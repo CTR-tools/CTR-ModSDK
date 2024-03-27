@@ -320,98 +320,102 @@ struct OverlayDATA_232
 	} advPauseInst[15];
 	
 	// 0x800B518C
-	// struct MenuBox menuBoxAdvPause
+	struct MenuBox menuBoxHintMenu;
 	
 	// 0x800B51B8
-	// FiveArrows pos
+	short fiveArrow_pos[2*3];
 	
 	// 0x800b51c4
-	// int FiveArrowCol1[3]
+	int fiveArrow_col1[3];
 	
 	// 0x800b51d0
-	// int FiveArrowCol2[3]
+	int fiveArrow_col2[3];
 	
-	// 0x800b51dc short[4] translate
-	// 0x800b51e4 short[4] rot
-	// 0x800b51ec short scale
-	// 0x800b51ee short padding1;
+	// 0x800b51dc 
+	short maskPos[4];
+	
+	// 0x800b51e4 
+	short maskRot[4];
+	
+	// 0x800b51ec 
+	short maskScale;
+	short padding1;
 	
 	// 0x800b51f0
-	// short maskOffsetPos[4];
+	short maskOffsetPos[4];
 	
 	// 0x800b51f8
-	// short maskOffsetRot[4];
+	short maskOffsetRot[4];
 	
 	// 0x800b5200
-	// short maskVars[12];
+	short maskVars[12];
 	
 	// 0x800b5218
-	// int maskFrameCurr;
+	int maskFrameCurr;
 	
 	// 0x800b521c
-	// struct ParticleEmitter emSet_maskSpawn[0xA];
+	struct ParticleEmitter emSet_maskSpawn[0xA];
 
 	// 0x800b5384
-	// struct ParticleEmitter emSet_maskLeave[0xA];
+	struct ParticleEmitter emSet_maskLeave[0xA];
 	
 	// 0x800b54ec
-	// short maskAudioSettings[4];
+	short maskAudioSettings[4];
 	
 	// 800b54f4
 	// 20 hints, last two entries are null
-	// short hintMenu_lngIndexArr[22];
+	short hintMenu_lngIndexArr[22];
 	
 	// 800b5520
-	// short eyePos[4]
+	short eyePos[4];
 	
 	// 800b5528
-	// short lookAtPos[4]
+	short lookAtPos[4];
 	
 	// 800b5530
-	// int colorQuad[4];
+	int colorQuad[4];
 	
 	// 800b5540
-	// int colorTri[3];
+	int colorTri[3];
 	
 	// 800b554c
-	// short pauseDir;
+	short pauseDir;
 	
 	// 800b554e
-	// short pauseTimer;
+	short pauseTimer;
 	
 	// 800b5550
-	// short pausePagePrev;
+	short pausePagePrev;
 	
 	// 800b5552
-	// short pausePageCurr;
+	short pausePageCurr;
 	
 	// 800b5554
-	// short pauseDir_dup;
-	// short padding3;
+	short pauseDir_dup;
+	short padding3;
 	
 	// 800b5558
-	// int maskHintID;
+	int maskHintID;
 	
 	// 800b555c
-	// int maskAngle;
+	int maskAngle;
 	
 	// 800b5560
-	// short maskCamPosStart[4];
+	short maskCamPosStart[4];
 	
 	// 800b5568
-	// short maskCamRotStart[4];
+	short maskCamRotStart[4];
 	
 	// 800b5570
-	// int maskWarppadDelayFrames;
+	int maskWarppadDelayFrames;
 	
 	// 800b5574
-	// int maskWarppadBoolInterrupt;
+	int maskWarppadBoolInterrupt;
 	
 	// 800b5578
-	// pointer to 800b557c
+	void* ptrPauseObject;
 	
 	// 800b557c
-	#if 0
 	struct
 	{
 		// 0x0
@@ -435,19 +439,18 @@ struct OverlayDATA_232
 		
 		// 0xe4 -- size
 	} PauseObject;
-	#endif
 	
 	// 800B5660
-	// int hintMenu_boolViewHint;
+	int hintMenu_boolViewHint;
 	
 	// 800B5664
-	// int hintMenu_scrollIndex;
+	int hintMenu_scrollIndex;
 	
 	// 800B5668
-	// short audioBackup[4];
+	short audioBackup[4];
 	
 	// 800b5670
-	// int unkModeHubItems;
+	int unkModeHubItems;
 };
 
 extern struct OverlayRDATA_232 R232;

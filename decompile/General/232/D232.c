@@ -1,5 +1,6 @@
 #include <common.h>
 
+void AH_HintMenu_MenuBoxFuncPtr();
 void DECOMP_AH_WarpPad_MenuBoxFuncPtr();
 
 struct OverlayDATA_232 D232 =
@@ -268,4 +269,431 @@ struct OverlayDATA_232 D232 =
 		// trophy
 		{0x62, 0x500, 0x808080, 0, {0xf368, 0x99f, 0x232}}
 	},
+	
+	.menuBoxHintMenu =
+	{
+		.stringIndexTitle = 0xFFFF,
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c, 
+		
+		.unk1 = 0,
+		
+		.state = 0x8A3,
+		.rows = 0,
+		.funcPtr = AH_HintMenu_MenuBoxFuncPtr,
+		.drawStyle = 4,
+	
+		// rest of variables all default zero
+	},
+	
+	.fiveArrow_pos =
+	{
+		0, -5,
+		-0x18, 6,
+		0x18, 6
+	},
+	
+	.fiveArrow_col1 =
+	{
+		0xC8FF, 0xFF, 0xFF
+	},
+	
+	.fiveArrow_col2 =
+	{
+		0x80c8ff, 0x80ff, 0x80ff
+	},
+	
+	.maskPos =
+	{
+		-0xA0, -0xA, 0x100
+	},
+	
+	.maskRot =
+	{
+		0, 0x180, 0
+	},
+	
+	.maskScale = 0x1000,
+	
+	.maskOffsetPos =
+	{
+		-0x14, 0, 0x50
+	},
+	
+	.maskOffsetRot =
+	{
+		0x7AF, 0x258, 0x78
+	},
+	
+	.maskVars =
+	{
+		// pos1
+		-0x46, 0, 0x140,
+		
+		// pos2
+		-0x3C, 0, 0x118,
+		
+		// rot1
+		0x7af, 0x258, 0x78,
+		
+		// rot2
+		0x800, 0x64, 0
+	},
+	
+	.maskFrameCurr = 0,
+	
+	.emSet_maskSpawn =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0xA1,
+						.particle_lifespan = 0x14,
+						.particle_Type = 0,
+				}
+		},
+		
+		[1] =
+		{
+			.flags = 0x1B,
+			
+			// posX
+			.initOffset = 0,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0x1900,
+					.velocity = -0x640,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0x3200,
+					.velocity = 0xc80,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[2] =
+		{
+			.flags = 0x1B,
+			
+			// posZ
+			.initOffset = 2,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0x1900,
+					.velocity = -0x640,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0x3200,
+					.velocity = 0xc80,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[3] =
+		{
+			.flags = 0x1B,
+			
+			// posY
+			.initOffset = 1,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0xC80,
+					.velocity = 0x190,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0x1900,
+					.velocity = 0x640,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[4] =
+		{
+			.flags = 3,
+			
+			// Scale
+			.initOffset = 5,
+			
+			// 50% scale
+			.InitTypes.AxisInit.baseValue.startVal = 0x800,
+			.InitTypes.AxisInit.baseValue.velocity = -0x20,
+			
+			// all the rest is untouched
+		},
+		
+		[5] =
+		{
+			.flags = 9,
+			
+			// RotX?
+			.initOffset = 4,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 1,
+			.InitTypes.AxisInit.rngSeed.startVal = 0x1000,
+			
+			// all the rest is untouched
+		},
+		
+		[6] =
+		{
+			.flags = 5,
+			
+			// colorR
+			.initOffset = 7,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		[7] =
+		{
+			.flags = 5,
+			
+			// colorG
+			.initOffset = 8,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		[8] =
+		{
+			.flags = 5,
+			
+			// colorB
+			.initOffset = 9,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		// null terminator
+		[9] = {}
+	},
+	
+	.emSet_maskLeave =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0xA1,
+						.particle_lifespan = 0x14,
+						.particle_Type = 0,
+				}
+		},
+		
+		[1] =
+		{
+			.flags = 0x1B,
+			
+			// posX
+			.initOffset = 0,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0x640,
+					.velocity = -0xC80,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0xc80,
+					.velocity = 0x1900,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[2] =
+		{
+			.flags = 0x1B,
+			
+			// posZ
+			.initOffset = 2,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0x640,
+					.velocity = -0xC80,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0xc80,
+					.velocity = 0x1900,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[3] =
+		{
+			.flags = 0x1B,
+			
+			// posY
+			.initOffset = 1,
+			
+			.InitTypes.AxisInit =
+			{
+				.baseValue =
+				{
+					.startVal = -0x190,
+					.velocity = -0x4B0,
+					.accel = 0,
+				},
+				
+				.rngSeed =
+				{
+					.startVal = 0xc80,
+					.velocity = 0xc80,
+					.accel = 0,
+				}
+			}
+			
+			// last 0x10 are blank
+		},
+		
+		[4] =
+		{
+			.flags = 3,
+			
+			// Scale
+			.initOffset = 5,
+			
+			// 100% scale
+			.InitTypes.AxisInit.baseValue.startVal = 0x1000,
+			.InitTypes.AxisInit.baseValue.velocity = -0x80,
+			
+			// all the rest is untouched
+		},
+		
+		[5] =
+		{
+			.flags = 9,
+			
+			// RotX?
+			.initOffset = 4,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 1,
+			.InitTypes.AxisInit.rngSeed.startVal = 0x1000,
+			
+			// all the rest is untouched
+		},
+		
+		[6] =
+		{
+			.flags = 5,
+			
+			// colorR
+			.initOffset = 7,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		[7] =
+		{
+			.flags = 5,
+			
+			// colorG
+			.initOffset = 8,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		[8] =
+		{
+			.flags = 5,
+			
+			// colorB
+			.initOffset = 9,
+			
+			.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+			.InitTypes.AxisInit.baseValue.accel = -0x100,
+			
+			// all the rest is untouched
+		},
+		
+		// null terminator
+		[9] = {}
+	},
+	
+	.maskAudioSettings =
+	{
+		0x0, 0x28, 0xFF
+	},
+	
+	.hintMenu_lngIndexArr =
+	{
+		0x17d, 0x17f, 0x181, 0x183, 0x185, 0x189,
+		0x19f, 0x187, 0x197, 0x199, 0x19b, 0x19d,
+		0x1a7, 0x1a9, 0x1ab, 0x1ad, 0x1af, 0x1b1,
+		0x1b3, 0x1b5, -1, 0
+	},
+	
+	.eyePos =
+	{
+		0x6d, 0x84, 0x85
+	},
+	
+	.lookAtPos =
+	{
+		-0x2E5, -0x12D, -0xF1
+	}
 };
