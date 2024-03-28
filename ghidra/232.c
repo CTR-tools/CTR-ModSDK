@@ -5934,7 +5934,9 @@ void FUN_800b1f78(int param_1,ushort param_2)
 					   
 					   0,0x1000);
         }
-        else {
+        else 
+		{
+		  // key
           *psVar16 = 5;
 		  
 		  // 0x8fba4 is where the adventure profile (currently loaded) begins
