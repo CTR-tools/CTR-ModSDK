@@ -2,7 +2,7 @@
 
 void DECOMP_AH_Pause_Destroy(void)
 {
-    char i;
+    int i;
     struct Instance *inst;
     struct Thread *t;
     int iVar3;

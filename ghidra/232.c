@@ -5656,6 +5656,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
   
   } while (iVar7 * 0x10000 >> 0x10 < 0xe);
   
+  // D232.advPausePages[pageID].type
   sVar2 = local_60[2];
   
   if (sVar2 == 1) 
