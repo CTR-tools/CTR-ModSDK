@@ -18,9 +18,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
   short sVar8;
   short *psVar9;
   short *psVar10;
-  int local_50;
-  int local_4c;
-  int local_48;
+  int pos3D[3];
   int local_40;
   int local_3c;
   int local_38;
@@ -214,10 +212,11 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
       }
       if (-1 < sVar8)
       {
-        local_50 = (int)*psVar10;
-        local_4c = 0;
-        local_48 = (int)*psVar9;
-        if (sVar8 == 2)
+        pos3D[0] = (int)*psVar10;
+        pos3D[1] = 0;
+        pos3D[2] = (int)*psVar9;
+        
+		if (sVar8 == 2)
         {
           uVar6 = 3;
         }
@@ -240,8 +239,8 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         if (sVar8 == 1)
         {
           D232.unkModeHubItems = sVar8;
-          local_30 = local_50;
-          local_2c = local_48;
+          local_30 = pos3D[0];
+          local_2c = pos3D[2];
 
           UI_Map_GetIconPos(hubPtrs, &local_30, &local_2c);
 
@@ -249,7 +248,9 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 
           *param_2 = *param_2 + 1;
         }
-        UI_Map_DrawRawIcon(hubPtrs, &local_50, 0x37, uVar6, 0, 0x1000);
+		
+		// draw star icon for boss
+        UI_Map_DrawRawIcon(hubPtrs, &pos3D[0], 0x37, uVar6, 0, 0x1000);
       }
       psVar10 = psVar10 + 4;
       psVar9 = psVar9 + 4;
