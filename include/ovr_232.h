@@ -307,7 +307,7 @@ struct OverlayDATA_232
 	{
 		// 0x0
 		short modelID;
-		short depth;
+		short scale;
 		
 		// 0x4
 		int color;

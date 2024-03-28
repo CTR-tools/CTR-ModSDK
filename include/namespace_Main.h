@@ -551,28 +551,28 @@ struct GameTracker
 
 	struct
 	{
-	// 1e30
-	int numTrophies;
-
-	// 1e34
-	int numRelics;
-
-	// 1e38
-	int numKeys;
-
-	// 1e3c
-	struct
-	{
-		int total;
-		int red;
-		int green;
-		int blue;
-		int yellow;
-		int purple;
-	} numCtrTokens;
-
-	// 1e54
-	int completionPercent; // 0 to 101
+		// 1e30
+		int numTrophies;
+	
+		// 1e34
+		int numRelics;
+	
+		// 1e38
+		int numKeys;
+	
+		// 1e3c
+		struct
+		{
+			int total;
+			int red;
+			int green;
+			int blue;
+			int yellow;
+			int purple;
+		} numCtrTokens;
+	
+		// 1e54
+		int completionPercent; // 0 to 101
 
 	} currAdvProfile;
 

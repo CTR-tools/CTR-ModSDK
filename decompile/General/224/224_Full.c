@@ -269,6 +269,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	gGT = sdata->gGT;
 	d = gGT->drivers[0];
 
+	// "TOTAL"
 	textWidth = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
 
 	// Fly-in Interpolation
