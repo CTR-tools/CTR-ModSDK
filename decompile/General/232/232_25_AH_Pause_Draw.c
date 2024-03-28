@@ -81,8 +81,8 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			
 		for(int i = 0; i < 5; i++)
 		{
-			int tokenPosX = posX + 0xf0 + ((i-2)*60);
-			int tokenPosY = (i&1) * 0x28;
+			short tokenPosX = posX + 0xf0 + ((i-2)*60);
+			short tokenPosY = (i&1) * 0x28;
 			
 			ptrPauseObject->PauseMember[i].indexAdvPauseInst = i+9;
 			ptrPauseObject->PauseMember[i].unlockFlag |= 1;
@@ -94,7 +94,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				LoadSave_UI_ConvertX(tokenPosX, 0x100);
 		
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertX(tokenPosY + 0x41, 0x100);
+				LoadSave_UI_ConvertY(tokenPosY + 0x41, 0x100);
 				
 			LoadSave_PrintInteger(
 				ptrTokenCount[i],
@@ -123,7 +123,6 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	
 	half = iVar11 >> 1;
 	
-	// not exactly "rect"
 	r.x = 0x10a - half;
 	r.y = 0x20;
 	r.w = (short)iVar11 + -0x14;
@@ -133,14 +132,13 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		&r, &sdata->battleSetup_Color_UI_1, 0x20,
 		gGT->backBuffer->otMem.startPlusFour);
 		
-	// not exactly "rect"
 	r.x = 0x100 - half;
 	r.y = 10;
-	r.h = 0x82;
 	r.w = (short)iVar11;
+	r.h = 0x82;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour[3]);
 	
 	for(int i = 0; i < 0xe; i++)
 	{
@@ -169,14 +167,14 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		
 		else
 		{
-			char* ptrColor = 
+			unsigned char* ptrColor = 
 				&D232.advPauseInst[index].color;
 			
 			inst->alphaScale = 0;
 			inst->colorRGBA = 
-				((unsigned int)ptrColor[0] << 0x14) |
-				((unsigned int)ptrColor[1] << 0xc) |
-				((unsigned int)ptrColor[2] << 0x4);
+				(ptrColor[0] << 0x14) |
+				(ptrColor[1] << 0xc) |
+				(ptrColor[2] << 0x4);
 		}
 		
 		int scale = 
