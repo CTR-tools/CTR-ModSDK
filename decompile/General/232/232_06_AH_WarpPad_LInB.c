@@ -236,9 +236,12 @@ GetKeysRequirement:
 			// if token not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
 			{
-				// open for relic/token
+				// not open for trophy
 				if(t->modelIndex != 1)
+				{	
+					// open for relic/token
 					t->modelIndex = 3;
+				}
 BattleTrack:
 				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
 				

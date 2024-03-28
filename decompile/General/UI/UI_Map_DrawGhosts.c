@@ -45,7 +45,9 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 		}
 	}
 	
-	DECOMP_UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],0x31,color,0,0x1000);
+	DECOMP_UI_Map_DrawRawIcon(
+		ptrMap, &bucket->inst->matrix.t[0],
+		0x31, color, 0, 0x1000);
   }
   return;
 }
