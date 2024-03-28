@@ -384,10 +384,10 @@ struct OverlayDATA_232
 	int colorTri[3];
 	
 	// 800b554c
-	short pauseDir;
+	short pausePageDir;
 	
 	// 800b554e
-	short pauseTimer;
+	short pausePageTimer;
 	
 	// 800b5550
 	short pausePagePrev;
@@ -396,7 +396,7 @@ struct OverlayDATA_232
 	short pausePageCurr;
 	
 	// 800b5554
-	short pauseDir_dup;
+	short pausePageDir_dup;
 	short padding3;
 	
 	// 800b5558

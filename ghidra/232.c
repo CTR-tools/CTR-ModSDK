@@ -6338,7 +6338,7 @@ void FUN_800b3144(void)
 	  // INSTANCE_Birth3D -- ptrModel, name, thread
       iVar5 = FUN_8003086c(*(undefined4 *)(PTR_DAT_8008d2ac + 0x22dc),s_pause_800abad4,uVar4);
 	
-	  // PauseObject->inst
+	  // PauseMember->inst
       *(int *)(puVar9 + 4) = iVar5;
 	  
       puVar2 = PTR_DAT_8008d2ac;
@@ -6437,17 +6437,27 @@ void FUN_800b3144(void)
     FUN_80028468(0,1);
   }
 LAB_800b3354:
+
+  // pausePageTimer
   sVar1 = DAT_800b554e + -1;
+  
   if ((DAT_800b554e < 1) &&
      (sVar1 = DAT_800b554e, *(short *)(PTR_DAT_8008d2ac + 0x1d3a) != DAT_800b5552))
   {
     DAT_800b5550 = DAT_800b5552;
-    DAT_800b554e = 8;
-    DAT_800b5554 = DAT_800b554c;
+    
+	// pausePageTimer
+	DAT_800b554e = 8;
+    
+	DAT_800b5554 = DAT_800b554c;
     sVar1 = DAT_800b554e;
     DAT_800b5552 = *(short *)(PTR_DAT_8008d2ac + 0x1d3a);
   }
+  
+  // pausePageTimer
   DAT_800b554e = sVar1;
+  
+  // second half
   if ((int)DAT_800b554e < 5) {
     iVar10 = (int)DAT_800b554e * -0x200;
     if (iVar10 < 0) {
@@ -6456,6 +6466,8 @@ LAB_800b3354:
     sVar11 = (short)(iVar10 >> 2) * DAT_800b554c;
     sVar1 = DAT_800b5552;
   }
+  
+  // first half
   else {
     sVar11 = (8 - DAT_800b554e) * DAT_800b554c * 0x80;
     sVar1 = DAT_800b5550;

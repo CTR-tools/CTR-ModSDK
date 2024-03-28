@@ -122,8 +122,11 @@ common, 232, AH_Map_Warppads, 0x0, General/232/232_22_AH_Map_Warppads.c
 common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
 common, 232, AH_Pause_Destroy, 0x0, General/232/232_24_AH_Pause_Destroy.c
 common, 232, AH_Pause_Draw, 0x0, General/232/232_25_AH_Pause_Draw.c
+common, 232, AH_Pause_Update, 0x0, General/232/232_26_AH_Pause_Update.c
 
+// 232_27
 common, 232, AH_HintMenu_MaskPosRot, 0x0, General/232/232_28_AH_HintMenu_MaskPosRot.c
+// 232_29
 
 common, 232, AH_MaskHint_Start, 0x0, General/232/232_30_AH_MaskHint_Start.c
 common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_31_AH_MaskHint_boolCanSpawn.c
