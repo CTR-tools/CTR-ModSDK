@@ -5763,17 +5763,31 @@ void FUN_800b1f78(int param_1,ushort param_2)
     if (sVar2 < 2) {
       if (sVar2 == 0) {
         local_48 = 0xffff;
-        local_40 = 0x15e;
+        
+		// === Not Gemstone ===
+		
+		// inst posX offset
+		local_40 = 0x15e;
+		
+		// string posX offset
         local_38 = 0x50;
+		
         local_50 = *local_60 + -0x19;
         local_30 = (int)local_50;
         iVar7 = 0;
-        if (local_30 == 0) {
+		
+		// Gemstone
+        if (local_30 == 0) 
+		{
+		  // inst posX offset
           local_40 = 0x16d;
           iVar7 = 4;
-          local_38 = 0x6e;
+          
+		  // string posX offset
+		  local_38 = 0x6e;
         }
-        uVar17 = 0;
+        
+		uVar17 = 0;
         piVar14 = (int *)(DAT_800b5578 + -2);
         local_2c = (int)(short)local_68;
         iVar11 = 0;
@@ -5837,7 +5851,10 @@ void FUN_800b1f78(int param_1,ushort param_2)
             piVar13 = piVar14 + 4;
             psVar15 = psVar16 + 8;
             sVar2 = (short)iVar7;
-            if (local_30 == 0) {
+            
+			// gemstone
+			if (local_30 == 0) 
+			{
               iVar11 = *piVar13;
 			  
 			  // convert x
@@ -5848,7 +5865,10 @@ void FUN_800b1f78(int param_1,ushort param_2)
 			  uVar4 = FUN_80047fd8((int)sVar2 + 0x2f,0x100);
               *(undefined4 *)(iVar11 + 0x48) = uVar4;
             }
-            else {
+            
+			// not gemstone
+			else 
+			{
               uVar6 = (int)(short)uVar17 + 0x4c;
               *psVar15 = (&DAT_80083a92)[(int)(short)uVar17 * 0xc] + 9;
 			  
@@ -5896,10 +5916,11 @@ void FUN_800b1f78(int param_1,ushort param_2)
                       ((int)*(short *)(&DAT_80086d88 + (int)local_60[3] * 0x10) * 4 + DAT_8008d878),
                      (int)(((uint)local_68 + (uint)local_38) * 0x10000) >> 0x10,
                      (iVar7 + 0x26) * 0x10000 >> 0x10,1,4);
-					 
+		
+		// if gemstone
         if ((int)local_50 == 0) 
 		{
-		  // silver
+		  // black
           iVar11 = 0x15;
 		  
 		  // 0x8fba4 is where the adventure profile (currently loaded) begins,
@@ -5933,15 +5954,19 @@ void FUN_800b1f78(int param_1,ushort param_2)
 					   
 					   0,0x1000);
         }
-        else 
+        
+		// if any other hub
+		else 
 		{
 		  // key
           *psVar16 = 5;
 		  
 		  // 0x8fba4 is where the adventure profile (currently loaded) begins
           if (((uint)(&DAT_8008fba4)
-                     [(int)((uint)(ushort)u_b___a_80084098[(int)local_50] << 0x10) >> 0x15] >>
-               (u_b___a_80084098[(int)local_50] & 0x1fU) & 1) != 0) {
+			  
+					// check for BeatBossPrize[hub]
+                     [(int)((uint)(ushort)u_80084098[(int)local_50] << 0x10) >> 0x15] >>
+					(u_80084098[(int)local_50] & 0x1fU) & 1) != 0) {
             psVar16[1] = psVar16[1] | 1;
           }
           iVar11 = *(int *)(psVar16 + 6);
@@ -5955,6 +5980,8 @@ void FUN_800b1f78(int param_1,ushort param_2)
 		  uVar4 = FUN_80047fd8((int)(short)iVar7 + 0x2f,0x100);
           *(undefined4 *)(iVar11 + 0x48) = uVar4;
         }
+		
+		// metaDataLev index
         iVar11 = (int)(short)local_48;
         if (-1 < iVar11) {
 			
@@ -5980,11 +6007,15 @@ void FUN_800b1f78(int param_1,ushort param_2)
 		  uVar4 = FUN_80047fd8(((iVar7 + 0x10) * 0x10000 >> 0x10) + 0x2f,0x100);
           *(undefined4 *)(iVar11 + 0x48) = uVar4;
         }
+		
+		// if gemstone
         if (local_50 == 0) {
           uVar6 = 0;
           piVar14 = (int *)(psVar16 + 6);
           iVar7 = (int)(short)local_68;
-          do {
+          
+		  // draw 5 gems
+		  do {
             sVar2 = (short)uVar6;
             uVar5 = (int)sVar2 + 0x6a;
             *psVar16 = sVar2;

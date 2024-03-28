@@ -1,10 +1,16 @@
 #include <common.h>
 
+// As of 11am: 3320/4556
+
 void DECOMP_AH_Pause_Draw(int pageID, int posX)
 {
 	RECT r;
 	int levelID = D232.advPausePages[pageID].hubID;
 	int lngIndex = D232.advPausePages[pageID].titleLng;
+	
+	int bitIndex;
+	struct AdvProgress *adv;
+	adv = &sdata->advProgress;
 	
 	if(lngIndex < 0)
 		lngIndex = data.metaDataLEV[levelID].name_LNG;
@@ -70,13 +76,239 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
     {
 		// assume no awards won
         ptrPauseObject->PauseMember[i].unlockFlag &= ~(1);
+		
+		// dont draw instance
+		ptrPauseObject->PauseMember[i].indexAdvPauseInst = -1;
     }
 	
 	int type = D232.advPausePages[pageID].type;
 	
 	if(type == 0)
 	{
-		// to-do
+		int hubID = levelID-0x19;
+		
+		// gemstone
+		if(hubID == 0)
+		{
+			// 2 relics
+			for(int i = 0; i < 2; i++)
+			{
+				// 0x10 + i:
+				// 0x10 - SlideCol
+				// 0x11 - TurboTrack
+				
+				struct MetaDataLEV* mdLev =
+					&data.metaDataLEV[0x10+i];
+					
+				DECOMP_DecalFont_DrawLine(
+					sdata->lngStrings[mdLev->name_LNG],
+					posX + 0x6e, i*0x10 + 4 + 0x26,
+					FONT_BIG, 0);
+					
+				struct Instance* inst = 
+					ptrPauseObject->PauseMember[i].inst;
+					
+				inst->matrix.t[0] = 
+					LoadSave_UI_ConvertX(posX + 0x16d + 1*0x1e, 0x100);
+				
+				inst->matrix.t[1] = 
+					LoadSave_UI_ConvertY(i*0x10 + 4 + 0x2f, 0x100);
+				
+				// 6, 7, 8,
+				// sapphire, gold, platinum
+				
+				// set sapphire by default
+				ptrPauseObject->PauseMember[i].indexAdvPauseInst = 6;
+				
+				// unlock if sapphire is visible
+				ptrPauseObject->PauseMember[i].unlockFlag |=
+					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x16));
+					
+				// increment to gold
+				ptrPauseObject->PauseMember[i].indexAdvPauseInst +=
+					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x28));
+					
+				// increment to platinum
+				ptrPauseObject->PauseMember[i].indexAdvPauseInst +=
+					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x3a));
+			}
+			
+			char bossID = 0xf;
+			
+			DECOMP_DecalFont_DrawLine(
+				sdata->lngStrings[
+					data.MetaDataCharacters[
+						bossID
+					].name_LNG_long
+				],
+				posX + 0x6e, 2*0x10 + 4 + 0x26,
+				FONT_BIG, 4);
+				
+			// === Draw Star ===
+			
+			// black
+			int color = 0x15;
+			
+			// set to grey (if beaten oxide at least once)
+			if(CHECK_ADV_BIT(adv->rewards, 0x62) != 0)
+				color = 1;
+			
+			u_int *starColor;
+            starColor = data.ptrColor[color];
+
+			struct Icon** iconPtrArray =
+				ICONGROUP_GETICONS(gGT->iconGroup[5]);
+			
+			DECOMP_DecalHUD_DrawPolyGT4
+			(						
+				iconPtrArray[0x37],
+
+				posX + 0x16d + 0x18,
+				2*0x10 + 4 + 0x2a,
+
+				&gGT->backBuffer->primMem,
+				gGT->tileView_UI.ptrOT,
+
+				starColor[0], starColor[1],
+				starColor[2], starColor[3],
+
+				0, 0x1000
+			);
+			
+			// 5 gems
+			for(int i = 0; i < 5; i++)
+			{					
+				struct Instance* inst = 
+					ptrPauseObject->PauseMember[2+i].inst;
+					
+				inst->matrix.t[0] = 
+					LoadSave_UI_ConvertX(posX + 0x100 + (i-2)*60, 0x100);
+				
+				inst->matrix.t[1] = 
+					LoadSave_UI_ConvertY(((i&1)<<4)|0x6a, 0x100);
+				
+				// gem color
+				ptrPauseObject->PauseMember[2+i].indexAdvPauseInst = i;
+				
+				// unlock gem
+				ptrPauseObject->PauseMember[2+i].unlockFlag |=
+					CHECK_ADV_BIT(adv->rewards, (i+0x6a));
+			}
+		}
+		
+		// any other hub
+		else
+		{
+			short* check = &data.advHubTrackIDs[(hubID-1)*4];
+			
+			// 4 tracks
+			for(int i = 0; i < 4; i++)
+			{
+				struct MetaDataLEV* mdLev =
+					&data.metaDataLEV[check[i]];
+					
+				DECOMP_DecalFont_DrawLine(
+					sdata->lngStrings[mdLev->name_LNG],
+					posX + 0x50, i*0x10 + 0 + 0x26,
+					FONT_BIG, 0);
+				
+				// 3 instances per track
+				for(int j = 0; j < 3; j++)
+				{
+					struct Instance* inst = 
+						ptrPauseObject->PauseMember[3*i+j].inst;
+						
+					inst->matrix.t[0] = 
+						LoadSave_UI_ConvertX(posX + 0x15e + j*0x1e, 0x100);
+				
+					inst->matrix.t[1] = 
+						LoadSave_UI_ConvertY(i*0x10 + 0 + 0x2f, 0x100);
+				}
+				
+				// trophy
+				ptrPauseObject->PauseMember[i*3+0].indexAdvPauseInst = 14;
+				ptrPauseObject->PauseMember[i*3+0].unlockFlag |=
+					CHECK_ADV_BIT(adv->rewards, (check[i]+6));
+					
+				// 6, 7, 8,
+				// sapphire, gold, platinum
+				
+				// set sapphire by default
+				ptrPauseObject->PauseMember[i*3+1].indexAdvPauseInst = 6;
+				
+				// unlock if sapphire is visible
+				ptrPauseObject->PauseMember[i*3+1].unlockFlag |=
+					CHECK_ADV_BIT(adv->rewards, (check[i]+0x16));
+					
+				// increment to gold
+				ptrPauseObject->PauseMember[i*3+1].indexAdvPauseInst +=
+					CHECK_ADV_BIT(adv->rewards, (check[i]+0x28));
+					
+				// increment to platinum
+				ptrPauseObject->PauseMember[i*3+1].indexAdvPauseInst +=
+					CHECK_ADV_BIT(adv->rewards, (check[i]+0x3a));
+					
+				// CTR Tokens
+				ptrPauseObject->PauseMember[i*3+2].indexAdvPauseInst = 9+mdLev->ctrTokenGroupID;
+				ptrPauseObject->PauseMember[i*3+2].unlockFlag |=
+					CHECK_ADV_BIT(adv->rewards, (check[i]+0x4c));
+			}
+			
+			// roo, papu, joe, pinstripe
+			// 10, 9, 11, 8
+			int bossArr = 0x080b090a;
+			char bossID = bossArr >> (8*(hubID-1));
+			
+			DECOMP_DecalFont_DrawLine(
+				sdata->lngStrings[
+					data.MetaDataCharacters[
+						bossID
+					].name_LNG_long
+				],
+				posX + 0x50, 4*0x10 + 0 + 0x26,
+				FONT_BIG, 4);
+				
+			struct Instance* inst = 
+				ptrPauseObject->PauseMember[12].inst;
+				
+			inst->matrix.t[0] = 
+				LoadSave_UI_ConvertX(posX + 0x15e + 1*0x1e, 0x100);
+			
+			inst->matrix.t[1] = 
+				LoadSave_UI_ConvertY(4*0x10 + 0 + 0x2f, 0x100);
+				
+			ptrPauseObject->PauseMember[12].indexAdvPauseInst = 5;
+			ptrPauseObject->PauseMember[12].unlockFlag |=
+				CHECK_ADV_BIT(adv->rewards, ((hubID-1)+0x5e));
+			
+			// skull rock, rampage ruins, 
+			// rocky road, nitro court
+			// 10, 9, 11, 8
+			int crystalArr = 0x12171315;
+			char crystalID = crystalArr >> (8*(hubID-1));
+			
+			DECOMP_DecalFont_DrawLine(
+				sdata->lngStrings[
+					data.metaDataLEV[
+						crystalID
+					].name_LNG
+				],
+				posX + 0x50, 5*0x10 + 0 + 0x26,
+				FONT_BIG, 1);
+			
+			inst = 
+				ptrPauseObject->PauseMember[13].inst;
+				
+			inst->matrix.t[0] = 
+				LoadSave_UI_ConvertX(posX + 0x15e + 1*0x1e, 0x100);
+			
+			inst->matrix.t[1] = 
+				LoadSave_UI_ConvertY(5*0x10 + 0 + 0x2f, 0x100);
+				
+			ptrPauseObject->PauseMember[13].indexAdvPauseInst = 13;
+			ptrPauseObject->PauseMember[13].unlockFlag |=
+				CHECK_ADV_BIT(adv->rewards, ((hubID-1)+0x6f));
+		}
 	}
 	
 	else if(type == 1)
@@ -118,11 +350,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	
 	else
 	{
-		struct AdvProgress *adv;
-		int bitIndex;
 		int count[3];
-		
-		adv = &sdata->advProgress;
 		count[0] = 0;
 		count[1] = 0;
 		count[2] = 0;
