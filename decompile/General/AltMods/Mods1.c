@@ -78,21 +78,6 @@ void NewCallback231()
 	DECOMP_LOAD_Callback_Overlay_231();
 }
 
-void NewCallback232()
-{	
-	// AdvPause
-	{
-		// fix spin rate
-		*(unsigned int*)0x800b3100 = 0x21140;
-
-		// flashing arrows
-		*(unsigned char*)0x800b2048 = 4*2;
-	}
-	
-
-	DECOMP_LOAD_Callback_Overlay_232();
-}
-
 void NewCallback233()
 {
 	// 233 patches here...
@@ -186,9 +171,7 @@ void ui60_entryHook()
 
 	// Inject new hooks
 	data.overlayCallbackFuncs[1] = NewCallback231;
-	data.overlayCallbackFuncs[2] = NewCallback232;
 	data.overlayCallbackFuncs[3] = NewCallback233;
-
 	return;
 }
 
