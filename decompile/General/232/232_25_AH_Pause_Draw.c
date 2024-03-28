@@ -138,7 +138,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	r.h = 0x82;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour[3]);
+	MENUBOX_DrawInnerRect(&r, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
 	
 	for(int i = 0; i < 0xe; i++)
 	{
