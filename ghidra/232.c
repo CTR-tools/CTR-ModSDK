@@ -5520,9 +5520,7 @@ void FUN_800b1ef8(void)
 }
 
 
-// AH_Pause_Draw
-// Draw everything except menuBox, and instances,
-// which are able to have themselves drawn independently
+// AH_Pause_Draw(pageID, posX)
 void FUN_800b1f78(int param_1,ushort param_2)
 
 {
@@ -6430,7 +6428,7 @@ LAB_800b3354:
     sVar1 = DAT_800b5550;
   }
   
-  // AH_Pause_Draw
+  // AH_Pause_Draw(pageID, posX)
   FUN_800b1f78((int)sVar1,(int)sVar11);
   
   return;
