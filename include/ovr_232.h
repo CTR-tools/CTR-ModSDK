@@ -344,7 +344,9 @@ struct OverlayDATA_232
 	
 	// 0x800b51ec 
 	short maskScale;
-	short padding1;
+	
+	// 0x800b51ee
+	short maskCooldown;
 	
 	// 0x800b51f0
 	short maskOffsetPos[4];

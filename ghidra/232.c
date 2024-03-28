@@ -6566,6 +6566,7 @@ void FUN_800b3594(int param_1)
   iVar10 = 0;
   DAT_8008fbb0 = DAT_8008fbb0 | 0x400000;
   sVar9 = DAT_800b54f4;
+  
   while (sVar5 = (short)iVar11, -1 < sVar9) {
     uVar6 = ((int)*(short *)((int)&DAT_800b54f4 + ((iVar10 << 0x10) >> 0xf)) + -0x17b) / 2 +
             0x76;
@@ -6578,7 +6579,9 @@ void FUN_800b3594(int param_1)
     iVar10 = iVar10 + 1;
     sVar9 = *(short *)((int)&DAT_800b54f4 + (iVar10 * 0x10000 >> 0xf));
   }
+  
   sVar9 = (short)(iVar11 + 1);
+  
   if (sVar5 < *(short *)(param_1 + 0x1a)) {
     *(short *)(param_1 + 0x1a) = sVar5;
   }

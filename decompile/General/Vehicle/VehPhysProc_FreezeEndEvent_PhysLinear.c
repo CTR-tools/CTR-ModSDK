@@ -16,8 +16,6 @@ void DECOMP_VehPhysProc_FreezeEndEvent_PhysLinear(struct Thread *t, struct Drive
     d->actionsFlagSet |= 8;
     d->actionsFlagSet &= ~(4);
 
-    if (0 < d->jump_TenBuffer)
-    {
+    if (d->jump_TenBuffer > 0)
         d->jump_TenBuffer = 0;
-    }
 }

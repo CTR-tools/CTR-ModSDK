@@ -1041,7 +1041,7 @@
 8006bf68 VehTalkMask_ThTick
 8006c150 VehTalkMask_Init
 8006c1bc VehTalkMask_PlayXA
-8006c224 VehTalkMask_boolNotTalking
+8006c224 VehTalkMask_boolNoXA
 8006c234 VehTalkMask_End
 
 8006c25c VehTurbo_ProcessBucket

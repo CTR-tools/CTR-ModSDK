@@ -1083,7 +1083,7 @@ void VehStuckProc_Warp_Init(struct Thread* t, struct Driver* d);
 //VehTalkMask_ThTick()
 //VehTalkMask_Init()
 //VehTalkMask_PlayXA()
-//VehTalkMask_boolNotTalking()
+//VehTalkMask_boolNoXA()
 //VehTalkMask_End()
 
 // More Turbo...
