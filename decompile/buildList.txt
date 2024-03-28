@@ -121,6 +121,7 @@ common, 232, AH_Map_HubItems, 0x0, General/232/232_21_AH_Map_HubItems.c
 common, 232, AH_Map_Warppads, 0x0, General/232/232_22_AH_Map_Warppads.c
 common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
 common, 232, AH_Pause_Destroy, 0x0, General/232/232_24_AH_Pause_Destroy.c
+//ommon, 232, AH_Pause_Draw, 0x0, General/232/232_25_AH_Pause_Draw.c
 
 common, 232, AH_HintMenu_MaskPosRot, 0x0, General/232/232_28_AH_HintMenu_MaskPosRot.c
 
