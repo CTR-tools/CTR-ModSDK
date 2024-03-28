@@ -76,7 +76,7 @@ struct AdvProgress
  		0x200000: Tiny Arena Trophy
  		0x400000: Dingo Canyon Sapphire Relic
  		0x800000: Dragon Mines Sapphire Relic
- 		0x1000000: Blizzard Bluff
+ 		0x1000000: Blizzard Bluff Sapphire Relic
  		0x2000000: Crash Cove Sapphire Relic
  		0x4000000: Tiger Temple Sapphire Relic
  		0x8000000: Papu Pyramid Sapphire Relic

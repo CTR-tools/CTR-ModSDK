@@ -74,15 +74,20 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	
 	int type = D232.advPausePages[pageID].type;
 	
-	if(type == 1)
+	if(type == 0)
+	{
+		// to-do
+	}
+	
+	else if(type == 1)
 	{
 		int* ptrTokenCount = 
 			&sdata->gGT->currAdvProfile.numCtrTokens.red;
 			
 		for(int i = 0; i < 5; i++)
 		{
-			short tokenPosX = posX + 0xf0 + ((i-2)*60);
-			short tokenPosY = (i&1) * 0x28;
+			short instPosX = posX + 0xf0 + ((i-2)*60);
+			short instPosY = (i&1) * 0x28;
 			
 			ptrPauseObject->PauseMember[i].indexAdvPauseInst = i+9;
 			ptrPauseObject->PauseMember[i].unlockFlag |= 1;
@@ -91,28 +96,95 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[i].inst;
 				
 			inst->matrix.t[0] = 
-				LoadSave_UI_ConvertX(tokenPosX, 0x100);
+				LoadSave_UI_ConvertX(instPosX, 0x100);
 		
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertY(tokenPosY + 0x41, 0x100);
+				LoadSave_UI_ConvertY(instPosY + 0x41, 0x100);
 				
 			LoadSave_PrintInteger(
 				ptrTokenCount[i],
-				tokenPosX + 0x36,
-				tokenPosY + 0x3a,
+				instPosX + 0x36,
+				instPosY + 0x3a,
 				0, 0);
 				
 			int strX = 'X';
 			DECOMP_DecalFont_DrawLine(
 				&strX,
-				tokenPosX + 0x24,
-				tokenPosY + 0x3e,
+				instPosX + 0x24,
+				instPosY + 0x3e,
 				FONT_SMALL, 0);
 		}
 	}
 	
-	// else if 0
-	// else if 2
+	else
+	{
+		struct AdvProgress *adv;
+		int bitIndex;
+		int count[3];
+		
+		adv = &sdata->advProgress;
+		count[0] = 0;
+		count[1] = 0;
+		count[2] = 0;
+		
+		for(int i = 0; i < 0x12; i++)
+		{
+			// platinum
+			if(CHECK_ADV_BIT(adv->rewards, (i+0x3a)) != 0)
+				count[2]++;
+			
+			// gold
+			else if(CHECK_ADV_BIT(adv->rewards, (i+0x28)) != 0)
+				count[1]++;
+			
+			// sapphire
+			else if(CHECK_ADV_BIT(adv->rewards, (i+0x16)) != 0)
+				count[0]++;
+		}
+		
+		for(int i = 0; i < 3; i++)
+		{
+			short instPosX = posX + 0xf6 + ((i-1)*90);
+			
+			ptrPauseObject->PauseMember[i].indexAdvPauseInst = i+6;
+			ptrPauseObject->PauseMember[i].unlockFlag |= 1;
+			
+			struct Instance* inst = 
+				ptrPauseObject->PauseMember[i].inst;
+				
+			inst->matrix.t[0] = 
+				LoadSave_UI_ConvertX(instPosX, 0x100);
+		
+			inst->matrix.t[1] = 
+				LoadSave_UI_ConvertY(0x49, 0x100);
+				
+			LoadSave_PrintInteger(
+				count[i],
+				instPosX + 0x19,
+				0x49,
+				0, 0);
+				
+			int strX = 'X';
+			DECOMP_DecalFont_DrawLine(
+				&strX,
+				instPosX + 10,
+				0x4e,
+				FONT_SMALL, 0);
+		}
+		
+		// variable reuse
+		bitIndex = count[0] + count[1] + count[2];
+		
+		// be careful, might overflow in languages
+		// other than english, where "TOTAL" is longer
+		sprintf(&count[0], "%s %d", sdata->lngStrings[0xc4], bitIndex);
+		
+		DECOMP_DecalFont_DrawLine(
+			count,
+			posX + 0x100, 0x6e,
+			FONT_BIG,
+			0xffff8000);
+	}
 	
 	int iVar7 = len;
 	
