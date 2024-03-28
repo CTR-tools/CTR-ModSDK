@@ -79,31 +79,15 @@ void DECOMP_AH_Map_Main(void)
 	
     DECOMP_AH_Map_HubItems(hubPtrs,&local_1e[0]);
 #endif
-
-#if 1
-	// needs resetting,
-	// register $s0 corrupts in DECOMP_AH_Map_Warppads
-	// if USE_60FPS is enabled. Can be fixed by removing
-	// USE_60FPS or removing call to PlayWarppadSound.
-	// Asm shows sw $s0 $sp(28) and then lw $s0 $sp(4) ???
-	gGT = sdata->gGT;
-	ptrHudData = data.hudStructPtr[0];
-#endif
 	
     DECOMP_UI_Map_DrawMap(
-                gGT->ptrIcons[3],
+        gGT->ptrIcons[3],
+        gGT->ptrIcons[4],
 
-                gGT->ptrIcons[4],
+        500,195,
 
-                500,195,
-
-				 // pointer to PrimMem struct
-                &gGT->backBuffer->primMem,
-
-                // pointer to OT memory
-                gGT->tileView_UI.ptrOT,
-                 
-				1);
+        &gGT->backBuffer->primMem,
+		gGT->tileView_UI.ptrOT, 1);
 	
     DECOMP_UI_DrawSlideMeter(ptrHudData[8].x, ptrHudData[8].y, advDriver);
   }
