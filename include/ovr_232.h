@@ -417,11 +417,7 @@ struct OverlayDATA_232
 	// 800b5574
 	int maskWarppadBoolInterrupt;
 	
-	// 800b5578
-	void* ptrPauseObject;
-	
-	// 800b557c
-	struct
+	struct PauseObject
 	{
 		// 0x0
 		struct
@@ -443,7 +439,13 @@ struct OverlayDATA_232
 		struct Thread* t;
 		
 		// 0xe4 -- size
-	} PauseObject;
+	};
+	
+	// 800b5578
+	struct PauseObject* ptrPauseObject;
+	
+	// 800b557c
+	struct PauseObject pauseObject;
 	
 	// 800B5660
 	int hintMenu_boolViewHint;

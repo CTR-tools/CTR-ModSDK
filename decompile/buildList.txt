@@ -1,5 +1,5 @@
-// 484+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 806 rewritten so far
-// 484 for every 'common' and ','
+// 485+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 807 rewritten so far
+// 485 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -120,6 +120,7 @@ common, 232, AH_Map_HubArrowOutter, 0x0, General/232/232_20_AH_Map_HubArrowOutte
 common, 232, AH_Map_HubItems, 0x0, General/232/232_21_AH_Map_HubItems.c
 common, 232, AH_Map_Warppads, 0x0, General/232/232_22_AH_Map_Warppads.c
 common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
+common, 232, AH_Pause_Destroy, 0x0, General/232/232_24_AH_Pause_Destroy.c
 
 common, 232, AH_HintMenu_MaskPosRot, 0x0, General/232/232_28_AH_HintMenu_MaskPosRot.c
 
