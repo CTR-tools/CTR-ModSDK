@@ -79,20 +79,7 @@ void NewCallback231()
 }
 
 void NewCallback232()
-{
-	// UI
-	{
-	
-		// blinking adv map UI
-		*(unsigned char*)0x800b18a0 = 2*2; // door arrows
-		*(unsigned char*)0x800b1934 = 2*2; // boss stars
-		*(unsigned char*)0x800b1ab8 = 2*2; // warppads
-
-		// map items "outer" anims
-
-		// transition in, is in EXE, already patched
-	}
-	
+{	
 	// AdvPause
 	{
 		// fix spin rate

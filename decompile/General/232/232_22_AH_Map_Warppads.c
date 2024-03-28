@@ -48,12 +48,13 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
 	
 	// Trophy: blue/white
 	warppadColor[1] = 5;
-	if ((gGT->timer & 2) != 0)
+	if (((gGT->timer >> FPS_RIGHTSHIFT(0)) & 2) != 0)
 		warppadColor[1] = 4;
 	
 	// SlideCol/TurboTrack
-	// flash a bunch of colors (crash-pura)
-	warppadColor[4] = (gGT->timer >> 1 & 7) + 5;
+	// flash a bunch of colors (crash-pura),
+	// each color should last two frames, so use timer>>1
+	warppadColor[4] = ((gGT->timer >> FPS_RIGHTSHIFT(1)) & 7) + 5;
 	
 	color = warppadColor[index];
 	
