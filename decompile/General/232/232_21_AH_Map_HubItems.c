@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
+void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 {
 
   struct GameTracker *gGT;
@@ -13,13 +13,13 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
   int iVar3;
   u_int bit;
   int iVar5;
-  undefined4 uVar6;
+  int uVar6;
   short sVar7;
   short sVar8;
   short *psVar9;
   short *psVar10;
   int local_50;
-  undefined4 local_4c;
+  int local_4c;
   int local_48;
   int local_40;
   int local_3c;
@@ -31,9 +31,8 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
   gGT = sdata->gGT;
   adv = &sdata->advProgress;
   levelID = gGT->levelID;
-  hubID = levelID - N_SANITY_BEACH;
 
-  psVar10 = (short *)(&PTR_DAT_800b4ed4_800b4f9c)[hubID];
+  psVar10 = D232.hubItemsXY_ptrArray[levelID-0x19];
   if (*psVar10 != -1)
   {
     psVar9 = psVar10 + 1;
@@ -44,16 +43,23 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
       sVar7 = 0xffffffff;
       sVar7 = -1;
       sVar7 = -1;
+	  
+	  // iconType
       sVar1 = psVar9[2];
+	  
       open = true;
+	  
+	  // Arrow beach->gemstone
       if (sVar1 == -1)
       {
         sVar7 = 0;
 
         if (levelID == N_SANITY_BEACH)
         {
+		  // locked if key < 1
           sVar7 = (gGT->currAdvProfile.numKeys < 1);
         }
+		
       LAB_800b17e8:
         iVar5 = sVar7 << 0x10;
         sVar8 = sVar8;
@@ -66,6 +72,8 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
         if (-1 < sVar1)
         {
           sVar7 = sVar7;
+		  
+		  // warppad
           if (sVar1 == 4)
           {
             iVar3 = 0;
@@ -87,7 +95,7 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
               sVar8 = 0;
               goto LAB_800b17e8;
             }
-            sVar7 = DAT_8008fbb0 & 4;
+            sVar7 = sdata->advProgress.rewards[3] & 4;
           }
           else
           {
@@ -96,20 +104,33 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
             {
               iVar5 = -0x10000;
               sVar8 = sVar8;
+			  
+			  // saveLoad screen (0x64)
               if (sVar1 == 100)
               {
                 local_40 = (int)*psVar10 + -0x200;
                 local_3c = (int)*psVar9 + -0x100;
-                UI_Map_GetIconPos(param_1, &local_40, &local_3c);
-                AH_Map_LoadSave_Full(local_40, local_3c, &DAT_800b4fcc,
-                                     &DAT_800b4fdc, 0x800, (int)psVar9[1]);
+				
+                UI_Map_GetIconPos(hubPtrs, &local_40, &local_3c);
+                
+				AH_Map_LoadSave_Full(
+					local_40, local_3c, 
+					&D232.loadSave_pos[0], &D232.loadSave_col[0], 
+					0x800, (int)psVar9[1]
+				);
+				
                 iVar5 = -0x10000;
               }
               goto LAB_800b17ec;
             }
+			
+			// did not use GOTO,
+			// must be == 3, for Boss Garage
+			
             for (iVar3 = 0; iVar3 < 4; iVar3++)
             {
-              trophies = &data.advTrackIDs_orderOfTrophies[(levelID - N_SANITY_BEACH) * 4];
+              trophies = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+			  
               if (CHECK_ADV_BIT(adv->rewards, trophies[iVar3]) == 0)
               {
                 open = false;
@@ -129,25 +150,35 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
           }
           goto LAB_800b17ec;
         }
+		
+		// Arrow beach->glacier
         if (sVar1 == -4)
         {
+		  // locked if keys < 2
           sVar7 = ((gGT->currAdvProfile.numKeys) < 2);
           goto LAB_800b17e8;
         }
         if (sVar1 < -3)
         {
+		  // Arrow glacier->citadel
           if (sVar1 == -5)
           {
+			// locked if keys < 3
             sVar7 = ((gGT->currAdvProfile.numKeys) < 3);
             goto LAB_800b17e8;
           }
           iVar5 = -1;
         }
+		
         else
         {
+		  // either arrow on Gemstone hub,
+		  // pointing to beach or to ruins
           if ((sVar1 == -3) || (sVar1 == -2))
           {
+			// never locked
             sVar7 = 0;
+			
             goto LAB_800b17e8;
           }
           iVar5 = -1;
@@ -157,14 +188,15 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
       {
         local_38 = (int)*psVar10 + -0x200;
         local_34 = (int)*psVar9 + -0x100;
-        UI_Map_GetIconPos(param_1, &local_38, &local_34);
-        if ((iVar5 == 0) && (0x800b5670 == 0))
+        UI_Map_GetIconPos(hubPtrs, &local_38, &local_34);
+        if ((iVar5 == 0) && (D232.unkModeHubItems == 0))
         {
           AH_Map_HubArrowOutter(
-              param_1, (int)*param_2, local_38, local_34,
+              hubPtrs, (int)*param_2, local_38, local_34,
               (0x1000 - (u_short)psVar9[1]), 1);
           *param_2 = *param_2 + 1;
         }
+		
         // if even frame
         if (((gGT->timer) & 2) == 0)
         {
@@ -175,7 +207,10 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
           iVar5 = ((int)sVar7 * 2 + 1) * 3;
         }
 
-        AH_Map_HubArrow(local_38, local_34, &DAT_800b4fec, iVar5 * 4 + 0x800B4FF8, 0x800, (int)psVar9[1]);
+        AH_Map_HubArrow(
+			local_38, local_34, 
+			&D232.hubArrow_pos[0], &D232.hubArrow_col1[iVar5], 
+			0x800, (int)psVar9[1]);
       }
       if (-1 < sVar8)
       {
@@ -198,17 +233,17 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
         }
         if (sVar8 == 1)
         {
-          *(short *)0x800b5670 = sVar8;
+          D232.unkModeHubItems = sVar8;
           local_30 = local_50;
           local_2c = local_48;
 
-          UI_Map_GetIconPos(param_1, &local_30, &local_2c);
+          UI_Map_GetIconPos(hubPtrs, &local_30, &local_2c);
 
-          AH_Map_HubArrowOutter(param_1, (int)*param_2, local_30, local_2c, 0, 2);
+          AH_Map_HubArrowOutter(hubPtrs, (int)*param_2, local_30, local_2c, 0, 2);
 
           *param_2 = *param_2 + 1;
         }
-        UI_Map_DrawRawIcon(param_1, &local_50, 0x37, uVar6, 0, 0x1000);
+        UI_Map_DrawRawIcon(hubPtrs, &local_50, 0x37, uVar6, 0, 0x1000);
       }
       psVar10 = psVar10 + 4;
       psVar9 = psVar9 + 4;

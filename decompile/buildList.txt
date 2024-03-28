@@ -117,6 +117,7 @@ common, 232, AH_Map_LoadSave_Prim, 0x0, General/232/232_17_AH_Map_LoadSave_Prim.
 common, 232, AH_Map_LoadSave_Full, 0x0, General/232/232_18_AH_Map_LoadSave_Full.c
 common, 232, AH_Map_HubArrow, 0x0, General/232/232_19_AH_Map_HubArrow.c
 common, 232, AH_Map_HubArrowOutter, 0x0, General/232/232_20_AH_Map_HubArrowOutter.c
+common, 232, AH_Map_HubItems, 0x0, General/232/232_21_AH_Map_HubItems.c
 
 common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
 

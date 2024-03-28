@@ -219,9 +219,14 @@ struct OverlayDATA_232
 		short angle;
 		
 		// 0x6
-		// 0x03 - boss
-		// 0x64 - saveload
-		// 0xFFFF - arrow
+		// 0x03: boss
+		// 0x04: warppad
+		// 0x64: saveload
+		// -1: (1 key) Arrow beach->gemstone
+		// -2: (0 key) Arrow gemstone->beach
+		// -3: (0 key) Arrow gemstone->ruins
+		// -4: (2 key) Arrow beach->glacier
+		// -5: (3 key) Arrow glacier->citadel
 		short iconType;
 		
 		// 0x8 -- size
