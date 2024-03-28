@@ -6306,8 +6306,10 @@ void FUN_800b3144(void)
 	{
 	  // INSTANCE_Birth3D -- ptrModel, name, thread
       iVar5 = FUN_8003086c(*(undefined4 *)(PTR_DAT_8008d2ac + 0x22dc),s_pause_800abad4,uVar4);
-						  
+	
+	  // PauseObject->inst
       *(int *)(puVar9 + 4) = iVar5;
+	  
       puVar2 = PTR_DAT_8008d2ac;
 	  
 	  // instance flags:
@@ -6330,16 +6332,15 @@ void FUN_800b3144(void)
         } while (iVar8 * 0x10000 >> 0x10 < (int)(uint)(byte)puVar3[0x1ca8]);
       }
       iVar10 = iVar10 + 1;
-      puVar9[2] = 0;
+      
+	  // wipe rot[3]
+	  puVar9[2] = 0;
       puVar9[1] = 0;
-	  
-	  // wipe flags (0 for black)
-	  // 2-byte for visible or black
       *puVar9 = 0;
+	  
       puVar9 = puVar9 + 8;
 	  
-	  // wipe flags (0xffff for null)
-	  // 2-byte for model and color
+	  // wipe index (0xffff for null)
       *puVar6 = 0xffff;
       puVar6 = puVar6 + 8;
 	  
