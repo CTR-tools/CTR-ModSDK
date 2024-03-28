@@ -4896,7 +4896,7 @@ LAB_800b0fc0:
 }
 
 
-// AdvMap_HubArrowOutter
+// AH_Map_HubArrowOutter
 // only visible when adv doors are open
 void FUN_800b1150
                (undefined4 param_1,short param_2,int param_3,int param_4,uint param_5,short param_6)
@@ -4999,14 +4999,17 @@ LAB_800b13b8:
           if (!bVar1) 
 		  {
 			// CTR_Box_DrawWirePrims
-            FUN_80021500((int)(short)iVar9,(int)(short)iVar6,iVar12 * 0x10000 >> 0x10,
-                         iVar11 * 0x10000 >> 0x10,(int)sVar14,uVar15,0xff,
+            FUN_80021500(
+				(int)(short)iVar9,(int)(short)iVar6,
+				iVar12 * 0x10000 >> 0x10,
+                iVar11 * 0x10000 >> 0x10,
+				(int)sVar14,uVar15,0xff,
 						 
-						 // pointer to OT mem
-                         *(undefined4 *)(PTR_DAT_8008d2ac + 0x147c),
-						 
-						 // pointer to PrimMem struct
-                         *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74);
+				// pointer to OT mem
+                *(undefined4 *)(PTR_DAT_8008d2ac + 0x147c),
+				
+				// pointer to PrimMem struct
+                *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74);
           }
           bVar1 = false;
           iVar13 = iVar13 + iVar8;
