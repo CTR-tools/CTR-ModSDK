@@ -11,7 +11,7 @@ void DECOMP_RB_CrateFruit_LInC();
 void DECOMP_RB_CrateWeapon_LInC();
 void DECOMP_RB_CrateTime_LInC();
 void DECOMP_RB_FlameJet_LInB();
-void DECOMP_RB_Plant_LInB();
+//void DECOMP_RB_Plant_LInB();		-- DONE
 //void DECOMP_RB_Minecart_LInB();	-- DONE
 //void DECOMP_RB_Snowball_LInB();	-- DONE
 //void DECOMP_RB_Armadillo_LInB();	-- DONE
@@ -21,8 +21,8 @@ void RB_Orca_LInB();
 //void DECOMP_RB_Baron_LInB();		-- DONE
 //void DECOMP_RB_Turtle_LInB();		-- DONE
 //void DECOMP_RB_Turtle_LInC();		-- DONE
-void DECOMP_RB_Spider_LInB();
-void DECOMP_RB_Fireball_LInB();
+//void DECOMP_RB_Spider_LInB();		-- DONE
+//void DECOMP_RB_Fireball_LInB();	-- DONE
 void RB_Banner_LInB();
 void DECOMP_RB_CtrLetter_LInB();
 void DECOMP_RB_CtrLetter_LInC();
