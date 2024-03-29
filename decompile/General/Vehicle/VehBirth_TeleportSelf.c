@@ -247,7 +247,6 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         // if spawning at hub door
         else
         {
-#ifndef REBUILD_PS1
             gameMode2 |= VEH_FREEZE_DOOR;
             
             // do trigonometry to take hub door
@@ -257,7 +256,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             // instDef posX + (where door starts)
             // doorLengthX + (to get to midpoint between two doors)
             // perpendicularX (to spawn away from door)
-            posBottom[0] = levInstDef->pos[0] + (short)(MATH_Cos(angle) >> 1) + (short)(MATH_Cos(angle + 0x400) >> 3);
+            posBottom[0] = levInstDef->pos[0] + (short)(DECOMP_MATH_Cos(angle) >> 1) + (short)(DECOMP_MATH_Cos(angle + 0x400) >> 3);
 
             // posY = instDef posY + random height offset
             posBottom[1] = levInstDef->pos[1] + 0x17a;
@@ -266,8 +265,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             // instDef posZ + (where door starts)
             // doorLengthZ + (to get to midpoint between two doors)
             // perpendicularZ (to spawn away from door)
-            posBottom[2] = levInstDef->pos[2] + (short)(MATH_Sin(angle) >> 1) + (short)(MATH_Sin(angle + 0x400) >> 3);
-#endif
+            posBottom[2] = levInstDef->pos[2] + (short)(DECOMP_MATH_Sin(angle) >> 1) + (short)(DECOMP_MATH_Sin(angle + 0x400) >> 3);
 		}
     }
 

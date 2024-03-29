@@ -6,8 +6,10 @@ void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struc
 	#if BUILD == SepReview
 	printf("camera init\n");
 	#endif
-
-	THREAD_BirthWithObject(0x30f, CAM_ThTick, 0,0)->inst = (struct Instance*)cDC;
+	
+#ifndef REBUILD_PS1
+	DECOMP_THREAD_BirthWithObject(0x30f, CAM_ThTick, 0,0)->inst = (struct Instance*)cDC;
+#endif
 
 	memset(cDC, 0, sizeof(struct CameraDC));
 

@@ -21,6 +21,7 @@
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
+#include "../decompile/General/CAMERA/CAM_02_Init.c"
 #include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
 #include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
 #include "../decompile/General/CAMERA/CAM_06_StartOfRace.c"

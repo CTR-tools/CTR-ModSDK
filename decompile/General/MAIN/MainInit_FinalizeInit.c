@@ -230,11 +230,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 
         if (i < gGT->numPlyrCurrGame)
         {
-
-// Need to finish CAM_Init and CAM_ThTIck for this
-#ifndef REBUILD_PS1
-            CAM_Init(&gGT->cameraDC[i], i, d, &gGT->tileView[i]);
-#endif
+            DECOMP_CAM_Init(&gGT->cameraDC[i], i, d, &gGT->tileView[i]);
 
 			// freeze camera of P1, only in main menu
             if (

@@ -1,6 +1,7 @@
 #include <common.h>
 
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT);
+void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView);
 int DECOMP_CAM_Path_GetNumPoints(void);
 u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *getPath);
 void DECOMP_CAM_SetDesiredPosRot(struct CameraDC* cDC, short* pos, short* rot);
