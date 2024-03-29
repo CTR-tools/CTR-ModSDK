@@ -20,13 +20,13 @@ u_int DECOMP_Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Partic
   else
   {
     // red
-    channel = Particle_BitwiseClampByte(&p->axis[7].startVal);
+    channel = DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
 	rgba = channel;
 
     if ((flagColors & 0x100) != 0)
     {
       // green
-      rgba = Particle_BitwiseClampByte(&p->axis[8].startVal);
+      rgba = DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal);
     }
 	
 	rgba = channel | (rgba<<8);
@@ -34,7 +34,7 @@ u_int DECOMP_Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Partic
     if ((flagColors & 0x200) != 0)
     {
       // blue
-      channel = Particle_BitwiseClampByte(&p->axis[9].startVal);
+      channel = DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal);
     }
 	
 	rgba = rgba | (channel<<0x10);
