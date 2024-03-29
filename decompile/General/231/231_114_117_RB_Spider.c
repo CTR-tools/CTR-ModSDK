@@ -2,6 +2,7 @@
 
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
+#ifndef REBUILD_PS1
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 {
 	typedef struct
@@ -162,6 +163,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     }
 
 }
+#endif
 
 void DECOMP_RB_Spider_ThTick(struct Thread* t)
 {
@@ -184,7 +186,7 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 	#endif
 		spiderInst->animFrame++;
 	
-	iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
+	iVar3 = DECOMP_INSTANCE_GetNumAnimFrames(spiderInst, 1);
 	
 	// if Sitting animation is done
 	if (iVar3 <= spiderInst->animFrame)
@@ -202,7 +204,7 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 			{
 				// start moving up (end of animation)
 				spiderInst->animFrame = 
-					INSTANCE_GetNumAnimFrames(spiderInst, 0) - 1;
+					DECOMP_INSTANCE_GetNumAnimFrames(spiderInst, 0) - 1;
 			}
 			
 			else
@@ -210,7 +212,9 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 				// start moving down (start of animation)
 				spiderInst->animFrame = 0;
 				
+				#ifndef REBUILD_PS1
 				PlaySound3D(0x7a, spiderInst);
+				#endif
 			}
 		}
 	}
@@ -241,12 +245,14 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 			spiderInst->animIndex = 1;
 		}
 	
+		#ifndef REBUILD_PS1
 		// last frame of last animation
 		else if (sVar2 == 0xc)
 		{
 			// play sound: spider move up
 			PlaySound3D(0x79, spiderInst);
 		}
+		#endif
 	}
 	
 	// if spider is near ceiling
@@ -261,7 +267,7 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 		
 		sVar2 = spiderInst->animFrame;
 		
-		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
+		iVar3 = DECOMP_INSTANCE_GetNumAnimFrames(spiderInst, 0);
 		if (iVar3 <= spiderInst->animFrame)
 		{
 			// reset loop, not near roof, WiggleLegsAndTeeth
@@ -285,13 +291,22 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 	}	  
   }
 
+  #ifndef REBUILD_PS1
   Seal_CheckColl(spiderInst, t, 1, 0x9000, 0x7b);
+  #endif
 }
 
 void DECOMP_RB_Spider_LInB(struct Instance* inst)
 {
   struct Spider* spider;
   short rot[3];
+
+  // Spider and Turtle break PC?
+  // Too many polygons?
+  #ifdef REBUILD_PC
+  inst->flags |= 0x80;
+  return;
+  #endif
 
   struct Thread* t = 
 	DECOMP_THREAD_BirthWithObject
@@ -331,7 +346,7 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   }
   
   struct Instance* shadowInst = 
-	INSTANCE_Birth3D(sdata->gGT->modelPtr[0x53], 0, t);
+	DECOMP_INSTANCE_Birth3D(sdata->gGT->modelPtr[0x53], 0, t);
   
   spider->shadowInst = shadowInst;
   

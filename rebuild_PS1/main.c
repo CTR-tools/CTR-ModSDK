@@ -538,6 +538,7 @@
 #include "../decompile/General/231/231_097_098_RB_Minecart.c"
 #include "../decompile/General/231/231_108_111_RB_Seal.c"
 #include "../decompile/General/231/231_112_113_RB_Snowball.c"
+#include "../decompile/General/231/231_114_117_RB_Spider.c"
 #include "../decompile/General/231/231_125_127_RB_Turtle.c"
 
 // 232
