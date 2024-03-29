@@ -49,7 +49,7 @@ void DECOMP_AH_Map_HubArrow(
 			local_30[j*2+1] + offset[i*2+1];
 		}
 		
-		MENUBOX_DrawRwdTriangle(
+		DECOMP_MENUBOX_DrawRwdTriangle(
 			&local_20[0], vertCol,
 			gGT->tileView_UI.ptrOT,
 			&gGT->backBuffer->primMem);

@@ -95,9 +95,11 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
 		minDistance = currDistance;
   }
   
+#ifndef REBUILD_PS1
   // play sound from closest unlocked warppad
   if (minDistance != 0x7fffffff) 
     PlayWarppadSound(minDistance << 1);
+#endif
   
   return;
 }

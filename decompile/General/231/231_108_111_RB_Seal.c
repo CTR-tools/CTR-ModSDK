@@ -136,11 +136,8 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 			sealObj->rotCurr[2], sealObj->rotDesired[2], 0x14
 		);
 
-#ifndef REBUILD_PS1
+	// converted to TEST in rebuildPC, not in rebuildPS1
 	ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
-#else
-	TEST_ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
-#endif
 
 	// if rotation is finished
 	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
@@ -288,11 +285,8 @@ void DECOMP_RB_Seal_LInB(struct Instance* inst)
 	sealObj->rotCurr[1] = instDef->rot[1];
 	sealObj->rotCurr[2] = instDef->rot[2];
 	
-#ifndef REBUILD_PS1
+	// converted to TEST in rebuildPC, not in rebuildPS1
 	ConvertRotToMatrix(&inst->matrix, &sealObj->rotCurr[0]);
-#else
-	TEST_ConvertRotToMatrix(&inst->matrix, &sealObj->rotCurr[0]);
-#endif
 
 	// dont call RB_Default_LInB(inst),
 	// we know seal is never over ice

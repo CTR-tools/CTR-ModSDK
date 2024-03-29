@@ -71,13 +71,8 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		inst->unk53 = 1;
 		inst->bitCompressed_NormalVector_AndDriverIndex = 0;
 
-#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
-#else
-		// only a TEST function for REBUILD_PS1 and REBUILD_PC,
-		// can not be used stable, with regular PS1 modding
-		TEST_ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
-#endif
 	
 		// instance posX and posY
 		inst->matrix.t[0] = levInstDef->pos[0];

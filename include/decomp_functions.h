@@ -289,6 +289,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
 void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad);
 void DECOMP_MainFrame_TogglePauseAudio(int bool_pause);
 
+void DECOMP_MainFreeze_SafeAdvDestroy();
 void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu);
 void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *menu);
 void DECOMP_MainFreeze_IfPressStart(void);
@@ -311,18 +312,19 @@ int DECOMP_MATH_Sin(u_int angle);
 int DECOMP_MATH_Cos(u_int angle);
 
 void DECOMP_MEMCARD_InitCard(void);
+
 void DECOMP_MEMPACK_Init(int ramSize);
 void DECOMP_MEMPACK_SwapPacks(int index);
 void DECOMP_MEMPACK_NewPack_StartEnd(void* start,int size);
-void DECOMP_MEMPACK_ClearHighMem();
-void DECOMP_MEMPACK_PopToState(int id);
-
-void* DECOMP_MEMPACK_AllocMem(int size);
-void* DECOMP_MEMPACK_ReallocMem(int size);
-void* DECOMP_MEMPACK_AllocHighMem(int allocSize);
 int DECOMP_MEMPACK_GetFreeBytes();
-void DECOMP_MEMPACK_PopState();
+void* DECOMP_MEMPACK_AllocMem(int size);
+void* DECOMP_MEMPACK_AllocHighMem(int allocSize);
+void DECOMP_MEMPACK_ClearHighMem();
+void* DECOMP_MEMPACK_ReallocMem(int size);
 int DECOMP_MEMPACK_PushState();
+void DECOMP_MEMPACK_ClearLowMem();
+void DECOMP_MEMPACK_PopState();
+void DECOMP_MEMPACK_PopToState(int id);
 
 void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int sizeX, short fontType,
                              int textFlag, short boxFlag);
@@ -605,8 +607,44 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst);
 void DECOMP_AH_Door_ThDestroy(struct Thread* t);
 void DECOMP_AH_Door_ThTick(struct Thread* t);
 void DECOMP_AH_Door_LInB(struct Instance *inst);
+	
+void DECOMP_AH_Map_LoadSave_Prim(
+	short* vertPos, char* vertCol, 
+	void* ot, struct PrimMem* primMem);
+	
+void DECOMP_AH_Map_LoadSave_Full(
+	int posX, int posY, 
+	short* vertPos, char* vertCol,
+	int unk800, int angle);
+	
+void DECOMP_AH_Map_HubArrow(
+	int posX, int posY, 
+	short* vertPos, char* vertCol,
+	int unk800, int angle);
+	
+void DECOMP_AH_Map_HubArrowOutter(
+	void* hubPtrs, int arrowIndex,
+	int posX, int posY, 
+	int inputAngle, int type);
 
+void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2);
+void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *param_3);
+void DECOMP_AH_Map_Main(void);
+void DECOMP_AH_Pause_Destroy(void);
+void DECOMP_AH_Pause_Draw(int pageID, int posX);
+void DECOMP_AH_Pause_Update();
+void DECOMP_AH_HintMenu_FiveArrows(int param_1,short rotation);
+void DECOMP_AH_HintMenu_MaskPosRot(void);
+void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb);
+void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad);
 int DECOMP_AH_MaskHint_boolCanSpawn();
+void DECOMP_AH_MaskHint_SetAnim(int scale);
+
+void DECOMP_AH_MaskHint_SpawnParticles(
+	short numParticles,struct ParticleEmitter* emSet,int maskAnim);
+	
+void DECOMP_AH_MaskHint_LerpVol(int param_1);
+void DECOMP_AH_MaskHint_Update();
 
 // 233
 void DECOMP_CS_Garage_ZoomOut(char zoomState);

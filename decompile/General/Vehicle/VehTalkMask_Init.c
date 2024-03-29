@@ -5,13 +5,13 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t);
 struct Instance* DECOMP_VehTalkMask_Init()
 {
 	struct Instance* mhInst =
-		INSTANCE_BirthWithThread(
+		DECOMP_INSTANCE_BirthWithThread(
 			0x39, 0, SMALL, AKUAKU,
 			DECOMP_VehTalkMask_ThTick,
 			sizeof(struct MaskHint), 0);
 			
 	struct Thread* mhTh = mhInst->thread;
-	mhTh->funcThDestroy = THREAD_DestroyInstance;
+	mhTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
 	
 	((struct MaskHint*)mhTh->object)->scale = 0;
 	

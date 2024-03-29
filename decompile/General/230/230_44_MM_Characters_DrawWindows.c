@@ -210,13 +210,8 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
     rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
     rot[2] = D230.csm_instRot[2];
 
-#ifndef REBUILD_PS1
+	// converted to TEST in rebuildPC, not in rebuildPS1
     ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
-#else
-    // only a TEST function for REBUILD_PS1 and REBUILD_PC,
-    // can not be used stable, with regular PS1 modding
-    TEST_ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
-#endif
   }
   return;
 }

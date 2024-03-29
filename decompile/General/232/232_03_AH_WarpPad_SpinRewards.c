@@ -11,11 +11,8 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	unsigned int trig;
 	unsigned int thirds;
 	
-#ifndef REBUILD_PS1
+	// converted to TEST in rebuildPC, not in rebuildPS1
 	ConvertRotToMatrix(
-#else
-	TEST_ConvertRotToMatrix(
-#endif
 		&prizeInst->matrix, 
 		&warppadObj->spinRot_Prize[0]);
 		

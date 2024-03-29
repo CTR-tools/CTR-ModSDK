@@ -99,13 +99,9 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 				rot[j] = (rot[j] + ptrSpawnType2->posCoords[baseShort+3+j]) / 2;
 			}
 		}
-		
-		#ifndef REBUILD_PS1
-		ConvertRotToMatrix(
-		#else
-		TEST_ConvertRotToMatrix(
-		#endif
-			&baronInst->matrix, &rot[0]);
+			
+		// converted to TEST in rebuildPC, not in rebuildPS1
+		ConvertRotToMatrix(&baronInst->matrix, &rot[0]);
 			
 		baronInst->matrix.t[0] = pos[0] + 0x111;
 		baronInst->matrix.t[1] = pos[1];
@@ -114,11 +110,8 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	// 30FPS
 	#else
 		
-		#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(
-		#else
-		TEST_ConvertRotToMatrix(
-		#endif
 			&baronInst->matrix,
 			&ptrSpawnType2->posCoords[baseShort+3]);
 			

@@ -71,12 +71,8 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
             rot[1] = gGT->level1->ptrSpawnType2_PosRot->posCoords[4];
             rot[2] = gGT->level1->ptrSpawnType2_PosRot->posCoords[5];
 
-#ifndef REBUILD_PS1
-			ConvertRotToMatrix(
-#else
-			TEST_ConvertRotToMatrix(
-#endif
-				&inst->matrix, &rot);
+			// converted to TEST in rebuildPC, not in rebuildPS1
+			ConvertRotToMatrix(&inst->matrix, &rot);
 
             inst->matrix.t[0] = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[0];
             inst->matrix.t[1] = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[1];

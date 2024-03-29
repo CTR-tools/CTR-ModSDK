@@ -390,7 +390,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 
 void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 {
-	MainFreeze_SafeAdvDestroy();
+	DECOMP_MainFreeze_SafeAdvDestroy();
 
 	// open racing wheel config menu instead
 	if (sdata->boolOpenWheelConfig != 0)

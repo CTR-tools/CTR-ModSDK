@@ -252,11 +252,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		warppadInst = instArr[WPIS_CLOSED_ITEM];
 		#define InstArr0 warppadInst
 		
-#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(
-#else
-		TEST_ConvertRotToMatrix(
-#endif
 			&InstArr0->matrix,
 			&warppadObj->spinRot_Prize[0]);
 		
@@ -313,11 +310,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		i = DECOMP_MixRNG_Scramble();
 		warppadObj->spinRot_Beam[1] += ((short)(i >> 3) + (short)((i >> 3) / 6) * -6 + 1) * 0x200;
 	
-#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(
-#else
-		TEST_ConvertRotToMatrix(
-#endif
 			&instArr[WPIS_OPEN_BEAM]->matrix, 
 			&warppadObj->spinRot_Beam[0]);
 	}
@@ -339,11 +333,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 			warppadObj->spinRot_Wisp[i][1] += FPS_HALF(0x100);
 			
-#ifndef REBUILD_PS1
+			// converted to TEST in rebuildPC, not in rebuildPS1
 			ConvertRotToMatrix(
-#else
-			TEST_ConvertRotToMatrix(
-#endif
 				&instArr[WPIS_OPEN_RING1+i]->matrix, 
 				&warppadObj->spinRot_Wisp[i][0]);
 			

@@ -21,7 +21,7 @@ void DECOMP_AH_Pause_Destroy(void)
     // loop through 14 instances, destroy them
     for (i = 0; i < 0xe; i++)
     {
-        INSTANCE_Death(
+        DECOMP_INSTANCE_Death(
 			ptrPauseObject->PauseMember[i].inst);
     }
 

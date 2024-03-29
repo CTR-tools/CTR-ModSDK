@@ -70,7 +70,11 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t)
   }
 
   mhInst->animFrame = 
+	#ifndef REBUILD_PS1
 	EngineSound_VolumeAdjust(iVar6,iVar5,1);
+	#else
+	0;
+	#endif
 
 SkipLerp:
 
@@ -86,7 +90,11 @@ SkipLerp:
   if (iVar4 < 6)
   {
 	mhInst->animFrame = 
+		#ifndef REBUILD_PS1
 		EngineSound_VolumeAdjust(iVar6,iVar5,1);
+		#else
+		0;
+		#endif
   }
   else
   {
@@ -98,7 +106,7 @@ SkipLerp:
   // 0x0C: mouth open
 
   int lastFrame = 
-	VehFrameInst_GetNumAnimFrames(mhInst,0) - 1;
+	DECOMP_VehFrameInst_GetNumAnimFrames(mhInst,0) - 1;
 
   if (mhInst->animFrame < 0)
 	mhInst->animFrame = 0;

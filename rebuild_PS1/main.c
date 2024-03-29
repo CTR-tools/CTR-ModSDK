@@ -11,12 +11,20 @@
 #include "TEST_ThTickRunBucket.c"
 #include "TEST_ThTickSetAndExec.c"
 
+// replace regular functions with TEST,
+// for as long as there is no DECOMP variant
+#define ConvertRotToMatrix TEST_ConvertRotToMatrix
+
+// replace custom ND version with regular library version
+#define SquareRoot0_stub SquareRoot0
+
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
 #include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
 #include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
 #include "../decompile/General/CAMERA/CAM_06_StartOfRace.c"
+#include "../decompile/General/CAMERA/CAM_10_ProcessTransition.c"
 #include "../decompile/General/CAMERA/CAM_16_SetDesiredPosRot.c"
 
 #include "../decompile/General/COLL/COLL_00_LevModelMeta.c"
@@ -257,7 +265,7 @@
 #include "../decompile/General/LOAD/LOAD_A03_Callback_Overlay_231.c"
 #include "../decompile/General/LOAD/LOAD_A04_Callback_Overlay_232.c"
 #include "../decompile/General/LOAD/LOAD_A05_Callback_Overlay_233.c"
-// hole
+#include "../decompile/General/LOAD/LOAD_A06_Callback_MaskHints3D.c"
 #include "../decompile/General/LOAD/LOAD_A07_Callback_Podiums.c"
 #include "../decompile/General/LOAD/LOAD_A08_Callback_LEV.c"
 #include "../decompile/General/LOAD/LOAD_A09_Callback_LEV_Adv.c"
@@ -295,7 +303,7 @@
 #include "../decompile/General/LOAD/LOAD_A43_OvrThreads.c"
 #include "../decompile/General/LOAD/LOAD_A44_GetAdvPackIndex.c"
 #include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
-
+#include "../decompile/General/LOAD/LOAD_A46_TalkingMask.c"
 #include "../decompile/General/LOAD/LOAD_A47_LevelFile.c"
 #include "../decompile/General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c"
 #include "../decompile/General/LOAD/LOAD_A49_IsOpen_MainMenu.c"
@@ -318,6 +326,7 @@
 #include "../decompile/General/MAIN/MainFreeze_IfPressStart.c"
 #include "../decompile/General/MAIN/MainFreeze_MenuPtrDefault.c"
 #include "../decompile/General/MAIN/MainFreeze_MenuPtrQuit.c"
+#include "../decompile/General/MAIN/MainFreeze_SafeAdvDestroy.c"
 
 #include "../decompile/General/MAIN/MainGameStart_Initialize.c"
 
@@ -457,6 +466,8 @@
 #include "../decompile/General/Vehicle/VehFire_Increment.c"
 #include "../decompile/General/Vehicle/VehFire_Audio.c"
 
+#include "../decompile/General/Vehicle/VehFrameInst_GetNumAnimFrames.c"
+
 #include "../decompile/General/Vehicle/VehPhysForce_ConvertSpeedToVec.c"
 #include "../decompile/General/Vehicle/VehPhysForce_AccelTerrainSlope.c"
 #include "../decompile/General/Vehicle/VehPhysForce_OnApplyForces.c"
@@ -489,6 +500,12 @@
 #include "../decompile/General/Vehicle/VehStuckProc_RevEngine_Init.c"
 #include "../decompile/General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c"
 #include "../decompile/General/Vehicle/VehStuckProc_Tumble_Init.c"
+
+#include "../decompile/General/Vehicle/VehTalkMask_ThTick.c"
+#include "../decompile/General/Vehicle/VehTalkMask_Init.c"
+#include "../decompile/General/Vehicle/VehTalkMask_PlayXA.c"
+#include "../decompile/General/Vehicle/VehTalkMask_boolNoXA.c"
+#include "../decompile/General/Vehicle/VehTalkMask_End.c"
 
 
 // 230
@@ -529,6 +546,5 @@
 #endif
 
 #include "../decompile/General/232/232_Block1.c"
-#include "../decompile/General/232/232_31_AH_MaskHint_boolCanSpawn.c"
 
 #include "../decompile/General/233/233_37_40_CS_Garage.c"

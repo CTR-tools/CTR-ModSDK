@@ -15,6 +15,6 @@ void DECOMP_AH_MaskHint_LerpVol(int param_1)
         
         // restore backups of Volume settings,
 		// that were originally saved in AH_MaskHint_Start
-        howl_VolumeSet(i, volume & 0xFF);
+        DECOMP_howl_VolumeSet(i, volume & 0xFF);
     }
 }

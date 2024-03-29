@@ -51,12 +51,10 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   *(short*)0x1f8003f8 = tileView->rot[2];
   ConvertRotToMatrix(matrixDST, (short *)0x1f8003f4);
   #else
-  // only a TEST function for REBUILD_PS1 and REBUILD_PC,
-  // can not be used stable, with regular PS1 modding
   *(short*)&scratchpad[0x3f4] = tileView->rot[0];
   *(short*)&scratchpad[0x3f6] = tileView->rot[1];
   *(short*)&scratchpad[0x3f8] = tileView->rot[2];
-  TEST_ConvertRotToMatrix(matrixDST, (short *)&scratchpad[0x3f4]);
+  ConvertRotToMatrix(matrixDST, (short *)&scratchpad[0x3f4]);
   #endif
 
 // ifdef USE_VR

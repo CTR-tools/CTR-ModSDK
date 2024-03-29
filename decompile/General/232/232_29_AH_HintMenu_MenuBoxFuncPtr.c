@@ -22,7 +22,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
     bVar3 = false;
     
 	iVar11 = 0;
-    MainFreeze_SafeAdvDestroy();
+    DECOMP_MainFreeze_SafeAdvDestroy();
     
 	iVar10 = 0;
     sdata->advProgress.rewards[3] |= 0x400000;
@@ -77,23 +77,44 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         // If you press Cross, Square, Triangle, or Circle
         if (((sdata->buttonTapPerPlayer[0] & 0x40070) != 0) &&
 
-            // if no XA is playing anymore
-            ((uVar6 = VehTalkMask_boolNoXA(), (uVar6 & 0xffff) != 0 || (D232.maskCooldown == 0))))
+            (
+				(
+					// if no XA is playing anymore
+					uVar6 = DECOMP_VehTalkMask_boolNoXA(), 
+					(uVar6 & 0xffff) != 0 || 
+					
+					// allowed to leave hint
+					(D232.maskCooldown == 0))
+				)
+			)
         {
             D232.hintMenu_boolViewHint = 0;
 
-            MENUBOX_ClearInput();
+            DECOMP_MENUBOX_ClearInput();
 
-            VehTalkMask_End();
+            DECOMP_VehTalkMask_End();
         }
 
-        DecalFont_DrawLine(sdata->lngStrings[lngIndex+0], 0x100, 0x2c, 1, 0xffff8000);
-        iVar11 = DecalFont_DrawMultiLine(sdata->lngStrings[lngIndex+1], 0x96, 0x3f, 0x14e, 2, 0);
+        DECOMP_DecalFont_DrawLine(
+			sdata->lngStrings[lngIndex+0], 
+			0x100, 0x2c, 
+			1, 0xffff8000);
+        
+		// height of multiLine
+		iVar11 = DECOMP_DecalFont_DrawMultiLine(
+			sdata->lngStrings[lngIndex+1], 
+			0x96, 0x3f, 
+			0x14e, 2, 0);
 
         // "EXIT"
 		char* strExit = sdata->lngStrings[0x17a];
-        DecalFont_DrawLine(strExit, 0x100, iVar11 + 0x4f, 1, 0xffff8000);
-        iVar10 = DecalFont_GetLineWidth(strExit, 1);
+        
+		DECOMP_DecalFont_DrawLine(
+			strExit, 
+			0x100, iVar11 + 0x4f, 
+			1, 0xffff8000);
+        
+		iVar10 = DECOMP_DecalFont_GetLineWidth(strExit, 1);
 
         iVar7 = (iVar10 + 6) * 0x10000;
         box.x = 0xff - (short)((iVar7 >> 0x10) - (iVar7 >> 0x1f) >> 1);
@@ -101,7 +122,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-        CTR_Box_DrawClearBox(
+        DECOMP_CTR_Box_DrawClearBox(
 			&box, &sdata->menuRowHighlight_Normal,
 			TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour,
 			&gGT->backBuffer->primMem);
@@ -111,7 +132,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         box.w = 0x21c;
         box.h = 2;
 
-        MENUBOX_DrawOuterRect_Edge(
+        DECOMP_MENUBOX_DrawOuterRect_Edge(
 			&box, &sdata->battleSetup_Color_UI_1, 0x20, gGT->backBuffer->otMem.startPlusFour);
 
         box.y = 0x28;
@@ -119,7 +140,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         box.x = -0xe;
         box.w = 0x21c;
 
-        MENUBOX_DrawInnerRect(
+        DECOMP_MENUBOX_DrawInnerRect(
 			&box, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
 
         return;
@@ -146,7 +167,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
                 if ((tapP1 & 0x40020) != 0)
                 {
                     // Play sound
-                    OtherFX_Play(2, 1);
+                    DECOMP_OtherFX_Play(2, 1);
                     goto LAB_800b38c0;
                 }
             }
@@ -155,7 +176,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
             else
             {
                 // Play Sound
-                OtherFX_Play(1, 1);
+                DECOMP_OtherFX_Play(1, 1);
 
                 if (mb->rowSelected == numHintsFound)
                 {
@@ -167,12 +188,14 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
                     // If there is no loading in progress
                     if ((sdata->load_inProgress == 0) && (sdata->XA_State == 0))
                     {
-                        sdata->instMaskHints3D = VehTalkMask_Init();
+                        sdata->instMaskHints3D = 
+							DECOMP_VehTalkMask_Init();
 
                         D232.maskCooldown = FPS_DOUBLE(30);
 
-                        VehTalkMask_PlayXA(sdata->instMaskHints3D,
-                                           (lngIndex + -0x17b)/2);
+                        DECOMP_VehTalkMask_PlayXA(
+							sdata->instMaskHints3D,
+							(lngIndex + -0x17b)/2);
 
                         DECOMP_AH_HintMenu_MaskPosRot();
 
@@ -201,7 +224,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
             if (mb->rowSelected < numHintsFound)
             {
                 // Play Sound
-                OtherFX_Play(0, 1);
+                DECOMP_OtherFX_Play(0, 1);
 
                 // change which row is selected
                 mb->rowSelected = mb->rowSelected + 1;
@@ -216,7 +239,7 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         if (0 < mb->rowSelected)
         {
             // Play Sound
-            OtherFX_Play(0, 1);
+            DECOMP_OtherFX_Play(0, 1);
 
             // change the row selected
             mb->rowSelected--;
@@ -224,14 +247,14 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
     }
 
     // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
+    DECOMP_MENUBOX_ClearInput();
 
 LAB_800b38cc:
 
-    uVar6 = VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]);
+    uVar6 = DECOMP_VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]);
 
     // Draw the "Hints" string
-    DecalFont_DrawLine(
+    DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[0x178+(uVar6==0)], 
 		0x100, 0x2c, 1, 0xffff8000);
 
@@ -278,7 +301,7 @@ LAB_800b38cc:
             iVar10 = iVar10 + 0x10;
 
             // "EXIT"
-            DecalFont_DrawLine(sdata->lngStrings[uVar6], 0x100, iVar7, 1, 0xffff8000);
+            DECOMP_DecalFont_DrawLine(sdata->lngStrings[uVar6], 0x100, iVar7, 1, 0xffff8000);
 
             iVar11 = iVar11 + 1;
         } while (iVar11 < sVar12);
@@ -294,7 +317,7 @@ LAB_800b38cc:
     box.y = (mb->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-    CTR_Box_DrawClearBox(
+    DECOMP_CTR_Box_DrawClearBox(
 		&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
         gGT->backBuffer->otMem.startPlusFour,
         &gGT->backBuffer->primMem);
@@ -303,7 +326,8 @@ LAB_800b38cc:
     box.h = 2;
     box.x = -0x14;
     box.w = 0x228;
-    MENUBOX_DrawOuterRect_Edge(
+    
+	DECOMP_MENUBOX_DrawOuterRect_Edge(
 		&box, &sdata->battleSetup_Color_UI_1, 0x20, 
 		gGT->backBuffer->otMem.startPlusFour);
 	
@@ -311,7 +335,8 @@ LAB_800b38cc:
     box.h = (short)iVar10 + 0x2b;
     box.x = -0x14;
     box.w = 0x228;
-    MENUBOX_DrawInnerRect(
+    
+	DECOMP_MENUBOX_DrawInnerRect(
 		&box, 4, gGT->backBuffer->otMem.startPlusFour);
 
     if (
@@ -320,7 +345,7 @@ LAB_800b38cc:
         // If you dont press Start, Square, or Triangle
         ((sdata->buttonTapPerPlayer[0] & 0x41020) != 0))
     {
-        MENUBOX_ClearInput();
+        DECOMP_MENUBOX_ClearInput();
         sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
     }
     return;

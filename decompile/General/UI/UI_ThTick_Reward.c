@@ -29,11 +29,8 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   // pointer to matrix
   mat = &inst->matrix;
 
-#ifndef REBUILD_PS1
+  // converted to TEST in rebuildPC, not in rebuildPS1
   ConvertRotToMatrix(mat,obj);
-#else
-  TEST_ConvertRotToMatrix(mat,obj);
-#endif
 
 #ifndef REBUILD_PS1
   MatrixRotate(mat,&obj->m.m[0][0],mat);

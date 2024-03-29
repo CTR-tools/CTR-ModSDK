@@ -28,7 +28,13 @@ void DECOMP_AH_MaskHint_SpawnParticles(
   
   for (i = 0; i < numParticles; i++) 
   {
+	  
+#ifdef REBUILD_PS1
+	particle =  NULL;
+#else
     particle = Particle_CreateInstance(0,ig,emSet);
+#endif
+
     if(particle == NULL) return;
 
 	for(j = 0; j < 3; j++)

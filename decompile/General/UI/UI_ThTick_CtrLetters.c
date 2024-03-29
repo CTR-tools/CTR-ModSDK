@@ -54,11 +54,8 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   rot[2] = 0;
   inst = &inst->matrix;
 
-#ifndef REBUILD_PS1
+  // converted to TEST in rebuildPC, not in rebuildPS1
   ConvertRotToMatrix(inst,&rot[0]);
-#else
-  TEST_ConvertRotToMatrix(inst,&rot[0]);
-#endif
 
 #ifndef REBUILD_PS1
   MatrixRotate(inst,&obj->m.m[0][0],inst);

@@ -11,7 +11,7 @@ void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 	
 	DECOMP_MEMPACK_SwapPacks(packID);
 	
-	MEMPACK_ClearLowMem();
+	DECOMP_MEMPACK_ClearLowMem();
 	
 	int offset = maskID*4 + (packID-1)*2;
 	

@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DECOMP_AH_Map_LoadSave_Prim(
-	short* vertPos, char* vertCol, 
-	void* ot, struct PrimMem* primMem);
-
 void DECOMP_AH_Map_LoadSave_Full(
 	int posX, int posY, 
 	short* vertPos, char* vertCol,

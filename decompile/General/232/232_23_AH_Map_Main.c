@@ -27,7 +27,7 @@ void DECOMP_AH_Map_Main(void)
 		// if Aku Hint is not unlocked
 		((sdata->advProgress.rewards[3] & 0x400000) == 0) && 
 		
-		(iVar1 = TitleFlag_IsFullyOffScreen(), iVar1 != 0)
+		(iVar1 = DECOMP_TitleFlag_IsFullyOffScreen(), iVar1 != 0)
 	 ) 
   {
 	// Trigger Aku Hint:
@@ -74,11 +74,9 @@ void DECOMP_AH_Map_Main(void)
 	
     DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
 
-#ifndef REBUILD_PC	
     DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread,&local_1e[0]);
 	
     DECOMP_AH_Map_HubItems(hubPtrs,&local_1e[0]);
-#endif
 	
     DECOMP_UI_Map_DrawMap(
         gGT->ptrIcons[3],

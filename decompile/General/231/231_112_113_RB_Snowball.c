@@ -90,11 +90,8 @@ RollSound:
 			}
 		}
 		
-		#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
-		#else
-		TEST_ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
-		#endif
 			
 		snowInst->matrix.t[0] = pos[0];
 		snowInst->matrix.t[1] = pos[1];
@@ -103,15 +100,10 @@ RollSound:
 	// original 30fps
 	#else
 		
-		#ifndef REBUILD_PS1
+		// converted to TEST in rebuildPC, not in rebuildPS1
 		ConvertRotToMatrix(
 			&snowInst->matrix,
 			&ptrSpawnType2->posCoords[baseShort+3]);
-		#else
-		TEST_ConvertRotToMatrix(
-			&snowInst->matrix,
-			&ptrSpawnType2->posCoords[baseShort+3]);
-		#endif
 			
 		snowInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0];
 		snowInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];

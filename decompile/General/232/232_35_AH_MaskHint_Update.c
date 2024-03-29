@@ -40,9 +40,11 @@ void DECOMP_AH_MaskHint_Update()
 				// parameter is wrong, and why function allocates
 				// 0x2d0 on $sp when MaskHint_Update starts
 				
+				#ifndef REBUILD_PS1
 				// Get pos and rot, then set them as desired
 				CAM_FollowDriver_AngleAxis(cdc,d,0x1f800108,pos,rot);
 				CAM_SetDesiredPosRot(cdc,pos,rot);
+				#endif
 			}
 			
 			D232.maskWarppadDelayFrames = FPS_DOUBLE(60);
@@ -62,7 +64,16 @@ void DECOMP_AH_MaskHint_Update()
 			}
 			
 			struct Instance* dInst = d->instSelf;
+			
+			#ifndef REBUILD_PS1
 			CTR_MatrixToRot(rot, &dInst->matrix, 0x11);
+			#else
+			// Lucky enough, N Sanity Beach's first
+			// mask hint, actually is 0,0,0
+			rot[0] = 0;
+			rot[1] = 0;
+			rot[2] = 0;
+			#endif
 			
 			// not a typo
 			D232.maskCamRotStart[0] = rot[1] & 0xfff;
@@ -73,7 +84,7 @@ void DECOMP_AH_MaskHint_Update()
 			D232.maskCamPosStart[1] = dInst->matrix.t[1];
 			D232.maskCamPosStart[2] = dInst->matrix.t[2];
 			
-			sdata->instMaskHints3D = VehTalkMask_Init();
+			sdata->instMaskHints3D = DECOMP_VehTalkMask_Init();
 			struct Instance* mhInst = sdata->instMaskHints3D;
 			((struct MaskHint*)mhInst->thread->object)->scale = 0;
 			
@@ -88,22 +99,22 @@ void DECOMP_AH_MaskHint_Update()
 		
 			// first frame "whoosh" sound
 			if(D232.maskFrameCurr == 0)
-				OtherFX_Play_LowLevel(0x100,1,0xff8080);
+				DECOMP_OtherFX_Play_LowLevel(0x100,1,0xff8080);
 			
 			// if 3-second spawn, play more sounds
 			if(D232.maskSpawnFrame == FPS_DOUBLE(0x5a))
 			{
 				if(D232.maskFrameCurr == FPS_DOUBLE(10))
-					OtherFX_Play_LowLevel(0x100,0,0xd78a80);
+					DECOMP_OtherFX_Play_LowLevel(0x100,0,0xd78a80);
 			
 				else if(D232.maskFrameCurr == FPS_DOUBLE(20))
-					OtherFX_Play_LowLevel(0x100,1,0xaf9480);
+					DECOMP_OtherFX_Play_LowLevel(0x100,1,0xaf9480);
 			
 				else if(D232.maskFrameCurr == FPS_DOUBLE(25))
-					OtherFX_Play_LowLevel(0x100,0,0x879e80);
+					DECOMP_OtherFX_Play_LowLevel(0x100,0,0x879e80);
 			
 				else if(D232.maskFrameCurr == FPS_DOUBLE(30))
-					OtherFX_Play_LowLevel(0x100,1,0x5fa880);
+					DECOMP_OtherFX_Play_LowLevel(0x100,1,0x5fa880);
 			}
 			
 			int timer4096 = 
@@ -138,7 +149,7 @@ void DECOMP_AH_MaskHint_Update()
 					DECOMP_AH_MaskHint_SpawnParticles
 						(0x18, &D232.emSet_maskLeave[0], 0x1000);
 					
-					VehTalkMask_PlayXA(
+					DECOMP_VehTalkMask_PlayXA(
 						sdata->modelMaskHints3D, 
 						D232.maskHintID);
 					
@@ -186,7 +197,7 @@ void DECOMP_AH_MaskHint_Update()
 				#if 1
 				
 				// Code that shipped in 1999
-				if(VehPickupItem_MaskBoolGoodGuy(d))
+				if(DECOMP_VehPickupItem_MaskBoolGoodGuy(d))
 					lngIndex = 0x177;
 				else
 					lngIndex = 0x232;
@@ -209,7 +220,7 @@ void DECOMP_AH_MaskHint_Update()
 						sdata->lngStrings[lngIndex],
 						0x100,0xb4,400,2,0xffff8000);
 						
-				MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+				DECOMP_MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 			}
 			
 			DECOMP_AH_MaskHint_SetAnim(0x1000);
@@ -228,7 +239,7 @@ void DECOMP_AH_MaskHint_Update()
 						) &&
 						(
 							(
-								(VehTalkMask_boolNoXA() != 0) ||
+								(DECOMP_VehTalkMask_boolNoXA() != 0) ||
 								((sdata->gGamepads->gamepad[0].buttonsTapped & BTN_TRIANGLE) != 0)
 							)
 						)
@@ -251,9 +262,9 @@ void DECOMP_AH_MaskHint_Update()
 			DECOMP_AH_MaskHint_SpawnParticles(20, &D232.emSet_maskLeave[0], 0x1000);
 			
 			// vanish sound
-			OtherFX_Play(0x101, 1);
+			DECOMP_OtherFX_Play(0x101, 1);
 			
-			VehTalkMask_End();
+			DECOMP_VehTalkMask_End();
 			
 			if((D232.maskWarppadBoolInterrupt & 1) == 0)
 			{
@@ -292,13 +303,13 @@ void DECOMP_AH_MaskHint_Update()
 			
 			if(D232.maskWarppadDelayFrames < 1)
 			{
-				MENUBOX_ClearInput();
+				DECOMP_MENUBOX_ClearInput();
 				
 				sdata->AkuAkuHintState = 0;
 				sdata->boolDraw3D_AdvMask = 0;
 				
 				gGT->gameMode2 &= ~(VEH_FREEZE_DOOR);
-				d->funcPtrs[0] = VehPhysProc_Driving_Init;
+				d->funcPtrs[0] = DECOMP_VehPhysProc_Driving_Init;
 			}
 		
 			break;

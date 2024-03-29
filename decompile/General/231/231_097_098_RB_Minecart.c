@@ -65,11 +65,7 @@ void RB_Minecart_NewPoint(
 	minecartObj->rotDesired[0] =
 		ratan2(
 			minecartObj->dir[1],
-			#ifndef REBUILD_PC
 			SquareRoot0_stub(
-			#else
-			SquareRoot0(
-			#endif
 				minecartObj->dir[0]*minecartObj->dir[0] +
 				minecartObj->dir[2]*minecartObj->dir[2]
 			)
@@ -185,12 +181,9 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 			minecartObj->rotCurr[1], 
 			minecartObj->rotDesired[1], 
 			minecartObj->rotSpeed);
-	
-	#ifndef REBUILD_PS1
+
+	// converted to TEST in rebuildPC, not in rebuildPS1	
 	ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
-	#else
-	TEST_ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
-	#endif
 	
 	#ifndef REBUILD_PS1
 	PlaySound3D_Flags(

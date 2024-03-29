@@ -1,7 +1,5 @@
 #include <common.h>
 
-// As of 11am: 3320/4556
-
 void DECOMP_AH_Pause_Draw(int pageID, int posX)
 {
 	RECT r;
@@ -108,11 +106,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				struct Instance* inst = 
 					ptrPauseObject->PauseMember[i].inst;
 					
+				// Remove LoadSave with regular UI variant
 				inst->matrix.t[0] = 
-					LoadSave_UI_ConvertX(posX + 0x16d + 1*0x1e, 0x100);
+					DECOMP_UI_ConvertX_2(posX + 0x16d + 1*0x1e, 0x100);
 				
 				inst->matrix.t[1] = 
-					LoadSave_UI_ConvertY(i*0x10 + 4 + 0x2f, 0x100);
+					DECOMP_UI_ConvertY_2(i*0x10 + 4 + 0x2f, 0x100);
 				
 				// 6, 7, 8,
 				// sapphire, gold, platinum
@@ -181,11 +180,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				struct Instance* inst = 
 					ptrPauseObject->PauseMember[2+i].inst;
 					
+				// Remove LoadSave with regular UI variant
 				inst->matrix.t[0] = 
-					LoadSave_UI_ConvertX(posX + 0x100 + (i-2)*60, 0x100);
+					DECOMP_UI_ConvertX_2(posX + 0x100 + (i-2)*60, 0x100);
 				
 				inst->matrix.t[1] = 
-					LoadSave_UI_ConvertY(((i&1)<<4)|0x6a, 0x100);
+					DECOMP_UI_ConvertY_2(((i&1)<<4)|0x6a, 0x100);
 				
 				// gem color
 				ptrPauseObject->PauseMember[2+i].indexAdvPauseInst = i;
@@ -218,11 +218,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					struct Instance* inst = 
 						ptrPauseObject->PauseMember[3*i+j].inst;
 						
+					// Remove LoadSave with regular UI variant
 					inst->matrix.t[0] = 
-						LoadSave_UI_ConvertX(posX + 0x15e + j*0x1e, 0x100);
+						DECOMP_UI_ConvertX_2(posX + 0x15e + j*0x1e, 0x100);
 				
 					inst->matrix.t[1] = 
-						LoadSave_UI_ConvertY(i*0x10 + 0 + 0x2f, 0x100);
+						DECOMP_UI_ConvertY_2(i*0x10 + 0 + 0x2f, 0x100);
 				}
 				
 				// trophy
@@ -271,11 +272,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[12].inst;
 				
+			// Remove LoadSave with regular UI variant
 			inst->matrix.t[0] = 
-				LoadSave_UI_ConvertX(posX + 0x15e + 1*0x1e, 0x100);
+				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 			
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertY(4*0x10 + 0 + 0x2f, 0x100);
+				DECOMP_UI_ConvertY_2(4*0x10 + 0 + 0x2f, 0x100);
 				
 			ptrPauseObject->PauseMember[12].indexAdvPauseInst = 5;
 			ptrPauseObject->PauseMember[12].unlockFlag |=
@@ -298,12 +300,13 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			
 			inst = 
 				ptrPauseObject->PauseMember[13].inst;
-				
+			
+			// Remove LoadSave with regular UI variant
 			inst->matrix.t[0] = 
-				LoadSave_UI_ConvertX(posX + 0x15e + 1*0x1e, 0x100);
+				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 			
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertY(5*0x10 + 0 + 0x2f, 0x100);
+				DECOMP_UI_ConvertY_2(5*0x10 + 0 + 0x2f, 0x100);
 				
 			ptrPauseObject->PauseMember[13].indexAdvPauseInst = 13;
 			ptrPauseObject->PauseMember[13].unlockFlag |=
@@ -326,18 +329,21 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[i].inst;
-				
+			
+			// Remove LoadSave with regular UI variant
 			inst->matrix.t[0] = 
-				LoadSave_UI_ConvertX(instPosX, 0x100);
+				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 		
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertY(instPosY + 0x41, 0x100);
-				
+				DECOMP_UI_ConvertY_2(instPosY + 0x41, 0x100);
+			
+			#ifndef REBUILD_PS1
 			LoadSave_PrintInteger(
 				ptrTokenCount[i],
 				instPosX + 0x36,
 				instPosY + 0x3a,
 				0, 0);
+			#endif
 				
 			int strX = 'X';
 			DECOMP_DecalFont_DrawLine(
@@ -379,18 +385,21 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[i].inst;
-				
+			
+			// Remove LoadSave with regular UI variant			
 			inst->matrix.t[0] = 
-				LoadSave_UI_ConvertX(instPosX, 0x100);
+				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 		
 			inst->matrix.t[1] = 
-				LoadSave_UI_ConvertY(0x49, 0x100);
+				DECOMP_UI_ConvertY_2(0x49, 0x100);
 				
+			#ifndef REBUILD_PS1
 			LoadSave_PrintInteger(
 				count[i],
 				instPosX + 0x19,
 				0x49,
 				0, 0);
+			#endif
 				
 			int strX = 'X';
 			DECOMP_DecalFont_DrawLine(
@@ -428,7 +437,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	r.w = (short)iVar11 + -0x14;
 	r.h = 2;
 	
-	MENUBOX_DrawOuterRect_Edge(
+	DECOMP_MENUBOX_DrawOuterRect_Edge(
 		&r, &sdata->battleSetup_Color_UI_1, 0x20,
 		gGT->backBuffer->otMem.startPlusFour);
 		
@@ -438,7 +447,8 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	r.h = 0x82;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&r, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
+	DECOMP_MENUBOX_DrawInnerRect(
+		&r, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
 	
 	for(int i = 0; i < 0xe; i++)
 	{
@@ -504,7 +514,9 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			short* specArr =
 				&D232.advPauseInst[index].specLight[0];
 			
+			#ifndef REBUILD_PS1
 			Vector_SpecLightSpin2D(inst, rotArr, specArr);
+			#endif
 		}
 		
 		else

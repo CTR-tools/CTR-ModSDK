@@ -296,7 +296,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	d->instSelf->matrix.t[1] = (posRot->pos[1]-0x40);
 	d->instSelf->matrix.t[2] = posRot->pos[2];
 
-    TEST_ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
+    ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
 	
 	#else
 		

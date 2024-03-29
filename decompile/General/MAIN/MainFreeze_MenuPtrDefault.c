@@ -63,7 +63,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	if (stringID == 11 || stringID == 12)
 	{
 		// Set MenuBox to Hints
-		sdata->ptrDesiredMenuBox = (struct MenuBox *)0x800b518c; // in 232
+		sdata->ptrDesiredMenuBox = &D232.menuBoxHintMenu; // in 232
 		return;
 	}
 
@@ -85,9 +85,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	// get rid of pause flag
 	gGT->gameMode1 &= ~PAUSE_1;
 
-#ifndef REBUILD_PS1
-	MainFreeze_SafeAdvDestroy();
-#endif
+	DECOMP_MainFreeze_SafeAdvDestroy();
 
 	// careful, it's stringID MINUS one
 	switch (stringID)

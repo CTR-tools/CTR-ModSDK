@@ -29,7 +29,7 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	
 	short posCurr[3];
 	short rotCurr[3];
-	CAM_ProcessTransition(
+	DECOMP_CAM_ProcessTransition(
 		&posCurr[0], &rotCurr[0],
 		&D232.maskCamPosStart[0], &D232.maskCamRotStart[0],
 		&posEnd[0], &rotEnd[0],

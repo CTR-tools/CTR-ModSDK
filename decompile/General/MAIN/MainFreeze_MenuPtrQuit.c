@@ -44,9 +44,7 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
             menu->drawStyle |= 0x100;
         }
 
-#ifndef REBUILD_PS1
-        MainFreeze_SafeAdvDestroy();
-#endif
+        DECOMP_MainFreeze_SafeAdvDestroy();
 	}
     return;
 }

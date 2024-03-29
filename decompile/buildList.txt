@@ -153,6 +153,7 @@ common, exe, CAM_Path_Move, 0x0, General/CAMERA/CAM_05_Path_Move.c
 common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_06_StartOfRace.c
 common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_07_EndOfRace_Battle.c
 common, exe, CAM_EndOfRace, 0x0, General/CAMERA/CAM_08_EndOfRace.c
+common, exe, CAM_ClearScreen, 0x0, General/CAMERA/CAM_10_ProcessTransition.c
 common, exe, CAM_LookAtPosition, 0x0, General/CAMERA/CAM_14_LookAtPosition.c
 common, exe, CAM_FollowDriver_Spin360, 0x0, General/CAMERA/CAM_15_FollowDriver_Spin360.c
 common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_16_SetDesiredPosRot.c

@@ -191,11 +191,8 @@ lightDir_spec0x30000:
     rot[1] = 0;
     rot[2] = 0;
 
-#ifndef REBUILD_PS1
+	// converted to TEST in rebuildPC, not in rebuildPS1
     ConvertRotToMatrix(&ui3D->m,&rot[0]);
-#else
-	TEST_ConvertRotToMatrix(&ui3D->m,&rot[0]);
-#endif
 
     ui3D->rot[0] = 0;
     ui3D->rot[1] = 0;

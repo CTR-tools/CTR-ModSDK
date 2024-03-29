@@ -48,7 +48,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	local_70 = 0;
 	numGamepads = 0;
 	isMultitap = (u_short)(sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4)) << 1;
-	MainFreeze_SafeAdvDestroy();
+	DECOMP_MainFreeze_SafeAdvDestroy();
 	somethingToDoWithVolumeLineWidth = 0;
 	numAnalogs = 0;
 	if (sdata->boolOpenWheelConfig != 0)

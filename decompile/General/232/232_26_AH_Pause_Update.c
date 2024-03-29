@@ -20,7 +20,7 @@ void DECOMP_AH_Pause_Update()
 		// 0x300 = SmallStackPool
 		// 0xd = "other" thread bucket
 		struct Thread* t =
-			THREAD_BirthWithObject(0x30d, 0, 0, 0);
+			DECOMP_THREAD_BirthWithObject(0x30d, 0, 0, 0);
 			
 		ptrPauseObject->t = t;
 		

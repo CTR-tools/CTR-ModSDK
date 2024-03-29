@@ -346,7 +346,7 @@ LAB_80035098:
 				(
 					(
 						(sdata->ptrActiveMenuBox != &data.menuBox_optionsMenu_racingWheel) &&
-						(sdata->ptrActiveMenuBox != (struct MenuBox*)0x800b518c) // in 232
+						(sdata->ptrActiveMenuBox != &D232.menuBoxHintMenu) // in 232
 					) &&
 					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)
@@ -356,11 +356,8 @@ LAB_80035098:
 					
 					DECOMP_MainFrame_TogglePauseAudio(0);
 					DECOMP_OtherFX_Play(1, 1);
-					
-#ifndef REBUILD_PS1
-					MainFreeze_SafeAdvDestroy();
-#endif
 
+					DECOMP_MainFreeze_SafeAdvDestroy();
 					DECOMP_ElimBG_Deactivate(gGT);
 
 					DECOMP_MENUBOX_Hide(sdata->ptrActiveMenuBox);
