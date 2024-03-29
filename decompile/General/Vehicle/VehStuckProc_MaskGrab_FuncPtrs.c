@@ -7,7 +7,7 @@ void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver *d)
     for (char i = 10; i > 0; i--)
     {
         // Create instance in particle pool
-        p = Particle_CreateInstance(0, sdata->gGT->iconGroup[0], &data.emSet_Maskgrab[0]);
+        p = Particle_Init(0, sdata->gGT->iconGroup[0], &data.emSet_Maskgrab[0]);
 
         if (p == NULL)
             return;

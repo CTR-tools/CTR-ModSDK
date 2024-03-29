@@ -68,7 +68,7 @@ void DECOMP_RB_Bubbles_RoosTubes()
 		
 		// == spawn particle ==
 		
-		p = Particle_CreateInstance(0, gGT->iconGroup[7], &emSet_TubeBubbles[0]);
+		p = Particle_Init(0, gGT->iconGroup[7], &emSet_TubeBubbles[0]);
 		
 		if(p == 0) return;
 		

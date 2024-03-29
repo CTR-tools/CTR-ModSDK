@@ -637,7 +637,7 @@
 8003e3f0 Particle_BitwiseClampByte
 8003e428 Particle_SetColors
 8003e4f4 Particle_RenderList
-8003f2bc Particle_CreateInstance
+8003f2bc Particle_Init
 
 8003f83c RobotcarWeapons_Init
 8003f8a4 RobotcarWeapons_Update

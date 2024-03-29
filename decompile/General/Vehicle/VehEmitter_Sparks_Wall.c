@@ -32,7 +32,7 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	if (speedAbs <= 0x200) return;
 	
     // Create instance in particle pool
-    struct Particle *p = Particle_CreateInstance(0, sdata->gGT->iconGroup[0], emSet);
+    struct Particle *p = Particle_Init(0, sdata->gGT->iconGroup[0], emSet);
 
     if (p == NULL)
         return;

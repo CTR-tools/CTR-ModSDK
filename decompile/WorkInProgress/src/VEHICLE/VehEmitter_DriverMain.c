@@ -168,7 +168,7 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
       for (; numParticles > 0; numParticles--)
       {
         // Create instance in particle pool
-        struct Particle *p = Particle_CreateInstance(0, gGT->iconGroup[0xD], &data.emSet_MudSplash[0]);
+        struct Particle *p = Particle_Init(0, gGT->iconGroup[0xD], &data.emSet_MudSplash[0]);
 
         if (p != NULL)
         {

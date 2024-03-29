@@ -132,9 +132,7 @@ PlayChewSound:
 					#ifdef REBUILD_PS1
 						0;
 					#else
-						Particle_CreateInstance(
-							0, sdata->gGT->iconGroup[0],
-							&emSet_PlantTires[0]);
+						Particle_Init(0, sdata->gGT->iconGroup[0],&emSet_PlantTires[0]);
 					#endif
 						
 					if(particle != 0)

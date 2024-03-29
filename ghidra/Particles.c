@@ -1097,7 +1097,7 @@ LAB_800402b0:
 }
 
 
-// Particle_CreateInstance
+// Particle_Init
 // param2 - IconGroup
 undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 

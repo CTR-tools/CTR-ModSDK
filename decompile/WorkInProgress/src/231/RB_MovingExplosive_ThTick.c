@@ -235,7 +235,7 @@ LAB_800add14:
 			// "shieldbomb"
 		
 			// Make Instane in Particle Pool
-			iVar8 = Particle_CreateInstance(0,(gGT + 0x2114),sdata->s_shield),
+			iVar8 = Particle_Init(0,(gGT + 0x2114),sdata->s_shield),
 			iVar8 != 0
 		)
 	 ) 

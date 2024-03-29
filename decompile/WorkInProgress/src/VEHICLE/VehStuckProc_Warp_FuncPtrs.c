@@ -10,7 +10,7 @@ void VehStuckProc_Warp_AddDustPuff1(struct ScratchpadStruct *sps)
     // if even frame don't spawn
     if (gGT->timer & 1) return;
 
-    struct Particle *p = Particle_CreateInstance(0, gGT->iconGroup[1], &data.emSet_Warppad[0]);
+    struct Particle *p = Particle_Init(0, gGT->iconGroup[1], &data.emSet_Warppad[0]);
 
     if (p == NULL) return;
 

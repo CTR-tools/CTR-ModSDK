@@ -58,9 +58,6 @@ void PatchModel_60fps(struct Model* m)
 	// error check (yes, needed)
 	if(m == 0) return;
 
-	// ignore ND box, intro models, oxide intro, podiums, etc
-	if(DECOMP_LOAD_IsOpen_Podiums()) return;
-
 	// model header
 	h = m->headers;
 
@@ -122,6 +119,9 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 	// check if pool is empty
 	if(instPool->free.count == 0) return;
 	if(instPool->taken.first == 0) return;
+	
+	// ignore ND box, intro models, oxide intro, podiums, etc
+	if(DECOMP_LOAD_IsOpen_Podiums()) return;
 
 	for(
 			struct Instance* inst = instPool->taken.first; 

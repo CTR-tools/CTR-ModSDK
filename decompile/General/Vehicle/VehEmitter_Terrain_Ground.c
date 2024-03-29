@@ -39,7 +39,7 @@ void DECOMP_VehEmitter_Terrain_Ground(struct Driver *d, struct ParticleEmitter *
     // spawn particles on wheels
     for (; numTires != 0; numTires--)
     {
-        struct Particle *p = Particle_CreateInstance(0, ig, emSet);
+        struct Particle *p = Particle_Init(0, ig, emSet);
 
         if (p == NULL) continue;
 

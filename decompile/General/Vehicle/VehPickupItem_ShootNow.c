@@ -643,7 +643,7 @@ RunMineCOLL:
 			tw->vel[2] = (weaponInst->matrix.m[2][2] * 7) >> FPS_RIGHTSHIFT(8);
 			
 			struct Particle* p = 
-				Particle_CreateInstance(0, gGT->iconGroup[0], &data.emSet_Warpball[0]);
+				Particle_Init(0, gGT->iconGroup[0], &data.emSet_Warpball[0]);
 				
 			tw->ptrParticle = p;
 			

@@ -46,7 +46,7 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
         emSet = &data.emSet_Exhaust_Water[0];
     }
 
-    p = Particle_CreateInstance(0, gGT->iconGroup[exhaustType], emSet);
+    p = Particle_Init(0, gGT->iconGroup[exhaustType], emSet);
 
     if (p == NULL)
         return p;

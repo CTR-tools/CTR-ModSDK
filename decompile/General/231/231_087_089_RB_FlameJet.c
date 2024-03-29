@@ -240,9 +240,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	struct GameTracker* gGT = sdata->gGT;
 	
 	particle1 = 
-		Particle_CreateInstance(
-			0, gGT->iconGroup[0xA], 
-			&emSet_fjFire[0]);
+		Particle_Init(0, gGT->iconGroup[0xA], &emSet_fjFire[0]);
 	
 	// fire particle
 	if(particle1 != 0)
@@ -273,9 +271,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	if(gGT->numPlyrCurrGame > 1) return;
 	
 	particle2 = 
-		Particle_CreateInstance(
-			0, gGT->ptrSparkle, 
-			&emSet_fjHeat[0]);
+		Particle_Init(0, gGT->ptrSparkle, &emSet_fjHeat[0]);
 			
 	// heat particle
 	if(particle2 != 0)

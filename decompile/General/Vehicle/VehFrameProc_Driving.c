@@ -143,7 +143,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
                     iVar9 = (((burnTimer >> 5) % 5) >> 2) - 8 + iVar9;
                     
                     inst->animFrame = (short)iVar9;
-                    struct Particle *p = Particle_CreateInstance(0, gGT->iconGroup[1], &data.emSet_BurnSmoke[0]);
+                    struct Particle *p = Particle_Init(0, gGT->iconGroup[1], &data.emSet_BurnSmoke[0]);
                     if (p != NULL)
                     {
                         p->unk18 = d->instSelf->unk50;

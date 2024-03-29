@@ -224,9 +224,7 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		#ifdef REBUILD_PS1
 			0;
 		#else
-			Particle_CreateInstance(
-				0, gGT->iconGroup[0xA], 
-				&emSet_Fireball[0]);
+			Particle_Init(0, gGT->iconGroup[0xA], &emSet_Fireball[0]);
 		#endif
 		
 		if(particle != 0)

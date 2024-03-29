@@ -44,7 +44,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
 	// Unk, emset for shatter?
 	  
 	// Create instance in particle pool
-    p = Particle_CreateInstance(0,gGT->iconGroup[1],&DAT_800b2d58);
+    p = Particle_Init(0,gGT->iconGroup[1],&DAT_800b2d58);
 	
     if (p != NULL) {
       p->axis[0]->startVal += shatterInst->matrix.t[0] * 0x100;

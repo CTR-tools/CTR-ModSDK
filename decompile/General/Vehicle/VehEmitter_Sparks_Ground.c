@@ -27,7 +27,7 @@ void DECOMP_VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *e
     for (int i = 0; i < 10; i++)
     {
         // Create instance in particle pool
-        struct Particle *p = Particle_CreateInstance(0, gGT->iconGroup[0], emSet);
+        struct Particle *p = Particle_Init(0, gGT->iconGroup[0], emSet);
 
         if (p == NULL)
             continue;

@@ -88,7 +88,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
                 // like splashing in water on coco park
 
                 // Create instance in particle pool
-                struct Particle* p = Particle_CreateInstance(0, gGT->iconGroup[9], &data.emSet_Falling[0]);
+                struct Particle* p = Particle_Init(0, gGT->iconGroup[9], &data.emSet_Falling[0]);
                 
                 if (p == NULL) continue;
 

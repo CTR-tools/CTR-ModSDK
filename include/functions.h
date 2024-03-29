@@ -705,7 +705,7 @@ void Particle_UpdateAllParticles();
 //Particle_BitwiseClampByte()
 //Particle_SetColors()
 void Particle_RenderList(struct TileView* tileView, void* particleList);
-struct Particle* Particle_CreateInstance(u_int param_1, struct IconGroup* ig, struct ParticleEmitter* pe);
+struct Particle* Particle_Init(u_int param_1, struct IconGroup* ig, struct ParticleEmitter* pe);
 
 // RobotcarWeapons (?)
 

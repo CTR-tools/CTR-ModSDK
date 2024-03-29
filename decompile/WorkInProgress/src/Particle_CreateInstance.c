@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Particle *Particle_CreateInstance(u_int param_1, struct IconGroup *ig, struct ParticleEmitter *emSet)
+struct Particle *Particle_Init(u_int param_1, struct IconGroup *ig, struct ParticleEmitter *emSet)
 {
   u_short flags;
   u_int *puVar2;

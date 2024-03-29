@@ -85,15 +85,10 @@ void NewCallback233()
 	// prize spin podium
 	*(unsigned short*)0x800af7e4 = 50; // 100/2 (not hex)
 
-	// Need to fix Adv Character Select
-	
-	// Adv Char Select arrows
-	*(unsigned char*)0x800b7e0c = 8;
-
 	DECOMP_LOAD_Callback_Overlay_233();
 }
 
-struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
+struct Particle* NewParticleInit(struct LinkedList* param_1)
 {
 	// NOTE: Need to add workaround for RB_Explosion_InitPotion,
 	// VehEmitter_DriverMain, when those functions are rewritten,
@@ -119,8 +114,8 @@ void ui60_entryHook()
 {
 	u_int i;
 
-	// replace call to LIST_RemoveFront inside Particle_CreateInstance
-	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
+	// replace call to LIST_RemoveFront inside Particle_Init
+	*(unsigned int*)0x80040348 = JAL(NewParticleInit);
 
 	// Starting line
 	{

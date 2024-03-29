@@ -6,7 +6,7 @@ struct Particle *VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VECTOR *p
 {
     if (((d->instSelf->flags & SPLIT_LINE) != 0) && ((param_2->vy - param_3->vy) + d->posCurr[1] < 256))
     {
-        struct Particle* p = Particle_CreateInstance(0, sdata->gGT->iconGroup[7], &data.emSet_Exhaust_Water[0]);
+        struct Particle* p = Particle_Init(0, sdata->gGT->iconGroup[7], &data.emSet_Exhaust_Water[0]);
 
         p->funcPtr = Particle_FuncPtr_ExhaustUnderwater;
 
