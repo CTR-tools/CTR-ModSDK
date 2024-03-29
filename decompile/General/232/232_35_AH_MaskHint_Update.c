@@ -77,7 +77,7 @@ void DECOMP_AH_MaskHint_Update()
 			struct Instance* mhInst = sdata->instMaskHints3D;
 			((struct MaskHint*)mhInst->thread->object)->scale = 0;
 			
-			AH_MaskHint_SetAnim(0);
+			DECOMP_AH_MaskHint_SetAnim(0);
 			
 			D232.maskFrameCurr = 0;
 			
@@ -109,9 +109,9 @@ void DECOMP_AH_MaskHint_Update()
 			int timer4096 = 
 				(D232.maskFrameCurr << 0xc) / D232.maskSpawnFrame;
 				
-			AH_MaskHint_SetAnim(timer4096);
+			DECOMP_AH_MaskHint_SetAnim(timer4096);
 			
-			AH_MaskHint_SpawnParticles(
+			DECOMP_AH_MaskHint_SpawnParticles(
 				3, &D232.emSet_maskSpawn[0], timer4096);
 			
 			// if not finished spawning
@@ -122,7 +122,7 @@ void DECOMP_AH_MaskHint_Update()
 				timer4096 = 
 					(D232.maskFrameCurr << 0xc) / D232.maskSpawnFrame;
 					
-				AH_MaskHint_LerpVol(timer4096);
+				DECOMP_AH_MaskHint_LerpVol(timer4096);
 				break;
 			}
 			
@@ -133,9 +133,9 @@ void DECOMP_AH_MaskHint_Update()
 					((gGT->cameraDC[0].flags & 0x800) != 0)
 				  )
 				{
-					AH_MaskHint_LerpVol(0x1000);
+					DECOMP_AH_MaskHint_LerpVol(0x1000);
 					
-					AH_MaskHint_SpawnParticles
+					DECOMP_AH_MaskHint_SpawnParticles
 						(0x18, &D232.emSet_maskLeave[0], 0x1000);
 					
 					VehTalkMask_PlayXA(
@@ -212,7 +212,7 @@ void DECOMP_AH_MaskHint_Update()
 				MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 			}
 			
-			AH_MaskHint_SetAnim(0x1000);
+			DECOMP_AH_MaskHint_SetAnim(0x1000);
 		
 			int bVar8;
 			int uVar3 = D232.maskWarppadDelayFrames - 1;
@@ -248,7 +248,7 @@ void DECOMP_AH_MaskHint_Update()
 			
 		case 5:
 		
-			AH_MaskHint_SpawnParticles(20, &D232.emSet_maskLeave[0], 0x1000);
+			DECOMP_AH_MaskHint_SpawnParticles(20, &D232.emSet_maskLeave[0], 0x1000);
 			
 			// vanish sound
 			OtherFX_Play(0x101, 1);
@@ -266,15 +266,15 @@ void DECOMP_AH_MaskHint_Update()
 			
 		case 6:
 		
-			AH_MaskHint_LerpVol(0x1000 - gGT->cameraDC[0].unk8C);
+			DECOMP_AH_MaskHint_LerpVol(0x1000 - gGT->cameraDC[0].unk8C);
 			
 			if(
 				((gGT->cameraDC[0].flags & 0x200) == 0) ||
 				((D232.maskWarppadBoolInterrupt & 1) != 0)
 			)
 			{
-				AH_MaskHint_SetAnim(0);
-				AH_MaskHint_LerpVol(0);
+				DECOMP_AH_MaskHint_SetAnim(0);
+				DECOMP_AH_MaskHint_LerpVol(0);
 				
 				D232.maskWarppadDelayFrames = 0;
 				if((D232.maskWarppadBoolInterrupt & 1) != 0)
@@ -286,7 +286,7 @@ void DECOMP_AH_MaskHint_Update()
 		
 		case 7:
 		
-			AH_MaskHint_LerpVol(0);
+			DECOMP_AH_MaskHint_LerpVol(0);
 			
 			D232.maskWarppadDelayFrames--;
 			

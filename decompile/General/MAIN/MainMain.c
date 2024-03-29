@@ -552,13 +552,11 @@ FinishLoading:
 				NikoCalcFPS();
 #endif
 
-#ifndef REBUILD_PS1
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
 				{
-					AH_MaskHint_Update();
+					DECOMP_AH_MaskHint_Update();
 				}
-#endif
 				break;
 
 			#if 0

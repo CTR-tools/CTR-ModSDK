@@ -1,6 +1,6 @@
 #include <common.h>
 
-void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
+void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
 {
     struct GameTracker *gGT;
     struct Instance *inst;
@@ -69,7 +69,7 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
     // if viewing a hint
     if (D232.hintMenu_boolViewHint != 0)
     {			
-        AH_HintMenu_MaskPosRot();
+        DECOMP_AH_HintMenu_MaskPosRot();
 
         if (D232.maskCooldown > 0)
 			D232.maskCooldown--;
@@ -174,7 +174,7 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
                         VehTalkMask_PlayXA(sdata->instMaskHints3D,
                                            (lngIndex + -0x17b)/2);
 
-                        AH_HintMenu_MaskPosRot();
+                        DECOMP_AH_HintMenu_MaskPosRot();
 
                         // talking mask instance
                         inst = sdata->instMaskHints3D;
@@ -252,7 +252,7 @@ LAB_800b38cc:
     // if scroll bar is not on top
     if (0 < D232.hintMenu_scrollIndex)
     {
-        AH_HintMenu_FiveArrows(0x3f, 0);
+        DECOMP_AH_HintMenu_FiveArrows(0x3f, 0);
     }
 
     iVar10 = 0x10;
@@ -287,7 +287,7 @@ LAB_800b38cc:
     // if scroll bar is not on bottom
     if (D232.hintMenu_scrollIndex + (int)sVar12 < (int)sVar9)
     {
-        AH_HintMenu_FiveArrows((iVar10 + 0x40), 0x800);
+        DECOMP_AH_HintMenu_FiveArrows((iVar10 + 0x40), 0x800);
     }
     box.x = -0xe;
     box.w = 0x21c;

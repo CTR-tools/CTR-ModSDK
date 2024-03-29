@@ -11,7 +11,7 @@ void DECOMP_AH_HintMenu_FiveArrows(int param_1,short rotation)
   
   for (i = 0; i < 5; i++)
   {	
-	AH_Map_HubArrow(
+	DECOMP_AH_Map_HubArrow(
         // posX
         (i * 0x32 + 0x95),
 		

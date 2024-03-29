@@ -39,10 +39,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		if (DECOMP_LOAD_IsOpen_AdvHub() == 0)
 			return;
 
-#ifndef REBUILD_PS1
-		AH_Pause_Update();
-#endif
-
+		DECOMP_AH_Pause_Update();
 		return;
 	}
 

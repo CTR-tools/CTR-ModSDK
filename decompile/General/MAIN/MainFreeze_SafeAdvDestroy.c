@@ -9,9 +9,7 @@ void DECOMP_MainFreeze_SafeAdvDestroy(void)
         // check if Adv Hub is loaded
         (DECOMP_LOAD_IsOpen_AdvHub() != 0))
     {
-#ifndef REBUILD_PS1
-        AH_Pause_Destroy();
-#endif
+        DECOMP_AH_Pause_Destroy();
     }
     return;
 }

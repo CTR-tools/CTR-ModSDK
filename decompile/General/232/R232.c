@@ -1,10 +1,5 @@
 #include <common.h>
 
-// come back to
-// 0x800aba3c battleTrackArr
-// 0x800aba4c bossTracks
-// 0x800aba58 bossIDs
-
 struct OverlayRDATA_232 R232 =
 {
 	.battleTrackArr =

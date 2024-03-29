@@ -1,5 +1,5 @@
-// 487+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 809 rewritten so far
-// 487 for every 'common' and ','
+// 471+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 812 rewritten so far
+// 471 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -7,7 +7,7 @@
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
-// 16 for 232 adv hub
+// 35 for 232 adv hub
 // 19 for the 20 UI Block #1
 // 12 for MAIN block
 // +6 for ElimBG
@@ -113,25 +113,6 @@ common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 common, 232, R232, 0x0, General/232/R232.c
 common, 232, D232, 0x0, General/232/D232.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
-common, 232, AH_Map_LoadSave_Prim, 0x0, General/232/232_17_AH_Map_LoadSave_Prim.c
-common, 232, AH_Map_LoadSave_Full, 0x0, General/232/232_18_AH_Map_LoadSave_Full.c
-common, 232, AH_Map_HubArrow, 0x0, General/232/232_19_AH_Map_HubArrow.c
-common, 232, AH_Map_HubArrowOutter, 0x0, General/232/232_20_AH_Map_HubArrowOutter.c
-common, 232, AH_Map_HubItems, 0x0, General/232/232_21_AH_Map_HubItems.c
-common, 232, AH_Map_Warppads, 0x0, General/232/232_22_AH_Map_Warppads.c
-common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
-common, 232, AH_Pause_Destroy, 0x0, General/232/232_24_AH_Pause_Destroy.c
-common, 232, AH_Pause_Draw, 0x0, General/232/232_25_AH_Pause_Draw.c
-common, 232, AH_Pause_Update, 0x0, General/232/232_26_AH_Pause_Update.c
-common, 232, AH_HintMenu_FiveArrows, 0x0, General/232/232_27_AH_HintMenu_FiveArrows.c
-common, 232, AH_HintMenu_MaskPosRot, 0x0, General/232/232_28_AH_HintMenu_MaskPosRot.c
-common, 232, AH_HintMenu_MenuBoxFuncPtr, 0x0, General/232/232_29_AH_HintMenu_MenuBoxFuncPtr.c
-common, 232, AH_MaskHint_Start, 0x0, General/232/232_30_AH_MaskHint_Start.c
-common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_31_AH_MaskHint_boolCanSpawn.c
-common, 232, AH_MaskHint_SetAnim, 0x0, General/232/232_32_AH_MaskHint_SetAnim.c
-common, 232, AH_MaskHint_SpawnParticles, 0x0, General/232/232_33_AH_MaskHint_SpawnParticles.c
-common, 232, AH_MaskHint_LerpVol, 0x0, General/232/232_34_AH_MaskHint_LerpVol.c
-common, 232, AH_MaskHint_Update, 0x0, General/232/232_35_AH_MaskHint_Update.c
 // AH_Sign_LInB
 
 // 233
@@ -440,19 +421,22 @@ common, exe, MainDB_PrimMem, 0x0, General/MAIN/MainDB_PrimMem.c
 common, exe, MainDB_OTMem, 0x0, General/MAIN/MainDB_OTMem.c
 common, exe, MainDrawCb_DrawSync, 0x0, General/MAIN/MainDrawCb_DrawSync.c
 common, exe, MainDrawCb_Vsync, 0x0, General/MAIN/MainDrawCb_Vsync.c
-common, exe, MainFrame_GameLogic, 0x0, General/MAIN/MainFrame_GameLogic.c
-common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
-common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
-common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
 
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
-common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
-common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
-common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
-common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
+common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
+common, exe, MainFrame_GameLogic, 0x0, General/MAIN/MainFrame_GameLogic.c
+common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
+common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
 
-// Does not fit byte budget
+// config npc105
+common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
+// configSetupEntry
+// menuptrOptions
+common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
+common, exe, MainFreeze_SafeAdvDestroy, 0x0, General/MAIN/MainFreeze_SafeAdvDestroy.c
+common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
 common, exe, MainFreeze_GetMenuBox, 0x0, General/MAIN/MainFreeze_GetMenuBox.c
+common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
 
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
 

@@ -36,8 +36,8 @@ void RR_EndEvent_DrawMenu();
 void AA_EndEvent_DrawMenu();
 void TT_EndEvent_DrawMenu();
 void CC_EndEvent_DrawMenu();
-void AH_Map_Main();
-void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
+void DECOMP_AH_Map_Main();
+void DECOMP_AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
 void CS_BoxScene_InstanceSplitLines();
 void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
@@ -768,11 +768,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if any transition is over
 					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
-						AH_Map_Main();
+						DECOMP_AH_Map_Main();
 						
 						if(sdata->AkuHint_RequestedHint != -1)
 						{
-							AH_MaskHint_Start(
+							DECOMP_AH_MaskHint_Start(
 								sdata->AkuHint_RequestedHint,
 								sdata->AkuHint_boolInterruptWarppad
 							);

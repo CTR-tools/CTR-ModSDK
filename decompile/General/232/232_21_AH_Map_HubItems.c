@@ -111,7 +111,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 				
                 UI_Map_GetIconPos(hubPtrs, &local_40, &local_3c);
                 
-				AH_Map_LoadSave_Full(
+				DECOMP_AH_Map_LoadSave_Full(
 					local_40, local_3c, 
 					&D232.loadSave_pos[0], &D232.loadSave_col[0], 
 					0x800, (int)psVar9[1]
@@ -189,7 +189,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         UI_Map_GetIconPos(hubPtrs, &local_38, &local_34);
         if ((iVar5 == 0) && (D232.unkModeHubItems == 0))
         {
-          AH_Map_HubArrowOutter(
+          DECOMP_AH_Map_HubArrowOutter(
               hubPtrs, (int)*param_2, local_38, local_34,
               (0x1000 - (u_short)psVar9[1]), 1);
           *param_2 = *param_2 + 1;
@@ -205,7 +205,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
           iVar5 = ((int)sVar7 * 2 + 1) * 3;
         }
 
-        AH_Map_HubArrow(
+        DECOMP_AH_Map_HubArrow(
 			local_38, local_34, 
 			&D232.hubArrow_pos[0], &D232.hubArrow_col1[iVar5], 
 			0x800, (int)psVar9[1]);
@@ -242,9 +242,9 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
           local_30 = pos3D[0];
           local_2c = pos3D[2];
 
-          UI_Map_GetIconPos(hubPtrs, &local_30, &local_2c);
+          DECOMP_UI_Map_GetIconPos(hubPtrs, &local_30, &local_2c);
 
-          AH_Map_HubArrowOutter(hubPtrs, (int)*param_2, local_30, local_2c, 0, 2);
+          DECOMP_AH_Map_HubArrowOutter(hubPtrs, (int)*param_2, local_30, local_2c, 0, 2);
 
           *param_2 = *param_2 + 1;
         }

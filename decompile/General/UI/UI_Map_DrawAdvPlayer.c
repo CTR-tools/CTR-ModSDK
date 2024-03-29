@@ -19,11 +19,9 @@ void DECOMP_UI_Map_DrawAdvPlayer(int ptrMap,int *matrix,int unused1,int unused2,
     arrowColor = &data.playerIconAdvMap.vertCol2[0];
   }
 
-#ifndef REBUILD_PC
-  AH_Map_HubArrow(posX,posY,
+  DECOMP_AH_Map_HubArrow(posX,posY,
 	&data.playerIconAdvMap.unk_playerAdvMap[0],
 	arrowColor,(int)param_6, (int)param_5);
-#endif
 	
   return;
 }

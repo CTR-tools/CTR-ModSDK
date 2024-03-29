@@ -1,6 +1,6 @@
 #include <common.h>
 
-void AH_HintMenu_MenuBoxFuncPtr();
+void DECOMP_AH_HintMenu_MenuBoxFuncPtr();
 void DECOMP_AH_WarpPad_MenuBoxFuncPtr();
 
 struct OverlayDATA_232 D232 =
@@ -280,7 +280,7 @@ struct OverlayDATA_232 D232 =
 		
 		.state = 0x8A3,
 		.rows = 0,
-		.funcPtr = AH_HintMenu_MenuBoxFuncPtr,
+		.funcPtr = DECOMP_AH_HintMenu_MenuBoxFuncPtr,
 		.drawStyle = 4,
 	
 		// rest of variables all default zero
