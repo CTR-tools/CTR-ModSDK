@@ -130,11 +130,7 @@ void DECOMP_UI_DrawSpeedBG(void)
     vertData[6] + 0x1e0, vertData[7] + 0xbe,
     data.speedometerBG_vertData[0x1a] + 0x1e0, data.speedometerBG_vertData[3] + 0xbe);
 
-#ifdef REBUILD_PC
-	ot = &gGT->tileView[0].ptrOT[0];
-#else
 	ot = gGT->tileView_UI.ptrOT;
-#endif
 
 	// inline AddPrim
     *(int*)p = *ot | 0x8000000;

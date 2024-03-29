@@ -188,18 +188,6 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DECOMP_DropRain_MakeSound(gGT);
 	MenuHighlight();
 	
-#ifdef REBUILD_PS1
-
-	// This is temporary until RenderBucket is done
-	if ((gGT->renderFlags & 0x20) != 0)
-	{
-		void TEST_DrawInstances(struct GameTracker* gGT);
-		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-		TEST_DrawInstances(gGT);
-		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-	}	
-#endif
-
 #ifndef REBUILD_PS1	
 	RenderAllWeather(gGT);
 	RenderAllConfetti(gGT);
@@ -232,6 +220,16 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllTires(gGT);
 	RenderAllShadows(gGT);
 	RenderAllHeatParticles(gGT);
+
+#else
+
+	// PC port version of ExecuteAllInstances
+	if ((gGT->renderFlags & 0x20) != 0)
+	{
+		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		void TEST_DrawInstances(struct GameTracker* gGT);
+		TEST_DrawInstances(gGT);
+	}
 #endif
 	
 	DECOMP_TileView_FadeAllWindows();
@@ -637,7 +635,10 @@ void RenderAllHUD(struct GameTracker* gGT)
 	// Why is this needed? What's broken
 	// that causes this to run premature?
 	#ifdef REBUILD_PS1
-	if((gGT->gameMode1 & 0x40000000) != 0) return;
+	// LOADING... and pause screen (see adv pause)
+	if((gGT->gameMode1 & 0x4000000f) != 0) return;
+
+	// before level is done loading
 	if(gGT->level1 == 0) return;
 	#endif
 	

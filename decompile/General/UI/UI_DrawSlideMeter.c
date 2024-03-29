@@ -101,11 +101,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		p->y3 = posY;
 		p->x2 = posX - meterLength;
 
-#ifdef REBUILD_PC
-		primmemCurr = &gGT->tileView[0].ptrOT[0];
-#else
 		primmemCurr = gGT->tileView_UI.ptrOT;
-#endif
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
