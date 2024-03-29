@@ -15,7 +15,7 @@ void DECOMP_RB_Blade_ThTick(struct Thread* t)
 	
 	bladeObj->angle += FPS_HALF(0x100);
 
-	// converted to TEST in rebuildPC, not in rebuildPS1	
+	// converted to TEST in rebuildPS1	
 	ConvertRotToMatrix(&bladeInst->matrix, &rot[0]);
 	
 	bladeInst->scale[0] = 0x1000;

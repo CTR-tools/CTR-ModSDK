@@ -56,7 +56,7 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket)
   obj->rot[1] = rotSpd;
   mat = &inst->matrix.m[0][0];
 
-  // converted to TEST in rebuildPC, not in rebuildPS1
+  // converted to TEST in rebuildPS1
   ConvertRotToMatrix(mat,obj);
 
 #ifndef REBUILD_PS1  

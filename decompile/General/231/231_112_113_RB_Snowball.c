@@ -90,7 +90,7 @@ RollSound:
 			}
 		}
 		
-		// converted to TEST in rebuildPC, not in rebuildPS1
+		// converted to TEST in rebuildPS1
 		ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
 			
 		snowInst->matrix.t[0] = pos[0];
@@ -100,7 +100,7 @@ RollSound:
 	// original 30fps
 	#else
 		
-		// converted to TEST in rebuildPC, not in rebuildPS1
+		// converted to TEST in rebuildPS1
 		ConvertRotToMatrix(
 			&snowInst->matrix,
 			&ptrSpawnType2->posCoords[baseShort+3]);

@@ -65,7 +65,7 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 	// increment frame
 	armInst->animFrame = armInst->animFrame+1;
 	
-	// converted to TEST in rebuildPC, not in rebuildPS1
+	// converted to TEST in rebuildPS1
 	ConvertRotToMatrix(&armInst->matrix, &armObj->rotCurr[0]);
 	
 	if(armObj->rotCurr[1] != armObj->rotDesired[1])

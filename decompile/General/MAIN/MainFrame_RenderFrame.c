@@ -36,8 +36,6 @@ void RR_EndEvent_DrawMenu();
 void AA_EndEvent_DrawMenu();
 void TT_EndEvent_DrawMenu();
 void CC_EndEvent_DrawMenu();
-void DECOMP_AH_Map_Main();
-void DECOMP_AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
 void CS_BoxScene_InstanceSplitLines();
 void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
@@ -45,7 +43,6 @@ void RB_Burst_ProcessBucket(struct Thread* thread);
 void RB_Blowup_ProcessBucket(struct Thread* thread);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
-void DECOMP_AH_WarpPad_AllWarppadNum();
 u_int MM_Video_CheckIfFinished(int param_1);
 
 #ifdef USE_60FPS

@@ -182,7 +182,7 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 			minecartObj->rotDesired[1], 
 			minecartObj->rotSpeed);
 
-	// converted to TEST in rebuildPC, not in rebuildPS1	
+	// converted to TEST in rebuildPS1	
 	ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
 	
 	#ifndef REBUILD_PS1

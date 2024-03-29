@@ -110,7 +110,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
             // Update rotation of garagetop
             garage->rot[0] += (short)garage->direction * FPS_HALF(0x40);
             
-			// converted to TEST in rebuildPC, not in rebuildPS1
+			// converted to TEST in rebuildPS1
 			ConvertRotToMatrix(
 				&garage->garageTopInst->matrix, 
 				&garage->rot[0]);

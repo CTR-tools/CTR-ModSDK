@@ -407,13 +407,13 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
   desiredRot[2] = door->doorRot[2];
   
-  // converted to TEST in rebuildPC, not in rebuildPS1
+  // converted to TEST in rebuildPS1
   ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
   
   // left-hand door rot[x,y,z]
   desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
 
-  // converted to TEST in rebuildPC, not in rebuildPS1
+  // converted to TEST in rebuildPS1
   ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
   
   // if less than 11 frames have passed,

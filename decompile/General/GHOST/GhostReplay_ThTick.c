@@ -282,7 +282,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 #endif
   local_rot[2] = 0;
 
-  // converted to TEST in rebuildPC, not in rebuildPS1
+  // converted to TEST in rebuildPS1
   ConvertRotToMatrix(&inst->matrix, local_rot);
 
   d->posCurr[0] = inst->matrix.t[0] << 8;
