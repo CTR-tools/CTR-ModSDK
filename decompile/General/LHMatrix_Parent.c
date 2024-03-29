@@ -1,9 +1,9 @@
 #include <common.h>
 
 /// @brief Link Hierarchal Matrix (like weapon relative to kart)
-/// @pDst - destination instance
-/// @pSrc - source instance
-/// @transVec - transform vector (x,y,z)
+/// @param pDst - destination instance
+/// @param pSrc - source instance
+/// @param transVec - transform vector (x,y,z)
 /// 0x800313c8
 void LHMatrix_Parent(struct Instance* pDst, struct Instance* pSrc, SVECTOR* transVec)
 {
