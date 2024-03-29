@@ -12911,7 +12911,7 @@ void FUN_8005111c(int param_1,int param_2,int param_3)
 }
 
 
-// draw spedometer needle
+// UI_DrawSpeedNeedle
 void FUN_800511c0(short param_1,short param_2,int param_3)
 
 {
@@ -13096,7 +13096,7 @@ void FUN_800511c0(short param_1,short param_2,int param_3)
 }
 
 
-// speedometer background
+// UI_DrawSpeedBG
 void FUN_800516ac(void)
 
 {
@@ -13314,8 +13314,7 @@ void FUN_800516ac(void)
 }
 
 
-//handles Jump meter and landing boosts
-//param_1 is player struct pointer
+// UI_JumpMeter_Update
 void FUN_80051c64(int param_1)
 {
   short sVar1;
@@ -13434,7 +13433,7 @@ void FUN_80051c64(int param_1)
 }
 
 
-// Draw Jump Meter
+// UI_JumpMeter_Draw
 void FUN_80051e24(short param_1,short param_2,int param_3)
 
 {
@@ -13622,7 +13621,7 @@ void FUN_80051e24(short param_1,short param_2,int param_3)
 }
 
 
-// Draw powerslide meter
+// UI_DrawSlideMeter
 void FUN_80052250(short param_1,short param_2,int param_3)
 
 {
