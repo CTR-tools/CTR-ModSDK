@@ -4,6 +4,7 @@
 /// @pDst - destination instance
 /// @pSrc - source instance
 /// @transVec - transform vector (x,y,z)
+/// 0x800313c8
 void LHMatrix_Parent(struct Instance* pDst, struct Instance* pSrc, SVECTOR* transVec)
 {
   //copy source matrix values to destination (both m and t)
