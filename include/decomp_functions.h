@@ -578,12 +578,16 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst);
 void DECOMP_RB_Minecart_ThTick(struct Thread* t);
 void DECOMP_RB_Minecart_LInB(struct Instance* inst);
 
+void DECOMP_RB_Plant_LInB(struct Instance* inst);
+
 void DECOMP_RB_Seal_ThTick_Move(struct Thread* t);
 void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t);
 void DECOMP_RB_Seal_LInB(struct Instance* inst);
 
 void DECOMP_RB_Snowball_ThTick(struct Thread* t);
 void DECOMP_RB_Snowball_LInB(struct Instance* inst);
+
+void DECOMP_RB_Spider_LInB(struct Instance* inst);
 
 void DECOMP_RB_Turtle_ThTick(struct Thread* t);
 int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh);
