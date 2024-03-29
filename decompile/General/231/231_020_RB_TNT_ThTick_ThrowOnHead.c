@@ -57,6 +57,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
       
 	  // assign 
 	  ThTick_SetAndExec(t,RB_TNT_ThTick_SitOnHead);
+	  return;
     }
   }
   

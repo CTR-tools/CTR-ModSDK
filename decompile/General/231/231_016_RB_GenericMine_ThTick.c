@@ -53,6 +53,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	
 	// this also quits the function
     ThTick_SetAndExec(t,func);
+	return;
   }
   
   // === If not "thrown" ===
@@ -270,6 +271,7 @@ LAB_800ad174:
         mw->stopFallAtY = 0x3fff;
 		
         ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOnHead);
+		return;
       }
 	  
 	  // if this TNT has an InstDef, then it is part of LEV,

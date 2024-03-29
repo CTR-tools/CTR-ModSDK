@@ -18,7 +18,9 @@ struct Instance* DECOMP_LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc)
 
     diff_y = thInst->matrix.t[1] - objBoxDesc->inst->matrix.t[1] ;
 
+	#ifndef REBUILD_PS1
     MATH_HitboxMatrix(&thInstMatrix, &objBoxDesc->inst->matrix);
+	#endif
 
     SetRotMatrix(&thInstMatrix);
     SetTransMatrix(&thInstMatrix);

@@ -40,11 +40,7 @@ void RB_Armadillo_ThTick_Flip(struct Thread* t)
 	armInst->animFrame = 0;
 	armInst->animIndex = 1;
 
-#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, DECOMP_RB_Armadillo_ThTick_Rolling);
-#else
-	TEST_ThTickSetAndExec(t, DECOMP_RB_Armadillo_ThTick_Rolling);
-#endif
 }
 
 void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
@@ -76,11 +72,7 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 	
 	// === End of TurnAround ===
 
-#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, RB_Armadillo_ThTick_Flip);
-#else
-	TEST_ThTickSetAndExec(t, RB_Armadillo_ThTick_Flip);
-#endif
 }
 
 void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
@@ -135,11 +127,7 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	armInst->animFrame = 0;
 	armInst->animIndex = 0;
 	
-#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, DECOMP_RB_Armadillo_ThTick_TurnAround);
-#else
-	TEST_ThTickSetAndExec(t, DECOMP_RB_Armadillo_ThTick_TurnAround);
-#endif
 }
 
 void DECOMP_RB_Armadillo_LInB(struct Instance* inst)

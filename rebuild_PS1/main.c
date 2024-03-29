@@ -14,6 +14,7 @@
 // replace regular functions with TEST,
 // for as long as there is no DECOMP variant
 #define ConvertRotToMatrix TEST_ConvertRotToMatrix
+#define ThTick_SetAndExec TEST_ThTickSetAndExec
 
 // replace custom ND version with regular library version
 #define SquareRoot0_stub SquareRoot0
@@ -250,6 +251,8 @@
 
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Clear.c"
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Store.c"
+
+#include "../decompile/General/LinkedCollide_Hitbox_Desc.c"
 
 #include "../decompile/General/LIST/LIST_Clear.c"
 #include "../decompile/General/LIST/LIST_AddFront.c"
@@ -536,6 +539,7 @@
 #include "../decompile/General/231/231_080_083_RB_Armadillo.c"
 #include "../decompile/General/231/231_084_086_RB_Fireball.c"
 #include "../decompile/General/231/231_097_098_RB_Minecart.c"
+#include "../decompile/General/231/231_102_107_RB_Plant.c"
 #include "../decompile/General/231/231_108_111_RB_Seal.c"
 #include "../decompile/General/231/231_112_113_RB_Snowball.c"
 #include "../decompile/General/231/231_114_117_RB_Spider.c"

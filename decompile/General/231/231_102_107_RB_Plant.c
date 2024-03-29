@@ -42,7 +42,7 @@ void DECOMP_RB_Plant_ThTick_Eat(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_StartEat)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_StartEat)
 		)
 		{
 			// increment frame
@@ -59,7 +59,7 @@ PlayChewSound:
 			
 			if(plantObj->boolEatingPlayer != 0)
 			{
-				OtherFX_Play(0x6e, 0);
+				DECOMP_OtherFX_Play(0x6e, 0);
 			}
 		}
 	}
@@ -69,7 +69,7 @@ PlayChewSound:
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Chew)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Chew)
 		)
 		{
 			// increment frame
@@ -105,7 +105,7 @@ PlayChewSound:
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Spit)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Spit)
 		)
 		{
 			// increment frame
@@ -117,7 +117,7 @@ PlayChewSound:
 				if(plantObj->boolEatingPlayer != 0)
 				{
 					// play PlantSpit sound
-					OtherFX_Play(0x6f, 0);
+					DECOMP_OtherFX_Play(0x6f, 0);
 				}
 				
 				#ifdef USE_60FPS
@@ -129,14 +129,20 @@ PlayChewSound:
 				{
 					// spit tires
 					particle = 
+					#ifdef REBUILD_PS1
+						0;
+					#else
 						Particle_CreateInstance(
 							0, sdata->gGT->iconGroup[0],
 							&emSet_PlantTires[0]);
-							
+					#endif
+						
 					if(particle != 0)
 					{
+						#ifndef REBUILD_PS1
 						particle->funcPtr = Particle_FuncPtr_SpitTire;
 						particle->driverInst = plantInst;
+						#endif
 						
 						particle->axis[0].startVal +=
 						(
@@ -209,20 +215,23 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_GrabDriver)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_GrabDriver)
 		)
 		{
 			// increment frame
 			plantInst->animFrame = plantInst->animFrame+1;
 			
 			plantBoxDesc.bucket = gGT->threadBuckets[MINE].thread;
-			hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+			hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 			
 			if(hitInst != 0)
 			{
 				plantBoxDesc.threadHit = hitInst->thread;
 				plantBoxDesc.funcThCollide = hitInst->thread->funcThCollide;
+				
+				#ifndef REBUILD_PS1
 				RB_Hazard_ThCollide_Generic_Alt(&plantBoxDesc);
+				#endif
 			}
 		}
 		
@@ -284,7 +293,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 	// if animation is not over
 	if(
 		(plantInst->animFrame+1) < 
-		INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Hungry)
+		DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Hungry)
 	)
 	{
 		// increment frame
@@ -305,11 +314,12 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 			
 			// end of animation
 			plantInst->animFrame =
-				INSTANCE_GetNumAnimFrames(
+				DECOMP_INSTANCE_GetNumAnimFrames(
 					plantInst, PlantAnim_TransitionRestHungry);
 			
 			plantInst->animIndex = PlantAnim_TransitionRestHungry;
 			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Transition_HungryToRest);
+			return;
 		}
 	}
 	
@@ -319,18 +329,25 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 	plantBoxDesc.thread = t;
 	
 	plantBoxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
-	hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+	hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{
 		// get driver from instance
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
-		// attempt to harm driver (eat)
-		if(RB_Hazard_HurtDriver(hitDriver,5,0,0) != 0)
+		int didHit =
+		#ifdef REBUILD_PS1
+			0;
+		#else
+			// attempt to harm driver (eat)
+			RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		#endif
+		
+		if(didHit != 0)
 		{
 			// play PlantGrab sound
-			OtherFX_Play(0x6d, 0);
+			DECOMP_OtherFX_Play(0x6d, 0);
 			plantObj->boolEatingPlayer = 1;
 			
 EatDriver:
@@ -353,14 +370,17 @@ EatDriver:
 	if((gGT->gameMode1 & ADVENTURE_BOSS) != 0) return;
 	
 	plantBoxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
-	hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+	hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{		
 		// get driver from instance
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
+		#ifndef REBUILD_PS1
 		RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		#endif
+		
 		plantObj->boolEatingPlayer = 0;
 		
 		goto EatDriver;
@@ -380,7 +400,7 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Rest)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Rest)
 		)
 		{
 			// increment frame
@@ -408,7 +428,7 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_TransitionRestHungry)
+			DECOMP_INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_TransitionRestHungry)
 		)
 		{
 			// increment frame
@@ -433,7 +453,7 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	int plantID;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

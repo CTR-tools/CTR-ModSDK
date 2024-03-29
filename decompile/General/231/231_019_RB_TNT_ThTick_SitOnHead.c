@@ -101,6 +101,7 @@ LAB_800ad4ec:
   
   // assign RB_TNT_ThTick_ThrowOffHead
   ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOffHead);
+  return;
   
 LAB_800ad5f8:
 

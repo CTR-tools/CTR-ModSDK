@@ -233,7 +233,6 @@ void RB_ShieldDark_ThTick(struct Thread *th)
 
     // execute, then assign per-frame funcPtr to thread
     ThTick_SetAndExec(th, RB_ShieldDark_Pop);
-
     return;
   }
 

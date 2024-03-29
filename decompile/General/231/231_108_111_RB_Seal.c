@@ -151,12 +151,8 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// negate
 	sealObj->direction = !sealObj->direction;
 	
-#ifndef REBUILD_PS1
 	// turn move
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_Move);
-#else
-	TEST_ThTickSetAndExec(t, DECOMP_RB_Seal_ThTick_Move);
-#endif
 }
 
 void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
@@ -224,12 +220,8 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	sealObj->rotDesired[0] = -sealObj->rotCurr[0];
 	sealObj->rotDesired[2] = -sealObj->rotCurr[2];
 	
-#ifndef REBUILD_PS1
 	// turn around
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
-#else
-	TEST_ThTickSetAndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
-#endif
 }
 
 void DECOMP_RB_Seal_LInB(struct Instance* inst)
