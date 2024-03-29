@@ -60,7 +60,7 @@ void RB_Orca_LInB() {}
 //void DECOMP_RB_Turtle_LInB() {}	-- DONE
 //void DECOMP_RB_Turtle_LInC() {}	-- DONE
 void DECOMP_RB_Spider_LInB() {}
-void DECOMP_RB_Fireball_LInB() {}
+//void DECOMP_RB_Fireball_LInB() {}	-- DONE
 void RB_Banner_LInB() {}
 void DECOMP_RB_CtrLetter_LInB() {}
 void DECOMP_RB_CtrLetter_LInC() {}

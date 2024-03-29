@@ -221,9 +221,13 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		
 		// fire particles
 		particle = 
+		#ifdef REBUILD_PS1
+			0;
+		#else
 			Particle_CreateInstance(
 				0, gGT->iconGroup[0xA], 
 				&emSet_Fireball[0]);
+		#endif
 		
 		if(particle != 0)
 		{
@@ -293,8 +297,10 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		fireInst->animFrame = 0;
 		#endif
 		
+		#ifndef REBUILD_PS1
 		// fwooooossssssssshhhh
 		PlaySound3D(0x81, fireInst);
+		#endif
 	}
 }
 
@@ -304,7 +310,7 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	struct InstDef* instDef;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

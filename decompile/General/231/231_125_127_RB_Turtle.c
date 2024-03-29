@@ -184,6 +184,12 @@ void DECOMP_RB_Turtle_LInB(struct Instance* inst)
 	struct Thread* t;
 	struct Turtle* turtleObj;
 	
+	#ifdef REBUILD_PC
+	// turtles crash the renderer?
+	inst->flags |= 0x80;
+	return;
+	#endif
+	
 	inst->flags |= 0x2000;
 
 	t = 

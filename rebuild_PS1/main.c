@@ -534,6 +534,7 @@
 #include "../decompile/General/231/231_054_055_RB_Baron.c"
 #include "../decompile/General/231/231_056_057_RB_Blade.c"
 #include "../decompile/General/231/231_080_083_RB_Armadillo.c"
+#include "../decompile/General/231/231_084_086_RB_Fireball.c"
 #include "../decompile/General/231/231_097_098_RB_Minecart.c"
 #include "../decompile/General/231/231_108_111_RB_Seal.c"
 #include "../decompile/General/231/231_112_113_RB_Snowball.c"

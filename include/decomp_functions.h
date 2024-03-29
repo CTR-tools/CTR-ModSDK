@@ -570,6 +570,9 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t);
 void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t);
 void DECOMP_RB_Armadillo_LInB(struct Instance* inst);
 
+void DECOMP_RB_Fireball_ThTick(struct Thread* t);
+void DECOMP_RB_Fireball_LInB(struct Instance* inst);
+
 void DECOMP_RB_Minecart_ThTick(struct Thread* t);
 void DECOMP_RB_Minecart_LInB(struct Instance* inst);
 
