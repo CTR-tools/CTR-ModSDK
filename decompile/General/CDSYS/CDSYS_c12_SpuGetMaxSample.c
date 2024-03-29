@@ -2,60 +2,38 @@
 
 void DECOMP_CDSYS_SpuGetMaxSample(void)
 {
-    u_char currIndex;
-    char index2;
-    int sample;
-    int *ptrSample;
-    uint cur_Max;
+	int endIndex;
+    int currIndex;
+    int index2;
+    
+	short sample;
     short max;
-
-    cur_Max = 0;
-    max = 0;
 
     // if you are not using CD, quit
     if (sdata->boolUseDisc == false) return;
-
-    currIndex = 0x100;
 
     // range {0x0 - 0x100}
     if (sdata->irqAddr == 0)
     {
         currIndex = 0;
-        cur_Max = 0x100;
+        endIndex = 0x100;
     }
     // otherwise, range {0x100 - 0x200}
     else
     {
-        cur_Max = 0x200;
+		currIndex = 0x100;
+        endIndex = 0x200;
     }
-
-    // curr < end
-    if (currIndex < cur_Max)
+	
+    // loop through region
+    for (max = 0; currIndex < endIndex; currIndex++)
     {
+		// absolute value
+        sample = sdata->SpuDecodedData[currIndex];
+        if (sample < 0) sample = -sample;
 
-        // loop through region
-        for (; currIndex < cur_Max; currIndex++)
-        {
-
-            // decoded SPU data
-            sample = *sdata->SpuDecodedData[currIndex];
-
-            // absolute value
-            if (sample < 0)
-            {
-                sample = -sample;
-            }
-
-            // if larger than cur_max
-            if ((cur_Max << 0x10) < (sample << 0x10))
-            {
-                // set new cur_max
-                cur_Max = sample;
-            }
-
-            // copy max
-            max = (short)cur_Max;
-        }
+		// find max
+        if (max < sample) max = sample;
     }
 
     // save max
@@ -84,11 +62,13 @@ void DECOMP_CDSYS_SpuGetMaxSample(void)
 
     if (index2 == 0) return;
 
-    for (; index2 != -1; currIndex--, index2--)
+    for (; index2 != -1; index2--)
     {
+		currIndex--;
+		if(currIndex < 0)
+			currIndex = 2;
+		
         if (sdata->XA_MaxSampleValInArr < sdata->XA_MaxSampleValArr[currIndex])
-        {
             sdata->XA_MaxSampleValInArr = sdata->XA_MaxSampleValArr[currIndex];
-        }
     }
 }

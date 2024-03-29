@@ -4400,9 +4400,9 @@ struct sData
 	// 80091198 -- JpnRetail
 	// see FUN_8001c8e4
 	#if BUILD == SepReview
-	unsigned int SpuDecodedData[0x400];
+	short SpuDecodedData[0x800];
 	#elif BUILD >= UsaRetail
-	unsigned int SpuDecodedData[0x200];
+	short SpuDecodedData[0x400];
 	#endif
 
 	// 8008E528

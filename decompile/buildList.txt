@@ -1,5 +1,5 @@
-// 480+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 821 rewritten so far
-// 480 for every 'common' and ','
+// 481+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 822 rewritten so far
+// 481 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -173,7 +173,7 @@ common, exe, CDSYS_SpuCallbackIRQ, 0x0, General/CDSYS/CDSYS_c08_SpuCallbackIRQ.c
 common, exe, CDSYS_SpuCallbackTransfer, 0x0, General/CDSYS/CDSYS_c09_SpuCallbackTransfer.c
 common, exe, CDSYS_SpuEnableIRQ, 0x0, General/CDSYS/CDSYS_c10_SpuEnableIRQ.c
 common, exe, CDSYS_SpuDisableIRQ, 0x0, General/CDSYS/CDSYS_c11_SpuDisableIRQ.c
-// skip CDSYS_SpuGetMaxSample
+common, exe, CDSYS_SpuGetMaxSample, 0x0, General/CDSYS/CDSYS_c12_SpuGetMaxSample.c
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_c13_XAGetNumTracks.c
 common, exe, CDSYS_XASeek, 0x0, General/CDSYS/CDSYS_c14_XASeek.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_c15_XAGetTrackLength.c
