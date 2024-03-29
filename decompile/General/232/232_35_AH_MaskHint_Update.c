@@ -51,6 +51,14 @@ void DECOMP_AH_MaskHint_Update()
 				// temporary, until CAM_FollowDriver_Normal
 				// and CAM_ThTick are implemented in PC port
 				cdc->flags |= 0x800;
+				
+				// rigged result
+				gGT->tileView[0].pos[0] = 0xBDB0;
+				gGT->tileView[0].pos[1] = 0x84;
+				gGT->tileView[0].pos[2] = 0xFAFC;
+				gGT->tileView[0].rot[0] = 0x6e4;
+				gGT->tileView[0].rot[1] = 0xef4;
+				gGT->tileView[0].rot[2] = 0;
 				#endif
 			}
 			
@@ -318,6 +326,24 @@ void DECOMP_AH_MaskHint_Update()
 				gGT->gameMode2 &= ~(VEH_FREEZE_DOOR);
 				d->funcPtrs[0] = DECOMP_VehPhysProc_Driving_Init;
 			}
+		
+			#ifdef REBUILD_PS1
+			// rigged, return camera to spawn pos.
+			// temporary until camera can lerp back around
+			
+			int k = 0;
+			gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
+			gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
+			gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
+						  
+			gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
+			gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
+			gGT->tileView[k].rot[2] = 0; // required
+			
+			// move backwards a little
+			gGT->tileView[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->tileView[k].rot[1])) >> 0xC;
+			gGT->tileView[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->tileView[k].rot[1])) >> 0xC;
+			#endif
 		
 			break;
 	}
