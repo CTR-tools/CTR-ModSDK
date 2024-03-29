@@ -660,6 +660,9 @@ common, exe, VehFrameProc_LastSpin, 0x0, General/Vehicle/VehFrameProc_LastSpin.c
 common, exe, VehGroundShadow_Subset1, 0x0, General/Vehicle/VehGroundShadow_Subset1.c
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
 
+// move somewhere else?
+common, exe, LHMatrix_Parent, 0x0, General/LHMatrix_Parent.c
+
 // need VehLap
 // need VehPhysCrash
 
