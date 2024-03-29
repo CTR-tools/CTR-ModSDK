@@ -197,33 +197,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 		TEST_DrawInstances(gGT);
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-	}
-	
-	// This is temporary, until RenderAllHUD is done
-	if(
-		(gGT->numPlyrCurrGame != 1) ||
-		((gGT->hudFlags & 8) == 0) ||
-		((gGT->gameMode1 & START_OF_RACE) == 0)
-	)
-	{
-		// why is this needed? adv hub crashes otherwise
-		if((gGT->gameMode1 & 0x40000000) == 0)
-		if(gGT->level1 != 0)
-		
-		if((gGT->hudFlags & 1) != 0)
-		{
-			if((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
-			{
-				DECOMP_UI_RenderFrame_AdvHub();
-			}
-			
-			else
-			{
-				DECOMP_UI_RenderFrame_Racing();
-			}
-		}
-	}
-	
+	}	
 #endif
 
 #ifndef REBUILD_PS1	
@@ -234,8 +208,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	#if 0
 	// Multiplayer PixelLOD Part 1
 	#endif
-	
+#endif
+
 	RenderAllHUD(gGT);
+
+#ifndef REBUILD_PS1	
 	RenderAllBeakerRain(gGT);
 	RenderAllBoxSceneSplitLines(gGT);
 	
@@ -647,6 +624,7 @@ void RenderAllStars(struct GameTracker* gGT)
 		&gGT->stars,
 		gGT->numPlyrCurrGame);
 }
+#endif
 
 void RenderAllHUD(struct GameTracker* gGT)
 {
@@ -666,11 +644,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 		// if no hud
 		if((hudFlags & 1) == 0)
 		{
+			#ifndef REBUILD_PS1
 			// if standings
 			if((hudFlags & 4) != 0)
 			{
 				CupStandings_InputAndDraw();
 			}
+			#endif
 		}
 		
 		// if hud
@@ -697,7 +677,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if crystal challenge
 					else
 					{
+						#ifndef REBUILD_PS1
 						DECOMP_UI_RenderFrame_CrystChall();
+						#endif
 					}
 				}
 				
@@ -716,6 +698,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
+					// PC can't share address spaces
+					#ifndef REBUILD_PC
+					
 					// temporary, until we rewrite MainGameEnd_Initialize
 					if((gGT->gameMode1 & RELIC_RACE) == 0)
 					{
@@ -731,6 +716,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 						void DECOMP_RR_EndEvent_DrawMenu();
 						DECOMP_RR_EndEvent_DrawMenu();
 					}
+					#endif
 					
 					return;
 				}
@@ -744,9 +730,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 				// and load the 232 overlay
 				if(gGT->overlayTransition > 1)
 				{
+					#ifndef REBUILD_PS1
 					gGT->overlayTransition--;
 					if(gGT->overlayTransition == 1)
 						LOAD_OvrThreads(2);
+					#endif
 				}
 				
 				// if 233 is still loaded
@@ -785,9 +773,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 					{
 						gGT->overlayTransition = 0;
 						
+						#ifndef REBUILD_PS1
 						INSTANCE_LevDelayedLInBs(
 							gGT->level1->ptrInstDefs,
 							gGT->level1->numInstances);
+						#endif
 							
 						// allow instances again
 						gGT->gameMode2 &= ~(DISABLE_LEV_INSTANCE);
@@ -804,10 +794,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 	// if drawing intro-race title bars
 	else
 	{
+		#ifndef REBUILD_PS1
 		UI_RaceStart_IntroText1P();
+		#endif
 	}
 }
 
+#ifndef REBUILD_PS1
 void RenderAllBeakerRain(struct GameTracker* gGT)
 {
 	int numPlyrCurrGame = gGT->numPlyrCurrGame;
