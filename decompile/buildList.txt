@@ -1,5 +1,5 @@
-// 473+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 813 rewritten so far
-// 473 for every 'common' and ','
+// 479+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 819 rewritten so far
+// 479 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -503,8 +503,20 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 // MixRNG
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
-// Particles
+// Particle
+common, exe, Particle_FuncPtr_PotionShatter, 0x0, General/Particle/Particle_FuncPtr_PotionShatter.c
+common, exe, Particle_FuncPtr_SpitTire, 0x0, General/Particle/Particle_FuncPtr_SpitTire.c
+common, exe, Particle_FuncPtr_ExhaustUnderwater, 0x0, General/Particle/Particle_FuncPtr_ExhaustUnderwater.c
+common, exe, Particle_OnDestroy, 0x0, General/Particle/Particle_OnDestroy.c
+// UpdateList
 
+// bugged?
+//ommon, exe, Particle_UpdateAllParticles, 0x0, General/Particle/Particle_UpdateAllParticles.c
+
+common, exe, Particle_BitwiseClampByte, 0x0, General/Particle/Particle_BitwiseClampByte.c
+common, exe, Particle_SetColors, 0x0, General/Particle/Particle_SetColors.c
+// RenderList
+// Init
 
 // MenuBox
 common, exe, MENUBOX_DrawPolyGT4, 0x0, General/MenuBox/MENUBOX_DrawPolyGT4.c

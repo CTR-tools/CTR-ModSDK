@@ -1,3 +1,4 @@
+
 // Particle_FuncPtr_PotionShatter
 void FUN_8003eae0(int param_1)
 
@@ -107,8 +108,12 @@ void FUN_8003ee20(int param_1)
   int iVar1;
   uint uVar2;
 
-  if ((3 < (*(int *)(param_1 + 0x2c) >> 8) + *(int *)(*(int *)(param_1 + 0x20) + 0x48)) &&
-     (*(short *)(param_1 + 0x10) < 0x1b))
+  if (
+		(3 < (*(int *)(param_1 + 0x2c) >> 8) + *(int *)(*(int *)(param_1 + 0x20) + 0x48)) &&
+		
+		// framesLeftInLife
+		(*(short *)(param_1 + 0x10) < 0x1b)
+	  )
   {
 	// bubblepop
     iVar1 = *(int *)(PTR_DAT_8008d2ac + 0x2134);
@@ -118,8 +123,10 @@ void FUN_8003ee20(int param_1)
 
     if (iVar1 != 0)
 	{
-	  // save icons
-	  // param1->8 = iconGroup->icons
+	  // actually the first icon pointer in the array,
+	  // not the pointer to the array itself
+	  
+	  // param1->8 = iconGroup->icons[0]
       *(undefined4 *)(param_1 + 8) = *(undefined4 *)(iVar1 + 0x14);
     }
 
