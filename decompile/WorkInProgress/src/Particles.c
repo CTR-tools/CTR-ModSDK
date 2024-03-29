@@ -34,7 +34,8 @@ void Particle_FuncPtr_PotionShatter(struct Particle *p)
 
 LAB_8003ebc8:
 
-  if (*(int*)(p + 0x20) == 0x45) // ???
+  // green shatter or red shatter
+  if (p->modelID == 0x45)
   {
     if (0 < p->axis[8].startVal)
     {

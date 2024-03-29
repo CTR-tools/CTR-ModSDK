@@ -503,6 +503,9 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 // MixRNG
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
+// Particles
+
+
 // MenuBox
 common, exe, MENUBOX_DrawPolyGT4, 0x0, General/MenuBox/MENUBOX_DrawPolyGT4.c
 common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_Edge.c

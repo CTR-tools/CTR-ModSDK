@@ -46,8 +46,17 @@ struct Particle
 	void* funcPtr;
 
 	// 0x20
-	// also can be plantInst, need to rename
-	struct Instance* driverInst;
+	union
+	{
+		// used by VehEmitter
+		struct Instance* driverInst;
+		
+		// used by plant TireSpit
+		struct Instance* plantInst;
+		
+		// used for potion shatter
+		int modelID;
+	};
 
 	/*
 		0x24: posX

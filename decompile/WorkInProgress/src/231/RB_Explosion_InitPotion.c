@@ -62,9 +62,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
 	  
       p->funcPtr = Particle_FuncPtr_PotionShatter;
       
-      // Which element is this?
-      // local_40 is pointer stack for INSTANCE_BirthWithThread, or shatter color
-	  *(int *)(p + 0x20) = local_40;
+	  p->modelID = shatterColor;
     }
   } 
   

@@ -139,7 +139,7 @@ PlayChewSound:
 					{
 						#ifndef REBUILD_PS1
 						particle->funcPtr = Particle_FuncPtr_SpitTire;
-						particle->driverInst = plantInst;
+						particle->plantInst = plantInst;
 						#endif
 						
 						particle->axis[0].startVal +=
