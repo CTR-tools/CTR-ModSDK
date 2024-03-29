@@ -41,9 +41,16 @@ void DECOMP_AH_MaskHint_Update()
 				// 0x2d0 on $sp when MaskHint_Update starts
 				
 				#ifndef REBUILD_PS1
+				
 				// Get pos and rot, then set them as desired
 				CAM_FollowDriver_AngleAxis(cdc,d,0x1f800108,pos,rot);
 				CAM_SetDesiredPosRot(cdc,pos,rot);
+				
+				#else
+					
+				// temporary, until CAM_FollowDriver_Normal
+				// and CAM_ThTick are implemented in PC port
+				cdc->flags |= 0x800;
 				#endif
 			}
 			

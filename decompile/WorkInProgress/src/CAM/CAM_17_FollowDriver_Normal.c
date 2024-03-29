@@ -744,7 +744,7 @@ LAB_8001ab04:
                 sVar10 = cDC->unk8E + 1;
 
                 // compare two transition timers
-                if (*(short *)(cDC + 0x9e) <= cDC->unk8E)
+                if (*(short *)(cDC->frameCounterTransition) <= cDC->unk8E)
                 {
                     // stop transitioning away from player,
                     // sit stationary away from player

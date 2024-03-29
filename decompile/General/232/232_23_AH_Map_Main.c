@@ -52,17 +52,6 @@ void DECOMP_AH_Map_Main(void)
   }
 #endif
   
-#ifdef REBUILD_PS1
-  // pc port starts too early?
-  // actually starts the instant loading begins?
-  if (gGT->level1 == 0)
-	  return;
-  if (gGT->levelID != N_SANITY_BEACH)
-	  return;
-  if (DECOMP_TitleFlag_IsFullyOnScreen())
-	  return;
-#endif
-
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
 	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);

@@ -633,6 +633,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 	
 	hudFlags = gGT->hudFlags;
 	gameMode1 = gGT->gameMode1;
+
+	// Why is this needed? What's broken
+	// that causes this to run premature?
+	#ifdef REBUILD_PS1
+	if((gGT->gameMode1 & 0x40000000) != 0) return;
+	if(gGT->level1 == 0) return;
+	#endif
 	
 	// if not drawing intro-race title bars
 	if(

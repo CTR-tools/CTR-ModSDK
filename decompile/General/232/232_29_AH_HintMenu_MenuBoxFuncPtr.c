@@ -185,6 +185,12 @@ void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
                 }
                 else
                 {
+                    // temporary until XA support is on PC,
+                    // otherwise state is locked in 4, and menu bugs
+                    #ifdef REBUILD_PC
+                    sdata->XA_State = 0;
+                    #endif
+
                     // If there is no loading in progress
                     if ((sdata->load_inProgress == 0) && (sdata->XA_State == 0))
                     {
