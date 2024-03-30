@@ -5364,16 +5364,18 @@ void FUN_80047da8(undefined4 param_1)
   // main structure of game
   puVar1 = PTR_DAT_8008d2ac;
 
-  // set level ID to main menu
+  // set level ID to main menu,
+  // so that MainRaceTrack_RequestLoad
+  // sets "previous" to main menu
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x1a10) = 0x27;
 
   // change character ID to icon ID
   DAT_80086e84 = DAT_8008fbce;
 
-  // Load AdvHub LEV depending on new profile
+  // MainRaceTrack_RequestLoad(level in profile)
   FUN_8003cfc0((int)*(short *)(puVar1 + 0x1eb0));
 
-  // make MenuBox invisible
+  // MENUBOX_Hide
   FUN_800469c8(param_1);
   return;
 }
