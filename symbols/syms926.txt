@@ -581,6 +581,7 @@
 8003ea6c MixRNG_Particles
 8003eaac MixRNG_GetValue
 
+// Particle
 8003eae0 Particle_FuncPtr_PotionShatter
 8003ec18 Particle_FuncPtr_SpitTire
 8003ee20 Particle_FuncPtr_ExhaustUnderwater
@@ -593,13 +594,17 @@
 8003f590 Particle_RenderList
 80040308 Particle_Init
 
+// PickBossWeapon
 80040850 RobotcarWeapons_Init
 800408b8 RobotcarWeapons_Update
 
+// PlayerLapStats
 800414f4 StartLine_Update
 
+// Podium
 80041c84 Tawna_Init
 
+// PROC
 80041dc0 THREAD_DestroyTracker
 80041dfc THREAD_DestroyInstance
 80041e20 THREAD_DestroyObject
@@ -615,6 +620,7 @@
 80042544 THREAD_StartSearch_Self
 800425d4 THREAD_CollideHitboxWithBucket
 
+// PushBuffer
 800426f8 TileView_Init
 80042910 TileView_SetPsyqGeom
 80042974 TileView_SetDrawEnv_DecalMP
@@ -625,14 +631,15 @@
 80043928 TileView_FadeOneWindow
 80043ab8 TileView_FadeAllWindows
 
+// QuitTitle
 80043b30 TitleBeginTrack_MenuBoxFuncPtr
 80043c04 TitleBeginTrack_Get_MenuBox
 
-// missing in sep3
+// RaceConfig
 80043c10 TitleCard_LoadGameOptions
 80043d24 TitleCard_SaveGameOptions
 
-// TitleFlag
+// RaceFlag
 80043e34 TitleFlag_MoveModels
 80043f1c TitleFlag_IsFullyOnScreen
 80043f28 TitleFlag_IsFullyOffScreen
@@ -648,6 +655,7 @@
 800442a0 TitleFlag_DrawLoadingString
 800444e8 TitleFlag_DrawSelf
 
+// RECTBOX
 80044ef8 MENUBOX_DrawPolyGT4
 80044f90 MENUBOX_DrawOuterRect_Edge
 80044ff8 MENUBOX_DrawTime
