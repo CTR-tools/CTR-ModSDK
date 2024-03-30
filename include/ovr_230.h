@@ -1037,10 +1037,10 @@ struct OVR_230_VideoBSS
     int field2_0x8;
     int field3_0xc;
 
-    // 800b67b8
+    // 800b67bc
     short totalFrames;
 
-    // 800b67bc
+    // 800b67be
     short frameCounter;
 
     // 800b67c0

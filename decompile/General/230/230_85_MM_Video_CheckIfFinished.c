@@ -19,7 +19,6 @@ u_int DECOMP_MM_Video_CheckIfFinished(int param_1)
     }
     else
     {
-
         do
         {
             if ((param_1 == 1) && (local_1c--, local_1c == 0))

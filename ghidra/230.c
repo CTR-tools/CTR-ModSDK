@@ -7790,20 +7790,26 @@ uint FUN_800b6674(int param_1)
 	// keep going until dec.isdone
 	do 
 	{
-      if ((param_1 == 1) && (local_1c = local_1c + -1, local_1c == 0)) {
+      if ((param_1 == 1) && (local_1c = local_1c + -1, local_1c == 0)) 
+	  {
         iVar3 = FUN_80078bf8(1);
-        if (iVar3 == 0x10) {
+		
+        if (iVar3 == 0x10) 
+		{
           bVar1 = true;
 		  
 		  // dec.isdone = 1;
           DAT_800b67f0 = 1;
         }
-        else {
+        else 
+		{
           local_1c = 0x28;
         }
       }
+	  
       local_20 = local_20 + -1;
-      if (local_20 == 0) 
+      
+	  if (local_20 == 0) 
 	  {
 		// dec.isdone = 1;
         DAT_800b67f0 = 1;
@@ -7819,6 +7825,7 @@ uint FUN_800b6674(int param_1)
 	DAT_800b67f0 = 0;
 	
     DAT_800b67c2 = 0;
+	
     if ((!bVar1) && (DAT_800b67be != DAT_800b67bc)) 
 	{
 	  // DecDCTReset
