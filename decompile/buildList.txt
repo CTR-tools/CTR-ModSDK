@@ -723,10 +723,6 @@ common, exe, VehTalkMask_End, 0x0, General/Vehicle/VehTalkMask_End.c
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
 common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
 
-// overwrite psyq with psn00bsdk library
-// I predict 80078d34 -> 8007a594 is free (6240 bytes)
-common, exe, StCdInterrupt, 0x0, Lib/mdec.c
-
 // Japan
 1006, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
 1111, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
