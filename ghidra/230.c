@@ -7310,10 +7310,8 @@ void FUN_800b5b7c(undefined *param_1)
 	
 	// 2 = CdlSetloc
     iVar1 = CdControl(2,puRam800b6830,0);
-	
-    if (iVar1 == 0) {
-      return;
-    }
+    if (iVar1 == 0) return;
+	  
     DAT_800b67cc = 1;
   }
   

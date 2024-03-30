@@ -50,10 +50,7 @@ void DECOMP_MM_Video_KickCD(CdlLOC *location)
 
         // 2 = CdlSetloc
         iVar1 = CdControl(2, V230.ptrCdLoc, 0);
-
-        // fails?
-        if (iVar1 == 0)
-            return;
+        if (iVar1 == 0) return;
 
         V230.field12_0x20 = 1;
     }
