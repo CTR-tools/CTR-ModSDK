@@ -1073,7 +1073,7 @@ void VehStuckProc_Tumble_PhysAngular(struct Thread* t, struct Driver* d);
 void VehStuckProc_Tumble_Animate(struct Thread* t, struct Driver* d);
 void VehStuckProc_Tumble_Init(struct Thread* t, struct Driver* d);
 void VehStuckProc_Warp_MoveDustPuff(struct Thread* t, struct Driver* d);
-void VehStuckProc_Warp_AddDustPuff1(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_AddDustPuff1(struct ScratchpadStruct *sps);
 void VehStuckProc_Warp_AddDustPuff2(struct Thread* t, struct Driver* d);
 void VehStuckProc_Warp_PhysAngular(struct Thread* t, struct Driver* d);
 void VehStuckProc_Warp_Init(struct Thread* t, struct Driver* d);

@@ -35335,9 +35335,8 @@ void FUN_80068be8(undefined4 param_1,int param_2)
 
 	// Interpolate scale by speed
     uVar1 = FUN_80058f54((int)*(short *)(iVar4 + 0x20),0x78,0x12c0);
-
-
-    *(undefined2 *)(iVar4 + 0x20) = uVar1;
+	*(undefined2 *)(iVar4 + 0x20) = uVar1;
+	
     iVar4 = *(int *)(param_2 + 0x2d8) + 0x800;
     if (*(int *)(param_2 + 0x2d0) + 0x8000 <= *(int *)(param_2 + 0x2d8)) goto LAB_80068db0;
   }

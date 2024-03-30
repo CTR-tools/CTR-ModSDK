@@ -1,5 +1,5 @@
-// 489+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 830 rewritten so far
-// 489 for every 'common' and ','
+// 492+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 833 rewritten so far
+// 492 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -661,7 +661,9 @@ common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 common, exe, VehFrameInst_GetStartFrame, 0x0, General/Vehicle/VehFrameInst_GetStartFrame.c
 common, exe, VehFrameInst_GetNumAnimFrames, 0x0, General/Vehicle/VehFrameInst_GetNumAnimFrames.c
 
-common, exe, VehFrameProc_Driving, 0x0, General/Vehicle/VehFrameProc_Driving.c
+// breaks animation during u-turn (DOWN+SQUARE+TURN)
+//ommon, exe, VehFrameProc_Driving, 0x0, General/Vehicle/VehFrameProc_Driving.c
+
 common, exe, VehFrameProc_Spinning, 0x0, General/Vehicle/VehFrameProc_Spinning.c
 common, exe, VehFrameProc_LastSpin, 0x0, General/Vehicle/VehFrameProc_LastSpin.c
 
@@ -691,9 +693,7 @@ common, exe, VehPhysJoystick_ReturnToRest, 0x0, General/Vehicle/VehPhysJoystick_
 common, exe, VehPhysJoystick_GetStrength, 0x0, General/Vehicle/VehPhysJoystick_GetStrength.c
 common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0, General/Vehicle/VehPhysJoystick_GetStrengthAbsolute.c
 
-// animation breaks when you U-Turn
-//ommon, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
-
+common, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
 common, exe, VehPhysProc_Driving_Audio, 0x0, General/Vehicle/VehPhysProc_Driving_Audio.c
 common, exe, VehPhysProc_Driving_Update, 0x0, General/Vehicle/VehPhysProc_Driving_Update.c
 common, exe, VehPhysProc_Driving_Init, 0x0, General/Vehicle/VehPhysProc_Driving_Init.c
@@ -720,8 +720,9 @@ common, exe, VehStuckProc_RevEngine_Update, 0x0, General/Vehicle/VehStuckProc_Re
 common, exe, VehStuckProc_RevEngine_Init, 0x0, General/Vehicle/VehStuckProc_RevEngine_Init.c
 common, exe, VehStuckProc_Tumble_Update, 0x0, General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c
 common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_Init.c
-
-// need VehStuckProc_Warp
+common, exe, VehStuckProc_Warp_AddDustPuff1, 0x0, General/Vehicle/VehStuckProc_Warp_AddDustPuff1.c
+common, exe, VehStuckProc_Warp_PhysAngular, 0x0, General/Vehicle/VehStuckProc_Warp_PhysAngular.c
+common, exe, VehStuckProc_Warp_Init, 0x0, General/Vehicle/VehStuckProc_Warp_Init.c
 
 common, exe, VehTalkMask_ThTick, 0x0, General/Vehicle/VehTalkMask_ThTick.c
 common, exe, VehTalkMask_Init, 0x0, General/Vehicle/VehTalkMask_Init.c
