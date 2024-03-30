@@ -30,7 +30,7 @@ void DECOMP_MM_Video_DecDCToutCallbackFunc(void)
         DecDCTout(V230.out_Buf[V230.imgId], V230.field32_0x58);
     }
 
-    if (BreakDraw() != 0)
+    if (ot != 0)
     {
         DrawOTag(ot);
     }
