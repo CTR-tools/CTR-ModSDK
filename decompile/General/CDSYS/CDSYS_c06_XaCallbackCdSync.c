@@ -2,13 +2,14 @@
 
 void DECOMP_CDSYS_XaCallbackCdSync(char result)
 {
-	unsigned char comstr;
+	unsigned char com;
 	
 	if(result == CdlComplete)
 	{
-		comstr = CdComstr(result) - 0x15;
+		// determine CdlSeekL or CdlSeekP
+		com = CdLastCom() - 0x15;
 		
-		if(comstr < 2)
+		if(com < 2)
 		{
 			sdata->XA_State = 0;
 		}

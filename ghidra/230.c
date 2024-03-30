@@ -7504,7 +7504,7 @@ LAB_800b5fec:
           }
         }
 		
-		// DecDCTBufSize
+		// DecDCTGetEnv
         uVar4 = FUN_800798b8(local_2c);
 		
         if (uVar4 <= DAT_800b67f4) 

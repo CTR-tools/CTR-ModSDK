@@ -1117,16 +1117,16 @@
 8007193c SpuSetTransferMode
 8007196c CdStatus
 8007197c CdMode
-8007198c CdComstr
+8007198c CdLastCom
 8007199c CdLastPos
-800719a8 __builtin_vec_delete
+800719a8 CdReset
 800719c8 CdSetDebug
 800719dc CdReady
 800719fc CdSyncCallback
 80071a10 CdReadyCallback
 80071a24 CdControl
 80071b60 CdControlF 
-80071c94 CdControlB 
+80071c94 CdControlB
 80071de0 CdGetSector
 80071e00 CdGetSector2
 80071e20 CdDataCallback
@@ -1254,7 +1254,7 @@
 8007793c start
 800779e4 __main // ignore "break" before it
 80077a54 BreakDraw
-// unknown 80077ae8 ------
+80077ae8 IsIdleGPU // NEW Mar29
 80077b48 SetRCnt
 80077be4 GetRCnt
 80077c1c StartRCnt
@@ -1265,7 +1265,8 @@
 // extra GTE function here in sep3
 80077cd8 SetVideoMode
 80077cec GetVideoMode //or GsGetWorkBase
-// -------- After this function is a lib signature -------------
+
+// Below here is good
 80077d10 _96_remove
 80077d28 _96_init
 80077d38 SetDefDrawEnv
@@ -1289,19 +1290,22 @@
 80078068 TestEvent
 80078078 open
 80078088 firstfile
-// unknown 80078224 ------ called by firstfile
+80078224 ------ called by firstfile
 80078328 CloseEvent
 80078338 _card_load
 80078348 sprintf
 80078bd8 strcat
 80078be8 rand
-// unknown 80078bf8 ------
+80078bf8 CdDiskReady // NEW Mar29
 80078d34 StCdInterrupt
 // unknown 80079650 ------ called by lib funcs
 // unknown 8007967c ------ called by lib funcs
 80079824 StClearRing
 80079884 DecDCTReset
-// unknown 800798b8 ------
+800798b8 DecDCTGetEnv // NEW Mar29
+// Above here is good
+
+
 800798c4 DecDCTin
 80079940 DecDCTout			// These are all MDEC
 80079960 DecDCToutCallback 

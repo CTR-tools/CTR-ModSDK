@@ -1083,9 +1083,9 @@
 8006FC14 SpuSetTransferMode
 8006FC44 CdStatus
 8006FC54 CdMode
-8006FC64 CdComstr
+8006FC64 CdLastCom
 8006FC74 CdLastPos
-80071980 __builtin_vec_delete
+80071980 CdReset
 8006FCA0 CdSetDebug
 8006FCB4 CdReady
 8006FCD4 CdSyncCallback

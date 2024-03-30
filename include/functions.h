@@ -1157,7 +1157,7 @@ void ThTick_RunBucket(struct Thread* thread);
 
 // PSY-Q
 
-void BreakDraw();
+void* BreakDraw();
 
 // ALL EXE FUNCTIONS ARE DECLARED ABOVE
 // OVERLAY FUNCTIONS ARE BELOW

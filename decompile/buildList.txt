@@ -54,7 +54,7 @@ common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
 common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
 common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
 common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
-// next comes MM_Video
+//ommon, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_99_MM_Video.c
 
 // 231 (incomplete)
 // skip first two
@@ -722,12 +722,15 @@ common, exe, VehTalkMask_End, 0x0, General/Vehicle/VehTalkMask_End.c
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
 common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
 
-// Japan
+// overwrite psyq with psn00bsdk library
+// I predict 80078d34 -> 8007a594 is free (6240 bytes)
+common, exe, StCdInterrupt, 0x0, Lib/mdec.c
 
+// Japan
 1006, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
 1111, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
 
-/// Retail
+// Retail
 1111, exe, DecalFont_boolRacingWheel, 0x0, General/RegionJapan/Retail/DecalFont_boolRacingWheel.c
 
 // rewritten psyq lib entry, not written by ND, needed for debugging

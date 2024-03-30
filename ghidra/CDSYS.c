@@ -403,7 +403,7 @@ void FUN_8001c7a4(char param_1)
   if (param_1 == '\x02')
   {
 	// string of command
-    iVar1 = CdComstr();
+    iVar1 = CdLastCom();
 
     if (iVar1 - 0x15U < 2) {
       DAT_8008d708 = 0;

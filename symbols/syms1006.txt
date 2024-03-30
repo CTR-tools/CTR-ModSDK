@@ -1112,9 +1112,9 @@
 80073710 SpuSetTransferMode
 80073740 CdStatus
 80073750 CdMode
-80073760 CdComstr
+80073760 CdLastCom
 80073770 CdLastPos
-8007377c __builtin_vec_delete
+8007377c CdReset
 8007379c CdSetDebug
 800737B0 CdReady
 800737D0 CdSyncCallback

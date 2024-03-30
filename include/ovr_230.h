@@ -1032,15 +1032,6 @@ struct OverlayDATA_230
 extern struct OverlayRDATA_230 R230;
 extern struct OverlayDATA_230 D230;
 
-// starts at 800b67ac
-extern struct
-{
-
-	// 800b67d4
-	int numFrames;
-
-} OVR_230_VideoBSS;
-
 #if BUILD >= EurRetail
 	_Static_assert(sizeof(struct MainMenu_LevelRow) == 0x14);
 #else
