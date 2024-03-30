@@ -7280,9 +7280,7 @@ void FUN_800b5b7c(undefined *param_1)
       }
       
 	  if (DAT_800b67cc != 3) 
-	  {
-        return;
-      }
+		return;
       
 	  // CdlModeStream2|CdlModeSpeed
 	  uVar2 = 0x1a0;
@@ -7304,9 +7302,8 @@ void FUN_800b5b7c(undefined *param_1)
       return;
     }
 	
-    if (DAT_800b67cc != 0) {
+    if (DAT_800b67cc != 0)
       return;
-    }
 	
 	// 2 = CdlSetloc
     iVar1 = CdControl(2,puRam800b6830,0);
