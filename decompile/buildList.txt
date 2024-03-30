@@ -68,9 +68,7 @@ common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
 common, 230, MM_Video_AllocMem, 0x0, General/230/230_82_MM_Video_AllocMem.c
 common, 230, MM_Video_ClearMem, 0x0, General/230/230_83_MM_Video_ClearMem.c
 common, 230, MM_Video_DecodeFrame, 0x0, General/230/230_84_MM_Video_DecodeFrame.c
-
-// causes half-screen in scrapbook
-//ommon, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfFinished.c
+common, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfFinished.c
 
 // 231 (incomplete)
 // skip first two

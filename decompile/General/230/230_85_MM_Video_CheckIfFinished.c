@@ -8,7 +8,27 @@ u_int DECOMP_MM_Video_CheckIfFinished(int param_1)
     int local_20;
     int local_1c;
 
-    local_20 = 40000;
+// Without this change, scrapbook 
+// draws only half the screen
+#if 0
+
+	// original value
+	// Naughty Dog did not know how to properly stall, so they made the 
+	// cpu run around in circles. Normally with param_1==0 (scrapbook)
+	// the loop is 34 instructions, so the stall is (40000*34) 1360000
+	// instructions long, divide by 33868800, approx 0.04 seconds of stall
+	local_20 = 40000;
+
+#else
+
+	// new value
+	// Instead of 34 instructions, the loop is now 11 instructions
+	// because of modern GCC compiler optimization. The stall is
+	// now (90000*11)/33868800, which is approx 0.03 seconds of stall
+	local_20 = 90000;
+
+#endif
+
     local_1c = 0x28;
 
     bVar1 = false;
