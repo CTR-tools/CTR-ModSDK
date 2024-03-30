@@ -1,14 +1,17 @@
 #include <common.h>
 
-int DECOMP_Particle_BitwiseClampByte(int *param_1)
+#define CLAMP_LOW  0
+#define CLAMP_HIGH 0xFF00
+
+/// @brief Clamps int to 0-0xFF00 range, but only takes upper 8 bits from the result.
+/// @param value - input value
+/// @return clamped value
+int DECOMP_Particle_BitwiseClampByte(int* value)
 {
-  int iVar1 = *param_1;
+  if (*value < CLAMP_LOW) 
+    *value = CLAMP_LOW;
+  else if (*value > CLAMP_HIGH)
+    *value = CLAMP_HIGH;
 
-  if (iVar1 < 0) iVar1 = 0;    
-  else if (iVar1 > 0xff00) iVar1 = 0xff00;
-  
-  *param_1 = iVar1;
-
-  // shift down a byte
-  return iVar1 >> 8;
+  return *value >> 8;
 }
