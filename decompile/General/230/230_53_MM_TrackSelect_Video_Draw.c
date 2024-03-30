@@ -125,7 +125,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   }
   if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
-    MM_Video_ClearMem(r, (u_int)param_5 | 1);
+    MM_Video_ClearMem();
 
     D230.trackSel_video_boolAllocated = 0;
   }

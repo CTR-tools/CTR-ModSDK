@@ -559,6 +559,18 @@ void DECOMP_MM_JumpTo_TrackSelect(void);
 void DECOMP_MM_JumpTo_Characters(void);
 void DECOMP_MM_JumpTo_Scrapbook(void);
 
+#if 0
+void DECOMP_MM_Video_DecDCToutCallbackFunc(void);
+void DECOMP_MM_Video_KickCD(CdlLOC *location);
+void DECOMP_MM_Video_VLC_Decode(void);
+void DECOMP_MM_Video_StartStream(int param_1, int numFrames);
+void DECOMP_MM_Video_StopStream(void);
+void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int param_5);
+void DECOMP_MM_Video_ClearMem(void);
+u_int DECOMP_MM_Video_DecodeFrame(short offsetX, short offsetY);
+u_int DECOMP_MM_Video_CheckIfFinished(int param_1);
+#endif
+
 // 231 (undone)
 void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);

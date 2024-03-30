@@ -1265,8 +1265,6 @@
 // extra GTE function here in sep3
 80077cd8 SetVideoMode
 80077cec GetVideoMode //or GsGetWorkBase
-
-// Below here is good
 80077d10 _96_remove
 80077d28 _96_init
 80077d38 SetDefDrawEnv
@@ -1303,9 +1301,6 @@
 80079824 StClearRing
 80079884 DecDCTReset
 800798b8 DecDCTGetEnv // NEW Mar29
-// Above here is good
-
-
 800798c4 DecDCTin
 80079940 DecDCTout			// These are all MDEC
 80079960 DecDCToutCallback 

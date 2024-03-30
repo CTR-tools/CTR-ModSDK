@@ -94,7 +94,7 @@ struct OVR_230_VideoBSS
 
 extern struct OVR_230_VideoBSS V230;
 
-void MM_Video_DecDCToutCallbackFunc(void)
+void DECOMP_MM_Video_DecDCToutCallbackFunc(void)
 {
     if (((V230.flags & 1) != 0) && (*(u_int *)0x8009ebf8 != 0))
     {
@@ -128,7 +128,7 @@ void MM_Video_DecDCToutCallbackFunc(void)
     }
 }
 
-void MM_Video_KickCD(CdlLOC *location)
+void DECOMP_MM_Video_KickCD(CdlLOC *location)
 {
     int iVar1;
     int CdlMode;
@@ -202,7 +202,7 @@ void MM_Video_KickCD(CdlLOC *location)
     }
 }
 
-void MM_Video_VLC_Decode(void)
+void DECOMP_MM_Video_VLC_Decode(void)
 {
     short sVar1;
     int iVar2;
@@ -243,7 +243,7 @@ void MM_Video_VLC_Decode(void)
             V230.field21_0x38 = 0xffffffff;
             V230.field9_0x1a = sVar1;
 
-            MM_Video_KickCD(&V230.cdLocation1);
+            DECOMP_MM_Video_KickCD(&V230.cdLocation1);
         }
     }
     else
@@ -254,7 +254,7 @@ void MM_Video_VLC_Decode(void)
         if (((V230.flags & 8) == 0) &&
             (local_30 < (V230.RING_SIZE >> 4)))
         {
-            MM_Video_KickCD(&V230.cdLocation2);
+            DECOMP_MM_Video_KickCD(&V230.cdLocation2);
         }
 
         if (iVar2 == V230.field20_0x34)
@@ -275,7 +275,7 @@ void MM_Video_VLC_Decode(void)
                     V230.field13_0x22 = 0;
                     V230.field21_0x38 = 0xffffffff;
 
-                    MM_Video_KickCD(&V230.cdLocation3);
+                    DECOMP_MM_Video_KickCD(&V230.cdLocation3);
                 }
             }
             else
@@ -314,7 +314,7 @@ void MM_Video_VLC_Decode(void)
                     V230.field21_0x38 = 0xffffffff;
                     if (V230.field1_0x4 < 1)
                     {
-                        MM_Video_KickCD(&V230.cdLocation1);
+                        DECOMP_MM_Video_KickCD(&V230.cdLocation1);
 
                         if (iVar2 == V230.numFrames)
                         {
@@ -338,7 +338,7 @@ void MM_Video_VLC_Decode(void)
                                 V230.field0_0x0 = V230.field0_0x0 + -1;
                                 V230.field2_0x8 = 0;
 
-                                MM_Video_KickCD(&V230.cdLocation1);
+                                DECOMP_MM_Video_KickCD(&V230.cdLocation1);
                             }
                             V230.field1_0x4 = -1;
                         }
@@ -416,7 +416,7 @@ void MM_Video_VLC_Decode(void)
     }
 }
 
-void MM_Video_StartStream(int param_1, int numFrames)
+void DECOMP_MM_Video_StartStream(int param_1, int numFrames)
 {
     V230.field3_0xc = 0;
     V230.field8_0x18 = 0;
@@ -456,7 +456,7 @@ void MM_Video_StartStream(int param_1, int numFrames)
     V230.ptrCdLoc = &V230.cdLocation1;
 }
 
-void MM_Video_StopStream(void)
+void DECOMP_MM_Video_StopStream(void)
 {
     int iVar1;
 
@@ -486,7 +486,7 @@ void MM_Video_StopStream(void)
     V230.drawNextFrame = 0;
 }
 
-void MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int param_5)
+void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int param_5)
 {
     char isRGB24;
     u_int uVar2;
@@ -539,17 +539,17 @@ void MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int p
 
     EnterCriticalSection();
 
-    DecDCToutCallback(&MM_Video_DecDCToutCallbackFunc);
+    DecDCToutCallback(&DECOMP_MM_Video_DecDCToutCallbackFunc);
 
     ExitCriticalSection();
 }
 
-void MM_Video_ClearMem(void)
+void DECOMP_MM_Video_ClearMem(void)
 {
     MEMPACK_PopState();
 }
 
-u_int MM_Video_DecodeFrame(short offsetX, short offsetY)
+u_int DECOMP_MM_Video_DecodeFrame(short offsetX, short offsetY)
 
 {
     int iVar1;
@@ -562,7 +562,7 @@ u_int MM_Video_DecodeFrame(short offsetX, short offsetY)
         {
             V230.field3_0xc = 0;
             V230.drawNextFrame = 0;
-            MM_Video_KickCD(&V230.cdLocation3);
+            DECOMP_MM_Video_KickCD(&V230.cdLocation3);
             return 0;
         }
     }
@@ -586,10 +586,10 @@ u_int MM_Video_DecodeFrame(short offsetX, short offsetY)
     {
         if (V230.ptrCdLoc != 0)
         {
-            MM_Video_KickCD(0);
+            DECOMP_MM_Video_KickCD(0);
         }
 
-        MM_Video_VLC_Decode();
+        DECOMP_MM_Video_VLC_Decode();
 
         // if value is zero, return zero,
         // not ready to draw
@@ -617,7 +617,7 @@ u_int MM_Video_DecodeFrame(short offsetX, short offsetY)
     return boolDraw;
 }
 
-u_int MM_Video_CheckIfFinished(int param_1)
+u_int DECOMP_MM_Video_CheckIfFinished(int param_1)
 {
     char bVar1;
     u_int uVar2;
