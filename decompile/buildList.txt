@@ -55,7 +55,22 @@ common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_Menu
 common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
 common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 
-//ommon, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_99_MM_Video.c
+common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
+
+// breaks looping of TrackSel, crashes at end
+//ommon, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
+
+// causes black screen in scrapbook
+//ommon, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
+
+common, 230, MM_Video_StartStream, 0x0, General/230/230_80_MM_Video_StartStream.c
+common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
+common, 230, MM_Video_AllocMem, 0x0, General/230/230_82_MM_Video_AllocMem.c
+common, 230, MM_Video_ClearMem, 0x0, General/230/230_83_MM_Video_ClearMem.c
+common, 230, MM_Video_DecodeFrame, 0x0, General/230/230_84_MM_Video_DecodeFrame.c
+
+// causes half-screen in scrapbook
+//ommon, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfFinished.c
 
 // 231 (incomplete)
 // skip first two

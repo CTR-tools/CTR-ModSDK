@@ -1029,8 +1029,102 @@ struct OverlayDATA_230
 	// 800b5a64 MM_Video_DecDCToutCallbackFunc
 };
 
+// starts at 800b67ac
+struct OVR_230_VideoBSS
+{
+    int field0_0x0;
+    int field1_0x4;
+    int field2_0x8;
+    int field3_0xc;
+
+    // 800b67b8
+    short totalFrames;
+
+    // 800b67bc
+    short frameCounter;
+
+    // 800b67c0
+    short DCT_MODE;
+
+    // 800b67c2
+    short drawNextFrame;
+
+    short field8_0x18;
+    short field9_0x1a;
+    short field10_0x1c;
+
+    // 800b67ca
+    short imgId;
+
+    short field12_0x20;
+    short field13_0x22;
+    short field14_0x24;
+
+    // padding?
+    char unk800b67d0[2];
+
+    // 800b67d4
+    int numFrames;
+
+    // 800b67d8
+    int frameCount;
+
+    int field19_0x30;
+    int field20_0x34;
+    int field21_0x38;
+
+    // 800b67e8
+    // 1 - IS_RGB24
+    // 2 - has Audio
+    // 4 - is looping
+    // 8 - is Scrapbook (?)
+    u_int flags;
+
+    // 800b67ec
+    int RING_SIZE;
+
+    // 800b67f0
+    u_int isDone;
+
+    int field25_0x48;
+
+	// field 26,27,28,29
+    char unk800b67f8[4];
+
+	// 30,31...
+    // 800b67fc
+    u_long* in_Buf[2];
+	
+	int field32_0x58;
+
+    char field33_0x5c;
+    char field34_0x5d;
+    char field35_0x5e;
+    char field36_0x5f;
+
+    // 800b680c
+    u_long *out_Buf[4];
+
+    // 800b681c
+    RECT slice;
+
+    // 800b6824
+    CdlLOC cdLocation1;
+
+    // 800b6828
+    CdlLOC cdLocation2;
+
+    // 800b682c
+    CdlLOC cdLocation3;
+	
+	// 800b6830
+    CdlLOC* ptrCdLoc;
+};
+
 extern struct OverlayRDATA_230 R230;
 extern struct OverlayDATA_230 D230;
+extern struct OVR_230_VideoBSS V230;
+
 
 #if BUILD >= EurRetail
 	_Static_assert(sizeof(struct MainMenu_LevelRow) == 0x14);
