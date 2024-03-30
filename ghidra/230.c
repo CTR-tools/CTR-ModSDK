@@ -7299,9 +7299,7 @@ void FUN_800b5b7c(undefined *param_1)
 	  DAT_800b67cc = 0;
       
 	  iVar1 = CdRead2(uVar2);
-      
-	  if (iVar1 == 0) 
-        return;
+	  if (iVar1 == 0) return;
 	
       puRam800b6830 = (undefined *)0x0;
       return;

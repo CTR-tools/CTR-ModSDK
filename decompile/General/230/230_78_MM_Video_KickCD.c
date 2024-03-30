@@ -39,10 +39,7 @@ void DECOMP_MM_Video_KickCD(CdlLOC *location)
             V230.field12_0x20 = 0;
 
             iVar1 = CdRead2(CdlMode);
-
-            // fails?
-            if (iVar1 == 0)
-                return;
+            if (iVar1 == 0) return;
 
             V230.ptrCdLoc = 0;
             return;
