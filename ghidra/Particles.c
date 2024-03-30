@@ -479,7 +479,7 @@ uint FUN_8003f4c4(uint param_1,uint param_2,int param_3)
   }
   else
   {
-	// Particle_BitwiseClampByte
+	// Particle_BitwiseClampByte (red)
     uVar1 = FUN_8003f48c(param_3 + 0x5c);
 
 	// red
@@ -487,7 +487,7 @@ uint FUN_8003f4c4(uint param_1,uint param_2,int param_3)
 
 	if ((param_1 & 0x100) != 0)
 	{
-	  // Particle_BitwiseClampByte
+	  // Particle_BitwiseClampByte (green)
       uVar2 = FUN_8003f48c(param_3 + 0x64); // 0x64 = 100
     }
 
@@ -496,7 +496,7 @@ uint FUN_8003f4c4(uint param_1,uint param_2,int param_3)
 
     if ((param_1 & 0x200) != 0)
 	{
-	  // Particle_BitwiseClampByte
+	  // Particle_BitwiseClampByte (blue)
       uVar1 = FUN_8003f48c(param_3 + 0x6c);
     }
 

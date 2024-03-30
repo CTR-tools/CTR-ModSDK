@@ -79,15 +79,14 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             interp = VehCalc_InterpBySpeed(inst->animFrame, animSpeed, startFrame);
             inst->animFrame = (short)interp;
 
-            // if not quite at the start
             if ((unsigned int)(currAnimIndex - 2) > 1) return;
 
-            currFrame = *(char *)&inst->animFrame;
             // kart animation frame
-            d->matrixIndex = currAnimIndex;
+            currFrame = *(char *)&inst->animFrame;
+            d->matrixIndex = currFrame;
             
             // kart animation Index
-            if (currAnimIndex == 0)
+            if (currFrame == 0)
                 d->matrixArray = 0;
 
             return;
@@ -105,90 +104,89 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         d->matrixArray = 0;
         d->matrixIndex = 0;
     }
-    else
-    {   // just steering
-        if (animType == 0)
+
+	// just steering
+    if (animType == 0)
+    {
+        // half number of frames
+        iVar9 = numFrames >> 1;
+        // if you don't have a TNT over you
+        if (d->instTntRecv == 0)
         {
-            // half number of frames
-            iVar9 = numFrames >> 1;
-            // if you don't have a TNT over you
-            if (d->instTntRecv == 0)
-            {
-                short burnTimer = d->burnTimer;
-                // not currently burned or just start burning
-                if ((burnTimer == 0) || (479 < burnTimer))
-                {   
-                    // negative turning stat while braking
-                    iVar9 = -0x40;
-                    // if you're not in accel prevention
-                    if ((d->actionsFlagSet & 8) == 0)
-                    {
-                        iVar7 = d->simpTurnState;
-						
-                        // negative character's turn stat
-                        animType = d->const_TurnRate;
-						iVar9 = -animType;
-                    }
-                    else
-                    {
-                        // positive turning stat while braking
-                        animType = 0x40;
-                        iVar7 = d->ampTurnState;
-                    }
-                    // seems like iVar9 gets set to 0 if you're turning, or to last frame index if you're not
-                    iVar9 = DECOMP_VehCalc_MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
+            short burnTimer = d->burnTimer;
+            // not currently burned or just start burning
+            if ((burnTimer == 0) || (479 < burnTimer))
+            {   
+                // negative turning stat while braking
+                iVar9 = -0x40;
+                // if you're not in accel prevention
+                if ((d->actionsFlagSet & 8) == 0)
+                {
+                    iVar7 = d->simpTurnState;
+					
+                    // negative character's turn stat
+                    animType = d->const_TurnRate;
+					iVar9 = -animType;
                 }
                 else
                 {
-                    iVar9 = (((burnTimer >> 5) % 5) >> 2) - 8 + iVar9;
-                    
-                    inst->animFrame = (short)iVar9;
-                    struct Particle *p = Particle_Init(0, gGT->iconGroup[1], &data.emSet_BurnSmoke[0]);
-                    if (p != NULL)
-                    {
-                        p->unk18 = d->instSelf->unk50;
-                        p->driverInst = d->instSelf;
-                        p->unk19 = d->driverID;
-                    }
+                    // positive turning stat while braking
+                    animType = 0x40;
+                    iVar7 = d->ampTurnState;
                 }
+                // seems like iVar9 gets set to 0 if you're turning, or to last frame index if you're not
+                iVar9 = DECOMP_VehCalc_MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
             }
-        }
-        else
-        {   
-            // jump animation
-            if (animType == 3)
+            else
             {
-                interp = VehCalc_InterpBySpeed(inst->animFrame, 1, numFrames - 1);
-                inst->animFrame = interp;
-
-                if (d->kartState == KS_MASK_GRABBED) return;                
-
-                char charID = data.characterIDs[d->driverID];
-
-                switch (charID)
+                iVar9 = (((burnTimer >> 5) % 5) >> 2) - 8 + iVar9;
+                
+                inst->animFrame = (short)iVar9;
+                struct Particle *p = Particle_Init(0, gGT->iconGroup[1], &data.emSet_BurnSmoke[0]);
+                if (p != NULL)
                 {
-                // if this is Penta
-                case 13:
-                    charID = 10; // Use Coco's
-                    break;
-                // if this is Fake Crash or Oxide
-                case 14:
-                case 15:
-                    charID = 7; // Use Crash's
-                    break;
-                default:
-                    charID += 7;
+                    p->unk18 = d->instSelf->unk50;
+                    p->driverInst = d->instSelf;
+                    p->unk19 = d->driverID;
                 }
-                // set AnimType based on charID
-                d->matrixArray = charID;
-                // set animation frame
-                d->matrixIndex = *(char *)&inst->animFrame;
-                return;
             }
-            // last frame
-            iVar9 = numFrames - 1;
         }
-        interp = VehCalc_InterpBySpeed(inst->animFrame, 1, iVar9);
-        inst->animFrame = interp;
     }
+    else
+    {   
+        // jump animation
+        if (animType == 3)
+        {
+            interp = VehCalc_InterpBySpeed(inst->animFrame, 1, numFrames - 1);
+            inst->animFrame = interp;
+
+            if (d->kartState == KS_MASK_GRABBED) return;                
+
+            char charID = data.characterIDs[d->driverID];
+
+            switch (charID)
+            {
+            // if this is Penta
+            case 13:
+                charID = 10; // Use Coco's
+                break;
+            // if this is Fake Crash or Oxide
+            case 14:
+            case 15:
+                charID = 7; // Use Crash's
+                break;
+            default:
+                charID += 7;
+            }
+            // set AnimType based on charID
+            d->matrixArray = charID;
+            // set animation frame
+            d->matrixIndex = *(char *)&inst->animFrame;
+            return;
+        }
+        // last frame
+        iVar9 = numFrames - 1;
+    }
+    interp = VehCalc_InterpBySpeed(inst->animFrame, 1, iVar9);
+    inst->animFrame = interp;
 }

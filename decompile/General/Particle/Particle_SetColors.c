@@ -14,27 +14,25 @@ u_int DECOMP_Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Partic
   u_int color = 0;
 
   if (flagColors & COLOR_FLAG_R)
-  { 
-    //so we kinda store rgb value to a temp var
-    //and reuse it in case no color flag is set.
-    //this way if only red flag is set, it becomes grayscale? weird.
-
+  {
     //process red
     int temp = DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
-
-    color |= temp;
+    color = temp;
 
     //process green
     if (flagColors & COLOR_FLAG_G)
-      temp = DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal);
+      color = DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal);
 
-    color |= temp << 8;
+	// Must do it like this,
+	// dont do temp=blue color|=temp<<8,
+	// because that makes grass turn blue
+    color = temp | color<<8;
 
     //process blue
     if (flagColors & COLOR_FLAG_B)
       temp = DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal);
 
-    color |= temp << 16;
+    color = color | temp << 16;
   }
   else
   {
