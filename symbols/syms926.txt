@@ -670,7 +670,7 @@
 800469c8 MENUBOX_Hide
 800469dc MENUBOX_BoolHidden
 
-800469f0 GhostData_NumGhostsForLEV
+800469f0 GhostData_BoolGhostForLEV
 // unknown 80046a74
 // unknown 80046a90
 80046b1c LoadSave_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost

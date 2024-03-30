@@ -4180,7 +4180,7 @@ uint FUN_800469dc(int param_1)
   return *(uint *)(param_1 + 8) >> 0xc & 1;
 }
 
-// GhostData_NumGhostsForLEV
+// GhostData_BoolGhostForLEV
 int FUN_800469f0(short param_1)
 
 {

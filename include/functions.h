@@ -802,7 +802,7 @@ int MENUBOX_BoolHidden(struct MenuBox* m);
 
 // GhostData (?)
 
-//GhostData_NumGhostsForLEV()
+//GhostData_BoolGhostForLEV()
 //LoadSave_NextMemcardAction()
 //GhostData_EncodeByte()
 //GhostData_DecodeByte()

@@ -420,7 +420,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 			{
 				// Check if this track has Ghost Data
-				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10].levID);
+				uVar15 = GhostData_BoolGhostForLEV(selectMenu[iVar10].levID);
 
 				// If this track has Ghost Data
 				if ((uVar15 & 0xffff) != 0)
