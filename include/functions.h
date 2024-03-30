@@ -804,10 +804,10 @@ int MENUBOX_BoolHidden(struct MenuBox* m);
 
 //GhostData_NumGhostsForLEV()
 //LoadSave_NextMemcardAction()
-//GhostData_Encode()
-//GhostData_Decode()
-//GhostData_SaveProfile()
-//GhostData_LoadProfile()
+//GhostData_EncodeByte()
+//GhostData_DecodeByte()
+//GhostData_EncodeProfile()
+//GhostData_DecodeProfile()
 void LoadSave_StartMemcardAction(int action);
 //LoadSave_StopMemcardAction()
 //GhostData_ResetNumGhosts()

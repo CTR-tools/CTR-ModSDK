@@ -731,10 +731,10 @@
 // unknown 80047e7c
 80047f08 LoadSave_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
 
-// no GhostData_Encode in this build
-80047f4c GhostData_Decode
-// no GhostData_SaveProfile in this build
-80047fbc GhostData_LoadProfile
+// no GhostData_EncodeByte in this build
+80047f4c GhostData_DecodeByte
+// no GhostData_EncodeProfile in this build
+80047fbc GhostData_DecodeProfile
 
 // no LoadSave_StartMemcardAction in this build
 80048120 LoadSave_StopMemcardAction

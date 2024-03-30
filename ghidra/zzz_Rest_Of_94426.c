@@ -4272,10 +4272,10 @@ void FUN_80046b1c(undefined2 param_1,undefined2 param_2,undefined4 param_3,undef
 }
 
 
-// GhostData_Encode
+// GhostData_EncodeByte
 uint FUN_80046b60(int param_1)
 {
-  // only called from GhostData_SaveProfile
+  // only called from GhostData_EncodeProfile
 
   uint uVar1;
   short sVar2;
@@ -4300,10 +4300,10 @@ uint FUN_80046b60(int param_1)
 }
 
 
-// GhostData_Decode
+// GhostData_DecodeByte
 int FUN_80046bc0(byte param_1)
 {
-  // only called from GhostData_LoadProfile
+  // only called from GhostData_DecodeProfile
 
   if (param_1 == 0x2d) {
     return 0x3e;
@@ -4325,7 +4325,7 @@ int FUN_80046bc0(byte param_1)
 // WARNING: Removing unreachable block (ram,0x80046ed4)
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// GhostData_SaveProfile
+// GhostData_EncodeProfile
 void FUN_80046c30(
 	uint param_1,	// index to save (or load) to
 	ushort param_2, // character ID array
@@ -4371,32 +4371,32 @@ void FUN_80046c30(
     uVar12 = uVar11 | param_4 << 9;
     uVar13 = uVar12 | param_1 << 0x1d;
 
-	// GhostData_Encode
+	// GhostData_EncodeByte
     uVar3 = FUN_80046b60(uVar11 & 0x3f);
 
     _DAT_80085a3c = CONCAT11(uVar3,DAT_80085a3c);
     _DAT_80085a3c = _DAT_80085a3c & 0xffff0000 | (uint)_DAT_80085a3c;
 
-	// GhostData_Encode
+	// GhostData_EncodeByte
     uVar3 = FUN_80046b60((uVar12 & 0xfc0) >> 6);
 
     _DAT_80085a3c = CONCAT12(uVar3,_DAT_80085a3c);
     _DAT_80085a3c = _DAT_80085a3c & 0xff000000 | (uint)_DAT_80085a3c;
 
-	// GhostData_Encode
+	// GhostData_EncodeByte
     bVar4 = FUN_80046b60((uVar12 & 0x3f000) >> 0xc);
 
     _DAT_80085a3c = _DAT_80085a3c & 0xffffff | (uint)bVar4 << 0x18;
     bVar4 = FUN_80046b60((uVar12 & 0xfc0000) >> 0x12);
     _DAT_80085a40 = _DAT_80085a40 & 0xffffff00 | (uint)bVar4;
 
-	// GhostData_Encode
+	// GhostData_EncodeByte
     uVar3 = FUN_80046b60(uVar13 >> 0x18 & 0x3f);
 
     _DAT_80085a40 = CONCAT11(uVar3,DAT_80085a40);
     _DAT_80085a40 = _DAT_80085a40 & 0xffff0000 | (uint)_DAT_80085a40;
 
-	// GhostData_Encode
+	// GhostData_EncodeByte
     uVar3 = FUN_80046b60(uVar13 >> 0x1e);
 
 	// loop counter
@@ -4529,7 +4529,7 @@ void FUN_80046c30(
 }
 
 
-// GhostData_LoadProfile
+// GhostData_DecodeProfile
 void FUN_80047034(undefined4 *param_1,undefined4 *param_2)
 
 {
@@ -4546,7 +4546,7 @@ void FUN_80047034(undefined4 *param_1,undefined4 *param_2)
   uint uVar11;
   uint uVar12;
 
-  // GhostData_Decode
+  // GhostData_DecodeByte
   uVar2 = FUN_80046bc0((uint)*(byte *)((int)param_2 + 0xd));
   iVar3 = FUN_80046bc0((uint)*(byte *)((int)param_2 + 0xe));
   iVar4 = FUN_80046bc0((uint)*(byte *)((int)param_2 + 0xf));
@@ -5238,7 +5238,7 @@ void FUN_80047a58(void)
 	  // If there are less than 7 ghosts loaded
       if (iVar2 >> 0x10 < 7)
 	  {
-		// GhostData_LoadProfile
+		// GhostData_DecodeProfile
         FUN_80047034(&DAT_8009aa60 + (iVar2 >> 0x10) * 0x34);
 
 		// increment ghost counter
@@ -6913,7 +6913,7 @@ LAB_800499e4:
         uVar15 = *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x24ec) + 0x514);
       }
 
-	  // GhostData_SaveProfile
+	  // GhostData_EncodeProfile
       FUN_80046c30(
 					// index highlighted by cursor
 					(int)*(short *)(param_1 + 0x1a),
