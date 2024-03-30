@@ -56,13 +56,8 @@ common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_G
 common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 
 common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
-
-// breaks looping of TrackSel, crashes at end
-//ommon, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
-
-// causes black screen in scrapbook
+common, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
 //ommon, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
-
 common, 230, MM_Video_StartStream, 0x0, General/230/230_80_MM_Video_StartStream.c
 common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
 common, 230, MM_Video_AllocMem, 0x0, General/230/230_82_MM_Video_AllocMem.c
