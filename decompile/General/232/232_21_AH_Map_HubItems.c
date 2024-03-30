@@ -71,12 +71,13 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         {
           sVar7 = sVar7;
 		  
-		  // warppad
+		  // gemstone valley
           if (sVar1 == 4)
           {
             iVar3 = 0;
             iVar5 = 0;
 
+			// check 4 boss keys
             for (iVar3 = 0; iVar3 < 4; iVar3++)
             {
               bit = iVar3 + 0x5e;
@@ -95,9 +96,12 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
             }
             sVar7 = sdata->advProgress.rewards[3] & 4;
           }
+		  
+		  // not gemstone valley
           else
           {
             iVar5 = 0;
+			
             if (3 < sVar1)
             {
               iVar5 = -0x10000;
@@ -125,11 +129,13 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 			// did not use GOTO,
 			// must be == 3, for Boss Garage
 			
+			int base = levelID - N_SANITY_BEACH;
+			
             for (iVar3 = 0; iVar3 < 4; iVar3++)
             {
-              trophies = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+              trophies = &data.advHubTrackIDs[base * 4];
 			  
-              if (CHECK_ADV_BIT(adv->rewards, trophies[iVar3]) == 0)
+              if (CHECK_ADV_BIT(adv->rewards, (trophies[iVar3]+6)) == 0)
               {
                 open = false;
                 break;
@@ -138,11 +144,17 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
             if (!open)
               goto LAB_800b17e4;
 
-            sVar7 = CHECK_ADV_BIT(adv->rewards, levelID + 0x44);
+			// check if key is unlocked
+            sVar7 = CHECK_ADV_BIT(adv->rewards, (base+0x5e));
           }
+		  
+		  // open, not beaten
           sVar8 = 1;
+		  
           iVar5 = -0x10000;
-          if (sVar7 != 0)
+          
+		  // boss is beaten
+		  if (sVar7 != 0)
           {
             sVar8 = 2;
           }
@@ -182,6 +194,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
           iVar5 = -1;
         }
       }
+	  
       if (-1 < iVar5)
       {
         local_38 = (int)*psVar10 + -0x200;
@@ -210,32 +223,39 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 			&D232.hubArrow_pos[0], &D232.hubArrow_col1[iVar5], 
 			0x800, (int)psVar9[1]);
       }
+	  
       if (-1 < sVar8)
       {
         pos3D[0] = (int)*psVar10;
         pos3D[1] = 0;
         pos3D[2] = (int)*psVar9;
         
+		// if beat boss race
 		if (sVar8 == 2)
         {
+		  // red
           uVar6 = 3;
         }
         else
         {
+		  // locked boss race
+		  // sVar6 == 0
+			
+		  // grey
           uVar6 = 0x17;
-          if (
-				(sVar8 == 1) && 
-				(
-					uVar6 = 5,
-					
-					// if odd frame
-                    (((gGT->timer >> FPS_RIGHTSHIFT(0)) & 2) != 0)
-				)
-			)
+		  
+		  // open, not beaten
+          if (sVar8 == 1)
           {
-            uVar6 = 4;
+			// blue and white
+			// depending on frames
+			uVar6 = 5;
+            if(((gGT->timer >> FPS_RIGHTSHIFT(0)) & 2) != 0)
+				uVar6 = 4;
           }
         }
+		
+		// open, not beaten
         if (sVar8 == 1)
         {
           D232.unkModeHubItems = sVar8;
