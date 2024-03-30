@@ -716,13 +716,16 @@
 80048f0c LoadSave_InputLogic
 800490c4 LoadSave_AllProfiles_MenuBoxFuncPtr
 
+// SubmitName
 8004aa08 TitleOSK_RestoreName
 8004aa60 TitleOSK_DrawMenu
 8004b144 TitleOSK_MenuBoxFuncPtr
 
+// TakeCupProgress
 8004b230 PrixSaveBox_Activate
 8004b258 PrixSaveBox_MenuBoxFuncPtr
 
+// Timer
 8004b31c RCNT_Init
 8004b370 RCNT_Destroy
 8004b3a4 RCNT_GetTime_Total
