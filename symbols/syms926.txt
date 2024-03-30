@@ -705,7 +705,7 @@
 // unknown 80047d64 -- related to memcard
 80047d64 unk80047d64 // needed for MainFrame_RenderFrame
 
-// TitleSaveObj
+// SelectProfile
 80047da8 LoadSave_QueueLoadHub_MenuBoxFuncPtr
 80047dfc LoadSave_ThTick
 80047f20 LoadSave_PrintInteger
