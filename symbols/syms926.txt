@@ -655,7 +655,7 @@
 800442a0 TitleFlag_DrawLoadingString
 800444e8 TitleFlag_DrawSelf
 
-// RECTBOX
+// RECTBOX (or RaiseMenu)
 80044ef8 MENUBOX_DrawPolyGT4
 80044f90 MENUBOX_DrawOuterRect_Edge
 80044ff8 MENUBOX_DrawTime
