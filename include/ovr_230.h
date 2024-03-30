@@ -1049,26 +1049,28 @@ struct OVR_230_VideoBSS
     // 800b67c2
     short drawNextFrame;
 
+	// 800b67c4
     short field8_0x18;
     short field9_0x1a;
+	
+	// 800b67c8
     short field10_0x1c;
 
     // 800b67ca
     short imgId;
 
+	// 800b67cc 
     short field12_0x20;
     short field13_0x22;
-    short field14_0x24;
-
-    // padding?
-    char unk800b67d0[2];
+	
+	// 800b67d0
+    int field14_0x24;
 
     // 800b67d4
     int numFrames;
 
     // 800b67d8
     int frameCount;
-
     int field19_0x30;
     int field20_0x34;
     int field21_0x38;
