@@ -1,5 +1,5 @@
-// 492+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 833 rewritten so far
-// 492 for every 'common' and ','
+// 493+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 833 rewritten so far
+// 493 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -16,7 +16,6 @@
 // +9 for GAMEPAD Block #1
 // +1 for DebugFont
 // +1 for DropRain
-// +1 for Particles
 // +1 for 222
 // +2 for 223
 // +2 for 224
@@ -519,10 +518,8 @@ common, exe, Particle_FuncPtr_SpitTire, 0x0, General/Particle/Particle_FuncPtr_S
 common, exe, Particle_FuncPtr_ExhaustUnderwater, 0x0, General/Particle/Particle_FuncPtr_ExhaustUnderwater.c
 common, exe, Particle_OnDestroy, 0x0, General/Particle/Particle_OnDestroy.c
 // UpdateList
-
-// UpdateAllParticles and SetColor, combined
-common, exe, Particle_UpdateAllParticles, 0x0, General/Particle/Particle_UpdateAllParticles.c General/Particle/Particle_BitwiseClampByte.c, particleGroup.bin
-
+common, exe, Particle_UpdateAllParticles, 0x0, General/Particle/Particle_UpdateAllParticles.c
+common, exe, Particle_BitwiseClampByte, 0x0, General/Particle/Particle_BitwiseClampByte.c
 common, exe, Particle_SetColors, 0x0, General/Particle/Particle_SetColors.c
 // RenderList
 // Init
