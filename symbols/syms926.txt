@@ -631,7 +631,7 @@
 80043928 TileView_FadeOneWindow
 80043ab8 TileView_FadeAllWindows
 
-// QuitTitle
+// QueueLoadTrack
 80043b30 TitleBeginTrack_MenuBoxFuncPtr
 80043c04 TitleBeginTrack_Get_MenuBox
 
@@ -706,7 +706,7 @@
 80047d64 unk80047d64 // needed for MainFrame_RenderFrame
 
 // TitleSaveObj
-80047da8 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
+80047da8 LoadSave_QueueLoadHub_MenuBoxFuncPtr
 80047dfc LoadSave_ThTick
 80047f20 LoadSave_PrintInteger
 80047fb8 LoadSave_UI_ConvertX

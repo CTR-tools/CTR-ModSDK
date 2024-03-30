@@ -753,7 +753,7 @@
 // unknown 800494d4
 // unknown 800497e0
 
-80049824 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
+80049824 LoadSave_QueueLoadHub_MenuBoxFuncPtr
 80049878 LoadSave_ThTick
 8004999c LoadSave_PrintInteger
 80049a34 LoadSave_UI_ConvertX

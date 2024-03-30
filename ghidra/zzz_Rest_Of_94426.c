@@ -5355,7 +5355,7 @@ void FUN_80047d64(void)
   return;
 }
 
-// LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
+// LoadSave_QueueLoadHub_MenuBoxFuncPtr
 void FUN_80047da8(undefined4 param_1)
 
 {
@@ -7469,7 +7469,7 @@ LAB_800499e4:
 		// GAMEPROG_AdvPercent
 		FUN_800265c0(&DAT_8008fba4);
 
-		// LoadSave_LoadProfileFromHub_MenuBoxFuncPtr,
+		// LoadSave_QueueLoadHub_MenuBoxFuncPtr,
 		// open menubox to load profile, while already on adv hub
         DAT_8008d924 = &DAT_80085c38;
 

@@ -816,7 +816,7 @@ void LoadSave_StartMemcardAction(int action);
 
 //LoadFromCard_GameProgressAndOptions()
 void unk80047d64();
-void LoadSave_LoadProfileFromHub_MenuBoxFuncPtr(struct MenuBox* mb);
+void LoadSave_QueueLoadHub_MenuBoxFuncPtr(struct MenuBox* mb);
 //LoadSave_ThTick()
 //LoadSave_PrintInteger()
 //LoadSave_UI_ConvertX()
