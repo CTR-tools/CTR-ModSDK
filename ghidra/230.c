@@ -7264,17 +7264,24 @@ void FUN_800b5b7c(undefined *param_1)
   undefined4 uVar2;
   undefined local_18 [8];
   
-  if ((param_1 != (undefined *)0x0) && (puRam800b6830 != &DAT_800b6824)) {
+  if ((param_1 != (undefined *)0x0) && (puRam800b6830 != &DAT_800b6824)) 
+  {
     DAT_800b67cc = 0;
     puRam800b6830 = param_1;
   }
-  if (DAT_800b67cc != 1) {
-    if (1 < DAT_800b67cc) {
-      if (DAT_800b67cc == 2) {
+  
+  if (DAT_800b67cc != 1) 
+  {
+    if (1 < DAT_800b67cc) 
+	{
+      if (DAT_800b67cc == 2) 
+	  {
         DAT_800b67cc = 3;
         return;
       }
-      if (DAT_800b67cc != 3) {
+      
+	  if (DAT_800b67cc != 3) 
+	  {
         return;
       }
       
@@ -7293,12 +7300,13 @@ void FUN_800b5b7c(undefined *param_1)
       
 	  iVar1 = CdRead2(uVar2);
       
-	  if (iVar1 == 0) {
+	  if (iVar1 == 0) 
         return;
-      }
+	
       puRam800b6830 = (undefined *)0x0;
       return;
     }
+	
     if (DAT_800b67cc != 0) {
       return;
     }
@@ -7504,7 +7512,7 @@ LAB_800b5fec:
           }
         }
 		
-		// DecDCTGetEnv
+		// DecDCTBufSize
         uVar4 = FUN_800798b8(local_2c);
 		
         if (uVar4 <= DAT_800b67f4) 

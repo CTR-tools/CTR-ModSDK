@@ -183,7 +183,7 @@ void DECOMP_MM_Video_VLC_Decode(void)
                         }
                     }
 
-                    size = DecDCTGetEnv(local_2c);
+                    size = DecDCTBufSize(local_2c);
 
                     if (size <= V230.field25_0x48)
                     {

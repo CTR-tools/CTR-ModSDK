@@ -1300,7 +1300,7 @@
 // unknown 8007967c ------ called by lib funcs
 80079824 StClearRing
 80079884 DecDCTReset
-800798b8 DecDCTGetEnv // NEW Mar29
+800798b8 DecDCTBufSize // NEW Mar29
 800798c4 DecDCTin
 80079940 DecDCTout			// These are all MDEC
 80079960 DecDCToutCallback 

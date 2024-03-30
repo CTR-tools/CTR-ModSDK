@@ -45,7 +45,6 @@ void DECOMP_MM_Video_KickCD(CdlLOC *location)
                 return;
 
             V230.ptrCdLoc = 0;
-
             return;
         }
 
