@@ -678,6 +678,11 @@
 800469c8 MENUBOX_Hide
 800469dc MENUBOX_BoolHidden
 
+
+
+
+// Must be RE- to SE-
+
 800469f0 GhostData_BoolGhostForLEV
 // unknown 80046a74
 // unknown 80046a90
@@ -704,6 +709,11 @@
 // this one \/ calls the other two ^^
 // unknown 80047d64 -- related to memcard
 80047d64 unk80047d64 // needed for MainFrame_RenderFrame
+
+// Must be RE- to SE-
+
+
+
 
 // SelectProfile
 80047da8 LoadSave_QueueLoadHub_MenuBoxFuncPtr
