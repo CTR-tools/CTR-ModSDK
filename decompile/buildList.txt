@@ -1,5 +1,5 @@
-// 490+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 831 rewritten so far
-// 490 for every 'common' and ','
+// 489+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 830 rewritten so far
+// 489 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -691,7 +691,9 @@ common, exe, VehPhysJoystick_ReturnToRest, 0x0, General/Vehicle/VehPhysJoystick_
 common, exe, VehPhysJoystick_GetStrength, 0x0, General/Vehicle/VehPhysJoystick_GetStrength.c
 common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0, General/Vehicle/VehPhysJoystick_GetStrengthAbsolute.c
 
-common, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
+// animation breaks when you U-Turn
+//ommon, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
+
 common, exe, VehPhysProc_Driving_Audio, 0x0, General/Vehicle/VehPhysProc_Driving_Audio.c
 common, exe, VehPhysProc_Driving_Update, 0x0, General/Vehicle/VehPhysProc_Driving_Update.c
 common, exe, VehPhysProc_Driving_Init, 0x0, General/Vehicle/VehPhysProc_Driving_Init.c
