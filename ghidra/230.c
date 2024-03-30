@@ -7258,7 +7258,6 @@ void FUN_800b5a64(void)
 // MM_Video_KickCD
 // start streaming from param_1 location
 void FUN_800b5b7c(undefined *param_1)
-
 {
   int iVar1;
   undefined4 uVar2;
