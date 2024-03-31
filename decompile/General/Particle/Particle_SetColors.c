@@ -1,3 +1,4 @@
+
 #include <common.h>
 
 #define COLOR_FLAG_R 0x0080
@@ -14,25 +15,24 @@ u_int DECOMP_Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Partic
   u_int color = 0;
 
   if (flagColors & COLOR_FLAG_R)
-  {
+  { 
+    // if other color flags are not set, we reuse red component for the rest
+    // todo: explain the reason for this
+
     //process red
-    int temp = DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
-    color = temp;
+    color = DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
 
-    //process green
+    // process green
     if (flagColors & COLOR_FLAG_G)
-      color = DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal);
-
-	// Must do it like this,
-	// dont do temp=blue color|=temp<<8,
-	// because that makes grass turn blue
-    color = temp | color<<8;
+      color |= DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal) << 8;
+    else
+      color |= color << 8;
 
     //process blue
     if (flagColors & COLOR_FLAG_B)
-      temp = DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal);
-
-    color = color | temp << 16;
+      color |= DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal) << 16;
+    else
+      color |= (color & 0xff) << 16;
   }
   else
   {
