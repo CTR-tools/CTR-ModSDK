@@ -683,32 +683,38 @@
 
 // Must be RE- to SE-
 
+// called from MM_TrackSelect_MenuBox
 800469f0 GhostData_BoolGhostForLEV
+
+// only called from 800472d0
 // unknown 80046a74
 // unknown 80046a90
 80046b1c LoadSave_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
 
+// only called from 80047a58 (decode)
+// or called from LoadSave (encode)
 80046b60 GhostData_EncodeByte
 80046bc0 GhostData_DecodeByte
 80046c30 GhostData_EncodeProfile
 80047034 GhostData_DecodeProfile
 
+// called only from LoadSave
 80047198 LoadSave_StartMemcardAction // (not in japan trial)
 800471ac LoadSave_StopMemcardAction
 
+// all these are only called from 800472d0
 // unknown 800471c4
 // unknown 800471e8
-
 80047224 GhostData_ResetNumGhosts
 80047230 LoadFromCard_GameProgressAndOptions
 
+// called only from 80047d64
 // unknown 800472d0 -- related to memcard
 // unknown 80047a58 -- related to memcard
-// these two ^^ are exclusively called by below \/
 
-// this one \/ calls the other two ^^
+// called only from MainFrame_RenderFrame
 // unknown 80047d64 -- related to memcard
-80047d64 unk80047d64 // needed for MainFrame_RenderFrame
+80047d64 unk80047d64
 
 // Must be RE- to SE-
 
