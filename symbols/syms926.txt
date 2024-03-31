@@ -655,7 +655,7 @@
 800442a0 TitleFlag_DrawLoadingString
 800444e8 TitleFlag_DrawSelf
 
-// RECTBOX (or RaiseMenu)
+// RaiseMenu
 80044ef8 MENUBOX_DrawPolyGT4
 80044f90 MENUBOX_DrawOuterRect_Edge
 80044ff8 MENUBOX_DrawTime
@@ -681,7 +681,7 @@
 
 
 
-// Must be RE- to SE-
+// RefreshCard
 
 // called from MM_TrackSelect_MenuBox
 800469f0 GhostData_BoolGhostForLEV
@@ -716,7 +716,7 @@
 // unknown 80047d64 -- related to memcard
 80047d64 unk80047d64
 
-// Must be RE- to SE-
+// RefreshCard
 
 
 
