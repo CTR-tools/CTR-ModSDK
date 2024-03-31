@@ -594,11 +594,12 @@
 8003f590 Particle_RenderList
 80040308 Particle_Init
 
-// PickBossWeapon
+// PickupBots_InitBoss
+// PickupBots_UpdateAll
 80040850 RobotcarWeapons_Init
 800408b8 RobotcarWeapons_Update
 
-// PlayerLapStats
+// PlayLevel_UpdateLapStats
 800414f4 StartLine_Update
 
 // Podium
