@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
+void DECOMP_MainFreeze_MenuPtrQuit(struct RectMenu* menu)
 {
     short row;
     struct GameTracker *gGT = sdata->gGT;
@@ -32,7 +32,7 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
 		
 		// row == 1
 
-        sdata->ptrActiveMenuBox = DECOMP_MainFreeze_GetMenuBox();
+        sdata->ptrActiveMenu = DECOMP_MainFreeze_GetMenuPtr();
     }
     else
     {

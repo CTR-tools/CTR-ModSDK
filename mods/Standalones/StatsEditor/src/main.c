@@ -1,6 +1,6 @@
 #include <common.h>
 
-extern struct MenuBox MyMenuBox;
+extern struct RectMenu MyMenuBox;
 
 // an extension of SelectPause
 void MyMainFreeze(struct GameTracker* gGT)
@@ -9,7 +9,7 @@ void MyMainFreeze(struct GameTracker* gGT)
 	if
 	(
 		// if flag is not fully on screen
-		(TitleFlag_IsFullyOnScreen() == 0) &&
+		(RaceFlag_IsFullyOnScreen() == 0) &&
 
 		// if you are not drawing loading screen (after fully off screen)
 		((gGT->renderFlags & 0x1000) == 0) &&
@@ -18,7 +18,7 @@ void MyMainFreeze(struct GameTracker* gGT)
 		(sdata->AkuAkuHintState == 0) &&
 
 		// if not in a menu, time trial, and not paused yet
-		(sdata->ptrActiveMenuBox == 0 && (gGT->gameMode1 & (END_OF_RACE | PAUSE_ALL)) == 0) &&
+		(sdata->ptrActiveMenu == 0 && (gGT->gameMode1 & (END_OF_RACE | PAUSE_ALL)) == 0) &&
 
 		// not in Main Menu and not in Demo Mode
 		(gGT->levelID != MAIN_MENU_LEVEL && ((gGT->gameMode1 & GAME_CUTSCENE) == 0 && gGT->boolDemoMode == 0)) &&
@@ -31,7 +31,7 @@ void MyMainFreeze(struct GameTracker* gGT)
 		gGT->gameMode1 |= PAUSE_1;
 
 		// make menu visible
-		MENUBOX_Show(&MyMenuBox);
+		RECTMENU_Show(&MyMenuBox);
 
 		// pause audio
 		MainFrame_TogglePauseAudio(1);
@@ -57,13 +57,13 @@ void SelectPause(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 		{
 			if
 			(
-				(((gGT->gameMode1 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0) && (sdata->ptrActiveMenuBox == 0)) &&
+				(((gGT->gameMode1 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0) && (sdata->ptrActiveMenu == 0)) &&
 				(
 					(
 						sdata->AkuAkuHintState == 0 &&
 						(
 							(
-								isTitleFlagFullyOnScreen = TitleFlag_IsFullyOnScreen(), isTitleFlagFullyOnScreen == 0
+								isTitleFlagFullyOnScreen = RaceFlag_IsFullyOnScreen(), isTitleFlagFullyOnScreen == 0
 					 		)
 						)
 					)
@@ -129,7 +129,7 @@ void MenuBoxInfodump(struct GameTracker* gGT)
 	char string16[] = "         ";
 	char string17[] = "         ";
 	char string18[] = "         ";
-	struct MenuBox* m = &data.menuBox_arcadeRace;
+	struct RectMenu* m = &data.menuArcadeRace;
 
 	//sprintf(string1,  "%d\n", m->stringIndexTitle);
 	sprintf(string2,  "%d\n", m->posX_curr);
@@ -148,7 +148,7 @@ void MenuBoxInfodump(struct GameTracker* gGT)
 	sprintf(string15, "%d\n", m->height);
 	sprintf(string16, "%X\n", m->ptrNextBox_InHierarchy);
 	sprintf(string17, "%X\n", m->ptrPrevBox_InHierarchy);
-	sprintf(string18, "%X\n", &data.menuBox_arcadeRace);
+	sprintf(string18, "%X\n", &data.menuArcadeRace);
 
 	DecalFont_DrawLine("stringTitle:",  6, 10 + 10*0,  FONT_SMALL, COCO_MAGENTA);
 	DecalFont_DrawLine("posX_curr:",  6, 10 + 10*1,  FONT_SMALL, COCO_MAGENTA);

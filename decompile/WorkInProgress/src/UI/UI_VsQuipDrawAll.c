@@ -24,9 +24,9 @@ void DECOMP_UI_VsQuipDrawAll(void) {
 
     // loop through all threads
     do {
-      // get current player's tileView
-      r = gGT->tileView[i].rect;
-      // Dimensions of each player's tileView
+      // get current player's pushBuffer
+      r = gGT->pushBuffer[i].rect;
+      // Dimensions of each player's pushBuffer
       // PosX, PosY, Width, Height
       posX = r.x;
       posY = r.y;
@@ -74,14 +74,14 @@ void DECOMP_UI_VsQuipDrawAll(void) {
         }
 
         // Draw the string with a box around it
-        MENUBOX_DrawQuip(
+        RECTMENU_DrawQuip(
           // The string to print
           print,
 
-          // X-position of tileView, plus 50% of width
+          // X-position of pushBuffer, plus 50% of width
           (posX + (width >> 1)),
 
-          // Y-position of tileView, plus 12% of height
+          // Y-position of pushBuffer, plus 12% of height
           (posY + (height >> 3)),
 
           0, 3, 0xffff8000, 4);

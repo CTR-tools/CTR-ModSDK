@@ -47,11 +47,11 @@ common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 common, 230, R230, 0x0, General/230/R230.c
 common, 230, D230, 0x0, General/230/D230.c
 common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_Block1.c
-common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
+common, 230, MM_AdvNewLoad_GetMenuPtr, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuPtr.c
 common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_Block2.c
 common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
-common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
-common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
+common, 230, MM_TrackSelect_MenuProc, 0x0, General/230/230_56_MM_TrackSelect_MenuProc.c
+common, 230, MM_TrackSelect_GetMenuPtr, 0x0, General/230/230_57_MM_TrackSelect_GetMenuPtr.c
 common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 
 common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
@@ -138,7 +138,7 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullScene_Init.c
 // skip BoxScene (34-36)
 common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_39_CS_Garage.c
-common, 233, CS_Garage_GetMenuBox, 0x0, General/233/233_40_CS_Garage_GetMenuBox.c
+common, 233, CS_Garage_GetMenuPtr, 0x0, General/233/233_40_CS_Garage_GetMenuPtr.c
 // skip credits (41-46)
 common, 233, CS_Credits_Init, 0x0, General/233/233_47_CS_Credits_Init.c
 common, 233, CS_Credits_NewDancer, 0x0, General/233/233_49_CS_Credits_NewDancer.c
@@ -205,14 +205,14 @@ common, exe, COLL_StartSearch_AI, 0x0, General/COLL/COLL_03_StartSearch_AI.c
 
 
 // CTR
-common, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
-common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR_Box_DrawSolidBox.c
-common, exe, CTR_Box_DrawWireBox, 0x0, General/CTR_Box_DrawWireBox.c
-common, exe, CTR_Box_DrawWirePrims, 0x0, General/CTR_Box_DrawWirePrims.c
-common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
-common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
-common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c
-common, exe, CTR_CycleTex_Model, 0x0, General/CTR_CycleTex_Model.c
+common, exe, CTR_Box_DrawClearBox, 0x0, General/CTR/CTR_Box_DrawClearBox.c
+common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR/CTR_Box_DrawSolidBox.c
+common, exe, CTR_Box_DrawWireBox, 0x0, General/CTR/CTR_Box_DrawWireBox.c
+common, exe, CTR_Box_DrawWirePrims, 0x0, General/CTR/CTR_Box_DrawWirePrims.c
+common, exe, CTR_CycleTex_LEV, 0x0, General/CTR/CTR_CycleTex_LEV.c
+common, exe, CTR_ErrorScreen, 0x0, General/CTR/CTR_ErrorScreen.c
+common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR/CTR_CycleTex_AllModels.c
+common, exe, CTR_CycleTex_Model, 0x0, General/CTR/CTR_CycleTex_Model.c
 
 // DebugFont
 common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers.c, DebugFont.bin
@@ -400,8 +400,8 @@ common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
 common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 
 // LinkedCollide
-common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide_Radius.c
-common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
+common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide/LinkedCollide_Radius.c
+common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide/LinkedCollide_Hitbox_Desc.c
 
 // LOAD
 
@@ -446,7 +446,7 @@ common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDra
 common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
 common, exe, MainFreeze_SafeAdvDestroy, 0x0, General/MAIN/MainFreeze_SafeAdvDestroy.c
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
-common, exe, MainFreeze_GetMenuBox, 0x0, General/MAIN/MainFreeze_GetMenuBox.c
+common, exe, MainFreeze_GetMenuPtr, 0x0, General/MAIN/MainFreeze_GetMenuPtr.c
 common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
 
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
@@ -524,78 +524,78 @@ common, exe, Particle_SetColors, 0x0, General/Particle/Particle_SetColors.c
 // RenderList
 // Init
 
-// MenuBox
-common, exe, MENUBOX_DrawPolyGT4, 0x0, General/MenuBox/MENUBOX_DrawPolyGT4.c
-common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_Edge.c
-common, exe, MENUBOX_DrawTime, 0x0, General/MenuBox/MENUBOX_DrawTime.c
-common, exe, MENUBOX_DrawRwdBlueRect_Subset, 0x0, General/MenuBox/MENUBOX_DrawRwdBlueRect_Subset.c
-common, exe, MENUBOX_DrawRwdBlueRect, 0x0, General/MenuBox/MENUBOX_DrawRwdBlueRect.c
-common, exe, MENUBOX_DrawRwdTriangle, 0x0, General/MenuBox/MENUBOX_DrawRwdTriangle.c
-common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c
-common, exe, MENUBOX_DrawOuterRect_HighLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c
-common, exe, MENUBOX_DrawQuip, 0x0, General/MenuBox/MENUBOX_DrawQuip.c
-common, exe, MENUBOX_DrawInnerRect, 0x0, General/MenuBox/MENUBOX_DrawInnerRect.c
-common, exe, MENUBOX_DrawFullRect, 0x0, General/MenuBox/MENUBOX_DrawFullRect.c
-common, exe, MENUBOX_GetHeight, 0x0, General/MenuBox/MENUBOX_GetHeight.c
-common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
-common, exe, MENUBOX_DrawSelf, 0x0, General/MenuBox/MENUBOX_DrawSelf.c
-common, exe, MENUBOX_ClearInput, 0x0, General/MenuBox/MENUBOX_ClearInput.c
-common, exe, MENUBOX_CollectInput, 0x0, General/MenuBox/MENUBOX_CollectInput.c
-common, exe, MENUBOX_ProcessInput, 0x0, General/MenuBox/MENUBOX_ProcessInput.c
-common, exe, MENUBOX_ProcessState, 0x0, General/MenuBox/MENUBOX_ProcessState.c
-common, exe, MENUBOX_Show, 0x0, General/MenuBox/MENUBOX_Show.c
-common, exe, MENUBOX_Hide, 0x0, General/MenuBox/MENUBOX_Hide.c
-common, exe, MENUBOX_BoolHidden, 0x0, General/MenuBox/MENUBOX_BoolHidden.c
-
-common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
+common, exe, Podium_InitModels, 0x0, General/Podium/Podium_InitModels.c
 
 // THREAD (need 3 more)
-common, exe, THREAD_DestroyTracker, 0x0, General/THREAD/THREAD_DestroyTracker.c
-common, exe, THREAD_DestroyInstance, 0x0, General/THREAD/THREAD_DestroyInstance.c
-common, exe, THREAD_DestroyObject, 0x0, General/THREAD/THREAD_DestroyObject.c
-common, exe, THREAD_DestroySelf, 0x0, General/THREAD/THREAD_DestroySelf_AndBloodline.c
-common, exe, THREAD_CheckBloodlineForDead, 0x0, General/THREAD/THREAD_CheckBloodlineForDead.c
-common, exe, THREAD_CheckAllForDead, 0x0, General/THREAD/THREAD_CheckAllForDead.c
-common, exe, THREAD_BirthWithObject, 0x0, General/THREAD/THREAD_BirthWithObject.c
-common, exe, THREAD_CollidePointWithSelf, 0x0, General/THREAD/THREAD_CollidePointWithSelf.c
-common, exe, THREAD_CollidePointWithBucket, 0x0, General/THREAD/THREAD_CollidePointWithBucket.c
-common, exe, THREAD_SearchForModel, 0x0, General/THREAD/THREAD_SearchForModel.c
+common, exe, PROC_DestroyTracker, 0x0, General/PROC/PROC_DestroyTracker.c
+common, exe, PROC_DestroyInstance, 0x0, General/PROC/PROC_DestroyInstance.c
+common, exe, PROC_DestroyObject, 0x0, General/PROC/PROC_DestroyObject.c
+common, exe, PROC_DestroySelf, 0x0, General/PROC/PROC_DestroySelf_AndBloodline.c
+common, exe, PROC_CheckBloodlineForDead, 0x0, General/PROC/PROC_CheckBloodlineForDead.c
+common, exe, PROC_CheckAllForDead, 0x0, General/PROC/PROC_CheckAllForDead.c
+common, exe, PROC_BirthWithObject, 0x0, General/PROC/PROC_BirthWithObject.c
+common, exe, PROC_CollidePointWithSelf, 0x0, General/PROC/PROC_CollidePointWithSelf.c
+common, exe, PROC_CollidePointWithBucket, 0x0, General/PROC/PROC_CollidePointWithBucket.c
+common, exe, PROC_SearchForModel, 0x0, General/PROC/PROC_SearchForModel.c
 
-// TileView
-common, exe, TileView_Init, 0x0, General/TileView/TileView_Init.c
-common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
-common, exe, TileView_SetDrawEnv_Normal, 0x0, General/TileView/TileView_SetDrawEnv_Normal.c
-common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
-common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
-common, exe, TileView_FadeOneWindow, 0x0, General/TileView/TileView_FadeOneWindow.c
-common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
+// PushBuffer
+common, exe, PushBuffer_Init, 0x0, General/PushBuffer/PushBuffer_Init.c
+common, exe, PushBuffer_SetPsyqGeom, 0x0, General/PushBuffer/PushBuffer_SetPsyqGeom.c
+common, exe, PushBuffer_SetDrawEnv_Normal, 0x0, General/PushBuffer/PushBuffer_SetDrawEnv_Normal.c
+common, exe, PushBuffer_SetMatrixVP, 0x0, General/PushBuffer/PushBuffer_SetMatrixVP.c
+common, exe, PushBuffer_UpdateFrustum, 0x0, General/PushBuffer/PushBuffer_UpdateFrustum.c
+common, exe, PushBuffer_FadeOneWindow, 0x0, General/PushBuffer/PushBuffer_FadeOneWindow.c
+common, exe, PushBuffer_FadeAllWindows, 0x0, General/PushBuffer/PushBuffer_FadeAllWindows.c
 
-// TitleBeginTrack
-common, exe, TitleBeginTrack_MenuBoxFuncPtr, 0x0, General/TitleBeginTrack_MenuBoxFuncPtr.c
-common, exe, TitleBeginTrack_Get_MenuBox, 0x0, General/TitleBeginTrack_Get_MenuBox.c
+// QueueLoadTrack
+common, exe, QueueLoadTrack_MenuProc, 0x0, General/QueueLoadTrack/QueueLoadTrack_MenuProc.c
+common, exe, QueueLoadTrack_GetMenuPtr, 0x0, General/QueueLoadTrack/QueueLoadTrack_GetMenuPtr.c
 
-// TitleFlag
-common, exe, TitleFlag_MoveModels, 0x0, General/TitleFlag/TitleFlag_t01_MoveModels.c
-common, exe, TitleFlag_IsFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c
-common, exe, TitleFlag_IsFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t03_IsFullyOffScreen.c
-common, exe, TitleFlag_IsTransitioning, 0x0, General/TitleFlag/TitleFlag_t04_IsTransitioning.c
-common, exe, TitleFlag_SetDrawOrder, 0x0, General/TitleFlag/TitleFlag_t05_SetDrawOrder.c
-common, exe, TitleFlag_BeginTransition, 0x0, General/TitleFlag/TitleFlag_t06_BeginTransition.c
-common, exe, TitleFlag_SetFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t07_SetFullyOnScreen.c
-common, exe, TitleFlag_SetFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c
-common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDraw.c
-common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
-common, exe, TitleFlag_GetOT, 0x0, General/TitleFlag/TitleFlag_t11_GetOT.c
-common, exe, TitleFlag_ResetTextAnim, 0x0, General/TitleFlag/TitleFlag_t12_ResetTextAnim.c
-common, exe, TitleFlag_DrawLoadingString, 0x0, General/TitleFlag/TitleFlag_t13_DrawLoadingString.c
-common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
+// RaceFlag
+common, exe, RaceFlag_MoveModels, 0x0, General/RaceFlag/RaceFlag_t01_MoveModels.c
+common, exe, RaceFlag_IsFullyOnScreen, 0x0, General/RaceFlag/RaceFlag_t02_IsFullyOnScreen.c
+common, exe, RaceFlag_IsFullyOffScreen, 0x0, General/RaceFlag/RaceFlag_t03_IsFullyOffScreen.c
+common, exe, RaceFlag_IsTransitioning, 0x0, General/RaceFlag/RaceFlag_t04_IsTransitioning.c
+common, exe, RaceFlag_SetDrawOrder, 0x0, General/RaceFlag/RaceFlag_t05_SetDrawOrder.c
+common, exe, RaceFlag_BeginTransition, 0x0, General/RaceFlag/RaceFlag_t06_BeginTransition.c
+common, exe, RaceFlag_SetFullyOnScreen, 0x0, General/RaceFlag/RaceFlag_t07_SetFullyOnScreen.c
+common, exe, RaceFlag_SetFullyOffScreen, 0x0, General/RaceFlag/RaceFlag_t08_SetFullyOffScreen.c
+common, exe, RaceFlag_SetCanDraw, 0x0, General/RaceFlag/RaceFlag_t09_SetCanDraw.c
+common, exe, RaceFlag_GetCanDraw, 0x0, General/RaceFlag/RaceFlag_t10_GetCanDraw.c
+common, exe, RaceFlag_GetOT, 0x0, General/RaceFlag/RaceFlag_t11_GetOT.c
+common, exe, RaceFlag_ResetTextAnim, 0x0, General/RaceFlag/RaceFlag_t12_ResetTextAnim.c
+common, exe, RaceFlag_DrawLoadingString, 0x0, General/RaceFlag/RaceFlag_t13_DrawLoadingString.c
+common, exe, RaceFlag_DrawSelf, 0x0, General/RaceFlag/RaceFlag_t14_DrawSelf.c
 
-// Title (?)
-common, exe, TitleOSK_DrawMenu, 0x0, General/TitleOSK_DrawMenu.c
+// RECTMENU
+common, exe, RECTMENU_DrawPolyGT4, 0x0, General/RECTMENU/RECTMENU_DrawPolyGT4.c
+common, exe, RECTMENU_DrawOuterRect_Edge, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_Edge.c
+common, exe, RECTMENU_DrawTime, 0x0, General/RECTMENU/RECTMENU_DrawTime.c
+common, exe, RECTMENU_DrawRwdBlueRect_Subset, 0x0, General/RECTMENU/RECTMENU_DrawRwdBlueRect_Subset.c
+common, exe, RECTMENU_DrawRwdBlueRect, 0x0, General/RECTMENU/RECTMENU_DrawRwdBlueRect.c
+common, exe, RECTMENU_DrawRwdTriangle, 0x0, General/RECTMENU/RECTMENU_DrawRwdTriangle.c
+common, exe, RECTMENU_DrawOuterRect_LowLevel, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_LowLevel.c
+common, exe, RECTMENU_DrawOuterRect_HighLevel, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_HighLevel.c
+common, exe, RECTMENU_DrawQuip, 0x0, General/RECTMENU/RECTMENU_DrawQuip.c
+common, exe, RECTMENU_DrawInnerRect, 0x0, General/RECTMENU/RECTMENU_DrawInnerRect.c
+common, exe, RECTMENU_DrawFullRect, 0x0, General/RECTMENU/RECTMENU_DrawFullRect.c
+common, exe, RECTMENU_GetHeight, 0x0, General/RECTMENU/RECTMENU_GetHeight.c
+common, exe, RECTMENU_GetWidth, 0x0, General/RECTMENU/RECTMENU_GetWidth.c
+common, exe, RECTMENU_DrawSelf, 0x0, General/RECTMENU/RECTMENU_DrawSelf.c
+common, exe, RECTMENU_ClearInput, 0x0, General/RECTMENU/RECTMENU_ClearInput.c
+common, exe, RECTMENU_CollectInput, 0x0, General/RECTMENU/RECTMENU_CollectInput.c
+common, exe, RECTMENU_ProcessInput, 0x0, General/RECTMENU/RECTMENU_ProcessInput.c
+common, exe, RECTMENU_ProcessState, 0x0, General/RECTMENU/RECTMENU_ProcessState.c
+common, exe, RECTMENU_Show, 0x0, General/RECTMENU/RECTMENU_Show.c
+common, exe, RECTMENU_Hide, 0x0, General/RECTMENU/RECTMENU_Hide.c
+common, exe, RECTMENU_BoolHidden, 0x0, General/RECTMENU/RECTMENU_BoolHidden.c
 
-// RCNT (watch out for namespace name, not alphabetical)
-common, exe, RCNT_Init, 0x0, General/RCNT/RCNT_Init.c
-common, exe, RCNT_Destroy, 0x0, General/RCNT/RCNT_Destroy.c
+// SubmitName
+common, exe, SubmitName_DrawMenu, 0x0, General/SubmitName/SubmitName_DrawMenu.c
+
+// Timer
+common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c
+common, exe, Timer_Destroy, 0x0, General/Timer/Timer_Destroy.c
 
 // UI
 common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c

@@ -24,9 +24,9 @@ void BOTS_Driver_Convert(struct Driver* driver);
 
 // CAM
 
-void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
+void CAM_SkyboxGlow(short* param_1, struct PushBuffer* pb, struct PrimMem* primMem, u_long* ptrOT);
 void CAM_ClearScreen(struct GameTracker* gGT);
-void CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView);
+void CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct PushBuffer* pb);
 void CAM_FindClosestQuadblock(short* scratchpad, struct CameraDC* cDC, struct Driver* d, short* param_4);
 int CAM_Path_GetNumPoints();
 u_int CAM_Path_Move(int frame, u_short* pos, u_short* rot, u_short* getPath);
@@ -35,13 +35,13 @@ void CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d);
 void CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d);
 u_char* CAM_StartLine_FlyIn_FixY(u_short* param_1);
 void CAM_ProcessTransition(short* camPosReturn, u_short* camRotReturn, short* camPosDest, short* camRotDest, short* camPosStart, short* camRotStart, int frame);
-void CAM_FollowDriver_AngleAxis(struct CameraDC* cDC, struct Driver* d, int param_3, short* tileViewPos, short* tileViewRot);
+void CAM_FollowDriver_AngleAxis(struct CameraDC* cDC, struct Driver* d, int param_3, short* pushBufferPos, short* pushBufferRot);
 void CAM_StartLine_FlyIn(int* param_1, short const0x96, int frame, u_short* camTransitionToPos, short* camTransitionToRot);
 u_int CAM_FollowDriver_TrackPath(struct CameraDC* cDC, short* param_2, int cDCspeed, int param_4);
 void CAM_LookAtPosition(int param_1, int* driverPos, short* camTransitionToPos, short* camTransitionToRot);
 void CAM_FollowDriver_Spin360(struct CameraDC* cDC, u_int param_2, struct Driver* d, short* camTransitionToPos, u_int param_5);
 void CAM_SetDesiredPosRot(int param_1, u_short* param_2, u_short* param_3);
-void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* tileView, int scratchpad, short* param_5);
+void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* pushBuffer, int scratchpad, short* param_5);
 int CAM_MapRange_PosPoints(short* vec3sPos1, short* vec3sPos2, short* vec3iPos);
 void CAM_ThTick(struct Thread* t);
 
@@ -152,7 +152,7 @@ void DecalMP_03(struct GameTracker* gGT);
 // DISPLAY
 
 //DISPLAY_Blur_SubFunc()
-void DISPLAY_Blur_Main(struct TileView* tileView, int strength);
+void DISPLAY_Blur_Main(struct PushBuffer* pb, int strength);
 //DISPLAY_SWap()
 
 // DotLights
@@ -582,11 +582,11 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 void MainFreeze_ConfigDrawNPC105(short startX, short startY, short param_3, int param_4, short param_5, char *color, u_long *otMem, struct PrimMem *primMem);
 void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
 void MainFreeze_ConfigSetupEntry();
-void MainFreeze_MenuPtrOptions(struct MenuBox* mb);
-void MainFreeze_MenuPtrQuit(struct MenuBox* mb);
+void MainFreeze_MenuPtrOptions(struct RectMenu* menu);
+void MainFreeze_MenuPtrQuit(struct RectMenu* menu);
 void MainFreeze_SafeAdvDestroy();
-void MainFreeze_MenuPtrDefault(struct MenuBox* mb);
-struct MenuBox* MainFreeze_GetMenuBox();
+void MainFreeze_MenuPtrDefault(struct RectMenu* menu);
+struct RectMenu* MainFreeze_GetMenuPtr();
 void MainFreeze_IfPressStart();
 
 // MainGameEnd
@@ -704,157 +704,157 @@ void Particle_FuncPtr_SpitTire();
 void Particle_UpdateAllParticles();
 //Particle_BitwiseClampByte()
 //Particle_SetColors()
-void Particle_RenderList(struct TileView* tileView, void* particleList);
+void Particle_RenderList(struct PushBuffer* pb, void* particleList);
 struct Particle* Particle_Init(u_int param_1, struct IconGroup* ig, struct ParticleEmitter* pe);
 
-// RobotcarWeapons (?)
+// PickupBots (?)
 
-//RobotcarWeapons_Init()
-void RobotcarWeapons_Update();
+//PickupBots_Init()
+void PickupBots_Update();
 
-// StartLine (?)
+// PlayLevel (?)
 
-void StartLine_Update();
+void PlayLevel_UpdateLapStats();
 
 // Tawna (?)
 
-void Tawna_Init(struct GameTracker* gGT);
+void Podium_InitModels(struct GameTracker* gGT);
 
 // THREAD
 
-void THREAD_DestroyTracker(struct Thread* t);
-void THREAD_DestroyInstance(struct Thread* t);
-void THREAD_DestroyObject(void* object, int threadFlags);
-void THREAD_DestroySelf(struct Thread* t);
-void THREAD_DestroyBloodline(struct Thread* t);
-void THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
-void THREAD_CheckAllForDead();
-struct Thread* THREAD_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative);
-void THREAD_CollidePointWithSelf(struct Thread* th, void* buf);
-void THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
-struct Thread* THREAD_SearchForModel(struct Thread* th, int modelID);
-void THREAD_PerBspLeaf_CheckInstances(struct BSP* bspLeaf, struct ScratchpadStruct* param_2);
-void THREAD_StartSearch_Self(struct ScratchpadStruct* SPS);
-void THREAD_CollideHitboxWithBucket(struct Thread* param_1, struct ScratchpadStruct* param_2, struct Thread* param_3);
+void PROC_DestroyTracker(struct Thread* t);
+void PROC_DestroyInstance(struct Thread* t);
+void PROC_DestroyObject(void* object, int threadFlags);
+void PROC_DestroySelf(struct Thread* t);
+void PROC_DestroyBloodline(struct Thread* t);
+void PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
+void PROC_CheckAllForDead();
+struct Thread* PROC_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative);
+void PROC_CollidePointWithSelf(struct Thread* th, void* buf);
+void PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
+struct Thread* PROC_SearchForModel(struct Thread* th, int modelID);
+void PROC_PerBspLeaf_CheckInstances(struct BSP* bspLeaf, struct ScratchpadStruct* param_2);
+void PROC_StartSearch_Self(struct ScratchpadStruct* SPS);
+void PROC_CollideHitboxWithBucket(struct Thread* param_1, struct ScratchpadStruct* param_2, struct Thread* param_3);
 
-// TileView
+// PushBuffer
 
-void TileView_Init(struct TileView* tileView, int id, int total);
-//TileView_SetPsyqGeom()
-void TileView_SetDrawEnv_DecalMP(u_long*, struct DB*, short, short, short, short, short, short, short, short);
-void TileView_SetDrawEnv_Normal(u_long* ot, struct TileView* tileView, struct DB* backBuffer, short* param_4, u_char param_5);
-void TileView_SetMatrixVP(struct TileView* tileView);
-//TileView_SetFrustumPlane()
-void TileView_UpdateFrustum(struct TileView* tileView);
-void TileView_FadeOneWindow(struct TileView* window);
-void TileView_FadeAllWindows();
+void PushBuffer_Init(struct PushBuffer* pb, int id, int total);
+//PushBuffer_SetPsyqGeom()
+void PushBuffer_SetDrawEnv_DecalMP(u_long*, struct DB*, short, short, short, short, short, short, short, short);
+void PushBuffer_SetDrawEnv_Normal(u_long* ot, struct PushBuffer* pb, struct DB* backBuffer, short* param_4, u_char param_5);
+void PushBuffer_SetMatrixVP(struct PushBuffer* pb);
+//PushBuffer_SetFrustumPlane()
+void PushBuffer_UpdateFrustum(struct PushBuffer* pb);
+void PushBuffer_FadeOneWindow(struct PushBuffer* pb);
+void PushBuffer_FadeAllWindows();
 
-// TitleBeginTrack
+// QueueLoadTrack
 
-//TitleBeginTrack_MenuBoxFuncPtr()
-//TitleBeginTrack_Get_MenuBox()
+//QueueLoadTrack_MenuProc()
+//QueueLoadTrack_GetMenuPtr()
 
-// TitleCard
+// RaceConfig
 
-//TitleCard_LoadGameOptions()
-//TitleCard_SaveGameOptions()
+//RaceConfig_LoadGameOptions()
+//RaceConfig_SaveGameOptions()
 
 // TitleFlag
 
-//TitleFlag_MoveModels()
-u_int TitleFlag_IsFullyOnScreen();
-u_int TitleFlag_IsFullyOffScreen();
-u_int TitleFlag_IsTransitioning();
-//TitleFlag_SetDrawOrder()
-void TitleFlag_BeginTransition(int param_1);
-void TitleFlag_SetFullyOnScreen();
-void TitleFlag_SetFullyOffScreen();
-void TitleFlag_SetCanDraw(int enable);
-int TitleFlag_GetCanDraw();
-u_long* TitleFlag_GetOT();
-void TitleFlag_ResetTextAnim();
-void TitleFlag_DrawLoadingString();
-void TitleFlag_DrawSelf();
+//RaceFlag_MoveModels()
+u_int RaceFlag_IsFullyOnScreen();
+u_int RaceFlag_IsFullyOffScreen();
+u_int RaceFlag_IsTransitioning();
+//RaceFlag_SetDrawOrder()
+void RaceFlag_BeginTransition(int param_1);
+void RaceFlag_SetFullyOnScreen();
+void RaceFlag_SetFullyOffScreen();
+void RaceFlag_SetCanDraw(int enable);
+int RaceFlag_GetCanDraw();
+u_long* RaceFlag_GetOT();
+void RaceFlag_ResetTextAnim();
+void RaceFlag_DrawLoadingString();
+void RaceFlag_DrawSelf();
 
 // MENUBOX
 
 void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-void MENUBOX_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
-u_char* MENUBOX_DrawTime(int milliseconds);
-void MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
-void MENUBOX_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);
-void MENUBOX_DrawRwdTriangle (short * position, char * color, u_long * otMem, struct PrimMem * primMem);
-void MENUBOX_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, u_int* rgb, short param_5, u_long* otMem);
-void MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
-void MENUBOX_DrawQuip(char*, short, short, short, short, int, short);
-void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void MENUBOX_DrawFullRect(struct MenuBox* mb, RECT* r);
-//MENUBOX_GetHeight()
-void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
-void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
-void MENUBOX_ClearInput();
-void MENUBOX_CollectInput();
-//void MENUBOX_ProcessInput(struct MenuBox* m);
-void MENUBOX_ProcessState();
-void MENUBOX_Show(struct MenuBox* m);
-void MENUBOX_Hide(struct MenuBox* m);
-int MENUBOX_BoolHidden(struct MenuBox* m);
+void RECTMENU_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
+u_char* RECTMENU_DrawTime(int milliseconds);
+void RECTMENU_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
+void RECTMENU_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);
+void RECTMENU_DrawRwdTriangle (short * position, char * color, u_long * otMem, struct PrimMem * primMem);
+void RECTMENU_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, u_int* rgb, short param_5, u_long* otMem);
+void RECTMENU_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
+void RECTMENU_DrawQuip(char*, short, short, short, short, int, short);
+void RECTMENU_DrawInnerRect(RECT* r, int flag, u_long* ot);
+void RECTMENU_DrawFullRect(struct RectMenu* menu, RECT* r);
+//RECTMENU_GetHeight()
+void RECTMENU_GetWidth(struct RectMenu* m, RECT* r, int);
+void RECTMENU_DrawSelf(struct RectMenu* m, int, int, int);
+void RECTMENU_ClearInput();
+void RECTMENU_CollectInput();
+//void RECTMENU_ProcessInput(struct RectMenu* m);
+void RECTMENU_ProcessState();
+void RECTMENU_Show(struct RectMenu* m);
+void RECTMENU_Hide(struct RectMenu* m);
+int RECTMENU_BoolHidden(struct RectMenu* m);
 
 // GhostData (?)
 
-//GhostData_BoolGhostForLEV()
-//LoadSave_NextMemcardAction()
-//GhostData_EncodeByte()
-//GhostData_DecodeByte()
-//GhostData_EncodeProfile()
-//GhostData_DecodeProfile()
-void LoadSave_StartMemcardAction(int action);
-//LoadSave_StopMemcardAction()
-//GhostData_ResetNumGhosts()
+//RefreshCard_BoolGhostForLEV()
+//RefreshCard_NextMemcardAction()
+//RefreshCard_GhostEncodeByte()
+//RefreshCard_GhostDecodeByte()
+//RefreshCard_GhostEncodeProfile()
+//RefreshCard_GhostDecodeProfile()
+void RefreshCard_StartMemcardAction(int action);
+//RefreshCard_StopMemcardAction()
+//RefreshCard_GetNumGhostsTotal()
 
 // Load...
 
-//LoadFromCard_GameProgressAndOptions()
-void unk80047d64();
-void LoadSave_QueueLoadHub_MenuBoxFuncPtr(struct MenuBox* mb);
-//LoadSave_ThTick()
-//LoadSave_PrintInteger()
-//LoadSave_UI_ConvertX()
-//LoadSave_UI_ConvertY()
-//LoadSave_DrawAdvProfile()
-//LoadSave_GetTrackID()
-//LoadSave_Init()
-void LoadSave_Destroy();
-void LoadSave_OneProfile_MenuBoxFuncPtr(struct MenuBox *mb);
-//LoadSave_DrawGhostProfile()
-void LoadSave_MuteCursors();
-void LoadSave_UnMuteCursors();
-void LoadSave_ToggleMode(u_int param_1);
-//LoadSave_InitAndDestroy()
-u_int LoadSave_InputLogic(struct MenuBox *mb, short param_2, u_int confirm);
-//LoadSave_AllProfiles_MenuBoxFuncPtr()
+//RefreshCard_GameProgressAndOptions()
+void RefreshCard_Entry();
+void SelectProfile_QueueLoadHub_MenuProc(struct RectMenu* menu);
+//SelectProfile_ThTick()
+//SelectProfile_PrintInteger()
+//SelectProfile_UI_ConvertX()
+//SelectProfile_UI_ConvertY()
+//SelectProfile_DrawAdvProfile()
+//SelectProfile_GetTrackID()
+//SelectProfile_Init()
+void SelectProfile_Destroy();
+void SelectProfile_AdvPickMode_MenuProc(struct RectMenu* menu);
+//SelectProfile_DrawGhostProfile()
+void SelectProfile_MuteCursors();
+void SelectProfile_UnMuteCursors();
+void SelectProfile_ToggleMode(u_int param_1);
+//SelectProfile_InitAndDestroy()
+u_int SelectProfile_InputLogic(struct RectMenu* menu, short param_2, u_int confirm);
+//SelectProfile_AllProfiles_MenuProc()
 
-// TitleOSK
+// SubmitName
 
-//TitleOSK_RestoreName()
-short TitleOSK_DrawMenu(u_short stringID);
-void TitleOSK_MenuBoxFuncPtr(struct MenuBox* mb);
+//SubmitName_RestoreName()
+short SubmitName_DrawMenu(u_short stringID);
+void SubmitName_MenuProc(struct RectMenu* menu);
 
 // PrixSaveBox (?)
 
-//PrixSaveBox_Activate()
-void PrixSaveBox_MenuBoxFuncPtr(struct MenuBox* mb);
+//TakeCupProgress_Activate()
+void TakeCupProgress_MenuProc(struct RectMenu* menu);
 
 // RCNT
 
-void RCNT_Init();
-//RCNT_Destroy()
-int RCNT_GetTime_Total();
-int RCNT_GetTime_Elapsed(int time, void* param_2);
+void Timer_Init();
+//Timer_Destroy()
+int Timer_GetTime_Total();
+int Timer_GetTime_Elapsed(int time, void* param_2);
 
 // Torch
 
-void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
+void Torch_Main(void* particleList_heatWarp, struct PushBuffer* pb, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void Torch_Subset1();
 //Torch_Subset2()
 //Torch_Subset3()
@@ -922,7 +922,7 @@ void UI_VsQuipDrawAll();
 void UI_VsWaitForPressX();
 //UI_RaceEnd_GetDriverClock()
 void UI_RaceStart_IntroText1P();
-//UI_RaceEnd_MenuBoxFuncPtr()
+//UI_RaceEnd_MenuProc()
 //CupStandings_FinalizeCupRanks()
 //CupStandings_UpdateCupRanks()
 //CupStandings_InputAndDraw()
@@ -978,7 +978,7 @@ void VehFrameProc_LastSpin();
 void VehGroundShadow_Main();
 //VehGroundSkids_Subset1()
 //VehGroundSkids_Subset2()
-void VehGroundSkids_Main(struct Thread* thread, struct TileView* tileView);
+void VehGroundSkids_Main(struct Thread* thread, struct PushBuffer* pb);
 //VehLap_UpdateProgress()
 void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
 //VehPhysCrash_BounceSelf()
@@ -1094,7 +1094,7 @@ void VehTurbo_ThTick(int param_1);
 
 // DrawSky (?)
 
-void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
+void DrawSky_Full(void* skybox, struct PushBuffer* pb, struct PrimMem* primMem);
 //DrawSky_Piece()
 
 // uncategorized
@@ -1102,7 +1102,7 @@ void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primM
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 //AnimateQuadVertex()
 //TRIG_AngleSinCos_r19r17r18()
-void DrawConfetti(struct TileView* tileView, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
+void DrawConfetti(struct PushBuffer* pb, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
 //TRIG_AngleSinCos_r15r16r17()
 
 // RenderBucket (?)
@@ -1137,16 +1137,16 @@ void AnimateWater2P(int timer, int numWaterVertices, struct WaterVert* waterVert
 void AnimateWater3P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
 void AnimateWater4P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
 //AnimateWaterVertex()
-void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
-void RenderStars(struct TileView* tileView, struct PrimMem* primMem, void* stars, char numPlyr);
+void RedBeaker_RenderRain(struct PushBuffer* pb, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
+void RenderStars(struct PushBuffer* pb, struct PrimMem* primMem, void* stars, char numPlyr);
 void DrawTires_Solid(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
 //TRIG_AngleSinCos_r9r8r10()
 void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
-void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
+void RenderWeather(struct PushBuffer* pb, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
 //TRIG_AngleSinCos_r16r17r18()
-int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
+int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct PushBuffer* pb, u_int LevRenderList, void* bspList, char numPlyr);
 void RenderLists_PreInit();
-int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
+int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct PushBuffer* pb, u_int LevRenderList, void* bspList);
 void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
 void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
 //RenderBucket_QueueDraw()
@@ -1179,16 +1179,16 @@ void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
 void RB_Burst_ProcessBucket(struct Thread* thread);
 void RB_Blowup_ProcessBucket(struct Thread* thread);
-void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
+void RB_Spider_DrawWebs(struct Thread* thread, struct PushBuffer* pb);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
 void MM_Title_SetTrophyDPP();
 
-void DrawLevelOvr1P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* waterEnvMap);
-void DrawLevelOvr2P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* waterEnvMap);
-void DrawLevelOvr3P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* waterEnvMap);
-void DrawLevelOvr4P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* VisMem1C, void* waterEnvMap);
+void DrawLevelOvr1P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* waterEnvMap);
+void DrawLevelOvr2P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* waterEnvMap);
+void DrawLevelOvr3P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* waterEnvMap);
+void DrawLevelOvr4P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* VisMem1C, void* waterEnvMap);
 
 u_int MM_Video_CheckIfFinished(int param_1);
 void AH_Pause_Update();

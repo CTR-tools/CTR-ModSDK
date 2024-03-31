@@ -65,7 +65,7 @@ void CS_Credits_Init()
 	// 0x300 = SmallStackPool
 	// 0xd = "other" thread bucket
 	creditsBSS->CreditThread =
-		THREAD_BirthWithObject(0x30d, CS_Credits_ThTick, 0, 0);
+		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, 0, 0);
 		
 	memset(creditsObj, 0, sizeof(struct CreditsObj));
 	creditsObj->countdown = 360;
@@ -93,7 +93,7 @@ void CS_Credits_Init()
 		inst->flags |= 0x400;
 		
 		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
-		idpp[0].tileView = &gGT->tileView_UI;
+		idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 		
 		#if 0
 		// OG game erases other idpp's, but just ignore it

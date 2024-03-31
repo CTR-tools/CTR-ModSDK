@@ -137,7 +137,7 @@ void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
 	short* metaArray;
 	
 	struct Thread* t = 
-		DECOMP_THREAD_BirthWithObject
+		DECOMP_PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

@@ -78,7 +78,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	gGT->numWinners = 1;
 	
 	// Set winnerIndex[0] to 0, to draw 
-	// confetti on the first tileView
+	// confetti on the first pushBuffer
 	gGT->winnerIndex[0] = 0;
 	
 	gGT->confetti.numParticles_max = 200;
@@ -148,12 +148,12 @@ void DECOMP_CS_Podium_FullScene_Init()
 	
 	CS_Podium_Stand_Init((void*)&InitData);
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x4 = size
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
 	// 0xf = camera thread bucket
-	victoryCamThread = (struct Thread *)THREAD_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, 0, 0);
+	victoryCamThread = (struct Thread *)PROC_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, 0, 0);
 	
 	// if it allocated correctly
 	if (victoryCamThread != 0) 

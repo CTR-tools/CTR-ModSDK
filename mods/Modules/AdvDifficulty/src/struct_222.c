@@ -1,8 +1,8 @@
 #include <common.h>
 #include "macro.h"
 
-void MenuBoxFuncPtr_Difficulty(struct MenuBox*);
-void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);
+void MenuProc_Difficulty(struct RectMenu*);
+void UI_RaceEnd_MenuProc(struct RectMenu*);
 extern struct MenuRow rows_extraDifficulty[];
 extern struct MenuRow rows_advDifficulty[];
 
@@ -24,7 +24,7 @@ struct MenuRow new_retryAdv[] =
         FINALIZER_ROW
 };
 
-struct MenuBox End_AdvRaceDifficulty = {
+struct RectMenu End_AdvRaceDifficulty = {
     #if BUILD == JpnRetail
     .stringIndexTitle = 354,
     #else
@@ -35,12 +35,12 @@ struct MenuBox End_AdvRaceDifficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | USE_SMALL_FONT | EXECUTE_FUNCPTR,
     .rows = rows_advDifficulty,
-    .funcPtr = MenuBoxFuncPtr_Difficulty,
+    .funcPtr = MenuProc_Difficulty,
     .width = 209,
     .height = 74
 };
 
-struct MenuBox End_arcadeDifficulty = {
+struct RectMenu End_arcadeDifficulty = {
     #if BUILD == JpnRetail
     .stringIndexTitle = 354,
     #else
@@ -51,19 +51,19 @@ struct MenuBox End_arcadeDifficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | USE_SMALL_FONT | EXECUTE_FUNCPTR,
     .rows = rows_extraDifficulty,
-    .funcPtr = MenuBoxFuncPtr_Difficulty,
+    .funcPtr = MenuProc_Difficulty,
     .width = 209,
     .height = 74
 };
 
-struct MenuBox new_retryExitToMap = {
+struct RectMenu new_retryExitToMap = {
     .stringIndexTitle = -1,
     .posX_curr = 256,
     .posY_curr = 170,
     .unk1 = 0,
     .state = CENTER_ON_COORDS | USE_SMALL_FONT | EXECUTE_FUNCPTR,
     .rows = new_retryAdv,
-    .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+    .funcPtr = UI_RaceEnd_MenuProc,
     .drawStyle = 4,
     .posX_prev = 256,
     .posY_prev = 170,

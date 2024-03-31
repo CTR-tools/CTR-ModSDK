@@ -32,4 +32,4 @@ register struct OnlineCTR* octr asm("k1");
 void MenuState1_BootGame(struct Thread* t);
 void MenuState2_Navigate(struct Thread* t);
 void MenuState3_Minimize(struct Thread* t);
-void MENUBOX_OnPressX(struct MenuBox* b);
+void RECTMENU_OnPressX(struct RectMenu* b);

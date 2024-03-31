@@ -18,7 +18,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 		return;
 	
     t =	
-		THREAD_BirthWithObject
+		PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

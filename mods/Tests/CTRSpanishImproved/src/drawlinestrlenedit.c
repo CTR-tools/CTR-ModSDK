@@ -448,7 +448,7 @@ LAB_80022598:
 									posY + pixHeightExtra,
 
 									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
+									sdata->gGT->pushBuffer_UI.ptrOT,
 
 									ptrColor[2],
 									ptrColor[3],
@@ -468,7 +468,7 @@ LAB_80022598:
 									posY + pixHeightExtra,
 
 									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
+									sdata->gGT->pushBuffer_UI.ptrOT,
 
 									ptrColor[0],
 									ptrColor[1],

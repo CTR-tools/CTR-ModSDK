@@ -13,7 +13,7 @@ int ScrapBookPlayMovie_DecodeFrame()
 }
 #endif
 
-void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
+void DECOMP_MM_Scrapbook_PlayMovie(struct RectMenu* menu)
 {
     short lev;
     int cdPos;
@@ -21,7 +21,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 	DRAWENV* ptrDrawEnv;
     const CdlFILE cdlFile;
     struct GameTracker *gGT = sdata->gGT;
-	int isOn = DECOMP_TitleFlag_IsFullyOnScreen();
+	int isOn = DECOMP_RaceFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
     switch (D230.scrapbookState)
@@ -33,12 +33,12 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // checkered flag, begin transition off-screen
-            DECOMP_TitleFlag_BeginTransition(2);
+            DECOMP_RaceFlag_BeginTransition(2);
         }
 
         // go to Load State
         D230.scrapbookState = 1;
-        mb->state &= ~NEEDS_TO_CLOSE;
+        menu->state &= ~NEEDS_TO_CLOSE;
         DECOMP_Audio_SetState_Safe(1);
         break;
 
@@ -47,7 +47,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     case 1:
 
         // if not fully off screen
-        if (DECOMP_TitleFlag_IsFullyOffScreen() != 1)
+        if (DECOMP_RaceFlag_IsFullyOffScreen() != 1)
         {
             // quit, dont start video yet
             return;
@@ -110,7 +110,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         {
             if (getButtonPress != 0)
             {
-                DECOMP_TitleFlag_SetFullyOnScreen();
+                DECOMP_RaceFlag_SetFullyOnScreen();
             }
 
             // stop video
@@ -131,10 +131,10 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         MM_Video_ClearMem();
 #endif
 
-        if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
+        if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
         {
             // checkered flag, begin transition on-screen
-            DECOMP_TitleFlag_BeginTransition(1);
+            DECOMP_RaceFlag_BeginTransition(1);
         }
     GO_BACK:
 
@@ -148,7 +148,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // change checkered flag back
-            DECOMP_TitleFlag_SetDrawOrder(0);
+            DECOMP_RaceFlag_SetDrawOrder(0);
 
 			// if adventure mode
 			lev = GEM_STONE_VALLEY;
@@ -166,7 +166,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
             DECOMP_MainRaceTrack_RequestLoad(lev);
 			
-            DECOMP_MENUBOX_Hide(mb);
+            DECOMP_RECTMENU_Hide(menu);
         }
         break;
     default:

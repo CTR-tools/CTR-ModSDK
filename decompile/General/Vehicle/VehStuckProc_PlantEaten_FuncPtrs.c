@@ -92,23 +92,23 @@ void DECOMP_VehStuckProc_PlantEaten_Animate(struct Thread *t, struct Driver *d)
 		
         RotTrans(&plantVector, &camVec, alStack32);
 
-        struct TileView * view = &gGT->tileView[d->driverID];
+        struct PushBuffer* pb = &gGT->pushBuffer[d->driverID];
 
-        view->pos[0] = camVec.vx;
-        view->pos[1] = inst->matrix.t[1] + 0xc0;
-        view->pos[2] = camVec.vz;
+        pb->pos[0] = camVec.vx;
+        pb->pos[1] = inst->matrix.t[1] + 0xc0;
+        pb->pos[2] = camVec.vz;
 
         int camX = camVec.vx - inst->matrix.t[0];
         int camZ = camVec.vz - inst->matrix.t[2];
 
-        view->rot[1] = (short)ratan2(camX, camZ);
+        pb->rot[1] = (short)ratan2(camX, camZ);
 
         // get distance between car and camera
         dist = SquareRoot0_stub(camX * camX + camZ * camZ);
 
-        view->rot[0] = (short)0x800 - ratan2(view->pos[1] - inst->matrix.t[1], dist);
+        pb->rot[0] = (short)0x800 - ratan2(pb->pos[1] - inst->matrix.t[1], dist);
 
-        view->rot[2] = 0;
+        pb->rot[2] = 0;
     }
 }
 

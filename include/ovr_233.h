@@ -179,7 +179,7 @@ extern struct
 struct OVR233_Garage
 {	
 	// 800b8598
-	struct MenuBox mbGarage;
+	struct RectMenu menuGarage;
 	
 	// 800b85c4
 	int numFramesMax_GarageMove;

@@ -96,11 +96,11 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   if (D230.trackSel_video_state != 3)
   {
     // Draw Video icon
-    DECOMP_MENUBOX_DrawPolyGT4(
+    DECOMP_RECTMENU_DrawPolyGT4(
 		gGT->ptrIcons[selectMenu->videoThumbnail],
         (r->x + 3), (r->y + 2),
         &gGT->backBuffer->primMem,
-        gGT->tileView_UI.ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
         D230.videoCol,
 		D230.videoCol,
 		D230.videoCol,
@@ -134,6 +134,6 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   D230.trackSel_unk = D230.trackSel_video_state;
 
   // Draw 2D Menu rectangle background
-  DECOMP_MENUBOX_DrawInnerRect(
+  DECOMP_RECTMENU_DrawInnerRect(
 	r, (short)(param_5 | 1), gGT->backBuffer->otMem.startPlusFour);
 }

@@ -13,7 +13,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
   short sVar9;
   struct Instance* iVar10;
   short *psVar11;
-  struct TileView* tileview;
+  struct PushBuffer* pb;
   short *ptrCurr;
   int iVar14;
   struct TransitionMeta* tMeta;
@@ -31,79 +31,77 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
     psVar11 = &D230.characterSelect_ptrWindowXY[iVar14*2];
     tMeta = &D230.ptrTransitionMeta[iVar14];
   
-    // tileView
-    tileview = &gGT->tileView[iVar14];
-  
-    tileview->rect.x = psVar11[0] + tMeta[0x10].currX;
-    tileview->rect.y = psVar11[1] + tMeta[0x10].currY;
-    tileview->rect.w = D230.characterSelect_sizeX;
-    tileview->rect.h = D230.characterSelect_sizeY;
+    pb = &gGT->pushBuffer[iVar14];
+    pb->rect.x = psVar11[0] + tMeta[0x10].currX;
+    pb->rect.y = psVar11[1] + tMeta[0x10].currY;
+    pb->rect.w = D230.characterSelect_sizeX;
+    pb->rect.h = D230.characterSelect_sizeY;
   
     // negative StartX
-    if ((short)tileview->rect.x < 0) {
-      tileview->rect.w -= tileview->rect.x;
-      tileview->rect.x = 0;
-      if ((short)tileview->rect.w < 0) {
-        tileview->rect.w = 0;
+    if ((short)pb->rect.x < 0) {
+      pb->rect.w -= pb->rect.x;
+      pb->rect.x = 0;
+      if ((short)pb->rect.w < 0) {
+        pb->rect.w = 0;
       }
     }
   
     // negative StartY
-    if ((short)tileview->rect.y < 0) {
-      tileview->rect.h -= tileview->rect.y;
-      tileview->rect.y = 0;
-      if ((short)tileview->rect.h < 0) {
-        tileview->rect.h = 0;
+    if ((short)pb->rect.y < 0) {
+      pb->rect.h -= pb->rect.y;
+      pb->rect.y = 0;
+      if ((short)pb->rect.h < 0) {
+        pb->rect.h = 0;
       }
     }
   
     // startX + sizeX out of bounds
     if (
-            (0x200 < tileview->rect.x + tileview->rect.w) &&
+            (0x200 < pb->rect.x + pb->rect.w) &&
             (
-                tileview->rect.w = 0x200 - tileview->rect.x,
-                tileview->rect.w < 0
+                pb->rect.w = 0x200 - pb->rect.x,
+                pb->rect.w < 0
             )
         )
     {
-      tileview->rect.x = 0x200;
-      tileview->rect.w = 0;
+      pb->rect.x = 0x200;
+      pb->rect.w = 0;
 
 #ifdef REBUILD_PC
       // PsyCross can't handle w==0
-      tileview->rect.w = 1;
+      pb->rect.w = 1;
 #endif
     }
   
     // startY + sizeY out of bounds
     if (
-            (0xd8 < tileview->rect.y + tileview->rect.h) &&
+            (0xd8 < pb->rect.y + pb->rect.h) &&
             (
-                tileview->rect.h = 0xd8 - tileview->rect.y,
-                tileview->rect.h < 0
+                pb->rect.h = 0xd8 - pb->rect.y,
+                pb->rect.h < 0
             )
         ) 
     {
-      tileview->rect.y = 0xd8;
-      tileview->rect.h = 0;
+      pb->rect.y = 0xd8;
+      pb->rect.h = 0;
 
 #ifdef REBUILD_PC
       // PsyCross can't handle h==0
-      tileview->rect.h = 1;
+      pb->rect.h = 1;
 #endif
     }
   
     // distanceToScreen
-    tileview->distanceToScreen_CURR = 0x100;
-    tileview->distanceToScreen_PREV = 0x100;
+    pb->distanceToScreen_CURR = 0x100;
+    pb->distanceToScreen_PREV = 0x100;
   
-    // tileView pos and rot to all zero
-    tileview->pos[0] = 0;
-    tileview->pos[1] = 0;
-    tileview->pos[2] = 0;
-    tileview->rot[0] = 0;
-    tileview->rot[1] = 0;
-    tileview->rot[2] = 0;
+    // pushBuffer pos and rot to all zero
+    pb->pos[0] = 0;
+    pb->pos[1] = 0;
+    pb->pos[2] = 0;
+    pb->rot[0] = 0;
+    pb->rot[1] = 0;
+    pb->rot[2] = 0;
   
     // player -> instance
     iVar10 = gGT->drivers[iVar14]->instSelf;
@@ -130,15 +128,15 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
 	struct InstDrawPerPlayer* idpp =
 		INST_GETIDPP(iVar10);
   
-    // clear tileView in every InstDrawPerPlayer
-    idpp[0].tileView = 0;
-    idpp[1].tileView = 0;
-    idpp[2].tileView = 0;
-    idpp[3].tileView = 0;
+    // clear pushBuffer in every InstDrawPerPlayer
+    idpp[0].pushBuffer = 0;
+    idpp[1].pushBuffer = 0;
+    idpp[2].pushBuffer = 0;
+    idpp[3].pushBuffer = 0;
   
-    // set tileView in InstDrawPerPlayer,
+    // set pushBuffer in InstDrawPerPlayer,
     // so that each camera can only see one driver
-    idpp[iVar6].tileView = tileview;
+    idpp[iVar6].pushBuffer = pb;
 
     ptrCurr = &D230.characterSelect_charIDs_curr[iVar6];
 
@@ -185,7 +183,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
 	  {
         // make driver fly off screen
         *ptrCurr = D230.characterSelect_charIDs_desired[iVar6];
-        iVar5 = DECOMP_TitleFlag_MoveModels((int)sVar9, (int)D230.moveModels);
+        iVar5 = DECOMP_RaceFlag_MoveModels((int)sVar9, (int)D230.moveModels);
   
         // direction moving
         iVar6 = -D230.characterSelect_MoveDir[iVar6];
@@ -195,7 +193,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
       // if timer is after midpoint
       else {
         // make new driver fly on screen
-        iVar5 = DECOMP_TitleFlag_MoveModels((int)sVar9 - (int)D230.moveModels, (int)D230.moveModels);
+        iVar5 = DECOMP_RaceFlag_MoveModels((int)sVar9 - (int)D230.moveModels, (int)D230.moveModels);
   
         // direction moving
         iVar8 = D230.characterSelect_MoveDir[iVar6];

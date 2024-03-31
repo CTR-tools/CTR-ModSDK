@@ -44,7 +44,7 @@ struct MenuRow menuRows[5] =
 	}
 };
 	
-struct MenuBox menuBox =
+struct RectMenu menuBox =
 {
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
@@ -59,7 +59,7 @@ struct MenuBox menuBox =
 
 	.rows = menuRows,
 
-	.funcPtr = MENUBOX_OnPressX,
+	.funcPtr = RECTMENU_OnPressX,
 
 	.drawStyle = 0x4,	// 0xF0 looks like load/save
 	
@@ -119,7 +119,7 @@ void ActivateMenu(struct Thread* t)
 	octr->PageNumber = 0;
 	octr->CountPressX = 0;
 	SetNames_Characters();
-	MENUBOX_Show(&menuBox);
+	RECTMENU_Show(&menuBox);
 	ThTick_Set(t, octr->funcs[OPEN_MENU]);
 }
 
@@ -196,7 +196,7 @@ void MenuState2_Navigate(struct Thread* t)
 		if(buttons & BTN_SELECT)
 		{	
 			// hide menubox
-			MENUBOX_Hide(&menuBox);
+			RECTMENU_Hide(&menuBox);
 			ThTick_Set(t, octr->funcs[MINIMIZE]);
 		}
 	}
@@ -221,7 +221,7 @@ void MenuState3_Minimize(struct Thread* t)
 	}
 }
 
-void MENUBOX_OnPressX(struct MenuBox* b)
+void RECTMENU_OnPressX(struct RectMenu* b)
 {	
 	int levelID;
 	int i;
@@ -247,7 +247,7 @@ void MENUBOX_OnPressX(struct MenuBox* b)
 	{	
 		// close menu, stop music, 
 		// stop "most FX", let menu FX ring
-		MENUBOX_Hide(b);
+		RECTMENU_Hide(b);
 		Music_Stop();
 		howl_StopAudio(1,1,0);
 		

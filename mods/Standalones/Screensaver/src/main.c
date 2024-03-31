@@ -126,7 +126,7 @@ void RunUpdateHook()
 	tap = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// shut any menu
-	sdata->ptrActiveMenuBox = 0;
+	sdata->ptrActiveMenu = 0;
 	
 	
 	
@@ -238,7 +238,7 @@ void RunUpdateHook()
 	}
 	
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
-	MENUBOX_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 	
 	
 	

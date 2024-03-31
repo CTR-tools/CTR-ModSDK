@@ -339,7 +339,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         if (
 				gGT->trafficLightsTimer < 1 &&
 				((gGT->gameMode1 & START_OF_RACE) == 0) &&
-				(DECOMP_TitleFlag_IsFullyOnScreen() == 0)
+				(DECOMP_RaceFlag_IsFullyOnScreen() == 0)
 			)
 		{
           DECOMP_VehFire_Increment(d, 

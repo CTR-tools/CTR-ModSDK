@@ -22,7 +22,7 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
     {
         inst = NULL;
 
-        t = THREAD_BirthWithObject(
+        t = PROC_BirthWithObject(
                 SIZE_RELATIVE_POOL_BUCKET(
                     0x60,
                     NONE,
@@ -72,7 +72,7 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
         t = inst->thread;
 
         // set funcThDestroy to remove instance from instance pool
-        t->funcThDestroy = THREAD_DestroyInstance();
+        t->funcThDestroy = PROC_DestroyInstance();
     }
 
     // cutscene obj

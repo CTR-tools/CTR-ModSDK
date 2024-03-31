@@ -13,7 +13,7 @@ u_char lightTile[3] = {0x42, 0xAA, 0xD7};
 u_char darkTile[3] = {0x3F, 0x96, 0xCD};
 // These specific colors are similar to Nitro-Fueled theme colors
 
-force_inline unsigned char TitleFlag_CalculateBrightness(u_int sine, u_char darker)
+force_inline unsigned char RaceFlag_CalculateBrightness(u_int sine, u_char darker)
 {
 	// This is the shader effect for wave shadow
 	// Smaller (more negative) number will result in harsher shadows
@@ -27,7 +27,7 @@ force_inline unsigned char TitleFlag_CalculateBrightness(u_int sine, u_char dark
 	return (u_char)(((sine * -50) + 0x1fe000) >> 0xD);
 }
 
-force_inline void TitleFlag_SetRGB(POLY_G4 *p, u_char* tile, u_char pixBrightness, u_char left)
+force_inline void RaceFlag_SetRGB(POLY_G4 *p, u_char* tile, u_char pixBrightness, u_char left)
 {
 	u_int rgb[3];
 
@@ -46,7 +46,7 @@ force_inline void TitleFlag_SetRGB(POLY_G4 *p, u_char* tile, u_char pixBrightnes
 	}
 }
 
-void DECOMP_TitleFlag_DrawSelf()
+void DECOMP_RaceFlag_DrawSelf()
 {
 	char i, j;
 	char column, row;
@@ -82,26 +82,26 @@ void DECOMP_TitleFlag_DrawSelf()
 	int unk4;
 	int time;
 
-	if (sdata->TitleFlag_CanDraw == 0)
+	if (sdata->RaceFlag_CanDraw == 0)
 		return;
 
-	if (sdata->TitleFlag_LoadingTextAnimFrame < 0)
+	if (sdata->RaceFlag_LoadingTextAnimFrame < 0)
 	{
 		if ((5 < sdata->Loading.stage) && (sdata->Loading.stage < 8))
 		{
-			sdata->TitleFlag_LoadingTextAnimFrame = 0;
+			sdata->RaceFlag_LoadingTextAnimFrame = 0;
 		}
 
-		if (sdata->TitleFlag_LoadingTextAnimFrame < 0)
+		if (sdata->RaceFlag_LoadingTextAnimFrame < 0)
 			goto SKIP_LOADING_TEXT;
 	}
 
-	TitleFlag_DrawLoadingString();
+	RaceFlag_DrawLoadingString();
 
 SKIP_LOADING_TEXT:
 
-	sdata->TitleFlag_CopyLoadStage = sdata->Loading.stage;
-	ot = (u_long *)TitleFlag_GetOT();
+	sdata->RaceFlag_CopyLoadStage = sdata->Loading.stage;
+	ot = (u_long *)RaceFlag_GetOT();
 
 	gte_SetRotMatrix(&data.matrixTitleFlag);
 	gte_SetTransMatrix(&data.matrixTitleFlag);
@@ -156,14 +156,14 @@ SKIP_LOADING_TEXT:
 	colorSine[0] = MATH_Sin(angle[0]) + 0xfff;
 	FP(1.0);
 
-	time = sdata->TitleFlag_ElapsedTime >> 5;
+	time = sdata->RaceFlag_ElapsedTime >> 5;
 	angle[0] = time;
 
 	pos[0].vy = 0xfc72;
 	pos[1].vy = 0xfcd0;
 	pos[2].vy = 0xfd2e;
 
-	flagPos = sdata->TitleFlag_Position;
+	flagPos = sdata->RaceFlag_Position;
 	flagPos = -0xbbe - flagPos;
 	pos[0].vx = flagPos;
 	pos[1].vx = flagPos;
@@ -349,12 +349,12 @@ SKIP_LOADING_TEXT:
 					// Calculate color brightness
 					// You don't have to do use either dark/light tile calculations,
 					// you can use the same calculation constants for both left and right
-					colorRight = TitleFlag_CalculateBrightness(colorSine[0], boolDarker);
-					colorLeft = TitleFlag_CalculateBrightness(colorSine[1], boolDarker);
+					colorRight = RaceFlag_CalculateBrightness(colorSine[0], boolDarker);
+					colorLeft = RaceFlag_CalculateBrightness(colorSine[1], boolDarker);
 
 					// set colors
-					TitleFlag_SetRGB(p, CurrTile, colorRight, false);
-					TitleFlag_SetRGB(p, CurrTile, colorLeft, true);
+					RaceFlag_SetRGB(p, CurrTile, colorRight, false);
+					RaceFlag_SetRGB(p, CurrTile, colorLeft, true);
 
 					// positions
 					*(int *)&p->x0 = bottom[0];
@@ -374,5 +374,5 @@ SKIP_LOADING_TEXT:
 		}
 		colorSine[0] = colorSine[1];
 	}
-	sdata->TitleFlag_ElapsedTime += gGT->elapsedTimeMS * 100;
+	sdata->RaceFlag_ElapsedTime += gGT->elapsedTimeMS * 100;
 }

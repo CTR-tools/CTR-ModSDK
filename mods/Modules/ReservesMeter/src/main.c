@@ -36,7 +36,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		box2.x = posX - 0x31;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
+		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->pushBuffer_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 		colorAndCode = 0x280000ff; // red
 		if (driver->reserves > 1600)
@@ -69,7 +69,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->x0 = reservesMeter;
 		p->x2 = reservesMeter;
 
-		primmemCurr = sdata->gGT->tileView_UI.ptrOT;
+		primmemCurr = sdata->gGT->pushBuffer_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -99,7 +99,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 			p->x2 = posX - 0x31;
 
 			// pointer to OT memory
-			primmemCurr = sdata->gGT->tileView_UI.ptrOT;
+			primmemCurr = sdata->gGT->pushBuffer_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;
@@ -156,7 +156,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		box2.x = posX;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
+		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->pushBuffer_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 		reservesMeter = driver->reserves;
 		sVar9 = driver->reserves;
@@ -199,7 +199,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->y0 = reservesMeter;
 		p->y1 = reservesMeter;
 
-		primmemCurr = sdata->gGT->tileView_UI.ptrOT;
+		primmemCurr = sdata->gGT->pushBuffer_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -229,7 +229,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 			p->y3 = posY;
 
 			// pointer to OT memory
-			primmemCurr = sdata->gGT->tileView_UI.ptrOT;
+			primmemCurr = sdata->gGT->pushBuffer_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;

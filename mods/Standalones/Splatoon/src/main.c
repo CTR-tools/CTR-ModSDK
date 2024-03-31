@@ -144,7 +144,7 @@ void EndCrystalChallenge(void)
 	DecalFont_DrawLine(line2, 40, 30, FONT_SMALL, PAPU_YELLOW);
 
 	// draw box
-	MENUBOX_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	// you can only press Cross, Circle, or Square
 	if(!(tap & 0x70)) return;
@@ -212,9 +212,9 @@ void RunInitHook()
 		mgs->playerVars[playerIndex].speedVar = 9;
 
 		// default rotation
-		sdata->gGT->tileView[playerIndex].rot[0] = 0;
-		sdata->gGT->tileView[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
-		sdata->gGT->tileView[playerIndex].rot[2] = 0x800;
+		sdata->gGT->pushBuffer[playerIndex].rot[0] = 0;
+		sdata->gGT->pushBuffer[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
+		sdata->gGT->pushBuffer[playerIndex].rot[2] = 0x800;
 
 		// initialize jump
 		mgs->playerVars[playerIndex].jumpHold = 0;
@@ -223,8 +223,8 @@ void RunInitHook()
 		sdata->gGT->drivers[playerIndex]->const_turboLowRoomWarning = 0;
 		sdata->gGT->drivers[playerIndex]->turbo_MeterRoomLeft = 1;
 
-		// erase tileView pointer from camDC, so we can move tileView ourselves
-		sdata->gGT->cameraDC[playerIndex].tileView = 0;
+		// erase pushBuffer pointer from camDC, so we can move pushBuffer ourselves
+		sdata->gGT->cameraDC[playerIndex].pushBuffer = 0;
 
 		// give model to player
 		sdata->gGT->drivers[playerIndex]->instSelf->model = (struct Model*)&m.mgti[playerIndex];
@@ -724,17 +724,17 @@ void RunUpdateHook()
 		driver = sdata->gGT->drivers[playerIndex];
 
 		// set camera to driver position, then change later
-		sdata->gGT->tileView[playerIndex].pos[0] = driver->posCurr[0] >> 8;
-		sdata->gGT->tileView[playerIndex].pos[1] = driver->posCurr[1] >> 8;
-		sdata->gGT->tileView[playerIndex].pos[2] = driver->posCurr[2] >> 8;
+		sdata->gGT->pushBuffer[playerIndex].pos[0] = driver->posCurr[0] >> 8;
+		sdata->gGT->pushBuffer[playerIndex].pos[1] = driver->posCurr[1] >> 8;
+		sdata->gGT->pushBuffer[playerIndex].pos[2] = driver->posCurr[2] >> 8;
 
 		// default rotation
-		sdata->gGT->tileView[playerIndex].rot[0] = 0;
-		sdata->gGT->tileView[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
-		sdata->gGT->tileView[playerIndex].rot[2] = 0x800;
+		sdata->gGT->pushBuffer[playerIndex].rot[0] = 0;
+		sdata->gGT->pushBuffer[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
+		sdata->gGT->pushBuffer[playerIndex].rot[2] = 0x800;
 
 		// get the direction the camera faces, so we can move in that direction
-		ConvertRotToMatrix(&matrix, sdata->gGT->tileView[playerIndex].rot);
+		ConvertRotToMatrix(&matrix, sdata->gGT->pushBuffer[playerIndex].rot);
 
 		// use 4-byte int for the shifting, also this is Vel, not Pos
 		tempPosX = mgs->playerVars[playerIndex].zoom * matrix.m[2][0];
@@ -749,12 +749,12 @@ void RunUpdateHook()
 
 		// adjust camera height, and make it look down,
 		// this is intentionally separate from the X and Z
-		sdata->gGT->tileView[playerIndex].rot[0] = 0x80;
+		sdata->gGT->pushBuffer[playerIndex].rot[0] = 0x80;
 
 		// apply the change
-		sdata->gGT->tileView[playerIndex].pos[0] -= tempPosX;
-		sdata->gGT->tileView[playerIndex].pos[1] += tempPosY;
-		sdata->gGT->tileView[playerIndex].pos[2] -= tempPosZ;
+		sdata->gGT->pushBuffer[playerIndex].pos[0] -= tempPosX;
+		sdata->gGT->pushBuffer[playerIndex].pos[1] += tempPosY;
+		sdata->gGT->pushBuffer[playerIndex].pos[2] -= tempPosZ;
 	}
 }
 

@@ -1,7 +1,7 @@
 #include <common.h>
 
 static int str_number = 0x20; // " \0"
-extern struct MenuBox menuBox222_arcade;
+extern struct RectMenu menu222;
 
 void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2);
 
@@ -283,8 +283,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		for (i = 0; i < sdata->numIconsEOR; i++)
 		{
 
-			int iVar11 = gGT->tileView[0].rect.x +
-						 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
+			int iVar11 = gGT->pushBuffer[0].rect.x +
+						 (gGT->pushBuffer[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
 
 			if (elapsedFrames + lerpEndY > FPS_DOUBLE(300))
 			{
@@ -325,7 +325,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				&gGT->backBuffer->primMem,
 
 				// pointer to OT mem
-				gGT->tileView_UI.ptrOT,
+				gGT->pushBuffer_UI.ptrOT,
 
 				1, 0x1000, 0x808080);
 		}
@@ -355,7 +355,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// If you are here, it means you pressed X to continue
 
 		// clear gamepad input
-		MENUBOX_ClearInput();
+		RECTMENU_ClearInput();
 
 		sdata->menuReadyToPass = 0;
 		sdata->framesSinceRaceEnded = 0;
@@ -377,9 +377,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	if ((gGT->gameMode1 & ARCADE_MODE) != 0)
 	{
 		// End of Race based on number of players (1 or more)
-		menuBox222_arcade.posY_curr = (numPlyr == 1) ? 170 : 108;
+		menu222.posY_curr = (numPlyr == 1) ? 170 : 108;
 
-		MENUBOX_Show(&menuBox222_arcade);
+		RECTMENU_Show(&menu222);
 
 		// record that the menu is drawing
 		sdata->menuReadyToPass |= 1;
@@ -398,14 +398,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		return;
 
 	// clear gamepad input
-	MENUBOX_ClearInput();
+	RECTMENU_ClearInput();
 
 	// if event was not won
 	if (driver->driverRank > 0)
 	{
 		// pass pointer to menu buffer that shows Retry / Exit To Map,
 		// identical to buffer in 221 dll, except this one in EXE space
-		MENUBOX_Show(&data.menuBox_Retry_ExitToMap);
+		RECTMENU_Show(&data.menuRetryExit);
 
 		// record that the menu is now showing
 		sdata->menuReadyToPass |= 1;
@@ -577,7 +577,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		sdata->numIconsEOR = numPlyr + gGT->numBotsNextGame;
 
 		// clear gamepad input (for menus)
-		MENUBOX_ClearInput();
+		RECTMENU_ClearInput();
 	}
 	
 	tenseconds = (framesElapsed + param_2 > FPS_DOUBLE(300));
@@ -719,7 +719,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 			currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
 			endFrame = FPS_DOUBLE(0xf);
 			
-			lerpStartX = gGT->tileView[driverId].rect.x + 0x70;
+			lerpStartX = gGT->pushBuffer[driverId].rect.x + 0x70;
 			
 			lerpEndX = 0x268;
 			if (driverId == 0)
@@ -735,7 +735,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 			if (driverId == 0)
 				lerpStartX = -0x90;
 	
-			lerpEndX = gGT->tileView[driverId].rect.x + 0x70;
+			lerpEndX = gGT->pushBuffer[driverId].rect.x + 0x70;
 		}
 	}
 	#endif
@@ -753,13 +753,13 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	r.h += 6;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 	return;
 }
 
-void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
+void UI_RaceEnd_MenuProc(struct RectMenu *);
 
-struct MenuRow menuRows222_arcade[5] =
+struct MenuRow rows222[5] =
 {
 	// Retry
 	{
@@ -803,15 +803,15 @@ struct MenuRow menuRows222_arcade[5] =
 	}
 };
 
-struct MenuBox menuBox222_arcade =
+struct RectMenu menu222 =
 {
 	.stringIndexTitle = 0xFFFF,
 	.posX_curr = 256,
 	.posY_curr = 170,
 	.unk1 = 0,
 	.state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
-	.rows = menuRows222_arcade,
-	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+	.rows = rows222,
+	.funcPtr = UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 	// rest of variables all default zero
 };

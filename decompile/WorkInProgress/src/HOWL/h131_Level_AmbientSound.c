@@ -158,8 +158,8 @@ void Level_AmbientSound(void)
                                         // get squared distance between two positions
                                         iVar5 = GTE_GetSquaredDistance(
 
-                                            // tileView (camera pos)
-                                            &gGT->tileView[iVar13]->pos[0],
+                                            // pushBuffer (camera pos)
+                                            &gGT->pushBuffer[iVar13]->pos[0],
 
                                             *(int *)(iVar19 * 8 + *(int *)(local_58[4] + 0x13c) + 4) + iVar17);
 

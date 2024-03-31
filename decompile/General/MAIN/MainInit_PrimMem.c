@@ -118,6 +118,6 @@ EndFunc:
 	
 	// 0x1000 per player, plus 0x18 for linking
 	size = ((gGT->numPlyrCurrGame) << 0xC) | 0x18;
-	gGT->ot_tileView_UI[0] = DECOMP_MEMPACK_AllocMem(size); // "ot1"
-	gGT->ot_tileView_UI[1] = DECOMP_MEMPACK_AllocMem(size); // "ot2"
+	gGT->otSwapchainDB[0] = DECOMP_MEMPACK_AllocMem(size); // "ot1"
+	gGT->otSwapchainDB[1] = DECOMP_MEMPACK_AllocMem(size); // "ot2"
 }

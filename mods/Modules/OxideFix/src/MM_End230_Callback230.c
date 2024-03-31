@@ -3,7 +3,7 @@
 void MM_EndOfFile();
 void MM_JumpTo_Scrapbook();
 void MM_Characters_RestoreIDs();
-void MM_Characters_MenuBox();
+void MM_Characters_MenuProc();
 
 // other parts of End230
 extern unsigned char icons1p2p[];
@@ -96,6 +96,6 @@ void LOAD_Callback_230_hook()
 
 	// change number of icons
 	*(unsigned char*)(MM_Characters_RestoreIDs + 0xC0) = 0x10;
-	*(unsigned char*)(MM_Characters_MenuBox + 0xC50) = 0x10;
-	*(unsigned char*)(MM_Characters_MenuBox + MB_OFFSET) = 0x10;
+	*(unsigned char*)(MM_Characters_MenuProc + 0xC50) = 0x10;
+	*(unsigned char*)(MM_Characters_MenuProc + MB_OFFSET) = 0x10;
 }

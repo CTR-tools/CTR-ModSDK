@@ -24,14 +24,14 @@ void PrintText()
 	gGT = sdata->gGT;
 
 	// backup
-	backup = gGT->tileView_UI.ptrOT;
+	backup = gGT->pushBuffer_UI.ptrOT;
 
 	// modify
-	gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
+	gGT->pushBuffer_UI.ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
 
 	// draw
 	DecalFont_DrawLine("Hello World!", 10, 200, FONT_SMALL, ORANGE);
 
 	// restore
-	gGT->tileView_UI.ptrOT = backup;
+	gGT->pushBuffer_UI.ptrOT = backup;
 }

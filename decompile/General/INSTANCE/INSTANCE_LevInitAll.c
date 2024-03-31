@@ -86,7 +86,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		for (char j = 0; j < gGT->numPlyrCurrGame; j++)
 		{
 			idpp[j].mh = 0;
-			idpp[j].tileView = &gGT->tileView[j];
+			idpp[j].pushBuffer = &gGT->pushBuffer[j];
 		}
 	
 		modelID = levInstDef->model->id;

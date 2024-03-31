@@ -2,7 +2,7 @@
 // & 0x2, 0x4, 0x8 -- FUN_80030ad4 -- collision?
 // & 0xX0 = X=0 freezes animation, X=8 hides model, x=1-7 plays animations
 // & 0x80 = make invisible
-// & 0x100 = tileView exists
+// & 0x100 = pushBuffer exists
 // & 0x200 = pixel LOD?
 // & 0x400 = creditghost, screenspace instance
 // & 0x2000 = split-line
@@ -422,7 +422,7 @@ struct InstDrawPerPlayer
 {
 	// 0x74
 	// used for flag & 0x2 to face camera
-	struct TileView* tileView;
+	struct PushBuffer* pushBuffer;
 
 	// 0x78 - in DrawFunc_Split and DrawFunc_Normal
 	MATRIX mvp;

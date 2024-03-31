@@ -899,7 +899,7 @@ void FUN_800ac638(int param_1)
   // RB_Potion_OnShatter_TeethCallback
   DAT_1f800130 = FUN_800ac5e8;
   
-  // THREAD_StartSearch_Self
+  // PROC_StartSearch_Self
   FUN_80042544(&DAT_1f800108);
   
   return;
@@ -1125,7 +1125,7 @@ void FUN_800aca50(int param_1)
 		((*(uint *)PTR_DAT_8008d2ac & 0x8000000) != 0)
 	 ) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x2c = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -4543,13 +4543,13 @@ void FUN_800b0454(int param_1)
 	{
       *(undefined2 *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar16 + 0x4a) * 0x110 + 0x17a) = 0x1fff;
 	  
-	  // tileView based on...
+	  // pushBuffer based on...
 	  // thread -> parentthread -> (Driver*)object -> index
       *(undefined2 *)
        (puVar3 + (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a) * 0x110 + 0x17c) =
            0x1000;
 		 
-	  // tileView based on...
+	  // pushBuffer based on...
 	  // thread -> parentthread -> (Driver*)object -> index
       *(undefined2 *)
        (puVar3 + (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a) * 0x110 + 0x17e) =
@@ -5519,7 +5519,7 @@ void FUN_800b18f8(int param_1)
   // thread -> model -> modelID
   DAT_1f800114 = *(undefined2 *)(*(int *)(param_1 + 0x18) + 0x10);
   
-  // THREAD_StartSearch_Self
+  // PROC_StartSearch_Self
   FUN_80042544(&DAT_1f800108);
   
   // check collision with all robotcar thread
@@ -6093,7 +6093,7 @@ void FUN_800b2154(int param_1)
   // RB_Burst_CollLevInst (callback for BSP collision)
   DAT_1f800130 = FUN_800b20a4;
   
-  // THREAD_StartSearch_Self
+  // PROC_StartSearch_Self
   FUN_80042544(&DAT_1f800108);
   return;
 }
@@ -6594,7 +6594,7 @@ void FUN_800b37d4(int param_1)
   // If this Instance's thread does not exist
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x30 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -6708,7 +6708,7 @@ void FUN_800b3978(int param_1)
   // if thread's instance is null
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x4 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -7233,10 +7233,10 @@ code_r0x800b4024:
       uStack40 = CONCAT22(*(undefined2 *)(iVar10 + 0x48),*(undefined2 *)(iVar10 + 0x44));
       uStack36 = CONCAT22(uStack36._2_2_,*(undefined2 *)(iVar10 + 0x4c));
       
-	  // gGT->tileView[driver->driverID]
+	  // gGT->pushBuffer[driver->driverID]
 	  puVar7 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110;
 	  
-	  // tileView 0x28 (matrix)
+	  // pushBuffer 0x28 (matrix)
 	  gte_SetRotMatrix(puVar5 + 0x168 + 0x28);
 	  gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
       
@@ -7252,14 +7252,14 @@ code_r0x800b4024:
       
 	  sStack32 = (short)uVar1;
 	  
-	  // TileView_rect.x
-      *(short *)(iVar6 + 0x4b4) =					// tileView variable
+	  // PushBuffer_rect.x
+      *(short *)(iVar6 + 0x4b4) =					// pushBuffer variable
            sStack32 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
       
 	  sStack30 = (short)((uint)uVar1 >> 0x10);
       
-	  // TileView_rect.y
-	  *(short *)(iVar6 + 0x4b6) =					// tileView variable
+	  // PushBuffer_rect.y
+	  *(short *)(iVar6 + 0x4b6) =					// pushBuffer variable
            sStack30 + *(short *)(puVar2 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
       return 1;
     }
@@ -7282,7 +7282,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
   // if there is no thread
   if (iVar4 == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
@@ -7505,10 +7505,10 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
                             *(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x44));
         local_24 = local_24 & 0xffff0000 | (uint)*(ushort *)(*(int *)(iVar4 + 0x1c) + 0x4c);
 		
-		// tileView of driver
+		// pushBuffer of driver
         puVar5 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar4 + 0x4a) * 0x110;
 		
-		// gGT->tileView[driver->driverID]->0x28 (matrix)
+		// gGT->pushBuffer[driver->driverID]->0x28 (matrix)
 		gte_SetRotMatrix(puVar5 + 0x168 + 0x28);
 		gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
 		
@@ -7530,10 +7530,10 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
       }
       puVar2 = PTR_DAT_8008d2ac;
 	  
-	  // driver->PickupWumpaHUD.startX = screen posX + tileView startX
+	  // driver->PickupWumpaHUD.startX = screen posX + pushBuffer startX
       *(short *)(iVar4 + 0x4bc) = local_20[0] + *(short *)(puVar5 + 0x184);
 	  
-	  // driver->PickupWumpaHUD.startY = screen posY + tileView startY - 0x14
+	  // driver->PickupWumpaHUD.startY = screen posY + pushBuffer startY - 0x14
       *(short *)(iVar4 + 0x4be) =
            *(short *)((int)puVar7 + 2) +
            *(short *)(puVar2 + (uint)*(byte *)(iVar4 + 0x4a) * 0x110 + 0x186) + -0x14;
@@ -7568,7 +7568,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
   // if there is no thread
   if (iVar4 == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -7865,10 +7865,10 @@ LAB_800b4974:
   local_30 = CONCAT22(*(undefined2 *)(iVar10 + 0x48),*(undefined2 *)(iVar10 + 0x44));
   local_2c = CONCAT22(local_2c._2_2_,*(undefined2 *)(iVar10 + 0x4c));
   
-  // tileView of driver
+  // pushBuffer of driver
   puVar7 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110;
   
-  // tileView -> 0x28 (matrix)
+  // pushBuffer -> 0x28 (matrix)
   r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
   gte_SetRotMatrix(r0);
   gte_SetTransMatrix(r0);
@@ -7883,14 +7883,14 @@ LAB_800b4974:
   // screen posX
   local_28 = (short)uVar2;
   
-  // driver->PickupHUD.startX = screen posX + tileView rect.x
+  // driver->PickupHUD.startX = screen posX + pushBuffer rect.x
   *(short *)(iVar6 + 0x4b4) =
        local_28 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
   
   // screen posY
   sStack38 = (short)((uint)uVar2 >> 0x10);
   
-  // driver->PickupHUD.startY = screen posY + tileView rect.y
+  // driver->PickupHUD.startY = screen posY + pushBuffer rect.y
   *(short *)(iVar6 + 0x4b6) =
        sStack38 + *(short *)(puVar9 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
 	   
@@ -7919,7 +7919,7 @@ undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 	// Naughty Dog made a string mistake,
 	// this is DEFINITELY a timebox, not fruit crate
 	  
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -8015,7 +8015,7 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
       local_18 = CONCAT22(*(undefined2 *)(iVar6 + 0x48),*(undefined2 *)(iVar6 + 0x44));
       local_14 = local_14 & 0xffff0000 | (uint)*(ushort *)(iVar6 + 0x4c);
 	  
-	  // tileView -> 0x28 (matrix)
+	  // pushBuffer -> 0x28 (matrix)
       puVar4 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar5 + 0x4a) * 0x110;
 	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
       gte_SetRotMatrix(r0);
@@ -8116,7 +8116,7 @@ undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
   // If there is no thread
   if (iVar3 == 0) {
     
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -8184,7 +8184,7 @@ void FUN_800b4f48(int param_1)
   // If this Instance has no thread
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -8308,7 +8308,7 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 	// 80090000
     puVar5 = &DAT_80090000;
     
-	// gGT->tileView[driver->driverID]->0x28 (matrix)
+	// gGT->pushBuffer[driver->driverID]->0x28 (matrix)
 	r0 = (MATRIX *)(PTR_DAT_8008d2ac + 0x168 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x28);
     gte_SetRotMatrix(r0);
     gte_SetTransMatrix(r0);
@@ -8332,13 +8332,13 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 		 // &r0_00 + 0x0 (screen posX)
          *(short *)(puVar9 + 0x18) +
 		 
-		 // gGT->tileView[driver->driverID].rect.x
+		 // gGT->pushBuffer[driver->driverID].rect.x
          *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1c);
     
 	// &r0_00 + 0x2 (screen posY)
 	sVar2 = *(short *)((int)r0_00 + 2);
 	
-	// gGT->tileView[driver->driverID].rect.y
+	// gGT->pushBuffer[driver->driverID].rect.y
     sVar3 = *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1e);
     
 	// should last 10 frames
@@ -8394,7 +8394,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 	// 800b3cf4
 	// "ctr"
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x4 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -8497,7 +8497,7 @@ void FUN_800b5334(int param_1)
 	// 800b3cf4
 	// "ctr"
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -8743,7 +8743,7 @@ void FUN_800b57f8(int param_1)
   // If this instance has no thread
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x4 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -9188,7 +9188,7 @@ void FUN_800b5dd0(int param_1)
   // If this instance has no thread
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x20 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -9499,7 +9499,7 @@ void FUN_800b6270(int param_1)
   // If there is no thread for this instance
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x10 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -9809,7 +9809,7 @@ void FUN_800b6938(int param_1)
   
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x14 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -10147,7 +10147,7 @@ void FUN_800b70a8(int param_1,int param_2,undefined4 param_3,int param_4)
       uStack22 = *(undefined2 *)(iVar7 + 0x48);
       uStack20 = *(undefined2 *)(iVar7 + 0x4c);
       
-	  // tileView -> 0x28 (matrix)
+	  // pushBuffer -> 0x28 (matrix)
 	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
       gte_SetRotMatrix(r0);
       gte_SetTransMatrix(r0);
@@ -10228,7 +10228,7 @@ undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
   // if there is no thread
   if (iVar3 == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x4 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -10520,7 +10520,7 @@ void FUN_800b7814(int param_1)
     return;
   }
   
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0x2c = size
   // 0 = no relation to param4
   // 0x300 = SmallStackPool
@@ -10873,7 +10873,7 @@ void FUN_800b7ecc(int param_1)
   {
 	// b7b84
 	// "orca"
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x30 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -11587,7 +11587,7 @@ void FUN_800b89a4(int param_1)
   // if instance has no thread
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -11981,7 +11981,7 @@ void FUN_800b90ec(int param_1)
   {
 	// b8bf8
 	// "seal"
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x30 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -12219,7 +12219,7 @@ void FUN_800b950c(int param_1)
   
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x10 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -12277,7 +12277,7 @@ void FUN_800b950c(int param_1)
 
 // RB_Spider_DrawWebs
 // param_1 - threadbucket
-// param_2 - ptr first tileView
+// param_2 - ptr first pushBuffer
 void FUN_800b95fc(int param_1,int param_2)
 {
   short sVar1;
@@ -12375,7 +12375,7 @@ void FUN_800b95fc(int param_1,int param_2)
 		// loop through all players
         do 
 		{
-		  // tileView->0x28 (matrix)
+		  // pushBuffer->0x28 (matrix)
           r0 = (MATRIX *)(param_2 + 0x28);
 		  
 		  // store on GTE
@@ -12439,7 +12439,7 @@ void FUN_800b95fc(int param_1,int param_2)
                   iVar7 = 0x3ff;
                 }
 				
-				// tileView 0xf4, ptrOT
+				// pushBuffer 0xf4, ptrOT
                 puVar6 = (uint *)(*(int *)(param_2 + 0xf4) + iVar7 * 4);
 				
                 puVar8 = puVar8 + 6;
@@ -12468,7 +12468,7 @@ void FUN_800b95fc(int param_1,int param_2)
 		  // next player
           iVar3 = iVar3 + -1;
 		  
-		  // next tileView
+		  // next pushBuffer
           param_2 = param_2 + 0x110;
 		  
 		  // reset spider loop count,
@@ -12762,7 +12762,7 @@ void FUN_800b9bd4(int param_1)
   {
 	// b95e4
 	// "spider"
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x10 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -13118,7 +13118,7 @@ undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
 	// if there is no thread
     if (iVar1 == 0) 
 	{
-	  // THREAD_BirthWithObject
+	  // PROC_BirthWithObject
 	  // 0x8 = size
 	  // 0 = no relation to param4
 	  // 0x300 = SmallStackPool
@@ -13205,7 +13205,7 @@ void FUN_800ba220(int param_1)
   // just in case it wasn't initialized
   if (iVar1 == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x8 = size
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
@@ -13427,7 +13427,7 @@ void FUN_800ba470(int param_1)
   // if there is no thread for this instance
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	 // THREAD_BirthWithObject
+	 // PROC_BirthWithObject
 	 // 0xc = size
 	 // 0 = no relation to param4
 	 // 0x300 flag = SmallStackPool

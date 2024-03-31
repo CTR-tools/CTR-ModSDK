@@ -114,7 +114,7 @@ void RB_CrateAny_ExplodeInit(struct Instance* crateInst, int color)
 		// pool, bucket, ThTick
 		SMALL, OTHER, DECOMP_RB_CrateAny_ThTick_Explode,
 		
-		// TileView and threadRelative
+		// PushBuffer and threadRelative
 		0, 0
 	);
 	
@@ -189,7 +189,7 @@ struct Thread* RB_CrateAny_GrowInit(struct Instance* crateInst)
 	
 	// birth regrow thread
 	crateThread = 
-		THREAD_BirthWithObject
+		PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
@@ -216,14 +216,14 @@ struct Thread* RB_CrateAny_GrowInit(struct Instance* crateInst)
 	return crateThread;
 }
 
-void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
 
 int DECOMP_RB_CrateWeapon_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,
 	struct ScratchpadStruct* sps)
 {
-	struct TileView* tileView;
+	struct PushBuffer* pb;
 	short posScreen[2];
 	struct Thread* crateThread;
 	struct Crate* crateObj;
@@ -312,16 +312,12 @@ int DECOMP_RB_CrateWeapon_LInC(
 			driver->BattleHUD.juicedUpCooldown = 10;
 		}
 		
-		tileView = &sdata->gGT->tileView[driver->driverID];
-		RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
+		pb = &sdata->gGT->pushBuffer[driver->driverID];
+		RB_Fruit_GetScreenCoords(pb, crateInst, &posScreen[0]);
 		
-		// screenPosX
-		driver->PickupTimeboxHUD.startX = 
-			tileView->rect.x + posScreen[0];
-		
-		// screenPosY
-		driver->PickupTimeboxHUD.startY = 
-			tileView->rect.y + posScreen[1];
+		// screenPosXY
+		driver->PickupTimeboxHUD.startX = pb->rect.x + posScreen[0];
+		driver->PickupTimeboxHUD.startY = pb->rect.y + posScreen[1];
 		
 		// means thread was born?
 		return 1;
@@ -361,7 +357,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	struct Thread* collidingTh,
 	struct ScratchpadStruct* sps)
 {
-	struct TileView* tileView;
+	struct PushBuffer* pb;
 	short posScreen[2];
 	struct Thread* crateThread;
 	struct Crate* crateObj;
@@ -394,16 +390,12 @@ int DECOMP_RB_CrateFruit_LInC(
 		driver->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
 		driver->PickupWumpaHUD.numCollected = newWumpa;
 		
-		tileView = &sdata->gGT->tileView[driver->driverID];
-		RB_Fruit_GetScreenCoords(tileView, driver->instSelf, &posScreen[0]);
+		pb = &sdata->gGT->pushBuffer[driver->driverID];
+		RB_Fruit_GetScreenCoords(pb, driver->instSelf, &posScreen[0]);
 		
-		// screenPosX
-		driver->PickupWumpaHUD.startX = 
-			tileView->rect.x + posScreen[0];
-		
-		// screenPosY
-		driver->PickupWumpaHUD.startY = 
-			tileView->rect.y + posScreen[1] - 0x14;
+		// screenPosXY
+		driver->PickupWumpaHUD.startX = pb->rect.x + posScreen[0];
+		driver->PickupWumpaHUD.startY = pb->rect.y + posScreen[1] - 0x14;
 		
 		// means thread was born?
 		return 1;
@@ -443,7 +435,7 @@ int DECOMP_RB_CrateTime_LInC(
 	struct Thread* driverTh,
 	struct ScratchpadStruct* sps)
 {
-	struct TileView* tileView;
+	struct PushBuffer* pb;
 	short posScreen[2];
 	struct Driver* driver;
 	
@@ -489,14 +481,10 @@ int DECOMP_RB_CrateTime_LInC(
 	
 	driver->PickupTimeboxHUD.cooldown = FPS_DOUBLE(10);
 	
-	tileView = &gGT->tileView[driver->driverID];
-	RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
+	pb = &gGT->pushBuffer[driver->driverID];
+	RB_Fruit_GetScreenCoords(pb, crateInst, &posScreen[0]);
 	
-	// screenPosX
-	driver->PickupTimeboxHUD.startX = 
-		tileView->rect.x + posScreen[0];
-	
-	// screenPosY
-	driver->PickupTimeboxHUD.startY = 
-		tileView->rect.y + posScreen[1];
+	// screenPosXY
+	driver->PickupTimeboxHUD.startX = pb->rect.x + posScreen[0];
+	driver->PickupTimeboxHUD.startY = pb->rect.y + posScreen[1];
 }

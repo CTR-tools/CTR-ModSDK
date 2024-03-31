@@ -12,7 +12,7 @@
 	 
 // FUN_800a0cbc, called by exe as entry to this monsterous algorithm, for rendering LEV.
 // param1 (a0) - offset 0x1808 of gameTracker, one struct per player
-// param2 (a1) - tileView
+// param2 (a1) - pushBuffer
 // param3 (a2) - LEV->ptr_mesh_info, pointer is stored at first four bytes of LEV
 // param4 (a3) - primMem
 // param5 (sp+0x10) - Vismem 0x10-0x1F
@@ -85,13 +85,13 @@
 	 // v1 = P1 clipBuffer
      6::800a0d28 00 00 43 8d     lw         v1,0x0(t2)=>DAT_80084228
 	 
-	 // 1f8000dc = tileView
+	 // 1f8000dc = pushBuffer
      6::800a0d2c dc 00 25 ac     sw         a1,offset DAT_1f8000dc(at)                       = ??
 	 
 	 // 1f800010 = P1 ClipBuffer
      6::800a0d30 10 00 23 ac     sw         v1,offset DAT_1f800010(at)                       = ??
 	 
-	 // load TileView matrix (offset 0x28) into registers
+	 // load PushBuffer matrix (offset 0x28) into registers
      6::800a0d34 28 00 ab 8c     lw         t3,0x28(a1)
      6::800a0d38 2c 00 ac 8c     lw         t4,0x2c(a1)
      6::800a0d3c 30 00 ad 8c     lw         t5,0x30(a1)
@@ -121,7 +121,7 @@
      6::800a0d84 9a 01 31 a4     sh         s1,offset DAT_1f80019a(at)                       = ??
      6::800a0d88 9c 01 32 a4     sh         s2,offset DAT_1f80019c(at)                       = ??
 	 
-	 // tileView sizeX, sizeY, and distanceToScreen
+	 // pushBuffer sizeX, sizeY, and distanceToScreen
      6::800a0d8c 20 00 a3 84     lh         v1,0x20(a1)
      6::800a0d90 22 00 a8 84     lh         t0,0x22(a1)
      6::800a0d94 18 00 a9 8c     lw         t1,0x18(a1)
@@ -136,10 +136,10 @@
      6::800a0db0 01 00 29 25     addiu      t1,t1,0x1
      6::800a0db4 5c 00 29 ac     sw         t1,offset DAT_1f80005c(at)                       = ??
 	 
-	 // v1 = tileView window sizeX
+	 // v1 = pushBuffer window sizeX
      6::800a0db8 20 00 a3 8c     lw         v1,0x20(a1)
      
-	 // a1 = tileView ptrOT
+	 // a1 = pushBuffer ptrOT
 	 6::800a0dbc f4 00 a5 8c     lw         a1,0xf4(a1)
 	 
 	 // 1f80006c = window sizeX
@@ -339,7 +339,7 @@
                              LAB_OVR_226__800a0e98                           XREF[1]:     OVR_226::800a0e10(j)  
      
 	 // a0 = gGT+0x1808 (renderlists)
-	 // a1 = tileView (from 1f8000dc)
+	 // a1 = pushBuffer (from 1f8000dc)
 	 6::800a0e98 f7 ac 02 0c     jal        FUN_OVR_226__800ab3dc                            undefined FUN_OVR_226__800ab3dc()
      6::800a0e9c dc 00 25 8c     _lw        a1,offset DAT_1f8000dc(at)                       = ??
      

@@ -22,7 +22,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   if ((sdata->buttonTapPerPlayer[0] & 0x40070) != 0)
   {
     // clear gamepad input (for menus)
-    DECOMP_MENUBOX_ClearInput();
+    DECOMP_RECTMENU_ClearInput();
 
     // set frame to 1000, skip the animation
     D230.timerInTitle = FPS_DOUBLE(1000);
@@ -110,8 +110,8 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   if (FPS_DOUBLE(245) < D230.timerInTitle)
   {
     // animation is over
-    D230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
-	D230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
+    D230.menuMainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
+	D230.menuMainMenu.state |= EXECUTE_FUNCPTR;
 
     // dont increment index
     timer = D230.timerInTitle;

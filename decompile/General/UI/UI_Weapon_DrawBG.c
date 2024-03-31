@@ -32,7 +32,7 @@ void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Dr
 		&gGT->backBuffer->primMem,
 		
 		// pointer to OTMem 
-		gGT->tileView[d->driverID].ptrOT,
+		gGT->pushBuffer[d->driverID].ptrOT,
 		
 		2+i,iVar2,iVar1,0xff0000);
   }

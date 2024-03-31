@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
+void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 {
 	int levID = 0;
 	u_short stringID;
@@ -14,22 +14,20 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 	// assume 5 frames have passed since paused
 
-	if (mb->unk1e != 0)
+	if (menu->unk1e != 0)
 	{
-		mb->drawStyle &= 0xfeff;
+		menu->drawStyle &= 0xfeff;
 
 		// if more than 2 screens
 		if (2 < gGT->numPlyrCurrGame)
 		{
-			mb->drawStyle |= 0x100;
+			menu->drawStyle |= 0x100;
 		}
 
 		if
 		(
 			((gameMode & ADVENTURE_ARENA) == 0) ||
-			
-			// mb is closing
-			(mb->state & NEEDS_TO_CLOSE)
+			(menu->state & NEEDS_TO_CLOSE)
 		)
 		{
 			return;
@@ -43,18 +41,18 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		return;
 	}
 
-	if (mb->rowSelected < 0) return;
+	if (menu->rowSelected < 0) return;
 
 	// get stringID from selected row
-	stringID = mb->rows[mb->rowSelected].stringIndex;
+	stringID = menu->rows[menu->rowSelected].stringIndex;
 
 	// stringID 14: "OPTIONS"
 	if (stringID == 14)
 	{
 		// Set MenuBox to Options
-		sdata->ptrDesiredMenuBox = &data.menuBox_optionsMenu_racingWheel;
+		sdata->ptrDesiredMenu = &data.menuRacingWheelConfig;
 
-		data.menuBox_optionsMenu_racingWheel.rowSelected = 8;
+		data.menuRacingWheelConfig.rowSelected = 8;
 		return;
 	}
 
@@ -63,7 +61,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	if (stringID == 11 || stringID == 12)
 	{
 		// Set MenuBox to Hints
-		sdata->ptrDesiredMenuBox = &D232.menuBoxHintMenu; // in 232
+		sdata->ptrDesiredMenu = &D232.menuHintMenu; // in 232
 		return;
 	}
 
@@ -71,8 +69,8 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	if (stringID == 3)
 	{
 		// Set MenuBox to Quit
-		sdata->ptrDesiredMenuBox = &data.menuBox_quit;
-		data.menuBox_quit.rowSelected = 1;
+		sdata->ptrDesiredMenu = &data.menuQuit;
+		data.menuQuit.rowSelected = 1;
 		return;
 	}
 
@@ -80,7 +78,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	gGT->cooldownFromUnpauseUntilPause = 5;
 
 	// hide MenuBox
-	DECOMP_MENUBOX_Hide(mb);
+	DECOMP_RECTMENU_Hide(menu);
 
 	// get rid of pause flag
 	gGT->gameMode1 &= ~PAUSE_1;
@@ -99,10 +97,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// restart race
 			sdata->Loading.stage = -5;
 
-			if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
+			if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
 			{
 				// checkered flag, begin transition on-screen
-				DECOMP_TitleFlag_BeginTransition(1);
+				DECOMP_RaceFlag_BeginTransition(1);
 			}
 
 			// if you are not showing a ghost during a race

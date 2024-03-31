@@ -95,7 +95,7 @@ void FUN_8009f718(void)
   // Disable drawing lines between multiplayer screens
   *(uint *)(PTR_DAT_8008d2ac + 0x256c) = *(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0xffff7fff;
   
-  // TitleFlag_SetFullyOnScreen
+  // RaceFlag_SetFullyOnScreen
   FUN_8004402c();
   
   if (DAT_8008d52c < 0x1a) {
@@ -360,9 +360,6 @@ void FUN_8009f718(void)
           *(undefined4 *)(puVar4 + 0x274) = 0x80;
         }
 		
-		// first tileView buffer is at 0x168,
-		// so this is ~0x20 bytes into tileViews
-		
 		// fly-in interpolation
         FUN_8004ecd4(&uStack136,(int)*(short *)(PTR_DAT_8008d2ac + iVar10 + 0x184),
                      (int)*(short *)(PTR_DAT_8008d2ac + iVar10 + 0x186),0x14,0xc,DAT_8008d52c,0x19);
@@ -372,14 +369,11 @@ void FUN_8009f718(void)
         sStack116 = *(short *)(PTR_DAT_8008d2ac + iVar10 + 0x188) + 6;
         sStack114 = *(short *)(PTR_DAT_8008d2ac + iVar10 + 0x18a) + 4;
         
-		// MENUBOX_DrawOuterRect_HighLevel (solid)
+		// RECTMENU_DrawOuterRect_HighLevel (solid)
 		FUN_80045650(&sStack120,&DAT_8008d438,0,
                      *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
         
 		puVar4 = PTR_DAT_8008d2ac + iVar10;
-        
-		// first tileView buffer is at 0x168,
-		// so this is ~0x20 bytes into tileViews
 		
 		*(ushort *)(puVar4 + 0x184) = uStack136;
         *(ushort *)(puVar4 + 0x186) = uStack134;
@@ -387,9 +381,6 @@ void FUN_8009f718(void)
       else {
 LAB_8009ff4c:
         puVar4 = PTR_DAT_8008d2ac + iVar10;
-		
-		// first tileView buffer is at 0x168,
-		// so this is ~0x20 bytes into tileViews
 		
         if (0 < *(short *)(puVar4 + 0x188)) {
           *(short *)(puVar4 + 0x184) = *(short *)(puVar4 + 0x184) + 5;
@@ -400,7 +391,7 @@ LAB_8009ff4c:
       }
       uVar13 = uVar13 + 1;
 	  
-	  // tileView buffer, one for each player
+	  // pushBuffer buffer, one for each player
       iVar10 = iVar10 + 0x110;
 	  
     } while ((int)uVar13 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);

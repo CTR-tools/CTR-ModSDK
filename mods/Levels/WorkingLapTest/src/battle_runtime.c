@@ -22,7 +22,7 @@ void RunInitHook()
 	
 	if(gGT->levelID != 0x14) return;
 	
-	sdata->ptrActiveMenuBox = 0;
+	sdata->ptrActiveMenu = 0;
 }
 
 struct MenuRow NewRowsMM[2] =
@@ -81,15 +81,15 @@ void RunUpdateHook()
 	firstQuad = gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 
 	// main menu
-	if(sdata->ptrActiveMenuBox == &D230.menubox_mainMenu)
+	if(sdata->ptrActiveMenu == &D230.menuMainMenu)
 	{
-		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
+		sdata->ptrActiveMenu->rows = &NewRowsMM[0];
 	}
 	
 	// time trial end of race
-	if(sdata->ptrActiveMenuBox == 0x800A04A4)
+	if(sdata->ptrActiveMenu == 0x800A04A4)
 	{
-		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
+		sdata->ptrActiveMenu->rows = &NewRowsEND[0];
 	}
 	
 	if(gGT->levelID != 0x14) return;

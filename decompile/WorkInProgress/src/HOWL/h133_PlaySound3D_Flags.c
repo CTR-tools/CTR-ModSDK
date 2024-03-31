@@ -33,9 +33,9 @@ void PlaySound3D_Flags(u_int *soundID_count, u_int param_2, struct Instance *ins
     // find closest camera to the instance
     for (p_index = 0; p_index < gGT->numPlyrCurrGame; p_index++)
     {
-        dir[p_index].vx = inst->matrix.t[0] - gGT->tileView[p_index].pos[0];
-        dir[p_index].vy = inst->matrix.t[1] - gGT->tileView[p_index].pos[1];
-        dir[p_index].vz = inst->matrix.t[2] - gGT->tileView[p_index].pos[2];
+        dir[p_index].vx = inst->matrix.t[0] - gGT->pushBuffer[p_index].pos[0];
+        dir[p_index].vy = inst->matrix.t[1] - gGT->pushBuffer[p_index].pos[1];
+        dir[p_index].vz = inst->matrix.t[2] - gGT->pushBuffer[p_index].pos[2];
 
         length = GTE_GetSquaredLength();
 
@@ -63,7 +63,7 @@ void PlaySound3D_Flags(u_int *soundID_count, u_int param_2, struct Instance *ins
     // then return, and do not play the sound
     if (distance == 9000) return;
 
-    GTE_AudioLR_Inst(gGT->tileView[currIndex].matrix_Camera, &dir[currIndex].vx);
+    GTE_AudioLR_Inst(gGT->pushBuffer[currIndex].matrix_Camera, &dir[currIndex].vx);
 
     // parameters calculated from previous function
     arc = ratan2(dir[currIndex].vx, -dir[currIndex].vz);

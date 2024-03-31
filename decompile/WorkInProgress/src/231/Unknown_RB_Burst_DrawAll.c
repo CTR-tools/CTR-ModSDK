@@ -8,7 +8,7 @@ void DECOMP_RB_Burst_DrawAll(struct GameTracker* gGT)
   int iVar4;
   int iVar5;
   int iVar6;
-  struct TileView* view;
+  struct PushBuffer* pb;
   int iVar8;
   int *piVar9;
   struct Instance* iVar10;
@@ -38,10 +38,10 @@ void DECOMP_RB_Burst_DrawAll(struct GameTracker* gGT)
       // pointer to first burst thread
       currThread = gGT->threadBuckets[BURST];
 
-      m = gGT->tileView[0].matrix_ViewProj;
+      m = gGT->pushBuffer[0].matrix_ViewProj;
       piVar11[0] = 0x10000;
       piVar9[0] = 0;
-      iVar20 = gGT->tileView[0].distanceToScreen_PREV << 1;
+      iVar20 = gGT->pushBuffer[0].distanceToScreen_PREV << 1;
 
       SetRotMatrix(m);
       SetTransMatrix(m);
@@ -100,9 +100,9 @@ void DECOMP_RB_Burst_DrawAll(struct GameTracker* gGT)
             sVar1 = *(short *)(puVar18 + 0x48);
             sVar2 = *(short *)(puVar18 + 0x4c);
 
-           gGT->tileView[i].fadeFromBlack_desiredResult = 0x1000;
-           gGT->tileView[i].fade_step = 0xff78;
-           gGT->tileView[i].fadeFromBlack_currentValue = (sVar1 + sVar2) * -8 + 0x1fff;
+           gGT->pushBuffer[i].fadeFromBlack_desiredResult = 0x1000;
+           gGT->pushBuffer[i].fade_step = 0xff78;
+           gGT->pushBuffer[i].fadeFromBlack_currentValue = (sVar1 + sVar2) * -8 + 0x1fff;
 
           }
         }
@@ -117,7 +117,7 @@ void DECOMP_RB_Burst_DrawAll(struct GameTracker* gGT)
     for (i = 0; i < numPlyr; i++)
     {
       currThread = gGT->threadBuckets[BURST];
-        view = gGT->tileView[i];
+        pb = gGT->pushBuffer[i];
 
         for (; currThread != NULL; currThread = currThread->siblingThread)
         {
@@ -126,24 +126,24 @@ void DECOMP_RB_Burst_DrawAll(struct GameTracker* gGT)
           if ((piVar11[0] == 0) || (piVar11[0] == currThread)) {
 
             if (piVar9[1] != 0) {
-              ((struct Instance*)piVar9[0])->idpp[i]->tileView = view;
+              ((struct Instance*)piVar9[0])->idpp[i]->pushBuffer = pb;
             }
             if (piVar9[2] != 0) {
-              ((struct Instance*)piVar9[1])->idpp[i]->tileView  = view;
+              ((struct Instance*)piVar9[1])->idpp[i]->pushBuffer  = pb;
             }
             if (*piVar9 != 0) {
-              ((struct Instance*)piVar9[2])->idpp[i]->tileView  = view;
+              ((struct Instance*)piVar9[2])->idpp[i]->pushBuffer  = pb;
             }
           }
           else {
             if (piVar9[1] != 0) {
-              ((struct Instance*)piVar9[0])->idpp[i]->tileView  = NULL;
+              ((struct Instance*)piVar9[0])->idpp[i]->pushBuffer  = NULL;
             }
             if (piVar9[2] != 0) {
-              ((struct Instance*)piVar9[1])->idpp[i]->tileView  = NULL;
+              ((struct Instance*)piVar9[1])->idpp[i]->pushBuffer  = NULL;
             }
             if (piVar9[0] != 0) {
-              ((struct Instance*)piVar9[2])->idpp[i]->tileView  = NULL;
+              ((struct Instance*)piVar9[2])->idpp[i]->pushBuffer  = NULL;
             }
           }
         } 

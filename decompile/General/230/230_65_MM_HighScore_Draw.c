@@ -40,7 +40,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         D230.transitionMeta_HighScores[0].currX + (offsetX - lineWidth) + 0xec,
         D230.transitionMeta_HighScores[0].currY + offsetY + 0x15,
         &gGT->backBuffer->primMem,
-        gGT->tileView_UI.ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
         colorPtr[0],
         colorPtr[1],
         colorPtr[2],
@@ -53,7 +53,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         D230.transitionMeta_HighScores[0].currX + (lineWidth + offsetX) + 0x112,
         D230.transitionMeta_HighScores[0].currY + offsetY + 0x15,
         &gGT->backBuffer->primMem,
-        gGT->tileView_UI.ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
         colorPtr[0],
         colorPtr[1],
         colorPtr[2],
@@ -105,7 +105,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 						// pointer to PrimMem struct
 						&gGT->backBuffer->primMem,
 						// pointer to OT mem
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 						colorPtr[0],
 						colorPtr[1],
 						colorPtr[2],
@@ -130,18 +130,18 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 
         // Draw time string
         DECOMP_MM_HighScore_Text3D(
-			DECOMP_MENUBOX_DrawTime(entry[0].time),
+			DECOMP_RECTMENU_DrawTime(entry[0].time),
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x160),
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x4a),
 			FONT_SMALL, 0);
 			
         // Character Icon
-        DECOMP_MENUBOX_DrawPolyGT4(
+        DECOMP_RECTMENU_DrawPolyGT4(
 			gGT->ptrIcons[data.MetaDataCharacters[entry[0].characterID].iconID],
 			D230.transitionMeta_HighScores[7].currX + (offsetX + 0x124), 
 			D230.transitionMeta_HighScores[7].currY + (offsetY + 0x38),
 			&gGT->backBuffer->primMem,
-			(gGT->tileView_UI).ptrOT,
+			(gGT->pushBuffer_UI).ptrOT,
 			iconColor, iconColor, iconColor, iconColor,
 			1, 0x1000);
     }
@@ -153,12 +153,12 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         char j = i + 2;
 
         // Character Icon
-        DECOMP_MENUBOX_DrawPolyGT4(
+        DECOMP_RECTMENU_DrawPolyGT4(
 			gGT->ptrIcons[data.MetaDataCharacters[entry[i+1].characterID].iconID],
 			D230.transitionMeta_HighScores[j].currX + offsetX + 0x20,
 			D230.transitionMeta_HighScores[j].currY + offsetY + (i * 0x1f) + 0x39,
 			&gGT->backBuffer->primMem,
-			gGT->tileView_UI.ptrOT,
+			gGT->pushBuffer_UI.ptrOT,
 			iconColor, iconColor, iconColor, iconColor,
 			1, 0x1000);
 
@@ -172,7 +172,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 
         // draw the Time string
         DECOMP_MM_HighScore_Text3D(
-			DECOMP_MENUBOX_DrawTime(entry[i+1].time),
+			DECOMP_RECTMENU_DrawTime(entry[i+1].time),
 			D230.transitionMeta_HighScores[j].currX + uVar10 + 0x5c,
 			D230.transitionMeta_HighScores[j].currY + uVar9 + (i * 0x1f) + 0x4a,
 			FONT_SMALL, 0);

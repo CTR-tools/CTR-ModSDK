@@ -100,13 +100,13 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 				if (buttonsTapped & BTN_SELECT)
 				{
 					// other stuff taken from the original game code (see MainFrame_GameLogic)
-					MENUBOX_ClearInput();
+					RECTMENU_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
 					MainFrame_TogglePauseAudio(0);
 					OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
 					ElimBG_Deactivate(gGT);
-					MENUBOX_Hide(sdata->ptrActiveMenuBox);
+					RECTMENU_Hide(sdata->ptrActiveMenu);
 					gGT->cooldownFromUnpauseUntilPause = 5;
 				}
 			}
@@ -151,11 +151,11 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* metaPhys, int* drive
 
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
 
-	MENUBOX_DrawInnerRect(&ones, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
-	MENUBOX_DrawInnerRect(&tens, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
-	MENUBOX_DrawInnerRect(&hundreds, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
-	MENUBOX_DrawInnerRect(&thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
-	MENUBOX_DrawInnerRect(&ten_thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&ones, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&tens, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&hundreds, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&ten_thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 }
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* driverClass)
@@ -175,11 +175,11 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* dr
 
 	DrawNumbers(gGT, metaPhys, driverClass, metaPhysColor);
 
-	MENUBOX_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
 
 // the MenuBox function
-void StatsEditor(struct MenuBox* mb)
+void StatsEditor(struct RectMenu* menu)
 {
 	MainFreeze_SafeAdvDestroy(); // probably mandatory
 

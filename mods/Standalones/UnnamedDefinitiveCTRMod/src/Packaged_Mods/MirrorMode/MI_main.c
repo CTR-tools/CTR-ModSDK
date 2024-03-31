@@ -4,7 +4,7 @@ extern u_int UDCTRM_MI_mirrorMode;
 
 #define COLOR 1
 
-void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex)
+void Torch_Main(void* particleList_heatWarp, struct PushBuffer* pb, struct PrimMem* primMem, char numPlyr, int swapchainIndex)
 {
 	return;
 }
@@ -25,16 +25,16 @@ void MI_ParseOT(u_long* startOT)
   struct GameTracker* gGT = sdata->gGT;
 
   // if TitleFlag is drawn in background
-  if(TitleFlag_IsFullyOnScreen() == 1)
+  if(RaceFlag_IsFullyOnScreen() == 1)
   {
 	// dont flip TitleFlag
 	startOT-=4;
   }
   
   // stop when ptrOT-4 is in tag, so ptrOT-0 is flipped
-  endOT = (unsigned int)gGT->tileView[gGT->numPlyrCurrGame-1].ptrOT-4;
+  endOT = (unsigned int)gGT->pushBuffer[gGT->numPlyrCurrGame-1].ptrOT-4;
   
-  windowWidth = gGT->tileView[0].rect.w;
+  windowWidth = gGT->pushBuffer[0].rect.w;
 
   // divide by two (more zoom out)
   // #define DIVIDE 0x200 >> 0xc

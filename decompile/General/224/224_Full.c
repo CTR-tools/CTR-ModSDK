@@ -3,17 +3,16 @@
 // this goes to footer
 static int str_number = 0x20; // " \0"
 
-extern struct MenuBox menuBox224;
-extern struct MenuRow menuRow_withSave[6];
-extern struct MenuRow menuRow_noSave[5];
+extern struct RectMenu menu224;
+extern struct MenuRow rowsWithSave[6];
+extern struct MenuRow rowsNoSave[5];
 
 void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFlags);
 
 void DECOMP_TT_EndEvent_DrawMenu(void)
 {
     int framesSinceRaceEnded;
-    struct MenuBox *ptrMenuBox; // TODO: Map Region. Curr: using raw mem addr
-    int startX_also_strFlags;   // TODO: Verify type
+    int startX_also_strFlags;
     short endX;
     short pos[2];
 	char** lngStrings;
@@ -250,9 +249,9 @@ AddStuff:
 		sdata->flags_timeTrialEndOfRace = 0;
 		
 		if (sdata->boolGhostTooBigToSave)
-			menuBox224.rows = menuRow_noSave;
+			menu224.rows = rowsNoSave;
 		
-		MENUBOX_Show(&menuBox224);
+		RECTMENU_Show(&menu224);
 	}
 
     return;
@@ -287,7 +286,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	rectangle.h = 99;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&rectangle, 4, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&rectangle, 4, gGT->backBuffer->otMem.startPlusFour);
 
 	return;
 }
@@ -354,14 +353,14 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 		u_int iconColor = 0x808080;
 
 		// Draw Character Icon 
-		MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
+		RECTMENU_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
 							startX - 0x52, timebox_Y,
 
 							// pointer to PrimMem struct
 							&gGT->backBuffer->primMem,
 
 							// pointer to OT mem
-							gGT->tileView_UI.ptrOT,
+							gGT->pushBuffer_UI.ptrOT,
 							
 							// color of each corner
 							iconColor, iconColor, 
@@ -373,7 +372,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 		DecalFont_DrawLine(scoreEntry[i+1].name, timebox_X, timebox_Y, 3, nameColor);
 
 		// Draw time
-		DecalFont_DrawLine(MENUBOX_DrawTime(scoreEntry[i+1].time), timebox_X, timebox_Y + 0x11, 2, timeColor);
+		DecalFont_DrawLine(RECTMENU_DrawTime(scoreEntry[i+1].time), timebox_X, timebox_Y + 0x11, 2, timeColor);
 
 		// If this loop index is a new high score
 		if (gGT->newHighScoreIndex == i)
@@ -386,7 +385,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 			// Draw a rectangle to highlight your time on the "Best Times" list
 			CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 								 // pointer to OT mem
-								 gGT->tileView_UI.ptrOT,
+								 gGT->pushBuffer_UI.ptrOT,
 								 // pointer to PrimMem struct
 								 &gGT->backBuffer->primMem);
 		}
@@ -408,7 +407,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 			timeColor = 0xffff8004;
 		}
 		// make a string for best lap
-		timeString = MENUBOX_DrawTime(scoreEntry[0].time);
+		timeString = RECTMENU_DrawTime(scoreEntry[0].time);
 	}
 
 	// Print amount of time, for whichever purpose
@@ -420,12 +419,12 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 	box.h = 0xb4;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
 }
 
-void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);
+void UI_RaceEnd_MenuProc(struct RectMenu*);
 
-struct MenuRow menuRow_withSave[6] =
+struct MenuRow rowsWithSave[6] =
 {	
 	// Retry
 	{
@@ -482,7 +481,7 @@ struct MenuRow menuRow_withSave[6] =
 	}
 };
 
-struct MenuRow menuRow_noSave[5] =
+struct MenuRow rowsNoSave[5] =
 {	
 	// Retry
 	{
@@ -530,7 +529,7 @@ struct MenuRow menuRow_noSave[5] =
 	}
 };
 
-struct MenuBox menuBox224 =
+struct RectMenu menu224 =
 {
 	.stringIndexTitle = 0xFFFF,
 	.posX_curr = 0x100,
@@ -539,8 +538,8 @@ struct MenuBox menuBox224 =
 	.unk1 = 0,
 	
 	.state = 0xC83,
-	.rows = menuRow_withSave,
-	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+	.rows = rowsWithSave,
+	.funcPtr = UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 
 	// rest of variables all default zero

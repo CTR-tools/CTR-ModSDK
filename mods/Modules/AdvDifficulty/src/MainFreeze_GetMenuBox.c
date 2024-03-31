@@ -1,10 +1,10 @@
 #include <common.h>
 
-void GetMenuDifficulty(struct MenuBox* mb);
+void GetMenuDifficulty(struct RectMenu* menu);
 
-struct MenuBox *DECOMP_MainFreeze_GetMenuBox(void)
+struct RectMenu *DECOMP_MainFreeze_GetMenuPtr(void)
 {
-    struct MenuBox *mb;
+    struct RectMenu* menu;
     struct GameTracker *gGT = sdata->gGT;
     u_int gameMode = gGT->gameMode1;
 
@@ -12,17 +12,17 @@ struct MenuBox *DECOMP_MainFreeze_GetMenuBox(void)
     {
         if (gameMode & ADVENTURE_CUP)
         {
-            mb = &data.menuBox_advCup;
+            mb = &data.menuAdvCup;
         }
         else
         {
-            mb = &data.menuBox_advRace;
+            mb = &data.menuAdvRace;
             GetMenuDifficulty(mb);
         }
         if (gameMode & ADVENTURE_ARENA)
         {
             
-            mb = &data.menuBox_advHub;
+            mb = &data.menuAdvHub;
             GetMenuDifficulty(mb);
         }
     }
@@ -30,16 +30,16 @@ struct MenuBox *DECOMP_MainFreeze_GetMenuBox(void)
     {
         if (gGT->gameMode2 & CUP_ANY_KIND)
         {
-            mb = &data.menuBox_arcadeCup;
+            mb = &data.menuArcadeCup;
         }
         else
         {
-            mb = &data.menuBox_arcadeRace;
+            mb = &data.menuArcadeRace;
             GetMenuDifficulty(mb);
         }
         if (gameMode & BATTLE_MODE)
         {
-            mb = &data.menuBox_battle;
+            mb = &data.menuBattle;
         }
     }
 

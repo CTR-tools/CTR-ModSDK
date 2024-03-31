@@ -56,7 +56,7 @@ void ChangePaintJob(char character, int buttonTap)
 	loadCLUT(character);
 }
 
-//Hooked at the very end of MM_Characters_MenuBox, which makes this function run only while you're in the character menu
+//Hooked at the very end of MM_Characters_MenuProc, which makes this function run only while you're in the character menu
 void CharacterMenuLoop()
 {
 	if((sdata->buttonTapPerPlayer[0] & BTN_L2) == BTN_L2)

@@ -28,7 +28,7 @@ void SaveSplits()
     SerializeSplits(0);
     SaveGameProgressToMemcardBuffer();
     MEMCARD_SetIcon(0);
-    LoadSave_StartMemcardAction(3);
+    RefreshCard_StartMemcardAction(3);
 }
 #endif
 
@@ -224,8 +224,8 @@ void DrawIGT()
   if (sdata->Loading.stage >= 1) return;
 
   gGT = sdata->gGT;
-  backupOT = gGT->tileView_UI.ptrOT;
-  gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
+  backupOT = gGT->pushBuffer_UI.ptrOT;
+  gGT->pushBuffer_UI.ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
 
   if (igt->splitFadeTimer > 0)
   {
@@ -241,7 +241,7 @@ void DrawIGT()
       DecalFont_DrawLine(s_totalTime, 256, 8, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
 
   // restore OT
-  gGT->tileView_UI.ptrOT = backupOT;
+  gGT->pushBuffer_UI.ptrOT = backupOT;
 }
 
 void SerializeSplits(char deserialize)
@@ -395,7 +395,7 @@ void DrawMenu()
             DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, FONT_SMALL, rowColor);
     }
     DecalFont_DrawLine(s_saveSplits, 254, 207, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
-    MENUBOX_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+    RECTMENU_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 // Our mod begins here

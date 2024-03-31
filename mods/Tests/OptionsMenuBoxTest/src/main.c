@@ -21,7 +21,7 @@ void eggplant(struct GameTracker* gGT)
 	char string16[] = "         ";
 	char string17[] = "         ";
 	char string18[] = "         ";
-	struct MenuBox* m = &data.menuBox_optionsMenu_racingWheel;
+	struct RectMenu* m = &data.menuRacingWheelConfig;
 
 	//sprintf(string1,  "%d\n", m->stringIndexTitle);
 	sprintf(string2,  "%d\n", m->posX_curr);
@@ -40,7 +40,7 @@ void eggplant(struct GameTracker* gGT)
 	sprintf(string15, "%d\n", m->height);
 	sprintf(string16, "%X\n", m->ptrNextBox_InHierarchy);
 	sprintf(string17, "%X\n", m->ptrPrevBox_InHierarchy);
-	sprintf(string18, "%X\n", &data.menuBox_optionsMenu_racingWheel);
+	sprintf(string18, "%X\n", &data.menuRacingWheelConfig);
 
 	DecalFont_DrawLine("stringTitle:",  6, 10 + 10*0,  FONT_SMALL, COCO_MAGENTA);
 	DecalFont_DrawLine("posX_curr:",  6, 10 + 10*1,  FONT_SMALL, COCO_MAGENTA);
@@ -87,5 +87,5 @@ int Hello_Main()
 	struct GameTracker* gGT = sdata->gGT;
 
 	//if (gGT->numPlyrCurrGame == 1) eggplant(gGT);
-	data.menuBox_optionsMenu_racingWheel.rowSelected = 9;
+	data.menuRacingWheelConfig.rowSelected = 9;
 }

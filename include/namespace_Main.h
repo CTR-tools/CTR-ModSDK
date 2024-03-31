@@ -110,7 +110,7 @@ struct GameTracker
 	// not sure if this is window, or camera, but
 	// there are also dynamically allocated cameras
 	// 0x168
-	struct TileView tileView[4];
+	struct PushBuffer pushBuffer[4];
 
 	// 0x5A8
 	// see 80023784
@@ -146,7 +146,7 @@ struct GameTracker
 	} DecalMP[3*4];
 
 	// 0x1388
-	struct TileView tileView_UI;
+	struct PushBuffer pushBuffer_UI;
 
 	// 0x1498
 	struct CameraDC cameraDC[4];
@@ -184,7 +184,7 @@ struct GameTracker
 	// 0x18c8
 	// 0x18cc
 	// one for each DB
-	void* ot_tileView_UI[2];
+	void* otSwapchainDB[2];
 
 	// 0x18d0
 	struct
@@ -438,7 +438,7 @@ struct GameTracker
 	// sep 0x1ce2
 	// usa 0x1d4c
 	// on-screen keyboard
-	short TitleOSK_CursorPosition;
+	short typeCursorPosition;
 
 
 #if BUILD >= UsaRetail

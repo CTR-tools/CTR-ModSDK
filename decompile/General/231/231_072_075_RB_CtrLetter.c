@@ -26,7 +26,7 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	struct CtrLetter* letterObj;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
@@ -63,7 +63,7 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
 
 int DECOMP_RB_CtrLetter_LInC(
 	struct Instance* letterInst,
@@ -73,7 +73,7 @@ int DECOMP_RB_CtrLetter_LInC(
 	short posScreen[2];
 	MATRIX* m;
 	struct Driver* driver;
-	struct TileView* tileView;
+	struct PushBuffer* pb;
 	int driverID;
 	int modelID;
 
@@ -100,16 +100,12 @@ int DECOMP_RB_CtrLetter_LInC(
 	driver = driverTh->object;
 	driverID = driver->driverID;
 	
-	tileView = &sdata->gGT->tileView[driverID];
-	RB_Fruit_GetScreenCoords(tileView, letterInst, &posScreen[0]);
+	pb = &sdata->gGT->pushBuffer[driverID];
+	RB_Fruit_GetScreenCoords(pb, letterInst, &posScreen[0]);
 	
-	// screenPosX
-	driver->PickupLetterHUD.startX = 
-		tileView->rect.x + posScreen[0];
-		
-	// screenPosY
-	driver->PickupLetterHUD.startY = 
-		tileView->rect.y + posScreen[1] - 0x14;
+	// screenPosXY
+	driver->PickupLetterHUD.startX = pb->rect.x + posScreen[0];
+	driver->PickupLetterHUD.startY = pb->rect.y + posScreen[1] - 0x14;
 	
 	// transition should last 10 frames
 	driver->PickupLetterHUD.cooldown = FPS_DOUBLE(10);

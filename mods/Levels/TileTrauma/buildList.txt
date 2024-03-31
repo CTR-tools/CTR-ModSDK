@@ -22,5 +22,5 @@ common, exe, MainInit_StringToLevID, -0x8, src/battle_hookInit.s
 common, exe, rdata_free, 0x0, src/battle_runtime.c
 
 // 230
-common, 230, MM_Characters_MenuBox, 0x0, src/230_50_MM_Characters_MenuBox.c
-common, 230, MM_MENUBOX_Main, 0x0, src/230_31_MM_MENUBOX_Main.c
+common, 230, MM_Characters_MenuProc, 0x0, src/230_50_MM_Characters_MenuProc.c
+common, 230, MM_MenuProc_Main, 0x0, src/230_31_MM_MenuProc_Main.c

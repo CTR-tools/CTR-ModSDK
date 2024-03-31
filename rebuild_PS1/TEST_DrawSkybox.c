@@ -2,7 +2,7 @@
 
 void TEST_DrawSkybox(
 	struct Skybox* ptrSkybox,
-	struct TileView* tileView,
+	struct PushBuffer* pushBuffer,
 	struct PrimMem* primMem)
 {
 	if (ptrSkybox == 0)
@@ -20,7 +20,7 @@ void TEST_DrawSkybox(
 
 	for (int i = 0; i < 4; i++)
 	{
-		int index = ((((tileView->rot[1] + 0x500) >> 9) + i - 2) & 0x7);
+		int index = ((((pushBuffer->rot[1] + 0x500) >> 9) + i - 2) & 0x7);
 		
 		struct SkyboxFace* ptrFace = ptrSkybox->ptrFaces[index];
 
@@ -61,7 +61,7 @@ void TEST_DrawSkybox(
 				(posScreen2[0]), (posScreen2[1]),	// XY1
 				(posScreen3[0]), (posScreen3[1]));
 
-			AddPrim(&tileView->ptrOT[0x3ff], pCurr);
+			AddPrim(&pushBuffer->ptrOT[0x3ff], pCurr);
 			primMem->curr = pNext;
 		}
 	}

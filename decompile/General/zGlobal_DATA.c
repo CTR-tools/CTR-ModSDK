@@ -3572,7 +3572,7 @@ struct Data data =
 		}
 	},
 	
-	.menuBox_optionsMenu_racingWheel =
+	.menuRacingWheelConfig =
 	{
 		.stringIndexTitle = 0xFFFF,
 		.posX_curr = 0x100,
@@ -3586,21 +3586,21 @@ struct Data data =
 		// the rest initializes as zeros
 	},
 	
-	.menuRow_quit =
+	.rowsQuit =
 	{
 		{0xD2, 0, 1, 0, 0}, // YES
 		{0xD3, 0, 1, 1, 1}, // NO
 		{-1,   0, 0, 0, 0} // NULL
 	},
 	
-	.menuBox_quit =
+	.menuQuit =
 	{
 		.stringIndexTitle = 3,
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0x8C83,
-		.rows = &data.menuRow_quit[0],
+		.rows = &data.rowsQuit[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrQuit,
 		.drawStyle = 4,
 		
@@ -3766,7 +3766,7 @@ struct Data data =
 		{0x0077, 0x0009}, // Exit
 	},
 	
-	.menuRow_advHub =
+	.rowsAdvHub =
 	{
 		{0x2, 3, 1, 0, 0}, // RESUME
 		{0xB, 0, 2, 1, 1}, // AKU AKU HINTS
@@ -3775,19 +3775,19 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_advHub =
+	.menuAdvHub =
 	{
 		.stringIndexTitle = 0xFFFF,
 		.posX_curr = 0x100,
 		.posY_curr = 0xAF,
 		.unk1 = 0,
 		.state = 0x8C83,
-		.rows = &data.menuRow_advHub[0],
+		.rows = &data.rowsAdvHub[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
-	.menuRow_advRace =
+	.rowsAdvRace =
 	{
 		{0x2, 3, 1, 0, 0}, // RESUME
 		{0x1, 0, 2, 1, 1}, // RESTART
@@ -3796,19 +3796,19 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_advRace =
+	.menuAdvRace =
 	{
 		.stringIndexTitle = 0, // PAUSED
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0xc883,
-		.rows = &data.menuRow_advRace[0],
+		.rows = &data.rowsAdvRace[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
-	.menuRow_advCup =
+	.rowsAdvCup =
 	{
 		{0x2, 2, 1, 0, 0}, // RESUME
 		{0xD, 0, 2, 1, 1}, // EXIT TO MAP
@@ -3816,19 +3816,19 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_advCup =
+	.menuAdvCup =
 	{
 		.stringIndexTitle = 0, // PAUSED
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0xc883,
-		.rows = &data.menuRow_advCup[0],
+		.rows = &data.rowsAdvCup[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 6,
 	},
 	
-	.menuRow_battle =
+	.rowsBattle =
 	{
 		{0x2, 6, 1, 0, 0}, // RESUME
 		{0x1, 0, 2, 1, 1}, // RESTART
@@ -3840,19 +3840,19 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_battle =
+	.menuBattle =
 	{
 		.stringIndexTitle = 0, // PAUSED
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0xcc83,
-		.rows = &data.menuRow_battle[0],
+		.rows = &data.rowsBattle[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
-	.menuRow_arcadeCup =
+	.rowsArcadeCup =
 	{
 		{0x2, 2, 1, 0, 0}, // RESUME
 		{0x3, 0, 2, 1, 1}, // QUIT
@@ -3860,19 +3860,19 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_arcadeCup =
+	.menuArcadeCup =
 	{
 		.stringIndexTitle = 0, // PAUSED
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0xcc83,
-		.rows = &data.menuRow_arcadeCup[0],
+		.rows = &data.rowsArcadeCup[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
-	.menuRow_arcadeRace =
+	.rowsArcadeRace =
 	{
 		{0x2, 5, 1, 0, 0}, // RESUME
 		{0x1, 0, 2, 1, 1}, // RESTART
@@ -3883,14 +3883,14 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_arcadeRace =
+	.menuArcadeRace =
 	{
 		.stringIndexTitle = 0, // PAUSED
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0xcc83,
-		.rows = &data.menuRow_arcadeRace[0],
+		.rows = &data.rowsArcadeRace[0],
 		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
@@ -4189,30 +4189,30 @@ struct Data data =
 	.s_BASCUS_94426G_Question = "BASCUS-94426G??????",
 	.s_BASCUS_94426G_Star = "BASCUS-94426G*",
 	
-	.menuRow_saveGame =
+	.rowsSaveGame =
 	{
 		{0xD2, 0, 1, 0, 0}, // YES
 		{0xD3, 0, 1, 1, 1}, // NO
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_saveGame =
+	.menuSaveGame =
 	{
 		.stringIndexTitle = 0x235,
 		.posX_curr = 0x100,
 		.posY_curr = 0x96,
 		.unk1 = 0,
 		.state = 0xC81,
-		.rows = &data.menuRow_saveGame[0],
+		.rows = &data.rowsSaveGame[0],
 		.funcPtr = 0x8004B258,
 		.drawStyle = 4,
 	},
 	
-	.menuBox_TitleBeginTrack =
+	.menuQueueLoadTrack =
 	{
 		.stringIndexTitle = 0xFFFF,
 		.state = 0x20, // no input, just funcPtr
-		.funcPtr = DECOMP_TitleBeginTrack_MenuBoxFuncPtr
+		.funcPtr = DECOMP_QueueLoadTrack_MenuProc
 	},
 	
 	.matrixTitleFlag =
@@ -4260,7 +4260,7 @@ struct Data data =
 		0xFFFF
 	},
 	
-	.menuRow_greenLoadSave =
+	.rowsGreenLoadSave =
 	{
 		{0xCB, 0, 1, 0, 0}, // LOAD
 		{0xCC, 0, 2, 1, 1}, // SAVE
@@ -4269,47 +4269,47 @@ struct Data data =
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_greenLoadSave =
+	.menuGreenLoadSave =
 	{
 		.stringIndexTitle = -1,
 		.posX_curr = 0x100,
 		.posY_curr = 0x7A,
 		.unk1 = 0,
 		.state = 0xC81,
-		.rows = &data.menuRow_greenLoadSave[0],
+		.rows = &data.rowsGreenLoadSave[0],
 		.funcPtr = 0x80048960,
 		.drawStyle = 0x10, // GREEN
 	},
 	
-	.menuBox_FourAdvProfiles =
+	.menuFourAdvProfiles =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
 		.funcPtr = 0x800490c4,
 	},
 	
-	.menuBox_GhostSelection =
+	.menuGhostSelection =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
 		.funcPtr = 0x800490c4,
 	},
 	
-	.menuBox_warning2 =
+	.menuWarning2 =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
 		.funcPtr = 0x800490c4,
 	},
 	
-	.menuBox_OSK =
+	.menuSubmitName =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x820,
 		.funcPtr = 0x8004b144,
 	},
 	
-	.menuBox_LoadProfileFromHub =
+	.menuQueueLoadHub =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x20,
@@ -4342,33 +4342,33 @@ struct Data data =
 	{0xDC, 0xDD, 0xDA, 0xDB},
 	
 	// same as saveGame
-	.menuRow_overwrite =
+	.rowsOverwrite =
 	{
 		{0xD2, 0, 1, 0, 0}, // YES
 		{0xD3, 0, 1, 1, 1}, // NO
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_overwrite_adv =
+	.menuOverwriteAdv =
 	{
 		.stringIndexTitle = 0xD1, // overwrite?
 		.posX_curr = 0x100,
 		.posY_curr = 0x86,
 		.unk1 = 0,
 		.state = 0x8A1,
-		.rows = &data.menuRow_overwrite[0],
+		.rows = &data.rowsOverwrite[0],
 		.funcPtr = 0,
 		.drawStyle = 0x10, // GREEN
 	},
 	
-	.menuBox_overwrite_ghost =
+	.menuOverwriteGhost =
 	{
 		.stringIndexTitle = 0xD1, // overwrite?
 		.posX_curr = 0x100,
 		.posY_curr = 0x82,
 		.unk1 = 0,
 		.state = 0x8A1,
-		.rows = &data.menuRow_overwrite[0],
+		.rows = &data.rowsOverwrite[0],
 		.funcPtr = 0,
 		.drawStyle = 0, // NORMAL
 	},
@@ -4734,21 +4734,21 @@ struct Data data =
 	.trackerTimer = {0},
 	.trackerType = {0},
 	
-	.menuRow_Retry_ExitToMap =
+	.rowsRetryExit =
 	{
 		{0x4, 0, 1, 0, 0}, // Retry
 		{0xD, 0, 1, 1, 1}, // Exit To Map
 		{-1,  0, 0, 0, 0}  // NULL
 	},
 	
-	.menuBox_Retry_ExitToMap =
+	.menuRetryExit =
 	{
 		.stringIndexTitle = -1,
 		.posX_curr = 0x100,
 		.posY_curr = 0xB4,
 		.unk1 = 0,
 		.state = 0x803,
-		.rows = &data.menuRow_Retry_ExitToMap[0],
+		.rows = &data.rowsRetryExit[0],
 		.funcPtr = 0x80055c90,
 		.drawStyle = 4,
 	},

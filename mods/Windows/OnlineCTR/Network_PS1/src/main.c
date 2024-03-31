@@ -94,7 +94,7 @@ void ThreadFunc()
 	{
 		// reset, including CurrState
 		memset(octr, 0, sizeof(struct OnlineCTR));
-		sdata->ptrActiveMenuBox = 0;
+		sdata->ptrActiveMenu = 0;
 		RunEntryHook();
 	}
 	
@@ -110,5 +110,5 @@ void RunInitHook()
 	#endif
 	
 	// small stack pool, pause thread (those threads can't pause)
-	THREAD_BirthWithObject(0x310, ThreadFunc, 0, 0);
+	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
 }

@@ -538,7 +538,7 @@
 8003af70 MainFreeze_SafeAdvDestroy
 
 8003afb8 MainFreeze_MenuPtrDefault
-8003b340 MainFreeze_GetMenuBox
+8003b340 MainFreeze_GetMenuPtr
 8003b40c MainFreeze_IfPressStart
 
 8003b51c MainGameEnd_SoloRaceGetReward
@@ -650,136 +650,136 @@
 80040aec Particle_RenderList
 80041864 Particle_Init
 
-80041dac RobotcarWeapons_Init
-80041e14 RobotcarWeapons_Update
-80042a50 StartLine_Update
-800431e0 Tawna_Init
+80041dac PickupBots_Init
+80041e14 PickupBots_Update
+80042a50 PlayLevel_UpdateLapStats
+800431e0 Podium_InitModels
 
-8004331c THREAD_DestroyTracker
-80043358 THREAD_DestroyInstance
-8004337c THREAD_DestroyObject
-800433f8 THREAD_DestroySelf
-80043460 THREAD_DestroyBloodline
-800434b4 THREAD_CheckBloodlineForDead
-80043550 THREAD_CheckAllForDead
-800435b8 THREAD_BirthWithObject
-800437e8 THREAD_CollidePointWithSelf
-800438a4 THREAD_CollidePointWithBucket
-800438f0 THREAD_SearchForModel
+8004331c PROC_DestroyTracker
+80043358 PROC_DestroyInstance
+8004337c PROC_DestroyObject
+800433f8 PROC_DestroySelf
+80043460 PROC_DestroyBloodline
+800434b4 PROC_CheckBloodlineForDead
+80043550 PROC_CheckAllForDead
+800435b8 PROC_BirthWithObject
+800437e8 PROC_CollidePointWithSelf
+800438a4 PROC_CollidePointWithBucket
+800438f0 PROC_SearchForModel
 
-80043958 THREAD_PerBspLeaf_CheckInstances
-80043aa0 THREAD_StartSearch_Self
-80043b30 THREAD_CollideHitboxWithBucket
+80043958 PROC_PerBspLeaf_CheckInstances
+80043aa0 PROC_StartSearch_Self
+80043b30 PROC_CollideHitboxWithBucket
 
-80043c54 TileView_Init
-80043e6c TileView_SetPsyqGeom
-80043ed0 TileView_SetDrawEnv_DecalMP
-80043fe8 TileView_SetDrawEnv_Normal
-80044160 TileView_SetMatrixVP
-800443ac TileView_SetFrustumPlane
-8004464c TileView_UpdateFrustum
-80044e84 TileView_FadeOneWindow
-80045014 TileView_FadeAllWindows
+80043c54 PushBuffer_Init
+80043e6c PushBuffer_SetPsyqGeom
+80043ed0 PushBuffer_SetDrawEnv_DecalMP
+80043fe8 PushBuffer_SetDrawEnv_Normal
+80044160 PushBuffer_SetMatrixVP
+800443ac PushBuffer_SetFrustumPlane
+8004464c PushBuffer_UpdateFrustum
+80044e84 PushBuffer_FadeOneWindow
+80045014 PushBuffer_FadeAllWindows
 
-8004508c TitleBeginTrack_MenuBoxFuncPtr
-80045160 TitleBeginTrack_Get_MenuBox
+8004508c QueueLoadTrack_MenuProc
+80045160 QueueLoadTrack_GetMenuPtr
 
 // missing in sep3
-8004516c TitleCard_LoadGameOptions
-// no TitleCard_SaveGameOptions in this build
+8004516c RaceConfig_LoadGameOptions
+// no RaceConfig_SaveGameOptions in this build
 
-80045280 TitleFlag_MoveModels
-80045368 TitleFlag_IsFullyOnScreen
-80045374 TitleFlag_IsFullyOffScreen
-80045390 TitleFlag_IsTransitioning
-800453d8 TitleFlag_SetDrawOrder
-800453fc TitleFlag_BeginTransition
-80045478 TitleFlag_SetFullyOnScreen
-800454a4 TitleFlag_SetFullyOffScreen
-800454d4 TitleFlag_SetCanDraw
-800454e0 TitleFlag_GetCanDraw
-800454ec TitleFlag_GetOT
-800456dc TitleFlag_ResetTextAnim
-800456ec TitleFlag_DrawLoadingString
-80045934 TitleFlag_DrawSelf
+80045280 RaceFlag_MoveModels
+80045368 RaceFlag_IsFullyOnScreen
+80045374 RaceFlag_IsFullyOffScreen
+80045390 RaceFlag_IsTransitioning
+800453d8 RaceFlag_SetDrawOrder
+800453fc RaceFlag_BeginTransition
+80045478 RaceFlag_SetFullyOnScreen
+800454a4 RaceFlag_SetFullyOffScreen
+800454d4 RaceFlag_SetCanDraw
+800454e0 RaceFlag_GetCanDraw
+800454ec RaceFlag_GetOT
+800456dc RaceFlag_ResetTextAnim
+800456ec RaceFlag_DrawLoadingString
+80045934 RaceFlag_DrawSelf
 
-80046344 MENUBOX_DrawPolyGT4
-800463dc MENUBOX_DrawOuterRect_Edge
-80046444 MENUBOX_DrawTime
-80046580 MENUBOX_DrawRwdBlueRect_Subset
-800466a0 MENUBOX_DrawRwdBlueRect
-80046834 MENUBOX_DrawRwdTriangle
-80046980 MENUBOX_DrawOuterRect_LowLevel
-80046a9c MENUBOX_DrawOuterRect_HighLevel
-80046ad8 MENUBOX_DrawQuip
-80046bfc MENUBOX_DrawInnerRect
+80046344 RECTMENU_DrawPolyGT4
+800463dc RECTMENU_DrawOuterRect_Edge
+80046444 RECTMENU_DrawTime
+80046580 RECTMENU_DrawRwdBlueRect_Subset
+800466a0 RECTMENU_DrawRwdBlueRect
+80046834 RECTMENU_DrawRwdTriangle
+80046980 RECTMENU_DrawOuterRect_LowLevel
+80046a9c RECTMENU_DrawOuterRect_HighLevel
+80046ad8 RECTMENU_DrawQuip
+80046bfc RECTMENU_DrawInnerRect
 
-80046e38 MENUBOX_DrawFullRect
-80046f40 MENUBOX_GetHeight
-80047070 MENUBOX_GetWidth
-800471d0 MENUBOX_DrawSelf
-800477f0 MENUBOX_ClearInput
-80047844 MENUBOX_CollectInput
-80047920 MENUBOX_ProcessInput
-80047bf8 MENUBOX_ProcessState
-80047d7c MENUBOX_Show
-80047db4 MENUBOX_Hide
-80047dc8 MENUBOX_BoolHidden
+80046e38 RECTMENU_DrawFullRect
+80046f40 RECTMENU_GetHeight
+80047070 RECTMENU_GetWidth
+800471d0 RECTMENU_DrawSelf
+800477f0 RECTMENU_ClearInput
+80047844 RECTMENU_CollectInput
+80047920 RECTMENU_ProcessInput
+80047bf8 RECTMENU_ProcessState
+80047d7c RECTMENU_Show
+80047db4 RECTMENU_Hide
+80047dc8 RECTMENU_BoolHidden
 
-80047ddc GhostData_BoolGhostForLEV
+80047ddc RefreshCard_BoolGhostForLEV
 // unknown 80047e60
 // unknown 80047e7c
-80047f08 LoadSave_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
+80047f08 RefreshCard_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
 
-// no GhostData_EncodeByte in this build
-80047f4c GhostData_DecodeByte
-// no GhostData_EncodeProfile in this build
-80047fbc GhostData_DecodeProfile
+// no RefreshCard_GhostEncodeByte in this build
+80047f4c RefreshCard_GhostDecodeByte
+// no RefreshCard_GhostEncodeProfile in this build
+80047fbc RefreshCard_GhostDecodeProfile
 
-// no LoadSave_StartMemcardAction in this build
-80048120 LoadSave_StopMemcardAction
+// no RefreshCard_StartMemcardAction in this build
+80048120 RefreshCard_StopMemcardAction
 
 // unknown 80048138
 // unknown 8004815c
 
-80048198 GhostData_ResetNumGhosts
-800481a4 LoadFromCard_GameProgressAndOptions
+80048198 RefreshCard_GetNumGhostsTotal
+800481a4 RefreshCard_GameProgressAndOptions
 
 // unknown 80048244
 // unknown 800489cc
 // unknown 80048cd8
 
-80048d1c LoadSave_QueueLoadHub_MenuBoxFuncPtr
-80048d70 LoadSave_ThTick
-80048e94 LoadSave_PrintInteger
-80048f2c LoadSave_UI_ConvertX
-80048f4c LoadSave_UI_ConvertY
-80048f6c LoadSave_DrawAdvProfile
-8004951c LoadSave_GetTrackID
-8004953c LoadSave_Init
-80049850 LoadSave_Destroy
-800498d0 LoadSave_OneProfile_MenuBoxFuncPtr
-// no LoadSave_DrawGhostProfile
+80048d1c SelectProfile_QueueLoadHub_MenuProc
+80048d70 SelectProfile_ThTick
+80048e94 SelectProfile_PrintInteger
+80048f2c SelectProfile_UI_ConvertX
+80048f4c SelectProfile_UI_ConvertY
+80048f6c SelectProfile_DrawAdvProfile
+8004951c SelectProfile_GetTrackID
+8004953c SelectProfile_Init
+80049850 SelectProfile_Destroy
+800498d0 SelectProfile_AdvPickMode_MenuProc
+// no SelectProfile_DrawGhostProfile
 
-// no LoadSave_MuteCursors
-80049940 LoadSave_UnMuteCursors
+// no SelectProfile_MuteCursors
+80049940 SelectProfile_UnMuteCursors
 
-80049988 LoadSave_ToggleMode
-80049a38 LoadSave_InitAndDestroy
-80049a68 LoadSave_InputLogic
-// no LoadSave_AllProfiles_MenuBoxFuncPtr
+80049988 SelectProfile_ToggleMode
+80049a38 SelectProfile_InitAndDestroy
+80049a68 SelectProfile_InputLogic
+// no SelectProfile_AllProfiles_MenuProc
 
-80049d98 TitleOSK_RestoreName
-80049df0 TitleOSK_DrawMenu
-80049e68 TitleOSK_MenuBoxFuncPtr
+80049d98 SubmitName_RestoreName
+80049df0 SubmitName_DrawMenu
+80049e68 SubmitName_MenuProc
 
-80049f54 PrixSaveBox_Activate
-80049f7c PrixSaveBox_MenuBoxFuncPtr
+80049f54 TakeCupProgress_Activate
+80049f7c TakeCupProgress_MenuProc
 
-8004a040 RCNT_Init
-8004a094 RCNT_Destroy
-8004a0c8 RCNT_GetTime_Total
-8004a140 RCNT_GetTime_Elapsed
+8004a040 Timer_Init
+8004a094 Timer_Destroy
+8004a0c8 Timer_GetTime_Total
+8004a140 Timer_GetTime_Elapsed
 
 8004a194 Torch_Main
 8004a638 Torch_Subset1
@@ -867,7 +867,7 @@
 
 80054470 UI_RaceEnd_GetDriverClock
 80054584 UI_RaceStart_IntroText1P
-800549d4 UI_RaceEnd_MenuBoxFuncPtr
+800549d4 UI_RaceEnd_MenuProc
 
 80054dc0 UI_CupStandings_FinalizeCupRanks
 80054f64 UI_CupStandings_UpdateCupRanks
@@ -1274,16 +1274,16 @@
 800abf30 MM_Cheat_OneLap
 800abf6c MM_Cheat_TurboCounter
 800abfa8 MM_ParseCheatCodes
-800ac154 MM_MENUBOX_Main
+800ac154 MM_MenuProc_Main
 800ac5bc MM_ToggleRows_PlayerCount // not in sep3
-800ac6d4 MM_MENUBOX_1p2p
-800ac75c MM_MENUBOX_2p3p4p
+800ac6d4 MM_MenuProc_1p2p
+800ac75c MM_MenuProc_2p3p4p
 800ac7ec MM_ToggleRows_Difficulty
-800ac918 MM_MENUBOX_Difficulty
-800ac99c MM_MENUBOX_SingleCup
-// MM_MENUBOX_Language only in europe
-800aca64 MM_MENUBOX_NewLoad // unused in 1006
-800acaf4 MM_AdvNewLoad_GetMenuBox // unused in 1006
+800ac918 MM_MenuProc_Difficulty
+800ac99c MM_MenuProc_SingleCup
+// MM_MenuProc_Language only in europe
+800aca64 MM_MenuProc_NewLoad // unused in 1006
+800acaf4 MM_AdvNewLoad_GetMenuPtr // unused in 1006
 800acb00 MM_Characters_AnimateColors
 800acbc0 MM_Characters_GetNextDriver
 800acc58 MM_Characters_boolIsInvalid // not in sep3
@@ -1294,24 +1294,24 @@
 800ad434 MM_Characters_PreventOverlap
 800ad5d8 MM_Characters_RestoreIDs
 800ad824 MM_Characters_HideDrivers
-800ad8c0 MM_Characters_MenuBox
+800ad8c0 MM_Characters_MenuProc
 800aeb88 MM_TrackSelect_Video_SetDefaults
 800aebd8 MM_TrackSelect_Video_State
 800aec34 MM_TrackSelect_Video_Draw
 800af0b4 MM_TrackSelect_boolTrackOpen
 800af12c MM_TrackSelect_Init
-800af238 MM_TrackSelect_MenuBox
-800b036c MM_TrackSelect_GetMenuBox
+800af238 MM_TrackSelect_MenuProc
+800b036c MM_TrackSelect_GetMenuPtr
 800b0378 MM_CupSelect_Init
-800b03ac MM_CupSelect_MenuBox
+800b03ac MM_CupSelect_MenuProc
 800b0b0c MM_Battle_CloseSubMenu
 800b0b20 MM_Battle_DrawIcon_Weapon
 800b0cf0 MM_Battle_Init
-800b0d08 MM_Battle_MenuBox
+800b0d08 MM_Battle_MenuProc
 800b23cc MM_HighScore_Text3D
 800b247c MM_HighScore_Draw
 800b2df8 MM_HighScore_Init
-800b2e38 MM_HighScore_MenuBox
+800b2e38 MM_HighScore_MenuProc
 800b34d8 MM_Scrapbook_Init
 800b3508 MM_Scrapbook_PlayMovie
 800b37a4 MM_ResetAllMenus
@@ -1465,7 +1465,7 @@
 // 232 (AdvHub)
 800aaab0 AH_WarpPad_GetSpawnPosRot
 800aab88 AH_WarpPad_AllWarppadNum
-800aad2c AH_WarpPad_MenuBoxFuncPtr
+800aad2c AH_WarpPad_MenuProc
 800aada8 AH_WarpPad_SpinRewards
 800aaef4 AH_WarpPad_ThTick
 800ac2f4 AH_WarpPad_ThDestroy
@@ -1492,7 +1492,7 @@
 800b2018 AH_Pause_Update
 800b2324 AH_HintMenu_FiveArrows
 800b23f0 AH_HintMenu_MaskPosRot
-800b2468 AH_HintMenu_MenuBoxFuncPtr
+800b2468 AH_HintMenu_MenuProc
 800b2d64 AH_MaskHint_Start
 800b2f14 AH_MaskHint_boolCanSpawn
 800b2f24 AH_MaskHint_SetAnim
@@ -1539,8 +1539,8 @@
 800af830 CS_LevCamera_OnInit
 800afaec CS_BoxScene_InstanceSplitLines
 800b6690 CS_Garage_ZoomOut
-800b6740 CS_Garage_MenuBoxFuncPtr
-800b7594 CS_Garage_GetMenuBox
+800b6740 CS_Garage_MenuProc
+800b7594 CS_Garage_GetMenuPtr
 800b75a0 CS_Garage_Init
 800b76b8 CS_Credits_AnimateCreditGhost
 800b7860 CS_Credits_GetNextString

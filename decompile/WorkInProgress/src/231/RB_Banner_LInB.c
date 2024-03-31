@@ -18,7 +18,7 @@ void RB_Banner_LInB(struct Instance* inst)
   // If this instance has no thread
   if (inst->thread == 0)
   {
-    t = THREAD_BirthWithObject(
+    t = PROC_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
             0x4,
             NONE,

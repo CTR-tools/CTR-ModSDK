@@ -61,5 +61,5 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 		}
 	}
 	
-	DECOMP_THREAD_CheckAllForDead();
+	DECOMP_PROC_CheckAllForDead();
 }

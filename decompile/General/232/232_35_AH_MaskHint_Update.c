@@ -53,12 +53,12 @@ void DECOMP_AH_MaskHint_Update()
 				cdc->flags |= 0x800;
 				
 				// rigged result
-				gGT->tileView[0].pos[0] = 0xBDB0;
-				gGT->tileView[0].pos[1] = 0x84;
-				gGT->tileView[0].pos[2] = 0xFAFC;
-				gGT->tileView[0].rot[0] = 0x6e4;
-				gGT->tileView[0].rot[1] = 0xef4;
-				gGT->tileView[0].rot[2] = 0;
+				gGT->pushBuffer[0].pos[0] = 0xBDB0;
+				gGT->pushBuffer[0].pos[1] = 0x84;
+				gGT->pushBuffer[0].pos[2] = 0xFAFC;
+				gGT->pushBuffer[0].rot[0] = 0x6e4;
+				gGT->pushBuffer[0].rot[1] = 0xef4;
+				gGT->pushBuffer[0].rot[2] = 0;
 				#endif
 			}
 			
@@ -235,7 +235,7 @@ void DECOMP_AH_MaskHint_Update()
 						sdata->lngStrings[lngIndex],
 						0x100,0xb4,400,2,0xffff8000);
 						
-				DECOMP_MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+				DECOMP_RECTMENU_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 			}
 			
 			DECOMP_AH_MaskHint_SetAnim(0x1000);
@@ -318,7 +318,7 @@ void DECOMP_AH_MaskHint_Update()
 			
 			if(D232.maskWarppadDelayFrames < 1)
 			{
-				DECOMP_MENUBOX_ClearInput();
+				DECOMP_RECTMENU_ClearInput();
 				
 				sdata->AkuAkuHintState = 0;
 				sdata->boolDraw3D_AdvMask = 0;
@@ -332,17 +332,17 @@ void DECOMP_AH_MaskHint_Update()
 			// temporary until camera can lerp back around
 			
 			int k = 0;
-			gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
-			gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
-			gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
+			gGT->pushBuffer[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
+			gGT->pushBuffer[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
+			gGT->pushBuffer[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
 						  
-			gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
-			gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
-			gGT->tileView[k].rot[2] = 0; // required
+			gGT->pushBuffer[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
+			gGT->pushBuffer[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
+			gGT->pushBuffer[k].rot[2] = 0; // required
 			
 			// move backwards a little
-			gGT->tileView[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->tileView[k].rot[1])) >> 0xC;
-			gGT->tileView[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->tileView[k].rot[1])) >> 0xC;
+			gGT->pushBuffer[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->pushBuffer[k].rot[1])) >> 0xC;
+			gGT->pushBuffer[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->pushBuffer[k].rot[1])) >> 0xC;
 			#endif
 		
 			break;

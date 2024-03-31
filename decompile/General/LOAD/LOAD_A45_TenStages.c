@@ -327,7 +327,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				#ifdef REBUILD_PC
 				// reset value, emulate overlay reloading
-				D230.menubox_mainMenu.state = 0x403;
+				D230.menuMainMenu.state = 0x403;
 				#endif
 				
 				// all these are 230, except for adv garage in 233
@@ -860,11 +860,11 @@ LAB_800346b0:
 					// enable pause menu? Or enable 3D cars on track?
 					gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
 
-					iVar9 = DECOMP_TitleFlag_IsFullyOffScreen();
+					iVar9 = DECOMP_RaceFlag_IsFullyOffScreen();
 					if (iVar9 == 1)
 					{
 						// checkered flag, begin transition on-screen
-						DECOMP_TitleFlag_BeginTransition(1);
+						DECOMP_RaceFlag_BeginTransition(1);
 					}
 				}
 				gGT->hudFlags = gGT->hudFlags | 8;

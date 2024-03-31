@@ -44,7 +44,7 @@ struct MenuRow menuRows[5] =
 	}
 };
 	
-struct MenuBox menuBox =
+struct RectMenu menuBox =
 {
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
@@ -151,7 +151,7 @@ void StatePS1_Launch_FirstInit()
 	sdata->mempack[0].lastFreeByte = 0x807ff800;
 	sdata->mempack[0].endOfAllocator = 0x807ff800;
 
-	sdata->ptrActiveMenuBox = 0;
+	sdata->ptrActiveMenu = 0;
 
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
@@ -195,7 +195,7 @@ void DrawClientCountStats()
 	DecalFont_DrawLine(message,0x8,0x28,FONT_SMALL,ORANGE);
 }
 
-void MENUBOX_OnPressX_Track(struct MenuBox* b)
+void RECTMENU_OnPressX_Track(struct RectMenu* b)
 {
 	int i;
 	
@@ -203,8 +203,8 @@ void MENUBOX_OnPressX_Track(struct MenuBox* b)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	MENUBOX_Hide(b);
-	sdata->ptrDesiredMenuBox = 0;
+	RECTMENU_Hide(b);
+	sdata->ptrDesiredMenu = 0;
 	
 	sdata->gGT->levelID = (4 * octr->PageNumber) + b->rowSelected;
 	
@@ -228,19 +228,19 @@ void StatePS1_Lobby_HostTrackPick()
 	if(octr->DriverID != 0)
 	{
 		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
-		sdata->ptrActiveMenuBox = 0;
+		sdata->ptrActiveMenu = 0;
 	}
 	
 	DrawClientCountStats();
 	
 	// open menu, set defaults
-	if(sdata->ptrActiveMenuBox != &menuBox)
+	if(sdata->ptrActiveMenu != &menuBox)
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
-		menuBox.funcPtr = MENUBOX_OnPressX_Track;
+		menuBox.funcPtr = RECTMENU_OnPressX_Track;
 		SetNames_Tracks();
-		MENUBOX_Show(&menuBox);
+		RECTMENU_Show(&menuBox);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
@@ -312,7 +312,7 @@ void DrawCharacterStats()
 	}
 }
 
-void MENUBOX_OnPressX_Character(struct MenuBox* b)
+void RECTMENU_OnPressX_Character(struct RectMenu* b)
 {
 	int i;
 	
@@ -320,8 +320,8 @@ void MENUBOX_OnPressX_Character(struct MenuBox* b)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	MENUBOX_Hide(b);
-	sdata->ptrDesiredMenuBox = 0;
+	RECTMENU_Hide(b);
+	sdata->ptrDesiredMenu = 0;
 	
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
 	
@@ -347,13 +347,13 @@ void StatePS1_Lobby_CharacterPick()
 	if(octr->boolLockedInCharacter == 1) return;
 	
 	// open menu, set defaults
-	if(sdata->ptrActiveMenuBox != &menuBox)
+	if(sdata->ptrActiveMenu != &menuBox)
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
-		menuBox.funcPtr = MENUBOX_OnPressX_Character;
+		menuBox.funcPtr = RECTMENU_OnPressX_Character;
 		SetNames_Characters();
-		MENUBOX_Show(&menuBox);
+		RECTMENU_Show(&menuBox);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;

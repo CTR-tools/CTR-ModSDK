@@ -3,7 +3,7 @@
 struct Driver* DECOMP_VehBirth_Player(int index)
 {
 	struct Thread* t =
-		DECOMP_THREAD_BirthWithObject(0x62c0100, 0, 0, 0);
+		DECOMP_PROC_BirthWithObject(0x62c0100, 0, 0, 0);
 		
 	struct Driver* d = t->object;
 	memset(d, 0, 0x62c);

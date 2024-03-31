@@ -466,7 +466,7 @@ LAB_800a0b58:
 	box.h = 0x3b;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
 
 	if ( // If you have not pressed X to continue
 		(((sdata->menuReadyToPass & 1) == 0) &&
@@ -483,10 +483,10 @@ LAB_800a0b58:
 		if ((sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)) != 0)
 		{
 			// clear gamepad input (for menus)
-			MENUBOX_ClearInput();
+			RECTMENU_ClearInput();
 
 			// Draw end of race menu (see 221 and 222)
-			MENUBOX_Show(&data.menuBox_Retry_ExitToMap);
+			RECTMENU_Show(&data.menuRetryExit);
 
 			// record that you have pressed X to continue
 			sdata->menuReadyToPass |= 1;
@@ -557,14 +557,14 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 		u_int iconColor = 0x808080;
 
 		// Draw Character Icon 
-		MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
+		RECTMENU_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
 							startX - 0x52, timebox_Y,
 
 							// pointer to PrimMem struct
 							&gGT->backBuffer->primMem,
 
 							// pointer to OT mem
-							gGT->tileView_UI.ptrOT,
+							gGT->pushBuffer_UI.ptrOT,
 							
 							// color of each corner
 							iconColor, iconColor, 
@@ -576,7 +576,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 		DecalFont_DrawLine(scoreEntry[i+1].name, timebox_X, timebox_Y, 3, nameColor);
 
 		// Draw time
-		DecalFont_DrawLine(MENUBOX_DrawTime(scoreEntry[i+1].time), timebox_X, timebox_Y + 0x11, 2, timeColor);
+		DecalFont_DrawLine(RECTMENU_DrawTime(scoreEntry[i+1].time), timebox_X, timebox_Y + 0x11, 2, timeColor);
 
 		// If this loop index is a new high score
 		if (gGT->newHighScoreIndex == i)
@@ -589,7 +589,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 			// Draw a rectangle to highlight your time on the "Best Times" list
 			CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 								 // pointer to OT mem
-								 gGT->tileView_UI.ptrOT,
+								 gGT->pushBuffer_UI.ptrOT,
 								 // pointer to PrimMem struct
 								 &gGT->backBuffer->primMem);
 		}
@@ -602,7 +602,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 		DecalFont_DrawLine(sdata->lngStrings[0xC5], startX, startY + 0x95, 1, 0xffff8000);
 		
 		// make a string for your current track time
-		timeString = MENUBOX_DrawTime(gGT->drivers[0]->timeElapsedInRace);
+		timeString = RECTMENU_DrawTime(gGT->drivers[0]->timeElapsedInRace);
 		
 		// color
 		timeColor = 0xffff8000;
@@ -617,5 +617,5 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 	box.h = 0xb4;
 
 	// Draw 2D Menu rectangle background
-	MENUBOX_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
 }

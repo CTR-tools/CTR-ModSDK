@@ -38,6 +38,6 @@ void DECOMP_UI_DrawBattleScores(int posX, int posY, struct Driver * d)
     icon,
     posX, posY,
     &gGT->backBuffer->primMem, 
-    gGT->tileView_UI.ptrOT,
+    gGT->pushBuffer_UI.ptrOT,
     1, 0x1000);
 }

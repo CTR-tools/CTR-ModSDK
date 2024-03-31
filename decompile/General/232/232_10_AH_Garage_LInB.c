@@ -22,7 +22,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
         return;
 
     t = 
-		DECOMP_THREAD_BirthWithObject
+		DECOMP_PROC_BirthWithObject
 		(
 			SIZE_RELATIVE_POOL_BUCKET
 			(

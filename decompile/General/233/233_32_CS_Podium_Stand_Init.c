@@ -15,7 +15,7 @@ void DECOMP_CS_Podium_Stand_Init(short *podiumData)
     return;
 
   // set funcThDestroy to remove instance from instance pool
-  inst->thread->funcThDestroy = THREAD_DestroyInstance;
+  inst->thread->funcThDestroy = PROC_DestroyInstance;
 
   inst->matrix.t[0] = podiumData[0];
   inst->matrix.t[1] = podiumData[1];

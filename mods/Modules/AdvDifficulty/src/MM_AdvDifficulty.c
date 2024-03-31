@@ -4,10 +4,10 @@
 extern struct MenuRow rows_advDifficulty[];
 extern struct MenuRow rows_extraDifficulty[];
 
-void MM_AdvDifficulty(struct MenuBox *mb)
+void MM_AdvDifficulty(struct RectMenu* menu)
 {
-	char row = mb->rowSelected;
-	struct MenuBox *prevBox = mb->ptrPrevBox_InHierarchy;
+	char row = menu->rowSelected;
+	struct RectMenu *prevBox = menu->ptrPrevBox_InHierarchy;
 
 	// if uninitialized
 	if (row == -1)
@@ -18,7 +18,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 
 	short arcadeDifficulty = 0;
 
-	if (prevBox == &D230.menubox_adventure && row < 6)
+	if (prevBox == &D230.menuAdventure && row < 6)
 	{
 		switch (row)
 		{
@@ -35,7 +35,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = D230.cupDifficultySpeed[row-1];
 			break;
 		}
-		D230.desiredMenu = 0;
+		D230.desiredMenuIndex = 0;
 	}
 	// if you are in Arcade menu
 	else if (row < 5)
@@ -52,14 +52,14 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = D230.cupDifficultySpeed[row];
 			break;
 		}
-		D230.desiredMenu = 2;
+		D230.desiredMenuIndex = 2;
 	}
 	sdata->gGT->arcadeDifficulty = arcadeDifficulty;
 	D230.MM_State = 2;
-	mb->state |= ONLY_DRAW_TITLE;
+	menu->state |= ONLY_DRAW_TITLE;
 }
 
-struct MenuBox extra_difficulty =
+struct RectMenu extra_difficulty =
     {
         #if BUILD == JpnRetail
         .stringIndexTitle = 354,
@@ -76,7 +76,7 @@ struct MenuBox extra_difficulty =
         .height = 86
 		};
 
-struct MenuBox adv_difficulty =
+struct RectMenu adv_difficulty =
     {
 		#if BUILD == JpnRetail
         .stringIndexTitle = 354,

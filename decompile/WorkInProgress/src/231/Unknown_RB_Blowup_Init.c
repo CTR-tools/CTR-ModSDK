@@ -113,11 +113,11 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   DAT_1f800120 = weaponInst->thread;
   DAT_1f800114 = weaponInst->model->id;
   
-  THREAD_StartSearch_Self(&DAT_1f800108);
+  PROC_StartSearch_Self(&DAT_1f800108);
   
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[ROBOT].thread,&DAT_1f800108,0);
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[ROBOT].thread,&DAT_1f800108,0);
   
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[MINE].thread,&DAT_1f800108,0);
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[MINE].thread,&DAT_1f800108,0);
   
   // If this is TNT
   if (weaponInst->model->id != 0x27) {
@@ -126,7 +126,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
     DAT_1f800110 = 0x4000;
   }
   // check collision with player threads
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread,&DAT_1f800108,0);
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread,&DAT_1f800108,0);
 
   DAT_1f800130 = RB_Burst_CollLevInst;
   return;

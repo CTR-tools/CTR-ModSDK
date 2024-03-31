@@ -7253,7 +7253,7 @@ void FUN_8002e55c(MATRIX *param_1,undefined4 *param_2)
 
 
 // GTE_AudioLR_Driver
-// param1 - matrix (tileView)
+// param1 - matrix (pushBuffer)
 // param2 - driver
 // param3 - return vector
 void FUN_8002e5cc(MATRIX *param_1,int param_2,undefined4 *param_3)
@@ -7989,7 +7989,7 @@ void FUN_8002ebe4(void)
 				// if numPlyrCurrGame is not zero
                 if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 				{
-				  // offset of 8008d2ac where tileView structs are held
+				  // offset of 8008d2ac where pushBuffer structs are held
 				  // for each player (posX, posY, width, height, etc)
                   iVar14 = 0x168;
 
@@ -8003,7 +8003,7 @@ void FUN_8002ebe4(void)
 					// get squared distance between two positions
                     iVar5 = FUN_8002e7bc(
 
-						// tileView (camera pos)
+						// pushBuffer (camera pos)
 						PTR_DAT_8008d2ac + iVar14,
 
 						*(int *)(iVar19 * 8 + *(int *)(local_58[4] + 0x13c) + 4) + iVar17
@@ -8018,7 +8018,7 @@ void FUN_8002ebe4(void)
 					// increment loop counter
                     iVar13 = iVar13 + 1;
 
-					// increment pointer to next tileView struct
+					// increment pointer to next pushBuffer struct
                     iVar14 = iVar14 + 0x110;
 
 									// numPlyrCurrGame
@@ -8120,7 +8120,7 @@ void FUN_8002f0dc(uint param_1,int param_2)
 	  // use iVar6 to imcrement pointer
       puVar3 = PTR_DAT_8008d2ac + iVar6;
 
-	  // Get distance from Instance and each Camera position (tileView)
+	  // Get distance from Instance and each Camera position (pushBuffer)
 	  *(int *)((int)&local_68 + iVar5) = *(int *)(param_2 + 0x44) - (int)*(short *)(puVar3 + 0x168);
       *(int *)((int)local_64 + iVar5) = *(int *)(param_2 + 0x48) - (int)*(short *)(puVar3 + 0x16a);
       *(int *)((int)local_64 + iVar5 + 4) = *(int *)(param_2 + 0x4c) - (int)*(short *)(puVar3 + 0x16c);
@@ -8141,7 +8141,7 @@ void FUN_8002f0dc(uint param_1,int param_2)
         uVar8 = uVar1;
       }
 
-	  // go to next tileView
+	  // go to next pushBuffer
       iVar6 = iVar6 + 0x110;
 
 	  // increment loop counter
@@ -8229,7 +8229,7 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
   // vec3 dir[4], 3*4 = 12 ints
   int local_64 [12];
 
-  // distance of each tileView to instance
+  // distance of each pushBuffer to instance
   uint local_38 [4];
 
   iVar7 = 0;
@@ -8292,7 +8292,7 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
         uVar8 = uVar1;
       }
 
-	  // next tileView
+	  // next pushBuffer
       iVar6 = iVar6 + 0x110;
 
 	  // increment loop counter
@@ -8952,10 +8952,10 @@ void FUN_8002ff28(void)
 		// loop for number of players (max 2)
         do
 		{
-		  // tileView
+		  // pushBuffer
           puVar7 = PTR_DAT_8008d2ac + (iVar2 >> 0x10) * 0x110;
 
-		  // Subtract robotcar position from tileView position
+		  // Subtract robotcar position from pushBuffer position
           iVar2 = (int)*(short *)(puVar7 + 0x168) - (*(int *)(iVar8 + 0x2d4) >> 8);
           iVar3 = (int)*(short *)(puVar7 + 0x16a) - (*(int *)(iVar8 + 0x2d8) >> 8);
           iVar4 = (int)*(short *)(puVar7 + 0x16c) - (*(int *)(iVar8 + 0x2dc) >> 8);

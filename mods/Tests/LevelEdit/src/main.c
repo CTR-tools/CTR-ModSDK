@@ -39,8 +39,8 @@ void Freecam()
 		gGT->drivers[0]->funcPtrs[loop] = 0;
 	}
 
-	// erase tileView pointer from camDC, so we can move tileView ourselves
-	gGT->cameraDC[0].tileView = 0;
+	// erase pushBuffer pointer from camDC, so we can move pushBuffer ourselves
+	gGT->cameraDC[0].pushBuffer = 0;
 
 	// amount of milliseconds per frame, 32 in 30fps, 16 in 60fps
 	speed = gGT->variousTimers[5];
@@ -55,52 +55,52 @@ void Freecam()
 	if(buttons & BTN_SELECT) speed *= 3;
 
 	// Change Rotation
-	if (buttons & BTN_TRIANGLE) gGT->tileView[0].rot[0] += speed;
-	if (buttons & BTN_CROSS) 	gGT->tileView[0].rot[0] -= speed;
-	if (buttons & BTN_SQUARE) 	gGT->tileView[0].rot[1] += speed;
-	if (buttons & BTN_CIRCLE) 	gGT->tileView[0].rot[1] -= speed;
+	if (buttons & BTN_TRIANGLE) gGT->pushBuffer[0].rot[0] += speed;
+	if (buttons & BTN_CROSS) 	gGT->pushBuffer[0].rot[0] -= speed;
+	if (buttons & BTN_SQUARE) 	gGT->pushBuffer[0].rot[1] += speed;
+	if (buttons & BTN_CIRCLE) 	gGT->pushBuffer[0].rot[1] -= speed;
 
 	// convert rotation to a matrix, we might not need to do this cause
-	// there might be a matrix in tileView anyways, need more research
-	ConvertRotToMatrix(&matrix, gGT->tileView[0].rot);
+	// there might be a matrix in pushBuffer anyways, need more research
+	ConvertRotToMatrix(&matrix, gGT->pushBuffer[0].rot);
 
 	if (buttons & BTN_LEFT)
 	{
 		// Subtract the "right" vector of matrix
-		gGT->tileView[0].pos[0] -= speed * matrix.m[0][0] >> 11;
-		gGT->tileView[0].pos[2] -= speed * matrix.m[0][2] >> 11;
+		gGT->pushBuffer[0].pos[0] -= speed * matrix.m[0][0] >> 11;
+		gGT->pushBuffer[0].pos[2] -= speed * matrix.m[0][2] >> 11;
 	}
 
 	else if (buttons & BTN_RIGHT)
 	{
 		// Add the "right" vector of matrix
-		gGT->tileView[0].pos[0] += speed * matrix.m[0][0] >> 11;
-		gGT->tileView[0].pos[2] += speed * matrix.m[0][2] >> 11;
+		gGT->pushBuffer[0].pos[0] += speed * matrix.m[0][0] >> 11;
+		gGT->pushBuffer[0].pos[2] += speed * matrix.m[0][2] >> 11;
 	}
 
 	if (buttons & BTN_UP)
 	{
 		// Add the "forward" vector of matrix
-		gGT->tileView[0].pos[0] += speed * matrix.m[2][0] >> 11;
-		gGT->tileView[0].pos[2] += speed * matrix.m[2][2] >> 11;
+		gGT->pushBuffer[0].pos[0] += speed * matrix.m[2][0] >> 11;
+		gGT->pushBuffer[0].pos[2] += speed * matrix.m[2][2] >> 11;
 	}
 
 	else if (buttons & BTN_DOWN)
 	{
 		// Subtract the "forward" vector of matrix
-		gGT->tileView[0].pos[0] -= speed * matrix.m[2][0] >> 11;
-		gGT->tileView[0].pos[2] -= speed * matrix.m[2][2] >> 11;
+		gGT->pushBuffer[0].pos[0] -= speed * matrix.m[2][0] >> 11;
+		gGT->pushBuffer[0].pos[2] -= speed * matrix.m[2][2] >> 11;
 	}
 
-	if (buttons & BTN_L1) gGT->tileView[0].pos[1] -= speed;
-	if (buttons & BTN_R1) gGT->tileView[0].pos[1] += speed;
+	if (buttons & BTN_L1) gGT->pushBuffer[0].pos[1] -= speed;
+	if (buttons & BTN_R1) gGT->pushBuffer[0].pos[1] += speed;
 
 	// At the end, set position of P1 to the position of camera,
 	// so that the view frustum updates depending on camera position,
 	// the driver wont teleport to this position cause we erased thread
-	gGT->drivers[0]->posCurr[0] = gGT->tileView[0].pos[0] << 8;
-	gGT->drivers[0]->posCurr[1] = gGT->tileView[0].pos[1] << 8;
-	gGT->drivers[0]->posCurr[2] = gGT->tileView[0].pos[2] << 8;
+	gGT->drivers[0]->posCurr[0] = gGT->pushBuffer[0].pos[0] << 8;
+	gGT->drivers[0]->posCurr[1] = gGT->pushBuffer[0].pos[1] << 8;
+	gGT->drivers[0]->posCurr[2] = gGT->pushBuffer[0].pos[2] << 8;
 }
 
 char name1[20] = "";
@@ -193,7 +193,7 @@ void RunUpdateHook()
 		if(k1->freecam_enable == 1)
 		{
 			k1->freecam_enable = 0;
-			sdata->gGT->cameraDC[0].tileView = &sdata->gGT->tileView[0];
+			sdata->gGT->cameraDC[0].pushBuffer = &sdata->gGT->pushBuffer[0];
 			VehPhysProc_Driving_Init(0, sdata->gGT->drivers[0]);
 		}
 
@@ -203,8 +203,8 @@ void RunUpdateHook()
 		}
 	}
 
-	// tileView offset 0x28
-	m = &sdata->gGT->tileView[0].matrix_ViewProj;
+	// pushBuffer offset 0x28
+	m = &sdata->gGT->pushBuffer[0].matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 

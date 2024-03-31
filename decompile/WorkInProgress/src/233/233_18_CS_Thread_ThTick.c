@@ -101,7 +101,7 @@ DRAW_SUBTITLES:
         box.y = cs->Subtitles.textPos[1] - 4;
 
         // Draw 2D Menu rectangle background
-        MENUBOX_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
+        RECTMENU_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
     }
 
     // if cutscene is over

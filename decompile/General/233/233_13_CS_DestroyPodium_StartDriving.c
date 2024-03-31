@@ -45,6 +45,6 @@ void DECOMP_CS_DestroyPodium_StartDriving(void)
 
   // cam mode be zero to follow you
   gGT->cameraDC[0].cameraMode = 0;
-  gGT->tileView[0].distanceToScreen_PREV = 0x100;
-  gGT->tileView[0].distanceToScreen_CURR = 0x100;
+  gGT->pushBuffer[0].distanceToScreen_PREV = 0x100;
+  gGT->pushBuffer[0].distanceToScreen_CURR = 0x100;
 }

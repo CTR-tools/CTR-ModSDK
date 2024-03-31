@@ -5,7 +5,6 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     int i;
     int numPlyr;
     u_char *puVar3;
-    struct TileView *view;
     struct Driver *d;
     struct Level *lev1;
     struct Instance *inst;
@@ -19,8 +18,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     // add a bookmark
     DECOMP_MEMPACK_PushState();
 
-    gGT->tileView[0].distanceToScreen_PREV = 0x100;
-    gGT->tileView[0].distanceToScreen_CURR = 0x100;
+    gGT->pushBuffer[0].distanceToScreen_PREV = 0x100;
+    gGT->pushBuffer[0].distanceToScreen_CURR = 0x100;
 
     // erase all threadBucket structs
     memset(&gGT->threadBuckets[0], 0, sizeof(struct ThreadBucket) * NUM_BUCKETS);
@@ -192,18 +191,20 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         numPlyr = gGT->numPlyrCurrGame;
     }
 
-    // Initialize four TileView, 4 main screens
-    DECOMP_TileView_Init(&gGT->tileView[0], 0, numPlyr);
-    DECOMP_TileView_Init(&gGT->tileView[1], 1, numPlyr);
-    DECOMP_TileView_Init(&gGT->tileView[2], 2, numPlyr);
-    DECOMP_TileView_Init(&gGT->tileView[3], 3, numPlyr);
+    // Initialize four PushBuffer, 4 main screens
+    DECOMP_PushBuffer_Init(&gGT->pushBuffer[0], 0, numPlyr);
+    DECOMP_PushBuffer_Init(&gGT->pushBuffer[1], 1, numPlyr);
+    DECOMP_PushBuffer_Init(&gGT->pushBuffer[2], 2, numPlyr);
+    DECOMP_PushBuffer_Init(&gGT->pushBuffer[3], 3, numPlyr);
 
-    // Initialize TileView UI
-    view = &gGT->tileView_UI;
-    DECOMP_TileView_Init(view, 0, 1);
-    view->rot[0] = 0x800;
-    DECOMP_TileView_SetPsyqGeom(view);
-	DECOMP_TileView_SetMatrixVP(view);
+    struct PushBuffer* pb;
+    
+	pb = &gGT->pushBuffer_UI;
+    DECOMP_PushBuffer_Init(pb, 0, 1);
+	
+    pb->rot[0] = 0x800;
+    DECOMP_PushBuffer_SetPsyqGeom(pb);
+	DECOMP_PushBuffer_SetMatrixVP(pb);
 
     if ((gGT->hudFlags & 2) != 0)
     {
@@ -230,7 +231,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 
         if (i < gGT->numPlyrCurrGame)
         {
-            DECOMP_CAM_Init(&gGT->cameraDC[i], i, d, &gGT->tileView[i]);
+            DECOMP_CAM_Init(&gGT->cameraDC[i], i, d, &gGT->pushBuffer[i]);
 
 			// freeze camera of P1, only in main menu
             if (
@@ -324,8 +325,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         lev1->unk5);
 #endif
 
-    gGT->tileView_UI.fadeFromBlack_desiredResult = 0x1000;
-    gGT->tileView_UI.fade_step = 0x200;
+    gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0x1000;
+    gGT->pushBuffer_UI.fade_step = 0x200;
 
     numPlyr = gGT->numPlyrCurrGame;
 
@@ -366,6 +367,6 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         CS_LevCamera_OnInit();
     }
 
-    RobotcarWeapons_Init();
+    PickupBots_Init();
 #endif
 }

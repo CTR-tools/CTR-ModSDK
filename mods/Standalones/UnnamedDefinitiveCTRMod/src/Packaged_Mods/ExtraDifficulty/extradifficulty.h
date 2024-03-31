@@ -18,9 +18,9 @@ struct MenuRow UDCTRM_ED_MenuRows[] =
     FINALIZER_ROW
 };
 
-void UDCTRM_ED_FuncPtr(struct MenuBox* mb);
+void UDCTRM_ED_FuncPtr(struct RectMenu* menu);
 
-struct MenuBox UDCTRM_ED_MenuBox =
+struct RectMenu UDCTRM_ED_MenuProc =
 {
     .stringIndexTitle = 345,
     .posX_curr = 0,

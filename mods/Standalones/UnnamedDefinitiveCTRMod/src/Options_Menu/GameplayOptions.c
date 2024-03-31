@@ -4,7 +4,7 @@
 extern u_int UDCTRM_OM_GameplayReservesMeter;
 extern u_int UDCTRM_OM_GameplayTurboCount;
 
-force_inline void ProcessInputs(struct MenuBox* mb, struct GameTracker* gGT, u_int buttonsTapped)
+force_inline void ProcessInputs(struct RectMenu* menu, struct GameTracker* gGT, u_int buttonsTapped)
 {
 	int exitMenu = false;
 
@@ -16,18 +16,18 @@ force_inline void ProcessInputs(struct MenuBox* mb, struct GameTracker* gGT, u_i
 
 		if (buttonsTapped & BTN_UP)
 		{
-			mb->rowSelected = (mb->rowSelected + (UDCTRM_OM_GameplayNumRows - 1)) % UDCTRM_OM_GameplayNumRows;
+			menu->rowSelected = (menu->rowSelected + (UDCTRM_OM_GameplayNumRows - 1)) % UDCTRM_OM_GameplayNumRows;
 		}
 
 		if (buttonsTapped & BTN_DOWN)
 		{
-			mb->rowSelected = (mb->rowSelected + 1) % UDCTRM_OM_GameplayNumRows;
+			menu->rowSelected = (menu->rowSelected + 1) % UDCTRM_OM_GameplayNumRows;
 		}
 	}
 
 	if (buttonsTapped & (BTN_CROSS | BTN_CIRCLE))
 	{
-		switch (mb->rowSelected)
+		switch (menu->rowSelected)
 		{
 			// Reserves Meter
 			case 0:
@@ -70,12 +70,12 @@ force_inline void ProcessInputs(struct MenuBox* mb, struct GameTracker* gGT, u_i
 }
 
 // draw menu
-force_inline void DisplayMenuBox(struct MenuBox* mb, struct GameTracker* gGT)
+force_inline void DisplayMenuBox(struct RectMenu* menu, struct GameTracker* gGT)
 {
 	u_int firstRowY = ((UDCTRM_OM_GameplayMenuBoxBG_y + 4) + 26);
 	u_int optionTextPosX = (UDCTRM_OM_Gameplayglowingcursor.x + UDCTRM_OM_Gameplayglowingcursor.w) - 2;
 
-	UDCTRM_OM_Gameplayglowingcursor.y = firstRowY + (10 * mb->rowSelected);
+	UDCTRM_OM_Gameplayglowingcursor.y = firstRowY + (10 * menu->rowSelected);
 
 	// "GAMEPLAY OPTIONS"
 	DecalFont_DrawLine(sdata->lngStrings[608], SCREEN_WIDTH/2, UDCTRM_OM_GameplayMenuBoxBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
@@ -102,13 +102,13 @@ force_inline void DisplayMenuBox(struct MenuBox* mb, struct GameTracker* gGT)
 	// Camera: "ZOOMED IN"
 	DecalFont_DrawLine(sdata->lngStrings[618], optionTextPosX, firstRowY + (10 * 3) + 1, FONT_SMALL, GRAY | JUSTIFY_RIGHT);
 
-	MENUBOX_DrawInnerRect(&UDCTRM_OM_GameplaytitleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
+	RECTMENU_DrawInnerRect(&UDCTRM_OM_GameplaytitleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_OM_Gameplayglowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
-	MENUBOX_DrawInnerRect(&UDCTRM_OM_GameplaymenuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&UDCTRM_OM_GameplaymenuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
 
 // the MenuBox function
-void UDCTRM_OM_GameplayFuncPtr(struct MenuBox* mb)
+void UDCTRM_OM_GameplayFuncPtr(struct RectMenu* menu)
 {
 	ProcessInputs(mb, sdata->gGT, sdata->gGamepads->gamepad[0].buttonsTapped);
 	DisplayMenuBox(mb, sdata->gGT);

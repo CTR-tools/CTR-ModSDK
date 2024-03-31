@@ -5,8 +5,8 @@
 #define StoreLong(dest, val) (*(unsigned long *)(dest) = (unsigned long)(val))
 #define ADDR_230 0x800AB9F0
 
-void MENUBOX_DrawInnerRect(RECT *r, int flag, u_long *ot);
-int RCNT_GetTime_Total();
+void RECTMENU_DrawInnerRect(RECT *r, int flag, u_long *ot);
+int Timer_GetTime_Total();
 void MM_JumpTo_Scrapbook();
 
 struct CustomCup
@@ -152,7 +152,7 @@ void HookCups(int *param_1)
 
 				id = (
 						 // system clock
-						 (RCNT_GetTime_Total() & 0xf)
+						 (Timer_GetTime_Total() & 0xf)
 
 						 +
 
@@ -215,21 +215,21 @@ void HookCups(int *param_1)
 		// Draw background box ========================
 		if (cc->modifiedCup == 0)
 		{
-			MENUBOX_DrawInnerRect(&window1, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawInnerRect(&window1, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
 		else if (cc->modifiedCup == 1)
 		{
-			MENUBOX_DrawInnerRect(&window2, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawInnerRect(&window2, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
 		else if (cc->modifiedCup == 2)
 		{
-			MENUBOX_DrawInnerRect(&window3, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawInnerRect(&window3, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
 		else if (cc->modifiedCup == 3)
 		{
-			MENUBOX_DrawInnerRect(&window4, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawInnerRect(&window4, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
-		MENUBOX_DrawInnerRect(&windowText, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+		RECTMENU_DrawInnerRect(&windowText, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 	}
 
 	// things drawn last are put underneath
@@ -268,7 +268,7 @@ void RunInitHook()
 void RunHook_Callback230()
 {
 	// cups menuBox
-	struct MenuBox *mb = (struct MenuBox *)(MM_JumpTo_Scrapbook +
+	struct RectMenu* menu = (struct RectMenu *)(MM_JumpTo_Scrapbook +
 
 #if BUILD == SepReview
 	0x2C4
@@ -288,8 +288,8 @@ void RunHook_Callback230()
 
 	// For now, this works without throwing off recompilers,
 	// replace with a JMP hook when proper overlay file injection works
-	cc->funcPtr = (void *)mb->funcPtr;
-	mb->funcPtr = (void *)HookCups;
+	cc->funcPtr = (void *)menu->funcPtr;
+	menu->funcPtr = (void *)HookCups;
 
 	return;
 }

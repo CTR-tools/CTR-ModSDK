@@ -11,7 +11,7 @@ void DECOMP_DotLights(struct GameTracker* gGT)
   int newPosX;
   int sizeX;
   int scale;
-  struct TileView* tileView;
+  struct PushBuffer* pb;
   int playerIndex;
   int lightIndex;
   int newPosY;
@@ -81,7 +81,7 @@ DrawLights:
   
   for(playerIndex = 0; playerIndex < gGT->numPlyrCurrGame; playerIndex++)
   {
-      tileView = &gGT->tileView[playerIndex];
+      pb = &gGT->pushBuffer[playerIndex];
 
 	  scale = FP(0.5);
 	  if(gGT->numPlyrCurrGame == 1) scale = FP(1.0);
@@ -101,7 +101,7 @@ DrawLights:
 
 	  // posX of first light
 	  // (window sizeX/2) - (light sizeX*2)
-	  newPosX = (tileView->rect.w + sizeX * -4) / 2;
+	  newPosX = (pb->rect.w + sizeX * -4) / 2;
 	  
 	  #ifdef USE_16BY9
 	  // counter the DrawPolyFT4 midpoint shifting
@@ -111,7 +111,7 @@ DrawLights:
 	  // posY
 	  newPosY =
 				// screen sizeY is used to scale original posY
-				(FP_Mult((((int)(tileView->rect.h) / 3) * 0x10000 >> 0x10), sortaPosY)) -
+				(FP_Mult((((int)(pb->rect.h) / 3) * 0x10000 >> 0x10), sortaPosY)) -
 
 			    // adjusted icon sizeY,
 				(
@@ -143,7 +143,7 @@ DrawLights:
 			&gGT->backBuffer->primMem,
 
 			// pointer to OT memory
-			tileView->ptrOT,
+			pb->ptrOT,
 
 			0,scale);
 	  }

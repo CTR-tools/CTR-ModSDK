@@ -33,7 +33,7 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
     sdata->gGT->gameMode2 &= ~(GARAGE_OSK);
 }
 
-void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
+void DECOMP_CS_Garage_MenuProc(void)
 {
     char bVar1;
     short sVar3;
@@ -190,7 +190,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
         DECOMP_CTR_Box_DrawWireBox(
 			&r, &local_60,
-			gGT->tileView_UI.ptrOT, primMem);
+			gGT->pushBuffer_UI.ptrOT, primMem);
 
 		r.x = uVar22 + 1;
 		r.y = local_30;
@@ -202,7 +202,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
         DECOMP_CTR_Box_DrawWireBox(
 			&r, &local_60,
-            gGT->tileView_UI.ptrOT, primMem);
+            gGT->pushBuffer_UI.ptrOT, primMem);
 			
         iVar16 = 0;
 
@@ -255,7 +255,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 p->y3 = (short)local_2c;
 
                 // pointer to OT memory
-                void* ot = gGT->tileView_UI.ptrOT;
+                void* ot = gGT->pushBuffer_UI.ptrOT;
 
 				*(int*)p = (*(int*)ot & 0xffffff) | 0x8000000;
 				*(int*)ot = (int)p & 0xffffff;
@@ -291,7 +291,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     r.h = 0x44;
 
     // Draw 2D Menu rectangle background
-    DECOMP_MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+    DECOMP_RECTMENU_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 
 	#if 0
 	// Original game uses array at 800b85d8,
@@ -328,7 +328,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         0xbb,
 
         primMem,
-        gGT->tileView_UI.ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
 		ptrColor[2], ptrColor[3],
@@ -342,7 +342,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         0xbb,
 
         primMem,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
 		ptrColor[2], ptrColor[3],
@@ -424,13 +424,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 if (gGarage.boolSelected == 1)
                 {
                     // set desiredMenuBox to OSK (on-screen keyboard)
-                    sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
+                    sdata->ptrDesiredMenu = &data.menuSubmitName;
 
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
                     sdata->advProgress.characterID = data.characterIDs[0];
 
 #ifndef REBUILD_PS1
-                    TitleOSK_RestoreName(0);
+                    SubmitName_RestoreName(0);
 #endif
 
                     // Play Sound
@@ -499,7 +499,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     }
 
     // clear gamepad input (for menus)
-    DECOMP_MENUBOX_ClearInput();
+    DECOMP_RECTMENU_ClearInput();
 
     sVar4 = gGarage.numFramesCurr_GarageMove;
 LAB_800b821c:
@@ -526,13 +526,13 @@ LAB_800b821c:
 		  )
 		{
 			// set desiredMenuBox to OSK (on-screen keyboard)
-			sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
+			sdata->ptrDesiredMenu = &data.menuSubmitName;
 	
 			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 			sdata->advProgress.characterID = data.characterIDs[0];
 
 #ifndef REBUILD_PS1
-			TitleOSK_RestoreName(0);
+			SubmitName_RestoreName(0);
 #endif
 
 			// Play Sound
@@ -637,14 +637,14 @@ LAB_800b821c:
 	
 	#endif
 
-    // set position and rotation to tileView
-    gGT->tileView[0].pos[0] = pos[0];
-    gGT->tileView[0].pos[1] = pos[1];
-    gGT->tileView[0].pos[2] = pos[2];
+    // set position and rotation to pushBuffer
+    gGT->pushBuffer[0].pos[0] = pos[0];
+    gGT->pushBuffer[0].pos[1] = pos[1];
+    gGT->pushBuffer[0].pos[2] = pos[2];
 	
-    gGT->tileView[0].rot[0] = rot[0];
-    gGT->tileView[0].rot[1] = rot[1];
-    gGT->tileView[0].rot[2] = rot[2];
+    gGT->pushBuffer[0].rot[0] = rot[0];
+    gGT->pushBuffer[0].rot[1] = rot[1];
+    gGT->pushBuffer[0].rot[2] = rot[2];
 
 	iVar7 = gGarage.numFramesCurr_ZoomOut;
     if (iVar7 == 0)
@@ -669,16 +669,16 @@ LAB_800b821c:
 	
     iVar7 = gGarage.fovMin + iVar7 / gGarage.numFramesMax_Zoom;
     
-	gGT->tileView[0].distanceToScreen_CURR = iVar7;
-    gGT->tileView[0].distanceToScreen_PREV = iVar7;
+	gGT->pushBuffer[0].distanceToScreen_CURR = iVar7;
+    gGT->pushBuffer[0].distanceToScreen_PREV = iVar7;
 }
 
 void DECOMP_CS_Garage_Init(void)
 {
   // go to 3D character selection
-  sdata->ptrActiveMenuBox = &gGarage.mbGarage;
+  sdata->ptrActiveMenu = &gGarage.menuGarage;
 
-  gGarage.mbGarage.state &= 0xfffffffb;
+  gGarage.menuGarage.state &= 0xfffffffb;
 
   // 0 = just entered garage
   DECOMP_CS_Garage_ZoomOut(0);

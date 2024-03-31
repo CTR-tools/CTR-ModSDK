@@ -92,8 +92,8 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
   pos.vy = (short) d->instSelf->matrix.t[1];
   pos.vz = (short) d->instSelf->matrix.t[2];
 
-  // tileView ViewProj
-  MATRIX m = &gGT->tileView[driverid].matrix_ViewProj.m[0][0];
+  // pushBuffer ViewProj
+  MATRIX m = &gGT->pushBuffer[driverid].matrix_ViewProj.m[0][0];
   gte_SetRotMatrix(m);
   gte_SetTransMatrix(m);
 
@@ -251,7 +251,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       p->x0 = screenPosX + sVar4;
       p->y0 = screenPosY - (sVar5 + 12);
 
-      ot = gGT->tileView[driverid].ptrOT;
+      ot = gGT->pushBuffer[driverid].ptrOT;
 
       *(int * ) p = * ot | 0x6000000;
       * ot = (u_int) p&0xffffff;

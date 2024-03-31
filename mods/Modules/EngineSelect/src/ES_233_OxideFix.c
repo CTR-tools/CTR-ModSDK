@@ -77,7 +77,7 @@ void AdvEngine()
 		if(!hasSelectedClass)
 			{
 				OtherFX_Play(1, 1);
-				sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
+				sdata->ptrDesiredMenu = &data.menuSubmitName;
 				hasSelectedClass = true;
 			}
 		hasSelectedClass = false;

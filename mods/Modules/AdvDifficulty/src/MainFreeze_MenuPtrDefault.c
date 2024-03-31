@@ -1,35 +1,35 @@
 #include <common.h>
 
-extern struct MenuBox AdvMainFreeze_Difficulty;
-extern struct MenuBox arcadeMainFreeze_Difficulty;
+extern struct RectMenu AdvMainFreeze_Difficulty;
+extern struct RectMenu arcadeMainFreeze_Difficulty;
 
 #if BUILD == UsaRetail
-struct MenuBox * menuBox_hints = 0x800b518c; // in 232
+struct RectMenu * menuBox_hints = 0x800b518c; // in 232
 #endif
 #if BUILD == EurRetail
-struct MenuBox * menuBox_hints = 0x800b5638;
+struct RectMenu * menuBox_hints = 0x800b5638;
 #endif
 #if BUILD == JpnRetail
-struct MenuBox * menuBox_hints = 0x800b86a0;
+struct RectMenu * menuBox_hints = 0x800b86a0;
 #endif
 
-void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
+void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 {
 	struct GameTracker *gGT = sdata->gGT;
-	struct MenuBox *nextMenubox = NULL;
+	struct RectMenu *nextMenubox = NULL;
 	u_int gameMode = gGT->gameMode1;
-	u_short stringID = mb->rows[mb->rowSelected].stringIndex;
+	u_short stringID = menu->rows[menu->rowSelected].stringIndex;
 	u_char level_to_load;
 
 	if (gGT->cooldownfromPauseUntilUnpause != 0)
 		return;
 
-	if (mb->unk1e != 0)
+	if (menu->unk1e != 0)
 	{
-		mb->drawStyle &= 0xfeff;
+		menu->drawStyle &= 0xfeff;
 		if (gGT->numPlyrCurrGame > 2)
-			mb->drawStyle |= 0x100;
-		if (!(gameMode & ADVENTURE_ARENA) || (mb->state & NEEDS_TO_CLOSE))
+			menu->drawStyle |= 0x100;
+		if (!(gameMode & ADVENTURE_ARENA) || (menu->state & NEEDS_TO_CLOSE))
 			return;
 		if (LOAD_IsOpen_AdvHub() == 0)
 			return;
@@ -37,22 +37,22 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 		return;
 	}
 
-	if (mb->rowSelected < 0)
+	if (menu->rowSelected < 0)
 		return;
 
 	switch (stringID)
 	{
 	case 14: // "OPTIONS"
-		nextMenubox = &data.menuBox_optionsMenu_racingWheel;
-		data.menuBox_optionsMenu_racingWheel.rowSelected = 8;
+		nextMenubox = &data.menuRacingWheelConfig;
+		data.menuRacingWheelConfig.rowSelected = 8;
 		break;
 	case 11: // "AKU AKU HINTS"
 	case 12: // "UKA UKA HINTS"
 		nextMenubox = menuBox_hints;
 		break;
 	case 3: // "QUIT"
-		nextMenubox = &data.menuBox_quit;
-		data.menuBox_quit.rowSelected = 1;
+		nextMenubox = &data.menuQuit;
+		data.menuQuit.rowSelected = 1;
 		break;
 	case 7:
 		nextMenubox = (gameMode & ARCADE_MODE) ? &arcadeMainFreeze_Difficulty : &AdvMainFreeze_Difficulty;
@@ -61,12 +61,12 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 
 	if (nextMenubox != NULL)
 	{
-		sdata->ptrDesiredMenuBox = nextMenubox;
+		sdata->ptrDesiredMenu = nextMenubox;
 		return;
 	}
 
 	gGT->cooldownFromUnpauseUntilPause = 5;
-	MENUBOX_Hide(mb);
+	RECTMENU_Hide(mb);
 	gGT->gameMode1 &= ~PAUSE_1;
 	MainFreeze_SafeAdvDestroy();
 
@@ -75,8 +75,8 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 	case 1: // "RESTART"
 	case 4: // "RETRY"
 		sdata->Loading.stage = -5;
-		if (TitleFlag_IsFullyOffScreen() == 1)
-			TitleFlag_BeginTransition(1);
+		if (RaceFlag_IsFullyOffScreen() == 1)
+			RaceFlag_BeginTransition(1);
 		if (!sdata->boolReplayHumanGhost || !sdata->ptrGhostTapePlaying)
 			return;
 		data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;

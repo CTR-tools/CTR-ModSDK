@@ -4,9 +4,9 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 {
 	MATRIX* m;
 	struct GameTracker* gGT = sdata->gGT;
-	struct TileView* tView = &gGT->tileView[0];
+	struct PushBuffer* pb = &gGT->pushBuffer[0];
 	
-	m = &tView->matrix_Camera;
+	m = &pb->matrix_Camera;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 	
@@ -23,9 +23,9 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	posEnd[2] = posEndINT[2];
 	
 	short rotEnd[3];
-	rotEnd[0] = tView->rot[0] - D232.maskOffsetRot[0];
-	rotEnd[1] = tView->rot[1] + D232.maskOffsetRot[1];
-	rotEnd[2] = tView->rot[2] - D232.maskOffsetRot[2];
+	rotEnd[0] = pb->rot[0] - D232.maskOffsetRot[0];
+	rotEnd[1] = pb->rot[1] + D232.maskOffsetRot[1];
+	rotEnd[2] = pb->rot[2] - D232.maskOffsetRot[2];
 	
 	short posCurr[3];
 	short rotCurr[3];

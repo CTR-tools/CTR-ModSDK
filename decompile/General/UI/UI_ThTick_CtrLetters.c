@@ -30,7 +30,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
 		// If you're in End-Of-Race menu
 		((sdata->gGT->gameMode1 & END_OF_RACE) != 0) &&
 
-		(DECOMP_TitleFlag_IsTransitioning() != 0)
+		(DECOMP_RaceFlag_IsTransitioning() != 0)
 	)
   {
 	// Set Scale to zero, basically stop

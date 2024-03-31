@@ -221,7 +221,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
             &gGT->backBuffer->primMem,
 
             // pointer to OT memory
-            gGT->tileView_UI.ptrOT,
+            gGT->pushBuffer_UI.ptrOT,
 
             1, 0x1000, local_30);
         }
@@ -328,7 +328,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
           &gGT->backBuffer->primMem,
 
           // pointer to OT memory
-          gGT->tileView_UI.ptrOT,
+          gGT->pushBuffer_UI.ptrOT,
 
           // color data
           local_30, local_30, local_30, local_30,
@@ -433,7 +433,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	&gGT->backBuffer->primMem,
 	  
 	  	// pointer to OT memory
-	  	gGT->tileView_UI.ptrOT,
+	  	gGT->pushBuffer_UI.ptrOT,
 	  
 	  	TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
 	  }

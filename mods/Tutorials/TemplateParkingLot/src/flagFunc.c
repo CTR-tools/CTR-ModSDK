@@ -4,8 +4,8 @@
 void MyFlagFunc()
 {
 	// draw flag when loading, so screen isn't just frozen
-	TitleFlag_SetFullyOnScreen();
+	RaceFlag_SetFullyOnScreen();
 
 	// without this, Sep3 wont work
-	TitleFlag_SetCanDraw(1);
+	RaceFlag_SetCanDraw(1);
 }

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_Battle_CloseSubMenu(struct MenuBox *mb)
+void DECOMP_MM_Battle_CloseSubMenu(struct RectMenu* menu)
 {
-    mb->state |= 4;
+    menu->state |= 4;
 }

@@ -14,7 +14,7 @@ void DECOMP_MainDrawCb_Vsync()
 	// 1 unit = 1/16th millisecond
 	// 1 second = ~16,000 units
 	// increment timer, and reset system clock
-	sdata->rcnt_elapsedUnits_total += GetRCnt(0xf2000001);
+	sdata->rcntTotalUnits += GetRCnt(0xf2000001);
 	ResetRCnt(0xf2000001);
 
 	DECOMP_howl_PlayAudio_Update();

@@ -7,7 +7,7 @@ void DECOMP_MM_Characters_HideDrivers(void)
 
   for (i = 0; i < 4; i++) 
   {
-    DECOMP_TileView_Init(&gGT->tileView[i], 0, 1);
+    DECOMP_PushBuffer_Init(&gGT->pushBuffer[i], 0, 1);
     
 	// player structure's instane flags, make invisible
     gGT->drivers[i]->instSelf->flags |= 0x80;

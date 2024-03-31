@@ -51,7 +51,7 @@ void DECOMP_AH_Map_LoadSave_Full(
 		
 		DECOMP_AH_Map_LoadSave_Prim(
 			&local_20[0], vertCol,
-			gGT->tileView_UI.ptrOT,
+			gGT->pushBuffer_UI.ptrOT,
 			&gGT->backBuffer->primMem);
 		
 		vertCol = &D232.colorQuad[0];

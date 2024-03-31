@@ -1,6 +1,6 @@
 
 // param1 (a0) - offset 0x1808 of gameTracker, one struct per player
-// param2 (a1) - tileView
+// param2 (a1) - pushBuffer
 // param3 (a2) - LEV->ptr_mesh_info, pointer is stored at first four bytes of LEV
 // param4 (a3) - primMem
 // param5 (sp+0x10) - Vismem 0x10-0x1F
@@ -82,7 +82,7 @@ void FUN_800a0cbc (int param_1,int param_2,int param_3,int param_4,int param_5,u
     puVar5 = &DAT_1f8001b4;
     DAT_1f800038 = auStack60;
 
-	// store tileView
+	// store pushBuffer
     DAT_1f8000dc = param_2;
 
 	// erase scratchpad memory
@@ -208,7 +208,7 @@ void FUN_800a0cbc (int param_1,int param_2,int param_3,int param_4,int param_5,u
     }
 
 	// param_1 is gameTracker->1808
-	// DAT_1f8000dc is tileView
+	// DAT_1f8000dc is pushBuffer
 	// Without this, none of the LEV draws
     FUN_800ab3dc(param_1,DAT_1f8000dc);
 
@@ -15329,7 +15329,7 @@ void FUN_800aa790(undefined4 param_1,int param_2,undefined4 param_3,int param_4)
   *(undefined4 *)(in_at + 0x2a0) = unaff_retaddr;
   if (unaff_s7 != in_t8) 
   {
-	// tileView matrix
+	// pushBuffer matrix
     setCopControlWord(2,0x4000,*(undefined4 *)(param_2 + 0x28));
     setCopControlWord(2,0x4800,*(undefined4 *)(param_2 + 0x2c));
     setCopControlWord(2,0x5000,*(undefined4 *)(param_2 + 0x30));
@@ -15339,7 +15339,7 @@ void FUN_800aa790(undefined4 param_1,int param_2,undefined4 param_3,int param_4)
     setCopControlWord(2,0x7000,*(undefined4 *)(param_2 + 0x40));
     setCopControlWord(2,0x7800,*(undefined4 *)(param_2 + 0x44));
 	
-	// tileView dimensions and dist-to-screen
+	// pushBuffer dimensions and dist-to-screen
     setCopControlWord(2,0xc000,(int)*(short *)(param_2 + 0x20) << 0xf);
     setCopControlWord(2,0xc800,(int)*(short *)(param_2 + 0x22) << 0xf);
     setCopControlWord(2,0xd000,*(uint *)(param_2 + 0x18));

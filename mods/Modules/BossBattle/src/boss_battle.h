@@ -12,9 +12,9 @@ struct MenuRow rows_boss[] =
     FINALIZER_ROW
 };
 
-void MM_MenuBox_BossBattle(struct MenuBox* mb);
+void MM_MenuProc_BossBattle(struct RectMenu* menu);
 
-struct MenuBox boss_battle_menu =
+struct RectMenu boss_battle_menu =
 {
     .stringIndexTitle = 345,
     .posX_curr = 0,
@@ -22,7 +22,7 @@ struct MenuBox boss_battle_menu =
     .unk1 = 0,
     .state = CENTER_ON_X | BIG_TEXT_IN_TITLE,
     .rows = rows_boss,
-    .funcPtr = MM_MenuBox_BossBattle,
+    .funcPtr = MM_MenuProc_BossBattle,
     .width = 171,
     .height = 86
 };

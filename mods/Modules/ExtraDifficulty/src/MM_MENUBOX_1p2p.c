@@ -1,16 +1,16 @@
 #include <common.h>
 
-extern struct MenuBox extra_difficulty;
+extern struct RectMenu extra_difficulty;
 
-void DECOMP_MM_MENUBOX_1p2p(struct MenuBox *mb)
+void DECOMP_MM_MenuProc_1p2p(struct RectMenu* menu)
 {
-  short row = mb->rowSelected;
+  short row = menu->rowSelected;
   struct GameTracker *gGT = sdata->gGT;
 
   // if uninitialized
   if (row == -1)
   {
-    mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+    menu->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 
     gGT->numPlyrNextGame = 1;
 
@@ -22,10 +22,10 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox *mb)
   if ((unsigned char)row < 2)
   {
     // row 0 is 1P, row 1 is 2P
-    gGT->numPlyrNextGame = mb->rowSelected + 1;
+    gGT->numPlyrNextGame = menu->rowSelected + 1;
 
     // go to difficulty box
-    mb->ptrNextBox_InHierarchy = &extra_difficulty; // this one-line change is the only reason this file is needed
-    mb->state |= 0x14;
+    menu->ptrNextBox_InHierarchy = &extra_difficulty; // this one-line change is the only reason this file is needed
+    menu->state |= 0x14;
   }
 }

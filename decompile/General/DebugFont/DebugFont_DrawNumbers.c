@@ -15,7 +15,7 @@ void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY)
   uVar4 = (screenPosY + 7) << 0x10;
 
   p = (POLY_FT4*)gGT->backBuffer->primMem.curr;
-  ot = (unsigned int*)gGT->tileView_UI.ptrOT;
+  ot = (unsigned int*)gGT->pushBuffer_UI.ptrOT;
   gGT->backBuffer->primMem.curr = p + 1;
 
   *(int*)&p->r0 = 0x2e000000;

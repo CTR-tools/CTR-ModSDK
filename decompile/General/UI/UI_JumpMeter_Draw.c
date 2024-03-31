@@ -37,7 +37,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	box.x = sVar9;
 	box.y = jumpMeter;
 
-	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
 
 	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
@@ -64,7 +64,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		p->y3 = posY - 0x23;
 
 		// pointer to OT memory
-		primmemCurr = gGT->tileView_UI.ptrOT;
+		primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -74,7 +74,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		box2.h = 0x26;
 		box2.x = posX;
 
-		DECOMP_CTR_Box_DrawWireBox(&box2, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+		DECOMP_CTR_Box_DrawWireBox(&box2, &data.colors[21], gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
 
 		backDB = gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
@@ -122,7 +122,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 			p->y0 = jumpMeter;
 			p->y1 = jumpMeter;
 
-			primmemCurr = gGT->tileView_UI.ptrOT;
+			primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;
@@ -152,7 +152,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 				p->y3 = posY;
 
 				// pointer to OT memory
-				primmemCurr = gGT->tileView_UI.ptrOT;
+				primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
 				*(int*)p = *primmemCurr | 0x5000000;
 				*primmemCurr = (u_int)p & 0xffffff;

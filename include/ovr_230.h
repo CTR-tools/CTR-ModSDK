@@ -138,7 +138,7 @@ struct OverlayRDATA_230
 	char s_1[4];
 
 	// 800aba28
-	char jmpPtrs_Characters_MenuBox[0x18];
+	char jmpPtrs_Characters_MenuProc[0x18];
 
 	// 800aba44 - UsaRetail
 	// 800abe58 - EurRetail
@@ -146,7 +146,7 @@ struct OverlayRDATA_230
 	char s_loaded_ghost_data[0x18];
 
 	// 800aba5c
-	char jmpPtrs_Battle_MenuBox[0x30];
+	char jmpPtrs_Battle_MenuProc[0x30];
 
 	// 800aba88 - UsaRetail
 	// 800abe9c - EurRetail
@@ -166,9 +166,9 @@ struct OverlayDATA_230
 	// 800b4c4c - EurRetail
 	// 800b7f68 - JpnRetail
 #if BUILD == EurRetail
-	struct MenuRow rows_mainMenu_Basic[8];
+	struct MenuRow rowsMainMenuBasic[8];
 #else
-	struct MenuRow rows_mainMenu_Basic[7];
+	struct MenuRow rowsMainMenuBasic[7];
 	char padding800b450E[2];
 #endif
 
@@ -176,21 +176,21 @@ struct OverlayDATA_230
 	// 800b4c7c - EurRetail
 	// 800b7f94 - JpnRetail
 #if BUILD == EurRetail
-	struct MenuRow rows_mainMenu_WithScrapbook[9];
+	struct MenuRow rowsMainMenuWithScrapbook[9];
 	char padding800b4cb2[2];
 #else
-	struct MenuRow rows_mainMenu_WithScrapbook[8];
+	struct MenuRow rowsMainMenuWithScrapbook[8];
 #endif
 
 	// 800b4540 - UsaRetail
 	// 800b4cb4 - EurRetail
 	// 800b7fc4 - JpnRetail
-	struct MenuBox menubox_mainMenu;
+	struct RectMenu menuMainMenu;
 
 	// 800b456c - UsaRetail
 	// 800b4ce0 - EurRetail
 	// 800b7ff0 - JpnRetail
-	struct MenuRow rows_players1P2P[3];
+	struct MenuRow rowsPlayers1P2P[3];
 
 // ????
 #if (BUILD == EurRetail) || (BUILD == UsaRetail)
@@ -200,32 +200,32 @@ struct OverlayDATA_230
 	// 800b4580 - UsaRetail
 	// 800b4cf4 - EurRetail
 	// 800b7ffc - JpnRetail
-	struct MenuBox menubox_players1P2P;
+	struct RectMenu menuPlayers1P2P;
 
 	// 800b45ac - UsaRetail
 	// 800b4d20 - EurRetail
 	// 800b8030 - JpnRetail
-	struct MenuRow rows_players2P3P4P[4];
+	struct MenuRow rowsPlayers2P3P4P[4];
 
 	// 800b45c4 - UsaRetail
 	// 800b4d38 - EurRetail
 	// 800b8042 - JpnRetail
-	struct MenuBox menubox_players2P3P4P;
+	struct RectMenu menuPlayers2P3P4P;
 
 	// 800b45f0 - UsaRetail
 	// 800b4d64 - EurRetail
 	// 800b8074 - JpnRetail
-	struct MenuRow rows_difficulty[4];
+	struct MenuRow rowsDifficulty[4];
 
 	// 800b4608 - UsaRetail
 	// 800b4d7c - EurRetail
 	// 800b808c - JpnRetail
-	struct MenuBox menubox_difficulty;
+	struct RectMenu menuDifficulty;
 
 	// 800b4634 - UsaRetail
 	// 800b4da8 - EurRetail
 	// 800b80b8 - JpnRetail
-	struct MenuRow rows_raceType[3];
+	struct MenuRow rowsRaceType[3];
 
 #if (BUILD == EurRetail) || (BUILD == UsaRetail)
 	char padding800b4dba[2];
@@ -234,12 +234,12 @@ struct OverlayDATA_230
 	// 800b4648 - UsaRetail
 	// 800b4dbc - EurRetail
 	// 800b80cc - JpnRetail
-	struct MenuBox menubox_raceType;
+	struct RectMenu menuRaceType;
 
 	// 800b4674 - UsaRetail
 	// 800b4de8 - EurRetail
 	// 800b80f8 - JpnRetail
-	struct MenuRow rows_adventure[3];
+	struct MenuRow rowsAdventure[3];
 
 // ???
 #if (BUILD == EurRetail) || (BUILD == UsaRetail)
@@ -249,35 +249,35 @@ struct OverlayDATA_230
 	// 800b4688 - UsaRetail
 	// 800b4dfc - EurRetail
 	// 800b810c - JpnRetail
-	struct MenuBox menubox_adventure;
+	struct RectMenu menuAdventure;
 
 #if BUILD == EurRetail
 	// 800b4e28
 	short langIndex[6];
 
 	// 800b4e34
-	struct MenuRow rows_language[7];
+	struct MenuRow rowsLanguage[7];
 
 	char padding800b4e5e[2];
 
 	// 800b4e60
-	struct MenuBox menubox_language;
+	struct RectMenu menuLanguage;
 #endif
 
 	// 800b46b4 - UsaRetail
 	// 800b4e8c - EurRetail
 	// 800b8138 - JpnRetail
-	struct MenuBox menubox_characterSelect;
+	struct RectMenu menuCharacterSelect;
 
 	// 800b46e0 - UsaRetail
 	// 800b4eb8 - EurRetail
 	// 800b8164 - JpnRetail
-	struct MenuBox menubox_trackSelect;
+	struct RectMenu menuTrackSelect;
 
 	// 800b470c - UsaRetail
 	// 800b4ee4 - EurRetail
 	// 800b8190 - JpnRetail
-	struct MenuRow rows_cupSelect[5];
+	struct MenuRow rowsCupSelect[5];
 
 // ????
 #if (BUILD == EurRetail) || (BUILD == UsaRetail)
@@ -287,31 +287,31 @@ struct OverlayDATA_230
 	// 800b472c - UsaRetail
 	// 800b4f04 - EurRetail
 	// 800b81b0 - JpnRetail
-	struct MenuBox menubox_cupSelect;
+	struct RectMenu menuCupSelect;
 
 	// 800b4758 - UsaRetail
 	// 800b4f30 - EurRetail
 	// 800b81dc - JpnRetail
-	struct MenuBox menubox_battleWeapons;
+	struct RectMenu menuBattleWeapons;
 
 	// 800b4784 - UsaRetail
 	// 800b4f5c - EurRetail
 	// 800b8208 - JpnRetail
-	struct MenuBox menubox_highScores;
+	struct RectMenu menuHighScores;
 
 	// 800b47b0 - UsaRetail
 	// 800b4f88 - EurRetail
 	// 800b8234 - JpnRetail
-	struct MenuBox menubox_scrapbook;
+	struct RectMenu menuScrapbook;
 
 	// 800b47dc - UsaRetail
 	// 800b4fb4 - EurRetail
 	// 800b8260 - JpnRetail
 	// array of menubox pointers
 #if BUILD == EurRetail
-	struct MenuBox *ptrMenuBoxes[10];
+	struct RectMenu *arrayMenuPtrs[10];
 #else
-	struct MenuBox *ptrMenuBoxes[9];
+	struct RectMenu *arrayMenuPtrs[9];
 #endif
 
 #if BUILD == JpnRetail
@@ -598,10 +598,10 @@ struct OverlayDATA_230
 	short lapRowVal[4];
 	
 	// 800b557c
-	struct MenuRow menurow_LapSel[4];
+	struct MenuRow rowsLapSel[4];
 	
 	// 800B5594
-	struct MenuBox menubox_LapSel;
+	struct RectMenu menuLapSel;
 	
 	// 800B55C0
 	int videoCol;
@@ -659,67 +659,67 @@ struct OverlayDATA_230
 	// 800b56b0 - UsaRetail
 	// 800b5ef0 - EurRetail
 	// 800b9754 - JpnRetail
-	struct MenuRow battleType_rows[4];
+	struct MenuRow rowsBattleType[4];
 
 	// 800b56c8 - UsaRetail
 	// 800b5f08 - EurRetail
 	// 800b976c - JpnRetail
-	struct MenuBox battleType_box;
+	struct RectMenu menuBattleType;
 
 	// 800b56f4 - UsaRetail
 	// 800b5f34 - EurRetail
 	// 800b9798 - JpnRetail
-	struct MenuRow battleLengthLifeTime_rows[4];
+	struct MenuRow rowsBattleLengthLifeTime[4];
 
 	// 800b570c - UsaRetail
 	// 800b5f4c - EurRetail
 	// 800b97b0 - JpnRetail
-	struct MenuBox battleLengthLifeTime_box;
+	struct RectMenu menuBattleLengthLifeTime;
 
 	// 800b5738 - UsaRetail
 	// 800b5f78 - EurRetail
 	// 800b97dc - JpnRetail
-	struct MenuRow battleLengthTimeTime_rows[4];
+	struct MenuRow rowsBattleLengthTimeTime[4];
 
 	// 800b5750 - UsaRetail
 	// 800b5f90 - EurRetail
 	// 800b97f4 - JpnRetail
-	struct MenuBox battleLengthTimeTime_box;
+	struct RectMenu menuBattleLengthTimeTime;
 
 	// 800b577c - UsaRetail
 	// 800b5fbc - EurRetail
 	// 800b9820 - JpnRetail
-	struct MenuRow battleLengthPoints_rows[4];
+	struct MenuRow rowsBattleLengthPoints[4];
 
 	// 800b5794 - UsaRetail
 	// 800b5fd4 - EurRetail
 	// 800b9838 - JpnRetail
-	struct MenuBox battleLengthPoints_box;
+	struct RectMenu menuBattleLengthPoints;
 
 	// 800b57c0 - UsaRetail
 	// 800b6000 - EurRetail
 	// 800b9864 - JpnRetail
-	struct MenuRow battleLengthLifeLife_rows[4];
+	struct MenuRow rowsBattleLengthLifeLife[4];
 
 	// 800b57d8 - UsaRetail
 	// 800b6018 - EurRetail
 	// 800b987c - JpnRetail
-	struct MenuBox battleLengthLifeLife_box;
+	struct RectMenu menuBattleLengthLifeLife;
 
 	// 800b5804 - UsaRetail
 	// 800b6044 - EurRetail
 	// 800b98a8 - JpnRetail
-	struct MenuRow battleStartGame_rows[2];
+	struct MenuRow rowsBattleStartGame[2];
 
 	// 800b5810 - UsaRetail
 	// 800b6050 - EurRetail
 	// 800b98b4 - JpnRetail
-	struct MenuBox battleStartGame_box;
+	struct RectMenu menuBattleStartGame;
 
 	// 800b583c - UsaRetail
 	// 800b607c - EurRetail
 	// 800b98e0 - JpnRetail
-	struct MenuBox *battleMenuBoxArray[5];
+	struct RectMenu *battleMenuArray[5];
 
 	// 800b5850 - UsaRetail
 	// 800b6090 - EurRetail
@@ -771,12 +771,12 @@ struct OverlayDATA_230
 	// 800b5954 - UsaRetail
 	// 800b6194 - EurRetail
 	// 800b99f8 - JpnRetail
-	struct MenuRow highScoreRows[4];
+	struct MenuRow rowsHighScore[4];
 
 	// 800b596c - UsaRetail
 	// 800b61ac - EurRetail
 	// 800b9a10 - JpnRetail
-	struct MenuBox highScoreBox;
+	struct RectMenu menuHighScore;
 
 	// 800B5998 - UsaRetail
 	// 800b61d8 - EurRetail
@@ -790,16 +790,16 @@ struct OverlayDATA_230
 	
 	// 800b61e0 - EurRetail
 	// why not just use the one at 800b4e28?
-	short langIndex_Boot[6];
+	short fileIndexLngBoot[6];
 
 	// 800b61ec - EurRetail
-	struct MenuRow rows_lngBoot[7];
+	struct MenuRow rowsLngBoot[7];
 
 	char padding800b6216[2];
 
 	// 800b6218 - EurRetail
 	// Language menu on game start
-	struct MenuBox menubox_lngBoot;
+	struct RectMenu menuLngBoot;
 
 #elif BUILD == JpnRetail
 	// 800b9a44 - JpnRetail
@@ -912,8 +912,7 @@ struct OverlayDATA_230
 	// 800b59e0 - UsaRetail
 	// 800b6284 - EurRetail
 	// 800b9a8c - JpnRetail
-	short desiredMenu;
-	short unk_afterdesiredmenu;
+	int desiredMenuIndex;
 
 	// 800b59e4 -- UsaRetail
 	// 800b6288 -- EurRetail

@@ -1,23 +1,23 @@
 #include <common.h>
 
-extern struct MenuBox adv_difficulty;
+extern struct RectMenu adv_difficulty;
 
-void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox *mb)
+void DECOMP_MM_MenuProc_NewLoad(struct RectMenu* menu)
 {
-  short row = mb->rowSelected;
+  short row = menu->rowSelected;
 
   switch (row)
   {
   case -1:
-    mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
+    menu->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
     return;
   case 0:
-    mb->ptrNextBox_InHierarchy = &adv_difficulty;
-    mb->state |= (ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+    menu->ptrNextBox_InHierarchy = &adv_difficulty;
+    menu->state |= (ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
     return;
   case 1:
     #if BUILD == UsaRetail
-        D230.desiredMenu = 1;
+        D230.desiredMenuIndex = 1;
         D230.MM_State = 2; // transitioning out
     #endif
     #if BUILD == EurRetail

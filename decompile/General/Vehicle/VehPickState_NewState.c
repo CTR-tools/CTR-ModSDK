@@ -207,19 +207,15 @@ SPINOUT:
 		((gameMode1 & END_OF_RACE) == 0)
 	)
 	{
-		struct TileView* tileView = 
-			&sdata->gGT->tileView[attackDriver->driverID];
+		struct PushBuffer* pb = 
+			&sdata->gGT->pushBuffer[attackDriver->driverID];
 		
 		short posScreen[2];
-		RB_Fruit_GetScreenCoords(tileView, attackDriver->instSelf, &posScreen[0]);
+		RB_Fruit_GetScreenCoords(pb, attackDriver->instSelf, &posScreen[0]);
 		
-		// screenPosX
-		attackDriver->BattleHUD.startX = 
-			tileView->rect.x + posScreen[0];
-		
-		// screenPosY
-		attackDriver->BattleHUD.startY = 
-			tileView->rect.y + posScreen[1];
+		// screenPosXY
+		attackDriver->BattleHUD.startX = pb->rect.x + posScreen[0];
+		attackDriver->BattleHUD.startY = pb->rect.y + posScreen[1];
 	
 		// if-checked for Battle inside the function
 		RB_Player_KillPlayer(attackDriver, victimDriver);

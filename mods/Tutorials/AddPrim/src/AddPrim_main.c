@@ -32,7 +32,7 @@ void AddPrim_RunUpdateHook()
 
 	// Draw a bar from left to right,
 	// dividing the screen in half on top and bottom
-    AddPrim(&sdata->gGT->tileView_UI.ptrOT[3], p);
+    AddPrim(&sdata->gGT->pushBuffer_UI.ptrOT[3], p);
 
 	// advance the primitive buffer
     sdata->gGT->backBuffer->primMem.curr = p + 1;

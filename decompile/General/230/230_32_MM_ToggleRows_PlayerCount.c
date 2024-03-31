@@ -7,7 +7,7 @@ void DECOMP_MM_ToggleRows_PlayerCount()
 		
 	for(i = 0; i < 2; i++)
 	{
-		row = &D230.rows_players1P2P[i];
+		row = &D230.rowsPlayers1P2P[i];
 		
 		// unlock row
 		row->stringIndex &= 0x7fff;
@@ -23,7 +23,7 @@ void DECOMP_MM_ToggleRows_PlayerCount()
 	
 	for(i = 0; i < 3; i++)
 	{
-		row = &D230.rows_players2P3P4P[i];
+		row = &D230.rowsPlayers2P3P4P[i];
 		
 		// unlock row
 		row->stringIndex &= 0x7fff;

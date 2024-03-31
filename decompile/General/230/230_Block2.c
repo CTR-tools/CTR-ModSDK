@@ -10,7 +10,7 @@
 #include "230_47_MM_Characters_PreventOverlap.c"
 #include "230_48_MM_Characters_RestoreIDs.c"
 #include "230_49_MM_Characters_HideDrivers.c"
-#include "230_50_MM_Characters_MenuBox.c"
+#include "230_50_MM_Characters_MenuProc.c"
 #include "230_51_MM_TrackSelect_Video_SetDefaults.c"
 #include "230_52_MM_TrackSelect_Video_State.c"
 #include "230_53_MM_TrackSelect_Video_Draw.c"

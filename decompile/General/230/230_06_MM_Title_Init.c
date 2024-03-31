@@ -29,14 +29,14 @@ void DECOMP_MM_Title_Init(void)
     // freecam mode
     gGT->cameraDC[0].cameraMode = 3;
 
-    gGT->tileView[0].distanceToScreen_CURR = 450;
+    gGT->pushBuffer[0].distanceToScreen_CURR = 450;
 
     void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 
     // pointer to Intro Cam, to view Crash holding Trophy in main menu
     D230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
 
-    t = DECOMP_THREAD_BirthWithObject(
+    t = DECOMP_PROC_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
             sizeof(struct Title), // 0x24
             NONE,
@@ -81,7 +81,7 @@ void DECOMP_MM_Title_Init(void)
       struct InstDrawPerPlayer *idpp = INST_GETIDPP(inst);
       for (m = 1; m < gGT->numPlyrCurrGame; m++)
       {
-        idpp[m].tileView = 0;
+        idpp[m].pushBuffer = 0;
       }
     }
 

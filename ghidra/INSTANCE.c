@@ -77,7 +77,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
   // if numPlyrCurrGame is not zero
   if (puVar3[0x1ca8] != '\0')
   {
-	// offset of 8008d2ac where tileView structs
+	// offset of 8008d2ac where pushBuffer structs
 	// are held for each player (pos, size, etc)
     iVar5 = 0x168;
 
@@ -85,7 +85,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
 	// each instance's InstDrawPerPlayer
     do
 	{
-	  // pointer to tileView struct
+	  // pointer to pushBuffer struct
       puVar2 = puVar3 + iVar5;
 
 	  // increment pointer to next winow struct
@@ -94,7 +94,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
 	  // pointer to LOD ModelHeader
       *(undefined4 *)(param_1 + 0xe0) = 0;
 
-	  // tileView
+	  // pushBuffer
       *(undefined **)(param_1 + 0x74) = puVar2;
 
 	  // inst flags per player
@@ -163,7 +163,7 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
   puVar2 = PTR_DAT_8008d2ac;
 
-  // tileView_UI
+  // pushBuffer_UI
   *(undefined **)(iVar3 + 0x74) = PTR_DAT_8008d2ac + 5000;
 
   // iteration counter starts at 1, not 0
@@ -178,7 +178,7 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 	// for iVar4 = 1 (not zero); iVar4 < numPlyrCurrGame; iVar4++)
     do 
 	{
-	  // tileView pointer for P2, P3, P4
+	  // pushBuffer pointer for P2, P3, P4
       *(undefined4 *)(iVar1 + 0xfc) = 0;
 
 	  // increment loop counter
@@ -239,7 +239,7 @@ FUN_800309a4(int param_1,undefined4 param_2,uint param_3,uint param_4,undefined4
       param_6 = (param_6 - ((param_6 & 3) - 4)) * 0x10000;
     }
 
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
     iVar2 = FUN_8004205c(param_3 | param_6 | param_4,param_5,param_2,param_7);
 
 	/*
@@ -430,7 +430,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 	  // if numPlyrCurrGame is not zero
       if (puVar3[0x1ca8] != '\0')
 	  {
-		// offset of 8008d2ac where tileView structs
+		// offset of 8008d2ac where pushBuffer structs
 		// are held for each player (pos, size, etc)
         iVar14 = 0x168;
 
@@ -440,16 +440,16 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 		// for iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++
         do
 		{
-		  // pointer to tileView struct
+		  // pointer to pushBuffer struct
           puVar9 = puVar3 + iVar14;
 
-		  // increment pointer to next tileView struct
+		  // increment pointer to next pushBuffer struct
           iVar14 = iVar14 + 0x110;
 
 		  // LOD ModelHeader
           *(undefined4 *)(iVar12 + 0xe0) = 0;
 
-		  // tileView
+		  // pushBuffer
           *(undefined **)(iVar12 + 0x74) = puVar9;
 
 		  // increment counter

@@ -53,7 +53,7 @@ void DECOMP_UI_DrawNumWumpa(short posX, short posY, struct Driver* d)
 			&gGT->backBuffer->primMem,
 	
 			// pointer to OT memory
-			gGT->tileView_UI.ptrOT,
+			gGT->pushBuffer_UI.ptrOT,
 	
 			// color data
 			data.ptrColor[ORANGE][0],

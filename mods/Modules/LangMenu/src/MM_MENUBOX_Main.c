@@ -1,12 +1,12 @@
 #include <common.h>
 
-extern struct MenuBox menubox_language;
+extern struct RectMenu menuLanguage;
 
-void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
+void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 {
   short choose;
   struct GameTracker *gGT = sdata->gGT;
-  struct MenuBox *nextBox;
+  struct RectMenu *nextBox;
 
   // if scrapbook is unlocked, change "rows" to extended array
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
@@ -25,7 +25,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
   MM_ParseCheatCodes();
 
-  MM_ToggleRows_Difficulty();
+  MM_TogglerowsDifficulty();
 
   MM_ToggleRows_PlayerCount();
 
@@ -54,7 +54,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((D230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
+    if ((D230.menuMainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
     {
 #if BUILD == JpnRetail
       if (D230.MM_State != 2)
@@ -76,7 +76,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
           // Go to a cutscene of some kind
           // (either oxide intro or demo mode)
-          D230.desiredMenu = 4;
+          D230.desiredMenuIndex = 4;
         }
       }
 
@@ -138,12 +138,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   case 0x4c: // Adventure Mode
     gGT->gameMode1 |= ADVENTURE_MODE;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
-    nextBox = &D230.menubox_adventure;
+    nextBox = &D230.menuAdventure;
     break;
 
   case 0x4d: // Time Trial
     D230.MM_State = 2;
-    D230.desiredMenu = 2;
+    D230.desiredMenuIndex = 2;
     gGT->numPlyrNextGame = 1;
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
@@ -151,31 +151,31 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
   case 0x4e: // Arcade Mode
     gGT->gameMode1 |= ARCADE_MODE;
-    nextBox = &D230.menubox_raceType;
+    nextBox = &D230.menuRaceType;
     break;
 
   case 0x4f: // Versus
-    nextBox = &D230.menubox_raceType;
+    nextBox = &D230.menuRaceType;
     break;
 
   case 0x50: // Battle
     D230.characterSelect_transitionState = 2;
     gGT->gameMode1 |= BATTLE_MODE;
-    nextBox = &D230.menubox_players2P3P4P;
+    nextBox = &D230.menuPlayers2P3P4P;
     break;
 
   case 0x51: // High Score
-    D230.desiredMenu = 3;
+    D230.desiredMenuIndex = 3;
     D230.MM_State = 2;
     break;
 
   case 82: // Language
-    menubox_language.unk1e = 0;
-    menubox_language.posX_curr = 0;
-    menubox_language.posY_curr = 0;
-    menubox_language.state = (CENTER_ON_X | 0x400000);
-    menubox_language.width = 141;
-    nextBox = &menubox_language;
+    menuLanguage.unk1e = 0;
+    menuLanguage.posX_curr = 0;
+    menuLanguage.posY_curr = 0;
+    menuLanguage.state = (CENTER_ON_X | 0x400000);
+    menuLanguage.width = 141;
+    nextBox = &menuLanguage;
     break;
     // Scrapbook
 #if BUILD == JpnRetail
@@ -183,7 +183,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 #else
   case 0x234: 
 #endif
-    D230.desiredMenu = 5;
+    D230.desiredMenuIndex = 5;
     D230.MM_State = 2;
     break;
   }

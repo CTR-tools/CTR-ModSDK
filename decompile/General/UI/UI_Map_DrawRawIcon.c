@@ -25,7 +25,7 @@ void DECOMP_UI_Map_DrawRawIcon(
 	iconPtrArray[iconID],
 	posX, posY,
 	&gGT->backBuffer->primMem,
-	gGT->tileView_UI.ptrOT,
+	gGT->pushBuffer_UI.ptrOT,
     ptrColor[0], ptrColor[1], ptrColor[2], ptrColor[3],
 	0, (int)scale);
 	

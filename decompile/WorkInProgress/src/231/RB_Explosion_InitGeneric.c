@@ -39,6 +39,6 @@ void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst)
   explosion->alphaScale = 0x1000;
   
   // set funcThDestroy to remove instance from instance pool
-  explosion->thread->funcThDestroy = THREAD_DestroyInstance;
+  explosion->thread->funcThDestroy = PROC_DestroyInstance;
   return;
 }

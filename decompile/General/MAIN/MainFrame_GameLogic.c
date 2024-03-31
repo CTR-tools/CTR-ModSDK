@@ -16,7 +16,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	struct Driver* psVar9;
 	struct Driver* psVar10;
 	struct Driver* pvVar12;
-	struct TileView* tileView;
+	struct PushBuffer* pushBuffer;
 	int iVar11;
 	struct Thread* psVar12;
 	
@@ -24,7 +24,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
 		bVar1 = false;
-		tileView = gGT->tileView;
+		pushBuffer = gGT->pushBuffer;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
 			psVar9 = (struct Driver*)psVar12->object;
@@ -54,25 +54,25 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 				}
 
 #ifndef REBUILD_PS1
-				DISPLAY_Blur_Main(tileView, uVar3);
+				DISPLAY_Blur_Main(pushBuffer, uVar3);
 #endif
 			}
 			else
 			{
 #ifndef REBUILD_PS1
-				DISPLAY_Blur_Main(tileView, -uVar3);
+				DISPLAY_Blur_Main(pushBuffer, -uVar3);
 #endif
 				psVar9->clockFlash--;
 			}
 LAB_80034e74:
-			tileView = tileView + 1;
+			pushBuffer = pushBuffer + 1;
 		}
 		gGT->timer = gGT->timer + 1;
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
 #ifndef REBUILD_PS1
-		iVar4 = RCNT_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
+		iVar4 = Timer_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
 		iVar4 = (iVar4 << 5) / 100;
 #else
 		iVar4 = FPS_HALF(0x20);
@@ -325,7 +325,7 @@ LAB_80035098:
 #endif
 	}
 
-	DECOMP_THREAD_CheckAllForDead();
+	DECOMP_PROC_CheckAllForDead();
 
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
@@ -345,13 +345,13 @@ LAB_80035098:
 				if
 				(
 					(
-						(sdata->ptrActiveMenuBox != &data.menuBox_optionsMenu_racingWheel) &&
-						(sdata->ptrActiveMenuBox != &D232.menuBoxHintMenu) // in 232
+						(sdata->ptrActiveMenu != &data.menuRacingWheelConfig) &&
+						(sdata->ptrActiveMenu != &D232.menuHintMenu) // in 232
 					) &&
 					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)
 				{
-					DECOMP_MENUBOX_ClearInput();
+					DECOMP_RECTMENU_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
 					
 					DECOMP_MainFrame_TogglePauseAudio(0);
@@ -360,7 +360,7 @@ LAB_80035098:
 					DECOMP_MainFreeze_SafeAdvDestroy();
 					DECOMP_ElimBG_Deactivate(gGT);
 
-					DECOMP_MENUBOX_Hide(sdata->ptrActiveMenuBox);
+					DECOMP_RECTMENU_Hide(sdata->ptrActiveMenu);
 					gGT->cooldownFromUnpauseUntilPause = 5;
 				}
 			}
@@ -372,9 +372,9 @@ LAB_80035098:
 		else if (gGT->cooldownFromUnpauseUntilPause == 0)
 		{
 			if ((uVar3 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0)
-				if (sdata->ptrActiveMenuBox == 0)
+				if (sdata->ptrActiveMenu == 0)
 					if (sdata->AkuAkuHintState == 0)
-						if (DECOMP_TitleFlag_IsFullyOnScreen() == 0)
+						if (DECOMP_RaceFlag_IsFullyOnScreen() == 0)
 			{
 				for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 				{
@@ -432,7 +432,7 @@ LAB_80035098:
 				}
 
 #ifndef REBUILD_PS1
-				sVar2 = TitleOSK_DrawMenu(0x140);
+				sVar2 = SubmitName_DrawMenu(0x140);
 				if (sVar2 == 0)
 				{
 					return;
@@ -441,9 +441,9 @@ LAB_80035098:
 				{
 					*(u_short*)&sdata->unk_saveGame_related = 0;
 					
-					LoadSave_ToggleMode(0x41);
+					SelectProfile_ToggleMode(0x41);
 
-					DECOMP_MENUBOX_Show(&data.menuBox_warning2);
+					DECOMP_RECTMENU_Show(&data.menuWarning2);
 					gGT->unknownFlags_1d44 |= AKU_SONG;
 
 					return;

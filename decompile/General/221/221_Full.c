@@ -13,14 +13,14 @@ const short hub[8] =
 	0,  // Needed for 4-byte alignment
 };
 
-extern struct MenuRow menuRows221[3];
-extern struct MenuBox menuBox221;
+extern struct MenuRow rows221[3];
+extern struct RectMenu menu221;
 	
 int DECOMP_UI_ConvertX_2(int x, int const_0x200);
 int DECOMP_UI_ConvertY_2(int y, int const_0x200);
 void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
-void MENUBOX_ClearInput();
-void MENUBOX_Show(struct MenuBox*);
+void RECTMENU_ClearInput();
+void RECTMENU_Show(struct RectMenu*);
 
 void DECOMP_CC_EndEvent_DrawMenu()
 {
@@ -43,7 +43,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// Dingo Canyon gives different item depending on 
 	// camera, Blizz Bluff gives Skull Rock token, and
 	// Dragon Mines gives purple gem
-	if(levelID == 0) bitIndex = gGT->tileView[0].pos[2];
+	if(levelID == 0) bitIndex = gGT->pushBuffer[0].pos[2];
 	else if(levelID == 1) bitIndex = 0;
 	else if(levelID == 2) bitIndex = -1;
 	
@@ -135,8 +135,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		
 		// if first frame of pressing X/O,
 		// open the Retry/ExitToMap menu
-		MENUBOX_ClearInput();
-		MENUBOX_Show(&menuBox221);
+		RECTMENU_ClearInput();
+		RECTMENU_Show(&menu221);
 		sdata->menuReadyToPass = 1;
 		return;
 	}
@@ -198,7 +198,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// unlock token and leave level
 	
 	// reset
-	MENUBOX_ClearInput();
+	RECTMENU_ClearInput();
 	sdata->framesSinceRaceEnded = 0;
 	
 	// loading flags
@@ -214,9 +214,9 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	return;
 }
 
-void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);
+void UI_RaceEnd_MenuProc(struct RectMenu*);
 
-struct MenuRow menuRows221[3] =
+struct MenuRow rows221[3] =
 {	
 	// Retry
 	{
@@ -246,7 +246,7 @@ struct MenuRow menuRows221[3] =
 	}
 };
 
-struct MenuBox menuBox221 =
+struct RectMenu menu221 =
 {
 	.stringIndexTitle = 0xFFFF,
 	.posX_curr = 0x100,
@@ -255,8 +255,8 @@ struct MenuBox menuBox221 =
 	.unk1 = 0,
 	
 	.state = 0x803,
-	.rows = menuRows221,
-	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+	.rows = rows221,
+	.funcPtr = UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 
 	// rest of variables all default zero

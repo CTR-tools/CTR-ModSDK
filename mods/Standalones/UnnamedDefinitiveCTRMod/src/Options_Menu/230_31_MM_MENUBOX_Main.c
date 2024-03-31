@@ -6,9 +6,9 @@
 #define UDCTRM_MM_ROW_OPTIONS 6
 #define UDCTRM_MM_ROW_SCRAPBOOK 7
 
-extern struct MenuBox UDCTRM_OM_MenuBox;
+extern struct RectMenu UDCTRM_OM_MenuProc;
 
-void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
+void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 {
 	short rowLngID;
 	struct GameTracker *gGT = sdata->gGT;
@@ -21,7 +21,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 	}
 
 	DECOMP_MM_ParseCheatCodes();
-	MM_ToggleRows_Difficulty();
+	MM_TogglerowsDifficulty();
 	MM_ToggleRows_PlayerCount();
 
 	// If you are at the highest hierarchy level of main menu
@@ -46,7 +46,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 			);
 		}
 
-		if ((D230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
+		if ((D230.menuMainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
 		{
 			gGT->numPlyrNextGame = 1;
 
@@ -63,7 +63,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
 					// Go to a cutscene of some kind
 					// (either oxide intro or demo mode)
-					D230.desiredMenu = 4;
+					D230.desiredMenuIndex = 4;
 				}
 			}
 
@@ -123,7 +123,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 	// get LNG index of row selected
 	rowLngID = mainMenu->rows[mainMenu->rowSelected].stringIndex;
 
-	struct MenuBox *nextBox;
+	struct RectMenu *nextBox;
 
 	switch (rowLngID)
 	{
@@ -131,12 +131,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 		gGT->numLaps = 3;
 		gGT->gameMode1 |= ADVENTURE_MODE;
 		gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
-		nextBox = &D230.menubox_adventure;
+		nextBox = &D230.menuAdventure;
 		break;
 
 	case 77: // Time Trial
 		D230.MM_State = EXITING_MENU;
-		D230.desiredMenu = 2;
+		D230.desiredMenuIndex = 2;
 		gGT->numPlyrNextGame = 1;
 		gGT->numLaps = 3;
 		gGT->gameMode1 |= TIME_TRIAL;
@@ -145,33 +145,33 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
 	case 78: // Arcade Mode
 		gGT->gameMode1 |= ARCADE_MODE;
-		nextBox = &D230.menubox_raceType;
+		nextBox = &D230.menuRaceType;
 		break;
 
 	case 79: // Versus
-		nextBox = &D230.menubox_raceType;
+		nextBox = &D230.menuRaceType;
 		break;
 
 	case 80: // Battle
 		D230.characterSelect_transitionState = 2;
 		gGT->gameMode1 |= BATTLE_MODE;
-		nextBox = &D230.menubox_players2P3P4P;
+		nextBox = &D230.menuPlayers2P3P4P;
 		break;
 
 	case 81: // High Score
-		D230.desiredMenu = 3;
+		D230.desiredMenuIndex = 3;
 		D230.MM_State = EXITING_MENU;
 		break;
 
 	case 564: // Scrapbook
-		D230.desiredMenu = 5;
+		D230.desiredMenuIndex = 5;
 		D230.MM_State = EXITING_MENU;
 		break;
 
 	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	// Options (new for this mod!)
 	case 14: // Options
-		nextBox = &UDCTRM_OM_MenuBox;
+		nextBox = &UDCTRM_OM_MenuProc;
 	/////////////////////////// END OF CHANGES     ///////////////////////////
 	}
 	if (nextBox)

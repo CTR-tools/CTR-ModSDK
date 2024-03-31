@@ -1,12 +1,12 @@
 #include <common.h>
 
-void MM_MENUBOX_Language(struct MenuBox *mb)
+void MM_MenuProc_Language(struct RectMenu* menu)
 {
-  char row = mb->rowSelected;
+  char row = menu->rowSelected;
 
   if (row == -1)
   {
-    mb->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
+    menu->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
   }
   else if ((-2 < row) && (row < 6))
   {
@@ -18,6 +18,6 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
 
     sdata->gGT->gameMode2 |= 0x10000000; // Flag only foound in EurRetail related to lang change
 
-    mb->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
+    menu->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
   }
 }

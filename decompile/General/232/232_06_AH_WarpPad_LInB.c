@@ -19,7 +19,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	gGT = sdata->gGT;
 	
     t =	
-		DECOMP_THREAD_BirthWithObject
+		DECOMP_PROC_BirthWithObject
 		(
 			SIZE_RELATIVE_POOL_BUCKET
 			(

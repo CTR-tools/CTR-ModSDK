@@ -13,7 +13,7 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
     if (savInst->thread == NULL)
     {
         t = 
-			DECOMP_THREAD_BirthWithObject
+			DECOMP_PROC_BirthWithObject
 			(
 				SIZE_RELATIVE_POOL_BUCKET
 				(

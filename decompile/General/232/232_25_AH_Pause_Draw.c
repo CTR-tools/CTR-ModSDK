@@ -45,7 +45,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
         0x16,
 
         primMem,
-        gGT->tileView_UI.ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
 		ptrColor[2], ptrColor[3],
@@ -59,7 +59,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
         0x16,
 
         primMem,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
 		ptrColor[2], ptrColor[3],
@@ -106,7 +106,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				struct Instance* inst = 
 					ptrPauseObject->PauseMember[i].inst;
 					
-				// Remove LoadSave with regular UI variant
+				// Remove SelectProfile with regular UI variant
 				inst->matrix.t[0] = 
 					DECOMP_UI_ConvertX_2(posX + 0x16d + 1*0x1e, 0x100);
 				
@@ -166,7 +166,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				2*0x10 + 4 + 0x2a,
 
 				&gGT->backBuffer->primMem,
-				gGT->tileView_UI.ptrOT,
+				gGT->pushBuffer_UI.ptrOT,
 
 				starColor[0], starColor[1],
 				starColor[2], starColor[3],
@@ -180,7 +180,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				struct Instance* inst = 
 					ptrPauseObject->PauseMember[2+i].inst;
 					
-				// Remove LoadSave with regular UI variant
+				// Remove SelectProfile with regular UI variant
 				inst->matrix.t[0] = 
 					DECOMP_UI_ConvertX_2(posX + 0x100 + (i-2)*60, 0x100);
 				
@@ -218,7 +218,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					struct Instance* inst = 
 						ptrPauseObject->PauseMember[3*i+j].inst;
 						
-					// Remove LoadSave with regular UI variant
+					// Remove SelectProfile with regular UI variant
 					inst->matrix.t[0] = 
 						DECOMP_UI_ConvertX_2(posX + 0x15e + j*0x1e, 0x100);
 				
@@ -272,7 +272,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[12].inst;
 				
-			// Remove LoadSave with regular UI variant
+			// Remove SelectProfile with regular UI variant
 			inst->matrix.t[0] = 
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 			
@@ -301,7 +301,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			inst = 
 				ptrPauseObject->PauseMember[13].inst;
 			
-			// Remove LoadSave with regular UI variant
+			// Remove SelectProfile with regular UI variant
 			inst->matrix.t[0] = 
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 			
@@ -330,7 +330,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[i].inst;
 			
-			// Remove LoadSave with regular UI variant
+			// Remove SelectProfile with regular UI variant
 			inst->matrix.t[0] = 
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 		
@@ -338,7 +338,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				DECOMP_UI_ConvertY_2(instPosY + 0x41, 0x100);
 			
 			#ifndef REBUILD_PS1
-			LoadSave_PrintInteger(
+			SelectProfile_PrintInteger(
 				ptrTokenCount[i],
 				instPosX + 0x36,
 				instPosY + 0x3a,
@@ -386,7 +386,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			struct Instance* inst = 
 				ptrPauseObject->PauseMember[i].inst;
 			
-			// Remove LoadSave with regular UI variant			
+			// Remove SelectProfile with regular UI variant			
 			inst->matrix.t[0] = 
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 		
@@ -394,7 +394,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				DECOMP_UI_ConvertY_2(0x49, 0x100);
 				
 			#ifndef REBUILD_PS1
-			LoadSave_PrintInteger(
+			SelectProfile_PrintInteger(
 				count[i],
 				instPosX + 0x19,
 				0x49,
@@ -437,7 +437,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	r.w = (short)iVar11 + -0x14;
 	r.h = 2;
 	
-	DECOMP_MENUBOX_DrawOuterRect_Edge(
+	DECOMP_RECTMENU_DrawOuterRect_Edge(
 		&r, &sdata->battleSetup_Color_UI_1, 0x20,
 		gGT->backBuffer->otMem.startPlusFour);
 		
@@ -447,7 +447,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	r.h = 0x82;
 
 	// Draw 2D Menu rectangle background
-	DECOMP_MENUBOX_DrawInnerRect(
+	DECOMP_RECTMENU_DrawInnerRect(
 		&r, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
 	
 	for(int i = 0; i < 0xe; i++)

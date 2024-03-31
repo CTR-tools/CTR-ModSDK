@@ -4,14 +4,14 @@
 // 840/1108
 
 void MM_ParseCheatCodes();
-void MM_ToggleRows_Difficulty();
+void MM_TogglerowsDifficulty();
 void MM_ToggleRows_PlayerCount();
 void MM_Title_MenuUpdate();
 void MM_Title_Init();
 
-extern struct MenuBox boss_battle_menu;
+extern struct RectMenu boss_battle_menu;
 
-void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
+void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 {
   int choose;
   struct GameTracker *gGT = sdata->gGT;
@@ -19,14 +19,14 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if scrapbook is unlocked
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
   {
-    // change D230.rows_mainMenu_Basic
-    // to D230.rows_mainMenu_WithScrapbook
-    mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
+    // change D230.rowsMainMenuBasic
+    // to D230.rowsMainMenuWithScrapbook
+    mainMenu->rows = &D230.rowsMainMenuWithScrapbook[0];
   }
 
   MM_ParseCheatCodes();
 
-  MM_ToggleRows_Difficulty();
+  MM_TogglerowsDifficulty();
 
   MM_ToggleRows_PlayerCount();
 
@@ -50,7 +50,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((D230.menubox_mainMenu.state & 0x10) == 0)
+    if ((D230.menuMainMenu.state & 0x10) == 0)
     {
       gGT->numPlyrNextGame = 1;
 
@@ -67,7 +67,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
           // Go to a cutscene of some kind
           // (either oxide intro or demo mode)
-          D230.desiredMenu = 4;
+          D230.desiredMenuIndex = 4;
         }
       }
 
@@ -141,7 +141,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
 
     // menubox for new/load
-    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_adventure;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menuAdventure;
     mainMenu->state |= 0x10;
     return;
   }
@@ -153,7 +153,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     D230.MM_State = 2;
 
     // Set next stage to 2 for Time Trial
-    D230.desiredMenu = 2;
+    D230.desiredMenuIndex = 2;
 
     // set number of players to 1
     gGT->numPlyrNextGame = 1;
@@ -186,7 +186,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x4f)
   {
     // next menuBox is choosing single+cup
-    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menuRaceType;
     mainMenu->state |= 0x10;
     return;
   }
@@ -200,7 +200,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode1 |= BATTLE_MODE;
 
     // set next menuBox to 2P,3P,4P
-    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menuPlayers2P3P4P;
     mainMenu->state |= 0x10;
     return;
   }
@@ -209,7 +209,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x51)
   {
     // Set next stage to high score menu
-    D230.desiredMenu = 3;
+    D230.desiredMenuIndex = 3;
 
     // Leave main menu hierarchy
     D230.MM_State = 2;
@@ -221,7 +221,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x234)
   {
     // Set next stage to Scrapbook
-    D230.desiredMenu = 5;
+    D230.desiredMenuIndex = 5;
 
     // Leave main menu hierarchy
     D230.MM_State = 2;

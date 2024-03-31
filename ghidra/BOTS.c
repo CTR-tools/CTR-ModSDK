@@ -1499,7 +1499,7 @@ LAB_80013e7c:
     if (*(short *)(param_1 + 0x44) == 0x18)
 	{
 	  // check for collision with all sibling players
-	  // THREAD_CollidePointWithBucket
+	  // PROC_CollidePointWithBucket
       FUN_80042348(*(undefined4 *)(param_1 + 0x10),&local_98);
 
 	  // pointer to first robotcar thread
@@ -1519,7 +1519,7 @@ LAB_80013e7c:
     }
 
 	// check for collision with all robotcars
-	// THREAD_CollidePointWithBucket
+	// PROC_CollidePointWithBucket
     FUN_80042348(uVar12,&local_98);
   }
 LAB_80013fbc:
@@ -3043,15 +3043,15 @@ LAB_800160f4:
 			  RotTrans(&local_88,(VECTOR *)&local_80,&lStack72);
               puVar5 = PTR_DAT_8008d2ac;
 
-			  // tileView posX
+			  // pushBuffer posX
               *(undefined2 *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar17 + 0x4a) * 0x110 + 0x168) =
                    (undefined2)local_80;
 
-			  // tileView posY
+			  // pushBuffer posY
               *(short *)(puVar5 + (uint)*(byte *)(iVar17 + 0x4a) * 0x110 + 0x16a) =
                    *(short *)(iVar3 + 0x48) + 0xc0;
 
-			  // tileView posZ
+			  // pushBuffer posZ
               *(ushort *)(puVar5 + (uint)*(byte *)(iVar17 + 0x4a) * 0x110 + 0x16c) =
                    (ushort)local_78;
 
@@ -4070,7 +4070,7 @@ LAB_80017218:
   // is found, then spawn the AIs
   if (bVar1)
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x62c = size
 	// 0 = no relation to param4
 	// 0x100 = LargeStackPool

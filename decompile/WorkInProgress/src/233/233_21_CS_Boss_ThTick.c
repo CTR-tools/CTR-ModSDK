@@ -53,16 +53,16 @@ void CS_Boss_ThTick(struct Thread *t)
     OVR_233.cutsceneState = 2;
 
     // set desired screen brightness to black
-    gGT->tileView_UI.fadeFromBlack_desiredResult = 0;
+    gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0;
 
     // set brightness to subtract each frame
-    gGT->tileView_UI.fade_step = -0x400;
+    gGT->pushBuffer_UI.fade_step = -0x400;
 
     break;
   case 2:
 
-    // if tileView_UI is fully faded to black
-    if (gGT->tileView_UI.fadeFromBlack_currentValue == 0)
+    // if pushBuffer_UI is fully faded to black
+    if (gGT->pushBuffer_UI.fadeFromBlack_currentValue == 0)
     {
       // podium "other" threads
       otherThread = gGT->threadBuckets[OTHER].thread;
@@ -160,28 +160,28 @@ void CS_Boss_ThTick(struct Thread *t)
       }
 
       // set camera position and rotation for cutscene
-      gGT->tileView[0].pos[0] = *(short *)(cutsceneID + 0x800B749C);
-      gGT->tileView[0].pos[1] = *(short *)(cutsceneID + 0x800B74A0);
-      gGT->tileView[0].pos[2] = *(short *)(cutsceneID + 0x800B74A2);
+      gGT->pushBuffer[0].pos[0] = *(short *)(cutsceneID + 0x800B749C);
+      gGT->pushBuffer[0].pos[1] = *(short *)(cutsceneID + 0x800B74A0);
+      gGT->pushBuffer[0].pos[2] = *(short *)(cutsceneID + 0x800B74A2);
 
-      gGT->tileView[0].rot[0] = *(short *)(cutsceneID + 0x800B74A4) + 0x800;
-      gGT->tileView[0].rot[1] = *(short *)(cutsceneID + 0x800B74A6);
-      gGT->tileView[0].rot[2] = *(short *)(cutsceneID + 0x800B74A8);
+      gGT->pushBuffer[0].rot[0] = *(short *)(cutsceneID + 0x800B74A4) + 0x800;
+      gGT->pushBuffer[0].rot[1] = *(short *)(cutsceneID + 0x800B74A6);
+      gGT->pushBuffer[0].rot[2] = *(short *)(cutsceneID + 0x800B74A8);
 
       OVR_233.cutsceneState = 4;
 
       // last camera variable
       // set desired brightness to normal brightness
-      gGT->tileView_UI.fadeFromBlack_desiredResult = 0x1000;
+      gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0x1000;
 
       // set screen to get brighter every frame
-      gGT->tileView_UI.fade_step = 0x400;
+      gGT->pushBuffer_UI.fade_step = 0x400;
     }
     break;
   case 4:
 
     // if screen is at max brightness
-    if (gGT->tileView_UI.fadeFromBlack_currentValue == 0x1000)
+    if (gGT->pushBuffer_UI.fadeFromBlack_currentValue == 0x1000)
     {
       // next stage, start playing cutscene
       OVR_233.cutsceneState = 5;

@@ -113,41 +113,41 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     }
 	
 	// used for multiplayer wumpa
-    sdata->ptrTileViewUI = NULL;
+    sdata->ptrPushBufferUI = NULL;
 	if (1 < gGT->numPlyrCurrGame)
 	{
-      sdata->ptrTileViewUI = &sdata->tileView_DecalMP;
+      sdata->ptrPushBufferUI = &sdata->pushBuffer_DecalMP;
     }
 	
 // skipping pixelLOD
 #if 0
-	// second half of pixel-LOD tileView, copy from TileView_UI
-    sdata->dataLibFiller[40] = gGT->tileView_UI.matrix_ViewProj.m[0][0];
-    sdata->dataLibFiller[44] = gGT->tileView_UI.matrix_ViewProj.m[0][2];
-    sdata->dataLibFiller[48] = gGT->tileView_UI.matrix_ViewProj.m[1][1];
-    sdata->dataLibFiller[52] = gGT->tileView_UI.matrix_ViewProj.m[2][0];
-    sdata->dataLibFiller[56] = gGT->tileView_UI.matrix_ViewProj.m[2][2];
-    sdata->dataLibFiller[60] = gGT->tileView_UI.matrix_ViewProj.t[0];
-    sdata->dataLibFiller[64] = gGT->tileView_UI.matrix_ViewProj.t[1];
-    sdata->dataLibFiller[68] = gGT->tileView_UI.matrix_ViewProj.t[2];
+	// second half of pixel-LOD pushBuffer, copy from PushBuffer_UI
+    sdata->dataLibFiller[40] = gGT->pushBuffer_UI.matrix_ViewProj.m[0][0];
+    sdata->dataLibFiller[44] = gGT->pushBuffer_UI.matrix_ViewProj.m[0][2];
+    sdata->dataLibFiller[48] = gGT->pushBuffer_UI.matrix_ViewProj.m[1][1];
+    sdata->dataLibFiller[52] = gGT->pushBuffer_UI.matrix_ViewProj.m[2][0];
+    sdata->dataLibFiller[56] = gGT->pushBuffer_UI.matrix_ViewProj.m[2][2];
+    sdata->dataLibFiller[60] = gGT->pushBuffer_UI.matrix_ViewProj.t[0];
+    sdata->dataLibFiller[64] = gGT->pushBuffer_UI.matrix_ViewProj.t[1];
+    sdata->dataLibFiller[68] = gGT->pushBuffer_UI.matrix_ViewProj.t[2];
 	
-	// first half of pixel-LOD tileView, copy from TileView_UI
-    sdata->dataLibFiller[0] = gGT->tileView_UI.pos[0];
-    sdata->dataLibFiller[2] = gGT->tileView_UI.pos[1];
-    sdata->dataLibFiller[4] = gGT->tileView_UI.pos[2];
-    sdata->dataLibFiller[28] = gGT->tileView_UI.rect.x;
-    sdata->dataLibFiller[30] = gGT->tileView_UI.rect.y;
-    sdata->dataLibFiller[32] = gGT->tileView_UI.rect.w;
-    sdata->dataLibFiller[34] = gGT->tileView_UI.rect.h;
+	// first half of pixel-LOD pushBuffer, copy from PushBuffer_UI
+    sdata->dataLibFiller[0] = gGT->pushBuffer_UI.pos[0];
+    sdata->dataLibFiller[2] = gGT->pushBuffer_UI.pos[1];
+    sdata->dataLibFiller[4] = gGT->pushBuffer_UI.pos[2];
+    sdata->dataLibFiller[28] = gGT->pushBuffer_UI.rect.x;
+    sdata->dataLibFiller[30] = gGT->pushBuffer_UI.rect.y;
+    sdata->dataLibFiller[32] = gGT->pushBuffer_UI.rect.w;
+    sdata->dataLibFiller[34] = gGT->pushBuffer_UI.rect.h;
 #endif
 
-    sdata->tileView_DecalMP.ptrOT = gGT->tileView->ptrOT;
-    sdata->tileView_DecalMP.distanceToScreen_PREV = gGT->tileView->distanceToScreen_PREV;
+    sdata->pushBuffer_DecalMP.ptrOT = gGT->pushBuffer->ptrOT;
+    sdata->pushBuffer_DecalMP.distanceToScreen_PREV = gGT->pushBuffer->distanceToScreen_PREV;
 
-	// Replace TileViewUI with regular TileView,
+	// Replace PushBufferUI with regular PushBuffer,
 	// workaround for decompile, and it just looks better
     sdata->ptrFruitDisp = 
-		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrTileViewUI*/0,/*sdata->s_fruitdisp*/0);
+		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&

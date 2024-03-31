@@ -1,7 +1,7 @@
 #include <common.h>
 
-extern struct MenuBox menuBox225_versus;
-extern struct MenuBox menuBox225_battle;
+extern struct RectMenu menuVS;
+extern struct RectMenu menuBattle;
 
 enum VsPosY
 {
@@ -25,8 +25,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 {
   struct GameTracker *gGT;
   struct Instance *bigNum;
-  struct TileView* view;
-  struct MenuBox *endMenu;
+  struct PushBuffer* view;
+  struct RectMenu *endMenu;
   char numPlyr;
   short pos[2];
   RECT box;
@@ -122,7 +122,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   // Disable drawing lines between multiplayer screens
   gGT->renderFlags &= ~(0x8000);
 
-  TitleFlag_SetFullyOnScreen();
+  RaceFlag_SetFullyOnScreen();
 
   if (sdata->framesSinceRaceEnded < FPS_DOUBLE(26))
   {
@@ -192,7 +192,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
             &gGT->backBuffer->primMem,
 
             // pointer to OT mem
-            gGT->tileView_UI.ptrOT,
+            gGT->pushBuffer_UI.ptrOT,
 
             1, 0x1000);
       }
@@ -220,7 +220,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
               &gGT->backBuffer->primMem,
 
               // pointer to OT mem
-              gGT->tileView_UI.ptrOT,
+              gGT->pushBuffer_UI.ptrOT,
 
               1, 0x1000);
           }
@@ -304,7 +304,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   {
     // get pointer to instance of Big Number in HUD
     bigNum = gGT->drivers[uVar13]->instBigNum;
-    view = &gGT->tileView[uVar13];
+    view = &gGT->pushBuffer[uVar13];
 
     // if the pointer is valid
     if (bigNum != NULL)
@@ -324,7 +324,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       if (uVar3 != uVar13)
         goto LAB_8009ff4c;
 	
-	  // === TileView is the winner ===
+	  // === PushBuffer is the winner ===
 	
       sStack104 = 1;
 
@@ -353,9 +353,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       }
 	  #endif
 	  
-      // first tileView buffer is at 0x168,
-      // so this is ~0x20 bytes into tileViews
-
       // fly-in interpolation
       UI_Lerp2D_Linear(&pos[0], view->rect.x, view->rect.y, 0x14, 0xc, sdata->framesSinceRaceEnded, FPS_DOUBLE(25));
 
@@ -364,10 +361,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       box.w = view->rect.w + 6;
       box.h = view->rect.h + 4;
 
-      MENUBOX_DrawOuterRect_HighLevel(&box, &sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
-
-      // first tileView buffer is at 0x168,
-      // so this is ~0x20 bytes into tileViews
+      RECTMENU_DrawOuterRect_HighLevel(&box, &sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
 
       view->rect.x = pos[0];
       view->rect.y = pos[1];
@@ -377,11 +371,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     else
     {
 		
-	// === TileView is not winner ===
+	// === PushBuffer is not winner ===
     LAB_8009ff4c:
-
-      // first tileView buffer is at 0x168,
-      // so this is ~0x20 bytes into tileViews
 
       if (view->rect.w > 0)
       {
@@ -407,18 +398,18 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   if (((sdata->menuReadyToPass & 1) == 0) && (FPS_DOUBLE(25) < sdata->framesSinceRaceEnded))
   {
     // if you're in battle mode.
-    endMenu = ((gGT->gameMode1 & 0x20) == 0) ? &menuBox225_versus : &menuBox225_battle;
+    endMenu = ((gGT->gameMode1 & 0x20) == 0) ? &menuVS : &menuBattle;
 
     // Make Menu Box appear based on the game mode
-    MENUBOX_Show(endMenu);
+    RECTMENU_Show(endMenu);
 
     sdata->menuReadyToPass |= 1;
   }
 }
 
-void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
+void UI_RaceEnd_MenuProc(struct RectMenu *);
 
-struct MenuRow menuRows225_versus[5] =
+struct MenuRow rowsVS[5] =
 {
     // Retry
     {
@@ -462,20 +453,20 @@ struct MenuRow menuRows225_versus[5] =
     }
 };
 
-struct MenuBox menuBox225_versus =
+struct RectMenu menuVS =
 {
     .stringIndexTitle = 0xFFFF,
     .posX_curr = 143,
     .posY_curr = 162,
     .unk1 = 0,
     .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
-    .rows = menuRows225_versus,
-    .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+    .rows = rowsVS,
+    .funcPtr = UI_RaceEnd_MenuProc,
     .drawStyle = 4,
     // rest of variables all default zero
 };
 
-struct MenuRow menuRows225_battle[6] =
+struct MenuRow rowsBattle[6] =
 {
     // Retry
     {
@@ -527,15 +518,15 @@ struct MenuRow menuRows225_battle[6] =
     }
 };
 
-struct MenuBox menuBox225_battle =
+struct RectMenu menuBattle =
 {
     .stringIndexTitle = 0xFFFF,
     .posX_curr = 143,
     .posY_curr = 166,
     .unk1 = 0,
     .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
-    .rows = menuRows225_battle,
-    .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+    .rows = rowsBattle,
+    .funcPtr = UI_RaceEnd_MenuProc,
     .drawStyle = 4,
     // rest of variables all default zero
 };

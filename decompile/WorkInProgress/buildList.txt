@@ -2,8 +2,8 @@ common, exe, rdata_free, 0x0, src/DecalGlobal_Find.c
 
 //common, exe, MainFreeze_MenuPtrOptions, 0x0, ../General/MAIN/MainFreeze_MenuPtrOptions.c
 
-// common, 230, MM_TrackSelect_MenuBox, 0x0, src/MM_TrackSelect_MenuBox_Hook.s
-// common, exe, rdata_free, 0x0, src/230/MM_TrackSelect_MenuBox.c
+// common, 230, MM_TrackSelect_MenuProc, 0x0, src/MM_TrackSelect_MenuProc_Hook.s
+// common, exe, rdata_free, 0x0, src/230/MM_TrackSelect_MenuProc.c
 // common, exe, GhostReplay_ThTick, 0x0, src/GhostReplayThTick.c
 
 //common, exe, TT_EndEvent_DisplayTime, 0x0, src/224/TT_EndEvent_DisplayTime.c

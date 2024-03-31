@@ -33,7 +33,7 @@ void ThreadFunc(struct Thread* t)
 void RunInitHook()
 {
 	// small stack pool, pause thread (those threads can't pause)
-	THREAD_BirthWithObject(0x310, ThreadFunc, 0, 0);
+	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
 }
 
 void RunUpdateHook(struct GameTracker* gGT, struct GamepadSystem* cs)

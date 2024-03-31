@@ -16,7 +16,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
   int p2hudData;
   int p3hudData;
   int p4hudData;
-  struct TileView* decalMP;
+  struct PushBuffer* decalMP;
 
   p1hudData = sdata->multiplayerWumpaHudData[0];
   p2hudData = sdata->multiplayerWumpaHudData[1];
@@ -28,13 +28,13 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
   if (2 < gGT->numPlyrCurrGame) {
     ptrHudData = p3hudData;
   }
-  // sdata->tileView_DecalMP
-  decalMP = (struct TileView*)0x8009ad18;
+  // sdata->pushBuffer_DecalMP
+  decalMP = (struct PushBuffer*)0x8009ad18;
   if (decalMP != 0)
   {
 	// called once to draw all wumpas
 
-    TileView_SetDrawEnv_DecalMP(
+    PushBuffer_SetDrawEnv_DecalMP(
 					(u_long *)((int)decalMP + 0xf8),
 
 					// gGT->backBuffer
@@ -58,7 +58,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
     if ((iVar6 != 0) && ((decalMP->ptrOT) != 0))
 	{
       CTR_CycleTex_2p3p4pWumpaHUD(
-        gGT->tileView[0].ptrOT[0x3ff],
+        gGT->pushBuffer[0].ptrOT[0x3ff],
         iVar6, 
         ((int)(decalMP->ptrOT) - iVar6 >> 2) + 1);
     }
@@ -87,7 +87,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 						// wumpaHudPosX
 						hudStructPtr[3].x +
 
-						// TileView rect.x
+						// PushBuffer rect.x
 						decalMP->rect.x
 				  ) - ((ptrHudData + 1) >> 1);
 
@@ -95,7 +95,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 						// wumpaHudPosY
 						hudStructPtr[3].y +
 
-						// TileView rect.y
+						// PushBuffer rect.y
 						decalMP->rect.y
 				  ) - ((ptrHudData + 6) >> 1);
 
@@ -151,7 +151,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 						 (void *)((int)(gGT->backBuffer->primMem).curr + 0x28);
 
 		  // pointer to OT memory, and pointer to primitive
-		  AddPrim(gGT->tileView_UI.ptrOT,p);
+		  AddPrim(gGT->pushBuffer_UI.ptrOT,p);
         }
         hudStructPtr += 0x14; // TO-DO, add enum so 0x14 is NUM_HUD
       }

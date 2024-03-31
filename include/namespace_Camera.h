@@ -89,7 +89,7 @@ struct CameraDC
 	struct Driver* driverToFollow;
 
 	// 0x48
-	struct TileView* tileView;
+	struct PushBuffer* pushBuffer;
 
 	// 0x4C
 	int unkTriplet1[3];

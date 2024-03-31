@@ -1,13 +1,13 @@
 #include <common.h>
 
-void UDCTRM_OM_FuncPtr(struct MenuBox* mb)
+void UDCTRM_OM_FuncPtr(struct RectMenu* menu)
 {
-	short row = mb->rowSelected;
+	short row = menu->rowSelected;
 
 	// if uninitialized
 	if (row == -1)
 	{
-		mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+		menu->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 		return;
 	}
 
@@ -15,11 +15,11 @@ void UDCTRM_OM_FuncPtr(struct MenuBox* mb)
 	if (row < 2)
 	{
 		if (row == 0)
-			D230.desiredMenu = 0x2a;
+			D230.desiredMenuIndex = 0x2a;
 		if (row == 1)
-			D230.desiredMenu = 0x45;
+			D230.desiredMenuIndex = 0x45;
 
 		D230.MM_State = EXITING_MENU;
-		mb->state |= ONLY_DRAW_TITLE;
+		menu->state |= ONLY_DRAW_TITLE;
 	}
 }

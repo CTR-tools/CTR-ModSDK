@@ -1,11 +1,11 @@
 #include <common.h>
 
-extern struct MenuBox End_AdvRaceDifficulty;
-extern struct MenuBox End_arcadeDifficulty;
+extern struct RectMenu End_AdvRaceDifficulty;
+extern struct RectMenu End_arcadeDifficulty;
 
-void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
+void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 {
-  struct MenuBox *nextMenu;
+  struct RectMenu *nextMenu;
   struct GameTracker *gGT;
   short option;
   u_int uVar3;
@@ -38,7 +38,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           return;
         nextMenu = (gGT->gameMode1 & ARCADE_MODE) ? &End_arcadeDifficulty : &End_AdvRaceDifficulty;
         nextMenu->posY_curr = (gGT->numPlyrCurrGame == 1)? 170 : 108;
-        MENUBOX_Show(nextMenu);
+        RECTMENU_Show(nextMenu);
         return;
       case 6:
         // Change level
@@ -52,10 +52,10 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         // Turn off HUD
         gGT->hudFlags &= 0xfe;
 
-        if (TitleFlag_IsFullyOffScreen())
+        if (RaceFlag_IsFullyOffScreen())
         {
           // checkered flag, begin transition on-screen
-          TitleFlag_BeginTransition(1);
+          RaceFlag_BeginTransition(1);
         }
 
         sdata->Loading.stage = -5;
@@ -112,9 +112,9 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         // Save Ghost
         sdata->framesSinceRaceEnded = 0x3f9;
         // Set Load/Save to Ghost mode
-        LoadSave_ToggleMode(0x31);
+        SelectProfile_ToggleMode(0x31);
         // Change active MenuBox to GhostSelection
-        sdata->ptrActiveMenuBox = &data.menuBox_GhostSelection;
+        sdata->ptrActiveMenu = &data.menuGhostSelection;
         return;
 
       case 13:

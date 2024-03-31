@@ -2,7 +2,7 @@
 
 #include "boss_battle.h"
 
-void MM_MenuBox_BossBattle(struct MenuBox* mb)
+void MM_MenuProc_BossBattle(struct RectMenu* menu)
 
 {
   
@@ -10,11 +10,11 @@ void MM_MenuBox_BossBattle(struct MenuBox* mb)
   struct GameTracker* gGT;
   
   gGT = sdata->gGT;
-  row = mb->rowSelected;
+  row = menu->rowSelected;
   
   if (row == -1) 
   {
-    mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+    menu->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 	return;
   }
   
@@ -25,20 +25,20 @@ void MM_MenuBox_BossBattle(struct MenuBox* mb)
     gGT->gameMode2 &= 0xffffffef;
     
     // if you choose cup mode
-    if (mb->rowSelected == 1) 
+    if (menu->rowSelected == 1) 
     {
   	  // enable cup mode
       gGT->gameMode2 &= 0xffffffef; 
 	  gGT->gameMode2 |= 0x10;
     }
     
-	mb->state |= 0x14;
+	menu->state |= 0x14;
     
     // if mode is Arcade
     if ((gGT->gameMode1 & ARCADE_MODE) != 0) 
     {
   	  // set next menuBox to 1P+2P select
-      mb->ptrNextBox_InHierarchy = &D230.menubox_players1P2P;  //menubox_players1P2P;
+      menu->ptrNextBox_InHierarchy = &D230.menuPlayers1P2P;  //menuPlayers1P2P;
       D230.characterSelect_transitionState = 1;
       return;
     }
@@ -47,7 +47,7 @@ void MM_MenuBox_BossBattle(struct MenuBox* mb)
     // if mode is VS
     
     // set next menuBox to 2P+3P+4P (vs or battle)
-    mb->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
+    menu->ptrNextBox_InHierarchy = &D230.menuPlayers2P3P4P;
     D230.characterSelect_transitionState = 2;
   }
 }

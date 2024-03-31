@@ -4,7 +4,7 @@
 
 // Hooks
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
-common, exe, TitleBeginTrack_Get_MenuBox, -0x8, src/hookInit.s
+common, exe, QueueLoadTrack_GetMenuPtr, -0x8, src/hookInit.s
 common, exe, MEMPACK_SwapPacks, -0x8, src/hookEntry.s
 
 // Remove some button maps

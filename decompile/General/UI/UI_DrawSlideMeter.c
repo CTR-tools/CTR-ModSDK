@@ -56,7 +56,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	box.w = WIDE_PICK(0x31, 0x25);
 	box.h = meterHeight;
 
-	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
 
 	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
@@ -101,7 +101,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		p->y3 = posY;
 		p->x2 = posX - meterLength;
 
-		primmemCurr = gGT->tileView_UI.ptrOT;
+		primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -128,7 +128,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 			p->x2 = posX - WIDE_PICK(0x31, 0x25);
 
 			// pointer to OT memory
-			primmemCurr = gGT->tileView_UI.ptrOT;
+			primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;

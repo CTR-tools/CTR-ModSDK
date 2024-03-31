@@ -5,8 +5,8 @@ void DECOMP_MM_Scrapbook_Init(void)
     D230.scrapbookState = 0;
 
     // change checkered flag
-    DECOMP_TitleFlag_SetDrawOrder(1);
+    DECOMP_RaceFlag_SetDrawOrder(1);
 
     // clear gamepad input (for menus)
-    DECOMP_MENUBOX_ClearInput();
+    DECOMP_RECTMENU_ClearInput();
 }

@@ -1,11 +1,11 @@
 #include <common.h>
 
 // This menubox and func only found in EurRetail
-void MM_MENUBOX_LanguageBoot(struct MenuBox *mb)
+void MM_MenuProc_LanguageBoot(struct RectMenu* menu)
 {
     struct GameTracker* gGT = sdata->gGT;
 
-    if (mb->unk1e == 1) // player input flag?
+    if (menu->unk1e == 1) // player input flag?
     {
         // if anyone move the menu cursor
         if (sdata->gGamepads->anyoneHeldCurr != 0)
@@ -28,13 +28,13 @@ void MM_MENUBOX_LanguageBoot(struct MenuBox *mb)
     gGT->gameMode2 |= 0x10000000;  
 
     //langIndex on PAL gGT
-    gGT[0x1D58] = D230.langIndex_Boot[mb->rowSelected]; // why need a separate index array???
+    gGT[0x1D58] = D230.fileIndexLngBoot[menu->rowSelected]; // why need a separate index array???
 
     // always goes to main menu after lang chosen
-    sdata->ptrDesiredMenuBox = &D230.menubox_mainMenu; 
+    sdata->ptrDesiredMenu = &D230.menuMainMenu; 
 
     // tell game not to call this menu again
     sdata->boolLangChosen = 1; 
 
-    mb->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
+    menu->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
 }

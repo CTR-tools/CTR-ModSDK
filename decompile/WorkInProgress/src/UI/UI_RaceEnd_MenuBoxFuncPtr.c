@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
+void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 
 {
   short option;
@@ -25,7 +25,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       {
 
         // make MenuBox invisible
-        MENUBOX_Hide(menu);
+        RECTMENU_Hide(mb);
       }
       sdata->framesSinceRaceEnded = 0;
       sdata->numIconsEOR = 1;
@@ -54,12 +54,12 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
             // Turn off HUD
             gGT->hudFlags &= 0xfe;
 
-            iVar4 = TitleFlag_IsFullyOffScreen();
+            iVar4 = RaceFlag_IsFullyOffScreen();
 
             if (iVar4 == 1)
             {
               // checkered flag, begin transition on-screen
-              TitleFlag_BeginTransition(1);
+              RaceFlag_BeginTransition(1);
             }
 
             sdata->Loading.stage = -5;
@@ -184,10 +184,10 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
               sdata->framesSinceRaceEnded = 0x3f9;
 
               // Set Load/Save to Ghost mode
-              LoadSave_ToggleMode(0x31);
+              SelectProfile_ToggleMode(0x31);
 
               // Change active MenuBox to GhostSelection
-              sdata->ptrActiveMenuBox = &data.menuBox_GhostSelection;
+              sdata->ptrActiveMenu = &data.menuGhostSelection;
               return;
             }
 

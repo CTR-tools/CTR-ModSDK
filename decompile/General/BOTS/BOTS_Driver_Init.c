@@ -37,7 +37,7 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	
 	// path data found
 	 
-	t = THREAD_BirthWithObject
+	t = PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

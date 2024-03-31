@@ -56,7 +56,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver *driver)
 
 	backDB = gGT->backBuffer;
 	// pointer to OT memory
-	ot = gGT->tileView_UI.ptrOT;
+	ot = gGT->pushBuffer_UI.ptrOT;
 
 	CTR_Box_DrawWireBox(&box, 0, ot, &backDB->primMem);
 

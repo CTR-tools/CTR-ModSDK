@@ -56,7 +56,7 @@ void CS_Podium_Prize_ThTick1(struct Thread *th)
         inst->matrix.t[1] = 0;
         inst->matrix.t[2] = prize[10];
 
-        ((struct InstDrawPerPlayer *)INST_GETIDPP(inst))->tileView = sdata->gGT->tileView_UI;
+        ((struct InstDrawPerPlayer *)INST_GETIDPP(inst))->pushBuffer = sdata->gGT->pushBuffer_UI;
 
 		// ngin sfx
         OtherFX_Stop2(175);

@@ -94,7 +94,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   p->x0 = posX + (sin[0] * 0x1e >> 0xb) + 0x41;
   p->y0 = posY + (ratio >> 9) + 0x29;
 
-  primmemCurr = gGT->tileView_UI.ptrOT;
+  primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
   *(int *)p = *primmemCurr | 0x6000000;
   *primmemCurr = (u_int) p & 0xffffff;
@@ -138,7 +138,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   p->y0 = posY + ((ratio >> 9) + 0x29);
 
   // pointer to OT memory
-  primmemCurr = gGT->tileView_UI.ptrOT;
+  primmemCurr = gGT->pushBuffer_UI.ptrOT;
 
   *(int *)p = *primmemCurr | 0x6000000;
   *primmemCurr = (u_int) p & 0xffffff;

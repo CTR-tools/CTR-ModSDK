@@ -1,14 +1,14 @@
 #include <common.h>
 #include "extradifficulty.h"
 
-void UDCTRM_ED_FuncPtr(struct MenuBox* mb)
+void UDCTRM_ED_FuncPtr(struct RectMenu* menu)
 {
-	short row = mb->rowSelected;
+	short row = menu->rowSelected;
 
 	// if uninitialized
 	if (row == -1)
 	{
-		mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+		menu->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 		return;
 	}
 
@@ -22,8 +22,8 @@ void UDCTRM_ED_FuncPtr(struct MenuBox* mb)
 		else
 			sdata->gGT->arcadeDifficulty = D230.cupDifficultySpeed[row];
 
-		D230.desiredMenu = 2;
+		D230.desiredMenuIndex = 2;
 		D230.MM_State = 2;
-		mb->state |= ONLY_DRAW_TITLE;
+		menu->state |= ONLY_DRAW_TITLE;
 	}
 }

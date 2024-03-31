@@ -125,7 +125,7 @@ void DECOMP_GhostReplay_Init1(void)
 		inst->unk51 = 0xc;
 		inst->flags = 7;
 
-		t = DECOMP_THREAD_BirthWithObject(
+		t = DECOMP_PROC_BirthWithObject(
 			
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET(

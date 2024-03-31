@@ -40,7 +40,7 @@ void DECOMP_UI_VsWaitForPressX(void)
       // flags, for which players have pressed X to continue
       pressedX = sdata->Battle_EndOfRace.Flags_PressX[i];
 
-      viewport = &gGT->tileView[i].rect;
+      viewport = &gGT->pushBuffer[i].rect;
 
       // Pointer to each player (9900C, 99010, etc)
       currDriver = gGT->drivers[i];
@@ -94,7 +94,7 @@ void DECOMP_UI_VsWaitForPressX(void)
           // ivar9 0x158: HIT YOU
           DecalFont_DrawLine(sdata->lngStrings[string],
 
-                             // Midpoint between tileView Start X and End X
+                             // Midpoint between pushBuffer Start X and End X
                              viewport->x + (viewport->w >> 1),
 
                              (viewport->y + 0x23),

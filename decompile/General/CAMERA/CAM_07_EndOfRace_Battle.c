@@ -7,7 +7,7 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
   int dx;
   int dz;
   int height;
-  struct TileView* tileView;
+  struct PushBuffer* pb;
 
   // transition to the radius of 
   // the camera that spins around player
@@ -25,9 +25,9 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
   cDC->frameCounterTransition = 60;
 
   // direction to face
-  tileView = cDC->tileView;
-  dx = tileView->pos[0] - (d->posCurr[0] >> 8);
-  dz = tileView->pos[2] - (d->posCurr[2] >> 8);
+  pb = cDC->pushBuffer;
+  dx = pb->pos[0] - (d->posCurr[0] >> 8);
+  dz = pb->pos[2] - (d->posCurr[2] >> 8);
   cDC->unk90 = ratan2(dx, dz);
   
   return;

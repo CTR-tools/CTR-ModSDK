@@ -57,11 +57,11 @@
 // [skipping COLL cause who cares]
 
 // order a bit different from retail
-80029f48 RCNT_GetTime_Total_Precise // cut in retail
-80029f98 RCNT_GetTime_Total
-8002a018 RCNT_GetTime_Elapsed
-8002a0bc RCNT_Init
-8002a164 RCNT_Destroy
+80029f48 Timer_GetTime_Total_Precise // cut in retail
+80029f98 Timer_GetTime_Total
+8002a018 Timer_GetTime_Elapsed
+8002a0bc Timer_Init
+8002a164 Timer_Destroy
 8002a1a4 EmptyFunc
 8002a304 Debug_PrimMem_ZoomOut
 

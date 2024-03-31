@@ -13,17 +13,17 @@
 void MM_CupSelect_Init();
 void MM_TrackSelect_Init();
 
-void MyMenuBoxFuncPtr(struct MenuBox* m);
+void MyMenuProc(struct RectMenu* m);
 
-struct MenuBox myBox =
+struct RectMenu myBox =
 {
 	.stringIndexTitle = -1,
 	.state = 0x28,
-	.funcPtr = (void*)MyMenuBoxFuncPtr,
+	.funcPtr = (void*)MyMenuProc,
 	.unk6 = 1,
 };
 
-void MyMenuBoxFuncPtr(struct MenuBox* m)
+void MyMenuProc(struct RectMenu* m)
 {
 	struct GamepadBuffer* gb;
 
@@ -37,7 +37,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 	if ((sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 	{
 		// change desiredMenuBox to Cup race selection
-		sdata->ptrDesiredMenuBox = (struct MenuBox*)0x800b472c;
+		sdata->ptrDesiredMenu = (struct RectMenu*)0x800b472c;
 
 		MM_CupSelect_Init();
 
@@ -47,7 +47,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 	// if going to track selection
 
 	// change desiredMenuBox to Single race selection
-	sdata->ptrDesiredMenuBox = (struct MenuBox*)0x800b46e0;
+	sdata->ptrDesiredMenu = (struct RectMenu*)0x800b46e0;
 
 	MM_TrackSelect_Init();
 
@@ -58,7 +58,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 void GoToNewState()
 {
 	// set our new main menu state
-	sdata->ptrDesiredMenuBox = &myBox;
+	sdata->ptrDesiredMenu = &myBox;
 
 	// quit the function
 	return;

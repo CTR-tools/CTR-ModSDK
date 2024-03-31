@@ -28,7 +28,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		upperHalf[0] + 0x1e0, upperHalf[1] + 0xbe,
 		upperHalf[2] + 0x1e0, upperHalf[3] + 0xbe,
 		0xff, 0xff, 0xff,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
     
 	// black
@@ -36,7 +36,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		upperHalf[0] + 0x1e1, upperHalf[1] + 0xbf,
 		upperHalf[2] + 0x1e1, upperHalf[3] + 0xbf,
 		0, 0, 0,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
       
 	upperHalf += 4;
@@ -49,7 +49,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		vertData[0] + 0x1e0, vertData[1] + 0xbe,
 		vertData[4] + 0x1e0, vertData[5] + 0xbe,
 		0xff, 0xff, 0xff,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
 
 	// white
@@ -57,7 +57,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		vertData[2] + 0x1e0, vertData[3] + 0xbe,
 		vertData[6] + 0x1e0, vertData[7] + 0xbe,
 		0xff, 0xff, 0xff,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
 
 	// black
@@ -65,7 +65,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		vertData[0] + 0x1e1, vertData[1] + 0xbf,
 		vertData[4] + 0x1e1, vertData[5] + 0xbf,
 		0, 0, 0,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
 
 	// black
@@ -73,7 +73,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		vertData[2] + 0x1e1, vertData[3] + 0xbf,
 		vertData[6] + 0x1e1, vertData[7] + 0xbf,
 		0, 0, 0,
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 		&backDB->primMem);
 
     // reset prim
@@ -98,7 +98,7 @@ void DECOMP_UI_DrawSpeedBG(void)
     vertData[6] + 0x1e0, vertData[7] + 0xbe);
 
 	// inline AddPrim
-    ot = gGT->tileView_UI.ptrOT;
+    ot = gGT->pushBuffer_UI.ptrOT;
     *(int*)p = *ot | 0x8000000;
     *ot = (u_int)p & 0xffffff;
     
@@ -130,7 +130,7 @@ void DECOMP_UI_DrawSpeedBG(void)
     vertData[6] + 0x1e0, vertData[7] + 0xbe,
     data.speedometerBG_vertData[0x1a] + 0x1e0, data.speedometerBG_vertData[3] + 0xbe);
 
-	ot = gGT->tileView_UI.ptrOT;
+	ot = gGT->pushBuffer_UI.ptrOT;
 
 	// inline AddPrim
     *(int*)p = *ot | 0x8000000;

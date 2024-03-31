@@ -77,13 +77,13 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 // draw menu
 force_inline void DisplayMenuBox(struct GameTracker* gGT)
 {
-	u_int firstRowY = ((UDCTRM_RO_MenuBoxBG_y + 4) + 26);
+	u_int firstRowY = ((UDCTRM_RO_MenuProcBG_y + 4) + 26);
 	u_int optionTextPosX = (UDCTRM_RO_glowingcursor.x + UDCTRM_RO_glowingcursor.w) - 2;
 
 	UDCTRM_RO_glowingcursor.y = firstRowY + (10 * UDCTRM_RO_rowSelected);
 
 	// "RACE OPTIONS"
-	DecalFont_DrawLine(sdata->lngStrings[593], SCREEN_WIDTH/2, UDCTRM_RO_MenuBoxBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[593], SCREEN_WIDTH/2, UDCTRM_RO_MenuProcBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	// "LAPS"
 	DecalFont_DrawLine(sdata->lngStrings[594], UDCTRM_RO_glowingcursor.x + 2, firstRowY + (10 * 0) + 1, FONT_SMALL, ORANGE);
@@ -112,9 +112,9 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT)
 	if (UDCTRM_MI_mirrorMode == 1) mirrorModeSettingColor = TINY_GREEN;
 	DecalFont_DrawLine(sdata->lngStrings[597 + UDCTRM_MI_mirrorMode], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, mirrorModeSettingColor | JUSTIFY_RIGHT);
 
-	MENUBOX_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
+	RECTMENU_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_RO_glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
-	MENUBOX_DrawInnerRect(&UDCTRM_RO_menuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&UDCTRM_RO_menuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
 
 // the MenuBox function

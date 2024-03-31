@@ -203,7 +203,7 @@ void DECOMP_RB_Minecart_LInB(struct Instance* inst)
 	int startIndex;
 	
 	struct Thread* t = 
-		DECOMP_THREAD_BirthWithObject
+		DECOMP_PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

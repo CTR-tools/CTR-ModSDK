@@ -24,7 +24,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	short *psVar21;
 	u_int uVar22;
 	struct CameraDC *cDC;
-	struct TileView *tv;
+	struct PushBuffer* pb;
 	struct ZoomData *ptrZoomData;
 	struct Driver *d;
 	short *scratchpad;
@@ -38,7 +38,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	scratchpad = (short *)0x1f800108;
 	cDC = (struct CameraDC *)t->inst;
 	d = cDC->driverToFollow;
-	tv = cDC->tileView;
+	pb = cDC->pushBuffer;
 
 	if ((cDC->flags & 0x8000) != 0)
 	{
@@ -178,21 +178,21 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	switch(cDC->cameraMode)
 	{
 		case 0:
-			tv->pos[0] = *(short *)(&d->instSelf->matrix.t[0]);
-			tv->pos[1] = *(short *)(&d->instSelf->matrix.t[1]);
-			tv->pos[2] = *(short *)(&d->instSelf->matrix.t[2]);
-			tv->rot[0] = d->rotCurr.x;
-			tv->rot[1] = d->rotCurr.y;
-			tv->rot[2] = d->rotCurr.z;
+			pb->pos[0] = *(short *)(&d->instSelf->matrix.t[0]);
+			pb->pos[1] = *(short *)(&d->instSelf->matrix.t[1]);
+			pb->pos[2] = *(short *)(&d->instSelf->matrix.t[2]);
+			pb->rot[0] = d->rotCurr.x;
+			pb->rot[1] = d->rotCurr.y;
+			pb->rot[2] = d->rotCurr.z;
 			*(u_short *)&cDC->unk_c0 = 0;
 			break;
 		case 3:
-			tv->pos[0] = *psVar19;
-			tv->pos[1] = psVar21[2];
-			tv->pos[2] = psVar21[3];
-			tv->rot[0] = psVar21[4];
-			tv->rot[1] = psVar21[5];
-			tv->rot[2] = psVar21[6];
+			pb->pos[0] = *psVar19;
+			pb->pos[1] = psVar21[2];
+			pb->pos[2] = psVar21[3];
+			pb->rot[0] = psVar21[4];
+			pb->rot[1] = psVar21[5];
+			pb->rot[2] = psVar21[6];
 			*(short *)&cDC->action = *psVar19;
 			*(short *)((int)&cDC->action + 2) = psVar21[2];
 			*(short *)&cDC->mode = psVar21[3];
@@ -201,9 +201,9 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			cDC->desiredRot[0] = psVar21[6];
 			break;
 		case 4:
-			tv->pos[0] = *psVar19;
-			tv->pos[1] = psVar21[2];
-			tv->pos[2] = psVar21[3];
+			pb->pos[0] = *psVar19;
+			pb->pos[1] = psVar21[2];
+			pb->pos[2] = psVar21[3];
 			break;
 		case 7:
 			(cDC->transitionTo).pos[0] = *psVar19;
@@ -258,10 +258,10 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			psVar19 = psVar21 + 2;
 			goto LAB_8001b928;
 		case 11:
-			sVar6 = *(short *)&tv->distanceToScreen_CURR;
-			tv->pos[0] = *psVar19;
-			tv->pos[1] = psVar21[2];
-			tv->pos[2] = psVar21[3];
+			sVar6 = *(short *)&pb->distanceToScreen_CURR;
+			pb->pos[0] = *psVar19;
+			pb->pos[1] = psVar21[2];
+			pb->pos[2] = psVar21[3];
 			psVar19 = psVar21 + 5;
 			sVar6 = psVar21[4] - sVar6;
 LAB_8001b928:
@@ -284,7 +284,7 @@ LAB_8001b928:
 
 SkipNewCameraEOR:
 
-	tv->distanceToScreen_PREV = tv->distanceToScreen_CURR;
+	pb->distanceToScreen_PREV = pb->distanceToScreen_CURR;
 	sVar6 = cDC->cameraMode;
 
 	if (sVar6 != 0)
@@ -297,7 +297,7 @@ SkipNewCameraEOR:
 			if (sVar6 == 4)
 			{
 LAB_8001c11c:
-				DECOMP_CAM_LookAtPosition((int)scratchpad, d->posCurr, tv->pos, tv->rot);
+				DECOMP_CAM_LookAtPosition((int)scratchpad, d->posCurr, pb->pos, pb->rot);
 				psVar21 = scratchpad;
 LAB_8001c128:
 				scratchpad = psVar21;
@@ -307,7 +307,7 @@ LAB_8001c128:
 				psVar21 = scratchpad;
 				if (sVar6 == 10)
 				{
-					DECOMP_CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, tv->pos, (u_int)tv->rot);
+					DECOMP_CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, pb->pos, (u_int)pb->rot);
 					goto LAB_8001c128;
 				}
 				if (sVar6 != 0xb)
@@ -375,35 +375,35 @@ LAB_8001c128:
 						{
 							psVar21 = (short *)&cDC->unk_b0[0];
 						}
-						tv->pos[0] = *psVar21 + (short)(local_28 * iVar25 >> 0xc);
-						tv->pos[1] = psVar21[1] + (short)(local_26 * iVar25 >> 0xc);
-						tv->pos[2] = psVar21[2] + (short)(local_24 * iVar25 >> 0xc);
+						pb->pos[0] = *psVar21 + (short)(local_28 * iVar25 >> 0xc);
+						pb->pos[1] = psVar21[1] + (short)(local_26 * iVar25 >> 0xc);
+						pb->pos[2] = psVar21[2] + (short)(local_24 * iVar25 >> 0xc);
 						goto LAB_8001c11c;
 					}
 					if (sVar6 == 7)
 					{
-						tv->pos[0] = (short)((u_int)d->posCurr[0] >> 8);
-						tv->pos[1] = (cDC->transitionTo).pos[0] + (short)((u_int)d->posCurr[1] >> 8);
-						tv->pos[2] = (short)((u_int)d->posCurr[2] >> 8);
+						pb->pos[0] = (short)((u_int)d->posCurr[0] >> 8);
+						pb->pos[1] = (cDC->transitionTo).pos[0] + (short)((u_int)d->posCurr[1] >> 8);
+						pb->pos[2] = (short)((u_int)d->posCurr[2] >> 8);
 						sVar6 = (cDC->transitionTo).pos[1];
-						tv->rot[1] = 0;
-						tv->rot[2] = 0;
-						tv->rot[0] = sVar6 + 0x400;
+						pb->rot[1] = 0;
+						pb->rot[2] = 0;
+						pb->rot[0] = sVar6 + 0x400;
 						psVar21 = (short *)0x1f800108;
 						if ((cDC->flags & 0x40) != 0)
 						{
-							tv->rot[1] = d->angle + 0x800;
+							pb->rot[1] = d->angle + 0x800;
 						}
 					}
 					else if ((u_short)(sVar5 - 0xfU) < 2)
 					{
-						tv->pos[0] = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
-						tv->pos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
-						tv->pos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
+						pb->pos[0] = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
+						pb->pos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
+						pb->pos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
 						
-						tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
-						tv->rot[1] = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
-						tv->rot[2] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
+						pb->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+						pb->rot[1] = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
+						pb->rot[2] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
 					}
 					else
 					{
@@ -415,7 +415,7 @@ LAB_8001c128:
 								{
 									cDC->flags = cDC->flags | 9;
 								}
-								CAM_FollowDriver_AngleAxis(cDC, d, (int)0x1f800108, tv->pos, tv->rot);
+								CAM_FollowDriver_AngleAxis(cDC, d, (int)0x1f800108, pb->pos, pb->rot);
 							}
 							else
 							{
@@ -423,7 +423,7 @@ LAB_8001c128:
 								{
 									cDC->flags = cDC->flags | 9;
 								}
-								CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x1f800108, ptrZoomData);
+								CAM_FollowDriver_Normal(cDC, d, pb->pos, 0x1f800108, ptrZoomData);
 							}
 							cDC->driver5B0_prevFrame = d->botFlags;
 							goto LAB_8001c150;
@@ -469,12 +469,12 @@ LAB_8001c128:
 
 								read_mt(uVar9, iVar7, iVar8);
 
-								tv->pos[0] = scratchpad[0x144] + (short)uVar9;
-								tv->pos[1] = scratchpad[0x145] + (short)iVar7;
-								tv->pos[2] = scratchpad[0x146] + (short)iVar8;
-								tv->rot[0] = scratchpad[0x106] + cDC->transitionTo.rot[0];
-								tv->rot[1] = scratchpad[0x107] + cDC->transitionTo.rot[1];
-								tv->rot[2] = scratchpad[0x108] + cDC->transitionTo.rot[2];
+								pb->pos[0] = scratchpad[0x144] + (short)uVar9;
+								pb->pos[1] = scratchpad[0x145] + (short)iVar7;
+								pb->pos[2] = scratchpad[0x146] + (short)iVar8;
+								pb->rot[0] = scratchpad[0x106] + cDC->transitionTo.rot[0];
+								pb->rot[1] = scratchpad[0x107] + cDC->transitionTo.rot[1];
+								pb->rot[2] = scratchpad[0x108] + cDC->transitionTo.rot[2];
 							}
 							psVar21 = scratchpad;
 							if (cDC->cameraMode == 0xd) goto LAB_8001c11c;
@@ -483,7 +483,7 @@ LAB_8001c128:
 					goto LAB_8001c128;
 				}
 				
-				DECOMP_CAM_LookAtPosition((int)0x1f800108, d->posCurr, tv->pos, tv->rot);
+				DECOMP_CAM_LookAtPosition((int)0x1f800108, d->posCurr, pb->pos, pb->rot);
 				
 				iVar7 = SquareRoot0_stub((*(int *)0x1f800354) * (*(int *)0x1f800354) + (*(int *)0x1f80035c) * (*(int *)0x1f80035c));
 				iVar17 = (int)(cDC->transitionTo).pos[0];
@@ -510,19 +510,19 @@ LAB_8001c128:
 				{
 					iVar7 = iVar17;
 				}
-				tv->distanceToScreen_PREV = tv->distanceToScreen_CURR + iVar7;
+				pb->distanceToScreen_PREV = pb->distanceToScreen_CURR + iVar7;
 			}
 			
-			*(int *)0x1f800348 = (int)tv->pos[0];
-			*(int *)0x1f80034c = (int)tv->pos[1];
-			*(int *)0x1f800350 = (int)tv->pos[2];
+			*(int *)0x1f800348 = (int)pb->pos[0];
+			*(int *)0x1f80034c = (int)pb->pos[1];
+			*(int *)0x1f800350 = (int)pb->pos[2];
 			
 			CAM_FindClosestQuadblock(scratchpad, cDC, d, (short *)((u_int)scratchpad | 0x240));
 			goto LAB_8001c150;
 		}
 	}
 
-	CAM_FollowDriver_Normal(cDC, d, &tv->pos[0], 0x1f800108, ptrZoomData);
+	CAM_FollowDriver_Normal(cDC, d, &pb->pos[0], 0x1f800108, ptrZoomData);
 	
 LAB_8001c150:
 	cDC->cameraModePrev = cDC->cameraMode;
@@ -572,9 +572,9 @@ LAB_8001c150:
 
 	if ((cDC->flags & 1) != 0)
 	{
-		gGT->rainBuffer[cDC->cameraID].cameraPos[0] = tv->pos[0];
-		gGT->rainBuffer[cDC->cameraID].cameraPos[1] = tv->pos[1];
-		gGT->rainBuffer[cDC->cameraID].cameraPos[2] = tv->pos[2];
+		gGT->rainBuffer[cDC->cameraID].cameraPos[0] = pb->pos[0];
+		gGT->rainBuffer[cDC->cameraID].cameraPos[1] = pb->pos[1];
+		gGT->rainBuffer[cDC->cameraID].cameraPos[2] = pb->pos[2];
 		cDC->flags &= ~1;
 	}
 	cDC->flags &= ~0x88;

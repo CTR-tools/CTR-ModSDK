@@ -95,10 +95,10 @@ LAB_8005ec70:
 		posZ = (u_short)((u_int)driver->posCurr[2] >> 8);
 
 		// check for collision with all sibling threads
-		THREAD_CollidePointWithBucket(bread->siblingThread, &posX);
+		PROC_CollidePointWithBucket(bread->siblingThread, &posX);
 
 		// pointer to first robotcar thread
-		THREAD_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &posX);
+		PROC_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &posX);
 
 		if
 		(

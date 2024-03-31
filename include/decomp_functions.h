@@ -1,7 +1,7 @@
 #include <common.h>
 
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT);
-void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView);
+void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct PushBuffer* pb);
 int DECOMP_CAM_Path_GetNumPoints(void);
 u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *getPath);
 void DECOMP_CAM_SetDesiredPosRot(struct CameraDC* cDC, short* pos, short* rot);
@@ -293,8 +293,8 @@ void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad);
 void DECOMP_MainFrame_TogglePauseAudio(int bool_pause);
 
 void DECOMP_MainFreeze_SafeAdvDestroy();
-void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu);
-void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *menu);
+void DECOMP_MainFreeze_MenuPtrQuit(struct RectMenu* menu);
+void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu);
 void DECOMP_MainFreeze_IfPressStart(void);
 
 void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio);
@@ -329,66 +329,66 @@ void DECOMP_MEMPACK_ClearLowMem();
 void DECOMP_MEMPACK_PopState();
 void DECOMP_MEMPACK_PopToState(int id);
 
-void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int sizeX, short fontType,
+void DECOMP_RECTMENU_DrawQuip(char *comment, short startX, int startY, u_int sizeX, short fontType,
                              int textFlag, short boxFlag);
-void DECOMP_MENUBOX_DrawInnerRect(RECT* r, int x, void* ot);
-void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, short width);
-void DECOMP_MENUBOX_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-int DECOMP_MENUBOX_BoolHidden(struct MenuBox* m);
-void DECOMP_MENUBOX_ClearInput();
-void DECOMP_MENUBOX_CollectInput();
-void DECOMP_MENUBOX_ProcessState();
-int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m);
-void DECOMP_MENUBOX_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
-void DECOMP_MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, short param_3, u_long* otMem);
-void DECOMP_MENUBOX_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int* rgb, short param_5, u_long* otMem);
-u_char* DECOMP_MENUBOX_DrawTime(int milliseconds);
-void DECOMP_MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
-void DECOMP_MENUBOX_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);
-void DECOMP_MENUBOX_DrawRwdTriangle(short* position,char* color,u_long* otMem,struct PrimMem* primMem);
-void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSubmenu);
-void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubmenu);
-void DECOMP_MENUBOX_Hide(struct MenuBox* m);
-void DECOMP_MENUBOX_Show(struct MenuBox* m);
+void DECOMP_RECTMENU_DrawInnerRect(RECT* r, int x, void* ot);
+void DECOMP_RECTMENU_DrawSelf(struct RectMenu* menu, int param_2, short param_3, short width);
+void DECOMP_RECTMENU_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+int DECOMP_RECTMENU_BoolHidden(struct RectMenu* m);
+void DECOMP_RECTMENU_ClearInput();
+void DECOMP_RECTMENU_CollectInput();
+void DECOMP_RECTMENU_ProcessState();
+int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m);
+void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
+void DECOMP_RECTMENU_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, short param_3, u_long* otMem);
+void DECOMP_RECTMENU_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int* rgb, short param_5, u_long* otMem);
+u_char* DECOMP_RECTMENU_DrawTime(int milliseconds);
+void DECOMP_RECTMENU_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
+void DECOMP_RECTMENU_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);
+void DECOMP_RECTMENU_DrawRwdTriangle(short* position,char* color,u_long* otMem,struct PrimMem* primMem);
+void DECOMP_RECTMENU_GetHeight(struct RectMenu* m, short* height, int boolCheckSubmenu);
+void DECOMP_RECTMENU_GetWidth(struct RectMenu* m, short* width, int boolCheckSubmenu);
+void DECOMP_RECTMENU_Hide(struct RectMenu* m);
+void DECOMP_RECTMENU_Show(struct RectMenu* m);
 
 int DECOMP_MixRNG_Scramble();
 
-struct Thread* DECOMP_THREAD_BirthWithObject(
+struct Thread* DECOMP_PROC_BirthWithObject(
 	int flags, void* funcThTick, 
 	char* name, struct Thread* relativeTh);
-void DECOMP_THREAD_CheckAllForDead();
-void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
-void DECOMP_THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
-void DECOMP_THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
-void DECOMP_THREAD_DestroyInstance(struct Thread* t);
-void DECOMP_THREAD_DestroyObject(void* object, int threadFlags);
-void DECOMP_THREAD_DestroySelf(struct Thread* t);
-void DECOMP_THREAD_DestroyTracker(struct Thread* t);
-struct Thread* DECOMP_THREAD_SearchForModel(struct Thread* th, int modelID);
+void DECOMP_PROC_CheckAllForDead();
+void DECOMP_PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
+void DECOMP_PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
+void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
+void DECOMP_PROC_DestroyInstance(struct Thread* t);
+void DECOMP_PROC_DestroyObject(void* object, int threadFlags);
+void DECOMP_PROC_DestroySelf(struct Thread* t);
+void DECOMP_PROC_DestroyTracker(struct Thread* t);
+struct Thread* DECOMP_PROC_SearchForModel(struct Thread* th, int modelID);
 
-void DECOMP_TileView_Init(struct TileView* tileView, int id, int total);
-void DECOMP_TileView_SetPsyqGeom(struct TileView* tileView);
-void DECOMP_TileView_SetMatrixVP(struct TileView* tileView);
+void DECOMP_PushBuffer_Init(struct PushBuffer* pb, int id, int total);
+void DECOMP_PushBuffer_SetPsyqGeom(struct PushBuffer* pb);
+void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb);
 
-void DECOMP_TileView_SetDrawEnv_Normal(
-		void* ot, struct TileView* tileView, struct DB* backBuffer,
+void DECOMP_PushBuffer_SetDrawEnv_Normal(
+		void* ot, struct PushBuffer* pb, struct DB* backBuffer,
 		DRAWENV* copyDrawEnvNULL, int isbg);
 
-void DECOMP_TileView_FadeOneWindow(struct TileView *view);
-void DECOMP_TileView_FadeAllWindows();
+void DECOMP_PushBuffer_FadeOneWindow(struct PushBuffer* pb);
+void DECOMP_PushBuffer_FadeAllWindows();
 
-void DECOMP_TitleBeginTrack_MenuBoxFuncPtr(struct MenuBox* mb);
-struct MenuBox* DECOMP_TitleBeginTrack_Get_MenuBox();
+void DECOMP_QueueLoadTrack_MenuProc(struct RectMenu* menu);
+struct RectMenu* DECOMP_QueueLoadTrack_GetMenuPtr();
 
-void DECOMP_TitleFlag_SetCanDraw(short param_1);
-void DECOMP_TitleFlag_BeginTransition(int direction);
-void DECOMP_TitleFlag_SetFullyOnScreen();
-void DECOMP_TitleFlag_SetFullyOffScreen();
-void DECOMP_TitleFlag_ResetTextAnim();
-void DECOMP_TitleFlag_DrawSelf();
+void DECOMP_RaceFlag_SetCanDraw(short param_1);
+void DECOMP_RaceFlag_BeginTransition(int direction);
+void DECOMP_RaceFlag_SetFullyOnScreen();
+void DECOMP_RaceFlag_SetFullyOffScreen();
+void DECOMP_RaceFlag_ResetTextAnim();
+void DECOMP_RaceFlag_DrawSelf();
 
-void DECOMP_RCNT_Init();
-void DECOMP_RCNT_Destroy();
+void DECOMP_Timer_Init();
+void DECOMP_Timer_Destroy();
 
 // UI
 void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket);
@@ -510,15 +510,15 @@ void DECOMP_MM_Title_Init(void);
 void DECOMP_MM_Title_CameraReset(void);
 void DECOMP_MM_Title_KillThread(void);
 void DECOMP_MM_ParseCheatCodes();
-void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu);
+void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu);
 void DECOMP_MM_ToggleRows_PlayerCount();
-void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb);
-void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb);
-void DECOMP_MM_ToggleRows_Difficulty(void);
-void DECOMP_MM_MENUBOX_Difficulty(struct MenuBox* mb);
-void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb);
-void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb);
-struct MenuBox* DECOMP_MM_AdvNewLoad_GetMenuBox(void);
+void DECOMP_MM_MenuProc_1p2p(struct RectMenu* menu);
+void DECOMP_MM_MenuProc_2p3p4p(struct RectMenu * menu);
+void DECOMP_MM_TogglerowsDifficulty(void);
+void DECOMP_MM_MenuProc_Difficulty(struct RectMenu* menu);
+void DECOMP_MM_MenuProc_SingleCup(struct RectMenu* menu);
+void DECOMP_MM_MenuProc_NewLoad(struct RectMenu* menu);
+struct RectMenu* DECOMP_MM_AdvNewLoad_GetMenuPtr(void);
 void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID, short flag);
 int DECOMP_MM_Characters_GetNextDriver(short dpad, char characterID);
 u_int DECOMP_MM_Characters_boolIsInvalid(short* globalIconPerPlayer, short characterID, short player);
@@ -529,28 +529,28 @@ void DECOMP_MM_Characters_BackupIDs(void);
 void DECOMP_MM_Characters_PreventOverlap(void);
 void DECOMP_MM_Characters_RestoreIDs(void);
 void DECOMP_MM_Characters_HideDrivers(void);
-void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused);
 void DECOMP_MM_TrackSelect_Video_SetDefaults(void);
 void DECOMP_MM_TrackSelect_Video_State(int state);
 void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectMenu, int trackIndex, int param_4, u_short param_5);
 char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect);
 void DECOMP_MM_TrackSelect_Init();
-void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb);
-void* DECOMP_MM_TrackSelect_GetMenuBox();
+void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu);
+void* DECOMP_MM_TrackSelect_GetMenuPtr();
 void DECOMP_MM_CupSelect_Init(void);
-void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb);
-void DECOMP_MM_Battle_CloseSubMenu(struct MenuBox *mb);
+void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu);
+void DECOMP_MM_Battle_CloseSubMenu(struct RectMenu* menu);
 void DECOMP_MM_Battle_DrawIcon_Weapon(struct Icon *icon, 
 		u_int posX, int posY, struct PrimMem *primMem, u_int *ot,
         char transparency, short param_7, u_short param_8, u_int *color);
 void DECOMP_MM_Battle_Init(void);
-void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused);
 void DECOMP_MM_HighScore_Text3D(char *string, int posX, int posY, short font, u_int flags);
 void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int posY);
 void DECOMP_MM_HighScore_Init(void);
-void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_HighScore_MenuProc(struct RectMenu* unused);
 void DECOMP_MM_Scrapbook_Init(void);
-void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb);
+void DECOMP_MM_Scrapbook_PlayMovie(struct RectMenu* menu);
 void DECOMP_MM_ResetAllMenus(void);
 void DECOMP_MM_JumpTo_Title_Returning(void);
 void DECOMP_MM_JumpTo_Title_FirstTime(void);
@@ -607,7 +607,7 @@ void DECOMP_RB_Turtle_LInB(struct Instance* inst);
 // 232
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData);
 void DECOMP_AH_WarpPad_AllWarppadNum();
-void DECOMP_AH_WarpPad_MenuBoxFuncPtr(struct MenuBox* mb);
+void DECOMP_AH_WarpPad_MenuProc(struct RectMenu* menu);
 
 void DECOMP_AH_WarpPad_SpinRewards(
 	struct Instance* prizeInst,
@@ -656,7 +656,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX);
 void DECOMP_AH_Pause_Update();
 void DECOMP_AH_HintMenu_FiveArrows(int param_1,short rotation);
 void DECOMP_AH_HintMenu_MaskPosRot(void);
-void DECOMP_AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb);
+void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu);
 void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad);
 int DECOMP_AH_MaskHint_boolCanSpawn();
 void DECOMP_AH_MaskHint_SetAnim(int scale);
@@ -669,6 +669,6 @@ void DECOMP_AH_MaskHint_Update();
 
 // 233
 void DECOMP_CS_Garage_ZoomOut(char zoomState);
-void DECOMP_CS_Garage_MenuBoxFuncPtr(void);
+void DECOMP_CS_Garage_MenuProc(void);
 void DECOMP_CS_Garage_Init(void);
-struct MenuBox* DECOMP_CS_Garage_GetMenuBox(void);
+struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void);

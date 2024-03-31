@@ -395,7 +395,7 @@ void DECOMP_RB_FlameJet_LInB(struct Instance* inst)
 	// yellow
 	inst->flags |= 0x30000;
 	
-	t = THREAD_BirthWithObject
+	t = PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

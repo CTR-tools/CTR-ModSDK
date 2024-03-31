@@ -16,7 +16,7 @@ void CS_LevThread_LInB(struct Instance* inst)
   if (inst->thread == NULL)
   {
     // thread for CS_Thread_ThTick
-    t = THREAD_BirthWithObject(
+    t = PROC_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET
         (
           0x60, 

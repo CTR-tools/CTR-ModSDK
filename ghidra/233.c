@@ -860,7 +860,7 @@ LAB_800ac9c8:
         
 		if ((*(ushort *)(param_2 + 0x16) & 0x100) == 0) 
 		{
-		  // tileView fade,
+		  // pushBuffer fade,
 		  // flash white after selecting Adv Character
           *(undefined2 *)(puVar3 + 0x17a) = 0x1fff;
           *(undefined2 *)(puVar3 + 0x17c) = 0x1000;
@@ -929,7 +929,7 @@ LAB_800acb0c:
 		// CAM_Path_Move
 		FUN_80018ba0(iVar10,&local_48,&local_50,local_40);
         
-		// store result in tileView pos and rot
+		// store result in pushBuffer pos and rot
 		*(undefined2 *)(puVar3 + 0x168) = local_48;
         *(undefined2 *)(puVar3 + 0x16a) = local_46;
         *(undefined2 *)(puVar3 + 0x16c) = local_44;
@@ -1007,21 +1007,21 @@ LAB_800acb0c:
 		  // enable checkered flag
 		  FUN_80044088(1);
           
-		  // TitleFlag_IsTransitioning
+		  // RaceFlag_IsTransitioning
 		  iVar8 = FUN_80043f44();
           if (
 				// if not
 				(iVar8 == 0) && 
 				
 				(
-					// TitleFlag_IsFullyOnScreen
+					// RaceFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(), 
 					iVar8 == 0
 				)
 			 ) 
 		  {
             
-			// TitleFlag_SetFullyOffScreen
+			// RaceFlag_SetFullyOffScreen
 			FUN_80044058();
           }
         }
@@ -1032,7 +1032,7 @@ LAB_800acb0c:
 		  // enable checkered flag
           FUN_80044088(1);
 		  
-		  // TitleFlag_IsTransitioning
+		  // RaceFlag_IsTransitioning
           iVar8 = FUN_80043f44();
 		  
           if (
@@ -1040,13 +1040,13 @@ LAB_800acb0c:
 				(iVar8 == 0) && 
 				
 				(
-					// TitleFlag_IsFullyOnScreen
+					// RaceFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(), 
 					iVar8 == 0
 				)
 			 ) 
 		  {
-			// TitleFlag_SetFullyOffScreen
+			// RaceFlag_SetFullyOffScreen
             FUN_80044058();
           }
 		  
@@ -1397,7 +1397,7 @@ LAB_800ad8ec:
 	
   case 0xc:
   
-	// tileView fade values
+	// pushBuffer fade values
     *(undefined2 *)(puVar3 + 0x17a) = 0x1fff;
     *(undefined2 *)(puVar3 + 0x17c) = 0x1000;
     *(undefined2 *)(puVar3 + 0x17e) = 0xfd56;
@@ -1553,7 +1553,7 @@ LAB_800ad334:
 	
   case 0x16:
   
-	// TitleFlag_IsFullyOffScreen
+	// RaceFlag_IsFullyOffScreen
     iVar10 = FUN_80043f28();
     if (iVar10 == 1) 
 	{
@@ -1567,13 +1567,13 @@ LAB_800ad334:
 	
   case 0x17:
   
-	// TitleFlag_IsFullyOnScreen
+	// RaceFlag_IsFullyOnScreen
     uVar7 = FUN_80043f1c();
     goto joined_r0x800ad160;
 	
   case 0x18:
   
-    // TitleFlag_IsFullyOnScreen
+    // RaceFlag_IsFullyOnScreen
     iVar10 = FUN_80043f1c();
     if (iVar10 == 1) 
 	{
@@ -2162,7 +2162,7 @@ void FUN_800ae318(int param_1)
   // if there is room in primMem
   if (puVar4 + 6 < puVar2) 
   {
-	// tileView offset 0x28 (400 = 0x190 = 0x168+0x28)
+	// pushBuffer offset 0x28 (400 = 0x190 = 0x168+0x28)
     setCopControlWord(2,0,*(undefined4 *)(PTR_DAT_8008d2ac + 400));
     setCopControlWord(2,0x800,*(undefined4 *)(PTR_DAT_8008d2ac + 0x194));
     setCopControlWord(2,0x1000,*(undefined4 *)(PTR_DAT_8008d2ac + 0x198));
@@ -2493,7 +2493,7 @@ void FUN_800ae9a8(int param_1)
     break;
   case 2:
   
-	// if tileView_UI is fully faded to black
+	// if pushBuffer_UI is fully faded to black
     if (*(short *)(PTR_DAT_8008d2ac + 0x139a) == 0) 
 	{
 	  // podium "other" threads
@@ -2753,7 +2753,7 @@ void FUN_800aedf8(int param_1)
       uVar7 = 0x237;
     }
 	
-	// PrixSaveBox_Activate
+	// TakeCupProgress_Activate
     FUN_8004b230(uVar7);
 	
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xffffcfff;
@@ -2784,7 +2784,7 @@ void FUN_800aedf8(int param_1)
       
 	  puVar3 = PTR_DAT_8008d2ac;
 	  
-	  // store result in tileView pos and rot
+	  // store result in pushBuffer pos and rot
       *(undefined2 *)(PTR_DAT_8008d2ac + 0x168) = local_28;
       *(undefined2 *)(puVar3 + 0x16a) = local_26;
       *(undefined2 *)(puVar3 + 0x16c) = local_24;
@@ -3017,7 +3017,7 @@ int FUN_800af328
   {
     iVar9 = 0;
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x60 = size
 	// 0 = no relation to param4
 	// 0x200 = MediumStackPool
@@ -3708,7 +3708,7 @@ void FUN_800afe58(struct Thread* t)
   // remove bit flag
   *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xf8ffffff;
   
-  // THREAD_DestroyInstance
+  // PROC_DestroyInstance
   FUN_80041dfc(t);
   
   return;
@@ -4020,7 +4020,7 @@ void FUN_800b0300(void)
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x2568) = 1;
   
   // Set winnerIndex[0] to 0, to draw 
-  // confetti on the first tileView
+  // confetti on the first pushBuffer
   *(undefined4 *)(puVar2 + 0x2558) = 0;
   
   *(undefined2 *)(puVar2 + 0x1b04) = 200;
@@ -4101,7 +4101,7 @@ void FUN_800b0300(void)
   // CS_Podium_Stand_Init
   FUN_800b0248(&local_50);
   
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0x4 = size
   // 0 = no relation to param4
   // 0x300 flag = SmallStackPool
@@ -4170,7 +4170,7 @@ void FUN_800b06ac(int param_1)
   // If this Instance's thread does not exist
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x60 = size
 	// 0 = no relation to param4
 	// 0x200 = MediumStackPool
@@ -4428,7 +4428,7 @@ void FUN_800b7784(short param_1)
 }
 
 
-// CS_Garage_MenuBoxFuncPtr
+// CS_Garage_MenuProc
 void FUN_800b7834(void)
 
 {
@@ -5019,7 +5019,7 @@ LAB_800b821c:
   // CAM_Path_Move
   FUN_80018ba0((int)sVar4,&local_58,&local_50,auStack72);
   
-  // set position and rotation to tileView
+  // set position and rotation to pushBuffer
   *puVar6 = local_58;
   *(undefined2 *)(puVar2 + 0x16a) = local_56;
   *(undefined2 *)(puVar2 + 0x16c) = local_54;
@@ -5049,13 +5049,13 @@ LAB_800b821c:
   }
   iVar7 = DAT_800b85d0 + iVar7 / DAT_800b85cc;
   
-  // what? Why is this tileView[1]
+  // what? Why is this pushBuffer[1]
   *(int *)(puVar2 + 0x274) = iVar7;
   *(int *)(puVar2 + 0x180) = iVar7;
   return;
 }
 
-// CS_Garage_GetMenuBox
+// CS_Garage_GetMenuPtr
 undefined * FUN_800b854c(void)
 {
   // this "MenuBox" is what displays the driver stats,
@@ -5649,7 +5649,7 @@ void FUN_800b8f8c(void)
     *(undefined4 *)(PTR_DAT_8008d2ac + 0x2568) = 1;
 	
 	// Set winnerIndex[0] to 0, to draw 
-	// confetti on the first tileView
+	// confetti on the first pushBuffer
     *(undefined4 *)(puVar2 + 0x2558) = 0;
 	
     *(undefined2 *)(puVar2 + 0x1b04) = 0xfa;
@@ -5659,7 +5659,7 @@ void FUN_800b8f8c(void)
     *(uint *)(puVar2 + 0x256c) = *(uint *)(puVar2 + 0x256c) | 4;
   }
   
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0 = size
   // 0 = no relation to param4
   // 0x300 = SmallStackPool
@@ -5702,7 +5702,7 @@ void FUN_800b8f8c(void)
 	// 2D instance
     *(uint *)(iVar5 + 0x28) = *(uint *)(iVar5 + 0x28) | 0x400;
 	
-	// tileView_UI
+	// pushBuffer_UI
     *(undefined **)(iVar5 + 0x74) = puVar2 + 5000;
 	
     puVar3 = PTR_DAT_8008d2ac;

@@ -120,7 +120,7 @@ common, exe, DecalHUD_Arrow2D, 0x0, ../../Patches/FixAdventureModeCharacterSelec
 926, 233, 0x800b8298, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
 1020, 233, 0x800b8aa8, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
 1111, 233, 0x800bba50, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
-common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
+common, 233, CS_Garage_GetMenuPtr, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
 common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233.c
 
 // EngineSelect //

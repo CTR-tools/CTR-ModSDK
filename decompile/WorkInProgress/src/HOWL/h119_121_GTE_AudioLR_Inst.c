@@ -1,13 +1,13 @@
 #include <common.h>
 
-void GTE_AudioLR_Inst(MATRIX *tileView, VECTOR *returnVect)
+void GTE_AudioLR_Inst(MATRIX *pushBuffer, VECTOR *returnVect)
 {
     SVECTOR instVect;
 
     instVect.vx = returnVect->vx;
     instVect.vy = returnVect->vy;
     instVect.vz = returnVect->vz;
-    SetRotMatrix(tileView);
+    SetRotMatrix(pushBuffer);
     gte_ldv0(&instVect);
     gte_rtv0();
     gte_stlvnl0(returnVect->vx);
@@ -15,14 +15,14 @@ void GTE_AudioLR_Inst(MATRIX *tileView, VECTOR *returnVect)
     gte_stlvnl2(returnVect->vz);
 }
 
-void GTE_AudioLR_Driver(MATRIX *tileView, struct Driver* d, VECTOR *returnVect)
+void GTE_AudioLR_Driver(MATRIX *pushBuffer, struct Driver* d, VECTOR *returnVect)
 {
     SVECTOR playerVect;
 
-    playerVect.vx = (short)(d->posCurr[0] >> 8) - tileView->t[0];
-    playerVect.vy = (short)(d->posCurr[1] >> 8) - tileView->t[1];
-    playerVect.vz = (short)(d->posCurr[2] >> 8) - tileView->t[2];
-    SetRotMatrix(tileView);
+    playerVect.vx = (short)(d->posCurr[0] >> 8) - pushBuffer->t[0];
+    playerVect.vy = (short)(d->posCurr[1] >> 8) - pushBuffer->t[1];
+    playerVect.vz = (short)(d->posCurr[2] >> 8) - pushBuffer->t[2];
+    SetRotMatrix(pushBuffer);
     gte_ldv0(&playerVect);
     gte_rtv0();
     gte_stlvnl0(returnVect->vx);

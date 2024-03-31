@@ -139,11 +139,11 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                         save->flags |= 2;
 
 #ifndef REBUILD_PS1
-                        LoadSave_GetTrackID();
+                        SelectProfile_GetTrackID();
 #endif
 
                         // enable menubox for green load/save screen
-                        DECOMP_MENUBOX_Show(&data.menuBox_greenLoadSave);
+                        DECOMP_RECTMENU_Show(&data.menuGreenLoadSave);
                     }
 
                     // if it is time to return to player
@@ -154,7 +154,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                             ((uVar6 & 0x400) == 0) &&
 
                             // if there's no MenuBox active
-                            (sdata->ptrActiveMenuBox == NULL))
+                            (sdata->ptrActiveMenu == NULL))
                         {
                             // toggle flag to return, this either snaps back
                             // or transitions back depending on & 0x200 (like 0x600 or 0xe00)

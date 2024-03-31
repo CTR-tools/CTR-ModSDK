@@ -71,9 +71,9 @@ void RunUpdateHook()
 	driver = (struct Driver*) ((char*)gGT->drivers[0] + 0x670 * mgs->driverIndex);
 
 	// set camera to driver position, then change later
-	gGT->tileView[0].pos[0] = driver->posCurr[0] >> 8;
-	gGT->tileView[0].pos[1] = driver->posCurr[1] >> 8;
-	gGT->tileView[0].pos[2] = driver->posCurr[2] >> 8;
+	gGT->pushBuffer[0].pos[0] = driver->posCurr[0] >> 8;
+	gGT->pushBuffer[0].pos[1] = driver->posCurr[1] >> 8;
+	gGT->pushBuffer[0].pos[2] = driver->posCurr[2] >> 8;
 
 	// erase function pointers (0xd)
 	for(loop = 0; loop < 0xd; loop++)
@@ -82,8 +82,8 @@ void RunUpdateHook()
 		driver->funcPtrs[loop] = 0;
 	}
 
-	// erase tileView pointer from camDC, so we can move tileView ourselves
-	gGT->cameraDC[0].tileView = 0;
+	// erase pushBuffer pointer from camDC, so we can move pushBuffer ourselves
+	gGT->cameraDC[0].pushBuffer = 0;
 
 	// set camera to handle frustum culling based on position of ghost driver
 	gGT->cameraDC[0].driverToFollow = driver;
@@ -215,12 +215,12 @@ void RunUpdateHook()
 	if(mgs->zoom < 0x20) mgs->zoom = 0x20;
 
 	// default rotation
-	gGT->tileView[0].rot[0] = 0;
-	gGT->tileView[0].rot[1] = mgs->rotY;
-	gGT->tileView[0].rot[2] = 0x800;
+	gGT->pushBuffer[0].rot[0] = 0;
+	gGT->pushBuffer[0].rot[1] = mgs->rotY;
+	gGT->pushBuffer[0].rot[2] = 0x800;
 
 	// get the direction the camera faces, so we can move in that direction
-	ConvertRotToMatrix(&matrix, gGT->tileView[0].rot);
+	ConvertRotToMatrix(&matrix, gGT->pushBuffer[0].rot);
 
 	// use 4-byte int for the shifting, also this is Vel, not Pos
 	tempPosX = 0x4 * mgs->zoom * matrix.m[2][0];
@@ -234,12 +234,12 @@ void RunUpdateHook()
 	// adjust camera height, and make it look down,
 	// this is intentionally separate from the X and Z
 	tempPosY = 0x2 * mgs->zoom;
-	gGT->tileView[0].rot[0] = 0x80;
+	gGT->pushBuffer[0].rot[0] = 0x80;
 
 	// apply the change
-	gGT->tileView[0].pos[0] -= tempPosX;
-	gGT->tileView[0].pos[1] += tempPosY;
-	gGT->tileView[0].pos[2] -= tempPosZ;
+	gGT->pushBuffer[0].pos[0] -= tempPosX;
+	gGT->pushBuffer[0].pos[1] += tempPosY;
+	gGT->pushBuffer[0].pos[2] -= tempPosZ;
 
 	// make crystal challenge event last forever
 	gGT->originalEventTime =

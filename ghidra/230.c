@@ -440,7 +440,7 @@ void FUN_800ac1f0(int param_1,short param_2)
   int iVar2;
   short *psVar3;
   
-  // TitleFlag_MoveModels
+  // RaceFlag_MoveModels
   // after frame 0xe6, make the intro models transition from the center
   // of the screen, to the left of the screen, over the course of 15 frames
   iVar2 = FUN_80043e34((int)(((uint)DAT_800b5a14 - 0xe6) * 0x10000) >> 0x10,0xf);
@@ -731,7 +731,7 @@ void FUN_800ac6dc(void)
 	// CameraDC, freecam mode
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x1532) = 3;
 	
-	// gGT->tileView[0].distToScreen_CURR
+	// gGT->pushBuffer[0].distToScreen_CURR
     *(undefined4 *)(puVar1 + 0x274) = 0x1c2;
 	
 	// pointer to Intro Cam, to view Crash holding Trophy in main menu
@@ -740,7 +740,7 @@ void FUN_800ac6dc(void)
 	// 0x800aba0c
 	// "title"
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0x24 = size
 	// 0 = no relation to param4	
 	// 0x200 = MediumStackPool
@@ -1314,7 +1314,7 @@ LAB_800acfc4:
 }
 
 
-// MM_MENUBOX_Main
+// MM_MenuProc_Main
 void FUN_800acff4(int param_1)
 
 {
@@ -1347,7 +1347,7 @@ void FUN_800acff4(int param_1)
   // MM_ParseCheatCodes
   FUN_800aceb4();
   
-  // MM_ToggleRows_Difficulty
+  // MM_TogglerowsDifficulty
   FUN_800ad678();
   
   // MM_ToggleRows_PlayerCount
@@ -1673,7 +1673,7 @@ void FUN_800ad448(void)
   return;
 }
 
-// MM_MENUBOX_1p2p
+// MM_MenuProc_1p2p
 void FUN_800AD560(int param_1)
 
 {
@@ -1712,7 +1712,7 @@ void FUN_800AD560(int param_1)
   return;
 }
 
-// MM_MENUBOX_2p3p4p
+// MM_MenuProc_2p3p4p
 void FUN_800AD5E8(int param_1)
 
 {
@@ -1751,7 +1751,7 @@ void FUN_800AD5E8(int param_1)
   return;
 }
 
-// MM_ToggleRows_Difficulty
+// MM_TogglerowsDifficulty
 void FUN_800ad678(void)
 
 {
@@ -1812,7 +1812,7 @@ void FUN_800ad678(void)
   return;
 }
 
-// MM_MENUBOX_Difficulty
+// MM_MenuProc_Difficulty
 void FUN_800AD7A4(int param_1)
 
 {
@@ -1844,7 +1844,7 @@ void FUN_800AD7A4(int param_1)
   return;
 }
 
-// MM_MENUBOX_SingleCup
+// MM_MenuProc_SingleCup
 void FUN_800AD828(int param_1)
 
 {
@@ -1900,7 +1900,7 @@ void FUN_800AD828(int param_1)
   return;
 }
 
-// MM_MENUBOX_NewLoad
+// MM_MenuProc_NewLoad
 void FUN_800ad8f0(int param_1)
 
 {
@@ -1944,7 +1944,7 @@ void FUN_800ad8f0(int param_1)
   return;
 }
 
-// MM_AdvNewLoad_GetMenuBox
+// MM_AdvNewLoad_GetMenuPtr
 undefined * FUN_800ad980(void)
 
 {
@@ -2167,7 +2167,7 @@ void FUN_800adc0c(int param_1)
       psVar11 = (short *)(iVar10 * 4 + DAT_800b5a0c);
       iVar6 = iVar10 * 10 + DAT_800b5a3c;
 	  
-	  // tileView
+	  // pushBuffer
       puVar12 = (undefined2 *)(PTR_DAT_8008d2ac + iVar10 * 0x110 + 0x168);
       
 	  // rect.x
@@ -2228,7 +2228,7 @@ void FUN_800adc0c(int param_1)
 	  puVar1 = PTR_DAT_8008d2ac;
       sVar9 = (short)iVar14;
       
-	  // tileView pos and rot to all zero
+	  // pushBuffer pos and rot to all zero
 	  *puVar12 = 0;
       puVar12[1] = 0;
       puVar12[2] = 0;
@@ -2255,13 +2255,13 @@ void FUN_800adc0c(int param_1)
 	  // copy which driver loaded
       iVar6 = (int)sVar9;
 	  
-	  // clear tileView in every InstDrawPerPlayer
+	  // clear pushBuffer in every InstDrawPerPlayer
       *(undefined4 *)(iVar10 + 0x74) = 0;
       *(undefined4 *)(iVar10 + 0xfc) = 0;
       *(undefined4 *)(iVar10 + 0x184) = 0;
       *(undefined4 *)(iVar10 + 0x20c) = 0;
 	  
-	  // set tileView in InstDrawPerPlayer,
+	  // set pushBuffer in InstDrawPerPlayer,
 	  // so that each camera can only see one driver
       *(undefined2 **)(iVar10 + iVar6 * 0x88 + 0x74) = puVar12;
       
@@ -2305,7 +2305,7 @@ void FUN_800adc0c(int param_1)
 		// if timer is before midpoint
         if ((int)sVar9 < (int)DAT_800b536e) 
 		{
-		  // TitleFlag_MoveModels
+		  // RaceFlag_MoveModels
 		  // make driver fly off screen
           *psVar13 = (&DAT_800b59f0)[iVar6];
           iVar5 = FUN_80043e34();
@@ -2318,7 +2318,7 @@ void FUN_800adc0c(int param_1)
 		// if timer is after midpoint
         else 
 		{
-		  // TitleFlag_MoveModels
+		  // RaceFlag_MoveModels
 		  // make new driver fly on screen
           iVar5 = FUN_80043e34((int)sVar9 - (int)DAT_800b536e);
 		  
@@ -2759,7 +2759,7 @@ void FUN_800ae6b0(void)
   do {
     sVar1 = (short)iVar2;
 	
-	// TileView_Init for each TileView
+	// PushBuffer_Init for each PushBuffer
     FUN_800426f8(PTR_DAT_8008d2ac + (int)sVar1 * 0x110 + 0x168,0,1);
     
 	// increment loop counter
@@ -2776,9 +2776,9 @@ void FUN_800ae6b0(void)
 
 
 // character selection menu, 
-// MENUBOX_FuncPtr for menuBox: 0x800b46b4;
+// RECTMENU_FuncPtr for menuBox: 0x800b46b4;
 
-// MM_Characters_MenuBox
+// MM_Characters_MenuProc
 void FUN_800ae74c(void)
 
 {
@@ -3329,7 +3329,7 @@ LAB_800aec08:
         puVar12 = &DAT_800b538c;
       }
 	  
-	  // MENUBOX_DrawOuterRect_HighLevel (solid)
+	  // RECTMENU_DrawOuterRect_HighLevel (solid)
       FUN_80045650(&local_80,puVar12,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  // increment loop counter
@@ -3392,7 +3392,7 @@ LAB_800aec08:
       iVar8 = (int)(short)iVar24 * 10 + DAT_800b5a3c;
       
 	  // Draw Character Icon
-	  // MENUBOX_DrawPolyGT4
+	  // RECTMENU_DrawPolyGT4
 	  FUN_80044ef8(*(undefined4 *)
                     (PTR_DAT_8008d2ac +
                     (int)*(short *)(&DAT_80086d8c + (int)psVar18[3] * 0x10) * 4 + 0x1eec),
@@ -3586,7 +3586,7 @@ LAB_800aec08:
 	  // MM_Characters_AnimateColors
 	  FUN_800ad98c(&local_68,uVar25,((int)(short)DAT_8008d934 >> (uVar25 & 0x1f) ^ 1U) & 1);
       
-	  // MENUBOX_DrawOuterRect_HighLevel (solid)
+	  // RECTMENU_DrawOuterRect_HighLevel (solid)
 	  FUN_80045650(&local_60,&local_68,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  iVar8 = 0;
@@ -3603,7 +3603,7 @@ LAB_800aec08:
           local_54 = CONCAT22((short)((uint)local_54 >> 0x10) + -4,(short)local_54 + -6);
           local_66 = local_66 & 0xff00 | (ushort)(byte)((int)((uint)(byte)local_66 << 2) / 5);
           
-		  // MENUBOX_DrawOuterRect_HighLevel (solid)
+		  // RECTMENU_DrawOuterRect_HighLevel (solid)
 		  FUN_80045650(&local_58,&local_68,0,
                        *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
           
@@ -3617,7 +3617,7 @@ LAB_800aec08:
       
 	  local_60 = 0;
 	  
-	  // MENUBOX_DrawRwdBlueRect
+	  // RECTMENU_DrawRwdBlueRect
       FUN_80045254(&local_60,&DAT_800b5398,
                    *(int *)(PTR_DAT_8008d2ac + (int)(short)iVar24 * 0x110 + 0x25c) + 0xffc,
 				   
@@ -3795,7 +3795,7 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
 	// This is the same function that draws Character icons
 	  
 	// Draw Video icon
-	// MENUBOX_DrawPolyGT4
+	// RECTMENU_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(((param_3 << 0x10) >> 0xc) + param_2 + 2) * 4 + 0x1eec),
@@ -3965,7 +3965,7 @@ void FUN_800affd0(void)
 }
 
 
-// MM_TrackSelect_MenuBox
+// MM_TrackSelect_MenuProc
 void FUN_800b00d4(int param_1)
 
 {
@@ -4109,7 +4109,7 @@ void FUN_800b00d4(int param_1)
           }
           
 		  // passthrough MenuBox for the function
-		  // TitleBeginTrack
+		  // QueueLoadTrack
 		  DAT_8008d924 = &DAT_80085a94;
 		  
 		  // make error message posY appear 
@@ -4716,7 +4716,7 @@ LAB_800b0774:
   } while( true );
 }
 
-// MM_TrackSelect_GetMenuBox
+// MM_TrackSelect_GetMenuPtr
 undefined * FUN_800b0eac(void)
 
 {
@@ -4728,7 +4728,7 @@ undefined * FUN_800b0eac(void)
 void FUN_800b0eb8(void)
 
 {
-  // 800b472c is menubox_cupSelect,
+  // 800b472c is menuCupSelect,
   // disable 0x400 (dont exec funcptr)
   // enable 0x20 (allow exec funcptr, and block input
   DAT_800b4734 = DAT_800b4734 & 0xfffffbff | 0x20;
@@ -4741,7 +4741,7 @@ void FUN_800b0eb8(void)
 }
 
 
-// MM_CupSelect_MenuBox
+// MM_CupSelect_MenuProc
 void FUN_800b0eec(int param_1)
 
 {
@@ -4843,7 +4843,7 @@ void FUN_800b0eec(int param_1)
 			  } while (iVar8 * 0x10000 >> 0x10 < 8);
 			  
 			  // passthrough MenuBox for the function
-			  // TitleBeginTrack
+			  // QueueLoadTrack
               DAT_8008d924 = &DAT_80085a94;
 			  
 			  // set current level to...
@@ -4980,7 +4980,7 @@ void FUN_800b0eec(int param_1)
         iVar8 = (int)(uVar12 << 0x10) >> 0x10;
 		
 		// Draw Icon of each track
-		// MENUBOX_DrawPolyGT4
+		// RECTMENU_DrawPolyGT4
         FUN_80044ef8(*(undefined4 *)
                       (PTR_DAT_8008d2ac +
                       (int)(short)(&DAT_8008414c)[(int)(short)uVar4 * 9 + iVar8 * 2] * 4 + 0x1eec),
@@ -5167,7 +5167,7 @@ void FUN_800b1830(void)
 }
 
 
-// MM_Battle_MenuBox
+// MM_Battle_MenuProc
 void FUN_800b1848(void)
 
 {
@@ -5263,7 +5263,7 @@ void FUN_800b1848(void)
           if (DAT_800b59c4 != 0) 
 		  {
 			// passthrough MenuBox for the function
-			// TitleBeginTrack
+			// QueueLoadTrack
             DAT_8008d924 = &DAT_80085a94;
             return;
           }
@@ -5797,7 +5797,7 @@ LAB_800b1d7c:
   
   local_38 = 0xd;
   
-  // MENUBOX_GetHeight
+  // RECTMENU_GetHeight
   FUN_80045b1c(&DAT_800b56c8,&local_38,0);
   
   sVar6 = local_38 + 0x20;
@@ -5838,12 +5838,12 @@ LAB_800b1d7c:
         
 		local_38 = 0xd;
         
-		// MENUBOX_GetHeight
+		// RECTMENU_GetHeight
 		FUN_80045b1c(&DAT_800b570c,&local_38,0);
         
 		local_36[0] = 0xd;
 		
-		// MENUBOX_GetHeight
+		// RECTMENU_GetHeight
         FUN_80045b1c(&DAT_800b57d8,local_36,0);
 		
         sVar20 = local_36[0] + sVar6;
@@ -5869,7 +5869,7 @@ LAB_800b1d7c:
                (int)(short)(DAT_800b565c + sVar6 + 4),0x134);
   local_38 = 0xd;
   
-  // MENUBOX_GetHeight
+  // RECTMENU_GetHeight
   FUN_80045b1c(puVar19,&local_38,0);
   
   sVar20 = local_38 + sVar6;
@@ -6103,7 +6103,7 @@ LAB_800b25f0:
                  (int)(short)(DAT_800b5698 + sVar20 + 0x78),0x134);
     local_38 = 0xd;
 	
-	// MENUBOX_GetHeight
+	// RECTMENU_GetHeight
     FUN_80045b1c(&DAT_800b5810,&local_38,0);
   }
   
@@ -6443,7 +6443,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
                (int)((DAT_800b5926 + uVar11 + 0x4a) * 0x10000) >> 0x10,2,0);
     
 	// Character Icon
-	// MENUBOX_DrawPolyGT4
+	// RECTMENU_DrawPolyGT4
 	FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar10 + 0x16) * 0x10) * 4 +
@@ -6476,7 +6476,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
     puVar5 = puVar10 + iVar1 * 6 + 6;
 	
 	// Character Icon
-	// MENUBOX_DrawPolyGT4
+	// RECTMENU_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar5 + 0x16) * 0x10) * 4 +
@@ -6556,7 +6556,7 @@ void FUN_800b3914(void)
 }
 
 
-// MM_HighScore_MenuBox
+// MM_HighScore_MenuProc
 void FUN_800b3954(void)
 
 {
@@ -6864,7 +6864,7 @@ void FUN_800b4014(int param_1)
   // alter checkered flag
   case 0:
   
-    // TitleFlag_IsFullyOnScreen
+    // RaceFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
@@ -6886,7 +6886,7 @@ void FUN_800b4014(int param_1)
   // find the TEST.STR file
   case 1:
   
-	// TitleFlag_IsFullyOffScreen
+	// RaceFlag_IsFullyOffScreen
     iVar1 = FUN_80043f28();
     
 	// if not fully off screen
@@ -6971,7 +6971,7 @@ void FUN_800b4014(int param_1)
 	  // If you press Start, Cross, Circle, Triangle, or Square
       if ((DAT_8009a990 & 0x41070) != 0) 
 	  {
-		// TitleFlag_SetFullyOnScreen
+		// RaceFlag_SetFullyOnScreen
         FUN_8004402c();
       }
 	  
@@ -6993,7 +6993,7 @@ void FUN_800b4014(int param_1)
 	// MM_Video_ClearMem
     FUN_800b64d4();
     
-	// TitleFlag_IsFullyOffScreen
+	// RaceFlag_IsFullyOffScreen
 	iVar1 = FUN_80043f28();
     if (iVar1 == 1) 
 	{
@@ -7010,7 +7010,7 @@ LAB_800b4224:
 	// or back to main menu
   case 4:
   
-	// TitleFlag_IsFullyOnScreen
+	// RaceFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{

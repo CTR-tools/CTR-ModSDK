@@ -70,5 +70,5 @@ void RunInitHook()
 	#endif
 	
 	// small stack pool, pause thread (those threads can't pause)
-	THREAD_BirthWithObject(0x310, octr->funcs[octr->NextInit], 0, 0);
+	PROC_BirthWithObject(0x310, octr->funcs[octr->NextInit], 0, 0);
 }

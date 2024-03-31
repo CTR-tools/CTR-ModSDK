@@ -162,7 +162,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		&gGT->backBuffer->primMem,
 	
 		// OTMem
-		gGT->tileView_UI.ptrOT,
+		gGT->pushBuffer_UI.ptrOT,
 	
 		TRANS_50_DECAL,(int)scale,1);
 #endif

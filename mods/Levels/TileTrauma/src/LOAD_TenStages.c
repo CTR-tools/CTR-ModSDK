@@ -15,8 +15,8 @@ void CseqMusic_StopAll();
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocHighMem(int allocSize);
-u_int TitleFlag_IsFullyOffScreen();
-void TitleFlag_BeginTransition(int param_1);
+u_int RaceFlag_IsFullyOffScreen();
+void RaceFlag_BeginTransition(int param_1);
 
 // LOAD_TenStages
 // loadingStage is loading stage
@@ -826,11 +826,11 @@ LAB_800346b0:
 					// enable pause menu? Or enable 3D cars on track?
 					gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
 
-					iVar9 = TitleFlag_IsFullyOffScreen();
+					iVar9 = RaceFlag_IsFullyOffScreen();
 					if (iVar9 == 1)
 					{
 						// checkered flag, begin transition on-screen
-						TitleFlag_BeginTransition(1);
+						RaceFlag_BeginTransition(1);
 					}
 				}
 				gGT->hudFlags = gGT->hudFlags | 8;

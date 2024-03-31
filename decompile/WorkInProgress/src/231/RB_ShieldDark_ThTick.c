@@ -7,8 +7,8 @@ void RB_ShieldDark_ThTick(struct Thread *th)
   int i;
   int iVar8;
   int rotY;
-  struct ShieldBomb *bomb;
-  struct TileView *view;
+  struct ShieldBomb* bomb;
+  struct PushBuffer* pb;
   short pos[3];
 
   struct GameTracker *gGT = sdata->gGT;
@@ -78,10 +78,10 @@ void RB_ShieldDark_ThTick(struct Thread *th)
 
       for (i = 0; i < gGT->numPlyrCurrGame; i++)
       {
-        view = gGT->tileView[i];
-        idpp[i].tileView = view;
-        colorIdpp[i].tileView = view;
-        highlightIdpp[i].tileView = view;
+        pb = gGT->pushBuffer[i];
+        idpp[i].pushBuffer = pb;
+        colorIdpp[i].pushBuffer = pb;
+        highlightIdpp[i].pushBuffer = pb;
       }
     }
   }
@@ -98,10 +98,10 @@ void RB_ShieldDark_ThTick(struct Thread *th)
       {
         if (i == player->driverID)
           continue;
-        view = gGT->tileView[i];
-        idpp[i].tileView = view;
-        colorIdpp[i].tileView = view;
-        highlightIdpp[i].tileView = view;
+        pb = gGT->pushBuffer[i];
+        idpp[i].pushBuffer = pb;
+        colorIdpp[i].pushBuffer = pb;
+        highlightIdpp[i].pushBuffer = pb;
       }
     }
   }
@@ -218,11 +218,11 @@ void RB_ShieldDark_ThTick(struct Thread *th)
 
     if ((shield->flags & 8) != 0)
     {
-      view = gGT->tileView[player->driverID];
+      pb = gGT->pushBuffer[player->driverID];
 
-      view->fadeFromBlack_currentValue = 0x1fff;
-      view->fadeFromBlack_desiredResult = 0x1000;
-      view->fade_step = -(0x88);
+      pb->fadeFromBlack_currentValue = 0x1fff;
+      pb->fadeFromBlack_desiredResult = 0x1000;
+      pb->fade_step = -(0x88);
     }
 
     shield->animFrame = 0;
@@ -276,7 +276,7 @@ void RB_ShieldDark_ThTick(struct Thread *th)
     ((int *)bombInst->matrix.m[0][0])[i] = ((int *)shieldInst->matrix.m[0][0])[i];
 
   // set funcThDestroy to remove instance from instance pool
-  bombInst->thread->funcThDestroy = THREAD_DestroyInstance;
+  bombInst->thread->funcThDestroy = PROC_DestroyInstance;
 
   // set scale (x, y, z) and transparency
   for (i = 0; i < 4; i++)
@@ -286,11 +286,11 @@ void RB_ShieldDark_ThTick(struct Thread *th)
   bomb = bombInst->thread->object;
 
   // frame timer to zero
-  bomb->timer = 0;
+  bomenu->timer = 0;
 
-  bomb->unk = 0;
-  bomb->driverWhoShot = player;
-  bomb->driverInst = player->instSelf;
+  bomenu->unk = 0;
+  bomenu->driverWhoShot = player;
+  bomenu->driverInst = player->instSelf;
   *(short *)((int)bomb + 0x10) = (short)(player->instSelf->matrix.m[0][2] * 3 >> 7);
   *(short *)((int)bomb + 0x12) = 0;
   *(short *)((int)bomb + 0x14) = (short)(player->instSelf->matrix.m[2][2] * 3 >> 7);

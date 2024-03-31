@@ -358,7 +358,7 @@ void MainMenuLoop()
 }
 
 //Check for L2/R2 button press in character menu and switch icon of highlighted character
-//Hooked at the very end of MM_Characters_MenuBox, which makes this function run only while you're in the character menu
+//Hooked at the very end of MM_Characters_MenuProc, which makes this function run only while you're in the character menu
 void CharacterMenuLoop()
 {
 	int button;

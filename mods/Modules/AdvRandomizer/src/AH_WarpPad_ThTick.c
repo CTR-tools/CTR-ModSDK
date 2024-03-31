@@ -13,7 +13,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	struct Instance* warppadInst;
 	struct Instance** visInstSrc;
 	struct Instance** instArr;
-	struct MenuBox* padMenu;
+	struct RectMenu* padMenu;
 	
 	struct Driver* driver;
 	struct Instance* driverInst;
@@ -45,7 +45,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	warppadObj = t->object;
 	warppadInst = t->inst;
 	visInstSrc = gGT->cameraDC[0].visInstSrc;
-	padMenu = (struct MenuBox *)0x800b4e50;
+	padMenu = (struct RectMenu *)0x800b4e50;
 	
 	while(visInstSrc[0] != 0)
 	{
@@ -140,8 +140,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				DecalFont_DrawLine
 				(
 					warppadLNG,
-					gGT->tileView[0].rect.x + gGT->tileView[0].rect.w/2,
-					gGT->tileView[0].rect.x + gGT->tileView[0].rect.h - 30,
+					gGT->pushBuffer[0].rect.x + gGT->pushBuffer[0].rect.w/2,
+					gGT->pushBuffer[0].rect.x + gGT->pushBuffer[0].rect.h - 30,
 					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 				);
 			}
@@ -208,8 +208,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	{	
 		angleCamToWarppad =
 			ratan2(
-				warppadMatrix->t[0] - gGT->tileView[0].pos[0],
-				warppadMatrix->t[2] - gGT->tileView[0].pos[2]
+				warppadMatrix->t[0] - gGT->pushBuffer[0].pos[0],
+				warppadMatrix->t[2] - gGT->pushBuffer[0].pos[2]
 			);
 			
 		angleCamToWarppad = -angleCamToWarppad;
@@ -454,7 +454,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	}
 		
 	// if flag is on-screen, loading has already been finalized
-	if(TitleFlag_IsTransitioning() != 0) return;
+	if(RaceFlag_IsTransitioning() != 0) return;
 		
 	// if driver has not entered this warppad
 	if(warppadObj->boolEnteredWarppad == 0)
@@ -498,14 +498,14 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				MENUBOX_Show(padMenu);
+				RECTMENU_Show(padMenu);
 				
 				// dont load level
 				return;
 			}
 			
 			// if opened, but not closed yet
-			if((MENUBOX_BoolHidden(padMenu) & 0xffff) == 0)
+			if((RECTMENU_BoolHidden(padMenu) & 0xffff) == 0)
 			{
 				// dont load level
 				return;

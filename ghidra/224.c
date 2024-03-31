@@ -171,7 +171,7 @@ void FUN_8009f8c0(short param_1,int param_2,short param_3)
                  (iVar3 + -1) * 0x10000 >> 0x10,2,4);
 				 
 	// Draw Character Icon
-	// MENUBOX_DrawPolyGT4
+	// RECTMENU_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar4 + 0x16) * 0x10) * 4 +

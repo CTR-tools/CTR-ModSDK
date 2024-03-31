@@ -547,10 +547,10 @@ void FUN_8003f590(int param_1,int *param_2)
   uint *puVar25;
   uint uVar26;
 
-  // TileView_SetPsyqGeom
+  // PushBuffer_SetPsyqGeom
   FUN_80042910(param_1);
 
-  // tileView -> 0x28 (matrix)
+  // pushBuffer -> 0x28 (matrix)
   DAT_1f800000 = *(undefined4 *)(param_1 + 0x28);
   DAT_1f800004 = *(undefined4 *)(param_1 + 0x2c);
   DAT_1f800008 = *(undefined4 *)(param_1 + 0x30);
@@ -562,10 +562,10 @@ void FUN_8003f590(int param_1,int *param_2)
   setCopControlWord(2,0x5800,DAT_1f80000c);
   setCopControlWord(2,0x6000,DAT_1f800010);
   
-  // tileView ptrOT
+  // pushBuffer ptrOT
   DAT_1f800020 = *(int *)(param_1 + 0xf4);
   
-  // tileView cameraID
+  // pushBuffer cameraID
   cVar1 = *(char *)(param_1 + 0x108);
   
   // another matrix

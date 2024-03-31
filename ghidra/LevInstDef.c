@@ -162,7 +162,7 @@ void FUN_80031268(int *param_1,int param_2)
     }
   }
 
-  // THREAD_CheckAllForDead
+  // PROC_CheckAllForDead
   FUN_80041ff4();
 
   return;

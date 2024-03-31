@@ -330,21 +330,21 @@ struct sData sdata_static =
 	.battleSetup_Color_UI_1 = 0x405000,
 	.battleSetup_Color_UI_2 = 0x60A000,
 	
-	.TitleFlag_AnimationType = 0,
-	.TitleFlag_Position = 0,
+	.RaceFlag_AnimationType = 0,
+	.RaceFlag_Position = 0,
 	.unk_CheckFlag1 = 300,
-	.TitleFlag_CanDraw = 1,
+	.RaceFlag_CanDraw = 1,
 	.unk_CheckFlag2 = 0,
-	.TitleFlag_DrawOrder = 0,
+	.RaceFlag_DrawOrder = 0,
 	.padding_8008d44e = 0,
 	
 #if BUILD >= UsaRetail
-	.TitleFlag_LoadingTextAnimFrame = -1,
-	.TitleFlag_Transition = 0,
+	.RaceFlag_LoadingTextAnimFrame = -1,
+	.RaceFlag_Transition = 0,
 #endif
 
-	.TitleFlag_ElapsedTime = 0,
-	.TitleFlag_CopyLoadStage = -1,
+	.RaceFlag_ElapsedTime = 0,
+	.RaceFlag_CopyLoadStage = -1,
 	
 	.DrawSolidBoxData = {0, 0xc0c0c0, 0},
 	
@@ -381,7 +381,7 @@ struct sData sdata_static =
 	.str_underscore = "_",
 	
 	.boolOpenTokenRelicMenu = 0,
-	.ptrTileViewUI = 0,
+	.ptrPushBufferUI = 0,
 	.ptrFruitDisp = 0,
 	.menuReadyToPass = 0,
 	

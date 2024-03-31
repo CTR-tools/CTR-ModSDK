@@ -105,8 +105,8 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          transition = 0x1e - gGT -> cameraDC -> unk8E;
       }
 
-   // TitleFlag_IsFullyOnScreen
-   iVar2 = TitleFlag_IsFullyOnScreen();
+   // RaceFlag_IsFullyOnScreen
+   iVar2 = RaceFlag_IsFullyOnScreen();
 
    // if not
    if (iVar2 == 0) {
@@ -127,7 +127,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 	  {
 		#if 0  
          // X-value, X + W/2
-         posX = gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11);
+         posX = gGT->pushBuffer[0].rect.x + ((gGT->pushBuffer[0].rect.w << 0x10) >> 0x11);
 		#else
 		 posX = 0x100; // screw it
 		#endif
@@ -136,7 +136,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          pcVar6 = sdata -> lngStrings[textID];
 
          // Y-value that transitions title text to off-screen
-         sVar7 = gGT->tileView[0].rect.y - (windowHeight + -7);
+         sVar7 = gGT->pushBuffer[0].rect.y - (windowHeight + -7);
       }
 
       // If you are in any cup of any kind
@@ -148,12 +148,12 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
             sdata -> lngStrings[textID],
 			
 			#if 0
-            gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11),
+            gGT->pushBuffer[0].rect.x + ((gGT->pushBuffer[0].rect.w << 0x10) >> 0x11),
             #else
 			0x100, // screw it
 			#endif
 			
-			((gGT->tileView[0].rect.y - (transition + -7)) + -6),
+			((gGT->pushBuffer[0].rect.y - (transition + -7)) + -6),
             FONT_BIG, (JUSTIFY_CENTER | ORANGE)
          );
 
@@ -176,7 +176,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          font = FONT_SMALL;
 
          // Y-value that transitions title text to off-screen
-         sVar7 = (gGT->tileView[0].rect.y - (transition + -7)) + 0xb;
+         sVar7 = (gGT->pushBuffer[0].rect.y - (transition + -7)) + 0xb;
       }
 
       // Print top title text "Arcade, Time Trial, etc"
@@ -193,17 +193,17 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          sdata -> lngStrings[data.metaDataLEV[gGT -> levelID].name_LNG],
 		 
 		 #if 0
-         gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11),
+         gGT->pushBuffer[0].rect.x + ((gGT->pushBuffer[0].rect.w << 0x10) >> 0x11),
 		 #else
 		 0x100, // screw it
 		 #endif
 		 
-         (gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + transition + -0x17),
+         (gGT->pushBuffer[0].rect.y + gGT->pushBuffer[0].rect.h + transition + -0x17),
          FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	  // same for all
-	  rect.x = gGT->tileView[0].rect.x;
-      rect.w = gGT->tileView[0].rect.w;
+	  rect.x = gGT->pushBuffer[0].rect.x;
+      rect.w = gGT->pushBuffer[0].rect.w;
 	  
 	  // 2-pixel height
 	  // random generic color
@@ -211,13 +211,13 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 	  rect.h = 2;
 
       // Draw tiny rectangle near big black title bar (first)
-      rect.y = gGT->tileView[0].rect.y - (windowHeight + -0x1c);
+      rect.y = gGT->pushBuffer[0].rect.y - (windowHeight + -0x1c);
       CTR_Box_DrawSolidBox(&rect, colors,
          gGT->backBuffer->otMem.startPlusFour,
          &gGT->backBuffer->primMem);
 
       // Draw tiny rectangle near big black title bar (second)
-	  rect.y = gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + windowHeight + -0x1e;
+	  rect.y = gGT->pushBuffer[0].rect.y + gGT->pushBuffer[0].rect.h + windowHeight + -0x1e;
       CTR_Box_DrawSolidBox(&rect, colors,
          gGT->backBuffer->otMem.startPlusFour,
          &gGT->backBuffer->primMem);
@@ -228,13 +228,13 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 	  rect.h = 0x1e;
 
       // draw big black title bar (first)
-	  rect.y = gGT->tileView[0].rect.y - windowHeight;
+	  rect.y = gGT->pushBuffer[0].rect.y - windowHeight;
       CTR_Box_DrawSolidBox(&rect, colors,
          gGT->backBuffer->otMem.startPlusFour,
          &gGT->backBuffer->primMem);
 
       // draw big black title bar (second)
-	  rect.y = gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + windowHeight + -0x1e;
+	  rect.y = gGT->pushBuffer[0].rect.y + gGT->pushBuffer[0].rect.h + windowHeight + -0x1e;
       CTR_Box_DrawSolidBox(&rect, colors,
          gGT->backBuffer->otMem.startPlusFour,
          &gGT->backBuffer->primMem);

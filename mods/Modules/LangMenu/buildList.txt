@@ -16,6 +16,6 @@
 1111, exe, 0x8003ddc8,0x0, src/loadLng.s
 
 // New Lang functions to 230
-common, 230, MM_MENUBOX_Main, 0x0, src/MM_MENUBOX_Main.c
+common, 230, MM_MenuProc_Main, 0x0, src/MM_MenuProc_Main.c
 common, 230, MM_JumpTo_Title_FirstTime, 0x0, src/MM_JumpTo_Title_FirstTime.c
-common, 230, MM_EndOfFile, 0x0, src/MM_MENUBOX_Language.c
+common, 230, MM_EndOfFile, 0x0, src/MM_MenuProc_Language.c

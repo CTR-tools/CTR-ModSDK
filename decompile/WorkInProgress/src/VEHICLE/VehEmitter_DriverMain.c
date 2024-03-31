@@ -708,7 +708,7 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
       if ((uVar13 < 0x81) || (((d->const_turboLowRoomWarning + 2) * 0x20) < uVar13))
       {
         puVar12 = *(undefined **)(*(int *)(puVar21 + 0x68) + 0x14);
-        uVar29 = THREAD_SearchForModel(puVar12, 0x2c);
+        uVar29 = PROC_SearchForModel(puVar12, 0x2c);
         uVar13 = (uint)((ulonglong)uVar29 >> 0x20);
         if ((int)uVar29 != 0)
           goto LAB_8005a9d8;

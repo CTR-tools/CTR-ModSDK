@@ -36,15 +36,15 @@ void CS_Thread_InterpolateFramesMS(struct Thread *t)
     // if there is room in primMem
     if (primmemCurr + 6 < endMin100)
     {
-        // tileView offset 0x28 (400 = 0x190 = 0x168+0x28)
-        setCopControlWord(2, 0, gGT->tileView[0].matrix_ViewProj.m[0][0]);
-        setCopControlWord(2, 0x800, gGT->tileView[0].matrix_ViewProj.m[0][2]);
-        setCopControlWord(2, 0x1000, gGT->tileView[0].matrix_ViewProj.m[1][1]);
-        setCopControlWord(2, 0x1800, gGT->tileView[0].matrix_ViewProj.m[2][0]);
-        setCopControlWord(2, 0x2000, gGT->tileView[0].matrix_ViewProj.m[2][2]);
-        setCopControlWord(2, 0x2800, gGT->tileView[0].matrix_ViewProj.t[0]);
-        setCopControlWord(2, 0x3000, gGT->tileView[0].matrix_ViewProj.t[1]);
-        setCopControlWord(2, 0x3800, gGT->tileView[0].matrix_ViewProj.t[2]);
+        // pushBuffer offset 0x28 (400 = 0x190 = 0x168+0x28)
+        setCopControlWord(2, 0, gGT->pushBuffer[0].matrix_ViewProj.m[0][0]);
+        setCopControlWord(2, 0x800, gGT->pushBuffer[0].matrix_ViewProj.m[0][2]);
+        setCopControlWord(2, 0x1000, gGT->pushBuffer[0].matrix_ViewProj.m[1][1]);
+        setCopControlWord(2, 0x1800, gGT->pushBuffer[0].matrix_ViewProj.m[2][0]);
+        setCopControlWord(2, 0x2000, gGT->pushBuffer[0].matrix_ViewProj.m[2][2]);
+        setCopControlWord(2, 0x2800, gGT->pushBuffer[0].matrix_ViewProj.t[0]);
+        setCopControlWord(2, 0x3000, gGT->pushBuffer[0].matrix_ViewProj.t[1]);
+        setCopControlWord(2, 0x3800, gGT->pushBuffer[0].matrix_ViewProj.t[2]);
         setCopReg(2, in_zero, local_20);
         setCopReg(2, in_at, local_1c);
         setCopReg(2, &local_20, local_18);
@@ -77,7 +77,7 @@ void CS_Thread_InterpolateFramesMS(struct Thread *t)
             {
                 iVar6 = 0x3ff;
             }
-            endMin100 = gGT->tileView[0].ptrOT[iVar6];
+            endMin100 = gGT->pushBuffer[0].ptrOT[iVar6];
             uVar3 = (u_int)primmemCurr & 0xffffff;
             *primmemCurr = *endMin100 | 0x5000000;
             primmemCurr += 6;

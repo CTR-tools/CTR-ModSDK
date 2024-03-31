@@ -121,7 +121,7 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   iVar1->matrix.m[2][2] = iVar3->matrix.m[2][2];
 
   t = iVar1->thread;
-  t->funcThDestroy = THREAD_DestroyInstance;
+  t->funcThDestroy = PROC_DestroyInstance;
   
   fObj = t->object;
   fObj->frameCount = FPS_DOUBLE(7);

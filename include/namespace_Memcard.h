@@ -264,7 +264,7 @@ struct GhostProfile
 	char profile_name[0x15];
 
 	// 0x15
-	char TitleOSK_name[0x11];
+	char SubmitName_name[0x11];
 
 	// 0x26
 	short alwaysOne;

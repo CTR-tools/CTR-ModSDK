@@ -522,7 +522,7 @@ LAB_80027658:
 				) &&
 
 				(
-					// TitleFlag_IsFullyOnScreen
+					// RaceFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(),
 
 					// if not fully on screen
@@ -699,7 +699,7 @@ void FUN_80027838(void)
 	  // s_ghost_8008d040
 	  // "ghost"
 
-	  // THREAD_BirthWithObject
+	  // PROC_BirthWithObject
 	  // 0x4 = size
 	  // 0 = no relation to param4
 	  // 0x100 flag = LargeStackPool

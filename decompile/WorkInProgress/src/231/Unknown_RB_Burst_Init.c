@@ -171,26 +171,26 @@ void DECOMP_RB_Burst_Init(struct Instance* inst)
   
   // check collision with all Player thread
  
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread,&DAT_1f800108,
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread,&DAT_1f800108,
 
   // burst->driverParent(?)->instSelf->thread
   *(unsigned short *)(*(int *)(*(int *)(burst + 4) + 0x1c) + 0x6c));
 
   // check collision with all Robotcar thread
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[ROBOT].thread,&DAT_1f800108,
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[ROBOT].thread,&DAT_1f800108,
 
   // burst->driverParent(?)->instSelf->thread
   *(unsigned short *)(*(int *)(*(int *)(burst + 4) + 0x1c) + 0x6c));
 			   
   // check collision with all Mine thread
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[MINE].thread,&DAT_1f800108,0);
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[MINE].thread,&DAT_1f800108,0);
   
   // check collision with all Tracking thread
-  THREAD_CollideHitboxWithBucket(gGT->threadBuckets[TRACKING].thread,&DAT_1f800108,0);
+  PROC_CollideHitboxWithBucket(gGT->threadBuckets[TRACKING].thread,&DAT_1f800108,0);
   
   // RB_Burst_CollLevInst (callback for BSP collision)
   DAT_1f800130 = RB_Burst_CollLevInst;
   
-  THREAD_StartSearch_Self(&DAT_1f800108);
+  PROC_StartSearch_Self(&DAT_1f800108);
   return;
 }

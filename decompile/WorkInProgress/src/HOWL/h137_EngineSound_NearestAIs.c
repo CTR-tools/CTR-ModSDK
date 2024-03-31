@@ -3,7 +3,7 @@
 void DECOMP_EngineSound_NearestAIs(void)
 {
   struct GameTracker *gGT;
-  struct TileView *view;
+  struct PushBuffer* pb;
   struct Driver *robot;
   struct Driver* player;
   struct Thread *t;
@@ -46,13 +46,13 @@ void DECOMP_EngineSound_NearestAIs(void)
         // loop for number of players (max 2)
         for (iVar10 = 0; iVar10 < 2; iVar10++)
         {
-          // tileView
-          view = gGT->tileView[iVar10];
+          // pushBuffer
+          pb = gGT->pushBuffer[iVar10];
 
-          // Subtract robotcar position from tileView position
-          distX = view->pos[0] - (short)robot->posCurr[0];
-          distY = view->pos[1] - (short)robot->posCurr[1];
-          distZ = view->pos[2] - (short)robot->posCurr[2];
+          // Subtract robotcar position from pushBuffer position
+          distX = pb->pos[0] - (short)robot->posCurr[0];
+          distY = pb->pos[1] - (short)robot->posCurr[1];
+          distZ = pb->pos[2] - (short)robot->posCurr[2];
 
           // Distance formula in 3D
           dist = SquareRoot0(distX * distX + distY * distY + distZ * distZ);
@@ -105,7 +105,7 @@ void DECOMP_EngineSound_NearestAIs(void)
         // param1 - matrix
         // param2 - driver
         // param3 - return vector
-        GTE_AudioLR_Driver(gGT->tileView[local_38[sVar1]].matrix_Camera, robot, v);
+        GTE_AudioLR_Driver(gGT->pushBuffer[local_38[sVar1]].matrix_Camera, robot, v);
 
         // direction X and Z from previous function
         lVar5 = ratan2(v.vx, -v.vz);

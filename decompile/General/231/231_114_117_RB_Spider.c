@@ -3,7 +3,7 @@
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
 #ifndef REBUILD_PS1
-void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
+void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 {
 	typedef struct
 	{
@@ -75,8 +75,8 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     // loop through all players
     for (i = 0; i < numPlyr; i++)
     {
-		view = &gGT->tileView[i];
-        m = &view->matrix_ViewProj;
+		pb = &gGT->pushBuffer[i];
+        m = &pb->matrix_ViewProj;
 
         // store on GTE
         gte_SetRotMatrix(m);
@@ -152,8 +152,8 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
                 if (depth > 0x3ff)
                     depth = 0x3ff;
 
-                // tileView 0xf4, ptrOT
-                ot = &view->ptrOT[depth];
+                // pushBuffer 0xf4, ptrOT
+                ot = &pb->ptrOT[depth];
 
                 // prim header, OT and prim len
                 *(int *)p = *ot | 0x5000000;
@@ -309,7 +309,7 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   #endif
 
   struct Thread* t = 
-	DECOMP_THREAD_BirthWithObject
+	DECOMP_PROC_BirthWithObject
 	(
 		SIZE_RELATIVE_POOL_BUCKET
 		(

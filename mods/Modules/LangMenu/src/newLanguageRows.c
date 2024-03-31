@@ -1,7 +1,7 @@
 #include <common.h>
 #include "macro.h"
 
-struct MenuRow rows_language_MM[4] = 
+struct MenuRow rowsLanguage_MM[4] = 
 {
     [0] = MENU_ROW(0x51,4,6,5,5), // High score
     [1] = MENU_ROW(0x52,5,6,6,6), // Language

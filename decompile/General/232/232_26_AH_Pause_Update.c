@@ -20,7 +20,7 @@ void DECOMP_AH_Pause_Update()
 		// 0x300 = SmallStackPool
 		// 0xd = "other" thread bucket
 		struct Thread* t =
-			DECOMP_THREAD_BirthWithObject(0x30d, 0, 0, 0);
+			DECOMP_PROC_BirthWithObject(0x30d, 0, 0, 0);
 			
 		ptrPauseObject->t = t;
 		
@@ -43,9 +43,9 @@ void DECOMP_AH_Pause_Update()
 			struct InstDrawPerPlayer *idpp = 
 				INST_GETIDPP(inst);
 				
-			idpp[0].tileView = &gGT->tileView_UI;
+			idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 			for(int j = 1; j < gGT->numPlyrCurrGame; j++)
-				idpp[j].tileView = 0;
+				idpp[j].pushBuffer = 0;
 			
 			*(int*)&inst->matrix.m[0][0] = 0x1000;
 			*(int*)&inst->matrix.m[0][2] = 0;

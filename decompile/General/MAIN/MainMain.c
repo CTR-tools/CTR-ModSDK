@@ -61,14 +61,14 @@ u_int DECOMP_main()
 
 				if (gGT->levelID == MAIN_MENU_LEVEL)
 				{
-					if (DECOMP_TitleFlag_IsFullyOffScreen() != 0)
-						DECOMP_TitleFlag_SetFullyOnScreen();
+					if (DECOMP_RaceFlag_IsFullyOffScreen() != 0)
+						DECOMP_RaceFlag_SetFullyOnScreen();
 				}
 				
 				else
 				{
-					if (DECOMP_TitleFlag_IsFullyOnScreen() != 0)
-						DECOMP_TitleFlag_BeginTransition(2);
+					if (DECOMP_RaceFlag_IsFullyOnScreen() != 0)
+						DECOMP_RaceFlag_BeginTransition(2);
 				}
 				
 				DECOMP_DropRain_Reset(gGT);
@@ -125,7 +125,7 @@ u_int DECOMP_main()
 				{
 					if
 					(
-						(DECOMP_TitleFlag_IsFullyOnScreen() == 1) ||
+						(DECOMP_RaceFlag_IsFullyOnScreen() == 1) ||
 						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
 						(sdata->pause_state != 0)
 					)
@@ -153,7 +153,7 @@ u_int DECOMP_main()
 					// if restarting race
 					if (iVar8 == -5)
 					{
-						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
+						if (DECOMP_RaceFlag_IsFullyOnScreen() == 1)
 						{
 							// reinitialize world,
 							// does not reinitialize pools
@@ -180,7 +180,7 @@ u_int DECOMP_main()
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 						
-						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
+						if (DECOMP_RaceFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
 							sdata->Loading.OnBegin.RemBitsConfig0 = 0;
@@ -200,8 +200,8 @@ u_int DECOMP_main()
 							DECOMP_MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 						}
 						
-						else if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
-							DECOMP_TitleFlag_BeginTransition(1);
+						else if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
+							DECOMP_RaceFlag_BeginTransition(1);
 						
 						// do not BREAK, 
 						// keep rendering the scene
@@ -409,11 +409,11 @@ FinishLoading:
 						(gGT->levelID != MAIN_MENU_LEVEL)
 					)
 				{	
-					// placeholder until 233 CS_Garage_MenuBox is done,
+					// placeholder until 233 CS_Garage_MenuProc is done,
 					// remember to correct the LOAD_TenStages "case 4"
 					if (gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 					{
-						if(gGT->tileView[0].pos[0] != 0x24c)
+						if(gGT->pushBuffer[0].pos[0] != 0x24c)
 						{
 							if(gGT->level2 == 0)
 							{
@@ -422,7 +422,7 @@ FinishLoading:
 								
 								int x = 0;
 								int getPath = 0;
-								DECOMP_CAM_Path_Move(x, &gGT->tileView[0].pos, &gGT->tileView[0].rot, &getPath);
+								DECOMP_CAM_Path_Move(x, &gGT->pushBuffer[0].pos, &gGT->pushBuffer[0].rot, &getPath);
 							}
 						}
 					}
@@ -435,12 +435,12 @@ FinishLoading:
 					// placeholder until 233 is done
 					if (gGT->levelID == NAUGHTY_DOG_CRATE)
 					{
-						gGT->tileView[0].pos[0] = 0;
-						gGT->tileView[0].pos[1] = 0x1c2;
-						gGT->tileView[0].pos[2] = 0x1dd;
-						gGT->tileView[0].rot[0] = 0x7dd;
-						gGT->tileView[0].rot[1] = 0;
-						gGT->tileView[0].rot[2] = 0;
+						gGT->pushBuffer[0].pos[0] = 0;
+						gGT->pushBuffer[0].pos[1] = 0x1c2;
+						gGT->pushBuffer[0].pos[2] = 0x1dd;
+						gGT->pushBuffer[0].rot[0] = 0x7dd;
+						gGT->pushBuffer[0].rot[1] = 0;
+						gGT->pushBuffer[0].rot[2] = 0;
 
 						// wait 5 seconds
 						if(gGT->timer > 30*5)
@@ -467,17 +467,17 @@ FinishLoading:
 						
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
-							gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
-							gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
-							gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
+							gGT->pushBuffer[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
+							gGT->pushBuffer[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
+							gGT->pushBuffer[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
 										  
-							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
-							gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
-							gGT->tileView[k].rot[2] = 0; // required
+							gGT->pushBuffer[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
+							gGT->pushBuffer[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
+							gGT->pushBuffer[k].rot[2] = 0; // required
 							
 							// move backwards a little
-							gGT->tileView[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->tileView[k].rot[1])) >> 0xC;
-							gGT->tileView[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->tileView[k].rot[1])) >> 0xC;
+							gGT->pushBuffer[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->pushBuffer[k].rot[1])) >> 0xC;
+							gGT->pushBuffer[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->pushBuffer[k].rot[1])) >> 0xC;
 							
 						}
 					}
@@ -490,34 +490,34 @@ FinishLoading:
 	
 						if ((held & BTN_UP) != 0)
 						{
-							gGT->tileView[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-							gGT->tileView[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+							gGT->pushBuffer[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
+							gGT->pushBuffer[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
 						}
 	
 						if ((held & BTN_DOWN) != 0)
 						{
-							gGT->tileView[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-							gGT->tileView[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+							gGT->pushBuffer[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
+							gGT->pushBuffer[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
 						}
 	
 						if ((held & BTN_LEFT) != 0)
 						{
-							gGT->tileView[0].rot[1] += FPS_HALF(0x20);
+							gGT->pushBuffer[0].rot[1] += FPS_HALF(0x20);
 						}
 	
 						if ((held & BTN_RIGHT) != 0)
 						{
-							gGT->tileView[0].rot[1] -= FPS_HALF(0x20);
+							gGT->pushBuffer[0].rot[1] -= FPS_HALF(0x20);
 						}
 	
 						if ((held & BTN_CROSS) != 0)
 						{
-							gGT->tileView[0].pos[1] -= FPS_HALF(0x20);
+							gGT->pushBuffer[0].pos[1] -= FPS_HALF(0x20);
 						}
 	
 						if ((held & BTN_TRIANGLE) != 0)
 						{
-							gGT->tileView[0].pos[1] += FPS_HALF(0x20);
+							gGT->pushBuffer[0].pos[1] += FPS_HALF(0x20);
 						}
 					}
 					
@@ -531,7 +531,7 @@ FinishLoading:
 						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 						{
 							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
-							sdata->ptrActiveMenuBox = 0;
+							sdata->ptrActiveMenu = 0;
 							data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 						}
 					}
@@ -633,7 +633,7 @@ void StateZero()
 	
 	// Without this, checkered flag will draw one frame after 
 	// the copyright page draws, then go off-screen at ND Box
-	DECOMP_TitleFlag_SetFullyOffScreen();
+	DECOMP_RaceFlag_SetFullyOffScreen();
 	
 	ResetGraph(0);
 	SetGraphDebug(0);
@@ -687,7 +687,7 @@ void StateZero()
 	// traffic light countdown timer, set to negative one second
 	gGT->trafficLightsTimer = 0xfffffc40;
 	
-	DECOMP_RCNT_Init();
+	DECOMP_Timer_Init();
 
 	// set callback and save callback
 	EnterCriticalSection();

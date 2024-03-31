@@ -16,10 +16,10 @@ void DF_PrintText()
   #endif
 
   gGT = sdata->gGT;
-  backup = gGT->tileView_UI.ptrOT;
-  gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
+  backup = gGT->pushBuffer_UI.ptrOT;
+  gGT->pushBuffer_UI.ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
   DecalFont_DrawLine("Debug View: R1+Select", 10, 208, FONT_SMALL, ORANGE);
-  gGT->tileView_UI.ptrOT = backup;
+  gGT->pushBuffer_UI.ptrOT = backup;
 }
 
 void DF_DrawBox()
@@ -37,7 +37,7 @@ void DF_DrawBox()
 
   CTR_Box_DrawWireBox(
 	&r,local_30,
-	sdata->gGT->tileView_UI.ptrOT,
+	sdata->gGT->pushBuffer_UI.ptrOT,
 	&sdata->gGT->backBuffer->primMem);
 }
 

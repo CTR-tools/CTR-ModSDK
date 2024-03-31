@@ -54,9 +54,9 @@ RECT glowingcursor =
 	.h = 21,
 };
 
-void StatsEditor(struct MenuBox*);
+void StatsEditor(struct RectMenu*);
 
-struct MenuBox MyMenuBox =
+struct RectMenu MyMenuBox =
 {
 	.stringIndexTitle = 45,
 

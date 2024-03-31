@@ -10,7 +10,7 @@ void DECOMP_MM_TrackSelect_Init()
 	D230.trackSel_transitionState = 0;
 
 	// set track index to the index selected in track selection menu, starts at 0 for both Arcade and Battle
-	D230.menubox_trackSelect.rowSelected = sdata->trackSelBackup;
+	D230.menuTrackSelect.rowSelected = sdata->trackSelBackup;
 	
 	// 12 frames when moving between selection
 	D230.trackSel_transitionFrames = FPS_DOUBLE(12);
@@ -30,22 +30,22 @@ void DECOMP_MM_TrackSelect_Init()
 	// If you scroll past the max number of tracks, go back to the first track
 	if (numTracks <= sdata->trackSelBackup)
 	{
-		D230.menubox_trackSelect.rowSelected = 0;
+		D230.menuTrackSelect.rowSelected = 0;
 	}
 
 	// Loop through all tracks until an unlocked track is found
-	while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[D230.menubox_trackSelect.rowSelected]))
+	while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[D230.menuTrackSelect.rowSelected]))
 	{
-		D230.menubox_trackSelect.rowSelected++;
+		D230.menuTrackSelect.rowSelected++;
 
 		// If track index goes too high, reset to zero
-		if (numTracks <= D230.menubox_trackSelect.rowSelected)
+		if (numTracks <= D230.menuTrackSelect.rowSelected)
 		{
-			D230.menubox_trackSelect.rowSelected = 0;
+			D230.menuTrackSelect.rowSelected = 0;
 		}
 	}
 
-	D230.trackSel_currTrack = D230.menubox_trackSelect.rowSelected;
+	D230.trackSel_currTrack = D230.menuTrackSelect.rowSelected;
 
 	DECOMP_MM_TrackSelect_Video_SetDefaults();
 }

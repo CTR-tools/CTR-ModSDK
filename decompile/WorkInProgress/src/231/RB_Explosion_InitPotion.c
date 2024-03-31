@@ -30,7 +30,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   shatterInst->matrix.t[2] = inst.matrix.t[2];
   
   // set funcThDestroy to remove instance from instance pool
-  shatterInst->thread->funcThDestroy = THREAD_DestroyInstance;
+  shatterInst->thread->funcThDestroy = PROC_DestroyInstance;
   
   // set scale
   shatterInst->scale[0] = 0x800;

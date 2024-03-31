@@ -66,9 +66,9 @@ void ModsMain()
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}
 	
-	// New block for TileView?
+	// New block for PushBuffer?
 	// MultiplayerWumpaHUD is never called, therefore
-	// TileView_SetDrawEnv_DecalMP can be taken
+	// PushBuffer_SetDrawEnv_DecalMP can be taken
 	
 	// add more...
 	

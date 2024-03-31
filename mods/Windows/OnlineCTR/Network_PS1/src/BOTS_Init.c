@@ -11,7 +11,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	th = (struct Thread*)THREAD_BirthWithObject(
+	th = (struct Thread*)PROC_BirthWithObject(
 			0x62c0101,BOTS_ThTick_Drive_custom,"robotcar",0);
 	
 	dr = (struct Driver*)th->object;

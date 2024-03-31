@@ -72,17 +72,14 @@
 
 #include <namespace_Memcard.h>
 #include <namespace_Mempack.h>
-#include <namespace_MenuBox.h> // need to rename
-#include <namespace_Particle.h>
-#include <namespace_Thread.h>
 
-// should not be here
-#include <namespace_TileView.h>
+#include <namespace_Particle.h>
+#include <namespace_Proc.h>
+#include <namespace_PushBuffer.h>
+#include <namespace_RectMenu.h>
 
 // should not be here
 #include <namespace_Main.h>
-
-// TileView should be here
 
 #include <namespace_UI.h>
 #include <namespace_Vehicle.h>

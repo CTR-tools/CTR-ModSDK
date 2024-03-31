@@ -22,8 +22,8 @@ void DF_PrintText()
   #endif
 
   gGT = sdata->gGT;
-  backup = gGT->tileView_UI.ptrOT;
-  gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
+  backup = gGT->pushBuffer_UI.ptrOT;
+  gGT->pushBuffer_UI.ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
   
   if((sdata->gGT->framesInThisLEV-frame) <= 1000)
 	  if(sdata->gGT->msInThisLEV-ms != 0)
@@ -38,7 +38,7 @@ void DF_PrintText()
   DecalFont_DrawLine(string, 10, 208, FONT_SMALL, ORANGE);
   
   
-  gGT->tileView_UI.ptrOT = backup;
+  gGT->pushBuffer_UI.ptrOT = backup;
 }
 
 void DF_DrawOTag(u_long* ot)

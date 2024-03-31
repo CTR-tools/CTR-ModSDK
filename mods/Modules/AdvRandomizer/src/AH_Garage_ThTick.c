@@ -182,7 +182,7 @@ LAB_800aec34:
     if (0x143fff < dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2])
         goto LAB_800aede0;
 
-    RECT view = gGT->tileView[0].rect;
+    RECT view = gGT->pushBuffer[0].rect;
 
     // if aku is not giving a hint
     if (sdata->AkuAkuHintState == 0 && !RANDOM_MODE)
@@ -239,7 +239,7 @@ LAB_800aede8:
     SPS->Union.ThBuckColl.funcCallback = AH_Garage_Open;
 
     // Open garage door when player gets within radius of door
-    THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread, SPS, 0);
+    PROC_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread, SPS, 0);
 
     ratio = MATH_Sin((int)inst->instDef->rot[1]);
 
@@ -256,10 +256,10 @@ LAB_800aede8:
 
     if (dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2] < 0x40000)
     {
-        gGT->tileView_UI.fadeFromBlack_desiredResult = 0;
-        gGT->tileView_UI.fade_step = 0xfd56;
+        gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0;
+        gGT->pushBuffer_UI.fade_step = 0xfd56;
     }
-    if (gGT->tileView_UI.fadeFromBlack_currentValue == 0)
+    if (gGT->pushBuffer_UI.fadeFromBlack_currentValue == 0)
     {
         // when loading is done, remove flag for In Adventure Arena
         sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_ARENA;
@@ -285,7 +285,7 @@ LAB_800aede8:
         // Set the boss character (P2)
         data.characterIDs[1] = data.metaDataLEV[hubID + 0x19].characterID_Boss;
 
-        TitleFlag_SetDrawOrder(1);
+        RaceFlag_SetDrawOrder(1);
         MainRaceTrack_RequestLoad(bossTracks[hubID]);
     }
     return;

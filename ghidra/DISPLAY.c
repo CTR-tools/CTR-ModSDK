@@ -119,7 +119,7 @@ uint * FUN_80023a40(uint *param_1,ushort *param_2)
 
 
 // DISPLAY_Blur_Main
-// param_1 - tileView
+// param_1 - pushBuffer
 // param_2 - strength?
 void FUN_80023d4c(int param_1,int param_2)
 
@@ -160,16 +160,16 @@ void FUN_80023d4c(int param_1,int param_2)
     puVar7[2] = 0xe6000001;
     puVar7[9] = 0xe6000000;
 
-	// tileView startX
+	// pushBuffer startX
     uVar6 = SEXT24(*(short *)(param_1 + 0x1c));
 
-	// tileView sizeY
+	// pushBuffer sizeY
     sVar1 = *(short *)(param_1 + 0x22);
 
-	// tileView startY
+	// pushBuffer startY
     uVar4 = (int)*(short *)(param_1 + 0x1e) * 0x10000;
 
-	// tileView sizeX
+	// pushBuffer sizeX
     uVar5 = uVar6 + (int)*(short *)(param_1 + 0x20);
 
     puVar7[4] = uVar6 | uVar4;

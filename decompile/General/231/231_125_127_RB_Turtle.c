@@ -193,7 +193,7 @@ void DECOMP_RB_Turtle_LInB(struct Instance* inst)
 	inst->flags |= 0x2000;
 
 	t = 
-		DECOMP_THREAD_BirthWithObject
+		DECOMP_PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

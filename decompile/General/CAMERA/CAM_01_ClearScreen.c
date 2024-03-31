@@ -11,7 +11,7 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
   struct DB* backDB;
   int iVar5;
   int iVar7;
-  struct TileView* view;
+  struct PushBuffer* pb;
   TILE* tile;
   int loop;
   struct Level* level1;
@@ -25,19 +25,19 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 
   for (loop = 0; loop < numPlyr; loop++)
   {
-    // pointer to tileView struct
-    view = &gGT->tileView[loop];
-	endOT = &view->ptrOT[0x3FF];
+    // pointer to pushBuffer struct
+    pb = &gGT->pushBuffer[loop];
+	endOT = &pb->ptrOT[0x3FF];
 
-    x = view->rect.x;
-    y = view->rect.y + swap * 0x128;
-    w = view->rect.w;
-    h = view->rect.h;
+    x = pb->rect.x;
+    y = pb->rect.y + swap * 0x128;
+    w = pb->rect.w;
+    h = pb->rect.h;
 	
-    // tileView rotation
-	// view up/down will change where the line splits.
+    // pushBuffer rotation
+	// cam up/down will change where the line splits.
 	// At 0x800, camera looks straight, and line is perfectly midpoint
-    iVar5 = ((int)view->rot[0]-0x800 >> 3) + (h>>1);
+    iVar5 = ((int)pb->rot[0]-0x800 >> 3) + (h>>1);
 
 	// if splitline is above top of screen,
 	// camera looks far down and only sees bottom half

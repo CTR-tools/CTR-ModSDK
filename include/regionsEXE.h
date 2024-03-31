@@ -1751,14 +1751,14 @@ struct Data
 	// 80083090 -- JpnTrial
 	// 80084468 -- EurRetail
 	// 80087424 -- JpnRetail
-	struct MenuBox menuBox_optionsMenu_racingWheel;
+	struct RectMenu menuRacingWheelConfig;
 
 	// 0x800841BC
-	struct MenuRow menuRow_quit[3];
+	struct MenuRow rowsQuit[3];
 
 	// 0x2C bytes large
 	// 0x800841D0
-	struct MenuBox menuBox_quit;
+	struct RectMenu menuQuit;
 
 	#if BUILD >= UsaRetail
 	// 800841FC -- 24 bytes (0x18)
@@ -1876,7 +1876,7 @@ struct Data
 	// 0x80083268 -- JpnTrial
 	// 0x80084604 -- EurRetail
 	// 0x800875B4 -- JpnRetail
-	struct MenuRow menuRow_advHub[5];
+	struct MenuRow rowsAdvHub[5];
 
 	// +2 padding
 	#if BUILD == UsaRetail
@@ -1884,10 +1884,10 @@ struct Data
 	#endif
 
 	// 0x80084388 -- 2C
-	struct MenuBox menuBox_advHub;
+	struct RectMenu menuAdvHub;
 
 	// 0x800843B4
-	struct MenuRow menuRow_advRace[5];
+	struct MenuRow rowsAdvRace[5];
 
 	// +2 padding
 	#if BUILD == UsaRetail
@@ -1895,28 +1895,28 @@ struct Data
 	#endif
 
 	// 0x800843D4 -- 2C
-	struct MenuBox menuBox_advRace;
+	struct RectMenu menuAdvRace;
 
 	// 0x80084400
-	struct MenuRow menuRow_advCup[4];
+	struct MenuRow rowsAdvCup[4];
 
 	// 0x80084418 -- 2C
-	struct MenuBox menuBox_advCup;
+	struct RectMenu menuAdvCup;
 
 	// 0x80084444
-	struct MenuRow menuRow_battle[8];
+	struct MenuRow rowsBattle[8];
 
 	// 0x80084474 -- 2c
-	struct MenuBox menuBox_battle;
+	struct RectMenu menuBattle;
 
 	// 0x800844A0
-	struct MenuRow menuRow_arcadeCup[4];
+	struct MenuRow rowsArcadeCup[4];
 
 	// 0x800844B8 -- 2c
-	struct MenuBox menuBox_arcadeCup;
+	struct RectMenu menuArcadeCup;
 
 	// 0x800844E4
-	struct MenuRow menuRow_arcadeRace[7];
+	struct MenuRow rowsArcadeRace[7];
 
 	// +2 padding
 	#if BUILD == UsaRetail
@@ -1928,7 +1928,7 @@ struct Data
 	// 0x80083410 -- JpnTrial
 	// 0x800847AC -- EurRetail
 	// 0x8008775C -- JpnRetail
-	struct MenuBox menuBox_arcadeRace;
+	struct RectMenu menuArcadeRace;
 	
 	// 0x8008453C
 	struct
@@ -2012,7 +2012,7 @@ struct Data
 		#endif
 
 		// Something changed in JPN
-		// After menuBox_arcadeRace
+		// After menuArcadeRace
 		// Before s_BASCUS_94426G_Question
 		#if BUILD == JpnRetail
 		char fillerJpn[0x18];
@@ -2033,7 +2033,7 @@ struct Data
 	char s_BASCUS_94426G_Star[0x10];
 
 	// 0x80085A54
-	struct MenuRow menuRow_saveGame[3];
+	struct MenuRow rowsSaveGame[3];
 
 	// +2 padding (0x14 total) 0x14 = 20, 3*6 +2
 	#if BUILD == UsaRetail
@@ -2041,12 +2041,12 @@ struct Data
 	#endif
 
 	// 0x80085A68 -- 2C (+8 for SepReview)
-	struct MenuBox menuBox_saveGame;
+	struct RectMenu menuSaveGame;
 
 	// 0x80085A94
 	// has internal pointer to 80043b30,
 	// which loads a LEV from track selection
-	struct MenuBox menuBox_TitleBeginTrack;
+	struct RectMenu menuQueueLoadTrack;
 
 	// 80083d40 -- SepReview -- remember MenuBoxes are larger
 	// 80085AC0 -- UsaRetail
@@ -2094,7 +2094,7 @@ struct Data
 	int lngIndex_FinishOrLoser[4];
 
 	// 80085B3C
-	struct MenuRow menuRow_greenLoadSave[5];
+	struct MenuRow rowsGreenLoadSave[5];
 
 	// +2 padding (0x14 total) 0x14 = 20, 3*6 +2
 	#if BUILD == UsaRetail
@@ -2107,42 +2107,42 @@ struct Data
 	// 80085df8 -- EurRetail	0x58 (from messageScreens)
 	// 80088dc0 -- JpnRetail	0x58 (from messageScreens)
 	// menuBox for green save/load screen
-	struct MenuBox menuBox_greenLoadSave;
+	struct RectMenu menuGreenLoadSave;
 
 	#if BUILD == SepReview
 	// 80083e00 -- SepReview
 	// 4 "rows" for 4 profile boxes in Adv LoadSave screen,
-	struct MenuRow menuRow_drawFourAdvProfiles[5];
+	struct MenuRow rowsFourAdvProfiles[5];
 	#endif
 
 	// 80083e20 -- SepReview
 	// 80085b88 -- UsaRetail
 	// menuBox to draw adventure profiles
-	struct MenuBox menuBox_FourAdvProfiles;
+	struct RectMenu menuFourAdvProfiles;
 
 	// 80083e54 -- SepReview
 	// 80085bb4 -- UsaRetail
 	// menuBox for ghosts
-	struct MenuBox menuBox_GhostSelection;
+	struct RectMenu menuGhostSelection;
 
 	// 80083e88 -- SepReview
 	// 80085be0 -- UsaRetail
 	// menuBox for "Warning, no memory card"
-	struct MenuBox menuBox_warning2;
+	struct RectMenu menuWarning2;
 
 	// 80083ebc -- SepReview
 	// 80085c0c -- UsaRetail
 	// 80085ea8 -- EurRetail
 	// 80088e70 -- JpnRetail
 	// menuBox for "Please Enter Your Name"
-	struct MenuBox menuBox_OSK; // on-screen keyboard
+	struct RectMenu menuSubmitName; // on-screen keyboard
 
 	// 80083ef0 -- SepReview -- remember MenuBoxes are larger
 	// 80085c38 -- UsaRetail
 	// 80084b14 -- JpnTrial
 	// 80085ed4 -- EurRetail
 	// 80088e9c -- JpnRetail
-	struct MenuBox menuBox_LoadProfileFromHub;
+	struct RectMenu menuQueueLoadHub;
 
 	// 0x80085C64
 	// appear in save/load screen
@@ -2185,13 +2185,13 @@ struct Data
 	// to save over an existing file
 
 	// 80085D1C
-	struct MenuRow menuRow_overwrite[3];
+	struct MenuRow rowsOverwrite[3];
 
 	// 80085D30
-	struct MenuBox menuBox_overwrite_adv;
+	struct RectMenu menuOverwriteAdv;
 
 	// 80085D5C
-	struct MenuBox menuBox_overwrite_ghost;
+	struct RectMenu menuOverwriteGhost;
 
 	// 80084058 -- SepReview
 	// 80085D88 -- UsaRetail
@@ -2294,12 +2294,12 @@ struct Data
 	// 0x80085174 -- JpnTrial
 	// 0x8008659C -- EurRetail
 	// 0x80089620 -- JpnRetail
-	struct MenuRow menuRow_Retry_ExitToMap[3];
+	struct MenuRow rowsRetryExit[3];
 
 	// +2 padding
 
 	// 0x80086314
-	struct MenuBox menuBox_Retry_ExitToMap;
+	struct RectMenu menuRetryExit;
 
 	// SepReview -- 0x80084618
 	// UsaRetail -- 0x80086340
@@ -3125,32 +3125,32 @@ struct sData
 	// 8008c3a0 JpnTrial
 	// 8008d7e0 EurRetail
 	// 80090854 JpnRetail
-	int TitleFlag_AnimationType;
+	int RaceFlag_AnimationType;
 
 	// 8008d444
-	short TitleFlag_Position;
+	short RaceFlag_Position;
 
 	// 8008d446
 	short unk_CheckFlag1;
 
 	// 8008b8a8 Sep3
 	// 8008d448 UsaRetail
-	short TitleFlag_CanDraw;
+	short RaceFlag_CanDraw;
 
 	// 8008d44a
 	short unk_CheckFlag2;
 
 	// 8008b8ac Sep3
 	// 8008d44c UsaRetail
-	short TitleFlag_DrawOrder;
+	short RaceFlag_DrawOrder;
 	short padding_8008d44e;
 
 #if BUILD >= UsaRetail
 	// 8008d450
-	int TitleFlag_LoadingTextAnimFrame;
+	int RaceFlag_LoadingTextAnimFrame;
 
 	// 8008d454
-	int TitleFlag_Transition;
+	int RaceFlag_Transition;
 #endif
 
 	// 8008b8b0 Sep3
@@ -3158,10 +3158,10 @@ struct sData
 	// 8008c3b8 JpnTrial
 	// 8008d7f8 EurRetail
 	// 8009086c JpnRetail
-	int TitleFlag_ElapsedTime;
+	int RaceFlag_ElapsedTime;
 	
 #if BUILD == SepReview
-	int TitleFlag_unknown;
+	int RaceFlag_unknown;
 #endif
 	
 	// 8008b8b8 Sep3
@@ -3169,7 +3169,7 @@ struct sData
 	// 8008c3bc JpnTrial
 	// 8008d7fc EurRetail
 	// 80090870 JpnRetail
-	int TitleFlag_CopyLoadStage;
+	int RaceFlag_CopyLoadStage;
 	
 	// 8008b8bc Sep3	
 	// 8008d460 UsaRetail	
@@ -3271,11 +3271,11 @@ struct sData
 	int boolOpenTokenRelicMenu;
 
 	// 8008b90c Sep3
-	// 8008d4b4 UsaRetail -- ptr to 8009ad18 (tileView) for multiplayer wumpa
+	// 8008d4b4 UsaRetail -- ptr to 8009ad18 (pushBuffer) for multiplayer wumpa
 	// 8008c40c JpnTrial
 	// 8008d858 EurRetail
 	// 800908cc JpnRetail
-	int ptrTileViewUI;
+	int ptrPushBufferUI;
 
 	// 8008d4b8
 	int ptrFruitDisp;
@@ -4058,7 +4058,7 @@ struct sData
 	// 8008d8f0 - Usa
 	u_short boolHasLoadedOptions;
 
-	u_short titleoskunknown;
+	u_short typeTimer;
 	#elif BUILD == JpnRetail
 	char data14_aaaaa[0x14];
 	#endif
@@ -4086,7 +4086,7 @@ struct sData
 	// 8008c860 -- JpnTrial
 	// 8008dcbc -- EurRetail
 	// 80090d34 -- JpnRetail
-	struct MenuBox* ptrActiveMenuBox;
+	struct RectMenu* ptrActiveMenu;
 
 	// 8008d90c
 	// Never used to detect dead menu
@@ -4113,8 +4113,8 @@ struct sData
 
 	// 8008d924 -- UsaRetail
 	// 8008dcd8 -- EurRetail
-	// Becomes nullptr after ptrActiveMenuBox is set
-	struct MenuBox* ptrDesiredMenuBox;
+	// Becomes nullptr after ptrActiveMenu is set
+	struct RectMenu* ptrDesiredMenu;
 
 	// 8008d928
 	char unk_memcardRelated_8008d928[0x8];
@@ -4169,7 +4169,7 @@ struct sData
 
 	// 8008d954 - UsaRetail
 	// 8008dd08 - EurRetail
-	struct MenuBox* activeSubMenu;
+	struct RectMenu* activeSubMenu;
 
 	// 8008bd8c -- SepReview
 	// 8008d958 -- UsaRetail
@@ -4230,7 +4230,7 @@ struct sData
 
 	// 8008d988
 	// root counter
-	int rcnt_elapsedUnits_total;
+	int rcntTotalUnits;
 
 	// 8008d98C
 	u_int flags_timeTrialEndOfRace;
@@ -4817,12 +4817,12 @@ struct sData
 	// 8009b0e0 - EurRetail	-- 1c34 from mempack
 	// 8009e208 - JpnRetail	-- 1c54 from mempack
 
-	// 8009AD18 - tileView_DecalMP
-	struct TileView tileView_DecalMP;
+	// 8009AD18 - pushBuffer_DecalMP
+	struct PushBuffer pushBuffer_DecalMP;
 
 	#if 0
 	// 8009AE28
-	// first byte after TileView,
+	// first byte after PushBuffer,
 	// used by FUN_8005d0d0 for collision?
 
 	// 8009ae38 used as rotation vector
@@ -4911,6 +4911,6 @@ _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
 #define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
 #define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x800809a0)->ELEMENT))
 
-_Static_assert(OFFSETOF_DATA(menuRow_quit[0]) == 0x800841BC);
-_Static_assert(OFFSETOF_DATA(menuBox_quit) == 0x800841D0);
+_Static_assert(OFFSETOF_DATA(rowsQuit[0]) == 0x800841BC);
+_Static_assert(OFFSETOF_DATA(menuQuit) == 0x800841D0);
 #endif

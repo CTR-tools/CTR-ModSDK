@@ -35,7 +35,7 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	struct Crystal* crystalObj;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
@@ -69,14 +69,14 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
 
 int DECOMP_RB_Crystal_LInC(
 	struct Instance* LevInst,
 	struct Thread* driverTh,
 	struct ScratchpadStruct* sps)
 {
-	struct TileView* tileView;
+	struct PushBuffer* pb;
 	short posScreen[2];
 	struct Driver* driver;
 	int modelID;
@@ -115,12 +115,12 @@ int DECOMP_RB_Crystal_LInC(
 	
 	// get driver object, get screen coords
 	driver = driverTh->object;
-	tileView = &sdata->gGT->tileView[driver->driverID];
-	RB_Fruit_GetScreenCoords(tileView, LevInst, &posScreen[0]);
+	pb = &sdata->gGT->pushBuffer[driver->driverID];
+	RB_Fruit_GetScreenCoords(pb, LevInst, &posScreen[0]);
 	
 	// lasts 5 frames, give start position, count numCollected
-	driver->PickupWumpaHUD.startX = tileView->rect.x + posScreen[0];
-	driver->PickupWumpaHUD.startY = tileView->rect.y + posScreen[1] - 0x14;
+	driver->PickupWumpaHUD.startX = pb->rect.x + posScreen[0];
+	driver->PickupWumpaHUD.startY = pb->rect.y + posScreen[1] - 0x14;
 	driver->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
 	driver->PickupWumpaHUD.numCollected++;
 	

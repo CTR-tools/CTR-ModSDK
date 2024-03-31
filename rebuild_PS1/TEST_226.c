@@ -39,7 +39,7 @@ enum RotateFlipType
 
 void TEST_226(
 	struct RenderList* RL,
-	struct TileView* view,
+	struct PushBuffer* pb,
 	struct mesh_info* mi,
 	struct PrimMem* primMem,
 	int* visMem10,
@@ -54,19 +54,19 @@ void TEST_226(
 
 #if 1
 	// temporary, until CAMERA_ThTick is done
-	view->distanceToScreen_PREV = view->distanceToScreen_CURR;
+	pb->distanceToScreen_PREV = pb->distanceToScreen_CURR;
 
-	// temporary, until TileView_UpdateFrustum is done
-	gte_SetGeomScreen(view->distanceToScreen_PREV);
+	// temporary, until PushBuffer_UpdateFrustum is done
+	gte_SetGeomScreen(pb->distanceToScreen_PREV);
 #endif
 
-	MATRIX* mat2 = &view->matrix_ViewProj;
+	MATRIX* mat2 = &pb->matrix_ViewProj;
 
 	gte_SetRotMatrix(mat2);
 	gte_SetTransMatrix(mat2);
-	gte_SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
+	gte_SetGeomOffset(pb->rect.w >> 1, pb->rect.h >> 1);
 
-	void* ot = &view->ptrOT[0];
+	void* ot = &pb->ptrOT[0];
 
 #if 0
 	printf("\nDump Level:\n");
@@ -127,7 +127,7 @@ void TEST_226(
 		gte_stotz(&otZ_block);
 		gte_stsxy(&posScreen1[0]);
 		if (posScreen1[0] > 0) goto PassFrustumBSP;
-		if (posScreen1[0] < view->rect.w) goto PassFrustumBSP;
+		if (posScreen1[0] < pb->rect.w) goto PassFrustumBSP;
 		if (otZ_block >= 0) continue;
 
 		// fail Frustum BSP

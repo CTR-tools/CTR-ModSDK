@@ -47,7 +47,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
        ((gGT->gameMode2 & 0x1000) != 0)) &&
 
       // if XA is not playing
-      (sdata->ptrActiveMenuBox == 0))
+      (sdata->ptrActiveMenu == 0))
   {
     // "Save Your Cup Progress?\0"
     stringOrLevID = 0x236;
@@ -60,12 +60,12 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
       stringOrLevID = 0x237;
     }
 
-    PrixSaveBox_Activate(stringOrLevID);
+    TakeCupProgress_Activate(stringOrLevID);
 
     // remove FIRST_TIME_WIN_CUP | FIRST_TIME_UNLOCK_BATTLE_MAP
     gGT->gameMode2 &= ~(0x3000);
   }
-  if ((OVR_233.cutsceneState == 0) || (sdata->ptrActiveMenuBox != 0))
+  if ((OVR_233.cutsceneState == 0) || (sdata->ptrActiveMenu != 0))
   {
     frame = CAM_Path_GetNumPoints();
     iVar8 = (frame << 0x15) >> 0x10;
@@ -97,14 +97,14 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
 
       CAM_Path_Move(frame, &pos, &rot, camPath);
 
-      // store result in tileView pos and rot
-      struct TileView *view = &gGT->tileView[0];
-      view->pos[0] = pos[0];
-      view->pos[1] = pos[1];
-      view->pos[2] = pos[2];
-      view->rot[0] = rot[0];
-      view->rot[1] = rot[1];
-      view->rot[2] = rot[2];
+      // store result in pushBuffer pos and rot
+      struct PushBuffer* pb = &gGT->pushBuffer[0];
+      pb->pos[0] = pos[0];
+      pb->pos[1] = pos[1];
+      pb->pos[2] = pos[2];
+      pb->rot[0] = rot[0];
+      pb->rot[1] = rot[1];
+      pb->rot[2] = rot[2];
     }
   }
   else
@@ -116,7 +116,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
     DecalFont_DrawLine(sdata->lngStrings[0xC9], 256, 190, FONT_BIG, (0xffff0000 | JUSTIFY_CENTER));
   }
 
-  if (((gGT->gameMode2 & 0x1000) == 0) && (sdata->ptrActiveMenuBox == NULL))
+  if (((gGT->gameMode2 & 0x1000) == 0) && (sdata->ptrActiveMenu == NULL))
   {
     // If do not tap the "Start" button
     if (((sdata->gGamepads->gamepad[0].buttonsTapped & BTN_START) == 0) &&
@@ -147,7 +147,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
       // remove podium scene bit
       gGT.gameMode2 &= ~(4);
 
-      TitleFlag_SetDrawOrder(0);
+      RaceFlag_SetDrawOrder(0);
 
       // go to main menu
       MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);

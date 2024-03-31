@@ -29,7 +29,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	gGT = sdata->gGT;
 
 	t =
-		THREAD_BirthWithObject(
+		PROC_BirthWithObject(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET(
 				sizeof(struct WarpPad),

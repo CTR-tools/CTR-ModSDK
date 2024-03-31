@@ -1,9 +1,9 @@
 #include <common.h>
 
 // character selection menu, 
-// MENUBOX_FuncPtr for menuBox: 0x800b46b4;
+// RECTMENU_FuncPtr for menuBox: 0x800b46b4;
 
-void MM_Characters_MenuBox()
+void MM_Characters_MenuProc()
 {
 	u_char numPlyrNextGame;
 	int bVar2;
@@ -120,7 +120,7 @@ void MM_Characters_MenuBox()
 			// else, multiplayer
 		
 			// battle
-			sdata->ptrDesiredMenuBox = &D230.menubox_battleWeapons;
+			sdata->ptrDesiredMenu = &D230.menuBattleWeapons;
 			MM_Battle_Init();
 			return;
 		}
@@ -472,7 +472,7 @@ void MM_Characters_MenuBox()
 				puVar12 = &D230.characterSelect_Outline;
 			}
 		
-			MENUBOX_DrawOuterRect_HighLevel(&r80, puVar12, 0, gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawOuterRect_HighLevel(&r80, puVar12, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
 
@@ -520,14 +520,14 @@ void MM_Characters_MenuBox()
 			iVar8 = &D230.ptrTransitionMeta[i];
 			
 			// Draw Character Icon
-			MENUBOX_DrawPolyGT4
+			RECTMENU_DrawPolyGT4
 			(
 				gGT->ptrIcons[data.MetaDataCharacters[csm_Active->characterID].iconID],
 				((struct TransitionMeta*)iVar8)->currX + csm_Active->posX + 6,
 				((struct TransitionMeta*)iVar8)->currY + csm_Active->posY + 4,
 
 				&gGT->backBuffer->primMem,
-				gGT->tileView_UI.ptrOT,
+				gGT->pushBuffer_UI.ptrOT,
 
 				iconColor, iconColor, iconColor, iconColor, 1, 0x1000
 			);
@@ -645,7 +645,7 @@ void MM_Characters_MenuBox()
 			r68.h = 0x21;
 		
 			// Draw 2D Menu rectangle background
-			MENUBOX_DrawInnerRect(&r68, 0, gGT->backBuffer->otMem.startPlusFour);
+			RECTMENU_DrawInnerRect(&r68, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
 	
@@ -673,7 +673,7 @@ void MM_Characters_MenuBox()
 				((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1
 			);
 			
-			MENUBOX_DrawOuterRect_HighLevel(
+			RECTMENU_DrawOuterRect_HighLevel(
 				&r60, &colorRGBA, 0, 
 				gGT->backBuffer->otMem.startPlusFour);
 			
@@ -696,7 +696,7 @@ void MM_Characters_MenuBox()
 					colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 					
-					MENUBOX_DrawOuterRect_HighLevel(
+					RECTMENU_DrawOuterRect_HighLevel(
 						&r58, &colorRGBA, 0, 
 						gGT->backBuffer->otMem.startPlusFour);
 				}
@@ -704,15 +704,15 @@ void MM_Characters_MenuBox()
 			psVar22 = psVar22 + 2;
 		
 			// Draw 2D Menu rectangle background
-			MENUBOX_DrawInnerRect(&r60, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
+			RECTMENU_DrawInnerRect(&r60, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
 			
 			r60.x = 0;
 			r60.y = 0;
 		
-			MENUBOX_DrawRwdBlueRect
+			RECTMENU_DrawRwdBlueRect
 			(
 				&r60.x, &D230.characterSelect_BlueRectColors[0],
-				&gGT->tileView[i].ptrOT[0x3ff], &gGT->backBuffer->primMem
+				&gGT->pushBuffer[i].ptrOT[0x3ff], &gGT->backBuffer->primMem
 			);
 		
 		}

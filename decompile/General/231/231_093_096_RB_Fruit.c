@@ -1,12 +1,12 @@
 #include <common.h>
 
-void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output)
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output)
 {
 	MATRIX* m;
 	short posWorld[4];
 	
 	// load camera matrix
-	m = &tileView->matrix_ViewProj;
+	m = &pb->matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 	

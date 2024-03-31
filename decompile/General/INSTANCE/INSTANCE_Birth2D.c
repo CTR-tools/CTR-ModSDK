@@ -17,14 +17,14 @@ struct Instance* DECOMP_INSTANCE_Birth2D(
 		INST_GETIDPP(inst);
 	
 #ifndef REBUILD_PS1
-	idpp[0].tileView = &gGT->tileView_UI;
+	idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 #else
-	idpp[0].tileView = &gGT->tileView[0];
+	idpp[0].pushBuffer = &gGT->pushBuffer[0];
 #endif
 	
 	for(i = 1; i < gGT->numPlyrCurrGame; i++)
 	{
-		idpp[i].tileView = 0;
+		idpp[i].pushBuffer = 0;
 	}
 	
 	return inst;

@@ -52,7 +52,7 @@ u_int main()
 
 			// Without this, checkered flag will draw one frame after
 			// the copyright page draws, then go off-screen at ND Box
-			TitleFlag_SetFullyOffScreen();
+			RaceFlag_SetFullyOffScreen();
 
 			ResetGraph(0);
 			SetGraphDebug(0);
@@ -103,7 +103,7 @@ u_int main()
 			// traffic light countdown timer, set to negative one second
 			gGT->trafficLightsTimer = 0xfffffc40;
 
-			RCNT_Init();
+			Timer_Init();
 
 			// set callback and save callback
 			EnterCriticalSection();
@@ -205,14 +205,14 @@ u_int main()
 
 			if (gGT->levelID == MAIN_MENU_LEVEL)
 			{
-				if (TitleFlag_IsFullyOffScreen() != 0)
-					TitleFlag_SetFullyOnScreen();
+				if (RaceFlag_IsFullyOffScreen() != 0)
+					RaceFlag_SetFullyOnScreen();
 			}
 
 			else
 			{
-				if (TitleFlag_IsFullyOnScreen() != 0)
-					TitleFlag_BeginTransition(2);
+				if (RaceFlag_IsFullyOnScreen() != 0)
+					RaceFlag_BeginTransition(2);
 			}
 
 			DropRain_Reset(gGT);
@@ -270,7 +270,7 @@ u_int main()
 			if (sdata->Loading.stage != -1)
 			{
 				if (
-					(TitleFlag_IsFullyOnScreen() == 1) ||
+					(RaceFlag_IsFullyOnScreen() == 1) ||
 					(gGT->levelID == NAUGHTY_DOG_CRATE) ||
 					(sdata->pause_state != 0))
 				{
@@ -298,7 +298,7 @@ u_int main()
 				// if restarting race
 				if (iVar8 == -5)
 				{
-					if (TitleFlag_IsFullyOnScreen() == 1)
+					if (RaceFlag_IsFullyOnScreen() == 1)
 					{
 						// reinitialize world,
 						// does not reinitialize pools
@@ -325,7 +325,7 @@ u_int main()
 					RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 					AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 
-					if (TitleFlag_IsFullyOnScreen() == 1)
+					if (RaceFlag_IsFullyOnScreen() == 1)
 					{
 						sdata->Loading.OnBegin.AddBitsConfig0 = 0;
 						sdata->Loading.OnBegin.RemBitsConfig0 = 0;
@@ -345,8 +345,8 @@ u_int main()
 						MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 					}
 
-					else if (TitleFlag_IsFullyOffScreen() == 1)
-						TitleFlag_BeginTransition(1);
+					else if (RaceFlag_IsFullyOffScreen() == 1)
+						RaceFlag_BeginTransition(1);
 
 					// do not BREAK,
 					// keep rendering the scene

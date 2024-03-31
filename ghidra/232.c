@@ -149,11 +149,11 @@ void FUN_800abbdc(void)
   return;
 }
 
-// AH_WarpPad_MenuBoxFuncPtr
+// AH_WarpPad_MenuProc
 void FUN_800abd80(int param_1)
 
 {
-  // MENUBOX_Hide
+  // RECTMENU_Hide
   FUN_800469c8();
   
   // If row selected is 0
@@ -500,12 +500,12 @@ void FUN_800abf48(int param_1)
                     ((int)(((uint)*(ushort *)(piVar19 + 0x1b) - 100) * 0x10000) >>
                      0xd)) * 4 + DAT_8008d878),
             
-			// gGT->tileView[0].rect (midpoint X)
+			// gGT->pushBuffer[0].rect (midpoint X)
 			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
                   ((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) *
                  0x10000) >> 0x10,
 				 
-			// gGT->tileView[0].rect (bottom Y - 0x1E)
+			// gGT->pushBuffer[0].rect (bottom Y - 0x1E)
             (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
                    (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,
             
@@ -542,11 +542,11 @@ LAB_800ac500:
 			((int)(short)(&DAT_80083a88)[(int)*(short *)(piVar19 + 0x1b) * 0xc] * 4 +
 			DAT_8008d878),
 			
-			// gGT->tileView[0].rect (midpoint X)
+			// gGT->pushBuffer[0].rect (midpoint X)
 			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
 			((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) * 0x10000) >> 0x10,
 				
-			// gGT->tileView[0].rect (bottom Y - 0x1E)
+			// gGT->pushBuffer[0].rect (bottom Y - 0x1E)
 			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
 				(uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,
 			
@@ -856,7 +856,7 @@ LAB_800ac860:
   // P1 spawn in 8th place on track
   DAT_8008d69c = 7;
   
-  // TitleFlag_IsTransitioning
+  // RaceFlag_IsTransitioning
   iVar7 = FUN_80043f44();
   
   // If transitioning then DontLoadLevelYet,
@@ -1494,7 +1494,7 @@ void FUN_800ad3ec(int param_1)
 	return;
   }
   
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0x78 = size
   // 0 = no relation to param4
   // 0x200 = MediumStackPool
@@ -2979,7 +2979,7 @@ LAB_800aede8:
 					// Level ID - 0x19: Adventure Hub (0-4)
 					(*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2) * 0x18);
     
-	// TitleFlag_SetDrawOrder
+	// RaceFlag_SetDrawOrder
 	FUN_80043f8c(1);
 													// Level ID - 0x19: Adventure Hub (0-4)
     FUN_8003cfc0((int)*(short *)((int)&local_60 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2)
@@ -3013,7 +3013,7 @@ void FUN_800af070(int param_1)
     return;
   }
   
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0x14 = size
   // 0 = no relation to param4
   // 0x300 = SmallStackPool
@@ -3390,7 +3390,7 @@ void FUN_800af3e4(int param_1)
 		  {
             *(ushort *)(piVar10 + 1) = *(ushort *)(piVar10 + 1) | 2;
             
-			// LoadSave_GetTrackID
+			// SelectProfile_GetTrackID
 			FUN_800485a8();
             
 			// enable menubox for green load/save screen
@@ -3496,7 +3496,7 @@ void FUN_800af7f0(int param_1)
   // if this Instance's thread is not valid
   if (*(int *)(param_1 + 0x6c) == 0) 
   {
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0xc = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -4380,7 +4380,7 @@ void FUN_800b072c(int param_1)
   }
   
   // 800abaa4 - "door" (not boss garage)
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0x38 = size
   // 0 = no relation to param4
   // 0x300 = SmallStackPool
@@ -4880,7 +4880,7 @@ LAB_800b0fc0:
     
 	} while (iVar1 * 0x10000 >> 0x10 < 3);
     
-	// MENUBOX_DrawRwdTriangle
+	// RECTMENU_DrawRwdTriangle
 	FUN_800453e8(local_20,param_4,
 	
 				// pointer to OT mem
@@ -5404,7 +5404,7 @@ void FUN_800b1c90(void)
 		// if Aku Hint is not unlocked
 		((DAT_8008fbb0 & 0x400000) == 0) && 
 		
-		// TitleFlag_IsFullyOffScreen
+		// RaceFlag_IsFullyOffScreen
 		(iVar1 = FUN_80043f28(), iVar1 != 0)
 	 ) 
   {
@@ -5744,7 +5744,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
 	  
       piVar14 = piVar14 + 4;
       
-	  // LoadSave_PrintInteger
+	  // SelectProfile_PrintInteger
 	  FUN_80047f20(
 		(int)local_e0[iVar7 >> 0x10],
 		(iVar11 + 0x36) * 0x10000 >> 0x10,
@@ -6153,7 +6153,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
   local_e0[2] = (short)iVar11 + -0x14;
   local_e0[3] = 2;
   
-  // MENUBOX_DrawOuterRect_Edge (transparent)
+  // RECTMENU_DrawOuterRect_Edge (transparent)
   FUN_80044f90(local_e0,&DAT_8008d438,0x20,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0)
               );
   
@@ -6314,7 +6314,7 @@ void FUN_800b3144(void)
 	// set pause page to the hub the driver is on
     *(short *)(PTR_DAT_8008d2ac + 0x1d3a) = DAT_800b5552;
 	
-	// THREAD_BirthWithObject
+	// PROC_BirthWithObject
 	// 0 = size
 	// 0 = no relation to param4
 	// 0x300 = SmallStackPool
@@ -6538,7 +6538,7 @@ void FUN_800b351c(void)
   return;
 }
 
-// AH_HintMenu_MenuBoxFuncPtr
+// AH_HintMenu_MenuProc
 void FUN_800b3594(int param_1)
 
 {
@@ -6652,7 +6652,7 @@ void FUN_800b3594(int param_1)
     local_2c = 0x21c;
     local_2a = 2;
 	
-    // MENUBOX_DrawOuterRect_Edge (transparent)
+    // RECTMENU_DrawOuterRect_Edge (transparent)
     FUN_80044f90(&local_30,&DAT_8008d438,0x20,
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
     
@@ -6727,7 +6727,7 @@ LAB_800b38c0:
             puVar4 = PTR_DAT_8008d2ac;
             puVar1 = (uint *)(DAT_8008d860 + 0x28);
             
-			// instance -> tileView = gGT->tileView_ui
+			// instance -> pushBuffer = gGT->pushBuffer_ui
 			*(undefined **)(DAT_8008d860 + 0x74) = PTR_DAT_8008d2ac + 5000;
 			
             *(uint *)(iVar11 + 0x28) = *puVar1 | 0x400;
@@ -6742,7 +6742,7 @@ LAB_800b38c0:
 			  {
                 iVar10 = iVar10 + 1;
                 
-				// clear instance->tileView per player
+				// clear instance->pushBuffer per player
 				*(undefined4 *)(iVar11 + (iVar7 >> 0x10) * 0x88 + 0x74) = 0;
                 
 				iVar7 = iVar10 * 0x10000;
@@ -6878,7 +6878,7 @@ LAB_800b38cc:
   local_30 = -0x14;
   local_2c = 0x228;
   
-  // MENUBOX_DrawOuterRect_Edge (transparent)
+  // RECTMENU_DrawOuterRect_Edge (transparent)
   FUN_80044f90(&local_30,&DAT_8008d438,0x20,
                *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   local_2e = 0x28;

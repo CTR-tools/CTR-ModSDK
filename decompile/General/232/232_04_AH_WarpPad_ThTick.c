@@ -139,8 +139,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				DECOMP_DecalFont_DrawLine
 				(
 					warppadLNG,
-					gGT->tileView[0].rect.x + gGT->tileView[0].rect.w/2,
-					gGT->tileView[0].rect.x + gGT->tileView[0].rect.h - 30,
+					gGT->pushBuffer[0].rect.x + gGT->pushBuffer[0].rect.w/2,
+					gGT->pushBuffer[0].rect.x + gGT->pushBuffer[0].rect.h - 30,
 					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 				);
 			}
@@ -207,8 +207,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	{	
 		angleCamToWarppad =
 			ratan2(
-				warppadMatrix->t[0] - gGT->tileView[0].pos[0],
-				warppadMatrix->t[2] - gGT->tileView[0].pos[2]
+				warppadMatrix->t[0] - gGT->pushBuffer[0].pos[0],
+				warppadMatrix->t[2] - gGT->pushBuffer[0].pos[2]
 			);
 			
 		angleCamToWarppad = -angleCamToWarppad;
@@ -457,7 +457,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 		
 	// if flag is on-screen, loading has already been finalized
-	if(DECOMP_TitleFlag_IsTransitioning() != 0) return;
+	if(DECOMP_RaceFlag_IsTransitioning() != 0) return;
 		
 	// if driver has not entered this warppad
 	if(warppadObj->boolEnteredWarppad == 0)
@@ -500,20 +500,20 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
-				D232.menuBox_TokenRelic.rowSelected =
+				D232.menuTokenRelic.rowSelected =
 					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
 				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				DECOMP_MENUBOX_Show(&D232.menuBox_TokenRelic);
+				DECOMP_RECTMENU_Show(&D232.menuTokenRelic);
 				
 				// dont load level
 				return;
 			}
 			
 			// if opened, but not closed yet
-			if((DECOMP_MENUBOX_BoolHidden(&D232.menuBox_TokenRelic) & 0xffff) == 0)
+			if((DECOMP_RECTMENU_BoolHidden(&D232.menuTokenRelic) & 0xffff) == 0)
 			{
 				// dont load level
 				return;

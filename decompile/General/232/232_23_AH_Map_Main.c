@@ -17,17 +17,17 @@ void DECOMP_AH_Map_Main(void)
   advDriver = gGT->drivers[0];
   ptrHudData = data.hudStructPtr[0];
   
-  iVar1 = DECOMP_TitleFlag_GetCanDraw();
+  iVar1 = DECOMP_RaceFlag_GetCanDraw();
   if (iVar1 == 0) 
   {
-    DECOMP_TitleFlag_SetCanDraw(1);
+    DECOMP_RaceFlag_SetCanDraw(1);
   }
   
   if (
 		// if Aku Hint is not unlocked
 		((sdata->advProgress.rewards[3] & 0x400000) == 0) && 
 		
-		(iVar1 = DECOMP_TitleFlag_IsFullyOffScreen(), iVar1 != 0)
+		(iVar1 = DECOMP_RaceFlag_IsFullyOffScreen(), iVar1 != 0)
 	 ) 
   {
 	// Trigger Aku Hint:
@@ -85,7 +85,7 @@ void DECOMP_AH_Map_Main(void)
         500,195,
 
         &gGT->backBuffer->primMem,
-		gGT->tileView_UI.ptrOT, 1);
+		gGT->pushBuffer_UI.ptrOT, 1);
 	
     DECOMP_UI_DrawSlideMeter(ptrHudData[8].x, ptrHudData[8].y, advDriver);
   }

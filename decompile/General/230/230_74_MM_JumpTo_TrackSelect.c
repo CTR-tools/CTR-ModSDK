@@ -3,9 +3,9 @@
 void DECOMP_MM_JumpTo_TrackSelect(void)
 {
   // return to track selection
-  sdata->ptrActiveMenuBox = &D230.menubox_trackSelect;
+  sdata->ptrActiveMenu = &D230.menuTrackSelect;
 
-  D230.menubox_trackSelect.state &= ~(ONLY_DRAW_TITLE);
+  D230.menuTrackSelect.state &= ~(ONLY_DRAW_TITLE);
 
   DECOMP_MM_TrackSelect_Init();
 }

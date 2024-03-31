@@ -11,7 +11,7 @@ struct Instance* DECOMP_VehTalkMask_Init()
 			sizeof(struct MaskHint), 0);
 			
 	struct Thread* mhTh = mhInst->thread;
-	mhTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
+	mhTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
 	
 	((struct MaskHint*)mhTh->object)->scale = 0;
 	

@@ -341,7 +341,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 						posY + pixHeightExtra,
 
 						&gGT->backBuffer->primMem,
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						ptrColor[0],
 						ptrColor[1],
@@ -369,7 +369,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 						posY + pixHeightExtra,
 
 						&gGT->backBuffer->primMem,
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						ptrColor[0],
 						ptrColor[1],
@@ -396,7 +396,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 							posY + pixHeightExtra,
 
 							&gGT->backBuffer->primMem,
-							gGT->tileView_UI.ptrOT,
+							gGT->pushBuffer_UI.ptrOT,
 
 							ptrColor[2],
 							ptrColor[3],
@@ -416,7 +416,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 							posY + pixHeightExtra,
 
 							&gGT->backBuffer->primMem,
-							gGT->tileView_UI.ptrOT,
+							gGT->pushBuffer_UI.ptrOT,
 
 							ptrColor[0],
 							ptrColor[1],

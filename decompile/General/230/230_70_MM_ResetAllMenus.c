@@ -4,15 +4,15 @@ void DECOMP_MM_ResetAllMenus(void)
 {
     for (int i = 0; i < 9; i++)
     {
-        struct MenuBox* mb = D230.ptrMenuBoxes[i];
+        struct RectMenu* menu = D230.arrayMenuPtrs[i];
 
         // Close menubox
-        mb->state |= 8;
-        mb->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+        menu->state |= 8;
+        menu->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 
         // Reset ptrNext and ptrPrev
-        mb->ptrNextBox_InHierarchy = 0;
-        mb->ptrPrevBox_InHierarchy = 0;
+        menu->ptrNextBox_InHierarchy = 0;
+        menu->ptrPrevBox_InHierarchy = 0;
     }
 
     sdata->framesRemainingInMenu = 0xF;

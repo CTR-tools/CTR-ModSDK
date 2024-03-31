@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RCNT_GetTime_Total();
+int Timer_GetTime_Total();
 
 char ChRand_Repeat(int index, int character)
 {
@@ -46,7 +46,7 @@ void ChRand_SetCharacters()
 
 		id = (
 				// system clock
-				(RCNT_GetTime_Total() & 0xf )
+				(Timer_GetTime_Total() & 0xf )
 
 				+
 

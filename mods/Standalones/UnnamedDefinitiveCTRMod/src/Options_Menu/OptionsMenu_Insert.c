@@ -4,9 +4,9 @@
 
 ////////////////// Options MenuBox //////////////////
 
-void UDCTRM_OM_FuncPtr(struct MenuBox* mb);
-void UDCTRM_OM_GameplayFuncPtr(struct MenuBox* mb);
-void UDCTRM_OM_ControllerSFXFuncPtr(struct MenuBox* mb);
+void UDCTRM_OM_FuncPtr(struct RectMenu* menu);
+void UDCTRM_OM_GameplayFuncPtr(struct RectMenu* menu);
+void UDCTRM_OM_ControllerSFXFuncPtr(struct RectMenu* menu);
 
 struct MenuRow UDCTRM_OM_MenuRows[] =
 {
@@ -15,7 +15,7 @@ struct MenuRow UDCTRM_OM_MenuRows[] =
     FINALIZER_ROW
 };
 
-struct MenuBox UDCTRM_OM_MenuBox =
+struct RectMenu UDCTRM_OM_MenuProc =
 {
     .stringIndexTitle = -1,
 
@@ -47,7 +47,7 @@ struct MenuBox UDCTRM_OM_MenuBox =
     .ptrPrevBox_InHierarchy = 0,
 };
 
-struct MenuBox UDCTRM_OM_GameplayMenuBox =
+struct RectMenu UDCTRM_OM_GameplayMenuBox =
 {
     .stringIndexTitle = -1,
 
@@ -79,7 +79,7 @@ struct MenuBox UDCTRM_OM_GameplayMenuBox =
     .ptrPrevBox_InHierarchy = 0,
 };
 
-struct MenuBox UDCTRM_OM_ControllerSFXMenuBox =
+struct RectMenu UDCTRM_OM_ControllerSFXMenuBox =
 {
     .stringIndexTitle = -1,
 

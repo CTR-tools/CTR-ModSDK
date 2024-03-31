@@ -29,7 +29,7 @@ struct Instance* DECOMP_INSTANCE_BirthWithThread(
 		objSize = (objSize & 0xffc) + 4;
 	}
 	
-	t = DECOMP_THREAD_BirthWithObject
+	t = DECOMP_PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

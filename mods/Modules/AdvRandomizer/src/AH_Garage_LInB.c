@@ -26,7 +26,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     if (inst->thread != NULL)
         return;
 
-    t = THREAD_BirthWithObject(
+    t = PROC_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
             sizeof(struct BossGarageDoor),
             NONE,

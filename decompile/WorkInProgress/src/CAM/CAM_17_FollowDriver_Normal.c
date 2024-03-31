@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct TileView *view, int scratchpad, struct ZoomData *zoom)
+void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct PushBuffer* pb, int scratchpad, struct ZoomData *zoom)
 {
     struct GameTracker *gGT = sdata->gGT;
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad;
@@ -57,7 +57,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // (either forward to reverse, or reverse to forward)
     if (backupFlags != cDC->flags)
     {
-        // set flag that view just changed this frame
+        // set flag that cam just changed this frame
         cDC->flags |= 8;
     }
 
@@ -298,10 +298,10 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
     if (state == KS_MASK_GRABBED)
     {
-        // tileView position
-        *(int *)(scratchpad + 0x240) = (int)view->pos[0];
-        *(int *)(scratchpad + 0x244) = (int)view->pos[1];
-        *(int *)(scratchpad + 0x248) = (int)view->pos[2];
+        // pushBuffer position
+        *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
+        *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
+        *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
 
         // reset camera interpolation
         *(short *)(cDC + 0xc0) = 0;
@@ -468,20 +468,20 @@ LAB_8001ab04:
 
     if (d->kartState == KS_MASK_GRABBED)
     {
-        view->rot[2] -= (view->rot[2] >> 3);
+        pb->rot[2] -= (pb->rot[2] >> 3);
 
         // camera dirX, cameraPosX minus driverPosX
-        *(int *)(scratchpad + 0x24c) = (int)view->pos[0] - (d->posCurr[0] >> 8);
+        *(int *)(scratchpad + 0x24c) = (int)pb->pos[0] - (d->posCurr[0] >> 8);
 
         // camera dirY, cameraPosY minus driverPosY, plus something else
-        *(int *)(scratchpad + 0x250) = (int)view->pos[1] - ((d->posCurr[1] >> 8) + (int)zoom->angle[2]);
+        *(int *)(scratchpad + 0x250) = (int)pb->pos[1] - ((d->posCurr[1] >> 8) + (int)zoom->angle[2]);
 
         // camera dirZ, cameraPosZ minus driverPosZ
-        *(int *)(scratchpad + 0x254) = (int)view->pos[2] - (d->posCurr[2] >> 8);
+        *(int *)(scratchpad + 0x254) = (int)pb->pos[2] - (d->posCurr[2] >> 8);
 
-        if ((view->rot[0] < 0x800) && (0x800 < view->rot[0] + 0x10))
+        if ((pb->rot[0] < 0x800) && (0x800 < pb->rot[0] + 0x10))
         {
-            view->rot[0] = 0x800;
+            pb->rot[0] = 0x800;
         }
     }
 
@@ -497,20 +497,20 @@ LAB_8001ab04:
 
         // camera rotation
         x_00 = ratan2(*(long *)(scratchpad + 0x24c), x);
-        view->rot[1] = (short)x_00;
+        pb->rot[1] = (short)x_00;
 
         x_00 = SquareRoot0(*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
                            *(int *)(scratchpad + 0x254) * *(int *)(scratchpad + 0x254));
         x_00 = ratan2(*(long *)(scratchpad + 0x250), x_00);
-        view->rot[0] = 0x800 - (short)x_00;
+        pb->rot[0] = 0x800 - (short)x_00;
 
-        view->rot[2] = (short)((u_int)((int)zoom->angle[0] * (int)cDC->desiredRot[0]) >> 8);
+        pb->rot[2] = (short)((u_int)((int)zoom->angle[0] * (int)cDC->desiredRot[0]) >> 8);
     }
 
-    // something with tileView position
-    *(int *)(scratchpad + 0x214) = *(int *)(scratchpad + 0x240) - (int)view->pos[0];
-    *(int *)(scratchpad + 0x218) = *(int *)(scratchpad + 0x244) - (int)view->pos[1];
-    *(int *)(scratchpad + 0x21c) = *(int *)(scratchpad + 0x248) - (int)view->pos[2];
+    // something with pushBuffer position
+    *(int *)(scratchpad + 0x214) = *(int *)(scratchpad + 0x240) - (int)pb->pos[0];
+    *(int *)(scratchpad + 0x218) = *(int *)(scratchpad + 0x244) - (int)pb->pos[1];
+    *(int *)(scratchpad + 0x21c) = *(int *)(scratchpad + 0x248) - (int)pb->pos[2];
 
     cDC->unkTriplet1[0] -= (*(int *)(scratchpad + 0x240) - *(int *)(cDC + 0x58));
     cDC->unkTriplet1[1] -= (*(int *)(scratchpad + 0x244) - *(int *)(cDC + 0x5c));
@@ -543,10 +543,10 @@ LAB_8001ab04:
 
     if (d->kartState != KS_MASK_GRABBED)
     {
-        // tileView position
-        view->pos[0] += *(short *)(scratchpad + 0x214) + cDC->unkTriplet1[0];
-        view->pos[1] += *(short *)(scratchpad + 0x218) + cDC->unkTriplet1[1];
-        view->pos[2] += *(short *)(scratchpad + 0x21c) + cDC->unkTriplet1[2];
+        // pushBuffer position
+        pb->pos[0] += *(short *)(scratchpad + 0x214) + cDC->unkTriplet1[0];
+        pb->pos[1] += *(short *)(scratchpad + 0x218) + cDC->unkTriplet1[1];
+        pb->pos[2] += *(short *)(scratchpad + 0x21c) + cDC->unkTriplet1[2];
     }
 
     cDC->unkTriplet2[0] = *(int *)(scratchpad + 0x240);
@@ -662,11 +662,15 @@ LAB_8001ab04:
         }
 
         // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
-        CAM_ProcessTransition(view, view + 3, &local_40, &local_38, view, view + 3, x);
+        CAM_ProcessTransition(
+			&pb->pos[0], &pb->rot[0], 
+			&local_40, &local_38, 
+			&pb->pos[0], &pb->rot[0],
+			x);
 
-        *(int *)(scratchpad + 0x240) = (int)view->pos[0];
-        *(int *)(scratchpad + 0x244) = (int)view->pos[1];
-        *(int *)(scratchpad + 0x248) = (int)view->pos[2];
+        *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
+        *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
+        *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
 
         CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
 

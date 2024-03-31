@@ -55,9 +55,9 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
     // if this driver is not an AI
     if ((target->actionsFlagSet & 0x100000) == 0)
     {
-      gGT->tileView[target->driverID].fadeFromBlack_currentValue = 0x1fff;
-      gGT->tileView[target->driverID].fadeFromBlack_desiredResult = 0x1000;
-      gGT->tileView[target->driverID].fade_step = 0xff78;
+      gGT->pushBuffer[target->driverID].fadeFromBlack_currentValue = 0x1fff;
+      gGT->pushBuffer[target->driverID].fadeFromBlack_desiredResult = 0x1000;
+      gGT->pushBuffer[target->driverID].fade_step = 0xff78;
     }
 
     // icon damage timer, draw icon as red

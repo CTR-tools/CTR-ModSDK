@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
+void DECOMP_MainFreeze_MenuPtrOptions(struct RectMenu* menu)
 {
 	short sVar1;
 	char bVar2;
@@ -150,11 +150,11 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		} while (i * 0x10000 < iVar10);
 	}
 
-	uVar6 = mb->drawStyle & 0xfeff;
-	mb->drawStyle = uVar6;
+	uVar6 = menu->drawStyle & 0xfeff;
+	menu->drawStyle = uVar6;
 	if (2 < sdata->gGT->numPlyrCurrGame)
 	{
-		mb->drawStyle = uVar6 | 0x100;
+		menu->drawStyle = uVar6 | 0x100;
 	}
 
 	menuRowsNegativePaddingCopy = menuRowsNegativePadding;
@@ -167,12 +167,12 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 			// 0: FX slider
 			// 1: Music slider
 			// 2: Voice slider
-			switch(mb->rowSelected)
+			switch(menu->rowSelected)
 			{
 			case 0:
 			case 1:
 			case 2:
-				selectedRow = (int)mb->rowSelected;
+				selectedRow = (int)menu->rowSelected;
 				OptionsMenu_TestSound(selectedRow, 1);
 				if ((sdata->AnyPlayerHold & BTN_LEFT) == 0)
 				{
@@ -217,7 +217,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 				OptionsMenu_TestSound(0, 0);
 				if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 				{
-					uVar6 = mb->rowSelected;
+					uVar6 = menu->rowSelected;
 					OtherFX_Play(1, 1);
 					i = (int)((uVar6 - 4) * 0x10000) >> 0x10;
 					// if the row you selected is for configuring a racing wheel gamepad
@@ -244,11 +244,11 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 			goto switchD_80038f90_caseD_9;
 		}
 		OtherFX_Play(0, 1);
-		short rowSelectedCopy = mb->rowSelected + 1;
-		mb->rowSelected = rowSelectedCopy;
+		short rowSelectedCopy = menu->rowSelected + 1;
+		menu->rowSelected = rowSelectedCopy;
 		if (8 < rowSelectedCopy)
 		{
-			mb->rowSelected = 0;
+			menu->rowSelected = 0;
 			goto switchD_80038f90_caseD_9;
 		}
 		if ((int)rowSelectedCopy < (int)(sdata->gGT->numPlyrCurrGame + 4)) goto switchD_80038f90_caseD_9;
@@ -256,18 +256,18 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	else
 	{
 		OtherFX_Play(0, 1);
-		short rowSelectedCopy = mb->rowSelected + -1;
-		mb->rowSelected = rowSelectedCopy;
+		short rowSelectedCopy = menu->rowSelected + -1;
+		menu->rowSelected = rowSelectedCopy;
 		if (-1 < rowSelectedCopy)
 		{
 			if (rowSelectedCopy == 7)
 			{
-				mb->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
+				menu->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
 			}
 			goto switchD_80038f90_caseD_9;
 		}
 	}
-	mb->rowSelected = 8;
+	menu->rowSelected = 8;
 switchD_80038f90_caseD_9:
 	uVar13 = 0;
 	i = 0;
@@ -319,7 +319,7 @@ switchD_80038f90_caseD_9:
 		volumeSliderTriangle[3] = volumeHeightSomething + 0x30;
 		volumeSliderTriangle[4] = volumeSliderTriangle[2];
 		volumeSliderTriangle[5] = volumeSliderTriangle[1];
-		MENUBOX_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		RECTMENU_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		
 		// "FX:" "MUSIC:" "VOICE:"
 		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + menuRowsNegativePadding_halved + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
@@ -441,28 +441,28 @@ switchD_80038f90_caseD_9:
 
 	glowingcursor.x = 0x4a;
 	glowingcursor.w = 0x16c;
-	glowingcursor.y = data.Options_HighlightBar[mb->rowSelected].posY + menuRowsNegativePadding_halved_again + 0x14;
-	glowingcursor.h = data.Options_HighlightBar[mb->rowSelected].sizeY;
+	glowingcursor.y = data.Options_HighlightBar[menu->rowSelected].posY + menuRowsNegativePadding_halved_again + 0x14;
+	glowingcursor.h = data.Options_HighlightBar[menu->rowSelected].sizeY;
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	titleSeparatorLine.x = 66;
 	titleSeparatorLine.y = menuRowsNegativePadding_halved_again + 43;
 	titleSeparatorLine.w = 380;
 	titleSeparatorLine.h = 2;
-	MENUBOX_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	menuBoxBG.x = 0x38;
 	menuBoxBG.w = 400;
 	menuBoxBG.h = 0x87 - menuRowsNegativePaddingCopy;
 	menuBoxBG.y = menuRowsNegativePadding_halved_again + 0x14;
-	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
-		MENUBOX_ClearInput();
-		sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
+		RECTMENU_ClearInput();
+		sdata->ptrDesiredMenu = DECOMP_MainFreeze_GetMenuPtr();
 	}
 	return;
 }

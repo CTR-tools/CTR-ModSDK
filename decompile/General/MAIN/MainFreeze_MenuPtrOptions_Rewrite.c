@@ -10,7 +10,7 @@ typedef struct
 	int menuRowsToRemove;
 } GAMEPAD_MainFreeze_MenuPtrOptions;
 
-force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
+force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* menu, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
 	// get number of ordinary gamepads and/or "analog controllers" connected, and which players are using which
 	if (sdata->gGT->numPlyrCurrGame != 0)
@@ -60,7 +60,7 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct MenuBox* mb,
 	gamepad->menuRowsToRemove = (4 - areBothControllerLabelsNecessary) - sdata->gGT->numPlyrCurrGame;
 }
 
-force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
+force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct RectMenu* menu, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
 	int exitMenu = false;
 
@@ -72,17 +72,17 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 		// there are only 9 rows total
 		if (sdata->AnyPlayerTap & BTN_UP)
 		{
-			mb->rowSelected = (mb->rowSelected + (9 - 1)) % 9;
-			if (mb->rowSelected == 7) mb->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
+			menu->rowSelected = (menu->rowSelected + (9 - 1)) % 9;
+			if (menu->rowSelected == 7) menu->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
 		}
 		if (sdata->AnyPlayerTap & BTN_DOWN)
 		{
-			mb->rowSelected = (mb->rowSelected + 1) % 9;
-			if (mb->rowSelected > (sdata->gGT->numPlyrCurrGame + 3)) mb->rowSelected = 8;
+			menu->rowSelected = (menu->rowSelected + 1) % 9;
+			if (menu->rowSelected > (sdata->gGT->numPlyrCurrGame + 3)) menu->rowSelected = 8;
 		}
 	}
 
-	switch (mb->rowSelected)
+	switch (menu->rowSelected)
 	{
 		// 0: FX slider
 		// 1: Music slider
@@ -90,15 +90,15 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 		case 0:
 		case 1:
 		case 2:
-			OptionsMenu_TestSound(mb->rowSelected, 1);
+			OptionsMenu_TestSound(menu->rowSelected, 1);
 			if (sdata->AnyPlayerHold & (BTN_LEFT | BTN_RIGHT))
 			{
-				int volume = howl_VolumeGet(mb->rowSelected) & 0xff;
+				int volume = howl_VolumeGet(menu->rowSelected) & 0xff;
 
 				if (sdata->AnyPlayerHold & BTN_LEFT)  volume = (volume + (0xff - 4)) % 0xff;
 				if (sdata->AnyPlayerHold & BTN_RIGHT) volume = (volume + 4)          % 0xff;
 
-				howl_VolumeSet(mb->rowSelected, volume);
+				howl_VolumeSet(menu->rowSelected, volume);
 			}
 			break;
 		
@@ -127,7 +127,7 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 			{
 				OtherFX_Play(1, 1);
 
-				int gamepadRow = mb->rowSelected - 4;
+				int gamepadRow = menu->rowSelected - 4;
 
 				if (gamepadRow < gamepad->numGamepads)
 				{
@@ -163,13 +163,13 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 	{
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
-		MENUBOX_ClearInput();
-		sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
+		RECTMENU_ClearInput();
+		sdata->ptrDesiredMenu = DECOMP_MainFreeze_GetMenuPtr();
 	}
 }
 
 // stuff is drawn last to first
-force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
+force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* menu, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
 	// note: multitap only works if it's connected to the P1 slot
 	int isMultitap = (sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4));
@@ -205,8 +205,8 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	}
 
 	// drawStyle needs research...
-	mb->drawStyle &= 0xfeff;
-	if (sdata->gGT->numPlyrCurrGame > 2) mb->drawStyle |= 0x100;
+	menu->drawStyle &= 0xfeff;
+	if (sdata->gGT->numPlyrCurrGame > 2) menu->drawStyle |= 0x100;
 
 	int volumeSliderTriangleLeftMargin = 0;
 
@@ -260,7 +260,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 			volumeSliderTriangle[2],
 			volumeSliderTriangle[1]
 		};
-		MENUBOX_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		RECTMENU_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		
 		// "FX:" "MUSIC:" "VOICE:"
 		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 76, (i * 10) + (menuRowsNegativePadding / 2) + 50, FONT_SMALL, ORANGE);
@@ -363,9 +363,9 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	RECT cursor =
 	{
 		.x = 74,
-		.y = data.Options_HighlightBar[mb->rowSelected].posY + (menuRowsNegativePadding / 2) + 20,
+		.y = data.Options_HighlightBar[menu->rowSelected].posY + (menuRowsNegativePadding / 2) + 20,
 		.w = 364,
-		.h = data.Options_HighlightBar[mb->rowSelected].sizeY
+		.h = data.Options_HighlightBar[menu->rowSelected].sizeY
 	};
 	CTR_Box_DrawClearBox(&cursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
@@ -376,7 +376,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		.w = 380,
 		.h = 2
 	};
-	MENUBOX_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	RECT menuBoxBG =
 	{
@@ -385,10 +385,10 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		.w = 400,
 		.h = 135 - menuRowsNegativePadding
 	};
-	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 }
 
-void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
+void DECOMP_MainFreeze_MenuPtrOptions(struct RectMenu* menu)
 {
 	DECOMP_MainFreeze_SafeAdvDestroy();
 
@@ -415,5 +415,5 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 
 	IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(mb, &gamepad);
 	PROCESSINPUTS_MainFreeze_MenuPtrOptions(mb, &gamepad);
-	DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(mb, &gamepad);
+	DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(mb, &gamepad);
 }

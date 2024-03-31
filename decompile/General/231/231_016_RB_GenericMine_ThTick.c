@@ -152,13 +152,13 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     if ((d->actionsFlagSet & 0x100000) == 0) 
 	{
 	  // current fade value (bright white)
-	  gGT->tileView[d->driverID].fadeFromBlack_currentValue = 0x1fff;
+	  gGT->pushBuffer[d->driverID].fadeFromBlack_currentValue = 0x1fff;
       
 	  // desired fade value (neutral)
-	  gGT->tileView[d->driverID].fadeFromBlack_desiredResult = 0x1000;
+	  gGT->pushBuffer[d->driverID].fadeFromBlack_desiredResult = 0x1000;
       
 	  // fade step
-	  gGT->tileView[d->driverID].fade_step = 0xff78;
+	  gGT->pushBuffer[d->driverID].fade_step = 0xff78;
 	}
 	
 	// make player icon red
@@ -299,7 +299,7 @@ LAB_800ad174:
         instCrate->matrix.t[1] = inst->matrix.t[1];
         instCrate->matrix.t[2] = inst->matrix.t[2];
 		
-        instCrate->thread->funcThDestroy = THREAD_DestroyInstance;
+        instCrate->thread->funcThDestroy = PROC_DestroyInstance;
 		
         instCrate->thread->funcThCollide = RB_Hazard_ThCollide_Generic;
 		

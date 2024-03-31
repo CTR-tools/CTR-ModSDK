@@ -15,14 +15,14 @@ char langIndex[7] =
 
 int timer;
 
-void MM_MENUBOX_Language(struct MenuBox *mb)
+void MM_MenuProc_Language(struct RectMenu* menu)
 {
   struct GameTracker *gGT = sdata->gGT;
-  char row = mb->rowSelected;
+  char row = menu->rowSelected;
 
-  if (mb->ptrPrevBox_InHierarchy == 0)
+  if (menu->ptrPrevBox_InHierarchy == 0)
   {
-    if (mb->unk1e == 1)
+    if (menu->unk1e == 1)
     {
       // if anyone move the menu cursor
       if (sdata->gGamepads->anyoneHeldCurr != 0)
@@ -40,10 +40,10 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
         return;
       }
     }
-    struct MenuBox *mainMenu = &D230.menubox_mainMenu;
+    struct RectMenu *mainMenu = &D230.menuMainMenu;
     gGT->notFoundInCode2 = 1; // boolLangChosen
     mainMenu->state |= DISABLE_INPUT_ALLOW_FUNCPTRS;
-    sdata->ptrDesiredMenuBox = mainMenu;
+    sdata->ptrDesiredMenu = mainMenu;
     goto LOAD_LNG;
   }
 
@@ -65,12 +65,12 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
     gGT->gameMode2 |= 0x10000000; // LANG_CHANGE
   }
 
-  mb->unk1e = 0;
-  mb->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
+  menu->unk1e = 0;
+  menu->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
 };
 
 #if BUILD == JpnRetail
-struct MenuRow rows_language[] =
+struct MenuRow rowsLanguage[] =
     {
         [0] = MENU_ROW(642, 0, 1, 0, 0),
         [1] = MENU_ROW(133, 0, 2, 1, 1),
@@ -81,7 +81,7 @@ struct MenuRow rows_language[] =
         [6] = MENU_ROW(138, 5, 6, 6, 6),
         [7] = FINALIZER_ROW};
 #else
-struct MenuRow rows_language[] =
+struct MenuRow rowsLanguage[] =
     {
         [0] = MENU_ROW(133, ROW_ENGLISH, ROW_FRENCH, ROW_ENGLISH, ROW_FRENCH),
         [1] = MENU_ROW(134, ROW_ENGLISH, ROW_GERMAN, ROW_ENGLISH, ROW_GERMAN),
@@ -92,27 +92,27 @@ struct MenuRow rows_language[] =
         [6] = FINALIZER_ROW};
 #endif
 
-struct MenuBox menubox_language =
+struct RectMenu menuLanguage =
     {
         .stringIndexTitle = -1,
         .posX_curr = 256,
         .posY_curr = 118,
         .unk1e = 1,
         .state = (CENTER_ON_COORDS | EXECUTE_FUNCPTR | 0x800),
-        .rows = rows_language,
-        .funcPtr = MM_MENUBOX_Language,
+        .rows = rowsLanguage,
+        .funcPtr = MM_MenuProc_Language,
         .width = 171,
         .height = 120};
 
-struct MenuBox *MM_Menubox_LanguageBoot(struct GameTracker *gGT)
+struct RectMenu *MM_menuLanguageBoot(struct GameTracker *gGT)
 {
   if (!gGT->notFoundInCode2)
   {
     timer = 900;
-    return &menubox_language;
+    return &menuLanguage;
   }
   else
   {
-    return &D230.menubox_mainMenu;
+    return &D230.menuMainMenu;
   }
 };

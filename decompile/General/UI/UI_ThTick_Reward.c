@@ -41,7 +41,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
 		((*(int*)&gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) &&
 		
 		// if any fade-in-from-black transition is over
-		(0xfff < gGT->tileView_UI.fadeFromBlack_currentValue)
+		(0xfff < gGT->pushBuffer_UI.fadeFromBlack_currentValue)
 	 )
   {
 	// make visible

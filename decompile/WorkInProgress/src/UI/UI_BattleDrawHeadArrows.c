@@ -29,8 +29,8 @@ void DECOMP_UI_BattleDrawHeadArrows(struct Driver *player)
 
   u_char playerID = player->driverID;
 
-  // tileView ViewProj
-  m = &gGT->tileView[playerID].matrix_ViewProj;
+  // pushBuffer ViewProj
+  m = &gGT->pushBuffer[playerID].matrix_ViewProj;
   gte_SetRotMatrix(m);
   gte_SetTransMatrix(m);
 
@@ -136,7 +136,7 @@ void DECOMP_UI_BattleDrawHeadArrows(struct Driver *player)
           *(int *)&p->g3.r1 = color | 0x30000000;
           *(int *)&p->g3.r2 = color | 0x30000000;
 
-          u_long *ot = gGT->tileView[playerID].ptrOT;
+          u_long *ot = gGT->pushBuffer[playerID].ptrOT;
 
           *(int*)p = *ot | 0x8000000;
           *ot = (u_int)p & 0xffffff;

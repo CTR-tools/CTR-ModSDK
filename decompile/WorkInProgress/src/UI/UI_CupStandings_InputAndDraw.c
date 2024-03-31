@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_int TitleFlag_IsFullyOffScreen();
+u_int RaceFlag_IsFullyOffScreen();
 
 void DECOMP_UI_CupStandings_UpdateCupRanks(void)
 {
@@ -56,7 +56,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
 
   numDrivers = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
   
-  titleFlag = TitleFlag_IsFullyOffScreen();
+  titleFlag = RaceFlag_IsFullyOffScreen();
 
     // if numPlyrCurrGame is not 1
       // if this is a multiplayer game
@@ -68,10 +68,10 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
     // If you are in Arcade or VS cup
     if (gGT -> gameMode2 & 0x10) {
       // checkered flag, begin transition on-screen
-      TitleFlag_BeginTransition(1);
+      RaceFlag_BeginTransition(1);
     }
     // enable checkered flag
-    TitleFlag_SetCanDraw(1);
+    RaceFlag_SetCanDraw(1);
   }
 
   if (
@@ -106,7 +106,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
     sdata->numIconsEOR = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
     // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
+    RECTMENU_ClearInput();
   }
   if ((sdata->menuReadyToPass & 4) == 0) {
     local_38 = -0x32;
@@ -205,8 +205,8 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
       if (gGT->cup.cupID == 4) {
         if (i < 5) {
           uVar9 = 0x60;
-          sVar7 = gGT->tileView->rect.x;
-          sVar5 = (short)(((int) gGT->tileView->rect.w + -0x20) / 5) * sVar5 + 0x10;
+          sVar7 = gGT->pushBuffer->rect.x;
+          sVar5 = (short)(((int) gGT->pushBuffer->rect.w + -0x20) / 5) * sVar5 + 0x10;
           goto LAB_800568d4;
         }
         sVar7 = 0;
@@ -220,14 +220,14 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
         if (numDrivers == 6) {
           uVar9 = 0x42;
           if (i < 3) {
-            sVar7 = gGT->tileView->rect.x;
-            sVar5 = (short)((int) gGT->tileView->rect.w + -0x80 >> 2) * sVar5 + 0x20;
+            sVar7 = gGT->pushBuffer->rect.x;
+            sVar5 = (short)((int) gGT->pushBuffer->rect.w + -0x80 >> 2) * sVar5 + 0x20;
           } else {
-            sVar1 = gGT->tileView->rect.w;
+            sVar1 = gGT->pushBuffer->rect.w;
             sVar5 = sVar5 + -2;
             LAB_800568b8:
               uVar9 = 0x79;
-            sVar7 = gGT->tileView->rect.x;
+            sVar7 = gGT->pushBuffer->rect.x;
             sVar5 = (short)((int) sVar1 + -0x80 >> 2) * sVar5 + 0x60;
           }
         }
@@ -238,17 +238,17 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
           // If number of AIs is zero
           if (gGT->numBotsNextGame == 0) {
             uVar9 = 0x6c;
-            sVar7 = gGT->tileView->rect.x + (short)(((int) gGT->tileView->rect.w + var1 * -0x5a + 0xc) / 2) + sVar18;
+            sVar7 = gGT->pushBuffer->rect.x + (short)(((int) gGT->pushBuffer->rect.w + var1 * -0x5a + 0xc) / 2) + sVar18;
             goto LAB_800568d8;
           }
           uVar9 = 0x42;
           if (3 < i) {
-            sVar1 = gGT->tileView->rect.w;
+            sVar1 = gGT->pushBuffer->rect.w;
             sVar5 = sVar5 + -4;
             goto LAB_800568b8;
           }
-          sVar7 = gGT->tileView->rect.x;
-          sVar5 = (short)((int) gGT->tileView->rect.w + -0x80 >> 2) * sVar5 + 0x20;
+          sVar7 = gGT->pushBuffer->rect.x;
+          sVar5 = (short)((int) gGT->pushBuffer->rect.w + -0x80 >> 2) * sVar5 + 0x20;
         }
         LAB_800568d4:
           sVar7 = sVar7 + sVar5;
@@ -304,7 +304,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
         gGT->backBuffer->primMem,
 
         // pointer to OT memory
-        gGT->tileView->ptrOT,
+        gGT->pushBuffer->ptrOT,
 
         1, 0x1000, 0x808080);
 
@@ -400,7 +400,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
       sdata->menuReadyToPass = sdata->menuReadyToPass | 8;
 
       // clear gamepad input (for menus)
-      MENUBOX_ClearInput();
+      RECTMENU_ClearInput();
     }
   } else {
     sdata->numIconsEOR = 1;
@@ -530,7 +530,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
             // set driver's cup score to zero
             gGT->cup.points[i] = 0;
           }
-          Tawna_Init(gGT);
+          Podium_InitModels(gGT);
 
           // If player 1 won the cup
           if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID) {
@@ -605,8 +605,8 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
             gGT->cup.points[i] = 0;
           }
 
-          // Tawna_Init
-          Tawna_Init(gGT);
+          // Podium_InitModels
+          Podium_InitModels(gGT);
 
           // If Player 1 or Player 2 won the cup
           if (((gGT->drivers[0]->driverRank) == 0) ||

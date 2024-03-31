@@ -186,10 +186,10 @@ struct OverlayDATA_232
 	short specLightToken[16];
 	
 	// 800b4e3c
-	struct MenuRow menuRow_TokenRelic[3];
+	struct MenuRow rowsTokenRelic[3];
 	
 	// 800b4e50
-	struct MenuBox menuBox_TokenRelic;
+	struct RectMenu menuTokenRelic;
 	
 	// 800b4e7c
 	short arrKeysNeeded[5];
@@ -325,7 +325,7 @@ struct OverlayDATA_232
 	} advPauseInst[15];
 	
 	// 0x800B518C
-	struct MenuBox menuBoxHintMenu;
+	struct RectMenu menuHintMenu;
 	
 	// 0x800B51B8
 	short fiveArrow_pos[2*3];

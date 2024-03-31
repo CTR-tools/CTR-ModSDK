@@ -17,5 +17,5 @@ void DECOMP_MainKillGame_StopCTR(void)
   ResetGraph(3);
   VSyncCallback(0);
 
-  DECOMP_RCNT_Destroy();
+  DECOMP_Timer_Destroy();
 }

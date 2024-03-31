@@ -11,7 +11,7 @@
 	 
 // FUN_800a0cbc, called by exe as entry to this monsterous algorithm, for rendering LEV.
 // param1 (a0) - offset 0x1808 of gameTracker, one struct per player
-// param2 (a1) - tileView
+// param2 (a1) - pushBuffer
 // param3 (a2) - LEV->ptr_mesh_info, pointer is stored at first four bytes of LEV
 // param4 (a3) - primMem
 // param5 (sp+0x10) - Vismem 0x10-0x1F
@@ -94,10 +94,10 @@
 	 // 1f800030 = primMem->end
      9::800a0d40 30 00 28 ac     _sw        t0,offset DAT_1f800030(at)                       = ??
 	 
-	 // 1f8000dc = P1 tileView
-	 // 1f8000e0 = P2 tileView
-	 // 1f8000e4 = P3 tileView
-	 // 1f8000e8 = P4 tileView
+	 // 1f8000dc = P1 pushBuffer
+	 // 1f8000e0 = P2 pushBuffer
+	 // 1f8000e4 = P3 pushBuffer
+	 // 1f8000e8 = P4 pushBuffer
      9::800a0d44 dc 00 25 ac     sw         a1,offset DAT_1f8000dc(at)                       = ??
      9::800a0d48 10 01 a5 24     addiu      a1,a1,0x110
      9::800a0d4c e0 00 25 ac     sw         a1,offset DAT_1f8000e0(at)                       = ??
@@ -214,7 +214,7 @@
      9::800a0e00 04 64 08 25     addiu      t0,t0,0x6404
 	 
 	 // call PrepareDraw (set camera matrix, window dimensions, etc)
-	 // delay slot: a1 = 1f8000dc (P1 tileView)
+	 // delay slot: a1 = 1f8000dc (P1 pushBuffer)
      9::800a0e04 32 84 02 0c     jal        FUN_OVR_229__800a10c8                            undefined FUN_OVR_229__800a10c8()
      9::800a0e08 dc 00 25 8c     _lw        a1,offset DAT_1f8000dc(at)                       = ??
      
@@ -308,7 +308,7 @@
      9::800a0e80 04 65 08 25     addiu      t0,t0,0x6504
      	 
 	 // call PrepareDraw (set camera matrix, window dimensions, etc)
-	 // delay slot: a1 = 1f8000e0 (P2 tileView)
+	 // delay slot: a1 = 1f8000e0 (P2 pushBuffer)
 	 9::800a0e84 32 84 02 0c     jal        FUN_OVR_229__800a10c8                            undefined FUN_OVR_229__800a10c8()
      9::800a0e88 e0 00 25 8c     _lw        a1,offset DAT_1f8000e0(at)                       = ??
 	 
@@ -369,7 +369,7 @@
      9::800a0f00 04 66 08 25     addiu      t0,t0,0x6604
 	 
 	 // call PrepareDraw (set camera matrix, window dimensions, etc)
-	 // delay slot: a1 = 1f8000e4 (P3 tileView)
+	 // delay slot: a1 = 1f8000e4 (P3 pushBuffer)
      9::800a0f04 32 84 02 0c     jal        FUN_OVR_229__800a10c8                            undefined FUN_OVR_229__800a10c8()
      9::800a0f08 e4 00 25 8c     _lw        a1,offset DAT_1f8000e4(at)                       = ??
 	 
@@ -416,7 +416,7 @@
      9::800a0f80 04 67 08 25     addiu      t0,t0,0x6704
 	 
 	 // call PrepareDraw (set camera matrix, window dimensions, etc)
-	 // delay slot: a1 = 1f8000e8 (P4 tileView)
+	 // delay slot: a1 = 1f8000e8 (P4 pushBuffer)
      9::800a0f84 32 84 02 0c     jal        FUN_OVR_229__800a10c8                            undefined FUN_OVR_229__800a10c8()
      9::800a0f88 e8 00 25 8c     _lw        a1,offset DAT_1f8000e8(at)                       = ??
 	 
@@ -608,7 +608,7 @@
      9::800a10cc 10 00 29 ac     sw         t1,0x10(at)
      9::800a10d0 c8 00 2a ac     sw         t2,0xc8(at)
 	 
-	 // tileView offset 0x28, store entire matrix on GTE
+	 // pushBuffer offset 0x28, store entire matrix on GTE
      9::800a10d4 28 00 ab 8c     lw         t3,0x28(a1)
      9::800a10d8 2c 00 ac 8c     lw         t4,0x2c(a1)
      9::800a10dc 30 00 ad 8c     lw         t5,0x30(a1)
@@ -626,7 +626,7 @@
                  48 00 30 
                  d1 48 00 
 				 
-	 // tileView 0xC - 0x12, frustum data
+	 // pushBuffer 0xC - 0x12, frustum data
      9::800a1114 0c 00 b0 84     lh         s0,0xc(a1)
      9::800a1118 0e 00 b1 84     lh         s1,0xe(a1)
      9::800a111c 10 00 b2 84     lh         s2,0x10(a1)
@@ -9417,7 +9417,7 @@
                                                                                           OVR_229::800a100c(c), 
                                                                                           OVR_229::800a1024(c)  
      
-	 // tileView matrix offset 0x28, upload to GTE
+	 // pushBuffer matrix offset 0x28, upload to GTE
 	 9::800a8270 a0 02 3f ac     sw         ra,0x2a0(at)
      9::800a8274 fc ff f8 12     beq        s7,t8,LAB_OVR_229__800a8268
      9::800a8278 28 00 ab 8c     _lw        t3,0x28(a1)

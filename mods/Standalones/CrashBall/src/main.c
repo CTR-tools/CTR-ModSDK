@@ -141,7 +141,7 @@ void DrawObjective()
 	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 
 	// Draw background box ========================
-	MENUBOX_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
@@ -149,7 +149,7 @@ void DrawObjective()
     if (buttons & BTN_CROSS)
 	{
 		// clear button input (for menus)
-		MENUBOX_ClearInput();
+		RECTMENU_ClearInput();
 
 		// set traffic lights to drop
 		sdata->gGT->trafficLightsTimer = 3840;
@@ -235,7 +235,7 @@ void DrawHUD()
 			// pointer to PrimMem struct
 			&sdata->gGT->backBuffer->primMem,
 
-			sdata->gGT->tileView_UI.ptrOT,
+			sdata->gGT->pushBuffer_UI.ptrOT,
 
 			1,0x1000,0x808080
 		);
@@ -248,15 +248,15 @@ void DrawHUD()
 void SetCamera()
 {
 	// Do not move the camera, based on player
-	sdata->gGT->cameraDC[0].tileView = 0;
+	sdata->gGT->cameraDC[0].pushBuffer = 0;
 
 	// set posx, posy, posz, rotx, roty, rotz
-	sdata->gGT->tileView[0].pos[0] = -0x880;
-	sdata->gGT->tileView[0].pos[1] = 0x730;
-	sdata->gGT->tileView[0].pos[2] = 0x0;
-	sdata->gGT->tileView[0].rot[0] = 0x60A;
-	sdata->gGT->tileView[0].rot[1] = -0x2400;
-	sdata->gGT->tileView[0].rot[2] = 0x0;
+	sdata->gGT->pushBuffer[0].pos[0] = -0x880;
+	sdata->gGT->pushBuffer[0].pos[1] = 0x730;
+	sdata->gGT->pushBuffer[0].pos[2] = 0x0;
+	sdata->gGT->pushBuffer[0].rot[0] = 0x60A;
+	sdata->gGT->pushBuffer[0].rot[1] = -0x2400;
+	sdata->gGT->pushBuffer[0].rot[2] = 0x0;
 }
 
 void HandleGamepads()

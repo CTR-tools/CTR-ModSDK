@@ -102,10 +102,10 @@ LAB_8005ec70:
 		collideThread = 0;
 
 		// check for collision with all sibling threads
-		THREAD_CollidePointWithBucket(thread->siblingThread, &pos);
+		PROC_CollidePointWithBucket(thread->siblingThread, &pos);
 
 		// pointer to first robotcar thread
-		THREAD_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &pos);
+		PROC_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &pos);
 		
 		// if there was a collision
 		if ((collideThread != 0) &&

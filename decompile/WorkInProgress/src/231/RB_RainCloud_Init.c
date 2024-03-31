@@ -14,7 +14,7 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     cloudInst = INSTANCE_BirthWithThread(0x42,sdata->s_cloud1, SMALL, OTHER,RB_RainCloud_ThTick,8, d->instSelf->thread);
 	
 	// set funcThDestroy to remove instance from instance pool	
-    cloudInst->thread->funcThDestroy = THREAD_DestroyInstance;
+    cloudInst->thread->funcThDestroy = PROC_DestroyInstance;
 	
 	// Set rotation, 5 direction vectors
    cloudInst->matrix.m[0][0] = 0x1000;

@@ -1,7 +1,7 @@
 #include <common.h>
 
-void DECOMP_AH_HintMenu_MenuBoxFuncPtr();
-void DECOMP_AH_WarpPad_MenuBoxFuncPtr();
+void DECOMP_AH_HintMenu_MenuProc();
+void DECOMP_AH_WarpPad_MenuProc();
 
 struct OverlayDATA_232 D232 =
 {
@@ -36,7 +36,7 @@ struct OverlayDATA_232 D232 =
 	},
 
 	// 800b4e3c
-	.menuRow_TokenRelic =
+	.rowsTokenRelic =
 	{
 		{0x176, 0, 1, 0, 0}, // CTR CHALLENGE
 		{0xb8,  0, 1, 1, 1}, // RELIC RACE
@@ -44,15 +44,15 @@ struct OverlayDATA_232 D232 =
 	},
 
 	// 800b4e50
-	.menuBox_TokenRelic =
+	.menuTokenRelic =
 	{
 		.stringIndexTitle = 0xb6,
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
 		.state = 0x100803,
-		.rows = &D232.menuRow_TokenRelic[0],
-		.funcPtr = DECOMP_AH_WarpPad_MenuBoxFuncPtr,
+		.rows = &D232.rowsTokenRelic[0],
+		.funcPtr = DECOMP_AH_WarpPad_MenuProc,
 		.drawStyle = 4,
 	},
 
@@ -270,7 +270,7 @@ struct OverlayDATA_232 D232 =
 		{0x62, 0x500, 0x808080, 0, {0xf368, 0x99f, 0x232}}
 	},
 	
-	.menuBoxHintMenu =
+	.menuHintMenu =
 	{
 		.stringIndexTitle = 0xFFFF,
 		.posX_curr = 0x100,
@@ -280,7 +280,7 @@ struct OverlayDATA_232 D232 =
 		
 		.state = 0x8A3,
 		.rows = 0,
-		.funcPtr = DECOMP_AH_HintMenu_MenuBoxFuncPtr,
+		.funcPtr = DECOMP_AH_HintMenu_MenuProc,
 		.drawStyle = 4,
 	
 		// rest of variables all default zero

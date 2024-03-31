@@ -41,13 +41,13 @@ void FUN_80024c4c(int param_1)
 
 	if (puVar13 + 0x34 < *(uint **)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x84)) {
 
-	  // TileView_SetPsyqGeom
+	  // PushBuffer_SetPsyqGeom
 	  FUN_80042910(PTR_DAT_8008d2ac + 0x168);
 
-	  // tileView ViewProj
+	  // pushBuffer ViewProj
       SetLightMatrix((MATRIX *)(puVar3 + 0x168 + 0x28));
 
-	  // flare position, minus, tileView->0x7C (matrix_Camera position)
+	  // flare position, minus, pushBuffer->0x7C (matrix_Camera position)
 	  gte_ldVXY0(((int)*(short *)(piVar15 + 1) - *(int *)(puVar3 + 0x1e4)) * 4 & 0xffffU |
                     ((int)*(short *)((int)piVar15 + 6) - *(int *)(puVar3 + 0x1e8)) * 0x40000);
       gte_ldVZ0(((int)*(short *)(piVar15 + 2) - *(int *)(puVar3 + 0x1ec)) * 4);
@@ -268,7 +268,7 @@ void FUN_80025138(undefined4 *param_1)
   undefined4 *puVar2;
   undefined4 uVar3;
 
-  // THREAD_BirthWithObject
+  // PROC_BirthWithObject
   // 0xc = size
   // 0 = no relation to param4
   // 0x300 = SmallStackPool

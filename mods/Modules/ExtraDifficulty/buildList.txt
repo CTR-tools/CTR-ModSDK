@@ -4,5 +4,5 @@
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
 926, 230, MM_EndOfFile, 0x0, src/MM_ExtraDifficulty.c
-926, 230, MM_MENUBOX_1p2p, 0x0, src/MM_MENUBOX_1p2p.c
+926, 230, MM_MenuProc_1p2p, 0x0, src/MM_MenuProc_1p2p.c
 926, bigfilelangenlng, 0x0, 0x0, assets/NTSC-U.lng

@@ -8,7 +8,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     char numPlyr;
     short sVar1;
     struct GameTracker *gGT;
-    struct TileView *view;
+    struct PushBuffer* pb;
     int ratio;
     int iVar6;
     struct MaskHeadWeapon* mask;
@@ -31,9 +31,9 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     {
         for (i = 0; i < numPlyr; i++)
         {
-            view = &gGT->tileView[i];
-            maskInst->idpp[i].tileView = view;
-            maskBeamInst->idpp[i].tileView = view;
+            pb = &gGT->pushBuffer[i];
+            maskInst->idpp[i].pushBuffer = pb;
+            maskBeamInst->idpp[i].pushBuffer = pb;
         }
     }
 	
@@ -43,8 +43,8 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
         {
             if (i != d->driverID)
             {
-                maskInst->idpp[i].tileView = NULL;
-                maskBeamInst->idpp[i].tileView = NULL;
+                maskInst->idpp[i].pushBuffer = NULL;
+                maskBeamInst->idpp[i].pushBuffer = NULL;
             }
         }
     }

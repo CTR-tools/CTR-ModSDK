@@ -12,7 +12,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	int* ptrColor;
 	u_char *pbVar6;
 	int i;
-	struct TileView *tileView;
+	struct PushBuffer* pb;
 	u_int partTimeVariable5;
 	struct Icon* iconPtr;
 	u_long *primMemCurr;
@@ -165,9 +165,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				// If game is not paused
 				if ((gameMode1 & PAUSE_ALL) == 0)
 				{
-					// Player / AI structure + 0x4a shows driver index (0-7)
-					// This is a pointer to each player's tileView buffer
-					tileView = &gGT->tileView[playerStruct->driverID];
+					pb = &gGT->pushBuffer[playerStruct->driverID];
 
 					// if "Time on clock" last 0xXX u_char is greater than 0x80 and less than 0xFF
 					if ((gGT->elapsedEventTime & 0x80) != 0)
@@ -177,11 +175,11 @@ void DECOMP_UI_RenderFrame_Racing()
 							// "WRONG WAY!"
 							sdata->lngStrings[0x1D],
 
-							// Midpoint between Start X and Size X
-							(int)(((u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11)) * 0x10000) >> 0x10,
+							// midpointX
+							pb->rect.x + pb->rect.w >> 1,
 
-						 	// Midpoint between Start Y and Size Y, except 0x1e higher
-						 	(int)(((u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
+						 	// midpointY + 0x1e
+						 	pb->rect.x + (pb->rect.w >> 1) + 0x1e,
 
 							FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 						);
@@ -310,7 +308,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						&gGT->backBuffer->primMem,
 
 						// pointer to OT memory
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						0, hudStructPtr[0].scale
 					);
@@ -391,7 +389,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					// print "-x" where x is the amount of seconds
 					sprintf(&string[0], &sdata->s_subtractLongInt[0], gGT->timeCrateTypeSmashed);
 
-					// 4b4 and 4b6 are WindowStartPos(x,y) from TileView, inside Driver
+					// 4b4 and 4b6 are WindowStartPos(x,y) from PushBuffer, inside Driver
 					DECOMP_UI_Lerp2D_HUD
 					(
 						&wumpaModel_Pos[0], playerStruct->PickupTimeboxHUD.startX,
@@ -587,7 +585,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						(int)hudStructPtr[2].y,
 
 						&gGT->backBuffer->primMem,
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						// color data
 						ptrColor[0],
@@ -846,7 +844,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				TurboCounterBar->y3 = turboCount_Pos[1] + 0x12;
 
 				// pointer to OT memory
-				primMemCurr = gGT->tileView_UI.ptrOT;
+				primMemCurr = gGT->pushBuffer_UI.ptrOT;
 
 				*(int*)TurboCounterBar = *primMemCurr | 0x8000000;
 				*primMemCurr = (u_int)TurboCounterBar & 0xffffff;
@@ -914,7 +912,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				&gGT->backBuffer->primMem,
 	
 				// pointer to OT memory
-				gGT->tileView_UI.ptrOT,
+				gGT->pushBuffer_UI.ptrOT,
 	
 				// color, in this case white
 				1
@@ -933,11 +931,8 @@ void DECOMP_UI_RenderFrame_Racing()
 		// for(int i = 0; i < numPlyrCurrGame; i++)
 		do
 		{
-			// pointer to array of pointers for each driver (9900C, 99010, etc)
 			playerStruct = gGT->drivers[i];
-
-			// pointer to each player's tileView buffer
-			tileView = &gGT->tileView[playerStruct->driverID];
+			pb = &gGT->pushBuffer[playerStruct->driverID];
 
 			if
 			(
@@ -969,19 +964,11 @@ void DECOMP_UI_RenderFrame_Racing()
 					// Basically, out of all human players, if you did not come in last
 					((int)playerStruct->driverRank < (int)numPlyr - 1) &&
 
-					// If you're not in Battle Mode (winner of battle mode wont be in this function)
+					// If you're not in Battle Mode 
+					// (winner of battle wont use this function)
 					((gameMode1 & BATTLE_MODE) == 0)
 				)
 				{
-
-					// Position is the same regardless of win or lose
-
-					// Midpoint between tileView Start X and End X
-					partTimeVariable3 = (u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11);
-
-					// Midpoint between tileView Start Y and End Y
-					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
-
 					// FINISHED!
 					pbVar6 = sdata->lngStrings[0x1E];
 				}
@@ -989,22 +976,15 @@ void DECOMP_UI_RenderFrame_Racing()
 				// If you came in last place, or you're in battle
 				else
 				{
-					// Position is the same regardless of win or lose
-
-					// Midpoint between tileView Start X and End X
-					partTimeVariable3 = (u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11);
-
-					// Midpoint between tileView Start Y and End Y
-					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
-
 					// LOSER!
 					pbVar6 = sdata->lngStrings[0x143];
 				}
 
-				// In some cases, this cuts off bits, but sometimes
-				// [number] * 0x10000 >> 0x10 = [number]
-
-				DECOMP_DecalFont_DrawLine(pbVar6, partTimeVariable3 * 0x10000 >> 0x10, (partTimeVariable5 - 0x1e) * 0x10000 >> 0x10, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+				DECOMP_DecalFont_DrawLine(
+					pbVar6, 
+					pb->rect.x + pb->rect.w >> 1,			// midpointX
+					pb->rect.y + (pb->rect.h >> 1) - 0x1e,	// midpointY
+					FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 				if
 				(

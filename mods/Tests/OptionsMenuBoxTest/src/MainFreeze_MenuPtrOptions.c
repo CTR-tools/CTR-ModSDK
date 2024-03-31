@@ -320,7 +320,7 @@ switchD_80038f90_caseD_9:
 		volumeSliderTriangle[3] = sVar8 + 0x30;
 		volumeSliderTriangle[4] = volumeSliderTriangle[2];
 		volumeSliderTriangle[5] = volumeSliderTriangle[1];
-		MENUBOX_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		RECTMENU_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		
 		// "FX:" "MUSIC:" "VOICE:"
 		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
@@ -438,20 +438,20 @@ switchD_80038f90_caseD_9:
 	titleSeparatorLine.y = sVar4 + 43;
 	titleSeparatorLine.w = 380;
 	titleSeparatorLine.h = 2;
-	MENUBOX_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	menuBoxBG.x = 0x38;
 	menuBoxBG.w = 400;
 	menuBoxBG.h = 0x87 - local_68 + (10 * NUM_ADDED_ENTRIES);
 	menuBoxBG.y = sVar4 + 0x14;
-	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
-		MENUBOX_ClearInput();
-		sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox();
+		RECTMENU_ClearInput();
+		sdata->ptrDesiredMenu = MainFreeze_GetMenuPtr();
 	}
 	// WARNING: Read-only address (ram, 0x8008d950) is written
 	// WARNING: Read-only address (ram, 0x8008d974) is written

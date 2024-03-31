@@ -84,7 +84,7 @@ void DECOMP_AH_Map_HubArrowOutter(
 				DECOMP_CTR_Box_DrawWirePrims(
 					iVar9, iVar6, sin, cos,
 					var14, var15, 0xff,
-					gGT->tileView_UI.ptrOT,
+					gGT->pushBuffer_UI.ptrOT,
 					&gGT->backBuffer->primMem);
 			}
 			

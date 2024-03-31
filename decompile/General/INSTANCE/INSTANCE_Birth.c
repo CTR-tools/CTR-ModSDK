@@ -44,7 +44,7 @@ void DECOMP_INSTANCE_Birth(
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		idpp[i].tileView = &gGT->tileView[i];
+		idpp[i].pushBuffer = &gGT->pushBuffer[i];
 		idpp[i].mh = 0;
 		idpp[i].unkb8[0] = 0;
 	}

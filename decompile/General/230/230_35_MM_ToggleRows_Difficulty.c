@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_ToggleRows_Difficulty(void)
+void DECOMP_MM_TogglerowsDifficulty(void)
 {
   char bVar1;
   struct GameTracker* gGT;
@@ -65,7 +65,7 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
     }
 	
 	// save new value
-    D230.rows_difficulty[iVar7].stringIndex = uVar5;
+    D230.rowsDifficulty[iVar7].stringIndex = uVar5;
   }
 }
  

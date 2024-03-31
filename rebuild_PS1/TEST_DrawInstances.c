@@ -34,15 +34,15 @@ void DrawOneInst(struct Instance* curr)
 	{
 		struct InstDrawPerPlayer* idpp = INST_GETIDPP(curr);
 
-		struct TileView* view = idpp[i].tileView;
-		if (view == 0) continue;
+		struct PushBuffer* pb = idpp[i].pushBuffer;
+		if (pb == 0) continue;
 
 #if 1
 		// temporary, until CAMERA_ThTick is done
-		view->distanceToScreen_PREV = view->distanceToScreen_CURR;
+		pb->distanceToScreen_PREV = pb->distanceToScreen_CURR;
 
-		// temporary, until TileView_UpdateFrustum is done
-		gte_SetGeomScreen(view->distanceToScreen_PREV);
+		// temporary, until PushBuffer_UpdateFrustum is done
+		gte_SetGeomScreen(pb->distanceToScreen_PREV);
 #endif
 
 		// ============ Get ModelViewProj Matrix ==============
@@ -53,7 +53,7 @@ void DrawOneInst(struct Instance* curr)
 		// why is this shifting by 0x10 instead of 0xC?
 		
 #define RCC(row, col, index) \
-	((int)((int)view->matrix_ViewProj.m[row][index] * (int)curr->matrix.m[index][col]) >> 0x10)
+	((int)((int)pb->matrix_ViewProj.m[row][index] * (int)curr->matrix.m[index][col]) >> 0x10)
 
 		mvp.m[0][0] = RCC(0, 0, 0) + RCC(0, 0, 1) + RCC(0, 0, 2);
 		mvp.m[0][1] = RCC(0, 1, 0) + RCC(0, 1, 1) + RCC(0, 1, 2);
@@ -70,24 +70,24 @@ void DrawOneInst(struct Instance* curr)
 		// ============ Get Perspective Translation ==============
 
 		VECTOR pos;
-		pos.vx = curr->matrix.t[0] - view->matrix_Camera.t[0];
-		pos.vy = curr->matrix.t[1] - view->matrix_Camera.t[1];
-		pos.vz = curr->matrix.t[2] - view->matrix_Camera.t[2];
+		pos.vx = curr->matrix.t[0] - pb->matrix_Camera.t[0];
+		pos.vy = curr->matrix.t[1] - pb->matrix_Camera.t[1];
+		pos.vz = curr->matrix.t[2] - pb->matrix_Camera.t[2];
 
 #ifdef REBUILD_PC
-		ApplyMatrixLV(&view->matrix_ViewProj, &pos, &mat2->t[0]);
+		ApplyMatrixLV(&pb->matrix_ViewProj, &pos, &mat2->t[0]);
 #else
 		// Not rewritten yet,
 #if 0
-		ApplyMatrixLV_stub(&view->matrix_ViewProj, &pos, &mat2->t[0]);
+		ApplyMatrixLV_stub(&pb->matrix_ViewProj, &pos, &mat2->t[0]);
 #endif
 #endif
 
 		gte_SetRotMatrix(mat2);
 		gte_SetTransMatrix(mat2);
-		gte_SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
+		gte_SetGeomOffset(pb->rect.w >> 1, pb->rect.h >> 1);
 
-		// temporary, for tileView_UI
+		// temporary, for pushBuffer_UI
 		if ((curr->flags & 0x400) != 0)
 		{
 			gte_SetRotMatrix(&curr->matrix);
@@ -131,7 +131,7 @@ void DrawOneInst(struct Instance* curr)
 		char* vertData = (char*)&mf[0] + mf->vertexOffset;
 
 		// 3FF is background, 0x0 is minimum depth
-		void* ot = &view->ptrOT[0];
+		void* ot = &pb->ptrOT[0];
 
 		//helper type, kinda same as RGB
 		//a 255 grid "compressed vertex" 0 = 0.0 and 255 = 1.0. 256 steps only.

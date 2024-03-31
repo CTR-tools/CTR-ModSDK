@@ -180,7 +180,7 @@ struct ScratchpadStructExtended
 	int unk1[2];
 	
 	
-	// --- the rest is for tileView funcs ---
+	// --- the rest is for pushBuffer funcs ---
 	
 	
 	// 0x2cc - 1f8003d4

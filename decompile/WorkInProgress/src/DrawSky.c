@@ -3,9 +3,9 @@
 
 // draws level skybox
 // param_1 - lev ptr_skybox
-// param_2 - tileView
+// param_2 - pushBuffer
 // param_3 - primMem
-void DrawSky_Full(Skybox* pSkybox, void* pTileView, void* primMem)
+void DrawSky_Full(Skybox* pSkybox, void* pPushBuffer, void* primMem)
 {
 	//just jump out 
 	if (pSkybox == NULL) return;
@@ -28,12 +28,12 @@ void DrawSky_Full(Skybox* pSkybox, void* pTileView, void* primMem)
 	DAT_1f800008 = unaff_s1;
 	DAT_1f80000c = unaff_s2;
 
-	// load tileView ViewProj to gte
-	gte_ldR11R12(*(undefined4 *)(pTileView + 0x28));
-	gte_ldR13R21(*(undefined4 *)(pTileView + 0x2c));
-	gte_ldR22R23(*(undefined4 *)(pTileView + 0x30));
-	gte_ldR31R32(*(undefined4 *)(pTileView + 0x34));
-	gte_ldR33(*(undefined4 *)(pTileView + 0x38));
+	// load pushBuffer ViewProj to gte
+	gte_ldR11R12(*(undefined4 *)(pPushBuffer + 0x28));
+	gte_ldR13R21(*(undefined4 *)(pPushBuffer + 0x2c));
+	gte_ldR22R23(*(undefined4 *)(pPushBuffer + 0x30));
+	gte_ldR31R32(*(undefined4 *)(pPushBuffer + 0x34));
+	gte_ldR33(*(undefined4 *)(pPushBuffer + 0x38));
 
 	// remove transformation,
 	// standard for sky in most games
@@ -41,17 +41,17 @@ void DrawSky_Full(Skybox* pSkybox, void* pTileView, void* primMem)
 
 	// These get modified in between skybox segments,
 	// the C output is wrong
-	DAT_1f800010 = pTileView->rot[1] + 0x500U >> 7 & 0x1c;
+	DAT_1f800010 = pPushBuffer->rot[1] + 0x500U >> 7 & 0x1c;
 	DAT_1f800014 = DAT_1f800010 >> 1;
 
 	//it probably modifies segment index on the register in between, then uses it in the segment function?
 	//does it like uses horizontal angle, something like 4096 / 512 then draw segments around it?
 
 	// draw four skybox segments
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pPushBuffer, primMem, &pPushBuffer->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pPushBuffer, primMem, &pPushBuffer->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pPushBuffer, primMem, &pPushBuffer->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pPushBuffer, primMem, &pPushBuffer->ptrOT[0x3ff]);
 
 	// restore
 	unaff_ra = DAT_1f800000;
@@ -69,10 +69,10 @@ u_int numSegment = 8;
 // draws skybox segment
 // every skybox is splitted in 8 segments, only 4 are drawn at a time
 // pSkybox - lev ptr_skybox
-// pTileView - tileView, do we really use tileview in this func?
+// pPushBuffer - pushBuffer, do we really use tileview in this func?
 // primMem - primMem
-// ptrOT - tileView->ptrOT
-void DrawSky_Piece(Skybox* pSkybox, void* pTileView, void* primMem, int ptrOT)
+// ptrOT - pushBuffer->ptrOT
+void DrawSky_Piece(Skybox* pSkybox, void* pPushBuffer, void* primMem, int ptrOT)
 {
 	//numsegment is hardcoded in_t5 + 8, guess it's the segment index (1 to 8) coming from some register?
 	//or maybe i got it all wrong

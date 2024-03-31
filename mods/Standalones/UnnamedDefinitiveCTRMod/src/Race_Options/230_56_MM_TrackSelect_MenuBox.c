@@ -9,7 +9,7 @@ void UDCTRM_RaceOptions();
 
 u_int UDCTRM_RO_isOpen = false;
 
-void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
+void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 {
 	char bVar1;
 	char bVar2;
@@ -83,7 +83,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if (D230.trackSel_StartRaceAfterFadeOut == 0)
 				{
 					// return to character selection
-					sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
+					sdata->ptrDesiredMenu = &D230.menuCharacterSelect;
 					MM_Characters_RestoreIDs();
 					return;
 				}
@@ -94,7 +94,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 				{
 					// open weapon selection menu
-					sdata->ptrDesiredMenuBox = &D230.menubox_battleWeapons;
+					sdata->ptrDesiredMenu = &D230.menuBattleWeapons;
 					MM_Battle_Init();
 					return;
 				}
@@ -112,16 +112,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					// by default, dont show ghost in race
 					sdata->boolReplayHumanGhost = 0;
 
-					LoadSave_ToggleMode(0x30);
+					SelectProfile_ToggleMode(0x30);
 
 					// open the ghost selection menu
-					sdata->ptrDesiredMenuBox = &data.menuBox_GhostSelection;
+					sdata->ptrDesiredMenu = &data.menuGhostSelection;
 					return;
 				}
 
 				// passthrough MenuBox for the function
-				// TitleBeginTrack
-				sdata->ptrDesiredMenuBox = &data.menuBox_TitleBeginTrack;
+				// QueueLoadTrack
+				sdata->ptrDesiredMenu = &data.menuQueueLoadTrack;
 
 				// make error message posY appear
 				// near middle of screen
@@ -144,7 +144,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		numTracks = 7;
 	}
 
-	currTrack = mb->rowSelected;
+	currTrack = menu->rowSelected;
 
 	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	if (!(UDCTRM_RO_isOpen))
@@ -228,7 +228,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 
 			// clear gamepad input (for menus)
-			MENUBOX_ClearInput();
+			RECTMENU_ClearInput();
 		}
 	}
 	else
@@ -241,7 +241,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	iVar9 = D230.trackSel_changeTrack_frameCount + -1;
 	if ((0 < D230.trackSel_changeTrack_frameCount) && (D230.trackSel_changeTrack_frameCount = iVar9, iVar9 == 0))
 	{
-		mb->rowSelected = D230.trackSel_currTrack;
+		menu->rowSelected = D230.trackSel_currTrack;
 	}
 
 	// not transitioning
@@ -264,8 +264,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	MM_TrackSelect_Video_State(uVar14);
 
 	uVar15 = (u_int)numTracks;
-	gGT->currLEV = selectMenu[mb->rowSelected].levID;
-	iVar9 = (int)mb->rowSelected + -1;
+	gGT->currLEV = selectMenu[menu->rowSelected].levID;
+	iVar9 = (int)menu->rowSelected + -1;
 
 	for (iVar18 = 0; iVar18 < 4; iVar18++)
 	{
@@ -379,7 +379,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						&gGT->backBuffer->primMem,
 
 						// pointer to OT mem
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						// color data
 						starColor[0],
@@ -420,7 +420,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 			{
 				// Check if this track has Ghost Data
-				uVar15 = GhostData_BoolGhostForLEV(selectMenu[iVar10].levID);
+				uVar15 = RefreshCard_BoolGhostForLEV(selectMenu[iVar10].levID);
 
 				// If this track has Ghost Data
 				if ((uVar15 & 0xffff) != 0)
@@ -463,7 +463,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar15 = (u_int)numTracks;
 
 		// Draw 2D Menu rectangle background
-		MENUBOX_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
+		RECTMENU_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
 
 		do
 		{
@@ -491,7 +491,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			// near-top if map exists, near-mid if no map
 			p.y = D230.transitionMeta_trackSel[1].currY + 0x3a;
 			
-			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
+			if (-1 < selectMenu[menu->rowSelected].mapTextureID)
 				p.y = D230.transitionMeta_trackSel[1].currY + 5;
 		
 			/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
@@ -511,9 +511,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 			/////////////////////////// SECTION 2         ///////////////////////////
 		
-			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
+			if (-1 < selectMenu[menu->rowSelected].mapTextureID)
 			{
-				int mapID = selectMenu[mb->rowSelected].mapTextureID;
+				int mapID = selectMenu[menu->rowSelected].mapTextureID;
 				struct Icon* iconMap0 = gGT->ptrIcons[mapID+0];
 				struct Icon* iconMap1 = gGT->ptrIcons[mapID+1];
 
@@ -563,7 +563,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						&gGT->backBuffer->primMem,
 
 						// pointer to OT mem
-						gGT->tileView_UI.ptrOT,
+						gGT->pushBuffer_UI.ptrOT,
 
 						// 1 = draw map with regular color (white) - used for the main layer of the minimap in the track select screen
 						// 2 = draw map blue - used for the outline of the minimap in the track select screen
