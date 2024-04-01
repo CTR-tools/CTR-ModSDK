@@ -131,6 +131,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	// PLEASE ENTER YOUR NAME
 	DECOMP_DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 	
+	// player name
 	DECOMP_DecalFont_DrawLine(
 		gGT->currNameEntered, 
 		
@@ -144,7 +145,13 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	if (((sdata->typeTimer & FPS_DOUBLE(2)) != 0) && (currNameLength < 16))
 	{
 		currNameWidth = DECOMP_DecalFont_GetLineWidth(gGT->currNameEntered, FONT_BIG);
-		DECOMP_DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
+		
+		DECOMP_DecalFont_DrawLine(
+			sdata->str_underscore, 
+			currNameWidth + WIDE_PICK(192,  208), 
+			
+			68, 
+			FONT_BIG, ORANGE);
 	}
 
 	// SAVE button blink
