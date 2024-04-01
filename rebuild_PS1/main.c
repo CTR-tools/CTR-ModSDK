@@ -557,5 +557,4 @@
 
 #include "../decompile/General/232/232_Block1.c"
 
-#include "../decompile/General/233/233_37_39_CS_Garage.c"
-#include "../decompile/General/233/233_40_CS_Garage_GetMenuPtr.c"
+#include "../decompile/General/233/233_37_40_CS_Garage.c"
