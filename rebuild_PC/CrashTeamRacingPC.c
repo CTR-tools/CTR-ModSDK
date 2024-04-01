@@ -53,6 +53,17 @@ typedef enum {
 
 // ======= PC-Specific Code =============
 
+// PsyCross bug, the Enter key does not
+// work in PsyXKeyboardHandler, workaround:
+int NikoGetEnterKey()
+{
+	// dont use Windows.h
+	__declspec(dllimport) short __stdcall 
+		GetAsyncKeyState(_In_ int vKey);
+	
+	return GetAsyncKeyState(0xd);
+}
+
 void PsyXKeyboardHandler(int key, char down)
 {
 	if (down == 0)

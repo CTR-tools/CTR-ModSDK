@@ -252,13 +252,6 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 			tap = BTN_CIRCLE;
 		}
 
-		// Return
-		if (kbCurr == 40)
-		{
-			cursorPosition = 1001;
-			tap = BTN_CIRCLE;
-		}
-
 		// Escape
 		if (kbCurr == 41)
 		{
@@ -282,6 +275,14 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	}
 
 	kbPrev = kbCurr;
+
+	// Press Enter
+	int NikoGetEnterKey();
+	if (NikoGetEnterKey())
+	{
+		cursorPosition = 1001;
+		tap = BTN_CIRCLE;
+	}
 
 #endif
 
