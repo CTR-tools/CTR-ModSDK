@@ -70,11 +70,6 @@ void NewCallback231()
 		// run thread at 30fps, in 60fps gameplay
 	}
 	
-	// follower
-	{
-		*(char*)0x800b7010 = 7*2;
-	}
-
 	DECOMP_LOAD_Callback_Overlay_231();
 }
 
