@@ -431,12 +431,18 @@ LAB_80035098:
 					return;
 				}
 
-#ifndef REBUILD_PS1
-				sVar2 = SubmitName_DrawMenu(0x140);
+				sVar2 = DECOMP_SubmitName_DrawMenu(0x140);
+				
+				// if not done yet
 				if (sVar2 == 0)
 				{
 					return;
 				}
+
+
+#ifndef REBUILD_PS1
+
+				// if SAVE
 				if (sVar2 == 1)
 				{
 					*(u_short*)&sdata->unk_saveGame_related = 0;
@@ -450,6 +456,7 @@ LAB_80035098:
 				}
 #endif
 
+				// if -1 (cancel)
 				gGT->newHighScoreIndex = -1;
 				gGT->unknownFlags_1d44 &= ~(RELIC_RACE | CRYSTAL_CHALLENGE);
 				return;

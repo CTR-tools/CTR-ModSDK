@@ -387,6 +387,10 @@ void DECOMP_RaceFlag_SetFullyOffScreen();
 void DECOMP_RaceFlag_ResetTextAnim();
 void DECOMP_RaceFlag_DrawSelf();
 
+short DECOMP_SubmitName_DrawMenu(u_short string);
+void DECOMP_SubmitName_MenuProc(struct RectMenu* menu);
+void DECOMP_SubmitName_RestoreName(short param_1);
+
 void DECOMP_Timer_Init();
 void DECOMP_Timer_Destroy();
 

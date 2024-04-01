@@ -415,6 +415,10 @@
 #include "../decompile/General/RECTMENU/RECTMENU_Hide.c"
 #include "../decompile/General/RECTMENU/RECTMENU_BoolHidden.c"
 
+#include "../decompile/General/SubmitName/SubmitName_RestoreName.c"
+#include "../decompile/General/SubmitName/SubmitName_DrawMenu.c"
+#include "../decompile/General/SubmitName/SubmitName_MenuProc.c"
+
 #include "../decompile/General/Timer/Timer_Init.c"
 #include "../decompile/General/Timer/Timer_Destroy.c"
 

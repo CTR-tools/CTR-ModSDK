@@ -4306,7 +4306,7 @@ struct Data data =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x820,
-		.funcPtr = 0x8004b144,
+		.funcPtr = DECOMP_SubmitName_MenuProc,
 	},
 	
 	.menuQueueLoadHub =

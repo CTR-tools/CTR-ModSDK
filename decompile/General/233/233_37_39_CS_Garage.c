@@ -429,11 +429,7 @@ void DECOMP_CS_Garage_MenuProc(void)
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
                     sdata->advProgress.characterID = data.characterIDs[0];
 
-#ifndef REBUILD_PS1
-                    SubmitName_RestoreName(0);
-#endif
-
-                    // Play Sound
+                    DECOMP_SubmitName_RestoreName(0);
                     DECOMP_OtherFX_Play(1, 1);
                 }
             }
@@ -531,11 +527,7 @@ LAB_800b821c:
 			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 			sdata->advProgress.characterID = data.characterIDs[0];
 
-#ifndef REBUILD_PS1
-			SubmitName_RestoreName(0);
-#endif
-
-			// Play Sound
+			DECOMP_SubmitName_RestoreName(0);
 			DECOMP_OtherFX_Play(1, 1);
 		}
 		

@@ -102,41 +102,41 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 			strColorBlink = 0;
 			if (cursorPosition == letterID)
 				strColorBlink = (sdata->typeTimer & 1) << 2;
-			DecalFont_DrawLine(&keyboardString, j*22 + 116, i*18 + 88, FONT_BIG, strColorBlink);
+			DECOMP_DecalFont_DrawLine(&keyboardString, j*22 + 116, i*18 + 88, FONT_BIG, strColorBlink);
 		
 			letterID++;
 		}
 	}
 	
-	DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
-	DecalFont_DrawLine(gGT->currNameEntered, 192, 68, FONT_BIG, WHITE);
+	DECOMP_DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+	DECOMP_DecalFont_DrawLine(gGT->currNameEntered, 192, 68, FONT_BIG, WHITE);
 	if ((sdata->typeTimer & 2) && (currNameLength < 16))
 	{
-		currNameWidth = DecalFont_GetLineWidth(gGT->currNameEntered, FONT_BIG);
-		DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
+		currNameWidth = DECOMP_DecalFont_GetLineWidth(gGT->currNameEntered, FONT_BIG);
+		DECOMP_DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
 	}
 	
 	// SAVE button (blink and draw)
 	strColorBlink2 = 0;
 	if (cursorPosition == 1001)
 		strColorBlink2 = (sdata->typeTimer & 1) << 2;
-	DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (JUSTIFY_RIGHT | strColorBlink2));
+	DECOMP_DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (JUSTIFY_RIGHT | strColorBlink2));
 	
 	// CANCEL button (blink and draw)
 	strColorBlink = 0;
 	if (cursorPosition == 1000)
 		strColorBlink = (sdata->typeTimer & 1) << 2;
-	DecalFont_DrawLine(sdata->lngStrings[321], 40, 150, 1, strColorBlink);
+	DECOMP_DecalFont_DrawLine(sdata->lngStrings[321], 40, 150, 1, strColorBlink);
 	
 	r.x = 32;
 	r.w = 448;
 	r.y = 62;
 	r.h = 2;
-	RECTMENU_DrawOuterRect_Edge(&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
+	DECOMP_RECTMENU_DrawOuterRect_Edge(&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
 	
 	r.y = 39;
 	r.h = 130;
-	RECTMENU_DrawInnerRect(&r, 0, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
+	DECOMP_RECTMENU_DrawInnerRect(&r, 0, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
 	
 	int tap = sdata->buttonTapPerPlayer[0];
 	
@@ -185,7 +185,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 								}
 							#endif
 							
-							gGT->currNameEntered[currNameLengthIncrement] = cursorCharacter;
+							gGT->currNameEntered[currNameLength] = cursorCharacter;
 						}
 					}
 					
@@ -208,7 +208,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 							local_38 = -1;
 						}
 						
-						RECTMENU_ClearInput();
+						DECOMP_RECTMENU_ClearInput();
 					}
 				}
 			}
@@ -292,7 +292,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 LAB_8004b0dc:
 	if (soundID != 0)
 	{
-		OtherFX_Play(data.soundIndexArray[soundID], 1);
+		DECOMP_OtherFX_Play(data.soundIndexArray[soundID], 1);
 	}
 	gGT->typeCursorPosition = cursorPosition;
 	return local_38;

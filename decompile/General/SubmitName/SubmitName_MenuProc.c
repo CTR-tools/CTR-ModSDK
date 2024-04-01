@@ -4,7 +4,7 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
 {
   struct GameTracker *gGT = sdata->gGT;
 
-  short selection = SubmitName_DrawMenu(0x13f);
+  short selection = DECOMP_SubmitName_DrawMenu(0x13f);
   menu->rowSelected = selection;
   
   // not finished yet
@@ -16,6 +16,7 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
   // if name entered for Time Trial
   if (sdata->data10_bbb[0xd] == 1)
   {
+	#ifndef REBUILD_PS1
 	// if hit CANCEL
     if (selection < 0)
     {
@@ -31,6 +32,7 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
       SelectProfile_ToggleMode(0x31);
       sdata->ptrDesiredMenu = &data.menuGhostSelection;
     }
+	#endif
   }
 
   // if name entered for Adventure
@@ -51,9 +53,11 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
       *(int*)&sdata->advProgress.name[0x8] = *(int*)&gGT->prevNameEntered[0x8];
       *(int*)&sdata->advProgress.name[0xc] = *(int*)&gGT->prevNameEntered[0xc];
 	  
+	  #ifndef REBUILD_PS1
       // AdventureMode
       SelectProfile_ToggleMode(1);
       sdata->ptrDesiredMenu = &data.menuFourAdvProfiles;
+	  #endif
     }
   }
 }

@@ -476,7 +476,7 @@ void MainGameEnd_Initialize(void)
 
       UI_VsQuipAssignAll();
 
-      SubmitName_RestoreName(2);
+      DECOMP_SubmitName_RestoreName(2);
 
       // if you are in Relic Race or Time Trial
       if ((gameMode1 & (RELIC_RACE | TIME_TRIAL)) != 0)
