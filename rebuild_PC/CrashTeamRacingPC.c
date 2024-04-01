@@ -1,3 +1,6 @@
+
+// ======= Headers =============
+
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
 #include "psx/types.h"
@@ -13,6 +16,8 @@
 #include "PsyX/PsyX_globals.h"
 #include "PsyX/PsyX_render.h"
 
+// ======= Syntax Correction =============
+
 #define BUILD 926
 #define u_char unsigned char
 #define u_short unsigned short
@@ -23,7 +28,8 @@
 #define _Static_assert(x) 
 #define __attribute__(x)
 
-// Since we dont have psn00b in PC
+// ======= Replace Psn00bsdk Data =============
+
 #define RECT RECT16
 typedef enum {
 	PAD_ID_MOUSE = 0x1, // Sony PS1 mouse
@@ -39,15 +45,27 @@ typedef enum {
 	PAD_ID_NONE = 0xf  // No pad connected (if len == 0xf)
 } PadTypeID;
 
+// ======= RebuildPS1 -> PC =============
+
 #include "../rebuild_PS1/main.c"
 #include "../decompile/General/zGlobal_DATA.c"
 #include "../decompile/General/zGlobal_SDATA.c"
 
-int frameCount = 0;
-int oldTicks = 0;
+// ======= PC-Specific Code =============
+
+void PsyXKeyboardHandler(int key, char down)
+{
+	if (down == 0)
+		key = 0;
+
+	void SubmitName_UseKeyboard(int key);
+	SubmitName_UseKeyboard(key);
+}
 
 // printf once every X frames
 int frameGap = 2000;
+int frameCount = 0;
+int oldTicks = 0;
 
 int NikoCalcFPS()
 {
@@ -77,6 +95,13 @@ int main()
 
 	// P1 = Controller 1
 	g_cfg_controllerToSlotMapping[0] = 0;
+
+	// for typing in SubmitName
+	g_dbg_gameDebugKeys = PsyXKeyboardHandler;
+	
+	// override PsyX_Sys_InitialiseInput,
+	// so typing in SubmitName doesn't break
+	memset(&g_cfg_keyboardMapping, 0, sizeof(g_cfg_keyboardMapping));
 
 	return DECOMP_main();
 }
