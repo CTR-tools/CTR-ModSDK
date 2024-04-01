@@ -1,5 +1,5 @@
-// 493+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+2+3+2+4+2+3+16+3+47-12 = 833 rewritten so far
-// 493 for every 'common' and ','
+// 494+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 835 rewritten so far
+// 494 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -19,7 +19,7 @@
 // +1 for 222
 // +2 for 223
 // +2 for 224
-// +2 for CS_Garage
+// +3 for CS_Garage
 // +3 for VehStuckProc_Tumble
 // +2 for VehStuckProc_RevEngine
 // +4 for VehPhysProc_Driving
@@ -137,8 +137,7 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 //ommon, 233, CS_Podium_Stand_Init, 0x0, General/233/233_32_CS_Podium_Stand_Init.c
 common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullScene_Init.c
 // skip BoxScene (34-36)
-common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_39_CS_Garage.c
-common, 233, CS_Garage_GetMenuPtr, 0x0, General/233/233_40_CS_Garage_GetMenuPtr.c
+common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_40_CS_Garage.c
 // skip credits (41-46)
 common, 233, CS_Credits_Init, 0x0, General/233/233_47_CS_Credits_Init.c
 common, 233, CS_Credits_NewDancer, 0x0, General/233/233_49_CS_Credits_NewDancer.c
