@@ -406,32 +406,10 @@ FinishLoading:
 
 				if (
 						(gGT->level1 != 0) && // for ND Box
-						(gGT->levelID != MAIN_MENU_LEVEL)
+						(gGT->levelID != MAIN_MENU_LEVEL) &&
+						(gGT->levelID != ADVENTURE_CHARACTER_SELECT)
 					)
-				{	
-					// placeholder until 233 CS_Garage_MenuProc is done,
-					// remember to correct the LOAD_TenStages "case 4"
-					if (gGT->levelID == ADVENTURE_CHARACTER_SELECT)
-					{
-						if(gGT->pushBuffer[0].pos[0] != 0x24c)
-						{
-							if(gGT->level2 == 0)
-							{
-								// no relevence, just boolean for camera
-								gGT->level2 = 1;
-								
-								int x = 0;
-								int getPath = 0;
-								DECOMP_CAM_Path_Move(x, &gGT->pushBuffer[0].pos, &gGT->pushBuffer[0].rot, &getPath);
-							}
-						}
-					}
-					else
-					{
-						// no relevence, just boolean for camera
-						gGT->level2 = 0;
-					}
-					
+				{
 					// placeholder until 233 is done
 					if (gGT->levelID == NAUGHTY_DOG_CRATE)
 					{
@@ -526,13 +504,6 @@ FinishLoading:
 						if((gGT->gameMode1 & GAME_CUTSCENE) != 0)
 						{
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
-						}
-						
-						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
-						{
-							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
-							sdata->ptrActiveMenu = 0;
-							data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 						}
 					}
 				}

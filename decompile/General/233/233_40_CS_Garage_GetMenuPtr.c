@@ -15,8 +15,7 @@ int CS_JunkFunc2()
   sdata->ptrActiveMenu = &gGarage.menuGarage; \
   gGarage.menuGarage.state &= 0xfffffffb; \
   DECOMP_CS_Garage_ZoomOut(0);
-  
-  // I know this sucks, I'll rewrite SubmitName later
+
   CSJUNKFUNC
   
   asm(".word9: nop");

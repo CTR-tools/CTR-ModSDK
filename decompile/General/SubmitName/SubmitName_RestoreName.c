@@ -13,7 +13,7 @@ void DECOMP_SubmitName_RestoreName(short param_1)
 
   // "A" or "SAVE"
   short cursor = 0;
-  if (gGT->currNameEntered != 0)
+  if (gGT->currNameEntered[0] != 0)
     cursor = 1001;
 
   gGT->typeCursorPosition = cursor;

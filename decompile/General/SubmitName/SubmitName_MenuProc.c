@@ -54,9 +54,17 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
       *(int*)&sdata->advProgress.name[0xc] = *(int*)&gGT->prevNameEntered[0xc];
 	  
 	  #ifndef REBUILD_PS1
+	  
       // AdventureMode
       SelectProfile_ToggleMode(1);
       sdata->ptrDesiredMenu = &data.menuFourAdvProfiles;
+	  
+	  #else
+		  
+	  DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
+	  sdata->ptrActiveMenu = 0;
+	  data.characterIDs[0] = sdata->advCharSelectIndex_curr;
+	  
 	  #endif
     }
   }
