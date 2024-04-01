@@ -48,7 +48,7 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
 	
 	// Trophy: blue/white
 	warppadColor[1] = 5;
-	if (((gGT->timer >> FPS_RIGHTSHIFT(0)) & 2) != 0)
+	if ((gGT->timer & FPS_DOUBLE(2)) != 0)
 		warppadColor[1] = 4;
 	
 	// SlideCol/TurboTrack

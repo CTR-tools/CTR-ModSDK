@@ -6,7 +6,7 @@ void DECOMP_AH_HintMenu_FiveArrows(int param_1,short rotation)
   char i;
   
   ptrColor = &D232.fiveArrow_col1[0];
-  if (((sdata->frameCounter >> FPS_RIGHTSHIFT(0)) & 2) != 0)
+  if ((sdata->frameCounter & FPS_DOUBLE(2)) != 0)
   	ptrColor = &D232.fiveArrow_col2[0];
   
   for (i = 0; i < 5; i++)

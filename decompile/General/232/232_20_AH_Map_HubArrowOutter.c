@@ -11,7 +11,7 @@ void DECOMP_AH_Map_HubArrowOutter(
 	posX += D232.hubArrowXY_Inner[2*type+0];
 	posY += D232.hubArrowXY_Inner[2*type+1];
 
-	int timer = gGT->timer;
+	int timer = gGT->timer >> FPS_RIGHTSHIFT(0);
 	
 	int var14;
 	int var15;
