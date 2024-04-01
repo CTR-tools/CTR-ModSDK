@@ -267,7 +267,7 @@ void RunInitHook()
 
 void RunHook_Callback230()
 {
-	// cups menuBox
+	// cups menu
 	struct RectMenu* menu = (struct RectMenu *)(MM_JumpTo_Scrapbook +
 
 #if BUILD == SepReview
@@ -281,7 +281,7 @@ void RunHook_Callback230()
 #elif BUILD == JpnRetail
 	0x290
 #else
-#error RunHook_Callback230 needs a macro for MenuBox
+#error RunHook_Callback230 needs a macro for Menu
 #endif
 
 	);

@@ -1,5 +1,5 @@
 #include <common.h>
-#include "menubox.h"
+#include "menu.h"
 
 u_int metaPhysID = 0;
 u_int digitSelected = 0;
@@ -158,7 +158,7 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* metaPhys, int* drive
 	RECTMENU_DrawInnerRect(&ten_thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 }
 
-force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* driverClass)
+force_inline void DisplayMenu(struct GameTracker* gGT, int* metaPhys, int* driverClass)
 {
 	// driver stats that differ between classes are colored blue
 	// only 9 stats are in this category
@@ -175,10 +175,10 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* dr
 
 	DrawNumbers(gGT, metaPhys, driverClass, metaPhysColor);
 
-	RECTMENU_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menu background
 }
 
-// the MenuBox function
+// the Menu function
 void StatsEditor(struct RectMenu* menu)
 {
 	MainFreeze_SafeAdvDestroy(); // probably mandatory
@@ -190,5 +190,5 @@ void StatsEditor(struct RectMenu* menu)
 	#endif
 
 	ProcessInputs(sdata->gGT, metaPhys, &data.MetaDataCharacters[data.characterIDs[0]].engineID, sdata->gGamepads->gamepad[0].buttonsTapped);
-	DisplayMenuBox(sdata->gGT, metaPhys, &data.MetaDataCharacters[data.characterIDs[0]].engineID);
+	DisplayMenu(sdata->gGT, metaPhys, &data.MetaDataCharacters[data.characterIDs[0]].engineID);
 }

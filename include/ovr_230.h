@@ -307,7 +307,7 @@ struct OverlayDATA_230
 	// 800b47dc - UsaRetail
 	// 800b4fb4 - EurRetail
 	// 800b8260 - JpnRetail
-	// array of menubox pointers
+	// array of menu pointers
 #if BUILD == EurRetail
 	struct RectMenu *arrayMenuPtrs[10];
 #else

@@ -22,7 +22,7 @@ void DECOMP_SelectProfile_AdvPickMode_MenuProc(struct RectMenu* menu)
         // Set Load/Save to "Green" mode, remembering the last selected row
         SelectProfile_ToggleMode((row | 0x20));
 
-        // Set MenuBox to a menu box that draws four adv profiles
+        // Set Menu to a menu box that draws four adv profiles
         sdata->ptrDesiredMenu = &data.menuFourAdvProfiles;
         return;
     }
@@ -33,7 +33,7 @@ void DECOMP_SelectProfile_AdvPickMode_MenuProc(struct RectMenu* menu)
         return;
     }
 
-    // make MenuBox invisible
+    // make Menu invisible
     RECTMENU_Hide(mb);
 
     // SelectProfile_Destroy

@@ -4850,7 +4850,7 @@ void FUN_800b7834(void)
       else {
         if (DAT_800b8640 == 1) 
 		{
-		  // set desiredMenuBox to OSK (on-screen keyboard)
+		  // set desiredMenu to OSK (on-screen keyboard)
           DAT_8008d924 = &DAT_80085c0c;
 		  
 		  // set Character ID of P1 to the 
@@ -4950,7 +4950,7 @@ LAB_800b821c:
 		))
 	  ) 
   {
-	// set desiredMenuBox to OSK (on-screen keyboard)
+	// set desiredMenu to OSK (on-screen keyboard)
     DAT_8008d924 = &DAT_80085c0c;
 	
 	// set Character ID of P1 to the 
@@ -5058,7 +5058,7 @@ LAB_800b821c:
 // CS_Garage_GetMenuPtr
 undefined * FUN_800b854c(void)
 {
-  // this "MenuBox" is what displays the driver stats,
+  // this "Menu" is what displays the driver stats,
   // driver name, and arrows, before selecting the driver
   return &DAT_800b8598;
 }

@@ -1,13 +1,13 @@
 #include <common.h>
 
 // For some reason, the game uses empty
-// MenuBox structs to change funcPtr, rather
+// Menu structs to change funcPtr, rather
 // than threads
 
-// Judging by Aug 5, using MenuBox
+// Judging by Aug 5, using Menu
 // for Adv Character Select, there was probably
 // a time when every state of main menu was a
-// traditional-looking MenuBox, so it was just
+// traditional-looking Menu, so it was just
 // kept that way
 
 void MM_CupSelect_Init();
@@ -36,7 +36,7 @@ void MyMenuProc(struct RectMenu* m)
 	// if you are in a cup
 	if ((sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 	{
-		// change desiredMenuBox to Cup race selection
+		// change desiredMenu to Cup race selection
 		sdata->ptrDesiredMenu = (struct RectMenu*)0x800b472c;
 
 		MM_CupSelect_Init();
@@ -46,7 +46,7 @@ void MyMenuProc(struct RectMenu* m)
 
 	// if going to track selection
 
-	// change desiredMenuBox to Single race selection
+	// change desiredMenu to Single race selection
 	sdata->ptrDesiredMenu = (struct RectMenu*)0x800b46e0;
 
 	MM_TrackSelect_Init();

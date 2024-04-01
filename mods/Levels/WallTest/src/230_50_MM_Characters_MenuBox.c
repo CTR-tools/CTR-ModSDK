@@ -1,7 +1,7 @@
 #include <common.h>
 
 // character selection menu, 
-// RECTMENU_FuncPtr for menuBox: 0x800b46b4;
+// RECTMENU_FuncPtr for menu: 0x800b46b4;
 
 void MM_Characters_MenuProc()
 {

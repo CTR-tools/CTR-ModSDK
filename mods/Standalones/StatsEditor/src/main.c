@@ -1,6 +1,6 @@
 #include <common.h>
 
-extern struct RectMenu MyMenuBox;
+extern struct RectMenu MyMenu;
 
 // an extension of SelectPause
 void MyMainFreeze(struct GameTracker* gGT)
@@ -31,7 +31,7 @@ void MyMainFreeze(struct GameTracker* gGT)
 		gGT->gameMode1 |= PAUSE_1;
 
 		// make menu visible
-		RECTMENU_Show(&MyMenuBox);
+		RECTMENU_Show(&MyMenu);
 
 		// pause audio
 		MainFrame_TogglePauseAudio(1);
@@ -104,12 +104,12 @@ int Hello_Main()
 	if (gGT->numPlyrCurrGame == 1)
 	{
 		SelectPause(gGT, gGamepads);
-		//MenuBoxInfodump(gGT);
+		//MenuInfodump(gGT);
 	}
 }
 
 /*
-void MenuBoxInfodump(struct GameTracker* gGT)
+void MenuInfodump(struct GameTracker* gGT)
 {
 	//string1[]  = "         ";
 	char string2[]  = "         ";

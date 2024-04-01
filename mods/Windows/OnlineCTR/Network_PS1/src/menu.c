@@ -44,7 +44,7 @@ struct MenuRow menuRows[5] =
 	}
 };
 	
-struct RectMenu menuBox =
+struct RectMenu menu =
 {
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
@@ -234,13 +234,13 @@ void StatePS1_Lobby_HostTrackPick()
 	DrawClientCountStats();
 	
 	// open menu, set defaults
-	if(sdata->ptrActiveMenu != &menuBox)
+	if(sdata->ptrActiveMenu != &menu)
 	{
 		octr->PageNumber = 0;
-		menuBox.rowSelected = 0;
-		menuBox.funcPtr = RECTMENU_OnPressX_Track;
+		menu.rowSelected = 0;
+		menu.funcPtr = RECTMENU_OnPressX_Track;
 		SetNames_Tracks();
-		RECTMENU_Show(&menuBox);
+		RECTMENU_Show(&menu);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
@@ -347,13 +347,13 @@ void StatePS1_Lobby_CharacterPick()
 	if(octr->boolLockedInCharacter == 1) return;
 	
 	// open menu, set defaults
-	if(sdata->ptrActiveMenu != &menuBox)
+	if(sdata->ptrActiveMenu != &menu)
 	{
 		octr->PageNumber = 0;
-		menuBox.rowSelected = 0;
-		menuBox.funcPtr = RECTMENU_OnPressX_Character;
+		menu.rowSelected = 0;
+		menu.funcPtr = RECTMENU_OnPressX_Character;
 		SetNames_Characters();
-		RECTMENU_Show(&menuBox);
+		RECTMENU_Show(&menu);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
@@ -371,7 +371,7 @@ void StatePS1_Lobby_CharacterPick()
 		SetNames_Characters();
 	}
 	
-	data.characterIDs[0] = (4 * octr->PageNumber) + menuBox.rowSelected;
+	data.characterIDs[0] = (4 * octr->PageNumber) + menu.rowSelected;
 }
 
 void StatePS1_Lobby_WaitForLoading()

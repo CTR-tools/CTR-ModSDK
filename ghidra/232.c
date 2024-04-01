@@ -972,28 +972,28 @@ LAB_800ac860:
               if (0x3c < *(short *)((int)piVar19 + 0x76)) 
 			  {
                 if (
-						// if MenuBox is not open
+						// if Menu is not open
 						(DAT_8008d4b0 == 0) && 
 						
 						// If you're in Adventure Arena
 						((*(uint *)PTR_DAT_8008d2ac & 0x100000) != 0)
 				   ) 
 				{
-				  // menubox->0x1a (row)
+				  // menu->0x1a (row)
                   DAT_800b4e6a =
 				  
 						// check if token is unlocked, then row = 1 (relic race)
                        (ushort)((uint)(&DAT_8008fba4)[(int)(iVar7 + 0x4cU) >> 5] >>
                                (iVar7 + 0x4cU & 0x1f)) & 1;
 							   
-				  // open CTR Challenge / Relic MenuBox
+				  // open CTR Challenge / Relic Menu
                   FUN_80046990(&DAT_800b4e50);
 				  
-				  // open MenuBox
+				  // open Menu
                   DAT_8008d4b0 = 1;
                 }
                 
-				// check if MenuBox is hidden
+				// check if Menu is hidden
 				uVar8 = FUN_800469dc(&DAT_800b4e50);
 				
 				// if it is, then the user chose an event
@@ -3393,7 +3393,7 @@ void FUN_800af3e4(int param_1)
 			// SelectProfile_GetTrackID
 			FUN_800485a8();
             
-			// enable menubox for green load/save screen
+			// enable menu for green load/save screen
 			FUN_80046990(&DAT_80085b5c);
           }
 		  
@@ -3404,7 +3404,7 @@ void FUN_800af3e4(int param_1)
 					// if you aren't already returning to player
 					((uVar6 & 0x400) == 0) && 
 				
-					// if there's no MenuBox active
+					// if there's no Menu active
 					(DAT_8008d908 == 0)
 				) 
 			{
@@ -6899,7 +6899,7 @@ LAB_800b38cc:
 	// clear gamepad input (for menus)
     FUN_80046404();
 	
-	// set desired MenuBox to pause MenuBox
+	// set desired Menu to pause Menu
     DAT_8008d924 = FUN_80039dcc();
   }
   return;

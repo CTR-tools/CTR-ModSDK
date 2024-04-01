@@ -2,23 +2,19 @@
 
 void DECOMP_SubmitName_RestoreName(short param_1)
 {
-  short cursor;
+  struct GameTracker* gGT = sdata->gGT;
 
+  // Time Trial or Adventure
   sdata->data10_bbb[0xd] = param_1;
 
   // copy the last string you typed the last time you were in
   // the OSK menu, back into the menu, avoid typing a second time
-  memmove(sdata->gGT->currNameEntered,sdata->gGT->prevNameEntered,0x11);
+  memmove(gGT->currNameEntered, gGT->prevNameEntered, 0x11);
 
-  // move cursor to 'A' letter
-  cursor = 0;
+  // "A" or "SAVE"
+  short cursor = 0;
+  if (gGT->currNameEntered != 0)
+    cursor = 1001;
 
-  // if string exists
-  if (sdata->gGT->currNameEntered != 0)
-  {
-	// move cursor to 'save' button
-    cursor = 0x3e9;
-  }
-  // set cursor position of OSK
-  sdata->gGT->typeCursorPosition = cursor;
+  gGT->typeCursorPosition = cursor;
 }

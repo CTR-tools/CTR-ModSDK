@@ -43,7 +43,7 @@ void DECOMP_TakeCupProgress_MenuProc(struct RectMenu* menu)
             // Set Load/Save to "Slot Selected" mode
             SelectProfile_ToggleMode(0x41);
 
-            // Change active MenuBox to Warning
+            // Change active Menu to Warning
             sdata->ptrDesiredMenu = &data.menuWarning2;
         }
         else

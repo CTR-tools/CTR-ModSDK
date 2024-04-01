@@ -44,7 +44,7 @@ struct MenuRow menuRows[5] =
 	}
 };
 	
-struct RectMenu menuBox =
+struct RectMenu menu =
 {
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
@@ -119,7 +119,7 @@ void ActivateMenu(struct Thread* t)
 	octr->PageNumber = 0;
 	octr->CountPressX = 0;
 	SetNames_Characters();
-	RECTMENU_Show(&menuBox);
+	RECTMENU_Show(&menu);
 	ThTick_Set(t, octr->funcs[OPEN_MENU]);
 }
 
@@ -195,8 +195,8 @@ void MenuState2_Navigate(struct Thread* t)
 				
 		if(buttons & BTN_SELECT)
 		{	
-			// hide menubox
-			RECTMENU_Hide(&menuBox);
+			// hide menu
+			RECTMENU_Hide(&menu);
 			ThTick_Set(t, octr->funcs[MINIMIZE]);
 		}
 	}

@@ -1,7 +1,7 @@
 #include <common.h>
 
-extern struct RectMenu UDCTRM_OM_GameplayMenuBox;
-extern struct RectMenu UDCTRM_OM_ControllerSFXMenuBox;
+extern struct RectMenu UDCTRM_OM_GameplayMenu;
+extern struct RectMenu UDCTRM_OM_ControllerSFXMenu;
 
 void DECOMP_MM_Title_MenuUpdate(void)
 {
@@ -245,14 +245,14 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
 			MM_Title_KillThread();
 
-			sdata->ptrDesiredMenu = &UDCTRM_OM_GameplayMenuBox;
+			sdata->ptrDesiredMenu = &UDCTRM_OM_GameplayMenu;
 			break;
 
 		case 0x45:
 
 			MM_Title_KillThread();
 
-			sdata->ptrDesiredMenu = &UDCTRM_OM_ControllerSFXMenuBox;
+			sdata->ptrDesiredMenu = &UDCTRM_OM_ControllerSFXMenu;
 			MainFrame_TogglePauseAudio(1);
 			break;
 		/////////////////////////// END OF CHANGES     ///////////////////////////

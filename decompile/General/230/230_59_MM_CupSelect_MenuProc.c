@@ -74,7 +74,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
                         gGT->cup.points[i] = 0;
                     }
 
-                    // passthrough MenuBox for the function
+                    // passthrough Menu for the function
                     sdata->ptrDesiredMenu = &data.menuQueueLoadTrack;
 
                     // set current level

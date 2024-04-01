@@ -591,7 +591,9 @@ common, exe, RECTMENU_Hide, 0x0, General/RECTMENU/RECTMENU_Hide.c
 common, exe, RECTMENU_BoolHidden, 0x0, General/RECTMENU/RECTMENU_BoolHidden.c
 
 // SubmitName
+common, exe, SubmitName_RestoreName, 0x0, General/SubmitName/SubmitName_RestoreName.c
 common, exe, SubmitName_DrawMenu, 0x0, General/SubmitName/SubmitName_DrawMenu.c
+common, exe, SubmitName_MenuProc, 0x0, General/SubmitName/SubmitName_MenuProc.c
 
 // Timer
 common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c

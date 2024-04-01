@@ -423,7 +423,7 @@ void FUN_8004b144(int param_1)
 	  // if hit CANCEL
       if (sVar1 < 0)
 	  {
-		// Change active MenuBox to
+		// Change active Menu to
 		//  end of race menu with "Save Ghost" option
         DAT_8008d924 = &DAT_800a0458;
       }
@@ -434,7 +434,7 @@ void FUN_8004b144(int param_1)
 		// Set Load/Save to Ghost mode, with slot 1 selected
         FUN_80048e2c(0x31);
 
-		// Change active MenuBox to GhostSelection
+		// Change active Menu to GhostSelection
 		DAT_8008d924 = &DAT_80085bb4;
       }
     }
@@ -467,7 +467,7 @@ void FUN_8004b144(int param_1)
 		  // Set Load/Save to New Adventure mode
           FUN_80048e2c(1);
 
-		  // Change active menuBox to draw four adv profiles
+		  // Change active menu to draw four adv profiles
           DAT_8008d924 = &DAT_80085b88;
         }
       }

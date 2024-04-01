@@ -6,7 +6,7 @@ void DECOMP_MM_ResetAllMenus(void)
     {
         struct RectMenu* menu = D230.arrayMenuPtrs[i];
 
-        // Close menubox
+        // Close menu
         menu->state |= 8;
         menu->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 

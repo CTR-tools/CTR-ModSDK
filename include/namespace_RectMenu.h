@@ -1,4 +1,4 @@
-enum MenuBoxFlags
+enum MenuFlags
 {
 	// menu's X position will be used to center it horizontally
 	CENTER_ON_X = 1,
@@ -14,7 +14,7 @@ enum MenuBoxFlags
 	// 8
 
 	// allows drawing another menu box while a menu box is being drawn
-	// position is automatically derived from originating menubox, so cascading windows are easier
+	// position is automatically derived from originating menu, so cascading windows are easier
 	DRAW_NEXT_MENU_IN_HIERARCHY = 0x10,
 	DISABLE_INPUT_ALLOW_FUNCPTRS = 0x20,
 
@@ -90,12 +90,12 @@ struct RectMenu
 	// & 2, centers posX
 	// & 4, draw only title bar
 	// & 0x10, draw ptrNextBox_InHierarchy
-	// & 0x20, disable menubox input, allow menubox funcptr
+	// & 0x20, disable menu input, allow menu funcptr
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
 	// & 0xFF, row height (state>>7)
-	// & 0x400, execute menubox funcptr
+	// & 0x400, execute menu funcptr
 	// & 0x800, ??? used in 221 menu
 	// & 0x1000, needs to close
 	// & 0x2000, invisible

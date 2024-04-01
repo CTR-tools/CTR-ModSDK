@@ -63,7 +63,7 @@ void RunInitHook()
 	*(int*)0x8002783C = 0;
 	#endif
 	
-	// set arcade/TT menubox to use adv cup rows
+	// set arcade/TT menu to use adv cup rows
 	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE;
 	
 	// required for AI Nav, cause I dont have

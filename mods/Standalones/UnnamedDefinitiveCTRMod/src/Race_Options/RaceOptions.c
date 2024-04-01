@@ -7,7 +7,7 @@ u_int UDCTRM_RO_numLapsIndex = 1; // number of laps should be 3 by default
 extern u_int UDCTRM_RF_blueFireMode; // found in BlueFireInt.c
 extern u_int UDCTRM_MI_mirrorMode; // found in MI_main.C
 // extern u_int UDCTRM_IL_itemless;
-extern u_int UDCTRM_RO_isOpen; // found in trackselect menubox... for now?
+extern u_int UDCTRM_RO_isOpen; // found in trackselect menu... for now?
 
 force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 {
@@ -69,13 +69,13 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 		if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE)) OtherFX_Play(2, 1); // back sound
 		else                                             OtherFX_Play(1, 1); // accept sound
 		CLOSE_RO_MENU:
-		// this variable controls when the track select menubox function will draw the race options menu
+		// this variable controls when the track select menu function will draw the race options menu
 		UDCTRM_RO_isOpen = false;
 	}
 }
 
 // draw menu
-force_inline void DisplayMenuBox(struct GameTracker* gGT)
+force_inline void DisplayMenu(struct GameTracker* gGT)
 {
 	u_int firstRowY = ((UDCTRM_RO_MenuProcBG_y + 4) + 26);
 	u_int optionTextPosX = (UDCTRM_RO_glowingcursor.x + UDCTRM_RO_glowingcursor.w) - 2;
@@ -114,13 +114,13 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT)
 
 	RECTMENU_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_RO_glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
-	RECTMENU_DrawInnerRect(&UDCTRM_RO_menuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&UDCTRM_RO_menuBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menu background
 }
 
-// the MenuBox function
-// remember: this is a fake menubox. this doesn't make use of a menubox struct at all
+// the Menu function
+// remember: this is a fake menu. this doesn't make use of a menu struct at all
 void UDCTRM_RaceOptions()
 {
 	ProcessInputs(sdata->gGT, sdata->gGamepads->gamepad[0].buttonsTapped);
-	DisplayMenuBox(sdata->gGT);
+	DisplayMenu(sdata->gGT);
 }

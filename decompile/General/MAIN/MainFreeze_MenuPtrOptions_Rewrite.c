@@ -174,7 +174,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	// note: multitap only works if it's connected to the P1 slot
 	int isMultitap = (sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4));
 
-	// a menubox row is 10 pixels
+	// a menu row is 10 pixels
 	int menuRowsNegativePadding = gamepad->menuRowsToRemove * 10;
 
 	int analogRowPosY = 0;
@@ -378,14 +378,14 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	};
 	RECTMENU_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
-	RECT menuBoxBG =
+	RECT menuBG =
 	{
 		.x = 56,
 		.y = (menuRowsNegativePadding / 2) + 20,
 		.w = 400,
 		.h = 135 - menuRowsNegativePadding
 	};
-	RECTMENU_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	RECTMENU_DrawInnerRect(&menuBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 }
 
 void DECOMP_MainFreeze_MenuPtrOptions(struct RectMenu* menu)

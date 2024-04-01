@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RECTMENU_DrawSelf(struct RectMenu* menu, int posX, int posY, int menuboxWidth)
+void RECTMENU_DrawSelf(struct RectMenu* menu, int posX, int posY, int menuWidth)
 {
     u_short textFlags;
     u_int state;
@@ -17,7 +17,7 @@ void RECTMENU_DrawSelf(struct RectMenu* menu, int posX, int posY, int menuboxWid
     RECT background;
     RECT borders;
     short local_60;
-    short menuboxHeight;
+    short menuHeight;
     short offsetY;
     short local_50;
     short local_48;
@@ -72,19 +72,19 @@ LAB_80045e94:
 
     state = menu->state;
 
-    menu->width = menuboxWidth;
+    menu->width = menuWidth;
     menu->state &= 0xfffffff7;
     menu->height = local_60;
 
     if ((state & 2) != 0)
     {
-        menuboxHeight = 0;
-        RECTMENU_GetHeight(mb, &menuboxHeight, 1);
-        local_38 = (short)(-menuboxHeight/2);
+        menuHeight = 0;
+        RECTMENU_GetHeight(mb, &menuHeight, 1);
+        local_38 = (short)(-menuHeight/2);
     }
     if ((state & 1) != 0)
     {
-        local_40 = (short)(-menuboxWidth/2);
+        local_40 = (short)(-menuWidth/2);
     }
     sVar6 = 0;
     row = &menu->rows[0];
@@ -111,7 +111,7 @@ LAB_80045e94:
         {
             uVar5 = uVar8 | 0x8000;
             titleString = sdata->lngStrings[index];
-            offsetX = (short)(posX + menu->posX_prev + (menuboxWidth/2));
+            offsetX = (short)(posX + menu->posX_prev + (menuWidth/2));
         }
         DecalFont_DrawLine(titleString, offsetX, posY_prev, sVar4, (uVar5 | WHITE));
         posY_prev = local_48 + posY_prev + 6;
@@ -119,7 +119,7 @@ LAB_80045e94:
 
     if (row->stringIndex != -1)
     {
-        local_30 = (menuboxWidth/2) + 1;
+        local_30 = (menuWidth/2) + 1;
         local_2c = posX_prev;
         do
         {
@@ -189,7 +189,7 @@ LAB_80045e94:
         {
             rgb = &sdata->menuRowHighlight_Green;
         }
-        background.w = menuboxWidth;
+        background.w = menuWidth;
 
         CTR_Box_DrawClearBox(
             &background, rgb, 1, 
@@ -200,7 +200,7 @@ LAB_80045e94:
     {
         RECTMENU_DrawSelf(menu->ptrNextBox_InHierarchy,
                          posX + menu->posX_prev,
-                         local_38 + offsetY + menu->posY_prev + sVar7 + 0xc, menuboxWidth);
+                         local_38 + offsetY + menu->posY_prev + sVar7 + 0xc, menuWidth);
     }
     posX_prev = menu->posX_prev;
     posY_prev = menu->posY_prev;
@@ -213,7 +213,7 @@ LAB_80045e94:
     {
         borders.h = sVar7 + 8;
     }
-    borders.w = menuboxWidth + 0xc;
+    borders.w = menuWidth + 0xc;
     borders.y = local_38 + offsetY + posY_prev - 4;
     borders.x = local_40 + posX + posX_prev - 6;
     RECTMENU_DrawFullRect(mb, &borders);

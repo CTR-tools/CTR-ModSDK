@@ -70,15 +70,15 @@ force_inline void ProcessInputs(struct RectMenu* menu, struct GameTracker* gGT, 
 }
 
 // draw menu
-force_inline void DisplayMenuBox(struct RectMenu* menu, struct GameTracker* gGT)
+force_inline void DisplayMenu(struct RectMenu* menu, struct GameTracker* gGT)
 {
-	u_int firstRowY = ((UDCTRM_OM_GameplayMenuBoxBG_y + 4) + 26);
+	u_int firstRowY = ((UDCTRM_OM_GameplayMenuBG_y + 4) + 26);
 	u_int optionTextPosX = (UDCTRM_OM_Gameplayglowingcursor.x + UDCTRM_OM_Gameplayglowingcursor.w) - 2;
 
 	UDCTRM_OM_Gameplayglowingcursor.y = firstRowY + (10 * menu->rowSelected);
 
 	// "GAMEPLAY OPTIONS"
-	DecalFont_DrawLine(sdata->lngStrings[608], SCREEN_WIDTH/2, UDCTRM_OM_GameplayMenuBoxBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[608], SCREEN_WIDTH/2, UDCTRM_OM_GameplayMenuBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	// "RESERVES METER:"
 	DecalFont_DrawLine(sdata->lngStrings[611], UDCTRM_OM_Gameplayglowingcursor.x + 2, firstRowY + (10 * 0) + 1, FONT_SMALL, ORANGE);
@@ -104,12 +104,12 @@ force_inline void DisplayMenuBox(struct RectMenu* menu, struct GameTracker* gGT)
 
 	RECTMENU_DrawInnerRect(&UDCTRM_OM_GameplaytitleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_OM_Gameplayglowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
-	RECTMENU_DrawInnerRect(&UDCTRM_OM_GameplaymenuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
+	RECTMENU_DrawInnerRect(&UDCTRM_OM_GameplaymenuBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menu background
 }
 
-// the MenuBox function
+// the Menu function
 void UDCTRM_OM_GameplayFuncPtr(struct RectMenu* menu)
 {
 	ProcessInputs(mb, sdata->gGT, sdata->gGamepads->gamepad[0].buttonsTapped);
-	DisplayMenuBox(mb, sdata->gGT);
+	DisplayMenu(mb, sdata->gGT);
 }

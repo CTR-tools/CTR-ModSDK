@@ -114,7 +114,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 #endif
 				}
 
-				// passthrough MenuBox for the function
+				// passthrough Menu for the function
 				// QueueLoadTrack
 				sdata->ptrDesiredMenu = &data.menuQueueLoadTrack;
 

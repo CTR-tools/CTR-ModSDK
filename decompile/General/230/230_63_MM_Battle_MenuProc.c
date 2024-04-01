@@ -80,7 +80,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                     // if starting race
                     if (D230.battle_postTransition_boolStart != 0)
                     {
-                        // passthrough MenuBox for funcPtr "QueueLoadTrack"
+                        // passthrough Menu for funcPtr "QueueLoadTrack"
                         sdata->ptrDesiredMenu = &data.menuQueueLoadTrack;
                         return;
                     }

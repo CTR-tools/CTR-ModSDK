@@ -7863,7 +7863,7 @@ void FUN_80055c90(int param_1)
 	{
       if (*(short *)((int)*(short *)(param_1 + 0x1a) * 6 + *(int *)(param_1 + 0xc)) != 9) {
 
-		// make MenuBox invisible
+		// make Menu invisible
 		FUN_800469c8();
       }
       DAT_8008d52c = 0;
@@ -8023,7 +8023,7 @@ void FUN_80055c90(int param_1)
 			  // Set Load/Save to Ghost mode
               FUN_80048e2c(0x31);
 
-			  // Change active MenuBox to GhostSelection
+			  // Change active Menu to GhostSelection
               DAT_8008d924 = &DAT_80085bb4;
               return;
             }

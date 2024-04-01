@@ -1797,7 +1797,7 @@ struct Data
 	// 80084530 -- EurRetail
 	// 800874e0 -- JpnRetail
 	#if BUILD <= SepReview
-	// Remember MenuBox is bigger in SepReview
+	// Remember Menu is bigger in SepReview
 	char data_preAdvHub[0x64];
 	
 	// UsaRetail, JpnTrial, EurRetail, JpnRetail
@@ -1923,7 +1923,7 @@ struct Data
 	char padding_arcaderace[2];
 	#endif
 
-	// 0x80082778 -- SepReview -- MenuBox struct was 8 bytes larger
+	// 0x80082778 -- SepReview -- Menu struct was 8 bytes larger
 	// 0x80084510 -- UsaRetail
 	// 0x80083410 -- JpnTrial
 	// 0x800847AC -- EurRetail
@@ -1991,7 +1991,7 @@ struct Data
 	struct MetaDataBOSS* bossWeaponMetaPtr[5];
 
 	#if BUILD == SepReview
-	// Maybe there's more menuBox structs???
+	// Maybe there's more menu structs???
 	// between menus and here there's 0x1C bytes
 	char extraSepReviewAfterMenus[0x1C];
 	#endif
@@ -2048,7 +2048,7 @@ struct Data
 	// which loads a LEV from track selection
 	struct RectMenu menuQueueLoadTrack;
 
-	// 80083d40 -- SepReview -- remember MenuBoxes are larger
+	// 80083d40 -- SepReview -- remember Menues are larger
 	// 80085AC0 -- UsaRetail
 	// 800849b0 -- JpnTrial
 	// 80085d5c -- EurRetail
@@ -2106,7 +2106,7 @@ struct Data
 	// 80084a38 -- JpnTrial		0x44 (from messageScreens)
 	// 80085df8 -- EurRetail	0x58 (from messageScreens)
 	// 80088dc0 -- JpnRetail	0x58 (from messageScreens)
-	// menuBox for green save/load screen
+	// menu for green save/load screen
 	struct RectMenu menuGreenLoadSave;
 
 	#if BUILD == SepReview
@@ -2117,27 +2117,27 @@ struct Data
 
 	// 80083e20 -- SepReview
 	// 80085b88 -- UsaRetail
-	// menuBox to draw adventure profiles
+	// menu to draw adventure profiles
 	struct RectMenu menuFourAdvProfiles;
 
 	// 80083e54 -- SepReview
 	// 80085bb4 -- UsaRetail
-	// menuBox for ghosts
+	// menu for ghosts
 	struct RectMenu menuGhostSelection;
 
 	// 80083e88 -- SepReview
 	// 80085be0 -- UsaRetail
-	// menuBox for "Warning, no memory card"
+	// menu for "Warning, no memory card"
 	struct RectMenu menuWarning2;
 
 	// 80083ebc -- SepReview
 	// 80085c0c -- UsaRetail
 	// 80085ea8 -- EurRetail
 	// 80088e70 -- JpnRetail
-	// menuBox for "Please Enter Your Name"
+	// menu for "Please Enter Your Name"
 	struct RectMenu menuSubmitName; // on-screen keyboard
 
-	// 80083ef0 -- SepReview -- remember MenuBoxes are larger
+	// 80083ef0 -- SepReview -- remember Menues are larger
 	// 80085c38 -- UsaRetail
 	// 80084b14 -- JpnTrial
 	// 80085ed4 -- EurRetail
@@ -3267,7 +3267,7 @@ struct sData
 	// 8008c408 JpnTrial
 	// 8008d854 EurRetail
 	// 800908c8 JpnRetail
-	// check if CTR Token/Relic adv menubox is open or not
+	// check if CTR Token/Relic adv menu is open or not
 	int boolOpenTokenRelicMenu;
 
 	// 8008b90c Sep3

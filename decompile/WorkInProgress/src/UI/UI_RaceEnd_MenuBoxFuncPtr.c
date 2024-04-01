@@ -24,7 +24,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
       if (menu->unk1a * 6 + menu->rows != 9)
       {
 
-        // make MenuBox invisible
+        // make Menu invisible
         RECTMENU_Hide(mb);
       }
       sdata->framesSinceRaceEnded = 0;
@@ -186,7 +186,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
               // Set Load/Save to Ghost mode
               SelectProfile_ToggleMode(0x31);
 
-              // Change active MenuBox to GhostSelection
+              // Change active Menu to GhostSelection
               sdata->ptrActiveMenu = &data.menuGhostSelection;
               return;
             }

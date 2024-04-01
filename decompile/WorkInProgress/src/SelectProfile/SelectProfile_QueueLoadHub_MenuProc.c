@@ -13,7 +13,7 @@ void DECOMP_SelectProfile_QueueLoadHub_MenuProc(struct RectMenu* menu)
   // Load AdvHub LEV depending on new profile
   MainRaceTrack_RequestLoad(gGT->currLEV);
 
-  // make MenuBox invisible
+  // make Menu invisible
   RECTMENU_Hide(mb);
   return;
 }

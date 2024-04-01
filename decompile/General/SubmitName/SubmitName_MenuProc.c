@@ -2,51 +2,57 @@
 
 void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
 {
-  short selection = SubmitName_DrawMenu(0x13f);
   struct GameTracker *gGT = sdata->gGT;
 
+  short selection = SubmitName_DrawMenu(0x13f);
   menu->rowSelected = selection;
-  // if no row is selected (or canceled?)
+  
+  // not finished yet
   if (selection == 0)
   {
     return;
   }
 
+  // if name entered for Time Trial
   if (sdata->data10_bbb[0xd] == 1)
   {
+	// if hit CANCEL
     if (selection < 0)
     {
-      // Change active MenuBox to
       // end of race menu with "Save Ghost" option
-      sdata->ptrDesiredMenu = &menuBox224;
+	  extern struct RectMenu menu224;
+      sdata->ptrDesiredMenu = &menu224;
     }
+	
+	// if hit SAVE
     else
     {
-      // Set Load/Save to Ghost mode, with slot 1 selected
+      // GhostMode
       SelectProfile_ToggleMode(0x31);
-      // Change active MenuBox to GhostSelection
       sdata->ptrDesiredMenu = &data.menuGhostSelection;
     }
   }
-  else if ((sdata->data10_bbb[0xd] < 2) && (sdata->data10_bbb[0xd] == 0))
+
+  // if name entered for Adventure
+  else if (sdata->data10_bbb[0xd] == 0)
   {
+	// if hit CANCEL
     if (selection < 0)
     {
-      // Change active MenuBox back to Adv char select
+      // Change active Menu back to Adv char select
       sdata->ptrDesiredMenu = DECOMP_CS_Garage_GetMenuPtr();
       DECOMP_CS_Garage_ZoomOut(1);
     }
     else
     {
       // make backup of name entered
-      sdata->advProgress.name[0] = gGT->prevNameEntered[0];
-      sdata->advProgress.name[4] = gGT->prevNameEntered[4];
-      sdata->advProgress.name[8] = gGT->prevNameEntered[8];
-      sdata->advProgress.name[0xc] = gGT->prevNameEntered[0xc];
-      sdata->advProgress.name[0x10] = gGT->prevNameEntered[0x10];
-      // Set Load/Save to New Adventure mode
+      *(int*)&sdata->advProgress.name[0x0] = *(int*)&gGT->prevNameEntered[0x0];
+      *(int*)&sdata->advProgress.name[0x4] = *(int*)&gGT->prevNameEntered[0x4];
+      *(int*)&sdata->advProgress.name[0x8] = *(int*)&gGT->prevNameEntered[0x8];
+      *(int*)&sdata->advProgress.name[0xc] = *(int*)&gGT->prevNameEntered[0xc];
+	  
+      // AdventureMode
       SelectProfile_ToggleMode(1);
-      // Change active menuBox to draw four adv profiles
       sdata->ptrDesiredMenu = &data.menuFourAdvProfiles;
     }
   }

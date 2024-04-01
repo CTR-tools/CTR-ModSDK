@@ -50,7 +50,7 @@ AddStuff:
         if ((unknownFlags_1d44 & 0x8000000) == 0)
         {
 			// between 1001 and 1018, frame counter is paused until &0x10,
-			// that's 15 frames between lerp high score off-screen, and showing MenuBox
+			// that's 15 frames between lerp high score off-screen, and showing Menu
             if ((framesSinceRaceEnded < FPS_DOUBLE(1018)) && ((sdata->menuReadyToPass & 0x10) != 0)) goto AddStuff;
             if (framesSinceRaceEnded < FPS_DOUBLE(1001)) goto AddStuff;
         }
@@ -243,7 +243,7 @@ AddStuff:
 	// if not showing menu yet
 	if ((sdata->menuReadyToPass & 1) == 0)
 	{
-		// start showing menubox
+		// start showing menu
 		sdata->menuReadyToPass = sdata->menuReadyToPass & 0xffffffef | 1;
 		
 		sdata->flags_timeTrialEndOfRace = 0;

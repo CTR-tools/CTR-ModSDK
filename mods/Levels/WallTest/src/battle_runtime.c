@@ -11,7 +11,7 @@ void RunInitHook()
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
 	
-	// set battle menubox to use adv cup rows
+	// set battle menu to use adv cup rows
 	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
 	
 	if(gGT->levelID != 0x14) return;

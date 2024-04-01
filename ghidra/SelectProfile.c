@@ -579,7 +579,7 @@ void FUN_80048960(int param_1)
 	  // remembering the last selected row
       FUN_80048e2c((int)(short)(*(ushort *)(param_1 + 0x1a) | 0x20));
 
-	  // Set MenuBox to a menu box
+	  // Set desiredMenu
 	  // that draws four adv profiles
 	  DAT_8008d924 = &DAT_80085b88;
 
@@ -601,7 +601,7 @@ void FUN_80048960(int param_1)
 
   // does that mean row = 3 (4th row) is valid??
 
-  // make MenuBox invisible
+  // make Menu invisible
   FUN_800469c8(param_1);
 
   // SelectProfile_Destroy
@@ -748,7 +748,7 @@ void FUN_80048da0(void)
   // offset 8 of menuGhostSelection
   DAT_80085bbc = DAT_80085bbc | 0x800000;
 
-  // offset 8 of menuBox_warning
+  // offset 8 of menu_warning
   DAT_80085be8 = DAT_80085be8 | 0x800000;
   return;
 }
@@ -764,7 +764,7 @@ void FUN_80048de4(void)
   // offset 8 of menuGhostSelection
   DAT_80085bbc = DAT_80085bbc & 0xff7fffff;
 
-  // offset 8 of menuBox_warning
+  // offset 8 of menu_warning
   DAT_80085be8 = DAT_80085be8 & 0xff7fffff;
   return;
 }
@@ -1851,13 +1851,13 @@ LAB_800499e4:
         }
         else
 		{
-		  // set menubox width to zero
+		  // set menu width to zero
           local_56[0] = 0;
 
 		  // RECTMENU_GetWidth
           FUN_80045c50(&DAT_80085d5c,local_56,1);
 
-		  // draw menubox
+		  // draw menu
 		  FUN_80045db0(&DAT_80085d5c,0,0,(int)local_56[0]);
 
 		  // Draw Ghost Profile
@@ -1923,12 +1923,12 @@ LAB_800499e4:
 		  // set width to zero
           local_58 = 0;
 
-		  // Open "Overwrite" menuBox
+		  // Open "Overwrite" menu
 
 		  // RECTMENU_GetWidth
 		  FUN_80045c50(&DAT_80085d30,&local_58,1);
 
-		  // draw menuBox
+		  // draw menu
           FUN_80045db0(&DAT_80085d30,0,0,(int)local_58);
 
 		  // 8008d474 is ptr to memcard data
@@ -2114,7 +2114,7 @@ LAB_800499e4:
 		FUN_800265c0(&DAT_8008fba4);
 
 		// SelectProfile_QueueLoadHub_MenuProc,
-		// open menubox to load profile, while already on adv hub
+		// open menu to load profile, while already on adv hub
         DAT_8008d924 = &DAT_80085c38;
 
 		// DAT_8008fbd2
@@ -2130,7 +2130,7 @@ LAB_800499e4:
       }
       else
 	  {
-		// Change MenuBox to Green Save/Load screen
+		// Change Menu to Green Save/Load screen
         DAT_8008d924 = &DAT_80085b5c;
 
         DAT_80085b76 = 3;
@@ -2142,7 +2142,7 @@ LAB_800499e4:
         if (DAT_8008d8f8 == 0) {
           if (DAT_8008d8fc != 0)
 		  {
-			// Change active MenuBox to OSK
+			// Change active Menu to OSK
             DAT_8008d924 = &DAT_80085c0c;
 
 			// SubmitName_RestoreName
@@ -2225,14 +2225,14 @@ LAB_800499e4:
           else {
             if (DAT_8008d8fc != 0)
 			{
-			  // Change active MenuBox to
+			  // Change active Menu to
 			  // "Save Game?" "Yes/No"
               DAT_8008d924 = &DAT_80085a68;
               return;
             }
           }
 
-		  // make MenuBox invisible
+		  // make Menu invisible
           FUN_800469c8(param_1);
           return;
         }
@@ -2245,13 +2245,13 @@ LAB_800499e4:
 		{
           if (DAT_8008d8fc != 0)
 		  {
-			// Change active MenuBox to
+			// Change active Menu to
 			// end of race menu with "Save Ghost" option
             DAT_8008d924 = &DAT_800a0458;
             return;
           }
 
-		  // Change active MenuBox to
+		  // Change active Menu to
 		  // end of race menu without "Save Ghost" option
           DAT_8008d924 = &DAT_800a04a4;
           return;
@@ -2274,7 +2274,7 @@ LAB_800499e4:
         DAT_80086e86 = *(undefined2 *)(DAT_8008d754 + 6);
       }
 
-	  // change active MenuBox to QueueLoadTrack
+	  // change active Menu to QueueLoadTrack
       DAT_8008d924 = (undefined *)FUN_80043c04();
 
 	  sVar22 = DAT_8008d904;

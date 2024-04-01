@@ -766,10 +766,10 @@ LAB_80035098:
 	  {
         if (
 			(
-				// If active MenuBox is not Options
+				// If active Menu is not Options
 				(DAT_8008d908 != &DAT_80084190) &&
 
-				// If active MenuBox is not AkuAku Hints
+				// If active Menu is not AkuAku Hints
 				(DAT_8008d908 != &DAT_800b518c)
 			) &&
 
@@ -795,7 +795,7 @@ LAB_80035098:
 		  // ElimBG_Deactivate
           FUN_80024c08(PTR_DAT_8008d2ac);
 
-		  // make MenuBox invisible
+		  // make Menu invisible
           FUN_800469c8(DAT_8008d908);
 
 		  // set countdown since unPaused,
@@ -820,7 +820,7 @@ LAB_80035098:
 					// end-of-race, or main menu
 					((uVar5 & 0x20202000) == 0) &&
 
-					// if no menuBox
+					// if no menu
 					(DAT_8008d908 == (undefined *)0x0)
 				) &&
 				(
@@ -1933,9 +1933,9 @@ void FUN_80035e70(uint *param_1)
     FUN_80021984(piVar21[2],param_1[0x73b]);
   }
 
-  // MenuBox input
+  // Menu input
   if (
-		// if there is an active menuBox
+		// if there is an active menu
 		(DAT_8008d908 != 0) ||
 
 		// If you're in End-Of-Race menu
@@ -1946,9 +1946,9 @@ void FUN_80035e70(uint *param_1)
     FUN_80046458();
   }
 
-  // MenuBox logic
+  // Menu logic
   if (
-		// if any MenuBox is active
+		// if any Menu is active
 		(DAT_8008d908 != 0) &&
 
 		// if game is not loading
@@ -2037,7 +2037,7 @@ void FUN_80035e70(uint *param_1)
   // DropRain_MakeSound
   FUN_80024464(param_1);
 
-  // frame timer for MenuBox row highlight
+  // frame timer for Menu row highlight
   uVar7 = (int)DAT_8008d970 << 7;
 
   // approximate trigonometry
@@ -5428,7 +5428,7 @@ switchD_80038f90_caseD_9:
 	// clear gamepad input (for menus)
     FUN_80046404();
 
-	// set desired MenuBox to pause MenuBox
+	// set desired Menu to pause Menu
     DAT_8008d924 = FUN_80039dcc();
   }
   return;
@@ -5480,7 +5480,7 @@ void FUN_80039908(int param_1)
         }
       }
 
-	  // Change active MenuBox to pause MenuBox
+	  // Change active Menu to pause Menu
       DAT_8008d924 = FUN_80039dcc();
     }
   }
@@ -5594,7 +5594,7 @@ void FUN_80039a44(int param_1)
   // String 0xE: Options
   if (uVar6 == 0xe)
   {
-	// Set desired MenuBox to Options
+	// Set desired Menu to Options
     DAT_8008d924 = &DAT_80084190;
 
     DAT_800841aa = 8;
@@ -5612,7 +5612,7 @@ void FUN_80039a44(int param_1)
   // String 0x3: Quit
   if (uVar6 == 3)
   {
-	// Set active MenuBox to Quit
+	// Set active Menu to Quit
     DAT_8008d924 = &DAT_800841d0;
     DAT_800841ea = 1;
     return;
@@ -5621,7 +5621,7 @@ void FUN_80039a44(int param_1)
   // must wait 5 frames until next pause
   PTR_DAT_8008d2ac[0x1d39] = 5;
 
-  // make MenuBox invisible
+  // make Menu invisible
   FUN_800469c8(param_1);
 
   // MainFreeze_SafeAdvDestroy
@@ -5981,7 +5981,7 @@ void FUN_80039e98(void)
 	// pause the game
     *(uint *)PTR_DAT_8008d2ac = uVar2 | 1;
 
-	// set desired MenuBox to pause MenuBox
+	// set desired Menu to pause Menu
     iVar1 = FUN_80039dcc();
 
 	// set row selected to the top row

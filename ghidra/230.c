@@ -1478,7 +1478,7 @@ void FUN_800acff4(int param_1)
     }
     uVar5 = *(uint *)(param_1 + 8);
 	
-	// next menuBox is choosing single+cup
+	// next menu is choosing single+cup
     puVar4 = &DAT_800b4648;
   }
   
@@ -1506,7 +1506,7 @@ void FUN_800acff4(int param_1)
 		  
           uVar5 = *(uint *)(param_1 + 8);
 		  
-		  // set next menuBox to 2P,3P,4P
+		  // set next menu to 2P,3P,4P
           puVar4 = &DAT_800b45c4;
           
 		  goto LAB_800ad3f8;
@@ -1564,7 +1564,7 @@ void FUN_800acff4(int param_1)
 	  // Turn on Adventure Mode
       *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac | 0x80000;
 	  
-	  // menubox for new/load
+	  // menu for new/load
       *(undefined4 *)(param_1 + 0x24) = 0x800b4688;
 	  
       *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) | 0x10;
@@ -1586,12 +1586,12 @@ void FUN_800acff4(int param_1)
 	
     uVar5 = *(uint *)(param_1 + 8);
 	
-	// set next menuBox to Arcade single+cup
+	// set next menu to Arcade single+cup
     puVar4 = &DAT_800b4648;
   }
 LAB_800ad3f8:
 
-  // set next menuBox
+  // set next menu
   *(undefined **)(param_1 + 0x24) = puVar4;
   
   *(uint *)(param_1 + 8) = uVar5 | 0x10;
@@ -1701,7 +1701,7 @@ void FUN_800AD560(int param_1)
 	  // set number of players to row + 1
       PTR_DAT_8008d2ac[0x1ca9] = *(char *)(param_1 + 0x1a) + '\x01';
 	  
-	  // set next menuBox to difficulty selection
+	  // set next menu to difficulty selection
       *(undefined4 *)(param_1 + 0x24) = 0x800b4608;
       
 	  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) | 0x14;
@@ -1881,7 +1881,7 @@ void FUN_800AD828(int param_1)
 	  // if mode is Arcade
 	  if ((*puVar2 & 0x400000) != 0) 
 	  {
-		// set next menuBox to 1P+2P select
+		// set next menu to 1P+2P select
         *(undefined4 *)(param_1 + 0x24) = 0x800b4580;
         _DAT_800b5a08 = 1;
         return;
@@ -1889,7 +1889,7 @@ void FUN_800AD828(int param_1)
       
 	  // if mode is VS
 	  
-	  // set next menuBox to 2P+3P+4P (vs or battle)
+	  // set next menu to 2P+3P+4P (vs or battle)
 	  *(undefined4 *)(param_1 + 0x24) = 0x800b45c4;
       
 	  _DAT_800b5a08 = 2;
@@ -1948,7 +1948,7 @@ void FUN_800ad8f0(int param_1)
 undefined * FUN_800ad980(void)
 
 {
-  // menubox for new/load
+  // menu for new/load
   return &DAT_800b4688;
 }
 
@@ -2776,7 +2776,7 @@ void FUN_800ae6b0(void)
 
 
 // character selection menu, 
-// RECTMENU_FuncPtr for menuBox: 0x800b46b4;
+// RECTMENU_FuncPtr for menu: 0x800b46b4;
 
 // MM_Characters_MenuProc
 void FUN_800ae74c(void)
@@ -2928,7 +2928,7 @@ void FUN_800ae74c(void)
 		  // if you are in a cup
           if ((*(uint *)(PTR_DAT_8008d2ac + 8) & 0x10) != 0) 
 		  {
-			// change desiredMenuBox to Cup race selection
+			// change desiredMenu to Cup race selection
             DAT_8008d924 = &DAT_800b472c;
 			
 			// MM_CupSelect_Init
@@ -2939,7 +2939,7 @@ void FUN_800ae74c(void)
 		  
 		  // if going to track selection
 		  
-		  // change desiredMenuBox to Single race selection
+		  // change desiredMenu to Single race selection
           DAT_8008d924 = &DAT_800b46e0;
 		  
 		  // MM_TrackSelect_Init
@@ -4108,7 +4108,7 @@ void FUN_800b00d4(int param_1)
             return;
           }
           
-		  // passthrough MenuBox for the function
+		  // passthrough Menu for the function
 		  // QueueLoadTrack
 		  DAT_8008d924 = &DAT_80085a94;
 		  
@@ -4842,7 +4842,7 @@ void FUN_800b0eec(int param_1)
               
 			  } while (iVar8 * 0x10000 >> 0x10 < 8);
 			  
-			  // passthrough MenuBox for the function
+			  // passthrough Menu for the function
 			  // QueueLoadTrack
               DAT_8008d924 = &DAT_80085a94;
 			  
@@ -5262,7 +5262,7 @@ void FUN_800b1848(void)
 		  // if starting race
           if (DAT_800b59c4 != 0) 
 		  {
-			// passthrough MenuBox for the function
+			// passthrough Menu for the function
 			// QueueLoadTrack
             DAT_8008d924 = &DAT_80085a94;
             return;
@@ -5273,7 +5273,7 @@ void FUN_800b1848(void)
 		  // MM_TrackSelect_Init
 		  FUN_800affd0();
           
-		  // change desiredMenuBox to Track Selection
+		  // change desiredMenu to Track Selection
 		  DAT_8008d924 = &DAT_800b46e0;
           
 		  return;
@@ -7060,11 +7060,11 @@ void FUN_800b42b0(void)
   uVar3 = 0;
   iVar1 = 0;
   
-  // loop through 9 menuboxes
+  // loop through 9 menues
   do {
     piVar2 = (int *)((int)&PTR_DAT_800b4540_800b47dc + (iVar1 >> 0xe));
     
-	// close menubox
+	// close menu
 	*(uint *)(*piVar2 + 8) = *(uint *)(*piVar2 + 8) | 8;
     *(uint *)(*piVar2 + 8) = *(uint *)(*piVar2 + 8) & 0xffffffeb;
     
@@ -7110,7 +7110,7 @@ void FUN_800b4364(void)
 {
   undefined *puVar1;
   
-  // MainMenu_ResetAllMenuBoxes
+  // MainMenu_ResetAllMenues
   FUN_800b42b0();
   
   // MainStats_ClearBattleVS
@@ -7202,7 +7202,7 @@ void FUN_800b44a8(void)
 }
 
 // 800b44e4
-// MenuBox and rows for Main Menu Hierarchy
+// Menu and rows for Main Menu Hierarchy
 // (another overlay split)?
 // strings exist for video related stuff
 

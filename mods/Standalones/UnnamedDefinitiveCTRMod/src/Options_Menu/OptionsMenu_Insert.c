@@ -2,7 +2,7 @@
 
 #include "..\..\..\include\helper_menu_box.h"
 
-////////////////// Options MenuBox //////////////////
+////////////////// Options Menu //////////////////
 
 void UDCTRM_OM_FuncPtr(struct RectMenu* menu);
 void UDCTRM_OM_GameplayFuncPtr(struct RectMenu* menu);
@@ -47,7 +47,7 @@ struct RectMenu UDCTRM_OM_MenuProc =
     .ptrPrevBox_InHierarchy = 0,
 };
 
-struct RectMenu UDCTRM_OM_GameplayMenuBox =
+struct RectMenu UDCTRM_OM_GameplayMenu =
 {
     .stringIndexTitle = -1,
 
@@ -79,7 +79,7 @@ struct RectMenu UDCTRM_OM_GameplayMenuBox =
     .ptrPrevBox_InHierarchy = 0,
 };
 
-struct RectMenu UDCTRM_OM_ControllerSFXMenuBox =
+struct RectMenu UDCTRM_OM_ControllerSFXMenu =
 {
     .stringIndexTitle = -1,
 

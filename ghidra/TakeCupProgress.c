@@ -45,7 +45,7 @@ void FUN_8004b258(int param_1)
 	  // Set Load/Save to "Slot Selected" mode
       FUN_80048e2c(0x41);
 
-	  // Change active MenuBox to Warning
+	  // Change active Menu to Warning
       DAT_8008d924 = &DAT_80085be0;
     }
     else {

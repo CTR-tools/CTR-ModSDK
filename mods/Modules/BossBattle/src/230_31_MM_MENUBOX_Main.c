@@ -140,7 +140,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
     gGT->gameMode1 |= ADVENTURE_MODE;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
 
-    // menubox for new/load
+    // menu for new/load
     mainMenu->ptrNextBox_InHierarchy = &D230.menuAdventure;
     mainMenu->state |= 0x10;
     return;
@@ -176,7 +176,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
     // set game mode to Arcade Mode
     gGT->gameMode1 |= ARCADE_MODE;
 
-    // set next menuBox
+    // set next menu
     mainMenu->ptrNextBox_InHierarchy = &boss_battle_menu; // this line will set to go to new boss battle mode
     mainMenu->state |= 0x10;
     return;
@@ -185,7 +185,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
   // if you entered VS mode
   if (choose == 0x4f)
   {
-    // next menuBox is choosing single+cup
+    // next menu is choosing single+cup
     mainMenu->ptrNextBox_InHierarchy = &D230.menuRaceType;
     mainMenu->state |= 0x10;
     return;
@@ -199,7 +199,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
     // set game mode to Battle Mode
     gGT->gameMode1 |= BATTLE_MODE;
 
-    // set next menuBox to 2P,3P,4P
+    // set next menu to 2P,3P,4P
     mainMenu->ptrNextBox_InHierarchy = &D230.menuPlayers2P3P4P;
     mainMenu->state |= 0x10;
     return;

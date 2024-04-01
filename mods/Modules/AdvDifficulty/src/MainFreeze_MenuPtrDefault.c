@@ -4,19 +4,19 @@ extern struct RectMenu AdvMainFreeze_Difficulty;
 extern struct RectMenu arcadeMainFreeze_Difficulty;
 
 #if BUILD == UsaRetail
-struct RectMenu * menuBox_hints = 0x800b518c; // in 232
+struct RectMenu * menu_hints = 0x800b518c; // in 232
 #endif
 #if BUILD == EurRetail
-struct RectMenu * menuBox_hints = 0x800b5638;
+struct RectMenu * menu_hints = 0x800b5638;
 #endif
 #if BUILD == JpnRetail
-struct RectMenu * menuBox_hints = 0x800b86a0;
+struct RectMenu * menu_hints = 0x800b86a0;
 #endif
 
 void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 {
 	struct GameTracker *gGT = sdata->gGT;
-	struct RectMenu *nextMenubox = NULL;
+	struct RectMenu *nextMenu = NULL;
 	u_int gameMode = gGT->gameMode1;
 	u_short stringID = menu->rows[menu->rowSelected].stringIndex;
 	u_char level_to_load;
@@ -43,25 +43,25 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	switch (stringID)
 	{
 	case 14: // "OPTIONS"
-		nextMenubox = &data.menuRacingWheelConfig;
+		nextMenu = &data.menuRacingWheelConfig;
 		data.menuRacingWheelConfig.rowSelected = 8;
 		break;
 	case 11: // "AKU AKU HINTS"
 	case 12: // "UKA UKA HINTS"
-		nextMenubox = menuBox_hints;
+		nextMenu = menu_hints;
 		break;
 	case 3: // "QUIT"
-		nextMenubox = &data.menuQuit;
+		nextMenu = &data.menuQuit;
 		data.menuQuit.rowSelected = 1;
 		break;
 	case 7:
-		nextMenubox = (gameMode & ARCADE_MODE) ? &arcadeMainFreeze_Difficulty : &AdvMainFreeze_Difficulty;
+		nextMenu = (gameMode & ARCADE_MODE) ? &arcadeMainFreeze_Difficulty : &AdvMainFreeze_Difficulty;
 		break;
 	}
 
-	if (nextMenubox != NULL)
+	if (nextMenu != NULL)
 	{
-		sdata->ptrDesiredMenu = nextMenubox;
+		sdata->ptrDesiredMenu = nextMenu;
 		return;
 	}
 

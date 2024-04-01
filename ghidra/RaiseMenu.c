@@ -514,7 +514,7 @@ void FUN_800459ec(short *param_1,short *param_2)
 
 
 // RECTMENU_GetHeight
-// param_1 MenuBox
+// param_1 Menu
 // param_2 return value
 // param_3 bool check submenus
 void FUN_80045b1c(short *param_1,short *param_2,short param_3)
@@ -552,7 +552,7 @@ void FUN_80045b1c(short *param_1,short *param_2,short param_3)
 		// go to next row
         psVar3 = psVar3 + 3;
 
-		// increment menubox height by row height
+		// increment menu height by row height
         *param_2 = *param_2 + sVar1;
 
 		// get next string
@@ -588,7 +588,7 @@ LAB_80045bd0:
       sVar2 = DAT_8008236a;
     }
 
-	// increment menubox height by text height
+	// increment menu height by text height
     *param_2 = sVar2 + sVar1;
   }
 
@@ -608,7 +608,7 @@ LAB_80045bd0:
 }
 
 // RECTMENU_GetWidth
-// param_1 MenuBox
+// param_1 Menu
 // param_2 return value
 // param_3 bool check submenus
 void FUN_80045c50(short *param_1,short *param_2,short param_3)
@@ -644,10 +644,10 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
       iVar2 = FUN_800224d0(*(undefined4 *)(((uint)uVar1 & 0x7fff) * 4 + DAT_8008d878),
                            (int)(short)uVar5);
 
-	  // if menuBox width is less than width of this string
+	  // if menu width is less than width of this string
 	  if ((int)*param_2 < (iVar2 + 1) * 0x10000 >> 0x10)
 	  {
-		// set new width of menuBox
+		// set new width of menu
         *param_2 = (short)(iVar2 + 1);
       }
 
@@ -660,7 +660,7 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
     } while (*puVar4 != 0xffff);
   }
 
-  // if MenuBox title has a string
+  // if Menu title has a string
   if (-1 < (int)*param_1)
   {
     uVar3 = 1;
@@ -671,10 +671,10 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
 	// DecalFont_GetLineWidth
     iVar2 = FUN_800224d0(*(undefined4 *)((int)*param_1 * 4 + DAT_8008d878),uVar3);
 
-	// if menuBox width is less than width of this string
+	// if menu width is less than width of this string
 	if ((int)*param_2 < (iVar2 + 1) * 0x10000 >> 0x10)
 	{
-	  // set new width of menuBox
+	  // set new width of menu
       *param_2 = (short)(iVar2 + 1);
     }
   }
@@ -695,8 +695,8 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
 
 
 // RECTMENU_DrawSelf
-// param_1 - ptrMenuBox
-// param_4 - menuBox width
+// param_1 - ptrMenu
+// param_4 - menu width
 void FUN_80045db0(short *param_1,int param_2,short param_3,ushort param_4)
 
 {
@@ -738,7 +738,7 @@ void FUN_80045db0(short *param_1,int param_2,short param_3,ushort param_4)
   local_40 = 0;
   local_38 = 0;
 
-  // if MenuBox should be drawn green
+  // if Menu should be drawn green
   // for save/load screen
   if ((param_1[10] & 0x10U) != 0)
   {
@@ -803,12 +803,12 @@ LAB_80045e94:
 
   uVar2 = *(uint *)(param_1 + 4);
 
-  // set menuBox width
+  // set menu width
   param_1[0x10] = param_4;
 
   *(uint *)(param_1 + 4) = uVar2 & 0xfffffff7;
 
-  // set menuBox height
+  // set menu height
   param_1[0x11] = local_60;
 
   if ((uVar2 & 2) != 0) {
@@ -830,7 +830,7 @@ LAB_80045e94:
   puVar10 = *(ushort **)(param_1 + 6);
 
   // dereference short, then cast short to int,
-  // get string index of the MenuBox title
+  // get string index of the Menu title
   iVar3 = (int)*param_1;
 
   sVar9 = local_50 + local_38 + local_58 + param_1[0xc];
@@ -1299,7 +1299,7 @@ int FUN_80046534(int param_1)
 
 		  // if you can enter this submenu
 
-		  // menuBox->rows[menuBox->rowSelected] & LOCKED == false
+		  // menu->rows[menu->rowSelected] & LOCKED == false
           if (((int)*(short *)((int)*(short *)(param_1 + 0x1a) * 6 + *(int *)(param_1 + 0xc)) &
               0x8000U) == 0)
 		  {
@@ -1370,7 +1370,7 @@ int FUN_80046534(int param_1)
 }
 
 // RECTMENU_ProcessState
-// birth, life, and death of MenuBox
+// birth, life, and death of Menu
 void FUN_8004680c(void)
 
 {
@@ -1390,15 +1390,15 @@ void FUN_8004680c(void)
     DAT_8008d90c = DAT_8008d90c + -1;
   }
 
-  // if you want to change the MenuBox
+  // if you want to change the Menu
   if (DAT_8008d924 != 0)
   {
     uVar2 = *(uint *)(DAT_8008d924 + 8);
 
-	// change ActiveMenuBox to DesiredMenuBox
+	// change ActiveMenu to DesiredMenu
 	DAT_8008d908 = DAT_8008d924;
 
-	// erase DesiredMenuBox
+	// erase DesiredMenu
     DAT_8008d924 = 0;
 
     *(uint *)(iVar3 + 8) = uVar2 & 0xffffefff;
@@ -1412,13 +1412,13 @@ void FUN_8004680c(void)
 
   if ((*(uint *)(DAT_8008d908 + 8) & 0x420) != 0) {
 
-	// Get function pointer that MenuBox executes each frame
+	// Get function pointer that Menu executes each frame
 	ppcVar1 = (code **)(DAT_8008d908 + 0x10);
 
 	// you are at the top level of main menu and can't go back
     *(undefined2 *)(DAT_8008d908 + 0x1e) = 1;
 
-	// execute MenuBox function
+	// execute Menu function
     (**ppcVar1)();
   }
 
@@ -1435,7 +1435,7 @@ void FUN_8004680c(void)
 	  // RECTMENU_GetWidth
 	  FUN_80045c50(DAT_8008d908,local_10,1);
 
-	  // draw menubox
+	  // draw menu
       FUN_80045db0(DAT_8008d908,0,0,(int)local_10[0]);
     }
   }
@@ -1460,7 +1460,7 @@ void FUN_8004680c(void)
   // left the menu, and no longer need the menu,
   if ((*(uint *)(DAT_8008d908 + 8) & 0x1000) != 0)
   {
-	// set ActiveMenuBox to nullptr
+	// set ActiveMenu to nullptr
     DAT_8008d908 = 0;
   }
   return;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-// This menubox and func only found in EurRetail
+// This menu and func only found in EurRetail
 void MM_MenuProc_LanguageBoot(struct RectMenu* menu)
 {
     struct GameTracker* gGT = sdata->gGT;

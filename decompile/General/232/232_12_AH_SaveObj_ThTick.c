@@ -142,7 +142,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                         SelectProfile_GetTrackID();
 #endif
 
-                        // enable menubox for green load/save screen
+                        // enable menu for green load/save screen
                         DECOMP_RECTMENU_Show(&data.menuGreenLoadSave);
                     }
 
@@ -153,7 +153,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                             // if you aren't already returning to player
                             ((uVar6 & 0x400) == 0) &&
 
-                            // if there's no MenuBox active
+                            // if there's no Menu active
                             (sdata->ptrActiveMenu == NULL))
                         {
                             // toggle flag to return, this either snaps back

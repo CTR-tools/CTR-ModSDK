@@ -464,7 +464,7 @@ struct GameTracker
 	#if BUILD >= UsaRetail
 	// 1d76
 	// 1d77
-	short unknown_NotInSep3_again;
+	short nameEnterPadding;
 	#endif
 
 	// usa 1d78 -- found

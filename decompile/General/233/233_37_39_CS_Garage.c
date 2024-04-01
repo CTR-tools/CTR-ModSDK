@@ -423,7 +423,7 @@ void DECOMP_CS_Garage_MenuProc(void)
 				// if pressed X twice quickly
                 if (gGarage.boolSelected == 1)
                 {
-                    // set desiredMenuBox to OSK (on-screen keyboard)
+                    // set desiredMenu to OSK (on-screen keyboard)
                     sdata->ptrDesiredMenu = &data.menuSubmitName;
 
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
@@ -525,7 +525,7 @@ LAB_800b821c:
 				((gGT->gameMode2 & GARAGE_OSK) != 0)
 		  )
 		{
-			// set desiredMenuBox to OSK (on-screen keyboard)
+			// set desiredMenu to OSK (on-screen keyboard)
 			sdata->ptrDesiredMenu = &data.menuSubmitName;
 	
 			data.characterIDs[0] = sdata->advCharSelectIndex_curr;

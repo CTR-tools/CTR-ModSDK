@@ -8,69 +8,69 @@ just reverse the order of the function, and it's fixed
 
 void DECOMP_RECTMENU_ProcessState()
 {
-	struct RectMenu* currMenuBox;
+	struct RectMenu* currMenu;
 	int currState;
 	short width;
 	int state;
 	
 	// check for curr box
-	currMenuBox = sdata->ptrDesiredMenu;
+	currMenu = sdata->ptrDesiredMenu;
 	
 	// unused
 	if(sdata->framesRemainingInMenu != 0)
 		sdata->framesRemainingInMenu--;
 	
-	// if you want to change the MenuBox
-	if(currMenuBox != 0)
+	// if you want to change the Menu
+	if(currMenu != 0)
 	{
 		sdata->ptrDesiredMenu = 0;
 		
-		// show menubox
-		sdata->ptrActiveMenu = currMenuBox;
-		currMenuBox->state &= ~NEEDS_TO_CLOSE;
+		// show menu
+		sdata->ptrActiveMenu = currMenu;
+		currMenu->state &= ~NEEDS_TO_CLOSE;
 		
-		// get menubox at end of hierarchy, if there is hierarchy
-		while((currMenuBox->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
+		// get menu at end of hierarchy, if there is hierarchy
+		while((currMenu->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
 		{
-			currMenuBox = (struct RectMenu*)currMenuBox->ptrNextBox_InHierarchy;
+			currMenu = (struct RectMenu*)currMenu->ptrNextBox_InHierarchy;
 		}
 		
 		// remove "draw only title bar" from lowest hierarchy,
 		// so that rows in this menu draw properly
-		currMenuBox->state &= ~ONLY_DRAW_TITLE;
+		currMenu->state &= ~ONLY_DRAW_TITLE;
 	}
 	
-	currMenuBox = sdata->ptrActiveMenu;
-	state = currMenuBox->state;
+	currMenu = sdata->ptrActiveMenu;
+	state = currMenu->state;
 	
 	// run funcPtr if it exists
 	if((state & (EXECUTE_FUNCPTR | DISABLE_INPUT_ALLOW_FUNCPTRS)) != 0)
 	{
-		currMenuBox->unk1e = 1;
-		currMenuBox->funcPtr(currMenuBox);
+		currMenu->unk1e = 1;
+		currMenu->funcPtr(currMenu);
 		
 		// check if funcPtr changed "state"
-		state = currMenuBox->state;
+		state = currMenu->state;
 	}
 	
 	// if not character selection
 	if((state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
 		// process button input for menu
-		DECOMP_RECTMENU_ProcessInput(currMenuBox);
+		DECOMP_RECTMENU_ProcessInput(currMenu);
 		
 		// check if ProcessInput changed "state"
-		state = currMenuBox->state;
+		state = currMenu->state;
 		
-		// if MenuBox border is not invisible
+		// if Menu border is not invisible
 		if((state & INVISIBLE) == 0)
 		{
 			// clear width, then get width
 			width = 0;
-			DECOMP_RECTMENU_GetWidth(currMenuBox, &width, 1);
+			DECOMP_RECTMENU_GetWidth(currMenu, &width, 1);
 			
 			// draw
-			DECOMP_RECTMENU_DrawSelf(currMenuBox, 0, 0, (int)width);
+			DECOMP_RECTMENU_DrawSelf(currMenu, 0, 0, (int)width);
 		}
 	}
 	
@@ -85,7 +85,7 @@ void DECOMP_RECTMENU_ProcessState()
 		sdata->gGT->renderFlags |= 0x20;
 	}
 	
-	// if menubox needs to close
+	// if menu needs to close
 	if((state & NEEDS_TO_CLOSE) != 0)
 	{
 		// deactivate

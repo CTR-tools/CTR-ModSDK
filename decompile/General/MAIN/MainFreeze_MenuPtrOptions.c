@@ -31,10 +31,10 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct RectMenu* menu)
 	RECT volumeSliderBarOutline;
 	short volumeSliderTriangle [8];
 
-	// extra menubox details
+	// extra menu details
 	RECT glowingcursor;
 	RECT titleSeparatorLine;
-	RECT menuBoxBG;
+	RECT menuBG;
 	
 	short local_70;
 	u_short menuRowsNegativePaddingCopy;
@@ -451,11 +451,11 @@ switchD_80038f90_caseD_9:
 	titleSeparatorLine.h = 2;
 	RECTMENU_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
-	menuBoxBG.x = 0x38;
-	menuBoxBG.w = 400;
-	menuBoxBG.h = 0x87 - menuRowsNegativePaddingCopy;
-	menuBoxBG.y = menuRowsNegativePadding_halved_again + 0x14;
-	RECTMENU_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	menuBG.x = 0x38;
+	menuBG.w = 400;
+	menuBG.h = 0x87 - menuRowsNegativePaddingCopy;
+	menuBG.y = menuRowsNegativePadding_halved_again + 0x14;
+	RECTMENU_DrawInnerRect(&menuBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{

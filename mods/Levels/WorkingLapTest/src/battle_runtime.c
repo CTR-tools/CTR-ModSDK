@@ -12,7 +12,7 @@ void RunInitHook()
 	struct BattleGame* bg = 0x8000F000;
 	gGT = sdata->gGT;
 	
-	// set battle menubox to use adv cup rows
+	// set battle menu to use adv cup rows
 	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
 	
 	// required for AI Nav, cause I dont have

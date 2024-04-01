@@ -776,9 +776,7 @@ void RaceFlag_ResetTextAnim();
 void RaceFlag_DrawLoadingString();
 void RaceFlag_DrawSelf();
 
-// MENUBOX
-
-void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+// RECTMENU
 void RECTMENU_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
 u_char* RECTMENU_DrawTime(int milliseconds);
 void RECTMENU_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);

@@ -49,7 +49,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	// stringID 14: "OPTIONS"
 	if (stringID == 14)
 	{
-		// Set MenuBox to Options
+		// Set Menu to Options
 		sdata->ptrDesiredMenu = &data.menuRacingWheelConfig;
 
 		data.menuRacingWheelConfig.rowSelected = 8;
@@ -60,7 +60,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	// stringID 12: "UKA UKA HINTS"
 	if (stringID == 11 || stringID == 12)
 	{
-		// Set MenuBox to Hints
+		// Set Menu to Hints
 		sdata->ptrDesiredMenu = &D232.menuHintMenu; // in 232
 		return;
 	}
@@ -68,7 +68,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	// stringID 3: "QUIT"
 	if (stringID == 3)
 	{
-		// Set MenuBox to Quit
+		// Set Menu to Quit
 		sdata->ptrDesiredMenu = &data.menuQuit;
 		data.menuQuit.rowSelected = 1;
 		return;
@@ -77,7 +77,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	// must wait 5 frames until next pause
 	gGT->cooldownFromUnpauseUntilPause = 5;
 
-	// hide MenuBox
+	// hide Menu
 	DECOMP_RECTMENU_Hide(menu);
 
 	// get rid of pause flag
