@@ -42,6 +42,12 @@ void DECOMP_GhostReplay_Init1(void)
 	// === Replay Buffer ===
 	// 0: human ghost
 	// 1: N Tropy / Oxide ghost
+	
+	// ALWAYS initialize ghost threads
+	// even if gh == 0, or else the text
+	// for "Ghost Too Big" will never play
+	gh = 0;
+	charID = 0;
 
 	for (i = 0; i < 2; i++)
 	{
@@ -52,12 +58,13 @@ void DECOMP_GhostReplay_Init1(void)
 		if (i == 0)
 		{
 			// if not playing a human ghost, skip this ghost
-			if (sdata->boolReplayHumanGhost == 0) continue;
-			
-			// assign the ghost you loaded
-			gh = sdata->ptrGhostTapePlaying;
-			
-			charID = 1;
+			if (sdata->boolReplayHumanGhost != 0)
+			{
+				// assign the ghost you loaded
+				gh = sdata->ptrGhostTapePlaying;
+				
+				charID = 1;
+			}
 		}
 
 		// second ghost pointer is n tropy or oxide
@@ -70,23 +77,24 @@ void DECOMP_GhostReplay_Init1(void)
 			timeTrialFlags = 3;
 			#endif
 			
-			// if not opened N Tropy, skip this ghost
-			if ((timeTrialFlags & 1) == 0) continue;
-			
-			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-			
-			// If you have not beaten N Tropy
-			if ((timeTrialFlags & 2) == 0)
+			// if N Tropy Opened
+			if ((timeTrialFlags & 1) == 1)
 			{
-				gh = pointers[ST1_NTROPY];	
-				charID = 2;
-			}
-
-			// If you have beaten N Tropy
-			else
-			{
-				gh = pointers[ST1_NOXIDE];	
-				charID = 3;
+				void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+				
+				// If you have not beaten N Tropy
+				if ((timeTrialFlags & 2) == 0)
+				{
+					gh = pointers[ST1_NTROPY];	
+					charID = 2;
+				}
+	
+				// If you have beaten N Tropy
+				else
+				{
+					gh = pointers[ST1_NOXIDE];	
+					charID = 3;
+				}
 			}
 		}
 		

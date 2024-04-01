@@ -18,7 +18,7 @@ void FUN_8004aa08(undefined2 param_1)
   if (PTR_DAT_8008d2ac[0x1d65] != '\0')
   {
 	// move cursor to 'save' button
-    uVar1 = 0x3e9;
+    uVar1 = 1001;
   }
 
   // set cursor position of OSK
@@ -415,14 +415,20 @@ void FUN_8004b144(int param_1)
   sVar1 = FUN_8004aa60(0x13f);
 
   *(short *)(param_1 + 0x1a) = sVar1;
-  if (sVar1 != 0) {
-    if (DAT_8008d906 == 1) {
+  if (sVar1 != 0) 
+  {
+	// if name entered for Time Trial
+    if (DAT_8008d906 == 1) 
+	{
+	  // if hit CANCEL
       if (sVar1 < 0)
 	  {
 		// Change active MenuBox to
 		//  end of race menu with "Save Ghost" option
         DAT_8008d924 = &DAT_800a0458;
       }
+	  
+	  // if hit SAVE
       else
 	  {
 		// Set Load/Save to Ghost mode, with slot 1 selected
@@ -432,8 +438,13 @@ void FUN_8004b144(int param_1)
 		DAT_8008d924 = &DAT_80085bb4;
       }
     }
-    else {
-      if ((DAT_8008d906 < 2) && (DAT_8008d906 == 0)) {
+	
+    else 
+	{  
+	  // if name entered for Adventure
+	  if ((DAT_8008d906 < 2) && (DAT_8008d906 == 0)) 
+	  {
+		// if hit CANCEL
         if (sVar1 < 0)
 		{
 		  // ptrDesiredMenu = CS_Garage_GetMenuPtr
@@ -442,8 +453,10 @@ void FUN_8004b144(int param_1)
 		  // CS_Garage_ZoomOut (1 = just hit OSK cancel)
           FUN_800b7784(1);
         }
-        else {
-
+        
+		// if hit ENTER
+		else 
+		{
 		  // make backup of name entered
 		  DAT_8008fbbc = *(undefined4 *)(PTR_DAT_8008d2ac + 0x1d54);
           DAT_8008fbc0 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x1d58);
