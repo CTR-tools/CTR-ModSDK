@@ -128,9 +128,20 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 		}
 	}
 
+	// PLEASE ENTER YOUR NAME
 	DECOMP_DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
-	DECOMP_DecalFont_DrawLine(gGT->currNameEntered, 192, 68, FONT_BIG, WHITE);
-	if ((sdata->typeTimer & 2) && (currNameLength < 16))
+	
+	DECOMP_DecalFont_DrawLine(
+		gGT->currNameEntered, 
+		
+		// original name max len = 8,
+		// 192 = 256 - iconW(16) * halfMaxLen(4)
+		WIDE_PICK(192,  208),
+		
+		68, 
+		FONT_BIG, WHITE);
+	
+	if (((sdata->typeTimer & FPS_DOUBLE(2)) != 0) && (currNameLength < 16))
 	{
 		currNameWidth = DECOMP_DecalFont_GetLineWidth(gGT->currNameEntered, FONT_BIG);
 		DECOMP_DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
