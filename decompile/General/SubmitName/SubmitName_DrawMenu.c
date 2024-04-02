@@ -45,16 +45,14 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	currNameEntered = gGT->currNameEntered;
 	blinkWhite = ((sdata->typeTimer >> FPS_RIGHTSHIFT(0)) & 1) << 2;
 
-	if (gGT->currNameEntered[0] != 0)
+	while(currNameEntered[0] != 0)
 	{
-		for (character = *currNameEntered; character; currNameEntered++)
+		if (currNameEntered[0] > 2)
 		{
-			if (character > 2)
-			{
-				nameLength++;
-			}
-			character = *currNameEntered;
+			nameLength++;
 		}
+		
+		currNameEntered++;
 	}
 
 	cursorPosition = gGT->typeCursorPosition;
