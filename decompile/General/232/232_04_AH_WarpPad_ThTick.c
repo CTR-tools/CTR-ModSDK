@@ -474,8 +474,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		}
 	}
 	
-	// Naughty Dog Bug: spam every frame,
-	// this wont have a negative performance impact cause it's IF-guarded,
+	// Spam every frame (not a bug, more like last-minute hack).
+	// This wont have a negative performance impact cause it's IF-guarded,
 	// needed cause mask hint sets state to 0xB (Freeze), then this sets
 	// warp back. Without this, Freeze causes mask-grab, which makes you drive.
 	// However, with this, state goes 0xA, then 0xB, then 0xA, and warp SFX
@@ -487,6 +487,83 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	
 	if (warppadObj->framesWarping < FPS_DOUBLE(0x400))
 		warppadObj->framesWarping++;
+	
+	// optimization, dont do this "every" frame,
+	// which the original game did. Also this needs
+	// to happen before the frames<61, to preserve
+	// OG bug (pause->quit->adventure->load->spawn8th)
+	if (warppadObj->framesWarping == 1)
+	{
+		// Assign Characters
+		// Dont worry about Token or Relic, those dont 
+		// use kartSpawnOrderArray, the OG game just did
+		// this without an IF check at all
+		if( (levelID < 0x10) || (levelID >= 100) )
+		{
+			// assign characterIDs, not actually "load"
+			DECOMP_LOAD_Robots1P(data.characterIDs[0]);
+			
+			// spawn P1 in the back
+			sdata->kartSpawnOrderArray[0] = 7;
+			
+			// variable reuse, get track speed champion
+			champID = data.metaDataLEV[levelID].characterID_Champion;
+			
+			// default
+			champSlot = 0;
+			
+			// If Speed Champion is on the track (Crash-Pura)
+			// and is not the same characterID as Player 1
+			if(
+				(champID < 8) &&
+				(champID != data.characterIDs[0])
+			)
+			{
+				// set everyone to spawn in order
+				for(i = 1; i < 7; i++) 
+				{
+					if(champID == data.characterIDs[i])
+					{
+						sdata->kartSpawnOrderArray[i] = 0;
+						champSlot = i;
+					}
+					
+					else
+						sdata->kartSpawnOrderArray[i] = i;
+				}
+				
+				sdata->kartSpawnOrderArray[7] = champSlot;
+			}
+			
+			// Speed Champion is invalid
+			else
+			{
+				for(i = 1; i < 8; i++) randKartSpawn[i] = i;
+				
+				for(i = 0; i < 7; i++)
+				{
+					#ifndef REBUILD_PS1
+					rng1 = RngDeadCoed(&sdata->const_0x30215400);
+					#else
+					rng1 = 0;
+					#endif
+					
+					rng2 = 7 - i;
+					
+					rng2 = (rng1 & 0xfff) % rng2 + 1;
+					rng2 = (short)rng2;
+					
+					sdata->kartSpawnOrderArray[randKartSpawn[rng2]] = (char)i;
+					
+					while(rng2 < 7)
+					{
+						randKartSpawn[rng2] = randKartSpawn[rng2+1];
+						rng2++;
+					}
+				}
+			}
+		}
+	}
 	
 	// wait 2 full seconds before loading
 	if (warppadObj->framesWarping < FPS_DOUBLE(61)) return;
@@ -582,76 +659,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		levelID = data.advCupTrackIDs[4*gGT->cup.cupID];
 	}
-	
-	// Assign Characters
-	// Dont worry about Token or Relic, those dont 
-	// use kartSpawnOrderArray, the OG game just did
-	// this without an IF check at all
-	if( (levelID < 0x10) || (levelID >= 100) )
-	{
-		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
 		
-		// spawn P1 in the back
-		sdata->kartSpawnOrderArray[0] = 7;
-		
-		// variable reuse, get track speed champion
-		champID = data.metaDataLEV[levelID].characterID_Champion;
-		
-		// default
-		champSlot = 0;
-		
-		// If Speed Champion is on the track (Crash-Pura)
-		// and is not the same characterID as Player 1
-		if(
-			(champID < 8) &&
-			(champID != data.characterIDs[0])
-		)
-		{
-			// set everyone to spawn in order
-			for(i = 1; i < 7; i++) 
-			{
-				if(champID == data.characterIDs[i])
-				{
-					sdata->kartSpawnOrderArray[i] = 0;
-					champSlot = i;
-				}
-				
-				else
-					sdata->kartSpawnOrderArray[i] = i;
-			}
-			
-			sdata->kartSpawnOrderArray[7] = champSlot;
-		}
-		
-		// Speed Champion is invalid
-		else
-		{
-			for(i = 1; i < 8; i++) randKartSpawn[i] = i;
-			
-			for(i = 0; i < 7; i++)
-			{
-				#ifndef REBUILD_PS1
-				rng1 = RngDeadCoed(&sdata->const_0x30215400);
-				#else
-				rng1 = 0;
-				#endif
-				
-				rng2 = 7 - i;
-				
-				rng2 = (rng1 & 0xfff) % rng2 + 1;
-				rng2 = (short)rng2;
-				
-				sdata->kartSpawnOrderArray[randKartSpawn[rng2]] = (char)i;
-				
-				while(rng2 < 7)
-				{
-					randKartSpawn[rng2] = randKartSpawn[rng2+1];
-					rng2++;
-				}
-			}
-		}
-	}
-	
 	// Rem Adventure Arena
 	sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 	
