@@ -57,7 +57,7 @@ void DECOMP_GhostReplay_Init1(void)
 		// first ghost pointer is a ghost loaded by player
 		if (i == 0)
 		{
-			// if not playing a human ghost, skip this ghost
+			// if ghost is playing, initialize ghost
 			if (sdata->boolReplayHumanGhost != 0)
 			{
 				// assign the ghost you loaded
@@ -65,6 +65,11 @@ void DECOMP_GhostReplay_Init1(void)
 				
 				charID = 1;
 			}
+
+			// if no human ghost is replayed, do NOT
+			// "return", the ghost[0] thread must be
+			// initialized, or else the "Ghost Too Big" 
+			// text will not play from GhostReplay_ThTick
 		}
 
 		// second ghost pointer is n tropy or oxide
@@ -77,8 +82,15 @@ void DECOMP_GhostReplay_Init1(void)
 			timeTrialFlags = 3;
 			#endif
 			
+			// No ghost unlocked
+			if ((timeTrialFlags & 1) == 0)
+			{
+				// skip initialization of ghost[1] thread
+				return;
+			}
+
 			// if N Tropy Opened
-			if ((timeTrialFlags & 1) == 1)
+			else
 			{
 				void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 				
@@ -101,11 +113,20 @@ void DECOMP_GhostReplay_Init1(void)
 		sdata->boolGhostsDrawing = 1;
 		recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 
+		// Signals GhostReplay_ThTick to return
+		// early, and not try to "play" the ghost
+		tape->ptrStart = 0;
+		tape->ptrEnd = 0;
+
+		if (gh != 0)
+		{
+			tape->ptrStart = &recordBuffer[0];
+			tape->ptrEnd = &recordBuffer[gh->size];
+		}
+
 		tape->gh = gh;
 		tape->gh_again = gh;
 		tape->constDEADC0ED = 0xDEADC0ED;
-		tape->ptrStart = &recordBuffer[0];
-		tape->ptrEnd = &recordBuffer[gh->size];
 		tape->ptrCurr = tape->ptrStart;
 		tape->timeElapsedInRace = 0;
 		tape->timeInPacket32_backup = 0;
@@ -116,6 +137,7 @@ void DECOMP_GhostReplay_Init1(void)
 		// if n tropy / oxide
 		if (i == 1)
 		{
+			// guaranteed gh != 0, so dont nullptr check
 			gGT->timeToBeatInTimeTrial_ForCurrentEvent = gh->timeElapsedInRace;
 		}
 
