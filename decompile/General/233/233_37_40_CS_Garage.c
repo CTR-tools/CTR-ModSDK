@@ -539,6 +539,19 @@ LAB_800b821c:
 				gGarage.delayOneSecond++;
 		}
 	}
+	
+	#ifdef REBUILD_PC
+	if(sdata->ptrDesiredMenu == &data.menuSubmitName)
+	{
+		// flush async key state buffer, otherwise
+		// tapping Enter "before" picking a garage
+		// character, then picking character, will
+		// immediately warp you to the adv hub, with
+		// no time to type the name
+		int NikoGetEnterKey();
+		NikoGetEnterKey();
+	}
+	#endif
 
     if (gGarage.boolSelected == 0)
     {
