@@ -34,7 +34,7 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         VehStuckProc_Warp_AddDustPuff2(d, &d->KartStates.Warp.timer);
     }
 
-    timer = d->KartStates.Warp.timer; 
+    timer = d->KartStates.Warp.timer;
 	timer += FPS_HALF(26);
 
     if (timer <= 800)
@@ -49,10 +49,8 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 					FPS_HALF(120), 
 					4800 >> (i & 1));
 
-        uVar1 = d->posCurr[1] + 0x800;
-
-        if (d->quadBlockHeight + 0x8000 <= d->posCurr[1])
-            goto LAB_80068db0;
+        if (d->posCurr[1] < d->quadBlockHeight + 0x8000)
+            d->posCurr[1] += 0x800;
     }
     else
     {
@@ -87,21 +85,15 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 
             // make invisible
             inst->flags |= HIDE_MODEL;
-
-            goto LAB_80068db0;
         }
-
-        uVar1 = d->KartStates.Warp.unk4 - 0x1800;
-        d->KartStates.Warp.unk4 = uVar1;
-
-        uVar1 = d->posCurr[1] + uVar1;
-    }
-
-    // set current height
-    d->posCurr[1] = uVar1;
-
-LAB_80068db0:
-
+		
+		else
+		{
+			d->KartStates.Warp.heightOffset -= 0x1800;
+			d->posCurr[1] += d->KartStates.Warp.heightOffset;
+		}
+	}
+	
     // drift angle = ((drift angle + warp timer + 0x800) & 0xfff) - 0x800
     sVar2 = (d->turnAngleCurr + (short)(timer) + 0x800U & 0xfff) - 0x800;
     d->turnAngleCurr = sVar2;

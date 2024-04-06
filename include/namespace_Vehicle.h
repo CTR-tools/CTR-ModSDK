@@ -1388,7 +1388,7 @@ struct Driver
 			// 0x580
 			int timer;
 			// 0x584
-			int unk4;
+			int heightOffset;
 			// 0x588
 			int quadHeight;
 			// 0x58c
