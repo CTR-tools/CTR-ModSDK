@@ -124,22 +124,6 @@ void ui60_entryHook()
 		*(unsigned short*)0x8001AF90 = 0x12C;
 	}
 
-	// enter warppad
-	{
-		// timers
-		*(unsigned short*)0x80068c70 = 13;
-
-		// interpolation speeds
-		*(unsigned short*)0x80068c80 = 0x78>>1;
-		*(unsigned short*)0x80068d64 = 0x78>>1;
-		*(unsigned short*)0x80068d78 = 0x78>>1;
-
-
-		*(unsigned short*)0x80068c84 = 0x258>>1;
-		*(unsigned short*)0x80068ca4 = 0xc80>>1;
-		*(unsigned short*)0x80068cb8 = 0x258>>1;
-	}
-
 	// Missile
 	{
 		// beeping sound

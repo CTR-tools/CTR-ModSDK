@@ -488,6 +488,8 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
 void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d);
 void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d);
 
+void DECOMP_VehStuckProc_Warp_Init(struct Thread *t, struct Driver *d);
+
 void DECOMP_VehPhysForce_ConvertSpeedToVec(struct Driver* driver);
 void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver);
 void DECOMP_VehPhysForce_OnApplyForces(struct Thread *t, struct Driver *d);

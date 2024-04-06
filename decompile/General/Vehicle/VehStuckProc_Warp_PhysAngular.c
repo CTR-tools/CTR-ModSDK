@@ -11,6 +11,10 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 
     // get instance from driver object
     struct Instance* inst = d->instSelf;
+	
+	#ifdef USE_60FPS
+	int halfTime = sdata->gGT->timer&1;
+	#endif
 
     // if driver is visible
     if ((inst->flags & HIDE_MODEL) == 0)
@@ -23,12 +27,11 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 
         d->KartStates.Warp.beamHeight = iVar3;
 
-        // if driver is visible
-        if ((inst->flags & HIDE_MODEL) == 0)
-        {
-            // stop particle spawning
-            d->KartStates.Warp.numParticle -= 100;
-        }
+// Unused?
+#if 0
+        // stop particle spawning
+        d->KartStates.Warp.numParticle -= 100;
+#endif
 
         // add dust puff
         VehStuckProc_Warp_AddDustPuff2(d, &d->KartStates.Warp.timer);
@@ -42,15 +45,17 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         // interpolate until scale is [0x12c0, 0x960, 0x12c0],
         // car is wide and short
 
-        for (char i = 0 ; i < 3;i++)
-            inst->scale[i] = 
-				VehCalc_InterpBySpeed(
-					inst->scale[i], 
-					FPS_HALF(120), 
-					4800 >> (i & 1));
+		#ifdef USE_60FPS
+		if(halfTime)
+		#endif
+			for (char i = 0 ; i < 3;i++)
+				inst->scale[i] = 
+					VehCalc_InterpBySpeed(
+						inst->scale[i], 
+						120, 4800 >> (i & 1));
 
         if (d->posCurr[1] < d->quadBlockHeight + 0x8000)
-            d->posCurr[1] += 0x800;
+            d->posCurr[1] += FPS_HALF(0x800);
     }
     else
     {
@@ -62,12 +67,15 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         // interpolate until scale is [0, 24000, 0],
         // car is tall and thin
 
-        for (char i = 0 ; i < 3;i++)
-            inst->scale[i] = 
-				VehCalc_InterpBySpeed(
-					inst->scale[i], 
-					(i == 1) ? FPS_HALF(3200) : FPS_HALF(600),
-					24000 * (i & 1));
+		#ifdef USE_60FPS
+		if(halfTime)
+		#endif
+			for (char i = 0 ; i < 3;i++)
+				inst->scale[i] = 
+					VehCalc_InterpBySpeed(
+						inst->scale[i], 
+						(i == 1) ? 3200 : 600,
+						24000 * (i & 1));
 
         // if scale shrinks to zero
         if (inst->scale[0] == 0)
@@ -88,7 +96,11 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         }
 		
 		else
+			#ifdef USE_60FPS
+			if(halfTime)
+			#endif
 		{
+			
 			d->KartStates.Warp.heightOffset -= 0x1800;
 			d->posCurr[1] += d->KartStates.Warp.heightOffset;
 		}

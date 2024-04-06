@@ -481,8 +481,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	// However, with this, state goes 0xA, then 0xB, then 0xA, and warp SFX
 	// plays a second time. Animation also plays twice but is invisible second time
 #ifndef REBUILD_PS1
-	void VehStuckProc_Warp_Init();
-	gGT->drivers[0]->funcPtrs[0] = VehStuckProc_Warp_Init;
+	gGT->drivers[0]->funcPtrs[0] = DECOMP_VehStuckProc_Warp_Init;
 #endif
 	
 	if (warppadObj->framesWarping < FPS_DOUBLE(0x400))
