@@ -56,9 +56,6 @@ void DECOMP_VehPhysProc_SpinLast_PhysAngular(struct Thread* t, struct Driver* d)
 		if(
 			(d->KartStates.Spinning.driftSpinRate > 0) &&
 			(driftAngleCurr > -400)
-			#ifdef USE_60FPS
-			&& (sdata->gGT->timer & 1)
-			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
@@ -87,9 +84,6 @@ void DECOMP_VehPhysProc_SpinLast_PhysAngular(struct Thread* t, struct Driver* d)
 		if(
 			(d->KartStates.Spinning.driftSpinRate < 0) &&
 			(driftAngleCurr < 400)
-			#ifdef USE_60FPS
-			&& (sdata->gGT->timer & 1)
-			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
