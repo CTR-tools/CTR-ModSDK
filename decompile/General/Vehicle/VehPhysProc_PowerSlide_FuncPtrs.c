@@ -58,20 +58,20 @@ void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver*
 		iVar13 = -iVar13;
 	}
 
-	// get camera rotation
+	// abs value: spinDistRemain
 	iVar12_C = driver->rotCurr.w - iVar13;
-
-	// make sure it's not negative
 	if (iVar12_C < 0)
-	{
 		iVar12_C = -iVar12_C;
-	}
 
+	// 1/8 abs spinDistRemain
 	uVar14 = iVar12_C >> 3;
+	
 	if (uVar14 == 0)
 	{
 		uVar14 = 1;
 	}
+	
+	// max spin this frame
 	uVar10 = (u_int)driver->unk46a;
 	if ((int)uVar14 < (int)(u_int)driver->unk46a)
 	{
@@ -305,13 +305,17 @@ LAB_800632cc:
 		}
 		driver->turnAngleCurr += sVar5;
 	}
+	
+	// abs value: numFramesDrifting
 	iVar12_E = driver->KartStates.Drifting.numFramesDrifting;
 	if (iVar12_E < 0)
 	{
 		iVar12_E = -iVar12_E;
 	}
 
-	// get half of spin-out constant, this determines when to start making tire sound effects, after the turbo meter finishes filling past it's max capacity
+	// get half of spin-out constant, 
+	// this determines when to start making tire sound effects, 
+	// after the turbo meter finishes filling past it's max capacity
 
 	// if you drift beyond the limit of the turbo meter
 	if ((int)(u_int)(driver->const_Drifting_FramesTillSpinout >> 1) < iVar12_E)
