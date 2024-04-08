@@ -318,7 +318,6 @@ SKIP_LOADING_TEXT:
 					setRGB1(p, colorLeft, colorLeft, colorLeft);
 					setRGB3(p, colorLeft, colorLeft, colorLeft);
 
-
 					// positions
 					*(int *)&p->x0 = bottom[0];
 					*(int *)&p->x2 = bottom[1];

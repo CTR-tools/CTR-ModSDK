@@ -1,11 +1,10 @@
 // ======= Headers =============
 #if __GNUC__
 #include <SDL2/SDL.h>
-#endif
-
 #define _EnterCriticalSection(x)
 #define EnterCriticalSection(x)
 #define ExitCriticalSection()
+#endif
 
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
