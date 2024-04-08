@@ -1,13 +1,13 @@
 #include <common.h>
 
-int DECOMP_RaceFlag_GetOT(void)
+u_int* DECOMP_RaceFlag_GetOT(void)
 {
     short sVar1;
     int iVar2;
     struct GameTracker* gGT = sdata->gGT;
 	
-	int* otDrawFirst_FarthestDepth;
-	int* otDrawLast_ClosestDepth;
+	u_int* otDrawFirst_FarthestDepth;
+	u_int* otDrawLast_ClosestDepth;
 	
 	otDrawFirst_FarthestDepth = &gGT->pushBuffer[0].ptrOT[0x3FF];
 	otDrawLast_ClosestDepth = gGT->otSwapchainDB[gGT->swapchainIndex];

@@ -3,7 +3,9 @@
 int bi = 0;
 
 #ifdef REBUILD_PC
-inline 
+#ifndef __GNUC__
+inline
+#endif
 #endif
 int GetBit(unsigned int* vertData)
 {

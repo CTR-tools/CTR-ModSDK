@@ -1,4 +1,5 @@
 #include <common.h>
+#include <inttypes.h>
 
 #ifdef REBUILD_PC
 // with 8mb expansion, we have bonus PrimMem
@@ -23,6 +24,11 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// Visual Studio -> Properties -> Linker -> Advanced -> 
 	// Base Address, Randomized Base Address, Fixed Base Address
 	ptrMempack->start = &memory[0];
+	printf(
+		"[CTR] Where does memory starts? (%s) %" PRIu32 "\n",
+		(ptrMempack->start < 0x01000000 ? "GOOD" : "BAD"),
+		ptrMempack->start
+	);
 	memset(memory, 0, 8*1024*1024);
 	
 	ptrMempack->endOfAllocator = &memory[8*1024*1024 - 4];

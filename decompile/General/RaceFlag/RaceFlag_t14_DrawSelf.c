@@ -1,16 +1,16 @@
 #include <common.h>
 
 #ifdef REBUILD_PC
-int scratchpadBuf[0x1000];
+u_int scratchpadBuf[0x1000];
 #endif
 
 force_inline char RaceFlag_CalculateBrightness(u_int sine, u_char darkTile)
 {
 	if (darkTile)
 	{
-		return sine * -55 + 0x140000 >> 0xD;
+		return((sine * -55 + 0x140000) >> 0xD);
 	}
-	return sine * -125 + 0x1fe000 >> 0xD;
+	return((sine * -125 + 0x1fe000) >> 0xD);
 }
 
 void DECOMP_RaceFlag_DrawSelf()
@@ -20,7 +20,7 @@ void DECOMP_RaceFlag_DrawSelf()
 	u_char toggle;
 	short flagPos;
 	u_long *ot;
-	long *scratchpad;
+	u_int *scratchpad;
 	u_int screenlimit;
 	u_int dimensions;
 	int approx[2];
@@ -171,7 +171,7 @@ SKIP_LOADING_TEXT:
 #ifdef REBUILD_PC
 		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
 		toggle = toggle ^ 1;
-		bottom = &scratchpadBuf[(toggle * 0x78 / 4) - 0];
+		bottom = &scratchpadBuf[(toggle * 0x78 / 4)];
 #else
 		top = (u_int *)((0x1f800000 + toggle * 0x78) - 4);
 		toggle = toggle ^ 1;
@@ -317,6 +317,7 @@ SKIP_LOADING_TEXT:
 					// left corner
 					setRGB1(p, colorLeft, colorLeft, colorLeft);
 					setRGB3(p, colorLeft, colorLeft, colorLeft);
+
 
 					// positions
 					*(int *)&p->x0 = bottom[0];

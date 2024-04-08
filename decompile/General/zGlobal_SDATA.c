@@ -5,6 +5,10 @@
 
 #include <common.h>
 
+#if __GNUC__
+char memcardBytes[0x1680];
+#endif
+
 struct sData sdata_static =
 {
 	.langBufferSize = 0x3F04,
@@ -353,6 +357,9 @@ struct sData sdata_static =
 #if NO_BSS
 	.ptrToMemcardBuffer1 = 0x800992e4,
 	.ptrToMemcardBuffer2 = 0x800992e4,
+#elif __GNUC__
+	.ptrToMemcardBuffer1 = &memcardBytes[0],
+	.ptrToMemcardBuffer2 = &memcardBytes[0],
 #else
 	.ptrToMemcardBuffer1 = &sdata_static.memcardBytes[0],
 	.ptrToMemcardBuffer2 = &sdata_static.memcardBytes[0],

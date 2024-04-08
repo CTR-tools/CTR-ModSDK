@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
+int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 {
 	if(levelID == PAPU_PYRAMID || levelID == POLAR_PASS)
 		if (2 < numPlyrCurrGame)

@@ -1,5 +1,9 @@
-
 // ======= Headers =============
+#include <stdlib.h>
+#include <SDL2/SDL.h>
+#define _EnterCriticalSection(x)
+#define EnterCriticalSection(x)
+#define ExitCriticalSection()
 
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
@@ -57,11 +61,15 @@ typedef enum {
 // work in PsyXKeyboardHandler, workaround:
 int NikoGetEnterKey()
 {
+#if __GNUC__
+	return 0;
+#else
 	// dont use Windows.h
 	__declspec(dllimport) short __stdcall 
-		GetAsyncKeyState(_In_ int vKey);
+		GetAsyncKeyState(int vKey);
 	
 	return GetAsyncKeyState(0xd);
+#endif
 }
 
 void PsyXKeyboardHandler(int key, char down)
@@ -90,11 +98,36 @@ int NikoCalcFPS()
 	printf("NikoCalcFPS: %d fps\n", (1000 * frameGap) / delta);
 }
 
-int main()
+#ifndef CC
+	#if __GNUC__
+		#if _WIN32
+			#ifndef __clang__
+				#define CC "MINGW-GCC"
+			#else
+				#define CC "MINGW-CLANG"
+			#endif
+		#else
+			#ifndef __clang__
+				#define CC "GCC"
+			#else
+				#define CC "CLANG"
+			#endif
+		#endif
+	#elif defined(_MSC_VER)
+		#define CC "MSVC"
+	#else
+		#define CC "Unknown"
+	#endif
+#endif
+
+int main(int argc, char* argv[])
 {
+	printf("[CTR] Built with: " CC "\n");
 #ifdef USE_16BY9
+	printf("[CTR] USE_16BY9=1\n");
 	PsyX_Initialise("CTRPC", 1280, 720, 0);
 #else
+	printf("[CTR] USE_16BY9=0\n");
 	PsyX_Initialise("CTRPC", 800, 600, 0);
 #endif
 

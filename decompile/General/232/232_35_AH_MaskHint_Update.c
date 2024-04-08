@@ -15,7 +15,7 @@ void DECOMP_AH_MaskHint_Update()
 			sdata->AkuAkuHintState++;
 			break;
 		
-		case 1:
+		case 1: {
 			int absSpeedApprox = d->speedApprox;
 			if(absSpeedApprox < 0) absSpeedApprox = -absSpeedApprox;
 			if(absSpeedApprox > 0x31) return;
@@ -65,7 +65,7 @@ void DECOMP_AH_MaskHint_Update()
 			D232.maskWarppadDelayFrames = FPS_DOUBLE(60);
 			
 			sdata->AkuAkuHintState++;
-			break;
+			} break;
 		
 		case 2:
 		
@@ -189,7 +189,7 @@ void DECOMP_AH_MaskHint_Update()
 			// stay here forever stuck
 			break;
 			
-		case 4:
+		case 4: {
 			int lngIndex = 0;
 			int boolFound = 0;
 			short* ptrLngID = &D232.hintMenu_lngIndexArr[0];
@@ -270,7 +270,7 @@ void DECOMP_AH_MaskHint_Update()
 				// show map again
 				gGT->hudFlags &= ~(0x10);
 			}
-			break;
+			} break;
 			
 		case 5:
 		
