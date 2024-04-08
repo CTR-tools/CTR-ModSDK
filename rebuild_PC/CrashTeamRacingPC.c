@@ -3,7 +3,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
 #include <string.h>
-//#include <stdlib.h> -- creates conflict. mb, rename math.h to ctr_math.h?
 
 #include "psx/types.h"
 #include "psx/libetc.h"
@@ -97,7 +96,7 @@ struct StartSettings {
 	int heigth;
 	char* fileName;
 };
- struct StartSettings startSettings = {
+struct StartSettings startSettings = {
 #ifdef WIDE_SCREEN	//HD 720p
 	.width = 1280,
 	.heigth = 720,
