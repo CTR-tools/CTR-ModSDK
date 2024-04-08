@@ -1,5 +1,7 @@
 #include <common.h>
-
+#if defined(REBUILD_PC) && defined(__GNUC__)
+extern u_int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame);
+#endif
 void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 {
   char numPlyr;
