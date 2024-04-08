@@ -309,7 +309,13 @@ struct Driver
 	struct Icon** wheelSprites;
 	// 0x4
 	unsigned short wheelSize;
-	// 0x6
+	
+    // 0x6
+    // Front wheel rotation sprite frame offset
+    // Also controls the LR panning of the Engine Sound 
+    // Default: 0
+    // Steering left ranges between 0 to 64
+    // Steering right ranges between 0 to -64 (if we display it as a signed number)
 	short wheelRotation;
 	// 0x8
 	unsigned int tireColor;
@@ -537,6 +543,10 @@ struct Driver
 	int unk_turboRelated;
 
 	// 0x300
+    // 0x300 = Kart skidmarks sound
+    // 0x304 = No sound yet defined* (VehEmitter_DriverMain.c: Line#290)
+    // 0x308 = Kart "kirb_dirt" sound
+    // 0x30C = Kart "engine_jet" sound
 	void* driverAudioPtrs[4];
 
 	// 0x310
@@ -584,6 +594,8 @@ struct Driver
 	short AxisAngle2_normalVec[3];
 
 	// 0x36e
+    // Seems to control the speedometer needle to show base current speed
+    // Altought the needle is also controlled a little bit by other variables that are not constants
 	short unk36E;
 
 	// 0x370
@@ -667,6 +679,10 @@ struct Driver
 
 	// 0x3B6
 	// both related to EngineSound
+    // 0x3b6 controls the ¿volume? of the Engine Sound*
+    // 0x3b8 controls the base pitch of the Engine Sound
+    // The final pitch calculation where this vars are used
+    // is also affected by something else I couldn't find
 	short fill_3B6[2];
 
 	// 0x3BA
@@ -711,6 +727,9 @@ struct Driver
 	short unk_LerpToForwards;
 	
 	// 0x3d4
+    // 0x3d4 - turnResistMax - controls the Y offset rotation of the model
+    // 0x3d6 - rotCurrW_original - no comments abt this - untested
+    // 0x3d8 - turnResistMaxBitshift - no comments abt this - untested
 	short unk3D4[3];
 
 	// 0x3DA
@@ -926,10 +945,11 @@ struct Driver
 	char unusedPadding;
 	
 	// all related to VehPhysGeneral_LerpToForwards
-	char unk457; // 0x22
-	char unk458; // 0x23
-	char unk459; // 0x24
-	char unk45a; // 0x25
+    // only affected by steering without sliding
+	char unk457; // 0x22 kart model angle lerp rotation Limit max*
+	char unk458; // 0x23 kart model angle lerp rotation Limit min*
+	char unk459; // 0x24 kart model angle lerp rotation strength/ratio max*
+	char unk45a; // 0x25 kart model angle lerp rotation strength/ratio min*
 
 	char unk45b; // unused? skips straight to 0x45c
 
@@ -959,22 +979,22 @@ struct Driver
 	short const_Drifting_CameraSpinRate;
 
 	// 0x46A, 0x46B - 0x31, 0x32
-	char unk46a;
-	char unk46b;
+	char unk46a; // destinedRot max lerping
+	char unk46b; // destinedRot min lerping?
 
 	// 0x46C, 0x46E, 0x470, 0x472, 0x474 - 0x33, 0x34, 0x35, 0x36, 0x37
 	short unk46c;
 	short unk46e;
-	short unk470;
-	short unk472;
-	short unk474;
+	short unk470; // sliding max angle rotation
+	short unk472; // sliding min angle rotation
+	short unk474; // sliding angle rotation factor?*
 
 	// 0x476, 0x477, 0x478, 0x479, 0x47A - 0x38, 0x39, 0x3A, 0x3B, 0x3C
 	char const_turboMaxRoom;        // point where turbo meter is empty
 	char const_turboLowRoomWarning; // point where turbo turns red
 	char const_turboFullBarReserveGain;
-	char unk479; // 582 related
-	char unk47A; // 582 related
+	char unk479; // 582 related -- somehow affects the force of the next variable (0x47a)
+	char unk47A; // 582 related -- defines the angle when doing a turbo boost
 
 	char unk47B; // unused? metaphys skips straight to 0x47C
 
