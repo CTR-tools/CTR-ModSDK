@@ -1,5 +1,4 @@
 #include <common.h>
-#include <inttypes.h>
 
 #ifdef REBUILD_PC
 // with 8mb expansion, we have bonus PrimMem
@@ -25,7 +24,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// Base Address, Randomized Base Address, Fixed Base Address
 	ptrMempack->start = &memory[0];
 	printf(
-		"[CTR] Where does memory starts? (%s) %" PRIu32 "\n",
+		"[CTR] Where does memory starts? (%s) %08x\n",
 		(ptrMempack->start < 0x01000000 ? "GOOD" : "BAD"),
 		ptrMempack->start
 	);
