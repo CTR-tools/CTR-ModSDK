@@ -681,7 +681,7 @@ struct Driver
 	// both related to EngineSound
     // 0x3b6 controls the ¿volume? of the Engine Sound*
     // 0x3b8 controls the base pitch of the Engine Sound
-    // The final pitch calculation where this vars are used
+    // The final pitch calculation where these vars are used
     // is also affected by something else I couldn't find
 	short fill_3B6[2];
 
