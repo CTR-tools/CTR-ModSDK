@@ -1,8 +1,10 @@
 
 // ======= Headers =============
-
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
+#include <string.h>
+//#include <stdlib.h> -- creates conflict. mb, rename math.h to ctr_math.h?
+
 #include "psx/types.h"
 #include "psx/libetc.h"
 #include "psx/libgte.h"
@@ -90,15 +92,46 @@ int NikoCalcFPS()
 	printf("NikoCalcFPS: %d fps\n", (1000 * frameGap) / delta);
 }
 
-int main()
-{
-#ifdef USE_16BY9
-	PsyX_Initialise("CTRPC", 1280, 720, 0);
-#else
-	PsyX_Initialise("CTRPC", 800, 600, 0);
+struct StartSettings {
+	int width;
+	int heigth;
+	char* fileName;
+};
+ struct StartSettings startSettings = {
+#ifdef WIDE_SCREEN	//HD 720p
+	.width = 1280,
+	.heigth = 720,
+#elif defined(ULTRAWIDE_SCREEN)	//half of UWHD
+	.width = 1280,
+	.heigth = 540,
+#else	//SVGA
+	.width = 800,
+	.heigth = 600,
 #endif
+};
 
-	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
+int main(int argc, char* argv[])
+{
+	switch (argc){
+	case 1:
+		startSettings.fileName = (char*)malloc(sizeof(char) * strlen("ctr-u.bin"));
+		strcpy(startSettings.fileName, "ctr-u.bin");
+		break;
+	case 2:
+		startSettings.fileName = (char*)malloc(sizeof(char) * strlen(argv[1]));
+		strcpy(startSettings.fileName, argv[1]);
+		break;
+	default:
+		//place for the parsing function
+		return -1;
+		break;
+	}
+	if (!fopen(startSettings.fileName, "r")) return -1; //no file
+	printf("Filename is: ");
+	printf(startSettings.fileName);
+	printf("\n");
+	PsyX_Initialise("CTRPC", startSettings.width, startSettings.heigth, 0);
+	PsyX_CDFS_Init(startSettings.fileName, 0, 0);
 
 	// set to 30 FPS VSync
 	PsyX_SetSwapInterval(2);
