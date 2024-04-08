@@ -1,6 +1,8 @@
 // ======= Headers =============
-#include <stdlib.h>
+#if __GNUC__
 #include <SDL2/SDL.h>
+#endif
+
 #define _EnterCriticalSection(x)
 #define EnterCriticalSection(x)
 #define ExitCriticalSection()
