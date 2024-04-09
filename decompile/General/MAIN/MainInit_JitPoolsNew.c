@@ -1,5 +1,5 @@
 #include <common.h>
-#if defined(REBUILD_PC) && defined(__GNUC__)
+#if defined(__clang__) || defined(__GNUC__)
 extern u_int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame);
 #endif
 void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
@@ -67,22 +67,22 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	&gGT->JitPools.thread,
 	uVar9 * 3 >> 7,
 	0x48,/*"ThreadPool"*/0);
-  
+
   // InstancePool
   DECOMP_JitPool_Init(
-	&gGT->JitPools.instance, 
+	&gGT->JitPools.instance,
 	uVar9 >> 5,
 	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), /*"InstancePool"*/0);
 
   // SmallStackPool
   DECOMP_JitPool_Init(
-	&gGT->JitPools.smallStack, 
+	&gGT->JitPools.smallStack,
 	uVar7 * 0x19 >> 10,
 	0x40 + sizeof(void*)*2,/*"SmallStackPool"*/0);
-  
+
   // MediumStackPool
   DECOMP_JitPool_Init(
-	&gGT->JitPools.mediumStack, 
+	&gGT->JitPools.mediumStack,
 	uVar7 >> 7,
 	0x80 + sizeof(void*)*2,/*"MediumStackPool"*/0);
 
@@ -126,11 +126,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   }
 
   for (int i = 0; i < numPlyr; i++)
-  {			
-    data.PtrClipBuffer[i] = 
-		DECOMP_MEMPACK_AllocMem( 
+  {
+    data.PtrClipBuffer[i] =
+		DECOMP_MEMPACK_AllocMem(
 			DECOMP_MainDB_GetClipSize(gGT->levelID, numPlyr) << 2
 			/*,"Clip Buffer"*/);
-  } 
+  }
 }
 
