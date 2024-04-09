@@ -53,7 +53,7 @@ void DECOMP_VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* dri
 	driver->rotCurr.w = 
 		DECOMP_VehCalc_InterpBySpeed(
 			driver->rotCurr.w, 
-			(rotCurrW_interp * elapsedTimeMS) >> 5, 0);
+			(driver->rotPrev.w * elapsedTimeMS) >> 5, 0);
 	
 	actionsFlagSet = driver->actionsFlagSet;
 	forwardDir = driver->forwardDir;
