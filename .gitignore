@@ -26,6 +26,7 @@ comport.txt
 gcc_out.txt
 overlay.ld
 rebuild_PC/result
+/result
 
 # Version tracker
 tools/updater/.version

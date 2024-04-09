@@ -5,6 +5,7 @@
 , SDL2
 , openal
 , fetchFromGitHub
+, psyCrossDebug ? false
 }:
 
 let
@@ -17,54 +18,38 @@ let
         dbusSupport = false;
         pipewireSupport = false;
         pulseSupport = false;
+        inherit stdenv;
       }).overrideAttrs (prevAttrs: {
         meta = prevAttrs.meta // { inherit (SDL2.meta) platforms; };
       })
-    else openal;
+    else openal.override { inherit stdenv; };
 in
 stdenv.mkDerivation (finalAttrs:  {
   pname = "PsyCross";
-  version = "unstable-2024-02-14-603475326";
+  version = "unstable-2024-02-14-0ce306d6c";
 
   src = fetchFromGitHub {
     owner = "OpenDriver2";
     repo = "PsyCross";
-    rev = "603475326dfa546cb47a6cc338c32053cca56022";
-    hash = "sha256-1FW0U/XE+4WBrcgvOAaLSdU/GlR2S3Av8UiZla5rybI=";
+    rev = "0ce306d6c32412986037e7e5e1dbdc1bf72e066a";
+    hash = "sha256-c57xyzM7GkL9SazUUxAM4DVXxb7cTcjJxgJpZ7UMBVQ=";
   };
 
   # Shows the proper compile date in the logs (taken from commit date)
-  env.SOURCE_DATE_EPOCH = "1707912179";
+  env.SOURCE_DATE_EPOCH = "1712578640";
 
   nativeBuildInputs = [ pkg-config cmake ];
-  propagatedBuildInputs = [ SDL2 openalWithWindows ];
+  propagatedBuildInputs = [ (SDL2.override { inherit stdenv; }) openalWithWindows ];
 
-  CFLAGS = [ "-Wno-narrowing" ];
-  CXXFLAGS = [ "-Wno-narrowing" ];
   hardeningDisable = [ "format" ];
 
+  CFLAGS = "-Wno-implicit-function-declaration" + lib.strings.optionalString psyCrossDebug "-D_DEBUG=1 -g -gdwarf-2 -O0";
+  CXXFLAGS = lib.strings.optionalString psyCrossDebug "-D_DEBUG=1 -g -gdwarf-2 -O0";
+  dontStrip = psyCrossDebug;
+
   postPatch = ''
-    substituteInPlace CMakeLists.txt \
-      --replace-fail 'OPENAL' 'OpenAL' \
-      --replace-fail '"*.c"' '"*.c" "*.C"'
-
-    substituteInPlace 'src/psx/LIBGTE.C' \
-      --replace-fail 'RotTransPers(SVECTOR* v0, int* sxy' 'RotTransPers(SVECTOR* v0, long* sxy'
-
-    substituteInPlace 'src/psx/LIBGPU.C' \
-      --replace-fail 'u_short LoadTPage(u_int*' 'u_short LoadTPage(u_long*'
-
-    substituteInPlace 'include/psx/kernel.h' \
-      --replace-fail '#if 0' "#if 1"
-
     substituteInPlace 'include/PsyX/PsyX_config.h' \
       --replace-fail 'USE_EXTENDED_PRIM_POINTERS 1' 'USE_EXTENDED_PRIM_POINTERS 0'
-
-    sed -i"" \
-      's/#ifdef _WIN32/#ifdef _WIN32\n#include <windows.h>\n/;/^#define _stricmp/d;s/_stricmp/strcmp/' \
-      src/PsyX_main.cpp
-
-    sed -i"" '1s/^/cmake_minimum_required(VERSION 3.28)\n/' CMakeLists.txt
   '';
 
   installPhase = ''

@@ -10,7 +10,7 @@ CFLAGS+=-Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implic
 LDLIBS+=-lpsycross \
     `${PKG_CONFIG} --libs sdl2` \
     `${PKG_CONFIG} --libs openal` \
-    -lm
+    -lstdc++ -lm
 
 # Clang always needs "no-pie", some distros might add PIE to GCC too.
 LDFLAGS+=-fno-pie -no-pie -Wl,-Ttext,0x00D00000

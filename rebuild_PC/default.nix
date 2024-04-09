@@ -3,7 +3,8 @@
 , callPackage
 , pkg-config
 , ctrModSDK ? ./..
-, psyCross ? callPackage ./PsyCross.nix {}
+, psyCross ? callPackage ./PsyCross.nix { inherit psyCrossDebug; }
+, psyCrossDebug ? false
 }:
 
 let
@@ -16,7 +17,9 @@ stdenv.mkDerivation (finalAttrs:  {
   version = "0.0.1";
 
   src = ctrModSDK;
-  sourceRoot = "CTR-ModSDK/rebuild_PC";
+  sourceRoot =
+    if ctrModSDK == ./.. then "CTR-ModSDK/rebuild_PC"
+    else "source/rebuild_PC";
 
   nativeBuildInputs = [ pkg-config ];
   buildInputs = psyCross.propagatedBuildInputs;
