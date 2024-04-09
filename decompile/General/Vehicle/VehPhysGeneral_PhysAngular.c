@@ -1,7 +1,7 @@
 #include <common.h>
 
 // byte budget: 1996
-// current size: 1948
+// current size: 1824
 
 void DECOMP_VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* driver)
 {
@@ -28,31 +28,13 @@ void DECOMP_VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* dri
 	char simpTurnState;
 	short driftAngleCurr_og;
 	
-	rotCurrW_original = (int)(driver->rotCurr).w;
-	rotCurrW_interp = rotCurrW_original;
-	if (rotCurrW_original < 0)
-	{
-		rotCurrW_interp = -rotCurrW_original;
-	}
+	void PhysLerpRot(struct Driver* driver, int iVar13);
+	PhysLerpRot(driver, 0);
+	
 	elapsedTimeMS = sdata->gGT->elapsedTimeMS;
-	destinedRot = rotCurrW_interp >> 3;
-	if (destinedRot == 0)
-	{
-		destinedRot = 1;
-	}
-	if ((int)(u_int)(u_char)driver->unk46a < (int)destinedRot)
-	{
-		destinedRot = (u_int)(u_char)driver->unk46a;
-	}
-	
-	rotCurrW_interp = DECOMP_VehCalc_InterpBySpeed((int)(driver->rotPrev).w, FPS_HALF(8), destinedRot);
-	(driver->rotPrev).w = (short)rotCurrW_interp;
-	
-	rotCurrW_interp = DECOMP_VehCalc_InterpBySpeed(rotCurrW_original, (rotCurrW_interp * elapsedTimeMS) >> 5, 0);
 	actionsFlagSet = driver->actionsFlagSet;
 	forwardDir = driver->forwardDir;
 	simpTurnState = driver->simpTurnState;
-	(driver->rotCurr).w = (short)rotCurrW_interp;
 	speedApprox = (int)driver->speedApprox;
 	rotCurrW_interp = simpTurnState * 0x100;
 	if (speedApprox < 1)
