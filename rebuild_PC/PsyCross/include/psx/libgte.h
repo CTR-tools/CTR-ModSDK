@@ -6,12 +6,12 @@
 
 typedef struct {
 	short	m[3][3];	/* 3x3 rotation matrix */
-	long    t[3];		/* transfer vector */
+	int		t[3];		/* transfer vector */
 } MATRIX;
 
-typedef struct {		/* long word type 3D vector */
-	long	vx, vy;
-	long	vz, pad;
+typedef struct {		/* int  word type 3D vector */
+	int		vx, vy;
+	int		vz, pad;
 } VECTOR;
 
 typedef struct {		/* short word type 3D vector */
@@ -48,43 +48,43 @@ SVECTOR *ApplyMatrixSV(MATRIX *m, SVECTOR *v0, SVECTOR *v1);
 VECTOR *ApplyMatrixLV(MATRIX *m, VECTOR *v0, VECTOR *v1);
 extern void RotTrans(SVECTOR* v0, VECTOR* v1, long* flag);
 extern void RotTransSV(SVECTOR* v0, SVECTOR* v1, long* flag);
-extern long RotTransPers(SVECTOR* v0, long* sxy, long* p, long* flag);
-extern long RotTransPers3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1, long* sxy2, long* p, long* flag);
-extern long RotTransPers4(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, SVECTOR* v3, long* sxy0, long* sxy1, long* sxy2, long* sxy3, long* p, long* flag);
+extern int RotTransPers(SVECTOR* v0, long* sxy, long* p, long* flag);
+extern int RotTransPers3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1, long* sxy2, long* p, long* flag);
+extern int RotTransPers4(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, SVECTOR* v3, long* sxy0, long* sxy1, long* sxy2, long* sxy3, long* p, long* flag);
 extern void NormalColor(SVECTOR* v0, CVECTOR* v1);
 extern void NormalColor3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, CVECTOR* v3, CVECTOR* v4, CVECTOR* v5);
-extern void NormalColorDpq(SVECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2);
+extern void NormalColorDpq(SVECTOR* v0, CVECTOR* v1, int p, CVECTOR* v2);
 extern void NormalColorCol(SVECTOR* v0, CVECTOR* v1, CVECTOR* v2);
 extern void NormalColorCol3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, CVECTOR* v3, CVECTOR* v4, CVECTOR* v5, CVECTOR* v6);
 extern void LocalLight(SVECTOR* v0, VECTOR* v1);
-extern long RotAverageNclip4(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, SVECTOR* v3, long* sxy0/*arg_10*/, long* sxy1/*arg_14*/, long* sxy2/*arg_18*/, long* sxy3/*arg_1C*/, long* p/*arg_20*/, long* otz/*arg_24*/, long* flag/*arg_28*/);
+extern int RotAverageNclip4(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, SVECTOR* v3, long* sxy0, long* sxy1, long* sxy2, long* sxy3, long* p, long* otz, long* flag);
 extern MATRIX* MulMatrix0(MATRIX* m0, MATRIX* m1, MATRIX* m2);
 extern MATRIX* MulMatrix(MATRIX* m0, MATRIX* m1);
 extern MATRIX* MulMatrix2(MATRIX* m0, MATRIX* m1);
-extern void SetBackColor(long rbk, long gbk, long bbk);
-extern void SetFarColor(long rfc, long gfc, long bfc);
+extern void SetBackColor(int rbk, int gbk, int bbk);
+extern void SetFarColor(int rfc, int gfc, int bfc);
 extern MATRIX* RotMatrix(SVECTOR* r, MATRIX* m);
 extern MATRIX* RotMatrixYXZ(SVECTOR* r, MATRIX* m);
 extern MATRIX* RotMatrixZYX_gte(SVECTOR* r, MATRIX* m);
-extern MATRIX* RotMatrixX(long r, MATRIX *m);
-extern MATRIX* RotMatrixY(long r, MATRIX *m);
-extern MATRIX* RotMatrixZ(long r, MATRIX *m);
+extern MATRIX* RotMatrixX(int r, MATRIX *m);
+extern MATRIX* RotMatrixY(int r, MATRIX *m);
+extern MATRIX* RotMatrixZ(int r, MATRIX *m);
 extern MATRIX* TransMatrix(MATRIX* m, VECTOR* v);
 extern MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2);
 extern MATRIX* ScaleMatrix(MATRIX* m, VECTOR* v);
 extern MATRIX* MulRotMatrix(MATRIX* m0);
-extern void ColorDpq(VECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2);
+extern void ColorDpq(VECTOR* v0, CVECTOR* v1, int p, CVECTOR* v2);
 extern void ColorCol(VECTOR* v0, CVECTOR* v1, CVECTOR* v2);
-extern long NormalClip(long sxy0, long sxy1, long sxy2);
+extern int NormalClip(int sxy0, int sxy1, int sxy2);
 extern void SetDQA(int iDQA);
 extern void SetDQB(int iDQB);
-extern void SetFogNear(long a, long h);
-extern void SetFogNearFar(long a, long b, long h);
-extern long SquareRoot0(long a);
+extern void SetFogNear(int a, int h);
+extern void SetFogNearFar(int a, int b, int h);
+extern int SquareRoot0(int a);
 
 extern int rsin(int a);
 extern int rcos(int a);
-extern long ratan2(long y, long x);
+extern int ratan2(int y, int x);
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }

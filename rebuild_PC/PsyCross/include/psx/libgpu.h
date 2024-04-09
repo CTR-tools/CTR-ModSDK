@@ -185,7 +185,7 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 #define isendprim(p) 		((((P_TAG *)(p))->addr) == (uintptr_t)&prim_terminator)
 #define nextPrim(p)  		(void *)(((P_TAG *)(p))->addr)
 
-#define setaddr(p, _addr)	(((P_TAG *)(p))->addr = (uintptr_t)((u_long*)_addr))
+#define setaddr(p, _addr)	(((P_TAG *)(p))->addr = (uintptr_t)((u_int*)_addr))
 #define getaddr(p)   		(uintptr_t)(((P_TAG *)(p))->addr)
 
 #else
@@ -193,8 +193,8 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 #define isendprim(p) 		((((P_TAG *)(p))->addr)==0xffffff)
 #define nextPrim(p)  		(void *)((((P_TAG *)(p))->addr))
 
-#define setaddr(p, _addr)	(((P_TAG *)(p))->addr = (u_long)((u_long*)_addr))
-#define getaddr(p)   		(u_long)(((P_TAG *)(p))->addr)
+#define setaddr(p, _addr)	(((P_TAG *)(p))->addr = (u_int)((u_int*)_addr))
+#define getaddr(p)   		(u_int)(((P_TAG *)(p))->addr)
 
 #endif
 
@@ -250,11 +250,11 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 #if USE_EXTENDED_PRIM_POINTERS
 #define setDrawTPage(p, dfe, dtd, tpage)	\
 	setlen(p, 1),	\
-	((u_long *)(p))[2] = _get_mode(dfe, dtd, tpage)
+	((u_int *)(p))[2] = _get_mode(dfe, dtd, tpage)
 #else
 #define setDrawTPage(p, dfe, dtd, tpage)	\
 	setlen(p, 1),	\
-	((u_long *)(p))[1] = _get_mode(dfe, dtd, tpage)
+	((u_int *)(p))[1] = _get_mode(dfe, dtd, tpage)
 #endif
 
 #define _get_tw(tw)	\
@@ -264,8 +264,8 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 
 #define setTexWindow(p, tw)			\
 	setlen(p, 2),				\
-	((u_long *)(p))[1] = _get_tw(tw),	\
-	((u_long *)(p))[2] = 0
+	((u_int *)(p))[1] = _get_tw(tw),	\
+	((u_int *)(p))[2] = 0
 
 #define _get_len(rect)	\
 		(((RECT16)->w*(rect)->h+1)/2+4)
@@ -274,8 +274,8 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 	(_get_len(RECT16) <= 16) ? (				\
 		(setlen(pt, _get_len(rect))),			\
 		((pt)->code[0] = 0xa0000000),			\
-		((pt)->code[1] = *((u_long *)&(rect)->x)),	\
-		((pt)->code[2] = *((u_long *)&(rect)->w)),	\
+		((pt)->code[1] = *((u_int *)&(rect)->x)),	\
+		((pt)->code[2] = *((u_int *)&(rect)->w)),	\
 		((pt)->p[_get_len(rect)-4] = 0x01000000)	\
 	) : ( \
 		(setlen(pt,0)) \
@@ -283,19 +283,19 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 
 #define setDrawStp(p, pbw) 				\
 		setlen(p, 2),					\
-		((u_long *)p)[1] = 0xe6000000|(pbw?0x01:0),	\
-		((u_long *)p)[2] = 0
+		((u_int *)p)[1] = 0xe6000000|(pbw?0x01:0),	\
+		((u_int *)p)[2] = 0
 
 #if USE_EXTENDED_PRIM_POINTERS
 #define setDrawMode(p, dfe, dtd, tpage, tw) 		\
 		setlen(p, 3),					\
-		((u_long *)p)[2] = _get_mode(dfe, dtd, tpage),	\
-		((u_long *)p)[3] = _get_tw((RECT16 *)tw)
+		((u_int *)p)[2] = _get_mode(dfe, dtd, tpage),	\
+		((u_int *)p)[3] = _get_tw((RECT16 *)tw)
 #else
 #define setDrawMode(p, dfe, dtd, tpage, tw) 		\
 		setlen(p, 2),					\
-		((u_long *)p)[1] = _get_mode(dfe, dtd, tpage),	\
-		((u_long *)p)[2] = _get_tw((RECT16 *)tw)
+		((u_int *)p)[1] = _get_mode(dfe, dtd, tpage),	\
+		((u_int *)p)[2] = _get_tw((RECT16 *)tw)
 #endif
 
 	
@@ -349,7 +349,7 @@ typedef struct _RECT16 {
 		uint len : 16; \
 		uint pgxp_index : 16;
 
-#define P_LEN		3		// 4 longs
+#define P_LEN		3		// 3 longs
 
 #else
 
@@ -371,7 +371,7 @@ typedef struct _RECT16 {
 	unsigned len : 8;
 
 #define DECLARE_P_ADDR \
-	u_long tag;
+	u_int tag;
 
 #define P_LEN		1		// 1 long
 
@@ -506,7 +506,7 @@ typedef struct {
 	VERTTYPE	x0, 	y0;
 	VERTTYPE	x1,	y1;
 	VERTTYPE	x2,	y2;
-	u_long	pad;
+	u_int	pad;
 } LINE_F3;				/* 2 connected Flat Line */
 
 typedef struct {
@@ -517,7 +517,7 @@ typedef struct {
 	VERTTYPE	x1,	y1;
 	u_char	r2, g2, b2, p2;
 	VERTTYPE	x2,	y2;
-	u_long	pad;
+	u_int	pad;
 } LINE_G3;				/* 2 connected Gouraud Line */
 
 typedef struct {
@@ -527,7 +527,7 @@ typedef struct {
 	VERTTYPE	x1,	y1;
 	VERTTYPE	x2,	y2;
 	VERTTYPE	x3,	y3;
-	u_long	pad;
+	u_int	pad;
 } LINE_F4;				/* 3 connected Flat Line Quadrangle */
 
 typedef struct {
@@ -540,7 +540,7 @@ typedef struct {
 	VERTTYPE	x2,	y2;
 	u_char	r3, g3, b3, p3;
 	VERTTYPE	x3,	y3;
-	u_long	pad;
+	u_int	pad;
 } LINE_G4;				/* 3 connected Gouraud Line */
 
 /*
@@ -601,43 +601,43 @@ typedef struct {
  */
 typedef struct {
 	DECLARE_P_ADDR
-	u_long	code[2];
+	u_int	code[2];
 } DR_MODE;				/* Drawing Mode */
 
 typedef struct {
 	DECLARE_P_ADDR
-	u_long	code[2];
+	u_int	code[2];
 } DR_TWIN;				/* Texture Window */
 		   
 typedef struct {
 	DECLARE_P_ADDR
-	u_long	code[2];
+	u_int	code[2];
 } DR_AREA;				/* Drawing Area */
 		   
 typedef struct {
 	DECLARE_P_ADDR
-	u_long	code[2];
+	u_int	code[2];
 } DR_OFFSET;				/* Drawing Offset */
 		   
 typedef struct {			/* MoveImage */
 	DECLARE_P_ADDR
-	u_long	code[5];
+	u_int	code[5];
 } DR_MOVE;
 
 typedef struct {			/* LoadImage */
 	DECLARE_P_ADDR
-	u_long	code[3];
-	u_long	p[13];
+	u_int	code[3];
+	u_int	p[13];
 } DR_LOAD;
 
 typedef	struct {
 	DECLARE_P_ADDR
-	u_long	code[1];
+	u_int	code[1];
 } DR_TPAGE;				/* Drawing TPage */
 
 typedef struct {
 	DECLARE_P_ADDR
-	u_long  code[2];
+	u_int  code[2];
 } DR_STP;                               /* Drawing STP */
 
 /* 
@@ -646,12 +646,12 @@ typedef struct {
 
 typedef struct {
 	DECLARE_P_ADDR
-	u_long  code[2];
+	u_int  code[2];
 } DR_PSYX_TEX;
 
 typedef struct {
 	DECLARE_P_ADDR
-	u_long  code;
+	u_int  code;
 	const char* text;
 } DR_PSYX_DBGMARKER;
 
@@ -660,7 +660,7 @@ typedef struct {
  */
 typedef struct {
 	DECLARE_P_ADDR
-	u_long	code[15];
+	u_int	code[15];
 } DR_ENV;				/* Packed Drawing Environment */
 
 typedef struct {
@@ -694,7 +694,7 @@ typedef struct {
  *	Multi-purpose Sony-TMD primitive
  */
 typedef struct {
-	u_long	id;	
+	u_int	id;
 	u_char	r0, g0, b0, p0;		/* Color of vertex 0 */
 	u_char	r1, g1, b1, p1;		/* Color of vertex 1 */
 	u_char	r2, g2, b2, p2;		/* Color of vertex 2 */
@@ -723,11 +723,11 @@ typedef struct {
  *	Multi-purpose TIM image
  */
 typedef struct {
-	u_long  mode;		/* pixel mode */
+	u_int	mode;		/* pixel mode */
 	RECT16	*cRECT16;		/* CLUT RECT16angle on frame buffer */
-	u_long	*caddr;		/* CLUT address on main memory */
+	u_int*	caddr;		/* CLUT address on main memory */
 	RECT16	*pRECT16;		/* texture image RECT16angle on frame buffer */
-	u_long	*paddr;		/* texture image address on main memory */
+	u_int*	paddr;		/* texture image address on main memory */
 } TIM_IMAGE;
 
 #pragma pack(pop)
@@ -774,10 +774,8 @@ extern int GetTimSize(u_char *sjis);
 extern int IsEndPrim(void *p);
 extern int KanjiFntOpen(int x, int y, int w, int h, int dx, int dy, int cx, int cy, int isbg, int n);
 extern void KanjiFntClose(void);
-extern int Krom2Tim(u_char *sjis, u_long *taddr, int dx, int dy, int cdx, int cdy, u_int fg, u_int bg);
-extern int LoadImagePSX(RECT16 *rect, u_long *p);
+extern int Krom2Tim(u_char *sjis, u_long* taddr, int dx, int dy, int cdx, int cdy, u_int fg, u_int bg);
 extern int LoadImage(RECT16* rect, u_long* p);
-extern int LoadImage2(RECT16* rect, u_long* p);
 extern int MargePrim(void *p0, void *p1);
 extern int MoveImage(RECT16* rect, int x, int y);
 extern int OpenTIM(u_long *addr);
@@ -785,16 +783,16 @@ extern int OpenTMD(u_long *tmd, int obj_no);
 extern int ResetGraph(int mode);
 extern int SetGraphDebug(int level);
 extern int StoreImage(RECT16 *rect, u_long *p);
-extern u_long *ClearOTag(u_long *ot, int n);
-extern u_long *ClearOTagR(u_long *ot, int n);
-extern u_long *FntFlush();
-extern u_long *KanjiFntFlush(int id);
-extern u_long DrawSyncCallback(void (*func)(void));
+extern u_long* ClearOTag(u_long*ot, int n);
+extern u_long* ClearOTagR(u_long*ot, int n);
+extern u_long* FntFlush();
+extern u_long* KanjiFntFlush(int id);
+extern u_int DrawSyncCallback(void (*func)(void));
 extern u_short GetClut(int x, int y);
 extern u_short GetTPage(int tp, int abr, int x, int y);
-extern u_short LoadClut(u_long *clut, int x, int y);
-extern u_short LoadClut2(u_long *clut, int x, int y);
-extern u_short LoadTPage(u_long *pix, int tp, int abr, int x, int y, int w, int h);
+extern u_short LoadClut(u_long*clut, int x, int y);
+extern u_short LoadClut2(u_long*clut, int x, int y);
+extern u_short LoadTPage(u_long*pix, int tp, int abr, int x, int y, int w, int h);
 extern void *NextPrim(void *p);
 extern void AddPrim(void *ot, void *p);
 extern void AddPrims(void *ot, void *p0, void *p1);
@@ -844,14 +842,14 @@ extern void SetTile1(TILE_1 *p);
 extern void SetTile16(TILE_16 *p);
 extern void SetTile8(TILE_8 *p);
 extern void TermPrim(void *p);
-extern u_long *BreakDraw(void);
-extern void ContinueDraw(u_long *insaddr, u_long *contaddr);
+extern u_long* BreakDraw(void);
+extern void ContinueDraw(u_int*insaddr, u_int*contaddr);
 extern int IsIdleGPU(int max_count);
 extern int GetODE(void);
 extern int LoadImage2(RECT16 *RECT16, u_long *p);
 extern int StoreImage2(RECT16 *RECT16, u_long *p);
 extern int MoveImage2(RECT16 *RECT16, int x, int y);
-extern int DrawOTag2(u_long *p);
+extern int DrawOTag2(u_int*p);
 extern void GetDrawMode(DR_MODE *p);
 extern void GetTexWindow(DR_TWIN *p);
 extern void GetDrawArea(DR_AREA *p);

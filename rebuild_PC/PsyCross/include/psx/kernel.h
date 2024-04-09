@@ -83,52 +83,52 @@
 #define	TcbStACTIVE	0x4000
 
 struct ToT {
-	unsigned long *head;
-	long size;
+	unsigned int *head;
+	int size;
 };
 
 struct TCBH {
 	struct TCB *entry;	/* NULL */
-	long flag;
+	int flag;
 };
 
 struct TCB {
-	long status;
-	long mode;
-	unsigned long reg[NREGS];	/* never change the offset of this */
-	long system[6];			/* reserved by system */
+	int status;
+	int mode;
+	unsigned int reg[NREGS];	/* never change the offset of this */
+	int system[6];			/* reserved by system */
 };
 
 struct EvCB {
-	unsigned long desc;	
-	long status;
-	long spec;
-	long mode;
-	long (*FHandler)();
-	long system[2];			/* reserved by system */
+	unsigned int desc;
+	int status;
+	int spec;
+	int mode;
+	int (*FHandler)();
+	int system[2];			/* reserved by system */
 };
 
 //#if !defined(D3D9)
-#if 0///@FIXME Really not defined D3D9 :/
+#if __GNUC__///@FIXME Really not defined D3D9 :/
 struct EXEC {                   
-        unsigned long pc0;      
-        unsigned long gp0;      
-        unsigned long t_addr;   
-        unsigned long t_size;   
-        unsigned long d_addr;   
-        unsigned long d_size;   
-        unsigned long b_addr;   
-        unsigned long b_size;   
-	unsigned long s_addr;
-	unsigned long s_size;
-	unsigned long sp,fp,gp,ret,base;
+        unsigned int pc0;      
+        unsigned int gp0;      
+        unsigned int t_addr;   
+        unsigned int t_size;   
+        unsigned int d_addr;   
+        unsigned int d_size;   
+        unsigned int b_addr;   
+        unsigned int b_size;   
+	unsigned int s_addr;
+	unsigned int s_size;
+	unsigned int sp,fp,gp,ret,base;
 };
 
 
 struct XF_HDR {
 	char key[8];
-	unsigned long text;
-	unsigned long data;
+	unsigned int text;
+	unsigned int data;
 	struct EXEC exec;
 	char title[60];		/* "PlayStation(tm) Executable A1" */
 };
@@ -136,17 +136,17 @@ struct XF_HDR {
 
 struct DIRENTRY {
 	char name[20];
-	long attr;
-	long size;
+	int attr;
+	int size;
 	struct DIRENTRY *next;
-	long head;
+	int head;
 	char system[4];
 };
 
 
 extern struct ToT SysToT[32];
 
-extern long SysClearRCnt[];
+extern int SysClearRCnt[];
 
 #ifndef NULL
 #define NULL (0)

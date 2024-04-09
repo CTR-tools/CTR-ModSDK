@@ -33,7 +33,7 @@ extern int PadIdentifier;
 
 #define _PAD(x,y) ((y)<<((x)<<4))
 
-#define getScratchAddr(offset)  ((u_long *)(_scratchData+(offset)*4))
+#define getScratchAddr(offset)  ((u_int *)(_scratchData+(offset)*4))
 
 #define MODE_NTSC 0
 #define MODE_PAL 1
@@ -50,9 +50,9 @@ extern int RestartCallback(void);
 extern int StopCallback(void);
 extern int VSync(int mode);
 extern int VSyncCallback(void (*f)(void)) ;
-extern long GetVideoMode (void);
-extern long SetVideoMode (long mode);
-extern u_long PadRead(int id);
+extern int GetVideoMode (void);
+extern int SetVideoMode (int mode);
+extern u_int PadRead(int id);
 extern void PadStop(void);
 extern void(*vsync_callback)(void);
 

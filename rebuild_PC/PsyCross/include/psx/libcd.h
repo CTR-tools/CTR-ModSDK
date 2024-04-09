@@ -139,7 +139,7 @@ typedef struct {
 
 typedef struct {
 	CdlLOC	pos;		/* file location */
-	u_long	size;		/* file size */
+	u_int	size;		/* file size */
 	char	name[16];	/* file name (body) */
 } CdlFILE;
 
@@ -158,13 +158,13 @@ typedef struct {
     u_short type;
     u_short secCount;
     u_short nSectors;
-    u_long  frameCount;
-    u_long  frameSize;
+    u_int	frameCount;
+    u_int	frameSize;
 
     u_short width;
     u_short height;
-    u_long  dummy1;
-    u_long  dummy2;
+    u_int	dummy1;
+    u_int	dummy2;
     CdlLOC  loc;
 } StHEADER;             /* CD-ROM STR structure */
 
@@ -198,24 +198,24 @@ extern "C" {
 extern void PsyX_CDFS_Init(const char* imageFileName, int track /*= 0*/, int sectorSize /*= 0*/);
 
 /* Initializes CD filesystem using ISO 9660 compliant stream */
-extern void PsyX_CDFS_Init_Mem(const u_long* data, int size, int track /*= 0*/, int sectorSize /*= 0*/);
+extern void PsyX_CDFS_Init_Mem(const u_int* data, int size, int track /*= 0*/, int sectorSize /*= 0*/);
 
-void	StSetRing(u_long *ring_addr,u_long ring_size);
+void	StSetRing(u_int *ring_addr,u_int ring_size);
 void	StClearRing(void);
 void	StUnSetRing(void);
-void	StSetStream(u_long mode,u_long start_frame,u_long end_frame,
+void	StSetStream(u_int mode,u_int start_frame,u_int end_frame,
 		    void (*func1)(),void (*func2)());
-void	StSetEmulate(u_long *addr,u_long mode,u_long start_frame,
-		     u_long end_frame,void (*func1)(),void (*func2)());
-u_long	StFreeRing(u_long *base);
-u_long	StGetNext(u_long **addr,u_long **header);
-u_long	StGetNextS(u_long **addr,u_long **header);
-u_short	StNextStatus(u_long **addr,u_long **header);
+void	StSetEmulate(u_int *addr,u_int mode,u_int start_frame,
+		     u_int end_frame,void (*func1)(),void (*func2)());
+u_int	StFreeRing(u_int *base);
+u_int	StGetNext(u_int **addr,u_int **header);
+u_int	StGetNextS(u_int **addr,u_int **header);
+u_short	StNextStatus(u_int **addr,u_int **header);
 void    StRingStatus(short *free_sectors,short *over_sectors);
-void	StSetMask(u_long mask,u_long start,u_long end);
+void	StSetMask(u_int mask,u_int start,u_int end);
 void	StCdInterrupt(void);
 int     StGetBackloc(CdlLOC *loc);
-int     StSetChannel(u_long channel);
+int     StSetChannel(u_int channel);
 
 void CdFlush(void);
 CdlFILE *CdSearchFile(CdlFILE *fp, char *name);
@@ -233,7 +233,7 @@ int CdPlay(int mode, int *track, int offset);
 int CdMix(CdlATV *vol);
 int CdPosToInt(CdlLOC *p);
 int CdRead(int sectors, u_long *buf, int mode);
-int CdRead2(long mode);
+int CdRead2(int mode);
 int CdReadFile(char *file, u_long *addr, int nbyte);
 int CdReadSync(int mode, u_char *result);
 int CdReady(int mode, u_char *result) ;

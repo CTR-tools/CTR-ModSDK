@@ -9,58 +9,60 @@
 extern "C" {
 #endif
 
-extern long SetRCnt(long spec, unsigned short target, long mode);
-extern long GetRCnt(long spec);
-extern long ResetRCnt(long spec);
-extern long StartRCnt(long spec);
-extern long StopRCnt(long spec);
+extern int SetRCnt(int spec, unsigned short target, int mode);
+extern int GetRCnt(int spec);
+extern int ResetRCnt(int spec);
+extern int StartRCnt(int spec);
+extern int StopRCnt(int spec);
 
-extern long OpenEvent(unsigned long desc,long spec,long mode,long(*func)());
-extern long CloseEvent(unsigned long event);
-extern long WaitEvent(unsigned long event);
-extern long TestEvent(unsigned long event);
-extern long EnableEvent(unsigned long event);
-extern long DisableEvent(unsigned long event);
-extern void DeliverEvent(unsigned long ev1, long ev2);
-extern void UnDeliverEvent(unsigned long ev1, long ev2);
+extern int OpenEvent(unsigned int desc, int spec, int mode, long (*func)());
+extern int CloseEvent(unsigned int event);
+extern int WaitEvent(unsigned int event);
+extern int TestEvent(unsigned int event);
+extern int EnableEvent(unsigned int event);
+extern int DisableEvent(unsigned int event);
+extern void DeliverEvent(unsigned int ev1, int ev2);
+extern void UnDeliverEvent(unsigned int ev1, int ev2);
 
-extern long OpenTh(long (*func)(), unsigned long , unsigned long);
-extern int CloseTh(long unk00);
-extern int ChangeTh(long unk00);
+extern int OpenTh(int (*func)(), unsigned int, unsigned int);
+extern int CloseTh(int unk00);
+extern int ChangeTh(int unk00);
 	
 /*
-extern long open(char* unk00, unsigned long);
-extern long close(long unk00);
-extern long lseek(long unk00, long, long);
-extern long read(long unk00, void *, long);
-extern long write(long unk00, void *, long);
-extern long ioctl(long unk00, long, long);
+extern int open(char* unk00, unsigned int );
+extern int close(int unk00);
+extern int lseek(int unk00, int , int );
+extern int read(int unk00, void *, int );
+extern int write(int unk00, void *, int );
+extern int ioctl(int unk00, int , int );
 	
 extern struct DIRENTRY* firstfile(char* unk00, struct DIRENTRY *);
 extern struct DIRENTRY* nextfile(struct DIRENTRY* unk00);
 	
-extern long erase(char* unk00);
-extern long undelete(char* unk00);
-extern long format(char* unk00);
-extern long rename(char* unk00, char *);
-extern long cd(char* unk00);
+extern int erase(char* unk00);
+extern int undelete(char* unk00);
+extern int format(char* unk00);
+extern int rename(char* unk00, char *);
+extern int cd(char* unk00);
 */
 	
-extern long LoadTest(char*  unk00, struct EXEC *);
-extern long Load(char * unk00, struct EXEC *);
-extern long Exec(struct EXEC * unk00, long, char **);
-extern long LoadExec(char * unk00, unsigned long, unsigned long);
+extern int LoadTest(char*  unk00, struct EXEC *);
+extern int Load(char * unk00, struct EXEC *);
+extern int Exec(struct EXEC * unk00, int, char **);
+extern int LoadExec(char * unk00, unsigned int, unsigned int);
 
-extern long InitPAD(char * unk00,long ,char *,long);
-extern long StartPAD();
+extern int InitPAD(char * unk00, int,char *, int);
+extern int StartPAD();
 extern void StopPAD();
 extern void EnablePAD();
 extern void DisablePAD();
 
 extern void FlushCache();
 extern void ReturnFromException();
-extern int  EnterCriticalSection();
+/*
+extern int EnterCriticalSection();
 extern void ExitCriticalSection();
+*/
 extern void Exception();
 extern void SwEnterCriticalSection();
 extern void SwExitCriticalSection();
@@ -72,41 +74,41 @@ extern unsigned long GetCr();
 extern unsigned long GetSr();
 extern unsigned long GetSysSp();
 
-extern long SetConf(unsigned long,unsigned long,unsigned long);
-extern void GetConf(unsigned long *,unsigned long *,unsigned long *);
+extern int SetConf(unsigned int,unsigned int,unsigned int);
+extern void GetConf(unsigned int*,unsigned int*,unsigned int*);
 
 /*
-extern long _get_errno(void);
-extern long _get_error(long);
+extern int _get_errno(void);
+extern int _get_error(int);
 */
-extern void SystemError( char, long);
-extern void SetMem(long);
+extern void SystemError( char, int);
+extern void SetMem(int);
 
-extern long Krom2RawAdd( unsigned long );
-extern long Krom2RawAdd2(unsigned short);
+extern int Krom2RawAdd( unsigned int);
+extern int Krom2RawAdd2(unsigned short);
 
 extern void _96_init(void);
 extern void _96_remove(void);
 extern void _boot(void);
 
-extern void ChangeClearPAD( long );
+extern void ChangeClearPAD(int);
 
 /* prototypes added by shino 96/05/22 */
-extern void InitCARD(long val);
-extern long StartCARD();
-extern long StopCARD();
+extern void InitCARD(int val);
+extern int StartCARD();
+extern int StopCARD();
 extern void _bu_init();
-extern long _card_info(long chan);
-extern long _card_clear(long chan);
-extern long _card_load(long chan);
-extern long _card_auto(long val);
+extern int _card_info(int chan);
+extern int _card_clear(int chan);
+extern int _card_load(int chan);
+extern int _card_auto(int val);
 extern void _new_card();
-extern long _card_status(long drv);
-extern long _card_wait(long drv);
-extern unsigned long _card_chan(void);
-extern long _card_write(long chan, long block, unsigned char *buf);
-extern long _card_read(long chan, long block, unsigned char *buf);
-extern long _card_format(long chan);
+extern int _card_status(int drv);
+extern int _card_wait(int drv);
+extern unsigned int _card_chan(void);
+extern int _card_write(int chan, int block, unsigned char *buf);
+extern int _card_read(int chan, int block, unsigned char *buf);
+extern int _card_format(int chan);
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }

@@ -384,7 +384,7 @@ extern int doCOP2(int op);
 
 #define gte_gpl12() doCOP2(0x01A8003E);
 
-#define gte_gpl0() doCOP2(0x01A0003E0);
+#define gte_gpl0() doCOP2(0x01A0003E);
 
 #define gte_mvmva_core( r0 ) doCOP2(r0)
 
@@ -525,7 +525,7 @@ extern int doCOP2(int op);
 
 #define gte_gpl12_b() doCOP2(0x01A8003E);
 
-#define gte_gpl0_b() doCOP2(0x01A0003E0);
+#define gte_gpl0_b() doCOP2(0x01A0003E);
 
 #define gte_mvmva_core_b( r0 ) doCOP2(r0)
 

@@ -25,6 +25,13 @@
 #define u_int unsigned int
 #define u_long unsigned int
 
+
+#ifndef _WIN32 || defined(__GNUC__)
+#include <SDL2/SDL.h>
+#define _EnterCriticalSection(x)
+#define EnterCriticalSection(x)
+#define ExitCriticalSection()
+#endif // _WIN32
 // these two should do nothing
 #define _Static_assert(x)
 #define __attribute__(x)
@@ -58,14 +65,15 @@ typedef enum {
 // work in PsyXKeyboardHandler, workaround:
 int NikoGetEnterKey()
 {
-#if defined(__GNUC__) || defined(__clang__)
-	return 0;
-#endif
+#ifdef _WIN32 && !defened(__GNUC__)
 	// dont use Windows.h
 	__declspec(dllimport) short __stdcall
 		GetAsyncKeyState(_In_ int vKey);
 
 	return GetAsyncKeyState(0xd);
+#else
+    return 0;
+#endif
 }
 
 void PsyXKeyboardHandler(int key, char down)

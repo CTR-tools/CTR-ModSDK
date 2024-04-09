@@ -3,7 +3,7 @@
 
 #include "kernel.h"
 
-typedef void (*MemCB)( long cmds, long rslt );
+typedef void (*MemCB)( int cmds, int rslt );
 
 #define McFuncExist		(1)
 #define McFuncAccept		(2)
@@ -26,25 +26,25 @@ typedef void (*MemCB)( long cmds, long rslt );
 extern "C" {
 #endif
 
-extern void MemCardInit( long val );
+extern void MemCardInit(int val );
 extern void MemCardEnd( void );
 extern void MemCardStart(void);
 extern void MemCardStop(void);
-extern long MemCardExist( long chan );
-extern long MemCardAccept( long chan );
-extern long MemCardOpen( long chan, char* file, long flag );
+extern int MemCardExist(int chan );
+extern int MemCardAccept(int chan );
+extern int MemCardOpen(int chan, char* file, int flag );
 extern void MemCardClose(void);
-extern long MemCardReadData( unsigned long* adrs, long ofs, long bytes );
-extern long MemCardReadFile( long chan, char* file, unsigned long* adrs, long ofs, long bytes );
-extern long MemCardWriteData( unsigned long* adrs, long ofs, long bytes );
-extern long MemCardWriteFile( long chan, char* file, unsigned long* adrs, long ofs ,long bytes );
-extern long MemCardCreateFile( long chan, char* file, long blocks );
-extern long MemCardDeleteFile( long chan, char* file );
-extern long MemCardFormat( long chan );
-extern long MemCardUnformat(long chan);
-extern long MemCardSync( long mode, long* cmds, long* rslt );
+extern int MemCardReadData( unsigned int* adrs, int ofs, int bytes );
+extern int MemCardReadFile(int chan, char* file, unsigned int* adrs, int ofs, int bytes );
+extern int MemCardWriteData( unsigned int* adrs, int ofs, int bytes );
+extern int MemCardWriteFile(int chan, char* file, unsigned int* adrs, int ofs , int bytes );
+extern int MemCardCreateFile(int chan, char* file, int blocks );
+extern int MemCardDeleteFile(int chan, char* file );
+extern int MemCardFormat(int chan );
+extern int MemCardUnformat(int chan);
+extern int MemCardSync(int mode, int* cmds, int* rslt );
 extern MemCB MemCardCallback( MemCB func );
-extern long MemCardGetDirentry( long chan, char* name, struct DIRENTRY* dir, long* files, long ofs, long max );
+extern int MemCardGetDirentry(int chan, char* name, struct DIRENTRY* dir, int* files, int ofs, int max );
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }

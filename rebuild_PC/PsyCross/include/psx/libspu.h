@@ -209,10 +209,10 @@ typedef struct {
 } SpuVolume;
 
 typedef struct {
-    unsigned long	voice;		/* set voice:
+    unsigned int	voice;		/* set voice:
                             SpuSetVoiceAttr: each voice is a bit array
                             SpuGetVoiceAttr: voice is a bit value */
-    unsigned long	mask;		/* settings attribute bit (invalid with Get) */
+    unsigned int	mask;		/* settings attribute bit (invalid with Get) */
     SpuVolume		volume;		/* volume                         */
     SpuVolume		volmode;	/* volume mode                    */
     SpuVolume		volumex;	/* current volume (invalid with Set) */
@@ -220,11 +220,11 @@ typedef struct {
     unsigned short	note;		/* tone (note setting) */
     unsigned short	sample_note;	/* tone (note setting) */
     short		envx;		/* current envelope value (invalid with Set) */
-    unsigned long	addr;		/* waveform data start address */
-    unsigned long	loop_addr;	/* loop start address */
-    long		a_mode;		/* Attack rate mode			*/
-    long		s_mode;		/* Sustain rate mode			*/
-    long		r_mode;		/* Release rate mode			*/
+    unsigned int	addr;		/* waveform data start address */
+    unsigned int	loop_addr;	/* loop start address */
+    int		a_mode;		/* Attack rate mode			*/
+    int		s_mode;		/* Sustain rate mode			*/
+    int		r_mode;		/* Release rate mode			*/
     unsigned short	ar;		/* Attack rate				*/
     unsigned short	dr;		/* Decay rate				*/
     unsigned short	sr;		/* Sustain rate				*/
@@ -241,12 +241,12 @@ typedef struct {
 } SpuLVoiceAttr;
 
 typedef struct {
-    unsigned long	mask;	  /* settings mask */
+    unsigned int	mask;	  /* settings mask */
     
-    long		mode;	  /* reverb mode */
+    int		mode;	  /* reverb mode */
     SpuVolume		depth;	  /* reverb depth */
-    long                delay;	  /* Delay Time  (ECHO, DELAY only)   */
-    long                feedback; /* Feedback    (ECHO only)          */
+    int                delay;	  /* Delay Time  (ECHO, DELAY only)   */
+    int                feedback; /* Feedback    (ECHO only)          */
 } SpuReverbAttr;
 
 #define SPU_DECODEDDATA_SIZE 0x200
@@ -261,12 +261,12 @@ typedef SpuDecodedData SpuDecodeData;
 
 typedef struct {
     SpuVolume	volume;		  /* volume       */
-    long	reverb;		  /* reverb on/off */
-    long	mix;		  /* mixing on/off */
+    int	reverb;		  /* reverb on/off */
+    int	mix;		  /* mixing on/off */
 } SpuExtAttr;
 
 typedef struct {
-    unsigned long	mask;	  /* settings mask */
+    unsigned int	mask;	  /* settings mask */
     
     SpuVolume		mvol;	  /* master volume */
     SpuVolume		mvolmode; /* master volume mode */
@@ -295,8 +295,8 @@ typedef void (*SpuTransferCallbackProc)(void);
  * ---------------------------------------------------------------- */
 
 typedef struct {
-    unsigned long mask;
-    unsigned long queueing;
+    unsigned int mask;
+    unsigned int queueing;
 } SpuEnv;
 
 #define SPU_ENV_EVENT_QUEUEING			(0x01 << 0)
@@ -312,71 +312,71 @@ extern void SpuInit (void);
 extern void SpuInitHot (void);
 extern void SpuStart (void);
 extern void SpuQuit (void);
-extern long SpuSetMute (long on_off);
-extern long SpuGetMute (void);
+extern int SpuSetMute (int on_off);
+extern int SpuGetMute (void);
 extern void SpuSetEnv (SpuEnv *env);
 
-extern long SpuSetNoiseClock (long n_clock);
-extern long SpuGetNoiseClock (void);
-extern unsigned long SpuSetNoiseVoice (long on_off, unsigned long voice_bit);
-extern unsigned long SpuGetNoiseVoice (void);
+extern int SpuSetNoiseClock (int n_clock);
+extern int SpuGetNoiseClock (void);
+extern unsigned int SpuSetNoiseVoice (int on_off, unsigned int voice_bit);
+extern unsigned int SpuGetNoiseVoice (void);
 
-extern long SpuSetReverb (long on_off);
-extern long SpuGetReverb (void);
-extern long SpuSetReverbModeParam (SpuReverbAttr *attr);
+extern int SpuSetReverb (int on_off);
+extern int SpuGetReverb (void);
+extern int SpuSetReverbModeParam (SpuReverbAttr *attr);
 extern void SpuGetReverbModeParam (SpuReverbAttr *attr);
-extern long SpuSetReverbDepth (SpuReverbAttr *attr);
-extern long SpuReserveReverbWorkArea (long on_off);
-extern long SpuIsReverbWorkAreaReserved (long on_off);
-extern unsigned long SpuSetReverbVoice (long on_off, unsigned long voice_bit);
-extern unsigned long SpuGetReverbVoice (void);
-extern long SpuClearReverbWorkArea (long mode);
+extern int SpuSetReverbDepth (SpuReverbAttr *attr);
+extern int SpuReserveReverbWorkArea (int on_off);
+extern int SpuIsReverbWorkAreaReserved (int on_off);
+extern unsigned int SpuSetReverbVoice (int on_off, unsigned int voice_bit);
+extern unsigned int SpuGetReverbVoice (void);
+extern int SpuClearReverbWorkArea (int mode);
 
-extern unsigned long SpuWrite (unsigned char *addr, unsigned long size);
-extern unsigned long SpuWrite0 (unsigned long size);
-extern unsigned long SpuRead (unsigned char *addr, unsigned long size);
-extern long SpuSetTransferMode (long mode);
+extern unsigned int SpuWrite (unsigned char *addr, unsigned int size);
+extern unsigned int SpuWrite0 (unsigned int size);
+extern unsigned int SpuRead (unsigned char *addr, unsigned int size);
+extern int SpuSetTransferMode (int mode);
 #define SpuSetTransMode(mode) SpuSetTransferMode((mode))
-extern long SpuGetTransferMode (void);
+extern int SpuGetTransferMode (void);
 #define SpuGetTransMode() SpuGetTransferMode()
-extern unsigned long SpuSetTransferStartAddr (unsigned long addr);
+extern unsigned int SpuSetTransferStartAddr (unsigned int addr);
 #define SpuSetTransStartAddr(addr) SpuSetTransferStartAddr((addr))
-extern unsigned long SpuGetTransferStartAddr (void);
+extern unsigned int SpuGetTransferStartAddr (void);
 #define SpuGetTransStartAddr() SpuGetTransferStartAddr()
-extern unsigned long SpuWritePartly (unsigned char *addr, unsigned long size);
+extern unsigned int SpuWritePartly (unsigned char *addr, unsigned int size);
 
-extern long SpuIsTransferCompleted (long flag);
+extern int SpuIsTransferCompleted (int flag);
 extern SpuTransferCallbackProc SpuSetTransferCallback (SpuTransferCallbackProc func);
-extern long SpuReadDecodedData (SpuDecodedData *d_data, long flag);
+extern int SpuReadDecodedData (SpuDecodedData *d_data, int flag);
 #define SpuReadDecodeData(d_data,flag) SpuReadDecodedData((d_data), (flag))
 
-extern long SpuSetIRQ (long on_off);
-extern long SpuGetIRQ (void);
-extern unsigned long SpuSetIRQAddr (unsigned long);
-extern unsigned long SpuGetIRQAddr (void);
+extern int SpuSetIRQ (int on_off);
+extern int SpuGetIRQ (void);
+extern unsigned int SpuSetIRQAddr (unsigned int);
+extern unsigned int SpuGetIRQAddr (void);
 extern SpuIRQCallbackProc SpuSetIRQCallback (SpuIRQCallbackProc);
 
 extern void SpuSetVoiceAttr (SpuVoiceAttr *arg);
 extern void SpuGetVoiceAttr (SpuVoiceAttr *arg);
-extern void SpuSetKey (long on_off, unsigned long voice_bit);
+extern void SpuSetKey (int on_off, unsigned int voice_bit);
 extern void SpuSetKeyOnWithAttr (SpuVoiceAttr *attr);
-extern long SpuGetKeyStatus (unsigned long voice_bit);
+extern int SpuGetKeyStatus (unsigned int voice_bit);
 extern void SpuGetAllKeysStatus (char *status);
-extern unsigned long SpuFlush (unsigned long ev);
+extern unsigned int SpuFlush (unsigned int ev);
 
-extern unsigned long SpuSetPitchLFOVoice (long on_off, unsigned long voice_bit);
-extern unsigned long SpuGetPitchLFOVoice (void);
+extern unsigned int SpuSetPitchLFOVoice (int on_off, unsigned int voice_bit);
+extern unsigned int SpuGetPitchLFOVoice (void);
 
 extern void SpuSetCommonAttr (SpuCommonAttr *attr);
 extern void SpuGetCommonAttr (SpuCommonAttr *attr);
 
-extern long SpuInitMalloc (long num, char *top);
-extern long SpuMalloc (long size);
-extern long SpuMallocWithStartAddr (unsigned long addr, long size);
-extern void SpuFree (unsigned long addr);
+extern int SpuInitMalloc (int num, char *top);
+extern int SpuMalloc (int size);
+extern int SpuMallocWithStartAddr (unsigned int addr, int size);
+extern void SpuFree (unsigned int addr);
 
-extern long SpuRGetAllKeysStatus (long min_, long max_, char *status);
-extern long SpuRSetVoiceAttr (long min_, long max_, SpuVoiceAttr *arg);
+extern int SpuRGetAllKeysStatus (int min_, int max_, char *status);
+extern int SpuRSetVoiceAttr (int min_, int max_, SpuVoiceAttr *arg);
 
 extern void SpuNSetVoiceAttr (int vNum, SpuVoiceAttr *arg);
 extern void SpuNGetVoiceAttr (int vNum, SpuVoiceAttr *arg);
@@ -389,16 +389,16 @@ extern void SpuSetVoiceVolumeAttr (int vNum, short volL, short volR,
 extern void SpuSetVoicePitch (int vNum, unsigned short pitch);
 extern void SpuSetVoiceNote (int vNum, unsigned short note);
 extern void SpuSetVoiceSampleNote (int vNum, unsigned short sampleNote);
-extern void SpuSetVoiceStartAddr (int vNum, unsigned long startAddr);
-extern void SpuSetVoiceLoopStartAddr (int vNum, unsigned long lsa);
+extern void SpuSetVoiceStartAddr (int vNum, unsigned int startAddr);
+extern void SpuSetVoiceLoopStartAddr (int vNum, unsigned int lsa);
 extern void SpuSetVoiceAR (int vNum, unsigned short AR);
 extern void SpuSetVoiceDR (int vNum, unsigned short DR);
 extern void SpuSetVoiceSR (int vNum, unsigned short SR);
 extern void SpuSetVoiceRR (int vNum, unsigned short RR);
 extern void SpuSetVoiceSL (int vNum, unsigned short SL);
-extern void SpuSetVoiceARAttr (int vNum, unsigned short AR, long ARmode);
-extern void SpuSetVoiceSRAttr (int vNum, unsigned short SR, long SRmode);
-extern void SpuSetVoiceRRAttr (int vNum, unsigned short RR, long RRmode);
+extern void SpuSetVoiceARAttr (int vNum, unsigned short AR, int ARmode);
+extern void SpuSetVoiceSRAttr (int vNum, unsigned short SR, int SRmode);
+extern void SpuSetVoiceRRAttr (int vNum, unsigned short RR, int RRmode);
 extern void SpuSetVoiceADSR (int vNum, unsigned short AR, unsigned short DR,
 			     unsigned short SR, unsigned short RR,
 			     unsigned short SL);
@@ -406,7 +406,7 @@ extern void SpuSetVoiceADSRAttr (int vNum,
 				 unsigned short AR, unsigned short DR,
 				 unsigned short SR, unsigned short RR,
 				 unsigned short SL,
-				 long ARmode, long SRmode, long RRmode);
+    int ARmode, int SRmode, int RRmode);
 
 extern void SpuGetVoiceVolume (int vNum, short *volL, short *volR);
 extern void SpuGetVoiceVolumeAttr (int vNum, short *volL, short *volR,
@@ -416,16 +416,16 @@ extern void SpuGetVoicePitch (int vNum, unsigned short *pitch);
 extern void SpuGetVoiceNote (int vNum, unsigned short *note);
 extern void SpuGetVoiceSampleNote (int vNum, unsigned short *sampleNote);
 extern void SpuGetVoiceEnvelope (int vNum, short *envx);
-extern void SpuGetVoiceStartAddr (int vNum, unsigned long *startAddr);
-extern void SpuGetVoiceLoopStartAddr (int vNum, unsigned long *loopStartAddr);
+extern void SpuGetVoiceStartAddr (int vNum, unsigned int *startAddr);
+extern void SpuGetVoiceLoopStartAddr (int vNum, unsigned int *loopStartAddr);
 extern void SpuGetVoiceAR (int vNum, unsigned short *AR);
 extern void SpuGetVoiceDR (int vNum, unsigned short *DR);
 extern void SpuGetVoiceSR (int vNum, unsigned short *SR);
 extern void SpuGetVoiceRR (int vNum, unsigned short *RR);
 extern void SpuGetVoiceSL (int vNum, unsigned short *SL);
-extern void SpuGetVoiceARAttr (int vNum, unsigned short *AR, long *ARmode);
-extern void SpuGetVoiceSRAttr (int vNum, unsigned short *SR, long *SRmode);
-extern void SpuGetVoiceRRAttr (int vNum, unsigned short *RR, long *RRmode);
+extern void SpuGetVoiceARAttr (int vNum, unsigned short *AR, int *ARmode);
+extern void SpuGetVoiceSRAttr (int vNum, unsigned short *SR, int *SRmode);
+extern void SpuGetVoiceRRAttr (int vNum, unsigned short *RR, int *RRmode);
 extern void SpuGetVoiceADSR (int vNum,
 			     unsigned short *AR, unsigned short *DR,
 			     unsigned short *SR, unsigned short *RR,
@@ -434,35 +434,35 @@ extern void SpuGetVoiceADSRAttr (int vNum,
 				 unsigned short *AR, unsigned short *DR,
 				 unsigned short *SR, unsigned short *RR,
 				 unsigned short *SL,
-				 long *ARmode, long *SRmode, long *RRmode);
-extern void SpuGetVoiceEnvelopeAttr (int vNum, long *keyStat, short *envx );
+                 int *ARmode, int *SRmode, int *RRmode);
+extern void SpuGetVoiceEnvelopeAttr (int vNum, int *keyStat, short *envx );
 
 extern void SpuSetCommonMasterVolume (short mvol_left, short mvol_right);
 extern void SpuSetCommonMasterVolumeAttr (short mvol_left, short mvol_right,
 					  short mvolmode_left,
 					  short mvolmode_right);
-extern void SpuSetCommonCDMix (long cd_mix);
+extern void SpuSetCommonCDMix (int cd_mix);
 extern void SpuSetCommonCDVolume (short cd_left, short cd_right);
-extern void SpuSetCommonCDReverb (long cd_reverb);
+extern void SpuSetCommonCDReverb (int cd_reverb);
 
 extern void SpuGetCommonMasterVolume (short *mvol_left, short *mvol_right);
 extern void SpuGetCommonMasterVolumeX (short *mvolx_left, short *mvolx_right);
 extern void SpuGetCommonMasterVolumeAttr (short *mvol_left, short *mvol_right,
 					  short *mvolmode_left,
 					  short *mvolmode_right);
-extern void SpuGetCommonCDMix (long *cd_mix);
+extern void SpuGetCommonCDMix (int *cd_mix);
 extern void SpuGetCommonCDVolume (short *cd_left, short *cd_right);
-extern void SpuGetCommonCDReverb (long *cd_reverb);
+extern void SpuGetCommonCDReverb (int *cd_reverb);
 
-extern long SpuSetReverbModeType (long mode);
+extern int SpuSetReverbModeType (int mode);
 extern void SpuSetReverbModeDepth (short depth_left, short depth_right);
-extern void SpuSetReverbModeDelayTime (long delay);
-extern void SpuSetReverbModeFeedback (long feedback);
-extern void SpuGetReverbModeType (long *mode);
+extern void SpuSetReverbModeDelayTime (int delay);
+extern void SpuSetReverbModeFeedback (int feedback);
+extern void SpuGetReverbModeType (int*mode);
 extern void SpuGetReverbModeDepth (short *depth_left, short *depth_right);
-extern void SpuGetReverbModeDelayTime (long *delay);
-extern void SpuGetReverbModeFeedback (long *feedback);
-extern void SpuSetESA( long revAddr );
+extern void SpuGetReverbModeDelayTime (int*delay);
+extern void SpuGetReverbModeFeedback (int*feedback);
+extern void SpuSetESA(int revAddr );
 #if defined(_LANGUAGE_C_PLUS_PLUS) || defined(__cplusplus) || defined(c_plusplus)
 }
 #endif
@@ -493,32 +493,32 @@ typedef struct {
     char pad1;			/* padding */
     char pad2;			/* padding */
     char pad3;			/* padding */
-    long last_size;		/* the size of last transferring
+    int last_size;		/* the size of last transferring
 				   (last_size <= (size / 2)) */
-    unsigned long buf_addr;	/* The start address of stream buffer */
-    unsigned long data_addr;	/* The start address of SPU streaming
+    unsigned int buf_addr;	/* The start address of stream buffer */
+    unsigned int data_addr;	/* The start address of SPU streaming
 				   data in main memory */
 } SpuStVoiceAttr;
 
 typedef struct {
-    long size;			/* The size of stream buffer */
-    long low_priority;		/* transfer priority */
+    int size;			/* The size of stream buffer */
+    int low_priority;		/* transfer priority */
     SpuStVoiceAttr voice [24];
 } SpuStEnv;
 
 #ifndef __SPU_ST_TRANSFERCALLBACK_PROC
 #define __SPU_ST_TRANSFERCALLBACK_PROC
-typedef void (*SpuStCallbackProc)(unsigned long, long);
+typedef void (*SpuStCallbackProc)(unsigned int, int);
 #endif /* __SPU_TRANSFERCALLBACK_PROC */
 
 #if defined(_LANGUAGE_C_PLUS_PLUS) || defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
-extern SpuStEnv *SpuStInit (long);
-extern long SpuStQuit (void);
-extern long SpuStGetStatus (void);
-extern unsigned long SpuStGetVoiceStatus (void);
-extern long SpuStTransfer (long flag, unsigned long voice_bit);
+extern SpuStEnv *SpuStInit (int);
+extern int SpuStQuit (void);
+extern int SpuStGetStatus (void);
+extern unsigned int SpuStGetVoiceStatus (void);
+extern int SpuStTransfer (int flag, unsigned int voice_bit);
 extern SpuStCallbackProc SpuStSetPreparationFinishedCallback (SpuStCallbackProc func);
 extern SpuStCallbackProc SpuStSetTransferFinishedCallback (SpuStCallbackProc func);
 extern SpuStCallbackProc SpuStSetStreamFinishedCallback (SpuStCallbackProc func);
