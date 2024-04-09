@@ -112,18 +112,43 @@ struct StartSettings startSettings = {
 int main(int argc, char* argv[])
 {
 	switch (argc){
-	case 1:
-		startSettings.fileName = (char*)malloc(sizeof(char) * strlen("ctr-u.bin"));
-		strcpy(startSettings.fileName, "ctr-u.bin");
-		break;
-	case 2:
-		startSettings.fileName = (char*)malloc(sizeof(char) * strlen(argv[1]));
-		strcpy(startSettings.fileName, argv[1]);
-		break;
-	default:
-		//place for the parsing function
-		return -1;
-		break;
+		case 1: {
+			startSettings.fileName = (char*)malloc(sizeof(char) * strlen("ctr-u.bin"));
+			strcpy(startSettings.fileName, "ctr-u.bin");
+			break;
+		}
+		case 2: {
+			startSettings.fileName = (char*)malloc(sizeof(char) * strlen(argv[1]));
+			strcpy(startSettings.fileName, argv[1]);
+			break;
+		}
+		default: {
+			for (int i = 1; i != argc; i++) {
+				switch (argv[i][0]) {
+				case '/':
+				case '+':
+				case '-': {
+					if (strlen(argv[i]) > 1 && argc > i + 1) switch (argv[i][1]) {
+					case 'w':
+						startSettings.width = atoi(argv[i + 1]);
+						break;
+					case 'h':
+						startSettings.heigth = atoi(argv[i + 1]);
+						break;
+					}
+					break;
+				}
+				}
+				if (i == argc - 1) {
+					int _strlen = strlen(argv[i]);
+					if (argv[i][_strlen - 4] == '.' && argv[i][_strlen - 3] == 'b' && argv[i][_strlen - 2] == 'i' && argv[i][_strlen - 1] == 'n') {
+						startSettings.fileName = (char*)malloc(sizeof(char) * strlen(argv[i]));
+						strcpy(startSettings.fileName, argv[i]);
+					}
+				}
+			}
+			break;
+		}
 	}
 	if (!fopen(startSettings.fileName, "r")) return -1; //no file
 	printf("Filename is: ");
