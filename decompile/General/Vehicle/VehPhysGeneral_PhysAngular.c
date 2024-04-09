@@ -28,33 +28,10 @@ void DECOMP_VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* dri
 	char simpTurnState;
 	short driftAngleCurr_og;
 	
-	// absolute value
-	rotCurrW_interp = driver->rotCurr.w;
-	if (rotCurrW_interp < 0)
-		rotCurrW_interp = -rotCurrW_interp;
-	
-	destinedRot = rotCurrW_interp >> 3;
-	if (destinedRot == 0)
-	{
-		destinedRot = 1;
-	}
-	if ((int)(u_int)(u_char)driver->unk46a < (int)destinedRot)
-	{
-		destinedRot = (u_int)(u_char)driver->unk46a;
-	}
-	
-	driver->rotPrev.w = 
-		DECOMP_VehCalc_InterpBySpeed(
-			driver->rotPrev.w, 
-			FPS_HALF(8), destinedRot);
+	void PhysLerpRot(struct Driver* driver, int iVar13);
+	PhysLerpRot(driver, 0);
 	
 	elapsedTimeMS = sdata->gGT->elapsedTimeMS;
-	
-	driver->rotCurr.w = 
-		DECOMP_VehCalc_InterpBySpeed(
-			driver->rotCurr.w, 
-			(driver->rotPrev.w * elapsedTimeMS) >> 5, 0);
-	
 	actionsFlagSet = driver->actionsFlagSet;
 	forwardDir = driver->forwardDir;
 	simpTurnState = driver->simpTurnState;

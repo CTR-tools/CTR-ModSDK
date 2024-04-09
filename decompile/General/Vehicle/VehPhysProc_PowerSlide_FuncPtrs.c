@@ -58,39 +58,8 @@ void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver*
 		iVar13 = -iVar13;
 	}
 
-	// abs value: spinDistRemain
-	iVar12_C = driver->rotCurr.w - iVar13;
-	if (iVar12_C < 0)
-		iVar12_C = -iVar12_C;
-
-	// 1/8 abs spinDistRemain
-	uVar14 = iVar12_C >> 3;
-	
-	if (uVar14 == 0)
-	{
-		uVar14 = 1;
-	}
-	
-	// max spin this frame
-	uVar10 = (u_int)driver->unk46a;
-	if ((int)uVar14 < (int)(u_int)driver->unk46a)
-	{
-		uVar10 = uVar14;
-	}
-
-	// Interpolate rotation by speed
-	driver->rotPrev.w =
-		DECOMP_VehCalc_InterpBySpeed(
-			(int)driver->rotPrev.w, 
-			FPS_HALF(8), 
-			uVar10);
-
-	// Interpolate rotation by speed
-	driver->rotCurr.w =
-		DECOMP_VehCalc_InterpBySpeed(
-			(int)driver->rotCurr.w, 
-			(int)driver->rotPrev.w * gGT->elapsedTimeMS >> 5, 
-			iVar13);
+	void PhysLerpRot(struct Driver* driver, int iVar13);
+	PhysLerpRot(driver, iVar13);
 
 	// turning rate
 	iVar12_D = driver->rotationSpinRate;
@@ -408,6 +377,43 @@ LAB_800632cc:
 	// Located in Drifting_FuncPtrs.c
 	void PhysTerrainSlope(struct Driver* driver);
 	PhysTerrainSlope(driver);
+}
+
+void PhysLerpRot(struct Driver* driver, int iVar13)
+{
+	// abs value: spinDistRemain
+	int iVar12_C = driver->rotCurr.w - iVar13;
+	if (iVar12_C < 0)
+		iVar12_C = -iVar12_C;
+
+	// 1/8 abs spinDistRemain
+	int uVar14 = iVar12_C >> 3;
+	
+	if (uVar14 == 0)
+	{
+		uVar14 = 1;
+	}
+	
+	// max spin this frame
+	int uVar10 = (u_int)driver->unk46a;
+	if ((int)uVar14 < (int)(u_int)driver->unk46a)
+	{
+		uVar10 = uVar14;
+	}
+
+	// Interpolate rotation by speed
+	driver->rotPrev.w =
+		DECOMP_VehCalc_InterpBySpeed(
+			(int)driver->rotPrev.w, 
+			FPS_HALF(8), 
+			uVar10);
+
+	// Interpolate rotation by speed
+	driver->rotCurr.w =
+		DECOMP_VehCalc_InterpBySpeed(
+			(int)driver->rotCurr.w, 
+			(int)driver->rotPrev.w * sdata->gGT->elapsedTimeMS >> 5, 
+			iVar13);
 }
 
 void PhysTerrainSlope(struct Driver* driver)
