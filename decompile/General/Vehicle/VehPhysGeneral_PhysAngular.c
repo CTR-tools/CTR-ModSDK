@@ -88,7 +88,10 @@ LAB_8005fd74:
 		}
 		if (rotCurrW_original < rotCurrW_interp)
 		{
-			rotCurrW_original = rotCurrW_original + (((int)driver->const_TurnInputDelay + driver->turnConst * 100) * terrain->friction >> 8);
+			rotCurrW_original += 
+				((int)driver->const_TurnInputDelay + driver->turnConst * 100) 
+				* terrain->friction >> 8;
+				
 			char_interpLessThanOG = rotCurrW_interp < rotCurrW_original;
 LAB_8005fee4:
 			if (char_interpLessThanOG)
@@ -98,8 +101,10 @@ LAB_8005fee4:
 		}
 		else if (rotCurrW_interp < rotCurrW_original)
 		{
-			rotCurrW_original -= (((int)driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrain->friction >> 8)
-			;
+			rotCurrW_original -= 
+				((int)driver->const_TurnInputDelay + driver->turnConst * 50) 
+				* terrain->friction >> 8;
+
 			char_interpLessThanOG = rotCurrW_original < rotCurrW_interp;
 			goto LAB_8005fee4;
 		}
@@ -109,20 +114,23 @@ LAB_8005fee4:
 			forwardDir = -forwardDir;
 		}
 	}
-	rotCurrW_interp = (int)driver->timeUntilDriftSpinout;
+	
 	rotCurrW_original = (int)forwardDir;
 	driver->rotationSpinRate = forwardDir;
+	
+	rotCurrW_interp = (int)driver->timeUntilDriftSpinout;
 	if (rotCurrW_interp != 0)
 	{
 		classSpeed_halved = rotCurrW_interp - elapsedTimeMS;
 		rotCurrW_interp = DECOMP_VehCalc_MapToRange(rotCurrW_interp, 0, 0x140, 0, (int)driver->previousFrameMultDrift);
-		rotCurrW_original = rotCurrW_original + rotCurrW_interp;
+		rotCurrW_original += rotCurrW_interp;
 		if (classSpeed_halved < 0)
 		{
 			classSpeed_halved = 0;
 		}
 		driver->timeUntilDriftSpinout = (short)classSpeed_halved;
 	}
+	
 	classSpeed_halved = (u_int)(u_short)driver->const_Speed_ClassStat << 0x10;
 	classSpeed_original = classSpeed_halved >> 0x10;
 	turnResistMax = (u_int)(u_char)driver->const_turnResistMax * classSpeed_original;
@@ -191,10 +199,26 @@ LAB_8005fee4:
 			}
 		}
 	}
+	
 	driftAngleCurr_og = driver->turnAngleCurr;
-	classSpeed_halved = DECOMP_VehPhysGeneral_LerpToForwards(driver, (int)driftAngleCurr_og, (int)forwardDir, classSpeed_halved);
-	driver->unk_LerpToForwards = (short)classSpeed_halved;
-	classSpeed_halved = (int)(short)classSpeed_halved;
+	
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer&1)
+	{
+	#endif
+	
+		// spins camera from side of driver, to back of driver,
+		// when the drifting ends. "LerpToForwards"
+		driver->unk_LerpToForwards = 
+			DECOMP_VehPhysGeneral_LerpToForwards(
+				driver, (int)driftAngleCurr_og, (int)forwardDir, classSpeed_halved);
+	
+	#ifdef USE_60FPS
+	}
+	#endif
+	
+	classSpeed_halved = (int)(short)driver->unk_LerpToForwards;
+	
 	if (terrain->unk_0x20[1] != 0x100)
 	{
 		classSpeed_halved = terrain->unk_0x20[1] * classSpeed_halved >> 8;
