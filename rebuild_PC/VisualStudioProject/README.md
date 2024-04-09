@@ -11,3 +11,6 @@
 * To build this project you will need a modern compiler from Microsoft, "release" and "x86" project configuration.
 * To run, the operating system must have 32-bit SDL2.dll (available, or find it yourself) and OpenAL for Windows installed.
 * The ctr-u.bin is launched by transferring it to an executable file or place a file named "ctr-u.bin" in the directory with the executable file.
+
+# Command Line
+You can run the program from the command line. You can use the parameters "/w number" and "/h number" to set the width and height, the last parameter should be the path to the .BIN file.
