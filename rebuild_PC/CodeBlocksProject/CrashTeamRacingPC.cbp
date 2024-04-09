@@ -25,12 +25,33 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-O2" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Weverything" />
+			<Add option="-m32" />
+			<Add option="-w" />
+			<Add option="-std=c99" />
+			<Add option="-Wno-everything" />
+			<Add directory="../PsyCross/include" />
+			<Add directory="../../include" />
 		</Compiler>
+		<Linker>
+			<Add option="-m32" />
+			<Add option="-fno-pie" />
+			<Add option="-no-pie" />
+			<Add option="-Wl,-Ttext,0x00D00000" />
+			<Add library="psycross" />
+			<Add library="SDL2" />
+			<Add library="openal" />
+			<Add library="stdc++" />
+			<Add library="m" />
+			<Add directory="../lib32" />
+		</Linker>
+		<Unit filename="../CrashTeamRacingPC.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

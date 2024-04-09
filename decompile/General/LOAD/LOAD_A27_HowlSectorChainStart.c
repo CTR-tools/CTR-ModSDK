@@ -40,4 +40,5 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	DECOMP_LOAD_HowlCallback(CdlComplete);
 	
 	#endif
+	return 1;
 }
