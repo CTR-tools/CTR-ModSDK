@@ -28,37 +28,56 @@ void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver*
 	iVar12_A = ((driver->axisRotationX - driver->angle) + 0x800U & 0xfff) - 0x800;
 	if (iVar12_A != 0)
 	{
-		#ifdef USE_60FPS
+		// 30fps
+		#ifndef USE_60FPS
+		
+		// decrease by 1/8
+		// val = val * 7/8
+		iVar13 = iVar12_A >> 3;
+		
+		// 60fps
+		#else
+			
+		// how to split division by 8,
+		// into two separate frames, which is 
+		// exponentional at 30fps, but a hybrid
+		// linear/exponential at 60fps
+		
 		if(gGT->timer&1)
 		{
+			// 1/16, half of 1/8
+			iVar13 = iVar12_A >> 4;
+		}
+		else
+		{
+			// undo last frame's change,
+			// undo 1/16 change, with 16/15
+			iVar13 = (iVar12_A * 16) / 15;
+			
+			// now take 1/8 of that
+			iVar13 = iVar13 >> 3;
+		}
+		
 		#endif
 		
-			iVar13 = iVar12_A >> 3;
-			if (iVar13 == 0)
-			{
-				iVar13 = 1;
-			}
-	
-			// FPS_DOUBLE, not FPS_HALF, cause this happens
-			// once every 2 frames, that's how we solve 
-			// the "iVar12_A" exponential problem
-			elapsedTimeDouble = gGT->elapsedTimeMS * FPS_DOUBLE(2);
-	
-			if (iVar13 > elapsedTimeDouble)
-				iVar13 = elapsedTimeDouble;
-			
-			if (iVar13 < -elapsedTimeDouble)
-				iVar13 = -elapsedTimeDouble;
-	
-			// change player rotation
-			driver->angle += iVar13;
-	
-			driver->axisRotationX -= iVar13;
-			driver->axisRotationX &= 0xfff;
-			
-		#ifdef USE_60FPS
+		if (iVar13 == 0)
+		{
+			iVar13 = 1;
 		}
-		#endif
+	
+		elapsedTimeDouble = gGT->elapsedTimeMS * 2;
+	
+		if (iVar13 > elapsedTimeDouble)
+			iVar13 = elapsedTimeDouble;
+		
+		if (iVar13 < -elapsedTimeDouble)
+			iVar13 = -elapsedTimeDouble;
+	
+		// change player rotation
+		driver->angle += iVar13;
+	
+		driver->axisRotationX -= iVar13;
+		driver->axisRotationX &= 0xfff;			
 	}
 	
 	// positive cam spin rate
@@ -275,26 +294,34 @@ LAB_800632cc:
 	// inverting newMin and newMax will give an inverse range mapping
 	iVar15 = DECOMP_VehCalc_MapToRange(iVar15, 0, iVar11 << 8, 0, iVar8);
 	
-	#ifdef USE_60FPS
+	iVar12_D = (iVar12_D + iVar15) - driver->turnAngleCurr;
+	
+
+	// Same trick as above ">>3"
+	// which has more comments there
+	#ifndef USE_60FPS
+	iVar15 = iVar12_D >> 3;
+	#else
 	if(gGT->timer&1)
 	{
-	#endif
-	
-		iVar12_D = (iVar12_D + iVar15) - driver->turnAngleCurr;
-		iVar15 = iVar12_D >> 3;
-		sVar5 = (short)iVar15;
-		if (iVar12_D != 0)
-		{
-			if (iVar15 == 0)
-			{
-				sVar5 = 1;
-			}
-			driver->turnAngleCurr += sVar5;
-		}
-	
-	#ifdef USE_60FPS
+		iVar15 = iVar12_D >> 4;
 	}
+	else
+	{
+		iVar15 = (iVar12_D * 16) / 15;
+		iVar15 = iVar12_D >> 3;
+	}	
 	#endif
+	
+	sVar5 = (short)iVar15;
+	if (iVar12_D != 0)
+	{
+		if (iVar15 == 0)
+		{
+			sVar5 = 1;
+		}
+		driver->turnAngleCurr += sVar5;
+	}
 	
 	// abs value: numFramesDrifting
 	iVar12_E = driver->KartStates.Drifting.numFramesDrifting;
@@ -402,41 +429,47 @@ LAB_800632cc:
 
 void PhysLerpRot(struct Driver* driver, int iVar13)
 {
-	#ifdef USE_60FPS
-	if(sdata->gGT->timer & 1)
+	int uVar14;
+	
+	// abs value: spinDistRemain
+	int iVar12_C = driver->rotCurr.w - iVar13;
+	if (iVar12_C < 0)
+		iVar12_C = -iVar12_C;
+	
+	// Same trick as above ">>3"
+	// which has more comments there
+	#ifndef USE_60FPS
+	uVar14 = iVar12_C >> 3;
+	#else
+	if(sdata->gGT->timer&1)
 	{
-	#endif
-	
-		// abs value: spinDistRemain
-		int iVar12_C = driver->rotCurr.w - iVar13;
-		if (iVar12_C < 0)
-			iVar12_C = -iVar12_C;
-	
-		// 1/8 abs spinDistRemain
-		int uVar14 = iVar12_C >> 3;
-		
-		if (uVar14 == 0)
-		{
-			uVar14 = 1;
-		}
-		
-		// max spin this frame
-		int uVar10 = (u_int)driver->unk46a;
-		if ((int)uVar14 < (int)(u_int)driver->unk46a)
-		{
-			uVar10 = uVar14;
-		}
-	
-		// Interpolate rotation by speed
-		driver->rotPrev.w =
-			DECOMP_VehCalc_InterpBySpeed(
-				(int)driver->rotPrev.w, 
-				8, 
-				uVar10);
-	
-	#ifdef USE_60FPS
+		uVar14 = iVar12_C >> 4;
 	}
+	else
+	{
+		uVar14 = (iVar12_C * 16) / 15;
+		uVar14 = iVar12_C >> 3;
+	}	
 	#endif
+	
+	if (uVar14 == 0)
+	{
+		uVar14 = 1;
+	}
+	
+	// max spin this frame
+	int uVar10 = (u_int)driver->unk46a;
+	if ((int)uVar14 < (int)(u_int)driver->unk46a)
+	{
+		uVar10 = uVar14;
+	}
+	
+	// Interpolate rotation by speed
+	driver->rotPrev.w =
+		DECOMP_VehCalc_InterpBySpeed(
+			(int)driver->rotPrev.w, 
+			8, 
+			uVar10);
 
 	// Interpolate rotation by speed
 	driver->rotCurr.w =
