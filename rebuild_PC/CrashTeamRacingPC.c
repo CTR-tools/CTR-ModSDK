@@ -26,7 +26,7 @@
 #define u_long unsigned int
 
 // these two should do nothing
-#define _Static_assert(x) 
+#define _Static_assert(x)
 #define __attribute__(x)
 
 // ======= Replace Psn00bsdk Data =============
@@ -58,10 +58,13 @@ typedef enum {
 // work in PsyXKeyboardHandler, workaround:
 int NikoGetEnterKey()
 {
+#if defined(__GNUC__) || defined(__clang__)
+	return 0;
+#endif
 	// dont use Windows.h
-	__declspec(dllimport) short __stdcall 
+	__declspec(dllimport) short __stdcall
 		GetAsyncKeyState(_In_ int vKey);
-	
+
 	return GetAsyncKeyState(0xd);
 }
 
@@ -82,7 +85,7 @@ int oldTicks = 0;
 int NikoCalcFPS()
 {
 	if (frameCount++ != frameGap) return;
-	
+
 	frameCount = 0;
 	int newTicks = SDL_GetTicks();
 	int delta = newTicks - oldTicks;
@@ -166,7 +169,7 @@ int main(int argc, char* argv[])
 
 	// for typing in SubmitName
 	g_dbg_gameDebugKeys = PsyXKeyboardHandler;
-	
+
 	// override PsyX_Sys_InitialiseInput,
 	// so typing in SubmitName doesn't break
 	memset(&g_cfg_keyboardMapping, 0, sizeof(g_cfg_keyboardMapping));
