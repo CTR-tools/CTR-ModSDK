@@ -1,5 +1,5 @@
 #Preparation Guide
-0. Find your licensed disc in the american region [SCUS-94426]Crash Team Racing 
+0. Find your licensed disc in the american region SCUS-94426 Crash Team Racing 
 1. Insert the disk into the computer's CD drive and make an image in .CUE .BIN format
 2. Compare the checksums of the .BIN file with these:
 	MD5: ab95bfca8a4bb3d90daa6519acf6e944
