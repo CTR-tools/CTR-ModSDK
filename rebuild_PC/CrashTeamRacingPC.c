@@ -136,14 +136,11 @@ struct StartSettings startSettings = {
 	#endif
 };
 
-
 int main(int argc, char* argv[])
 {
 	printf("[CTR] Built with: " CC "\n");
 #ifdef USE_16BY9
 	printf("[CTR] USE_16BY9=1\n");
-#else
-	printf("[CTR] USE_16BY9=0\n");
 #endif
 	switch (argc){
 		case 1: {

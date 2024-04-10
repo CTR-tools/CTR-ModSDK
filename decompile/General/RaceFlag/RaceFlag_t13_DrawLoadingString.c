@@ -12,7 +12,7 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     char *pbVar8;
     int iVar9;
     int iVar10;
-    int uVar11;
+    u_int *uVar11;
     char local_30;
     char local_2f;
 
@@ -49,8 +49,10 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     iVar10 = 
 		(sdata->RaceFlag_Transition & 0xffff) - 
 		(
-			((iVar3 << 0x10) >> 0x10) - 
-			((iVar3 << 0x10) >> 0x1f) >> 1
+			(
+				((iVar3 << 0x10) >> 0x10) -
+				((iVar3 << 0x10) >> 0x1f)
+			) >> 1
 		);
 
     iVar3 = FPS_HALF(sdata->RaceFlag_LoadingTextAnimFrame);
