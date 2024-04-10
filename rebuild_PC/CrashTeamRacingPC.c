@@ -1,9 +1,13 @@
-
 // ======= Headers =============
+#if __GNUC__
+#include <SDL2/SDL.h>
+#define _EnterCriticalSection(x)
+#define EnterCriticalSection(x)
+#define ExitCriticalSection()
+#endif
+
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
-#include <string.h>
-
 #include "psx/types.h"
 #include "psx/libetc.h"
 #include "psx/libgte.h"
@@ -25,15 +29,8 @@
 #define u_int unsigned int
 #define u_long unsigned int
 
-
-#ifndef _WIN32 || defined(__GNUC__)
-#include <SDL2/SDL.h>
-#define _EnterCriticalSection(x)
-#define EnterCriticalSection(x)
-#define ExitCriticalSection()
-#endif // _WIN32
 // these two should do nothing
-#define _Static_assert(x)
+#define _Static_assert(x) 
 #define __attribute__(x)
 
 // ======= Replace Psn00bsdk Data =============
@@ -65,14 +62,14 @@ typedef enum {
 // work in PsyXKeyboardHandler, workaround:
 int NikoGetEnterKey()
 {
-#ifdef _WIN32 && !defened(__GNUC__)
-	// dont use Windows.h
-	__declspec(dllimport) short __stdcall
-		GetAsyncKeyState(_In_ int vKey);
-
-	return GetAsyncKeyState(0xd);
+#if __GNUC__
+	return 0;
 #else
-    return 0;
+	// dont use Windows.h
+	__declspec(dllimport) short __stdcall 
+		GetAsyncKeyState(int vKey);
+	
+	return GetAsyncKeyState(0xd);
 #endif
 }
 
@@ -93,7 +90,7 @@ int oldTicks = 0;
 int NikoCalcFPS()
 {
 	if (frameCount++ != frameGap) return;
-
+	
 	frameCount = 0;
 	int newTicks = SDL_GetTicks();
 	int delta = newTicks - oldTicks;
@@ -102,26 +99,52 @@ int NikoCalcFPS()
 	printf("NikoCalcFPS: %d fps\n", (1000 * frameGap) / delta);
 }
 
+#ifndef CC
+	#if __GNUC__
+		#if _WIN32
+			#ifndef __clang__
+				#define CC "MINGW-GCC"
+			#else
+				#define CC "MINGW-CLANG"
+			#endif
+		#else
+			#ifndef __clang__
+				#define CC "GCC"
+			#else
+				#define CC "CLANG"
+			#endif
+		#endif
+	#elif defined(_MSC_VER)
+		#define CC "MSVC"
+	#else
+		#define CC "Unknown"
+	#endif
+#endif
+
 struct StartSettings {
 	int width;
 	int heigth;
 	char* fileName;
 };
 struct StartSettings startSettings = {
-#ifdef WIDE_SCREEN	//HD 720p
+	#ifdef USE_16BY9 //HD 720p
 	.width = 1280,
 	.heigth = 720,
-#elif defined(ULTRAWIDE_SCREEN)	//half of UWHD
-	.width = 1280,
-	.heigth = 540,
-#else	//SVGA
+	#else	//SVGA
 	.width = 800,
 	.heigth = 600,
-#endif
+	#endif
 };
+
 
 int main(int argc, char* argv[])
 {
+	printf("[CTR] Built with: " CC "\n");
+#ifdef USE_16BY9
+	printf("[CTR] USE_16BY9=1\n");
+#else
+	printf("[CTR] USE_16BY9=0\n");
+#endif
 	switch (argc){
 		case 1: {
 			startSettings.fileName = (char*)malloc(sizeof(char) * strlen("ctr-u.bin"));
@@ -136,19 +159,19 @@ int main(int argc, char* argv[])
 		default: {
 			for (int i = 1; i != argc; i++) {
 				switch (argv[i][0]) {
-				case '/':
-				case '+':
-				case '-': {
-					if (strlen(argv[i]) > 1 && argc > i + 1) switch (argv[i][1]) {
+					case '/':
+					case '+':
+					case '-': {
+						if (strlen(argv[i]) > 1 && argc > i + 1) switch (argv[i][1]) {
 					case 'w':
 						startSettings.width = atoi(argv[i + 1]);
 						break;
 					case 'h':
 						startSettings.heigth = atoi(argv[i + 1]);
 						break;
+						}
+						break;
 					}
-					break;
-				}
 				}
 				if (i == argc - 1) {
 					int _strlen = strlen(argv[i]);
@@ -167,7 +190,6 @@ int main(int argc, char* argv[])
 	printf("\n");
 	PsyX_Initialise("CTRPC", startSettings.width, startSettings.heigth, 0);
 	PsyX_CDFS_Init(startSettings.fileName, 0, 0);
-
 	// set to 30 FPS VSync
 	PsyX_SetSwapInterval(2);
 	PsyX_EnableSwapInterval(1);
@@ -177,7 +199,7 @@ int main(int argc, char* argv[])
 
 	// for typing in SubmitName
 	g_dbg_gameDebugKeys = PsyXKeyboardHandler;
-
+	
 	// override PsyX_Sys_InitialiseInput,
 	// so typing in SubmitName doesn't break
 	memset(&g_cfg_keyboardMapping, 0, sizeof(g_cfg_keyboardMapping));
