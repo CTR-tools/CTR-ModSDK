@@ -1,0 +1,9 @@
+[submodule "rebuild_PC/thirdparty/PsyCross"]
+	path = rebuild_PC/thirdparty/PsyCross
+	url = https://github.com/OpenDriver2/PsyCross.git
+[submodule "rebuild_PC/thirdparty/SDL"]
+	path = rebuild_PC/thirdparty/SDL
+	url = https://github.com/libsdl-org/SDL.git
+[submodule "rebuild_PC/thirdparty/openal-soft"]
+	path = rebuild_PC/thirdparty/openal-soft
+	url = https://github.com/kcat/openal-soft.git
