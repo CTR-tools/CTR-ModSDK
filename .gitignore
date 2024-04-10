@@ -25,6 +25,7 @@ offset.txt
 comport.txt
 gcc_out.txt
 overlay.ld
+Makefile
 rebuild_PC/result
 /result
 
