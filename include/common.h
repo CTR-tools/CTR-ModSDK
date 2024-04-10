@@ -3,8 +3,7 @@
 
 // toggle these in decompile
 //#define USE_60FPS
-//#define WIDE_SCREEN
-//#define ULTRAWIDE_SCREEN
+//#define USE_16BY9
 //#define USE_NEW2P
 //#define USE_GPU1P
 //#define USE_VR
@@ -24,11 +23,8 @@
 // WIDE_PICK:
 // param1 - normal
 // param2 - widescreen
-#ifdef WIDE_SCREEN
+#ifdef USE_16BY9
 #define WIDE_34(x) (((x)*750)/1000)
-#define WIDE_PICK(x,y) (y)
-#elif defined(ULTRAWIDE_SCREEN)
-#define WIDE_34(x) (((x)*9)/16)
 #define WIDE_PICK(x,y) (y)
 #else
 #define WIDE_34(x) (x)	

@@ -1,11 +1,11 @@
 #include <common.h>
 
-int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
+u_int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 {
 	if(levelID == PAPU_PYRAMID || levelID == POLAR_PASS)
 		if (2 < numPlyrCurrGame)
 			return 2500;
-		
+
 	if(levelID == SEWER_SPEEDWAY) return 6000;
 	if(levelID == MYSTERY_CAVES) return 2500;
 	if(levelID == MAIN_MENU_LEVEL) return 0x10;
