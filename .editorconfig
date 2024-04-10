@@ -5,7 +5,7 @@ insert_final_newline = false
 trim_trailing_whitespace = true
 charset = utf-8
 
-[*.{nix,md,MD,sh}]
+[*.{nix,md,MD,sh,yml}]
 insert_final_newline = true
 end_of_line = lf
 indent_style = space

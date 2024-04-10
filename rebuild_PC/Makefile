@@ -1,6 +1,6 @@
 .PHONY: all
 
-CFLAGS+=--std=c99 -DUSE_16BY9=1 -O0 \
+CFLAGS+=-std=c99 -DUSE_16BY9=1 -O2 \
     -I./PsyCross/include -I../include \
     `${PKG_CONFIG} --cflags sdl2`
 
