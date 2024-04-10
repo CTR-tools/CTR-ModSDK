@@ -316,7 +316,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		tape->packetID++;
         break;
 
-      case 0x81: // Animation
+      case 0x81: { // Animation
         int numAnimFrames = DECOMP_INSTANCE_GetNumAnimFrames(inst, buffer[1]);
         inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
         inst->animFrame = (buffer[2] == 0 || numAnimFrames <= buffer[2])
@@ -333,7 +333,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		#endif
 		
         buffer += 3;
-        break;
+        } break;
 
       case 0x82: // Boost
         if (

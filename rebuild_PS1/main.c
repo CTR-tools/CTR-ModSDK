@@ -78,7 +78,7 @@
 #include "../decompile/General/DecalHUD/DecalHUD_DrawPolyGT4.c"
 #include "../decompile/General/DecalHUD/DecalHUD_Arrow2D.c"
 
-#include "../decompile/General/DISPLAY/DISPLAY_Swap.c"
+#include "../decompile/General/Display/DISPLAY_Swap.c"
 
 #include "../decompile/General/DotLights/DotLights.c"
 #include "../decompile/General/DropRain/DropRain.c"

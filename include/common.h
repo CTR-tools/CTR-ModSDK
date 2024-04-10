@@ -87,7 +87,7 @@
 #include <ovr_231.h>
 #include <ovr_232.h>
 #include <ovr_233.h>
-#include <math.h>
+#include <ctr_math.h>
 #include <regionsEXE.h>
 
 #ifndef REBUILD_PC
