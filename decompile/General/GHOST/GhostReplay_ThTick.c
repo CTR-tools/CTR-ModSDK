@@ -28,7 +28,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   inst->scale[2] = 0xccc;
 
   // 6-second timer != 0, and ghost made by human
-  if ((sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0))
+  if ((sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0)) 
   {
     color = 0xFFFF8004;
     if (sdata->ghostOverflowTextTimer & 1) {
@@ -46,12 +46,12 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   gGT = sdata->gGT;
 
   if (
-		(sdata->boolGhostsDrawing == 0) ||
+		(sdata->boolGhostsDrawing == 0) || 
 		((gGT->gameMode1 & PAUSE_THREADS) != 0) ||
-		(d == 0) ||
-		(tape->ptrEnd == tape->ptrStart) ||
+		(d == 0) || 
+		(tape->ptrEnd == tape->ptrStart) || 
 		(d->ghostBoolInit == 0)
-	)
+	) 
   {
     inst->flags |= HIDE_MODEL;
     return;
@@ -74,16 +74,16 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   inst->flags = (inst->flags & 0xfff8ff7f) | GHOST_DRAW_TRANSPARENT;
 
   timeInRace = tape->timeElapsedInRace >= 0 ? tape->timeElapsedInRace : 0;
-
+  
   packet = &tape->packets[0];
 
   // flush and rewrite cached GhostPackets array
-  if (tape->timeInPacket32 <= timeInRace)
-  {
+  if (tape->timeInPacket32 <= timeInRace) 
+  {  
     opcodePos = 0;
     packetPtr = tape->ptrCurr;
     short tmpPos[3] = {0};
-
+	
 	char* lastByteAfterPrevPacket = tape->ptrCurr;
 
     tape->packetID = -1;
@@ -102,11 +102,11 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         d->speedApprox = gh->speedApprox;
 
 		#ifdef REBUILD_PS1
-
+		
 		// kill thread, no AI yet
 		t->flags |= 0x800;
 		return;
-
+		
 		#else
 
         BOTS_Driver_Convert(d);
@@ -118,7 +118,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         // allow this thread to ignore all collisions
         t->flags |= 0x1000;
         return;
-
+		
 		#endif
       }
 
@@ -128,7 +128,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         switch (opcode) {
 
         case 0x80: // position data
-          for (int i = 0; i < 3; ++i)
+          for (int i = 0; i < 3; ++i) 
 		  {
             // Little Endian to Big Endian
             u_short rawValue =
@@ -159,7 +159,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
           packet->bufferPacket = lastByteAfterPrevPacket;
           packetPtr += 11;
 		  lastByteAfterPrevPacket = packetPtr;
-
+		
           packet++;
 
           break;
@@ -188,7 +188,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		  packet->bufferPacket = lastByteAfterPrevPacket;
           packetPtr += 1;
 		  lastByteAfterPrevPacket = packetPtr;
-
+		
           packet++;
           break;
         }
@@ -210,7 +210,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         packet->bufferPacket = lastByteAfterPrevPacket;
         packetPtr += 5;
 		lastByteAfterPrevPacket = packetPtr;
-
+		
         packet++;
       }
     }
@@ -295,20 +295,20 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 
   unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
 
-  while (tape->packetID < packetIdx)
-  {
+  while (tape->packetID < packetIdx) 
+  {  
     if (tape->ptrEnd <= buffer)
       break;
 
     uint8_t opcode = buffer[0];
 
-    if (4 < (opcode + 0x80 & 0xFF))
+    if (4 < (opcode + 0x80 & 0xFF)) 
 	{
       buffer += 5; // Skip velocity data, assumed to be 5 bytes
 	  tape->packetID++;
-    }
-
-	else
+    } 
+	
+	else 
 	{
       switch (opcode) {
       case 0x80:       // Position and Rotation
@@ -316,26 +316,25 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		tape->packetID++;
         break;
 
-      case 0x81: // Animation
-      {
+      case 0x81: { // Animation
         int numAnimFrames = DECOMP_INSTANCE_GetNumAnimFrames(inst, buffer[1]);
         inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
         inst->animFrame = (buffer[2] == 0 || numAnimFrames <= buffer[2])
                               ? numAnimFrames
                               : buffer[2];
-
+		
 		// fix crashing
 		#ifdef REBUILD_PS1
 		inst->animIndex = 0;
-
+		
 		// halfway
 		// ghost needs doubling, human doesnt?
 		inst->animFrame = FPS_DOUBLE(10);
 		#endif
-
+		
         buffer += 3;
-        break;
-      }
+        } break;
+
       case 0x82: // Boost
         if (
 				gGT->trafficLightsTimer < 1 &&
@@ -343,8 +342,8 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 				(DECOMP_RaceFlag_IsFullyOnScreen() == 0)
 			)
 		{
-          DECOMP_VehFire_Increment(d,
-			(int)(buffer[1] << 8 | buffer[2]), // endian flip
+          DECOMP_VehFire_Increment(d, 
+			(int)(buffer[1] << 8 | buffer[2]), // endian flip 
 			buffer[3],
             (int)(buffer[4] << 8 | buffer[5]) // endian flip
 		  );
