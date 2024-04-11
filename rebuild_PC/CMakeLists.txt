@@ -46,7 +46,7 @@ endif()
 # === LINKER OPTIONS ===
 
 # Clang always needs "no-pie", but some distros might add PIE to GCC too.
-target_link_options(ctr_bin PUBLIC -fno-pie -no-pie -Wl,-Ttext,0x00D00000)
+target_link_options(ctr_bin PUBLIC -fno-pie -no-pie -Wl,-Ttext,0x00500000)
 
 # === DEPENDENCIES ===
 
@@ -94,7 +94,7 @@ target_include_directories(psycross_static PRIVATE ${OPENAL_INCLUDE_DIR})
 
 # === OUR PsyCross USAGE ===
 
-target_compile_options(psycross_static PUBLIC -DUSE_EXTENDED_PRIM_POINTERS=${CTR_PRIM} -O2)
+target_compile_options(psycross_static PRIVATE -DUSE_EXTENDED_PRIM_POINTERS=${CTR_PRIM} -O2)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
   target_compile_options(psycross_static PUBLIC -g -gdwarf-2)
