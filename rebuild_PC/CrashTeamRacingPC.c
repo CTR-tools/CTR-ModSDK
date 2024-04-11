@@ -8,6 +8,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
+#define USE_EXTENDED_PRIM_POINTERS 0
 #include "psx/types.h"
 #include "psx/libetc.h"
 #include "psx/libgte.h"
