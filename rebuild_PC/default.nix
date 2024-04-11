@@ -2,13 +2,28 @@
 , stdenv
 , callPackage
 , pkg-config
+, cmake
+, openal
+, SDL2
 , ctrModSDK ? ./..
-, psyCross ? callPackage ./PsyCross.nix { inherit psyCrossDebug; }
-, psyCrossDebug ? false
+, withDebug ? true
+, trustCompiler ? false
 }:
 
 let
   isWindows = stdenv.hostPlatform.uname.system == "Windows";
+
+  openalWithWindows =
+    if isWindows then
+      (openal.override {
+        alsaSupport = false;
+        dbusSupport = false;
+        pipewireSupport = false;
+        pulseSupport = false;
+      }).overrideAttrs (prevAttrs: {
+        meta = prevAttrs.meta // { inherit (SDL2.meta) platforms; };
+      })
+    else openal;
 
   mainProgram = if isWindows then "CrashTeamRacingPC.exe" else "CrashTeamRacingPC";
 in
@@ -21,36 +36,33 @@ stdenv.mkDerivation (finalAttrs:  {
     if ctrModSDK == ./.. then "CTR-ModSDK/rebuild_PC"
     else "source/rebuild_PC";
 
-  nativeBuildInputs = [ pkg-config ];
-  buildInputs = psyCross.propagatedBuildInputs;
-
-  LDLIBS = "-L./PsyCross";
+  nativeBuildInputs = [ pkg-config cmake ];
+  buildInputs = [ openalWithWindows SDL2 ];
 
   # Disables incompatible hardening
   hardeningDisable = [ "format" ];
-
-  postPatch = ''
-    rm -r PsyCross
-    ln -s ${psyCross} PsyCross
-  '';
 
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/bin
   '' + lib.strings.optionalString isWindows ''
-    cp ${psyCross.openal}/bin/*.dll $out/bin/
-    cp ${psyCross.SDL2}/bin/*.dll $out/bin/
+    cp ${openalWithWindows}/bin/*.dll $out/bin/
+    cp ${SDL2}/bin/*.dll $out/bin/
   '' + ''
     cp ${mainProgram} $out/bin/
 
     runHook postInstall
   '';
 
+  # If you need vendored deps
+  #cmakeFlags = [ "-DCMAKE_SKIP_BUILD_RPATH=TRUE" ];
+
   # Debug
-  CFLAGS = "-g -gdwarf-2";
-  dontStrip = true;
-  passthru = { inherit psyCross; };
+  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
+    ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ];
+  dontStrip = withDebug;
+  passthru = { openal = openalWithWindows; };
 
   # Shows the proper compile date in the logs
   env.SOURCE_DATE_EPOCH = (builtins.currentTime or ctrModSDK.lastModified);
@@ -61,6 +73,6 @@ stdenv.mkDerivation (finalAttrs:  {
     license = lib.licenses.publicDomain;
     maintainers = with lib.maintainers; [ pedrohlc ];
     inherit mainProgram;
-    inherit (psyCross.meta) platforms;
+    inherit (SDL2.meta) platforms;
   };
 })

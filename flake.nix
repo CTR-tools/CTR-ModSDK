@@ -8,7 +8,7 @@
       };
       mingw32 = with pkgsCross.mingw32; {
         gcc = callPackage ./rebuild_PC { ctrModSDK = self; };
-        clang = callPackage ./rebuild_PC { ctrModSDK = self; stdenv = clangStdenv;  };
+        clang = callPackage ./rebuild_PC { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true;  };
       };
       all = stdenvNoCC.mkDerivation {
         name = "ctr-join";
