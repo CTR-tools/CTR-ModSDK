@@ -7,6 +7,7 @@
 , SDL2
 , ctrModSDK ? ./..
 , withDebug ? true
+, trustCompiler ? false
 }:
 
 let
@@ -58,7 +59,8 @@ stdenv.mkDerivation (finalAttrs:  {
   #cmakeFlags = [ "-DCMAKE_SKIP_BUILD_RPATH=TRUE" ];
 
   # Debug
-  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ];
+  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
+    ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ];
   dontStrip = withDebug;
   passthru = { openal = openalWithWindows; };
 

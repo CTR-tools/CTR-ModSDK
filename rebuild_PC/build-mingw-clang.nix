@@ -3,4 +3,4 @@
 , pkgsCross ? pkgs.pkgsCross.mingw32
 }:
 
-pkgsCross.callPackage ./default.nix { stdenv = pkgsCross.clangStdenv; }
+pkgsCross.callPackage ./default.nix { stdenv = pkgsCross.clangStdenv; trustCompiler = true; }

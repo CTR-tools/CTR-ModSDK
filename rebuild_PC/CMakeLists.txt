@@ -29,7 +29,12 @@ endif()
 
 # Clang is rigorous
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
-    target_compile_options(ctr_bin PUBLIC -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration -Wno-return-type)
+  target_compile_options(ctr_bin PUBLIC -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration -Wno-return-type)
+  if(MINGW OR CYGWIN)
+    if(NOT CMAKE_VERSION VERSION_LESS "3.13")
+      target_link_options(ctr_bin PUBLIC -static-libgcc)
+    endif()
+  endif()
 endif()
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -89,7 +94,7 @@ target_include_directories(psycross_static PRIVATE ${OPENAL_INCLUDE_DIR})
 
 # === OUR PsyCross USAGE ===
 
-target_compile_options(psycross_static PUBLIC -DUSE_EXTENDED_PRIM_POINTERS=${CTR_PRIM})
+target_compile_options(psycross_static PUBLIC -DUSE_EXTENDED_PRIM_POINTERS=${CTR_PRIM} -O2)
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
   target_compile_options(psycross_static PUBLIC -g -gdwarf-2)
