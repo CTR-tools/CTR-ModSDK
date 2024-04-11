@@ -21,4 +21,4 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Build
-        run: nix build -L --no-link --keep-going .#all
+        run: nix build -L --no-link --keep-going '.?submodules=1#all'
