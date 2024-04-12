@@ -44,6 +44,7 @@ void DECOMP_VehPhysProc_PowerSlide_Init(struct Thread *t, struct Driver *d)
 #ifdef USE_60FPS
 void Hook60_DriverMain(struct Thread *t, struct Driver *d)
 {
+	#ifndef REBUILD_PS1
 	if(sdata->gGT->timer&1)
 	{
 		// next slot (8-frame cycle)
@@ -57,6 +58,7 @@ void Hook60_DriverMain(struct Thread *t, struct Driver *d)
 	
 	// put it back, for non-drift functions
 	*(short*)0x80059a6c = -1;
+	#endif
 }
 #endif
 
