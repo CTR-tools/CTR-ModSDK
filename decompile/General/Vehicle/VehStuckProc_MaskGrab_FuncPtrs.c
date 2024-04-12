@@ -86,7 +86,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         inst->animIndex = 0;
 
         // (instance, anim#0)
-        numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
+        //numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
 
         // (midpoint, numFrames)
         inst->animFrame = FPS_DOUBLE(10); //VehFrameInst_GetStartFrame(0, numFrames);

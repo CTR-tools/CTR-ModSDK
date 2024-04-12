@@ -15,10 +15,11 @@ void DECOMP_VehFrameProc_LastSpin(struct Thread *t, struct Driver* d)
     if (inst->animIndex == 0)
     {
         // get number of frames in animation
-        numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
+        // numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
+		numFrames = FPS_DOUBLE(20);
 
         // if numFrames not zero
-        if (numFrames)
+        if (numFrames != 0)
         {
             sVar1 = d->turnAngleCurr;
 
