@@ -78,7 +78,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	)
 	{
 		// increment timer by (speed * time)
-		driver->distanceDriven += (driver->speedApprox * gGT->elapsedTimeMS) >> 8;
+		driver->distanceDriven += (driver->speedApprox * msPerFrame) >> 8;
 	}
 
 	for(i = 0; i < 14; i++)

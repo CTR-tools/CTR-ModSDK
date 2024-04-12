@@ -65,11 +65,8 @@ void DECOMP_VehPhysProc_SpinFirst_PhysAngular(struct Thread* t, struct Driver* d
 		
 	d->ampTurnState = d->rotationSpinRate;
 	
-	d->angle = 
-	(
-		d->angle + 
-		(d->rotationSpinRate * elapsedTimeMS >> 0xd)
-	) & 0xfff;
+	d->angle += (short)((d->rotationSpinRate * elapsedTimeMS) >> 0xd);
+	d->angle &= 0xfff;
 	
 	d->rotCurr.y = d->unk3D4[0] + d->angle + d->turnAngleCurr;
 	

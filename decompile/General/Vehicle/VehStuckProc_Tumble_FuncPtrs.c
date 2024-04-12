@@ -14,8 +14,6 @@ void DECOMP_VehStuckProc_Tumble_Update(struct Thread *thread, struct Driver *dri
 
 void DECOMP_VehStuckProc_Tumble_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
-	int NoInputTimer;
-	
 	driver->NoInputTimer -= sdata->gGT->elapsedTimeMS;
 	if (driver->NoInputTimer < 0)
 		driver->NoInputTimer = 0;
@@ -57,7 +55,7 @@ void DECOMP_VehStuckProc_Tumble_PhysAngular(struct Thread *thread, struct Driver
 	driver->turnAngleCurr &= 0xfff;
 	driver->turnAngleCurr -= 0x800;
 	
-	driver->angle += (short)((int)driver->rotationSpinRate * elapsedTimeMS >> 0xd);
+	driver->angle += (short)(((int)driver->rotationSpinRate * elapsedTimeMS) >> 0xd);
 	driver->angle &= 0xfff;
 	
 	(driver->rotCurr).y = 

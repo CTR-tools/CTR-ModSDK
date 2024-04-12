@@ -173,12 +173,12 @@ void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver*
 
 	if (bVar2)
 	{
-		iVar12_D -= ((int)driver->unk466 * gGT->elapsedTimeMS >> 5);
+		iVar12_D -= ((int)driver->unk466 * gGT->elapsedTimeMS) >> 5;
 		bVar2 = iVar12_D < iVar13;
 	}
 	else
 	{
-		iVar12_D += ((int)driver->unk464 * gGT->elapsedTimeMS >> 5);
+		iVar12_D += ((int)driver->unk464 * gGT->elapsedTimeMS) >> 5;
 		bVar2 = iVar13 < iVar12_D;
 	}
 	
@@ -392,7 +392,7 @@ LAB_800632cc:
 	
 	driver->ampTurnState = (short)(iVar9 + iVar13);
 	
-	driver->angle += (short)(driver->ampTurnState * gGT->elapsedTimeMS >> 0xd);
+	driver->angle += (short)((driver->ampTurnState * gGT->elapsedTimeMS) >> 0xd);
 	driver->angle &= 0xfff;
 	
 	if (driver->KartStates.Drifting.driftBoostTimeMS != 0) 
@@ -475,7 +475,7 @@ void PhysLerpRot(struct Driver* driver, int iVar13)
 	driver->rotCurr.w =
 		DECOMP_VehCalc_InterpBySpeed(
 			(int)driver->rotCurr.w, 
-			(int)driver->rotPrev.w * sdata->gGT->elapsedTimeMS >> 5, 
+			(int)(driver->rotPrev.w * sdata->gGT->elapsedTimeMS) >> 5, 
 			iVar13);
 }
 

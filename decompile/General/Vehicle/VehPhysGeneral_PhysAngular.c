@@ -371,22 +371,27 @@ LAB_80060284:
 		angle = angle - (short)rotCurrW_original & 0xfff;
 	}
 	driver->ampTurnState = (short)turnResistMinBitshift;
-	angle = angle + (short)(turnResistMinBitshift * elapsedTimeMS >> 0xd) & 0xfff;
+	
+	angle += (short)((turnResistMinBitshift * elapsedTimeMS) >> 0xd);
+	angle &= 0xfff;
 	driver->angle = angle;
+	
 	(driver->rotCurr).y = angle + (short)driftAngleCurr_Final + forwardDir;
 
 	if (((actionsFlagSet & 8) == 0) && (driver->mashXUnknown < 7))
 	{
 		if (terrain->unk14 != 0x100)
 		{
-			turnResistMinBitshift = turnResistMinBitshift * terrain->unk14 >> 8;
+			turnResistMinBitshift = (turnResistMinBitshift * terrain->unk14) >> 8;
 		}
 	}
 	else
 	{
-		turnResistMinBitshift = turnResistMinBitshift * 10 >> 8;
+		turnResistMinBitshift = (turnResistMinBitshift * 10) >> 8;
 	}
-	driver->axisRotationX = driver->axisRotationX + (short)(turnResistMinBitshift * elapsedTimeMS >> 0xd) & 0xfff;
+	
+	driver->axisRotationX += (short)((turnResistMinBitshift * elapsedTimeMS) >> 0xd);
+	driver->axisRotationX &= 0xfff;
 
 	// Located in Drifting_FuncPtrs.c
 	void PhysTerrainSlope(struct Driver* driver);
