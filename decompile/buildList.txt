@@ -1,5 +1,5 @@
-// 494+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 835 rewritten so far
-// 494 for every 'common' and ','
+// 493+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 834 rewritten so far
+// 493 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -54,8 +54,9 @@ common, 230, MM_TrackSelect_MenuProc, 0x0, General/230/230_56_MM_TrackSelect_Men
 common, 230, MM_TrackSelect_GetMenuPtr, 0x0, General/230/230_57_MM_TrackSelect_GetMenuPtr.c
 common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 
+// KickCD works fine on console, breaks duckstation track loop at end of video
 common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
-common, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
+//ommon, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
 //ommon, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
 common, 230, MM_Video_StartStream, 0x0, General/230/230_80_MM_Video_StartStream.c
 common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
