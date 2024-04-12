@@ -317,19 +317,25 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         break;
 
       case 0x81: { // Animation
-        int numAnimFrames = DECOMP_INSTANCE_GetNumAnimFrames(inst, buffer[1]);
-        inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
-        inst->animFrame = (buffer[2] == 0 || numAnimFrames <= buffer[2])
-                              ? numAnimFrames
-                              : buffer[2];
+
+		// What's with the safety checks in the original game?
+		// Did the animation format of ghosts not match retail?
+		// I dont remember seeing different animation patterns
+		// in the Aug5/Aug14/Sep3 builds, was their recording bugged?
+
+		// Ghosts always have the same animation index as Human drivers
+		// But for some reason an invalid index is here anyway?
+		int numAnimFrames = DECOMP_INSTANCE_GetNumAnimFrames(inst, buffer[1]);
+		inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
+
+		// LEV ntropy/oxide ghost can use frame[0x11 or 0x14], doesnt
+		// exist, must be from an old CTR build, so check for that
+		inst->animFrame = buffer[2];
+		if (inst->animFrame > 0x10)
+			inst->animFrame = 0x10;
 		
-		// fix crashing
-		#ifdef REBUILD_PS1
-		inst->animIndex = 0;
-		
-		// halfway
-		// ghost needs doubling, human doesnt?
-		inst->animFrame = FPS_DOUBLE(10);
+		#ifdef USE_60FPS
+		inst->animFrame = FPS_DOUBLE(inst->animFrame);
 		#endif
 		
         buffer += 3;
