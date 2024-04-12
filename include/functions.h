@@ -967,8 +967,8 @@ void VehEmitter_DriverMain();
 
 void VehFire_Audio(struct Driver* driver, int speed_cap);
 void VehFire_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
-//Instance_GetStartFrame()
-//Instance_GetNumAnimFrames()
+//VehFrameInst_GetStartFrame()
+//VehFrameInst_GetNumAnimFrames()
 void VehFrameProc_Driving(struct Thread* t, struct Driver* d);
 void VehFrameProc_Spinning();
 void VehFrameProc_LastSpin();

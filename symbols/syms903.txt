@@ -69,8 +69,8 @@
 8001d6ec COLL_Instance
 // extra function here in sep3?
 8001dd40 COLL_PerBspLeaf_CheckInstances
-8001deac COLL_CheckDriver_AI
-8001e080 COLL_CheckDriver_Player
+8001deac COLL_StartSearch_AI
+8001e080 COLL_StartSearch_Player
 8001f1ec COLL_SearchTree_FindQuadblock_Touching
 8001f2e8 COLL_SearchTree_FindX
 
@@ -896,7 +896,7 @@
 
 80058be0 VehFire_Audio
 80058cb8 VehFire_Increment
-80059180 Instance_GetStartFrame
+80059180 VehFrameInst_GetStartFrame
 800591b0 Instance_GetNumAnimFrames
 
 80059234 VehFrameProc_Driving
