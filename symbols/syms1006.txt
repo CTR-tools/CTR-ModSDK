@@ -79,8 +79,8 @@
 8001e4e4 COLL_LevModelMeta
 8001e514 COLL_Instance
 8001ea60 COLL_PerBspLeaf_CheckInstances
-8001ebcc COLL_CheckDriver_AI
-8001ed94 COLL_CheckDriver_Player
+8001ebcc COLL_StartSearch_AI
+8001ed94 COLL_StartSearch_Player
 8001ff5c COLL_SearchTree_FindQuadblock_Touching
 8002003c COLL_SearchTree_FindX
 
@@ -906,7 +906,7 @@
 
 8005990c VehFire_Audio
 800599e4 VehFire_Increment
-80059eac Instance_GetStartFrame
+80059eac VehFrameInst_GetStartFrame
 80059edc Instance_GetNumAnimFrames
 
 80059f60 VehFrameProc_Driving
