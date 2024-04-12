@@ -48,7 +48,7 @@ void DECOMP_VehStuckProc_Tumble_Init(struct Thread *thread, struct Driver *drive
 	
 	driver->instSelf->animIndex = 0;
 	
-	iVar2 = 10;
+	iVar2 = FPS_DOUBLE(10);
 	#if 0 // 10 =
 		VehFrameInst_GetStartFrame(
 			

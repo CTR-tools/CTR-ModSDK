@@ -52,7 +52,7 @@ void DECOMP_VehPhysProc_SpinStop_Animate(struct Thread* t, struct Driver* d)
 	// === spinning has stopped ===
 		
 	// desired halfway into steer animation
-	numFrames = 10;
+	numFrames = FPS_DOUBLE(10);
 	#if 0 // 10 =
 		VehFrameInst_GetStartFrame(
 			

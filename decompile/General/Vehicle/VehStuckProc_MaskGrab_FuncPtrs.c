@@ -74,7 +74,6 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
 {
     char frame;
     short sVar2;
-    short midFrame;
     int numFrames;
     struct GameTracker *gGT = sdata->gGT;
     struct Instance *inst = t->inst;
@@ -90,9 +89,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
 
         // (midpoint, numFrames)
-        midFrame = VehFrameInst_GetStartFrame(0, numFrames);
-
-        inst->animFrame = midFrame;
+        inst->animFrame = FPS_DOUBLE(10); //VehFrameInst_GetStartFrame(0, numFrames);
 
         d->AxisAngle2_normalVec[0] = d->KartStates.MaskGrab.AngleAxis_NormalVec[0];
         d->AxisAngle2_normalVec[1] = d->KartStates.MaskGrab.AngleAxis_NormalVec[1];
