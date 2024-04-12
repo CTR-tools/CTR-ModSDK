@@ -45,6 +45,10 @@ void DECOMP_VehPhysProc_Driving_Init(struct Thread *t, struct Driver *d)
     }
 }
 
+#ifdef USE_60FPS
+void Hook60_DriverMain(struct Thread *t, struct Driver *d);
+#endif
+
 void *PlayerDrivingFuncTable[13] =
 {
     NULL,
@@ -61,6 +65,12 @@ void *PlayerDrivingFuncTable[13] =
     VehPhysGeneral_JumpAndFriction,
     VehPhysForce_TranslateMatrix,
     VehFrameProc_Driving,
-    VehEmitter_DriverMain
+
+		#ifdef USE_60FPS
+		Hook60_DriverMain,
+		#else
+		VehEmitter_DriverMain
+		#endif
+
 	#endif
 };
