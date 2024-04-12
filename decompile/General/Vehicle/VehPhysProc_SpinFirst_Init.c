@@ -3,6 +3,10 @@
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
 
+#ifdef USE_60FPS
+void Hook60_DriverMain(struct Thread *t, struct Driver *d);
+#endif
+
 void* PlayerSpinningFuncTable[0xD] =
 {
 	DECOMP_VehPhysProc_SpinFirst_InitSetUpdate,
@@ -19,7 +23,13 @@ void* PlayerSpinningFuncTable[0xD] =
 	VehPhysGeneral_JumpAndFriction,
 	VehPhysForce_TranslateMatrix,
 	VehFrameProc_Spinning,
-	VehEmitter_DriverMain,
+
+		#ifdef USE_60FPS
+		Hook60_DriverMain,
+		#else
+		VehEmitter_DriverMain
+		#endif
+
 	#endif
 };
 

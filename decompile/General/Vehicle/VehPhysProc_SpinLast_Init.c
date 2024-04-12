@@ -3,6 +3,10 @@
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
 
+#ifdef USE_60FPS
+void Hook60_DriverMain(struct Thread *t, struct Driver *d);
+#endif
+
 void* PlayerLastSpinFuncTable[0xD] =
 {
 	0,
@@ -19,7 +23,13 @@ void* PlayerLastSpinFuncTable[0xD] =
 	VehPhysGeneral_JumpAndFriction,
 	VehPhysForce_TranslateMatrix,
 	VehFrameProc_LastSpin,
-	VehEmitter_DriverMain,
+
+		#ifdef USE_60FPS
+		Hook60_DriverMain,
+		#else
+		VehEmitter_DriverMain
+		#endif
+
 	#endif
 };
 
