@@ -16,7 +16,7 @@ void DECOMP_VehFrameProc_LastSpin(struct Thread *t, struct Driver* d)
     {
         // get number of frames in animation
         // numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
-		numFrames = FPS_DOUBLE(20);
+		numFrames = FPS_DOUBLE(20)+1;
 
         // if numFrames not zero
         if (numFrames != 0)
