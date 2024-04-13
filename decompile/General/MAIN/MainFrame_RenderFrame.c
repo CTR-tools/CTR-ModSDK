@@ -67,8 +67,10 @@ void PatchModel_60fps(struct Model* m)
 	// record the model is patched
 	h[0].name[0xf] = 1;
 
-	#if 0
-	// max graphics
+	#if 1
+	// max graphics, because h[1] is already lerp'd, 
+	// so attempting to force lerp purely for 60fps
+	// causes the AI/Ghost models to explode at LOD[1]
 	h[0].maxDistanceLOD = 0x7fff;
 	#endif
 
