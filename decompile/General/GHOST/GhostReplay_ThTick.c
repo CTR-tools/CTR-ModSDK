@@ -149,8 +149,11 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
             // Get time (big endian) from position message
             u_short bigEndianTime = (packetPtr[7] << 8) | packetPtr[8];
             tape->ptrCurr = packetPtr;
-            tape->timeInPacket32_backup += bigEndianTime;
-            tape->timeInPacket32 += bigEndianTime;
+			
+			// casting required, or only half register is 
+			// written to bigEndianTime, which breaks timeInPacket
+            tape->timeInPacket32_backup += (int)bigEndianTime;
+            tape->timeInPacket32 += (int)bigEndianTime;
           }
 
           // count position opcodes
