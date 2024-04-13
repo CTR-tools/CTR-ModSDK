@@ -7,7 +7,7 @@ void DECOMP_Particle_FuncPtr_ExhaustUnderwater(struct Particle *p)
 
   if (
 		(3 < ((p->axis[1].startVal >> 8) + p->driverInst->matrix.t[1])) &&
-		(p->framesLeftInLife < 27)
+		(p->framesLeftInLife < FPS_DOUBLE(27))
 	  )
   {
     // bubblepop

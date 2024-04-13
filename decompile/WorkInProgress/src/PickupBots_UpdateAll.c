@@ -49,9 +49,6 @@ void DECOMP_PickupBots_Update(void)
 		// RNG for which weaopn shoots (oxide)
 		// etc
 
-		// if numPlyrCurrGame is not zero
-		if (!gGT->numPlyrCurrGame) return;
-
 		for (i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			// get the player structure of each human player
@@ -220,7 +217,7 @@ void DECOMP_PickupBots_Update(void)
 								// Get character ID of two player/AI structures: iVar4 and iVar14
 
 								sVar11 = data.characterIDs[nextDriver->driverID];
-								sVar2 = data.characterIDs)currDriver->driverID];
+								sVar2 = data.characterIDs[currDriver->driverID];
 								uVar10 = 0xb;
 								goto LAB_8004128c;
 							}
