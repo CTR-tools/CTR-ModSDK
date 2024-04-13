@@ -1135,7 +1135,7 @@ SkipSetSteer:
 	
 	// alternate tire colors each frame,
 	// if 2e808080 is detected (&1==0),
-	// if not EngineRevving, and if unkSpeedVal
+	// if not RevEngine, and if unkSpeedVal
 	if
 	(
 		(driver->unkSpeedValue1 < 1) && 

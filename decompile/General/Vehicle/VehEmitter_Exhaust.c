@@ -69,7 +69,7 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
     // if engine revving
     if (d->kartState == KS_ENGINE_REVVING)
     {
-        if (d->engineRevState != 1)
+        if (d->revEngineState != 1)
         {
             return p;
         }

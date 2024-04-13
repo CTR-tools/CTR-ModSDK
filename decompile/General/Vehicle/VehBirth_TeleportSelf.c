@@ -520,7 +520,7 @@ LAB_80058568:
     d->underDriver = 0;
     d->distanceDrivenBackwards = 0;
     d->clockReceive = 0;
-    d->engineRevState = 0;
+    d->revEngineState = 0;
 
     // turn off 7th and 20th bits of Actions Flag set (means ? (7) and racer is not in the air (20))
     d->actionsFlagSet &= ~(0x80040);

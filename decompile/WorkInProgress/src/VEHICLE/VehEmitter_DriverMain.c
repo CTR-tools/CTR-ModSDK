@@ -696,7 +696,7 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
   // else if "player"???
   else
   {
-    if ((d->engineRevState == 2) ||
+    if ((d->revEngineState == 2) ||
         ((uVar13 = gGT->numPlyrCurrGame, 1 < uVar13 &&
         (((uVar13 != 2 || 
         (uVar13 = d->driverID, (gGT->timer & 1) != uVar13)) &&

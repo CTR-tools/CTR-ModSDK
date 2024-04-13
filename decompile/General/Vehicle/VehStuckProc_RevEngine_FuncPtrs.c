@@ -5,7 +5,7 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
     int revFireLevel;
 
     // If race has not started
-    if (d->KartStates.EngineRevving.boolEngineRevMaskGrab == false)
+    if (d->KartStates.RevEngine.boolMaskGrab == false)
     {
         // If Traffic Lights are not done counting down
         if (0 < sdata->gGT->trafficLightsTimer)
@@ -34,15 +34,15 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
     // frozen, and into driving, last iteration of
     // this function
 
-    if ((d->KartStates.EngineRevving.boolEngineRevMaskGrab == true) &&
-		(d->KartStates.EngineRevving.maskObj != NULL))
-		 d->KartStates.EngineRevving.maskObj->duration = 0;
+    if ((d->KartStates.RevEngine.boolMaskGrab == true) &&
+		(d->KartStates.RevEngine.maskObj != NULL))
+		 d->KartStates.RevEngine.maskObj->duration = 0;
     
-    if ((d->const_SpeedometerScale_ClassStat < d->KartStates.EngineRevving.engineRevFire) &&
-        (d->KartStates.EngineRevving.unk[1] & 3) == 0)
+    if ((d->const_SpeedometerScale_ClassStat < d->KartStates.RevEngine.fireLevel) &&
+        (d->KartStates.RevEngine.unk[1] & 3) == 0)
     {
         // While not moving, if you rev'd your engine less than...
-        if (d->KartStates.EngineRevving.engineRevBoostMeter < (d->const_SpeedometerScale_ClassStat + d->const_SacredFireSpeed))
+        if (d->KartStates.RevEngine.boostMeter < (d->const_SpeedometerScale_ClassStat + d->const_SacredFireSpeed))
         {
             // You get a small boost
             revFireLevel = 0x20;
@@ -61,7 +61,7 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
 
     // full meter
     d->turbo_MeterRoomLeft = 0;
-    d->engineRevState = 0;
+    d->revEngineState = 0;
 
     DECOMP_VehPhysProc_Driving_Init(t, d);
 }
@@ -72,19 +72,19 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
 	
     struct GameTracker *gGT = sdata->gGT;
     
-	unkTimer = d->KartStates.EngineRevving.unk58e;
+	unkTimer = d->KartStates.RevEngine.unk58e;
     unkTimer -= gGT->elapsedTimeMS;
     if (unkTimer * 0x10000 < 0) unkTimer = 0;
-    d->KartStates.EngineRevving.unk58e = unkTimer;
+    d->KartStates.RevEngine.unk58e = unkTimer;
 
-    unkTimer = d->KartStates.EngineRevving.unk590;
+    unkTimer = d->KartStates.RevEngine.unk590;
     unkTimer -= gGT->elapsedTimeMS;
     if (unkTimer * 0x10000 < 0) unkTimer = 0;
-    d->KartStates.EngineRevving.unk590 = unkTimer;
+    d->KartStates.RevEngine.unk590 = unkTimer;
 
     DECOMP_VehPhysProc_Driving_PhysLinear(t, d);
 
-    if (d->KartStates.EngineRevving.boolEngineRevMaskGrab != 0)
+    if (d->KartStates.RevEngine.boolMaskGrab != 0)
     {
         struct CameraDC *cDC = &gGT->cameraDC[d->driverID];
 
@@ -94,8 +94,8 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
         d->posCurr[1] -= FPS_HALF(0x200);
 
         // if maskObj exists
-        if (d->KartStates.EngineRevving.maskObj != 0)
-            d->KartStates.EngineRevving.maskObj->duration = 7680;
+        if (d->KartStates.RevEngine.maskObj != 0)
+            d->KartStates.RevEngine.maskObj->duration = 7680;
     }
 }
 
@@ -116,14 +116,14 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
 
     if (
 			(d->fireSpeed > 0) && 
-			(d->KartStates.EngineRevving.unk58e == 0) &&
-			((d->KartStates.EngineRevving.unk[1] & 3) == 0)
+			(d->KartStates.RevEngine.unk58e == 0) &&
+			((d->KartStates.RevEngine.unk[1] & 3) == 0)
 		)
     {
         // Curr revving meter - Max revving meter
         iVar4 = 
-			d->KartStates.EngineRevving.engineRevFire - 
-			d->KartStates.EngineRevving.engineRevBoostMeter;
+			d->KartStates.RevEngine.fireLevel - 
+			d->KartStates.RevEngine.boostMeter;
 
         // absolute value
         if (iVar4 < 0)
@@ -150,71 +150,71 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
         }
 
         iVar4 = DECOMP_VehCalc_InterpBySpeed(
-				d->KartStates.EngineRevving.engineRevFire, 
+				d->KartStates.RevEngine.fireLevel, 
 				FPS_HALF(iVar7), 
-				d->KartStates.EngineRevving.engineRevBoostMeter);
+				d->KartStates.RevEngine.boostMeter);
 
         // Set new curr rev
-        d->KartStates.EngineRevving.engineRevFire = iVar4;
-        d->KartStates.EngineRevving.unk[0] = 2;
+        d->KartStates.RevEngine.fireLevel = iVar4;
+        d->KartStates.RevEngine.unk[0] = 2;
 
         // if max revv > filling speed
-        if (iVar4 < d->KartStates.EngineRevving.engineRevBoostMeter)
+        if (iVar4 < d->KartStates.RevEngine.boostMeter)
         {
-            d->KartStates.EngineRevving.engineRevMS = 0;
+            d->KartStates.RevEngine.timeMS = 0;
         }
 
         else
         {
             // elapsed milliseconds per frame, ~32
-            sVar5 = d->KartStates.EngineRevving.engineRevMS + sdata->gGT->elapsedTimeMS;
-            d->KartStates.EngineRevving.engineRevMS = sVar5;
+            sVar5 = d->KartStates.RevEngine.timeMS + sdata->gGT->elapsedTimeMS;
+            d->KartStates.RevEngine.timeMS = sVar5;
 
             // if more than 0.192s
             if (192 < sVar5)
             {
-                d->KartStates.EngineRevving.unk[0] = 0;
-                d->KartStates.EngineRevving.unk[1] |= 3;
+                d->KartStates.RevEngine.unk[0] = 0;
+                d->KartStates.RevEngine.unk[1] |= 3;
 
                 DECOMP_OtherFX_Play_Echo(0xf, 1, d->actionsFlagSet & 0x10000);
             }
         }
         goto LAB_80067dec;
     }
-    d->KartStates.EngineRevving.engineRevMS = 0;
-    if (d->KartStates.EngineRevving.unk[0] == 2)
+    d->KartStates.RevEngine.timeMS = 0;
+    if (d->KartStates.RevEngine.unk[0] == 2)
     {
-        d->KartStates.EngineRevving.unk58e = 0x100;
-        d->KartStates.EngineRevving.unk[0] = 0;
+        d->KartStates.RevEngine.unk58e = 0x100;
+        d->KartStates.RevEngine.unk[0] = 0;
 
         // if curr rev > ???
-        if (d->const_SpeedometerScale_ClassStat < d->KartStates.EngineRevving.engineRevFire)
+        if (d->const_SpeedometerScale_ClassStat < d->KartStates.RevEngine.fireLevel)
         {
-            d->KartStates.EngineRevving.unk[0] = 1;
+            d->KartStates.RevEngine.unk[0] = 1;
         }
     }
-    if ((d->KartStates.EngineRevving.unk[0] != 0) &&
+    if ((d->KartStates.RevEngine.unk[0] != 0) &&
 
         // curr rev < ???
-        (d->KartStates.EngineRevving.engineRevFire < d->const_SpeedometerScale_ClassStat))
+        (d->KartStates.RevEngine.fireLevel < d->const_SpeedometerScale_ClassStat))
     {
-        d->KartStates.EngineRevving.unk[0] = 0;
+        d->KartStates.RevEngine.unk[0] = 0;
 
         uVar6 = DECOMP_VehCalc_InterpBySpeed(
-				d->KartStates.EngineRevving.engineRevBoostMeter, 
+				d->KartStates.RevEngine.boostMeter, 
 				FPS_HALF(d->const_SacredFireSpeed / 3 + 3),
 				d->const_SacredFireSpeed + d->const_SpeedometerScale_ClassStat);
 				
-        d->KartStates.EngineRevving.engineRevBoostMeter = uVar6;
+        d->KartStates.RevEngine.boostMeter = uVar6;
     }
 
     // if curr rev < 1
-    if (d->KartStates.EngineRevving.engineRevFire < 1)
+    if (d->KartStates.RevEngine.fireLevel < 1)
     {
-        d->KartStates.EngineRevving.unk[1] &= ~(2);
+        d->KartStates.RevEngine.unk[1] &= ~(2);
 
         // max rev = ???
-        d->KartStates.EngineRevving.engineRevBoostMeter =
+        d->KartStates.RevEngine.boostMeter =
             d->const_SpeedometerScale_ClassStat + d->const_SacredFireSpeed / 3;
     }
 
@@ -223,9 +223,9 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
     {
 
         // rev deacceleration rate = curr rev / 2
-        uVar8 = d->KartStates.EngineRevving.engineRevFire >> 1;
+        uVar8 = d->KartStates.RevEngine.fireLevel >> 1;
 
-        if ((d->KartStates.EngineRevving.unk[1] & 2) == 0)
+        if ((d->KartStates.RevEngine.unk[1] & 2) == 0)
         {
             bVar2 = (int)uVar8 < 0x100;
 
@@ -261,53 +261,53 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
         }
 
         // new rev = curr rev - rev deacceleration rate
-        iVar4 = d->KartStates.EngineRevving.engineRevFire - FPS_HALF(uVar8);
+        iVar4 = d->KartStates.RevEngine.fireLevel - FPS_HALF(uVar8);
 
         // curr rev = new rev
-        d->KartStates.EngineRevving.engineRevFire = iVar4;
+        d->KartStates.RevEngine.fireLevel = iVar4;
 
         // if new rev < 1
         if (iVar4 < 1)
         {
 
-            d->KartStates.EngineRevving.unk590 = 0xc0;
+            d->KartStates.RevEngine.unk590 = 0xc0;
 
             // curr rev = 0
-            d->KartStates.EngineRevving.engineRevFire = 0;
+            d->KartStates.RevEngine.fireLevel = 0;
         }
     }
     if (d->fireSpeed < 1)
     {
-        d->KartStates.EngineRevving.unk[1] &= ~(1);
+        d->KartStates.RevEngine.unk[1] &= ~(1);
     }
 
 LAB_80067dec:
 
-    if ((*(u_int *)&d->KartStates.EngineRevving.unk590 & 0x200ffff) == 0)
+    if ((*(u_int *)&d->KartStates.RevEngine.unk590 & 0x200ffff) == 0)
     {
 
         // if curr rev < ???
-        if (d->KartStates.EngineRevving.engineRevFire < d->const_SpeedometerScale_ClassStat)
+        if (d->KartStates.RevEngine.fireLevel < d->const_SpeedometerScale_ClassStat)
         {
-            d->engineRevState = 0;
+            d->revEngineState = 0;
         }
         else
         {
-            d->engineRevState = 1;
+            d->revEngineState = 1;
         }
     }
     else
     {
-        d->engineRevState = 2;
+        d->revEngineState = 2;
     }
 
     iVar4 = d->const_SpeedometerScale_ClassStat;
 
     // ??? = curr rev
-    d->unk36E = d->KartStates.EngineRevving.engineRevFire;
+    d->unk36E = d->KartStates.RevEngine.fireLevel;
 
     // if curr rev < ???
-    if (d->KartStates.EngineRevving.engineRevFire < iVar4)
+    if (d->KartStates.RevEngine.fireLevel < iVar4)
     {
 
         // 476 and 447 can be absolutely any value,
@@ -338,7 +338,7 @@ LAB_80067dec:
 
     uVar3 = DECOMP_VehCalc_MapToRange
 	(
-		d->KartStates.EngineRevving.engineRevFire, 
+		d->KartStates.RevEngine.fireLevel, 
 		iVar7, iVar9, 
 		(u_int)bVar1 << 5, local_18
 	);

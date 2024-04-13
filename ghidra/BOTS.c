@@ -921,7 +921,7 @@ void FUN_800135d8(int param_1)
   return;
 }
 
-// BOTS_ThTick_EngineRevving
+// BOTS_ThTick_RevEngine
 void FUN_8001372c(int param_1)
 {
   int iVar1;
@@ -974,7 +974,7 @@ void FUN_8001372c(int param_1)
 	// erase pointer to object
     *(undefined4 *)(iVar2 + 0x620) = 0;
 
-	// kart state engineRevving
+	// kart state RevEngine
 	*(undefined *)(iVar2 + 0x376) = 4;
 
 	// clock weapon recv
@@ -1108,7 +1108,7 @@ void FUN_80013838(int param_1)
     *(ushort *)(iVar4 + 4) = *(ushort *)(iVar4 + 4) | 1;
   }
 
-  // execute, then assign per-frame to BOTS_ThTick_EngineRevving
+  // execute, then assign per-frame to BOTS_ThTick_RevEngine
   FUN_800716ec(param_1,FUN_8001372c);
 
   return;

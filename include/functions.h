@@ -12,7 +12,7 @@ void BOTS_Adv_AdjustDifficulty();
 void BOTS_UpdateGlobals();
 void BOTS_SetRotation(struct Driver* driver_perhaps, int param_2);
 void BOTS_LevInstColl(int param_1);
-void BOTS_ThTick_EngineRevving (struct Thread * thread, u_int param_2, u_char * param_3, u_int param_4);
+void BOTS_ThTick_RevEngine (struct Thread * thread, u_int param_2, u_char * param_3, u_int param_4);
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
 void BOTS_ThTick_Drive(struct Thread* thread);

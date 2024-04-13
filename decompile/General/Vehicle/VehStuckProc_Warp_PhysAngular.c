@@ -60,7 +60,7 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         // cap to 800
 		timer = 800;
 
-        d->engineRevState = 2;
+        d->revEngineState = 2;
 
         // interpolate until scale is [0, 24000, 0],
         // car is tall and thin

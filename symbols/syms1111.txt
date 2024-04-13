@@ -23,7 +23,7 @@
 80014814 BOTS_UpdateGlobals
 800148e4 BOTS_SetRotation
 80014a80 BOTS_LevInstColl
-80014bd4 BOTS_ThTick_EngineRevving
+80014bd4 BOTS_ThTick_RevEngine
 80014ce0 BOTS_MaskGrab
 80014f18 BOTS_Killplane
 800150c0 BOTS_ThTick_Drive

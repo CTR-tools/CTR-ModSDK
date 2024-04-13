@@ -97,8 +97,8 @@ void DECOMP_BOTS_MaskGrab(struct Thread *botThread)
         mask->rot[1] = | 1;
     }
 
-    // execute, then assign per-frame to BOTS_ThTick_EngineRevving
-    ThTick_SetAndExec(botThread, BOTS_ThTick_EngineRevving);
+    // execute, then assign per-frame to BOTS_ThTick_RevEngine
+    ThTick_SetAndExec(botThread, BOTS_ThTick_RevEngine);
 
     return;
 }

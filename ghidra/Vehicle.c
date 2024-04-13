@@ -2711,7 +2711,7 @@ LAB_8005a858:
   else 
   {
     if (
-			// engineRevState
+			// revEngineState
 			(*(char *)(param_2 + 0x4fe) == '\x02') ||
 			
 			(
@@ -5932,7 +5932,7 @@ LAB_8005e8d8:
   if ((uVar10 & 0x80000) == 0) 
   {
     if (
-			// firstFrameSinceEngineRevving
+			// firstFrameSinceRevEngine
 			(*(char *)(param_1 + 0x449) != '\0') && 
 			
 			(uVar8 != 0)
@@ -5949,7 +5949,7 @@ LAB_8005e8d8:
 	  // forwardDir (0x3e8)
       *(undefined2 *)(param_1 + 1000) = uVar2;
 	  
-	  // firstFrameSinceEngineRevving
+	  // firstFrameSinceRevEngine
       *(undefined *)(param_1 + 0x449) = 0;
 	  
       goto LAB_8005e9d8;
@@ -15758,7 +15758,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
          *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0xdc + 0x1508) | 8;
   }
   
-  // firstFrameSinceEngineRevving
+  // firstFrameSinceRevEngine
   *(undefined *)(param_2 + 0x449) = 1;
 
   // VehStuckProc_RevEngine_Update

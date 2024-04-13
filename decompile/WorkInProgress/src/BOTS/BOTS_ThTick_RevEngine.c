@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_BOTS_ThTick_EngineRevving(struct Thread* botThread)
+void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
 {
   struct MaskHeadWeapon* maskObj;
   struct Driver* bot;

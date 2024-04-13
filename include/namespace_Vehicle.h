@@ -919,7 +919,7 @@ struct Driver
 	char const_SteerAccel_Stage2_FrameLength;
 
 	// not part of metaPhys
-	char boolFirstFrameSinceEngineRevving;
+	char boolFirstFrameSinceRevEngine;
 	
 	// 0x44a - 0x1C
 	short const_SteerAccel_Stage1_MaxSteer;
@@ -1146,7 +1146,7 @@ struct Driver
 	
 	// 0x4fe
 	// 0, 1, 2, depending on rev level
-	char engineRevState;
+	char revEngineState;
 
 	// 0x4ff
 	char ChangeState_param2;
@@ -1338,13 +1338,13 @@ struct Driver
 			// == Needs More Research ==
 			
 			// 0x584
-			int engineRevBoostMeter;
+			int boostMeter;
 			
 			// 0x588
-			int engineRevFire;
+			int fireLevel;
 			
 			// 0x58c
-			short engineRevMS;
+			short timeMS;
 
 			// 0x58e
 			short unk58e;
@@ -1356,11 +1356,11 @@ struct Driver
 			unsigned char unk[2];
 			
 			// 0x594
-			int boolEngineRevMaskGrab;
+			int boolMaskGrab;
 			
 			// == end ==
 			
-		} EngineRevving;
+		} RevEngine;
 		
 		// state 5
 		struct

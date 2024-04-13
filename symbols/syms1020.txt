@@ -12,7 +12,7 @@
 80013394 BOTS_UpdateGlobals
 80013464 BOTS_SetRotation
 80013600 BOTS_LevInstColl
-80013754 BOTS_ThTick_EngineRevving
+80013754 BOTS_ThTick_RevEngine
 80013860 BOTS_MaskGrab
 80013a98 BOTS_Killplane
 80013c40 BOTS_ThTick_Drive
