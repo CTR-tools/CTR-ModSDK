@@ -67,6 +67,10 @@ void PatchModel_60fps(struct Model* m)
 	// record the model is patched
 	h[0].name[0xf] = 1;
 
+	// skip "big1" because it needs LODs
+	// to shift from 1st to 8th UI polygons
+	if(*(int*)&h[0].name[0] == 0x31676962) return;
+
 	#if 1
 	// max graphics, because h[1] is already lerp'd, 
 	// so attempting to force lerp purely for 60fps
