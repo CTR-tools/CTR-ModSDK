@@ -178,8 +178,8 @@ void DECOMP_UI_RenderFrame_Racing()
 							// midpointX
 							pb->rect.x + pb->rect.w >> 1,
 
-						 	// midpointY + 0x1e
-						 	pb->rect.x + (pb->rect.w >> 1) + 0x1e,
+						 	// midpointY, 0x1e higher
+						 	pb->rect.y + (pb->rect.h >> 1) - 0x1e,
 
 							FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 						);
