@@ -21,7 +21,7 @@ void DECOMP_VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
         return;
 
     // if animation is not zero
-    if (animIndex)
+    if (animIndex != 0)
     {
         startFrame = VehFrameInst_GetStartFrame(animIndex, numFrames);
 
@@ -47,7 +47,7 @@ void DECOMP_VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
             inst->animIndex = 0;
         }
 
-        if (animIndex != 0)
+        if (inst->animIndex != 0)
             goto ANIM_SPIN;
     }
 

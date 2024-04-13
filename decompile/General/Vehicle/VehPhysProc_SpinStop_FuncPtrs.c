@@ -11,7 +11,7 @@ void DECOMP_VehPhysProc_SpinStop_Animate(struct Thread* t, struct Driver* d)
 	#if 0
 	numFrames = VehFrameInst_GetNumAnimFrames(inst, inst->animIndex);
 	#else
-	numFrames = 21;
+	numFrames = FPS_DOUBLE(20)+1;
 	#endif
 	
 	// if you are spinning right
