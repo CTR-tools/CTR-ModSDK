@@ -422,8 +422,6 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 	RECTMENU_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
 }
 
-void UI_RaceEnd_MenuProc(struct RectMenu*);
-
 struct MenuRow rowsWithSave[6] =
 {	
 	// Retry
@@ -539,7 +537,7 @@ struct RectMenu menu224 =
 	
 	.state = 0xC83,
 	.rows = rowsWithSave,
-	.funcPtr = UI_RaceEnd_MenuProc,
+	.funcPtr = DECOMP_UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 
 	// rest of variables all default zero

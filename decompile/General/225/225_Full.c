@@ -407,8 +407,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   }
 }
 
-void UI_RaceEnd_MenuProc(struct RectMenu *);
-
 struct MenuRow rowsVS[5] =
 {
     // Retry
@@ -461,7 +459,7 @@ struct RectMenu menuVS =
     .unk1 = 0,
     .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
     .rows = rowsVS,
-    .funcPtr = UI_RaceEnd_MenuProc,
+    .funcPtr = DECOMP_UI_RaceEnd_MenuProc,
     .drawStyle = 4,
     // rest of variables all default zero
 };
@@ -526,7 +524,7 @@ struct RectMenu menuBattle =
     .unk1 = 0,
     .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
     .rows = rowsBattle,
-    .funcPtr = UI_RaceEnd_MenuProc,
+    .funcPtr = DECOMP_UI_RaceEnd_MenuProc,
     .drawStyle = 4,
     // rest of variables all default zero
 };

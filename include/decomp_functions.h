@@ -430,6 +430,8 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 
 void DECOMP_UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 
+void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu*);
+
 // VEH
 void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);
 void DECOMP_VehBirth_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);

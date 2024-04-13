@@ -757,8 +757,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	return;
 }
 
-void UI_RaceEnd_MenuProc(struct RectMenu *);
-
 struct MenuRow rows222[5] =
 {
 	// Retry
@@ -811,7 +809,7 @@ struct RectMenu menu222 =
 	.unk1 = 0,
 	.state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
 	.rows = rows222,
-	.funcPtr = UI_RaceEnd_MenuProc,
+	.funcPtr = DECOMP_UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 	// rest of variables all default zero
 };

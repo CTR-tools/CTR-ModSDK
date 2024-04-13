@@ -37,7 +37,7 @@ enum GameMode1
 
 enum GameMode2
 {
-	// & 1 - spawn outside boss door
+	SPAWN_AT_BOSS = 1,
 	
 	VEH_FREEZE_PODIUM = 4,
 	TOKEN_RACE 		= 0x8,

@@ -214,8 +214,6 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	return;
 }
 
-void UI_RaceEnd_MenuProc(struct RectMenu*);
-
 struct MenuRow rows221[3] =
 {	
 	// Retry
@@ -256,7 +254,7 @@ struct RectMenu menu221 =
 	
 	.state = 0x803,
 	.rows = rows221,
-	.funcPtr = UI_RaceEnd_MenuProc,
+	.funcPtr = DECOMP_UI_RaceEnd_MenuProc,
 	.drawStyle = 4,
 
 	// rest of variables all default zero
