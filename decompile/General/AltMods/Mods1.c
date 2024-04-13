@@ -131,17 +131,47 @@ void ui60_entryHook()
 		*(unsigned char*)0x8004FFC8 = 10*2;
 	}
 
-	#if 0
+	// AI cooldown
+	{
+		// nextDriver->weaponCooldown needs to double
+		
+		*(short*)0x800412ac = FPS_DOUBLE(0xFF);
+		*(short*)0x800412b0 = FPS_DOUBLE(0xF0);
+		
+		*(short*)0x8004149c = FPS_DOUBLE(0xFF);
+		*(short*)0x800414a0 = FPS_DOUBLE(0xF0);
+	}
+
 	// Boss cooldown
 	{
 		// 8008d8e4 needs to be doubled, after being set
 
-		// NOT FIXED, but better than nothing
-		// changes rng [0 - 16] to [0 - 64]
-		*(unsigned char*)0x80040c24 = 0x40;
-		*(unsigned char*)0x80040f4c = 0x40;
+		struct MetaDataBOSS* x;
+
+		for(
+				x = &data.BossWeaponOxide[0];
+				x < &data.bossWeaponMetaPtr[0];
+				x++
+			)
+		{
+			// double min cooldown
+			x->weaponCooldown = FPS_DOUBLE(x->weaponCooldown);
+		}
+
+		// double & 0x10
+		// double + 0xc
+		// double <<2 to <<4
+		*(unsigned short*)0x80040c24 = FPS_DOUBLE(0x10);
+		*(unsigned short*)0x80040c40 = FPS_DOUBLE(0xC);
+		*(int*)0x80040c50 = 0x31900;
+		
+		// double & 0x10
+		// double + 0xc
+		// double <<2 to <<4
+		*(unsigned short*)0x80040f4c = FPS_DOUBLE(0x10);
+		*(unsigned short*)0x80040f68 = FPS_DOUBLE(0xC);
+		*(int*)0x80040f78 = 0x31900;
 	}
-	#endif
 
 	// Inject new hooks
 	data.overlayCallbackFuncs[1] = NewCallback231;
