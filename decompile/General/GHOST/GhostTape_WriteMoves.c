@@ -88,7 +88,7 @@ void DECOMP_GhostTape_WriteMoves(short raceFinished)
 
       pbVar1[0] = 0x81;
 	  pbVar1[1] = iVar7->animIndex;
-	  pbVar1[2] = iVar7->animFrame;
+	  pbVar1[2] = FPS_HALF(iVar7->animFrame);
 	  pbVar1 += 3;
     }
 
