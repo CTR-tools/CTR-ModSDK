@@ -107,7 +107,7 @@ void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, int numPlyrCurrGame);
 void CTR_ClearRenderLists_3P4P(struct GameTracker* gGT, int numPlyrCurrGame);
 void CTR_EmptyFunc_MainFrame_ResetDB();
 void CTR_ErrorScreen(char r, char g, char b);
-//CTR_MatrixToRot();
+void CTR_MatrixToRot(SVECTOR *rot, MATRIX *matrix, u_int flags);
 //CTR_ScrambleGhostString();
 
 // DebugFont
