@@ -187,7 +187,7 @@ void FUN_8003eefc(int **param_1,int **param_2)
 	  // particle->next
 	  ppiVar12 = (int **)*param_2;
 
-	  // reduce life by one frame
+	  // framesLeftInLife -= 1
       *(short *)(param_2 + 4) = sVar3 + -1;
 
 	  // if particle is dead
