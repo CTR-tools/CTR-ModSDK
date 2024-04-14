@@ -637,7 +637,7 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 0xA,
 		
-		// colorA ???
+		// only for SpitTire
 		.initOffset = 0xA,
 		
 		.InitTypes.AxisInit =

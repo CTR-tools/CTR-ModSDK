@@ -100,31 +100,14 @@ struct Particle* NewParticleInit(struct LinkedList* param_1)
 		if(sdata->gGT->timer & 2) return 0;
 	}
 	
-	return (struct Particle*)LIST_RemoveFront(param_1);
-}
-
-void NewParticleDestroy(struct Particle* p)
-{
-  struct Particle *pp;
-
-  // unpatch
-  p->prev = (int)p->prev & ~(1);
-
-  pp = p->prev;
-
-  while (pp != NULL)
-  {
-	// unpatch
-	pp->prev = (int)pp->prev & ~(1);
-	  
-    pp = pp->next;
+	struct Particle* p =
+		(struct Particle*)LIST_RemoveFront(param_1);
 	
-	// unpatch
-	pp->prev = (int)pp->prev & ~(1);
+	// remove patching for 60fps
+	p->axis[0x9].startVal = 0;
+	p->axis[0xA].startVal = 0;
 	
-	// free list of Oscillator Pool
-    LIST_AddFront(&sdata->gGT->JitPools.oscillator.free, pp);
-  }
+	return p;
 }
 
 // This executes one time, before the
@@ -135,10 +118,6 @@ void ui60_entryHook()
 
 	// replace call to LIST_RemoveFront inside Particle_Init
 	*(unsigned int*)0x80040348 = JAL(NewParticleInit);
-	
-	// hook to remove bit tagging
-	*(unsigned int*)0x8003eeb0 = JMP(NewParticleDestroy);
-	*(unsigned int*)0x8003eeb4 = 0;
 
 	// Starting line
 	{

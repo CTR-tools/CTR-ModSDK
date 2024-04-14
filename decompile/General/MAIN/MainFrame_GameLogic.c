@@ -260,12 +260,27 @@ LAB_80035098:
 		// This does not fix Underwater, or particles with function pointers
 		for(struct Particle* p = gGT->particleList_ordinary; p != 0; p = p->next)
 		{
-			// skip if already tagged
-			if( ((int)p->prev) & 1 ) continue;
+			// if TireAxis is in use
+			if((p->flagsAxis & (0x1<<0xA)) != 0)
+			{
+				// use ColorB axis, guaranteed not in use,
+				// check here for patching
+				if (p->axis[0x9].startVal == 1) continue;
+					p->axis[0x9].startVal = 1;
+			}
 			
-			// tag to show that it's patched
-			p->prev = (unsigned int)p->prev | 1;
+			// TireAxis is not in use
+			else
+			{
+				// check here for patching
+				if (p->axis[0xA].startVal == 1) continue;
+					p->axis[0xA].startVal = 1;
+			}
 			
+			// === If unpatched particle ===
+			
+			printf("patch\n");
+
 			p->framesLeftInLife *= 2;
 			
 			for(int axis = 0; axis < 0xb; axis++)

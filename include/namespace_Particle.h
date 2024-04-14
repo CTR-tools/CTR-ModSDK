@@ -26,12 +26,11 @@ struct Particle
 	u_short flagsSetColor;
 
 	// 0x14
-	u_short flagsAxis; // old notes???
+	// one bit per axis
+	u_short flagsAxis;
 	
 	// 0x16
 	short unk16;
-
-	// ---
 
 	// 0x18
 	// char[2], short[1] (0, 0xff, 0x0400)
@@ -69,7 +68,7 @@ struct Particle
 		0x5C: colorR
 		0x64: colorG
 		0x6C: colorB
-		0x74: colorA ???
+		0x74: spitTire
 	*/
 
 	// 0x24

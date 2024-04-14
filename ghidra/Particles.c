@@ -218,15 +218,18 @@ LAB_8003f2dc:
 
 		if ((uVar1 & 0x1000) != 0)
 		{
-          param_2[0xf] = param_2[9];
+		  // copy pos Axis to rot Axis?
+          // X, Y, Z, offsets 0x24-0x74
+		  param_2[0xf] = param_2[9];
           param_2[0x15] = param_2[0xb];
           param_2[0x11] = param_2[0xd];
+		  
           if ((uVar1 & 0x4000) == 0) {
             param_2[0x1d] = param_2[0x1e];
           }
         }
 
-		// particle offset 0x14
+		// flagsAxis
         piVar10 = param_2[5];
 
 		// offset 4 (unknown pointer)
@@ -351,33 +354,45 @@ LAB_8003f1f4:
           (*(code *)param_2[7])(param_2);
         }
 		
+		// flagsAxis
         uVar2 = *(ushort *)(param_2 + 5);
-        if (((uVar1 & 1) != 0) &&
+		
+		if (((uVar1 & 1) != 0) &&
            ((((uVar2 & 0x20) != 0 && ((int)param_2[0x13] < 1)) ||
             (((uVar2 & 0x40) != 0 && ((int)param_2[0x15] < 1)))))) goto LAB_8003f2dc;
-        if ((uVar1 & 2) != 0) {
+        
+		if ((uVar1 & 2) != 0) 
+		{
           piVar10 = (int *)0x0;
-          if (((uVar2 & 0x80) != 0) && (0 < (int)param_2[0x17])) {
+          
+		  // colorR !=0, get colorR.startVal
+		  if (((uVar2 & 0x80) != 0) && (0 < (int)param_2[0x17])) {
             piVar10 = param_2[0x17];
           }
+		  
+		  // colorG !=0, get colorG.startVal
           if (((uVar2 & 0x100) != 0) && (0 < (int)param_2[0x19])) {
             piVar10 = (int *)((uint)piVar10 | (uint)param_2[0x19]);
           }
+		  
+		  // colorB !=0, get colorB.startVal
           if (((uVar2 & 0x200) != 0) && (0 < (int)param_2[0x1b])) {
             piVar10 = (int *)((uint)piVar10 | (uint)param_2[0x1b]);
           }
+		  
           if ((int)piVar10 < 0x800) goto LAB_8003f2dc;
         }
         param_1 = param_2;
         
 		if (
+				// if TireAxis is in use
 				((*(ushort *)(param_2 + 5) & 0x400) != 0) &&
 				
 				// get particle->ptrIconGroup
 				(piVar10 = param_2[3], piVar10 != (int *)0x0)
 			) 
 		{
-		  // axis[0xA] (colorA)
+		  // axis[0xA] (TireAxis)
           piVar7 = param_2[0x1d];
 		  
           if ((int)piVar7 < 0)
@@ -1361,10 +1376,14 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 				  // first free member in Oscillator Pool
                   iVar14 = FUN_8003186c(PTR_DAT_8008d2ac + 0x19c0);
 
+				  // struct Oscillator*
                   if (iVar14 == 0) goto LAB_800406f8;
                   local_2c[uVar16] = iVar14;
                 }
-                else {
+                
+				else 
+				{
+				  // struct Oscillator*
                   iVar14 = local_2c[uVar16];
                 }
 
@@ -1397,19 +1416,31 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 
 				uVar17 = uVar17 | 1 << (uVar16 + 0x10 & 0x1f);
                 uVar8 = 1 << (uVar16 & 0x1f);
-                if ((uVar17 & uVar8) == 0) {
+                
+				// if axis is not in use
+				if ((uVar17 & uVar8) == 0) 
+				{
                   uVar17 = uVar17 | uVar8;
                   puVar6 = puVar5 + uVar16 * 2;
+				  
+				  // startVal = 0
                   puVar6[9] = 0;
+				  
+				  // velocity = 0
                   *(undefined2 *)(puVar6 + 10) = 0;
+				  
+				  // accel = 0
                   *(undefined2 *)((int)puVar6 + 0x2a) = 0;
                 }
               }
             }
 
 			// & 0x80 == 1
-			else {
-              if ((uVar17 & 1 << (uVar16 + 0x10 & 0x1f)) != 0) {
+			else 
+			{
+              if ((uVar17 & 1 << (uVar16 + 0x10 & 0x1f)) != 0) 
+			  {
+				// struct Oscillator*
                 iVar14 = local_2c[uVar16];
 
 				// emitterChunk offset 0x12+0x6 (0x18)

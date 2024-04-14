@@ -30,6 +30,13 @@ void DECOMP_RB_Bubbles_RoosTubes()
 	spawnType2 = &level1->ptrSpawnType2[1];
 	d = gGT->drivers[0];
 	
+	int timer = gGT->timer;
+	
+	#ifdef USE_60FPS
+	if(timer & 1) return;
+	timer = timer>>1;
+	#endif
+	
 	for(
 			// initializer, skip one cause level geometry
 			// covers the particles (see #ctr-early-content)
@@ -47,7 +54,7 @@ void DECOMP_RB_Bubbles_RoosTubes()
 	)
 	{
 		// each particle gets spawned once every 8 frames
-		if(((gGT->timer + numSpawnPosCoords) & 7) != 0)
+		if(((timer + numSpawnPosCoords) & 7) != 0)
 		{
 			// skip emitter, run iterative condition
 			continue;
@@ -68,9 +75,16 @@ void DECOMP_RB_Bubbles_RoosTubes()
 		
 		// == spawn particle ==
 		
-		p = Particle_Init(0, gGT->iconGroup[7], &emSet_TubeBubbles[0]);
+		#ifdef USE_60FPS
+		sdata->UnusedPadding1 = 1;
+		#endif
 		
+		p = Particle_Init(0, gGT->iconGroup[7], &emSet_TubeBubbles[0]);
 		if(p == 0) return;
+		
+		#ifdef USE_60FPS
+		sdata->UnusedPadding1 = 0;
+		#endif
 		
 		numFreeParticles--;
 		
