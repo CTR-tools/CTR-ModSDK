@@ -176,7 +176,7 @@ void DECOMP_UI_RenderFrame_Racing()
 							sdata->lngStrings[0x1D],
 
 							// midpointX
-							pb->rect.x + pb->rect.w >> 1,
+							pb->rect.x + (pb->rect.w >> 1),
 
 						 	// midpointY, 0x1e higher
 						 	pb->rect.y + (pb->rect.h >> 1) - 0x1e,
@@ -982,7 +982,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 				DECOMP_DecalFont_DrawLine(
 					pbVar6, 
-					pb->rect.x + pb->rect.w >> 1,			// midpointX
+					pb->rect.x + (pb->rect.w >> 1),			// midpointX
 					pb->rect.y + (pb->rect.h >> 1) - 0x1e,	// midpointY
 					FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
