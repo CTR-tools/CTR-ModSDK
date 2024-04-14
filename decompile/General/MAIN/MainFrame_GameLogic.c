@@ -260,19 +260,11 @@ LAB_80035098:
 		// This does not fix Underwater, or particles with function pointers
 		for(struct Particle* p = gGT->particleList_ordinary; p != 0; p = p->next)
 		{
-			// good thing PSX supports address mirroring,
-			// use the top bit to determine if particle is patched
-			unsigned int pointer = p->ptrIconGroup;
-			unsigned int topBit = pointer & 0xC0000000;
+			// skip if already tagged
+			if( ((int)p->prev) & 1 ) continue;
 			
-			// topBit will be 00000000 (if null) or 80000000 (not null),
-			// set the bit 40000000 to prove it was patched, and the 
-			// pointer will behave as if it was never edited (thanks psx mirroring)
-			if(topBit == 0x40000000) continue;
-			
-			pointer = pointer & 0xfffffff;
-			pointer |= 0x40000000;
-			p->ptrIconGroup = pointer;
+			// tag to show that it's patched
+			p->prev = (unsigned int)p->prev | 1;
 			
 			p->framesLeftInLife *= 2;
 			
