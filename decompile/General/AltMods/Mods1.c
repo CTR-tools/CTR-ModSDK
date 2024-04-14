@@ -91,7 +91,7 @@ struct Particle* NewParticleInit(struct LinkedList* param_1)
 	
 	// Workaround, use unused variable to force particles on "any"
 	// frame. This is required for effects that spawn 10x particles
-	// on the same frame (MaskGrab, AkuHints, TireSpit, VehEmitter)
+	// on the same frame (MaskGrab, AkuHints, SpitTire, VehEmitter)
 	if(sdata->UnusedPadding1 == 0)
 	{
 		// do 2 instead of 1,

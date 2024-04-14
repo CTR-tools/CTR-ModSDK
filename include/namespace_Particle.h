@@ -51,7 +51,7 @@ struct Particle
 		// used by VehEmitter
 		struct Instance* driverInst;
 		
-		// used by plant TireSpit
+		// used by plant SpitTire
 		struct Instance* plantInst;
 		
 		// used for potion shatter
