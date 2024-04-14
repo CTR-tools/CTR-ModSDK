@@ -1035,15 +1035,20 @@ LAB_80040074:
                         iVar8 = iVar8 + 1;
                       } while (iVar8 < 4);
                     }
-                    else {
+                    else 
+					{
+					  // rotation matrix of view
                       setCopControlWord(2,0,DAT_1f800000);
                       setCopControlWord(2,0x800,DAT_1f800004);
                       setCopControlWord(2,0x1000,DAT_1f800008);
                       setCopControlWord(2,0x1800,DAT_1f80000c);
                       setCopControlWord(2,0x2000,DAT_1f800010);
-                      setCopReg(2,0,0);
+                      
+					  // translation 0,0,0
+					  setCopReg(2,0,0);
                       setCopReg(2,0x800,0);
-                      if ((uVar2 & 0x20) == 0) {
+                    
+					  if ((uVar2 & 0x20) == 0) {
                         setCopReg(2,0x1000,param_2[0xf] - param_2[9] >> 6 & 0xffffU |
                                            (param_2[0x15] - param_2[0xb] >> 6) << 0x10);
                         setCopReg(2,0x1800,param_2[0x11] - param_2[0xd] >> 6);
