@@ -646,9 +646,11 @@ void FUN_8003f590(int param_1,int *param_2)
             iVar8 = *(int *)(iVar8 + iVar18 * 4 + 0x14);
             param_2[2] = iVar8;
           }
-          iVar18 = 0;
+          
+		  iVar18 = 0;
 
-		  if (iVar8 != 0) {
+		  if (iVar8 != 0) 
+		  {
             uVar3 = *(ushort *)((int)param_2 + 0x12);
             uVar26 = (uint)uVar3;
             iVar11 = param_2[9] >> 6;
