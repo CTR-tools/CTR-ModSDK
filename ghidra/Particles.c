@@ -369,9 +369,17 @@ LAB_8003f1f4:
           if ((int)piVar10 < 0x800) goto LAB_8003f2dc;
         }
         param_1 = param_2;
-        if (((*(ushort *)(param_2 + 5) & 0x400) != 0) &&
-           (piVar10 = param_2[3], piVar10 != (int *)0x0)) {
+        
+		if (
+				((*(ushort *)(param_2 + 5) & 0x400) != 0) &&
+				
+				// get particle->ptrIconGroup
+				(piVar10 = param_2[3], piVar10 != (int *)0x0)
+			) 
+		{
+		  // axis[0xA] (colorA)
           piVar7 = param_2[0x1d];
+		  
           if ((int)piVar7 < 0)
 		  {
             if ((*(ushort *)((int)param_2 + 0x12) & 0x100) == 0) {
@@ -591,21 +599,42 @@ void FUN_8003f590(int param_1,int *param_2)
       puVar24 = puVar7;
       do {
         puVar7 = puVar24;
-        if ((((int)*(char *)((int)param_2 + 0x19) == -1) ||
-            ((int)*(char *)((int)param_2 + 0x19) == (int)cVar1)) && (iVar8 = param_2[3], iVar8 != 0)
-           ) {
+        
+		if (
+			(
+				// no driverID
+				((int)*(char *)((int)param_2 + 0x19) == -1) ||
+            
+				// driverID == index
+				((int)*(char *)((int)param_2 + 0x19) == (int)cVar1)
+			) && 
+			
+			// ptrIconGroup
+			(iVar8 = param_2[3], iVar8 != 0)
+           
+		   ) 
+		{
           uVar2 = *(ushort *)(param_2 + 5);
-          if ((uVar2 & 0x400) == 0) {
+		  
+          if ((uVar2 & 0x400) == 0) 
+		  {
+			// ptrIconArray
             iVar8 = param_2[2];
           }
-          else {
+          else 
+		  {
+			// colorA
             iVar18 = param_2[0x1d] >> 8;
-            if (iVar18 < 0) {
+            
+			if (iVar18 < 0) {
               iVar18 = 0;
             }
+			
+			// number of icons in group
             if ((int)*(short *)(iVar8 + 0x12) <= iVar18) {
               iVar18 = (int)*(short *)(iVar8 + 0x12) + -1;
             }
+			
             if (iVar18 < 0)
 			{
 				// skip this particle,
@@ -613,6 +642,7 @@ void FUN_8003f590(int param_1,int *param_2)
 				goto LAB_800402b0;
 			}
 
+			// change pointer to current icon, from group array
             iVar8 = *(int *)(iVar8 + iVar18 * 4 + 0x14);
             param_2[2] = iVar8;
           }
