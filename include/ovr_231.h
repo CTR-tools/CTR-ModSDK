@@ -125,13 +125,17 @@ struct TrackerWeapon
 	// 0x58 bytes large
 };
 
-// don't know where to put this but it probably exists
 struct RainCloud
 {
-	char unknown[5];
+	// 0x0
+	void* rainBuffer;
+	
+	// 0x4
+	short timeMS;
+	
 	// 0x6
 	// I guess this is used for randomizing the items?
-	short itemScrollRandom;
+	short boolScrollItem;
 };
 
 // when the shield is worn

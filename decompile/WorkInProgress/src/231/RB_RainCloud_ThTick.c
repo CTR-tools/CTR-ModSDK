@@ -50,32 +50,24 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   // if driver is not using mask weapon
   if ((parent->actionsFlagSet & 0x800000) == 0) 
   {
-	// if ms remaining is not zero
-    if (*(short *)(rcloud + 4) != 0) 
+	// if RainCloud alive
+    if (rcloud->timeMS != 0) 
 	{
-	  // reduce by elapsed time
-      reduce = (int)*(short *)(rcloud + 4) - gGT->elapsedTimeMS;
-      *(short *)(rcloud + 4) = (short)reduce;
-      
-	  // solve for negatives
-	  if (reduce * 0x10000 < 0) {
-        *(short *)(rcloud + 4) = 0;
-      }
+      rcloud->timeMS -= gGT->elapsedTimeMS;
+	  if (rcloud->timeMS < 0) 
+		  rcloud->timeMS = 0;
 	  
-      if (*(short *)(rcloud + 6) != 1) {
+      if (rcloud->boolScrollItem != 1)
         return;
-      }
 	  
 	  // If your weapon is "no weapon"
-      if (parent->heldItemID == 0xf) {
+      if (parent->heldItemID == 0xf)
         return;
-      }
 	  
-	  // This is if weapo nwas already fired,
+	  // This is if weapon was already fired,
 	  // but is flickering in the UI
-      if (parent->noItemTimer != 0) {
+      if (parent->noItemTimer != 0)
         return;
-      }
 	  
 	  
 	  // === Have weapon, have not used it yet ===
@@ -99,16 +91,15 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
       return;
     }
 	
-	// at this point, you must not
-	// have cloud above you
+	// === RainCloud timeMS is over ===
 
-    *(short *)(rcloud + 4) = 0;
+    rcloud->timeMS = 0;
 	
 	// erase cloudTh pointer
     parent->thCloud = NULL;
     
 	if (
-			(*(short *)(rcloud + 6) == 1) && 
+			(rcloud->boolScrollItem == 1) && 
 			
 			// If your weapon is not "no weapon"
 			(parent->heldItemID != 0xf)
@@ -117,11 +108,11 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
       parent->itemRollTimer = 0;
 	  
 	  // pick random weapon for driver
-      VehPhysGeneral_SetHeldItem(parent,0x800b0000);
+      VehPhysGeneral_SetHeldItem(parent);
     }
   }
   else {
-    *(short *)(rcloud + 4) = 0;
+    rcloud->timeMS = 0;
 	
 	// erase pointer to cloud thread
     parent->thCloud = NULL;

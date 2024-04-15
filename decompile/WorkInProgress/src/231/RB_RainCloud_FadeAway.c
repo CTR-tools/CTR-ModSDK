@@ -18,15 +18,18 @@ void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
   inst->matrix.t[2] += parentInst->matrix.t[2] >> 1;
   
   // shrink scale (x, y, z)
-  inst->scale[0] += -0x100;
-  inst->scale[1] += -0x100;
-  inst->scale[2] += -0x100;
+  inst->scale[0] += FPS_HALF(-0x100);
+  inst->scale[1] += FPS_HALF(-0x100);
+  inst->scale[2] += FPS_HALF(-0x100);
   
-  // animation?
-  *(int *)(rcloud[0] + 8) -= 2;
+  *(int *)((int)rcloud->rainBuffer + 8) -= FPS_HALF(2);
   
-  if (inst->scale[0] < 0) {
-    JitPool_Remove(sdata->gGT->JitPools.rain,rcloud[0]);
+  if (inst->scale[0] < 0) 
+  {
+    DECOMP_JitPool_Remove(
+		sdata->gGT->JitPools.rain,
+		rcloud->rainBuffer
+	);
 	
 	// This thread is now dead
     t->flags |= 0x800;
