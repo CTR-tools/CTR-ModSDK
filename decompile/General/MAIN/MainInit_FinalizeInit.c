@@ -13,7 +13,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 	// Quitting a race while heldItem is warpball,
 	// never resets this flag, and then the game
 	// can not give warpball again until you reboot
-	gGT->gameMode1 &= ~(WARPBALL_HELD)
+	gGT->gameMode1 &= ~(WARPBALL_HELD);
 	
     lev1 = gGT->level1;
 
