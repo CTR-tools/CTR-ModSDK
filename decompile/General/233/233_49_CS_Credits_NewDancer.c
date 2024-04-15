@@ -16,7 +16,7 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	creditsBSS->dancerInst_invisible = dancerTh->inst;
 	creditsBSS->dancerInst_invisible->flags |= 0x80;
 	
-	creditsObj->countdown = 360;
+	creditsObj->countdown = FPS_DOUBLE(360);
 	
 	char** ptrStrings = creditsBSS->ptrStrings;
 	

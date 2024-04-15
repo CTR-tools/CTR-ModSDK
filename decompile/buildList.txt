@@ -141,6 +141,7 @@ common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullSce
 common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_40_CS_Garage.c
 // skip credits (41-46)
 common, 233, CS_Credits_Init, 0x0, General/233/233_47_CS_Credits_Init.c
+common, 233, CS_Credits_IsTextValid, 0x0, General/233/233_48_CS_Credits_IsTextValid.c
 common, 233, CS_Credits_NewDancer, 0x0, General/233/233_49_CS_Credits_NewDancer.c
 common, 233, CS_Credits_End, 0x0, General/233/233_51_CS_Credits_End.c
 

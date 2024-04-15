@@ -2162,7 +2162,7 @@ void FUN_800ae318(int param_1)
   // if there is room in primMem
   if (puVar4 + 6 < puVar2) 
   {
-	// pushBuffer offset 0x28 (400 = 0x190 = 0x168+0x28)
+	// pushBuffer offset 0x28 (400 equals 0x190 equals 0x168+0x28)
     setCopControlWord(2,0,*(undefined4 *)(PTR_DAT_8008d2ac + 400));
     setCopControlWord(2,0x800,*(undefined4 *)(PTR_DAT_8008d2ac + 0x194));
     setCopControlWord(2,0x1000,*(undefined4 *)(PTR_DAT_8008d2ac + 0x198));

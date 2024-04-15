@@ -68,7 +68,7 @@ void CS_Credits_Init()
 		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, 0, 0);
 		
 	memset(creditsObj, 0, sizeof(struct CreditsObj));
-	creditsObj->countdown = 360;
+	creditsObj->countdown = FPS_DOUBLE(360);
 	
 	// === 5 instances ===
 	for(i = 0; i < 5; i++)
