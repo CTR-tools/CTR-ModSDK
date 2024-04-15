@@ -137,9 +137,9 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			
 			// make flame disappear after
 			// 	- powerslide: two frames (quick death)
-			//	- all others: 255 frames (slowly die out)
+			//	- all others: -1 frames (255 = 'no' death)
 			if (type & 2)	count = FPS_DOUBLE(2);
-			else			count = FPS_DOUBLE(0xff);
+			else			count = -1;
 			turboObj->fireDisappearCountdown = count;
 	
 			// if modelIndex == "player" of any kind
