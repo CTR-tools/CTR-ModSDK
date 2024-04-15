@@ -25,7 +25,7 @@ void start()
 	sdata = &sdata_static;
 	
 	// initialize $sp
-	sp = 0x807ffff8;
+	sp = 0x807ffffc;
 	
 	u_int DECOMP_main();
 	DECOMP_main();

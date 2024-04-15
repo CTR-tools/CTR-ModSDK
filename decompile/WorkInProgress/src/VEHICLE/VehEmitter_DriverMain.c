@@ -687,22 +687,33 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
     // put each driver on alternates frames of 4 (0,1,2,3)
     uVar13 = (gGT->timer & 3);
     if (uVar13 != (*(byte *)(d + 0x4a) & 3))
+	{
+	  // skip particle spawn
       goto LAB_8005a9d8;
-
+	}
   LAB_8005a858:
     if (d->unk381 != 0)
       goto LAB_8005a868;
   }
-  // else if "player"???
+  
+  // else if "player"
   else
   {
+	// in a 1-player game, spawn 2 particles per frame on P1
+	// in a 2-player game, alternate players every 2 frames
+	// in a 4-player game, alternate players every 4 frames
+	  
     if ((d->revEngineState == 2) ||
         ((uVar13 = gGT->numPlyrCurrGame, 1 < uVar13 &&
         (((uVar13 != 2 || 
         (uVar13 = d->driverID, (gGT->timer & 1) != uVar13)) &&
         (uVar13 = d->driverID, (gGT->timer & 3) != uVar13))))))
+	{
+	  // skip particles
       goto LAB_8005a9d8;
-    if (d->unk381 == 0)
+	}
+	
+	if (d->unk381 == 0)
     {
       uVar13 = d->turbo_MeterRoomLeft;
       if ((uVar13 < 0x81) || (((d->const_turboLowRoomWarning + 2) * 0x20) < uVar13))
@@ -711,8 +722,11 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
         uVar29 = PROC_SearchForModel(puVar12, 0x2c);
         uVar13 = (uint)((ulonglong)uVar29 >> 0x20);
         if ((int)uVar29 != 0)
+		{
+		  // skip particles, burned-out meter
           goto LAB_8005a9d8;
-      }
+		}
+	  }
       goto LAB_8005a858;
     }
   LAB_8005a868:
