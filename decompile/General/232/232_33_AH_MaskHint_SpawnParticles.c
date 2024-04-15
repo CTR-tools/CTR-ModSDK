@@ -7,11 +7,7 @@ void DECOMP_AH_MaskHint_SpawnParticles(
   struct Particle* particle;
   struct Instance* maskInst;
   int i, j;
-  
-#ifdef REBUILD_PS1
-  return;
-#else
-  
+    
   maskAnim = maskAnim + 0x1000;
   if (maskAnim > 0x3fff) {
     maskAnim = 0x3fff;
@@ -32,7 +28,12 @@ void DECOMP_AH_MaskHint_SpawnParticles(
   
   for (i = 0; i < numParticles; i++) 
   {
+	#ifdef REBUILD_PS1
+	particle = 0;
+	return;
+	#else
     particle = Particle_Init(0,ig,emSet);
+	#endif
 
 // We know this never fails because the first mask spawn
 // uses 60 particles (3 per frame, lifespan=0x14, 3*20)

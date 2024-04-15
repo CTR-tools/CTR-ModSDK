@@ -9,6 +9,12 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
 	struct GameTracker* gGT = sdata->gGT;
 	struct Instance* dInst = d->instSelf;
 
+	#ifdef USE_60FPS
+	int BoolCheckExhaust(struct Driver* d);
+	if(BoolCheckExhaust(d) == 0)
+		return 0;
+	#endif
+
     if (d->invisibleTimer != 0)
 		return 0;
 	
@@ -21,6 +27,9 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
 
     char numPlyr = gGT->numPlyrCurrGame;
 
+	// equivalent of (d->driverID < numPlyr),
+	// because modelIndex is not set to DYNAMIC_ROBOT_CAR
+	// for human players after BOTS_Driver_Convert is called
 	if (dInst->thread->modelIndex != DYNAMIC_ROBOT_CAR)
 	{
 		switch (numPlyr)
@@ -46,7 +55,15 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
         emSet = &data.emSet_Exhaust_Water[0];
     }
 
+	#ifdef USE_60FPS
+	sdata->UnusedPadding1 = 1;
+	#endif
+
     p = Particle_Init(0, gGT->iconGroup[exhaustType], emSet);
+
+	#ifdef USE_60FPS
+	sdata->UnusedPadding1 = 0;
+	#endif
 
     if (p == NULL)
         return p;

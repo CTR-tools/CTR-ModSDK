@@ -110,6 +110,62 @@ struct Particle* NewParticleInit(struct LinkedList* param_1)
 	return p;
 }
 
+
+int BoolCheckExhaust(struct Driver* d)
+{
+	// 30fps PASS conditions:
+	// 	humans:
+	// 		1P:   every frame
+	// 		2P:   driverID == gGT->timer&1
+	// 		3P4P: driverID == gGT->timer&3
+	//	bots:
+	//		driverID&3 == gGT->timer&3
+	
+	// 60fps FAIL conditions:
+	//	humans:
+	//		1P:   gGT->timer&1
+	//		2P:   gGT->timer&2
+	//		3P4P: gGT->timer&4
+	//	bots:
+	//		gGT->timer&4
+	
+	struct GameTracker* gGT = sdata->gGT;
+	int numPlyr = gGT->numPlyrCurrGame;
+	int timer = gGT->timer;
+	
+	// human
+	if(d->driverID < numPlyr)
+	{
+		if(numPlyr == 1)
+		{
+			if((timer&1) != 0)
+				return 0;
+		}
+		
+		else if(numPlyr == 2)
+		{
+			if((timer&2) != 0)
+				return 0;
+		}
+		
+		// 3p/4p
+		else
+		{
+			if((timer&4) != 0)
+				return 0;
+		}
+	}
+	
+	// AI
+	else
+	{
+		if((timer&4) != 0)
+			return 0;
+	}
+	
+	return 1;
+}
+
 // This executes one time, before the
 // Crash Team Racing exe boots
 void ui60_entryHook()
