@@ -684,10 +684,13 @@ common, exe, VehPhysForce_AccelTerrainSlope, 0x0, General/Vehicle/VehPhysForce_A
 common, exe, VehPhysForce_OnApplyForces, 0x0, General/Vehicle/VehPhysForce_OnApplyForces.c
 
 // need more of VehPhysGeneral
+
 common, exe, VehPhysGeneral_PhysAngular, 0x0, General/Vehicle/VehPhysGeneral_PhysAngular.c
-common, exe, VehPhysGeneral_SetHeldItem, 0x0, General/Vehicle/VehPhysGeneral_SetHeldItem.c
-common, exe, VehPhysGeneral_LerpToForwards, 0x0, General/Vehicle/VehPhysGeneral_LerpToForwards.c
 common, exe, VehPhysGeneral_LerpQuarterStrength, 0x0, General/Vehicle/VehPhysGeneral_LerpQuarterStrength.c
+common, exe, VehPhysGeneral_LerpToForwards, 0x0, General/Vehicle/VehPhysGeneral_LerpToForwards.c
+common, exe, VehPhysGeneral_JumpGetVelY, 0x0, General/Vehicle/VehPhysGeneral_JumpGetVelY.c
+// JumpAndFriction
+common, exe, VehPhysGeneral_SetHeldItem, 0x0, General/Vehicle/VehPhysGeneral_SetHeldItem.c
 //ommon, exe, VehPhysGeneral_GetBaseSpeed, 0x0, General/Vehicle/VehPhysGeneral_GetBaseSpeed.c
 
 common, exe, VehPhysJoystick_ReturnToRest, 0x0, General/Vehicle/VehPhysJoystick_ReturnToRest.c
