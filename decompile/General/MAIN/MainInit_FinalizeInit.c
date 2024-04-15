@@ -9,6 +9,12 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     struct Level *lev1;
     struct Instance *inst;
 	
+	// === Naughty Dog Bug ===
+	// Quitting a race while heldItem is warpball,
+	// never resets this flag, and then the game
+	// can not give warpball again until you reboot
+	gGT->gameMode1 &= ~(WARPBALL_HELD)
+	
     lev1 = gGT->level1;
 
     // enable collisions with all temporary walls
