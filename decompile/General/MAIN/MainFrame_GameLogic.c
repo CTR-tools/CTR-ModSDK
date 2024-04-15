@@ -366,7 +366,7 @@ LAB_80035098:
 					DECOMP_ElimBG_Deactivate(gGT);
 
 					DECOMP_RECTMENU_Hide(sdata->ptrActiveMenu);
-					gGT->cooldownFromUnpauseUntilPause = 5;
+					gGT->cooldownFromUnpauseUntilPause = FPS_DOUBLE(5);
 				}
 			}
 			else
@@ -407,7 +407,7 @@ LAB_80035098:
 						
 						DECOMP_MainFreeze_IfPressStart();
 
-						gGT->cooldownfromPauseUntilUnpause = 5;
+						gGT->cooldownfromPauseUntilUnpause = FPS_DOUBLE(5);
 					}
 				}
 			}

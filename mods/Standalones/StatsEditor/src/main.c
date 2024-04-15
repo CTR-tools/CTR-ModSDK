@@ -89,7 +89,7 @@ void SelectPause(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 				{
 					gGT->unknownFlags_1d44 = gGT->gameMode1 & 0x3e0020 | PAUSE_1;
 					MyMainFreeze(gGT);
-					gGT->cooldownfromPauseUntilUnpause = 5;
+					gGT->cooldownfromPauseUntilUnpause = FPS_DOUBLE(5);
 				}
 			}
 		}

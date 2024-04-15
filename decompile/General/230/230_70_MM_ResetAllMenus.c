@@ -15,5 +15,6 @@ void DECOMP_MM_ResetAllMenus(void)
         menu->ptrPrevBox_InHierarchy = 0;
     }
 
-    sdata->framesRemainingInMenu = 0xF;
+	// unused
+    sdata->framesRemainingInMenu = FPS_DOUBLE(0xF);
 }

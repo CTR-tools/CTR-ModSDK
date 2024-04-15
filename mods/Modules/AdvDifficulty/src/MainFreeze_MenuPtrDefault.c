@@ -65,7 +65,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 		return;
 	}
 
-	gGT->cooldownFromUnpauseUntilPause = 5;
+	gGT->cooldownFromUnpauseUntilPause = FPS_DOUBLE(5);
 	RECTMENU_Hide(mb);
 	gGT->gameMode1 &= ~PAUSE_1;
 	MainFreeze_SafeAdvDestroy();

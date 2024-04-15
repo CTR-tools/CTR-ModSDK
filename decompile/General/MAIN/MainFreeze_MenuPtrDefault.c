@@ -75,7 +75,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 	}
 
 	// must wait 5 frames until next pause
-	gGT->cooldownFromUnpauseUntilPause = 5;
+	gGT->cooldownFromUnpauseUntilPause = FPS_DOUBLE(5);
 
 	// hide Menu
 	DECOMP_RECTMENU_Hide(menu);

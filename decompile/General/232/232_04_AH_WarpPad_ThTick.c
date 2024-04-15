@@ -565,7 +565,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 	
 	// wait 2 full seconds before loading
-	if (warppadObj->framesWarping < FPS_DOUBLE(61)) return;
+	if (warppadObj->framesWarping <= FPS_DOUBLE(60)) return;
 
 	// only works for trophy tracks rn
 	if(levelID < 0x10)

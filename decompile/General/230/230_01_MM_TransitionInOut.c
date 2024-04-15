@@ -10,7 +10,7 @@ unsigned char DECOMP_MM_TransitionInOut(struct TransitionMeta* meta, int framesP
 	start = meta->headStart;
 	framesLeft = ((short)framesPassed - start);
 
-    if (framesLeft == 4)
+    if (framesLeft == FPS_DOUBLE(4))
     {
         // Play "swoosh" sound for menu transition
         DECOMP_OtherFX_Play(0x65, 0);

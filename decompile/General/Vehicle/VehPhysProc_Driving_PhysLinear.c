@@ -548,14 +548,14 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 			
 			// if numHeldItems == 0
 			// wait a full second before next weapon
-			driver->noItemTimer = 0x1e;
+			driver->noItemTimer = FPS_DOUBLE(0x1e);
 
 			// If "held item quantity" is zero
 			if (driver->numHeldItems != 0)
 			{
 				// if numHeldItems > 0,
 				// wait 5 frames before next weapon use
-				driver->noItemTimer = 5;
+				driver->noItemTimer = FPS_DOUBLE(5);
 			
 				// not spring weapon
 				if (heldItemID != 5)

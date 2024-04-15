@@ -107,7 +107,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 					MainFreeze_SafeAdvDestroy();
 					ElimBG_Deactivate(gGT);
 					RECTMENU_Hide(sdata->ptrActiveMenu);
-					gGT->cooldownFromUnpauseUntilPause = 5;
+					gGT->cooldownFromUnpauseUntilPause = FPS_DOUBLE(5);
 				}
 			}
 		}
