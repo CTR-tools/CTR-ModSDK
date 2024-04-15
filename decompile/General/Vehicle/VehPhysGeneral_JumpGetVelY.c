@@ -25,15 +25,11 @@ int DECOMP_VehPhysGeneral_JumpGetVelY(short *normalVec, int *speedXYZ)
 
   result =
 
-	  // FPS_DOUBLE is needed to make an accurate
-	  // "initial" Y component, with half-speedXZ
-	  // due to half of elapsed time per frame
-
       // x2 * x1
-      FPS_DOUBLE(speedXYZ[0]) * normalVec[0] +
+      speedXYZ[0] * normalVec[0] +
 
       // z2 * z1
-      FPS_DOUBLE(speedXYZ[2]) * normalVec[2];
+      speedXYZ[2] * normalVec[2];
 
   return result / y1;
 }
