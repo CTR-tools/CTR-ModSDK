@@ -217,7 +217,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			#endif
 		}
 	
-		turboObj->fireDisappearCountdown = FPS_DOUBLE(0xff);
+		turboObj->fireDisappearCountdown = -1;
 		turboInst1->alphaScale = 0;
 		turboInst2->alphaScale = 0;
 	
