@@ -264,22 +264,20 @@ LAB_80035098:
 			if((p->flagsAxis & (0x1<<0xA)) != 0)
 			{
 				// use ColorB axis, guaranteed not in use,
-				// check here for patching
-				if (p->axis[0x9].startVal == 1) continue;
-					p->axis[0x9].startVal = 1;
+				// check here for patching, 4 divides to 2 in FOR-loop
+				if (p->axis[0x9].startVal != 0) continue;
+					p->axis[0x9].startVal = 4;
 			}
 			
 			// TireAxis is not in use
 			else
 			{
-				// check here for patching
-				if (p->axis[0xA].startVal == 1) continue;
-					p->axis[0xA].startVal = 1;
+				// check here for patching, 4 divides to 2 in FOR-loop
+				if (p->axis[0xA].startVal != 0) continue;
+					p->axis[0xA].startVal = 4;
 			}
 			
 			// === If unpatched particle ===
-			
-			printf("patch\n");
 
 			p->framesLeftInLife *= 2;
 			
