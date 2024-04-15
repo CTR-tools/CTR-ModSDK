@@ -113,35 +113,39 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
             d->KartStates.MaskGrab.boolWhistle = true;
         }
 
-        // Crashing
+
+        // Crashing animation at a frozen frame
+		// makes it look like the driver is falling
         d->matrixArray = 4;
+        inst->animIndex = 2;
+
 
 		int maskGrabAnimFrame = d->KartStates.MaskGrab.animFrame;
 
+
+		// logic specific to matrix set
 		if (maskGrabAnimFrame < 3)
 			d->matrixIndex = 7;
 		else
 			d->matrixIndex = maskGrabAnimFrame + 5;
 
-        // change animation
-        inst->animIndex = 2;
 
+		// logic specific to instance
         frame = 7;
-
         if (2 < maskGrabAnimFrame)
-        {
             frame = maskGrabAnimFrame + 5;
-        }
-
         inst->animFrame = frame;
 
-        frame = maskGrabAnimFrame + 1;
-        
-        if (7 < frame)
-        {
-            frame = 7;
-        }
 
+		// logic specific to maskgrab
+		#ifdef USE_60FPS
+			frame = maskGrabAnimFrame;
+			if(gGT->timer&1) frame++;
+		#else
+			frame = maskGrabAnimFrame + 1;
+		#endif
+		
+        if (frame > 7) frame = 7;
         d->KartStates.MaskGrab.animFrame = frame;
 
         // no input is less than 1.35 s
