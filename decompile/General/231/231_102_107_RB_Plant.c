@@ -135,47 +135,47 @@ PlayChewSound:
 						Particle_Init(0, sdata->gGT->iconGroup[0],&emSet_PlantTires[0]);
 					#endif
 						
-					if(particle != 0)
-					{
-						#ifndef REBUILD_PS1
-						particle->funcPtr = Particle_FuncPtr_SpitTire;
-						particle->plantInst = plantInst;
-						#endif
+					if(particle == 0)
+						break;
+
+					#ifndef REBUILD_PS1
+					particle->funcPtr = Particle_FuncPtr_SpitTire;
+					particle->plantInst = plantInst;
+					#endif
+					
+					particle->axis[0].startVal +=
+					(
+						plantInst->matrix.t[0] +
+						(plantInst->matrix.m[0][2] * 9 >> 7) 
+					) * 0x100;
 						
-						particle->axis[0].startVal +=
-						(
-							plantInst->matrix.t[0] +
-							(plantInst->matrix.m[0][2] * 9 >> 7) 
-						) * 0x100;
-							
-						particle->axis[1].startVal +=
-						(
-							plantInst->matrix.t[1] 
-							+ 0x20
-						) * 0x100;
-							
-						particle->axis[2].startVal +=
-						(
-							plantInst->matrix.t[2] +
-							(plantInst->matrix.m[2][2] * 9 >> 7) 
-						) * 0x100;
-							
-						particle->axis[0].velocity +=
-						(
-							// 6 - 26
-							(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
-							(plantInst->matrix.m[0][2] >> 0xC)
-						) * 0x100;
-							
-						// axis[1].velocity is untouched
-							
-						particle->axis[2].velocity +=
-						(
-							// 6 - 26
-							(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
-							(plantInst->matrix.m[2][2] >> 0xC)
-						) * 0x100;
-					}
+					particle->axis[1].startVal +=
+					(
+						plantInst->matrix.t[1] 
+						+ 0x20
+					) * 0x100;
+						
+					particle->axis[2].startVal +=
+					(
+						plantInst->matrix.t[2] +
+						(plantInst->matrix.m[2][2] * 9 >> 7) 
+					) * 0x100;
+						
+					particle->axis[0].velocity +=
+					(
+						// 6 - 26
+						(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
+						(plantInst->matrix.m[0][2] >> 0xC)
+					) * 0x100;
+						
+					// axis[1].velocity is untouched
+						
+					particle->axis[2].velocity +=
+					(
+						// 6 - 26
+						(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
+						(plantInst->matrix.m[2][2] >> 0xC)
+					) * 0x100;
 				}
 			
 				#ifdef USE_60FPS

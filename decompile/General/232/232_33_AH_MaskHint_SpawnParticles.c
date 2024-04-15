@@ -8,6 +8,10 @@ void DECOMP_AH_MaskHint_SpawnParticles(
   struct Instance* maskInst;
   int i, j;
   
+#ifdef REBUILD_PS1
+  return;
+#else
+  
   maskAnim = maskAnim + 0x1000;
   if (maskAnim > 0x3fff) {
     maskAnim = 0x3fff;
@@ -28,14 +32,15 @@ void DECOMP_AH_MaskHint_SpawnParticles(
   
   for (i = 0; i < numParticles; i++) 
   {
-	  
-#ifdef REBUILD_PS1
-	particle =  NULL;
-#else
     particle = Particle_Init(0,ig,emSet);
-#endif
 
+// We know this never fails because the first mask spawn
+// uses 60 particles (3 per frame, lifespan=0x14, 3*20)
+// and particle pool hold 64, and vehicle is the one that 
+// fails Particle_Init, see exhaust fade when mask spawns
+#if 0
     if(particle == NULL) return;
+#endif
 
 	for(j = 0; j < 3; j++)
 		particle->axis[j].startVal += maskInst->matrix.t[j] * 0x100;

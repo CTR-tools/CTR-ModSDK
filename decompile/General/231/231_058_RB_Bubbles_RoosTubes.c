@@ -80,12 +80,13 @@ void DECOMP_RB_Bubbles_RoosTubes()
 		#endif
 		
 		p = Particle_Init(0, gGT->iconGroup[7], &emSet_TubeBubbles[0]);
-		if(p == 0) return;
 		
 		#ifdef USE_60FPS
 		sdata->UnusedPadding1 = 0;
 		#endif
 		
+		if(p == 0) return;
+				
 		numFreeParticles--;
 		
 		p->unk1A = 0x7fff;
