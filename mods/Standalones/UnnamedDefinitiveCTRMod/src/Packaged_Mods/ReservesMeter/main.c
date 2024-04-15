@@ -62,7 +62,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->x3 = posX;
 		p->y3 = bottomY;
 		
-		reservesMeter = posX - ((short)(reservesMeterWidth / 0x960) - (short)(reservesMeterWidth / 0x80000000));
+		reservesMeter = posX - ((short)(reservesMeterWidth / 0x960));
 		if(reservesMeter < (posX - 0x31))
 		{
 			reservesMeter = posX - 0x31;
@@ -192,7 +192,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->x3 = sVar9;
 		p->y3 = posY;
 		
-		reservesMeter = posY - ((short)(reservesMeterHeight / 0x960) - (short)(reservesMeterHeight / 0x80000000));
+		reservesMeter = posY - ((short)(reservesMeterHeight / 0x960));
 		if(reservesMeter < (posY - 0x4C))
 		{
 			reservesMeter = posY - 0x4C;

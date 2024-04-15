@@ -118,7 +118,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 			p->y2 = posY;
 			p->x3 = sVar9;
 			p->y3 = posY;
-			jumpMeter = posY - ((short)(jumpMeterHeight / 0x960) - (short)(jumpMeterHeight / 0x80000000));
+			jumpMeter = posY - ((short)(jumpMeterHeight / 0x960));
 			p->y0 = jumpMeter;
 			p->y1 = jumpMeter;
 
