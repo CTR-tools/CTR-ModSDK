@@ -15,8 +15,6 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 	// can not give warpball again until you reboot
 	gGT->gameMode1 &= ~(WARPBALL_HELD);
 	
-    lev1 = gGT->level1;
-
     // enable collisions with all temporary walls
     // (adv hub doors, tiger temple teeth, etc)
     sdata->doorAccessFlags = 0;
@@ -178,6 +176,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     }
 
     DECOMP_MainInit_JitPoolsReset(gGT);
+	
+    lev1 = gGT->level1;
 
 #ifndef REBUILD_PS1
     // 0x1d7c

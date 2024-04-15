@@ -456,22 +456,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		// skip if not drawing "FINAL LAP"
 		if(textTimer == 0)
 			continue;
-		
-		#ifdef USE_60FPS
-		// if crossed finish line less than 1 second ago
-		if((gGT->elapsedEventTime - gGT->drivers[i]->lapTime) < 960)
-			
-			// if PlayLevel.c initialized this to 90 (which we can't change yet),
-			// for more info, CTRL + F and search: (&DAT_8008d2a0)[iVar10] = 0x5a;
-			if(sdata->finalLapTextTimer[i] == 90)
 				
-				// change to 180, for 3 seconds at 60fps
-				sdata->finalLapTextTimer[i] = 180;
-				
-		// update register with changed value
-		textTimer = sdata->finalLapTextTimer[i];
-		#endif
-		
 		// turn "time remaining" into "time elapsed",
 		// 90 frames total in animation, 1.5 seconds
 		textTimer = FPS_DOUBLE(90) - textTimer;

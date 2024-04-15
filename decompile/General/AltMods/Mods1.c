@@ -175,6 +175,13 @@ void ui60_entryHook()
 	// replace call to LIST_RemoveFront inside Particle_Init
 	*(unsigned int*)0x80040348 = JAL(NewParticleInit);
 
+	// Final Lap
+	{
+		// if PlayLevel.c initialized this to 90 (which we can't change yet),
+		// for more info, CTRL + F and search: (&DAT_8008d2a0)[iVar10] = 0x5a;
+		*(short*)0x80041718 = FPS_DOUBLE(90);
+	}
+
 	// Starting line
 	{
 		// Intro Camera Fly-in

@@ -211,7 +211,8 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	if (driver->heldItemID == 0x9)
 	{
 		// if nobody has warpball, then set flag that somebody has it
-		if (!(gGT->gameMode1 & WARPBALL_HELD)) gGT->gameMode1 |= WARPBALL_HELD;
+		if ((gGT->gameMode1 & WARPBALL_HELD) == 0) 
+			gGT->gameMode1 |= WARPBALL_HELD;
 
 		// if somebody has warpball already, then give 3 missiles
 		else driver->heldItemID = 0xb;
@@ -225,7 +226,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 			gGT->numPlyrCurrGame > 2 &&
 
 			// if not in battle mode
-			!(gGT->gameMode1 & BATTLE_MODE)
+			((gGT->gameMode1 & BATTLE_MODE) == 0)
 		)
 	{
 		// if less than 2 drivers have 3 missiles, then increase number of drivers that have it
