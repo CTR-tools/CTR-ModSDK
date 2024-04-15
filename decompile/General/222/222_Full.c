@@ -148,7 +148,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					if (hudC->scale[0] == 0x800)
 						OtherFX_Play(0x67, 1);
 
-					if (hudLetters[0]->scale[0] < 0x2200)
+					// original code said < 0x2200, but the 
+					// actual desired value is 0x2400, needs
+					// this change so 60fps doesn't stop at
+					// 0x2200 when stepping at half speed
+					if (hudLetters[0]->scale[0] < 0x2400)
 					{
 						for (i = 0; i < 3; i++)
 						{
@@ -179,8 +183,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudToken->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
 				
 				// variable reuse, frame timers
-				lerpStartY = 120;
-				lerpEndY = 160;
+				lerpStartY = FPS_DOUBLE(120);
+				lerpEndY = FPS_DOUBLE(160);
 			}
 			
 			// If you already have this CTR Token unlocked
@@ -282,7 +286,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// loop through all the driver icons
 		for (i = 0; i < sdata->numIconsEOR; i++)
 		{
-
 			int iVar11 = gGT->pushBuffer[0].rect.x +
 						 (gGT->pushBuffer[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
 
