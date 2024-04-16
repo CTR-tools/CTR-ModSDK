@@ -1124,6 +1124,8 @@ void FUN_80018d9c(int param_1,int param_2)
   undefined2 uVar1;
   long lVar2;
 
+  // This is NOT TransitionTo,
+  // spin360's spinSpeed (missing union)
   *(undefined2 *)(param_1 + 0xa4) = 0xffe5;
 
   // Activate end-of-race Battle flag

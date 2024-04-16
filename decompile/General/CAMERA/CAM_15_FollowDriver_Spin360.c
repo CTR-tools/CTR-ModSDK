@@ -3,16 +3,21 @@
 void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, int param_2, struct Driver* d, short* desiredPos, short* desiredRot)
 {
   int ratio;
-  short posX;
+  short spinSpeed;
+  
+  // === Union Missing ===
+  // Not really "transitionTo" but the variables
+  // are shared with other camera modes, therefore
+  // need a union with proper names for each mode
   
   // rotate one way
-  posX = cDC->transitionTo.pos[0];
+  spinSpeed = cDC->transitionTo.pos[0];
   
   // rotate other way for odd number
   if ((d->driverID & 1) != 0)
-	posX = -posX;
+	spinSpeed = -spinSpeed;
 
-  int angle = cDC->unk90 + posX;
+  int angle = cDC->unk90 + spinSpeed;
   cDC->unk90 = angle;
 
   ratio = MATH_Sin(angle);

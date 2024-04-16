@@ -9,10 +9,11 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
   int height;
   struct PushBuffer* pb;
 
-  // transition to the radius of 
-  // the camera that spins around player
+  // This is NOT TransitionTo,
+  // spin360's spinSpeed (missing union)
+  // and spinHeight, spinDistance, etc
   height = data.Spin360_heightOffset_cameraPos[sdata->gGT->numPlyrCurrGame];
-  cDC->transitionTo.pos[0] = 0xffe5;
+  cDC->transitionTo.pos[0] = FPS_HALF(0xffe5);
   cDC->transitionTo.pos[1] = height;
   cDC->transitionTo.pos[2] = 0xc0;
 

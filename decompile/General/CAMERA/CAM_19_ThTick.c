@@ -253,10 +253,16 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			(cDC->transitionTo).rot[2] = psVar21[7];
 			*(short *)&cDC->unk_b0[0] = psVar21[8];
 			break;
+			
+		// Spin360
 		case 10:
-			sVar6 = *psVar19;
+			
+			// spinSpeed
+			sVar6 = FPS_HALF(*psVar19);
+			
 			psVar19 = psVar21 + 2;
 			goto LAB_8001b928;
+			
 		case 11:
 			sVar6 = *(short *)&pb->distanceToScreen_CURR;
 			pb->pos[0] = *psVar19;
@@ -432,13 +438,19 @@ LAB_8001c128:
 						{
 							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & 0xf) == 0))
 							{
-								uVar9 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800390, (int)*(short *)&cDC->unk_b0[0], 1);
-								iVar7 = FPS_HALF(-0xc0);
+								uVar9 = CAM_FollowDriver_TrackPath(
+											cDC, (short *)0x1f800390, 
+											FPS_HALF(*(short *)&cDC->unk_b0[0]), 
+											1);
+								
+								iVar7 = -0xc0;
 								if (-1 < *(short *)&cDC->unk_b0[0])
-								{
-									iVar7 = FPS_HALF(0xc0);
-								}
-								uVar10 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800398, iVar7, 0);
+									iVar7 = 0xc0;
+								
+								uVar10 = CAM_FollowDriver_TrackPath(
+											cDC, (short *)0x1f800398, 
+											FPS_HALF(iVar7), 
+											0);
 								
 								// interpolate two rotations
 								

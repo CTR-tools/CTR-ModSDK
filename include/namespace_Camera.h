@@ -166,6 +166,8 @@ struct CameraDC
 	// difference between 8e and 9e?
 
 	// 0xa4
+	// union shared between camera modes
+	// Spin360 uses 0xa4 for spin speed
 	struct
 	{
 		short pos[3];
@@ -173,7 +175,8 @@ struct CameraDC
 	} transitionTo;
 
 	// 0xb0 - next byte
-	// 0xb0 - 2 byte short, speed of camera on track path
+	// union between multiple camera modes
+	// TrackPath uses 0xb0 for movement speed
 	char unk_b0[8];
 
 	// X axis (0xb8)
