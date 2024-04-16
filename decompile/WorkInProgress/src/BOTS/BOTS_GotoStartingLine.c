@@ -37,7 +37,7 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   BOTS_SetRotation(d, 1);
 
   // time until full acceleration from start
-  accelDuration = sdata->AI_timeToFullAccel_0xa0;
+  accelDuration = sdata->AI_AccelFrameCount;
 
   // get acceleration order from spawn order
   accel = sdata->accelerateOrder[spawnPos];

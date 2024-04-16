@@ -2086,7 +2086,7 @@ LAB_80014b48:
 			// decrease timer
             *(int *)(iVar17 + 0x5b4) = *(int *)(iVar17 + 0x5b4) + -1;
 
-			// velocity (positive or negative)
+			// velocity depends on AI_AccelFrameSteps
 			iVar3 = (int)(iVar3 * (0x100 - DAT_8008cf84 *
                                   (uint)(byte)(&DAT_8008d680)[*(byte *)(iVar17 + 0x4a)]))
                     >> 8;

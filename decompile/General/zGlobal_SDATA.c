@@ -27,8 +27,11 @@ struct sData sdata_static =
 		0, -1, -1, 2
 	},
 	
-	.AI_timeToFullAccel_0xa0 = 0xa0,
-	.AI_dragDuringAccel_0x18 = 0x18,
+	// twice as many frames, half as much
+	// step for each frame of acceleration
+	.AI_AccelFrameCount = 0xa0,
+	.AI_AccelFrameSteps = 0x18,
+	
 	.AI_VelY_WhenBlasted_0x3000 = 0x3000,
 	
 	.s_camera = "camera",

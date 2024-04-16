@@ -2593,8 +2593,8 @@ struct sData
 	// 0x8008CF80
 	// both these are multiplied by accelerateOrder,
 	// used to spread out AIs during first few seconds of race
-	int AI_timeToFullAccel_0xa0;
-	int AI_dragDuringAccel_0x18;
+	int AI_AccelFrameCount;
+	int AI_AccelFrameSteps;
 
 	// 0x8008CF88
 	int AI_VelY_WhenBlasted_0x3000;
