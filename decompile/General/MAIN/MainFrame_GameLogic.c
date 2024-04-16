@@ -223,17 +223,19 @@ LAB_80035098:
 							}
 							
 							#ifdef USE_60FPS
-							// if this function just ran
-							if(pcVar5 == VehFrameProc_Driving)
-							{
-								// only if jumping animation,
-								// otherwise wheelie gets bugged
-								if(psVar9->instSelf->animIndex == 3)
-								{
-									psVar9->matrixIndex = 
-									psVar9->matrixIndex >> 1;
-								}
-							}
+								#ifndef REBUILD_PS1
+									// if this function just ran
+									if(pcVar5 == VehFrameProc_Driving)
+									{
+										// only if jumping animation,
+										// otherwise wheelie gets bugged
+										if(psVar9->instSelf->animIndex == 3)
+										{
+											psVar9->matrixIndex = 
+											psVar9->matrixIndex >> 1;
+										}
+									}
+								#endif
 							#endif
 						}
 						
