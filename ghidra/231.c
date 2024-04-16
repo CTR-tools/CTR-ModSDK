@@ -4793,6 +4793,9 @@ void FUN_800b0f1c(int param_1)
   // instance -> thread -> object
   piVar3 = *(int **)(*(int *)(iVar1 + 0x6c) + 0x30);
   
+  // === Ghidra Fail ===
+  // This should be getting the average, not adding
+  
   // set X and Y
   *(int *)(iVar1 + 0x44) = *(int *)(iVar1 + 0x44) + *(int *)(iVar2 + 0x44) >> 1;
   *(int *)(iVar1 + 0x48) = *(int *)(iVar1 + 0x48) + *(int *)(iVar2 + 0x48) + 0x80 >> 1;
@@ -4864,7 +4867,9 @@ void FUN_800b1000(int param_1)
     *(undefined2 *)(iVar3 + 0x54) = 0;
   }
   
-  // set scale of one instance to half the scale of another
+  // === Ghidra Fail ===
+  // should be averaging scale and averaging velocity
+  
   *(undefined2 *)(iVar3 + 0x1c) =
        (short)((int)*(short *)(iVar3 + 0x1c) + (int)*(short *)(iVar6 + 0x1c) >> 1);
   *(undefined2 *)(iVar3 + 0x1e) =

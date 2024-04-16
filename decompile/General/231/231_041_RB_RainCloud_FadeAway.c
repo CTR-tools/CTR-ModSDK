@@ -1,5 +1,7 @@
 #include <common.h>
 
+// budget 216/224
+
 void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
 {
   struct Instance* inst;
@@ -10,10 +12,16 @@ void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
   rcloud = t->object;  
   parentInst = t->parentThread->inst;
 
-  // set X, Y and Z
-  inst->matrix.t[0] += parentInst->matrix.t[0] >> 1;
-  inst->matrix.t[1] += (parentInst->matrix.t[1] + 0x80) >> 1;
-  inst->matrix.t[2] += parentInst->matrix.t[2] >> 1;
+  // offset upward before averaging
+  inst->matrix.t[1] += 0x80;
+
+  // X, Y, Z
+  for(int i = 0; i < 3; i++)
+  {
+	// get average between instance and driver
+	inst->matrix.t[i] += parentInst->matrix.t[i];
+	inst->matrix.t[i] = inst->matrix.t[i] >> 1;
+  }
   
   struct RainLocal* rainLocal = rcloud->rainLocal;
   rainLocal->frameCount -= FPS_HALF(2);

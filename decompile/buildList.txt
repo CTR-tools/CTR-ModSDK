@@ -94,8 +94,8 @@ common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_Th
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
 common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
 
-//common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c
-//common, 231, RB_RainCloud_ThTick, 0x0, General/231/231_042_RB_RainCloud_ThTick.c
+common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c
+common, 231, RB_RainCloud_ThTick, 0x0, General/231/231_042_RB_RainCloud_ThTick.c
 common, 231, RB_RainCloud_Init, 0x0, General/231/231_043_RB_RainCloud_Init.c
 
 // skip explosion, blowup, burst, 
