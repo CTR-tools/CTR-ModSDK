@@ -6,13 +6,26 @@ void DECOMP_MM_ResetAllMenus(void)
     {
         struct RectMenu* menu = D230.arrayMenuPtrs[i];
 
-        // Close menu
-        menu->state |= 8;
-        menu->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+		// PC doesn't "reload" 230 cause it's all
+		// in the executable. Do manual clearing
+		#ifdef REBUILD_PC
+		do
+		{
+			struct RectMenu* next = menu->ptrNextBox_InHierarchy;
+		#endif
+			
+			// Close menu
+			menu->state |= 8;
+			menu->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
+			
+			// Reset ptrNext and ptrPrev
+			menu->ptrNextBox_InHierarchy = 0;
+			menu->ptrPrevBox_InHierarchy = 0;
 
-        // Reset ptrNext and ptrPrev
-        menu->ptrNextBox_InHierarchy = 0;
-        menu->ptrPrevBox_InHierarchy = 0;
+		#ifdef REBUILD_PC			
+			menu = next;
+		} while(menu != 0);
+		#endif
     }
 
 	// unused
