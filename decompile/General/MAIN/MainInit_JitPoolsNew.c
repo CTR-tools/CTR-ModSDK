@@ -60,10 +60,18 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // add a bookmark
   DECOMP_MEMPACK_PushState();
 
+  // OG game uses either 24, 48, or 96
+  int numThreads = uVar9 * 3 >> 7;
+
+  // Niko optimization, 
+  // game never uses more than 64
+  if(numThreads > 64)
+	  numThreads = 64;
+
   // ThreadPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.thread,
-	uVar9 * 3 >> 7,
+	numThreads,
 	0x48,/*"ThreadPool"*/0);
   
   // InstancePool
