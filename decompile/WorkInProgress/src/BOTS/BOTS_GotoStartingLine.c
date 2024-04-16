@@ -6,7 +6,6 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   short accel;
   int accelDuration;
   short rotY;
-  ushort extraout_var;
 
   sdata->unk_counter_upTo450 = 0;
 
