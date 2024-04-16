@@ -138,6 +138,10 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 		struct Model* m = i->model;
 		if(m == 0) return;
 		
+		// need this, or it'll somehow become
+		// 0x13 instead of 0x14? May as well leave it here
+		i->animFrame = FPS_DOUBLE(10);
+		
 		// make an exception for driver when 233 is still
 		// loaded, and aku/uka says "congratulations, you win"
 		PatchModel_60fps(m);
