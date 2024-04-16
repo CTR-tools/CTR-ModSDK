@@ -476,7 +476,7 @@ void DECOMP_MM_ParseCheatCodes()
 	
 	// if not holding L1 and R1
 	if(
-			gpad->buttonsHeldCurrFrame & (BTN_L1|BTN_R1) 
+			(gpad->buttonsHeldCurrFrame & (BTN_L1|BTN_R1))
 			!= 
 			(BTN_L1|BTN_R1)
 		) 
