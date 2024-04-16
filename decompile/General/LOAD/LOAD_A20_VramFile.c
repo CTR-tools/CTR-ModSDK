@@ -32,6 +32,10 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 			DECOMP_MEMPACK_PopState();
 		}
 		
+		// optimization, dont use instructions writing
+		// return value, let it use whatever sits on 
+		// the register. Return value is never used 
+		// because callback.funcptr is zero
 		return;
 	}
 	

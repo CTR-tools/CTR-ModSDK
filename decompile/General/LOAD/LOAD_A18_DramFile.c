@@ -17,6 +17,11 @@ void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		lqs.callback.funcPtr = 0;
 		
 		DECOMP_LOAD_DramFileCallback(&lqs);
+		
+		// optimization, dont use instructions writing
+		// return value, let it use whatever sits on 
+		// the register. Return value is never used 
+		// because callback.funcptr is zero
 		return;
 	}
 	
