@@ -9,12 +9,6 @@
 
 void NewCallback231()
 {
-	// weapon roulette
-	{
-		// timer after red potion expires
-		*(unsigned char*)0x800b11a4 = 5*2;
-	}
-
 	// spinning bomb
 	{
 		// cut speed in half
@@ -168,6 +162,12 @@ void ui60_entryHook()
 		// if PlayLevel.c initialized this to 90 (which we can't change yet),
 		// for more info, CTRL + F and search: (&DAT_8008d2a0)[iVar10] = 0x5a;
 		*(short*)0x80041718 = FPS_DOUBLE(90);
+	}
+	
+	// SelectProfile flashing orange/red
+	// for strings SAVE/LOAD/WARNING
+	{
+		*(short*)0x8004A5C8 = FPS_DOUBLE(4);
 	}
 
 	// Starting line
