@@ -9,18 +9,20 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 	#endif
 	
 	#ifdef USE_60FPS
-	// RenderBucketInstance is moved to rdata_free,
-	// which saves 0x400 to 0x1000 bytes, so increase
-	// by 0x200 bytes, which happens twice
-	
 	// This is needed cause of LOD upgrading in 60fps,
 	// which is needed cause LOD[1] can't double-lerp
 	// animations
 	
 	// Without this, game crashes if you load
-	// 1P Arcade N Tropy Crash Cove,
-	// then startline boost while holding R2
+	// Adventure->HotAirSkyway, then tap X+LEFT at startline
+	
+	// half of 0x400 (this runs twice)
+	// at least 0x400 saved from RenderBucketInstance->RDATA_FREE
 	size += 0x200;
+	
+	// half of 0x200 (this runs twice)
+	// 0x200 bytes saved from moving $sp in MEMPACK_Init
+	size += 0x100;
 	#endif
 	
 	pvVar1 = DECOMP_MEMPACK_AllocMem(size);

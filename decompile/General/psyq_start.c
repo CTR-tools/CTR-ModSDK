@@ -31,6 +31,19 @@ void start()
 		
 		*(int*)0x8009f6f8 = 0;
 		*(int*)0x8009f6fc = 0;
+		
+		// clear $sp region
+		for(
+				i = 0x807ff800; 
+				i < 0x807fff00; 
+				i += 4
+			)
+		{
+			i[0] = 0;
+			i[1] = 0;
+			i[2] = 0;
+			i[3] = 0;
+		}
 	}
 	
 	// initialize $gp
