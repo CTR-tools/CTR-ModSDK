@@ -102,7 +102,18 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,uVar7 >> 5,	0x18,	/*"OscillatorPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.rain, 		uVar7 >> 9,	0x28,	/*"RainPool"*/0);
 
+#ifdef REBUILD_PS1
+  // original CTR code, still used for 
+  // REBUILD_PS1 and REBUILD_PC cause those 
+  // builds dont have OG game's bloatful RDATA
   gGT->ptrRenderBucketInstance = DECOMP_MEMPACK_AllocMem(uVar9/*,"RENDER_BUCKET_INSTANCE"*/);
+#else
+  // save 0x400 - 0x1000 bytes
+  // when compiling with OG game's RDATA
+  // then expand PrimMem in 60fps,
+  // add 148 bytes cause of MATH_Sin relocated
+  gGT->ptrRenderBucketInstance = (int)148 + (int)&rdata.s_STATIC_GNORMALZ[0];
+#endif
 
 // ===========================================
 

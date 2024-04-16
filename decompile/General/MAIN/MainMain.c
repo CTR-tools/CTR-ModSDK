@@ -597,7 +597,7 @@ void StateZero()
 	ResetCallback();
 	
 	// We have 2mb RAM total
-	DECOMP_MEMPACK_Init(0x800000);
+	DECOMP_MEMPACK_Init(0x200000);
 	
 	// also sets debug variables to "off"
 	DECOMP_LOAD_InitCD();
