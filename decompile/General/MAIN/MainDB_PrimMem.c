@@ -19,9 +19,9 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 		// at least 0x400 saved from RenderBucketInstance->RDATA_FREE
 		size += 0x200;
 		
-		// half of 0x200 (this runs twice)
+		// half of 0x300 (this runs twice)
 		// 0x200 bytes saved from moving $sp in MEMPACK_Init
-		size += 0x100;
+		size += 0x180;
 		
 		// half of 0x900
 		// this configuration normally uses 96 threads, now 64,

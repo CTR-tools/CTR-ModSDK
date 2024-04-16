@@ -75,7 +75,13 @@ void PatchModel_60fps(struct Model* m)
 	// max graphics, because h[1] is already lerp'd, 
 	// so attempting to force lerp purely for 60fps
 	// causes the AI/Ghost models to explode at LOD[1]
-	h[0].maxDistanceLOD = 0x7fff;
+	
+	// only do this for drivers,
+	// doing this on everything will crash
+	// Hot Air Skyway due to too many primitives,
+	// only drivers have lerp'd h[1] anyway
+	if(m->id == -1)
+		h[0].maxDistanceLOD = 0x7fff;
 	#endif
 
 	#if 0
