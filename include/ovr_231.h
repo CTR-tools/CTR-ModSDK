@@ -125,10 +125,34 @@ struct TrackerWeapon
 	// 0x58 bytes large
 };
 
+struct RainLocal
+{
+	// 0x0
+	struct RainLocal* next;
+	struct RainLocal* prev;
+	
+	// 0x8
+	int frameCount;
+	
+	// 0xC
+	short unk1[4];
+	
+	// 0x14
+	short vel[4];
+	
+	// 0x1c
+	short pos[4];
+	
+	// 0x24
+	struct instance* cloudInst;
+	
+	// 0x28 -- size
+};
+
 struct RainCloud
 {
 	// 0x0
-	void* rainBuffer;
+	struct RainLocal* rainLocal;
 	
 	// 0x4
 	short timeMS;
@@ -136,6 +160,8 @@ struct RainCloud
 	// 0x6
 	// I guess this is used for randomizing the items?
 	short boolScrollItem;
+	
+	// size - 0x8
 };
 
 // when the shield is worn

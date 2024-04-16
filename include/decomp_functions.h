@@ -582,6 +582,10 @@ u_int MM_Video_CheckIfFinished(int param_1);
 void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
 
+void DECOMP_RB_RainCloud_FadeAway(struct Thread* t);
+void DECOMP_RB_RainCloud_ThTick(struct Thread* t);
+void DECOMP_RB_RainCloud_Init(struct Driver* d);
+
 void DECOMP_RB_Baron_LInB(struct Instance* inst);
 
 void DECOMP_RB_Blade_ThTick(struct Thread* t);

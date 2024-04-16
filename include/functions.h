@@ -1175,6 +1175,10 @@ void CS_BoxScene_InstanceSplitLines();
 
 void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
+
+void RB_RainCloud_FadeAway(struct Thread *t);
+void RB_RainCloud_ThTick(struct Thread* t);
+
 void RB_Burst_ProcessBucket(struct Thread* thread);
 void RB_Blowup_ProcessBucket(struct Thread* thread);
 void RB_Spider_DrawWebs(struct Thread* thread, struct PushBuffer* pb);

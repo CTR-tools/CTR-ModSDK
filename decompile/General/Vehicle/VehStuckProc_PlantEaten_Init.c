@@ -2,8 +2,6 @@
 
 extern void *PlayerEatenFuncTable[13];
 
-void RB_RainCloud_FadeAway(struct Thread *t);
-
 // when eaten by plant on papu pyramid
 void DECOMP_VehStuckProc_PlantEaten_Init(struct Thread *t, struct Driver *d)
 {
@@ -31,7 +29,7 @@ void DECOMP_VehStuckProc_PlantEaten_Init(struct Thread *t, struct Driver *d)
     // if thread of "cloud" exists
     if (d->thCloud != NULL)
     {
-        *(short *)&((struct RainCloud *)d->thCloud->object)->unknown[4] = 0;
+        ((struct RainCloud *)d->thCloud->object)->timeMS = 0;
 
         d->thCloud->funcThTick = RB_RainCloud_FadeAway;
 		d->thCloud = NULL;

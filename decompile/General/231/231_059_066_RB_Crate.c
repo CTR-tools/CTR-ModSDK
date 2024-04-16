@@ -271,7 +271,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 			if (
 				(
 					(struct RainCloud*)driver->thCloud->object
-				)->itemScrollRandom == 1
+				)->boolScrollItem == 1
 			)
 			{
 				return 1;

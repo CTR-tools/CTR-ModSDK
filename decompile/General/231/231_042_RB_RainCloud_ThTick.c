@@ -7,21 +7,23 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   int reduce;
   int rng;
   struct Instance* inst;
-  struct Driver* parent;
+  struct Driver* d;
   struct RainCloud* rcloud;
-  struct Instance* parentInst;
+  struct Instance* dInst;
   
   struct GameTracker* gGT = sdata->gGT;
   
   inst = t->inst;
   rcloud = t->object;
   
-  animFrame = inst->animFrame;
-  
   // get player who put the potion
-  parent = t->parentThread->object;
-  parentInst = t->parentThread->inst;
+  struct Thread* driverTh = 
+	t->parentThread;
   
+  d = driverTh->object;
+  dInst = driverTh->inst;
+  
+  animFrame = inst->animFrame;
   numFrames = INSTANCE_GetNumAnimFrames(inst,0);
   
   // if you have not reached the end of the animation
@@ -39,16 +41,16 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   }
   
   // set scale of one instance to half the scale of another
-  inst->scale[0] += parentInst->scale[0] >> 1;
-  inst->scale[1] += parentInst->scale[1] >> 1;
-  inst->scale[2] += parentInst->scale[2] >> 1;
+  inst->scale[0] += dInst->scale[0] >> 1;
+  inst->scale[1] += dInst->scale[1] >> 1;
+  inst->scale[2] += dInst->scale[2] >> 1;
 	   
-  inst->matrix.t[0] += parentInst->matrix.t[0] >> 1;
-  inst->matrix.t[1] += (parentInst->matrix.t[1] + (inst->scale[1] * 5 >> 7)) >> 1;
-  inst->matrix.t[2] += parentInst->matrix.t[2] >> 1;
+  inst->matrix.t[0] += dInst->matrix.t[0] >> 1;
+  inst->matrix.t[1] += (dInst->matrix.t[1] + (inst->scale[1] * 5 >> 7)) >> 1;
+  inst->matrix.t[2] += dInst->matrix.t[2] >> 1;
   
   // if driver is not using mask weapon
-  if ((parent->actionsFlagSet & 0x800000) == 0) 
+  if ((d->actionsFlagSet & 0x800000) == 0) 
   {
 	// if RainCloud alive
     if (rcloud->timeMS != 0) 
@@ -60,15 +62,14 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
       if (rcloud->boolScrollItem != 1)
         return;
 	  
-	  // If your weapon is "no weapon"
-      if (parent->heldItemID == 0xf)
+	  // skip this, cause RainCloud_Init
+	  // already checks before setting bool
+	  #if 0
+      if (d->heldItemID == 0xf)
         return;
-	  
-	  // This is if weapon was already fired,
-	  // but is flickering in the UI
-      if (parent->noItemTimer != 0)
+      if (d->noItemTimer != 0)
         return;
-	  
+	  #endif
 	  
 	  // === Have weapon, have not used it yet ===
 	  
@@ -76,48 +77,42 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
 	  // === Naughty Dog Bug fixed ===
 	  // Allow warpball to be found in itemRNG
 	  // if the warpball "was" held, then lost
-	  if(parent->heldItemID == 9)
+	  if(d->heldItemID == 9)
 		  gGT->gameMode1 &= ~(WARPBALL_HELD);
 	  
 	  // set weapon to "weapon roulette" to make it spin
-      parent->heldItemID = 0x10;
+      d->heldItemID = 0x10;
 	  
 	  // you are always 5 frames away from new weapon,
 	  // so you get weapon 5 frames after cloud dies
-      parent->itemRollTimer = FPS_DOUBLE(5);
+      d->itemRollTimer = FPS_DOUBLE(5);
 	  
 	  // you hold zero of this item
-      parent->numHeldItems = 0;
+      d->numHeldItems = 0;
       return;
     }
 	
 	// === RainCloud timeMS is over ===
-
-    rcloud->timeMS = 0;
-	
-	// erase cloudTh pointer
-    parent->thCloud = NULL;
     
 	if (
 			(rcloud->boolScrollItem == 1) && 
 			
 			// If your weapon is not "no weapon"
-			(parent->heldItemID != 0xf)
+			(d->heldItemID != 0xf)
 		)
 	{
-      parent->itemRollTimer = 0;
+      d->itemRollTimer = 0;
 	  
 	  // pick random weapon for driver
-      VehPhysGeneral_SetHeldItem(parent);
+      VehPhysGeneral_SetHeldItem(d);
     }
   }
-  else {
-    rcloud->timeMS = 0;
-	
-	// erase pointer to cloud thread
-    parent->thCloud = NULL;
-  }
+
+  // using mask weapon,
+  // or timeMS is over
+  rcloud->timeMS = 0;
+  d->thCloud = NULL;
   
-  ThTick_SetAndExec(t,RB_RainCloud_FadeAway);
+  ThTick_SetAndExec(t,DECOMP_RB_RainCloud_FadeAway);
   return;
 }

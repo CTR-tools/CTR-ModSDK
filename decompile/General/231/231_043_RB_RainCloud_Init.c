@@ -2,9 +2,9 @@
 
 void DECOMP_RB_RainCloud_Init(struct Driver* d)
 {
-  char* rain;
   struct Instance* cloudInst;
   struct RainCloud* rcloud;
+  struct RainLocal* rlocal;
   unsigned short uVar3;
 
   // if driver -> cloudTh is invalid
@@ -36,34 +36,31 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     *(char *)(cloudInst + 0x51) = *(char *)(d->instSelf + 0x51);
     
 	// add rain to pool
-	rain = JitPool_Add(sdata->gGT->JitPools.rain);
+	rlocal = DECOMP_JitPool_Add(&sdata->gGT->JitPools.rain);
     
 	// no idea what struct is this yet 
-	if (rain != NULL) 
+	if (rlocal != NULL) 
 	{
-      *(short *)((int)rain + 8) = 0x1e;
+      rlocal->frameCount = 0x1e;
 	  
-	  // short[4]
-      *(short *)((int)rain + 0xc) = 0;
-      *(short *)((int)rain + 0xe) = 0;
-      *(short *)((int)rain + 0x10) = 0;
+	  rlocal->unk1[0] = 0;
+      rlocal->unk1[1] = 0;
+      rlocal->unk1[2] = 0;
       
-	  // short[4]
-	  *(short *)((int)rain + 0x14) = 0;
-      *(short *)((int)rain + 0x16) = 0xffd8;
-      *(short *)((int)rain + 0x18) = 0;
+	  rlocal->vel[0] = 0;
+      rlocal->vel[1] = FPS_HALF(-0x28);
+      rlocal->vel[2] = 0;
       
-	  // short[4]
-	  *(short *)((int)rain + 0x1c) = d->instSelf->matrix.t[0];
-      *(short *)((int)rain + 0x1e) = d->instSelf->matrix.t[1] + 0x80;
-      *(short *)((int)rain + 0x20) = d->instSelf->matrix.t[2];
+	  rlocal->pos[0] = d->instSelf->matrix.t[0];
+      rlocal->pos[1] = d->instSelf->matrix.t[1] + 0x80;
+      rlocal->pos[2] = d->instSelf->matrix.t[2];
       
-	  *(int *)(  (int)rain + 0x24) = cloudInst;
+	  rlocal->cloudInst = cloudInst;
     }
     
 	rcloud = cloudInst->thread->object;
     rcloud->timeMS = 0x1e00; // 7.68s
-    rcloud->rainBuffer = rain;
+    rcloud->rainLocal = rlocal;
 	rcloud->boolScrollItem = 1;
     
 	if (
@@ -89,7 +86,7 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     rcloud->timeMS = 0x1e00;
     
 	// random number
-	rng = DECOMP_MixRNG_Scramble();
+	int rng = DECOMP_MixRNG_Scramble();
 	
 	// random (related to driver offset 0x50a)
     rcloud->boolScrollItem = (short)((rng % 400) / 100);

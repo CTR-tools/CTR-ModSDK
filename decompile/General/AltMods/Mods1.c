@@ -38,18 +38,6 @@ void NewCallback231()
 		*(unsigned short*)0x800AFC64 = -0x80;
 	}
 
-	#if 0
-	// raincloud
-	{
-		// cut values in half
-
-		// scale from FadeAway
-		*(unsigned short*)0x800B0f7c = -0x80;
-		*(unsigned short*)0x800B0f88 = -0x80;
-		*(unsigned short*)0x800B0f94 = -0x80;
-	}
-	#endif
-
 	// shield
 	{
 		// ShieldDark_Pop and ShieldDark_PerFrame

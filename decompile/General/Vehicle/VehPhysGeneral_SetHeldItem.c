@@ -34,7 +34,8 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	itemSet = ITEMSET_BattleCustom;
 
 	// 5th Itemset (Battle Mode Default Itemset, 0x34de)
-	if (gGT->battleSetup.enabledWeapons == 0x34de) itemSet = ITEMSET_BattleDefault;
+	if (gGT->battleSetup.enabledWeapons == 0x34de) 
+		itemSet = ITEMSET_BattleDefault;
 
 	// Not in Battle Mode
 	if ((gGT->gameMode1 & BATTLE_MODE) == 0)
@@ -43,7 +44,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		itemSet = ITEMSET_CrystalChallenge;
 
 		// Not in Crystal Challenge
-		if (!(gGT->gameMode1 & CRYSTAL_CHALLENGE))
+		if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) == 0)
 		{
 			// Choose Itemset based on number of Drivers
 			switch(gGT->numPlyrCurrGame + gGT->numBotsNextGame)
@@ -128,8 +129,10 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 			}
 		}
 		
-		// if you have 4th-place itemset on first lap, then override to 3rd place
-		if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0) itemSet = ITEMSET_Race3;
+		// if you have 4th-place itemset on first lap, 
+		// then override to 3rd place
+		if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0) 
+			itemSet = ITEMSET_Race3;
 	}
 
 	// Decide item for Driver
@@ -179,13 +182,15 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		if (bossFails < 0x3)
 		{
 			// Replace Clock, Mask,  with 3 Missiles
-			if ((u_int)driver->heldItemID - 0x7 < 0x3) driver->heldItemID = 0xb;
+			if ((u_int)driver->heldItemID - 0x7 < 0x3) 
+				driver->heldItemID = 0xb;
 		}
 
 		else if (bossFails < 0x4)
 		{
 			// Replace Clock, Mask with 3 Missiles
-			if ((u_int)driver->heldItemID - 0x7 < 0x2) driver->heldItemID = 0xb;
+			if ((u_int)driver->heldItemID - 0x7 < 0x2) 
+				driver->heldItemID = 0xb;
 		}
 
 		else if (bossFails < 0x5 && driver->heldItemID == 0x8)
@@ -195,7 +200,8 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		}
 
 		// Replace 3 Missiles with 1 Missile if racing Komodo Joe
-		if (gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
+		if (gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb) 
+			driver->heldItemID = 0x2;
 	}
 
 #if 0
@@ -230,14 +236,16 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		)
 	{
 		// if less than 2 drivers have 3 missiles, then increase number of drivers that have it
-		if (gGT->numPlayersWith3Missiles < 2)	gGT->numPlayersWith3Missiles++;
+		if (gGT->numPlayersWith3Missiles < 2)	
+			gGT->numPlayersWith3Missiles++;
 
 		// if 2 drivers already have 3 missiles, now you have 1 missile
 		else driver->heldItemID = 0x2;
 	}
 
 	// Set number of held items
-	if ((u_int)driver->heldItemID - 0xA < 0x2) driver->numHeldItems = 0x3;
+	if ((u_int)driver->heldItemID - 0xA < 0x2) 
+		driver->numHeldItems = 0x3;
 
 	return;
 }

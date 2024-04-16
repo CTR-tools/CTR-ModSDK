@@ -185,7 +185,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	// if you have a raincloud over your head from potion
 	if (driver->thCloud != 0) 
 		driverRankItemValue = 
-			((struct RainCloud*)driver->thCloud->object)->itemScrollRandom;
+			((struct RainCloud*)driver->thCloud->object)->boolScrollItem;
 
 	// get approximate speed
 	approximateSpeed = driver->speedApprox;
