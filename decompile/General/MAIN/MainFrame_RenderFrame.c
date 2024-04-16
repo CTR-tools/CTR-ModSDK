@@ -127,7 +127,24 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 	if(instPool->taken.first == 0) return;
 	
 	// ignore ND box, intro models, oxide intro, podiums, etc
-	if(DECOMP_LOAD_IsOpen_Podiums()) return;
+	if(DECOMP_LOAD_IsOpen_Podiums())
+	{
+		struct Driver* d = gGT->drivers[0];
+		if(d == 0) return;
+		
+		struct Instance* i = d->instSelf;
+		if(i == 0) return;
+		
+		struct Model* m = i->model;
+		if(m == 0) return;
+		
+		// make an exception for driver when 233 is still
+		// loaded, and aku/uka says "congratulations, you win"
+		PatchModel_60fps(m);
+		
+		// nothing else
+		return;
+	}
 
 	for(
 			struct Instance* inst = instPool->taken.first; 
