@@ -3994,8 +3994,8 @@ void FUN_8001702c(int param_1)
   *(int *)(param_1 + 0x5b4) = iVar2 * (uint)bVar1;
 
   // cooldown before next weapon
-  FUN_8006c684(&DAT_8008d668);
-  *(short *)(param_1 + 0x624) = (extraout_var & 0xff) + 300;
+  rng = FUN_8006c684(&DAT_8008d668);
+  *(short *)(param_1 + 0x624) = (rng & 0xff) + 300;
 
   return;
 }
