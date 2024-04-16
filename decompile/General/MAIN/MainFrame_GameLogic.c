@@ -221,6 +221,15 @@ LAB_80035098:
 							{
 								pcVar5(psVar12, psVar9);
 							}
+							
+							#ifdef USE_60FPS
+							// if this function just ran
+							if(pcVar5 == VehFrameProc_Driving)
+							{
+								psVar9->matrixIndex = 
+								psVar9->matrixIndex >> 1;
+							}
+							#endif
 						}
 						
 						// rig collisions to high-poly,

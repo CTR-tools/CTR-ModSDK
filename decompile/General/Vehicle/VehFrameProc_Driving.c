@@ -178,11 +178,14 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             default:
                 charID += 7;
             }
-            // set AnimType based on charID
+            
+			// set AnimType based on charID
             d->matrixArray = charID;
-            // set animation frame
+			
+            // set animation frame (needs FPS_HALF)
             d->matrixIndex = *(char *)&inst->animFrame;
-            return;
+            
+			return;
         }
         // last frame
         iVar9 = numFrames - 1;
