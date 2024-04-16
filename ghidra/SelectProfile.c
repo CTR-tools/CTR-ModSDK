@@ -1018,8 +1018,11 @@ void FUN_800490c4(int param_1)
   ushort local_38;
   ushort local_30;
 
+  // color = ORANGE
   local_50 = 0;
-  if ((*(ushort *)(param_1 + 0x14) & 0x10) != 0) {
+  if ((*(ushort *)(param_1 + 0x14) & 0x10) != 0) 
+  {
+	// color = DARK_RED
     local_50 = 0x1d;
   }
   uVar24 = 0;
