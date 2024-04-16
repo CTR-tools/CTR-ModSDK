@@ -59,7 +59,7 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	
 	((struct MaskHint*)mhInst->thread->object)->scale = scale * 4 - 1;
 	
-	angle = (sdata->frameCounter + sdata->gGT->timer) * 0x20;
+	angle = (sdata->frameCounter + gGT->timer) * FPS_HALF(0x20);
 	sin = DECOMP_MATH_Sin(angle);
 	mhInst->matrix.t[1] = posCurr[1] + (short)(((sin << 4) >> 0xc) * scale >> 0xc);
 }
