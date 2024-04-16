@@ -433,10 +433,10 @@ LAB_8001c128:
 							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & 0xf) == 0))
 							{
 								uVar9 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800390, (int)*(short *)&cDC->unk_b0[0], 1);
-								iVar7 = -0xc0;
+								iVar7 = FPS_HALF(-0xc0);
 								if (-1 < *(short *)&cDC->unk_b0[0])
 								{
-									iVar7 = 0xc0;
+									iVar7 = FPS_HALF(0xc0);
 								}
 								uVar10 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800398, iVar7, 0);
 								
