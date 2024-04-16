@@ -157,6 +157,22 @@ void ui60_entryHook()
 	// replace call to LIST_RemoveFront inside Particle_Init
 	*(unsigned int*)0x80040348 = JAL(NewParticleInit);
 
+	// Gravity
+	{
+		// decrease from 900 to xxx,
+		// otherwise Hot Air Skyway C-T-R token is impossible,
+		// and some shortcuts are impossible (HAS USF jump to startline)
+		
+		// 900 isnt enough
+		// 800 is too easy
+		// 850 feels about right
+		
+		data.metaPhys[0].value[0] = 850;
+		data.metaPhys[0].value[1] = 850;
+		data.metaPhys[0].value[2] = 850;
+		data.metaPhys[0].value[3] = 850;
+	}
+
 	// Final Lap
 	{
 		// if PlayLevel.c initialized this to 90 (which we can't change yet),

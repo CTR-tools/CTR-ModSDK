@@ -4,8 +4,8 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 {
 	u_int metaPhysSize;
 	u_int i;
-	struct MetaPhys * metaPhys;
-	u_char * d;
+	struct MetaPhys* metaPhys;
+	u_char* d;
 
 	d = (u_char *)driver;
 
