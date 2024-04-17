@@ -15,19 +15,8 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 		// Without this, game crashes if you load
 		// Adventure->HotAirSkyway, then tap X+LEFT at startline
 		
-		// half of 0x400 (this runs twice)
-		// at least 0x400 saved from RenderBucketInstance->RDATA_FREE
-		size += 0x200;
-		
-		// half of 0x300 (this runs twice)
-		// 0x200 bytes saved from moving $sp in MEMPACK_Init
-		size += 0x180;
-		
-		// half of 0x900
-		// this configuration normally uses 96 threads, now 64,
-		// saves 0x900 total (96-64)*0x48
-		if ((sdata->gGT->gameMode1 & (ADVENTURE_ARENA|MAIN_MENU)) == 0)
-		size += 0x480;
+		// Should fit with all memory optimizations
+		size += 0x800;
 		#endif
 	#endif
 	

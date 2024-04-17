@@ -60,19 +60,20 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			BI_ADVENTUREPACK + data.characterIDs[0];
 		
 		//#ifdef USE_OXIDE
-		//// loading into main menu,
-		//// load oxide adv mpk, which is faster
-		//// than retail doing "any" arcade mpk
-		//if (gGT->overlayIndex_Threads == 0)
-		//	fileIndex = BI_ADVENTUREPACK + 0xf;
-		//
-		//// loading into cutscene (or AdvGarage),
-		//// use penta, so game doesn't crash if you
-		//// select Oxide in Arcade select, then go 
-		//// to a cutscene and load oxide mpk accidentally
-		//else if (gGT->overlayIndex_Threads == 3)
-		//	fileIndex = BI_ADVENTUREPACK + 0xD;
-		//#endif
+		#if 0
+		// loading into main menu,
+		// load oxide adv mpk, which is faster
+		// than retail doing "any" arcade mpk
+		if (gGT->overlayIndex_Threads == 0)
+			fileIndex = BI_ADVENTUREPACK + 0xf;
+		
+		// loading into cutscene (or AdvGarage),
+		// use penta, so game doesn't crash if you
+		// select Oxide in Arcade select, then go 
+		// to a cutscene and load oxide mpk accidentally
+		else if (gGT->overlayIndex_Threads == 3)
+			fileIndex = BI_ADVENTUREPACK + 0xD;
+		#endif
 		
 		// adv mpk
 		DECOMP_LOAD_AppendQueue(
