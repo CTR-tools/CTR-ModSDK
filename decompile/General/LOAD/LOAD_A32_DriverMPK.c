@@ -45,7 +45,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	}
 
 // Compiles 4120 (optimized to 4064 with "else")
-// This is what I want, why wont it work?
+// This fails ONLY on DuckStation for any MPK
+// other than BI_ADVENTUREPACK + data.characterIDs[0],
+// VehBirth_GetModelByString will return nullptr and
+// something later will explode, but PC port works fine
 #if 0
 	#ifdef USE_OXIDE
 	// need oxide model for character select
