@@ -92,7 +92,7 @@ void DECOMP_CS_Garage_MenuProc(void)
 		MDC = &data.MetaDataCharacters[gGarage.unusedFrameCount];
 		nameIndex = MDC->name_LNG_long;
 
-		DecalFont_DrawLine
+		DECOMP_DecalFont_DrawLine
 		(
 			"PRESS L1 OR R1 TO SWAP",
 			0x100,					// midpoint

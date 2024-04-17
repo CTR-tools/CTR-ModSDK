@@ -429,7 +429,7 @@ void Oxide_HookAppendLoadingQueue()
 	int loop;
 	struct LoadQueueSlot* lqs_next;
 	struct LoadQueueSlot* lqs_curr;
-	int packIndex = LOAD_GetAdvPackIndex();
+	int packIndex = DECOMP_LOAD_GetAdvPackIndex();
 
 	// set pointers
 	lqs_curr = &sdata->queueSlots[sdata->queueLength-1];
