@@ -232,10 +232,13 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             // if quadblock is not ground
             if ((uVar1 & 0x1000) == 0)
             {
+				// NO SCRUB
                 scrubId = 6;
+				
                 // is not invisible
                 if ((uVar1 & 1) == 0)
                 {
+					// SOLID
                     scrubId = 0;
                 }
             }
@@ -271,6 +274,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
                 // driver is now on ground
                 d->unkAA |= 8;
 
+				// ROAD
                 scrubId = 5;
             }
 
