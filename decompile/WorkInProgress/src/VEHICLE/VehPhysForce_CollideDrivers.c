@@ -16,6 +16,8 @@ void DECOMP_VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* dr
 	int distance;
 	short driverHitRadius;
 	
+	struct GameTracker* gGT = sdata->gGT;
+	
 	stepFlagSet = driver->stepFlagSet;
 
 	driver->velocityXYZ[0] -= driver->accelXYZ[0];
@@ -38,7 +40,7 @@ void DECOMP_VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* dr
 		reservesIncrement = 960;
 
 		// If Super Turbo Pads is enabled
-		if (sdata->gGT->gameMode2 & CHEAT_TURBOPAD)
+		if (gGT->gameMode2 & CHEAT_TURBOPAD)
 		{
 			// Skip a few lines
 			goto LAB_8005ec50;
@@ -61,22 +63,24 @@ LAB_8005ec50:
 	}
 
 	// add reserves and speed of turbo pad
-	DECOMP_VehFire_Increment(driver, reservesIncrement, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
+	DECOMP_VehFire_Increment(
+		driver, reservesIncrement, 
+		(TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), 
+		fireLevel);
 
 LAB_8005ec70:
+	
+	inst = thread->inst;
+	
 	if ((stepFlagSet & 0x8000) == 0)
 	{
-		// thread -> instance -> flags
 		// instance is not in water or mud
-		thread->inst->flags &= ~(0x2000);
+		inst->flags &= ~(0x2000);
 	}
 
 	// if instance is in water or mud
 	else
 	{
-		// thread -> instance
-		inst = thread->inst;
-
 		// set vertical split height
 		// (Y=0 for all water and mud)
 		inst->vertSplit = 0;
@@ -86,14 +90,14 @@ LAB_8005ec70:
 		inst->flags |= 0x2000;
 	}
 
+	// position X, Y and Z
+	for (char i = 0; i < 3; i++)
+		pos[i] = (u_short)((u_int)driver->posCurr[i] >> 8);
+
 	// if collision is not disabled for this thread
 	if ((thread->flags & 0x1000) == 0)
 	{
 		// 40, 3e, 3c, 38, 34, allocated in that order
-
-		// position X, Y and Z
-		for (char i = 0; i < 3; i++)
-			pos[i] = (u_short)((u_int)driver->posCurr[i] >> 8);
 
 		// distance between two objects
 		distance = 0x7fffffff;
@@ -105,7 +109,7 @@ LAB_8005ec70:
 		PROC_CollidePointWithBucket(thread->siblingThread, &pos);
 
 		// pointer to first robotcar thread
-		PROC_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &pos);
+		PROC_CollidePointWithBucket(gGT->threadBuckets[ROBOT].thread, &pos);
 		
 		// if there was a collision
 		if ((collideThread != 0) &&
@@ -122,27 +126,31 @@ LAB_8005ec70:
 		}
 	}
 	
-	// starts breaking below this section
-	
+	// This is broken
 	#if 0
+	
 	// if touched quadblock
 	if ((driver->unkAA & 2) != 0) 
 	{
 		// distance from driver to quadblock
-		iVar1 = pos[0] - driver->spsHitPos[0];
-		iVar2 = pos[1] - driver->spsHitPos[1];
-		iVar3 = pos[2] - driver->spsHitPos[2];
+		// dont use "pos[x]", need full 3 bytes
+		iVar1 = ((u_int)driver->posCurr[0] >> 8) - driver->spsHitPos[0];
+		iVar2 = ((u_int)driver->posCurr[1] >> 8) - driver->spsHitPos[1];
+		iVar3 = ((u_int)driver->posCurr[2] >> 8) - driver->spsHitPos[2];
+		
+		int iVar4 = (((driver->quadBlockHeight >> 8) - driver->spsHitPos[1]) + 4);
 		
 		if
 		(
 			(
 			(driver->spsNormalVec[0] * iVar1) + 
-			(driver->spsNormalVec[1] * (((driver->quadBlockHeight >> 8) - driver->spsHitPos[1]) + 4)) +
+			(driver->spsNormalVec[1] * iVar4) +
 			(driver->spsNormalVec[2] * iVar3)
 			) < 0
 		) 
 		{
 			// calculate speed vector
+			// this causes papu pyramid tizzy wall bounce
 			driver->velocityXYZ[0] += iVar1 * 0x40;
 			driver->velocityXYZ[1] += iVar2 * 0x40;
 			driver->velocityXYZ[2] += iVar3 * 0x40;

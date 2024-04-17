@@ -6233,7 +6233,7 @@ LAB_8005ec70:
     
 	if (
 		*(short *)(param_2 + 0xb4) * iVar3 +
-        (int)*(short *)(param_2 + 0xb6) * (((*(int *)(param_2 + 0x2d0) >> 8) - (int)*(short *)(param_2 + 0xae)) + 4) +
+        *(short *)(param_2 + 0xb6) * (((*(int *)(param_2 + 0x2d0) >> 8) - (int)*(short *)(param_2 + 0xae)) + 4) +
         *(short *)(param_2 + 0xb8) * iVar1 < 0) 
 	{
 	  // calculate speed vector
