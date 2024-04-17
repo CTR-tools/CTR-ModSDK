@@ -25,8 +25,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 #endif
 	
 	struct GameTracker* gGT = sdata->gGT;
-
 	gameMode1 = gGT->gameMode1;
+	
+	int lastFileIndexMPK;
 
 	// 3P/4P
 	if(levelLOD - 3U < 2)
@@ -40,15 +41,44 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		}
 
 		// load 4P MPK of fourth player
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			BI_4PARCADEPACK + data.characterIDs[i],
-			0,param_3);
-
-		return;
+		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[i];
 	}
 
-	// adv mpk
-	if(
+// Compiles 4120
+// This is what I want, why wont it work?
+#if 0
+	#ifdef USE_OXIDE
+	// need oxide model for character select
+	else if(gGT->levelID == MAIN_MENU_LEVEL)
+	{
+		lastFileIndexMPK = BI_ADVENTUREPACK + 0xf;
+	}
+	#endif
+
+	// adv mpk for adventure
+	else if((gameMode1 & ADVENTURE_ARENA) != 0)
+	{
+		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
+	}
+	
+	else if(
+		// adv mpk when we just need text from MPK
+		((gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0)
+		||
+
+		// credits
+		((gGT->gameMode2 & CREDITS) != 0)
+	  )
+	{
+		// penta penguin, smallest MPK
+		lastFileIndexMPK = BI_ADVENTUREPACK + 0xD;
+	}
+	
+// Compiles 4080
+// This is what we're stuck with
+#else
+	else if(
+		// adv mpk when we just need text from MPK
 		((gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) != 0)
 		||
 
@@ -56,35 +86,11 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		((gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
-		int fileIndex = 
-			BI_ADVENTUREPACK + data.characterIDs[0];
-		
-		//#ifdef USE_OXIDE
-		#if 0
-		// loading into main menu,
-		// load oxide adv mpk, which is faster
-		// than retail doing "any" arcade mpk
-		if (gGT->overlayIndex_Threads == 0)
-			fileIndex = BI_ADVENTUREPACK + 0xf;
-		
-		// loading into cutscene (or AdvGarage),
-		// use penta, so game doesn't crash if you
-		// select Oxide in Arcade select, then go 
-		// to a cutscene and load oxide mpk accidentally
-		else if (gGT->overlayIndex_Threads == 3)
-			fileIndex = BI_ADVENTUREPACK + 0xD;
-		#endif
-		
-		// adv mpk
-		DECOMP_LOAD_AppendQueue(
-			param_1,LT_DRAM,
-			fileIndex,
-			0,param_3);
-
-		return;
+		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
+#endif
 
-	if((gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
+	else if((gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
@@ -92,14 +98,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// time trial mpk
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			BI_TIMETRIALPACK + data.characterIDs[1],
-			0,param_3);
-
-		return;
+		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
 	}
 
-	if(
+	else if(
 			// If you are in Adventure cup
 			((gameMode1 & ADVENTURE_CUP) != 0) &&
 
@@ -107,39 +109,31 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			(gGT->cup.cupID == 4)
 		)
 	{
+		data.characterIDs[1] = 0xA;
+		data.characterIDs[2] = 0x9;
+		data.characterIDs[3] = 0xB;
+		data.characterIDs[4] = 0x8;
+
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_RACERMODELHI + data.characterIDs[0],
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// pack of four AIs with bosses
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			BI_2PARCADEPACK + 7,
-			0,param_3);
-
-		data.characterIDs[1] = 0xA;
-		data.characterIDs[2] = 0x9;
-		data.characterIDs[3] = 0xB;
-		data.characterIDs[4] = 0x8;
-
-		return;
+		lastFileIndexMPK = BI_2PARCADEPACK + 7;
 	}
 
 	// any 1P mode,
 	// not adv, not time trial, not gem cup, not credits
-	if(levelLOD == 1)
+	else if(levelLOD == 1)
 	{
 		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
 
 		// arcade mpk
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			BI_1PARCADEPACK + data.characterIDs[0],
-			0,param_3);
-
-		return;
+		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
 	}
 
-	if(levelLOD == 2)
+	else if(levelLOD == 2)
 	{
 		// med models
 		for(i = 0; i < 2; i++)
@@ -155,4 +149,11 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 		return;
 	}
+
+	DECOMP_LOAD_AppendQueue(
+		param_1,LT_DRAM,
+		lastFileIndexMPK,
+		0,param_3);
+
+	return;
 }
