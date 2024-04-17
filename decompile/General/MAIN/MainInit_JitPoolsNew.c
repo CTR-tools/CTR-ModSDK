@@ -194,7 +194,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // SmallStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.smallStack, 
-	uVar7 * 0x19 >> 10,
+	numThread,
 	0x40 + sizeof(void*)*2,
 	/*"SmallStackPool"*/0);
   
@@ -208,7 +208,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x670,	/*"LargeStackPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	uVar7 >> 5,	0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,uVar7 >> 5,	0x18,	/*"OscillatorPool"*/0);
-  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		uVar7 >> 9,	0x28,	/*"RainPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	0x28,	/*"RainPool"*/0);
 
 #ifdef REBUILD_PS1
   // original CTR code, still used for 
