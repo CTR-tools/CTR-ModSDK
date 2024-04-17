@@ -57,6 +57,14 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		((gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
+		#ifdef USE_OXIDE
+		// loading into main menu,
+		// load oxide adv mpk, which is faster
+		// than retail doing "any" arcade mpk
+		if(gGT->overlayIndex_Threads == 0)
+			data.characterIDs[0] = 0xf;
+		#endif
+		
 		// adv mpk
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_ADVENTUREPACK + data.characterIDs[0],

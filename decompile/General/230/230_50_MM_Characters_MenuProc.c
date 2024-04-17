@@ -463,9 +463,14 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	
 	csm_Active = D230.csm_Active;
 	
+#ifndef USE_OXIDE
+  #define NUM_ICONS 0xF
+#else
+  #define NUM_ICONS 0x10
+#endif
+	
 	// loop through character icons
-
-	for (i = 0; i < 0xf; i++)
+	for (i = 0; i < NUM_ICONS; i++)
 	{
 		iVar8 = csm_Active->unlockFlags;
 		if
@@ -598,7 +603,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	csm_Active = D230.csm_Active;
 
 	// loop through all icons
-	for (i = 0; i < 0xf; i++)
+	for (i = 0; i < NUM_ICONS; i++)
 	{
 		iVar8 = csm_Active[i].unlockFlags;
 		

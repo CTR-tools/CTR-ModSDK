@@ -25,7 +25,13 @@ void DECOMP_MM_Characters_RestoreIDs(void)
 
   DECOMP_MM_Characters_SetMenuLayout();
 
-  for (i = 0; i < 0xf; i++) 
+#ifndef USE_OXIDE
+  #define NUM_ICONS 0xF
+#else
+  #define NUM_ICONS 0x10
+#endif
+
+  for (i = 0; i < NUM_ICONS; i++) 
   {  
 	// would not need this if CSM was sorted 
 	// by order of character ID

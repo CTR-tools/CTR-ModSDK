@@ -43,6 +43,11 @@ struct Model* MM_Characters_GetModelByID(int id)
   if (level1 == NULL)
     return NULL;
 
+  #ifdef USE_OXIDE
+  if(id == 0xf)
+	  return sdata->PLYROBJECTLIST[18];
+  #endif
+
   models = level1->ptrModelsPtrArray;
   return models[0xE - id];
 }
