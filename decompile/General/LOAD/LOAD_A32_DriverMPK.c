@@ -44,7 +44,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[i];
 	}
 
-// Compiles 4120
+// Compiles 4120 (optimized to 4064 with "else")
 // This is what I want, why wont it work?
 #if 0
 	#ifdef USE_OXIDE
@@ -74,7 +74,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		lastFileIndexMPK = BI_ADVENTUREPACK + 0xD;
 	}
 	
-// Compiles 4080
+// Compiles 4080 (optimized to 4016 with "else")
 // This is what we're stuck with
 #else
 	else if(
@@ -133,7 +133,8 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
 	}
 
-	else if(levelLOD == 2)
+	//else if(levelLOD == 2)
+	else
 	{
 		// med models
 		for(i = 0; i < 2; i++)
