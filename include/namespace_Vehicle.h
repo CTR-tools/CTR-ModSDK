@@ -441,7 +441,14 @@ struct Driver
 	struct QuadBlock* currBlockTouching;
 
 	// 0xA4
-	char fill18_postQuadBlock[0x18];
+	short normalVecUP[3];
+	short unkAA;
+	
+	// 0xac
+	short spsHitPos[4];
+	
+	// 0xb4
+	short spsNormalVec[4];
 
 	// 0xBC
 	// 0xBD is waterFlag

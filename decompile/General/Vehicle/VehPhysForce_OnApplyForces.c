@@ -55,19 +55,15 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread *t, struct Driver *d)
     d->currBlockTouching = NULL;
 
     // normalVec = {0, 0x1000, ...}
-    *(u_int *)&d->fill18_postQuadBlock[0] = 0x10000000;
-
-    // normalVec = {0, 0x1000, ...}
+    *(u_int *)&d->normalVecUP[0] = 0x10000000;
     *(u_int *)&d->AxisAngle1_normalVec[0] = 0x10000000;
 
     // normalVec = {... ..., 0}
-    *(u_short *)&d->fill18_postQuadBlock[4] = 0;
-    
-    // normalVec = {... ..., 0}
+    d->normalVecUP[2] = 0;
     d->AxisAngle1_normalVec[2] = 0;
 
     // driver quadblock flags?
-    *(u_short *)&d->fill18_postQuadBlock[6] = 0;
+    d->unkAA = 0;
 
 	#ifdef REBUILD_PC
 	d->accelXYZ[1] = 1; // move upward

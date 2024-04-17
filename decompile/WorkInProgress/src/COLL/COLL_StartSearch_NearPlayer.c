@@ -194,7 +194,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
         if (SPS->boolDidTouchQuadblock != false)
         {
             // u_short (d + 0xAA)
-            *(u_short *)&d->fill18_postQuadBlock[6] |= 4;
+            d->unkAA |= 4;
         }
 
         if (0 < *(short*)0x1f80018c)
@@ -220,7 +220,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             if ((QB->quadFlags & 0x200) != 0)
             {
                 // player needs to be mask grabbed
-                *(u_short *)&d->fill18_postQuadBlock[6] |= 1;
+                d->unkAA |= 1;
             }
 
             // quadblock, triangleID, search data
@@ -254,22 +254,22 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
                     d->underDriver = 0;
                 }
 
-                // int (sps + 0x70)
-                u_int uVar8 = *(u_int *)0x1f800178;
-
                 // set quadblock you are touching
                 d->currBlockTouching = QB;
 
-                *(u_int *)&d->fill18_postQuadBlock[0] = uVar8;
+                // int (sps + 0x70)
+                u_int uVar8 = *(u_int *)0x1f800178;
+
+				// normalVec[0,1]
+                *(u_int *)&d->normalVecUP = uVar8;
                 *(u_int *)&d->AxisAngle1_normalVec[0] = uVar8;
 
-                // short (sps + 0xA8)
-                *(short *)&d->fill18_postQuadBlock[4] = *(short *)0x1f80017c; // short (sps + 0x74)
-
+				// normalVec[2]
+                d->normalVecUP[2] = *(short *)0x1f80017c;
                 d->AxisAngle1_normalVec[2] = *(short *)0x1f80017c;
 
                 // driver is now on ground
-                *(u_short *)&d->fill18_postQuadBlock[6] |= 8;
+                d->unkAA |= 8;
 
                 scrubId = 5;
             }
@@ -277,11 +277,13 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             // struct MetaDataScrub*
             scrubMeta = VehAfterColl_GetSurface(scrubId);
 
-            *(u_short *)&d->fill18_postQuadBlock[6] |= 2;
-            *(u_int *)(d + 0xac) = *(u_int*)0x1f800170;
-            *(short *)(d + 0xb0) = *(short*)0x1f800174;
-            *(u_int *)(d + 0xb4) = *(u_int*)0x1f800178;
-            *(short *)(d + 0xb8) = *(short *)0x1f80017c;
+            d->unkAA |= 2;
+            
+			*(u_int *)(&d->spsHitPos[0]) = *(u_int*)0x1f800170;
+            *(short *)(&d->spsHitPos[2]) = *(short*)0x1f800174;
+			
+            *(u_int *)(&d->spsNormalVec[0]) = *(u_int*)0x1f800178;
+            *(short *)(&d->spsNormalVec[2]) = *(short *)0x1f80017c;
 
             uVar2 = COLL_Scrub(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]);
 

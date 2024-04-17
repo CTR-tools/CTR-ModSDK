@@ -3492,11 +3492,15 @@ void FUN_80020410(undefined4 param_1,int param_2)
 	  // VehAfterColl_GetSurface
 	  uVar12 = FUN_80057c44(uVar12);
 
-      uVar8 = DAT_1f800170;
       *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 2;
+	  
+	  // driver->spsHitPoint = sps->hitPoint
+      uVar8 = DAT_1f800170;
       *(undefined4 *)(param_2 + 0xac) = uVar8;
       uVar8 = _DAT_1f800178;
       *(undefined2 *)(param_2 + 0xb0) = (undefined2)DAT_1f800174;
+	  
+	  // driver->spsNormalVec = sps->normalVec
       *(undefined4 *)(param_2 + 0xb4) = uVar8;
       *(undefined2 *)(param_2 + 0xb8) = DAT_1f80017c;
 

@@ -132,7 +132,11 @@ struct ScratchpadStruct
 	// 0x64
 	// ptrQuadblock
 	
-	// 0x70 short normalVec[3]
+	// 0x68
+	// short hitPos[4]
+	
+	// 0x70 
+	// short normalVec[4]
 	
 	// 0x88 - array of pointer,
 	// size of array at offset 0xc4,

@@ -24,7 +24,7 @@ void DECOMP_VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* dr
 
 	if ((stepFlagSet & 0x4000) != 0)
 	{
-		*(u_short*)&driver->fill18_postQuadBlock[6] |= 1;
+		driver->unkAA |= 1;
 	}
 
 	// If this is not a super turbo pad
@@ -125,20 +125,20 @@ LAB_8005ec70:
 	// starts breaking below this section
 	
 	#if 0
-	// quadblock flags
-	if ((*(u_short*)&driver->fill18_postQuadBlock[6] & 2) != 0) 
+	// if touched quadblock
+	if ((driver->unkAA & 2) != 0) 
 	{
 		// driver currQuadblock position?
-		iVar1 = pos[0] - *(short*)&driver->fill18_postQuadBlock[0x8];
-		iVar2 = pos[1] - *(short*)&driver->fill18_postQuadBlock[0xA];
-		iVar3 = pos[2] - *(short*)&driver->fill18_postQuadBlock[0xC];
+		iVar1 = pos[0] - driver->spsHitPos[0];
+		iVar2 = pos[1] - driver->spsHitPos[1];
+		iVar3 = pos[2] - driver->spsHitPos[2];
 		
 		if
 		(
 			(
-			(*(short*)&driver->fill18_postQuadBlock[0x10] * iVar1) + 
-			(*(short*)&driver->fill18_postQuadBlock[0x12] * (((driver->quadBlockHeight >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) + 4)) +
-			(*(short*)&driver->fill18_postQuadBlock[0x14] * iVar3)
+			(driver->spsNormalVec[0] * iVar1) + 
+			(driver->spsNormalVec[1] * (((driver->quadBlockHeight >> 8) - driver->spsHitPos[1]) + 4)) +
+			(driver->spsNormalVec[2] * iVar3)
 			) < 0
 		) 
 		{
