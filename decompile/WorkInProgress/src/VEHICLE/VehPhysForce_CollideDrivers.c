@@ -128,7 +128,7 @@ LAB_8005ec70:
 	// if touched quadblock
 	if ((driver->unkAA & 2) != 0) 
 	{
-		// driver currQuadblock position?
+		// distance from driver to quadblock
 		iVar1 = pos[0] - driver->spsHitPos[0];
 		iVar2 = pos[1] - driver->spsHitPos[1];
 		iVar3 = pos[2] - driver->spsHitPos[2];
