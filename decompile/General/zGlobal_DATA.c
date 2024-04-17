@@ -6696,12 +6696,25 @@ struct Data data =
 	
 	.MetaDataScrub =
 	{
+		// SOLID
 		{0, 0x3, 0xD00, 700},
+		
+		// RUBBER
 		{0, 0x1, 0xD00, 0},
+		
+		// SANDBAG
 		{0, 0x3, 0xD00, 0x100},
+		
+		// SLOWDOWN
 		{0, 0xC, 0xF00, 0},
+		
+		// NO EFFECT
 		{0, 0xC, 0x3E800, 0},
+		
+		// ROAD
 		{0, 0xD, 0x3E800, 0},
+		
+		// NO SCRUB
 		{0, 0x3, 0x3E800, 700},
 	},
 	

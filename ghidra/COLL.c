@@ -3439,10 +3439,15 @@ void FUN_80020410(undefined4 param_1,int param_2)
 	  uVar1 = *(ushort *)(DAT_1f800188 + 0x12);
 
 	  // if quadblock is not ground
-	  if ((uVar1 & 0x1000) == 0) {
+	  if ((uVar1 & 0x1000) == 0) 
+	  {
+		// NO SCRUB
         uVar12 = 6;
+		
         // is not invisible
-        if ((uVar1 & 1) == 0) { 
+        if ((uVar1 & 1) == 0) 
+		{
+		  // SOLID
           uVar12 = 0;
         }
       }
@@ -3471,8 +3476,11 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		*(undefined4 *)(param_2 + 0xa4) = uVar8;
         uVar8 = _DAT_1f800178;
         *(undefined2 *)(param_2 + 0xa8) = DAT_1f80017c;
-        uVar12 = 5;
-        *(undefined4 *)(param_2 + 0x360) = uVar8;
+        
+		// ROAD
+		uVar12 = 5;
+        
+		*(undefined4 *)(param_2 + 0x360) = uVar8;
         uVar2 = DAT_1f80017c;
 
 		// driver is now on ground
