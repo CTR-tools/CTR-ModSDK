@@ -3690,10 +3690,13 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
       if (iVar3 < 0) {
         iVar3 = -iVar3;
       }
-      if ((iVar3 < 0x300) && (*(short *)(param_1 + 0x39e) == 0)) {
+      if ((iVar3 < 0x300) && (*(short *)(param_1 + 0x39e) == 0)) 
+	  {
+		// driverPos - sps->hitPos
         uVar10 = (*(int *)(param_1 + 0x2d4) >> 8) - (int)*(short *)(param_3 + 0x68);
         uVar12 = (*(int *)(param_1 + 0x2dc) >> 8) - (int)*(short *)(param_3 + 0x6c);
         uVar9 = (*(int *)(param_1 + 0x2d8) >> 8) - (int)*(short *)(param_3 + 0x6a);
+		
         if ((uVar10 | uVar9 | uVar12) != 0) {
 
           // iVar3 = sqrt(x2+y2+z2 << 0)
@@ -3779,9 +3782,11 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	  // millisecond timer since touching wall
       *(undefined2 *)(param_1 + 0x3fe) = 0xf0;
 
-	  // driver 0x384,
-	  // save the 3D position of the wall collided, and scrubMeta
+	  // driver scrubMeta
       *(undefined2 *)(param_1 + 0x38a) = (short)iVar5;
+	  
+	  // driver 0x384
+	  // driver->posWallColl = sps->hitPos
       *(undefined4 *)(param_1 + 900) = *(undefined4 *)(param_3 + 0x68);
       *(undefined2 *)(param_1 + 0x388) = *(undefined2 *)(param_3 + 0x6c);
     }
