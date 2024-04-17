@@ -6228,10 +6228,12 @@ LAB_8005ec70:
   }
   if ((*(ushort *)(param_2 + 0xaa) & 2) != 0) 
   {
+	// driverPos - spsHitPos
     iVar3 = (*(int *)(param_2 + 0x2d4) >> 8) - (int)*(short *)(param_2 + 0xac);
     iVar1 = (*(int *)(param_2 + 0x2dc) >> 8) - (int)*(short *)(param_2 + 0xb0);
     
 	if (
+		// spsNormVec
 		*(short *)(param_2 + 0xb4) * iVar3 +
         *(short *)(param_2 + 0xb6) * (((*(int *)(param_2 + 0x2d0) >> 8) - (int)*(short *)(param_2 + 0xae)) + 4) +
         *(short *)(param_2 + 0xb8) * iVar1 < 0) 
