@@ -44,11 +44,14 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[i];
 	}
 
-// Compiles 4120 (optimized to 4064 with "else")
 // This fails ONLY on DuckStation for any MPK
 // other than BI_ADVENTUREPACK + data.characterIDs[0],
 // VehBirth_GetModelByString will return nullptr and
-// something later will explode, but PC port works fine
+// nullptr-dereference "somewhere" will explode, but 
+// PC port works fine, so how is model used?
+
+// Remember to change MM_SetMenuLayout and MM_GetModelByName 
+// to reflect loading oxide in MPK (not lowLOD)
 #if 0
 	#ifdef USE_OXIDE
 	// need oxide model for character select
@@ -76,9 +79,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		// penta penguin, smallest MPK
 		lastFileIndexMPK = BI_ADVENTUREPACK + 0xD;
 	}
-	
-// Compiles 4080 (optimized to 4016 with "else")
+
 // This is what we're stuck with
+// until further notice, it'll do
 #else
 	else if(
 		// adv mpk when we just need text from MPK
@@ -89,6 +92,23 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		((gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
+		#ifdef USE_OXIDE
+		// need oxide model for character select
+		if(gGT->levelID == MAIN_MENU_LEVEL)
+		{
+			// high lod model (temporary workaround)
+			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+				BI_RACERMODELHI + 0xF,
+				&data.driverModel_lowLOD[0],0xfffffffe);
+		}
+		
+		// get rid of oxide cause MPK is too big
+		if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+		{
+			data.characterIDs[0] = 0;
+		}
+		#endif
+		
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
 #endif

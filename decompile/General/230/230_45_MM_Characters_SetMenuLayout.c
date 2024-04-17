@@ -32,7 +32,10 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   D230.ptrCsmArr[2] = &OXIDE_icons3p[0];
   D230.ptrCsmArr[3] = &OXIDE_icons4p[0];
   
-  struct Model* m = sdata->PLYROBJECTLIST[18];
+  
+  //struct Model* m = sdata->PLYROBJECTLIST[18];
+  struct Model* MM_Characters_GetModelByID(int id);
+  struct Model* m = MM_Characters_GetModelByID(0xf);
   
   // modified scale, 5/8 size -- ((orig * 5) >> 3)
   m->headers[0].scale[0] = 0x896;

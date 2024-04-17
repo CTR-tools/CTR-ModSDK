@@ -45,7 +45,12 @@ struct Model* MM_Characters_GetModelByID(int id)
 
   #ifdef USE_OXIDE
   if(id == 0xf)
-	  return sdata->PLYROBJECTLIST[18];
+	  // Use this when nullptr-deref is fixed,
+	  // see LOAD_DriverMPK for more details
+	  //return sdata->PLYROBJECTLIST[18];
+	  
+	  // temporary workaround
+	  return data.driverModel_lowLOD[0];
   #endif
 
   models = level1->ptrModelsPtrArray;
