@@ -711,6 +711,7 @@ void FUN_8001d944(int param_1,int param_2)
       }
     }
     
+	// normalVec
 	iVar15 = (int)*(short *)(param_2 + 0x370) * 5 + (int)DAT_1f800178 * 3;
     iVar14 = (int)*(short *)(param_2 + 0x372) * 5 + (int)DAT_1f80017a * 3;
     iVar13 = (int)*(short *)(param_2 + 0x374) * 5 + (int)(short)DAT_1f80017c * 3;
@@ -737,7 +738,8 @@ void FUN_8001d944(int param_1,int param_2)
     if ((uVar6 == 0xffffffff) && (iVar13 * 0x1000 == -0x80000000)) {
       trap(0x1800);
     }
-    // normalize a vector
+	
+    // normalize a normalVec
     *(undefined2 *)(param_2 + 0x370) = (short)((iVar15 * 0x1000) / (int)uVar6);
     *(undefined2 *)(param_2 + 0x372) = (short)((iVar14 * 0x1000) / (int)uVar6);
     *(undefined2 *)(param_2 + 0x374) = (short)((iVar13 * 0x1000) / (int)uVar6);
@@ -771,12 +773,14 @@ void FUN_8001d944(int param_1,int param_2)
 	  // if quadblock is ground
       if ((*(ushort *)(DAT_1f800188 + 0x12) & 0x1000) != 0)
 	  {
+		// normalVecUP[0,1]
         *(uint *)(param_2 + 0xa4) = _DAT_1f800178;
         uVar2 = DAT_1f80017c;
 
 		// driver is not in air, they're on ground
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 8;
 
+		// normalVecUP[2]
 		*(ushort *)(param_2 + 0xa8) = uVar2;
       }
 
