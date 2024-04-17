@@ -217,9 +217,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_MainInit_PrimMem(gGT);
 			DECOMP_MainInit_OTMem(gGT);
 
-			// if cutscene, adventure arena, or credits
+			// RAM Optimization, NEVER do this here
+			#if 0
 			if
 			(
+				// if cutscene, adventure arena, or credits
 				((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) != 0) ||
 				((gGT->gameMode2 & CREDITS) != 0)
 			)
@@ -227,6 +229,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// (now, at beginning of mempack)
 				DECOMP_MainInit_JitPoolsNew(gGT);
 			}
+			#endif
+			
 			break;
 		}
 		case 1:
@@ -474,7 +478,17 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// loaded at HighMem in main pack, end of RAM,
 				// so the pointer maps dont bloat subpacks
 				DECOMP_MEMPACK_SwapPacks(0);
+				
+				#if 1
+				// biggest lev_swap (cutscene/adventure)
+				// is 0xBBA0 for gemstone ptr map, align up
+				// by 0x800 for 0xc000
+				sdata->PatchMem_Size = 0xc000;
+				#else
+				// original game code
 				sdata->PatchMem_Size = DECOMP_MEMPACK_GetFreeBytes();
+				#endif
+				
 				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 
 				// make all futuere allocations in subpacks
@@ -606,6 +620,14 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			gGT->gameMode1_prevFrame = 1;
 
+			// RAM optimization, always do this here
+			#if 1
+			DECOMP_MEMPACK_SwapPacks(0);
+			DECOMP_MainInit_JitPoolsNew(gGT);
+			if ((gGT->gameMode2 & LEV_SWAP) != 0)
+				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
+			#endif
+			
 			if
 			(
 				// 2 is for cutscene
@@ -616,8 +638,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				((gGT->gameMode2 & CREDITS) == 0)
 			)
 			{
-				// (now, at end of mempack)
+				// RAM optimization, never do this here
+				#if 0
 				DECOMP_MainInit_JitPoolsNew(gGT);
+				#endif
 
 				return loadingStage + 1;
 			}

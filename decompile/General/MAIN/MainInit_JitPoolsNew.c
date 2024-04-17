@@ -60,52 +60,152 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // add a bookmark
   DECOMP_MEMPACK_PushState();
 
-  // OG game uses either 24, 48, or 96
-  int numThreads = uVar9 * 3 >> 7;
+  int numThread = 0;
+  int numInstance = 0;
+  int numDriver = 0;
+  
+  int numInstLev = gGT->level1->numInstances;
+  
+  // if not set yet,
+  // eliminate main menu
+  if(numThread == 0)
+  {
+	switch(gGT->overlayIndex_Threads)
+	{
+		// 230: main menu
+		// OG game uses: 32,24,4
+		case 0:
+			// 4 drivers, 4 camera threads,
+			// Crash + Trophy + Animations
+			numInstance = 16;
+			numThread = 16;
+			numDriver = 4;
+			break;
+		
+		//// 231: race or battle
+		//case 1:
+		//	break;
 
-  // Niko optimization, 
-  // game never uses more than 64
-  if(numThreads > 64)
-	  numThreads = 64;
+		// 232: adv hub
+		// OG game uses: 64,48,8
+		case 2:
+			numInstance = 32;
+			numThread = 32;
+			numDriver = 4;
+			break;
+		
+
+		// 233: cutscene (and advhub podium->drive)
+		// OG game uses: 64,48,8
+		case 3:
+			numInstance = 32;
+			numThread = 32;
+			numDriver = 4;
+			break;
+	}
+  }
+  
+  // if not set yet,
+  // eliminate the following:
+  //	Crystal Challenge
+  //	Time Trial
+  //	Relic Race
+  //	VS/Battle
+  if(numThread == 0)
+  {
+	// For Arcade/Battle
+	// worst case thread in race: 48
+	// +10 for mine pool
+	// +10 for missiles
+	// +10 for mystery caves turtles
+	// +8 drivers
+	// +4 camera
+	// +1 warpball
+	  
+	// all of these use 231 overlayIndex_Threads
+	switch(gGT->overlayIndex_EndOfRace)
+	{
+		// 221: Crystal Challenge
+		// OG game uses: 128,96,8
+		case 0:
+			// hub4 challenge is 77 numInstLev
+			// add 16 for explosion threads
+			numInstance = numInstLev+16;
+			numThread = numInstLev+16;
+			numDriver = 1;
+			break;
+		
+		// 222: adv/arcade
+		// OG game uses: 128,96,8
+		case 1:
+			// dingo canyon is 66 numInstLev
+			numInstance = numInstLev+32;
+			numThread = 48;
+			numDriver = 8;
+			if(gGT->numPlyrCurrGame==2)
+				numDriver = 6;
+			break;
+			
+		// 223: relic race
+		// OG game uses: 128,96,8
+		case 2:
+			// +16 instance for driver, hud, etc
+			// +32 threads for track hazards + crate explosion + driver + camera
+			numInstance = numInstLev + 16;
+			numThread = 32;
+			numDriver = 1;
+			break;
+
+		// 224: time trial
+		// OG game uses: 128,96,8
+		case 3:
+			// +16 instance for driver, hud, etc
+			// +24 threads for track hazards + ghosts + driver + camera
+			numInstance = numInstLev + 16;
+			numThread = 24;
+			numDriver = 3;
+			break;
+			
+		// 225: vs/battle
+		// OG game uses: 128,96,8
+		case 4:
+			// highest numInstLev is 42 (mystery caves)
+			numInstance = numInstLev+32;
+			numThread = 48;
+			numDriver = 4;
+			break;
+	}
+  }
 
   // ThreadPool
   DECOMP_JitPool_Init(
-	&gGT->JitPools.thread,
-	numThreads,
-	0x48,/*"ThreadPool"*/0);
+	&gGT->JitPools.thread, 
+	numThread, 
+	sizeof(struct Thread),
+	/*"ThreadPool"*/0);
   
   // InstancePool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.instance, 
-	uVar9 >> 5,
-	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), /*"InstancePool"*/0);
+	numInstance,
+	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), 
+	/*"InstancePool"*/0);
 
   // SmallStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.smallStack, 
 	uVar7 * 0x19 >> 10,
-	0x40 + sizeof(void*)*2,/*"SmallStackPool"*/0);
+	0x40 + sizeof(void*)*2,
+	/*"SmallStackPool"*/0);
   
   // MediumStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.mediumStack, 
 	uVar7 >> 7,
-	0x80 + sizeof(void*)*2,/*"MediumStackPool"*/0);
+	0x80 + sizeof(void*)*2,
+	/*"MediumStackPool"*/0);
 
-  // if you're not in main menu
-  if ((gameMode & MAIN_MENU) == 0)
-  {
-	// allocate 8 driver structs
-    uVar5 = uVar7 >> 9;
-  }
-  // if you are in main menu
-  else
-  {
-	// allocate 4 driver structs
-    uVar5 = 4;
-  }
-
-  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,uVar5, 		0x670,	/*"LargeStackPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x670,	/*"LargeStackPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	uVar7 >> 5,	0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,uVar7 >> 5,	0x18,	/*"OscillatorPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.rain, 		uVar7 >> 9,	0x28,	/*"RainPool"*/0);
