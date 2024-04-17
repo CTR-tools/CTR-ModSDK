@@ -89,7 +89,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// 232: adv hub
 		// OG game uses: 64,48,8
 		case 2:
-			numInstance = 32;
+			numInstance = 64;
 			numThread = 32;
 			numDriver = 4;
 			break;
@@ -98,7 +98,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// 233: cutscene (and advhub podium->drive)
 		// OG game uses: 64,48,8
 		case 3:
-			numInstance = 32;
+			numInstance = 64;
 			numThread = 32;
 			numDriver = 4;
 			break;
