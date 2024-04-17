@@ -150,7 +150,6 @@ LAB_8005ec70:
 		) 
 		{
 			// calculate speed vector
-			// this causes papu pyramid tizzy wall bounce
 			driver->velocityXYZ[0] += iVar1 * 0x40;
 			driver->velocityXYZ[1] += iVar2 * 0x40;
 			driver->velocityXYZ[2] += iVar3 * 0x40;
