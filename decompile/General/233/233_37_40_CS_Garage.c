@@ -69,6 +69,39 @@ void DECOMP_CS_Garage_MenuProc(void)
 	struct MetaDataCHAR* MDC = &data.MetaDataCharacters[sdata->advCharSelectIndex_curr];
 	int nameIndex = MDC->name_LNG_long;
 	RECT r;
+	
+	#ifdef USE_OXIDE
+	if(
+		// if Crash selected
+		(sdata->advCharSelectIndex_curr == 0) &&
+		(gGarage.numFramesCurr_GarageMove == 0)
+	  )
+	{
+		// button
+		int buttonTap = sdata->AnyPlayerTap;
+
+		// left
+		if((buttonTap & BTN_L1) == BTN_L1)
+			gGarage.unusedFrameCount--;
+
+		// right
+		else if((buttonTap & BTN_R1) == BTN_R1)
+			gGarage.unusedFrameCount++;
+		
+		gGarage.unusedFrameCount &= 0xf;
+		MDC = &data.MetaDataCharacters[gGarage.unusedFrameCount];
+		nameIndex = MDC->name_LNG_long;
+
+		DecalFont_DrawLine
+		(
+			"PRESS L1 OR R1 TO SWAP",
+			0x100,					// midpoint
+			0xc8,					// near bottom
+			FONT_SMALL,				// small text
+			(JUSTIFY_CENTER | ORANGE)	// center
+		);
+	}
+	#endif
 
     // CameraDC, freecam mode
     gGT->cameraDC[0].cameraMode = 3;
@@ -88,14 +121,12 @@ void DECOMP_CS_Garage_MenuProc(void)
 
     // At this point, there must not be a transition
     // between drivers, so start drawing the UI
-
-    iVar7 = (int)(short)sdata->advCharSelectIndex_curr;
 	
 	#if 0
 	// count frames in garage?
     gGarage.unusedFrameCount++;
 	#endif
-
+	
     // animate growth of all three stat bars
     for (iVar7 = 0; iVar7 < 3; iVar7++)
     {
@@ -526,6 +557,14 @@ LAB_800b821c:
 	
 			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 			sdata->advProgress.characterID = data.characterIDs[0];
+			
+			#ifdef USE_OXIDE
+			if(data.characterIDs[0] == 0)
+			{
+				data.characterIDs[0] = gGarage.unusedFrameCount;
+				sdata->advProgress.characterID = data.characterIDs[0];
+			}
+			#endif
 
 			DECOMP_SubmitName_RestoreName(0);
 			DECOMP_OtherFX_Play(1, 1);
@@ -656,20 +695,10 @@ LAB_800b821c:
     {
         iVar7 = (gGarage.numFramesMax_Zoom - gGarage.numFramesCurr_ZoomIn) *
                 (gGarage.fovMax - gGarage.fovMin);
-		
-		#if 0
-        if (gGarage.numFramesMax_Zoom == 0) trap(0x1c00);
-        if ((gGarage.numFramesMax_Zoom == -1) && (iVar7 == -0x80000000)) trap(0x1800);
-		#endif
 	}
     else
     {
         iVar7 = iVar7 * (gGarage.fovMax - gGarage.fovMin);
-		
-		#if 0
-        if (gGarage.numFramesMax_Zoom == 0) trap(0x1c00);
-        if ((gGarage.numFramesMax_Zoom == -1) && (iVar7 == -0x80000000)) trap(0x1800);
-		#endif
     }
 	
     iVar7 = gGarage.fovMin + iVar7 / gGarage.numFramesMax_Zoom;
@@ -693,118 +722,3 @@ struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void)
 {
   return &gGarage.menuGarage;
 }
-
-#ifndef REBUILD_PS1
-// Globals must be 0x800b8598, for CS_Thread_UseOpcode
-int CS_JunkFunc2()
-{
-#define CSJUNKFUNC \
-  sdata->ptrActiveMenu = &gGarage.menuGarage; \
-  gGarage.menuGarage.state &= 0xfffffffb; \
-  DECOMP_CS_Garage_ZoomOut(0);
-
-  #ifndef USE_60FPS
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  #endif
-
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  
-  asm(".word1: nop");
-  
-  #ifndef USE_60FPS
-  asm(".word2: nop");
-  #endif
-  
-}
-#endif
-
-// must be 0x800b8598 because CS_Thread_UseOpcode
-// is referencing these globals for character select animations
-struct OVR233_Garage gGarage =
-{	
-	.menuGarage =
-	{
-		.stringIndexTitle = 0xFFFF,
-		.posX_curr = 0x100,
-		.posY_curr = 0x6c, 
-		
-		.unk1 = 0,
-		
-		.state = 0x823,
-		.rows = 0,
-		.funcPtr = DECOMP_CS_Garage_MenuProc,
-		.drawStyle = 0,
-	},
-	
-	.numFramesMax_GarageMove = 0x1d,
-	
-	// used???
-	.padding1 = 0x14,
-	
-	.numFramesMax_Zoom = 0x14,
-	
-	.fovMin = 0x12c,
-	.fovMax = 0x190,
-	
-	// only used for CS_Thread_UseOpcode,
-	// should remove later
-	.unusedArr_garageChars =
-	{0,1,2,3,4,5,6,7},
-	
-	// barLen is used, intended zero
-	
-	// unusedFrameCount (ignore)
-	
-	// unusedArr_lngIndex (ignore)
-	
-	.barStat =
-	{
-		// balanced
-		0x37, 0x37, 0x37,
-		
-		0x30, 0x50, 0x20,
-		
-		0x50, 0x20, 0xA,
-		
-		// turn
-		0x1c, 0x30, 0x50,
-	},
-	
-	// unusedArr_Colors (ignore)
-	
-	.barColors =
-	{
-		// blue
-		0xc80000,
-		
-		// blue-green
-		0xA8700,
-		
-		// green-yellow
-		0xb428,
-		
-		// yellow
-		0xb4b4,
-		
-		// orange
-		0x64dc,
-		
-		// dark orange
-		0x28dc,
-		
-		// red
-		0xeb,
-	},
-	
-	// rest initialize to zero
-};

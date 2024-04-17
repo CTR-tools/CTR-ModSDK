@@ -17,4 +17,9 @@ void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destina
 		
 		sdata->queueLength++;
 	}
+	
+	#ifdef USE_OXIDE
+	void Oxide_HookAppendLoadingQueue();
+	Oxide_HookAppendLoadingQueue();
+	#endif
 }

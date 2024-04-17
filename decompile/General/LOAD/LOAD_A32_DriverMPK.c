@@ -1,6 +1,5 @@
 #include <common.h>
 
-
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {
 	int i;
@@ -57,17 +56,28 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		((gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
-		#ifdef USE_OXIDE
-		// loading into main menu,
-		// load oxide adv mpk, which is faster
-		// than retail doing "any" arcade mpk
-		if(gGT->overlayIndex_Threads == 0)
-			data.characterIDs[0] = 0xf;
-		#endif
+		int fileIndex = 
+			BI_ADVENTUREPACK + data.characterIDs[0];
+		
+		//#ifdef USE_OXIDE
+		//// loading into main menu,
+		//// load oxide adv mpk, which is faster
+		//// than retail doing "any" arcade mpk
+		//if (gGT->overlayIndex_Threads == 0)
+		//	fileIndex = BI_ADVENTUREPACK + 0xf;
+		//
+		//// loading into cutscene (or AdvGarage),
+		//// use penta, so game doesn't crash if you
+		//// select Oxide in Arcade select, then go 
+		//// to a cutscene and load oxide mpk accidentally
+		//else if (gGT->overlayIndex_Threads == 3)
+		//	fileIndex = BI_ADVENTUREPACK + 0xD;
+		//#endif
 		
 		// adv mpk
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			BI_ADVENTUREPACK + data.characterIDs[0],
+		DECOMP_LOAD_AppendQueue(
+			param_1,LT_DRAM,
+			fileIndex,
 			0,param_3);
 
 		return;
@@ -143,11 +153,5 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		DECOMP_LOAD_Robots2P(param_1, data.characterIDs[0], data.characterIDs[1], param_3);
 
 		return;
-	}
-
-	while(1)
-	{
-		// trap,
-		// unknown scenario
 	}
 }

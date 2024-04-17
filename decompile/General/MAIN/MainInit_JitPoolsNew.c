@@ -139,7 +139,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 128,96,8
 		case 1:
 			// dingo canyon is 66 numInstLev
-			numInstance = numInstLev+32;
+			numInstance = numInstLev+40;
 			numThread = 48;
 			numDriver = 8;
 			if(gGT->numPlyrCurrGame==2)

@@ -142,6 +142,7 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullScene_Init.c
 // skip BoxScene (34-36)
 common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_40_CS_Garage.c
+926, 233, 0x800b8598, 0x0, General/233/233_zGlobal_gGarage.c
 // skip credits (41-46)
 common, 233, CS_Credits_Init, 0x0, General/233/233_47_CS_Credits_Init.c
 common, 233, CS_Credits_IsTextValid, 0x0, General/233/233_48_CS_Credits_IsTextValid.c
