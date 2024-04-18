@@ -434,10 +434,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		iVar24 = &D230.ptrTransitionMeta[globalIconPerPlayerCopy];
 		
 		#ifdef USE_OXIDE
-		if (globalIconPerPlayerCopy == 15) // 15 = oxide
+		if (globalIconPerPlayerCopy == NITROS_OXIDE)
 		{
 			// use same transition as Fake Crash
-			iVar24 = &D230.ptrTransitionMeta[globalIconPerPlayerCopy-1];
+			iVar24 = &D230.ptrTransitionMeta[FAKE_CRASH];
 		}
 		#endif
 		
@@ -515,10 +515,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar8 = &D230.ptrTransitionMeta[i];
 			
 			#ifdef USE_OXIDE
-			if (i == 15) // 15 = oxide
+			if (i == NITROS_OXIDE)
 			{
 				// use same transition as Fake Crash
-				iVar8 = &D230.ptrTransitionMeta[i-1];
+				iVar8 = &D230.ptrTransitionMeta[FAKE_CRASH];
 			}
 			#endif
 
@@ -570,10 +570,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar8 = &D230.ptrTransitionMeta[playerIcon];
 			
 			#ifdef USE_OXIDE
-			if (playerIcon == 15) // 15 = oxide
+			if (playerIcon == NITROS_OXIDE)
 			{
 				// use same transition as Fake Crash
-				iVar8 = &D230.ptrTransitionMeta[playerIcon-1];
+				iVar8 = &D230.ptrTransitionMeta[FAKE_CRASH];
 			}
 			#endif
 			
@@ -647,10 +647,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar8 = &D230.ptrTransitionMeta[i];
 
 			#ifdef USE_OXIDE
-			if (i == 15) // 15 = oxide
+			if (i == NITROS_OXIDE)
 			{
 				// use same transition as Fake Crash
-				iVar8 = &D230.ptrTransitionMeta[i-1];
+				iVar8 = &D230.ptrTransitionMeta[FAKE_CRASH];
 			}
 			#endif
 
