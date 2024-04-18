@@ -460,6 +460,14 @@ void DECOMP_CS_Garage_MenuProc(void)
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
                     sdata->advProgress.characterID = data.characterIDs[0];
 
+					#ifdef USE_OXIDE
+					if (data.characterIDs[0] == 0)
+					{
+						data.characterIDs[0] = gGarage.unusedFrameCount;
+						sdata->advProgress.characterID = data.characterIDs[0];
+					}
+					#endif
+
                     DECOMP_SubmitName_RestoreName(0);
                     DECOMP_OtherFX_Play(1, 1);
                 }
