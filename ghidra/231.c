@@ -4085,6 +4085,7 @@ void FUN_800afdbc(int param_1)
   DAT_1f800134._0_2_ = (short)(((iVar4 << 6) >> 0xc) * (int)*(short *)(iVar9 + 0x12) >> 0xc);
   DAT_1f80012a = *(undefined2 *)(iVar9 + 2);
   DAT_1f80012c._0_2_ = 0;
+  
   if ((*(ushort *)(iVar9 + 4) & 1) == 0) 
   {
 	// Copy Matrix:
@@ -4105,12 +4106,14 @@ void FUN_800afdbc(int param_1)
 	 // convert 3 rotation shorts into rotation matrix
     FUN_8006c2a4(iVar10 + 0x30,&DAT_1f800128);
   }
+  
   DAT_1f800130._0_2_ = 0;
   DAT_1f800130._2_2_ = 0x40;
   DAT_1f800134._0_2_ = 0;
   DAT_1f800128 = 0;
   DAT_1f80012a = *(undefined2 *)(iVar9 + 2);
   DAT_1f80012c._0_2_ = 0;
+  
   if ((*(ushort *)(iVar9 + 4) & 1) == 0) {
     FUN_800313c8(*(undefined4 *)(iVar9 + 8),iVar11,&DAT_1f800130);
 	

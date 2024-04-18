@@ -89,10 +89,8 @@ common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_T
 // skip 3 functions
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
 // skip 10 functions (warpball)
-
-//ommon, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
-//ommon, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
-
+common, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
+common, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
 common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
 common, 231, RB_ShieldDark_ThTick_Grow, 0x0, General/231/231_038_RB_ShieldDark_ThTick_Grow.c
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c

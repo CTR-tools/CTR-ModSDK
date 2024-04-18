@@ -14,6 +14,18 @@ struct HitboxDesc
 	void* funcThCollide;
 };
 
+struct MaskHeadScratch
+{
+	// 0x1f800108
+	MATRIX m;
+	
+	// 0x1f800128
+	short rot[4];
+	
+	// 0x1f800130
+	short posOffset[4];
+};
+
 struct MaskHeadWeapon
 {
 	// 0x0

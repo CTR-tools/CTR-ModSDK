@@ -86,8 +86,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
       {
         if (i == player->driverID)
           continue;
-	  
-        pb = &gGT->pushBuffer[i];
+
         idpp[i].pushBuffer = 0;
         colorIdpp[i].pushBuffer = 0;
         highlightIdpp[i].pushBuffer = 0;

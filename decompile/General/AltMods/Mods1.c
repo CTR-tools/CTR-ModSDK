@@ -16,22 +16,6 @@ void NewCallback231()
 		*(unsigned short*)0x800ADFE0 = 0x100;
 	}
 
-	// spinning aku mask
-	{
-		// search "-0x100;"
-
-		// cut values in half
-
-		// spin from PerFrame
-		*(unsigned short*)0x800B0178 = -0x80;
-
-		// spin and scale from FadeAway
-		*(unsigned short*)0x800AFC40 = -0x80;
-		*(unsigned short*)0x800AFC50 = -0x80;
-		*(unsigned short*)0x800AFC5C = -0x80;
-		*(unsigned short*)0x800AFC64 = -0x80;
-	}
-
 	// start banner
 	{
 		// 800b57c0 and 800b57d0

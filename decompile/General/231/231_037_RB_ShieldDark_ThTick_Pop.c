@@ -63,8 +63,8 @@ void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t)
   // play 3D sound for "shield pop"
   PlaySound3D(0x58, instDark);
 	
-  INSTANCE_Death(instColor);
-  INSTANCE_Death(sh->instHighlight);
+  DECOMP_INSTANCE_Death(instColor);
+  DECOMP_INSTANCE_Death(sh->instHighlight);
 	
   // this thread is now dead
   t->flags |= 0x800;

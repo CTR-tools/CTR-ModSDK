@@ -89,7 +89,7 @@ void DECOMP_RB_CrateAny_ThTick_Explode(struct Thread* t)
 	
 	// if explosion is over
 	t->flags |= 0x800;
-	INSTANCE_Death(crateExplodeInst);
+	DECOMP_INSTANCE_Death(crateExplodeInst);
 }
 
 void RB_CrateAny_ExplodeInit(struct Instance* crateInst, int color)
