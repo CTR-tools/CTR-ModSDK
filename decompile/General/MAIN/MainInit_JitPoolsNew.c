@@ -141,9 +141,12 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// 222: adv/arcade
 		// OG game uses: 128,96,8
 		case 1:
-			// dingo canyon is 66 numInstLev
-			numInstance = numInstLev+40;
-			numThread = 48;
+			// dingo canyon is 66 numInstLev,
+			// inst+44 and thread=60 with
+			// 2P Polar Pass Oxide+FakeCrash
+			// is the max we can push in 2mb RAM
+			numInstance = numInstLev+44;
+			numThread = 60;
 			numDriver = 8;
 			if(gGT->numPlyrCurrGame==2)
 				numDriver = 6;
