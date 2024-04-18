@@ -285,6 +285,9 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   *(int*)&bombInst->matrix.m[1][1] = *(int*)&shieldInst->matrix.m[1][1];
   *(int*)&bombInst->matrix.m[2][0] = *(int*)&shieldInst->matrix.m[2][0];
   bombInst->matrix.m[2][2] = shieldInst->matrix.m[2][2];
+  bombInst->matrix.t[0] = shieldInst->matrix.t[0];
+  bombInst->matrix.t[1] = shieldInst->matrix.t[1];
+  bombInst->matrix.t[2] = shieldInst->matrix.t[2];
 
   // set scale (x, y, z) and transparency
   for (i = 0; i < 4; i++)
@@ -302,9 +305,11 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   tw->driverParent = player;
   tw->instParent = driverInst;
   
-  tw->dir[1] = 0;
-  tw->dir[0] = (driverInst->matrix.m[0][2] * 3) >> FPS_RIGHTSHIFT(7);
-  tw->dir[2] = (driverInst->matrix.m[2][2] * 3) >> FPS_RIGHTSHIFT(7);
+  // do NOT patch for 60fps,
+  // velocity uses elapsedTime
+  tw->vel[1] = 0;
+  tw->vel[0] = (driverInst->matrix.m[0][2] * 3) >> 7;
+  tw->vel[2] = (driverInst->matrix.m[2][2] * 3) >> 7;
   
   tw->rotY = player->angle;
   tw->frameCount_DontHurtParent = FPS_DOUBLE(10);

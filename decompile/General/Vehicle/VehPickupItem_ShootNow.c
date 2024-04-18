@@ -183,9 +183,11 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			
 			tw->rotY = d->rotCurr.y;
 			
+			// do NOT patch for 60fps,
+			// velocity uses elapsedTime
 			tw->vel[1] = 0;
-			tw->vel[0] = (weaponInst->matrix.m[0][2] * 3) >> FPS_RIGHTSHIFT(7);
-			tw->vel[2] = (weaponInst->matrix.m[2][2] * 3) >> FPS_RIGHTSHIFT(7);
+			tw->vel[0] = (weaponInst->matrix.m[0][2] * 3) >> 7;
+			tw->vel[2] = (weaponInst->matrix.m[2][2] * 3) >> 7;
 			
 			if(d->numWumpas >= 10)
 			{
@@ -217,9 +219,11 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			else
 			{
 				if(d->numWumpas < 10)
-				{
-					tw->vel[0] = (weaponInst->matrix.m[0][2] * 5) >> FPS_RIGHTSHIFT(8);
-					tw->vel[2] = (weaponInst->matrix.m[2][2] * 5) >> FPS_RIGHTSHIFT(8);
+				{			
+					// do NOT patch for 60fps,
+					// velocity uses elapsedTime
+					tw->vel[0] = (weaponInst->matrix.m[0][2] * 5) >> 8;
+					tw->vel[2] = (weaponInst->matrix.m[2][2] * 5) >> 8;
 				}
 			}
 			
@@ -639,8 +643,10 @@ RunMineCOLL:
 			tw->vel[1] = 0;
 			tw->rotY = d->rotCurr.y;
 			
-			tw->vel[0] = (weaponInst->matrix.m[0][2] * 7) >> FPS_RIGHTSHIFT(8);
-			tw->vel[2] = (weaponInst->matrix.m[2][2] * 7) >> FPS_RIGHTSHIFT(8);
+			// do NOT patch for 60fps,
+			// velocity uses elapsedTime
+			tw->vel[0] = (weaponInst->matrix.m[0][2] * 7) >> 8;
+			tw->vel[2] = (weaponInst->matrix.m[2][2] * 7) >> 8;
 			
 			struct Particle* p = 
 				Particle_Init(0, gGT->iconGroup[0], &data.emSet_Warpball[0]);

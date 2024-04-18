@@ -32,16 +32,6 @@ void NewCallback231()
 		*(unsigned short*)0x800AFC64 = -0x80;
 	}
 
-	// shield
-	{
-		// ShieldDark_Pop and ShieldDark_PerFrame
-		// have many unfixed bugs, for now duration
-		// is most important
-
-		// sub 16ms instead of 32
-		*(unsigned short*)0x800b0a3c = -0x10;
-	}
-
 	// start banner
 	{
 		// 800b57c0 and 800b57d0
