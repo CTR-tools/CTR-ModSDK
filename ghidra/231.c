@@ -4566,11 +4566,15 @@ void FUN_800b0454(int param_1)
 	
     return;
   }
+  
   if ((uVar1 & 2) == 0) {
     return;
   }
+  
   *(undefined4 *)(iVar8 + 0x14) = 0;
   *(char *)(iVar8 + 0x55c) = *(char *)(iVar8 + 0x55c) + '\x01';
+  
+  // vibration
   FUN_80026440(iVar8,8,0);
   FUN_800264c0(iVar8,8,0x7f);
   
@@ -4622,24 +4626,49 @@ void FUN_800b0454(int param_1)
   // a 4th scale value???
   *(undefined2 *)(iVar10 + 0x22) = 0x400;
   
-  // get object from thread
+  // get TrackerWeapon object from thread
   puVar11 = *(undefined4 **)(*(int *)(iVar10 + 0x6c) + 0x30);
   
-  // frame timer to zero
+  // tw->flags
   *(undefined2 *)((int)puVar11 + 0x16) = 0;
   
+  // tw->driverParent
   puVar11[1] = iVar8;
+  
+  // tw->driverTarget
   *puVar11 = 0;
+  
+  // tw->timeAlive
   puVar11[0x12] = 0;
+  
+  // tw->audioPtr
   puVar11[9] = 0;
+  
+  // angle
   uVar2 = *(undefined2 *)(iVar8 + 0x39a);
+  
+  // tw->dir[1]
   *(undefined2 *)((int)puVar11 + 0x12) = 0;
+  
+  // tw->rotY
   *(undefined2 *)((int)puVar11 + 0x1e) = uVar2;
+  
+  // tw->dir[0] = driver->instSelf->matrix.m[0][2]
   *(short *)(puVar11 + 4) = (short)((int)*(short *)(*(int *)(iVar8 + 0x1c) + 0x34) * 3 >> 7);
+  
+  // tw->dir[2] = driver->instSelf->matrix.m[2][2]
   sVar4 = *(short *)(*(int *)(iVar8 + 0x1c) + 0x40);
+  
+  // tw->frameCount_DontHurtParent
   *(undefined2 *)(puVar11 + 8) = 10;
+  
+  // tw->unk22
   *(undefined2 *)((int)puVar11 + 0x22) = 0;
+  
+  // tw->dir[2]
   *(short *)(puVar11 + 5) = (short)((int)sVar4 * 3 >> 7);
+  
+  // tw->instParent
   puVar11[2] = *(undefined4 *)(iVar8 + 0x1c);
 LAB_800b0d6c:
   

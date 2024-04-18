@@ -164,7 +164,6 @@ struct RainCloud
 	// size - 0x8
 };
 
-// when the shield is worn
 struct Shield
 {
 	// 0x0
@@ -191,13 +190,6 @@ struct Shield
 	short highlightTimer;
 	
 	// 0x18
-};
-
-// when the shield is thrown
-struct ShieldBomb
-{
-	// 0x58 bytes
-	int unk;
 };
 
 struct MineWeapon;

@@ -1,5 +1,5 @@
-// 500+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 841 rewritten so far
-// 500 for every 'common' and ','
+// 503+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 844 rewritten so far
+// 503 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -89,8 +89,12 @@ common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_T
 // skip 3 functions
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
 // skip 10 functions (warpball)
-common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
-// rb_38_shieldgrow
+
+//ommon, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
+//ommon, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
+//ommon, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
+//ommon, 231, RB_ShieldDark_ThTick_Grow, 0x0, General/231/231_038_RB_ShieldDark_ThTick_Grow.c
+
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
 common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
 common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c

@@ -181,9 +181,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				Voiceline_RequestPlay(talk, data.characterIDs[d->driverID], 0x10);
 			}
 			
-			tw->vel[1] = 0;
 			tw->rotY = d->rotCurr.y;
 			
+			tw->vel[1] = 0;
 			tw->vel[0] = (weaponInst->matrix.m[0][2] * 3) >> FPS_RIGHTSHIFT(7);
 			tw->vel[2] = (weaponInst->matrix.m[2][2] * 3) >> FPS_RIGHTSHIFT(7);
 			

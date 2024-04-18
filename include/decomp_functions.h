@@ -1,4 +1,3 @@
-#include <common.h>
 
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT);
 void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct PushBuffer* pb);
