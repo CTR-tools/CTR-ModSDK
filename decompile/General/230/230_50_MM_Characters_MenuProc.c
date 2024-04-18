@@ -504,6 +504,42 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar8 = &D230.ptrTransitionMeta[i];
 			
 			// Draw Character Icon
+			#if USE_OXIDE
+
+			if (i == 15) // 15 = oxide
+			{
+				DECOMP_RECTMENU_DrawPolyGT4
+				(
+					gGT->ptrIcons[data.MetaDataCharacters[csm_Active->characterID].iconID],
+					
+					// recycle position data of icon transitions from pura and fake crash respectively
+					// band-aid solution until we can actually expand global variables
+					((struct TransitionMeta*)(&D230.ptrTransitionMeta[7]))->currX + csm_Active->posX + 6,
+					((struct TransitionMeta*)(&D230.ptrTransitionMeta[14]))->currY + csm_Active->posY + 4,
+
+					&gGT->backBuffer->primMem,
+					gGT->pushBuffer_UI.ptrOT,
+
+					iconColor, iconColor, iconColor, iconColor, TRANS_50_DECAL, FP(1.0)
+				);
+			}
+			else
+			{
+				DECOMP_RECTMENU_DrawPolyGT4
+				(
+					gGT->ptrIcons[data.MetaDataCharacters[csm_Active->characterID].iconID],
+					((struct TransitionMeta*)iVar8)->currX + csm_Active->posX + 6,
+					((struct TransitionMeta*)iVar8)->currY + csm_Active->posY + 4,
+
+					&gGT->backBuffer->primMem,
+					gGT->pushBuffer_UI.ptrOT,
+
+					iconColor, iconColor, iconColor, iconColor, TRANS_50_DECAL, FP(1.0)
+				);
+			}
+
+			#else
+
 			DECOMP_RECTMENU_DrawPolyGT4
 			(
 				gGT->ptrIcons[data.MetaDataCharacters[csm_Active->characterID].iconID],
@@ -515,6 +551,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 				iconColor, iconColor, iconColor, iconColor, TRANS_50_DECAL, FP(1.0)
 			);
+
+			#endif
+
 		}
 		
 		csm_Active++;
@@ -619,8 +658,29 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		) 
 		{
 			iVar8 = &D230.ptrTransitionMeta[i];
+
+			#if USE_OXIDE
+
+			if (i == 15) // 15 = oxide
+			{
+				// recycle position data of icon transitions from pura and fake crash respectively
+				// band-aid solution until we can actually expand global variables
+				r68.x = ((struct TransitionMeta*)(&D230.ptrTransitionMeta[7]))->currX + csm_Active[i].posX;
+				r68.y = ((struct TransitionMeta*)(&D230.ptrTransitionMeta[14]))->currY + csm_Active[i].posY;
+			}
+			else
+			{
+				r68.x = ((struct TransitionMeta*)iVar8)->currX + csm_Active[i].posX;
+				r68.y = ((struct TransitionMeta*)iVar8)->currY + csm_Active[i].posY;
+			}
+
+			#else
+
 			r68.x = ((struct TransitionMeta*)iVar8)->currX + csm_Active[i].posX;
 			r68.y = ((struct TransitionMeta*)iVar8)->currY + csm_Active[i].posY;
+
+			#endif
+
 			r68.w = 0x34;
 			r68.h = 0x21;
 		
