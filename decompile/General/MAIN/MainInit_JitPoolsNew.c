@@ -123,6 +123,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	// 1p	+3*3 for missile explosions 3*3
 	// 1p	+10 for mystery caves turtles
 	// 4p	+8*3 for missile explosions (3+3+1+1)*3
+	// 4p	+4*3 for TNT explosions hit by missiles (4*3)
 	  
 	// all of these use 231 overlayIndex_Threads
 	switch(gGT->overlayIndex_EndOfRace)
@@ -172,7 +173,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 128,96,8
 		case 4:
 			// highest numInstLev is 42 (mystery caves)
-			numInstance = numInstLev+48;
+			numInstance = numInstLev+64;
 			numThread = 48;
 			numDriver = 4;
 			break;
