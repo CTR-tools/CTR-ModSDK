@@ -9,14 +9,22 @@ struct Prize
 	// 0x10
 	short posEnd[4];
 	
+	// 0x18
+	short unk[4];
+	
 	// 0x20
-	short vel[4];
+	short vel[3];
+	
+	// 0x26
+	short frameMax; // set in ThTick1
 	
 	// 0x28
-	// frameMax (set in ThTick1)
+	short frameMax2;
 	
 	// 0x2a
-	// frameCurr
+	short frameCurr;
+	
+	// 0x2c -- size of struct
 };
 
 struct unknown233
