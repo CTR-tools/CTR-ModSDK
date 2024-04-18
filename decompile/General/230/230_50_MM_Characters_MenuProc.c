@@ -504,7 +504,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar8 = &D230.ptrTransitionMeta[i];
 			
 			// Draw Character Icon
-			#if USE_OXIDE
+			#ifdef USE_OXIDE
 
 			if (i == 15) // 15 = oxide
 			{
@@ -659,7 +659,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		{
 			iVar8 = &D230.ptrTransitionMeta[i];
 
-			#if USE_OXIDE
+			#ifdef USE_OXIDE
 
 			if (i == 15) // 15 = oxide
 			{
