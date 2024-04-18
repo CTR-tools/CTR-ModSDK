@@ -63,7 +63,6 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
 		  
 	  DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
 	  sdata->ptrActiveMenu = 0;
-	  data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 	  
 	  #endif
     }
