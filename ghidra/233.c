@@ -3638,7 +3638,9 @@ void FUN_800afcc4(int param_1)
   // get object from thread
   psVar5 = *(short **)(param_1 + 0x30);
   
-  if (DAT_800b7770 != 0) {
+  if (DAT_800b7770 != 0) 
+  {
+	// if not just beat oxide
     if (*(short *)(param_1 + 0x44) != 0x38) 
 	{
 	  // Make visible

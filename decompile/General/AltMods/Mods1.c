@@ -33,6 +33,9 @@ void NewCallback233()
 {
 	// 233 patches here...
 
+	// set in Podium_Prize_ThTick1
+	*(short*)0x800afdb4 = 0xf*2;
+
 	// prize spin podium
 	*(unsigned short*)0x800af7e4 = 50; // 100/2 (not hex)
 

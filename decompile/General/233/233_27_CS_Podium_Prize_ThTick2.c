@@ -7,6 +7,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
     int currScale;
 
     // get object from thread
+	// should replace with struct Prize in 233
     int prize = th->object;
 
     // get instance from thread
@@ -21,7 +22,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
         if ((frameIndex & 1) == 0)
         {
             // scaleX
-            currScale = inst->scale[0] + 800 + frameIndex * 400;
+            currScale = inst->scale[0] + FPS_HALF(800) + frameIndex * 400;
 
             if ((frameIndex + 1) * 0x28a + 0x2000 < currScale)
             {
@@ -32,7 +33,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
         else
         {
             // scaleX
-            currScale = inst->scale[0] - 800;
+            currScale = inst->scale[0] - FPS_HALF(800);
 
             if (currScale < 0x1001)
             {
@@ -52,7 +53,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
     }
     else
     {
-        // execute, then assign per-frame funcPtr to thread
+		void CS_Podium_Prize_ThTick3();
         ThTick_SetAndExec(th, CS_Podium_Prize_ThTick3);
     }
 }

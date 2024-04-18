@@ -137,7 +137,10 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 //ommon, 233, CS_DestroyPodium_StartDriving, 0x0, General/233/233_13_CS_DestroyPodium_StartDriving.c
 // Skip CS_Thread (14-18)
 // Skip Boss (19-22)
-// Skip Podium (23-29)
+// Skip Podium (23-25)
+//ommon, 233, CS_Podium_Prize_ThTick3, 0x0, General/233/233_26_CS_Podium_Prize_ThTick3.c
+common, 233, CS_Podium_Prize_ThTick2, 0x0, General/233/233_27_CS_Podium_Prize_ThTick2.c
+//ommon, 233, CS_Podium_Prize_ThTick1, 0x0, General/233/233_28_CS_Podium_Prize_ThTick1.c
 //ommon, 233, CS_Podium_Prize_ThDestroy, 0x0, General/233/233_29_CS_Podium_Prize_ThDestroy.c
 //ommon, 233, CS_Podium_Stand_ThTick, 0x0, General/233/233_31_CS_Podium_Stand_ThTick.c
 //ommon, 233, CS_Podium_Stand_Init, 0x0, General/233/233_32_CS_Podium_Stand_Init.c

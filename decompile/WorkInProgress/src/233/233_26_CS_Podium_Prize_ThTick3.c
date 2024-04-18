@@ -1,5 +1,7 @@
 #include <common.h>
 
+extern char prizeHintArr[7];
+
 // Lerp position from center of screen to destination
 // Then kill thread
 void CS_Podium_Prize_ThTick3(struct Thread *th)
@@ -17,6 +19,7 @@ void CS_Podium_Prize_ThTick3(struct Thread *th)
     struct Instance *inst = th->inst;
 
     // get object from thread
+	// should replace with struct Prize in 233
     int prize = th->object;
 
     sVar2 = *(short *)(prize + 0x26) - 1;
@@ -27,17 +30,6 @@ void CS_Podium_Prize_ThTick3(struct Thread *th)
         iVar3 = *(short *)(prize + 0x28);
         iVar8 = sVar2 * (0x100 - *(short *)(prize + 0x10));
         iVar5 = sVar2 * (0x6c - *(short *)(prize + 0x12));
-
-#if 0
-  if (iVar3 == 0)
-  {
-    trap(0x1c00);
-  }
-  if ((iVar3 == -1) && (iVar8 == -0x80000000))
-  {
-    trap(0x1800);
-  }
-#endif
 
         iVar8 = (*(short *)(prize + 0x10) + iVar8 / iVar3 - 0x100) * -inst->matrix.t[2];
 
@@ -79,75 +71,30 @@ void CS_Podium_Prize_ThTick3(struct Thread *th)
     // if you do not go to boss cutscene
     if (CS_Boss_BoolShouldStart() == 0)
     {
-        // if hint is not unlocked
-        if ((sdata->advProgress.rewards[4] & 0x4000) == 0)
-        {
-            // Map Information
-            // (part of welcome to adv arena)
-            hintID = 24;
-        }
-
-        else
-        {
-            // if hint is not unlocked
-            if ((sdata->advProgress.rewards[4] & 0x1000) == 0)
-            {
-                // Wumpa Fruit Hint
-                hintID = 22;
-            }
-
-            else
-            {
-                // if hint is not unlocked
-                if ((sdata->advProgress.rewards[4] & 0x2000) == 0)
-                {
-                    // TNT Hint
-                    hintID = 23;
-                }
-                else
-                {
-                    // if hint is not unlocked
-                    if ((sdata->advProgress.rewards[4] & 0x10) == 0)
-                    {
-                        // Hang Time Turbo Hint
-                        hintID = 14;
-                    }
-                    else
-                    {
-                        // if hint is not unlocked
-                        if ((sdata->advProgress.rewards[4] & 0x20) == 0)
-                        {
-                            // Power Sliding Hint
-                            hintID = 15;
-                        }
-
-                        else
-                        {
-                            // if hint is not unlocked
-                            if ((sdata->advProgress.rewards[4] & 0x40) == 0)
-                            {
-                                // Turbo Boost Hint
-                                hintID = 16;
-                            }
-                            else
-                            {
-                                // If hint is unlocked, skip
-                                if ((sdata->advProgress.rewards[4] & 0x80) != 0)
-                                    goto LAB_800afa68;
-
-                                // if hint is not unlocked,
-                                // Brake Sliding Hint
-                                hintID = 17;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Request Aku Hint,
-        // also calls VehPhysProc_FreezeEndEvent_Init
-        MainFrame_RequestMaskHint(hintID, 0);
+		int rewards = sdata->advProgress.rewards[4];
+		
+		char* arr;
+		hintID = 0;
+		
+		// Give Aku Hint at the first 7 podium
+		// rewards, teaching how to play
+		for(
+				arr = &prizeHintArr[0]; 
+				arr < &prizeHintArr[7]; 
+				arr++
+			)
+		{
+			int index = (int)*arr;
+			
+			if((rewards & (1 << (index-10))) == 0)
+			{
+				hintID = index;
+				break;
+			}
+		}
+		
+		if(hintID != 0)
+			DECOMP_MainFrame_RequestMaskHint(hintID, 0);
     }
 
 LAB_800afa68:
@@ -166,3 +113,28 @@ LAB_800afa68:
     // This thread is now dead
     th->flags |= 0x800;
 }
+
+char prizeHintArr[7] =
+{
+    // Map Information
+    // (part of welcome to adv arena)
+    24,
+
+    // Wumpa Fruit Hint
+    22,
+
+    // TNT Hint
+    23,
+
+    // Hang Time Turbo Hint
+    14,
+
+    // Power Sliding Hint
+    15,
+
+    // Turbo Boost Hint
+    16,
+
+	// Brake Sliding Hint
+	17
+};
