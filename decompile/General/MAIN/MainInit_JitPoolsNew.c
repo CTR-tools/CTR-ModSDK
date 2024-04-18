@@ -76,8 +76,9 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 32,24,4
 		case 0:
 			// 4 drivers, 4 camera threads,
-			// Crash + Trophy + Animations
-			numInstance = 16;
+			// Crash + Trophy + Animations,
+			// plus 8 instances for Adv->Load
+			numInstance = 24;
 			numThread = 16;
 			numDriver = 4;
 			break;
