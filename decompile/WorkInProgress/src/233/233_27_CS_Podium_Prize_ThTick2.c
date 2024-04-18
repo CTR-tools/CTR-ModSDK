@@ -1,5 +1,7 @@
 #include <common.h>
 
+// Make the trophy bounce 3 times
+// Then start ThTick3
 void CS_Podium_Prize_ThTick2(struct Thread *th)
 {
     int currScale;
@@ -12,6 +14,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
 
     short frameIndex = *(short *)(prize + 0x2a);
 
+	// bouncing scale animation
     if (frameIndex < 5)
     {
         // if even frame

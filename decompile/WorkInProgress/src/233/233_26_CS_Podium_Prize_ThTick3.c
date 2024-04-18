@@ -1,5 +1,7 @@
 #include <common.h>
 
+// Lerp position from center of screen to destination
+// Then kill thread
 void CS_Podium_Prize_ThTick3(struct Thread *th)
 {
     short currScale;

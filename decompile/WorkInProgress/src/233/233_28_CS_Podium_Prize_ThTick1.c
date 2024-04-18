@@ -1,5 +1,8 @@
 #include <common.h>
 
+// Wait for cutscene to end
+// Play "boing" sound, initialize variables,
+// Then start ThTick2
 void CS_Podium_Prize_ThTick1(struct Thread *th)
 {
     short interp;
