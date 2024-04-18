@@ -72,16 +72,32 @@ void PatchModel_60fps(struct Model* m)
 	if(*(int*)&h[0].name[0] == 0x31676962) return;
 
 	#if 1
-	// max graphics, because h[1] is already lerp'd, 
-	// so attempting to force lerp purely for 60fps
-	// causes the AI/Ghost models to explode at LOD[1]
-	
-	// only do this for drivers,
-	// doing this on everything will crash
-	// Hot Air Skyway due to too many primitives,
-	// only drivers have lerp'd h[1] anyway
+	// Only do this for drivers, because we dont have
+	// enough primitives to boost "all" instance LODs,
+	// but also LOD[1] and LOD[2] for drivers are lerp'd,
+	// so we cant force-lerp with pre-lerp'd animations
 	if(m->id == -1)
-		h[0].maxDistanceLOD = 0x7fff;
+	{
+		// human drivers have 1 LOD,
+		// robotcar AIs have 4 LODs
+		if(m->numHeaders == 4)
+		{
+			// LODs are 0x140, 0x258, 0x550, 0x2000
+		
+			// expand range of LOD[0], but dont expand
+			// all the way to LOD[3], cause polygons 
+			// explode when they get too small on-screen
+			h[0].maxDistanceLOD = 0x1000;
+			
+			// skip LOD[1] and LOD[2]
+			h[1].maxDistanceLOD = 0;
+			h[2].maxDistanceLOD = 0;
+			
+			// dont touch LOD[3], that is the cutoff
+			// to stop rendering the model. Without that,
+			// polygons explode in the distance
+		}
+	}
 	#endif
 
 	#if 0
