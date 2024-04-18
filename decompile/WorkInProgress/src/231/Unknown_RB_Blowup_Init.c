@@ -67,9 +67,9 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   shockwaveInst->flags |= 0x200;
   
   // set showckwave position to weapon position
-   shockwaveInst->matrix.t[0] = weaponInst->matrix.t[0];
-    shockwaveInst->matrix.t[1] = weaponInst->matrix.t[1];
-    shockwaveInst->matrix.t[2] = weaponInst->matrix.t[2];
+  shockwaveInst->matrix.t[0] = weaponInst->matrix.t[0];
+  shockwaveInst->matrix.t[1] = weaponInst->matrix.t[1];
+  shockwaveInst->matrix.t[2] = weaponInst->matrix.t[2];
   
   headers = shockwaveInst->model->headers;
   

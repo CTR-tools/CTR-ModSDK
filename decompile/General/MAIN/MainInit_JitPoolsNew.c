@@ -117,11 +117,12 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	// For Arcade/Battle
 	// worst case thread in race: 48
 	// +10 for mine pool
-	// +10 for missiles
-	// +10 for mystery caves turtles
 	// +8 drivers
 	// +4 camera
 	// +1 warpball
+	// 1p	+3*3 for missile explosions 3*3
+	// 1p	+10 for mystery caves turtles
+	// 4p	+8*3 for missile explosions (3+3+1+1)*3
 	  
 	// all of these use 231 overlayIndex_Threads
 	switch(gGT->overlayIndex_EndOfRace)
@@ -171,7 +172,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 128,96,8
 		case 4:
 			// highest numInstLev is 42 (mystery caves)
-			numInstance = numInstLev+32;
+			numInstance = numInstLev+48;
 			numThread = 48;
 			numDriver = 4;
 			break;
