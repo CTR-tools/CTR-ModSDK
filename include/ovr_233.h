@@ -1,3 +1,24 @@
+struct Prize
+{
+	// 0x0
+	short posStart[4];
+	
+	// 0x8
+	short rot[4];
+	
+	// 0x10
+	short posEnd[4];
+	
+	// 0x20
+	short vel[4];
+	
+	// 0x28
+	// frameMax (set in ThTick1)
+	
+	// 0x2a
+	// frameCurr
+};
+
 struct unknown233
 {
 	void* unknown1;
