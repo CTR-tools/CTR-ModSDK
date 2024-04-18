@@ -145,8 +145,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 			// inst+44 and thread=60 with
 			// 2P Polar Pass Oxide+FakeCrash
 			// is the max we can push in 2mb RAM
-			numInstance = numInstLev+44;
-			numThread = 60;
+			numInstance = numInstLev+40;
+			numThread = 48;
 			numDriver = 8;
 			if(gGT->numPlyrCurrGame==2)
 				numDriver = 6;
