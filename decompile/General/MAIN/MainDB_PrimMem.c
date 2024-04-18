@@ -12,11 +12,16 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 		// which is needed cause LOD[1] can't double-lerp
 		// animations
 		
-		// Without this, game crashes if you load
+		// Without this, game crashes if you (without pressing L2)
 		// Adventure->HotAirSkyway, then tap X+LEFT at startline
 		
 		// Should fit with all memory optimizations
 		size += 0x800;
+		#endif
+		
+		#ifdef USE_OXIDE
+		// same logic as before, but Oxide is bigger
+		size += 0x200;
 		#endif
 	#endif
 	
