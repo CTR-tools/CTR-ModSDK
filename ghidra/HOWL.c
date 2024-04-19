@@ -8441,7 +8441,10 @@ void FUN_8002f5f4(int param_1)
   // engineID from metadata, given characterID
   iVar5 = *(int *)(&DAT_80086d90 + (int)(short)(&DAT_80086e84)[(uint)bVar1] * 0x10);
 
-  if (*(char *)(param_1 + 0x47b) == '\0') {
+  // === Unused Code ===
+  // This variable is always 2
+  if (*(char *)(param_1 + 0x47b) == '\0') 
+  {
     *(undefined2 *)(param_1 + 0x3b6) = (short)((int)*(short *)(param_1 + 0x3b6) * 0x177 >> 9);
     *(undefined2 *)(param_1 + 0x3b8) =
          (short)((int)*(short *)(param_1 + 0x3b8) * 3000 + 0x22400 >> 0xc);
@@ -8488,8 +8491,12 @@ void FUN_8002f5f4(int param_1)
       goto LAB_8002fc04;
     }
   }
-  else {
-    if (*(char *)(param_1 + 0x47b) == '\x01') {
+  else 
+  {
+	// === Unused Code ===
+	// This variable is always 2
+    if (*(char *)(param_1 + 0x47b) == '\x01') 
+	{
       *(undefined2 *)(param_1 + 0x3b6) =
            (short)((int)*(short *)(param_1 + 0x3b6) * 3000 + 0x322bc0 >> 0xc);
       *(undefined2 *)(param_1 + 0x3b8) =
@@ -8537,7 +8544,9 @@ void FUN_8002f5f4(int param_1)
         goto LAB_8002fc04;
       }
     }
-    else {
+    
+	// If == 2
+	else {
       if (*(char *)(param_1 + 0x376) == '\x04') {
         iVar12 = 0;
         if (0 < *(short *)(param_1 + 0x39e)) {

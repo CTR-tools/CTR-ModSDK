@@ -309,7 +309,7 @@ LAB_800632cc:
 	else
 	{
 		iVar15 = (iVar12_D * 16) / 15;
-		iVar15 = iVar12_D >> 3;
+		iVar15 = iVar15 >> 3;
 	}	
 	#endif
 	
@@ -448,7 +448,7 @@ void PhysLerpRot(struct Driver* driver, int iVar13)
 	else
 	{
 		uVar14 = (iVar12_C * 16) / 15;
-		uVar14 = iVar12_C >> 3;
+		uVar14 = uVar14 >> 3;
 	}	
 	#endif
 	

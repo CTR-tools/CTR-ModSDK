@@ -31,7 +31,8 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
     d->tireColor = 0x2e808080;
     d->unkSpeedValue1 = 0xa00;
 
-    // related to engine sound
+    // unused by decomp, but if this function is combined
+	// with retail code, the variable must be set to 2
     d->unk47B = 2;
 
     d->AxisAngle1_normalVec[1] = 0x1000;
