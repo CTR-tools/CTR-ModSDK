@@ -6,7 +6,6 @@ void EngineSound_Player(struct Driver *driver)
     short sVar2;
     short sVar3;
     short sVar4;
-    int engine;
     u_int vol;
     u_int distort;
     int iVar8;
@@ -17,9 +16,6 @@ void EngineSound_Player(struct Driver *driver)
 
     // Player / AI structure + 0x4a shows driver index (0-7)
     id = driver->driverID;
-
-    // engineID from metadata, given characterID
-    engine = data.MetaDataCharacters[data.characterIDs[id]].engineID;
 
     if (driver->unk47B == 0)
     {
@@ -339,5 +335,13 @@ void EngineSound_Player(struct Driver *driver)
     }
     vol |= distort;
 RECALCULATE:
-    EngineAudio_Recalculate((engine * 4 + id & 0xffff), vol | LR);
+
+    int engine = data.MetaDataCharacters
+		[data.characterIDs[id]].engineID;
+
+	// fix for PAL/JPN, use slots 0,1,2,3,
+	// engineID of 4 (penta) changes to 0
+	engine = engine&3;
+
+    EngineAudio_Recalculate((engine * 4) + (id & 0xffff), vol | LR);
 }

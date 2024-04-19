@@ -12,14 +12,15 @@ void DECOMP_VehBirth_EngineAudio_AllPlayers(void)
   {
     u_char driverID = ((struct Driver *)th->object)->driverID;
 
+	int engine = data.MetaDataCharacters
+		[data.characterIDs[driverID]].engineID;
+
+	// fix for PAL/JPN, use slots 0,1,2,3,
+	// engineID of 4 (penta) changes to 0
+	engine = engine&3;
+
 #ifndef REBUILD_PS1
-    EngineAudio_InitOnce(
-
-        4*data.MetaDataCharacters
-			[data.characterIDs[driverID]].engineID
-		+ driverID,
-
-        0x8080);
+    EngineAudio_InitOnce((engine * 4) + driverID, 0x8080);
 #endif
   }
 }
