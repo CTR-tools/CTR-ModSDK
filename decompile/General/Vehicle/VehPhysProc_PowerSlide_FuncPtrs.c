@@ -345,7 +345,9 @@ LAB_800632cc:
 		if (iVar12_E < 10)
 		{
 			driver->unk3D4[2] = 8;
-			driver->unk3D4[1] = 0x14;
+			
+			driver->unk3D4[1] = FPS_HALF(0x14);
+			
 			if (iVar13 < 0)
 			{
 				driver->unk3D4[1] = -driver->unk3D4[1];
@@ -370,7 +372,9 @@ LAB_800632cc:
 	
 	if (driver->unk3D4[2] == 0)
 	{
-		driver->unk3D4[1] = 10;
+		// nearing spinout sfx
+		driver->unk3D4[1] = FPS_HALF(10);
+		
 		if (0 < driver->unk3D4[0])
 			driver->unk3D4[1] = -driver->unk3D4[1];
 		

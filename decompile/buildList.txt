@@ -367,6 +367,26 @@ common, exe, Music_Start, 0x0, General/HOWL/h116_Music_Start.c
 common, exe, Music_End, 0x0, General/HOWL/h117_Music_End.c
 common, exe, Music_GetHighestSongPlayIndex, 0x0, General/HOWL/h118_Music_GetHighestSongPlayIndex.c
 
+// GTE_AudioLR_Inst 
+// GTE_AudioLR_Driver 
+// GTE_GetSquaredLength
+// OtherFX_RecycleNew
+// OtherFX_RecycleMute
+// OtherFX_DriverCrashing
+// GTE_GetSquaredDistance
+// CalculateVolumeFromDistance
+// PlayWarppadSound
+// Level_SoundLoopSet
+// Level_SoundLoopFade
+// Level_RandomFX
+// Level_AmbientSound
+// PlaySound3D
+// PlaySound3D_Flags
+// EngineSound_Player.c
+// EngineSound_VolumeAdjust // also for talking masks
+// EngineSound_AI
+// EngineSound_NearestAIs
+
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c
 common, exe, Garage_Enter, 0x0, General/HOWL/h139_Garage_Enter.c

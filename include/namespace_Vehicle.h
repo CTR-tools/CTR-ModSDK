@@ -568,7 +568,7 @@ struct Driver
 	} rotPrev;
 
 	// 0x2FC
-	int unk_turboRelated;
+	int sfxDistortOffset;
 
 	// 0x300
     // 0x300 = Kart skidmarks sound
