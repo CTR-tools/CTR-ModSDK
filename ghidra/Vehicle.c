@@ -1031,7 +1031,7 @@ void FUN_80058ba4(void)
 	// thread -> driver -> driverID
     uVar1 = (uint)*(byte *)(*(int *)(iVar2 + 0x30) + 0x4a);
 
-	// Initialize car engine sound
+	// EngineAudio_InitOnce
     FUN_80028880(
 
 		// engineID from metadata, given characterID
@@ -16497,7 +16497,7 @@ void FUN_80068e04(undefined4 param_1,int param_2)
     FUN_80028808(*(undefined4 *)(param_2 + 0x300));
     *(undefined4 *)(param_2 + 0x300) = 0;
 
-	// engineID from metadata, given characterID
+	// EngineAudio_Stop (driverID + engineID*4)
     FUN_80028b54((uint)*(byte *)(param_2 + 0x4a) +
                  *(int *)(&DAT_80086d90 +
                          (int)(short)(&DAT_80086e84)[*(byte *)(param_2 + 0x4a)] * 0x10) * 4 & 0xffff

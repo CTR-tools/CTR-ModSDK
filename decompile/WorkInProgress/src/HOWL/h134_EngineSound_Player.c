@@ -339,9 +339,5 @@ RECALCULATE:
     int engine = data.MetaDataCharacters
 		[data.characterIDs[id]].engineID;
 
-	// fix for PAL/JPN, use slots 0,1,2,3,
-	// engineID of 4 (penta) changes to 0
-	engine = engine&3;
-
-    EngineAudio_Recalculate((engine * 4) + (id & 0xffff), vol | LR);
+    EngineAudio_Recalculate((engine * 4) + id, vol | LR);
 }
