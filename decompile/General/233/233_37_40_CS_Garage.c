@@ -33,6 +33,49 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
     sdata->gGT->gameMode2 &= ~(GARAGE_OSK);
 }
 
+#ifdef USE_OXIDE
+char OXIDE_GarageUnlockFlags[] =
+{
+	// [x] = y
+	// [characterID-8] = unlockFlag (unlocks[0] & 1<<self)
+
+	0x0A,
+	0x08,
+	0x07,
+	0x09,
+	0x05,
+	0x06,
+	0x0B,
+	0x0C,
+
+};
+
+int OXIDE_GarageGetNext(int curr, int dir)
+{
+	do
+	{
+		// go to next
+		curr += dir;
+		curr &= 0xf;
+	
+	// repeat search if new character is locked
+	} while(
+			// character has unlock condition
+			(curr >= 8) &&
+			
+			(
+				// locked
+				(
+					sdata->gameProgress.unlocks[0] &
+					(1 << OXIDE_GarageUnlockFlags[curr-8])
+				) == 0
+			)
+		   );
+		   
+	return curr;
+}
+#endif
+
 void DECOMP_CS_Garage_MenuProc(void)
 {
     char bVar1;
@@ -74,7 +117,10 @@ void DECOMP_CS_Garage_MenuProc(void)
 	if(
 		// if Crash selected
 		(sdata->advCharSelectIndex_curr == 0) &&
-		(gGarage.numFramesCurr_GarageMove == 0)
+		(gGarage.numFramesCurr_GarageMove == 0) &&
+		
+		// if at least one character unlocked
+		((sdata->gameProgress.unlocks[0] & 0x1FE0) != 0)
 	  )
 	{
 		// button
@@ -82,13 +128,16 @@ void DECOMP_CS_Garage_MenuProc(void)
 
 		// left
 		if((buttonTap & BTN_L1) == BTN_L1)
-			gGarage.unusedFrameCount--;
+			gGarage.unusedFrameCount =
+				OXIDE_GarageGetNext(
+					gGarage.unusedFrameCount, -1);
 
 		// right
 		else if((buttonTap & BTN_R1) == BTN_R1)
-			gGarage.unusedFrameCount++;
+			gGarage.unusedFrameCount =
+				OXIDE_GarageGetNext(
+					gGarage.unusedFrameCount, 1);
 		
-		gGarage.unusedFrameCount &= 0xf;
 		MDC = &data.MetaDataCharacters[gGarage.unusedFrameCount];
 		nameIndex = MDC->name_LNG_long;
 
@@ -715,6 +764,11 @@ LAB_800b821c:
     gGT->pushBuffer[0].distanceToScreen_PREV = iVar7;
 }
 
+struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void)
+{
+  return &gGarage.menuGarage;
+}
+
 void DECOMP_CS_Garage_Init(void)
 {
   // go to 3D character selection
@@ -724,9 +778,4 @@ void DECOMP_CS_Garage_Init(void)
 
   // 0 = just entered garage
   DECOMP_CS_Garage_ZoomOut(0);
-}
-
-struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void)
-{
-  return &gGarage.menuGarage;
 }
