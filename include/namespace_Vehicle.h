@@ -755,9 +755,7 @@ struct Driver
 	short unk_LerpToForwards;
 	
 	// 0x3d4
-    // 0x3d4 - turnResistMax - controls the Y offset rotation of the model
-    // 0x3d6 - rotCurrW_original - no comments abt this - untested
-    // 0x3d8 - turnResistMaxBitshift - no comments abt this - untested
+    // This is a UNION between kart states
 	short unk3D4[3];
 
 	// 0x3DA

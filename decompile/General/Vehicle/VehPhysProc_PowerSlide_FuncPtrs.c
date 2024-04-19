@@ -21,7 +21,10 @@ void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver*
 	int elapsedTimeDouble;
 	short iVar12_C;
 	short iVar12_D;
-	short iVar12_E;
+	
+	int absVal_NumFrameDrift;
+	int absVal_DistortCurr;
+	int absVal_DistortVel;
 	
 	gGT = sdata->gGT;
 
@@ -296,7 +299,6 @@ LAB_800632cc:
 	
 	iVar12_D = (iVar12_D + iVar15) - driver->turnAngleCurr;
 	
-
 	// Same trick as above ">>3"
 	// which has more comments there
 	#ifndef USE_60FPS
@@ -322,30 +324,33 @@ LAB_800632cc:
 		}
 		driver->turnAngleCurr += sVar5;
 	}
+
+	absVal_NumFrameDrift = 
+		driver->KartStates.Drifting.numFramesDrifting;
 	
-	// abs value: numFramesDrifting
-	iVar12_E = driver->KartStates.Drifting.numFramesDrifting;
-	if (iVar12_E < 0)
-	{
-		iVar12_E = -iVar12_E;
-	}
+	if (absVal_NumFrameDrift < 0)
+		absVal_NumFrameDrift = -absVal_NumFrameDrift;
 
 	// get half of spin-out constant, 
 	// this determines when to start making tire sound effects, 
 	// after the turbo meter finishes filling past it's max capacity
 
 	// if you drift beyond the limit of the turbo meter
-	if ((int)(u_int)(driver->const_Drifting_FramesTillSpinout >> 1) < iVar12_E)
+	if ((driver->const_Drifting_FramesTillSpinout >> 1) < absVal_NumFrameDrift)
 	{
-		iVar12_E = driver->unk3D4[0];
-		if (iVar12_E < 0)
+		// Play the SFX of near-spinout
+		
+		absVal_DistortCurr = driver->unk3D4[0];
+		if (absVal_DistortCurr < 0)
+			absVal_DistortCurr = -absVal_DistortCurr;
+		
+		// if low distortion
+		if (absVal_DistortCurr < 10)
 		{
-			iVar12_E = -iVar12_E;
-		}
-		if (iVar12_E < 10)
-		{
-			driver->unk3D4[2] = 8;
+			// count up for 8 frames
+			driver->unk3D4[2] = FPS_DOUBLE(8);
 			
+			// distortion, rate of change
 			driver->unk3D4[1] = FPS_HALF(0x14);
 			
 			if (iVar13 < 0)
@@ -354,22 +359,28 @@ LAB_800632cc:
 			}
 		}
 	}
+	
+	// if not near-spinout
 	else
 	{
+		// stop increasing distortion,
+		// go back down
+		driver->unk3D4[2] = 0;
+	}
+		
+	absVal_DistortCurr = driver->unk3D4[0];
+	if (absVal_DistortCurr < 0)
+		absVal_DistortCurr = -absVal_DistortCurr;
+	
+	// if distortion is too high
+	if (0x32 < absVal_DistortCurr)
+	{
+		// stop increasing distortion,
+		// go back down
 		driver->unk3D4[2] = 0;
 	}
 	
-	iVar12_E = driver->unk3D4[0];
-	if (iVar12_E < 0)
-	{
-		iVar12_E = -iVar12_E;
-	}
-	
-	if (0x32 < iVar12_E)
-	{
-		driver->unk3D4[2] = 0;
-	}
-	
+	// frame countdown over
 	if (driver->unk3D4[2] == 0)
 	{
 		// nearing spinout sfx
@@ -378,20 +389,25 @@ LAB_800632cc:
 		if (0 < driver->unk3D4[0])
 			driver->unk3D4[1] = -driver->unk3D4[1];
 		
-		iVar12_E = driver->unk3D4[1];
-		if (iVar12_E < 0)
-		{
-			iVar12_E = -iVar12_E;
-		}
+		absVal_DistortVel = driver->unk3D4[1];
+		if (absVal_DistortVel < 0)
+			absVal_DistortVel = -absVal_DistortVel;
 
-		// Interpolate rotation by speed
-		sVar5 = DECOMP_VehCalc_InterpBySpeed(driver->unk3D4[0], iVar12_E, 0);
+		// move down until zero
+		sVar5 = DECOMP_VehCalc_InterpBySpeed(
+			driver->unk3D4[0], absVal_DistortVel, 0);
 	}
+	
+	// frames counting down
 	else
 	{
 		driver->unk3D4[2]--;
+		
+		// move up each frame
 		sVar5 = driver->unk3D4[0] + driver->unk3D4[1];
 	}
+	
+	// near-spinout distortion SFX
 	driver->unk3D4[0] = sVar5;
 	
 	driver->ampTurnState = (short)(iVar9 + iVar13);
