@@ -280,7 +280,7 @@ struct MetaPhys
 	// unused debug string?
 	int unk;
 
-	int DriverOffset;
+	int offset;
 	int size;
 	int value[NUM_CLASSES];
 };

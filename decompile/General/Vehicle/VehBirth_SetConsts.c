@@ -7,7 +7,11 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 	struct MetaPhys* metaPhys;
 	u_char* d;
 
-	d = (u_char *)driver;
+	d = (u_char*)driver;
+	
+	int engineID = 
+		data.MetaDataCharacters
+			[data.characterIDs[driver->driverID]].engineID;
 
 	for(i = 0; i < 65; i++)
 	{
@@ -15,8 +19,8 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 
 		metaPhysSize = metaPhys->size;
 		
-		void* src = &metaPhys->value[data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID];
-		void* dst = &d[metaPhys->DriverOffset];
+		void* src = &metaPhys->value[engineID];
+		void* dst = &d[metaPhys->offset];
 
 		if (metaPhysSize == 1)
 		{
@@ -30,6 +34,7 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 			continue;
 		}
 		
+		#
 		*(int*)dst = *(int*)src;
 	}
 

@@ -18,10 +18,10 @@ void USAUnlimitedPenta_VehBirth_SetConsts(struct Driver * driver)
 		// The pre-compiled binary takes out one of the variables in each instance of the MetaPhys struct
 		// Because of that we have to reference those starting from unk and ending at size, see the struct on common.h
 		// and we also need to treat size as an array, so this is the best we can do
-		// oh yeah and the DriverOffset (referred to as unk here, because of the above) needs to be subtracted by 4 bytes
+		// oh yeah and the offset (referred to as unk here, because of the above) needs to be subtracted by 4 bytes
 
 		// Get the size of the variable
-		metaPhysSize = *(u_int *)&metaPhys->DriverOffset;
+		metaPhysSize = *(u_int *)&metaPhys->offset;
 
 		switch(metaPhysSize)
 		{
