@@ -31,6 +31,8 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   D230.ptrCsmArr[1] = &OXIDE_icons1p2p[0];
   D230.ptrCsmArr[2] = &OXIDE_icons3p[0];
   D230.ptrCsmArr[3] = &OXIDE_icons4p[0];
+  D230.ptrCsmArr[4] = &OXIDE_icons1p2pLimited[0];
+  D230.ptrCsmArr[5] = &OXIDE_icons1p2pLimited[0];
   
   
   //struct Model* m = sdata->PLYROBJECTLIST[18];
@@ -44,20 +46,25 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   
   m->headers[0].ptrAnimations[0] = 
   m->headers[0].ptrAnimations[1];
-  
-  // if scrapbook unlocked, then unlock Oxide,
-  // flag 0x1000 must match the 1<<0xC in the icon array
-  if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-	sdata->gameProgress.unlocks[0] |= 0x1000;
 #endif
 
   // Loop through bottom characters,
   // if any are unlocked, use expanded
   for (i = 0xc; i < NUM_ICONS; i++) 
   {
+	#ifdef USE_OXIDE
+	
+	// modded
+	unlocked = D230.ptrCsmArr[0][i].unlockFlags;
+	
+	#else
+	
+	// OG game code
     unlocked = D230.csm_1P2P[i].unlockFlags;
-    
-	if ((sdata->gameProgress.unlocks[unlocked >> 5] >> unlocked & 1) != 0) 
+	
+	#endif
+	
+	if ((sdata->gameProgress.unlocks[0] >> unlocked & 1) != 0) 
 	{
       expand = 1;
 	  break;

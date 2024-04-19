@@ -541,8 +541,16 @@ void DECOMP_MM_ParseCheatCodes()
 		// apply cheat
 		*cheat->writeAddr |= cheat->addBits;
 		
+		#ifdef USE_OXIDE
+		// if scrapbook unlocked, then unlock Oxide,
+		// flag 0x1000 must match the 1<<0xC in the icon array
+		if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+			sdata->gameProgress.unlocks[0] |= 0x1000;
+		#endif
+		
 		// do NOT quit loop,
-		// pinstripe and max engine overlap in cheat
+		// pinstripe and max engine overlap in cheat,
+		// n tropy and inf wumpa overlap in cheat
 	}
 		
 	return;

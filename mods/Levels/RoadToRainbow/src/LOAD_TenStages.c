@@ -335,7 +335,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// If in main menu (character selection, track selection, any part of it)
 			if ((gGT->gameMode1 & MAIN_MENU) != 0)
-			{
+			{				
 				// all these are 230, except for adv garage in 233
 				switch(sdata->mainMenuState)
 				{

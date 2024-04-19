@@ -334,6 +334,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				D230.menuMainMenu.state = 0x403;
 				#endif
 				
+				#ifdef USE_OXIDE
+				// if scrapbook unlocked, then unlock Oxide,
+				// flag 0x1000 must match the 1<<0xC in the icon array
+				if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+					sdata->gameProgress.unlocks[0] |= 0x1000;
+				#endif
+				
 				// all these are 230, except for adv garage in 233
 				switch(sdata->mainMenuState)
 				{
