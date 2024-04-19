@@ -34,7 +34,6 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 			continue;
 		}
 		
-		#
 		*(int*)dst = *(int*)src;
 	}
 

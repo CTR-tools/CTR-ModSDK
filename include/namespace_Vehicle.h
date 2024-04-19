@@ -32,28 +32,6 @@ enum KartState
 	KS_FREEZE=11
 };
 
-enum EngineClass
-{
-	// crash, cortex, joe, fake, oxide
-	BALANCED,
-
-	// coco, ngin, pinstripe
-	ACCEL,
-
-	// tiny, dingo, papu, ntropy
-	SPEED,
-
-	// polar, pura, roo (penta in ntsc)
-	TURN,
-
-	#if BUILD >= JpnTrial
-	// penta
-	MAX,
-	#endif
-
-	NUM_CLASSES
-};
-
 enum PhysType
 {
 	// MetaPhys[0]
@@ -275,10 +253,33 @@ enum TurboType
 	SUPER_ENGINE 						= 0x10
 };
 
+enum EngineClass
+{
+	// crash, cortex, joe, fake, oxide
+	BALANCED,
+
+	// coco, ngin, pinstripe
+	ACCEL,
+
+	// tiny, dingo, papu, ntropy
+	SPEED,
+
+	// polar, pura, roo (penta in ntsc)
+	TURN,
+
+	#if (BUILD >= JpnTrial) || defined(USE_PENTA)
+	// penta
+	MAX,
+	#endif
+
+	NUM_CLASSES
+};
+
 struct MetaPhys
 {
-	// unused debug string?
-	int unk;
+	#if (BUILD >= JpnTrial) || !defined(USE_PENTA)
+	char* unusedDebugStr;
+	#endif
 
 	int offset;
 	int size;
