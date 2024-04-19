@@ -44,6 +44,11 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   
   m->headers[0].ptrAnimations[0] = 
   m->headers[0].ptrAnimations[1];
+  
+  // if scrapbook unlocked, then unlock Oxide,
+  // flag 0x1000 must match the 1<<0xC in the icon array
+  if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+	sdata->gameProgress.unlocks[0] |= 0x1000;
 #endif
 
   // Loop through bottom characters,
