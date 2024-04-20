@@ -94,10 +94,13 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct RectMenu* menu,
 			OptionsMenu_TestSound(menu->rowSelected, 1);
 			if (sdata->AnyPlayerHold & (BTN_LEFT | BTN_RIGHT))
 			{
-				int volume = howl_VolumeGet(menu->rowSelected) & 0xff;
+				int volume = howl_VolumeGet(menu->rowSelected);
 
-				if (sdata->AnyPlayerHold & BTN_LEFT)  volume = (volume + (0xff - 4)) % 0xff;
-				if (sdata->AnyPlayerHold & BTN_RIGHT) volume = (volume + 4)          % 0xff;
+				if (sdata->AnyPlayerHold & BTN_LEFT)  volume -= FPS_HALF(4);
+				if (sdata->AnyPlayerHold & BTN_RIGHT) volume += FPS_HALF(4);
+				
+				if(volume < 0) volume = 0;
+				if(volume > 0xff) volume = 0xff;
 
 				howl_VolumeSet(menu->rowSelected, volume);
 			}
