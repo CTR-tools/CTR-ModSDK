@@ -22,15 +22,15 @@ struct CustomCup
 
 register struct CustomCup *cc asm("k1");
 
-RECT windowSel[4]
+RECT windowSel[4] = 
 {
-	{0x100, 0x25, 0xE0, 0x4E},	// top right
-	{0x20, 0x25, 0xE0, 0x4E},	// top left
-	{0x100, 0x79, 0xE0, 0x4E},	// bottom right
-	{0x20, 0x79, 0xE0, 0x4E}	// bottom left
+	[0] = {0x100, 0x25, 0xE0, 0x4E},	// top right
+	[1] = {0x20, 0x25, 0xE0, 0x4E},		// top left
+	[2] = {0x100, 0x79, 0xE0, 0x4E},	// bottom right
+	[3] = {0x20, 0x79, 0xE0, 0x4E}		// bottom left
 };
 
-RECT windowText = {0x40, 0xCC, 0x180, 0x1D};
+RECT windowText = {0x40, 0, 0x180, 0x50};
 
 // base address of Single menu data,
 // this is an awful method, I'll fix it later
@@ -192,17 +192,21 @@ void HookCups(int *param_1)
 				ORANGE);
 		}
 
+		windowText.y = 0x25;
+		if(cc->modifiedCup < 2)
+			windowText.y = 0x79;
+
 		DecalFont_DrawLine(
 			"USE D-PAD TO CUSTOMIZE CUP",
 			0x100,
-			0xD2,
+			windowText.y + 0x18,
 			FONT_SMALL,
 			(JUSTIFY_CENTER | PERIWINKLE));
 
 		DecalFont_DrawLine(
 			"PRESS R1 TO RANDOMOMIZE",
 			0x100,
-			0xDA,
+			windowText.y + 0x30,
 			FONT_SMALL,
 			(JUSTIFY_CENTER | PERIWINKLE));
 
