@@ -7,7 +7,8 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	int maxRoom;
 	struct DB* backDB;
 	POLY_F4 *p;
-	u_long *primmemCurr;
+	u_long* ptrOT;
+	u_long* primmemCurr;
 	short meterHeight;
 	short meterLength;
 	RECT box;
@@ -15,18 +16,12 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	
 	gGT = sdata->gGT;
 
-	meterLength = 0;
-
-	// height of bar in 1P or 2P
 	meterHeight = 7;
-
-	// if numPlyrCurrGame is more than 2 (3P or 4P)
-	if (2 < gGT->numPlyrCurrGame)
-	{
-		// Make the bar shorter
+	if (gGT->numPlyrCurrGame > 2)
 		meterHeight = 3;
-	}
 
+	meterLength = 0;
+	
 	// if powerslide meter is not zero
 	if ((int)driver->turbo_MeterRoomLeft != 0)
 	{
@@ -36,103 +31,67 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		// max amount of room in turbo
 		maxRoom = (u_int)driver->const_turboMaxRoom << 5;
 
-		/*
-		// max turbo meter size must be more than zero
-		if (driver->const_turboMaxRoom == 0)
-		{
-			trap(0x1c00);
-		}
-		if ((maxRoom == -1) && (backDB == -0x80000000))
-		{
-			trap(0x1800);
-		}
-		*/
-
 		// length of rectangle is currentRoom / maxRoom
 		meterLength = WIDE_PICK(0x31, 0x25) - (short)(currentRoomRemaining / maxRoom);
 	}
+	
 	box.x = posX - WIDE_PICK(0x31, 0x25);
 	box.y = posY - meterHeight;
 	box.w = WIDE_PICK(0x31, 0x25);
 	box.h = meterHeight;
-
-	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
-
+	
 	backDB = gGT->backBuffer;
-	primmemCurr = backDB->primMem.curr;
-	p = 0;
+	int boxColor = 0;
+	
+	DECOMP_CTR_Box_DrawWireBox(
+		&box, &boxColor, 
+		gGT->pushBuffer_UI.ptrOT, 
+		&backDB->primMem);
+		
+	meterHeight = posY - meterHeight;
 
-	// if there is room remaining to draw
-	if (primmemCurr <= (u_long *)backDB->primMem.endMin100)
+	// red color, ready to boost
+	colorAndCode = 0x280000ff;
+
+	// green color, no boost yet
+	if ((int)((u_int)driver->const_turboLowRoomWarning << 5) < (int)driver->turbo_MeterRoomLeft)
+		colorAndCode = 0x2800ff00;
+
+	for(int i = 0; i < 2; i++)
 	{
-		// increment "curr" for next draw after powerslide meter
-		backDB->primMem.curr = &primmemCurr[6];
-
-		// set pointer for where to draw powerslide meter primMem
-		p = (POLY_F4 *)primmemCurr;
-	}
-
-	// if we are definitely drawing the powerslide meter
-	if (p != 0)
-	{
-		// if remaining room is more than the "low warning"
-		if ((int)((u_int)driver->const_turboLowRoomWarning << 5) < (int)driver->turbo_MeterRoomLeft)
-		{
-			// set color to green
-			colorAndCode = 0x2800ff00;
-		}
-
-		// if room remaining is lower than "low warning"
-		else
-		{
-			// set color to red
-			colorAndCode = 0x280000ff;
-		}
-
-		*(u_int *)&p->r0 = colorAndCode;
-		gGT = gGT;
-		meterHeight = posY - meterHeight;
-		p->x0 = posX - meterLength;
-		p->y0 = meterHeight;
-		p->x1 = posX;
-		p->y1 = meterHeight;
-		p->y2 = posY;
-		p->x3 = posX;
-		p->y3 = posY;
-		p->x2 = posX - meterLength;
-
-		primmemCurr = gGT->pushBuffer_UI.ptrOT;
-
-		*(int*)p = *primmemCurr | 0x5000000;
-		*primmemCurr = (u_int)p & 0xffffff;
-
-		backDB = gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
+	
+		// if there is room remaining to draw
 		if (primmemCurr <= (u_long *)backDB->primMem.endMin100)
 		{
-			backDB->primMem.curr = &primmemCurr[6];
 			p = (POLY_F4 *)primmemCurr;
+			backDB->primMem.curr = p+1;
 		}
-		if (p != 0)
-		{
-			*(u_int *)&p->r0 = 0x28808080;
-			gGT = gGT;
-			p->x0 = posX - WIDE_PICK(0x31, 0x25);
-			p->y0 = meterHeight;
-			p->x1 = posX;
-			p->y1 = meterHeight;
-			p->y2 = posY;
-			p->x3 = posX;
-			p->y3 = posY;
-			p->x2 = posX - WIDE_PICK(0x31, 0x25);
-
-			// pointer to OT memory
-			primmemCurr = gGT->pushBuffer_UI.ptrOT;
-
-			*(int*)p = *primmemCurr | 0x5000000;
-			*primmemCurr = (u_int)p & 0xffffff;
-		}
+	
+		if (p == 0)
+			return;
+	
+		*(int*)&p->r0 = colorAndCode;
+		
+		p->y0 = meterHeight;
+		p->y1 = meterHeight;
+		p->y2 = posY;
+		p->y3 = posY;
+		
+		p->x0 = posX - meterLength;
+		p->x1 = posX;
+		p->x2 = posX - meterLength;
+		p->x3 = posX;
+	
+		ptrOT = gGT->pushBuffer_UI.ptrOT;
+		*(int*)p = *ptrOT | 0x5000000;
+		*ptrOT = (u_int)p & 0xffffff;
+		
+		// Gray color for Prim #2
+		colorAndCode = 0x28808080;
+		
+		// full length of meter
+		meterLength = WIDE_PICK(0x31, 0x25);
 	}
-	return;
 }
