@@ -149,11 +149,10 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 128,96,8
 		case 1:
 			// dingo canyon is 66 numInstLev,
-			// inst+44 and thread=60 with
 			// 2P Polar Pass Oxide+FakeCrash
 			// is the max we can push in 2mb RAM
-			numInstance = numInstLev+40;
-			numThread = 48;
+			numInstance = numInstLev+44;
+			numThread = 50;
 			numDriver = 8;
 			if(gGT->numPlyrCurrGame==2)
 				numDriver = 6;
@@ -164,7 +163,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		case 2:
 			// +16 instance for driver, hud, etc
 			// +32 threads for track hazards + crate explosion + driver + camera
-			numInstance = numInstLev + 16;
+			numInstance = numInstLev+16;
 			numThread = 32;
 			numDriver = 1;
 			break;
@@ -175,7 +174,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 			// +16 instance for driver, hud, etc
 			// +32 threads for track hazards + 
 			//		3 drivers + 3 turbo threads + camera
-			numInstance = numInstLev + 16;
+			numInstance = numInstLev+16;
 			numThread = 32;
 			numDriver = 3;
 			break;
@@ -212,14 +211,20 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	0x40 + sizeof(void*)*2,
 	/*"SmallStackPool"*/0);
   
+  // saves 1320 bytes
+  int numMedium = uVar7 >> 7;
+  if(numMedium > 22) numMedium = 22;
+  
   // MediumStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.mediumStack, 
-	uVar7 >> 7,
+	numMedium,
 	0x80 + sizeof(void*)*2,
 	/*"MediumStackPool"*/0);
 
-  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x670,	/*"LargeStackPool"*/0);
+  // OG game used 0x670 for driver, should be 0x640,
+  // maybe intended to mix RainPool into Driver struct?
+  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x640,	/*"LargeStackPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	uVar7 >> 5,	0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,uVar7 >> 5,	0x18,	/*"OscillatorPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	0x28,	/*"RainPool"*/0);
