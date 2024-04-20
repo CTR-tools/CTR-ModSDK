@@ -22,14 +22,13 @@ struct CustomCup
 
 register struct CustomCup *cc asm("k1");
 
-// window with track names top right
-RECT window1 = {0x100, 0x25, 0xE0, 0x4E};
-// window with track names top left
-RECT window2 = {0x20, 0x25, 0xE0, 0x4E};
-// window with track names bottom right
-RECT window3 = {0x100, 0x79, 0xE0, 0x4E};
-// window with track names bottom left
-RECT window4 = {0x20, 0x79, 0xE0, 0x4E};
+RECT windowSel[4]
+{
+	{0x100, 0x25, 0xE0, 0x4E},	// top right
+	{0x20, 0x25, 0xE0, 0x4E},	// top left
+	{0x100, 0x79, 0xE0, 0x4E},	// bottom right
+	{0x20, 0x79, 0xE0, 0x4E}	// bottom left
+};
 
 RECT windowText = {0x40, 0xCC, 0x180, 0x1D};
 
@@ -207,24 +206,16 @@ void HookCups(int *param_1)
 			FONT_SMALL,
 			(JUSTIFY_CENTER | PERIWINKLE));
 
-		// Draw background box ========================
-		if (cc->modifiedCup == 0)
-		{
-			RECTMENU_DrawInnerRect(&window1, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
-		}
-		else if (cc->modifiedCup == 1)
-		{
-			RECTMENU_DrawInnerRect(&window2, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
-		}
-		else if (cc->modifiedCup == 2)
-		{
-			RECTMENU_DrawInnerRect(&window3, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
-		}
-		else if (cc->modifiedCup == 3)
-		{
-			RECTMENU_DrawInnerRect(&window4, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
-		}
-		RECTMENU_DrawInnerRect(&windowText, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+		struct DB *backBuffer = 
+			sdata->gGT->backBuffer;
+
+		RECTMENU_DrawInnerRect(
+			&windowSel[cc->modifiedCup], 1, 
+			backBuffer->otMem.startPlusFour);
+
+		RECTMENU_DrawInnerRect(
+			&windowText, 1, 
+			backBuffer->otMem.startPlusFour);
 	}
 
 	// things drawn last are put underneath
