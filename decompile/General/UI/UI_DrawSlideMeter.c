@@ -9,17 +9,17 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	POLY_F4 *p;
 	u_long* ptrOT;
 	u_long* primmemCurr;
-	short meterHeight;
+	int fullWidth;
+	short fullHeight;
 	short meterLength;
 	RECT box;
 	int currentRoomRemaining;
-	int fullWidth;
 	
 	gGT = sdata->gGT;
 
-	meterHeight = 7;
+	fullHeight = 7;
 	if (gGT->numPlyrCurrGame > 2)
-		meterHeight = 3;
+		fullHeight = 3;
 
 	// width of full bar
 	fullWidth = WIDE_PICK(0x31, 0x25);
@@ -41,9 +41,9 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	}
 	
 	box.x = posX - fullWidth;
-	box.y = posY - meterHeight;
+	box.y = posY - fullHeight;
 	box.w = fullWidth;
-	box.h = meterHeight;
+	box.h = fullHeight;
 	
 	backDB = gGT->backBuffer;
 	int boxColor = 0;
@@ -53,7 +53,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		gGT->pushBuffer_UI.ptrOT, 
 		&backDB->primMem);
 		
-	meterHeight = posY - meterHeight;
+	int topY = posY - fullHeight;
 
 	// red color, ready to boost
 	colorAndCode = 0x280000ff;
@@ -79,8 +79,8 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	
 		*(int*)&p->r0 = colorAndCode;
 		
-		p->y0 = meterHeight;
-		p->y1 = meterHeight;
+		p->y0 = topY;
+		p->y1 = topY;
 		p->y2 = posY;
 		p->y3 = posY;
 		
@@ -99,4 +99,9 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		// full length of meter
 		meterLength = fullWidth;
 	}
+	
+	#ifdef USE_BOOSTBAR
+	void DrawBoostBar(short posX, short posY, struct Driver* driver);
+	DrawBoostBar(posX, posY+5, driver);
+	#endif
 }

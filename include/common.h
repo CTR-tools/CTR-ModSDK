@@ -7,6 +7,7 @@
 //#define USE_NEW2P
 //#define USE_OXIDE
 //#define USE_PENTA
+//#define USE_BOOSTBAR
 //#define USE_GPU1P
 //#define USE_VR
 
