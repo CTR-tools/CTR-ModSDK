@@ -228,7 +228,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		26 + (menuRowsNegativePadding / 2), 
 		FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
-	int volumeSliderWidth = 380 - (volumeSliderTriangleLeftMargin + 30);
+	int volumeSliderWidth = 380 - (30 + volumeSliderTriangleLeftMargin + 30);
 
 	struct OTMem* otMem = &gGT->backBuffer->otMem;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
