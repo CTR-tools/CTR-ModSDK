@@ -114,16 +114,23 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   //	VS/Battle
   if(numThread == 0)
   {
-	// For Arcade/Battle
-	// worst case thread in race: 48
-	// +10 for mine pool
-	// +8 drivers
-	// +4 camera
-	// +1 warpball
-	// 1p	+3*3 for missile explosions 3*3
-	// 1p	+10 for mystery caves turtles
-	// 4p	+8*3 for missile explosions (3+3+1+1)*3
-	// 4p	+4*3 for TNT explosions hit by missiles (4*3)
+	// Level: +66 inst (dingo canyon) +20 threads (mystery caves)
+	//		4p is only +42 inst
+	
+	// MinePool +10 inst +10 thread
+	// warpball +1 inst +1 thread
+	
+	// missile explosion +8*3 inst +8 thread
+	//		max missiles in flight (4p=8, 2p=6, 1p=3)
+	
+	// drivers/turbo +(4->8)*3 inst +(4->8)*2 thread
+	//		1p=8, 2p=6, 4p=4, TimeTrial=3
+	
+	// camera +0 inst +numPlayer thread
+	
+	// tnt explosion +numPlayer*3 inst +0 thread
+	//		assume 1 player hits one TNT,
+	//		no added thread cause missile thread dies
 	  
 	// all of these use 231 overlayIndex_Threads
 	switch(gGT->overlayIndex_EndOfRace)
@@ -166,9 +173,10 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		// OG game uses: 128,96,8
 		case 3:
 			// +16 instance for driver, hud, etc
-			// +24 threads for track hazards + ghosts + driver + camera
+			// +32 threads for track hazards + 
+			//		3 drivers + 3 turbo threads + camera
 			numInstance = numInstLev + 16;
-			numThread = 24;
+			numThread = 32;
 			numDriver = 3;
 			break;
 			
