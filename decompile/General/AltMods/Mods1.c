@@ -144,10 +144,8 @@ void ui60_entryHook()
 		// 800 is too easy
 		// 850 feels about right
 		
-		data.metaPhys[0].value[0] = 850;
-		data.metaPhys[0].value[1] = 850;
-		data.metaPhys[0].value[2] = 850;
-		data.metaPhys[0].value[3] = 850;
+		for(int i = 0; i < NUM_CLASSES; i++)
+			data.metaPhys[0].value[i] = 850;
 	}
 
 	// Final Lap
