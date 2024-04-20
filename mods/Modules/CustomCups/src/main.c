@@ -119,16 +119,10 @@ void HookCups(int *param_1)
 	{
 		CUP_SELECT = cc->modifiedCup;
 
-		if (buttonTap & BTN_UP)
-			cc->choiceY--;
-		if (buttonTap & BTN_DOWN)
-			cc->choiceY++;
-
-		if (cc->choiceY < 0)
-			cc->choiceY = 0;
-		else if (cc->choiceY > 3)
-			cc->choiceY = 3;
-
+		if (buttonTap & BTN_UP) cc->choiceY--;
+		if (buttonTap & BTN_DOWN) cc->choiceY++;
+		cc->choiceY &= 3;
+		
 		if (buttonTap & BTN_LEFT)
 			cc->choiceX[cc->modifiedCup][cc->choiceY]--;
 		if (buttonTap & BTN_RIGHT)
@@ -139,7 +133,8 @@ void HookCups(int *param_1)
 		if (cc->choiceX[cc->modifiedCup][cc->choiceY] < 0)
 			cc->choiceX[cc->modifiedCup][cc->choiceY] = 17;
 		else
-			cc->choiceX[cc->modifiedCup][cc->choiceY] = cc->choiceX[cc->modifiedCup][cc->choiceY] % 18;
+			cc->choiceX[cc->modifiedCup][cc->choiceY] = 
+			cc->choiceX[cc->modifiedCup][cc->choiceY] % 18;
 
 		if ((buttonTap & BTN_R1) != 0)
 		{
