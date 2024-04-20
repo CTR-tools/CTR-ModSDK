@@ -23,8 +23,15 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* me
 		// if gamepad is not an "analog controller", as CTR uses to refer to jogcons and negcons
 		if
 		(
-			((ptrControllerPacket == 0) || (ptrControllerPacket->isControllerConnected != 0)) ||
-			((ptrControllerPacket->controllerData != ((PAD_ID_JOGCON << 4) | 3) && (ptrControllerPacket->controllerData != ((PAD_ID_NEGCON << 4) | 3))))
+			(
+				(ptrControllerPacket == 0) || 
+				(ptrControllerPacket->isControllerConnected != 0)
+			) ||
+			
+			(
+				(ptrControllerPacket->controllerData != ((PAD_ID_JOGCON << 4) | 3)) && 
+				(ptrControllerPacket->controllerData != ((PAD_ID_NEGCON << 4) | 3))
+			)
 		)
 		{
 			gamepad->gamepadId[gamepad->numGamepads] = i;
