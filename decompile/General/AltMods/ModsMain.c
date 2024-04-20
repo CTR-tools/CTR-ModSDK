@@ -27,6 +27,10 @@ void ModsMain()
 	#endif
 	#endif
 	
+	#ifdef USE_BOOSTBAR
+	void uibb_entryHook(); uibb_entryHook();
+	#endif
+	
 // PC port has unlimited byte budget
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");

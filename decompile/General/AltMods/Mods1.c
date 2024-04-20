@@ -437,6 +437,23 @@ void Oxide_HookAppendLoadingQueue()
 #endif
 
 #ifdef USE_BOOSTBAR
+void uibb_entryHook()
+{
+	struct UiElement2D* ptrHudData;
+	
+	// This is already 206
+	// data.hud_1P_P1[8].y
+	
+	// Change all these, should be
+	// same value as hud_1P_P1.y 
+	data.hud_2P_P1[8].y = 206;
+	data.hud_2P_P2[8].y = 206;
+	data.hud_4P_P1[8].y = 206;
+	data.hud_4P_P2[8].y = 206;
+	data.hud_4P_P3[8].y = 206;
+	data.hud_4P_P4[8].y = 206;
+}
+
 void DrawBoostBar(short posX, short posY, struct Driver* driver)
 {
 	// Inherets code copy/paste from UI_DrawSlideMeter
