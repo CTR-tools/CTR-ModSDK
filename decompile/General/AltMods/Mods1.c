@@ -462,7 +462,7 @@ void uibb_entryHook()
 
 void DrawBoostBar(short posX, short posY, struct Driver* driver)
 {
-	// Inherets code copy/paste from UI_DrawSlideMeter
+	// Copies code from UI_DrawSlideMeter
 	
 	struct GameTracker *gGT;
 	u_int colorAndCode;
