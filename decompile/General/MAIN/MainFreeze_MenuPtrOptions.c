@@ -351,7 +351,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		if (lineWidth_vibrateOn < lineWidth_vibrateOff) lineWidth_vibrateOn = lineWidth_vibrateOff;
 
 		lineWidth_vibrateOn = (lineWidth_controller1A + lineWidth_vibrateOn + 10);
-		lineWidth_vibrateOn = 256 - (lineWidth_vibrateOn - (lineWidth_vibrateOn >> 0xf) >> 1);
+		lineWidth_vibrateOn = 256 - (lineWidth_vibrateOn >> 1);
 
 		for(int i = 0; i < gamepad->numGamepads; i++)
 		{
