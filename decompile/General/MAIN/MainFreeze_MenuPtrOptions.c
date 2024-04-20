@@ -232,23 +232,6 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	struct OTMem* otMem = &gGT->backBuffer->otMem;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
-
-	short volumeSliderTriangle[8] =
-	{
-		// 0, 1
-		volumeSliderTriangleLeftPosX + 56,
-		volumeSliderPosY + 58,
-		
-		// 2, 3
-		volumeSliderTriangleLeftPosX + volumeSliderWidth + 56,
-		volumeSliderPosY + 48,
-		
-		// 4, 5
-		0,0
-	};
-	
-	volumeSliderTriangle[4] = volumeSliderTriangle[2];
-	volumeSliderTriangle[5] = volumeSliderTriangle[1];
 		
 	// draw volume sliders
 	for(int i = 0; i <3; i++)
@@ -260,8 +243,25 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 		if (volumeSliderValue < 0) volumeSliderValue += 0xff;
 
-		int volumeSliderTriangleLeftPosX = volumeSliderTriangleLeftMargin + 30;
-		int volumeSliderBarPosX = volumeSliderTriangleLeftPosX + (short)((u_int)volumeSliderValue >> 8) + 0x38; // yeah, I really don't know
+		int volumeSliderTriangleLeftPosX = 30 + volumeSliderTriangleLeftMargin;
+		int volumeSliderBarPosX = 0x38 + volumeSliderTriangleLeftPosX + (short)((u_int)volumeSliderValue >> 8);
+
+		short volumeSliderTriangle[8] =
+		{
+			// 0, 1
+			volumeSliderTriangleLeftPosX + 56,
+			volumeSliderPosY + 58,
+			
+			// 2, 3
+			volumeSliderTriangleLeftPosX + volumeSliderWidth + 56,
+			volumeSliderPosY + 48,
+			
+			// 4, 5
+			0,0
+		};
+		
+		volumeSliderTriangle[4] = volumeSliderTriangle[2];
+		volumeSliderTriangle[5] = volumeSliderTriangle[1];
 
 		RECT volumeSliderBar =
 		{
@@ -374,7 +374,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 			// ON: 0
 			// OFF: 1
-			char* boolDisabled = 
+			int boolDisabled = 
 				(gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0;
 
 			dualShockRowColor = GRAY;

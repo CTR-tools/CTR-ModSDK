@@ -472,8 +472,10 @@ common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
 
 // config npc105
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
+
 // configSetupEntry
-// menuptrOptions
+//ommon, exe, MainFreeze_MenuPtrOptions, 0x0, General/MAIN/MainFreeze_MenuPtrOptions.c
+
 common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
 common, exe, MainFreeze_SafeAdvDestroy, 0x0, General/MAIN/MainFreeze_SafeAdvDestroy.c
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
