@@ -13,6 +13,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	short meterLength;
 	RECT box;
 	int currentRoomRemaining;
+	int fullWidth;
 	
 	gGT = sdata->gGT;
 
@@ -20,24 +21,28 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	if (gGT->numPlyrCurrGame > 2)
 		meterHeight = 3;
 
+	// width of full bar
+	fullWidth = WIDE_PICK(0x31, 0x25);
+
+	// width of boost meter
 	meterLength = 0;
 	
 	// if powerslide meter is not zero
 	if ((int)driver->turbo_MeterRoomLeft != 0)
 	{
 		// current room remaining
-		currentRoomRemaining = driver->turbo_MeterRoomLeft * WIDE_PICK(0x31, 0x25);
+		currentRoomRemaining = driver->turbo_MeterRoomLeft * fullWidth;
 
 		// max amount of room in turbo
 		maxRoom = (u_int)driver->const_turboMaxRoom << 5;
 
 		// length of rectangle is currentRoom / maxRoom
-		meterLength = WIDE_PICK(0x31, 0x25) - (short)(currentRoomRemaining / maxRoom);
+		meterLength = fullWidth - (short)(currentRoomRemaining / maxRoom);
 	}
 	
-	box.x = posX - WIDE_PICK(0x31, 0x25);
+	box.x = posX - fullWidth;
 	box.y = posY - meterHeight;
-	box.w = WIDE_PICK(0x31, 0x25);
+	box.w = fullWidth;
 	box.h = meterHeight;
 	
 	backDB = gGT->backBuffer;
@@ -92,6 +97,6 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		colorAndCode = 0x28808080;
 		
 		// full length of meter
-		meterLength = WIDE_PICK(0x31, 0x25);
+		meterLength = fullWidth;
 	}
 }
