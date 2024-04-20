@@ -27,7 +27,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry()
 		sdata_boolOpenWheelConfig = 0;
 		return;
 	}
-	iVar9 = (int)sdata_gamepad_ID_ThatOpenedRaceWheelConfig;
+	iVar9 = (int)sdata_gamepadID_OwnerRaceWheelConfig;
 	psVar4 = sdata_gGamepads->gamepad[iVar9].ptrControllerPacket;
 	if (psVar4 == (struct ControllerPacket *)0x0)
 	{
@@ -80,7 +80,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry()
 		if (sdata_raceWheelConfigPageIndex == 0)
 	{
 			DecalFont_DrawMultiLine(sdata_lngStrings[0x222],0x100,(int)sdata_posY_MultiLine[uVar7 * 2],0x1cc,1,-0x8000);
-			iVar9 = (int)sdata_gamepad_ID_ThatOpenedRaceWheelConfig;
+			iVar9 = (int)sdata_gamepadID_OwnerRaceWheelConfig;
 			if ((sdata_buttonTapPerPlayer[iVar9] & 0x50) != 0)
 	{
 				sdata_raceWheelConfigPageIndex = sdata_raceWheelConfigPageIndex + 1;
@@ -91,7 +91,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry()
 				else
 	{
 					sdata_gGamepads->gamepad[iVar9].unk44 = '\x04';
-					data_rwd[sdata_gamepad_ID_ThatOpenedRaceWheelConfig].gamepadCenter = 0x80;
+					data_rwd[sdata_gamepadID_OwnerRaceWheelConfig].gamepadCenter = 0x80;
 				}
 				RECTMENU_ClearInput();
 			}

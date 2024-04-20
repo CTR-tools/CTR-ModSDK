@@ -215,11 +215,11 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 					// if the row you selected is for configuring a racing wheel gamepad
 					if (i < (short)numRacingWheels)
 					{
-						sdata->gGT->gameMode1 = sdata->gGT->gameMode1 ^ data.gGT_gameMode1_Vibration_PerPlayer[(short)local_a8[i]];
+						sdata->gGT->gameMode1 = sdata->gGT->gameMode1 ^ data.gGT_gameMode1_VibPerPlayer[(short)local_a8[i]];
 					}
 					else
 					{
-						sdata->gamepad_ID_ThatOpenedRaceWheelConfig = local_b0[i - (short)numRacingWheels];
+						sdata->gamepadID_OwnerRaceWheelConfig = local_b0[i - (short)numRacingWheels];
 						sdata->boolOpenWheelConfig = 1;
 						sdata->raceWheelConfigPageIndex = 0;
 					}
@@ -384,7 +384,7 @@ switchD_80038f90_caseD_9:
 				}
 				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
 				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
-				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
+				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_VibPerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
 				{
 					// "VIBRATE ON"
 					dualshockVibrateString = &sdata->lngStrings[325];
@@ -395,7 +395,7 @@ switchD_80038f90_caseD_9:
 					dualshockVibrateString = &sdata->lngStrings[326];
 				}
 				uVar15 = GRAY;
-				if ((!bVar2) && (uVar15 = RED, (sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0))
+				if ((!bVar2) && (uVar15 = RED, (sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_VibPerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0))
 				{
 					uVar15 = WHITE;
 				}

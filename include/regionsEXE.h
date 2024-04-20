@@ -1848,7 +1848,7 @@ struct Data
 	// 8008320c -- JpnTrial
 	// 800845a8 -- EurRetail
 	// 80087558 -- JpnRetail
-	int gGT_gameMode1_Vibration_PerPlayer[4];
+	int gGT_gameMode1_VibPerPlayer[4];
 
 	// 8008431c
 	// Controller 1, 2, 1A, 1B, 1C, 1D
@@ -3928,7 +3928,7 @@ struct sData
 
 	// 8008d87c -- UsaRetail
 	// 8008dc2c -- EurRetail
-	int gamepad_ID_ThatOpenedRaceWheelConfig;
+	int gamepadID_OwnerRaceWheelConfig;
 
 	#if BUILD == EurRetail
 	// 8008dc30 -- EurRetail

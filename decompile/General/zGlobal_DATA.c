@@ -3728,7 +3728,7 @@ struct Data data =
 	},
 	#endif
 	
-	.gGT_gameMode1_Vibration_PerPlayer =
+	.gGT_gameMode1_VibPerPlayer =
 	{
 		0x100, 0x200, 0x400, 0x800
 	},

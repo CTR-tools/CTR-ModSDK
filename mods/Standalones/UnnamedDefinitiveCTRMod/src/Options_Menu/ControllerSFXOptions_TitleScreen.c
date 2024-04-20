@@ -136,13 +136,13 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct RectMenu* menu,
 				{
 					// selecting dualshock row
 					// toggle gamepad vibration
-					sdata->gGT->gameMode1 ^= data.gGT_gameMode1_Vibration_PerPlayer[gamepad->gamepadId[gamepadRow]];
+					sdata->gGT->gameMode1 ^= data.gGT_gameMode1_VibPerPlayer[gamepad->gamepadId[gamepadRow]];
 				}
 				else
 				{
 					// selecting "analog controller" row
 					// this will open the analog controller config menu
-					sdata->gamepad_ID_ThatOpenedRaceWheelConfig = gamepad->analogId[gamepadRow - gamepad->numGamepads];
+					sdata->gamepadID_OwnerRaceWheelConfig = gamepad->analogId[gamepadRow - gamepad->numGamepads];
 					sdata->boolOpenWheelConfig = true;
 					sdata->raceWheelConfigPageIndex = 0;
 				}
@@ -324,7 +324,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 				char* dualshockVibrateString = 0;
 
-				if ((sdata->gGT->gameMode1 & data.gGT_gameMode1_Vibration_PerPlayer[currPad]) == 0)
+				if ((sdata->gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0)
 				{
 					// "VIBRATE ON"
 					dualshockVibrateString = sdata->lngStrings[325];
@@ -337,7 +337,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 				dualShockRowColor = GRAY;
 				/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
-				if ((!gamepadConnected) && (dualShockRowColor = CORTEX_RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_Vibration_PerPlayer[currPad]) == 0))
+				if ((!gamepadConnected) && (dualShockRowColor = CORTEX_RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0))
 				{
 					dualShockRowColor = TINY_GREEN;
 				}
