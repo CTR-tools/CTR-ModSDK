@@ -120,10 +120,10 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	// MinePool +10 inst +10 thread
 	// warpball +1 inst +1 thread
 	
-	// missile explosion +8*3 inst +8 thread
+	// missile explosion +x*3 inst +x thread
 	//		max missiles in flight (4p=8, 2p=6, 1p=3)
 	
-	// drivers/turbo +(4->8)*3 inst +(4->8)*2 thread
+	// drivers/turbo + x*3 inst +x*2 thread
 	//		1p=8, 2p=6, 4p=4, TimeTrial=3
 	
 	// camera +0 inst +numPlayer thread
@@ -151,7 +151,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 			// dingo canyon is 66 numInstLev,
 			// 2P Polar Pass Oxide+FakeCrash
 			// is the max we can push in 2mb RAM
-			numInstance = numInstLev+44;
+			numInstance = numInstLev+46; // risky, not enough
 			numThread = 50;
 			numDriver = 8;
 			if(gGT->numPlyrCurrGame==2)
@@ -184,7 +184,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 		case 4:
 			// highest numInstLev is 42 (mystery caves)
 			numInstance = numInstLev+64;
-			numThread = 48;
+			numThread = 64;
 			numDriver = 4;
 			break;
 	}
