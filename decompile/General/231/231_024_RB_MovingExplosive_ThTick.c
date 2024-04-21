@@ -268,7 +268,6 @@ LAB_800add14:
   
   RB_MakeInstanceReflective(sps,inst);
   
-  // if hit a wall
   if ((*(int*)&sps->dataOutput[0] & 4) != 0) 
   {
 	// move backward one frame
@@ -299,7 +298,7 @@ LAB_800add14:
       COLL_SearchTree_FindQuadblock_Touching(&posA,&posB,sps,0);
 	  
 	  // if still nothing, then explode
-      if (sps->boolDidTouchQuadblock == 0 == 0) 
+      if (sps->boolDidTouchQuadblock == 0) 
 			goto LAB_800ae42c;
 		
 	  // if quadblock under,
