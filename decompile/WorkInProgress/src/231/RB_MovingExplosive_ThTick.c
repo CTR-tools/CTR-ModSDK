@@ -231,11 +231,8 @@ LAB_800add14:
 			(sdata->gGT->numPlyrCurrGame < 2)
 		) && 
 		(
-			// DAT_800b2ae4
-			// "shieldbomb"
-		
 			// Make Instane in Particle Pool
-			iVar8 = Particle_Init(0,(gGT + 0x2114),sdata->s_shield),
+			iVar8 = Particle_Init(0,(gGT + 0x2114),0x800b2ae4),
 			iVar8 != 0
 		)
 	 ) 
