@@ -20,8 +20,10 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 		#endif
 		
 		#ifdef USE_OXIDE
-		// same logic as before, but Oxide is bigger
-		size += 0x200;
+		// same logic as before, but Oxide is bigger,
+		// 0x200 is not enough or Tiger Temple crashes
+		// in Demo Mode with Oxide as P1
+		size += 0x800;
 		#endif
 	#endif
 	
