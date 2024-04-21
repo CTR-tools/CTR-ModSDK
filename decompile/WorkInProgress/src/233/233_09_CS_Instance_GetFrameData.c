@@ -47,7 +47,7 @@ u_int CS_Instance_GetFrameData(struct Instance *inst, int animIndex, u_int animF
     animFrame = numFrames - 1U;
   }
 
-  psVar5 = (short *)(ptrAnim->modelDeltaArray + ptrAnim->frameSize * animFrame + 0x18);
+  psVar5 = (short *)(ptrAnim->ptrDeltaArray + ptrAnim->frameSize * animFrame + 0x18);
   iVar1 = offset * 3 + 0x1c;
   pbVar6 = (char *)((int)psVar5 + iVar1);
   uVar7 = (u_int)*pbVar6;

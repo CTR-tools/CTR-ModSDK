@@ -305,7 +305,7 @@ struct ModelAnim
 	// copied to instance -> 0xd4
 	// used for compressed animations,
 	// or nullptr if animation is uncompressed
-	u_int* modelDeltaArray;
+	u_int* ptrDeltaArray;
 
 	// 0x18
 	// struct ModelFrame firstFrame;
@@ -449,8 +449,8 @@ struct InstDrawPerPlayer
 	// 0xd0
 	unsigned int ptrColorLayout;
 	
-	// 0xd4 - Anim->offset0x14?
-	int unkD4;
+	// 0xd4
+	int ptrDeltaArray;
 	
 	// 0xd8 - LOD index (0,1,2,3)
 	int lodIndex;

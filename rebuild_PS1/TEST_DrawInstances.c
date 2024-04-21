@@ -200,10 +200,10 @@ void DrawOneInst(struct Instance* curr)
 
 				// here should also check for current anim etc,
 				// for now just check if anim exists and take 1st frame
-				if (ma != NULL && ma->modelDeltaArray != NULL)
+				if (ma != NULL && ma->ptrDeltaArray != NULL)
 				{
 					//store temporal vertex packed uint
-					u_int temporal = ma->modelDeltaArray[vertexIndex];
+					u_int temporal = ma->ptrDeltaArray[vertexIndex];
 
 					//printf("temporal: %08x\n", temporal);
 
