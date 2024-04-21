@@ -211,29 +211,25 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
         // if you are not in any drop-down menu
         if ((short)sdata->battleSetupExpandMenu < 0)
         {
-
+			int buttonTapP1 = sdata->buttonTapPerPlayer[0];
+			
             // If you dont press Up
-            if ((sdata->buttonTapPerPlayer[0] & 1) == 0)
+            if ((buttonTapP1 & 1) == 0)
             {
-
                 // If you dont press Down
-                if ((sdata->buttonTapPerPlayer[0] & 2) == 0)
+                if ((buttonTapP1 & 2) == 0)
                 {
-
                     // If you dont press Left
-                    if ((sdata->buttonTapPerPlayer[0] & 4) == 0)
+                    if ((buttonTapP1 & 4) == 0)
                     {
-
                         // If you dont press Right
-                        if ((sdata->buttonTapPerPlayer[0] & 8) == 0)
+                        if ((buttonTapP1 & 8) == 0)
                         {
-
                             // If you dont press Cross or Circle
-                            if ((sdata->buttonTapPerPlayer[0] & 0x50) == 0)
+                            if ((buttonTapP1 & 0x50) == 0)
                             {
-
                                 // If you press Square or Trianlge
-                                if ((sdata->buttonTapPerPlayer[0] & 0x40020) != 0)
+                                if ((buttonTapP1 & 0x40020) != 0)
                                 {
                                     // Play "Go Back" sound
                                     DECOMP_OtherFX_Play(2, 1);
@@ -327,7 +323,6 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                                     // loop through 14 "possible" weapons
                                     for (uVar12 = 0; uVar12 < 0xe; uVar12++)
                                     {
-
                                         // bit flag of weapons enabled
                                         if ((gGT->battleSetup.enabledWeapons & 1 << uVar12) != 0)
                                         {
@@ -545,15 +540,19 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
         DECOMP_RECTMENU_ClearInput();
     }
 
+	struct TransitionMeta* tmbattle = 
+		&D230.transitionMeta_battle[0];
+
     // "SETUP BATTLE"
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x90],
-		D230.transitionMeta_battle[9].currX + 0x100,
-		D230.transitionMeta_battle[9].currY + 10, 1, 0xffff8000);
+    DECOMP_DecalFont_DrawLine(
+		sdata->lngStrings[0x90],
+		tmbattle[9].currX + 0x100,
+		tmbattle[9].currY + 10, 1, 0xffff8000);
 
     // "TYPE:"
     DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x91],
-		D230.transitionMeta_battle[1].currX + 0x8c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
+		tmbattle[1].currX + 0x8c + WIDE_PICK(0,25),
+		tmbattle[1].currY + 0x24, 1, 0x4000);
 
     D230.menuBattleType.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 
@@ -568,18 +567,20 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
         D230.menuBattleType.state |= 0x100;
     }
 
-    DECOMP_RECTMENU_DrawSelf(&D230.menuBattleType, 
-		D230.transitionMeta_battle[0].currX + 0x9c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[0].currY + 0x24, WIDE_34(0x134));
+    DECOMP_RECTMENU_DrawSelf(
+		&D230.menuBattleType, 
+		tmbattle[0].currX + 0x9c + WIDE_PICK(0,25),
+		tmbattle[0].currY + 0x24, WIDE_34(0x134));
 		
     local_38 = 0xd;
     DECOMP_RECTMENU_GetHeight(&D230.menuBattleType, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x95],
-		D230.transitionMeta_battle[3].currX + 0x8c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[3].currY + sVar6 + 4, 1, 0x4000);
+    DECOMP_DecalFont_DrawLine(
+		sdata->lngStrings[0x95],
+		tmbattle[3].currX + 0x8c + WIDE_PICK(0,25),
+		tmbattle[3].currY + sVar6 + 4, 1, 0x4000);
 
     if (D230.menuBattleType.rowSelected == 1)
     {
@@ -604,8 +605,8 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                 }
 				
                 DECOMP_RECTMENU_DrawSelf(&D230.menuBattleLengthLifeTime,
-					D230.transitionMeta_battle[2].currX + 0x9c + WIDE_PICK(0,25),
-					D230.transitionMeta_battle[2].currY + sVar6 + 4, WIDE_34(0x8e));
+					tmbattle[2].currX + 0x9c + WIDE_PICK(0,25),
+					tmbattle[2].currY + sVar6 + 4, WIDE_34(0x8e));
 								 
                 D230.menuBattleLengthLifeLife.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
                 
@@ -619,8 +620,8 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                 }
 				
                 DECOMP_RECTMENU_DrawSelf(&D230.menuBattleLengthLifeLife,
-					D230.transitionMeta_battle[2].currX + 0x142 - WIDE_PICK(0,16),
-					D230.transitionMeta_battle[2].currY + sVar6 + 4, WIDE_34(0x8e));
+					tmbattle[2].currX + 0x142 - WIDE_PICK(0,16),
+					tmbattle[2].currY + sVar6 + 4, WIDE_34(0x8e));
 								 
                 local_38 = 0xd;
                 DECOMP_RECTMENU_GetHeight(&D230.menuBattleLengthLifeTime, &local_38, 0);
@@ -651,8 +652,8 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
     }
     
 	DECOMP_RECTMENU_DrawSelf(box, 
-		D230.transitionMeta_battle[2].currX + 0x9c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[2].currY + sVar6 + 4, WIDE_34(0x134));
+		tmbattle[2].currX + 0x9c + WIDE_PICK(0,25),
+		tmbattle[2].currY + sVar6 + 4, WIDE_34(0x134));
     
 	local_38 = 0xd;
     DECOMP_RECTMENU_GetHeight(box, &local_38, 0);
@@ -664,8 +665,8 @@ LAB_800b25f0:
 
     // "TEAMS:"
     DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x98],
-		D230.transitionMeta_battle[5].currX + 0x8c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[5].currY + sVar20 + 10, 1, 0x4000);
+		tmbattle[5].currX + 0x8c + WIDE_PICK(0,25),
+		tmbattle[5].currY + sVar20 + 10, 1, 0x4000);
 
     i = 4;
 
@@ -723,8 +724,8 @@ LAB_800b25f0:
 
                 DECOMP_MM_Battle_DrawIcon_Character(
 					gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
-					(int)D230.transitionMeta_battle[4].currX + (int)sVar6 + WIDE_PICK(0,25),
-					(int)D230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
+					(int)tmbattle[4].currX + (int)sVar6 + WIDE_PICK(0,25),
+					(int)tmbattle[4].currY + (int)sVar20 + 6,
 	
 					&gGT->backBuffer->primMem,
 					gGT->pushBuffer_UI.ptrOT,
@@ -733,9 +734,9 @@ LAB_800b25f0:
         }
 
         local_48.h = 0x1a;
-        local_48.x = D230.transitionMeta_battle[4].currX + (short)iVar8 + WIDE_PICK(0,25);
+        local_48.x = tmbattle[4].currX + (short)iVar8 + WIDE_PICK(0,25);
+        local_48.y = tmbattle[4].currY + sVar20 + 5;
         iVar8 = iVar8 + (u_int)uVar4;
-        local_48.y = D230.transitionMeta_battle[4].currY + sVar20 + 5;
         
 		local_48.w = uVar4;
 
@@ -749,8 +750,8 @@ LAB_800b25f0:
     {
         local_50.w = WIDE_34(0x134);
         local_50.h = 0x1e;
-        local_50.x = D230.transitionMeta_battle[4].currX + 0x9c + WIDE_PICK(0,25);
-        local_50.y = D230.transitionMeta_battle[4].currY + sVar20 + 3;
+        local_50.x = tmbattle[4].currX + 0x9c + WIDE_PICK(0,25);
+        local_50.y = tmbattle[4].currY + sVar20 + 3;
 
         DECOMP_CTR_Box_DrawClearBox(
 			&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
@@ -760,8 +761,8 @@ LAB_800b25f0:
 	
     local_40.w = WIDE_34(0x140);
     local_40.h = 0x24;
-    local_40.x = D230.transitionMeta_battle[4].currX + 0x96 + WIDE_PICK(0,25);
-    local_40.y = D230.transitionMeta_battle[4].currY + sVar20;
+    local_40.x = tmbattle[4].currX + 0x96 + WIDE_PICK(0,25);
+    local_40.y = tmbattle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
     DECOMP_RECTMENU_DrawInnerRect(
@@ -770,8 +771,8 @@ LAB_800b25f0:
     // "WEAPONS:"
     DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[0x99],
-		D230.transitionMeta_battle[7].currX + 0x8c + WIDE_PICK(0,25),
-		D230.transitionMeta_battle[7].currY + sVar20 + 0x44,
+		tmbattle[7].currX + 0x8c + WIDE_PICK(0,25),
+		tmbattle[7].currY + sVar20 + 0x44,
 		1, 0x4000);
 
     // make flashing color for error message
@@ -791,7 +792,6 @@ LAB_800b25f0:
     // If you have no weapons selected, which are in flags "0xcde"
     if ((gGT->battleSetup.enabledWeapons & 0xcde) == 0)
     {
-
         // THERE MUST BE
         j = 0xac;
 
@@ -831,8 +831,8 @@ LAB_800b25f0:
             D230.menuBattleStartGame.state |= 0x100;
         }
         DECOMP_RECTMENU_DrawSelf(&D230.menuBattleStartGame, 
-				D230.transitionMeta_battle[8].currX + 0x9c + WIDE_PICK(0,25),
-				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, WIDE_34(0x134));
+				tmbattle[8].currX + 0x9c + WIDE_PICK(0,25),
+				tmbattle[8].currY + sVar20 + 0x78, WIDE_34(0x134));
 				
         local_38 = 0xd;
         DECOMP_RECTMENU_GetHeight(&D230.menuBattleStartGame, &local_38, 0);
@@ -853,8 +853,8 @@ LAB_800b25f0:
     i = 0;
     local_40.w = WIDE_34(0x140);
     local_40.h = 0x44;
-    local_40.x = D230.transitionMeta_battle[6].currX + 0x96 + WIDE_PICK(0,25);
-    local_40.y = D230.transitionMeta_battle[6].currY + sVar20 + 0x2a;
+    local_40.x = tmbattle[6].currX + 0x96 + WIDE_PICK(0,25);
+    local_40.y = tmbattle[6].currY + sVar20 + 0x2a;
 
     // Loop through all 11 weapon icons
     for (i = 0; i < 11; i++)

@@ -1,5 +1,7 @@
 #include <common.h>
 
+// 10624 -> 10512
+
 void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 {
     char i;
@@ -61,12 +63,6 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
                 // if cup selected
                 if (D230.cupSel_postTransition_boolStart != 0)
                 {
-                    // set cupID to the cup selected
-                    gGT->cup.cupID = menu->rowSelected;
-
-                    // set track index to zero, to go to first track
-                    gGT->cup.trackIndex = 0;
-
                     // loop through 8 drivers
                     for (i = 0; i < 8; i++)
                     {
@@ -77,8 +73,14 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
                     // passthrough Menu for the function
                     sdata->ptrDesiredMenu = &data.menuQueueLoadTrack;
 
+                    // set track index to zero, to go to first track
+                    gGT->cup.trackIndex = 0;
+					
+                    // set cupID to the cup selected
+                    gGT->cup.cupID = menu->rowSelected;
+
                     // set current level
-                    gGT->currLEV = data.ArcadeCups[gGT->cup.cupID].CupTrack[gGT->cup.trackIndex].trackID;
+                    gGT->currLEV = data.ArcadeCups[gGT->cup.cupID].CupTrack[0].trackID;
                     return;
                 }
 
@@ -103,32 +105,27 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
+        // Use solid color
+        txtColor = 0xffff8000;
+		
         // If this cup is the one you selected
         if (cupIndex == menu->rowSelected)
         {
             // Make text flash
-            txtColor = (FPS_HALF(sdata->frameCounter) & 2) ? 0xffff8000 : 0xffff8004;
+			if ((sdata->frameCounter & FPS_DOUBLE(2)) != 0)
+				txtColor |= 4;
         }
-        // If this is not the cup you're highlighting
-        else
-        {
-            // Use solid color
-            txtColor = 0xffff8000;
-        }
+
+		startX = (short)D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200;
+		startY = (short)D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54;
 
         // draw the name of the cup
         DECOMP_DecalFont_DrawLine(
 			sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],                  
-			(D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0xa2),
-			(D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x44),
-			3, txtColor);
-    }
+			startX + 0xa2, startY + 0x44, 3, txtColor);
 
-    // Loop through all four cups
-    for (cupIndex = 0; cupIndex < 4; cupIndex++)
-    {
-        startX = (short) D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0x4e;
-        startY = (short) D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x29;
+        startX = startX + 0x4e;
+        startY = startY + 0x29;
 
         // loop through 3 stars to draw
         for (starIndex = 0; starIndex < 3; starIndex++)
