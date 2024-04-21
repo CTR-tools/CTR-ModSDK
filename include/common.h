@@ -7,6 +7,7 @@
 //#define USE_NEW2P
 //#define USE_OXIDE
 //#define USE_PENTA
+//#define USE_HARDER
 //#define USE_NEWCUPS
 //#define USE_BOOSTBAR
 
