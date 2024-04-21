@@ -7,6 +7,8 @@
 , SDL2
 , ctrModSDK ? ./..
 , withDebug ? true
+, withMods ? true
+, vendoredDeps ? false
 , trustCompiler ? false
 }:
 
@@ -20,14 +22,15 @@ let
         dbusSupport = false;
         pipewireSupport = false;
         pulseSupport = false;
-      }).overrideAttrs (prevAttrs: {
-        meta = prevAttrs.meta // { inherit (SDL2.meta) platforms; };
-      })
+      }).overrideAttrs
+        (prevAttrs: {
+          meta = prevAttrs.meta // { inherit (SDL2.meta) platforms; };
+        })
     else openal;
 
   mainProgram = if isWindows then "CrashTeamRacingPC.exe" else "CrashTeamRacingPC";
 in
-stdenv.mkDerivation (finalAttrs:  {
+stdenv.mkDerivation (finalAttrs: {
   pname = "CTR-PC";
   version = "0.0.1";
 
@@ -42,6 +45,21 @@ stdenv.mkDerivation (finalAttrs:  {
   # Disables incompatible hardening
   hardeningDisable = [ "format" ];
 
+  # Config
+  cmakeFlags =
+    lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
+    ++ lib.optionals (!withMods) [
+      "-DCTR_16BY9=OFF"
+      "-DCTR_60FPS=OFF"
+      "-DCTR_NEW2P=OFF"
+      "-DCTR_OXIDE=OFF"
+      "-DCTR_PENTA=OFF"
+      "-DCTR_NEWCUPS=OFF"
+      "-DCTR_HARDER=OFF"
+      "-DCTR_BOOSTBAR=OFF"
+    ] ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ]
+    ++ lib.optionals vendoredDeps [ "-DCMAKE_SKIP_BUILD_RPATH=TRUE" ];
+
   installPhase = ''
     runHook preInstall
 
@@ -55,13 +73,10 @@ stdenv.mkDerivation (finalAttrs:  {
     runHook postInstall
   '';
 
-  # If you need vendored deps
-  #cmakeFlags = [ "-DCMAKE_SKIP_BUILD_RPATH=TRUE" ];
-
-  # Debug
-  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
-    ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ];
+  # Keep debug symbols
   dontStrip = withDebug;
+
+  # Export openal
   passthru = { openal = openalWithWindows; };
 
   # Shows the proper compile date in the logs

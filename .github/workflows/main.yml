@@ -20,5 +20,13 @@ jobs:
           submodules: true
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - name: Build
-        run: nix build -L --no-link --keep-going '.?submodules=1#all'
+      - name: Build Decomp Debug Linux32 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.native32.gcc'
+      - name: Build Decomp Debug Linux32 Clang
+        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.native32.clang'
+      - name: Build Decomp Debug Mingw32 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.gcc'
+      - name: Build Decomp Debug Mingw32 Clang
+        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.clang'
+      - name: Build Retail Release Mingw32 Clang
+        run: nix build -L --no-link --keep-going '.?submodules=1#retail.release.mingw32.clang'
