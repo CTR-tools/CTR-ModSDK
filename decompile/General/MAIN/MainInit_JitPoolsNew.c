@@ -141,7 +141,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 			// hub4 challenge is 77 numInstLev
 			// add 16 for explosion threads
 			numInstance = numInstLev+16;
-			numThread = numInstLev+16;
+			numThread = numInstLev+8;
 			numDriver = 1;
 			break;
 		
