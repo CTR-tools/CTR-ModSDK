@@ -22,17 +22,21 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	if(modelID == 0x62) 
 		goto SpinReward;
 	
+	// OG code had pointers to warppadObj->specLightXXX
+	// but that was replaced with pointers to globals,
+	// because the arrays didnt actually change per warppad
+	
 	// gem
 	else if(modelID == 0x5f) 
-		specLight = &warppadObj->specLightGem[0];
+		specLight = &D232.specLightGem[0];
 	
 	// relic
 	else if(modelID == 0x61) 
-		specLight = &warppadObj->specLightRelic[0];
+		specLight = &D232.specLightRelic[0];
 	
 	// token
 	else if(modelID == 0x7d) 
-		specLight = &warppadObj->specLightToken[0];
+		specLight = &D232.specLightToken[0];
 	
 #ifndef REBUILD_PS1
 	Vector_SpecLightSpin3D(

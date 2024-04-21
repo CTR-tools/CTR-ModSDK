@@ -205,21 +205,24 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	/*"InstancePool"*/0);
 
   // SmallStackPool
+  // OG game was 0x40+8,
+  // changed now to 0x38+8 (UI_Element3d)
   DECOMP_JitPool_Init(
 	&gGT->JitPools.smallStack, 
 	numThread-numDriver,
-	0x40 + sizeof(void*)*2,
+	0x38 + sizeof(void*)*2,
 	/*"SmallStackPool"*/0);
   
-  // saves 1320 bytes
   int numMedium = uVar7 >> 7;
-  if(numMedium > 22) numMedium = 22;
+  if(numMedium > 20) numMedium = 20;
   
   // MediumStackPool
+  // OG game was 0x80+8,
+  // now changed to 0x60+8 (optimized Warppad)
   DECOMP_JitPool_Init(
 	&gGT->JitPools.mediumStack, 
 	numMedium,
-	0x80 + sizeof(void*)*2,
+	0x60 + sizeof(void*)*2,
 	/*"MediumStackPool"*/0);
 
   // OG game used 0x670 for driver, should be 0x640,

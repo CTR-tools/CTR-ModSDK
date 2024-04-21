@@ -262,18 +262,22 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 #ifndef REBUILD_PS1
 		// Trophy has no specular light
 		if(modelID == 0x62) return;
+		
+		// OG code had pointers to warppadObj->specLightXXX
+		// but that was replaced with pointers to globals,
+		// because the arrays didnt actually change per warppad
 				
 		// Relic
 		if(modelID == 0x61) 
 		{
-			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightRelic[0]);
+			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &D232.specLightRelic[0]);
 			return;
 		}
 		
 		// Token
 		if(modelID == 0x7d) 
 		{
-			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightToken[0]);
+			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &D232.specLightToken[0]);
 			return;
 		}
 		
@@ -290,7 +294,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		}
 		
 		// for Key or Gem
-		Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightGem[0]);
+		Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &D232.specLightGem[0]);
 #endif
 		return;
 	}

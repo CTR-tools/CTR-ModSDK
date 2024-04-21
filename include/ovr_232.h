@@ -105,6 +105,7 @@ struct WarpPad
 	// 0x48
 	short spinRot_Rewards[4];
 	
+	#if 0
 	// 0x50
 	short specLightGem[4];
 	
@@ -113,6 +114,7 @@ struct WarpPad
 	
 	// 0x60
 	short specLightToken[4];
+	#endif
 	
 	// 0x68
 	short digit10s;
