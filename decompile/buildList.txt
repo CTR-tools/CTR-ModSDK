@@ -1,5 +1,5 @@
-// 504+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 845 rewritten so far
-// 504 for every 'common' and ','
+// 510+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 851 rewritten so far
+// 510 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -93,8 +93,14 @@ common, 231, RB_Hazard_CollLevInst, 0x0, General/231/231_022_RB_Hazard_CollLevIn
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
 common, 231, RB_MovingExplosive_ThTick, 0x0, General/231/231_024_RB_MovingExplosive_ThTick.c
 common, 231, RB_MovingExplosive_Explode, 0x0, General/231/231_025_RB_MovingExplosive_Explode.c
-
-// skip 10 functions (warpball)
+common, 231, RB_Warpball_FadeAway, 0x0, General/231/231_026_RB_Warpball_FadeAway.c
+common, 231, RB_Warpball_Death, 0x0, General/231/231_027_RB_Warpball_Death.c
+// RB_Warpball_NewPathNode
+common, 231, RB_Warpball_Start, 0x0, General/231/231_029_RB_Warpball_Start.c
+// RB_Warpball_SetTargetDriver
+common, 231, RB_Warpball_SeekDriver, 0x0, General/231/231_032_RB_Warpball_SeekDriver.c
+common, 231, RB_Warpball_TurnAround, 0x0, General/231/231_033_RB_Warpball_TurnAround.c
+// RB_Warpball_ThTick
 
 
 common, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c

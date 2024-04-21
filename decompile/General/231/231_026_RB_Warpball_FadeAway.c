@@ -38,9 +38,9 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   iVar2 = (int)frameId * 6;
   
   // set scale (x, y, z)
-  inst->scale[0] = ((char *)0x800b2c88)[iVar2];
-  inst->scale[1] = ((char *)0x800b2c8a)[iVar2];
-  inst->scale[2] = ((char *)0x800b2c8c)[iVar2];
+  inst->scale[0] = ((short*)0x800b2c88)[iVar2];
+  inst->scale[1] = ((short*)0x800b2c8a)[iVar2];
+  inst->scale[2] = ((short*)0x800b2c8c)[iVar2];
   
   inst->matrix.t[1] = tw->distFromGround + ((int *)0x800b2cac)[frameId];
   

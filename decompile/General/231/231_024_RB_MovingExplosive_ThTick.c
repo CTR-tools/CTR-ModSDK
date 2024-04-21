@@ -47,7 +47,7 @@ void DECOMP_RB_MovingExplosive_ThTick(struct Thread* t)
     }
 LAB_800adc00:
 
-    PlaySound3D_Flags(tw->audioPtr,sound,inst);
+    PlaySound3D_Flags(&tw->audioPtr,sound,inst);
   }
 
 LAB_800adc08:

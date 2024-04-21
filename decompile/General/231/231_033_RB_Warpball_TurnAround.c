@@ -21,30 +21,21 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
 		(tw->driverTarget == NULL)
 	  ) 
   {
-    if ((flags & 4) != 0) {
-     tw->flags = flags & 0xfffb | 0x208;
+    if ((flags & 4) != 0) 
+	{
+		tw->flags = (flags & 0xfffb) | 0x208;
     }
 	
-	// turn around
-	// velX = -velX
-	// velZ = -velZ
-	// velY = -velY
     tw->vel[0] = -tw->vel[0];
-    tw->vel[2] = -tw->vel[2];
     tw->vel[1] = -tw->vel[1];
+    tw->vel[2] = -tw->vel[2];
 	
-	// posX += velX
-    inst->matrix.t[0] += (int)tw->vel[0] * gGT->elapsedTimeMS >> 5;
-		 
-	// posY += velY
-    inst->matrix.t[1] += (int)tw->vel[1] * gGT->elapsedTimeMS >> 5;
-		 
-	// posZ += velZ
-    inst->matrix.t[2] += (int)tw->vel[2] * gGT->elapsedTimeMS >> 5;
+    inst->matrix.t[0] += ((int)tw->vel[0] * gGT->elapsedTimeMS) >> 5;
+    inst->matrix.t[1] += ((int)tw->vel[1] * gGT->elapsedTimeMS) >> 5;
+    inst->matrix.t[2] += ((int)tw->vel[2] * gGT->elapsedTimeMS) >> 5;
     
 	// increment counter
-	sVar3 = *(short *)((int)tw + 0x52) + 1;
-  *(short *)((int)tw + 0x52) += 1;
+	tw->turnAround++;
     
 	if (
 			// if count too high
@@ -64,19 +55,25 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
     }
 	
 	// if attempted to turn around 3 times
-    if ((*(unsigned short *)((int)tw + 0x52) & 3) == 0) 
+    if ((tw->turnAround & 3) == 0) 
 	{
-	  // move backwards on path
-		
-	  // start = end (current)
-      tw[0x10] = tw[0xf];
+	  tw->ptrNodeNext = tw->ptrNodeCurr;
+	  
+	  struct CheckpointNode* first =
+		&sdata->gGT->level1->ptr_restart_points[0];
 	  
 	  // set new end to 10 path indices ahead of current
-      tw[0xf] = sdata->gGT->level1->ptr_restart_points + (unsigned int)(tw[0xf] + 10) * 0xc;
+      tw->ptrNodeCurr = &first[tw->ptrNodeCurr->nextIndex_backward];
     }
 	
+	struct CheckpointNode* cn =
+		tw->ptrNodeCurr;
+	
 	// rotation
-    rot = ratan2((int)*(short *)tw[0xf] - inst->matrix.t[0], (int)((short *)tw[0xf])[2] - inst->matrix.t[2]);
+    rot = ratan2(
+			cn->pos[0] - inst->matrix.t[0], 
+			cn->pos[2] - inst->matrix.t[2]
+		);
 		
 	// rotation
     tw->dir[1] = rot;
