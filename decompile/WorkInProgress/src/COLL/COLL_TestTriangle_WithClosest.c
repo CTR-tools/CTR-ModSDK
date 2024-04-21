@@ -12,7 +12,7 @@ void DECOMP_COLL_TestTriangle_WithClosest(struct QuadBlock* ptrQuad, int triangl
   if (ptrQuad == NULL)
   {
     // Reset flags and values when no quadblock is provided
-    spex->scratchpadStruct.Union.QuadBlockColl.unk22 &= 0xffdf;
+    spex->scratchpadStruct.Union.QuadBlockColl.searchFlags &= 0xffdf;
     *(u_short *)(spex + 0xe) = 0; // part of modelID?
     spex->numTriangles = 0;
     return;
@@ -41,7 +41,7 @@ void DECOMP_COLL_TestTriangle_WithClosest(struct QuadBlock* ptrQuad, int triangl
         numColl += 0x100;
         bspTriangle->numCollision += 0x100;
       }
-      spex->Union.QuadBlockColl.unk22 |= 0x20;
+      spex->Union.QuadBlockColl.searchFlags |= 0x20;
 
 	    // then trigger scrub effect with 1f800116
       *(u_short *)(spex + 0xe) = numColl; // 1f800116
@@ -55,7 +55,7 @@ void DECOMP_COLL_TestTriangle_WithClosest(struct QuadBlock* ptrQuad, int triangl
   bspTriangle->triangleID = triangleID;
   bspTriangle->numCollision = 0; // init at zero
 
-  spex->Union.QuadBlockColl.unk22 &= 0xffdf; // Reset flags
+  spex->Union.QuadBlockColl.searchFlags &= 0xffdf; // Reset flags
   *(u_short *)(spex + 0xe) = 0; // 1f800116 (no scrub)
   spex->numTriangles++; // Move to the next slot for a new record
 }

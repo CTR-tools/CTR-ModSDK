@@ -86,9 +86,17 @@ common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_T
 common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
 common, 231, RB_TNT_ThTick_SitOnHead, 0x0, General/231/231_019_RB_TNT_ThTick_SitOnHead.c
 common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
-// skip 3 functions
+
+// new as of 4/21/2024, untested
+common, 231, RB_Explosion_ThTick, 0x0, General/231/231_021_RB_Explosion_ThTick.c
+common, 231, RB_Hazard_CollLevInst, 0x0, General/231/231_022_RB_Hazard_CollLevInst.c
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
+common, 231, RB_MovingExplosive_ThTick, 0x0, General/231/231_024_RB_MovingExplosive_ThTick.c
+common, 231, RB_MovingExplosive_Explode, 0x0, General/231/231_025_RB_MovingExplosive_Explode.c
+
 // skip 10 functions (warpball)
+
+
 common, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
 common, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
 common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c

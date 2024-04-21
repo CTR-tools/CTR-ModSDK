@@ -57,11 +57,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     }
 	
     // ground and wall quadblock flags
-    sps->Union.QuadBlockColl.searchFlags = 0x3000;
+    sps->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
 
-    sps->Union.QuadBlockColl.unk28 = 0;
+    sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
     // collision triangles, 2 (low-LOD) & 8 (hi-LOD)
-    sps->Union.QuadBlockColl.unk22 = (numPlyr > 3) ? 2 : 0;
+    sps->Union.QuadBlockColl.searchFlags = (numPlyr > 3) ? 2 : 0;
 
     sps->ptr_mesh_info = level1->ptr_mesh_info;
 

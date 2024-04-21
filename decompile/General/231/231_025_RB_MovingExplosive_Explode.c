@@ -1,6 +1,9 @@
 #include <common.h>
 
-void DECOMP_RB_MovingExplosive_Explode(struct Thread* t,struct Instance* inst,struct TrackerWeapon* tw)
+void DECOMP_RB_MovingExplosive_Explode(
+	struct Thread* t,
+	struct Instance* inst,
+	struct TrackerWeapon* tw)
 {
   short soundId;
   struct Driver* d;
@@ -12,6 +15,7 @@ void DECOMP_RB_MovingExplosive_Explode(struct Thread* t,struct Instance* inst,st
     soundId = 0x49;
     tw->driverParent->instBombThrow = NULL;
   }
+  
   // missile
   else 
   {
@@ -29,7 +33,7 @@ void DECOMP_RB_MovingExplosive_Explode(struct Thread* t,struct Instance* inst,st
   PlaySound3D(soundId,inst);
   
   // stop audio of rolling
-  OtherFX_RecycleMute(tw->audioPtr);
+  OtherFX_RecycleMute(&tw->audioPtr);
   
   RB_Burst_Init(inst);
   

@@ -15,7 +15,7 @@ void DECOMP_RB_Warpball_Death(struct Thread* t)
   PlaySound3D(0x4f);
   
   // stop audio of moving
-  OtherFX_RecycleMute(tw->audioPtr);
+  OtherFX_RecycleMute(&tw->audioPtr);
   
   ThTick_SetAndExec(t,&RB_Warpball_FadeAway);
   return;

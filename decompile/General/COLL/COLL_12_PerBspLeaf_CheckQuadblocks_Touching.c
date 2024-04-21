@@ -20,7 +20,7 @@ void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP *node, struct Sc
         COLL_PerQuadblock_CheckTriangles_Touching(ptrQuad++, sps);
     }
 
-    if ((sps->Union.QuadBlockColl.unk22 & 1) != 0)
+    if ((sps->Union.QuadBlockColl.searchFlags & 1) != 0)
     {
         COLL_PerBspLeaf_CheckInstances(node, sps);
     }

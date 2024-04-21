@@ -39,18 +39,18 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
         SPS->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
     // ground and wall quadblock flags
-    SPS->Union.QuadBlockColl.searchFlags = 0x3000;
+    SPS->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
 
-    SPS->Union.QuadBlockColl.unk28 = 0;
+    SPS->Union.QuadBlockColl.qbFlagsIgnored = 0;
 
     // low-LOD collision (2 triangles)
-    SPS->Union.QuadBlockColl.unk22 = 1;
+    SPS->Union.QuadBlockColl.searchFlags = 1;
 
     // if numPlyrCurrGame is less than 3
     if (gGT->numPlyrCurrGame < 3)
     {
         // high-LOD collision (8 triangles)
-        SPS->Union.QuadBlockColl.unk22 = 3;
+        SPS->Union.QuadBlockColl.searchFlags = 3;
     }
 
     multiplier = 0x1000;
@@ -98,7 +98,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
         // if not moving in X or Y
         if ((SPS->Input1.pos[0] == quadPos[0]) &&
-            (uVar1 = SPS->Union.QuadBlockColl.unk22 | 1,
+            (uVar1 = SPS->Union.QuadBlockColl.searchFlags | 1,
 
              // if not moving in Z
              SPS->Input1.pos[2] == quadPos[2]))
@@ -179,7 +179,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
 #endif
 
-        SPS->Union.QuadBlockColl.unk22 = SPS->Union.QuadBlockColl.unk22 & ~(8) | 1;
+        SPS->Union.QuadBlockColl.searchFlags = SPS->Union.QuadBlockColl.searchFlags & ~(8) | 1;
 
         // if LEV mesh_info exists
         if ((SPS->ptr_mesh_info != NULL) &&
@@ -206,7 +206,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
         if (SPS->boolDidTouchHitbox == false)
         {
-            uVar1 = SPS->Union.QuadBlockColl.unk22;
+            uVar1 = SPS->Union.QuadBlockColl.searchFlags;
 
             // if quadblock was not found, quit
             if (SPS->boolDidTouchQuadblock == 0)
@@ -299,16 +299,16 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
             if ((0 < *(short*)0x1f80018c) &&
                 (multiplier = multiplier - (multiplier * *(short*)0x1f80018c >> 12),
-                 uVar1 = SPS->Union.QuadBlockColl.unk22,
+                 uVar1 = SPS->Union.QuadBlockColl.searchFlags,
                  multiplier < 100))
                 break;
 
-            SPS->Union.QuadBlockColl.unk22 |= 8;
+            SPS->Union.QuadBlockColl.searchFlags |= 8;
         }
 
         else
         {
-            SPS->Union.QuadBlockColl.unk22 &= ~(8);
+            SPS->Union.QuadBlockColl.searchFlags &= ~(8);
             *(u_short *)&d->fill18_postQuadBlock[6] &= ~(2);
 
             uVar2 = 1;
@@ -385,10 +385,10 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
                 }
             }
         }
-        uVar1 = SPS->Union.QuadBlockColl.unk22;
+        uVar1 = SPS->Union.QuadBlockColl.searchFlags;
     }
 
-    SPS->Union.QuadBlockColl.unk22 = uVar1;
+    SPS->Union.QuadBlockColl.searchFlags = uVar1;
 
     // driver->0xBC = scratchpad->0x1A4
     d->stepFlagSet = *(u_int*)0x1f8002ac;

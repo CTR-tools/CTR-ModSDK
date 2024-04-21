@@ -149,7 +149,7 @@ struct MetaDataMODEL
 	// Level Instance Collision
 	// callback after detecting
 	// Lev BSP hitbox collision
-	void (*LInC)(struct Instance *i, struct Thread *t, struct ScratchpadStruct* sps);
+	int (*LInC)(struct Instance *i, struct Thread *t, struct ScratchpadStruct* sps);
 };
 
 struct MetaDataBOSS
@@ -1111,7 +1111,7 @@ struct rData
 	char s_lapString[0xc];
 
 	// 800116ec
-	char unk54[0x54];
+	char rdata54[0x54];
 
 	// 80011740
 	char s_oxide[0x18];

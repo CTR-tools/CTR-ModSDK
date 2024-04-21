@@ -7,8 +7,8 @@ void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *quad, struct Sc
     *(int*)&sps->unk4C[0x18] = quad;
 
     if (
-        ((sps->Union.QuadBlockColl.searchFlags & quad->quadFlags) != 0) &&
-		((sps->Union.QuadBlockColl.unk28 & quad->quadFlags) == 0) &&
+        ((sps->Union.QuadBlockColl.qbFlagsWanted & quad->quadFlags) != 0) &&
+		((sps->Union.QuadBlockColl.qbFlagsIgnored & quad->quadFlags) == 0) &&
 		(quad->bbox.min[0] < sps->bbox.max[0]) &&
 		(quad->bbox.min[1] < sps->bbox.max[1]) &&
 		(quad->bbox.min[2] < sps->bbox.max[2]) &&
@@ -19,7 +19,7 @@ void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *quad, struct Sc
     {
         // if 3P or 4P mode,
         // then use low-LOD quadblock collision (two triangles)
-        if ((sps->Union.QuadBlockColl.unk22 & 2) == 0)
+        if ((sps->Union.QuadBlockColl.searchFlags & 2) == 0)
         {
             COLL_TestQuadblock_TwoTris(sps, quad);
 
@@ -33,7 +33,7 @@ void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *quad, struct Sc
         }
         else
         {
-            if ((sps->Union.QuadBlockColl.unk22 & 8) == 0)
+            if ((sps->Union.QuadBlockColl.searchFlags & 8) == 0)
             {
                 COLL_TestQuadblock_EightTris(sps, quad);
             }

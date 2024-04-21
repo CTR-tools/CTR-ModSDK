@@ -6,15 +6,15 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct *sps, struct
 {
   unsigned short flag;
   short model;
-  struct Instance *inst;
-  struct InstanceDef *instdef;
-  struct MetaDataMODEL *meta;
+  struct Instance* inst;
+  struct InstDef* instdef;
+  struct MetaDataMODEL* meta;
 
   // Check if the hitbox flag has the collision bit set and if InstDef is not NULL
   if ((sps->bspHitbox->flag & 0x80) &&
       (instdef = sps->bspHitbox->data.hitbox.instDef) != NULL)
   {
-    inst = instdef->ptrInstace;
+    inst = instdef->ptrInstance;
     model = inst->model->id;
 
     // Get the metadata for the model
@@ -26,16 +26,28 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct *sps, struct
       // Execute LInC, create a thread for this instance, and let it run thread->funcThCollide upon collision
       flag = meta->LInC(inst, th, sps);
 
-      if (model != PU_WUMPA_FRUIT)
-      {
-        if (model > PU_RANDOM_CRATE || model < PU_RANDOM_CRATE)
-        {
+	  // if not PU_WUMPA_FRUIT
+      if (model != 2) 
+	  {
+		// useless
+        if (model < 2) {
+          return flag;
+        }
+		
+		// anything except for
+		// 7: PU_FRUIT_CRATE,
+		// 8: PU_RANDOM_CRATE (weapon box)
+        if (8 < model) {
+          return flag;
+        }
+        if (model < 7) {
           return flag;
         }
       }
       return 0;
     }
   }
+  
   // make potion open teeth,
   // or make warpball turn around
   return 1;

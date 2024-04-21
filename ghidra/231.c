@@ -2313,7 +2313,9 @@ LAB_800adc08:
       *(short *)((int)piVar9 + 0x22) = *(short *)((int)piVar9 + 0x22) + -1;
     }
   }
-  else {
+  else 
+  {
+	// tw->framesSeekMine
     if (piVar9[0x15] == 0) 
 	{
 	  // get distance between tracker and the driver being chased
@@ -2326,6 +2328,8 @@ LAB_800add14:
 	  // get direction, given X and Y distance to travel
       sVar3 = ratan2(iVar6,iVar8);
     }
+	
+	// if seeking mine
     else {
       piVar9[0x15] = piVar9[0x15] + -1;
       iVar8 = *(int *)(*piVar9 + 0x20);
@@ -2347,7 +2351,8 @@ LAB_800add14:
 	if ((sVar1 == 0x3b) || (sVar1 == 0x56)) 
 	{
 	  // RB_Hazard_InterpolateValue
-      sVar3 = FUN_800ada90((int)*(short *)((int)piVar9 + 0x1e),(int)sVar3,4);  
+      sVar3 = FUN_800ada90(
+		(int)*(short *)((int)piVar9 + 0x1e),(int)sVar3,4);  
 	  *(short *)((int)piVar9 + 0x1e) = sVar3;
       
 	  // Sine(angle)
@@ -2645,7 +2650,7 @@ LAB_800ae440:
         return;
       }
       
-	  // if you are here, this must be a bomb
+	  // === Assume Bomb ===
 	  
 	  // RB_Hazard_CollideWithBucket, check Tracking threadbucket
 	  iVar8 = FUN_800ac350(iVar10,param_1,*(undefined4 *)(PTR_DAT_8008d2ac + 0x1ba4),
@@ -4665,7 +4670,7 @@ void FUN_800b0454(int param_1)
   // tw->frameCount_DontHurtParent
   *(undefined2 *)(puVar11 + 8) = 10;
   
-  // tw->unk22
+  // tw->frameCount_Blind
   *(undefined2 *)((int)puVar11 + 0x22) = 0;
   
   // tw->dir[2]

@@ -9,13 +9,6 @@
 
 void NewCallback231()
 {
-	// spinning bomb
-	{
-		// cut speed in half
-		*(unsigned short*)0x800ADFD4 = -0x100;
-		*(unsigned short*)0x800ADFE0 = 0x100;
-	}
-
 	// start banner
 	{
 		// 800b57c0 and 800b57d0

@@ -46,12 +46,12 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	posTop[1] = inst->matrix.t[1] + 0x100;
 	posTop[2] = inst->matrix.t[2];
 
-	SPS->Union.QuadBlockColl.searchFlags = 0x1040;
-	SPS->Union.QuadBlockColl.unk28 = 0;
-	SPS->Union.QuadBlockColl.unk22 = 0x41;
+	SPS->Union.QuadBlockColl.qbFlagsWanted = 0x1040;
+	SPS->Union.QuadBlockColl.qbFlagsIgnored = 0;
+	SPS->Union.QuadBlockColl.searchFlags = 0x41;
 
 	if (gGT->numPlyrCurrGame < 3) {
-		SPS->Union.QuadBlockColl.unk22 = 0x43;
+		SPS->Union.QuadBlockColl.searchFlags = 0x43;
 	}
 
 	SPS->ptr_mesh_info = gGT->level1->ptr_mesh_info;

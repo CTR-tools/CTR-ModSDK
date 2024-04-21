@@ -136,7 +136,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			
 			tw = weaponTh->object;
 			tw->flags = 0;
-			tw->unk54 = 0;
+			tw->framesSeekMine = 0;
 			tw->audioPtr = 0;
 			tw->timeAlive = 0;
 			tw->driverParent = d;
@@ -228,7 +228,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			}
 			
 			tw->frameCount_DontHurtParent = FPS_DOUBLE(60);
-			tw->unk22 = 0;
+			tw->frameCount_Blind = 0;
 			break;
 		
 		// TNT/Nitro
@@ -304,12 +304,12 @@ RunMineCOLL:
 			
 			struct ScratchpadStruct *sps = 0x1f800108;
 			
-			sps->Union.QuadBlockColl.searchFlags = 0x1000;
-			sps->Union.QuadBlockColl.unk28 = 0;
+			sps->Union.QuadBlockColl.qbFlagsWanted = 0x1000;
+			sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
 			
-			sps->Union.QuadBlockColl.unk22 = 1;
+			sps->Union.QuadBlockColl.searchFlags = 1;
 			if(gGT->numPlyrCurrGame < 3)
-				sps->Union.QuadBlockColl.unk22 = 3;
+				sps->Union.QuadBlockColl.searchFlags = 3;
 			
 			sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 			
@@ -339,7 +339,7 @@ RunMineCOLL:
 					RB_GenericMine_ThDestroy(weaponTh, weaponInst, mw);
 				}
 				
-				sps->Union.QuadBlockColl.unk22 = 0;
+				sps->Union.QuadBlockColl.searchFlags = 0;
 				COLL_SearchTree_FindQuadblock_Touching(pos1, pos2, sps, 0);
 			}
 			
@@ -364,6 +364,7 @@ RunMineCOLL:
 			
 			VehPhysForce_RotAxisAngle(&weaponInst->matrix, rotPtr, d->angle);
 			
+			// dropped a mine
 			d->actionsFlagSet |= 0x80000000;
 			
 			if(flags == 0)

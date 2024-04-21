@@ -299,7 +299,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   tw->driverTarget = 0;
   tw->timeAlive = 0;
   tw->audioPtr = 0;
-  tw->unk22 = 0;
+  tw->frameCount_Blind = 0;
   
   tw->driverParent = player;
   tw->instParent = driverInst;

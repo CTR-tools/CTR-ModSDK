@@ -15,9 +15,9 @@ void DECOMP_CAM_StartLine_FlyIn_FixY(short* posRot)
 
   // lev -> mesh_info
   sdata->scratchpadStruct.ptr_mesh_info = sdata->gGT->level1->ptr_mesh_info;
-  sdata->scratchpadStruct.Union.QuadBlockColl.unk22 = 2;
-  sdata->scratchpadStruct.Union.QuadBlockColl.searchFlags = 0x3000; // ground and wall
-  sdata->scratchpadStruct.Union.QuadBlockColl.unk28 = 0;
+  sdata->scratchpadStruct.Union.QuadBlockColl.searchFlags = 2;
+  sdata->scratchpadStruct.Union.QuadBlockColl.qbFlagsWanted = 0x3000; // ground and wall
+  sdata->scratchpadStruct.Union.QuadBlockColl.qbFlagsIgnored = 0;
 
   local_20 = posRot[0];
   local_26 = posRot[1];

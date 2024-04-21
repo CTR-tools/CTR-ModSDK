@@ -78,7 +78,7 @@ struct TrackerWeapon
 
 	// 0x20
 	short frameCount_DontHurtParent;
-	short unk22;
+	short frameCount_Blind;
 
 	// 0x24
 	int audioPtr;
@@ -132,7 +132,7 @@ struct TrackerWeapon
 	short turnAround;
 	
 	// 0x54
-	int unk54;
+	int framesSeekMine;
 
 	// 0x58 bytes large
 };

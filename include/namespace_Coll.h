@@ -69,14 +69,14 @@ struct ScratchpadStruct
 			short hitPos[3];
 			
 			// 0x22
-			short unk22;
-			
-			// 0x24
 			short searchFlags;
 			
+			// 0x24
+			int qbFlagsWanted;
+			
 			// 0x28
-			// could be non-union callback
-			int unk28;
+			int qbFlagsIgnored;
+			
 		} QuadBlockColl;
 		
 		// when using this,
@@ -110,6 +110,8 @@ struct ScratchpadStruct
 	// 0x3C...
 	// 1f800144, can be ptr_mesh_info, or search flags
 	short unk3C;
+	
+	// 0x3e
 	short boolDidTouchQuadblock;
 	
 	// 0x40
