@@ -271,7 +271,7 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 	
 	int CUP_SELECT = D230.menuCupSelect.rowSelected;
 
-	DecalFont_DrawLine(
+	DECOMP_DecalFont_DrawLine(
 		"PRESS SELECT FOR CUSTOM CUPS",
 		0x100,
 		0x4,
@@ -317,19 +317,18 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 			while (i < 4)
 			{
 				// random
-				MixRNG_Scramble();
+				DECOMP_MixRNG_Scramble();
 
 				id = (
-						 // system clock
-						 (Timer_GetTime_Total() & 0xf)
+						#ifndef REBUILD_PS1
+						// system clock
+						(Timer_GetTime_Total() & 0xf) +
+						#endif
+		
+						// from RNG
+						(sdata->randomNumber >> 8)
 
-						 +
-
-						 // from RNG
-						 (sdata->randomNumber >> 8)
-
-							 ) %
-					 18; // 18 tracks
+					  ) % 18; // 18 tracks
 
 				// avoid repeats
 				if (CustomCups_boolRepeat(i, id, CUP_SELECT))
@@ -363,7 +362,7 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 		startY += 11;
 
 		// Draw arrow
-		DecalFont_DrawLine(
+		DECOMP_DecalFont_DrawLine(
 			"-\0",
 			startX,
 			startY + 0x10 * cc->choiceY,
@@ -380,7 +379,7 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 			CUP_ICON(i, CUP_SELECT) = SIN_ICON(i, CUP_SELECT);
 
 			// Draw name of track
-			DecalFont_DrawLine(
+			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[CUP_TRACK(i, CUP_SELECT) + 0x6e],
 				startX + 0x10,
 				startY + 0x10 * i,
@@ -392,14 +391,14 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 		if(CUP_SELECT < 2)
 			windowText.y = 0x79;
 
-		DecalFont_DrawLine(
+		DECOMP_DecalFont_DrawLine(
 			"USE D-PAD TO CUSTOMIZE CUP",
 			0x100,
 			windowText.y + 0x18,
 			FONT_SMALL,
 			(JUSTIFY_CENTER | PERIWINKLE));
 
-		DecalFont_DrawLine(
+		DECOMP_DecalFont_DrawLine(
 			"PRESS R1 TO RANDOMOMIZE",
 			0x100,
 			windowText.y + 0x30,
@@ -409,11 +408,11 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 		struct DB *backBuffer = 
 			sdata->gGT->backBuffer;
 
-		RECTMENU_DrawInnerRect(
+		DECOMP_RECTMENU_DrawInnerRect(
 			&windowSel[CUP_SELECT], 1, 
 			backBuffer->otMem.startPlusFour);
 
-		RECTMENU_DrawInnerRect(
+		DECOMP_RECTMENU_DrawInnerRect(
 			&windowText, 1, 
 			backBuffer->otMem.startPlusFour);
 	}
