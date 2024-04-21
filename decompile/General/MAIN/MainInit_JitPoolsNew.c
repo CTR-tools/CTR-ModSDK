@@ -207,7 +207,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // SmallStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.smallStack, 
-	numThread,
+	numThread-numDriver,
 	0x40 + sizeof(void*)*2,
 	/*"SmallStackPool"*/0);
   
