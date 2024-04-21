@@ -60,7 +60,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 
 	RB_MakeInstanceReflective(SPS, inst);
 
-  // if hit a wall
+    // if hit a wall
 	if ((*(int*)&SPS->dataOutput[0] & 4) != 0) 
 	{
 		RB_GenericMine_ThDestroy(t,inst,mw);
