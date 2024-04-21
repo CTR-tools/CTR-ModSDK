@@ -3003,12 +3003,15 @@ int FUN_800ae7dc(int param_1,int param_2)
 	// MATH_VectorNormalize
 	FUN_8003d378(&local_28);
 	
-    local_30 = CONCAT22(*(short *)(param_2 + 0x48) - psVar8[1],*(short *)(param_2 + 0x44) - *psVar8)
-    ;
-    setCopControlWord(2,0,local_28);
-    setCopControlWord(2,0x800,(int)local_24);
-    setCopReg(2,0,local_30);
-    setCopReg(2,0x800,(int)(short)(*(short *)(param_2 + 0x4c) - psVar8[2]));
+    gte_ldR11R12(local_28);
+    gte_ldR13R21((int)local_24);
+	
+    local_30 = CONCAT22(
+		*(short *)(param_2 + 0x48) - psVar8[1],
+		*(short *)(param_2 + 0x44) - *psVar8);
+	
+    gte_ldVXY0(2,0,local_30);
+    gte_ldVZ0(2,0x800,(int)(short)(*(short *)(param_2 + 0x4c) - psVar8[2]));
     
 	copFunction(2,0x406012);
     

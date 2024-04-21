@@ -4,12 +4,10 @@ void DECOMP_RB_Warpball_Death(struct Thread* t)
 {
   struct TrackerWeapon* tw;
   
-  // get object from thread
   tw = t->object;
-  
-  *(unsigned short *)((int)tw + 0x38) = *(unsigned short *)(*(int *)((int)t + 0x34) + 0x48);
-  *(unsigned short *)(*(short*)((int)tw + 0xC) + 0x10) = 0;
-  *(unsigned short *)((int)tw + 0x30) = 0;
+  tw->distFromGround = t->inst->matrix.t[1];
+  tw->ptrParticle->framesLeftInLife = 0;
+  tw->fadeAway_frameCount5 = 0;
   
   // play sound of warpball death
   PlaySound3D(0x4f);

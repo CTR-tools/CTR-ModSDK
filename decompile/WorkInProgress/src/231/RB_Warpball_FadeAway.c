@@ -14,8 +14,7 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   // get instance from thread
   inst = t->inst;
   
-  // frame counter more than 5
-  if (5 < *(short*)((int)tw + 0x30)) 
+  if (tw->fadeAway_frameCount5 > 5) 
   {
     d = tw->driverTarget;
     
@@ -26,7 +25,7 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
     }
 	
 	// remove active warpball flag
-   sdata->gGT->gameMode1 &= ~(WARPBALL_HELD);
+	sdata->gGT->gameMode1 &= ~(WARPBALL_HELD);
 	
 	// This thread is now dead
     t->flags |= 0x800;
@@ -34,7 +33,7 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   }
   
   // frame counter
-  frameId = *(short*)((int)tw + 0x30);
+  frameId = tw->fadeAway_frameCount5;
   
   iVar2 = (int)frameId * 6;
   
@@ -43,10 +42,12 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   inst->scale[1] = ((char *)0x800b2c8a)[iVar2];
   inst->scale[2] = ((char *)0x800b2c8c)[iVar2];
   
-  inst->matrix.t[1] = *(short*)((int)tw + 0x38) + ((int *)0x800b2cac)[frameId];
+  inst->matrix.t[1] = tw->distFromGround + ((int *)0x800b2cac)[frameId];
   
-  // increment counter
-  *(short*)((int)tw + 0x30) += 1;
+  #ifdef USE_60FPS
+  if(sdata->gGT->timer&1)
+  #endif  
+	tw->fadeAway_frameCount5 += 1;
   
   return;
 }

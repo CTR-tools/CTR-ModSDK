@@ -60,7 +60,7 @@ struct TrackerWeapon
 	struct Instance* instParent; // of driver who shot me
 
 	// 0xC
-	void* ptrParticle;
+	struct Particle* ptrParticle;
 
 	// 0x10
 	short vel[3];
