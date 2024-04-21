@@ -262,7 +262,7 @@ LAB_800add14:
     sps->Union.QuadBlockColl.searchFlags = 0x43;
   }
   
-  sps->ptr_mesh_info = gGT->level1;
+  sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
   
   COLL_SearchTree_FindQuadblock_Touching(&posA,&posB,sps,0);
   
@@ -367,7 +367,7 @@ LAB_800add14:
 			(
 				(
 					(instDef->ptrInstance != 0) &&
-					(instDef->modelID != 0x70)
+					(instDef->modelID == 0x70)
 				)
 			)
 		) 

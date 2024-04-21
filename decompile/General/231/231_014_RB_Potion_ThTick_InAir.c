@@ -46,9 +46,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	posTop[1] = inst->matrix.t[1] + 0x100;
 	posTop[2] = inst->matrix.t[2];
 
+	SPS->Union.QuadBlockColl.searchFlags = 0x41;
 	SPS->Union.QuadBlockColl.qbFlagsWanted = 0x1040;
 	SPS->Union.QuadBlockColl.qbFlagsIgnored = 0;
-	SPS->Union.QuadBlockColl.searchFlags = 0x41;
 
 	if (gGT->numPlyrCurrGame < 3) {
 		SPS->Union.QuadBlockColl.searchFlags = 0x43;
@@ -61,7 +61,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	RB_MakeInstanceReflective(SPS, inst);
 
 	// 1f800108+1A4
-	if ((*(int*)0x1f8002ac & 4) != 0) 
+	if ((*(int*)&SPS->dataOutput[0] & 4) != 0) 
 	{
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
