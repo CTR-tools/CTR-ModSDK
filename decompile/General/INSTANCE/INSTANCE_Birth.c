@@ -46,6 +46,6 @@ void DECOMP_INSTANCE_Birth(
 	{
 		idpp[i].pushBuffer = &gGT->pushBuffer[i];
 		idpp[i].mh = 0;
-		idpp[i].unkb8[0] = 0;
+		idpp[i].instFlags = 0;
 	}
 }

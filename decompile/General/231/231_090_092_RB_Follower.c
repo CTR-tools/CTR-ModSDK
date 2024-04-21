@@ -26,12 +26,12 @@ void DECOMP_RB_Follower_ProcessBucket(struct Thread* t)
 		// make Follower invisible to all other players
 		for(i = 0; i < numPlyr; i++)
 			if(i != driverID)
-				idpp[i].unkb8[0] &= ~(0x40);
+				idpp[i].instFlags &= ~(0x40);
 		
 		// make Mine invisible to this player
 		inst = fObj->mineTh->inst;
 		idpp = INST_GETIDPP(inst);
-		idpp[driverID].unkb8[0] &= ~(0x40);
+		idpp[driverID].instFlags &= ~(0x40);
 	}
 }
 

@@ -18,7 +18,7 @@ char DECOMP_CS_Instance_BoolPlaySound(struct CutsceneObj *cs, struct Instance *d
 		if(visInstSrc[0] == desiredInst)
 		{
 			idpp = INST_GETIDPP(desiredInst);
-			return (idpp[0].unkb8[0] & 0x40) != 0;
+			return (idpp[0].instFlags & 0x40) != 0;
 		}
 		
 		visInstSrc++;

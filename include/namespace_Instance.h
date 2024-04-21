@@ -430,10 +430,11 @@ struct InstDrawPerPlayer
 	// 0x98 - in normal wheel rendering (FUN_8006e588) (and drawFuncs, like 0x78)
 	MATRIX m3x3;
 
-	// all get set in FUN_80070950
 	// 0xb8 - same enum as Instance offset 0x28
-	// 0xbc - ???
-	int unkb8[2];
+	int instFlags;
+	
+	// 0xbc
+	int unkbc;
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame

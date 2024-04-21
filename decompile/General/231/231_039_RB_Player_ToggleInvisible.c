@@ -26,7 +26,7 @@ void DECOMP_RB_Player_ToggleInvisible(void)
 			INST_GETIDPP(d->instSelf);
 			
           // make driver instance invisible on this screen
-          idpp[i].unkb8[0] &= 0xffffffbf;
+          idpp[i].instFlags &= 0xffffffbf;
         }
       }
     }

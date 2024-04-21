@@ -25,13 +25,13 @@ void DECOMP_VehTurbo_ProcessBucket(struct Thread* turboThread)
 				// each InstDrawPerPlayer
 				for (char i = 0; i < numPlyr; i++)
 				{
-					temp4 = driverInstance->idpp[i].unkb8[0];
+					temp4 = driverInstance->idpp[i].instFlags;
 					// judging by 0x28 being copied to 0xb8 ?
 					if ((temp4 & 0x100) == 0)
 					{
 						// flags
-						turbo->inst->idpp[i].unkb8[0] &= (temp4 | 0xffffffbf);
-						inst->idpp[i].unkb8[0] &= (temp4 | 0xffffffbf);
+						turbo->inst->idpp[i].instFlags &= (temp4 | 0xffffffbf);
+						inst->idpp[i].instFlags &= (temp4 | 0xffffffbf);
 				
 						temp4 = driverInstance->idpp[i].unkE4[0];
 						inst->idpp[i].unkE4[0] = temp4;

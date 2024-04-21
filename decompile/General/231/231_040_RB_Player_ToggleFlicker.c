@@ -27,7 +27,7 @@ void DECOMP_RB_Player_ToggleFlicker(void)
       for (i = 0; i < gGT->numPlyrCurrGame; i++)
       {
         // make driver invisible
-        idpp[i].unkb8[0] &= 0xffffffbf;
+        idpp[i].instFlags &= 0xffffffbf;
       }
     }
   }

@@ -16,11 +16,11 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
   idpp1 = INST_GETIDPP(title->i[1]); // "title"
   idpp2 = INST_GETIDPP(title->i[2]); // another "title"
   
-  idpp2_b8 = idpp2->unkb8[0];
+  idpp2_b8 = idpp2->instFlags;
   if ((idpp2_b8 & 0x100) != 0) return; 
   
   idpp2_b8 |= 0xffffffbf;
-  idpp1->unkb8[0] &= idpp2_b8;
+  idpp1->instFlags &= idpp2_b8;
   
   // ASM optimization, put all LWs together
   e4 = idpp2->unkE4;
