@@ -107,5 +107,3 @@ endif()
 
 target_link_libraries(ctr_bin psycross_static)
 target_include_directories(ctr_bin PRIVATE ${PsyCross_SOURCE_DIR}/include)
-
-#target_link_libraries(ctr_bin stdc++ m)
