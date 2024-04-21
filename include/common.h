@@ -2,12 +2,15 @@
 #define COMMON_H
 
 // toggle these in decompile
-#define USE_60FPS
-#define USE_16BY9
-#define USE_NEW2P
-#define USE_OXIDE
-#define USE_PENTA
-#define USE_BOOSTBAR
+//#define USE_60FPS
+//#define USE_16BY9
+//#define USE_NEW2P
+//#define USE_OXIDE
+//#define USE_PENTA
+//#define USE_NEWCUPS
+//#define USE_BOOSTBAR
+
+// requires 8mb expansion (will adjust later)
 //#define USE_GPU1P
 //#define USE_VR
 
