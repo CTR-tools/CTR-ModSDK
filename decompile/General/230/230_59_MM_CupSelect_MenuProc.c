@@ -1,7 +1,5 @@
 #include <common.h>
 
-// 10624 -> 10512
-
 void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 {
     char i;
