@@ -2455,7 +2455,7 @@ LAB_800add14:
 		) && 
 		(
 			// DAT_800b2ae4
-			// "shieldbomb"
+			// ParticleEmitter emSet[]
 		
 			// Make Instane in Particle Pool
 			iVar8 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2114),&DAT_800b2ae4),
