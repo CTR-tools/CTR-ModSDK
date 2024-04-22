@@ -682,10 +682,7 @@ void StateZero()
 	
 	// Defrag to save heap space,
 	// required because MEMPACK_Init moves heap
-	// === Not Ready === 
-	// Can't relocate RB_Teeth
-	//#ifndef REBUILD_PC
-	#if 0
+	#ifndef REBUILD_PC
 	void RB_NewEndFile();
 	void OVR_Region3();
 	
