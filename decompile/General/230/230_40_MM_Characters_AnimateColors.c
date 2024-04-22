@@ -12,6 +12,8 @@ void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID
 
   trigApprox = 0;
 
+  // if player has not selected character yet
+  // see MM_Characters_MenuProc
   if (flag == 0) {
     trigApproximationIndex = FPS_HALF(sdata->frameCounter) * 0x100 + playerID * 0x400;
 
