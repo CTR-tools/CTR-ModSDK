@@ -39,7 +39,7 @@ void DECOMP_MM_Characters_RestoreIDs(void)
     // Basically sets them to 0, 1, 2, 3, 4... up to 0xE,
     // setting Oxide's manually to 0xF is needed to make his icon appear
 
-    D230.characterIcon[D230.csm_Active[i].characterID] = i;
+    D230.characterMenuID[D230.csm_Active[i].characterID] = i;
   }
 
     for (i = 0; i < gGT->numPlyrNextGame; i++) 

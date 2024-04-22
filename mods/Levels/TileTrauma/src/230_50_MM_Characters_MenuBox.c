@@ -57,7 +57,7 @@ void MM_Characters_MenuProc()
 	
 	for (i = 0; i < 4; i++)
 	{
-		globalIconPerPlayer[i] = D230.characterIcon[data.characterIDs[i]];
+		globalIconPerPlayer[i] = D230.characterMenuID[data.characterIDs[i]];
 	}
 	
 	// if menu is not in focus

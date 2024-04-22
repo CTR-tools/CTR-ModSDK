@@ -504,8 +504,10 @@ struct OverlayDATA_230
 
 	// 800b50B4 - UsaRetail
 	// 800b5890 - EurRetail
-	// wouldn't need this if icons were stored by order of characterID
-	short characterIcon[0x10];
+	// the character select menu has a different order for playable characters
+	// this array contains the IDs used for each character in the character select menu
+	// each member of the array corresponds to the character order used in the rest of the game, see enum Characters
+	short characterMenuID[0x10];
 
 	// 0x15 for transition meta array:
 	// 14 character icons + title text + 4 kart screens + 2 more?

@@ -54,7 +54,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	
 	for (i = 0; i < 4; i++)
 	{
-		globalIconPerPlayer[i] = D230.characterIcon[data.characterIDs[i]];
+		globalIconPerPlayer[i] = D230.characterMenuID[data.characterIDs[i]];
 	}
 	
 	// if menu is not in focus
@@ -475,9 +475,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	csm_Active = D230.csm_Active;
 	
 #ifndef USE_OXIDE
-  #define NUM_ICONS 0xF
+	#define NUM_ICONS 0xF
 #else
-  #define NUM_ICONS 0x10
+	#define NUM_ICONS 0x10
 #endif
 	
 	// loop through character icons
