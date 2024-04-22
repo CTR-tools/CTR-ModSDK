@@ -1,5 +1,5 @@
-// 520+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 861 rewritten so far
-// 520 for every 'common' and ','
+// 509+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 862 rewritten so far
+// 509 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -28,7 +28,6 @@
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
 // +47 for RB_Block2
-// -12 cause Block2 is not unified, it is 12 separate lines, can't relocate RB_Teeth
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
@@ -108,8 +107,6 @@ common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleF
 common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c
 common, 231, RB_RainCloud_ThTick, 0x0, General/231/231_042_RB_RainCloud_ThTick.c
 common, 231, RB_RainCloud_Init, 0x0, General/231/231_043_RB_RainCloud_Init.c
-
-// untested Apr22
 common, 231, RB_Explosion_InitPotion, 0x0, General/231/231_044_RB_Explosion_InitPotion.c
 common, 231, RB_Explosion_InitGeneric, 0x0, General/231/231_045_RB_Explosion_InitGeneric.c
 // Blowup_ProcessBucket
@@ -122,31 +119,11 @@ common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst
 common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
 // Burst_DrawAll
 // RB_GetThread_ClosestTracker
-
-// Count might be off for the rest of the files
-
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_56_72.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_073_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_074_077_RB_CtrLetter.c
 // skip Banner
-
-// Defrag isn't ready, can't relocate RB_Teeth
-//ommon, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_82_129.c
-
-common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_082_085_RB_Armadillo.c
-common, 231, RB_Fireball_ThTick, 0x0, General/231/231_086_088_RB_Fireball.c
-common, 231, RB_FlameJet_Particles, 0x0, General/231/231_089_091_RB_FlameJet.c
-common, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_092_094_RB_Follower.c
-common, 231, RB_Fruit_ThTick, 0x0, General/231/231_095_098_RB_Fruit.c
-common, 231, RB_Minecart_ThTick, 0x0, General/231/231_099_100_RB_Minecart.c
-// skip Orca (unused, removed from decomp)
-common, 231, RB_Plant_ThTick_Eat, 0x0, General/231/231_104_109_RB_Plant.c
-common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_110_113_RB_Seal.c
-common, 231, RB_Snowball_ThTick, 0x0, General/231/231_114_115_RB_Snowball.c
-common, 231, RB_Spider_DrawWebs, 0x0, General/231/231_116_119_RB_Spider.c
-// skip StartText (unused, removed from decomp) 
-common, 231, RB_Teeth_LInB, 0x0, General/231/231_122_126_RB_Teeth.c
-common, 231, RB_Turtle_ThTick, 0x0, General/231/231_127_129_RB_Turtle.c
+common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_82_129.c
 
 // 232 (incomplete)
 common, 232, R232, 0x0, General/232/R232.c
