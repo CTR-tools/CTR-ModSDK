@@ -118,7 +118,7 @@ common, 231, RB_Burst_CollThBucket, 0x0, General/231/231_051_RB_Burst_CollThBuck
 common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst.c
 common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
 // Burst_DrawAll
-// RB_GetThread_ClosestTracker
+common, 231, RB_GetThread_ClosestTracker, 0x0, General/231/231_055_RB_GetThread_ClosestTracker.c
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_56_72.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_073_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_074_077_RB_CtrLetter.c
