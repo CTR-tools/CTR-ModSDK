@@ -6084,6 +6084,8 @@ void FUN_800b2154(int param_1)
   iVar2 = *(int *)(*(int *)(iVar2 + 0x18) + 0x14);
   *(ushort *)(iVar2 + 0x56) = *(ushort *)(iVar2 + 0x56) | 2;
   
+  // ======= End of Instance =========
+  
   DAT_1f800108 = *(undefined2 *)(param_1 + 0x44);
   DAT_1f80010a = *(undefined2 *)(param_1 + 0x48);
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);

@@ -1,5 +1,5 @@
-// 510+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 851 rewritten so far
-// 510 for every 'common' and ','
+// 520+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 861 rewritten so far
+// 520 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -86,8 +86,6 @@ common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_T
 common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
 common, 231, RB_TNT_ThTick_SitOnHead, 0x0, General/231/231_019_RB_TNT_ThTick_SitOnHead.c
 common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
-
-// new as of 4/21/2024, untested
 common, 231, RB_Explosion_ThTick, 0x0, General/231/231_021_RB_Explosion_ThTick.c
 common, 231, RB_Hazard_CollLevInst, 0x0, General/231/231_022_RB_Hazard_CollLevInst.c
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
@@ -101,8 +99,6 @@ common, 231, RB_Warpball_Start, 0x0, General/231/231_029_RB_Warpball_Start.c
 common, 231, RB_Warpball_SeekDriver, 0x0, General/231/231_032_RB_Warpball_SeekDriver.c
 common, 231, RB_Warpball_TurnAround, 0x0, General/231/231_033_RB_Warpball_TurnAround.c
 // RB_Warpball_ThTick
-
-
 common, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
 common, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
 common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
@@ -112,9 +108,23 @@ common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleF
 common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c
 common, 231, RB_RainCloud_ThTick, 0x0, General/231/231_042_RB_RainCloud_ThTick.c
 common, 231, RB_RainCloud_Init, 0x0, General/231/231_043_RB_RainCloud_Init.c
-// skip explosion, blowup, burst, 
-common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_050_RB_Burst_CollLevInst.c
-// skip burst
+
+// untested Apr22
+common, 231, RB_Explosion_InitPotion, 0x0, General/231/231_044_RB_Explosion_InitPotion.c
+common, 231, RB_Explosion_InitGeneric, 0x0, General/231/231_045_RB_Explosion_InitGeneric.c
+// Blowup_ProcessBucket
+common, 231, RB_Blowup_ThTick, 0x0, General/231/231_047_RB_Blowup_ThTick.c
+//common, 231, RB_Blowup_Init, 0x0, General/231/231_048_RB_Blowup_Init.c
+// Burst_ProcessBucket
+common, 231, RB_Burst_ThTick, 0x0, General/231/231_050_RB_Burst_ThTick.c
+common, 231, RB_Burst_CollThBucket, 0x0, General/231/231_051_RB_Burst_CollThBucket.c
+common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst.c
+common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
+// Burst_DrawAll
+// RB_GetThread_ClosestTracker
+
+// Count might be off for the rest of the files
+
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_54_70.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_071_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c

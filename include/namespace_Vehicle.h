@@ -1239,10 +1239,10 @@ struct Driver
 	int timeSpentBurnt;
 
 	// 0x550 (not an int)
-	int highestJump;
+	short highestJump;
 	
 	// 0x552
-	// set in 231
+	short longestShot;
 
 	// 0x554
 	short numberOfJumps;

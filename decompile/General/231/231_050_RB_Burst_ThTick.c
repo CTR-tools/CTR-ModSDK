@@ -1,43 +1,42 @@
 #include <common.h>
 
+// Identical to Blowup, but except for i<x
 void DECOMP_RB_Burst_ThTick(struct Thread *t)
 {
-  char i;
   short animFrame;
   short numFrames;
   struct Instance* inst;
+  int boolAlive;
+  
   int *burst;
-
   burst = t->object;
 
-  for (i = 0; i < 3; i++)
+  boolAlive = 0;
+  for (int i = 0; i < 3; i++, burst++)
   {
     // get instance pointer
-    inst = burst[i];
-
-    if (inst == NULL) break;
-
-    animFrame = inst->animFrame;
-
+    inst = *burst;
+	
+    if (inst == NULL)
+		continue;
+    
+	animFrame = inst->animFrame;
     numFrames = INSTANCE_GetNumAnimFrames(inst, 0);
 
-    // if animation is not done
     if (animFrame < numFrames - 1)
-    {
-      // increment animation frame
+	{
+	  boolAlive = 1;
       inst->animFrame++;
-    }
+	}
 
-    // if animation is done
     else
     {
       INSTANCE_Death(inst);
-      inst = NULL;
+      *burst = NULL;
     }
   }
 
-  // if all instances have been erased
-  if (burst[0] == burst[1] == burst[2] == 0)
+  if (!boolAlive)
   {
     // This thread is now dead
     t->flags |= 0x800;
