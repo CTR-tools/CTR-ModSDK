@@ -151,7 +151,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		
 			// open door if door is closed,
 			// then destroy mine right after
-			RB_Teeth_OpenDoor(instDef->ptrInstance);
+			DECOMP_RB_Teeth_OpenDoor(instDef->ptrInstance);
 		}
 	}
 	

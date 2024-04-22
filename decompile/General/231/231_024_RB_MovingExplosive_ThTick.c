@@ -371,7 +371,7 @@ LAB_800add14:
 			)
 		) 
 	  {
-        RB_Teeth_OpenDoor(instDef->ptrInstance);
+        DECOMP_RB_Teeth_OpenDoor(instDef->ptrInstance);
       }
       goto LAB_800ae42c;
     }

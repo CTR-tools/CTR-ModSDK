@@ -28,7 +28,7 @@ void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHit
   }
   
   if (model == 0x70) 
-    RB_Teeth_OpenDoor(inst);
+    DECOMP_RB_Teeth_OpenDoor(inst);
 
   return;
 }

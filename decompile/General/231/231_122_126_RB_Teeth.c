@@ -2,23 +2,6 @@
 
 void DECOMP_RB_Teeth_OpenDoor();
 
-// need this cause OpenDoor can't relocate,
-// feel free to remove later
-void Teeth_Padding()
-{
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-	asm("nop");
-}
-
 void DECOMP_RB_Teeth_LInB(struct Instance* inst)
 {	
   inst->unk50 += 2;
@@ -275,7 +258,7 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
         // if driver is using mask weapon
         if ((d->actionsFlagSet & 0x800000) != 0)
         {
-            RB_Teeth_OpenDoor(teethInst);
+            DECOMP_RB_Teeth_OpenDoor(teethInst);
         }
 
         return 2;
