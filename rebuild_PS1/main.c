@@ -537,16 +537,16 @@
 // 231
 #include "../decompile/General/231/231_002_RB_ModifyWumpa.c"
 #include "../decompile/General/231/231_023_RB_Hazard_InterpolateValue.c"
-#include "../decompile/General/231/231_054_055_RB_Baron.c"
-#include "../decompile/General/231/231_056_057_RB_Blade.c"
-#include "../decompile/General/231/231_080_083_RB_Armadillo.c"
-#include "../decompile/General/231/231_084_086_RB_Fireball.c"
-#include "../decompile/General/231/231_097_098_RB_Minecart.c"
-#include "../decompile/General/231/231_102_107_RB_Plant.c"
-#include "../decompile/General/231/231_108_111_RB_Seal.c"
-#include "../decompile/General/231/231_112_113_RB_Snowball.c"
-#include "../decompile/General/231/231_114_117_RB_Spider.c"
-#include "../decompile/General/231/231_125_127_RB_Turtle.c"
+#include "../decompile/General/231/231_056_057_RB_Baron.c"
+#include "../decompile/General/231/231_058_059_RB_Blade.c"
+#include "../decompile/General/231/231_082_085_RB_Armadillo.c"
+#include "../decompile/General/231/231_086_088_RB_Fireball.c"
+#include "../decompile/General/231/231_099_100_RB_Minecart.c"
+#include "../decompile/General/231/231_104_109_RB_Plant.c"
+#include "../decompile/General/231/231_110_113_RB_Seal.c"
+#include "../decompile/General/231/231_114_115_RB_Snowball.c"
+#include "../decompile/General/231/231_116_119_RB_Spider.c"
+#include "../decompile/General/231/231_127_129_RB_Turtle.c"
 
 // 232
 #ifdef REBUILD_PC

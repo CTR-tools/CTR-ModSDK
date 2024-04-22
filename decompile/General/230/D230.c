@@ -508,7 +508,7 @@ struct OverlayDATA_230 D230 =
 		&D230.csm_1P2P_limited
 	},
 
-	.characterIcon = 
+	.characterMenuID = 
 	{
 		-1, 0, 0, 0,
 		0, 0, 0, 0,
