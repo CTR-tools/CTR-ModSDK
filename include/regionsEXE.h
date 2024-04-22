@@ -178,7 +178,7 @@ struct MetaDataCHAR
 {
 	// 0
 	// "crash", "pen"
-	// never seen in-game
+	// only used for time trial ghost save data in final game
 	char* name_Debug;
 
 	// 4
