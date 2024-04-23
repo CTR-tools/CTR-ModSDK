@@ -485,7 +485,7 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	if(ptrSpawnType1->count > 0)
 	{
 		// puts plants on separate cycles
-		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+		void** pointers = ST1_GETPOINTERS(ptrSpawnType1);
 		metaArray = (short*)pointers[ST1_SPAWN];
 		
 		plantID = inst->name[6] - '0';

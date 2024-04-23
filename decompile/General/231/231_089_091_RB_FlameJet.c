@@ -290,10 +290,11 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle2->axis[1].velocity = 0;
 		particle2->axis[2].velocity = (short)fjObj->dirZ;
 		
-		particle2->axis[3].velocity = (0x4a00 - particle2->axis[3].startVal)/7;
-		particle2->axis[4].velocity = (0x4600 - particle2->axis[4].startVal)/7;
-		particle2->axis[5].velocity = (0x4400 - particle2->axis[5].startVal)/7;
-		
+		int vel = (0x4a00 - particle2->axis[3].startVal)/7;
+		particle2->axis[3].velocity = vel;
+		particle2->axis[4].velocity = vel;
+		particle2->axis[5].velocity = vel;
+	
 		particle2->axis[1].accel = particle1->axis[1].accel;
 		
 		particle2->unk1A = 0x1e00;
