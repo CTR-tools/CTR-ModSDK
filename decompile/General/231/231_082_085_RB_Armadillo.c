@@ -176,8 +176,9 @@ void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
 	armObj->velX = inst->matrix.m[0][2] >> FPS_RIGHTSHIFT(7);
 	armObj->velZ = inst->matrix.m[2][2] >> FPS_RIGHTSHIFT(7);
 	
-	instDef = &inst->instDef;
-	armObj->rotCurr[0] = instDef->rot[0];
-	armObj->rotCurr[1] = instDef->rot[1];
-	armObj->rotCurr[2] = instDef->rot[2];
+	// optimization, 
+	// rot[0] and rot[1] are always zero
+	armObj->rotCurr[1] = inst->instDef->rot[1];
+	armObj->rotCurr[0] = 0;
+	armObj->rotCurr[2] = 0;
 }
