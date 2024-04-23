@@ -14,4 +14,5 @@
 // leave empty, see MEMPACK_Init
 char RB_NewEndFile[4] =
 {
+	0,0,0,0
 };

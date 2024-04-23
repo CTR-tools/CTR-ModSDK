@@ -688,7 +688,9 @@ void StateZero()
 	
 	// Dont load full overlay file, cut off the end
 	struct BigEntry* firstEntry = BIG_GETENTRY(sdata->ptrBigfile1);
-	firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
+	firstEntry[231].size = 28*0x800;
+	//firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
+	//printf("Size: %08x\n", firstEntry[231].size);
 	#endif
 	
 	#ifndef FastBoot
