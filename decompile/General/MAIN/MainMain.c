@@ -683,7 +683,7 @@ void StateZero()
 	// Defrag to save heap space,
 	// required because MEMPACK_Init moves heap
 	#ifndef REBUILD_PC
-	void RB_NewEndFile();
+	extern char RB_NewEndFile[4];
 	void OVR_Region3();
 	
 	// Dont load full overlay file, cut off the end

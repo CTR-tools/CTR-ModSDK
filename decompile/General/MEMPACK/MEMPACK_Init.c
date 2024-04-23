@@ -7,7 +7,7 @@ char memory[8*1024*1024];
 
 void RB_EndOfFile();
 void CS_EndOfFile();
-void RB_NewEndFile(); // only in decomp
+extern char RB_NewEndFile[4];
 void OVR_Region3();
 
 void DECOMP_MEMPACK_Init(int ramSize)
@@ -41,12 +41,12 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// manually in MainMain after call to DECOMP_LOAD_ReadDirectory
 	
 	// RB_EndOfFile		800ba548	30 sectors (original game, deprecated by decomp)
-	// RB_NewEndFile	800b86e0	26 sectors (decomp, 4:3 30fps)
+	// RB_NewEndFile	800b8c78	27 sectors (decomp, 4:3 30fps)
 	// RB_NewEndFile	800b87c8	26 sectors (decomp, 16:9 60fps)
 	// CS_EndOfFile		800b97fc	28 sectors (original game, current largest size)
 
 	// Use current largest
-	#define END231 CS_EndOfFile
+	#define END231 RB_NewEndFile
 	
 	u_int Aligned231 = (((u_int)(END231-OVR_Region3) + 0x7ff) & ~(0x7ff));
 	//printf("\nMEMPACK_Init: %d sectors in 231\n\n", Aligned231/0x800);

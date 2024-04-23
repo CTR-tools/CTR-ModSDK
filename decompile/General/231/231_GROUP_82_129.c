@@ -12,7 +12,6 @@
 #include "231_127_129_RB_Turtle.c"
 
 // leave empty, see MEMPACK_Init
-void RB_NewEndFile()
+char RB_NewEndFile[4] =
 {
-	
-}
+};
