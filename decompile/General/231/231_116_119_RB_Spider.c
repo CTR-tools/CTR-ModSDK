@@ -165,6 +165,27 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 }
 #endif
 
+short spiderArr[] =
+{
+	// first 13
+	0x4c0,
+	0x439,
+	0x3A6,
+	0x306,
+	0x266,
+	0x1c8,
+	0x139,
+	0xb9,
+	0x59,
+	0x17,
+	0,0,0,
+	
+	// next 13
+	0,0,0,0,
+	0,0,0,0,
+	0,0,0,0,0
+};
+
 void DECOMP_RB_Spider_ThTick(struct Thread* t)
 {
   short sVar2;
@@ -279,8 +300,9 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 	
 	}
 	
-	short* arr = 0x800b9da4;
-	spiderInst->matrix.t[1] = (int)spiderInst->instDef->pos[1] + arr[sVar2];
+	spiderInst->matrix.t[1] = 
+		(int)spiderInst->instDef->pos[1] + 
+		spiderArr[sVar2];
 	
 	// if animation frame is less than 11
 	if (sVar2 < 0xb)
