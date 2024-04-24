@@ -1,24 +1,5 @@
 #include <common.h>
 
-struct JunkModel
-{
-	// name of model group
-	// "oxide" for example
-	// 0x0
-	char name[0x10];
-
-	// index of 2160 array
-	// 0x10
-	short id;
-	short padding;
-};
-
-struct JunkModel junkModel =
-{
-	.name = {},
-	.id = -1
-};
-
 // param1 - pointer to Instance Descriptions
 // param2 - number of instances
 void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
@@ -30,91 +11,15 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
     struct Instance *inst;
     struct MetaDataMODEL *meta;
     struct GameTracker *gGT = sdata->gGT;
-	
-	struct Instance* fakeInst;
 
-	// get first free item in Instance Pool
-	fakeInst = (struct Instance *)DECOMP_LIST_RemoveFront(&gGT->JitPools.instance.free);
-	fakeInst->flags = 0;
-	fakeInst->model = &junkModel;
-
-	for (int i = 0; i < numInst; i++, levInstDef++)
+	for (int i = 0; i < numInst; i++)
 	{
-		int deferredAction = 0;
-		
-		modelID = levInstDef->model->id;
-		
-		int boolArcadeOnly =
-		(
-			(((unsigned int)modelID - PU_FRUIT_CRATE) < 2) ||
-			(modelID == PU_WUMPA_FRUIT)
-		);
-		
-		int boolRelicOnly =
-		(
-			(((unsigned int)modelID - STATIC_TIME_CRATE_02) < 2) ||
-			(modelID == STATIC_TIME_CRATE_01)
-		);
-	
-		if((gGT->gameMode1 & TIME_TRIAL) != 0)
-		{
-			if(boolArcadeOnly || boolRelicOnly)
-			{
-				deferredAction = 1;
-			}
-		}
-	
-		else if ((gGT->gameMode1 & RELIC_RACE) != 0)
-		{
-			if(boolArcadeOnly)
-				deferredAction = 1;
-	
-			if (boolRelicOnly)
-				deferredAction = 2;
-		}
-	
-		else if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0)
-		{
-			if (modelID == STATIC_CRYSTAL)
-				deferredAction = 3;
-	
-			else if (modelID == PU_FRUIT_CRATE)
-				deferredAction = 1;
-		}
-	
-		// If NOT crystal challenge
-		else
-		{
-			// Disable LevInst for Crystal, TNT, Nitro
-			if (
-					(modelID == STATIC_CRYSTAL) ||
-					(modelID == STATIC_CRATE_TNT) ||
-					(modelID == PU_EXPLOSIVE_CRATE)
-				)
-			{
-				deferredAction = 1;
-			}
-		}
-	
-		if (
-			// If not in Adventure Mode, or CTR Token Race
-			((gGT->gameMode1 & ADVENTURE_MODE) == 0) ||
-			((gGT->gameMode2 & TOKEN_RACE) == 0)
-			)
-		{
-			// disable C-T-R letters
-			if ((unsigned int)(modelID - STATIC_C) < 3)
-				deferredAction = 1;
-		}
-		
-		if(deferredAction == 1)
-		{
-			levInstDef->ptrInstance = fakeInst;
-			continue;
-		}
-		
 		// get first free item in Instance Pool
 		inst = (struct Instance *)DECOMP_LIST_RemoveFront(&gGT->JitPools.instance.free);
+	
+		// NOT writing to model
+		// InstDef + 0x10 + 0x1c
+		// InstDef -> 0x2C = ptrInstance
 		levInstDef->ptrInstance = inst;
 	
 		// if allocation failed
@@ -183,6 +88,8 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			idpp[j].mh = 0;
 			idpp[j].pushBuffer = &gGT->pushBuffer[j];
 		}
+	
+		modelID = levInstDef->model->id;
 		
 		// can be -1
 		if ((short)modelID > 0)
@@ -201,17 +108,75 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			}
 		}
 	
-		if(deferredAction == 2)
+		int boolArcadeOnly =
+		(
+			(((unsigned int)modelID - PU_FRUIT_CRATE) < 2) ||
+			(modelID == PU_WUMPA_FRUIT)
+		);
+		
+		int boolRelicOnly =
+		(
+			(((unsigned int)modelID - STATIC_TIME_CRATE_02) < 2) ||
+			(modelID == STATIC_TIME_CRATE_01)
+		);
+	
+		if((gGT->gameMode1 & TIME_TRIAL) != 0)
 		{
-			gGT->timeCratesInLEV++;
+			if(boolArcadeOnly || boolRelicOnly)
+			{
+				inst->flags &= ~(0xf);
+			}
+		}
+	
+		else if ((gGT->gameMode1 & RELIC_RACE) != 0)
+		{
+			if(boolArcadeOnly)
+				inst->flags &= ~(0xf);
+	
+			if (boolRelicOnly)
+			{
+				gGT->timeCratesInLEV++;
 
-			// temporary, until timebox thread is ready
-			inst->flags |= 1;
+				// temporary, until timebox thread is ready
+				inst->flags |= 1;
+			}
+		}
+	
+		else if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0)
+		{
+			if (modelID == STATIC_CRYSTAL)
+				gGT->numCrystalsInLEV++;
+	
+			else if (modelID == PU_FRUIT_CRATE)
+				inst->flags &= ~(0xf);
+		}
+	
+		// If NOT crystal challenge
+		else
+		{
+			// Disable LevInst for Crystal, TNT, Nitro
+			if (
+					(modelID == STATIC_CRYSTAL) ||
+					(modelID == STATIC_CRATE_TNT) ||
+					(modelID == PU_EXPLOSIVE_CRATE)
+				)
+			{
+				inst->flags &= ~(0xf);
+			}
+		}
+	
+		if (
+			// If not in Adventure Mode, or CTR Token Race
+			((gGT->gameMode1 & ADVENTURE_MODE) == 0) ||
+			((gGT->gameMode2 & TOKEN_RACE) == 0)
+			)
+		{
+			// disable C-T-R letters
+			if ((unsigned int)(modelID - STATIC_C) < 3)
+				inst->flags &= ~(0xf);
 		}
 		
-		if(deferredAction == 3)
-		{
-			gGT->numCrystalsInLEV++;
-		}
+		// next InstDef
+		levInstDef++;
 	}
 }
