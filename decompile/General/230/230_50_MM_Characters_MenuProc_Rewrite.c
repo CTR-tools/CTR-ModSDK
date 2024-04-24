@@ -1,7 +1,7 @@
 #include <common.h>
 
 // upon pressing one of the d-pad buttons get closest available character in the direction pressed
-force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, int direction, int characterMenuIDCurrPlayer, int* characterMenuIDPerPlayer)
+force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, u_int button, int direction, int characterMenuIDCurrPlayer, int* characterMenuIDPerPlayer)
 {
 	struct GameTracker* gGT = sdata->gGT;
 
@@ -9,9 +9,14 @@ force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, int direction,
 	// this is mainly so the game can look up an available character slot after encountering one that is being highlighted by another player
 	int currCharacter = characterMenuIDCurrPlayer;
 
+	// the character that the game will highlight
+	int	nextCharacter = -1;
+
 	// is directional character from current position unavailable //
 	// if there is no adjacent character slot in the direction pressed, from the position of the slot currently highlighted
 	int isDrtnChrFromCurrPosUnavailable = false;
+
+	int isCharacterHighlightedByOtherPlayer = false;
 
 	do
 	{
@@ -19,8 +24,7 @@ force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, int direction,
 		// adjacent character slot in the direction pressed, from the position of the slot currently highlighted
 		int drtnChrFromCurrPos = DECOMP_MM_Characters_GetNextDriver(direction, currCharacter);
 
-		// the character that the game will highlight
-		int nextCharacter = drtnChrFromCurrPos;
+		nextCharacter = drtnChrFromCurrPos;
 
 		if (drtnChrFromCurrPos == currCharacter)
 		{
@@ -116,7 +120,7 @@ force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, int direction,
 			}
 		}
 
-		int isCharacterHighlightedByOtherPlayer = false;
+		isCharacterHighlightedByOtherPlayer = false;
 
 		for(int k = 0; k < gGT->numPlyrNextGame; k++)
 		{
@@ -156,7 +160,7 @@ force_inline int GETNEXTCHARACTER_MM_Characters_MenuProc(int idx, int direction,
 	return nextCharacter;
 }
 
-force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMenuIDCurrPlayer, int* characterMenuIDPerPlayer)
+force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int characterSelectPlayerID, int* characterMenuIDCurrPlayer, int* characterMenuIDPerPlayer)
 {
 	struct GameTracker* gGT = sdata->gGT;
 
@@ -167,7 +171,7 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 		(D230.isMenuTransitioning == IN_MENU) && 
 		(
 			// get input from this player
-			button = sdata->buttonTapPerPlayer[i], 
+			button = sdata->buttonTapPerPlayer[idx], 
 		
 			// If you press the D-Pad, or Cross, Square, Triangle, Circle
 			button & (BTN_TRIANGLE | BTN_CIRCLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)
@@ -175,7 +179,7 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 	)
 	{
 		// if player hasn't selected a character
-		if ((sdata->characterSelectFlags >> i & 1) == 0)
+		if ((sdata->characterSelectFlags >> idx & 1) == 0)
 		{
 			int direction = -1;
 			int nextCharacterMenuID = *characterMenuIDCurrPlayer;
@@ -187,7 +191,7 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 					if (button & BTN_UP)   direction = 0;
 					if (button & BTN_LEFT) direction = 2;
 
-					D230.characterSelect_MoveDir[i] = -1;
+					D230.characterSelect_MoveDir[idx] = -1;
 				}
 
 				if (button & (BTN_DOWN | BTN_RIGHT))
@@ -195,10 +199,10 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 					if (button & BTN_DOWN)  direction = 1;
 					if (button & BTN_RIGHT) direction = 3;
 
-					D230.characterSelect_MoveDir[i] = 1;
+					D230.characterSelect_MoveDir[idx] = 1;
 				}
 
-				nextCharacterMenuID = GETNEXTCHARACTER_MM_Characters_MenuProc(i, direction, characterMenuIDCurrPlayer, characterMenuIDPerPlayer);
+				nextCharacterMenuID = GETNEXTCHARACTER_MM_Characters_MenuProc(idx, button, direction, characterMenuIDCurrPlayer, characterMenuIDPerPlayer);
 			}
 
 			// something to prevent character duplicates between players I guess
@@ -212,10 +216,10 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 			}
 
 			// If this player pressed Cross or Circle
-			if (((sdata->buttonTapPerPlayer)[i] & (BTN_CIRCLE | BTN_CROSS_one)) != 0) 
+			if (((sdata->buttonTapPerPlayer)[idx] & (BTN_CIRCLE | BTN_CROSS_one)) != 0) 
 			{
 				// this player has now selected a character
-				sdata->characterSelectFlags |= (1 << i);
+				sdata->characterSelectFlags |= (1 << idx);
 	
 				int numPlyrNextGame = gGT->numPlyrNextGame;
 
@@ -234,7 +238,7 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 			if
 			(
 				// if this is the first iteration of the loop
-				(i == 0) && 
+				(idx == 0) && 
 		
 				// if you press Square or Triangle
 				((sdata->buttonTapPerPlayer[0] & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0)
@@ -262,7 +266,7 @@ force_inline void PROCESSINPUTS_MM_Characters_MenuProc(int idx, int* characterMe
 		}
 
 		// clear input
-		sdata->buttonTapPerPlayer[i] = 0;
+		sdata->buttonTapPerPlayer[idx] = 0;
 	}
 }
 
@@ -275,14 +279,14 @@ force_inline void PLAYERPOLLING_MM_Characters_MenuProc(struct CharacterSelectMet
 
 	for (int i = 0; i < gGT->numPlyrNextGame; i++)
 	{
-		u_int characterSelectPlayerID = 1 << i;
+		int characterSelectPlayerID = 1 << i;
 		int characterMenuIDCurrPlayer = characterMenuIDPerPlayer[i];
 
 		DECOMP_MM_Characters_AnimateColors(playerHighlightColor, i, sdata->characterSelectFlags & characterSelectPlayerID);
 
-		playerCSM = &D230.csm_Active[characterMenuIDPerPlayer];
+		playerCSM = &D230.csm_Active[characterMenuIDCurrPlayer];
 
-		PROCESSINPUTS_MM_Characters_MenuProc(i, &characterMenuIDCurrPlayer, characterMenuIDPerPlayer);
+		PROCESSINPUTS_MM_Characters_MenuProc(i, characterSelectPlayerID, &characterMenuIDCurrPlayer, characterMenuIDPerPlayer);
 
 		// set player's character slot to highlight, after any buttons were potentially pressed
 		characterMenuIDPerPlayer[i] = characterMenuIDCurrPlayer;
@@ -298,11 +302,14 @@ force_inline void PLAYERPOLLING_MM_Characters_MenuProc(struct CharacterSelectMet
 		}
 		#endif
 		
-		r80.x = characterSlotTransition->currX + playerCSM->posX;
-		r80.y = characterSlotTransition->currY + playerCSM->posY;
-		r80.w = 0x34;
-		r80.h = 0x21;
-	
+		RECT r80 =
+		{
+			.x = characterSlotTransition->currX + playerCSM->posX,
+			.y = characterSlotTransition->currY + playerCSM->posY,
+			.w = 0x34,
+			.h = 0x21,
+		};
+
 		// if player has not selected a character
 		if (((sdata->characterSelectFlags >> i) & 1) == 0) 
 		{
@@ -333,6 +340,10 @@ force_inline void PLAYERPOLLING_MM_Characters_MenuProc(struct CharacterSelectMet
 force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPerPlayer)
 {
 	struct GameTracker* gGT = sdata->gGT;
+
+	struct CharacterSelectMeta* csm_Active = D230.csm_Active;
+
+	u_char colorRGBA[4];
 
 	// draw "SELECT CHARACTER" string
 
@@ -422,7 +433,7 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 	#define NUM_ICONS 16
 #endif
 
-	for (int i = 0, struct CharacterSelectMeta* csm_Active = D230.csm_Active; i < NUM_ICONS; i++, csm_Active++)
+	for (int i = 0; i < NUM_ICONS; i++, csm_Active++)
 	{
 		u_short characterSelectUnlockFlags = csm_Active->unlockFlags;
 
@@ -440,7 +451,7 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 		{
 			u_int iconColor = D230.characterSelect_NeutralColor;
 
-			for (j = 0; j < gGT->numPlyrNextGame; j++)
+			for (int j = 0; j < gGT->numPlyrNextGame; j++)
 			{
 				if
 				(
@@ -481,7 +492,7 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 
 	// character slot highlights, character names, character 3D model rotation
 
-	for (i = 0; i < gGT->numPlyrNextGame; i++)
+	for (int i = 0; i < gGT->numPlyrNextGame; i++)
 	{
 		int characterMenuIDCurrPlayer = characterMenuIDPerPlayer[i];
 		struct CharacterSelectMeta* csm_Active = &D230.csm_Active[characterMenuIDCurrPlayer];
@@ -512,10 +523,13 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 			}
 			#endif
 			
-			r80.x = characterSlotTransition->currX + csm_Active->posX + 3;
-			r80.y = characterSlotTransition->currY + csm_Active->posY + 2;
-			r80.w = 46;
-			r80.h = 29;
+			RECT r80 =
+			{
+				.x = characterSlotTransition->currX + csm_Active->posX + 3,
+				.y = characterSlotTransition->currY + csm_Active->posY + 2,
+				.w = 46,
+				.h = 29,
+			};
 
 			// this draws the flashing square that appears when you highlight a character in the character select screen
 			DECOMP_CTR_Box_DrawSolidBox
@@ -533,17 +547,17 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 		) 
 		{
 			// get number of players
-			numPlyrNextGame = gGT->numPlyrNextGame;
+			int numPlyrNextGame = gGT->numPlyrNextGame;
 	
 			// if number of players is 1 or 2
-			fontType = FONT_CREDITS;
+			int fontType = FONT_CREDITS;
 	
 			// if number of players is 3 or 4
 			if (numPlyrNextGame >= 3) fontType = FONT_SMALL;
 	
 			struct TransitionMeta* transitionMeta = &D230.ptrTransitionMeta[i+0x10];
-			sVar10 = transitionMeta->currY + D230.characterSelect_ptrWindowXY[i*2+1];
-			sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
+			short sVar10 = transitionMeta->currY + D230.characterSelect_ptrWindowXY[i*2+1];
+			short sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
 
 			if ((numPlyrNextGame == 4) && (i > 1)) sVar6 = sVar10 + sVar6 - 6;
 			else							       sVar6 = sVar10 + D230.textPos + sVar6;
@@ -563,7 +577,9 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 
 	// not sure what this is
 
-	for (i = 0, struct CharacterSelectMeta* csm_Active = D230.csm_Active; i < NUM_ICONS; i++)
+	csm_Active = D230.csm_Active;
+
+	for (int i = 0; i < NUM_ICONS; i++)
 	{
 		u_short characterSelectUnlockFlags = csm_Active[i].unlockFlags;
 		
@@ -589,12 +605,14 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 			}
 			#endif
 
-			r68.x = characterSlotTransition->currX + csm_Active[i].posX;
-			r68.y = characterSlotTransition->currY + csm_Active[i].posY;
+			RECT r68 =
+			{
+				.x = characterSlotTransition->currX + csm_Active[i].posX,
+				.y = characterSlotTransition->currY + csm_Active[i].posY,
+				.w = 52,
+				.h = 33,
+			};
 
-			r68.w = 52;
-			r68.h = 33;
-		
 			// Draw 2D Menu rectangle background
 			DECOMP_RECTMENU_DrawInnerRect(&r68, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
@@ -605,16 +623,20 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 	{
 		short* characterSelect_ptrWindowXY = D230.characterSelect_ptrWindowXY;
 
-		for (i = 0; i < gGT->numPlyrNextGame; i++)
+		for (int i = 0; i < gGT->numPlyrNextGame; i++)
 		{
 			struct TransitionMeta* transitionMeta = &D230.ptrTransitionMeta[i];
 			
 			// store window width and height in one 4-byte variable
-			r60.x = *(short *)((u_int)transitionMeta + 0xa6) + *characterSelect_ptrWindowXY;
-			r60.y = *(short *)((u_int)transitionMeta + 0xa8) + characterSelect_ptrWindowXY[1];
-			r60.w = D230.characterSelect_sizeX;
-			r60.h = D230.characterSelect_sizeY;
-			
+
+			RECT r60 =
+			{
+				.x = *(short *)((u_int)transitionMeta + 0xa6) + *characterSelect_ptrWindowXY,
+				.y = *(short *)((u_int)transitionMeta + 0xa8) + characterSelect_ptrWindowXY[1],
+				.w = D230.characterSelect_sizeX,
+				.h = D230.characterSelect_sizeY,
+			};
+
 			DECOMP_MM_Characters_AnimateColors
 			(
 				&colorRGBA, i, 
@@ -630,12 +652,15 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> i & 1U) != 0) 
 			{
-				r58.x = r60.x;
-				r58.y = r60.y;
-				r58.w = r60.w;
-				r58.h = r60.h;
+				RECT r58 =
+				{
+					.x = r60.x,
+					.y = r60.y,
+					.w = r60.w,
+					.h = r60.h,
+				};
 				
-				for (iVar8 = 0; iVar8 < 2; iVar8++)
+				for (int j = 0; j < 2; j++)
 				{
 					r58.x += 3;
 					r58.y += 2;
@@ -749,7 +774,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	DECOMP_MM_Characters_PreventOverlap();
 
-	for (int i = 0, struct CharacterSelectMeta* csm_Active = D230.csm_Active; i < 4; i++)
+	struct CharacterSelectMeta* csm_Active = D230.csm_Active;
+
+	for (int i = 0; i < 4; i++)
 	{
 		data.characterIDs[i] = csm_Active[characterMenuIDPerPlayer[i]].characterID;
 	}
