@@ -158,8 +158,8 @@ LAB_800add14:
 			RB_Hazard_InterpolateValue(
 				tw->rotY,(int)sVar3,0x40);
         
-		tw->vel[0] = (MATH_Sin(tw->rotY) * 3) >> 8;
-		tw->vel[2] = (MATH_Cos(tw->rotY) * 3) >> 8;
+		tw->vel[0] = (MATH_Sin(tw->rotY) * 5) >> 8;
+		tw->vel[2] = (MATH_Cos(tw->rotY) * 5) >> 8;
       }
 	  
 	  // if 10 wumpa were used
