@@ -316,7 +316,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
 LAB_800b0d6c:
 
   // green shield fade away sound
-  PlaySound3D(0x58, player);
+  PlaySound3D(0x58, shieldInst);
 
   // shield and highlight
   DECOMP_INSTANCE_Death(colorInst);
