@@ -61,7 +61,6 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // normally maxed at 96
   int numThread = uVar9 * 3 >> 7;
-  if(numThread > 80) numThread = 80;
 
   // ThreadPool
   DECOMP_JitPool_Init(
@@ -69,10 +68,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	sizeof(struct Thread), /*"ThreadPool"*/0);
   
   // normally maxed at 128
-  // 96 is not enough for Dingo Canyon Time Trial,
-  // somehow that'll crash when ghosts use turbos
   int numInstance = uVar9 >> 5;
-  if(numInstance > 102) numInstance = 102;
   
   // InstancePool
   DECOMP_JitPool_Init(
@@ -82,7 +78,6 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // normally maxed at 100
   int numSmall = uVar7 * 0x19 >> 10;
-  if(numSmall > 60) numSmall = 60;
 
   // SmallStackPool
   // OG game was 0x40+8,
