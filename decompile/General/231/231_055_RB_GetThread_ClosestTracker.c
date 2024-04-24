@@ -13,7 +13,7 @@ struct Thread* DECOMP_RB_GetThread_ClosestTracker(struct Driver* d)
   
   // loop through all threads
   for (
-		currThread = sdata->gGT->threadBuckets[MINE].thread; 
+		currThread = sdata->gGT->threadBuckets[TRACKING].thread; 
 		currThread != NULL;
 		currThread = currThread->siblingThread
 	) 
