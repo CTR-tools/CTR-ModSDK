@@ -7,14 +7,15 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   struct TrackerWeapon* tw;
   struct Instance* inst;
   struct Driver* d;
+  struct GameTracker* gGT;
   
-  // get object from thread
+  gGT = sdata->gGT;
+  
   tw = t->object;
-  
-  // get instance from thread
   inst = t->inst;
+  frameId = tw->fadeAway_frameCount5;
   
-  if (tw->fadeAway_frameCount5 > 5) 
+  if (frameId > 5) 
   {
     d = tw->driverTarget;
     
@@ -25,15 +26,12 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
     }
 	
 	// remove active warpball flag
-	sdata->gGT->gameMode1 &= ~(WARPBALL_HELD);
+	gGT->gameMode1 &= ~(WARPBALL_HELD);
 	
 	// This thread is now dead
     t->flags |= 0x800;
     return;
   }
-  
-  // frame counter
-  frameId = tw->fadeAway_frameCount5;
   
   // set scale (x, y, z)
   inst->scale[0] = ((short*)0x800b2c88)[(frameId*3)+0];
@@ -43,7 +41,7 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
   inst->matrix.t[1] = tw->distFromGround + ((int *)0x800b2cac)[frameId];
   
   #ifdef USE_60FPS
-  if(sdata->gGT->timer&1)
+  if(gGT->timer&1)
   #endif  
 	tw->fadeAway_frameCount5 += 1;
   
