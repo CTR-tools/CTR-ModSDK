@@ -18,11 +18,11 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
 926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../nop.s
 1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../nop.s
 1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../nop.s
 
 // Binary edits
 // Turbo pad to STP

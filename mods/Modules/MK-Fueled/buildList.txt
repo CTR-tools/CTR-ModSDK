@@ -8,7 +8,7 @@ common, exe, UI_DrawSlideMeter, 0x0, src/UI_DrawSlideMeter.c
 common, exe, VehFire_Increment, 0x0, src/VehFire_Increment.c
 
 // 2 tire sparks instead on 4 when drifting
-// common, exe, VehEmitter_Terrain_Ground, 0x94, ../../../nop.s
+// common, exe, VehEmitter_Terrain_Ground, 0x94, ../../nop.s
 
 // No smoke, except underwater bubbles
 common, exe, VehEmitter_Exhaust, 0x0, src/NoSmoke.c 

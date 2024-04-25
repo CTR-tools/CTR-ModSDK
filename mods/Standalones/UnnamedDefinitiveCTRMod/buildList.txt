@@ -42,11 +42,11 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/BlueFire/src/hookUpdate.s
 // Keep U-Turn reserves stuff
 // Erasing the original reserve cancelation if, so that we can run our own code
 926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../nop.s
 1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../nop.s
 1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../nop.s
 
 // Modify VehFire_Increment function to allow for USF stacking
 common, exe, VehFire_Increment, 0x0, src/VehFire_Increment_Hook.s
