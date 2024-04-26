@@ -220,13 +220,29 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		
 		// set new velY
 		fireObj->velY = velY;
+
+		#ifdef USE_60FPS
+		// for particles
+		sdata->UnusedPadding1 = 1;
 		
-		// fire particles
-		particle = 
-		#ifdef REBUILD_PS1
-			0;
-		#else
-			Particle_Init(0, gGT->iconGroup[0xA], &emSet_Fireball[0]);
+		// spawn every 1 frame out of 2,
+		// rather than 2 frame out of 4
+		if(gGT->timer&1)
+			particle = 0;
+		else
+		#endif
+
+			// fire particles
+			particle = 
+			#ifdef REBUILD_PS1
+				0;
+			#else
+				Particle_Init(0, gGT->iconGroup[0xA], &emSet_Fireball[0]);
+			#endif
+		
+		#ifdef USE_60FPS
+		// for particles
+		sdata->UnusedPadding1 = 0;
 		#endif
 		
 		if(particle != 0)
