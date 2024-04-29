@@ -3,7 +3,7 @@
 // byte budget
 // 840/1108
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 extern struct MenuRow rowsOnlyVsBattle[3];
 #endif
 
@@ -16,7 +16,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
     mainMenu->rows = &D230.rowsMainMenuWithScrapbook[0];
 
-  #ifdef USE_GPU1P
+  #ifdef USE_HIGHMP
   mainMenu->rows = &rowsOnlyVsBattle[0];
   #endif
 
@@ -224,7 +224,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
   }
 }
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 struct MenuRow rowsOnlyVsBattle[3] =
 {
 	{0x4F, 0,1,0,0},

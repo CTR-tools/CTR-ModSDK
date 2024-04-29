@@ -132,7 +132,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 	selectMenu = &D230.arcadeTracks[0];
 	numTracks = 18;
 
-	#ifdef USE_GPU1P
+	#ifdef USE_HIGHMP
 	numTracks = 23;
 	D230.battleTracks[0].levID = 0x19;
 	D230.battleTracks[1].levID = 0x1a;
@@ -147,7 +147,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 		selectMenu = &D230.battleTracks[0];
 		numTracks = 7;
 		
-		#ifdef USE_GPU1P
+		#ifdef USE_HIGHMP
 		D230.battleTracks[0].levID = 18;
 		D230.battleTracks[1].levID = 19;
 		D230.battleTracks[2].levID = 20;

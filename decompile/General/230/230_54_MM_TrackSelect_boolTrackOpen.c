@@ -13,7 +13,7 @@ char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect)
 		(
 			flag == -2
 			
-			#ifndef USE_GPU1P
+			#ifndef USE_HIGHMP
 			&& sdata->gGT->numPlyrNextGame == 1
 			#endif
 		) ||
@@ -22,7 +22,7 @@ char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect)
 		(
 			flag >= -1 
 			
-			#ifndef USE_GPU1P
+			#ifndef USE_HIGHMP
 			&& ((sdata->gameProgress.unlocks[flag >> 5] >> flag) & 1)
 			#endif
 		)

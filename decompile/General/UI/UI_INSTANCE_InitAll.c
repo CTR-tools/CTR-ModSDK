@@ -30,7 +30,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// If you're in Adventure Arena
     if ((gameMode1 & ADVENTURE_ARENA) != 0)
 	{
-	  #ifdef USE_GPU1P
+	  #ifdef USE_HIGHMP
 	  if(gGT->numPlyrCurrGame != 1)
 		  return;
 	  #endif

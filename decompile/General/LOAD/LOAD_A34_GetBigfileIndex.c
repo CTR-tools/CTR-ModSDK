@@ -4,7 +4,7 @@ int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 {
 	// === Wow we need a bigfile enum ===
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 	lod = 1;
 #endif
 

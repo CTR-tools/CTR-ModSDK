@@ -198,7 +198,7 @@ LAB_80035098:
 						DECOMP_VehPickupItem_ShootOnCirclePress((struct Driver*)psVar12->object);
 					}
 
-					#ifdef USE_GPU1P
+					#ifdef USE_HIGHMP
 					int backupPlyrCount;
 					#endif
 					
@@ -242,7 +242,7 @@ LAB_80035098:
 						// rig collisions to high-poly,
 						// wait until Stage 2 finishes, cause PhysLinear
 						// uses gGT->numPlyrCurrGame for VehPhysGeneral_SetHeldItem
-						#ifdef USE_GPU1P
+						#ifdef USE_HIGHMP
 						if(iVar11 == 2)
 						{
 							backupPlyrCount = gGT->numPlyrCurrGame;
@@ -251,7 +251,7 @@ LAB_80035098:
 						#endif
 					}
 					
-					#ifdef USE_GPU1P
+					#ifdef USE_HIGHMP
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
 				}

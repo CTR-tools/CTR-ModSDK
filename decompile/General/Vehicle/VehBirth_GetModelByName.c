@@ -10,7 +10,13 @@ struct Model* VehBirth_GetModelByName(char *searchName)
     // maximum of 4, used in VS mode
     models = (struct Model **)&data.driverModel_lowLOD[0];
 
-    for (i = 0; i < 3; i++)
+	#ifdef USE_HIGH1P
+	#define NUM_CHECK 8 // modding: 8 drivers
+	#else
+	#define NUM_CHECK 3 // OG game: 3 drivers in VS mode
+	#endif
+
+    for (i = 0; i < NUM_CHECK; i++)
     {
         m = models[i];
 

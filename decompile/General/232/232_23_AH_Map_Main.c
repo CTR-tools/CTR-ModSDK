@@ -35,7 +35,7 @@ void DECOMP_AH_Map_Main(void)
     DECOMP_MainFrame_RequestMaskHint(0,0);
   }
   
-  #ifdef USE_GPU1P
+  #ifdef USE_HIGHMP
   if (gGT->numPlyrCurrGame != 1)
   return;
   #endif

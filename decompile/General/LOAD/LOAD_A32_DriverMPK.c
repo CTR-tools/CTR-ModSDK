@@ -1,12 +1,9 @@
 #include <common.h>
 
-void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
+#ifdef USE_HIGHMP
+void highMp_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {
 	int i;
-	int gameMode1;
-		
-#ifdef USE_GPU1P
-	
 	for(i = 0; i < 3; i++)
 	{
 		// high lod CTR model
@@ -15,13 +12,87 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			&data.driverModel_lowLOD[i],0xfffffffe);
 	}
 
-	// Tim Trial MPK
+	// Time Trial MPK
 	DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 		BI_TIMETRIALPACK + data.characterIDs[i],
 		0,param_3);
+}
+#endif
 
-	return;
+#ifdef USE_RANDOM
+int Timer_GetTime_Total();
+
+char ChRand_Repeat(int index, int character)
+{
+	int i;
+
+	// check if character is taken
+	// previously (<)
+	// or by self (=)
+	for(i = 0; i <= index; i++)
+		if(data.characterIDs[i] == character)
+			return 1;
+
+	return 0;
+}
+
+void ChRand_SetCharacters()
+{
+	int id;
+
+	// this randomizes non-players, but if you want
+	// all drivers randomized, then set 'i' to zero here
+	int i = sdata->gGT->numPlyrCurrGame;
+
+	// if in a cup
+	if
+	(
+		(sdata->gGT->gameMode1 & ADVENTURE_CUP) ||
+
+		// arcade cup
+		((sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
+	)
+	{
+		// if this is not the first track of a cup,
+		// then dont randomize. Keep characters from first track
+		if(sdata->gGT->cup.trackIndex != 0) return;
+	}
+
+	// loop through drivers
+	while(i < 8)
+	{
+		// random
+		MixRNG_Scramble();
+
+		id = (
+				// system clock
+				(Timer_GetTime_Total() & 0xf )
+
+				+
+
+				// from RNG
+				(sdata->randomNumber >> 8)
+
+			 ) % 15; // 15 characters
+
+		// avoid repeats
+		if(ChRand_Repeat(i, id)) continue;
+
+		// set value
+		data.characterIDs[i] = id;
+		i++;
+	}
+}
+#endif
+
+void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
+{
+	int i;
+	int gameMode1;
 		
+#ifdef USE_HIGHMP
+	highMp_DriverMPK(param_1, levelLOD, param_3);
+	return;
 #endif
 	
 	struct GameTracker* gGT = sdata->gGT;
@@ -154,6 +225,24 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 		// arcade mpk
 		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
+		
+		#ifdef USE_RANDOM
+		ChRand_SetCharacters();
+		#endif
+		
+		#ifdef USE_HIGH1P
+		int i;
+		for(i = 0; i < 7; i++)
+		{
+			// high lod CTR model
+			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+				BI_RACERMODELHI + data.characterIDs[i],
+				&data.driverModel_lowLOD[i],0xfffffffe);
+		}
+		
+		// time trial mpk
+		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[7];
+		#endif
 	}
 
 	//else if(levelLOD == 2)

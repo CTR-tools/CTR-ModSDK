@@ -62,7 +62,7 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	
 EndFunc:
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 	size = 0x200000;
 #endif
 
@@ -109,7 +109,7 @@ void DECOMP_MainInit_OTMem(struct GameTracker* gGT)
 	
 EndFunc:
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 	size = 0x20000;
 #endif
 

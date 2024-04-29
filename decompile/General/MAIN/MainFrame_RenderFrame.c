@@ -207,7 +207,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DECOMP_ElimBG_HandleState(gGT);
 	
 #ifndef REBUILD_PS1
-	#ifndef USE_GPU1P
+	#ifndef USE_HIGHMP
 	if((gGT->renderFlags & 0x21) != 0)
 		MainFrame_VisMemFullFrame(gGT, gGT->level1);
 	#endif
@@ -1042,7 +1042,7 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 		gGT->swapchainIndex * 0x128);
 }
 
-#ifdef USE_GPU1P
+#ifdef USE_HIGHMP
 
 void RenderAllLevelGeometry(struct GameTracker* gGT)
 {
@@ -1453,7 +1453,7 @@ SkyboxGlow:
 	return;
 }
 
-#endif // USE_GPU1P
+#endif // USE_HIGHMP
 
 #endif // Rebuild_PS1
 

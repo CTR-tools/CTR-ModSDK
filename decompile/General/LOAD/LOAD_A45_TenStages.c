@@ -170,7 +170,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// lev swap will be needed
 				gGT->gameMode2 |= LEV_SWAP;
 				
-				#ifdef USE_GPU1P
+				#ifdef USE_HIGHMP
 				if(gGT->podiumRewardID == 0)
 				{
 					// get CurrGame from main menu's NextGame
@@ -267,7 +267,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			else 
 				ovrRegion1 = 4;
 			
-			#ifdef USE_GPU1P
+			#ifdef USE_HIGHMP
 			ovrRegion1 = 4;
 			#endif
 		
@@ -276,7 +276,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 2:
 		{
-			#ifdef USE_GPU1P
+			#ifdef USE_HIGHMP
 			DECOMP_LOAD_OvrLOD(1);
 			#else
 			DECOMP_LOAD_OvrLOD(gGT->numPlyrCurrGame);
@@ -413,9 +413,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// == banks are done parsing ===
 			
+			#ifdef USE_HIGH1P
+			#define NUM_CHECK 8 // modding: 8 drivers
+			#else
+			#define NUM_CHECK 3 // OG game: 3 drivers in VS mode
+			#endif
+			
 			// loop through models
 			piVar15 = &data.driverModel_lowLOD[0];
-			for (iVar9 = 0; iVar9 < 3; iVar9++, piVar15++)
+			for (iVar9 = 0; iVar9 < NUM_CHECK; iVar9++, piVar15++)
 			{
 				// increment pointer by 4,
 				// change pointer to file (starting at pointer map)

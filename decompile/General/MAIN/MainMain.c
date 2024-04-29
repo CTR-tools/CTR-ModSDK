@@ -596,14 +596,14 @@ void StateZero()
 	SetVideoMode(0);
 	ResetCallback();
 	
-	// We have 2mb RAM total
-	DECOMP_MEMPACK_Init(0x200000);
-	
-	// also sets debug variables to "off"
+	#ifndef USE_RAMEX
+	#define MEMPACK_SIZE 0x200000 // 2mb
+	#else
+	#define MEMPACK_SIZE 0x800000 // 8mb
+	#endif
+
+	DECOMP_MEMPACK_Init(MEMPACK_SIZE);
 	DECOMP_LOAD_InitCD();
-	
-	// Without this, checkered flag will draw one frame after 
-	// the copyright page draws, then go off-screen at ND Box
 	DECOMP_RaceFlag_SetFullyOffScreen();
 	
 	ResetGraph(0);
