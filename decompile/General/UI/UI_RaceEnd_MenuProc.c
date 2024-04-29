@@ -91,7 +91,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		memcpy(
 			sdata->ptrGhostTapePlaying, 
 			sdata->GhostRecording.ptrGhost, 
-			0xf80);
+			0x3e00);
 	
 		// Make P2 the character that is saved in the
 		// header of the ghost that you will see in the race
