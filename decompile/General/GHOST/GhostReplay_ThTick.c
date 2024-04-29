@@ -84,7 +84,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     packetPtr = tape->ptrCurr;
     short tmpPos[3] = {0};
 	
-	char* lastByteAfterPrevPacket = tape->ptrCurr;
+	char* packetEndChain = tape->ptrCurr;
 
     tape->packetID = -1;
     tape->timeInPacket01 = tape->timeInPacket32_backup;
@@ -159,9 +159,14 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
           // count position opcodes
           opcodePos++;
 
-          packet->bufferPacket = lastByteAfterPrevPacket;
+          packet->bufferPacket = packetEndChain;
           packetPtr += 11;
-		  lastByteAfterPrevPacket = packetPtr;
+		  
+		  // the end of the chain represents the last byte
+		  // that can be checked in the 32 packets, can be
+		  // used to search for animation opcodes between
+		  // position packets
+		  packetEndChain = packetPtr;
 		
           packet++;
 
@@ -188,9 +193,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
           packet[0].rot[0] = packet[-1].rot[0];
           packet[0].rot[1] = packet[-1].rot[1];
 
-		  packet->bufferPacket = lastByteAfterPrevPacket;
+		  packet->bufferPacket = packetEndChain;
           packetPtr += 1;
-		  lastByteAfterPrevPacket = packetPtr;
+		  packetEndChain = packetPtr;
 		
           packet++;
           break;
@@ -210,9 +215,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         packet->rot[1] = packetPtr[3] << 4;
         packet->rot[0] = packetPtr[4] << 4;
 
-        packet->bufferPacket = lastByteAfterPrevPacket;
+        packet->bufferPacket = packetEndChain;
         packetPtr += 5;
-		lastByteAfterPrevPacket = packetPtr;
+		packetEndChain = packetPtr;
 		
         packet++;
       }
