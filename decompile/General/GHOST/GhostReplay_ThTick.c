@@ -83,6 +83,8 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     opcodePos = 0;
     packetPtr = tape->ptrCurr;
     short tmpPos[3] = {0};
+	
+	char* lastByteAfterPrevPacket = tape->ptrCurr;
 
     tape->packetID = -1;
     tape->timeInPacket01 = tape->timeInPacket32_backup;
@@ -157,8 +159,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
           // count position opcodes
           opcodePos++;
 
-          packet->bufferPacket = packetPtr;
+          packet->bufferPacket = lastByteAfterPrevPacket;
           packetPtr += 11;
+		  lastByteAfterPrevPacket = packetPtr;
 		
           packet++;
 
@@ -185,8 +188,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
           packet[0].rot[0] = packet[-1].rot[0];
           packet[0].rot[1] = packet[-1].rot[1];
 
-		  packet->bufferPacket = packetPtr;
+		  packet->bufferPacket = lastByteAfterPrevPacket;
           packetPtr += 1;
+		  lastByteAfterPrevPacket = packetPtr;
 		
           packet++;
           break;
@@ -206,8 +210,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         packet->rot[1] = packetPtr[3] << 4;
         packet->rot[0] = packetPtr[4] << 4;
 
-        packet->bufferPacket = packetPtr;
+        packet->bufferPacket = lastByteAfterPrevPacket;
         packetPtr += 5;
+		lastByteAfterPrevPacket = packetPtr;
 		
         packet++;
       }
