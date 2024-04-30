@@ -31,7 +31,5 @@ void DECOMP_VehPickupItem_ShootOnCirclePress(struct Driver *d)
 		weapon = 2;
 	}
     
-	#ifndef REBUILD_PS1
     DECOMP_VehPickupItem_ShootNow(d, weapon, 0);
-	#endif
 }

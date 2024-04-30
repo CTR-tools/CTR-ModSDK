@@ -5,7 +5,7 @@ struct Thread* DECOMP_RB_GetThread_ClosestTracker(struct Driver* d)
   int distX;
   int distZ;
   struct Thread* currThread; 
-  struct Thread* closestTh;
+  struct Thread* closestTh=0;
   int smallestDist;
   
   // assume farthest distance

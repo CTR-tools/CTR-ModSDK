@@ -42,7 +42,7 @@ void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, st
   // make invisible
   inst->flags |= 0x80;
 
-  RB_MinePool_Remove(mw);
+  DECOMP_RB_MinePool_Remove(mw);
 
   // this thread is now dead
   t->flags |= 0x800;

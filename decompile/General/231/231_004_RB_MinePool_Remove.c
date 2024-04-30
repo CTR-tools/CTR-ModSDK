@@ -1,5 +1,9 @@
 #include <common.h>
 
+extern struct WeaponSlot231 minePoolItem[40];
+extern struct LinkedList minePoolTaken;
+extern struct LinkedList minePoolFree;
+
 void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw)
 {
 	struct WeaponSlot231* ws = mw->weaponSlot231;
@@ -13,6 +17,6 @@ void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw)
 	#endif
 	
 	// remove from taken, add to free
-	LIST_RemoveMember((struct LinkedList*)0x800b2e9c, (struct Item*)ws);
-	LIST_AddFront((struct LinkedList*)0x800b2ea8, (struct Item*)ws);
+	DECOMP_LIST_RemoveMember(&minePoolTaken, (struct Item*)ws);
+	DECOMP_LIST_AddFront(&minePoolFree, (struct Item*)ws);
 }

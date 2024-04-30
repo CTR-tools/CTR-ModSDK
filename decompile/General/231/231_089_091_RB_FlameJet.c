@@ -348,9 +348,13 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 				// hit MINE
 				if(hitInst != 0)
 				{
-					fjBoxDesc.threadHit = hitInst->thread;
-					fjBoxDesc.funcThCollide = hitInst->thread->funcThCollide;
-					RB_Hazard_ThCollide_Generic_Alt(&fjBoxDesc);
+					struct Thread* threadHit = hitInst->thread;
+					
+					fjBoxDesc.threadHit = threadHit;
+					fjBoxDesc.funcThCollide = threadHit->funcThCollide;
+					
+					// optimization
+					DECOMP_RB_Hazard_ThCollide_Generic(threadHit);
 				}
 				
 				// if no player or robot was hit,

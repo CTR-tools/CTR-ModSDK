@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Hazard_ThCollide_Missile(struct Thread* thread)
+int DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread)
 {
 	struct TrackerWeapon* tw;
 	struct Driver* driver;
@@ -11,15 +11,19 @@ int RB_Hazard_ThCollide_Missile(struct Thread* thread)
 	
 	// could I also just do thread->modelID?
 	if (inst->model->id == 0x29)
-	{		
+	{
+		#ifndef REBUILD_PS1
 		// play audio of explosion
 		PlaySound3D(0x4c, inst);
+		#endif
 		
 		// kill thread
 		thread->flags |= 0x800;
 
+		#ifndef REBUILD_PS1
 		// stop audio of moving
 		OtherFX_RecycleMute(&tw->audioPtr);
+		#endif
 
 		// get driver
 		driver = tw->driverTarget;

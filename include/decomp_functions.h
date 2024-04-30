@@ -579,12 +579,38 @@ u_int MM_Video_CheckIfFinished(int param_1);
 
 // 231 (undone)
 void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
+void DECOMP_RB_MinePool_Init(void);
+void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw);
+void DECOMP_RB_MinePool_Add(struct MineWeapon* mw);
+
+struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
+	struct Instance* weaponInst, char boolCanSkipParent, 
+	int hitRadius, struct Instance* mineDriverInst
+);
+
+struct Instance* DECOMP_RB_Hazard_CollideWithBucket(
+	struct Instance* weaponInst, 
+	struct Thread* weaponTh, struct Thread* bucket, 
+	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
+);
+
+int DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread);
+int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);
+
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
+
+void DECOMP_RB_MovingExplosive_ThTick(struct Thread* t);
+
+void DECOMP_RB_MovingExplosive_Explode(
+	struct Thread* t,
+	struct Instance* inst,
+	struct TrackerWeapon* tw);
 
 void DECOMP_RB_RainCloud_FadeAway(struct Thread* t);
 void DECOMP_RB_RainCloud_ThTick(struct Thread* t);
 void DECOMP_RB_RainCloud_Init(struct Driver* d);
 
+struct Thread* DECOMP_RB_GetThread_ClosestTracker(struct Driver* d);
 void DECOMP_RB_Baron_LInB(struct Instance* inst);
 
 void DECOMP_RB_Blade_ThTick(struct Thread* t);

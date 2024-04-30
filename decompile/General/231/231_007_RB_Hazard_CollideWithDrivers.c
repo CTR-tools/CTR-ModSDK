@@ -1,8 +1,8 @@
 #include <common.h>
 
-struct Instance* RB_Hazard_CollideWithDrivers(
-	struct Instance* weaponInst, 
-	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
+struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
+	struct Instance* weaponInst, char boolCanSkipParent, 
+	int hitRadius, struct Instance* mineDriverInst
 )
 {
 	int i;

@@ -224,12 +224,13 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 			
 			if(hitInst != 0)
 			{
-				plantBoxDesc.threadHit = hitInst->thread;
-				plantBoxDesc.funcThCollide = hitInst->thread->funcThCollide;
+				struct Thread* threadHit = hitInst->thread;
 				
-				#ifndef REBUILD_PS1
-				RB_Hazard_ThCollide_Generic_Alt(&plantBoxDesc);
-				#endif
+				plantBoxDesc.threadHit = threadHit;
+				plantBoxDesc.funcThCollide = threadHit->funcThCollide;
+				
+				// optimization
+				DECOMP_RB_Hazard_ThCollide_Generic(threadHit);
 			}
 		}
 		

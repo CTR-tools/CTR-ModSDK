@@ -1,8 +1,8 @@
 #include <common.h>
 
-// LinkedList, and MinePool data,
-// comes between last RB Weapon func (ClosestTracker),
-// and first RB Hazard func (Baron_ThTick)
+extern struct WeaponSlot231 minePoolItem[40];
+extern struct LinkedList minePoolTaken;
+extern struct LinkedList minePoolFree;
 
 void DECOMP_RB_MinePool_Init(void)
 {
@@ -11,11 +11,8 @@ void DECOMP_RB_MinePool_Init(void)
 	unsigned int addr;
 	int gameMode;
 	
-	// clear taken
-	LIST_Clear((struct LinkedList*)0x800b2e9c);
-	
-	// clear free
-	LIST_Clear((struct LinkedList*)0x800b2ea8);
+	DECOMP_LIST_Clear(&minePoolTaken);
+	DECOMP_LIST_Clear(&minePoolFree);
 	
 	gameMode = sdata->gGT->gameMode1;
 	
@@ -35,15 +32,11 @@ void DECOMP_RB_MinePool_Init(void)
 		if (sdata->gGT->levelID == DRAGON_MINES) numMines = 3;
 		if (sdata->gGT->levelID == ROO_TUBES) numMines = 7;
 	}
-	
-	// empty buffer of 50(dec) * 0xC
-	addr = 0x800b2eb4;
-	
+		
 	// add all mines
 	for(i = 0; i < numMines; i++)
 	{
-		LIST_AddFront((struct LinkedList*)0x800b2ea8, (struct Item*)addr);
-		
-		addr += 0xC;
+		DECOMP_LIST_AddFront(
+			&minePoolFree, (struct Item*)&minePoolItem[i]);
 	}
 }

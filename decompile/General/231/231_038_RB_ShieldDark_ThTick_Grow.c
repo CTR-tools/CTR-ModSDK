@@ -258,13 +258,11 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
     model = 0x56;
   }
 
-  void RB_MovingExplosive_ThTick();
-
   // create a thread, get an instance
   struct Instance *bombInst = 
 	DECOMP_INSTANCE_BirthWithThread(
 		model, 0, MEDIUM, OTHER, 
-        RB_MovingExplosive_ThTick, 
+        DECOMP_RB_MovingExplosive_ThTick, 
         sizeof(struct TrackerWeapon),
         playerTh);
 		

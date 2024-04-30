@@ -1,9 +1,6 @@
 #include <common.h>
 
-void RB_MovingExplosive_ThTick(struct Thread* t);
-void RB_Hazard_ThCollide_Missile(struct Thread* t);
 void RB_GenericMine_ThTick(struct Thread* t);
-void RB_Hazard_ThCollide_Generic(struct Thread* t);
 void RB_ShieldDark_ThTick_Grow(struct Thread* t);
 void RB_Warpball_ThTick(struct Thread* t);
 
@@ -37,12 +34,16 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			gGT->numMissiles++;
 			d->numTimesMissileLaunched++;
 			
+			#ifndef REBUILD_PS1
 			GAMEPAD_ShockFreq(d, 8, 0);
 			GAMEPAD_ShockForce1(d, 8, 0x7f);
 			
 			struct Driver* victim =
 				VehPickupItem_MissileGetTargetDriver(d);
-				
+			#else
+			struct Driver* victim = 0;
+			#endif
+			
 			// if driver not found
 			if(victim == 0)
 			{
@@ -112,9 +113,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			
 			// medium stack pool
 			weaponInst =
-				INSTANCE_BirthWithThread(
+				DECOMP_INSTANCE_BirthWithThread(
 					modelID, 0, MEDIUM, bucket, 
-					RB_MovingExplosive_ThTick,
+					DECOMP_RB_MovingExplosive_ThTick,
 					sizeof(struct TrackerWeapon), 
 					parentTh);
 					
@@ -128,11 +129,13 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			weaponInst->matrix.t[1] = dInst->matrix.t[1];
 			weaponInst->matrix.t[2] = dInst->matrix.t[2];
 			
+			#ifndef REBUILD_PS1
 			VehPhysForce_RotAxisAngle(&weaponInst->matrix, &d->AxisAngle1_normalVec, d->rotCurr.y);
-					
+			#endif
+			
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyTracker;
-			weaponTh->funcThCollide = RB_Hazard_ThCollide_Missile;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Missile;
 			
 			tw = weaponTh->object;
 			tw->flags = 0;
@@ -151,6 +154,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				talk = 10;
 				d->instBombThrow = weaponInst;
 				
+				#ifndef REBUILD_PS1
+				
+				// Original Code
 				short rot[3];
 				CTR_MatrixToRot(&rot[0], &weaponInst->matrix, 0x11);
 				
@@ -160,6 +166,15 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				tw->dir[2] = rot[2];
 				
 				PlaySound3D(0x47, weaponInst);
+				
+				#else
+				
+				// rigged for Cortex Castle
+				tw->dir[0] = 0;
+				tw->dir[1] = -1024;
+				tw->dir[2] = 0;
+				
+				#endif
 			}
 			
 			// missile
@@ -170,15 +185,19 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				if(victim != 0)
 					if(victim->thTrackingMe == 0)
 						victim->thTrackingMe = 
-							RB_GetThread_ClosestTracker(victim);
+							DECOMP_RB_GetThread_ClosestTracker(victim);
 				
+				#ifndef REBUILD_PS1
 				PlaySound3D(0x4a, weaponInst);
+				#endif
 			}
 			
 			// if human and not AI
 			if((d->actionsFlagSet & 0x100000) == 0)
 			{
+				#ifndef REBUILD_PS1
 				Voiceline_RequestPlay(talk, data.characterIDs[d->driverID], 0x10);
+				#endif
 			}
 			
 			tw->rotY = d->rotCurr.y;
@@ -230,7 +249,8 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			tw->frameCount_DontHurtParent = FPS_DOUBLE(60);
 			tw->frameCount_Blind = 0;
 			break;
-		
+
+#ifndef REBUILD_PS1	
 		// TNT/Nitro
 		case 3:
 		
@@ -240,7 +260,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				modelID = 6;
 			
 			weaponInst =
-				INSTANCE_BirthWithThread(
+				DECOMP_INSTANCE_BirthWithThread(
 					modelID, 0, SMALL, MINE, 
 					RB_GenericMine_ThTick,
 					sizeof(struct MineWeapon), 
@@ -265,7 +285,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 			
 			PlaySound3D(0x52, weaponInst);
 			
@@ -286,7 +306,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			mw->tntSpinY = 0;
 			mw->extraFlags = 0;
 			
-			RB_MinePool_Add(mw);
+			DECOMP_RB_MinePool_Add(mw);
 			VehPickupItem_PotionThrow(mw, weaponInst, flags);
 			
 RunMineCOLL:
@@ -381,7 +401,7 @@ RunMineCOLL:
 				modelID = 0x46;
 			
 			weaponInst =
-				INSTANCE_BirthWithThread(
+				DECOMP_INSTANCE_BirthWithThread(
 					modelID, 0, SMALL, MINE, 
 					RB_GenericMine_ThTick,
 					sizeof(struct MineWeapon), 
@@ -404,7 +424,7 @@ RunMineCOLL:
 			
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 			
 			PlaySound3D(0x52, weaponInst);
 			
@@ -429,7 +449,7 @@ RunMineCOLL:
 			if ((gb->buttonsHeldCurrFrame & BTN_UP) != 0)
 				flags |= 4;
 			
-			RB_MinePool_Add(mw);
+			DECOMP_RB_MinePool_Add(mw);
 			int ret = VehPickupItem_PotionThrow(mw, weaponInst, flags);
 		
 			if(ret == 0)
@@ -453,7 +473,7 @@ RunMineCOLL:
 		case 6:
 			
 			weaponInst =
-				INSTANCE_BirthWithThread(
+				DECOMP_INSTANCE_BirthWithThread(
 					0x5a, 0, MEDIUM, OTHER, 
 					RB_ShieldDark_ThTick_Grow,
 					sizeof(struct Shield), 
@@ -561,7 +581,7 @@ RunMineCOLL:
 			
 			// MEDIUM
 			weaponInst =
-				INSTANCE_BirthWithThread(
+				DECOMP_INSTANCE_BirthWithThread(
 					0x36, 0, MEDIUM, TRACKING, 
 					RB_Warpball_ThTick,
 					sizeof(struct TrackerWeapon), 
@@ -658,6 +678,7 @@ RunMineCOLL:
 				p->unk18 = 250;
 			
 			break;
+#endif
 		
 		// invisibility
 		case 0xc:

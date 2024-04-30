@@ -1,7 +1,6 @@
 #include <common.h>
 
 void RB_GenericMine_ThTick(struct Thread *);
-void RB_Hazard_ThCollide_Generic(struct Thread *);
 
 void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 {
@@ -42,7 +41,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 	// why are these paired to P1 in Crystal Challenge?
 	parentInst = gGT->drivers[0]->instSelf;
 
-	t->funcThCollide = RB_Hazard_ThCollide_Generic;
+	t->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 	t->parentThread = parentInst->thread;
 	t->modelIndex = inst->model->id;
 	
@@ -58,7 +57,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 	mw->extraFlags = 0;
 	mw->stopFallAtY = inst->matrix.t[1];
 	
-	RB_MinePool_Add(mw);
+	DECOMP_RB_MinePool_Add(mw);
 		
     RB_Default_LInB(inst);
 }

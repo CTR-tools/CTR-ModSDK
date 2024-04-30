@@ -151,7 +151,6 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	posY = posXY[1];
   }
 
-#ifndef REBUILD_PS1
   DECOMP_DecalHUD_DrawWeapon(
 		// pointer to icon, from array of icon pointers
 		gGT->ptrIcons[iconID],
@@ -165,7 +164,6 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		gGT->pushBuffer_UI.ptrOT,
 	
 		TRANS_50_DECAL,(int)scale,1);
-#endif
 		
   return;
 }

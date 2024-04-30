@@ -425,6 +425,7 @@ FinishLoading:
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
 
+					int tap = gGS->gamepad[0].buttonsTapped;
 					int held = gGS->gamepad[0].buttonsHeldCurrFrame;
 
 					if (
@@ -466,36 +467,44 @@ FinishLoading:
 						// must be zero for level music to work
 						sdata->XA_State = 0;
 	
-						if ((held & BTN_UP) != 0)
-						{
-							gGT->pushBuffer[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
-							gGT->pushBuffer[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
-						}
+						int dirUD = 0;
+						int dirLR = 0;
+						int dirCT = 0;
 	
-						if ((held & BTN_DOWN) != 0)
-						{
-							gGT->pushBuffer[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
-							gGT->pushBuffer[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
-						}
+						if ((held & BTN_UP) != 0) dirUD = -1;
+						if ((held & BTN_DOWN) != 0) dirUD = 1;
+						gGT->pushBuffer[0].pos[2] += (dirUD * FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
+						gGT->pushBuffer[0].pos[0] += (dirUD * FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
 	
-						if ((held & BTN_LEFT) != 0)
-						{
-							gGT->pushBuffer[0].rot[1] += FPS_HALF(0x20);
-						}
+						if ((held & BTN_LEFT) != 0) dirLR = 1;
+						if ((held & BTN_RIGHT) != 0) dirLR = -1;
+						gGT->pushBuffer[0].rot[1] += dirLR * FPS_HALF(0x20);
 	
-						if ((held & BTN_RIGHT) != 0)
+						if ((held & BTN_CROSS) != 0) dirCT = -1;
+						if ((held & BTN_TRIANGLE) != 0) dirCT = 1;
+						gGT->pushBuffer[0].pos[1] += dirCT * FPS_HALF(0x20);
+						
+						if ((tap & BTN_R1) != 0)
 						{
-							gGT->pushBuffer[0].rot[1] -= FPS_HALF(0x20);
+							if(gGT->drivers[0]->heldItemID == 0xF)
+							{
+								gGT->drivers[0]->heldItemID = 0;
+								gGT->drivers[0]->numHeldItems = 1;
+							}
+							
+							else
+							{
+								gGT->drivers[0]->heldItemID++;
+							}
 						}
-	
-						if ((held & BTN_CROSS) != 0)
+						
+						if ((tap & BTN_L1) != 0)
 						{
-							gGT->pushBuffer[0].pos[1] -= FPS_HALF(0x20);
-						}
-	
-						if ((held & BTN_TRIANGLE) != 0)
-						{
-							gGT->pushBuffer[0].pos[1] += FPS_HALF(0x20);
+							if(gGT->drivers[0]->heldItemID != 0xF)
+								gGT->drivers[0]->heldItemID--;
+							
+							if(gGT->drivers[0]->heldItemID < 0)
+								gGT->drivers[0]->heldItemID = 0;
 						}
 					}
 					

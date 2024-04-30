@@ -29,13 +29,15 @@ void DECOMP_RB_MovingExplosive_Explode(
     soundId = 0x4c;
   }
 
+#ifndef REBUILD_PS1
   // play explosion sound
   PlaySound3D(soundId,inst);
   
   // stop audio of rolling
   OtherFX_RecycleMute(&tw->audioPtr);
   
-  RB_Burst_Init(inst);
+  DECOMP_RB_Burst_Init(inst);
+#endif
   
   // This thread is now dead
   t->flags |= 0x800;

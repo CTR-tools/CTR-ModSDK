@@ -21,6 +21,7 @@ void DECOMP_RB_MovingExplosive_ThTick(struct Thread* t)
   tw = t->object;
   tw->timeAlive += gGT->elapsedTimeMS;
   
+#ifndef REBUILD_PS1
   if (modelID == DYNAMIC_ROCKET) 
   {
     if ((t->flags & 0x800) == 0) {
@@ -46,9 +47,9 @@ void DECOMP_RB_MovingExplosive_ThTick(struct Thread* t)
       sound = 0x59;
     }
 LAB_800adc00:
-
     PlaySound3D_Flags(&tw->audioPtr,sound,inst);
   }
+#endif
 
 LAB_800adc08:
 
@@ -56,7 +57,10 @@ LAB_800adc08:
 	tw->driverTarget;
 
   // driver not invisible
-  if (driverTarget->invisibleTimer == 0) 
+  if (
+		(driverTarget != 0) &&
+		(driverTarget->invisibleTimer == 0)
+	  )
   {
     if (
 			// Naughty Dog Bug? That's so unlikely?
@@ -134,11 +138,11 @@ LAB_800add14:
 		) 
 	{
       tw->rotY = 
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			tw->rotY,(int)sVar3,4);
 	  
-	  tw->vel[0] = (MATH_Sin(tw->rotY) * 3) >> 7;
-	  tw->vel[2] = (MATH_Cos(tw->rotY) * 3) >> 7;
+	  tw->vel[0] = (DECOMP_MATH_Sin(tw->rotY) * 3) >> 7;
+	  tw->vel[2] = (DECOMP_MATH_Cos(tw->rotY) * 3) >> 7;
       
 	  // if bomb is rolled backwards
 	  if ((tw->flags & 0x20) != 0)
@@ -155,22 +159,22 @@ LAB_800add14:
       if ((tw->flags & 1) == 0) 
 	  {
 		tw->rotY = 
-			RB_Hazard_InterpolateValue(
+			DECOMP_RB_Hazard_InterpolateValue(
 				tw->rotY,(int)sVar3,0x40);
         
-		tw->vel[0] = (MATH_Sin(tw->rotY) * 5) >> 8;
-		tw->vel[2] = (MATH_Cos(tw->rotY) * 5) >> 8;
+		tw->vel[0] = (DECOMP_MATH_Sin(tw->rotY) * 5) >> 8;
+		tw->vel[2] = (DECOMP_MATH_Cos(tw->rotY) * 5) >> 8;
       }
 	  
 	  // if 10 wumpa were used
       else 
 	  {
 		tw->rotY = 
-			RB_Hazard_InterpolateValue(
+			DECOMP_RB_Hazard_InterpolateValue(
 				tw->rotY,(int)sVar3,0x80);
         
-		tw->vel[0] = (MATH_Sin(tw->rotY) * 3) >> 7;
-		tw->vel[2] = (MATH_Cos(tw->rotY) * 3) >> 7;
+		tw->vel[0] = (DECOMP_MATH_Sin(tw->rotY) * 3) >> 7;
+		tw->vel[2] = (DECOMP_MATH_Cos(tw->rotY) * 3) >> 7;
       }
 	  
       tw->dir[0] = 0;
@@ -183,8 +187,7 @@ LAB_800add14:
   }
   
   sVar3 = inst->animFrame;
-  
-  iVar8 = INSTANCE_GetNumAnimFrames(inst,0);
+  iVar8 = DECOMP_INSTANCE_GetNumAnimFrames(inst,0);
   
   // if instance is not at end of animation
   if ((int)sVar3 + 1 < iVar8) 
@@ -200,6 +203,7 @@ LAB_800add14:
     inst->animFrame = 0;
   }
   
+#ifndef REBUILD_PS1
   if (
 		// if missile
 		(modelID == DYNAMIC_ROCKET) && 
@@ -219,6 +223,7 @@ LAB_800add14:
 		p->axis[2].startVal = inst->matrix.t[2] << 8;
 	}
   }
+#endif
   
   int elapsedTime = gGT->elapsedTimeMS;
   inst->matrix.t[0] += (((int)tw->vel[0] * elapsedTime) >> 5);
@@ -251,7 +256,8 @@ LAB_800add14:
   posB[0] = inst->matrix.t[0];
   posB[1] = inst->matrix.t[1] + 0x100;
   posB[2] = inst->matrix.t[2];
-  
+
+#ifndef REBUILD_PC
   struct ScratchpadStruct* sps = 0x1f800108;
   
   sps->Union.QuadBlockColl.searchFlags = 0x41;
@@ -279,7 +285,7 @@ LAB_800add14:
 	inst->matrix.t[1] += ((int)tw->vel[1] * elapsedTime) >> 5;
 	inst->matrix.t[2] += ((int)tw->vel[2] * elapsedTime) >> 5;
 
-	RB_MovingExplosive_Explode(t,inst,tw);
+	DECOMP_RB_MovingExplosive_Explode(t,inst,tw);
     return;
   }
   
@@ -376,10 +382,12 @@ LAB_800add14:
       goto LAB_800ae42c;
     }
   }
+
+#endif
   
   struct Instance* hitInst;
   
-  hitInst = RB_Hazard_CollideWithDrivers(
+  hitInst = DECOMP_RB_Hazard_CollideWithDrivers(
 	inst,
 	tw->frameCount_DontHurtParent,
 	0x2400,
@@ -389,7 +397,7 @@ LAB_800add14:
   if (hitInst == 0) 
   {
 	// check Mine threadbucket
-    hitInst = RB_Hazard_CollideWithBucket(
+    hitInst = DECOMP_RB_Hazard_CollideWithBucket(
 		inst, t,
 		gGT->threadBuckets[MINE].thread,
         tw->frameCount_DontHurtParent,
@@ -411,7 +419,7 @@ LAB_800ae440:
 	  // === Assume Bomb ===
 	  
 	  // check Tracking threadbucket
-	  hitInst = RB_Hazard_CollideWithBucket(
+	  hitInst = DECOMP_RB_Hazard_CollideWithBucket(
 		inst, t, 
 		gGT->threadBuckets[TRACKING].thread,
         tw->frameCount_DontHurtParent,
@@ -470,7 +478,7 @@ LAB_800ae440:
   }
 LAB_800ae42c:
 
-  RB_MovingExplosive_Explode(t,inst,tw);
+  DECOMP_RB_MovingExplosive_Explode(t,inst,tw);
   return;
 }
  

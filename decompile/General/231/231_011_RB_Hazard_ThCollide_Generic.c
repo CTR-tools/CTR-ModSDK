@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Hazard_ThCollide_Generic(struct Thread* thread)
+int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 {
 	struct Instance* inst;
 	struct MineWeapon* mw;
@@ -36,8 +36,11 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 	// if red beaker or green beaker
 	if ((unsigned int)(modelID - 0x46) < 2)
 	{
+		#ifndef REBUILD_PS1
 		PlaySound3D(0x3f, inst);
-		RB_MinePool_Remove(mw);
+		#endif
+		
+		DECOMP_RB_MinePool_Remove(mw);
 	}
 	
 	else
@@ -72,10 +75,15 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 			soundID = 0x3d;
 		}
 		
+		#ifndef REBUILD_PS1
 		PlaySound3D(soundID, inst);
-		RB_MinePool_Remove(mw);
+		#endif
 		
-		RB_Explosion_InitGeneric(inst);
+		DECOMP_RB_MinePool_Remove(mw);
+		
+		#ifndef REBUILD_PS1
+		DECOMP_RB_Explosion_InitGeneric(inst);
+		#endif
 		
 		inst->scale[0] = 0;
 		inst->scale[1] = 0;

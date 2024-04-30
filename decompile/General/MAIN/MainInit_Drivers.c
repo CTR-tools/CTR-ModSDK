@@ -25,9 +25,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 
     if (DECOMP_LOAD_IsOpen_RacingOrBattle())
     {
-#ifndef REBUILD_PS1
-        RB_MinePool_Init();
-#endif
+        DECOMP_RB_MinePool_Init();
     }
 
     // Spawn all players,

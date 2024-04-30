@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Instance* RB_Hazard_CollideWithBucket(
+struct Instance* DECOMP_RB_Hazard_CollideWithBucket(
 	struct Instance* weaponInst, 
 	struct Thread* weaponTh, struct Thread* bucket, 
 	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst

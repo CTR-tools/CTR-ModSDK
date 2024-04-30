@@ -501,6 +501,7 @@
 #include "../decompile/General/Vehicle/VehPhysProc_AAA_BigBlock1.c"
 
 #include "../decompile/General/Vehicle/VehPickupItem_MaskBoolGoodGuy.c"
+#include "../decompile/General/Vehicle/VehPickupItem_ShootNow.c"
 #include "../decompile/General/Vehicle/VehPickupItem_ShootOnCirclePress.c"
 
 #include "../decompile/General/Vehicle/VehStuckProc_RevEngine_FuncPtrs.c"
@@ -536,9 +537,21 @@
 
 // 231
 #include "../decompile/General/231/231_002_RB_ModifyWumpa.c"
+#include "../decompile/General/231/231_003_RB_MinePool_Init.c"
+#include "../decompile/General/231/231_004_RB_MinePool_Remove.c"
+#include "../decompile/General/231/231_005_RB_MinePool_Add.c"
+#include "../decompile/General/231/231_006_RB_Hazard_HurtDriver.c"
+#include "../decompile/General/231/231_007_RB_Hazard_CollideWithDrivers.c"
+#include "../decompile/General/231/231_008_RB_Hazard_CollideWithBucket.c"
+#include "../decompile/General/231/231_009_RB_Hazard_ThCollide_Generic_Alt.c"
+#include "../decompile/General/231/231_010_RB_Hazard_ThCollide_Missile.c"
+#include "../decompile/General/231/231_011_RB_Hazard_ThCollide_Generic.c"
+
 #include "../decompile/General/231/231_023_RB_Hazard_InterpolateValue.c"
-#include "../decompile/General/231/231_056_057_RB_Baron.c"
-#include "../decompile/General/231/231_058_059_RB_Blade.c"
+#include "../decompile/General/231/231_024_RB_MovingExplosive_ThTick.c"
+#include "../decompile/General/231/231_025_RB_MovingExplosive_Explode.c"
+
+#include "../decompile/General/231/231_GROUP_55_72.c"
 #include "../decompile/General/231/231_082_085_RB_Armadillo.c"
 #include "../decompile/General/231/231_086_088_RB_Fireball.c"
 #include "../decompile/General/231/231_099_100_RB_Minecart.c"

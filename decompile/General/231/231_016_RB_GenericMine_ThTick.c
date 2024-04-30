@@ -2,7 +2,6 @@
 
 void RB_TNT_ThTick_ThrowOnHead();
 void RB_TNT_ThTick_ThrowOffHead();
-void RB_Hazard_ThCollide_Generic();
 void RB_Potion_ThTick_InAir();
 
 void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
@@ -110,7 +109,8 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     param = 0x1900;
   }
   
-  coll = RB_Hazard_CollideWithDrivers(inst,mw->frameCount_DontHurtParent,param,mw->instParent);
+  coll = DECOMP_RB_Hazard_CollideWithDrivers(
+	inst,mw->frameCount_DontHurtParent,param,mw->instParent);
   
   // if no collision
   if (coll == 0) goto LAB_800ad17c;
@@ -255,7 +255,7 @@ LAB_800ad174:
 		// driver -> instTntRecv
         d->instTntRecv = inst;
 		
-        RB_MinePool_Remove(mw);
+        DECOMP_RB_MinePool_Remove(mw);
 		
 		// play Hit TNT "bounce" sound
         PlaySound3D(0x50,inst);
@@ -301,7 +301,7 @@ LAB_800ad174:
 		
         instCrate->thread->funcThDestroy = PROC_DestroyInstance;
 		
-        instCrate->thread->funcThCollide = RB_Hazard_ThCollide_Generic;
+        instCrate->thread->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 		
 		// Get object from thread
         tnt = instCrate->thread->object;
@@ -335,7 +335,7 @@ LAB_800ad174:
         tnt->deltaPos[1] = 0;
         tnt->deltaPos[2] = 0;
 		
-        RB_MinePool_Remove(mw);
+        DECOMP_RB_MinePool_Remove(mw);
 		
 		// set scale (x, y, z) to zero
         inst->scale[0] = 0;

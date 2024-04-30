@@ -132,7 +132,7 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	
 // not needed in PC port yet
 #ifndef REBUILD_PS1
-	hitInst = RB_Hazard_CollideWithDrivers(baronInst, 0, 0x19000, 0);
+	hitInst = DECOMP_RB_Hazard_CollideWithDrivers(baronInst, 0, 0x19000, 0);
 	if(hitInst != 0)
 	{
 		// get driver from instance

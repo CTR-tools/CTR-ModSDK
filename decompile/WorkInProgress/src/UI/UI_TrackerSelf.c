@@ -56,7 +56,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
   x = ptrAnim[animIndex];
   y = ptrAnim[animIndex + 1];
 
-  struct Thread * trackerTh = RB_GetThread_ClosestTracker(d);
+  struct Thread * trackerTh = DECOMP_RB_GetThread_ClosestTracker(d);
 
   if ((trackerTh == NULL) && (animIndex == 0)) {
     // Get data from missile or warpball
