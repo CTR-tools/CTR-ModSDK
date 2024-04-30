@@ -551,7 +551,10 @@
 #include "../decompile/General/231/231_024_RB_MovingExplosive_ThTick.c"
 #include "../decompile/General/231/231_025_RB_MovingExplosive_Explode.c"
 
+// Can not defrag 055 into GROUP_55_72 until globals are rewritten
+#include "../decompile/General/231/231_055_RB_GetThread_ClosestTracker.c"
 #include "../decompile/General/231/231_GROUP_55_72.c"
+
 #include "../decompile/General/231/231_082_085_RB_Armadillo.c"
 #include "../decompile/General/231/231_086_088_RB_Fireball.c"
 #include "../decompile/General/231/231_099_100_RB_Minecart.c"
