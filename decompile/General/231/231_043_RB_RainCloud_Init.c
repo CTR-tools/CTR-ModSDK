@@ -30,10 +30,9 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     cloudInst->matrix.t[2] = d->instSelf->matrix.t[2];
 	
     cloudInst->alphaScale = 0x800;
-    
-    // not in headers?
-    *(char *)(cloudInst + 0x50) = *(char *)(d->instSelf + 0x50);
-    *(char *)(cloudInst + 0x51) = *(char *)(d->instSelf + 0x51);
+	
+    cloudInst->unk50 = d->instSelf->unk50;
+    cloudInst->unk51 = d->instSelf->unk51;
     
 	// add rain to pool
 	rlocal = DECOMP_JitPool_Add(&sdata->gGT->JitPools.rain);
