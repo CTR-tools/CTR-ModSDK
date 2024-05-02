@@ -17,14 +17,14 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 	switch(weaponID)
 	{
 		// Turbo
-		case 0:
+		case 0: {
 		
 			int boost = 0x80;
 			if(d->numWumpas >= 10)
 				boost = 0x100;
 			
 			DECOMP_VehFire_Increment(d, 0x960, 9, boost);
-			break;
+			} break;
 			
 		// Shared code for Bomb and Missile
 		case 2:
@@ -702,13 +702,13 @@ RunMineCOLL:
 		
 		
 		// Super Engine
-		case 0xd:
+		case 0xd: {
 		
 			int engine = 0x1e00;
 			if(d->numWumpas >= 10)
 				engine = 0x2d00;
 			
 			d->superEngineTimer = engine;
-			break;
+			} break;
 	}
 }

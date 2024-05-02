@@ -86,7 +86,7 @@ EndFunc:
 		// is past all the level load+callback
 		if(gGT->levelID <= CITADEL_CITY)
 		{
-			int newSize = (MEMPACK_GetFreeBytes()/2);
+			int newSize = (DECOMP_MEMPACK_GetFreeBytes()/2);
 			
 			// adjust for alignment
 			// that can inflate size later
@@ -98,7 +98,7 @@ EndFunc:
 				
 			// if remaining size is less than OG requirement,
 			// allocate way too much memory and crash the game
-			if(newSize < size) MEMPACK_AllocMem(0x900000);
+			if(newSize < size) DECOMP_MEMPACK_AllocMem(0x900000);
 		
 			printf("BonusPrim: %d\n", newSize-size);
 			size = newSize;

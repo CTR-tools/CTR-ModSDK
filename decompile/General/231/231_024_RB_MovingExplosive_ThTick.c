@@ -51,7 +51,7 @@ LAB_800adc00:
   }
 #endif
 
-LAB_800adc08:
+LAB_800adc08:;
 
   struct Driver* driverTarget =
 	tw->driverTarget;
