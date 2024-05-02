@@ -98,9 +98,13 @@ EndFunc:
 				
 			// if remaining size is less than OG requirement,
 			// allocate way too much memory and crash the game
-			if(newSize < size) DECOMP_MEMPACK_AllocMem(0x900000);
-		
-			printf("BonusPrim: %d\n", newSize-size);
+			if(newSize < size) 
+			{
+				printf("Missed by: %08x\n", (size-newSize)*2);
+				DECOMP_MEMPACK_AllocMem(0x900000);
+			}
+			
+			printf("BonusPrim: %08x\n", newSize-size);
 			size = newSize;
 		}
 	}
