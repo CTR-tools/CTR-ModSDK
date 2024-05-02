@@ -4171,8 +4171,12 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
   // backup $gp
   DAT_1f800020 = &DAT_8008cf6c;
 
+  // primMem->curr
   puVar3 = *(uint **)(param_2 + 0xc);
+  
+  // rainpool->taken.first
   DAT_1f800038 = *(int *)(param_3 + 0xc);
+  
   param_4 = param_4 + -1;
   iVar18 = 0;
   DAT_1f800000 = unaff_s0;
@@ -4186,10 +4190,14 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
   DAT_1f800024 = (undefined *)register0x00000074;
   DAT_1f800028 = unaff_s8;
   DAT_1f80002c = unaff_retaddr;
+  
+  // if rain
   if (DAT_1f800038 != 0) {
     DAT_1f800048 = 0;
     DAT_1f80004c = 0;
     DAT_1f800030 = 0x2000080;
+	
+	// loop through 4 players
     do 
 	{
 	  // pushBuffer ViewProj
@@ -4209,10 +4217,17 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
       gte_ldOFY((int)*(short *)(param_1 + 0x22) << 0xf);
       gte_ldH(*(undefined4 *)(param_1 + 0x18));
 	  
-      for (piVar5 = (int *)DAT_1f800038; piVar5 != (int *)0x0; piVar5 = (int *)*piVar5) {
+	  // loop through all rain
+      for (piVar5 = (int *)DAT_1f800038; piVar5 != (int *)0x0; piVar5 = (int *)*piVar5) 
+	  {
+		// rainLocal->frameCount
         iVar15 = piVar5[2];
+		
         iVar19 = piVar5[3];
-        if (piVar5[9] != 0) {
+        
+		// rainLocal->cloudInst
+		if (piVar5[9] != 0) 
+		{
           iVar20 = (int)*(short *)(piVar5 + 4);
           iVar24 = (int)*(short *)(piVar5 + 6);
           uVar23 = piVar5[5] & 0xfffeffff;
@@ -4222,10 +4237,15 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
             piVar5[3] = uVar21;
             piVar5[4] = iVar22;
           }
+		  
+		  // rainLocal->cloudInst
           iVar12 = piVar5[9] + iVar18;
+		  
+		  // inst->idpp[x].mvp.t[0,1,2] 
           iVar6 = (int)*(short *)(iVar12 + 0x94);
           gte_ldtr((int)*(short *)(iVar12 + 0x8c),(int)*(short *)(iVar12 + 0x90),iVar6);
-          if ((-1 < iVar6) && (iVar6 + -0xc00 < 0)) {
+          
+		  if ((-1 < iVar6) && (iVar6 + -0xc00 < 0)) {
             uVar10 = iVar6 - 0x400U >> 3;
             if ((int)(iVar6 - 0x400U) < 0) {
               uVar10 = 0;
@@ -4303,11 +4323,19 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
               }
             }
             iVar15 = piVar5[2];
+			
+			// code and color
             puVar3[1] = 0xe1000a20;
+			
             puVar3[2] = 0;
-            *puVar3 = *puVar13 | 0x2000000;
+            
+			// prim and OT
+			*puVar3 = *puVar13 | 0x2000000;
             *puVar13 = (uint)puVar3 & 0xffffff;
+			
+			// next prim
             puVar3 = puVar3 + 3;
+			
             uVar10 = 0x30125400;
             uVar17 = 0x493583fe;
             while( true ) {
@@ -4366,11 +4394,18 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
                 }
               }
             }
+            
+			// code and color
             puVar3[1] = 0xe1000a40;
-            puVar3[2] = 0;
+            
+			puVar3[2] = 0;
+			
+			// prim and OT
             *puVar3 = *puVar13 | 0x2000000;
             *puVar13 = (uint)puVar3 & 0xffffff;
-            puVar3 = puVar3 + 3;
+            
+			// next prim
+			puVar3 = puVar3 + 3;
           }
         }
       }
@@ -4380,6 +4415,8 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
       param_4 = param_4 + -1;
     } while (bVar1);
   }
+  
+  // primMem->curr
   *(uint **)(param_2 + 0xc) = puVar3;
   return;
 }
