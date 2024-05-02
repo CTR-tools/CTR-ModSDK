@@ -213,9 +213,30 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				sdata->levelLOD = 8;
 			}
-						
-			DECOMP_MainInit_PrimMem(gGT);
-			DECOMP_MainInit_OTMem(gGT);
+			
+			// RAM optimization, dont do this
+			#if 0
+			
+				// OG game
+				DECOMP_MainInit_PrimMem(gGT);
+				DECOMP_MainInit_OTMem(gGT);
+			
+			#else
+				
+				// first allocate OT for RaceFlag
+				DECOMP_MainInit_OTMem(gGT);
+				
+
+				// use HighMem for RaceFlag, dont use MEMPACK_AllocHighMem,
+				// then later this allocation is extended to remainder of heap,
+				// this will always be LESS than OG game allocation, so it wont
+				// impact any intended loading screens
+				int backup = sdata->mempack[0].firstFreeByte;
+				sdata->mempack[0].firstFreeByte = (int)sdata->mempack[0].lastFreeByte - 0xA000;
+				DECOMP_MainInit_PrimMem(gGT, 0xA000);
+				sdata->mempack[0].firstFreeByte = backup;
+			
+			#endif
 
 			// RAM Optimization, NEVER do this here
 			#if 0
@@ -637,6 +658,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			#if 1
 			DECOMP_MEMPACK_SwapPacks(0);
 			DECOMP_MainInit_JitPoolsNew(gGT);
+			
+			// end of RAM, steal rest of heap
+			DECOMP_MainInit_PrimMem(gGT, 0);
+
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			#endif

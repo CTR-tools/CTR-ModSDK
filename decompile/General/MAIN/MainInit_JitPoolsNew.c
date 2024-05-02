@@ -101,6 +101,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   if ((gameMode & MAIN_MENU) != 0) numDriver = 4;
   if (gGT->numPlyrCurrGame == 2) numDriver = 6;
   if (gGT->numPlyrCurrGame > 2) numDriver = 4;
+  if ((gameMode & TIME_TRIAL) != 0) numDriver = 3;
 
   // OG game used 0x670 for driver, should be 0x640,
   // maybe intended to mix RainPool into Driver struct?

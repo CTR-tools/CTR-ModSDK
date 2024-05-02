@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
+// force parameter is a personal optimization
+void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 {
 	int size;
 	int levelID = gGT->levelID;
@@ -62,10 +63,47 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	
 EndFunc:
 
-#ifdef USE_HIGHMP
-	size = 0x200000;
-#endif
-
+	// optimization,
+	// use all remaining heap for primMem,
+	// LOAD_TenStages:Stage8
+	#if 1
+	if(force == 0)
+	{
+		// only for race tracks, menu/cutscenes
+		// dont need PrimMem expansion, and also
+		// menu/cutscene needs HighMem sometimes
+		
+		// gGT->levelID is set cause Stage8
+		// is past all the level load+callback
+		if(gGT->levelID <= CITADEL_CITY)
+		{
+			int newSize = (MEMPACK_GetFreeBytes()/2);
+			
+			// adjust for alignment
+			// that can inflate size later
+			newSize &= 0xffffffE0;
+			
+			// make room for ghost recording and two tapes
+			if((gGT->gameMode1 & TIME_TRIAL) != 0)
+				newSize -= (0x3E00+(0x268*2))/2;
+				
+			// if remaining size is less than OG requirement,
+			// allocate way too much memory and crash the game
+			if(newSize < size) MEMPACK_AllocMem(0x900000);
+		
+			printf("BonusPrim: %d\n", newSize-size);
+			size = newSize;
+		}
+	}
+	#endif
+	
+	// optimization,
+	// steal OT mem during loading screen,
+	// LOAD_TenStages:Stage0
+	#if 1
+		if(force != 0)
+			size = force/2;
+	#endif
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
 }

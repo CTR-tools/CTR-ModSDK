@@ -3,30 +3,7 @@
 void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 {
 	void* pvVar1;
-	
-	#ifdef REBUILD_PC
-	size = size*8;
-	#else
-		#ifdef USE_60FPS
-		// This is needed cause of LOD upgrading in 60fps,
-		// which is needed cause LOD[1] can't double-lerp
-		// animations
 		
-		// Without this, game crashes if you (without pressing L2)
-		// Adventure->HotAirSkyway, then tap X+LEFT at startline
-		
-		// Should fit with all memory optimizations
-		size += 0x800;
-		#endif
-		
-		#ifdef USE_OXIDE
-		// same logic as before, but Oxide is bigger,
-		// 0x200 is not enough or Tiger Temple crashes
-		// in Demo Mode with Oxide as P1
-		size += 0x800;
-		#endif
-	#endif
-	
 	pvVar1 = DECOMP_MEMPACK_AllocMem(size);
 	primMem->size = size;
 	primMem->unk2 = (int)pvVar1;
