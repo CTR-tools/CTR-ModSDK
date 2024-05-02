@@ -516,15 +516,16 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				#if 1
 				// biggest lev_swap (cutscene/adventure)
 				// is 0xBBA0 for gemstone ptr map, align up
-				// by 0x800 for 0xc000
+				// by 0x800 for 0xc000, and use AllocMem,
+				// HighMem is now reserved for PrimMem
 				sdata->PatchMem_Size = 0xc000;
+				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 				#else
 				// original game code
 				sdata->PatchMem_Size = DECOMP_MEMPACK_GetFreeBytes();
+				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 				#endif
 				
-				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
-
 				// make all futuere allocations in subpacks
 				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}

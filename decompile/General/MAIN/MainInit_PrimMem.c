@@ -63,6 +63,15 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 	
 EndFunc:
 
+#ifdef USE_HIGHMP
+
+	if(force != 0)
+		size = force/2;
+	else
+		size = 0x200000;
+
+#else
+
 	// optimization,
 	// use all remaining heap for primMem,
 	// LOAD_TenStages:Stage8
@@ -104,6 +113,9 @@ EndFunc:
 		if(force != 0)
 			size = force/2;
 	#endif
+
+#endif
+	
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
 }
