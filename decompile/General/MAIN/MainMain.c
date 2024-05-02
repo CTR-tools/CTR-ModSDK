@@ -307,10 +307,19 @@ FinishLoading:
 					(gGS->gamepad[0].buttonsTapped & BTN_L2)
 					)
 				{
-					gGT->drivers[0]->posCurr[0] = 0xE1700;
-					gGT->drivers[0]->posCurr[1] = 0xFFFD0039;
-					gGT->drivers[0]->posCurr[2] = 0x4D0B00;
-					gGT->drivers[0]->angle = 0x283;
+					gGT->hudFlags |= 1;
+					
+					gGT->drivers[0]->posCurr[0] = 0x2e3152;
+					gGT->drivers[0]->posCurr[1] = 0x5f96;
+					gGT->drivers[0]->posCurr[2] = 0xfff59bd1;
+					gGT->drivers[0]->angle = 0x5af;
+					
+					gGT->drivers[0]->heldItemID = 9;
+					
+					gGT->drivers[1]->posCurr[0] = 0x2f8d79;
+					gGT->drivers[1]->posCurr[1] = 0x5f70;
+					gGT->drivers[1]->posCurr[2] = 0xffedde6f;
+					gGT->drivers[1]->angle = 0x5af;
 				}
 				#endif
 
@@ -713,9 +722,9 @@ void StateZero()
 	gGT->levelID = NAUGHTY_DOG_CRATE;
 	
 	#ifdef FastBoot
-	gGT->levelID = N_GIN_LABS;
-	gGT->numPlyrCurrGame = 1;
-	gGT->numPlyrNextGame = 1;
+	gGT->levelID = POLAR_PASS;
+	gGT->numPlyrCurrGame = 2;
+	gGT->numPlyrNextGame = 2;
 	#endif
 	
 	InitGeom();
