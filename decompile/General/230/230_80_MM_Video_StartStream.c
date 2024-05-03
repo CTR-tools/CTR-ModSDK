@@ -28,7 +28,7 @@ void DECOMP_MM_Video_StartStream(int param_1, int numFrames)
     // next parameter (0) = START_FRAME
     StSetStream((V230.flags & 1), 0, 0xffffffff, 0, 0);
 
-    CDSYS_SetMode_StreamData();
+    DECOMP_CDSYS_SetMode_StreamData();
 
     // 800b6814 = Ring_Buf (mempack)
     StSetRing(V230.out_Buf[2], V230.RING_SIZE);

@@ -14,7 +14,5 @@ void DECOMP_CDSYS_SpuCallbackTransfer()
 	
 	sdata->countPass_CdTransferCallback++;
 	
-	#ifndef REBUILD_PS1
-	CDSYS_SpuGetMaxSample();
-	#endif
+	DECOMP_CDSYS_SpuGetMaxSample();
 }

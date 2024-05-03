@@ -119,6 +119,16 @@ EndFunc:
 	#endif
 
 #endif
+
+#ifdef REBUILD_PC
+	// only allocate early-stage
+	if(force == 0) return;
+	
+	// allocate rest of 24-bit range
+	size = 0x1000000 - (int)sdata->mempack[0].firstFreeByte;
+	size /= 2;
+	size -= 0x100;
+#endif
 	
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);

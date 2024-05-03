@@ -5,12 +5,24 @@ int DECOMP_CAM_Path_GetNumPoints(void);
 u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *getPath);
 void DECOMP_CAM_SetDesiredPosRot(struct CameraDC* cDC, short* pos, short* rot);
 
+void DECOMP_CDSYS_Init(int boolUseDisc);
+u_int DECOMP_CDSYS_GetFilePosInt(char* fileString, int* filePos);
+void DECOMP_CDSYS_SetMode_StreamData();
+void DECOMP_CDSYS_SetMode_StreamAudio();
 void DECOMP_CDSYS_SetXAToLang(int lang);
-void DECOMP_CDSYS_XAPlay(int categoryID, int xaID);
-void DECOMP_CDSYS_XAPauseAtEnd();
 void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
-void DECOMP_CDSYS_SetMode_StreamData();
+void DECOMP_CDSYS_SpuCallbackIRQ();
+void DECOMP_CDSYS_SpuCallbackTransfer();
+void DECOMP_CDSYS_SpuEnableIRQ();
+void DECOMP_CDSYS_SpuDisableIRQ();
+void DECOMP_CDSYS_SpuGetMaxSample(void);
+u_int DECOMP_CDSYS_XAGetNumTracks(int categoryID);
+
+void DECOMP_CDSYS_XAPlay(int categoryID, int xaID);
+void DECOMP_CDSYS_XAPauseRequest();
+void DECOMP_CDSYS_XAPauseForce();
+void DECOMP_CDSYS_XAPauseAtEnd();
 
 void* DECOMP_COLL_LevModelMeta(unsigned int id);
 

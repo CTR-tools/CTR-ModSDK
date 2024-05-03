@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DECOMP_CDSYS_SpuCallbackTransfer();
-void DECOMP_CDSYS_SpuCallbackIRQ();
-
 void DECOMP_CDSYS_SpuEnableIRQ()
 {
 	for(int i = 0; i < 0x100; i++)

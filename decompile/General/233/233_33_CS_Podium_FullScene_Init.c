@@ -210,7 +210,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 			break;
 	}
 
-	CDSYS_XAPlay(0, podiumMusic);
+	DECOMP_CDSYS_XAPlay(0, podiumMusic);
   
 	return;
 }

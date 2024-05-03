@@ -51,6 +51,6 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 			(unsigned int)lngFile;
 	}
 #if BUILD == EurRetail
-	CDSYS_SetXAToLang(lang);
+	DECOMP_CDSYS_SetXAToLang(lang);
 #endif
 }

@@ -42,6 +42,7 @@
 #include "../decompile/General/CDSYS/CDSYS_c09_SpuCallbackTransfer.c" 
 #include "../decompile/General/CDSYS/CDSYS_c10_SpuEnableIRQ.c" 
 #include "../decompile/General/CDSYS/CDSYS_c11_SpuDisableIRQ.c" 
+#include "../decompile/General/CDSYS/CDSYS_c12_SpuGetMaxSample.c"
 #include "../decompile/General/CDSYS/CDSYS_c13_XAGetNumTracks.c" 
 #include "../decompile/General/CDSYS/CDSYS_c14_XASeek.c" 
 #include "../decompile/General/CDSYS/CDSYS_c15_XAGetTrackLength.c" 

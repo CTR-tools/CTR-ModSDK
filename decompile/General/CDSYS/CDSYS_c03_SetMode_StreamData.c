@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_CDSYS_XAPauseForce();
-
 void DECOMP_CDSYS_SetMode_StreamData()
 {
 	char buf[8];

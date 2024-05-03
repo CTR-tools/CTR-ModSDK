@@ -214,7 +214,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				sdata->levelLOD = 8;
 			}
 			
-			// RAM optimization, dont do this
+			// RAM optimization, dont do this OG code
 			#if 0
 			
 				// OG game
@@ -231,11 +231,20 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// then later this allocation is extended to remainder of heap,
 				// this will always be LESS than OG game allocation, so it wont
 				// impact any intended loading screens
-				int backup = sdata->mempack[0].firstFreeByte;
-				sdata->mempack[0].firstFreeByte = (int)sdata->mempack[0].lastFreeByte - 0xA000;
-				DECOMP_MainInit_PrimMem(gGT, 0xA000);
-				sdata->mempack[0].firstFreeByte = backup;
-			
+				#ifndef REBUILD_PC
+					
+					int backup = sdata->mempack[0].firstFreeByte;
+					sdata->mempack[0].firstFreeByte = (int)sdata->mempack[0].lastFreeByte - 0xA000;
+					DECOMP_MainInit_PrimMem(gGT, 0xA000);
+					sdata->mempack[0].firstFreeByte = backup;
+				
+				// use low-end addressing for PC port
+				#else
+					
+					DECOMP_MainInit_PrimMem(gGT, 0xA000);
+				
+				#endif
+				
 			#endif
 
 			// RAM Optimization, NEVER do this here
