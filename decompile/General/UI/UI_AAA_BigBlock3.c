@@ -9,6 +9,12 @@
 #include "UI_INSTANCE_BirthWithThread.c"
 #include "UI_INSTANCE_InitAll.c"
 #include "UI_Map_DrawMap.c"
+#include "UI_Map_GetIconPos.c"
+#include "UI_Map_DrawAdvPlayer.c"
+#include "UI_Map_DrawRawIcon.c"
+#include "UI_Map_DrawDrivers.c"
+#include "UI_Map_DrawGhosts.c"
+#include "UI_Map_DrawTracking.c"
 
 #include "../AltMods/Mods6.c"
 

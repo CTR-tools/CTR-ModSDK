@@ -6,6 +6,7 @@ void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
 void howl_VolumeGet();
+void UI_WeaponBG_AnimateShine();
 void StateZero(); // MainMain.c
 
 void Mods1_EndOfFile();
@@ -53,7 +54,7 @@ void ModsMain()
 		(int)LOAD_AppendQueue - (int)Mods5_EndOfFile,
 		
 		// UI defrag Block3
-		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile,
+		(int)UI_WeaponBG_AnimateShine - (int)Mods6_EndOfFile,
 		
 		// VehPtr defrag Block1
 		(int)VehPickState_NewState - (int)Mods7_EndOfFile,

@@ -1,5 +1,5 @@
-// 509+43+33+27+38+14+18+35+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 863 rewritten so far
-// 509 for every 'common' and ','
+// 504+43+33+27+38+14+18+35+19+12+6+1+14+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 863 rewritten so far
+// 504 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -12,7 +12,7 @@
 // 12 for MAIN block
 // +6 for ElimBG
 // +1 for UI Block #2
-// +8 for UI Block #3
+// +14 for UI Block #3
 // +9 for GAMEPAD Block #1
 // +1 for DebugFont
 // +1 for DropRain
@@ -641,18 +641,14 @@ common, exe, Timer_Destroy, 0x0, General/Timer/Timer_Destroy.c
 // UI
 common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
 
-// everything between UI_SaveLapTime and UI_Map_GetIconPos
+// everything between UI_SaveLapTime and UI_Map_DrawTracking
 common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock3.c
 
-common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
-common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
-common, exe, UI_Map_DrawRawIcon, 0x0, General/UI/UI_Map_DrawRawIcon.c
-common, exe, UI_Map_DrawDrivers, 0x0, General/UI/UI_Map_DrawDrivers.c
-common, exe, UI_Map_DrawGhosts, 0x0, General/UI/UI_Map_DrawGhosts.c
-common, exe, UI_Map_DrawTracking, 0x0, General/UI/UI_Map_DrawTracking.c
 //UI_WeaponBG_AnimateShine
 common, exe, UI_WeaponBG_DrawShine, 0x0, General/UI/UI_WeaponBG_DrawShine.c
 //UI_TrackerBG
+
+// cant defrag these until UI_CupStandings_InputAndDraw is done
 common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
 common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
 common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
@@ -666,6 +662,8 @@ common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_AAA_BigBlock2.c
 
 // squish 20 functions
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_AAA_BigBlock1.c
+
+// UI_VsQuip (5x functions here)
 
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
