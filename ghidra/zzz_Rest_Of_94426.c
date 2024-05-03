@@ -4264,8 +4264,11 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
               iVar12 = 0xffc;
             }
             puVar13 = (uint *)(DAT_1f800034 + iVar12);
-            uVar10 = 0x30125400;
+            
+			// RNG seed
+			uVar10 = 0x30125400;
             uVar17 = 0x493583fe;
+			
             while( true ) {
               uVar2 = DAT_1f800048;
               uVar4 = uVar17 >> 8;
@@ -4336,8 +4339,10 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 			// next prim
             puVar3 = puVar3 + 3;
 			
+			// RNG seed
             uVar10 = 0x30125400;
             uVar17 = 0x493583fe;
+			
             while( true ) {
               uVar2 = DAT_1f80004c;
               uVar4 = uVar17 >> 8;
@@ -4570,7 +4575,8 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
       uVar5 = gte_stSXY2();
 
       if (
-			((-1 < iVar19 << 0xd) && (uVar15 = uVar5 - 0xd90200 | uVar5, (int)uVar15 < 0)) &&
+			((-1 < iVar19 << 0xd) && 
+			(uVar15 = uVar5 - 0xd90200 | uVar5, (int)uVar15 < 0)) &&
 			(-1 < (int)(~uVar15 << 0x10))
 		 )
 	  {
@@ -5803,8 +5809,11 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
   puVar12 = (uint *)(uVar11 + param_3[0xb] * 4);
   *(uint *)(iVar4 + 0x30) = param_3[8] | 0x52000000;
   *(uint *)(iVar4 + 0x34) = uVar6;
+  
+  // RNG seed
   uVar6 = 0x30125400;
   uVar11 = 0x493583fe;
+  
   do {
     uVar8 = uVar11 >> 8;
     uVar11 = uVar6 >> 8 | uVar11 << 0x18;
