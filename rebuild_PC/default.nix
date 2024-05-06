@@ -49,14 +49,15 @@ stdenv.mkDerivation (finalAttrs: {
   cmakeFlags =
     lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
     ++ lib.optionals (!withMods) [
-      "-DCTR_16BY9=OFF"
       "-DCTR_60FPS=OFF"
+      "-DCTR_16BY9=OFF"
       "-DCTR_NEW2P=OFF"
       "-DCTR_OXIDE=OFF"
       "-DCTR_PENTA=OFF"
-      "-DCTR_NEWCUPS=OFF"
       "-DCTR_HARDER=OFF"
+      "-DCTR_NEWCUPS=OFF"
       "-DCTR_BOOSTBAR=OFF"
+      "-DCTR_RAMEX=OFF"
     ] ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ]
     ++ lib.optionals vendoredDeps [ "-DCMAKE_SKIP_BUILD_RPATH=TRUE" ];
 
