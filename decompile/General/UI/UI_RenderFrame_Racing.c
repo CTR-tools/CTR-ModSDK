@@ -777,7 +777,11 @@ void DECOMP_UI_RenderFrame_Racing()
 			if (sdata->TurboDisplayPos_Only1P != 0)
 			{
 				// Interpolate the turbo counter slide in from the right
-				DECOMP_UI_Lerp2D_Linear(&turboCount_Pos[0], 0x2c8, 0x20, 500, 0x20, sdata->TurboDisplayPos_Only1P, 10);
+				DECOMP_UI_Lerp2D_Linear(
+					&turboCount_Pos[0], 
+					0x2c8, 0x20, 
+					500, 0x20, 
+					sdata->TurboDisplayPos_Only1P, 10);
 
 				// The actual counter number will continue to
 				// increase past 1000, but the on-screen text

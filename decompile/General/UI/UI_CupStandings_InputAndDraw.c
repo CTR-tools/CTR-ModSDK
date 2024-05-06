@@ -276,7 +276,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
       }
 
       // Interpolate fly-in variables over 0x14 frames
-      UI_Lerp2D_Linear(
+      DECOMP_UI_Lerp2D_Linear(
 		&local_58[0], 
 		iVar10, uVar9, 
 		iVar15, uVar9, 
@@ -308,7 +308,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
       }
 
       // Draw character icon
-      UI_DrawDriverIcon(
+      DECOMP_UI_DrawDriverIcon(
         gGT->ptrIcons[
           data.MetaDataCharacters[
 			data.characterIDs[
@@ -357,19 +357,32 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
   // If this is the first screen of cup standings,
   // where you see just amount of points added
-  if ((sdata->menuReadyToPass & 4) == 0) {
+  if ((sdata->menuReadyToPass & 4) == 0) 
+  {
     // fly-in interpolation
-    UI_Lerp2D_Linear(&local_58[0], -10, (int) local_38, -10, 9, sdata->framesSinceRaceEnded, 0x14);
+    DECOMP_UI_Lerp2D_Linear(
+		&local_58[0], 
+		-10, (int)local_38, 
+		-10, 9, 
+		sdata->framesSinceRaceEnded, 0x14);
   }
 
   // if it's not...
   else {
-    if (sdata->framesSinceRaceEnded <= 0xf0) {
+    if (sdata->framesSinceRaceEnded <= 0xf0) 
+	{
       local_58[0] = -10;
       local_58[1] = 9;
-    } else {
+    } 
+	
+	else 
+	{
       // fly-in interpolation
-      UI_Lerp2D_Linear(&local_58[0], -10, 9, -10, (int) local_30, sdata->framesSinceRaceEnded + -0xf0, 0x14);
+      DECOMP_UI_Lerp2D_Linear(
+		&local_58[0], 
+		-10, 9, 
+		-10, (int)local_30, 
+		sdata->framesSinceRaceEnded + -0xf0, 0x14);
     }
   }
   
@@ -458,7 +471,9 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
       sdata->menuReadyToPass = sdata->menuReadyToPass & 0xfffffffb;
 
       // Increment Track Number by 1 (0-3 in the cup)
-      int cupTrack = gGT->cup.trackIndex + 1;
+	  gGT->cup.trackIndex++;
+	  
+      int cupTrack = gGT->cup.trackIndex;
 
       // If this is not the last race in the cup
       if (cupTrack < 4) 

@@ -538,7 +538,11 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		DECOMP_UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, FPS_DOUBLE(10));
+		DECOMP_UI_Lerp2D_Linear(
+			&resultPos, 
+			startX, posY, 
+			endX, posY, 
+			textTimer, FPS_DOUBLE(10));
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead

@@ -124,7 +124,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
   RaceFlag_SetFullyOnScreen();
 
-  if (sdata->framesSinceRaceEnded < FPS_DOUBLE(26))
+  if (sdata->framesSinceRaceEnded <= FPS_DOUBLE(25))
   {
     uVar7 = 0x296;
     iVar11 = sdata->framesSinceRaceEnded;
@@ -137,15 +137,25 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   }
 
   // fly-in interpolation
-  UI_Lerp2D_Linear(&pos[0], 0x296, uVar13, uVar7, uVar13, iVar11, FPS_DOUBLE(5));
+  DECOMP_UI_Lerp2D_Linear(
+	&pos[0], 
+	0x296, uVar13, 
+	uVar7, uVar13, 
+	iVar11, FPS_DOUBLE(5));
 
   iVar14 = uVar13 + 0x28;
 
   // "Versus" or "Battle"
-  DecalFont_DrawLine(sdata->lngStrings[iVar10], pos[0], pos[1], 1, 0xffff8000);
+  DecalFont_DrawLine(
+	sdata->lngStrings[iVar10], 
+	pos[0], pos[1], 
+	1, 0xffff8000);
 
   // STANDINGS
-  DecalFont_DrawLine(sdata->lngStrings[0xCA], pos[0], (pos[1] + 0x11), 1, 0xffff8000);
+  DecalFont_DrawLine(
+	sdata->lngStrings[0xCA], 
+	pos[0], (pos[1] + 0x11), 
+	1, 0xffff8000);
 
   iVar10 = uStack96;
   iVar11 = 0;
@@ -172,7 +182,11 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       }
 
       // fly-in interpolation
-      UI_Lerp2D_Linear(&pos[0], 0x296, sVar5, uVar7, sVar5, iVar10, FPS_DOUBLE(5));
+      DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		0x296, sVar5, 
+		uVar7, sVar5, 
+		iVar10, FPS_DOUBLE(5));
 
       sVar9 = 0;
 
@@ -354,7 +368,11 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 	  #endif
 	  
       // fly-in interpolation
-      UI_Lerp2D_Linear(&pos[0], view->rect.x, view->rect.y, 0x14, 0xc, sdata->framesSinceRaceEnded, FPS_DOUBLE(25));
+      DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		view->rect.x, view->rect.y, 
+		0x14, 0xc, 
+		sdata->framesSinceRaceEnded, FPS_DOUBLE(25));
 
       box.x = pos[0] - 3;
       box.y = pos[1] - 2;

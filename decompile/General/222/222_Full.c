@@ -171,12 +171,26 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					// lerp on-screen: CTR TOKEN AWARDED
 					txtStartX = 0x264;
 					txtEndX = 0x100;
-					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, FPS_DOUBLE(8));
+					
+					DECOMP_UI_Lerp2D_Linear(
+						&txtPos[0], 
+						txtStartX, 0xA6, 
+						txtEndX, 0xA6, 
+						currFrame, FPS_DOUBLE(8));
+					
 					txtColor = (gGT->timer & FPS_DOUBLE(1)) ? 0xFFFF8003 : 0xFFFF8004;
-					DecalFont_DrawLine(sdata->lngStrings[0x16F], txtPos[0], txtPos[1], 1, txtColor);
+					
+					DecalFont_DrawLine(
+						sdata->lngStrings[0x16F], 
+						txtPos[0], txtPos[1], 
+						1, txtColor);
 				}
 
-				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, FPS_DOUBLE(8));
+				DECOMP_UI_Lerp2D_Linear(
+					&letterPos[0], 
+					lerpStartX, lerpStartY, 
+					lerpEndX, lerpEndY, 
+					currFrame, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
@@ -201,7 +215,12 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					lerpEndY = lerpStartY;
 					lerpFrames = FPS_DOUBLE(10);
 				}
-				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
+				
+				DECOMP_UI_Lerp2D_Linear(
+					&letterPos[0], 
+					lerpStartX, lerpStartY, 
+					lerpEndX, lerpEndY, 
+					currFrame, lerpFrames);
 				
 				// variable reuse, frame timers
 				lerpStartY = 0;
@@ -305,15 +324,20 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			t -= FPS_DOUBLE(10);
 
 			// interpolate fly-in
-			UI_Lerp2D_Linear(&letterPos[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, FPS_DOUBLE(10));
+			DECOMP_UI_Lerp2D_Linear(
+				&letterPos[0], 
+				lerpStartX, 0x60, 
+				lerpEndX, 0x60, 
+				currFrame, FPS_DOUBLE(10));
 
 			str_number = (char)i + '1';
 
 			// print a single character, a number 1-8,
-			DecalFont_DrawLine(&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
+			DecalFont_DrawLine(
+				&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
 
 			// Draw the driver's character icon
-			UI_DrawDriverIcon(
+			DECOMP_UI_DrawDriverIcon(
 			
 				gGT->ptrIcons[
 					data.MetaDataCharacters[
@@ -633,12 +657,22 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 
 	// interpolate fly-in positionXY
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
+	DECOMP_UI_Lerp2D_Linear(
+		&posXY[0], 
+		lerpStartX, lerpStartY, 
+		lerpEndX, lerpEndY, 
+		currFrame, endFrame);
+	
 	bigNum->matrix.t[0] = posXY[0];
 	bigNum->matrix.t[1] = posXY[1];
 
 	// interpolate scale to 0x1e00
-	UI_Lerp2D_Linear(&posXY[0], hud[2].scale, 0, 0x1e00, 0, framesElapsed, FPS_DOUBLE(30));
+	DECOMP_UI_Lerp2D_Linear(
+		&posXY[0], 
+		hud[2].scale, 0, 
+		0x1e00, 0, 
+		framesElapsed, FPS_DOUBLE(30));
+	
 	bigNum->scale[0] = posXY[0];
 	bigNum->scale[1] = posXY[0];
 	bigNum->scale[2] = posXY[0];
@@ -681,7 +715,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		#endif
 	}
 
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
+	DECOMP_UI_Lerp2D_Linear(
+		&posXY[0], 
+		lerpStartX, lerpStartY, 
+		lerpEndX, lerpEndY, 
+		currFrame, endFrame);
 	
 	DECOMP_UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
 
@@ -743,7 +781,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 	#endif
 	
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpEndY, lerpEndX, lerpEndY, currFrame, endFrame);
+	DECOMP_UI_Lerp2D_Linear(
+		&posXY[0], 
+		lerpStartX, lerpEndY, 
+		lerpEndX, lerpEndY, 
+		currFrame, endFrame);
 	
 	DECOMP_UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 

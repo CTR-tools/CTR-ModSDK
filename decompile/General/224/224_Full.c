@@ -71,22 +71,33 @@ AddStuff:
         }
 		
 		// draw race clock in top-left corner
-        UI_Lerp2D_Linear(&pos[0], 0x14, 8, startX_also_strFlags, 8, framesSinceRaceEnded, FPS_DOUBLE(0x14));
+        DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			0x14, 8, 
+			startX_also_strFlags, 8, 
+			framesSinceRaceEnded, FPS_DOUBLE(0x14));
         
-		DECOMP_UI_DrawRaceClock((int)pos[0], (int)pos[1], 0, gGT->drivers[0]);
+		DECOMP_UI_DrawRaceClock(
+			(int)pos[0], (int)pos[1], 0, gGT->drivers[0]);
 		
 		return;
     }
 
 	// between 91 and 900 frames (3-30)
-	if (framesSinceRaceEnded < FPS_DOUBLE(901))
+	if (framesSinceRaceEnded <= FPS_DOUBLE(900))
 	{
 		// first transition is race clock
 		framesSinceRaceEnded -= FPS_DOUBLE(90);
 		
 		// race time
-		UI_Lerp2D_Linear(&pos[0], -0x64, 90, 0x100, 90, framesSinceRaceEnded, FPS_DOUBLE(0x14));
-		DECOMP_TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			-0x64, 90, 
+			0x100, 90, 
+			framesSinceRaceEnded, FPS_DOUBLE(0x14));
+		
+		DECOMP_TT_EndEvent_DisplayTime(
+			(int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
 		
 		// Blink Orange/White
 		startX_also_strFlags = (gGT->timer & FPS_DOUBLE(1)) ? 0xffff8000 : 0xffff8004;
@@ -101,10 +112,17 @@ AddStuff:
 			// if there is a new high score
 			gGT->newHighScoreIndex > -1)
 		{
-			UI_Lerp2D_Linear(&pos[0], 0x264, 122, 0x100, 122, framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				0x264, 122, 
+				0x100, 122, 
+				framesSinceRaceEnded, FPS_DOUBLE(0x14));
 			
 			// "NEW HIGH SCORE!"
-			DecalFont_DrawLine(lngStrings[353], (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
+			DecalFont_DrawLine(
+				lngStrings[353], 
+				(int)pos[0], (int)pos[1], 
+				1, startX_also_strFlags);
 	
 			// Total time should flash
 			sdata->flags_timeTrialEndOfRace |= (1<<2);
@@ -120,10 +138,17 @@ AddStuff:
 			// if got new best lap
 			((unknownFlags_1d44 & 0x4000000) != 0))
 		{
-			UI_Lerp2D_Linear(&pos[0], -0x64, 142, 0x100, 142, framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				-0x64, 142, 
+				0x100, 142, 
+				framesSinceRaceEnded, FPS_DOUBLE(0x14));
 			
 			// NEW BEST LAP!
-			DecalFont_DrawLine(lngStrings[370], (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
+			DecalFont_DrawLine(
+				lngStrings[370], 
+				(int)pos[0], (int)pos[1], 
+				1, startX_also_strFlags);
 			
 			// make the best row start flashing
 			sdata->flags_timeTrialEndOfRace |= 1 << (3 + gGT->lapIndexNewBest);
@@ -139,7 +164,11 @@ AddStuff:
 			// if just open, or beat, n tropy
 			((unknownFlags_1d44 & 0x10008000) != 0))
 		{
-			UI_Lerp2D_Linear(&pos[0], 0x264, 162, 0x100, 162, framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				0x264, 162, 
+				0x100, 162, 
+				framesSinceRaceEnded, FPS_DOUBLE(0x14));
 		
 			char *nTropyString;
 		
@@ -152,7 +181,10 @@ AddStuff:
 				nTropyString = lngStrings[372];
 			
 			// Draw the "N Tropy" related string
-			DecalFont_DrawLine(nTropyString, (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
+			DecalFont_DrawLine(
+				nTropyString, 
+				(int)pos[0], (int)pos[1], 
+				1, startX_also_strFlags);
 		}
 	
 		// PRESS * TO CONTINUE
@@ -197,7 +229,12 @@ AddStuff:
 				endX = -0x96;
 			}
 	
-			UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 10, endX, 10, framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				startX_also_strFlags, 10, 
+				endX, 10, 
+				framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			
 			DECOMP_TT_EndEvent_DrawHighScore(pos[0], (int)pos[1]);
 	
 	
@@ -219,11 +256,21 @@ AddStuff:
 				endX = 0x296;
 			}
 	
-			UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 0x82, endX, 0x82, framesSinceRaceEnded, FPS_DOUBLE(0x14));
-			DECOMP_TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				startX_also_strFlags, 0x82, 
+				endX, 0x82, 
+				framesSinceRaceEnded, FPS_DOUBLE(0x14));
+			
+			DECOMP_TT_EndEvent_DisplayTime(
+				(int)pos[0], pos[1], 
+				sdata->flags_timeTrialEndOfRace);
 	
 			// PRESS * TO CONTINUE
-			DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
+			DecalFont_DrawLine(
+				lngStrings[201], 
+				0x100, 0xbe, 
+				1, 0xffff8000);
 
 			// ==== Pause Timer until Press X =======
 			// Cross or Circle, or if timer drags on too long
@@ -271,8 +318,15 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	// "TOTAL"
 	textWidth = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
 
+	// === Naughty Dog Bug ===
+	// Start and End is the same
+
 	// Fly-in Interpolation
-	UI_Lerp2D_Linear(&pos[0], (paramX - (0x88 - textWidth) / 2), paramY, (paramX - (0x88 - textWidth) / 2), paramY, sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		(paramX - (0x88 - textWidth) / 2), paramY, 
+		(paramX - (0x88 - textWidth) / 2), paramY, 
+		sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
 
 	// "YOUR TIME"
 	DecalFont_DrawLine(sdata->lngStrings[197], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
@@ -316,11 +370,21 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 	// 12 entries per track, 6 for Time Trial and 6 for Relic Race
 	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[0];
 
+	// === Naughty Dog Bug ===
+	// Start and End is the same
+	
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		startX, startY, 
+		startX, startY, 
+		sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
 
 	// "BEST TIMES"
-	DecalFont_DrawLine(sdata->lngStrings[0x171], pos[0], pos[1], 1, 0xffff8000);
+	DecalFont_DrawLine(
+		sdata->lngStrings[0x171], 
+		pos[0], pos[1], 
+		1, 0xffff8000);
 
 	// Draw icon, name, and time of the
 	// 5 best times in Time Trial

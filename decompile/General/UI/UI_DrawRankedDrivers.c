@@ -193,14 +193,12 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		  // === Icon Transitioning ===
 		  if(posXY[0] == -100)
 		  {
-			#ifndef REBUILD_PS1
-			UI_Lerp2D_Angular(
+			DECOMP_UI_Lerp2D_Angular(
 				&posXY[0],
 				*curr,
 				*des,
 				*psVar13
 			);
-			#endif
 			
             psVar13[0]++;
             

@@ -67,7 +67,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// YouWin/TryAgain, and Crystal Count
 	{
 		// fly in from right
-		UI_Lerp2D_Linear(
+		DECOMP_UI_Lerp2D_Linear(
 			&posXY[0],
 			0x264, 0x56, // startX, startY,
 			0xcd, 0x56, // endX, endY
@@ -95,7 +95,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// this must happen after "Fly from Right" for variable re-use
 	{
 		// fly in from left
-		UI_Lerp2D_Linear(
+		DECOMP_UI_Lerp2D_Linear(
 			&posXY[0],
 			-0x63, 0x18, // startX, startY,
 			0x100, 0x18, // endX, endY

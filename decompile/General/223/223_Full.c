@@ -204,7 +204,11 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&pos[0], startX, 0x32, 0x100, endY, startFrame, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		startX, 0x32, 
+		0x100, endY, 
+		startFrame, FPS_DOUBLE(0x14));
 
 	DECOMP_UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
 	
@@ -244,7 +248,11 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		}
 		startY = DECOMP_UI_ConvertY_2(0xa2, 0x100);
 
-		UI_Lerp2D_Linear(&pos[0], startX, startY, endX, startY, startFrame, FPS_DOUBLE(0x14));
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			startX, startY, 
+			endX, startY, 
+			startFrame, FPS_DOUBLE(0x14));
 	}
 
 LAB_800a0594:
@@ -266,7 +274,11 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&pos[0], startX, 0x20, 0x100, endY, startFrame, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		startX, 0x20, 
+		0x100, endY, 
+		startFrame, FPS_DOUBLE(0x14));
 
 	// if race ended less than 16.333 seconds ago
 	if (boolEarly)
@@ -284,7 +296,11 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&pos[0], 200, 0x79, endX, 0x79, startFrame, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		200, 0x79, 
+		endX, 0x79, 
+		startFrame, FPS_DOUBLE(0x14));
 
 	sdata->ptrTimebox1->matrix.t[0] = DECOMP_UI_ConvertX_2(pos[0], 0x100);
 	sdata->ptrTimebox1->matrix.t[1] = DECOMP_UI_ConvertY_2(pos[1], 0x100);
@@ -309,7 +325,11 @@ LAB_800a0594:
 			if (framesElapsed > FPS_DOUBLE(79))
 			{
 				// interpolate fly-in
-				UI_Lerp2D_Linear(&pos[0], -0x96, 0x8a, 0x100, 0x8a, framesElapsed - FPS_DOUBLE(80), FPS_DOUBLE(0x14));
+				DECOMP_UI_Lerp2D_Linear(
+					&pos[0], 
+					-0x96, 0x8a, 
+					0x100, 0x8a, 
+					framesElapsed - FPS_DOUBLE(80), FPS_DOUBLE(0x14));
 
 				if (framesElapsed == FPS_DOUBLE(0x50))
 				{
@@ -324,11 +344,16 @@ LAB_800a0594:
 		else
 		{
 			// interpolate fly-in
-			UI_Lerp2D_Linear(&pos[0], 0x100, 0x8a, 0x296, 0x8a, framesElapsed - FPS_DOUBLE(250), FPS_DOUBLE(0x14));
+			DECOMP_UI_Lerp2D_Linear(
+				&pos[0], 
+				0x100, 0x8a, 
+				0x296, 0x8a, 
+				framesElapsed - FPS_DOUBLE(250), FPS_DOUBLE(0x14));
 
 		LAB_800a07f8:
 			// "PERFECT"
-			DecalFont_DrawLine(sdata->lngStrings[0x162], pos[0], pos[1], 1, txtColor);
+			DecalFont_DrawLine(
+				sdata->lngStrings[0x162], pos[0], pos[1], 1, txtColor);
 		}
 
 		if (framesElapsed < FPS_DOUBLE(490))
@@ -370,10 +395,15 @@ LAB_800a0594:
 		}
 
 		// interpolate fly-in
-		UI_Lerp2D_Linear(&pos[0], startX, uVar11, 0x199, endY, framesElapsed - FPS_DOUBLE(140), FPS_DOUBLE(0x14));
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			startX, uVar11, 
+			0x199, endY, 
+			framesElapsed - FPS_DOUBLE(140), FPS_DOUBLE(0x14));
 
 		// Draw String
-		DecalFont_DrawLine(auStack56, pos[0], pos[1], 1, txtColor);
+		DecalFont_DrawLine(
+			auStack56, pos[0], pos[1], 1, txtColor);
 	}
 
 LAB_800a096c:
@@ -388,10 +418,17 @@ LAB_800a096c:
 		startFrame = framesElapsed - FPS_DOUBLE(490);
 
 	LAB_800a0a64:
+	
 		// interpolate fly-in
-		UI_Lerp2D_Linear(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, FPS_DOUBLE(0x14));
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			startX, 0x50, 
+			sVar6, 0x50, 
+			startFrame, FPS_DOUBLE(0x14));
+		
 		// "RELIC AWARDED!"
-		DecalFont_DrawLine(sdata->lngStrings[0x160], pos[0], pos[1], 1, txtColor);
+		DecalFont_DrawLine(
+			sdata->lngStrings[0x160], pos[0], pos[1], 1, txtColor);
 	}
 
 	// race ended than 489 frames ago or less
@@ -442,10 +479,15 @@ LAB_800a096c:
 		}
 
 		// Interpolate fly-in
-		UI_Lerp2D_Linear(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, FPS_DOUBLE(0x14));
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			startX, 0x50, 
+			sVar6, 0x50, 
+			startFrame, FPS_DOUBLE(0x14));
 
 		// "NEW HIGH SCORE!"
-		DecalFont_DrawLine(sdata->lngStrings[0x161], pos[0], pos[1], 1, txtColor);
+		DecalFont_DrawLine(
+			sdata->lngStrings[0x161], pos[0], pos[1], 1, txtColor);
 	}
 
 LAB_800a0b58:
@@ -456,7 +498,11 @@ LAB_800a0b58:
 	if (FPS_DOUBLE(490) < framesElapsed)
 	{
 		// Interpolate, vertical fly-out??
-		UI_Lerp2D_Linear(&pos[0], -0xa, 0xc, -0xa, -0x58, framesElapsed - FPS_DOUBLE(490), FPS_DOUBLE(0x14));
+		DECOMP_UI_Lerp2D_Linear(
+			&pos[0], 
+			-0xa, 0xc, 
+			-0xa, -0x58, 
+			framesElapsed - FPS_DOUBLE(490), FPS_DOUBLE(0x14));
 	}
 
 	// This is actually a RECT on the stack
@@ -466,7 +512,8 @@ LAB_800a0b58:
 	box.h = 0x3b;
 
 	// Draw 2D Menu rectangle background
-	RECTMENU_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
+	RECTMENU_DrawInnerRect(
+		&box, 0, gGT->backBuffer->otMem.startPlusFour);
 
 	if ( // If you have not pressed X to continue
 		(((sdata->menuReadyToPass & 1) == 0) &&
@@ -520,8 +567,15 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 	// 12 entries per track, 6 for Time Trial and 6 for Relic Race
 	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[6];
 
+	// === Naughty Dog Bug ===
+	// Start and End are the same
+
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
+	DECOMP_UI_Lerp2D_Linear(
+		&pos[0], 
+		startX, startY, 
+		startX, startY, 
+		sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
 
 	// "BEST TIMES"
 	DecalFont_DrawLine(sdata->lngStrings[0x171], pos[0], pos[1], 1, 0xffff8000);
