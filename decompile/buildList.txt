@@ -1,5 +1,5 @@
-// 505+43+33+27+38+14+18+35+19+12+6+1+16+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 866 rewritten so far
-// 505 for every 'common' and ','
+// 501+43+33+27+38+14+18+35+19+12+6+5+16+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 866 rewritten so far
+// 501 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -11,7 +11,7 @@
 // 19 for the 20 UI Block #1
 // 12 for MAIN block
 // +6 for ElimBG
-// +1 for UI Block #2
+// +5 for UI Block #2
 // +16 for UI Block #3
 // +9 for GAMEPAD Block #1
 // +1 for DebugFont
@@ -647,14 +647,8 @@ common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock3.c
 // cant defrag until UI_TrackerSelf.c is rewritten
 common, exe, UI_TrackerBG, 0x0, General/UI/UI_TrackerBG.c
 
-// cant defrag these until UI_CupStandings_InputAndDraw is done
-common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
-common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
-common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
-common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
-
-// squish 2 functions
-common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_AAA_BigBlock2.c
+// squish 6 functions
+common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_AAA_BigBlock2.c
 
 // UI_BattleDrawHeadArrows
 // UI_TrackerSelf
