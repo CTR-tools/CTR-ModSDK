@@ -2201,7 +2201,7 @@ void FUN_80035e70(uint *param_1)
 	  // if drawing cup standings
       if ((bVar2 & 4) != 0)
 	  {
-		// update and draw cup standings
+		// UI_CupStandings_InputAndDraw
         FUN_800562fc();
       }
     }

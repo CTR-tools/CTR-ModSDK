@@ -921,9 +921,9 @@ void UI_VsWaitForPressX();
 //UI_RaceEnd_GetDriverClock()
 void UI_RaceStart_IntroText1P();
 //UI_RaceEnd_MenuProc()
-//CupStandings_FinalizeCupRanks()
-//CupStandings_UpdateCupRanks()
-//CupStandings_InputAndDraw()
+//UI_CupStandings_FinalizeCupRanks()
+//UI_CupStandings_UpdateCupRanks()
+//UI_CupStandings_InputAndDraw()
 
 // Vector
 

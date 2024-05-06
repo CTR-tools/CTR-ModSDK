@@ -8264,7 +8264,7 @@ void FUN_80056220(void)
   return;
 }
 
-// UI_CupStandings_UpdateAndDraw
+// UI_CupStandings_InputAndDraw
 void FUN_800562fc(void)
 {
   short sVar1;

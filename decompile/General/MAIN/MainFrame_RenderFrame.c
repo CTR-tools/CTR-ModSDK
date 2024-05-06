@@ -690,7 +690,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 			// if standings
 			if((hudFlags & 4) != 0)
 			{
-				CupStandings_InputAndDraw();
+				UI_CupStandings_InputAndDraw();
 			}
 			#endif
 		}
