@@ -1,8 +1,10 @@
 #include <common.h>
 
 #ifdef REBUILD_PC
-// with 8mb expansion, we have bonus PrimMem
-char memory[8*1024*1024];
+// 32mb RAM, so that PrimMem can fill the entirety 
+// of 24-bit address space (16mb max) and have enough
+// RAM left over for the rest of the game (16mb more)
+char memory[32*1024*1024];
 #endif
 
 void RB_EndOfFile();
@@ -28,10 +30,10 @@ void DECOMP_MEMPACK_Init(int ramSize)
 		(ptrMempack->start < 0x01000000 ? "GOOD" : "BAD"),
 		ptrMempack->start
 	);
-	memset(memory, 0, 8*1024*1024);
 	
-	ptrMempack->endOfAllocator = &memory[8*1024*1024 - 4];
-	ptrMempack->lastFreeByte = &memory[8*1024*1024 - 4];
+	memset(memory, 0, 32*1024*1024);
+	ptrMempack->endOfAllocator = &memory[32*1024*1024 - 4];
+	ptrMempack->lastFreeByte = &memory[32*1024*1024 - 4];
 
 #else
 	
