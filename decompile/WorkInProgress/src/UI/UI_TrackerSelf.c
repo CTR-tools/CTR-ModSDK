@@ -304,7 +304,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
     }
   }
 
-  UI_TrackerBG(
+  DECOMP_UI_TrackerBG(
 
     // missile lock-on icon
     (gGT->ptrIcons[0x2d]),
