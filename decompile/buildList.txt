@@ -667,6 +667,9 @@ common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_AAA_BigBlock1.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 common, exe, UI_RaceEnd_MenuProc, 0x0, General/UI/UI_RaceEnd_MenuProc.c
+// UI_CupStandings_FinalizeCupRanks
+// UI_CupStandings_UpdateRanks
+common, exe, UI_CupStandings_InputAndDraw, 0x0, General/UI/UI_CupStandings_InputAndDraw.c
 
 common, exe, VehAfterColl_GetSurface, 0x0, General/Vehicle/VehAfterColl_GetSurface.c
 common, exe, VehAfterColl_GetTerrain, 0x0, General/Vehicle/VehAfterColl_GetTerrain.c

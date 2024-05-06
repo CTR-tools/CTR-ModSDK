@@ -4976,7 +4976,14 @@ struct Data data =
 	
 	.cupPointsPerPosition =
 	{
-		9,6,3,1,0,0,0,0
+		// more optimal version than 
+		// OG game, see usage for details
+		
+		// Arcade
+		9,6,3,1,
+		
+		// VS
+		4,3,2,1
 	},
 	
 	// By default, can NOT remove rdata name_Debug,

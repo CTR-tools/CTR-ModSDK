@@ -7898,7 +7898,7 @@ void FUN_80055c90(int param_1)
 
             if (iVar4 == 1)
 			{
-			  // checkered flag, begin transition on-screen
+			  // RaceFlag_BeginTransition
               FUN_80043fb0(1);
             }
 
@@ -8327,7 +8327,7 @@ void FUN_800562fc(void)
 		)
 	)
   {
-	// checkered flag, begin transition on-screen
+	// RaceFlag_BeginTransition
     FUN_80043fb0(1);
   }
 
@@ -8343,7 +8343,7 @@ void FUN_800562fc(void)
 		(PTR_DAT_8008d2ac[0x1ca8] != '\x01')
 	  )
   {
-	// enable checkered flag
+	// RaceFlag_SetCanDraw
     FUN_80044088(1);
   }
 
