@@ -4242,8 +4242,8 @@ struct sData
 	int wumpaShineResult;
 
 	// 8008d998
-	int wumpaShineColor1[3];
-	int wumpaShineColor2[3];
+	unsigned char wumpaShineColor1[3][4];
+	unsigned char wumpaShineColor2[3][4];
 
 	// 8008d9b0
 	int relicTime_1min;

@@ -58,9 +58,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	turboCount_Pos[0] = 0;
 	turboCount_Pos[1] = 0;
 
-#ifndef REBUILD_PS1
-	UI_WeaponBG_AnimateShine();
-#endif
+	DECOMP_UI_WeaponBG_AnimateShine();
 
 	// if time on clock is zero
 	if (gGT->elapsedEventTime == 0)

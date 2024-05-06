@@ -445,8 +445,9 @@
 #include "../decompile/General/UI/UI_Map_DrawGhosts.c"
 #include "../decompile/General/UI/UI_Map_DrawTracking.c"
 
+#include "../decompile/General/UI/UI_WeaponBG_AnimateShine.c"
 #include "../decompile/General/UI/UI_WeaponBG_DrawShine.c"
-
+// TrackerBG comes next
 #include "../decompile/General/UI/UI_DrawDriverIcon.c"
 
 #include "../decompile/General/UI/UI_Lerp2D_Angular.c"

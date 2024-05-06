@@ -641,11 +641,9 @@ common, exe, Timer_Destroy, 0x0, General/Timer/Timer_Destroy.c
 // UI
 common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
 
-// everything between UI_SaveLapTime and UI_Map_DrawTracking
+// everything between UI_SaveLapTime and UI_WeaponBG_DrawShine
 common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock3.c
 
-//UI_WeaponBG_AnimateShine
-common, exe, UI_WeaponBG_DrawShine, 0x0, General/UI/UI_WeaponBG_DrawShine.c
 //UI_TrackerBG
 
 // cant defrag these until UI_CupStandings_InputAndDraw is done

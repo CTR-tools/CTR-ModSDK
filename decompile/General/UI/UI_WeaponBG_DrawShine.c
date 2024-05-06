@@ -17,11 +17,11 @@ void DECOMP_UI_WeaponBG_DrawShine(
     short sVar11;
     short sVar12;
     
-	u_int *wumpaShine = &sdata->wumpaShineColor1[0];
+	u_int *wumpaShine = &sdata->wumpaShineColor1[0][0];
 
     if (param_6 == 3)
     {
-        wumpaShine = &sdata->wumpaShineColor2[0];
+        wumpaShine = &sdata->wumpaShineColor2[0][0];
     }
 
     sVar3 = (short)(((icon->texLayout.u1 - icon->texLayout.u0) * (int)param_7) >> 0xc);

@@ -15,6 +15,8 @@
 #include "UI_Map_DrawDrivers.c"
 #include "UI_Map_DrawGhosts.c"
 #include "UI_Map_DrawTracking.c"
+#include "UI_WeaponBG_AnimateShine.c"
+#include "UI_WeaponBG_DrawShine.c"
 
 #include "../AltMods/Mods6.c"
 
