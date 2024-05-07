@@ -190,8 +190,8 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
   // If VS cup (not purple gem, or adv/arcade)
   if (numDrivers <= 4) 
   {
-  	// 4,3,2,1
-  	points = &points[4-numDrivers];
+  	// 3,2,1,0
+  	points = &points[4+(4-numDrivers)];
   }
 
     sVar18 = 0;
@@ -320,7 +320,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 		local_58[0], local_58[1],
 
         &gGT->backBuffer->primMem,
-        gGT->pushBuffer[0].ptrOT,
+        gGT->pushBuffer_UI.ptrOT,
         1, 0x1000, 0x808080);
 
       // If this is the first screen of cup standings,

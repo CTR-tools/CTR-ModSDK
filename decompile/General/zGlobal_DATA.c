@@ -4983,7 +4983,7 @@ struct Data data =
 		9,6,3,1,
 		
 		// VS
-		4,3,2,1
+		3,2,1,0
 	},
 	
 	// By default, can NOT remove rdata name_Debug,
