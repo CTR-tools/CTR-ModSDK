@@ -3,7 +3,7 @@
 void FLARE_ThTick();
 void VehPickState_NewState();
 void UI_VsQuipReadDriver();
-void UI_BattleDrawHeadArrows();
+void UI_TrackerSelf();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
 void howl_VolumeGet();
 void UI_TrackerBG();
@@ -42,7 +42,7 @@ void ModsMain()
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
 		
 		// UI defrag Block2
-		(int)UI_BattleDrawHeadArrows - (int)Mods2_EndOfFile,
+		(int)UI_TrackerSelf - (int)Mods2_EndOfFile,
 		
 		// GAMEPAD defrag Block1
 		(int)GAMEPAD_JogCon1 - (int)Mods3_EndOfFile,

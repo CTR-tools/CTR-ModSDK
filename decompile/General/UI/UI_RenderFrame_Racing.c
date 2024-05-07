@@ -627,7 +627,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			if ((gameMode1 & BATTLE_MODE) != 0)
 			{
 				// Draw arrows over the heads of other players (not AIs)
-				UI_BattleDrawHeadArrows(playerStruct);
+				DECOMP_UI_BattleDrawHeadArrows(playerStruct);
 			}
 #endif
 

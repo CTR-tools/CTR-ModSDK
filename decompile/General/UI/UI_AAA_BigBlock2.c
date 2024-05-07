@@ -6,6 +6,7 @@
 #include "UI_Lerp2D_Linear.c"
 #include "UI_DrawRaceClock.c"
 #include "UI_DrawLimitClock.c"
+#include "UI_BattleDrawHeadArrows.c"
 
 #include "../AltMods/Mods2.c"
 
