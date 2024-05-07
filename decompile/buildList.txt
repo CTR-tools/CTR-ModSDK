@@ -650,7 +650,7 @@ common, exe, UI_TrackerBG, 0x0, General/UI/UI_TrackerBG.c
 // squish 6 functions
 common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_AAA_BigBlock2.c
 
-// UI_BattleDrawHeadArrows
+common, exe, UI_BattleDrawHeadArrows, 0x0, General/UI/UI_BattleDrawHeadArrows.c
 // UI_TrackerSelf
 
 // squish 20 functions
