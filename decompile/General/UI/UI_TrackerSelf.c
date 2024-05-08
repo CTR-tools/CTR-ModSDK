@@ -139,11 +139,15 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	
 	struct TrackerWeapon* tw =
 		d->thTrackingMe->object;
-		
+	
+	#ifndef REBUILD_PS1
     missileDist = 
 		VehCalc_FastSqrt(
 			tw->distanceToTarget, 0);
-    
+    #else
+	missileDist = 0;
+	#endif
+	
 	missileDist = missileDist / 0x32;
     sVar18 = (short) missileDist;
     data.trackerDist[driverid] = sVar18;
@@ -159,9 +163,9 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	{
       if ((gGT->gameMode1 & PAUSE_ALL) == 0) 
 	  {
-        // OtherFX_Play "homing in" sound
-        OtherFX_Play(0x56, 1);
-      }
+        // "homing in" sound
+        DECOMP_OtherFX_Play(0x56, 1);
+	  }
 
       // white
       bgColor = 0xffffff;

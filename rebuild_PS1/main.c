@@ -426,37 +426,6 @@
 // UI
 #include "../decompile/General/UI/UI_SaveLapTime.c"
 
-#include "../decompile/General/UI/UI_ThTick_CountPickup.c"
-#include "../decompile/General/UI/UI_ThTick_Reward.c"
-#include "../decompile/General/UI/UI_ThTick_CtrLetters.c"
-#include "../decompile/General/UI/UI_ThTick_big1.c"
-
-#include "../decompile/General/UI/UI_ConvertX_2.c"
-#include "../decompile/General/UI/UI_ConvertY_2.c"
-
-#include "../decompile/General/UI/UI_INSTANCE_BirthWithThread.c"
-#include "../decompile/General/UI/UI_INSTANCE_InitAll.c"
-
-#include "../decompile/General/UI/UI_Map_DrawMap.c"
-#include "../decompile/General/UI/UI_Map_GetIconPos.c"
-#include "../decompile/General/UI/UI_Map_DrawAdvPlayer.c"
-#include "../decompile/General/UI/UI_Map_DrawRawIcon.c"
-#include "../decompile/General/UI/UI_Map_DrawDrivers.c"
-#include "../decompile/General/UI/UI_Map_DrawGhosts.c"
-#include "../decompile/General/UI/UI_Map_DrawTracking.c"
-
-#include "../decompile/General/UI/UI_WeaponBG_AnimateShine.c"
-#include "../decompile/General/UI/UI_WeaponBG_DrawShine.c"
-// TrackerBG comes next
-#include "../decompile/General/UI/UI_DrawDriverIcon.c"
-
-#include "../decompile/General/UI/UI_Lerp2D_Angular.c"
-#include "../decompile/General/UI/UI_Lerp2D_HUD.c"
-#include "../decompile/General/UI/UI_Lerp2D_Linear.c"
-
-#include "../decompile/General/UI/UI_DrawRaceClock.c"
-#include "../decompile/General/UI/UI_DrawLimitClock.c"
-
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
 #include "../decompile/General/Vehicle/VehBirth_TeleportSelf.c"
