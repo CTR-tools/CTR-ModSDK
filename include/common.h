@@ -3,20 +3,20 @@
 
 // toggle these in decompile
 
-#define USE_60FPS		// 60 frames per second
-#define USE_16BY9		// Widescreen
-#define USE_NEW2P		// Requires 16BY9: Side-By-Side 2P
-#define USE_OXIDE		// Unlock Oxide
-#define USE_PENTA		// Penta Max Stats
-#define USE_HARDER	// Difficulty Selector (Arcade)
-#define USE_NEWCUPS	// Cup Randomizer
-#define USE_BOOSTBAR	// Super's reserve bar
+//#define USE_60FPS		// 60 frames per second
+//#define USE_16BY9		// Widescreen
+//#define USE_NEW2P		// Requires 16BY9: Side-By-Side 2P
+//#define USE_OXIDE		// Unlock Oxide
+//#define USE_PENTA		// Penta Max Stats
+//#define USE_HARDER	// Difficulty Selector (Arcade)
+//#define USE_NEWCUPS	// Cup Randomizer
+//#define USE_BOOSTBAR	// Super's reserve bar
 
-#define USE_RAMEX		// 8mb RAM expansion
-#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
-#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
+//#define USE_RAMEX		// 8mb RAM expansion
+//#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
+//#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
-#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
+//#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
 
 //#define USE_VR		// Virtual Reality
