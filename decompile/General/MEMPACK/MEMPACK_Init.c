@@ -44,9 +44,6 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// RB_EndOfFile		800ba548	30 sectors (original game, deprecated by decomp)
 	// (defragged 231)	800b8c78	28 sectors
 	// CS_EndOfFile		800b97fc	28 sectors (original game, current largest size)
-
-	// Use current largest
-	// RB_NewEndFile, not RB_EndOfFile
 	
 	u_int Aligned231 = 28*0x800;
 	//u_int Size231 = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
