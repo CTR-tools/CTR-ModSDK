@@ -1,5 +1,5 @@
-// 498+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 868 rewritten so far
-// 498 for every 'common' and ','
+// 499+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 869 rewritten so far
+// 499 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -631,6 +631,9 @@ common, exe, RECTMENU_BoolHidden, 0x0, General/RECTMENU/RECTMENU_BoolHidden.c
 common, exe, SubmitName_RestoreName, 0x0, General/SubmitName/SubmitName_RestoreName.c
 common, exe, SubmitName_DrawMenu, 0x0, General/SubmitName/SubmitName_DrawMenu.c
 common, exe, SubmitName_MenuProc, 0x0, General/SubmitName/SubmitName_MenuProc.c
+
+// TakeCupProgress
+common, exe, TakeCupProgress_Activate, 0x0, General/TakeCupProgress/TakeCupProgress_Activate.c
 
 // Timer
 common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c

@@ -637,3 +637,10 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
     }
   }
 }
+
+#include "../AltMods/Mods8.c"
+
+void Mods8_EndOfFile()
+{
+	// leave empty
+}

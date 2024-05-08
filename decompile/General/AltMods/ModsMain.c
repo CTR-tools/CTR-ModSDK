@@ -3,10 +3,9 @@
 void FLARE_ThTick();
 void VehPickState_NewState();
 void UI_VsQuipReadDriver();
-void UI_TrackerSelf();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
 void howl_VolumeGet();
-void UI_TrackerBG();
+void Vector_SpecLightSpin2D();
 void StateZero(); // MainMain.c
 
 void Mods1_EndOfFile();
@@ -36,7 +35,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
-	int modSizes[7] =
+	int modSizes[8] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -58,9 +57,12 @@ void ModsMain()
 		
 		// RenderFrame defrag
 		(int)MainFreeze_ConfigDrawNPC105 - (int)Mods7_EndOfFile,
+		
+		// CupStandings defrag
+		(int)Vector_SpecLightSpin2D - (int)Mods8_EndOfFile,
 	};
 	
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}
