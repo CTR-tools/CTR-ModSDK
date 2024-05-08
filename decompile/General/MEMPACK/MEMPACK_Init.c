@@ -53,12 +53,11 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	//u_int Aligned231 = ((Size231 + 0x7ff) & ~(0x7ff));
 	//printf("\nMEMPACK_Init: %d sectors in 231\n\n", Aligned231/0x800);
 	
-	// Original game allocated 0x800 to stack, now just do 0x500,
-	// bios-dependent, sometimes stack goes to 0x300-0x480 bytes of usage,
-	// needs more testing before we can wipe bios $sp and go 0x500->0x400
+	// Original game allocated 0x800 to stack,
+	// but now Stack is relocated to kernel memory
 	ptrMempack->start = (u_int)OVR_Region3 + Aligned231;
-	ptrMempack->endOfAllocator = (void *)(ramSize + 0x80000000 - 0x500);
-	ptrMempack->lastFreeByte = (void *)(ramSize + 0x80000000 - 0x500);
+	ptrMempack->endOfAllocator = (void *)(ramSize + 0x80000000);
+	ptrMempack->lastFreeByte = (void *)(ramSize + 0x80000000);
 #endif
 
 	ptrMempack->numBookmarks = 0;

@@ -48,27 +48,23 @@ void start()
 	// initialize $gp
 	sdata = &sdata_static;
 	
-#ifdef USE_RAMEX
 	void startSP();
 	startSP();
-#endif
 		
 	u_int DECOMP_main();
 	DECOMP_main();
 }
 
-#ifdef USE_RAMEX
 void startSP()
 {
 	// initialize $sp
 	//register int sp asm("sp");
-	//sp = 0x807ffffc;
+	//sp = 0x8000fff0;
 	
 	// I can't believe this compiler wont
 	// just listen to me and set the register
 	asm(
 		".set noreorder\n"
-		"lui $29, 0x807F\n"
-		"ori $29, $29, 0xFFFc");
+		"lui $29, 0x8000\n"
+		"ori $29, $29, 0xFFF0");
 }
-#endif

@@ -56,8 +56,18 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
     }
   }
 
+
   // add a bookmark
   DECOMP_MEMPACK_PushState();
+
+
+// original ps1 with fragmented memory
+#ifndef REBUILD_PS1
+  // saves 0x1B00 bytes
+  void RelocMemory_DefragUI_Mods1();
+  int backup = sdata->mempack[0].firstFreeByte;
+  sdata->mempack[0].firstFreeByte = (int)RelocMemory_DefragUI_Mods1;
+#endif
 
   // normally maxed at 96
   int numThread = uVar9 * 3 >> 7;
@@ -66,26 +76,15 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   DECOMP_JitPool_Init(
 	&gGT->JitPools.thread, numThread, 
 	sizeof(struct Thread), /*"ThreadPool"*/0);
-  
-  // normally maxed at 128
-  int numInstance = uVar9 >> 5;
-  
-  // InstancePool
-  DECOMP_JitPool_Init(
-	&gGT->JitPools.instance, numInstance,
-	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), 
-	/*"InstancePool"*/0);
 
-  // normally maxed at 100
-  int numSmall = uVar7 * 0x19 >> 10;
 
-  // SmallStackPool
-  // OG game was 0x40+8,
-  // changed now to 0x38+8 (UI_Element3d)
-  DECOMP_JitPool_Init(
-	&gGT->JitPools.smallStack, numSmall,
-	0x38 + sizeof(void*)*2, /*"SmallStackPool"*/0);
-  
+// 8000F000 - 8000F820 to MediumStackPool
+// 8000F820 - 8000FFF0 to $sp stack memory
+#ifdef REBULID_PS1
+  sdata->mempack[0].firstFreeByte = 0x8000F000;
+#endif
+
+	
   // normally maxed at 32
   int numMedium = uVar7 >> 7;
   if(numMedium > 20) numMedium = 20;
@@ -97,16 +96,50 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	&gGT->JitPools.mediumStack, numMedium,
 	0x60 + sizeof(void*)*2, /*"MediumStackPool"*/0);
 
+// original ps1 with fragmented memory
+#ifndef REBUILD_PS1
+  sdata->mempack[0].firstFreeByte = backup;
+#endif
+
+
+
+  // normally maxed at 128
+  int numInstance = uVar9 >> 5;
+  
+  // InstancePool
+  DECOMP_JitPool_Init(
+	&gGT->JitPools.instance, numInstance,
+	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), 
+	/*"InstancePool"*/0);
+
+
+
+  // normally maxed at 100
+  int numSmall = uVar7 * 0x19 >> 10;
+
+  // SmallStackPool
+  // OG game was 0x40+8,
+  // changed now to 0x38+8 (UI_Element3d)
+  DECOMP_JitPool_Init(
+	&gGT->JitPools.smallStack, numSmall,
+	0x38 + sizeof(void*)*2, /*"SmallStackPool"*/0);
+
+
+
   int numDriver = uVar7 >> 9;
   if ((gameMode & MAIN_MENU) != 0) numDriver = 4;
   if (gGT->numPlyrCurrGame == 2) numDriver = 6;
   if (gGT->numPlyrCurrGame > 2) numDriver = 4;
   if ((gameMode & TIME_TRIAL) != 0) numDriver = 3;
 
+
+
   // OG game used 0x670 for driver, should be 0x640,
   // maybe intended to mix RainPool into Driver struct?
   DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x640,	/*"LargeStackPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	0x28,	/*"RainPool"*/0);
+
+
   
   // Must be 64 in adventure arena,
   // normally maxed at 128
@@ -114,6 +147,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   if(numParticle > 120) numParticle = 120;
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	numParticle,0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,numParticle,0x18,	/*"OscillatorPool"*/0);
+
+
 
 #ifdef REBUILD_PS1
   // original CTR code, still used for 
@@ -128,7 +163,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   gGT->ptrRenderBucketInstance = (int)148 + (int)&rdata.s_STATIC_GNORMALZ[0];
 #endif
 
+
+
 // ===========================================
+
+
 
   // small, medium, large
   for(int i = 0; i < 3; i++)
