@@ -57,6 +57,14 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   }
 
 
+  // assume RAMEX,
+  // always have 8 drivers
+  #ifdef USE_ONLINE
+  uVar7 = 0x1000;
+  uVar9 = 0x1000;
+  #endif
+
+
   // add a bookmark
   DECOMP_MEMPACK_PushState();
 
