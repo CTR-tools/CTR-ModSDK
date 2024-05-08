@@ -47,7 +47,7 @@ struct RectMenu menu =
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
 	
-	.posX_curr = 0x160, // X position
+	.posX_curr = 0xC0, // X position
 	.posY_curr = 0x74,  // Y position
 	
 	.unk1 = 0,
@@ -306,7 +306,7 @@ void DrawCharacterStats()
 			octr->boolLockedInCharacter_Others[i] ? 
 			PLAYER_GREEN : PLAYER_RED;
 	
-		DecalFont_DrawLine(message,0x8,0x48+i*0x8,FONT_SMALL,color);
+		DecalFont_DrawLine(message,0x140,0x48+i*0x8,FONT_SMALL,color);
 	}
 }
 

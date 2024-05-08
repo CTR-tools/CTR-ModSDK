@@ -111,4 +111,6 @@ void octr_initHook()
 	
 	// small stack pool, pause thread (those threads can't pause)
 	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
+	
+	sdata->lngStrings[0x17D] = "OnlineCTR";
 }
