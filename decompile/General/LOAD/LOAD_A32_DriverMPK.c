@@ -90,6 +90,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	int i;
 	int gameMode1;
 		
+#ifdef USE_ONLINE
+	goto ForceOnlineLoad8;
+#endif
+		
 #ifdef USE_HIGHMP
 	highMp_DriverMPK(param_1, levelLOD, param_3);
 	return;
@@ -221,6 +225,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	// not adv, not time trial, not gem cup, not credits
 	else if(levelLOD == 1)
 	{
+ForceOnlineLoad8:
 		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
 
 		// arcade mpk
