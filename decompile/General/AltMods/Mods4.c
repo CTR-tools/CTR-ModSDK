@@ -1,31 +1,6 @@
-// used for boost bar
+// used for boost bar (part 1)
 
 #ifdef USE_BOOSTBAR
-void uibb_entryHook()
-{
-	struct UiElement2D* ptrHudData;
-	
-	// This is already 206
-	// data.hud_1P_P1[8].y
-	
-	// Change all these, should be
-	// same value as hud_1P_P1.y 
-	data.hud_2P_P1[8].y -= 6;
-	data.hud_2P_P2[8].y -= 6;
-	data.hud_4P_P1[8].y -= 6;
-	data.hud_4P_P2[8].y -= 6;
-	data.hud_4P_P3[8].y -= 6;
-	data.hud_4P_P4[8].y -= 6;
-	
-	// lapcount that draws above bootbar
-	data.hud_2P_P1[1].y -= 6;
-	data.hud_2P_P2[1].y -= 6;
-	data.hud_4P_P1[1].y -= 6;
-	data.hud_4P_P2[1].y -= 6;
-	data.hud_4P_P3[1].y -= 6;
-	data.hud_4P_P4[1].y -= 6;
-}
-
 void DrawBoostBar(short posX, short posY, struct Driver* driver)
 {
 	// Copies code from UI_DrawSlideMeter

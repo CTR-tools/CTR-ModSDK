@@ -80,7 +80,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 // 8000F000 - 8000F820 to MediumStackPool
 // 8000F820 - 8000FFF0 to $sp stack memory
-#ifdef REBULID_PS1
+#ifndef REBULID_PS1
   sdata->mempack[0].firstFreeByte = 0x8000F000;
 #endif
 
