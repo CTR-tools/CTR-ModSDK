@@ -19,6 +19,10 @@
 // replace custom ND version with regular library version
 #define SquareRoot0_stub SquareRoot0
 
+// temporarily require manual including
+#include "../decompile/General/AltMods/Mods3.c"
+#include "../decompile/General/AltMods/Mods4.c"
+
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
