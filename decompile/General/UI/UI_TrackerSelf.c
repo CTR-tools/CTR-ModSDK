@@ -215,7 +215,6 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
     sVar6 = sVar18 + (x >> 8);
     sVar5 = (short)((y * 7) >> 12);
 
-    primMem = &gGT->backBuffer->primMem;
     for (char i = 0; i < 2; i++) 
 	{
       // if left side or right side
@@ -224,6 +223,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
         orientation = -1;
       }
 
+	  primMem = &gGT->backBuffer->primMem;
       p = primMem->curr;
 
       // if curr < near-end
@@ -265,8 +265,8 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 
       ot = gGT->pushBuffer[driverid].ptrOT;
 
-      *(int * ) p = * ot | 0x6000000;
-      * ot = (u_int) p&0xffffff;
+      *(int*) p = *ot | 0x6000000;
+      *ot = (u_int) p&0xffffff;
 
       // next Prim
 
@@ -311,21 +311,20 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       p->x0 = screenPosX + sVar4;
       p->y0 = screenPosY - 12;
 
-      *(int * ) p = * ot | 0x6000000;
-      * ot = (u_int) p&0xffffff;
+      *(int*)p = *ot | 0x6000000;
+      *ot = (u_int) p&0xffffff;
     }
   }
 
   DECOMP_UI_TrackerBG(
 
     // missile lock-on icon
-    (gGT->ptrIcons[0x2d]),
+    gGT->ptrIcons[0x2d],
 
     screenPosX - (x >> 7),
     screenPosY - ((y * 0xf) >> 0xb),
 
-    // pointer to PrimMem struct
-    primMem,
-
-    ot, 1, x, y, bgColor);
+	&gGT->backBuffer->primMem,
+	gGT->pushBuffer[driverid].ptrOT,
+	1, x, y, bgColor);
 }

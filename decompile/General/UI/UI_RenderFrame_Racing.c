@@ -616,9 +616,6 @@ void DECOMP_UI_RenderFrame_Racing()
 			}
 			LAB_80053af4:
 
-// not rewritten yet
-#ifndef REBUILD_PS1
-
 			// draw lock-on target for driver, if
 			// a missile or warpball is chasing them
 			DECOMP_UI_TrackerSelf(playerStruct);
@@ -629,7 +626,6 @@ void DECOMP_UI_RenderFrame_Racing()
 				// Draw arrows over the heads of other players (not AIs)
 				DECOMP_UI_BattleDrawHeadArrows(playerStruct);
 			}
-#endif
 
 			if
 			(
