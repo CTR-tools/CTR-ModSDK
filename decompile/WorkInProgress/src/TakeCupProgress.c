@@ -1,6 +1,5 @@
 #include <common.h>
 
-//  (beta 'Arcade' was Gran Prix)
 // Only called from 233, when you are at the cup
 // podium and you need to save progress
 void DECOMP_TakeCupProgress_Activate(short stringIndex)
@@ -23,13 +22,17 @@ void DECOMP_TakeCupProgress_MenuProc(struct RectMenu* menu)
             // print "Save your cup progress?"
             // and optionally "New Battle Arena Opened!"
 
-            DecalFont_DrawMultiLine(sdata->lngStrings[sdata->stringIndexSaveCupProgress],
-                                //posx  posy 
-                                256,    60, 
-                                //maxlen, typefont
-                                460,    FONT_BIG,
-                                //Yellow, text flag
-                                (0xffff0000 | JUSTIFY_CENTER));
+            DecalFont_DrawMultiLine(
+				sdata->lngStrings[sdata->stringIndexSaveCupProgress],
+                
+				//posx  posy 
+                256,    60, 
+                
+				//maxlen, typefont
+                460,    FONT_BIG,
+                
+				//Yellow, text flag
+                (0xffff0000 | JUSTIFY_CENTER));
         }
     }
     else
