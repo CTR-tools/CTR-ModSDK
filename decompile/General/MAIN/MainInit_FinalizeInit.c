@@ -357,6 +357,15 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     BOTS_EmptyFunc();
 #endif
 
+#ifdef USE_ONLINE
+	void octr_initHook();
+	octr_initHook();
+	
+	// quit, so confetti doesn't initialize
+	// when loading into Polar Credits LEV
+	return;
+#endif
+
 #ifndef REBUILD_PS1
     if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		if (gGT->podiumRewardID != 0)

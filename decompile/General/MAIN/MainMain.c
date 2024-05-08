@@ -721,6 +721,11 @@ void StateZero()
 	
 	gGT->levelID = NAUGHTY_DOG_CRATE;
 	
+	#ifdef USE_ONLINE
+	gGT->levelID = 0x32;
+	gGT->gameMode1 |= 0x10;
+	#endif
+	
 	#ifdef FastBoot
 	gGT->levelID = POLAR_PASS;
 	gGT->numPlyrCurrGame = 2;

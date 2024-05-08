@@ -1,5 +1,3 @@
-#include "global.h"
-
 struct MenuRow menuRows[5] =
 {	
 	{

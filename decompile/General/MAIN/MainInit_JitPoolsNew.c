@@ -61,8 +61,10 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   DECOMP_MEMPACK_PushState();
 
 
-// original ps1 with fragmented memory
-#ifndef REBUILD_PS1
+// original ps1 with fragmented memory,
+// but also only if NOT using RAMEX, because
+// with RAMEX, we dont need to save 0x1b00 bytes
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
   // saves 0x1B00 bytes
   void RelocMemory_DefragUI_Mods1();
   int backup = sdata->mempack[0].firstFreeByte;
@@ -80,7 +82,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 // 8000F000 - 8000F820 to MediumStackPool
 // 8000F820 - 8000FFF0 to $sp stack memory
-#ifndef REBUILD_PS1
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
   sdata->mempack[0].firstFreeByte = 0x8000F000;
 #endif
 
@@ -97,7 +99,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	0x60 + sizeof(void*)*2, /*"MediumStackPool"*/0);
 
 // original ps1 with fragmented memory
-#ifndef REBUILD_PS1
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
   sdata->mempack[0].firstFreeByte = backup;
 #endif
 

@@ -1,5 +1,14 @@
+// OnlineCTR (part 1)
+#ifdef USE_ONLINE
+#include "OnlineCTR/global.h"
+#include "OnlineCTR/main.c"
+#include "OnlineCTR/menu.c"
+#endif
+
 // original ps1 with fragmented memory,
-#ifndef REBUILD_PS1
+// but also only if NOT using RAMEX, because
+// with RAMEX, we dont need to save 0x1b00 bytes
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
 
 // This awful idea stems from a stubbing system we had back
 // in the first 2021 CTR rebuild attempts, which was supposed
