@@ -204,6 +204,10 @@ lightDir_spec0x30000:
 
 	// TODO: use enum for hud elements
 	hudStruct += 0x14;
+	
+	#ifdef USE_ONLINE
+	driverThread = 0;
+	#endif
   }
 
   return inst;

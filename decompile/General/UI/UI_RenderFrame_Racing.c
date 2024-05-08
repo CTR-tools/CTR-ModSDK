@@ -653,6 +653,10 @@ void DECOMP_UI_RenderFrame_Racing()
 			// TODO: use num where 0x14 = NUM_HUD
 			hudStructPtr += 0x14;
 
+			#ifdef USE_ONLINE
+			playerThread = 0;
+			#endif
+
 		} while (playerThread != 0);
 	}
 

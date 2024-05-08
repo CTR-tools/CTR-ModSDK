@@ -79,10 +79,10 @@ void ThreadFunc()
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	for(i = 2; i >= 0; i--)
+	for(i = 3; i >= 0; i--)
 		octr->time[i+1] = octr->time[i];
 	
-	for(i = 2; i >= 0; i--)
+	for(i = 3; i >= 0; i--)
 		if(octr->time[i+1] != octr->time[i])
 			break;
 		
@@ -113,4 +113,93 @@ void octr_initHook()
 	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
 	
 	sdata->lngStrings[0x17D] = "OnlineCTR";
+}
+
+// replace MainInit_Drivers
+void OnlineInit_Drivers(struct GameTracker* gGT)
+{	
+	int i;
+	int bitFlag;
+	struct Driver* dr;
+
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+
+	for(i = 0; i < 8; i++)
+	{
+		gGT->drivers[i] = 0;
+		sdata->kartSpawnOrderArray[i] = i;
+	}
+	
+	// if first boot
+	if(gGT->levelID == CREDITS_POLAR)
+	{
+		gGT->drivers[0] = VehBirth_Player(0);
+		return;
+	}
+	
+	if(DECOMP_LOAD_IsOpen_RacingOrBattle())
+		DECOMP_RB_MinePool_Init();
+	
+	// 8 spawn positions
+	bitFlag = 7;
+	
+	// override for battle maps
+	if(
+		(gGT->levelID > TURBO_TRACK) &&
+		(gGT->levelID < GEM_STONE_VALLEY)
+	  )
+	{
+		// 4 spawn positions
+		bitFlag = 3;
+	}
+	
+	// All clients must spawn drivers in the same order,
+	// so that pointers can be sent over network
+	
+	for(i = 0; i < octr->DriverID; i++)
+	{
+		// init, save, fakeID, teleport, realID
+		dr = DECOMP_VehBirth_Player(i+1);
+		gGT->drivers[i+1] = dr;
+		dr->driverID = i&bitFlag;
+		VehBirth_TeleportSelf(dr,3,0);
+		dr->driverID = i+1;
+		
+		#ifdef USE_60FPS
+		// needed cause VehBirth_TeleportSelf
+		// has not been rewritten yet for decomp
+		dr->instSelf->animFrame = FPS_DOUBLE(10);
+		#endif
+	}
+	
+	// init, save, fakeID, teleport, realID
+	dr = DECOMP_VehBirth_Player(0);
+	gGT->drivers[0] = dr;
+	dr->driverID = i&bitFlag;
+	VehBirth_TeleportSelf(dr,3,0);
+	dr->driverID = 0;
+	
+	#ifdef USE_60FPS
+	// needed cause VehBirth_TeleportSelf
+	// has not been rewritten yet for decomp
+	dr->instSelf->animFrame = FPS_DOUBLE(10);
+	#endif
+	
+	for(i = i+1; i < octr->NumDrivers; i++)
+	{
+		// init, save, fakeID, teleport, realID
+		dr = DECOMP_VehBirth_Player(i);
+		gGT->drivers[i] = dr;
+		dr->driverID = i&bitFlag;
+		VehBirth_TeleportSelf(dr,3,0);
+		dr->driverID = i;
+		
+		#ifdef USE_60FPS
+		// needed cause VehBirth_TeleportSelf
+		// has not been rewritten yet for decomp
+		dr->instSelf->animFrame = FPS_DOUBLE(10);
+		#endif
+	}
 }

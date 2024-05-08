@@ -186,7 +186,13 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->numLaps * 8;
 #endif
 
+#ifndef USE_ONLINE
+	// OG code
     DECOMP_MainInit_Drivers(gGT);
+#else
+	void OnlineInit_Drivers(struct GameTracker* gGT);
+	OnlineInit_Drivers(gGT);
+#endif
 
     // assume 1P fov
     numPlyr = 1;
