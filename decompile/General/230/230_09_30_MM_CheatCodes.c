@@ -543,9 +543,10 @@ void DECOMP_MM_ParseCheatCodes()
 		
 		#ifdef USE_OXIDE
 		// if scrapbook unlocked, then unlock Oxide,
-		// flag 0x1000 must match the 1<<0xC in the icon array
+		// flag 0x1000 must match the 1<<0 in the icon array,
+		// this bit was used in Aug5 to unlock SlideCol, unused
 		if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-			sdata->gameProgress.unlocks[0] |= 0x1000;
+			sdata->gameProgress.unlocks[0] |= 1;
 		#endif
 		
 		// do NOT quit loop,
