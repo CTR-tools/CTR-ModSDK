@@ -13,9 +13,9 @@
 #include "VehPhysProc_SpinStop_FuncPtrs.c"
 #include "VehPhysProc_SpinStop_Init.c"
 
-#include "../AltMods/Mods7.c"
+#include "../AltMods/Mods5.c"
 
-void Mods7_EndOfFile()
+void Mods5_EndOfFile()
 {
 	// leave empty
 }

@@ -621,7 +621,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 			// draw lock-on target for driver, if
 			// a missile or warpball is chasing them
-			UI_TrackerSelf(playerStruct);
+			DECOMP_UI_TrackerSelf(playerStruct);
 
 			// If you're in Battle
 			if ((gameMode1 & BATTLE_MODE) != 0)

@@ -36,37 +36,31 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
-	int modSizes[9] =
+	int modSizes[7] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
 		
-		// UI defrag Block2
-		(int)UI_TrackerSelf - (int)Mods2_EndOfFile,
-		
 		// GAMEPAD defrag Block1
-		(int)GAMEPAD_JogCon1 - (int)Mods3_EndOfFile,
+		(int)GAMEPAD_JogCon1 - (int)Mods2_EndOfFile,
 		
 		// HOWL defrag Block1
-		(int)howl_VolumeGet - (int)Mods4_EndOfFile,
+		(int)howl_VolumeGet - (int)Mods3_EndOfFile,
 		
 		// LOAD defrag Block1
-		(int)LOAD_AppendQueue - (int)Mods5_EndOfFile,
-		
-		// UI defrag Block3
-		(int)UI_TrackerBG - (int)Mods6_EndOfFile,
+		(int)LOAD_AppendQueue - (int)Mods4_EndOfFile,
 		
 		// VehPtr defrag Block1
-		(int)VehPickState_NewState - (int)Mods7_EndOfFile,
+		(int)VehPickState_NewState - (int)Mods5_EndOfFile,
 		
 		// ElimBG defrag Block1
-		(int)FLARE_ThTick - (int)Mods8_EndOfFile,
+		(int)FLARE_ThTick - (int)Mods6_EndOfFile,
 		
 		// RenderFrame defrag
-		(int)MainFreeze_ConfigDrawNPC105 - (int)Mods9_EndOfFile,
+		(int)MainFreeze_ConfigDrawNPC105 - (int)Mods7_EndOfFile,
 	};
 	
-	for(int i = 0; i < 9; i++)
+	for(int i = 0; i < 7; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}

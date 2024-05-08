@@ -45,9 +45,9 @@
 #include "h63_UpdateChannelVol_Music_All.c"
 #include "h64_UpdateChannelVol_OtherFX_All.c"
 
-#include "../AltMods/Mods4.c"
+#include "../AltMods/Mods3.c"
 
-void Mods4_EndOfFile()
+void Mods3_EndOfFile()
 {
 	// leave empty
 }

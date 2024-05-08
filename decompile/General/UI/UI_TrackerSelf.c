@@ -4,20 +4,20 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 {
   short y;
   short x;
-  short animIndex;
+  short timer;
   short sVar4;
   short sVar5;
   short sVar6;
   short * ptrAnim;
   u_short driverid;
-  u_int screenPosXY;
+  short screenPosXY[2];
   u_int rgb0, rgb1, rgb2;
   int warpballDist;
   int missileDist;
   int beep_rate;
   u_long * ot;
   POLY_G3 * p;
-  VECTOR pos;
+  SVECTOR pos;
   struct PrimMem * primMem;
   short orientation;
   u_int bgColor;
@@ -28,21 +28,23 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 
   // get index of driver in driver array
   driverid = d->driverID;
+  
+  timer = data.trackerTimer[driverid];
 
-  // if there is no missile chasing this player
-  if ((d->thTrackingMe == 0) &&
-
-    // this missile has finished chasing this driver ???
-    (animIndex == 0)) 
-    {
+  if (
+		// timer loop ended
+		(timer == 0) &&
+		
+		// no more missile chasing player
+		(d->thTrackingMe == 0)
+	  )
+  {
     // clear type of object tracking the player
     data.trackerType[driverid] = NULL;
     return;
   }
 
   warpballDist = 0;
-
-  animIndex = data.trackerTimer[driverid];
 
   // If no missile or warpball is chasing this driver
   if (d->thTrackingMe == 0) {
@@ -53,59 +55,75 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
     ptrAnim = &data.trackerAnim1[0];
   }
 
-  x = ptrAnim[animIndex];
-  y = ptrAnim[animIndex + 1];
+  x = ptrAnim[timer*2+0];
+  y = ptrAnim[timer*2+1];
 
-  struct Thread * trackerTh = DECOMP_RB_GetThread_ClosestTracker(d);
+  struct Thread* trackerTh = 
+	DECOMP_RB_GetThread_ClosestTracker(d);
 
-  if ((trackerTh == NULL) && (animIndex == 0)) {
-    // Get data from missile or warpball
-    // driver->trackerInstFollowingMe->object->flags ??
+  if (
+		// timer loop ended
+		(timer == 0) &&
+		
+		// no missiles chasing player
+		(trackerTh == NULL)
+	  ) 
+  {
+	// trackerWeapon hit intended driverTarget
     if ((((struct TrackerWeapon * ) d->thTrackingMe->object)->flags&0x10) != 0)
       goto LAB_8004fe8c;
+  
+	// reset timer loop
     sVar18 = FPS_DOUBLE(12);
-  } else {
-    // if 27th bit of Actions Flag set is on (means ?)
-    if ((((d->actionsFlagSet&0x4000000) != 0) &&
-        (trackerTh == d->thTrackingMe)) ||
-      // missile is not chasing this driver
-      (animIndex != 0))
+  } 
+  
+  // missile chasing player,
+  // or dead missile + timer loop active
+  else 
+  {
+    if (
+			(
+				// if 27th bit of Actions Flag set is on (means ?)
+				((d->actionsFlagSet&0x4000000) != 0) &&
+				
+				// tracker chasing driver
+				(trackerTh == d->thTrackingMe)
+			) ||
+      
+			// timer loop active
+			(timer != 0)
+		)
       goto LAB_8004fe8c;
 
     // turn on 27th bit of Actions Flag set (means ?)
     d->actionsFlagSet |= 0x4000000;
+	
+	// reset timer loop
     sVar18 = FPS_DOUBLE(8);
   }
 
+  // reset timer loop
   data.trackerTimer[driverid] = sVar18;
 
   LAB_8004fe8c:
 
-    // set pointer of the missile or warpball chasing the player
-    d->thTrackingMe = trackerTh;
+  // set pointer of the missile or warpball chasing the player
+  d->thTrackingMe = trackerTh;
 
-  if (animIndex != 0) {
+  if (timer != 0) {
     data.trackerTimer[driverid]--;
   }
+
+  MATRIX* m = &gGT->pushBuffer[driverid].matrix_ViewProj;
+  gte_SetRotMatrix(m);
+  gte_SetTransMatrix(m);
 
   pos.vx = (short) d->instSelf->matrix.t[0];
   pos.vy = (short) d->instSelf->matrix.t[1];
   pos.vz = (short) d->instSelf->matrix.t[2];
 
-  // pushBuffer ViewProj
-  MATRIX m = &gGT->pushBuffer[driverid].matrix_ViewProj.m[0][0];
-  gte_SetRotMatrix(m);
-  gte_SetTransMatrix(m);
-
-  // ldv0
-  // put driver pos on GTE
   gte_ldv0(&pos);
-
-  // RTPS - Perspective Transformation (single)
   gte_rtps();
-
-  // stsxy
-  // get driver screenspace pos
   gte_stsxy(&screenPosXY);
 
   // red?
@@ -113,104 +131,94 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 
   // if no missile or warpball is chasing this player
   if (d->thTrackingMe == NULL) {
-    sVar18 = data.trackerTimer[4 + driverid];
+    sVar18 = data.trackerDist[driverid];
   }
 
   // if a missile or warpball is chasing this player
   else {
-    // get distance between missile and player
-
-    // uVar8 = sqrt(driver->4a4->30->28 << 0)
-    missileDist = sqrt(((struct TrackerWeapon * ) d->thTrackingMe->object)->distanceToTarget, 0);
-    missileDist = missileDist / 0x32;
+	
+	struct TrackerWeapon* tw =
+		d->thTrackingMe->object;
+		
+    missileDist = 
+		VehCalc_FastSqrt(
+			tw->distanceToTarget, 0);
+    
+	missileDist = missileDist / 0x32;
     sVar18 = (short) missileDist;
-    data.trackerTimer[4 + driverid] = sVar18;
+    data.trackerDist[driverid] = sVar18;
 
-    // beeping gets faster as missile gets closer
-    // iVar10 is beeping rate (higher is less beeps)
+	beep_rate = FPS_DOUBLE(5);
+	if(missileDist > 100) beep_rate = FPS_DOUBLE(10);
+	if(missileDist > 200) beep_rate = FPS_DOUBLE(30);
 
-    // slowest rate, once every 30 frames,
-    // if missile is more than 201 units away
-    beep_rate = FPS_DOUBLE(30);
-
-    // if missile is closer than 201 units
-    if ((missileDist < 201) && (
-
-      // apply beep once every 5 frames if
-      // missile is less than 100 units away
-      beep_rate = FPS_DOUBLE(5),
-
-      // if missile is more than 100 units
-      // and less than 201 units away
-      100 < missileDist)) {
-      // beep once every 10 frames
-      beep_rate = FPS_DOUBLE(10);
-    }
-
-    // // if the variable was somehow not set
-    // if (beep_rate == 0)
-    // {
-    //   // kill the game
-    //   trap(0x1c00);
-    // }
-
-    // red ?
+    // red
     bgColor = 0xff;
 
-    // play the beeping on certain frames
-    if (gGT->timer % beep_rate == 0) {
-      // If game is not paused
-      if ((gGT->gameMode1&PAUSE_ALL) == 0) {
+    if ((gGT->timer % beep_rate) == 0) 
+	{
+      if ((gGT->gameMode1 & PAUSE_ALL) == 0) 
+	  {
         // OtherFX_Play "homing in" sound
         OtherFX_Play(0x56, 1);
       }
 
-      // white ?
+      // white
       bgColor = 0xffffff;
     }
-    // if it's a WarpBall
-    if (d->thTrackingMe->inst->model->id == DYNAMIC_WARPBALL) {
-      // driver->threadTracking->object->pathNodeStart->pathNodeIndex?
-      warpballDist = ((struct TrackerWeapon * ) d->thTrackingMe->object)->pathNodeStart->distToFinish -
+    
+	if (d->thTrackingMe->inst->model->id == DYNAMIC_WARPBALL) 
+	{
+	  struct CheckpointNode* firstNode =
+		&gGT->level1->ptr_restart_points[0];
+		
+      warpballDist = 
+	  (
+		(
+			tw->ptrNodeCurr->distToFinish -
+			firstNode[d->unknown_lap_related[1]].distToFinish
 
-        // LEV->path [driver->pathIndex]->pathNodeIndex (whaaaat)?
-        (u_int)d-> unknown_lap_related[1] * 0xc + (gGT->level1->ptr_restart_points->distToFinish * 8);
+        ) * 8
+	  );
 
       // if warpball is further in the lap than the driver,
-      // and warpball needs to go around the track
-      if (warpballDist < 0) {
-        // add to distance between warpball and driver
-        warpballDist += (gGT->level1->ptr_restart_points->distToFinish * 8);
+      // then add a full lap of distance until warpball hits driver
+      if (warpballDist < 0) 
+	  {
+        // add length of track
+        warpballDist += (firstNode[0].distToFinish * 8);
       }
 
       // type of object following driver is a warpball
       data.trackerType[driverid] = 1;
     }
+	
     // if this is not a warpball
-    else {
+    else 
+	{
       // type of object is missile, or nothing?
       data.trackerType[driverid] = 0;
     }
   }
 
   // driver screenspace x and y
-  screenPosX = (short)screenPosXY;
-  screenPosY = (short)(screenPosXY >> 0x10);
+  screenPosX = (short)screenPosXY[0];
+  screenPosY = (short)screenPosXY[1];
 
   // check distance
-  if (warpballDist < 16000) {
+  if (warpballDist < 16000) 
+  {
     sVar6 = sVar18 + (x >> 8);
-    sVar5 = (short)(y * 7 >> 12);
+    sVar5 = (short)((y * 7) >> 12);
 
-    for (char i = 0; i < 2; i++) {
-
+    primMem = &gGT->backBuffer->primMem;
+    for (char i = 0; i < 2; i++) 
+	{
       // if left side or right side
       orientation = 1;
       if (i == 0) {
         orientation = -1;
       }
-
-      primMem = gGT->backBuffer->primMem;
 
       p = primMem->curr;
 
@@ -309,8 +317,8 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
     // missile lock-on icon
     (gGT->ptrIcons[0x2d]),
 
-    screenPosX - ( x >> 7),
-    screenPosY - ( y * 0xf >> 0xb),
+    screenPosX - (x >> 7),
+    screenPosY - ((y * 0xf) >> 0xb),
 
     // pointer to PrimMem struct
     primMem,

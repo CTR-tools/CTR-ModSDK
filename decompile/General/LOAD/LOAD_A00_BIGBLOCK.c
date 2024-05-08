@@ -35,9 +35,9 @@
 #include "LOAD_A33_LangFile.c"
 #include "LOAD_A34_GetBigfileIndex.c"
 
-#include "../AltMods/Mods5.c"
+#include "../AltMods/Mods4.c"
 
-void Mods5_EndOfFile()
+void Mods4_EndOfFile()
 {
 	// leave empty
 }

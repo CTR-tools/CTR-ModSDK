@@ -11,9 +11,9 @@
 #include "GAMEPAD_ProcessMotors.c"
 #include "GAMEPAD_ProcessAnyoneVars.c"
 
-#include "../AltMods/Mods3.c"
+#include "../AltMods/Mods2.c"
 
-void Mods3_EndOfFile()
+void Mods2_EndOfFile()
 {
 	// leave empty
 }

@@ -2282,9 +2282,10 @@ struct Data
 	short rankIconsTransitionTimer[8];
 
 	// 800862e8
-	// used to make the tracker squish and bounce 
-	// for the first few frames of tracking
-	short trackerTimer[8];
+	short trackerTimer[4];
+
+	// 800862f0
+	short trackerDist[4];
 
 	// 800862f8
 	short trackerType[4];

@@ -8,9 +8,9 @@
 #include "ElimBG_HandleState.c"
 #include "ElimBG_Deactivate.c"
 
-#include "../AltMods/Mods8.c"
+#include "../AltMods/Mods6.c"
 
-void Mods8_EndOfFile()
+void Mods6_EndOfFile()
 {
 	// leave empty
 }
