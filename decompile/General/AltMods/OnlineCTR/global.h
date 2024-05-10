@@ -62,7 +62,7 @@ enum ServerGiveMessageType
 	SG_ENDRACE,
 
 	// gameplay
-	SG_POSITION,
+	SG_RACEFRAME,
 	
 	SG_COUNT
 };
@@ -136,6 +136,25 @@ struct SG_MessageTrack
 	// 16 bits total (2 bytes)
 };
 
+struct SG_MessageRaceFrame
+{
+	// max of 16 message types
+	unsigned char type : 4;
+
+	// max of 16 byte message
+	unsigned char size : 4;
+
+	// index 0 - 7
+	unsigned char clientID : 3;
+	unsigned char padding : 5;
+
+	unsigned int posX : 24;
+	unsigned int posY : 24;
+	unsigned int posZ : 24;
+
+	// 11 bytes
+};
+
 enum ClientGiveMessageType
 {
 	CG_DROPCLIENT,
@@ -145,7 +164,7 @@ enum ClientGiveMessageType
 	CG_ENDRACE,
 
 	// gameplay
-	CG_POSITION,
+	CG_RACEFRAME,
 	
 	CG_COUNT
 };
@@ -197,6 +216,20 @@ struct CG_MessageTrack
 	// 16 bits total (2 bytes)
 };
 
+struct CG_MessageRaceFrame
+{
+	// max of 16 message types
+	unsigned char type : 4;
+
+	// max of 16 byte message
+	unsigned char size : 4;
+
+	unsigned int posX : 24;
+	unsigned int posY : 24;
+	unsigned int posZ : 24;
+
+	// 10 bytes
+};
 
 // my functions
 void StatePC_Launch_EnterPID();

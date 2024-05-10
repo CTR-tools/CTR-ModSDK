@@ -159,6 +159,24 @@ void ParseMessage()
 				break;
 			}
 
+			case SG_RACEFRAME:
+			{
+				int clientID = ((struct SG_MessageRaceFrame*)recvBuf)->clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
+
+				int psxPtr = *(int*)&pBuf[(0x8009900c+4*clientID) & 0xffffff];
+				psxPtr &= 0xffffff;
+
+				*(int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX << 8;
+				*(int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY << 8;
+				*(int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ << 8;
+				break;
+
+				break;
+			}
+
 		default:
 			break;
 		}
@@ -348,7 +366,19 @@ void StatePC_Game_StartRace()
 {
 	ParseMessage();
 
-	// this is gameplay, should send and recv position
+	struct CG_MessageRaceFrame cg;
+	cg.type = CG_RACEFRAME;
+	cg.size = sizeof(struct CG_MessageRaceFrame);
+
+	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+	psxPtr &= 0xffffff;
+
+	cg.posX = *(int*)&pBuf[psxPtr + 0x2d4] >> 8;
+	cg.posY = *(int*)&pBuf[psxPtr + 0x2d8] >> 8;
+	cg.posZ = *(int*)&pBuf[psxPtr + 0x2dc] >> 8;
+
+	send(CtrMain.socket, &cg, cg.size, 0);
+	printf("%d %d %d\n", cg.posX, cg.posY, cg.posZ);
 }
 
 void (*ClientState[]) () =

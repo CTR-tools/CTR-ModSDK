@@ -54,6 +54,12 @@ void ServerState_Boot()
 
 void CheckNewClients()
 {
+	// I'd love to "accept" and then send a "reject"
+	// message, but unfortunately select() sometimes
+	// acts as blocking, will fix that later
+	if (boolTakingConnections == 0)
+		return;
+
 	fd_set copy = master;
 
 	// See who's talking to us
@@ -257,6 +263,36 @@ void ParseMessage(int i)
 			{
 				printf("Ready to race: %d\n", i);
 				CtrClient[i].boolRaceSelf = 1;
+				break;
+			}
+
+			case CG_RACEFRAME:
+			{
+				struct SG_MessageRaceFrame mg;
+				mg.type = SG_RACEFRAME;
+				mg.size = sizeof(struct SG_MessageRaceFrame);
+
+				mg.clientID = i;
+
+				// position
+				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
+				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
+				mg.posZ = ((struct CG_MessageRaceFrame*)recvBuf)->posZ;
+				printf("%d %d %d\n", mg.posX, mg.posY, mg.posZ);
+
+				// send a message all other clients
+				for (int j = 0; j < 8; j++)
+				{
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						send(CtrClient[j].socket, &mg, mg.size, 0);
+					}
+				}
+
 				break;
 			}
 		default:
