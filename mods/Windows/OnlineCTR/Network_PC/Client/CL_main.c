@@ -31,8 +31,10 @@ void Disconnect()
 	CtrMain.disconnectCount++;
 	if (CtrMain.disconnectCount < 100) return;
 	printf("%d\n", CtrMain.disconnectCount);
-	octr->CurrState = LAUNCH_ENTER_IP;
 	CtrMain.disconnectCount = 0;
+
+	// reboot
+	octr->CurrState = -1;
 }
 
 void ParseMessage()
@@ -60,17 +62,8 @@ void ParseMessage()
 			if (err == WSAENOTCONN)
 			{
 				Disconnect();
-
-				system("cls");
-				printf("Failed to connect to server\n\n");
-				printf("Close Client.exe and reopen, try again\n");
-
-				printf("\n");
-				system("pause");
-				exit(0);
 			}
 
-			octr->CurrState = LAUNCH_CONNECT_FAILED;
 			return;
 		}
 	}
@@ -195,15 +188,6 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
-	// how does this happen anyway?
-	// if you connected and somehow got kicked back?
-	if (CtrMain.socket != 0)
-	{
-		// wait for the state to change momentarily
-		octr->CurrState = LAUNCH_FIRST_INIT;
-		return;
-	}
-
 	printf("\n");
 	printf("Enter IP Address: ");
 	scanf_s("%s", ip, sizeof(ip));

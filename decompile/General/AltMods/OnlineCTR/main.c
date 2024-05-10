@@ -47,20 +47,38 @@ void ThreadFunc()
 	for(i = 3; i >= 0; i--)
 		if(octr->time[i+1] != octr->time[i])
 			break;
-		
+	
 	// if client didn't update the game in 4 frames
-	if(
+	int boolCloseClient = 
 		(i == -1) &&
-		(octr->CurrState >= LAUNCH_FIRST_INIT)
-	  )
+		(octr->CurrState >= LAUNCH_FIRST_INIT);
+		
+	// if server disconnects mid-game
+	// (currState < 0)
+	
+	if(boolCloseClient || (octr->CurrState < 0))
 	{
 		// reset, including CurrState
 		memset(octr, 0, sizeof(struct OnlineCTR));
+		
 		sdata->ptrActiveMenu = 0;
 		octr_entryHook();
+		
+		// go back to empty black screen
+		sdata->gGT->levelID = 0x32;
+		
+		// stop music, 
+		// stop "most FX", let menu FX ring
+		Music_Stop();
+		howl_StopAudio(1,1,0);
+	
+		// load next level
+		sdata->gGT->gameMode1 = 0x40000000;
+		sdata->Loading.stage = 0;
 	}
 	
-	octr->funcs[octr->CurrState]();
+	if (octr->CurrState >= 0)
+		octr->funcs[octr->CurrState]();
 }
 
 // this runs after the end of MainInit_FinalizeInit,

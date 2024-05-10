@@ -723,7 +723,6 @@ void StateZero()
 	
 	#ifdef USE_ONLINE
 	gGT->levelID = 0x32;
-	gGT->gameMode1 |= 0x10;
 	#endif
 	
 	#ifdef FastBoot
