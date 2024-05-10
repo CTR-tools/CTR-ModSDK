@@ -410,8 +410,39 @@ void StatePS1_Lobby_StartLoading()
 
 void StatePS1_Game_WaitForRace()
 {
-	// lock traffic lights off-screen,
-	// put message on-screen
+	struct GameTracker* gGT = sdata->gGT;
+	gGT->trafficLightsTimer = 0xf40;
+	
+	// Copy from DrawUnpluggedMsg
+	
+	int posY;
+	int lngArrStart;
+	RECT window;
+	int i;
+	
+	// position of error
+	posY = data.errorPosY[sdata->errorMessagePosIndex];
+
+	// "Controller 1" or "Controller 2"
+	lngArrStart = 0;
+	
+	window.x = 0xffec;
+	window.y = posY - 3;
+	window.w = 0x228;
+	window.h = 0;
+	
+	// PLEASE CONNECT A CONTROLLER
+	DECOMP_DecalFont_DrawLine(
+		"WAITING FOR PLAYERS...",
+		0x100, posY + window.h, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+		
+	// add for each line
+	window.h += 8;
+	
+	// add 3 pixels above, 3 pixels bellow
+	window.h += 6;
+		
+	DECOMP_RECTMENU_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void StatePS1_Game_StartRace()

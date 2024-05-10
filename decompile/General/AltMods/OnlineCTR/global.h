@@ -74,12 +74,7 @@ struct SG_Header
 	// max of 16 byte message
 	unsigned char size : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-
-	unsigned char junk : 7;
-	
-	// 16 bits total (2 bytes)
+	// 8 bits total (1 byte)
 };
 
 // sent to each user when someone connects
@@ -90,14 +85,14 @@ struct SG_MessageClientStatus
 	
 	// max of 16 byte message
 	unsigned char size : 4;
+
+	// 8 drivers max,
+	// but maybe we'll have spectate mode?
+
+	// 1-15
+	unsigned char clientID : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-	
-	// index 0 - 7
-	unsigned char clientID : 3;
-	
-	// 1-8
+	// 1-15
 	unsigned char numClientsTotal : 4;
 	
 	// 16 bits total (2 bytes)
@@ -114,19 +109,14 @@ struct SG_MessageCharacter
 	// max of 16 byte message
 	unsigned char size : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-	
 	// index 0 - 7
 	unsigned char clientID : 3;
+	unsigned char boolLockedIn : 1;
 
 	// character 0 - 15
 	unsigned char characterID : 4;
 
-	unsigned char boolLockedIn : 1;
-	unsigned char padding : 7;
-
-	// 24 bits total (3 bytes)
+	// 16 bits total (2 byte)
 };
 
 // get track, assigned by host
@@ -138,11 +128,8 @@ struct SG_MessageTrack
 	// max of 16 byte message
 	unsigned char size : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-	
 	// track ID
-	unsigned char trackID : 7;
+	unsigned char trackID : 8;
 	
 	// 16 bits total (2 bytes)
 };
@@ -166,12 +153,7 @@ struct CG_Header
 	// max of 16 byte message
 	unsigned char size : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-
-	unsigned char junk : 7;
-	
-	// 16 bits total (2 bytes)
+	// 8 bits total (1 byte)
 };
 
 // character message
@@ -183,16 +165,13 @@ struct CG_MessageCharacter
 	// max of 16 byte message
 	unsigned char size : 4;
 
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-
 	// character 0 - 15
 	unsigned char characterID : 4;
 
 	unsigned char boolLockedIn : 1;
 
 	// extra junk
-	unsigned char padding : 2;
+	unsigned char padding : 3;
 
 	// 16 bits total (2 bytes)
 };
@@ -206,14 +185,12 @@ struct CG_MessageTrack
 	// max of 16 byte message
 	unsigned char size : 4;
 	
-	// is this the last message or not?
-	unsigned char boolLastMessage : 1;
-	
 	// track ID
-	unsigned char trackID : 7;
+	unsigned char trackID : 8;
 	
 	// 16 bits total (2 bytes)
 };
+
 
 // my functions
 void StatePC_Launch_EnterPID();

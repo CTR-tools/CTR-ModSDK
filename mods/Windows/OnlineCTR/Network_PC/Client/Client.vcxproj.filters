@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Network_PS1\src\global.h">
+    <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

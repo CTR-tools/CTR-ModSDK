@@ -12,7 +12,7 @@
 #pragma comment (lib, "AdvApi32.lib")
 
 #define WINDOWS_INCLUDE
-#include "../../Network_PS1/src/global.h"
+#include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 
 char* pBuf;
 struct OnlineCTR* octr;
@@ -21,18 +21,12 @@ char ip[100];
 struct SocketCtr
 {
 	SOCKET socket;
-	int disconnectCount;
 };
 
 struct SocketCtr CtrMain;
 
 void Disconnect()
 {
-	CtrMain.disconnectCount++;
-	if (CtrMain.disconnectCount < 100) return;
-	printf("%d\n", CtrMain.disconnectCount);
-	CtrMain.disconnectCount = 0;
-
 	// reboot
 	octr->CurrState = -1;
 }
@@ -42,25 +36,21 @@ void ParseMessage()
 	char recvBufFull[0x20];
 	memset(recvBufFull, 0xFF, 0x20);
 
-	int recvByteCount;
-	recvByteCount = recv(CtrMain.socket, recvBufFull, 8, 0);
+	// if send() happens 100 times, it all gets picked up
+	// in one recv() call, so only call recv one time
+	int numBytes = recv(CtrMain.socket, recvBufFull, 0x20, 0);
 
-	// check for errors
-	if (recvByteCount == -1)
+	if(numBytes == -1)
 	{
 		int err = WSAGetLastError();
 
 		// This happens due to nonblock, ignore it
 		if (err != WSAEWOULDBLOCK)
 		{
-			// if server is closed disconnected
-			if (err == WSAECONNRESET)
+			// if server is disconnected
+			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
-				Disconnect();
-			}
-
-			if (err == WSAENOTCONN)
-			{
+				printf("Test?\n");
 				Disconnect();
 			}
 
@@ -68,11 +58,13 @@ void ParseMessage()
 		}
 	}
 
-	struct SG_Header* recvBuf = &recvBufFull[0];
-	int offset = 0;
-
-	while(1)
+	// parse every message coming in
+	for(int offset = 0; offset < numBytes; /**/)
 	{
+		struct SG_Header* recvBuf = &recvBufFull[offset];
+		printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
+		offset += recvBuf->size;
+
 		int slot;
 
 		// switch will compile into a jmp table, no funcPtrs needed
@@ -160,19 +152,6 @@ void ParseMessage()
 		default:
 			break;
 		}
-
-		if (recvBuf->boolLastMessage == 1)
-		{
-			// end found
-			break;
-		}
-
-		// end not found
-		else
-		{
-			offset += recvBuf->size;
-			recvBuf = &recvBufFull[offset];
-		}
 	}
 }
 
@@ -198,7 +177,7 @@ void StatePC_Launch_EnterIP()
 	struct hostent* hostinfo;
 
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1234);
+	socketIn.sin_port = htons(1235);
 
 	hostinfo = gethostbyname(ip);
 
@@ -219,7 +198,6 @@ void StatePC_Launch_EnterIP()
 
 	// Create a SOCKET for connecting to server
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	CtrMain.disconnectCount = 0;
 	
 	// Setup the TCP listening socket
 	int res = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
@@ -275,7 +253,6 @@ void StatePC_Lobby_HostTrackPick()
 	struct CG_MessageTrack mt;
 	mt.type = CG_TRACK;
 	mt.size = sizeof(struct CG_MessageTrack);
-	mt.boolLastMessage = 1;
 
 	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
@@ -300,7 +277,6 @@ void StatePC_Lobby_CharacterPick()
 	struct CG_MessageCharacter mc;
 	mc.type = CG_CHARACTER;
 	mc.size = sizeof(struct CG_MessageCharacter);
-	mc.boolLastMessage = 1;
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
@@ -337,7 +313,7 @@ void StatePC_Lobby_StartLoading()
 {
 	ParseMessage();
 
-	// chang state to WaitForRace
+	// change state to WaitForRace
 }
 
 void StatePC_Game_WaitForRace()

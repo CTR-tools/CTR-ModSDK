@@ -5,52 +5,28 @@
 #include <stdio.h>
 
 #define WINDOWS_INCLUDE
-#include "../../Network_PS1/src/global.h"
+#include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
-struct Message
-{
-	char buf[256];
-	int offsetLatest_Start;
-	int offsetLatest_End;
-};
-
 struct SocketCtr
 {
 	SOCKET socket;
 
-	short disconnectCount;
 	char characterID;
 	char boolLockedInCharacter;
-
-	struct Message sendBuf;
-	struct Message sendBufPrev;
+	short padding;
 };
 
 struct SocketCtr CtrMain;
 #define MAX_CLIENTS 8
 
+int boolTakingConnections = 0;
 unsigned char clientCount = 0;
 struct SocketCtr CtrClient[MAX_CLIENTS];
 fd_set master;
-
-void MessageAppend(int i, struct SG_Header* header)
-{
-	struct Message* sendBuf = &CtrClient[i].sendBuf;
-
-	// if message is not empty
-	if (sendBuf->offsetLatest_End != 0)
-	{
-		((struct SG_Header*)&sendBuf->buf[sendBuf->offsetLatest_Start])->boolLastMessage = 0;
-	}
-
-	sendBuf->offsetLatest_Start = sendBuf->offsetLatest_End;
-	sendBuf->offsetLatest_End += header->size;
-	memcpy(&sendBuf->buf[sendBuf->offsetLatest_Start], header, header->size);
-}
 
 int state = 0;
 enum ServerState
@@ -75,6 +51,7 @@ void ServerState_Boot()
 	clientCount = 0;
 	printf("\nClientCount: 0\n");
 	state = SERVER_LOBBY;
+	boolTakingConnections = 1;
 }
 
 void CheckNewClients()
@@ -96,11 +73,14 @@ void CheckNewClients()
 			// Accept a new connection
 			SOCKET client = accept(CtrMain.socket, 0, 0);
 
-			if (clientCount == MAX_CLIENTS)
+			if (
+					(clientCount == MAX_CLIENTS) ||
+					(boolTakingConnections == 0)
+				)
 			{
+				printf("Rejected\n");
 				closesocket(client);
-				FD_CLR(CtrClient[i].socket, &master);
-				return;
+				continue;
 			}
 
 			// Add the new connection to the list of connected clients
@@ -115,7 +95,6 @@ void CheckNewClients()
 			// reconnects, they'll overwrite another socket in the array,
 			// I'll fix it later
 			CtrClient[clientCount].socket = client;
-			CtrClient[clientCount].disconnectCount = 0;
 			clientCount++;
 
 			// Send ClientID and clientCount back to all clients
@@ -124,12 +103,9 @@ void CheckNewClients()
 				struct SG_MessageClientStatus mw;
 				mw.type = SG_NEWCLIENT;
 				mw.size = sizeof(struct SG_MessageClientStatus);
-				mw.boolLastMessage = 1;
 				mw.clientID = j;
 				mw.numClientsTotal = clientCount;
-
-				// send a message to the client
-				MessageAppend(j, &mw);
+				send(CtrClient[j].socket, &mw, mw.size, 0);
 			}
 
 			printf("ClientCount: %d\n", clientCount);
@@ -139,13 +115,6 @@ void CheckNewClients()
 
 void Disconnect(int i)
 {
-	// prevent a one-frame accident
-	if (CtrClient[i].disconnectCount < 100)
-	{
-		CtrClient[i].disconnectCount++;
-		return;
-	}
-
 	ServerState_Boot();
 
 #if 0
@@ -166,107 +135,101 @@ void Disconnect(int i)
 		struct SG_MessageClientStatus mw;
 		mw.type = SG_DROPCLIENT;
 		mw.size = sizeof(struct SG_MessageClientStatus);
-		mw.boolLastMessage = 1;
 		mw.clientID = i;
 		mw.numClientsTotal = clientCount;
-
-		// send a message to the client
-		MessageAppend(j, &mw);
+		send(CtrClient[j].socket, &mw, mw.size, 0);
 	}
 #endif
 }
 
 void ParseMessage(int i)
 {
-	char recvBuf[8];
-	memset(recvBuf, 0xFF, 8);
+	char recvBufFull[0x20];
+	memset(recvBufFull, 0xFF, 0x20);
 
-	int recvByteCount;
-	recvByteCount = recv(CtrClient[i].socket, recvBuf, 8, 0);
+	// if send() happens 100 times, it all gets picked up
+	// in one recv() call, so only call recv one time
+	int numBytes = recv(CtrClient[i].socket, recvBufFull, 0x20, 0);
 
-	// check for errors
-	if (recvByteCount == -1)
+	if (numBytes == -1)
 	{
 		int err = WSAGetLastError();
 
 		// This happens due to nonblock, ignore it
 		if (err != WSAEWOULDBLOCK)
 		{
-			// server closed
-			if (err == WSAECONNRESET)
+			// client closed
+			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
+				printf("Test?\n");
 				Disconnect(i);
 			}
 
-			// client closed
-			if (err == WSAENOTCONN)
+			else
 			{
-				Disconnect(i);
+				printf("%d\n", err);
 			}
 
 			return;
 		}
 	}
 
-	if (recvByteCount != ((struct CG_Header*)recvBuf)->size)
+	// parse every message coming in
+	for (int offset = 0; offset < numBytes; /**/)
 	{
-		//printf("Bug! -- Tag: %d, recvBuf.size: %d, recvCount: %d\n",
-		//	recvBuf.type, recvBuf.size, receivedByteCount);
-
-		// dont disconnect, just try again next cycle
-	}
-
-	// if recvSize is equal to expected, and if type is valid
-	else if (((struct CG_Header*)recvBuf)->type < CG_COUNT)
-	{
-		CtrClient[i].disconnectCount = 0;
+		struct CG_Header* recvBuf = &recvBufFull[offset];
+		printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
+		offset += recvBuf->size;
 
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct CG_Header*)recvBuf)->type)
 		{
-		case CG_TRACK:
-
-			printf("Got Track from %d\n", i);
-
-			int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
-			
-			struct SG_MessageTrack mt;
-			mt.type = SG_TRACK;
-			mt.size = sizeof(struct CG_MessageTrack);
-			mt.boolLastMessage = 1;
-			mt.trackID = trackID;
-
-			// send a message all other clients
-			for (int j = 0; j < 8; j++)
+			case CG_TRACK:
 			{
-				if (
+				// clients can only connect during track selection,
+				// once the Client Gives CG_TRACK to server, close it
+				boolTakingConnections = 0;
+
+				printf("Got Track from %d\n", i);
+
+				int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
+
+				struct SG_MessageTrack mt;
+				mt.type = SG_TRACK;
+				mt.size = sizeof(struct CG_MessageTrack);
+				mt.trackID = trackID;
+
+				// send a message all other clients
+				for (int j = 0; j < 8; j++)
+				{
+					if (
 						// skip empty sockets, skip self
 						(CtrClient[j].socket != 0) &&
 						(i != j)
-					)
-				{
-					CtrClient[j].boolLockedInCharacter = 0;
+						)
+					{
+						CtrClient[j].boolLockedInCharacter = 0;
 
-					printf("Give Track to %d\n", j);
-					MessageAppend(j, &mt);
+						printf("Give Track to %d\n", j);
+						send(CtrClient[j].socket, &mt, mt.size, 0);
+					}
 				}
-			}
 
-			break;
+				break;
+			}
 
 		case CG_CHARACTER:
 
 			printf("Got Character from %d\n", i);
-			
+
 			struct SG_MessageCharacter mg;
 			mg.type = SG_CHARACTER;
 			mg.size = sizeof(struct SG_MessageCharacter);
-			mg.boolLastMessage = 1;
 
 			mg.clientID = i;
 			mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
 			mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
-			
+
 			CtrClient[i].characterID = mg.characterID;
 			CtrClient[i].boolLockedInCharacter = mg.boolLockedIn;
 
@@ -282,7 +245,7 @@ void ParseMessage(int i)
 					)
 				{
 					printf("Give Character to %d\n", j);
-					MessageAppend(j, &mg);
+					send(CtrClient[j].socket, &mg, mg.size, 0);
 				}
 			}
 
@@ -325,11 +288,11 @@ void ServerState_Lobby()
 		struct SG_Header sg;
 		sg.type = SG_STARTLOADING;
 		sg.size = sizeof(struct SG_Header);
-		sg.boolLastMessage = 1;
 
 		// send a message to the client
 		for (int j = 0; j < clientCount; j++)
-			MessageAppend(j, &sg);
+			send(CtrClient[j].socket, &sg, sg.size, 0);
+
 
 		state = SERVER_RACE;
 	}
@@ -337,8 +300,6 @@ void ServerState_Lobby()
 
 void ServerState_Race()
 {
-	CheckNewClients();
-
 	// check messages in sockets
 	for (int i = 0; i < 8; i++)
 	{
@@ -378,7 +339,7 @@ int main()
 	// accept from any (INADDR_ANY) address
 	struct sockaddr_in socketIn;
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1234);
+	socketIn.sin_port = htons(1235);
 	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
@@ -392,26 +353,6 @@ int main()
 	while (1)
 	{
 		ServerState[state]();
-
-		for (int j = 0; j < clientCount; j++)
-		{
-			int check = memcmp(&CtrClient[j].sendBuf, &CtrClient[j].sendBufPrev, sizeof(struct Message));
-
-			// no message to send
-			if (CtrClient[j].sendBuf.offsetLatest_End == 0) continue;
-
-			// dont send message if they're identical
-			if (check == 0)
-			{
-				printf("Saved: %d\n", saved++);
-				continue;
-			}
-
-			send(CtrClient[j].socket, &CtrClient[j].sendBuf, CtrClient[j].sendBuf.offsetLatest_End, 0);
-
-			memcpy(&CtrClient[j].sendBufPrev, &CtrClient[j].sendBuf, sizeof(struct Message));
-			memset(&CtrClient[j].sendBuf, 0, sizeof(struct Message));
-		}
 		
 		// 1ms
 		Sleep(1);

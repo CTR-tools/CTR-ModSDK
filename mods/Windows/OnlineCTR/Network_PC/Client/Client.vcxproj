@@ -144,7 +144,7 @@
     <ClCompile Include="CL_main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Network_PS1\src\global.h" />
+    <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
