@@ -296,6 +296,9 @@ void StatePC_Launch_EnterIP()
 	
 	// Setup the TCP listening socket
 	int res = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
+
+	int flag = 1;
+	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
 	
 	// failed connection
 	if (res < 0)

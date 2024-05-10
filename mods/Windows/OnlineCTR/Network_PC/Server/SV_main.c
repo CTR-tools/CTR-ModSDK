@@ -419,8 +419,13 @@ int main()
 	socketIn.sin_family = AF_INET;
 	socketIn.sin_port = htons(1234);
 	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
+
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
+
+	int flag = 1;
+	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
+
 	listen(CtrMain.socket, SOMAXCONN);
 	printf("NodeServer ready on port 1234\n\n");
 
