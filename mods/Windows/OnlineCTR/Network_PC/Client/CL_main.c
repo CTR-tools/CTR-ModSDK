@@ -434,6 +434,8 @@ int main()
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 	//octr->CurrState = StatePC_Launch_EnterPID;
 
+	int gGT_timer = 0;
+
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick,
@@ -443,8 +445,9 @@ int main()
 
 		ClientState[octr->CurrState]();
 		
-		// 4ms, 60fps=16ms
-		Sleep(4);
+		// wait for next frame
+		while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff]) {}
+		gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff];
 	}
 
 	system("pause");

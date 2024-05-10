@@ -37,12 +37,12 @@ struct OnlineCTR
 	int boolLockedInCharacter;
 	
 	// 0x20
-	int time[4];
+	int time[8];
 
-	// 0x30
+	// 0x40
 	char boolLockedInCharacter_Others[8];
 
-	// 0x38
+	// 0x48
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes

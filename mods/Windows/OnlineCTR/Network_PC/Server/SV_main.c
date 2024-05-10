@@ -62,36 +62,6 @@ enum ServerState
 
 void ServerState_Boot()
 {
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r); //stores the console's current dimensions
-	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
-
-	WSADATA wsaData;
-	int iResult;
-
-	// Initialize Winsock
-	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (iResult != 0) {
-		printf("WSAStartup failed with error: %d\n", iResult);
-		system("pause");
-	}
-
-	// TCP, port 1234 (call of duty uses 27000), 
-	// accept from any (INADDR_ANY) address
-	struct sockaddr_in socketIn;
-	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1234);
-	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
-	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
-	listen(CtrMain.socket, SOMAXCONN);
-	printf("NodeServer ready on port 1234\n\n");
-
-	// set LISTENING socket to non-blocking
-	unsigned long nonBlocking = 1;
-	iResult = ioctlsocket(CtrMain.socket, FIONBIO, &nonBlocking);
-
 	FD_ZERO(&master);
 	FD_SET(CtrMain.socket, &master);
 
@@ -99,6 +69,7 @@ void ServerState_Boot()
 	{
 		closesocket(CtrClient[i].socket);
 		FD_CLR(CtrClient[i].socket, &master);
+		memset(&CtrClient[i], 0, sizeof(struct SocketCtr));
 	}
 
 	clientCount = 0;
@@ -174,7 +145,10 @@ void Disconnect(int i)
 		CtrClient[i].disconnectCount++;
 		return;
 	}
-	
+
+	ServerState_Boot();
+
+#if 0
 	clientCount--;
 	printf("Disconnected %d, now %d remain\n", i, clientCount);
  
@@ -199,6 +173,7 @@ void Disconnect(int i)
 		// send a message to the client
 		MessageAppend(j, &mw);
 	}
+#endif
 }
 
 void ParseMessage(int i)
@@ -384,6 +359,36 @@ void (*ServerState[]) () =
 int saved = 0;
 int main()
 {
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r); //stores the console's current dimensions
+	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+
+	WSADATA wsaData;
+	int iResult;
+
+	// Initialize Winsock
+	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (iResult != 0) {
+		printf("WSAStartup failed with error: %d\n", iResult);
+		system("pause");
+	}
+
+	// TCP, port 1234 (call of duty uses 27000), 
+	// accept from any (INADDR_ANY) address
+	struct sockaddr_in socketIn;
+	socketIn.sin_family = AF_INET;
+	socketIn.sin_port = htons(1234);
+	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
+	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
+	listen(CtrMain.socket, SOMAXCONN);
+	printf("NodeServer ready on port 1234\n\n");
+
+	// set LISTENING socket to non-blocking
+	unsigned long nonBlocking = 1;
+	iResult = ioctlsocket(CtrMain.socket, FIONBIO, &nonBlocking);
+
 	while (1)
 	{
 		ServerState[state]();
