@@ -118,6 +118,10 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
         if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
         if ((pad->buttonsHeldCurrFrame & 2) != 0) pad->stickLY = 0xFF;
         if ((pad->buttonsHeldCurrFrame & 4) != 0) pad->stickLX = 0;
-        if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;		
+        if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;
+
+		#ifdef USE_ONLINE
+		break;
+		#endif
 	}
 }

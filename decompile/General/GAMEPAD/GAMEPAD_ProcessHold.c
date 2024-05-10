@@ -98,5 +98,9 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 				pad->framesSinceLastInput = 0;
 			}
 		}
+	
+		#ifdef USE_ONLINE
+		break;
+		#endif
 	}
 }

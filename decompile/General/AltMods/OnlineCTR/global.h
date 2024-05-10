@@ -147,11 +147,18 @@ struct SG_MessageRaceFrame
 	// index 0 - 7
 	unsigned char clientID : 3;
 	unsigned char padding : 5;
+
+#if 0
 	short padding2;
 
 	unsigned int posX;
 	unsigned int posY;
 	unsigned int posZ;
+#endif
+
+#if 1
+	unsigned char buttonHold;
+#endif
 
 	// 16 bytes
 };
@@ -224,13 +231,16 @@ struct CG_MessageRaceFrame
 	// max of 16 byte message
 	unsigned char size : 5;
 
+	unsigned char buttonHold;
+
+#if 0
 	char padding1;
 	short padding2;
 
 	unsigned int posX;
 	unsigned int posY;
 	unsigned int posZ;
-
+#endif
 	// 16 bytes
 };
 

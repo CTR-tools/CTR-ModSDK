@@ -277,10 +277,18 @@ void ParseMessage(int i)
 
 				mg.clientID = i;
 
+// Position Data
+#if 0
 				// position
 				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
 				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
 				mg.posZ = ((struct CG_MessageRaceFrame*)recvBuf)->posZ;
+#endif
+
+// Input Data
+#if 1
+				mg.buttonHold = ((struct CG_MessageRaceFrame*)recvBuf)->buttonHold;
+#endif
 
 				// send a message all other clients
 				for (int j = 0; j < 8; j++)

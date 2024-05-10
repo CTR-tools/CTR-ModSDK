@@ -21,9 +21,12 @@ char ip[100];
 struct SocketCtr
 {
 	SOCKET socket;
+	int buttonPrev;
 };
 
 struct SocketCtr CtrMain;
+
+int buttonPrev[8] = {0};
 
 void ParseMessage()
 {
@@ -166,13 +169,76 @@ void ParseMessage()
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
+// Position Data
+#if 0
 				int psxPtr = *(int*)&pBuf[(0x8009900c+4*slot) & 0xffffff];
 				psxPtr &= 0xffffff;
 
 				*(int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX;
 				*(int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY;
 				*(int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ;
-				break;
+#endif
+
+// Input Data
+#if 1
+				int curr = ((struct SG_MessageRaceFrame*)recvBuf)->buttonHold;
+
+				// sneak L1/R1 into one byte,
+				// remove Circle/L2
+
+				if ((curr & 0x40) != 0)
+				{
+					curr &= ~(0x40);
+					curr |= 0x400;
+				}
+
+				if ((curr & 0x80) != 0)
+				{
+					curr &= ~(0x80);
+					curr |= 0x800;
+				}
+
+				int prev = buttonPrev[slot];
+
+				// tapped
+				int tap = ~prev & curr;
+
+				// released
+				int rel = prev & ~curr;
+
+				struct Gamepad
+				{
+					short unk_0;
+					short unk_1;
+					short stickLX;
+					short stickLY;
+					short stickLX_dontUse1;
+					short stickLY_dontUse1;
+					short stickRX;
+					short stickRY;
+					int buttonsHeldCurrFrame;
+					int buttonsTapped;
+					int buttonsReleased;
+					int buttonsHeldPrevFrame;
+				};
+
+				struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
+				pad->buttonsHeldCurrFrame = curr;
+				pad->buttonsTapped = tap;
+				pad->buttonsReleased = rel;
+				pad->buttonsHeldPrevFrame = prev;
+
+				// In this order: Up, Down, Left, Right
+				if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
+				else if ((pad->buttonsHeldCurrFrame & 2) != 0) pad->stickLY = 0xFF;
+				else pad->stickLY = 0x80;
+
+				if ((pad->buttonsHeldCurrFrame & 4) != 0) pad->stickLX = 0;
+				else if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;
+				else pad->stickLX = 0x80;
+
+				buttonPrev[slot] = curr;
+#endif
 
 				break;
 			}
@@ -370,12 +436,37 @@ void StatePC_Game_StartRace()
 	cg.type = CG_RACEFRAME;
 	cg.size = sizeof(struct CG_MessageRaceFrame);
 
+// Position Data
+#if 0
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
 
 	cg.posX = *(int*)&pBuf[psxPtr + 0x2d4];
 	cg.posY = *(int*)&pBuf[psxPtr + 0x2d8];
 	cg.posZ = *(int*)&pBuf[psxPtr + 0x2dc];
+#endif
+
+// Input Data
+#if 1
+	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+
+	// ignore Circle/L2
+	hold &= ~(0xC0);
+
+	// put L1/R1 into one byte
+
+	if ((hold & 0x400) != 0)
+	{
+		hold |= 0x40;
+	}
+
+	if ((hold & 0x800) != 0)
+	{
+		hold |= 0x80;
+	}
+
+	cg.buttonHold = (unsigned char)hold;
+#endif
 
 	send(CtrMain.socket, &cg, cg.size, 0);
 }
