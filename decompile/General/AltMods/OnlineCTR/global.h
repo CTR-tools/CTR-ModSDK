@@ -59,7 +59,7 @@ enum ServerGiveMessageType
 	SG_CHARACTER,
 	SG_STARTLOADING,
 	SG_STARTRACE,
-	SG_ENDRACE,
+	//SG_ENDRACE,
 
 	// gameplay
 	SG_RACEFRAME,
@@ -71,10 +71,10 @@ enum ServerGiveMessageType
 struct SG_Header
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 	
 	// 8 bits total (1 byte)
 };
@@ -83,10 +83,10 @@ struct SG_Header
 struct SG_MessageClientStatus
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 
 	// 8 drivers max,
 	// but maybe we'll have spectate mode?
@@ -106,10 +106,10 @@ struct SG_MessageClientStatus
 struct SG_MessageCharacter
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 	
 	// index 0 - 7
 	unsigned char clientID : 3;
@@ -125,10 +125,10 @@ struct SG_MessageCharacter
 struct SG_MessageTrack
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 	
 	// track ID
 	unsigned char trackID : 8;
@@ -139,25 +139,25 @@ struct SG_MessageTrack
 struct SG_MessageRaceFrame
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 
 	// index 0 - 7
 	unsigned char clientID : 3;
 	unsigned char padding : 5;
+	short padding2;
 
-	unsigned int posX : 24;
-	unsigned int posY : 24;
-	unsigned int posZ : 24;
+	unsigned int posX;
+	unsigned int posY;
+	unsigned int posZ;
 
-	// 11 bytes
+	// 16 bytes
 };
 
 enum ClientGiveMessageType
 {
-	CG_DROPCLIENT,
 	CG_CHARACTER,
 	CG_TRACK,
 	CG_STARTRACE,
@@ -173,10 +173,10 @@ enum ClientGiveMessageType
 struct CG_Header
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 	
 	// 8 bits total (1 byte)
 };
@@ -185,10 +185,10 @@ struct CG_Header
 struct CG_MessageCharacter
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 
 	// character 0 - 15
 	unsigned char characterID : 4;
@@ -205,10 +205,10 @@ struct CG_MessageCharacter
 struct CG_MessageTrack
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 	
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 	
 	// track ID
 	unsigned char trackID : 8;
@@ -219,16 +219,19 @@ struct CG_MessageTrack
 struct CG_MessageRaceFrame
 {
 	// max of 16 message types
-	unsigned char type : 4;
+	unsigned char type : 3;
 
 	// max of 16 byte message
-	unsigned char size : 4;
+	unsigned char size : 5;
 
-	unsigned int posX : 24;
-	unsigned int posY : 24;
-	unsigned int posZ : 24;
+	char padding1;
+	short padding2;
 
-	// 10 bytes
+	unsigned int posX;
+	unsigned int posY;
+	unsigned int posZ;
+
+	// 16 bytes
 };
 
 // my functions

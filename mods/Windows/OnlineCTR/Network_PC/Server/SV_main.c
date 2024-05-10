@@ -281,7 +281,7 @@ void ParseMessage(int i)
 				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
 				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
 				mg.posZ = ((struct CG_MessageRaceFrame*)recvBuf)->posZ;
-				printf("%d %d %d\n", mg.posX, mg.posY, mg.posZ);
+				printf("pos: %d %d %d\n", mg.posX, mg.posY, mg.posZ);
 
 				// send a message all other clients
 				for (int j = 0; j < 8; j++)
@@ -372,6 +372,7 @@ void ServerState_Tick()
 			if (CtrClient[j].boolEndSelf == 0)
 				boolEndAll = 0;
 
+#if 0
 		if (boolEndAll)
 		{
 			printf("End Race\n");
@@ -384,6 +385,7 @@ void ServerState_Tick()
 			for (int j = 0; j < clientCount; j++)
 				send(CtrClient[j].socket, &sg, sg.size, 0);
 		}
+#endif
 	}
 }
 
