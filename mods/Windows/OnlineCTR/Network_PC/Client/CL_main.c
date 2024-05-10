@@ -51,6 +51,7 @@ void ParseMessage()
 
 				// reboot
 				octr->CurrState = -1;
+				printf("Reboot\n");
 			}
 
 			return;
@@ -542,9 +543,6 @@ int main()
 	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
-	//octr->CurrState = StatePC_Launch_EnterPID;
-
-	int gGT_timer = 0;
 
 	while (1)
 	{
@@ -552,13 +550,20 @@ int main()
 		// then run client update
 
 		octr->time[0]++;
-
 		ClientState[octr->CurrState]();
 		
-		// wait for next frame
-		while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff]) {}
-		gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff];
+		void FrameStall(); FrameStall();
 	}
 
 	system("pause");
 }
+
+#pragma optimize("", off)
+int gGT_timer = 0;
+void FrameStall()
+{
+	// wait for next frame
+	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff]) {}
+	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff];
+}
+#pragma optimize("", on)
