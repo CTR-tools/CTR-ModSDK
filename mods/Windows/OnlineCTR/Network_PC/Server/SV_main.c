@@ -161,7 +161,6 @@ void ParseMessage(int i)
 			// client closed
 			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
-				printf("Test?\n");
 				Disconnect(i);
 			}
 

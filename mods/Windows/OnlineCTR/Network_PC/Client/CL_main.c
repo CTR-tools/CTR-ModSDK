@@ -50,7 +50,6 @@ void ParseMessage()
 			// if server is disconnected
 			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
-				printf("Test?\n");
 				Disconnect();
 			}
 

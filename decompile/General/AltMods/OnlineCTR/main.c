@@ -61,6 +61,9 @@ void ThreadFunc()
 		// reset, including CurrState
 		memset(octr, 0, sizeof(struct OnlineCTR));
 		
+		// Draw Black Screen
+		DECOMP_CTR_ErrorScreen(0,0,0);
+		
 		sdata->ptrActiveMenu = 0;
 		octr_entryHook();
 		
