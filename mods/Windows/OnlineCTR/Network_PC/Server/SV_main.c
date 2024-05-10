@@ -48,6 +48,9 @@ void ServerState_Boot()
 	}
 
 	clientCount = 0;
+	boolLoadAll = 0;
+	boolRaceAll = 0;
+	boolEndAll = 0;
 	printf("\nClientCount: 0\n");
 	boolTakingConnections = 1;
 }
