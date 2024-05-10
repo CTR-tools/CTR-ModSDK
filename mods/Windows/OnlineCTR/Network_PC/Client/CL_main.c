@@ -417,31 +417,13 @@ void StatePC_Lobby_StartLoading()
 	boolAlreadySent_StartRace = 0;
 }
 
-void StatePC_Game_WaitForRace()
+void SendGamepadInput()
 {
-	ParseMessage();
-
-	if (!boolAlreadySent_StartRace)
-	{
-		boolAlreadySent_StartRace = 1;
-
-		struct CG_Header cg;
-		cg.type = CG_STARTRACE;
-		cg.size = sizeof(struct CG_Header);
-
-		send(CtrMain.socket, &cg, cg.size, 0);
-	}
-}
-
-void StatePC_Game_StartRace()
-{
-	ParseMessage();
-
 	struct CG_MessageRaceFrame cg;
 	cg.type = CG_RACEFRAME;
 	cg.size = sizeof(struct CG_MessageRaceFrame);
 
-// Position Data
+	// Position Data
 #if 0
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
@@ -451,7 +433,7 @@ void StatePC_Game_StartRace()
 	cg.posZ = *(int*)&pBuf[psxPtr + 0x2dc];
 #endif
 
-// Input Data
+	// Input Data
 #if 1
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
@@ -482,6 +464,35 @@ void StatePC_Game_StartRace()
 #endif
 
 	send(CtrMain.socket, &cg, cg.size, 0);
+}
+
+void StatePC_Game_WaitForRace()
+{
+	ParseMessage();
+
+	if (!boolAlreadySent_StartRace)
+	{
+		boolAlreadySent_StartRace = 1;
+
+		struct CG_Header cg;
+		cg.type = CG_STARTRACE;
+		cg.size = sizeof(struct CG_Header);
+
+		send(CtrMain.socket, &cg, cg.size, 0);
+	}
+
+	SendGamepadInput();
+}
+
+void StatePC_Game_StartRace()
+{
+	ParseMessage();
+
+	struct CG_MessageRaceFrame cg;
+	cg.type = CG_RACEFRAME;
+	cg.size = sizeof(struct CG_MessageRaceFrame);
+
+	SendGamepadInput();
 }
 
 void (*ClientState[]) () =
