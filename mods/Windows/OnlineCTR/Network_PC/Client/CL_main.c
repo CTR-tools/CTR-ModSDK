@@ -30,12 +30,12 @@ int buttonPrev[8] = {0};
 
 void ParseMessage()
 {
-	char recvBufFull[0x20];
-	memset(recvBufFull, 0xFF, 0x20);
+	char recvBufFull[0x100];
+	memset(recvBufFull, 0xFF, 0x100);
 
 	// if send() happens 100 times, it all gets picked up
 	// in one recv() call, so only call recv one time
-	int numBytes = recv(CtrMain.socket, recvBufFull, 0x20, 0);
+	int numBytes = recv(CtrMain.socket, recvBufFull, 0x100, 0);
 
 	if(numBytes == -1)
 	{
@@ -404,11 +404,15 @@ void StatePC_Lobby_WaitForLoading()
 	// this check happens in ParseMessage
 }
 
+unsigned char prevHold1 = 0;
+unsigned char prevHold2 = 0;
 int boolAlreadySent_StartRace = 0;
 void StatePC_Lobby_StartLoading()
 {
 	ParseMessage();
 
+	prevHold1 = 0;
+	prevHold2 = 0;
 	boolAlreadySent_StartRace = 0;
 }
 
@@ -466,6 +470,15 @@ void StatePC_Game_StartRace()
 	}
 
 	cg.buttonHold = (unsigned char)hold;
+
+	// dont send duplicate input, if input hasnt changed in 3 frames,
+	// this way "curr" and "prev" are both set by client recv
+	if ((cg.buttonHold == prevHold1) && (prevHold1 == prevHold2))
+		return;
+
+	prevHold2 = prevHold1;
+	prevHold1 = cg.buttonHold;
+	printf("%02x\n", prevHold1);
 #endif
 
 	send(CtrMain.socket, &cg, cg.size, 0);

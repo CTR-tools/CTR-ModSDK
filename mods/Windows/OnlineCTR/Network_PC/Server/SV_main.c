@@ -152,12 +152,12 @@ void Disconnect(int i)
 
 void ParseMessage(int i)
 {
-	char recvBufFull[0x20];
-	memset(recvBufFull, 0xFF, 0x20);
+	char recvBufFull[0x100];
+	memset(recvBufFull, 0xFF, 0x100);
 
 	// if send() happens 100 times, it all gets picked up
 	// in one recv() call, so only call recv one time
-	int numBytes = recv(CtrClient[i].socket, recvBufFull, 0x20, 0);
+	int numBytes = recv(CtrClient[i].socket, recvBufFull, 0x100, 0);
 
 	if (numBytes == -1)
 	{
