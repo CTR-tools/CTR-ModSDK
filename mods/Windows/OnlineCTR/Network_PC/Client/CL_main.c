@@ -479,7 +479,6 @@ void StatePC_Game_StartRace()
 
 	prevHold2 = prevHold1;
 	prevHold1 = cg.buttonHold;
-	printf("%02x\n", prevHold1);
 #endif
 
 	send(CtrMain.socket, &cg, cg.size, 0);
