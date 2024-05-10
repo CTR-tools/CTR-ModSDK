@@ -58,7 +58,7 @@ void ParseMessage()
 	for(int offset = 0; offset < numBytes; /**/)
 	{
 		struct SG_Header* recvBuf = &recvBufFull[offset];
-		printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
+		//printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
 		offset += recvBuf->size;
 
 		int slot;
@@ -172,7 +172,6 @@ void ParseMessage()
 				*(int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX;
 				*(int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY;
 				*(int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ;
-				printf("recv\n");
 				break;
 
 				break;
@@ -206,7 +205,7 @@ void StatePC_Launch_EnterIP()
 	struct hostent* hostinfo;
 
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1235);
+	socketIn.sin_port = htons(1234);
 
 	hostinfo = gethostbyname(ip);
 
@@ -378,8 +377,7 @@ void StatePC_Game_StartRace()
 	cg.posY = *(int*)&pBuf[psxPtr + 0x2d8];
 	cg.posZ = *(int*)&pBuf[psxPtr + 0x2dc];
 
-	int s = send(CtrMain.socket, &cg, cg.size, 0);
-	printf("send: %d %d %d %d\n", s, cg.posX, cg.posY, cg.posZ);
+	send(CtrMain.socket, &cg, cg.size, 0);
 }
 
 void (*ClientState[]) () =

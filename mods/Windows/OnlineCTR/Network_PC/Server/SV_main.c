@@ -188,7 +188,7 @@ void ParseMessage(int i)
 	for (int offset = 0; offset < numBytes; /**/)
 	{
 		struct CG_Header* recvBuf = &recvBufFull[offset];
-		printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
+		//printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
 		offset += recvBuf->size;
 
 		// switch will compile into a jmp table, no funcPtrs needed
@@ -281,7 +281,6 @@ void ParseMessage(int i)
 				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
 				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
 				mg.posZ = ((struct CG_MessageRaceFrame*)recvBuf)->posZ;
-				printf("pos: %d %d %d\n", mg.posX, mg.posY, mg.posZ);
 
 				// send a message all other clients
 				for (int j = 0; j < 8; j++)
@@ -410,7 +409,7 @@ int main()
 	// accept from any (INADDR_ANY) address
 	struct sockaddr_in socketIn;
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1235);
+	socketIn.sin_port = htons(1234);
 	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
