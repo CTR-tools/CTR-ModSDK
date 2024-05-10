@@ -1,8 +1,10 @@
 // OnlineCTR (part 1)
+#ifndef REBUILD_PC
 #ifdef USE_ONLINE
 #include "OnlineCTR/global.h"
 #include "OnlineCTR/main.c"
 #include "OnlineCTR/menu.c"
+#endif
 #endif
 
 // original ps1 with fragmented memory,
