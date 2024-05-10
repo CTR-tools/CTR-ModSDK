@@ -25,12 +25,6 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 
-void Disconnect()
-{
-	// reboot
-	octr->CurrState = -1;
-}
-
 void ParseMessage()
 {
 	char recvBufFull[0x20];
@@ -50,7 +44,10 @@ void ParseMessage()
 			// if server is disconnected
 			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
-				Disconnect();
+				//Disconnect();
+
+				// reboot
+				octr->CurrState = -1;
 			}
 
 			return;
@@ -69,84 +66,98 @@ void ParseMessage()
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct SG_Header*)recvBuf)->type)
 		{
-		case SG_NEWCLIENT:
-
-			// clientID is "you"
-			octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
-			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
-			
-			if (octr->CurrState = LAUNCH_FIRST_INIT)
+			case SG_NEWCLIENT:
 			{
-				// choose to get host menu or guest menu
-				octr->CurrState = LOBBY_ASSIGN_ROLE;
+				// clientID is "you"
+				octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
+				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+				printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
+				
+				if (octr->CurrState = LAUNCH_FIRST_INIT)
+				{
+					// choose to get host menu or guest menu
+					octr->CurrState = LOBBY_ASSIGN_ROLE;
+				}
+				
+				break;
 			}
 			
-			break;
-		
-		case SG_DROPCLIENT:
-
-			int clientDropped = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
-
-			// fix driver IDs
-			if (clientDropped == octr->DriverID) slot = 0;
-			if (clientDropped < octr->DriverID) slot = clientDropped + 1;
-			if (clientDropped > octr->DriverID) slot = clientDropped;
-
-			for (int i = slot; i < octr->NumDrivers; i++)
+			case SG_DROPCLIENT:
 			{
-				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
-					*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
+				int clientDropped = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
+				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
 
-				octr->boolLockedInCharacter_Others[i] =
-					octr->boolLockedInCharacter_Others[i + 1];
+				// fix driver IDs
+				if (clientDropped == octr->DriverID) slot = 0;
+				if (clientDropped < octr->DriverID) slot = clientDropped + 1;
+				if (clientDropped > octr->DriverID) slot = clientDropped;
+
+				for (int i = slot; i < octr->NumDrivers; i++)
+				{
+					*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
+						*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
+
+					octr->boolLockedInCharacter_Others[i] =
+						octr->boolLockedInCharacter_Others[i + 1];
+				}
+
+				// clientID is the client disconnected
+				if (octr->DriverID > clientDropped)
+					octr->DriverID--;
+
+				printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
+
+				// if you are new host
+				if (octr->DriverID == 0)
+				{
+					if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT)
+						octr->CurrState = LOBBY_HOST_TRACK_PICK;
+				}
+
+				break;
 			}
 
-			// clientID is the client disconnected
-			if (octr->DriverID > clientDropped)
-				octr->DriverID--;
-
-			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
-
-			// if you are new host
-			if (octr->DriverID == 0)
+			case SG_TRACK:
 			{
-				if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT)
-					octr->CurrState = LOBBY_HOST_TRACK_PICK;
+				octr->boolLockedInTrack = 1;
+				int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
+				printf("Got Track: %d\n", trackID);
+
+				// set sdata->gGT->trackID
+				*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
+				octr->CurrState = LOBBY_CHARACTER_PICK;
+				break;
 			}
-			
-			break;
-		
-		case SG_TRACK:
-			octr->boolLockedInTrack = 1;
-			int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
-			printf("Got Track: %d\n", trackID);
 
-			// set sdata->gGT->trackID
-			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
-			octr->CurrState = LOBBY_CHARACTER_PICK;
-			break;
+			case SG_CHARACTER:
+			{
+				int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
+				int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
+				printf("Client: %d, Character: %d\n", clientID, characterID);
 
-		case SG_CHARACTER:
-			int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
-			int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
-			printf("Client: %d, Character: %d\n", clientID, characterID);
-			
-			if (clientID == octr->DriverID) slot = 0;
-			if (clientID < octr->DriverID) slot = clientID + 1;
-			if (clientID > octr->DriverID) slot = clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
 
-			*(short*)&pBuf[(0x80086e84 + 2*slot) & 0xffffff] = characterID;
-			octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
-			break;
+				*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
+				octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
+				break;
+			}
 
-		case SG_STARTLOADING:
-			// variable reuse, wait a few frames,
-			// so screen updates with green names
-			octr->CountPressX = 0;
-			octr->CurrState = LOBBY_START_LOADING;
-			break;
+			case SG_STARTLOADING:
+			{
+				// variable reuse, wait a few frames,
+				// so screen updates with green names
+				octr->CountPressX = 0;
+				octr->CurrState = LOBBY_START_LOADING;
+				break;
+			}
+
+			case SG_STARTRACE:
+			{
+				octr->CurrState = GAME_START_RACE;
+				break;
+			}
 
 		default:
 			break;
@@ -256,19 +267,21 @@ void StatePC_Lobby_HostTrackPick()
 	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
-	// send a message to the client
 	send(CtrMain.socket, &mt, mt.size, 0);
 
 	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
 
+int prev_characterID = -1;
+int prev_boolLockedIn = -1;
 void StatePC_Lobby_GuestTrackWait()
 {
 	ParseMessage();
+
+	prev_characterID = -1;
+	prev_boolLockedIn = -1;
 }
 
-int prev_characterID = -1;
-int prev_boolLockedIn = -1;
 void StatePC_Lobby_CharacterPick()
 {
 	ParseMessage();
@@ -289,7 +302,6 @@ void StatePC_Lobby_CharacterPick()
 		prev_characterID = mc.characterID;
 		prev_boolLockedIn = mc.boolLockedIn;
 
-		// send a message to the client
 		send(CtrMain.socket, &mc, mc.size, 0);
 	}
 	
@@ -308,22 +320,28 @@ void StatePC_Lobby_WaitForLoading()
 	// this check happens in ParseMessage
 }
 
+int boolAlreadySent_StartRace = 0;
 void StatePC_Lobby_StartLoading()
 {
 	ParseMessage();
 
-	// change state to WaitForRace
+	boolAlreadySent_StartRace = 0;
 }
 
 void StatePC_Game_WaitForRace()
 {
 	ParseMessage();
 
-	// send message that you're done loading
+	if (!boolAlreadySent_StartRace)
+	{
+		boolAlreadySent_StartRace = 1;
 
-	// if recv message to start race,
-	// change state to StartLoading,
-	// this check happens in ParseMessage
+		struct CG_Header cg;
+		cg.type = CG_STARTRACE;
+		cg.size = sizeof(struct CG_Header);
+
+		send(CtrMain.socket, &cg, cg.size, 0);
+	}
 }
 
 void StatePC_Game_StartRace()

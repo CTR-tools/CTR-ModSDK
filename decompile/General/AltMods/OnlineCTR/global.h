@@ -58,6 +58,8 @@ enum ServerGiveMessageType
 	SG_TRACK,
 	SG_CHARACTER,
 	SG_STARTLOADING,
+	SG_STARTRACE,
+	SG_ENDRACE,
 
 	// gameplay
 	SG_POSITION,
@@ -139,6 +141,10 @@ enum ClientGiveMessageType
 	CG_DROPCLIENT,
 	CG_CHARACTER,
 	CG_TRACK,
+	CG_STARTRACE,
+	CG_ENDRACE,
+
+	// gameplay
 	CG_POSITION,
 	
 	CG_COUNT

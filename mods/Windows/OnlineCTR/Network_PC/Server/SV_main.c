@@ -16,25 +16,24 @@ struct SocketCtr
 	SOCKET socket;
 
 	char characterID;
-	char boolLockedInCharacter;
-	short padding;
+	char boolLoadSelf;
+	char boolRaceSelf;
+	char boolEndSelf;
 };
 
 struct SocketCtr CtrMain;
 #define MAX_CLIENTS 8
 
-int boolTakingConnections = 0;
 unsigned char clientCount = 0;
+int boolTakingConnections = 0;
+
+// must match socket
+int boolLoadAll = 0;
+int boolRaceAll = 0;
+int boolEndAll = 0;
+
 struct SocketCtr CtrClient[MAX_CLIENTS];
 fd_set master;
-
-int state = 0;
-enum ServerState
-{
-	SERVER_BOOT,
-	SERVER_LOBBY,
-	SERVER_RACE,
-};
 
 void ServerState_Boot()
 {
@@ -50,7 +49,6 @@ void ServerState_Boot()
 
 	clientCount = 0;
 	printf("\nClientCount: 0\n");
-	state = SERVER_LOBBY;
 	boolTakingConnections = 1;
 }
 
@@ -113,11 +111,12 @@ void CheckNewClients()
 	}
 }
 
+#if 0
 void Disconnect(int i)
 {
-	ServerState_Boot();
+	// need to use closesocket, FD_CLR, and memset &CtrClient[i],
+	// that's why this bugged out before, come back to it later
 
-#if 0
 	clientCount--;
 	printf("Disconnected %d, now %d remain\n", i, clientCount);
  
@@ -139,8 +138,8 @@ void Disconnect(int i)
 		mw.numClientsTotal = clientCount;
 		send(CtrClient[j].socket, &mw, mw.size, 0);
 	}
-#endif
 }
+#endif
 
 void ParseMessage(int i)
 {
@@ -161,7 +160,10 @@ void ParseMessage(int i)
 			// client closed
 			if ((err == WSAENOTCONN) || (err == WSAECONNRESET))
 			{
-				Disconnect(i);
+				//Disconnect(i);
+
+				// reboot
+				ServerState_Boot();
 			}
 
 			else
@@ -207,7 +209,7 @@ void ParseMessage(int i)
 						(i != j)
 						)
 					{
-						CtrClient[j].boolLockedInCharacter = 0;
+						CtrClient[j].boolLoadSelf = 0;
 
 						printf("Give Track to %d\n", j);
 						send(CtrClient[j].socket, &mt, mt.size, 0);
@@ -217,46 +219,53 @@ void ParseMessage(int i)
 				break;
 			}
 
-		case CG_CHARACTER:
-
-			printf("Got Character from %d\n", i);
-
-			struct SG_MessageCharacter mg;
-			mg.type = SG_CHARACTER;
-			mg.size = sizeof(struct SG_MessageCharacter);
-
-			mg.clientID = i;
-			mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
-			mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
-
-			CtrClient[i].characterID = mg.characterID;
-			CtrClient[i].boolLockedInCharacter = mg.boolLockedIn;
-
-			printf("Client: %d, Character: %d\n", mg.clientID, mg.characterID);
-
-			// send a message all other clients
-			for (int j = 0; j < 8; j++)
+			case CG_CHARACTER:
 			{
-				if (
-					// skip empty sockets, skip self
-					(CtrClient[j].socket != 0) &&
-					(i != j)
-					)
+				printf("Got Character from %d\n", i);
+
+				struct SG_MessageCharacter mg;
+				mg.type = SG_CHARACTER;
+				mg.size = sizeof(struct SG_MessageCharacter);
+
+				mg.clientID = i;
+				mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
+				mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
+
+				CtrClient[i].characterID = mg.characterID;
+				CtrClient[i].boolLoadSelf = mg.boolLockedIn;
+
+				printf("Client: %d, Character: %d\n", mg.clientID, mg.characterID);
+
+				// send a message all other clients
+				for (int j = 0; j < 8; j++)
 				{
-					printf("Give Character to %d\n", j);
-					send(CtrClient[j].socket, &mg, mg.size, 0);
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						printf("Give Character to %d\n", j);
+						send(CtrClient[j].socket, &mg, mg.size, 0);
+					}
 				}
+
+				break;
 			}
 
-			break;
-
+			case CG_STARTRACE:
+			{
+				printf("Ready to race: %d\n", i);
+				CtrClient[i].boolRaceSelf = 1;
+				break;
+			}
 		default:
 			break;
 		}
 	}
 }
 
-void ServerState_Lobby()
+void ServerState_Tick()
 {
 	CheckNewClients();
 
@@ -275,48 +284,70 @@ void ServerState_Lobby()
 
 	if (clientCount == 0) return;
 
-	int boolReadyToStart = 1;
-	for (int j = 0; j < clientCount; j++)
-		if (CtrClient[j].boolLockedInCharacter == 0)
-			boolReadyToStart = 0;
-
-	if (boolReadyToStart)
+	if (!boolLoadAll)
 	{
-		printf("Start Loading\n");
-
-		struct SG_Header sg;
-		sg.type = SG_STARTLOADING;
-		sg.size = sizeof(struct SG_Header);
-
-		// send a message to the client
+		boolLoadAll = 1;
 		for (int j = 0; j < clientCount; j++)
-			send(CtrClient[j].socket, &sg, sg.size, 0);
+			if (CtrClient[j].boolLoadSelf == 0)
+				boolLoadAll = 0;
 
-
-		state = SERVER_RACE;
-	}
-}
-
-void ServerState_Race()
-{
-	// check messages in sockets
-	for (int i = 0; i < 8; i++)
-	{
-		if (CtrClient[i].socket != 0)
+		if (boolLoadAll)
 		{
-			ParseMessage(i);
+			printf("Start Loading\n");
+
+			struct SG_Header sg;
+			sg.type = SG_STARTLOADING;
+			sg.size = sizeof(struct SG_Header);
+
+			// send a message to the client
+			for (int j = 0; j < clientCount; j++)
+				send(CtrClient[j].socket, &sg, sg.size, 0);
+		}
+	}
+
+	if (!boolRaceAll)
+	{
+		boolRaceAll = 1;
+		for (int j = 0; j < clientCount; j++)
+			if (CtrClient[j].boolRaceSelf == 0)
+				boolRaceAll = 0;
+
+		if (boolRaceAll)
+		{
+			printf("Start Race\n");
+
+			struct SG_Header sg;
+			sg.type = SG_STARTRACE;
+			sg.size = sizeof(struct SG_Header);
+
+			// send a message to the client
+			for (int j = 0; j < clientCount; j++)
+				send(CtrClient[j].socket, &sg, sg.size, 0);
+		}
+	}
+
+	if (!boolEndAll)
+	{
+		boolEndAll = 1;
+		for (int j = 0; j < clientCount; j++)
+			if (CtrClient[j].boolEndSelf == 0)
+				boolEndAll = 0;
+
+		if (boolEndAll)
+		{
+			printf("End Race\n");
+
+			struct SG_Header sg;
+			sg.type = SG_ENDRACE;
+			sg.size = sizeof(struct SG_Header);
+
+			// send a message to the client
+			for (int j = 0; j < clientCount; j++)
+				send(CtrClient[j].socket, &sg, sg.size, 0);
 		}
 	}
 }
 
-void (*ServerState[]) () =
-{
-	ServerState_Boot,
-	ServerState_Lobby,
-	ServerState_Race,
-};
-
-int saved = 0;
 int main()
 {
 	HWND console = GetConsoleWindow();
@@ -349,9 +380,11 @@ int main()
 	unsigned long nonBlocking = 1;
 	iResult = ioctlsocket(CtrMain.socket, FIONBIO, &nonBlocking);
 
+	ServerState_Boot();
+
 	while (1)
 	{
-		ServerState[state]();
+		ServerState_Tick();
 		
 		// 1ms
 		Sleep(1);

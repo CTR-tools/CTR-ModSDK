@@ -33,6 +33,10 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   
   while (driverThread != 0)
   {
+	#ifdef USE_ONLINE
+	driverThread = gGT->drivers[0]->instSelf->thread;
+	#endif
+	  
     driver = driverThread->object;
   
     // Create a new thread for this HUD element

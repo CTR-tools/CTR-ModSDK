@@ -130,6 +130,10 @@ void DECOMP_UI_RenderFrame_Racing()
 	cVar22 = '\0';
 	if (playerThread != 0)
 	{
+		#ifdef USE_ONLINE
+		playerThread = gGT->drivers[0]->instSelf->thread;
+		#endif
+		
 		// Loop through all player threads
 		do
 		{

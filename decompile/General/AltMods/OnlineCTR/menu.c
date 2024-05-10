@@ -416,15 +416,11 @@ void StatePS1_Game_WaitForRace()
 	// Copy from DrawUnpluggedMsg
 	
 	int posY;
-	int lngArrStart;
 	RECT window;
 	int i;
 	
 	// position of error
 	posY = data.errorPosY[sdata->errorMessagePosIndex];
-
-	// "Controller 1" or "Controller 2"
-	lngArrStart = 0;
 	
 	window.x = 0xffec;
 	window.y = posY - 3;
