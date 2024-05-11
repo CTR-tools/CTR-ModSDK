@@ -200,8 +200,6 @@ void ParseMessage(int i)
 				// once the Client Gives CG_TRACK to server, close it
 				boolTakingConnections = 0;
 
-				printf("Got Track from %d\n", i);
-
 				int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
 
 				struct SG_MessageTrack mt;
@@ -219,8 +217,6 @@ void ParseMessage(int i)
 						)
 					{
 						CtrClient[j].boolLoadSelf = 0;
-
-						printf("Give Track to %d\n", j);
 						send(CtrClient[j].socket, &mt, mt.size, 0);
 					}
 				}
@@ -230,8 +226,6 @@ void ParseMessage(int i)
 
 			case CG_CHARACTER:
 			{
-				printf("Got Character from %d\n", i);
-
 				struct SG_MessageCharacter mg;
 				mg.type = SG_CHARACTER;
 				mg.size = sizeof(struct SG_MessageCharacter);
@@ -243,8 +237,6 @@ void ParseMessage(int i)
 				CtrClient[i].characterID = mg.characterID;
 				CtrClient[i].boolLoadSelf = mg.boolLockedIn;
 
-				printf("Client: %d, Character: %d\n", mg.clientID, mg.characterID);
-
 				// send a message all other clients
 				for (int j = 0; j < 8; j++)
 				{
@@ -254,7 +246,6 @@ void ParseMessage(int i)
 						(i != j)
 						)
 					{
-						printf("Give Character to %d\n", j);
 						send(CtrClient[j].socket, &mg, mg.size, 0);
 					}
 				}
@@ -277,17 +268,18 @@ void ParseMessage(int i)
 
 				mg.clientID = i;
 
+				struct CG_MessageRaceFrame* r =
+					(struct CG_MessageRaceFrame*)recvBuf;
+
 // Position Data
 #if 1
 				// position
-				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
-				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
-				mg.posZ = ((struct CG_MessageRaceFrame*)recvBuf)->posZ;
+				memcpy(&mg.posX[0], &r->posX[0], 9);
 #endif
 
 // Input Data
 #if 0
-				mg.buttonHold = ((struct CG_MessageRaceFrame*)recvBuf)->buttonHold;
+				mg.buttonHold = r->buttonHold;
 #endif
 
 				// send a message all other clients
@@ -438,8 +430,5 @@ int main()
 	while (1)
 	{
 		ServerState_Tick();
-		
-		// 1ms
-		Sleep(1);
 	}
 }

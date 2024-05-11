@@ -75,7 +75,6 @@ void ParseMessage()
 				// clientID is "you"
 				octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
 				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
-				printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
 				
 				if (octr->CurrState = LAUNCH_FIRST_INIT)
 				{
@@ -137,7 +136,6 @@ void ParseMessage()
 			{
 				int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
 				int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
-				printf("Client: %d, Character: %d\n", clientID, characterID);
 
 				if (clientID == octr->DriverID) slot = 0;
 				if (clientID < octr->DriverID) slot = clientID + 1;
@@ -165,24 +163,39 @@ void ParseMessage()
 
 			case SG_RACEFRAME:
 			{
-				int clientID = ((struct SG_MessageRaceFrame*)recvBuf)->clientID;
+				struct SG_MessageRaceFrame* r =
+					(struct SG_MessageRaceFrame*)recvBuf;
+
+				int clientID = r->clientID;
 				if (clientID == octr->DriverID) slot = 0;
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
+
 
 // Position Data
 #if 1
 				int psxPtr = *(int*)&pBuf[(0x8009900c+4*slot) & 0xffffff];
 				psxPtr &= 0xffffff;
 
-				*(unsigned int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX << 8;
-				*(unsigned int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY << 8;
-				*(unsigned int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ << 8;
+				// 0x2D4, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
+
+				// 0x2D8, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
+
+				// 0x2DC, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
 #endif
 
 // Input Data
 #if 0
-				int curr = ((struct SG_MessageRaceFrame*)recvBuf)->buttonHold;
+				int curr = r->buttonHold;
 
 				// sneak L1/R1 into one byte,
 				// remove Circle/L2
@@ -431,9 +444,20 @@ void SendGamepadInput()
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
 
-	cg.posX = *(unsigned int*)&pBuf[psxPtr + 0x2d4] >> 8;
-	cg.posY = *(unsigned int*)&pBuf[psxPtr + 0x2d8] >> 8;
-	cg.posZ = *(unsigned int*)&pBuf[psxPtr + 0x2dc] >> 8;
+	// 0x2D4, drop bottom byte
+	cg.posX[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+1];
+	cg.posX[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+2];
+	cg.posX[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+3];
+
+	// 0x2D8, drop bottom byte
+	cg.posY[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+1];
+	cg.posY[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+2];
+	cg.posY[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+3];
+
+	// 0x2DC, drop bottom byte
+	cg.posZ[0] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+1];
+	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+2];
+	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+3];
 #endif
 
 	// Input Data
