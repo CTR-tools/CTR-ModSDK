@@ -16,7 +16,6 @@
 
 char* pBuf;
 struct OnlineCTR* octr;
-char ip[100];
 
 struct SocketCtr
 {
@@ -278,64 +277,76 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
-	printf("\n");
-	printf("Enter IP Address: ");
-	scanf_s("%s", ip, sizeof(ip));
-
-	// sockAddr
 	struct sockaddr_in socketIn;
-	
 	struct hostent* hostinfo;
+	int result = 0;
 
 	socketIn.sin_family = AF_INET;
 	socketIn.sin_port = htons(1234);
 
-	hostinfo = gethostbyname(ip);
+	// Try Niko's IP, then only enter manually
+	// if this server is not open (temporary test)
+	socketIn.sin_addr.S_un.S_un_b.s_b1 = 24;
+	socketIn.sin_addr.S_un.S_un_b.s_b2 = 187;
+	socketIn.sin_addr.S_un.S_un_b.s_b3 = 10;
+	socketIn.sin_addr.S_un.S_un_b.s_b4 = 49;
 
-	if (hostinfo == NULL)
-	{
-		printf("Unknown host\n");
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		return;
-	}
-
-	socketIn.sin_addr = *(struct in_addr*)hostinfo->h_addr;
-
-	printf("URL converts to IP: %d.%d.%d.%d\n",
-		socketIn.sin_addr.S_un.S_un_b.s_b1,
-		socketIn.sin_addr.S_un.S_un_b.s_b2,
-		socketIn.sin_addr.S_un.S_un_b.s_b3,
-		socketIn.sin_addr.S_un.S_un_b.s_b4);
-
-	// Create a SOCKET for connecting to server
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	
-	// Setup the TCP listening socket
-	int res = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
+	result = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
 
-	int flag = 1;
-	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
-	
-	// failed connection
-	if (res < 0)
+	if ((result < 0) || CtrMain.socket == INVALID_SOCKET)
 	{
-		printf("WSAGetLastError: %d\n", WSAGetLastError());
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		return;
-	}
-	
-	// failed connection
-	if (CtrMain.socket == INVALID_SOCKET)
-	{
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		return;
+		char ip[100];
+
+		printf("\n");
+		printf("Enter IP Address: ");
+		scanf_s("%s", ip, sizeof(ip));
+
+		hostinfo = gethostbyname(ip);
+		if (hostinfo == NULL)
+		{
+			printf("Unknown host\n");
+			octr->CurrState = LAUNCH_CONNECT_FAILED;
+			return;
+		}
+
+		socketIn.sin_addr = *(struct in_addr*)hostinfo->h_addr;
+		printf("URL converts to IP: %d.%d.%d.%d\n",
+			socketIn.sin_addr.S_un.S_un_b.s_b1,
+			socketIn.sin_addr.S_un.S_un_b.s_b2,
+			socketIn.sin_addr.S_un.S_un_b.s_b3,
+			socketIn.sin_addr.S_un.S_un_b.s_b4);
+
+		// Create a SOCKET for connecting to server
+		CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+		// Setup the TCP listening socket
+		result = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
+
+
+		// failed connection
+		if (result < 0)
+		{
+			printf("WSAGetLastError: %d\n", WSAGetLastError());
+			octr->CurrState = LAUNCH_CONNECT_FAILED;
+			return;
+		}
+
+		// failed connection
+		if (CtrMain.socket == INVALID_SOCKET)
+		{
+			octr->CurrState = LAUNCH_CONNECT_FAILED;
+			return;
+		}
 	}
 	
 	unsigned long nonBlocking = 1;
 	ioctlsocket(CtrMain.socket, FIONBIO, &nonBlocking);
-	
-	octr->DriverID = -1;
 
+	int flag = 1;
+	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
+
+	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
 }
 
@@ -559,6 +570,9 @@ void (*ClientState[]) () =
 	StatePC_Game_StartRace
 };
 
+// for EnumProcessModules
+#pragma comment(lib, "psapi.lib")
+
 int main()
 {
 	printf(__DATE__);
@@ -571,12 +585,75 @@ int main()
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
 
-	char pid[16];
-	printf("Enter DuckStation PID: ");
-	scanf_s("%s", pid, sizeof(pid));
+	int numDuckInstances = 0;
+	char* duckTemplate = "duckstation";
+	int duckPID = -1;
+
+	// copy from
+	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
+	DWORD aProcesses[1024], cbNeeded, cProcesses;
+	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
+	cProcesses = cbNeeded / sizeof(DWORD);
+	for (int i = 0; i < cProcesses; i++)
+	{
+		DWORD processID = aProcesses[i];
+
+		if (processID != 0)
+		{
+			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
+				PROCESS_VM_READ,
+				FALSE, processID);
+
+			if (NULL != hProcess)
+			{
+				HMODULE hMod;
+				DWORD cbNeeded;
+
+				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod),
+					&cbNeeded))
+				{
+					TCHAR szProcessName[MAX_PATH];
+					GetModuleBaseNameA(hProcess, hMod, szProcessName,
+						sizeof(szProcessName) / sizeof(TCHAR));
+
+					char* procName = (char*)&szProcessName[0];
+
+					if (
+						(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
+						(*(int*)&procName[4] == *(int*)&duckTemplate[4])
+						)
+					{
+						numDuckInstances++;
+						duckPID = processID;
+					}
+				}
+			}
+		}
+	}
+
+	if (numDuckInstances == 0)
+	{
+		printf("DuckStation not found\n");
+		system("pause");
+		exit(0);
+	}
+
+	char pidStr[16];
+	if (numDuckInstances > 1)
+	{
+		printf("Multiple ducks detected\n");
+		printf("Please use PID manually\n\n");
+
+		printf("Enter DuckStation PID: ");
+		scanf_s("%s", pidStr, sizeof(pidStr));
+	}
+	else
+	{
+		sprintf_s(pidStr, 100, "%d", duckPID);
+	}
 
 	char duckName[100];
-	sprintf_s(duckName, 100, "duckstation_%s", pid);
+	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
 
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
