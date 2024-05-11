@@ -278,7 +278,7 @@ void ParseMessage(int i)
 				mg.clientID = i;
 
 // Position Data
-#if 0
+#if 1
 				// position
 				mg.posX = ((struct CG_MessageRaceFrame*)recvBuf)->posX;
 				mg.posY = ((struct CG_MessageRaceFrame*)recvBuf)->posY;
@@ -286,7 +286,7 @@ void ParseMessage(int i)
 #endif
 
 // Input Data
-#if 1
+#if 0
 				mg.buttonHold = ((struct CG_MessageRaceFrame*)recvBuf)->buttonHold;
 #endif
 

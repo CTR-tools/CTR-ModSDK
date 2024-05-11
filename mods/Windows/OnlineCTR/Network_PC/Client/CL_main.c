@@ -171,17 +171,17 @@ void ParseMessage()
 				if (clientID > octr->DriverID) slot = clientID;
 
 // Position Data
-#if 0
+#if 1
 				int psxPtr = *(int*)&pBuf[(0x8009900c+4*slot) & 0xffffff];
 				psxPtr &= 0xffffff;
 
-				*(int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX;
-				*(int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY;
-				*(int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ;
+				*(unsigned int*)&pBuf[psxPtr + 0x2d4] = ((struct SG_MessageRaceFrame*)recvBuf)->posX << 8;
+				*(unsigned int*)&pBuf[psxPtr + 0x2d8] = ((struct SG_MessageRaceFrame*)recvBuf)->posY << 8;
+				*(unsigned int*)&pBuf[psxPtr + 0x2dc] = ((struct SG_MessageRaceFrame*)recvBuf)->posZ << 8;
 #endif
 
 // Input Data
-#if 1
+#if 0
 				int curr = ((struct SG_MessageRaceFrame*)recvBuf)->buttonHold;
 
 				// sneak L1/R1 into one byte,
@@ -427,17 +427,17 @@ void SendGamepadInput()
 	cg.size = sizeof(struct CG_MessageRaceFrame);
 
 	// Position Data
-#if 0
+#if 1
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
 
-	cg.posX = *(int*)&pBuf[psxPtr + 0x2d4];
-	cg.posY = *(int*)&pBuf[psxPtr + 0x2d8];
-	cg.posZ = *(int*)&pBuf[psxPtr + 0x2dc];
+	cg.posX = *(unsigned int*)&pBuf[psxPtr + 0x2d4] >> 8;
+	cg.posY = *(unsigned int*)&pBuf[psxPtr + 0x2d8] >> 8;
+	cg.posZ = *(unsigned int*)&pBuf[psxPtr + 0x2dc] >> 8;
 #endif
 
 	// Input Data
-#if 1
+#if 0
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
 	// ignore Circle/L2

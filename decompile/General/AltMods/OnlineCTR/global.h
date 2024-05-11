@@ -148,19 +148,17 @@ struct SG_MessageRaceFrame
 	unsigned char clientID : 3;
 	unsigned char padding : 5;
 
-#if 0
-	short padding2;
-
-	unsigned int posX;
-	unsigned int posY;
-	unsigned int posZ;
-#endif
-
 #if 1
-	unsigned char buttonHold;
+	unsigned int posX : 24;
+	unsigned int posY : 24;
+	unsigned int posZ : 24;
+	// 11 bytes
 #endif
 
-	// 16 bytes
+#if 0
+	unsigned char buttonHold;
+	// 3 bytes
+#endif
 };
 
 enum ClientGiveMessageType
@@ -231,20 +229,17 @@ struct CG_MessageRaceFrame
 	// max of 16 byte message
 	unsigned char size : 5;
 
-#if 0
-	char padding1;
-	short padding2;
-
-	unsigned int posX;
-	unsigned int posY;
-	unsigned int posZ;
-#endif
-
 #if 1
-	unsigned char buttonHold;
+	unsigned int posX : 24;
+	unsigned int posY : 24;
+	unsigned int posZ : 24;
+	// 10 bytes
 #endif
 
-	// 16 bytes
+#if 0
+	unsigned char buttonHold;
+	// 2 bytes
+#endif
 };
 
 // my functions
