@@ -23,6 +23,11 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         numPorts = 1;
         maxPadsPerPort = 4;
     }
+	
+#ifdef USE_ONLINE
+	numPorts = 1;
+	maxPadsPerPort = 1;
+#endif
 
 	pad = &gGamepads->gamepad[0];
 
@@ -69,11 +74,6 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
             // increment gamepad counter
             numConnected++;
 			pad++;
-			
-			#ifdef USE_ONLINE
-			port = numPorts;
-			i = maxPadsPerPort;
-			#endif
         }
     }
 

@@ -31,6 +31,11 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	numSlots = 1;
 	numPortsPerSlot = 4;
 #endif
+
+#ifdef USE_ONLINE
+	numSlots = 1;
+	numPortsPerSlot = 1;
+#endif
 	
 	padIndex = 0;
 	numConnected = 0;
@@ -60,7 +65,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 				}
 			}
 			
-			numConnected++; // what?
+			numConnected++;
 			padIndex++;
 			padCurr++;
 		}
