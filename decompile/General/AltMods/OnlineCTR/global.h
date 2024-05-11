@@ -53,21 +53,28 @@ struct OnlineCTR
 
 enum ServerGiveMessageType
 {
+	// connection
 	SG_NEWCLIENT,
 	SG_DROPCLIENT,
+
+	// lobby
 	SG_TRACK,
 	SG_CHARACTER,
+
+	// sync
 	SG_STARTLOADING,
 	SG_STARTRACE,
-	//SG_ENDRACE,
 
 	// gameplay
-	SG_RACEFRAME,
+	SG_RACEINPUT,
+	SG_RACEPOS,
+
+	//SG_ENDRACE,
 	
 	SG_COUNT
 };
 
-// sent to each user when someone connects
+// Variety of opcodes (start load / start race)
 struct SG_Header
 {
 	// 15 types, 15 bytes max
@@ -92,8 +99,6 @@ struct SG_MessageClientStatus
 };
 
 // assign character,
-// each user gets this each time
-// another user changes their character
 struct SG_MessageCharacter
 {
 	// 15 types, 15 bytes max
@@ -123,7 +128,7 @@ struct SG_MessageTrack
 	// 16 bits total (2 bytes)
 };
 
-struct SG_MessageRaceFrame
+struct SG_MessageRaceInput
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
@@ -133,29 +138,41 @@ struct SG_MessageRaceFrame
 	unsigned char clientID : 3;
 	unsigned char padding : 5;
 
-#if 1
+	unsigned char buttonHold;
+	// 3 bytes
+};
+
+struct SG_MessageRacePos
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	// index 0 - 7
+	unsigned char clientID : 3;
+	unsigned char padding : 5;
+
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
 	// 11 bytes
-#endif
-
-#if 0
-	unsigned char buttonHold;
-	// 3 bytes
-#endif
 };
 
 enum ClientGiveMessageType
 {
+	// lobby
 	CG_CHARACTER,
 	CG_TRACK,
-	CG_STARTRACE,
-	CG_ENDRACE,
 
-	// gameplay
-	CG_RACEFRAME,
+	// sync
+	CG_STARTRACE,
 	
+	// gameplay
+	CG_RACEINPUT,
+	CG_RACEPOS,
+
+	//CG_ENDRACE,
+
 	CG_COUNT
 };
 
@@ -198,23 +215,26 @@ struct CG_MessageTrack
 	// 16 bits total (2 bytes)
 };
 
-struct CG_MessageRaceFrame
+struct CG_MessageRaceInput
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
 
-#if 1
+	unsigned char buttonHold;
+	// 2 bytes
+};
+
+struct CG_MessageRacePos
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
 	// 10 bytes
-#endif
-
-#if 0
-	unsigned char buttonHold;
-	// 2 bytes
-#endif
 };
 
 // my functions

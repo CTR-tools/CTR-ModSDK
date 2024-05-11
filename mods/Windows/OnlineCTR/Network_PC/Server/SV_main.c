@@ -260,27 +260,18 @@ void ParseMessage(int i)
 				break;
 			}
 
-			case CG_RACEFRAME:
+			case CG_RACEINPUT:
 			{
-				struct SG_MessageRaceFrame mg;
-				mg.type = SG_RACEFRAME;
-				mg.size = sizeof(struct SG_MessageRaceFrame);
+				struct SG_MessageRaceInput mg;
+				mg.type = SG_RACEINPUT;
+				mg.size = sizeof(struct SG_MessageRaceInput);
 
 				mg.clientID = i;
 
-				struct CG_MessageRaceFrame* r =
-					(struct CG_MessageRaceFrame*)recvBuf;
+				struct CG_MessageRaceInput* r =
+					(struct CG_MessageRaceInput*)recvBuf;
 
-// Position Data
-#if 1
-				// position
-				memcpy(&mg.posX[0], &r->posX[0], 9);
-#endif
-
-// Input Data
-#if 0
 				mg.buttonHold = r->buttonHold;
-#endif
 
 				// send a message all other clients
 				for (int j = 0; j < 8; j++)
@@ -297,6 +288,37 @@ void ParseMessage(int i)
 
 				break;
 			}
+
+			case CG_RACEPOS:
+			{
+				struct SG_MessageRacePos mg;
+				mg.type = SG_RACEPOS;
+				mg.size = sizeof(struct SG_MessageRacePos);
+
+				mg.clientID = i;
+
+				struct CG_MessageRacePos* r =
+					(struct CG_MessageRacePos*)recvBuf;
+
+				memcpy(&mg.posX[0], &r->posX[0], 9);
+
+
+				// send a message all other clients
+				for (int j = 0; j < 8; j++)
+				{
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						send(CtrClient[j].socket, &mg, mg.size, 0);
+					}
+				}
+
+				break;
+			}
+
 		default:
 			break;
 		}
@@ -390,6 +412,11 @@ void ServerState_Tick()
 
 int main()
 {
+	printf(__DATE__);
+	printf("\n");
+	printf(__TIME__);
+	printf("\n\n");
+
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions

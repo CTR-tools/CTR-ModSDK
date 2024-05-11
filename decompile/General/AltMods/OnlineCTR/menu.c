@@ -104,22 +104,39 @@ void SetNames_Characters()
 	}
 }
 
+void PrintTimeStamp()
+{
+	DECOMP_DecalFont_DrawLine(__DATE__, WIDE_PICK(5, 100-40), 206, FONT_SMALL, DARK_RED);
+	DECOMP_DecalFont_DrawLine(__TIME__, WIDE_PICK(170, 228-40), 206, FONT_SMALL, DARK_RED);
+}
 
 void StatePS1_Launch_EnterPID()
 {	
-	DecalFont_DrawLine("Attach Windows Client To Continue",0x8,0xd0,FONT_SMALL,ORANGE);
+	DECOMP_DecalFont_DrawLine(
+		"Attach Windows Client To Continue",
+		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Launch_EnterIP()
 {	
-	DecalFont_DrawLine("Client Attached",0x8,0xc8,FONT_SMALL,PLAYER_GREEN);
-	DecalFont_DrawLine("Enter IP Address",0x8,0xd0,FONT_SMALL,ORANGE);
+	DECOMP_DecalFont_DrawLine(
+		"Client Attached",
+		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|PLAYER_GREEN);
+	
+	DECOMP_DecalFont_DrawLine(
+		"Enter IP Address",
+		0x100,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Launch_ConnectFailed()
 {
-	DecalFont_DrawLine("Server Not Found",0x8,0xc8,FONT_SMALL,PLAYER_RED);
-	DecalFont_DrawLine("Please Try Again",0x8,0xd0,FONT_SMALL,ORANGE);
+	DECOMP_DecalFont_DrawLine(
+		"Server Not Found",
+		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|PLAYER_RED);
+		
+	DECOMP_DecalFont_DrawLine(
+		"Please Try Again",
+		0x100,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Launch_FirstInit()
@@ -261,7 +278,9 @@ void StatePS1_Lobby_GuestTrackWait()
 {
 	DrawClientCountStats();
 	
-	DecalFont_DrawLine("Waiting for Host to Pick Track",0x8,0xd0,FONT_SMALL,ORANGE);
+	DECOMP_DecalFont_DrawLine(
+		"Waiting for Host to Pick Track",
+		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void DrawRecvTrack()
@@ -378,7 +397,10 @@ void StatePS1_Lobby_WaitForLoading()
 	DrawCharacterStats();
 	DrawRecvTrack();
 	
-	DecalFont_DrawLine("Waiting for All Characters",0x8,0xd0,FONT_SMALL,ORANGE);
+	// waiting for all charactesr
+	DECOMP_DecalFont_DrawLine(
+		"Hope you win!",
+		0xC0,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Lobby_StartLoading()
@@ -390,12 +412,15 @@ void StatePS1_Lobby_StartLoading()
 	DrawClientCountStats();
 	DrawCharacterStats();
 	DrawRecvTrack();
-	DecalFont_DrawLine("LOADING...",0x100,0x6c,FONT_SMALL,ORANGE);
+	
+	DECOMP_DecalFont_DrawLine(
+		"LOADING...",
+		0xC0,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 	
 	// variable reuse, wait a few frames,
 	// so screen updates with green names
 	octr->CountPressX++;
-	if(octr->CountPressX < 3) return;
+	if(octr->CountPressX < FPS_DOUBLE(15)) return;
 	
 	// stop music, 
 	// stop "most FX", let menu FX ring

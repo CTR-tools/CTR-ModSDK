@@ -78,6 +78,13 @@ void ThreadFunc()
 		// load next level
 		sdata->gGT->gameMode1 = 0x40000000;
 		sdata->Loading.stage = 0;
+		return;
+	}
+	
+	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
+	{
+		void PrintTimeStamp();
+		PrintTimeStamp();
 	}
 	
 	if (octr->CurrState >= 0)
@@ -185,4 +192,16 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		dr->instSelf->animFrame = FPS_DOUBLE(10);
 		#endif
 	}
+}
+
+void OnlineEndOfRace()
+{
+	struct Driver* d = sdata->gGT->drivers[0];
+	
+	// if "you" are still racing, do nothing
+	if((d->actionsFlagSet & 0x2000000) == 0)
+		return;
+	
+	// if "you" finished race,
+	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
 }

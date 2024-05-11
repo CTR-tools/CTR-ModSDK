@@ -161,40 +161,16 @@ void ParseMessage()
 				break;
 			}
 
-			case SG_RACEFRAME:
+			case SG_RACEINPUT:
 			{
-				struct SG_MessageRaceFrame* r =
-					(struct SG_MessageRaceFrame*)recvBuf;
+				struct SG_MessageRaceInput* r =
+					(struct SG_MessageRaceInput*)recvBuf;
 
 				int clientID = r->clientID;
 				if (clientID == octr->DriverID) slot = 0;
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
-
-// Position Data
-#if 1
-				int psxPtr = *(int*)&pBuf[(0x8009900c+4*slot) & 0xffffff];
-				psxPtr &= 0xffffff;
-
-				// 0x2D4, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
-
-				// 0x2D8, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
-
-				// 0x2DC, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
-#endif
-
-// Input Data
-#if 0
 				int curr = r->buttonHold;
 
 				// sneak L1/R1 into one byte,
@@ -252,8 +228,36 @@ void ParseMessage()
 				else pad->stickLX = 0x80;
 
 				buttonPrev[slot] = curr;
-#endif
+				break;
+			}
 
+			case SG_RACEPOS:
+			{
+				struct SG_MessageRacePos* r =
+					(struct SG_MessageRacePos*)recvBuf;
+
+				int clientID = r->clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
+
+				int psxPtr = *(int*)&pBuf[(0x8009900c + 4 * slot) & 0xffffff];
+				psxPtr &= 0xffffff;
+
+				// 0x2D4, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
+
+				// 0x2D8, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
+
+				// 0x2DC, drop bottom byte
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
+				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
 				break;
 			}
 
@@ -421,6 +425,7 @@ void StatePC_Lobby_WaitForLoading()
 	// this check happens in ParseMessage
 }
 
+int prevClockSecond = 0;
 unsigned char prevHold1 = 0;
 unsigned char prevHold2 = 0;
 int boolAlreadySent_StartRace = 0;
@@ -433,35 +438,12 @@ void StatePC_Lobby_StartLoading()
 	boolAlreadySent_StartRace = 0;
 }
 
-void SendGamepadInput()
+void SendKartInput()
 {
-	struct CG_MessageRaceFrame cg;
-	cg.type = CG_RACEFRAME;
-	cg.size = sizeof(struct CG_MessageRaceFrame);
+	struct CG_MessageRaceInput cg;
+	cg.type = CG_RACEINPUT;
+	cg.size = sizeof(struct CG_MessageRaceInput);
 
-	// Position Data
-#if 1
-	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-	psxPtr &= 0xffffff;
-
-	// 0x2D4, drop bottom byte
-	cg.posX[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+1];
-	cg.posX[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+2];
-	cg.posX[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d4+3];
-
-	// 0x2D8, drop bottom byte
-	cg.posY[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+1];
-	cg.posY[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+2];
-	cg.posY[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d8+3];
-
-	// 0x2DC, drop bottom byte
-	cg.posZ[0] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+1];
-	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+2];
-	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc+3];
-#endif
-
-	// Input Data
-#if 0
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
 	// ignore Circle/L2
@@ -488,9 +470,53 @@ void SendGamepadInput()
 
 	prevHold2 = prevHold1;
 	prevHold1 = cg.buttonHold;
-#endif
 
 	send(CtrMain.socket, &cg, cg.size, 0);
+}
+
+void SendKartPos()
+{
+	struct CG_MessageRacePos cg;
+	cg.type = CG_RACEPOS;
+	cg.size = sizeof(struct CG_MessageRacePos);
+
+	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+	psxPtr &= 0xffffff;
+
+	// 0x2D4, drop bottom byte
+	cg.posX[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1];
+	cg.posX[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2];
+	cg.posX[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3];
+
+	// 0x2D8, drop bottom byte
+	cg.posY[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1];
+	cg.posY[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2];
+	cg.posY[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3];
+
+	// 0x2DC, drop bottom byte
+	cg.posZ[0] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 1];
+	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 2];
+	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 3];
+
+	send(CtrMain.socket, &cg, cg.size, 0);
+}
+
+void SendKartMain()
+{
+	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
+
+	// divide by 1024, even though one second is 1000,
+	// that way nobody notices it's "exactly" every second
+	int approxSecond = gGT_elapsedEventTime >> 10;
+
+	if (prevClockSecond < approxSecond)
+	{
+		prevClockSecond = approxSecond;
+
+		SendKartPos();
+	}
+
+	SendKartInput();
 }
 
 void StatePC_Game_WaitForRace()
@@ -508,18 +534,14 @@ void StatePC_Game_WaitForRace()
 		send(CtrMain.socket, &cg, cg.size, 0);
 	}
 
-	SendGamepadInput();
+	SendKartMain();
 }
 
 void StatePC_Game_StartRace()
 {
 	ParseMessage();
 
-	struct CG_MessageRaceFrame cg;
-	cg.type = CG_RACEFRAME;
-	cg.size = sizeof(struct CG_MessageRaceFrame);
-
-	SendGamepadInput();
+	SendKartMain();
 }
 
 void (*ClientState[]) () =
@@ -540,6 +562,11 @@ void (*ClientState[]) () =
 
 int main()
 {
+	printf(__DATE__);
+	printf("\n");
+	printf(__TIME__);
+	printf("\n\n");
+
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions

@@ -744,6 +744,12 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
+					#ifdef USE_ONLINE
+					void OnlineEndOfRace();
+					OnlineEndOfRace();
+					return;
+					#endif
+					
 					// PC can't share address spaces
 					#ifndef REBUILD_PC
 					
