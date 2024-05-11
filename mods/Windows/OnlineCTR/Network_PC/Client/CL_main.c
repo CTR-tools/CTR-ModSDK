@@ -236,12 +236,11 @@ void ParseMessage()
 				struct SG_MessageRacePos* r =
 					(struct SG_MessageRacePos*)recvBuf;
 
+				// this one just uses ClientID directly
+				// because of how kart spawning is modified
 				int clientID = r->clientID;
-				if (clientID == octr->DriverID) slot = 0;
-				if (clientID < octr->DriverID) slot = clientID + 1;
-				if (clientID > octr->DriverID) slot = clientID;
-
-				int psxPtr = *(int*)&pBuf[(0x8009900c + 4 * slot) & 0xffffff];
+				
+				int psxPtr = *(int*)&pBuf[(0x8009900c + 4 * clientID) & 0xffffff];
 				psxPtr &= 0xffffff;
 
 				// 0x2D4, drop bottom byte
