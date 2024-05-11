@@ -68,6 +68,7 @@ enum ServerGiveMessageType
 	// gameplay
 	SG_RACEINPUT,
 	SG_RACEPOS,
+	SG_RACEROT,
 
 	//SG_ENDRACE,
 	
@@ -158,6 +159,28 @@ struct SG_MessageRacePos
 	// 11 bytes
 };
 
+struct SG_MessageRaceRot
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	// index 0 - 7
+	unsigned char clientID : 3;
+	unsigned char kartRot1 : 5;
+	char kartRot2;
+	// 3 bytes
+};
+
+static_assert(sizeof(struct SG_Header) == 1);
+static_assert(sizeof(struct SG_MessageCharacter) == 2);
+static_assert(sizeof(struct SG_MessageTrack) == 2);
+static_assert(sizeof(struct SG_MessageRaceInput) == 3);
+static_assert(sizeof(struct SG_MessageRacePos) == 11);
+static_assert(sizeof(struct SG_MessageRaceRot) == 3);
+
+
+
 enum ClientGiveMessageType
 {
 	// lobby
@@ -170,6 +193,7 @@ enum ClientGiveMessageType
 	// gameplay
 	CG_RACEINPUT,
 	CG_RACEPOS,
+	CG_RACEROT,
 
 	//CG_ENDRACE,
 
@@ -236,6 +260,24 @@ struct CG_MessageRacePos
 	unsigned char posZ[3];
 	// 10 bytes
 };
+
+struct CG_MessageRaceRot
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	unsigned char kartRot1;
+	unsigned char kartRot2;
+	// 3 bytes
+};
+
+static_assert(sizeof(struct CG_Header) == 1);
+static_assert(sizeof(struct CG_MessageCharacter) == 2);
+static_assert(sizeof(struct CG_MessageTrack) == 2);
+static_assert(sizeof(struct CG_MessageRaceInput) == 2);
+static_assert(sizeof(struct CG_MessageRacePos) == 10);
+static_assert(sizeof(struct CG_MessageRaceRot) == 3);
 
 // my functions
 void StatePC_Launch_EnterPID();

@@ -262,6 +262,31 @@ void ParseMessage()
 				break;
 			}
 
+			case SG_RACEROT:
+			{
+				struct SG_MessageRaceRot* r =
+					(struct SG_MessageRaceRot*)recvBuf;
+
+				// this one just uses ClientID directly
+				// because of how kart spawning is modified
+				int clientID = r->clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
+
+				int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
+				psxPtr &= 0xffffff;
+
+				int angle =
+					(r->kartRot1) |
+					(r->kartRot2 << 5);
+
+				angle &= 0xfff;
+
+				*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
+				break;
+			}
+
 		default:
 			break;
 		}
@@ -438,6 +463,7 @@ void StatePC_Lobby_WaitForLoading()
 	// this check happens in ParseMessage
 }
 
+int prevClockTenth = 0;
 int prevClockSecond = 0;
 unsigned char prevHold1 = 0;
 unsigned char prevHold2 = 0;
@@ -514,6 +540,26 @@ void SendKartPos()
 	send(CtrMain.socket, &cg, cg.size, 0);
 }
 
+void SendKartRot()
+{
+	struct CG_MessageRaceRot cg;
+	cg.type = CG_RACEROT;
+	cg.size = sizeof(struct CG_MessageRaceRot);
+
+	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+	psxPtr &= 0xffffff;
+
+	unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
+	angle &= 0xfff;
+
+	unsigned char angleBit5 = angle & 0x1f;
+	unsigned char angleTop8 = angle >> 5;
+	cg.kartRot1 = angleBit5;
+	cg.kartRot2 = angleTop8;
+
+	send(CtrMain.socket, &cg, cg.size, 0);
+}
+
 void SendKartMain()
 {
 	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
@@ -527,6 +573,16 @@ void SendKartMain()
 		prevClockSecond = approxSecond;
 
 		SendKartPos();
+	}
+
+	// divide by 106, odds are it wont collide with 1024
+	int approxTenth = gGT_elapsedEventTime / 106;
+
+	if (prevClockTenth < approxTenth)
+	{
+		prevClockTenth = approxTenth;
+
+		SendKartRot();
 	}
 
 	SendKartInput();

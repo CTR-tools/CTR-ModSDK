@@ -319,6 +319,36 @@ void ParseMessage(int i)
 				break;
 			}
 
+			case CG_RACEROT:
+			{
+				struct SG_MessageRaceRot mg;
+				mg.type = SG_RACEROT;
+				mg.size = sizeof(struct SG_MessageRaceRot);
+
+				mg.clientID = i;
+
+				struct CG_MessageRaceRot* r =
+					(struct CG_MessageRaceRot*)recvBuf;
+
+				mg.kartRot1 = r->kartRot1;
+				mg.kartRot2 = r->kartRot2;
+
+				// send a message all other clients
+				for (int j = 0; j < 8; j++)
+				{
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						send(CtrClient[j].socket, &mg, mg.size, 0);
+					}
+				}
+
+				break;
+			}
+
 		default:
 			break;
 		}
