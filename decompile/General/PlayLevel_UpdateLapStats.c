@@ -405,8 +405,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	if((gGT->drivers[0]->actionsFlagSet & 0x2000000) != 0)
 	{
 		MainGameEnd_Initialize();
-		return;
 	}
+	
+	// Ignore all other end-conditions
+	return;
 	#endif
 		
 	int numPlyr = gGT->numPlyrCurrGame;
