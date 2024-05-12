@@ -38,7 +38,7 @@ void DECOMP_UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	if(d->driverID == 0)
 	#else
 	// if this is human and not AI
-	if ((d->actionsFlagSet & 0x100000) == 0) 
+	if ((d->actionsFlagSet & 0x100000) != 0) 
 	#endif
 	
 	{

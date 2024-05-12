@@ -590,14 +590,12 @@
 8003f590 Particle_RenderList
 80040308 Particle_Init
 
-
 80040850 PickupBots_Init
 800408b8 PickupBots_Update
 
 800414f4 PlayLevel_UpdateLapStats
 
 80041c84 Podium_InitModels
-
 
 80041dc0 PROC_DestroyTracker
 80041dfc PROC_DestroyInstance

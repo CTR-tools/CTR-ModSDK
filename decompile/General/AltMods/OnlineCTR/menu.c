@@ -428,7 +428,7 @@ void StatePS1_Lobby_StartLoading()
 	howl_StopAudio(1,1,0);
 	
 	// load next level
-	sdata->gGT->gameMode1 = 0x40000000;
+	sdata->gGT->gameMode1 = LOADING | ARCADE_MODE;
 	sdata->Loading.stage = 0;
 }
 
