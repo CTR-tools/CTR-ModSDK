@@ -20,11 +20,9 @@ struct OnlineCTR* octr;
 struct SocketCtr
 {
 	SOCKET socket;
-	int buttonPrev;
 };
 
 struct SocketCtr CtrMain;
-
 int buttonPrev[8] = {0};
 
 void ParseMessage()
@@ -564,9 +562,8 @@ void SendKartMain()
 {
 	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
 
-	// divide by 1024, even though one second is 1000,
-	// that way nobody notices it's "exactly" every second
-	int approxSecond = gGT_elapsedEventTime >> 10;
+	// divide by 777, 3/4 of of a second
+	int approxSecond = gGT_elapsedEventTime / 777;
 
 	if (prevClockSecond < approxSecond)
 	{
@@ -575,7 +572,7 @@ void SendKartMain()
 		SendKartPos();
 	}
 
-	// divide by 106, odds are it wont collide with 1024
+	// divide by 106, odds are it wont collide with 777
 	int approxTenth = gGT_elapsedEventTime / 106;
 
 	if (prevClockTenth < approxTenth)

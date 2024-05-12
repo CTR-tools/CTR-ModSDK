@@ -11,6 +11,14 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
   unsigned int actionFlag;
   struct GameTracker *gGT = sdata->gGT;
 
+  #ifdef USE_ONLINE
+  struct Instance* inst = d->instSelf;
+  if(inst->thread != 0)
+  {
+	  inst->thread->flags |= 0x800;
+	  inst->thread = 0;
+  }
+
   // if this racer is not an AI (player)
   if ((d->actionsFlagSet & 0x100000) == 0)
   {
