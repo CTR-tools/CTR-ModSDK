@@ -428,9 +428,8 @@ void StatePS1_Lobby_StartLoading()
 	howl_StopAudio(1,1,0);
 	
 	// load next level
-	sdata->gGT->gameMode1 = 0x40000000;
+	sdata->gGT->gameMode1 = LOADING | ARCADE_MODE;
 	sdata->Loading.stage = 0;
-	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
 void StatePS1_Game_WaitForRace()

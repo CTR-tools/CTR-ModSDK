@@ -668,6 +668,10 @@ void StateZero()
 	// set lap count to 3
 	gGT->numLaps = 3;
 	
+	#ifdef USE_ONLINE
+	gGT->numLaps = 1;
+	#endif
+	
 	gGT->battleSetup.enabledWeapons |= 0x34de;
 	gGT->numPlyrCurrGame = 1;
 	gGT->numPlyrNextGame = 1;

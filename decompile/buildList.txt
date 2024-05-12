@@ -561,6 +561,8 @@ common, exe, Particle_SetColors, 0x0, General/Particle/Particle_SetColors.c
 // RenderList
 // Init
 
+common, exe, PlayLevel_UpdateLapStats, 0x0, General/PlayLevel_UpdateLapStats.c
+
 common, exe, Podium_InitModels, 0x0, General/Podium/Podium_InitModels.c
 
 // THREAD (need 3 more)
