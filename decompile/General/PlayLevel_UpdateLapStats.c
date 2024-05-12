@@ -284,6 +284,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// index of driver closest to finish line
 		iVar2 = -1;
 
+		// lap index
 		iVar9 = -10;
 
 		for (iVar10 = 0; iVar10 < 8; iVar10++)
@@ -304,20 +305,22 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 				(
 					(
+						// lap index
 						iVar4 = currDriver->lapIndex - ((currDriver->actionsFlagSet & 0x1000000) != 0),
 
+						// differeent lap
 						(iVar9 < iVar4) ||
 
 						// OR
 
 						(
 							(
-								(iVar4 == iVar9) &&
+								// same lap
+								(iVar9 == iVar4) &&
 
 								// AND
 
-								// Compare distToFinish < min
-								(currDriver->distanceToFinish_curr < minDistance)
+								(minDistance > currDriver->distanceToFinish_curr)
 							)
 						)
 					)
@@ -325,8 +328,9 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			   )
 			{
 				// set new min distToFinish
-				currDriver = currDriver->distanceToFinish_curr;
+				minDistance = currDriver->distanceToFinish_curr;
 
+				// set lap index
 				iVar9 = iVar4;
 
 				// index of driver closest to finish
