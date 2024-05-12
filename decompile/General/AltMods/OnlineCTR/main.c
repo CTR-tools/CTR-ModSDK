@@ -5,6 +5,14 @@ void octr_entryHook()
 	// start-line spawn, turn BEQ to JMP
 	*(char*)0x80058072 = 0;
 	
+	// BOTS_Adv_AdjustDifficulty(); must be called before
+	// initializing any AI, either BOTS_Driver_Init or
+	// from BOTS_Driver_Convert. If AIs are wanted, then
+	// put that call in OnlineInit_Drivers, but for now
+	// just disable BOTS_Driver_Convert
+	*(int*)0x80017318 = 0x3E00008;
+	*(int*)0x8001731c = 0;
+	
 	// ======== Globals ============
 	
 	#if USE_K1 == 0
@@ -41,6 +49,9 @@ void ThreadFunc()
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
+	// only disable for no$psx testing,
+	// which can force in-game with 8000c000=LOBBY_START_LOADING
+	#if 1
 	for(i = 3; i >= 0; i--)
 		octr->time[i+1] = octr->time[i];
 	
@@ -80,6 +91,7 @@ void ThreadFunc()
 		sdata->Loading.stage = 0;
 		return;
 	}
+	#endif
 	
 	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
 	{
