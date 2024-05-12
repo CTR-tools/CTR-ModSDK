@@ -169,13 +169,6 @@ void ui60_entryHook()
 			data.metaPhys[0].value[i] = 850;
 	}
 
-	// Final Lap
-	{
-		// if PlayLevel.c initialized this to 90 (which we can't change yet),
-		// for more info, CTRL + F and search: (&DAT_8008d2a0)[iVar10] = 0x5a;
-		*(short*)0x80041718 = FPS_DOUBLE(90);
-	}
-	
 	// SelectProfile flashing orange/red
 	// for strings SAVE/LOAD/WARNING
 	{
