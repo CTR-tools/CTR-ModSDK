@@ -51,7 +51,7 @@ void ThreadFunc()
 	
 	// only disable for no$psx testing,
 	// which can force in-game with 8000c000=LOBBY_START_LOADING
-	#if 1
+	#if 0
 	for(i = 3; i >= 0; i--)
 		octr->time[i+1] = octr->time[i];
 	
