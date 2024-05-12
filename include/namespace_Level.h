@@ -464,7 +464,7 @@ struct CheckpointNode
 	short pos[3];
 	
 	// 0x6
-	short distToFinish;
+	unsigned short distToFinish;
 	
 	// 0x8
 	unsigned char nextIndex_forward;

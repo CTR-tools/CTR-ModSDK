@@ -63,14 +63,14 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				(distToFinish_prev < 1200) &&
 				(distToFinish_curr > 32000)
 			)
-		{
+		{	
 			// Set racer's distance driven backwards to zero
 			currDriver->distanceDrivenBackwards = 0;
 
 			// if driving behind startline, now not
 			if ((currDriver->actionsFlagSet & 0x1000000) != 0)
 			{
-				currDriver->actionsFlagSet &= (0x1000000);
+				currDriver->actionsFlagSet &= ~(0x1000000);
 				
 				// skip next 46 lines of code
 				goto LAB_800418b4;
@@ -224,7 +224,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			// if player did not JUST cross finish backwards
 			else
-			{
+			{	
+				unsigned int trackLen = 
+					gGT->level1->ptr_restart_points[0].distToFinish;
+				
 				if (
 					// if player did not EVER cross finish backwards
 					((currDriver->actionsFlagSet & 0x1000000) == 0) &&
@@ -233,8 +236,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						// if distance driven this frame is less than...
 						(currDriver->distanceToFinish_checkpoint - distToFinish_curr) <=
 
-						// level's distant to finish
-						((gGT->level1->ptr_restart_points[0].distToFinish >> 2) << 3)
+						// level's distance to finish
+						((trackLen >> 2) << 3)
 					)
 				   )
 				{
