@@ -13,6 +13,7 @@
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
+#include <enet/enet.h>
 
 char* pBuf;
 struct OnlineCTR* octr;
@@ -31,7 +32,7 @@ void ParseMessage()
 {
 	char recvBufFull[0x100];
 	memset(recvBufFull, 0xFF, 0x100);
-
+	
 	// if send() happens 100 times, it all gets picked up
 	// in one recv() call, so only call recv one time
 	int numBytes = recv(CtrMain.socket, recvBufFull, 0x100, 0);
@@ -305,6 +306,15 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
+	ENetAddress adress;
+
+	adress.host = ENET_HOST_ANY;
+	adress.port = 1234;
+
+	ENetHost* client;
+
+	client = enet_host_create();
+
 	struct sockaddr_in socketIn;
 	struct hostent* hostinfo;
 	int result = 0;
@@ -740,6 +750,13 @@ int main()
 		system("pause");
 		return;
 	}
+
+	//initialize enet
+	if (enet_initialize() != 0) {
+		printf(stderr, "Failed to initialize ENet.\n");
+		return 1;
+	}
+	atexit(enet_deinitialize);
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 

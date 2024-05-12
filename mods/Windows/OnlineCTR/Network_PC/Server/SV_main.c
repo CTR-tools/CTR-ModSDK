@@ -11,6 +11,8 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
+#include <enet/enet.h>
+
 struct SocketCtr
 {
 	SOCKET socket;
@@ -460,6 +462,31 @@ int main()
 	if (iResult != 0) {
 		printf("WSAStartup failed with error: %d\n", iResult);
 		system("pause");
+	}
+
+	//initialize enet
+	if (enet_initialize() != 0) {
+		printf(stderr, "Failed to initialize ENet.\n");
+		return 1;
+	}
+	atexit(enet_deinitialize);
+
+	ENetAddress address;
+	ENetHost* server;
+
+	address.host = ENET_HOST_ANY;
+	address.port = 1234;
+
+	server = enet_host_create(&address,
+		8      /* allow up to 8 clients*/,
+		2      /* allow up to 2 channels to be used, 0 and 1 */,
+		0      /* assume any amount of incoming bandwidth */,
+		0      /* assume any amount of outgoing bandwidth */);
+	if (server == NULL)
+	{
+		fprintf(stderr,
+			"An error occurred while trying to create an ENet server host.\n");
+		exit(EXIT_FAILURE);
 	}
 
 	// TCP, port 1234 (call of duty uses 27000), 
