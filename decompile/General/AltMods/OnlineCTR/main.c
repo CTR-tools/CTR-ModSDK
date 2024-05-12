@@ -204,6 +204,8 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		dr->instSelf->animFrame = FPS_DOUBLE(10);
 		#endif
 	}
+	
+	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
 void OnlineEndOfRace()

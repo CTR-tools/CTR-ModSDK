@@ -430,7 +430,6 @@ void StatePS1_Lobby_StartLoading()
 	// load next level
 	sdata->gGT->gameMode1 = 0x40000000;
 	sdata->Loading.stage = 0;
-	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
 void StatePS1_Game_WaitForRace()

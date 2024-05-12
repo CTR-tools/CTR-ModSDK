@@ -230,6 +230,10 @@ void ParseMessage()
 
 			case SG_RACEPOS:
 			{
+				// wait for drivers to be initialized
+				if (octr->CurrState < GAME_WAIT_FOR_RACE)
+					break;
+
 				struct SG_MessageRacePos* r =
 					(struct SG_MessageRacePos*)recvBuf;
 
@@ -262,6 +266,10 @@ void ParseMessage()
 
 			case SG_RACEROT:
 			{
+				// wait for drivers to be initialized
+				if (octr->CurrState < GAME_WAIT_FOR_RACE)
+					break;
+
 				struct SG_MessageRaceRot* r =
 					(struct SG_MessageRaceRot*)recvBuf;
 
