@@ -24,7 +24,7 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 int buttonPrev[8] = {0};
-char name[0xC];
+char name[100];
 
 void ParseMessage()
 {
@@ -675,8 +675,9 @@ int main()
 	printf("\n\n");
 
 	printf("Enter Your Name: ");
-	scanf_s("%s", name, sizeof(name));
+	scanf_s("%s", name, 100);
 	name[11] = 0;
+	printf("\n");
 
 	HWND console = GetConsoleWindow();
 	RECT r;
