@@ -99,6 +99,12 @@ void ThreadFunc()
 		PrintTimeStamp();
 	}
 	
+	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
+	{
+		void DrawOverheadNames();
+		DrawOverheadNames();
+	}
+	
 	if (octr->CurrState >= 0)
 		octr->funcs[octr->CurrState]();
 }
@@ -268,4 +274,73 @@ void Online_OtherFX_RecycleNew(
             OtherFX_Modify(local, modifyFlags);
         }
     }
+}
+
+struct MyData
+{
+	short World_posX;
+	short World_posY;
+	short World_posZ;
+	short World_posW;
+	
+	short Screen_posX;
+	short Screen_posY;
+	
+	int Screen_posZ;
+};
+
+void RunPerspOnDriver(struct Driver* d)
+{
+	struct MyData* ptrDest = (struct MyData*)0x1f800108;
+	ptrDest->World_posX = d->posCurr[0] >> 8;
+	ptrDest->World_posY = (d->posCurr[1] >> 8) + 0x19;
+	ptrDest->World_posZ = d->posCurr[2] >> 8;
+	ptrDest->World_posW = 0;
+	
+	gte_ldv0(&ptrDest->World_posX);
+
+	gte_rtps();
+	gte_stsxy(&ptrDest->Screen_posX);
+		
+	gte_avsz3();
+	gte_stotz(&ptrDest->Screen_posZ);
+}
+
+void DrawOverheadNames()
+{
+	int i;
+	MATRIX* m;
+
+	struct GameTracker* gGT = sdata->gGT;
+	struct MyData* ptrDest = (struct MyData*)0x1f800108;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+
+	// pushBuffer offset 0x28
+	m = &sdata->gGT->pushBuffer[0].matrix_ViewProj;
+    gte_SetRotMatrix(m);
+    gte_SetTransMatrix(m);
+	
+	RunPerspOnDriver(gGT->drivers[0]);
+
+	int p1z = ptrDest->Screen_posZ;
+
+	for(i = 1; i < octr->NumDrivers; i++)
+	{
+		RunPerspOnDriver(gGT->drivers[i]);
+		
+		if(ptrDest->Screen_posZ < (p1z))
+			continue;
+		
+		if(ptrDest->Screen_posZ > (p1z*10))
+			continue;
+
+		DecalFont_DrawLine(
+			octr->nameBuffer[i * 0xC],
+			ptrDest->Screen_posX, 
+			ptrDest->Screen_posY-0x4, 
+			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+	}
 }
