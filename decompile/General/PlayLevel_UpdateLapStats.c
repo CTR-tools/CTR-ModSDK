@@ -19,6 +19,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 	iVar9 = 0;
 	iVar13 = 0;
+	currRank = 0;
 
 	// find farthest-ahead human
 	for (int iVar9 = 0; iVar9 < 8; iVar9++)
@@ -63,14 +64,14 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				(distToFinish_prev < 1200) &&
 				(distToFinish_curr > 32000)
 			)
-		{
+		{	
 			// Set racer's distance driven backwards to zero
 			currDriver->distanceDrivenBackwards = 0;
 
 			// if driving behind startline, now not
 			if ((currDriver->actionsFlagSet & 0x1000000) != 0)
 			{
-				currDriver->actionsFlagSet &= (0x1000000);
+				currDriver->actionsFlagSet &= ~(0x1000000);
 				
 				// skip next 46 lines of code
 				goto LAB_800418b4;
@@ -224,7 +225,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			// if player did not JUST cross finish backwards
 			else
-			{
+			{	
+				unsigned int trackLen = 
+					gGT->level1->ptr_restart_points[0].distToFinish;
+				
 				if (
 					// if player did not EVER cross finish backwards
 					((currDriver->actionsFlagSet & 0x1000000) == 0) &&
@@ -233,8 +237,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						// if distance driven this frame is less than...
 						(currDriver->distanceToFinish_checkpoint - distToFinish_curr) <=
 
-						// level's distant to finish
-						((gGT->level1->ptr_restart_points[0].distToFinish >> 2) << 3)
+						// level's distance to finish
+						((trackLen >> 2) << 3)
 					)
 				   )
 				{
@@ -247,7 +251,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// if racer hasn't finished the race
 			if ((currDriver->actionsFlagSet & 0x2000000) == 0)
 			{
-				// set racer's place in race to -1
+				// set rank to "unsorted"
 				currDriver->driverRank = -1;
 
 				// skip next 5 lines of code
@@ -273,57 +277,62 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		}
 	}
 	
+	// sort all drivers that have NOT finished race
 	for (currRank; currRank < 8; currRank++)
 	{
+		if(gGT->drivers[currRank] == 0)
+			break;
+		
 		// set "min" distance to max
 		minDistance = 0x3fffffff;
 
-		// index of driver closest to finish line
+		// set "highest" lap to min
 		iVar2 = -1;
 
+		// lap index
 		iVar9 = -10;
 
+		// look for "next" farthest driver,
+		// out of all unsorted drivers remaining
 		for (iVar10 = 0; iVar10 < 8; iVar10++)
 		{
 			// get current driver
 			currDriver = gGT->drivers[iVar10];
 
+			if(currDriver == 0)
+				break;
+			
+			if(currDriver->driverRank != -1)
+				continue;
+			
+			// driver lap index
+			iVar4 = currDriver->lapIndex;
+			
+			// if drive backwards behind startline
+			if((currDriver->actionsFlagSet & 0x1000000) != 0)
+				iVar4 -= 1;
+
 			if (
-				(
-					(currDriver != 0) &&
+					// new highest lap
+					(iVar4 > iVar9) ||
 
-					// AND
+					// OR
 
-					(currDriver->driverRank == -1)
-				) &&
-
-				// AND
-
-				(
 					(
-						iVar4 = currDriver->lapIndex - ((currDriver->actionsFlagSet & 0x1000000) != 0),
+						// same lap
+						(iVar9 == iVar4) &&
 
-						(iVar9 < iVar4) ||
+						// AND
 
-						// OR
-
-						(
-							(
-								(iVar4 == iVar9) &&
-
-								// AND
-
-								// Compare distToFinish < min
-								(currDriver->distanceToFinish_curr < minDistance)
-							)
-						)
+						// new lowest distance (max progress)
+						(currDriver->distanceToFinish_curr < minDistance)
 					)
 				)
-			   )
 			{
-				// set new min distToFinish
-				currDriver = currDriver->distanceToFinish_curr;
+				// set new min distToFinish (max progress)
+				minDistance = currDriver->distanceToFinish_curr;
 
+				// highest lap
 				iVar9 = iVar4;
 
 				// index of driver closest to finish
@@ -355,11 +364,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// get pointer to each player structure
 		currDriver = gGT->drivers[iVar10];
 
-		if ((currDriver != 0) &&
+		if(currDriver == 0)
+			break;
 
-			// AND
-
-			(-1 < currDriver->driverRank))
+		// should be impossible to be -1 here
+		if(currDriver->driverRank > -1)
 		{
 			gGT->driversInRaceOrder[currDriver->driverRank] = currDriver;
 		}
@@ -371,7 +380,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		currDriver = gGT->drivers[iVar10];
 
 		if (currDriver == NULL)
-			continue;
+			break;
 
 		int currRank = currDriver->driverRank;
 
@@ -398,8 +407,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	if((gGT->drivers[0]->actionsFlagSet & 0x2000000) != 0)
 	{
 		MainGameEnd_Initialize();
-		return;
 	}
+	
+	// Ignore all other end-conditions
+	return;
 	#endif
 		
 	int numPlyr = gGT->numPlyrCurrGame;
@@ -434,7 +445,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver = gGT->drivers[currRank];
 			
 			if(currDriver == NULL)
-				continue;
+				break;
 			
 			// if driver already finished race
 			if((currDriver->actionsFlagSet & 0x2000000) != 0)

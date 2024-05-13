@@ -99,6 +99,12 @@ void ThreadFunc()
 		PrintTimeStamp();
 	}
 	
+	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
+	{
+		void DrawOverheadNames();
+		DrawOverheadNames();
+	}
+	
 	if (octr->CurrState >= 0)
 		octr->funcs[octr->CurrState]();
 }
@@ -218,4 +224,121 @@ void OnlineEndOfRace()
 	
 	// if "you" finished race,
 	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
+}
+
+void Online_OtherFX_RecycleNew(
+		u_int* soundID_Count, u_int newSoundID, u_int modifyFlags)
+{
+	struct Driver* d = sdata->gGT->drivers[0];
+	
+	if(
+		((int)soundID_Count != (int)&d->driverAudioPtrs[0]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[1]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[2]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[3])
+	  )
+	{
+		// For now, mute everyone who is not Player1.
+		// In the future, modify Vol/LR
+		return;
+	}
+	
+	int local = *soundID_Count;
+	
+    if (
+		// if this sound is already playing
+		(local != 0) &&
+
+        // if soundID doesn't match new ID
+        ((local & 0xffff) != newSoundID)
+	   )
+    {
+        OtherFX_Stop1(local);
+        
+		*soundID_Count = 0;
+		local = 0;
+    }
+
+    if (newSoundID != -1)
+    {
+        // if this is a new sound
+        if (local == 0)
+        {
+            *soundID_Count = 
+				OtherFX_Play_LowLevel(newSoundID & 0xffff, 0, modifyFlags);
+        }
+        // if not a new sound,
+        // modification of old sound
+        else
+        {
+            OtherFX_Modify(local, modifyFlags);
+        }
+    }
+}
+
+struct MyData
+{
+	short World_posX;
+	short World_posY;
+	short World_posZ;
+	short World_posW;
+	
+	short Screen_posX;
+	short Screen_posY;
+	
+	int Screen_posZ;
+};
+
+void RunPerspOnDriver(struct Driver* d)
+{
+	struct MyData* ptrDest = (struct MyData*)0x1f800108;
+	ptrDest->World_posX = d->posCurr[0] >> 8;
+	ptrDest->World_posY = (d->posCurr[1] >> 8) + 0x19;
+	ptrDest->World_posZ = d->posCurr[2] >> 8;
+	ptrDest->World_posW = 0;
+	
+	gte_ldv0(&ptrDest->World_posX);
+
+	gte_rtps();
+	gte_stsxy(&ptrDest->Screen_posX);
+	gte_stsz(&ptrDest->Screen_posZ);
+}
+
+void DrawOverheadNames()
+{
+	int i;
+	MATRIX* m;
+
+	struct GameTracker* gGT = sdata->gGT;
+	struct MyData* ptrDest = (struct MyData*)0x1f800108;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+
+	// pushBuffer offset 0x28
+	m = &sdata->gGT->pushBuffer[0].matrix_ViewProj;
+    gte_SetRotMatrix(m);
+    gte_SetTransMatrix(m);
+	
+	RunPerspOnDriver(gGT->drivers[0]);
+
+	int p1z = ptrDest->Screen_posZ;
+
+	for(i = 1; i < octr->NumDrivers; i++)
+	{
+		RunPerspOnDriver(gGT->drivers[i]);
+		
+		if(ptrDest->Screen_posZ < (p1z))
+			continue;
+		
+		if(ptrDest->Screen_posZ > (p1z*5))
+			continue;
+
+		DecalFont_DrawLine(
+			&octr->nameBuffer[i * 0xC],
+			ptrDest->Screen_posX, 
+			ptrDest->Screen_posY-0x4, 
+			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+	}
 }

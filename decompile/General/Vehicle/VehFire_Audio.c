@@ -6,6 +6,11 @@ void DECOMP_VehFire_Audio(struct Driver* driver, int speed_cap)
     u_int volume;
 	u_int extraFlags;
 
+	#ifdef USE_ONLINE
+	if(driver->driverID != 0)
+		return;
+	#endif
+
     // if turbo audio cooldown is not done
     if (driver->VehFire_AudioCooldown != 0) {
         return;

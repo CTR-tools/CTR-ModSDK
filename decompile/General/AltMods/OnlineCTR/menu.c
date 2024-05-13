@@ -47,7 +47,7 @@ struct RectMenu menu =
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
 	
-	.posX_curr = 0xC0, // X position
+	.posX_curr = 0xB0, // X position
 	.posY_curr = 0x74,  // Y position
 	
 	.unk1 = 0,
@@ -247,6 +247,7 @@ void StatePS1_Lobby_HostTrackPick()
 	}
 	
 	DrawClientCountStats();
+	DrawCharacterStats();
 	
 	// open menu, set defaults
 	if(sdata->ptrActiveMenu != &menu)
@@ -277,10 +278,15 @@ void StatePS1_Lobby_HostTrackPick()
 void StatePS1_Lobby_GuestTrackWait()
 {
 	DrawClientCountStats();
-	
+	DrawCharacterStats();
+		
 	DECOMP_DecalFont_DrawLine(
-		"Waiting for Host to Pick Track",
-		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		"waiting for host",
+		menu.posX_curr,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		
+	DECOMP_DecalFont_DrawLine(
+		"to pick the track",
+		menu.posX_curr,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void DrawRecvTrack()
@@ -307,25 +313,35 @@ void DrawCharacterStats()
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
+	sprintf(message, "Players: %d/8", octr->NumDrivers);
+	DecalFont_DrawLine(message,0x128,0x40,FONT_SMALL,0);
+	
 	for(i = 0; i < octr->NumDrivers; i++)
 	{	
+		// convert client index to local index
 		if(i == octr->DriverID) slot = 0;
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
-		
-		sprintf(message, "Client %d: %s", i, 
-			sdata->lngStrings[
-				data.MetaDataCharacters[
-					data.characterIDs[slot]
-				].name_LNG_short]);
-		
+
 		// 0x19 - red
 		// 0x1A - green
 		int color = 
 			octr->boolLockedInCharacter_Others[i] ? 
 			PLAYER_GREEN : PLAYER_RED;
-	
-		DecalFont_DrawLine(message,0x140,0x48+i*0x8,FONT_SMALL,color);
+		
+		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
+		DecalFont_DrawLine(message,0x128,0x48+i*0x8,FONT_SMALL,color);
+		
+		if(octr->CurrState < LOBBY_CHARACTER_PICK)
+			continue;
+		
+		char* characterName =
+			sdata->lngStrings[
+				data.MetaDataCharacters[
+					data.characterIDs[slot]
+				].name_LNG_short];
+				
+		DecalFont_DrawLine(characterName,0x1A8,0x48+i*0x8,FONT_SMALL,color);
 	}
 }
 
@@ -400,7 +416,8 @@ void StatePS1_Lobby_WaitForLoading()
 	// waiting for all charactesr
 	DECOMP_DecalFont_DrawLine(
 		"Hope you win!",
-		0xC0,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		menu.posX_curr,menu.posY_curr,
+		FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Lobby_StartLoading()
@@ -415,7 +432,8 @@ void StatePS1_Lobby_StartLoading()
 	
 	DECOMP_DecalFont_DrawLine(
 		"LOADING...",
-		0xC0,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		menu.posX_curr,menu.posY_curr,
+		FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 	
 	// variable reuse, wait a few frames,
 	// so screen updates with green names

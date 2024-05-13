@@ -2,38 +2,40 @@
 
 extern void *PlayerMaskGrabFuncTable[13];
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 // when falling off track
 void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 {
-    // When this function executes,
-    // mask comes down to catch you
+	#ifdef USE_ONLINE
+		#if USE_K1 == 0
+		struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+		#endif
+		
+		if(octr->boolLerpFrame[d->driverID])
+			return;
+	#endif
 
     struct GameTracker* gGT = sdata->gGT;
-
-    char i;
-    int p;
-
     struct Instance* inst = t->inst;
 
     // now being mask grabbed
     d->kartState = KS_MASK_GRABBED;
 
-    d->KartStates.MaskGrab.boolParticlesSpawned = false;
-    d->KartStates.MaskGrab.AngleAxis_NormalVec[0] = 0;
-    d->KartStates.MaskGrab.boolLiftingPlayer = false;
-
-    // reset whistle bool
-    d->KartStates.MaskGrab.boolWhistle = false;
-
-    // reset stillFalling bool
-    d->KartStates.MaskGrab.boolStillFalling = false;
-
+    d->KartStates.MaskGrab.animFrame = 0;
+    
+	// 4 bytes in a row: C, D, E, F
+	*(int*)&d->KartStates.MaskGrab.boolParticlesSpawned = 0;
+	//d->KartStates.MaskGrab.boolParticlesSpawned = false;
+    //d->KartStates.MaskGrab.boolStillFalling = false;
+    //d->KartStates.MaskGrab.boolLiftingPlayer = false;
+    //d->KartStates.MaskGrab.boolWhistle = false;
+	
     // Mask Object
     d->KartStates.MaskGrab.maskObj = VehPickupItem_MaskUseWeapon(d, 1);
-    
-	if(d->KartStates.MaskGrab.maskObj == 0)
-		printf("Error\n");
-	
+    	
     d->matrixArray = 0;
     d->matrixIndex = 0;
 
@@ -82,7 +84,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 			#endif
 
             // spawn particles
-            for (i = 10; i > 0; i--)
+            for (int i = 10; i > 0; i--)
             {
                 // 0x2138 = "falling",
                 // like splashing in water on coco park
@@ -131,7 +133,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     d->posCurr[1] = d->posPrev[1];
     d->posCurr[2] = d->posPrev[2];
 
-    for (i = 0; i < 13; i++)
+    for (int i = 0; i < 13; i++)
         d->funcPtrs[i] = PlayerMaskGrabFuncTable[i];
 
     struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;

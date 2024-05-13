@@ -25,6 +25,7 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 int buttonPrev[8] = {0};
+char name[100];
 
 ENetHost* clientHost;
 ENetPeer* serverPeer;
@@ -83,9 +84,11 @@ void ParseMessage()
 		{
 			case SG_NEWCLIENT:
 			{
+				struct SG_MessageClientStatus* r = recvBuf;
+
 				// clientID is "you"
-				octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+				octr->DriverID = r->clientID;
+				octr->NumDrivers = r->numClientsTotal;
 				
 				if (octr->CurrState = LAUNCH_FIRST_INIT)
 				{
@@ -98,8 +101,10 @@ void ParseMessage()
 			
 			case SG_DROPCLIENT:
 			{
-				int clientDropped = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+				struct SG_MessageClientStatus* r = recvBuf;
+
+				int clientDropped = r->clientID;
+				octr->NumDrivers = r->numClientsTotal;
 
 				// fix driver IDs
 				if (clientDropped == octr->DriverID) slot = 0;
@@ -131,10 +136,25 @@ void ParseMessage()
 				break;
 			}
 
+			case SG_NAME:
+			{
+				struct SG_MessageName* r = recvBuf;
+
+				int clientID = r->clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
+
+				memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
+				break;
+			}
+
 			case SG_TRACK:
 			{
+				struct SG_MessageTrack* r = recvBuf;
+
 				octr->boolLockedInTrack = 1;
-				int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
+				int trackID = r->trackID;
 				printf("Got Track: %d\n", trackID);
 
 				// set sdata->gGT->trackID
@@ -145,15 +165,17 @@ void ParseMessage()
 
 			case SG_CHARACTER:
 			{
-				int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
-				int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
+				struct SG_MessageCharacter* r = recvBuf;
+
+				int characterID = r->characterID;
+				int clientID = r->clientID;
 
 				if (clientID == octr->DriverID) slot = 0;
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
 				*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-				octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
+				octr->boolLockedInCharacter_Others[clientID] = r->boolLockedIn;
 				break;
 			}
 
@@ -174,8 +196,7 @@ void ParseMessage()
 
 			case SG_RACEINPUT:
 			{
-				struct SG_MessageRaceInput* r =
-					(struct SG_MessageRaceInput*)recvBuf;
+				struct SG_MessageRaceInput* r = recvBuf;
 
 				int clientID = r->clientID;
 				if (clientID == octr->DriverID) slot = 0;
@@ -248,8 +269,7 @@ void ParseMessage()
 				if (octr->CurrState < GAME_WAIT_FOR_RACE)
 					break;
 
-				struct SG_MessageRacePos* r =
-					(struct SG_MessageRacePos*)recvBuf;
+				struct SG_MessageRacePos* r = recvBuf;
 
 				// this one just uses ClientID directly
 				// because of how kart spawning is modified
@@ -258,23 +278,22 @@ void ParseMessage()
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
-				int psxPtr = *(int*)&pBuf[(0x8009900c + (slot*4)) & 0xffffff];
-				psxPtr &= 0xffffff;
+				// restart lerp
+				posLerpTimer[slot] = 0;
 
-				// 0x2D4, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
+				// store position, then lerp data
 
-				// 0x2D8, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
+				posNew[9 * slot + 0] = r->posX[0];
+				posNew[9 * slot + 1] = r->posX[1];
+				posNew[9 * slot + 2] = r->posX[2];
 
-				// 0x2DC, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
+				posNew[9 * slot + 3] = r->posY[0];
+				posNew[9 * slot + 4] = r->posY[1];
+				posNew[9 * slot + 5] = r->posY[2];
+
+				posNew[9 * slot + 6] = r->posZ[0];
+				posNew[9 * slot + 7] = r->posZ[1];
+				posNew[9 * slot + 8] = r->posZ[2];
 				break;
 			}
 
@@ -284,8 +303,7 @@ void ParseMessage()
 				if (octr->CurrState < GAME_WAIT_FOR_RACE)
 					break;
 
-				struct SG_MessageRaceRot* r =
-					(struct SG_MessageRaceRot*)recvBuf;
+				struct SG_MessageRaceRot* r = recvBuf;
 
 				// this one just uses ClientID directly
 				// because of how kart spawning is modified
@@ -475,6 +493,16 @@ void StatePC_Lobby_StartLoading()
 	prevHold1 = 0;
 	prevHold2 = 0;
 	boolAlreadySent_StartRace = 0;
+
+	// clear lerp buffer
+	memset(&posNew[0], 0, 8*9);
+
+	// lerp is finished (dont apply)
+	for (int i = 0; i < 8; i++)
+	{
+		posLerpTimer[i] = 5;
+		octr->boolLerpFrame[i] = 0;
+	}
 }
 
 void SendKartInput()
@@ -560,7 +588,7 @@ void SendKartRot()
 	send(CtrMain.socket, &cg, cg.size, 0);
 }
 
-void SendKartMain()
+void PostParseMessage()
 {
 	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
 
@@ -585,6 +613,58 @@ void SendKartMain()
 	}
 
 	SendKartInput();
+
+	// lerping position in PostParse immediately
+	// after getting it from Parse, then set real
+	// position one frame later
+	for (int i = 0; i < 8; i++)
+	{
+		if (posLerpTimer[i] > 1)
+			continue;
+
+		int psxPtr = *(int*)&pBuf[(0x8009900c + (i * 4)) & 0xffffff];
+		psxPtr &= 0xffffff;
+
+		unsigned char nextPos[12];
+		memcpy(&nextPos[0], &pBuf[psxPtr + 0x2d4], 12);
+
+		// 0x2D4, drop bottom byte
+		nextPos[1] = posNew[i * 9 + 0];
+		nextPos[2] = posNew[i * 9 + 1];
+		nextPos[3] = posNew[i * 9 + 2];
+
+		// 0x2D8, drop bottom byte
+		nextPos[5] = posNew[i * 9 + 3];
+		nextPos[6] = posNew[i * 9 + 4];
+		nextPos[7] = posNew[i * 9 + 5];
+
+		// 0x2DC, drop bottom byte
+		nextPos[9]  = posNew[i * 9 + 6];
+		nextPos[10] = posNew[i * 9 + 7];
+		nextPos[11] = posNew[i * 9 + 8];
+
+		// half-lerp on first frame
+		if (posLerpTimer[i] == 0)
+		{
+			posLerpTimer[i]++;
+			octr->boolLerpFrame[i] = 1;
+
+			*(int*)&pBuf[psxPtr + 0x2d4] = (*(int*)&pBuf[psxPtr + 0x2d4] + *(int*)&nextPos[0]) / 2;
+			*(int*)&pBuf[psxPtr + 0x2d8] = (*(int*)&pBuf[psxPtr + 0x2d8] + *(int*)&nextPos[4]) / 2;
+			*(int*)&pBuf[psxPtr + 0x2dc] = (*(int*)&pBuf[psxPtr + 0x2dc] + *(int*)&nextPos[8]) / 2;
+		}
+
+		// full-set on second frame
+		if (posLerpTimer[i] == 0)
+		{
+			posLerpTimer[i]++;
+			octr->boolLerpFrame[i] = 0;
+
+			*(int*)&pBuf[psxPtr + 0x2d4] = *(int*)&nextPos[0];
+			*(int*)&pBuf[psxPtr + 0x2d8] = *(int*)&nextPos[4];
+			*(int*)&pBuf[psxPtr + 0x2dc] = *(int*)&nextPos[8];
+		}
+	}
 }
 
 void StatePC_Game_WaitForRace()
@@ -602,14 +682,14 @@ void StatePC_Game_WaitForRace()
 		send(CtrMain.socket, &cg, cg.size, 0);
 	}
 
-	SendKartMain();
+	PostParseMessage();
 }
 
 void StatePC_Game_StartRace()
 {
 	ParseMessage();
 
-	SendKartMain();
+	PostParseMessage();
 }
 
 void (*ClientState[]) () =
@@ -637,6 +717,11 @@ int main()
 	printf("\n");
 	printf(__TIME__);
 	printf("\n\n");
+
+	printf("Enter Your Name: ");
+	scanf_s("%s", name, 100);
+	name[11] = 0;
+	printf("\n");
 
 	HWND console = GetConsoleWindow();
 	RECT r;

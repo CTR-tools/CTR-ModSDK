@@ -17,6 +17,7 @@ struct SocketCtr
 {
 	SOCKET socket;
 
+	char name[0xC];
 	char characterID;
 	char boolLoadSelf;
 	char boolRaceSelf;
@@ -142,168 +143,151 @@ void ProcessReceiveDataEvent(ENetPeer* peer, ENetPacket* packet) {
 
 	struct CG_Header* recvBuf = packet->data;
 
-	// switch will compile into a jmp table, no funcPtrs needed
-	switch (((struct CG_Header*)recvBuf)->type)
-	{
-		case CG_TRACK:
+		char sgBuffer[16];
+		memset(sgBuffer, 0, 16);
+
+		int sendAll = 1;
+
+		// switch will compile into a jmp table, no funcPtrs needed
+		switch (((struct CG_Header*)recvBuf)->type)
 		{
-			// clients can only connect during track selection,
-			// once the Client Gives CG_TRACK to server, close it
-			boolTakingConnections = 0;
+			case CG_NAME:
+			{
+				struct SG_MessageName* s = &sgBuffer[0];
+				struct CG_MessageName* r = recvBuf;
 
-			int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
+				// save new name
+				memcpy(&CtrClient[i].name[0], &r->name[0], 12);
+				printf("%d: %s\n", i, r->name);
 
-			struct SG_MessageTrack mt;
-			mt.type = SG_TRACK;
-			mt.size = sizeof(struct CG_MessageTrack);
-			mt.trackID = trackID;
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
 
-			// set peers to loading
+				// send all OTHER names to THIS client
+				for (int j = 0; j < 8; j++)
+				{
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						s->clientID = j;
+						memcpy(&s->name[0], &CtrClient[j].name[0], 12);
+
+						// clieint[i] gets 8 messages,
+						// dont send 1 message to all [j]
+						send(CtrClient[i].socket, s, s->size, 0);
+					}
+				}
+
+				// send THIS name to all OTHER clients
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
+				s->clientID = i;
+				memcpy(&s->name[0], &CtrClient[i].name[0], 12);
+				break;
+			}
+
+			case CG_TRACK:
+			{
+				// clients can only connect during track selection,
+				// once the Client Gives CG_TRACK to server, close it
+				boolTakingConnections = 0;
+
+				struct SG_MessageTrack* s = &sgBuffer[0];
+				struct CG_MessageTrack* r = recvBuf;
+
+				s->type = SG_TRACK;
+				s->size = sizeof(struct CG_MessageTrack);
+				s->trackID = r->trackID;
+				break;
+			}
+
+			case CG_CHARACTER:
+			{
+				struct SG_MessageCharacter* s = &sgBuffer[0];
+				struct CG_MessageCharacter* r = recvBuf;
+
+				s->type = SG_CHARACTER;
+				s->size = sizeof(struct SG_MessageCharacter);
+				s->clientID = i;
+				s->characterID = r->characterID;
+				s->boolLockedIn = r->boolLockedIn;
+
+				CtrClient[i].characterID = s->characterID;
+				CtrClient[i].boolLoadSelf = s->boolLockedIn;
+				break;
+			}
+
+			case CG_STARTRACE:
+			{
+				printf("Ready to race: %d\n", i);
+				CtrClient[i].boolRaceSelf = 1;
+				sendAll = 0;
+				break;
+			}
+
+			case CG_RACEINPUT:
+			{
+				struct SG_MessageRaceInput* s = &sgBuffer[0];
+				struct CG_MessageRaceInput* r = recvBuf;
+
+				s->type = SG_RACEINPUT;
+				s->size = sizeof(struct SG_MessageRaceInput);
+				s->clientID = i;
+				s->buttonHold = r->buttonHold;
+				break;
+			}
+
+			case CG_RACEPOS:
+			{
+				struct SG_MessageRacePos* s = &sgBuffer[0];
+				struct CG_MessageRacePos* r = recvBuf;
+
+				s->type = SG_RACEPOS;
+				s->size = sizeof(struct SG_MessageRacePos);
+				s->clientID = i;
+				memcpy(&s->posX[0], &r->posX[0], 9);
+				break;
+			}
+
+			case CG_RACEROT:
+			{
+				struct SG_MessageRaceRot* s = &sgBuffer[0];
+				struct CG_MessageRaceRot* r = recvBuf;
+
+				s->type = SG_RACEROT;
+				s->size = sizeof(struct SG_MessageRaceRot);
+				s->clientID = i;
+				s->kartRot1 = r->kartRot1;
+				s->kartRot2 = r->kartRot2;
+				break;
+			}
+
+			default:
+			{
+				break;
+			}
+		}
+
+		if (sendAll)
+		{
+			struct SG_Header* s = &sgBuffer[0];
+
+			// send a message all other clients
 			for (int j = 0; j < 8; j++)
 			{
 				if (
-					// skip empty peers
-					peerInfos[j].peer
+					// skip empty sockets, skip self
+					(CtrClient[j].socket != 0) &&
+					(i != j)
 					)
 				{
-					peerInfos[j].boolLoadSelf = 0;
+					send(CtrClient[j].socket, s, s->size, 0);
 				}
 			}
-
-			broadcastToPeersReliable(&mt, mt.size);
-			break;
 		}
-
-		case CG_CHARACTER:
-		{
-			struct SG_MessageCharacter mg;
-			mg.type = SG_CHARACTER;
-			mg.size = sizeof(struct SG_MessageCharacter);
-
-			mg.clientID = peerID;
-			mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
-			mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
-
-			peerInfos[peerID].characterID = mg.characterID;
-			peerInfos[peerID].boolLoadSelf = mg.characterID;
-
-			broadcastToPeersReliable(&mg, mg.size);
-			break;
-		}
-
-		case CG_STARTRACE:
-		{
-			printf("Ready to race: %d\n", peerID);
-			peerInfos[peerID].boolRaceSelf = 1;
-			break;
-		}
-
-		case CG_RACEINPUT:
-		{
-			struct SG_MessageRaceInput mg;
-			mg.type = SG_RACEINPUT;
-			mg.size = sizeof(struct SG_MessageRaceInput);
-
-			mg.clientID = peerID;
-
-			struct CG_MessageRaceInput* r =
-				(struct CG_MessageRaceInput*)recvBuf;
-
-			mg.buttonHold = r->buttonHold;
-
-			broadcastToPeersUnreliable(&mg, mg.size);
-			break;
-		}
-
-		case CG_RACEPOS:
-		{
-			struct SG_MessageRacePos mg;
-			mg.type = SG_RACEPOS;
-			mg.size = sizeof(struct SG_MessageRacePos);
-
-			mg.clientID = peerID;
-
-			struct CG_MessageRacePos* r =
-				(struct CG_MessageRacePos*)recvBuf;
-
-			memcpy(&mg.posX[0], &r->posX[0], 9);
-
-			broadcastToPeersUnreliable(&mg, mg.size);
-			break;
-		}
-
-		case CG_RACEROT:
-		{
-			struct SG_MessageRaceRot mg;
-			mg.type = SG_RACEROT;
-			mg.size = sizeof(struct SG_MessageRaceRot);
-
-			mg.clientID = peerID;
-
-			struct CG_MessageRaceRot* r =
-				(struct CG_MessageRaceRot*)recvBuf;
-
-			mg.kartRot1 = r->kartRot1;
-			mg.kartRot2 = r->kartRot2;
-
-			broadcastToPeersUnreliable(&mg, mg.size);
-			break;
-		}
-
-		default:
-			break;
-	}
-
-	enet_packet_destroy(packet);
-	/* Clean up the packet now that we're done using it. */
-}
-
-void ProcessNewMessages() {
-	ENetEvent event;
-	while (enet_host_service(server, &event, 0) > 0) {
-		printf("rec\n");
-		switch (event.type) {
-			case ENET_EVENT_TYPE_RECEIVE:
-				ProcessReceiveDataEvent(event.peer, event.packet);
-				break;
-			case ENET_EVENT_TYPE_CONNECT:
-				printf("new connection incoming\n");
-				ProcessConnectEvent(event.peer);
-				break;
-			case ENET_EVENT_TYPE_DISCONNECT:
-				printf("Connection disconnected from %u:%u.\n", event.peer->address.host, event.peer->address.port);
-				remove_peer(&event.peer);
-				break;
-		}
-	}
-}
-
-#if 0
-void Disconnect(int i)
-{
-	// need to use closesocket, FD_CLR, and memset &CtrClient[i],
-	// that's why this bugged out before, come back to it later
-
-	clientCount--;
-	printf("Disconnected %d, now %d remain\n", i, clientCount);
- 
-	for (int j = i; j < clientCount; j++)
-	{
-		memcpy(&CtrClient[j], &CtrClient[j+1], sizeof(struct SocketCtr));
-	}
-
-	// clear last
-	memset(&CtrClient[clientCount], 0, sizeof(struct SocketCtr));
-
-	// Send ClientID and clientCount back to all clients
-	for (int j = 0; j < clientCount; j++)
-	{
-		struct SG_MessageClientStatus mw;
-		mw.type = SG_DROPCLIENT;
-		mw.size = sizeof(struct SG_MessageClientStatus);
-		mw.clientID = i;
-		mw.numClientsTotal = clientCount;
-		send(CtrClient[j].socket, &mw, mw.size, 0);
 	}
 }
 #endif
