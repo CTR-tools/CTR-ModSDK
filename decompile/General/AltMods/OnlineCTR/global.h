@@ -43,6 +43,9 @@ struct OnlineCTR
 	char boolLockedInCharacter_Others[8];
 
 	// 0x48
+	char nameBuffer[0xC*8];
+
+	// 0xA8
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
@@ -58,6 +61,7 @@ enum ServerGiveMessageType
 	SG_DROPCLIENT,
 
 	// lobby
+	SG_NAME,
 	SG_TRACK,
 	SG_CHARACTER,
 
@@ -81,8 +85,6 @@ struct SG_Header
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
-	
-	// 8 bits total (1 byte)
 };
 
 // sent to each user when someone connects
@@ -95,8 +97,31 @@ struct SG_MessageClientStatus
 	// 1-15 for client, and total
 	unsigned char clientID : 4;
 	unsigned char numClientsTotal : 4;
+};
+
+// get name from any client
+struct SG_MessageName
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	// index 0 - 7
+	unsigned char clientID : 3;
+	unsigned char padding : 5;
+
+	char name[0xC];
+};
+
+// get track, assigned by host
+struct SG_MessageTrack
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
 	
-	// 16 bits total (2 bytes)
+	// track ID
+	unsigned char trackID : 8;
 };
 
 // assign character,
@@ -112,21 +137,6 @@ struct SG_MessageCharacter
 	unsigned char clientID : 3;
 	unsigned char boolLockedIn : 1;
 	unsigned char characterID : 4;
-
-	// 16 bits total (2 byte)
-};
-
-// get track, assigned by host
-struct SG_MessageTrack
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
-	
-	// track ID
-	unsigned char trackID : 8;
-	
-	// 16 bits total (2 bytes)
 };
 
 struct SG_MessageRaceInput
@@ -140,7 +150,6 @@ struct SG_MessageRaceInput
 	unsigned char padding : 5;
 
 	unsigned char buttonHold;
-	// 3 bytes
 };
 
 struct SG_MessageRacePos
@@ -156,7 +165,6 @@ struct SG_MessageRacePos
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
-	// 11 bytes
 };
 
 struct SG_MessageRaceRot
@@ -169,10 +177,10 @@ struct SG_MessageRaceRot
 	unsigned char clientID : 3;
 	unsigned char kartRot1 : 5;
 	char kartRot2;
-	// 3 bytes
 };
 
 static_assert(sizeof(struct SG_Header) == 1);
+static_assert(sizeof(struct SG_MessageName) == 14);
 static_assert(sizeof(struct SG_MessageCharacter) == 2);
 static_assert(sizeof(struct SG_MessageTrack) == 2);
 static_assert(sizeof(struct SG_MessageRaceInput) == 3);
@@ -184,8 +192,9 @@ static_assert(sizeof(struct SG_MessageRaceRot) == 3);
 enum ClientGiveMessageType
 {
 	// lobby
-	CG_CHARACTER,
+	CG_NAME,
 	CG_TRACK,
+	CG_CHARACTER,
 
 	// sync
 	CG_STARTRACE,
@@ -206,8 +215,26 @@ struct CG_Header
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
+};
+
+struct CG_MessageName
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	char name[0xC];
+};
+
+// get track, assigned by host
+struct CG_MessageTrack
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
 	
-	// 8 bits total (1 byte)
+	// track ID
+	unsigned char trackID : 8;
 };
 
 // character message
@@ -222,21 +249,6 @@ struct CG_MessageCharacter
 	unsigned char characterID : 4;
 	unsigned char boolLockedIn : 1;
 	unsigned char padding : 3;
-
-	// 16 bits total (2 bytes)
-};
-
-// get track, assigned by host
-struct CG_MessageTrack
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
-	
-	// track ID
-	unsigned char trackID : 8;
-	
-	// 16 bits total (2 bytes)
 };
 
 struct CG_MessageRaceInput
@@ -246,7 +258,6 @@ struct CG_MessageRaceInput
 	unsigned char size : 4;
 
 	unsigned char buttonHold;
-	// 2 bytes
 };
 
 struct CG_MessageRacePos
@@ -258,7 +269,6 @@ struct CG_MessageRacePos
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
-	// 10 bytes
 };
 
 struct CG_MessageRaceRot
@@ -269,10 +279,10 @@ struct CG_MessageRaceRot
 
 	unsigned char kartRot1;
 	unsigned char kartRot2;
-	// 3 bytes
 };
 
 static_assert(sizeof(struct CG_Header) == 1);
+static_assert(sizeof(struct CG_MessageName) == 13);
 static_assert(sizeof(struct CG_MessageCharacter) == 2);
 static_assert(sizeof(struct CG_MessageTrack) == 2);
 static_assert(sizeof(struct CG_MessageRaceInput) == 2);

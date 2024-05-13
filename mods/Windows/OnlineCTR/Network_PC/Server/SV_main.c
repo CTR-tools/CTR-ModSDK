@@ -15,6 +15,7 @@ struct SocketCtr
 {
 	SOCKET socket;
 
+	char name[0xC];
 	char characterID;
 	char boolLoadSelf;
 	char boolRaceSelf;
@@ -191,65 +192,79 @@ void ParseMessage(int i)
 		//printf("%d %d %d %d\n", numBytes, offset, recvBuf->size, recvBuf->type);
 		offset += recvBuf->size;
 
+		char sgBuffer[16];
+		memset(sgBuffer, 0, 16);
+
+		int sendAll = 1;
+
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct CG_Header*)recvBuf)->type)
 		{
+			case CG_NAME:
+			{
+				struct SG_MessageName* s = &sgBuffer[0];
+				struct CG_MessageName* r = recvBuf;
+
+				// save new name
+				memcpy(&CtrClient[i].name[0], &r->name[0], 12);
+
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
+
+				// send all OTHER names to THIS client
+				for (int j = 0; j < 8; j++)
+				{
+					if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+						)
+					{
+						s->clientID = j;
+						memcpy(&s->name[0], &CtrClient[j].name[0], 12);
+
+						// clieint[i] gets 8 messages,
+						// dont send 1 message to all [j]
+						send(CtrClient[i].socket, s, s->size, 0);
+					}
+				}
+
+				// send THIS name to all OTHER clients
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
+				s->clientID = i;
+				memcpy(&s->name[0], &CtrClient[i].name[0], 12);
+				break;
+			}
+
 			case CG_TRACK:
 			{
 				// clients can only connect during track selection,
 				// once the Client Gives CG_TRACK to server, close it
 				boolTakingConnections = 0;
 
-				int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
+				struct SG_MessageTrack* s = &sgBuffer[0];
+				struct CG_MessageTrack* r = recvBuf;
 
-				struct SG_MessageTrack mt;
-				mt.type = SG_TRACK;
-				mt.size = sizeof(struct CG_MessageTrack);
-				mt.trackID = trackID;
-
-				// send a message all other clients
-				for (int j = 0; j < 8; j++)
-				{
-					if (
-						// skip empty sockets, skip self
-						(CtrClient[j].socket != 0) &&
-						(i != j)
-						)
-					{
-						CtrClient[j].boolLoadSelf = 0;
-						send(CtrClient[j].socket, &mt, mt.size, 0);
-					}
-				}
-
+				s->type = SG_TRACK;
+				s->size = sizeof(struct CG_MessageTrack);
+				s->trackID = r->trackID;
 				break;
 			}
 
 			case CG_CHARACTER:
 			{
-				struct SG_MessageCharacter mg;
-				mg.type = SG_CHARACTER;
-				mg.size = sizeof(struct SG_MessageCharacter);
+				struct SG_MessageCharacter* s = &sgBuffer[0];
+				struct CG_MessageCharacter* r = recvBuf;
 
-				mg.clientID = i;
-				mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
-				mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
+				s->type = SG_CHARACTER;
+				s->size = sizeof(struct SG_MessageCharacter);
+				s->clientID = i;
+				s->characterID = r->characterID;
+				s->boolLockedIn = r->boolLockedIn;
 
-				CtrClient[i].characterID = mg.characterID;
-				CtrClient[i].boolLoadSelf = mg.boolLockedIn;
-
-				// send a message all other clients
-				for (int j = 0; j < 8; j++)
-				{
-					if (
-						// skip empty sockets, skip self
-						(CtrClient[j].socket != 0) &&
-						(i != j)
-						)
-					{
-						send(CtrClient[j].socket, &mg, mg.size, 0);
-					}
-				}
-
+				CtrClient[i].characterID = s->characterID;
+				CtrClient[i].boolLoadSelf = s->boolLockedIn;
 				break;
 			}
 
@@ -257,100 +272,69 @@ void ParseMessage(int i)
 			{
 				printf("Ready to race: %d\n", i);
 				CtrClient[i].boolRaceSelf = 1;
+				sendAll = 0;
 				break;
 			}
 
 			case CG_RACEINPUT:
 			{
-				struct SG_MessageRaceInput mg;
-				mg.type = SG_RACEINPUT;
-				mg.size = sizeof(struct SG_MessageRaceInput);
+				struct SG_MessageRaceInput* s = &sgBuffer[0];
+				struct CG_MessageRaceInput* r = recvBuf;
 
-				mg.clientID = i;
-
-				struct CG_MessageRaceInput* r =
-					(struct CG_MessageRaceInput*)recvBuf;
-
-				mg.buttonHold = r->buttonHold;
-
-				// send a message all other clients
-				for (int j = 0; j < 8; j++)
-				{
-					if (
-						// skip empty sockets, skip self
-						(CtrClient[j].socket != 0) &&
-						(i != j)
-						)
-					{
-						send(CtrClient[j].socket, &mg, mg.size, 0);
-					}
-				}
-
+				s->type = SG_RACEINPUT;
+				s->size = sizeof(struct SG_MessageRaceInput);
+				s->clientID = i;
+				s->buttonHold = r->buttonHold;
 				break;
 			}
 
 			case CG_RACEPOS:
 			{
-				struct SG_MessageRacePos mg;
-				mg.type = SG_RACEPOS;
-				mg.size = sizeof(struct SG_MessageRacePos);
+				struct SG_MessageRacePos* s = &sgBuffer[0];
+				struct CG_MessageRacePos* r = recvBuf;
 
-				mg.clientID = i;
-
-				struct CG_MessageRacePos* r =
-					(struct CG_MessageRacePos*)recvBuf;
-
-				memcpy(&mg.posX[0], &r->posX[0], 9);
-
-
-				// send a message all other clients
-				for (int j = 0; j < 8; j++)
-				{
-					if (
-						// skip empty sockets, skip self
-						(CtrClient[j].socket != 0) &&
-						(i != j)
-						)
-					{
-						send(CtrClient[j].socket, &mg, mg.size, 0);
-					}
-				}
-
+				s->type = SG_RACEPOS;
+				s->size = sizeof(struct SG_MessageRacePos);
+				s->clientID = i;
+				memcpy(&s->posX[0], &r->posX[0], 9);
 				break;
 			}
 
 			case CG_RACEROT:
 			{
-				struct SG_MessageRaceRot mg;
-				mg.type = SG_RACEROT;
-				mg.size = sizeof(struct SG_MessageRaceRot);
+				struct SG_MessageRaceRot* s = &sgBuffer[0];
+				struct CG_MessageRaceRot* r = recvBuf;
 
-				mg.clientID = i;
-
-				struct CG_MessageRaceRot* r =
-					(struct CG_MessageRaceRot*)recvBuf;
-
-				mg.kartRot1 = r->kartRot1;
-				mg.kartRot2 = r->kartRot2;
-
-				// send a message all other clients
-				for (int j = 0; j < 8; j++)
-				{
-					if (
-						// skip empty sockets, skip self
-						(CtrClient[j].socket != 0) &&
-						(i != j)
-						)
-					{
-						send(CtrClient[j].socket, &mg, mg.size, 0);
-					}
-				}
-
+				s->type = SG_RACEROT;
+				s->size = sizeof(struct SG_MessageRaceRot);
+				s->clientID = i;
+				s->kartRot1 = r->kartRot1;
+				s->kartRot2 = r->kartRot2;
 				break;
 			}
 
-		default:
-			break;
+			default:
+			{
+				break;
+			}
+		}
+
+		if (sendAll)
+		{
+			struct SG_Header* s = &sgBuffer[0];
+
+			// send a message all other clients
+			for (int j = 0; j < 8; j++)
+			{
+				if (
+					// skip empty sockets, skip self
+					(CtrClient[j].socket != 0) &&
+					(i != j)
+					)
+				{
+					send(CtrClient[j].socket, s, s->size, 0);
+				}
+			}
 		}
 	}
 }

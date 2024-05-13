@@ -309,11 +309,15 @@ void DrawCharacterStats()
 	
 	for(i = 0; i < octr->NumDrivers; i++)
 	{	
+		// convert client index to local index
 		if(i == octr->DriverID) slot = 0;
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
 		
-		sprintf(message, "Client %d: %s", i, 
+		sprintf(message, "%s: %s",
+
+			&octr->nameBuffer[slot * 0xc],
+		
 			sdata->lngStrings[
 				data.MetaDataCharacters[
 					data.characterIDs[slot]

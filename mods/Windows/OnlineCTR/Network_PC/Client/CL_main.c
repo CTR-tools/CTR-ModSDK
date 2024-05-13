@@ -24,6 +24,7 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 int buttonPrev[8] = {0};
+char name[0xC];
 
 void ParseMessage()
 {
@@ -69,9 +70,11 @@ void ParseMessage()
 		{
 			case SG_NEWCLIENT:
 			{
+				struct SG_MessageClientStatus* r = recvBuf;
+
 				// clientID is "you"
-				octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+				octr->DriverID = r->clientID;
+				octr->NumDrivers = r->numClientsTotal;
 				
 				if (octr->CurrState = LAUNCH_FIRST_INIT)
 				{
@@ -84,8 +87,10 @@ void ParseMessage()
 			
 			case SG_DROPCLIENT:
 			{
-				int clientDropped = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
-				octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+				struct SG_MessageClientStatus* r = recvBuf;
+
+				int clientDropped = r->clientID;
+				octr->NumDrivers = r->numClientsTotal;
 
 				// fix driver IDs
 				if (clientDropped == octr->DriverID) slot = 0;
@@ -117,10 +122,25 @@ void ParseMessage()
 				break;
 			}
 
+			case SG_NAME:
+			{
+				struct SG_MessageName* r = recvBuf;
+
+				int clientID = r->clientID;
+				if (clientID == octr->DriverID) slot = 0;
+				if (clientID < octr->DriverID) slot = clientID + 1;
+				if (clientID > octr->DriverID) slot = clientID;
+
+				memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
+				break;
+			}
+
 			case SG_TRACK:
 			{
+				struct SG_MessageTrack* r = recvBuf;
+
 				octr->boolLockedInTrack = 1;
-				int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
+				int trackID = r->trackID;
 				printf("Got Track: %d\n", trackID);
 
 				// set sdata->gGT->trackID
@@ -131,15 +151,17 @@ void ParseMessage()
 
 			case SG_CHARACTER:
 			{
-				int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
-				int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
+				struct SG_MessageCharacter* r = recvBuf;
+
+				int characterID = r->characterID;
+				int clientID = r->clientID;
 
 				if (clientID == octr->DriverID) slot = 0;
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
 				*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-				octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
+				octr->boolLockedInCharacter_Others[clientID] = r->boolLockedIn;
 				break;
 			}
 
@@ -160,8 +182,7 @@ void ParseMessage()
 
 			case SG_RACEINPUT:
 			{
-				struct SG_MessageRaceInput* r =
-					(struct SG_MessageRaceInput*)recvBuf;
+				struct SG_MessageRaceInput* r = recvBuf;
 
 				int clientID = r->clientID;
 				if (clientID == octr->DriverID) slot = 0;
@@ -234,8 +255,7 @@ void ParseMessage()
 				if (octr->CurrState < GAME_WAIT_FOR_RACE)
 					break;
 
-				struct SG_MessageRacePos* r =
-					(struct SG_MessageRacePos*)recvBuf;
+				struct SG_MessageRacePos* r = recvBuf;
 
 				// this one just uses ClientID directly
 				// because of how kart spawning is modified
@@ -270,8 +290,7 @@ void ParseMessage()
 				if (octr->CurrState < GAME_WAIT_FOR_RACE)
 					break;
 
-				struct SG_MessageRaceRot* r =
-					(struct SG_MessageRaceRot*)recvBuf;
+				struct SG_MessageRaceRot* r = recvBuf;
 
 				// this one just uses ClientID directly
 				// because of how kart spawning is modified
@@ -379,6 +398,17 @@ void StatePC_Launch_EnterIP()
 
 	int flag = 1;
 	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
+
+	// write name to slot[0]
+	*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
+	*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
+	*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
+
+	struct CG_MessageName m;
+	m.type = CG_NAME;
+	m.size = sizeof(struct CG_MessageName);
+	memcpy(&m.name[0], &name[0], 0xC);
+	send(CtrMain.socket, &m, m.size, 0);
 
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
@@ -643,6 +673,10 @@ int main()
 	printf("\n");
 	printf(__TIME__);
 	printf("\n\n");
+
+	printf("Enter Your Name: ");
+	scanf_s("%s", name, sizeof(name));
+	name[11] = 0;
 
 	HWND console = GetConsoleWindow();
 	RECT r;
