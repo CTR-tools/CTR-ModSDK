@@ -374,7 +374,7 @@ common, exe, Music_GetHighestSongPlayIndex, 0x0, General/HOWL/h118_Music_GetHigh
 // GTE_AudioLR_Inst 
 // GTE_AudioLR_Driver 
 // GTE_GetSquaredLength
-// OtherFX_RecycleNew
+common, exe, OtherFX_RecycleNew, 0x0, General/HOWL/h122_OtherFX_RecycleNew.c
 // OtherFX_RecycleMute
 // OtherFX_DriverCrashing
 // GTE_GetSquaredDistance
