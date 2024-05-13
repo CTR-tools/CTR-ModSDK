@@ -26,6 +26,9 @@ struct SocketCtr CtrMain;
 int buttonPrev[8] = {0};
 char name[100];
 
+int posLerpTimer[8];
+unsigned char posNew[8*9];
+
 void ParseMessage()
 {
 	char recvBufFull[0x100];
@@ -264,23 +267,22 @@ void ParseMessage()
 				if (clientID < octr->DriverID) slot = clientID + 1;
 				if (clientID > octr->DriverID) slot = clientID;
 
-				int psxPtr = *(int*)&pBuf[(0x8009900c + (slot*4)) & 0xffffff];
-				psxPtr &= 0xffffff;
+				// restart lerp
+				posLerpTimer[slot] = 0;
 
-				// 0x2D4, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
+				// store position, then lerp data
 
-				// 0x2D8, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
+				posNew[9 * slot + 0] = r->posX[0];
+				posNew[9 * slot + 1] = r->posX[1];
+				posNew[9 * slot + 2] = r->posX[2];
 
-				// 0x2DC, drop bottom byte
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
-				*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
+				posNew[9 * slot + 3] = r->posY[0];
+				posNew[9 * slot + 4] = r->posY[1];
+				posNew[9 * slot + 5] = r->posY[2];
+
+				posNew[9 * slot + 6] = r->posZ[0];
+				posNew[9 * slot + 7] = r->posZ[1];
+				posNew[9 * slot + 8] = r->posZ[2];
 				break;
 			}
 
@@ -511,6 +513,13 @@ void StatePC_Lobby_StartLoading()
 	prevHold1 = 0;
 	prevHold2 = 0;
 	boolAlreadySent_StartRace = 0;
+
+	// clear lerp buffer
+	memset(&posNew[0], 0, 8*9);
+
+	// lerp is finished (dont apply)
+	for (int i = 0; i < 8; i++)
+		posLerpTimer[i] = 5;
 }
 
 void SendKartInput()
@@ -596,7 +605,7 @@ void SendKartRot()
 	send(CtrMain.socket, &cg, cg.size, 0);
 }
 
-void SendKartMain()
+void PostParseMessage()
 {
 	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
 
@@ -621,6 +630,56 @@ void SendKartMain()
 	}
 
 	SendKartInput();
+
+	// lerping position in PostParse immediately
+	// after getting it from Parse, then set real
+	// position one frame later
+	for (int i = 0; i < 8; i++)
+	{
+		if (posLerpTimer[i] > 1)
+			continue;
+
+		int psxPtr = *(int*)&pBuf[(0x8009900c + (i * 4)) & 0xffffff];
+		psxPtr &= 0xffffff;
+
+		unsigned char nextPos[12];
+		memcpy(&nextPos[0], &pBuf[psxPtr + 0x2d4], 12);
+
+		// 0x2D4, drop bottom byte
+		nextPos[1] = posNew[i * 9 + 0];
+		nextPos[2] = posNew[i * 9 + 1];
+		nextPos[3] = posNew[i * 9 + 2];
+
+		// 0x2D8, drop bottom byte
+		nextPos[5] = posNew[i * 9 + 3];
+		nextPos[6] = posNew[i * 9 + 4];
+		nextPos[7] = posNew[i * 9 + 5];
+
+		// 0x2DC, drop bottom byte
+		nextPos[9]  = posNew[i * 9 + 6];
+		nextPos[10] = posNew[i * 9 + 7];
+		nextPos[11] = posNew[i * 9 + 8];
+
+		// half-lerp on first frame
+		if (posLerpTimer[i] == 0)
+		{
+			posLerpTimer[i]++;
+
+			*(int*)&pBuf[psxPtr + 0x2d4] = (*(int*)&pBuf[psxPtr + 0x2d4] + *(int*)&nextPos[0]) / 2;
+			*(int*)&pBuf[psxPtr + 0x2d8] = (*(int*)&pBuf[psxPtr + 0x2d8] + *(int*)&nextPos[4]) / 2;
+			*(int*)&pBuf[psxPtr + 0x2dc] = (*(int*)&pBuf[psxPtr + 0x2dc] + *(int*)&nextPos[8]) / 2;
+		}
+
+		// full-set on second frame
+		if (posLerpTimer[i] == 0)
+		{
+			posLerpTimer[i]++;
+
+			*(int*)&pBuf[psxPtr + 0x2d4] = *(int*)&nextPos[0];
+			*(int*)&pBuf[psxPtr + 0x2d8] = *(int*)&nextPos[4];
+			*(int*)&pBuf[psxPtr + 0x2dc] = *(int*)&nextPos[8];
+		}
+	}
 }
 
 void StatePC_Game_WaitForRace()
@@ -638,14 +697,14 @@ void StatePC_Game_WaitForRace()
 		send(CtrMain.socket, &cg, cg.size, 0);
 	}
 
-	SendKartMain();
+	PostParseMessage();
 }
 
 void StatePC_Game_StartRace()
 {
 	ParseMessage();
 
-	SendKartMain();
+	PostParseMessage();
 }
 
 void (*ClientState[]) () =
