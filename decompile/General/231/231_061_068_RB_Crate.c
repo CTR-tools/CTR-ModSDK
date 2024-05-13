@@ -284,6 +284,11 @@ int DECOMP_RB_CrateWeapon_LInC(
 			return 1;
 		}
 		
+		#ifdef USE_ONLINE
+		if(driver != sdata->gGT->drivers[0])
+			return;
+		#endif
+		
 		// == give driver weapon ==
 		
 		// set weapon to roulette

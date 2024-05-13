@@ -219,3 +219,53 @@ void OnlineEndOfRace()
 	// if "you" finished race,
 	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
 }
+
+void Online_OtherFX_RecycleNew(
+		u_int* soundID_Count, u_int newSoundID, u_int modifyFlags)
+{
+	struct Driver* d = sdata->gGT->drivers[0];
+	
+	if(
+		((int)soundID_Count != (int)&d->driverAudioPtrs[0]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[1]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[2]) &&
+		((int)soundID_Count != (int)&d->driverAudioPtrs[3])
+	  )
+	{
+		// For now, mute everyone who is not Player1.
+		// In the future, modify Vol/LR
+		return;
+	}
+	
+	int local = *soundID_Count;
+	
+    if (
+		// if this sound is already playing
+		(local != 0) &&
+
+        // if soundID doesn't match new ID
+        ((local & 0xffff) != newSoundID)
+	   )
+    {
+        OtherFX_Stop1(local);
+        
+		*soundID_Count = 0;
+		local = 0;
+    }
+
+    if (newSoundID != -1)
+    {
+        // if this is a new sound
+        if (local == 0)
+        {
+            *soundID_Count = 
+				OtherFX_Play_LowLevel(newSoundID & 0xffff, 0, modifyFlags);
+        }
+        // if not a new sound,
+        // modification of old sound
+        else
+        {
+            OtherFX_Modify(local, modifyFlags);
+        }
+    }
+}
