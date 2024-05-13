@@ -126,7 +126,7 @@ void octr_initHook()
 	struct GameTracker* gGT = sdata->gGT;
 	if(gGT->levelID <= TURBO_TRACK)
 	{
-		VehBirth_TeleportSelf(gGT->drivers[0],3,0);
+		DECOMP_CAM_StartOfRace(&gGT->cameraDC[0]);
 		gGT->gameMode1 |= START_OF_RACE;
 		gGT->hudFlags &= ~(1);
 	}
