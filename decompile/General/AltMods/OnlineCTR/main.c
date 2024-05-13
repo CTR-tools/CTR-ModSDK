@@ -51,7 +51,7 @@ void ThreadFunc()
 	
 	// only disable for no$psx testing,
 	// which can force in-game with 8000c000=LOBBY_START_LOADING
-	#if 1
+	#if 0
 	for(i = 3; i >= 0; i--)
 		octr->time[i+1] = octr->time[i];
 	
@@ -121,6 +121,14 @@ void octr_initHook()
 	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
 	
 	sdata->lngStrings[0x17D] = "OnlineCTR";
+	
+	struct GameTracker* gGT = sdata->gGT;
+	if(gGT->levelID < TURBO_TRACK)
+	{
+		VehBirth_TeleportSelf(gGT->drivers[0],3,0);
+		gGT->gameMode1 |= START_OF_RACE;
+		gGT->hudFlags &= ~(1);
+	}
 }
 
 // replace MainInit_Drivers

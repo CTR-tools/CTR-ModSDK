@@ -691,8 +691,17 @@ void StatePC_Game_WaitForRace()
 {
 	ParseMessage();
 
-	if (!boolAlreadySent_StartRace)
+	int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
+
+	if (
+			// only send once
+			(!boolAlreadySent_StartRace) &&
+			
+			// after camera fly-in is done
+			((gGT_gameMode1 & 0x40) == 0)
+		)
 	{
+		printf("Ready to Race\n");
 		boolAlreadySent_StartRace = 1;
 
 		struct CG_Header cg;
