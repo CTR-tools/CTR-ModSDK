@@ -455,6 +455,9 @@ void StatePS1_Game_WaitForRace()
 	struct GameTracker* gGT = sdata->gGT;
 	gGT->trafficLightsTimer = 0xf40;
 	
+	if((gGT->gameMode1 & START_OF_RACE) != 0)
+		return;
+	
 	// Copy from DrawUnpluggedMsg
 	
 	int posY;
