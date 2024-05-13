@@ -44,8 +44,11 @@ struct OnlineCTR
 
 	// 0x48
 	char nameBuffer[0xC*8];
-
+	
 	// 0xA8
+	char boolLerpFrame[8];
+
+	// 0xB0
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes

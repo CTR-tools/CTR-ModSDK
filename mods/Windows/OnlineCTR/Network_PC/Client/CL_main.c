@@ -519,7 +519,10 @@ void StatePC_Lobby_StartLoading()
 
 	// lerp is finished (dont apply)
 	for (int i = 0; i < 8; i++)
+	{
 		posLerpTimer[i] = 5;
+		octr->boolLerpFrame[i] = 0;
+	}
 }
 
 void SendKartInput()
@@ -664,6 +667,7 @@ void PostParseMessage()
 		if (posLerpTimer[i] == 0)
 		{
 			posLerpTimer[i]++;
+			octr->boolLerpFrame[i] = 1;
 
 			*(int*)&pBuf[psxPtr + 0x2d4] = (*(int*)&pBuf[psxPtr + 0x2d4] + *(int*)&nextPos[0]) / 2;
 			*(int*)&pBuf[psxPtr + 0x2d8] = (*(int*)&pBuf[psxPtr + 0x2d8] + *(int*)&nextPos[4]) / 2;
@@ -674,6 +678,7 @@ void PostParseMessage()
 		if (posLerpTimer[i] == 0)
 		{
 			posLerpTimer[i]++;
+			octr->boolLerpFrame[i] = 0;
 
 			*(int*)&pBuf[psxPtr + 0x2d4] = *(int*)&nextPos[0];
 			*(int*)&pBuf[psxPtr + 0x2d8] = *(int*)&nextPos[4];
