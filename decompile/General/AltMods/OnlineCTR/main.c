@@ -301,9 +301,7 @@ void RunPerspOnDriver(struct Driver* d)
 
 	gte_rtps();
 	gte_stsxy(&ptrDest->Screen_posX);
-		
-	gte_avsz3();
-	gte_stotz(&ptrDest->Screen_posZ);
+	gte_stsz(&ptrDest->Screen_posZ);
 }
 
 void DrawOverheadNames()
@@ -334,11 +332,11 @@ void DrawOverheadNames()
 		if(ptrDest->Screen_posZ < (p1z))
 			continue;
 		
-		if(ptrDest->Screen_posZ > (p1z*10))
+		if(ptrDest->Screen_posZ > (p1z*5))
 			continue;
 
 		DecalFont_DrawLine(
-			octr->nameBuffer[i * 0xC],
+			&octr->nameBuffer[i * 0xC],
 			ptrDest->Screen_posX, 
 			ptrDest->Screen_posY-0x4, 
 			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
