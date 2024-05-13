@@ -26,6 +26,19 @@ struct SocketCtr
 struct SocketCtr CtrMain;
 int buttonPrev[8] = {0};
 
+ENetHost* clientHost;
+ENetPeer* serverPeer;
+
+void sendToHostUnreliable(const void* data, size_t size) {
+	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
+	enet_peer_send(serverPeer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
+}
+
+void sendToHostReliable(const void* data, size_t size) {
+	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
+	enet_peer_send(serverPeer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
+}
+
 void ParseMessage()
 {
 	char recvBufFull[0x100];
@@ -312,84 +325,56 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
-	ENetAddress adress;
+	ENetHost* test;
+	test = enet_host_create(NULL /* create a client host */,
+		1 /* only allow 1 outgoing connection */,
+		2 /* allow up 2 channels to be used, 0 and 1 */,
+		0 /* assume any amount of incoming bandwidth */,
+		0 /* assume any amount of outgoing bandwidth */);
 
-	adress.host = ENET_HOST_ANY;
+	if (test == NULL)
+	{
+		fprintf(stderr,
+			"An error occurred while trying to create an ENet client host.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	ENetEvent event;
+	/* Initiate the connection, allocating the two channels 0 and 1. */
+	serverPeer = NULL;
+
+	ENetAddress adress;
 	adress.port = 1234;
 
-	ENetHost* client;
+	enet_address_set_host(&adress, "127.0.0.1");
 
-	client = enet_host_create();
+	serverPeer = enet_host_connect(test, &adress, 2, 0);
 
-	struct sockaddr_in socketIn;
-	struct hostent* hostinfo;
-	int result = 0;
+	if (serverPeer == NULL) {
+		fprintf(stderr, "No available peers for initiating an ENet connection.\n");
+		exit(EXIT_FAILURE);
+	}
 
-	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(1234);
-
-	// Try Niko's IP, then only enter manually
-	// if this server is not open (temporary test)
-	socketIn.sin_addr.S_un.S_un_b.s_b1 = 24;
-	socketIn.sin_addr.S_un.S_un_b.s_b2 = 187;
-	socketIn.sin_addr.S_un.S_un_b.s_b3 = 10;
-	socketIn.sin_addr.S_un.S_un_b.s_b4 = 49;
-
-	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	result = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
-
-	if ((result < 0) || CtrMain.socket == INVALID_SOCKET)
-	{
-		char ip[100];
-
-		printf("\n");
-		printf("Enter IP Address: ");
-		scanf_s("%s", ip, sizeof(ip));
-
-		hostinfo = gethostbyname(ip);
-		if (hostinfo == NULL)
-		{
-			printf("Unknown host\n");
-			octr->CurrState = LAUNCH_CONNECT_FAILED;
-			return;
-		}
-
-		socketIn.sin_addr = *(struct in_addr*)hostinfo->h_addr;
-		printf("URL converts to IP: %d.%d.%d.%d\n",
-			socketIn.sin_addr.S_un.S_un_b.s_b1,
-			socketIn.sin_addr.S_un.S_un_b.s_b2,
-			socketIn.sin_addr.S_un.S_un_b.s_b3,
-			socketIn.sin_addr.S_un.S_un_b.s_b4);
-
-		// Create a SOCKET for connecting to server
-		CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-		// Setup the TCP listening socket
-		result = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
-
-
-		// failed connection
-		if (result < 0)
-		{
-			printf("WSAGetLastError: %d\n", WSAGetLastError());
-			octr->CurrState = LAUNCH_CONNECT_FAILED;
-			return;
-		}
-
-		// failed connection
-		if (CtrMain.socket == INVALID_SOCKET)
-		{
-			octr->CurrState = LAUNCH_CONNECT_FAILED;
-			return;
-		}
+	/* Wait up to 5 seconds for the connection attempt to succeed. */
+	if (enet_host_service(test, &event, 5000) > 0 &&
+		event.type == ENET_EVENT_TYPE_CONNECT) {
+		printf("Connection to server succeeded.\n");
+		const char* message = "Hello, Server!";
+		size_t messageSize = strlen(message) + 1;
+		sendToHostReliable(message, messageSize);
+		ENetPacket* packet = enet_packet_create(&message, messageSize, ENET_PACKET_FLAG_RELIABLE);
+		enet_peer_send(serverPeer, 0, packet);
+		printf("sent test packet");
+	} else {
+		/* Either the 5 seconds are up or a disconnect event was */
+		/* received. Reset the peer in the event the 5 seconds   */
+		/* had run out without any significant event.            */
+		enet_peer_reset(serverPeer);
+		puts("Connection to server failed.");
+		octr->CurrState = LAUNCH_CONNECT_FAILED;
+		return;
 	}
 	
-	unsigned long nonBlocking = 1;
-	ioctlsocket(CtrMain.socket, FIONBIO, &nonBlocking);
-
-	int flag = 1;
-	setsockopt(CtrMain.socket, IPPROTO_TCP, TCP_NODELAY, &flag, sizeof(int));
-
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
 }
@@ -425,8 +410,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
-
-	send(CtrMain.socket, &mt, mt.size, 0);
+	sendToHostReliable(&mt, mt.size);
 
 	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
@@ -762,6 +746,51 @@ int main()
 		return 1;
 	}
 	atexit(enet_deinitialize);
+
+	ENetHost* test;
+	test = enet_host_create(NULL /* create a client host */,
+		1 /* only allow 1 outgoing connection */,
+		2 /* allow up 2 channels to be used, 0 and 1 */,
+		0 /* assume any amount of incoming bandwidth */,
+		0 /* assume any amount of outgoing bandwidth */);
+
+	if (test == NULL)
+	{
+		fprintf(stderr,
+			"An error occurred while trying to create an ENet client host.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	ENetEvent event;
+	/* Initiate the connection, allocating the two channels 0 and 1. */
+	serverPeer = NULL;
+
+	ENetAddress adress;
+	adress.port = 1234;
+
+	enet_address_set_host(&adress, "127.0.0.1");
+
+	serverPeer = enet_host_connect(test, &adress, 2, 0);
+
+	if (serverPeer == NULL) {
+		fprintf(stderr, "No available peers for initiating an ENet connection.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Wait up to 5 seconds for the connection attempt to succeed. */
+	if (enet_host_service(test, &event, 5000) > 0 &&
+		event.type == ENET_EVENT_TYPE_CONNECT) {
+		printf("Connection to server succeeded.\n");
+	}
+	else {
+		/* Either the 5 seconds are up or a disconnect event was */
+		/* received. Reset the peer in the event the 5 seconds   */
+		/* had run out without any significant event.            */
+		enet_peer_reset(serverPeer);
+		puts("Connection to server failed.");
+		octr->CurrState = LAUNCH_CONNECT_FAILED;
+		return;
+	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
