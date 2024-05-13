@@ -115,8 +115,6 @@ void CheckNewClients()
 				mw.numClientsTotal = clientCount;
 				send(CtrClient[j].socket, &mw, mw.size, 0);
 			}
-
-			printf("ClientCount: %d\n", clientCount);
 		}
 	}
 }
@@ -207,6 +205,7 @@ void ParseMessage(int i)
 
 				// save new name
 				memcpy(&CtrClient[i].name[0], &r->name[0], 12);
+				printf("%d: %s\n", i, r->name);
 
 				s->type = SG_NAME;
 				s->size = sizeof(struct SG_MessageName);
