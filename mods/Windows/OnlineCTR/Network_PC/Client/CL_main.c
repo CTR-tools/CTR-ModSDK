@@ -265,6 +265,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
 
+
+			break;
+		}
+
 	default:
 		break;
 	}

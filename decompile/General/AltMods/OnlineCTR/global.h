@@ -262,29 +262,7 @@ struct CG_EverythingKart
 	unsigned char posY[3];
 	unsigned char posZ[3];
 
-//	// byte[13-14]
-//
-//	// uncompessed driver->0x394
-//	unsigned char kartRot3;
-//	unsigned char kartRot4;
-//
-//	// byte[15-16]
-//
-//	// uncomprssed driver->0x396
-//	unsigned char kartRot5;
-//	unsigned char kartRot6;
-//
-//	// byte[17-18]
-//
-//	unsigned char kartSpeed1;
-//	unsigned char kartSpeed2;
-
-	// 19 bytes total
-
-	// We then take 0x394, 0x396, and 0x38C,
-	// let the psx code call VehPhysForce_ConvertSpeedToVec,
-	// and then game engine finds component speed, so that
-	// you dont fall through flooor
+	// 13 bytes
 };
 
 static_assert(sizeof(struct CG_Header) == 1);
