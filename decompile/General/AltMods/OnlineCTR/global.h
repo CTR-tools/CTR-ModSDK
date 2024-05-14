@@ -27,28 +27,32 @@ struct OnlineCTR
 	// 0x0
 	int CurrState;
 	int IsBootedPS1;
-	int PageNumber;
-	int CountPressX;
+	
+	// 0x8
+	char PageNumber;
+	char CountPressX;
+	char NumDrivers;
+	char DriverID;
+	
+	// 0xc
+	char boolLockedInTrack;
+	char boolLockedInCharacter;
+	char boolLockedInLap;
+	char lapID;
 	
 	// 0x10
-	int NumDrivers;
-	int DriverID;
-	int boolLockedInTrack;
-	int boolLockedInCharacter;
-	
+	char time[8];
+
+	// 0x18
+	char boolLockedInCharacters[8];
+
 	// 0x20
-	int time[8];
-
-	// 0x40
-	char boolLockedInCharacter_Others[8];
-
-	// 0x48
 	char nameBuffer[0xC*8];
 	
-	// 0xA8
+	// 0x80
 	char boolLerpFrame[8];
 
-	// 0xB0
+	// 0x88
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
@@ -317,6 +321,8 @@ void StatePC_Game_StartRace();
 
 #if USE_K1 == 1
 register struct OnlineCTR* octr asm("k1");
+#else
+static struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 #endif
 
 // my functions

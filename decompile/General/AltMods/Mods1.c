@@ -2,8 +2,11 @@
 #ifndef REBUILD_PC
 #ifdef USE_ONLINE
 #include "OnlineCTR/global.h"
-#include "OnlineCTR/main.c"
+#include "OnlineCTR/hooks.c"
 #include "OnlineCTR/menu.c"
+#include "OnlineCTR/names3d.c"
+#include "OnlineCTR/states.c"
+#include "OnlineCTR/thread.c"
 #endif
 #endif
 

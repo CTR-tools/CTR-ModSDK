@@ -79,7 +79,7 @@ void ParseMessage()
 				octr->DriverID = r->clientID;
 				octr->NumDrivers = r->numClientsTotal;
 				
-				if (octr->CurrState = LAUNCH_FIRST_INIT)
+				if (octr->CurrState == LAUNCH_FIRST_INIT)
 				{
 					// choose to get host menu or guest menu
 					octr->CurrState = LOBBY_ASSIGN_ROLE;
@@ -105,8 +105,8 @@ void ParseMessage()
 					*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
 						*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
 
-					octr->boolLockedInCharacter_Others[i] =
-						octr->boolLockedInCharacter_Others[i + 1];
+					octr->boolLockedInCharacters[i] =
+						octr->boolLockedInCharacters[i + 1];
 				}
 
 				// clientID is the client disconnected
@@ -169,7 +169,7 @@ void ParseMessage()
 				if (clientID > octr->DriverID) slot = clientID;
 
 				*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-				octr->boolLockedInCharacter_Others[clientID] = r->boolLockedIn;
+				octr->boolLockedInCharacters[clientID] = r->boolLockedIn;
 				break;
 			}
 
@@ -442,8 +442,12 @@ void StatePC_Lobby_HostTrackPick()
 {
 	ParseMessage();
 
-	if (!octr->boolLockedInTrack) return;
+	// boolLockedInLap gets set after
+	// boolLockedInTrack already sets
+	if (!octr->boolLockedInLap)
+		return;
 
+	printf("%d %d\n", octr->boolLockedInTrack, octr->boolLockedInLap);
 	printf("Sending Track to Server\n");
 
 	struct CG_MessageTrack mt;
@@ -452,6 +456,10 @@ void StatePC_Lobby_HostTrackPick()
 
 	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
+	mt.lapID = octr->lapID;
+
+	// sdata->gGT->numLaps
+	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (mt.lapID * 2) + 1;
 
 	send(CtrMain.socket, &mt, mt.size, 0);
 
@@ -478,7 +486,7 @@ void StatePC_Lobby_CharacterPick()
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-	mc.boolLockedIn = octr->boolLockedInCharacter;
+	mc.boolLockedIn = octr->boolLockedInCharacters[octr->DriverID];
 
 	if(
 		(prev_characterID != mc.characterID) ||
