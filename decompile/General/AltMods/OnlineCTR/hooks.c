@@ -15,15 +15,13 @@ void octr_entryHook()
 	
 	// ======== Globals ============
 	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#else
+	#if USE_K1 == 1
 	octr = 0x8000C000;
 	#endif
 	
 	// default for first LEV, before gameplay
-	octr->DriverID = 0;
-	octr->NumDrivers = 8;
+	memset(octr, 0, sizeof(struct OnlineCTR));
+	octr->NumDrivers = 1;
 	octr->IsBootedPS1 = 1;
 
 	// FSM for menus
@@ -41,86 +39,25 @@ void octr_entryHook()
 	octr->funcs[GAME_START_RACE] = StatePS1_Game_StartRace;
 }
 
-void ThreadFunc()
-{
-	int i;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-	
-	// only disable for no$psx testing,
-	// which can force in-game with 8000c000=LOBBY_START_LOADING
-	#if 1
-	for(i = 3; i >= 0; i--)
-		octr->time[i+1] = octr->time[i];
-	
-	for(i = 3; i >= 0; i--)
-		if(octr->time[i+1] != octr->time[i])
-			break;
-	
-	// if client didn't update the game in 4 frames
-	int boolCloseClient = 
-		(i == -1) &&
-		(octr->CurrState >= LAUNCH_FIRST_INIT);
-		
-	// if server disconnects mid-game
-	// (currState < 0)
-	
-	if(boolCloseClient || (octr->CurrState < 0))
-	{
-		// reset, including CurrState
-		memset(octr, 0, sizeof(struct OnlineCTR));
-		
-		// Draw Black Screen
-		DECOMP_CTR_ErrorScreen(0,0,0);
-		
-		sdata->ptrActiveMenu = 0;
-		octr_entryHook();
-		
-		// go back to empty black screen
-		sdata->gGT->levelID = 0x32;
-		
-		// stop music, 
-		// stop "most FX", let menu FX ring
-		Music_Stop();
-		howl_StopAudio(1,1,0);
-	
-		// load next level
-		sdata->gGT->gameMode1 = 0x40000000;
-		sdata->Loading.stage = 0;
-		return;
-	}
-	#endif
-	
-	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
-	{
-		void PrintTimeStamp();
-		PrintTimeStamp();
-	}
-	
-	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
-	{
-		void DrawOverheadNames();
-		DrawOverheadNames();
-	}
-	
-	if (octr->CurrState >= 0)
-		octr->funcs[octr->CurrState]();
-}
-
 // this runs after the end of MainInit_FinalizeInit,
 // which is also after the end of camera initialization
 void octr_initHook()
 {
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
+	void ThreadFunc();
 	
 	// small stack pool, pause thread (those threads can't pause)
 	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
 	
 	sdata->lngStrings[0x17D] = "OnlineCTR";
+	sdata->lngStrings[0x4e] = "OnlineCTR";
+	
+	struct GameTracker* gGT = sdata->gGT;
+	if(gGT->levelID <= TURBO_TRACK)
+	{
+		DECOMP_CAM_StartOfRace(&gGT->cameraDC[0]);
+		gGT->gameMode1 |= START_OF_RACE;
+		gGT->hudFlags &= ~(1);
+	}
 }
 
 // replace MainInit_Drivers
@@ -129,11 +66,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	int i;
 	int bitFlag;
 	struct Driver* dr;
-
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-
+	
 	for(i = 0; i < 8; i++)
 	{
 		gGT->drivers[i] = 0;
@@ -274,71 +207,4 @@ void Online_OtherFX_RecycleNew(
             OtherFX_Modify(local, modifyFlags);
         }
     }
-}
-
-struct MyData
-{
-	short World_posX;
-	short World_posY;
-	short World_posZ;
-	short World_posW;
-	
-	short Screen_posX;
-	short Screen_posY;
-	
-	int Screen_posZ;
-};
-
-void RunPerspOnDriver(struct Driver* d)
-{
-	struct MyData* ptrDest = (struct MyData*)0x1f800108;
-	ptrDest->World_posX = d->posCurr[0] >> 8;
-	ptrDest->World_posY = (d->posCurr[1] >> 8) + 0x19;
-	ptrDest->World_posZ = d->posCurr[2] >> 8;
-	ptrDest->World_posW = 0;
-	
-	gte_ldv0(&ptrDest->World_posX);
-
-	gte_rtps();
-	gte_stsxy(&ptrDest->Screen_posX);
-	gte_stsz(&ptrDest->Screen_posZ);
-}
-
-void DrawOverheadNames()
-{
-	int i;
-	MATRIX* m;
-
-	struct GameTracker* gGT = sdata->gGT;
-	struct MyData* ptrDest = (struct MyData*)0x1f800108;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-
-	// pushBuffer offset 0x28
-	m = &sdata->gGT->pushBuffer[0].matrix_ViewProj;
-    gte_SetRotMatrix(m);
-    gte_SetTransMatrix(m);
-	
-	RunPerspOnDriver(gGT->drivers[0]);
-
-	int p1z = ptrDest->Screen_posZ;
-
-	for(i = 1; i < octr->NumDrivers; i++)
-	{
-		RunPerspOnDriver(gGT->drivers[i]);
-		
-		if(ptrDest->Screen_posZ < (p1z))
-			continue;
-		
-		if(ptrDest->Screen_posZ > (p1z*5))
-			continue;
-
-		DecalFont_DrawLine(
-			&octr->nameBuffer[i * 0xC],
-			ptrDest->Screen_posX, 
-			ptrDest->Screen_posY-0x4, 
-			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-	}
 }

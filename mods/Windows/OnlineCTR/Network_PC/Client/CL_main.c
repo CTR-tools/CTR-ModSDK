@@ -150,7 +150,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->boolLockedInCharacter_Others[clientID] = r->boolLockedIn;
 			break;
 		}
-
+      
 		case SG_STARTLOADING:
 		{
 			// variable reuse, wait a few frames,
@@ -419,8 +419,12 @@ void StatePC_Lobby_HostTrackPick()
 {
 	ProcessNewMessages();
 
-	if (!octr->boolLockedInTrack) return;
+	// boolLockedInLap gets set after
+	// boolLockedInTrack already sets
+	if (!octr->boolLockedInLap)
+		return;
 
+	printf("%d %d\n", octr->boolLockedInTrack, octr->boolLockedInLap);
 	printf("Sending Track to Server\n");
 
 	struct CG_MessageTrack mt;
@@ -429,6 +433,11 @@ void StatePC_Lobby_HostTrackPick()
 
 	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
+	mt.lapID = octr->lapID;
+
+	// sdata->gGT->numLaps
+	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (mt.lapID * 2) + 1;
+
 	sendToHostReliable(&mt, mt.size);
 
 	octr->CurrState = LOBBY_CHARACTER_PICK;
@@ -454,7 +463,7 @@ void StatePC_Lobby_CharacterPick()
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-	mc.boolLockedIn = octr->boolLockedInCharacter;
+	mc.boolLockedIn = octr->boolLockedInCharacters[octr->DriverID];
 
 	if(
 		(prev_characterID != mc.characterID) ||
@@ -673,8 +682,17 @@ void StatePC_Game_WaitForRace()
 {
 	ProcessNewMessages();
 
-	if (!boolAlreadySent_StartRace)
+	int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
+
+	if (
+			// only send once
+			(!boolAlreadySent_StartRace) &&
+			
+			// after camera fly-in is done
+			((gGT_gameMode1 & 0x40) == 0)
+		)
 	{
+		printf("Ready to Race\n");
 		boolAlreadySent_StartRace = 1;
 
 		struct CG_Header cg;

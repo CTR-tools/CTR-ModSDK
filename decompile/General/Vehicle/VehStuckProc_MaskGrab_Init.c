@@ -9,13 +9,9 @@ extern void *PlayerMaskGrabFuncTable[13];
 // when falling off track
 void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 {
-	#ifdef USE_ONLINE
-		#if USE_K1 == 0
-		struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-		#endif
-		
-		if(octr->boolLerpFrame[d->driverID])
-			return;
+	#ifdef USE_ONLINE		
+	if(octr->boolLerpFrame[d->driverID])
+		return;
 	#endif
 
     struct GameTracker* gGT = sdata->gGT;

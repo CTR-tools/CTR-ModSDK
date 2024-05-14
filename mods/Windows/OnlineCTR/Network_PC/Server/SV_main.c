@@ -220,6 +220,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->type = SG_TRACK;
 			s->size = sizeof(struct CG_MessageTrack);
 			s->trackID = r->trackID;
+			s->lapID = r->lapID;
+			s->boolAllowWeapons = r->boolAllowWeapons;
 
 			broadcastToPeersReliable(s, s->size);
 			break;
