@@ -445,8 +445,21 @@ void StatePS1_Lobby_StartLoading()
 	Music_Stop();
 	howl_StopAudio(1,1,0);
 	
-	// load next level
-	sdata->gGT->gameMode1 = LOADING | ARCADE_MODE;
+	struct GameTracker* gGT = sdata->gGT;
+	
+	// for battle tracks
+	gGT->gameMode1 = LOADING | BATTLE_MODE;
+	
+	if(
+		(gGT->levelID <= TURBO_TRACK) ||
+		(gGT->levelID >= GEM_STONE_VALLEY)
+	  )
+	{
+		// for all other tracks
+		gGT->gameMode1 = LOADING | ARCADE_MODE;
+	}
+	
+	// start loading
 	sdata->Loading.stage = 0;
 }
 

@@ -248,6 +248,8 @@ void ParseMessage(int i)
 				s->type = SG_TRACK;
 				s->size = sizeof(struct CG_MessageTrack);
 				s->trackID = r->trackID;
+				s->lapID = r->lapID;
+				s->boolAllowWeapons = r->boolAllowWeapons;
 				break;
 			}
 
