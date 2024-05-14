@@ -88,8 +88,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
 					*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
 
-				octr->boolLockedInCharacter_Others[i] =
-					octr->boolLockedInCharacter_Others[i + 1];
+				octr->boolLockedInCharacters[i] =
+					octr->boolLockedInCharacters[i + 1];
 			}
 
 			// clientID is the client disconnected
@@ -147,7 +147,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID > octr->DriverID) slot = clientID;
 
 			*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-			octr->boolLockedInCharacter_Others[clientID] = r->boolLockedIn;
+			octr->boolLockedInCharacters[clientID] = r->boolLockedIn;
 			break;
 		}
       
@@ -359,7 +359,9 @@ void StatePC_Launch_EnterIP()
 	ENetAddress adress;
 	adress.port = 1234;
 
-	enet_address_set_host(&adress, "127.0.0.1");
+	// Try Niko's IP, then only enter manually
+	// if this server is not open (temporary test)
+	enet_address_set_host(&adress, "24.187.10.49");
 
 	serverPeer = enet_host_connect(clientHost, &adress, 2, 0);
 
@@ -375,7 +377,23 @@ void StatePC_Launch_EnterIP()
 	} else {
 		/* Either the 5 seconds are up or a disconnect event was */
 		/* received. Reset the peer in the event the 5 seconds   */
-		/* had run out without any significant event.            */
+		/* had run out without any significant eventevent.            */
+		char ip[100];
+
+		printf("\n");
+		printf("Enter IP Address: ");
+		scanf_s("%s", ip, sizeof(ip));
+
+		enet_address_set_host(&adress, &ip);
+
+
+		serverPeer = enet_host_connect(clientHost, &adress, 2, 0);
+
+		if (serverPeer == NULL) {
+			fprintf(stderr, "No available peers for initiating an ENet connection.\n");
+			exit(EXIT_FAILURE);
+		}
+
 		enet_peer_reset(serverPeer);
 		puts("Connection to server failed.");
 		octr->CurrState = LAUNCH_CONNECT_FAILED;

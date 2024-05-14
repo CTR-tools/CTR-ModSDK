@@ -443,7 +443,7 @@ int main()
 	atexit(enet_deinitialize);
 
 	ENetAddress address;
-	enet_address_set_host(&address, "127.0.0.1");
+	address.host = ENET_HOST_ANY;
 	address.port = 1234;
 	server = enet_host_create(&address,
 		8      /* allow up to 8 clients*/,
