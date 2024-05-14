@@ -48,9 +48,6 @@ struct OnlineCTR
 
 	// 0x20
 	char nameBuffer[0xC*8];
-	
-	// 0x80
-	char boolLerpFrame[8];
 
 	// 0x88
 	// function pointers MUST come last,
@@ -77,9 +74,7 @@ enum ServerGiveMessageType
 	SG_STARTRACE,
 
 	// gameplay
-	SG_RACEINPUT,
-	SG_RACEPOS,
-	SG_RACEROT,
+	SG_RACEDATA,
 
 	//SG_ENDRACE,
 	
@@ -147,53 +142,40 @@ struct SG_MessageCharacter
 	unsigned char characterID : 4;
 };
 
-struct SG_MessageRaceInput
+struct SG_EverythingKart
 {
+	// byte[0]
+
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
 
-	// index 0 - 7
+	// byte[1-2]
+
 	unsigned char clientID : 3;
-	unsigned char padding : 5;
+
+	// bit-compressed driver->0x39A
+	unsigned char kartRot1 : 5;
+	unsigned char kartRot2;
+
+	// byte[3]
 
 	unsigned char buttonHold;
-};
 
-struct SG_MessageRacePos
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
-
-	// index 0 - 7
-	unsigned char clientID : 3;
-	unsigned char padding : 5;
+	// byte[4-12]
 
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
-};
 
-struct SG_MessageRaceRot
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
-
-	// index 0 - 7
-	unsigned char clientID : 3;
-	unsigned char kartRot1 : 5;
-	char kartRot2;
+	// 13 bytes
 };
 
 static_assert(sizeof(struct SG_Header) == 1);
 static_assert(sizeof(struct SG_MessageName) == 14);
 static_assert(sizeof(struct SG_MessageCharacter) == 2);
 static_assert(sizeof(struct SG_MessageTrack) == 2);
-static_assert(sizeof(struct SG_MessageRaceInput) == 3);
-static_assert(sizeof(struct SG_MessageRacePos) == 11);
-static_assert(sizeof(struct SG_MessageRaceRot) == 3);
+static_assert(sizeof(struct SG_EverythingKart) == 13);
 
 
 
@@ -208,9 +190,7 @@ enum ClientGiveMessageType
 	CG_STARTRACE,
 	
 	// gameplay
-	CG_RACEINPUT,
-	CG_RACEPOS,
-	CG_RACEROT,
+	CG_RACEDATA,
 
 	//CG_ENDRACE,
 
@@ -260,43 +240,58 @@ struct CG_MessageCharacter
 	unsigned char padding : 3;
 };
 
-struct CG_MessageRaceInput
+struct CG_EverythingKart
 {
+	// byte[0]
+
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
+
+	// bit-compressed driver->0x39A
+	unsigned char kartRot1;
+	unsigned char kartRot2;
+
+	// byte[3]
 
 	unsigned char buttonHold;
-};
 
-struct CG_MessageRacePos
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
+	// byte[4-12]
 
 	unsigned char posX[3];
 	unsigned char posY[3];
 	unsigned char posZ[3];
-};
 
-struct CG_MessageRaceRot
-{
-	// 15 types, 15 bytes max
-	unsigned char type : 4;
-	unsigned char size : 4;
+//	// byte[13-14]
+//
+//	// uncompessed driver->0x394
+//	unsigned char kartRot3;
+//	unsigned char kartRot4;
+//
+//	// byte[15-16]
+//
+//	// uncomprssed driver->0x396
+//	unsigned char kartRot5;
+//	unsigned char kartRot6;
+//
+//	// byte[17-18]
+//
+//	unsigned char kartSpeed1;
+//	unsigned char kartSpeed2;
 
-	unsigned char kartRot1;
-	unsigned char kartRot2;
+	// 19 bytes total
+
+	// We then take 0x394, 0x396, and 0x38C,
+	// let the psx code call VehPhysForce_ConvertSpeedToVec,
+	// and then game engine finds component speed, so that
+	// you dont fall through flooor
 };
 
 static_assert(sizeof(struct CG_Header) == 1);
 static_assert(sizeof(struct CG_MessageName) == 13);
 static_assert(sizeof(struct CG_MessageCharacter) == 2);
 static_assert(sizeof(struct CG_MessageTrack) == 2);
-static_assert(sizeof(struct CG_MessageRaceInput) == 2);
-static_assert(sizeof(struct CG_MessageRacePos) == 10);
-static_assert(sizeof(struct CG_MessageRaceRot) == 3);
+static_assert(sizeof(struct CG_EverythingKart) == 13);
 
 // my functions
 void StatePC_Launch_EnterPID();

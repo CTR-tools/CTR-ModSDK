@@ -272,5 +272,4 @@ void StatePS1_Game_WaitForRace()
 
 void StatePS1_Game_StartRace()
 {
-	// deal with weapons
 }

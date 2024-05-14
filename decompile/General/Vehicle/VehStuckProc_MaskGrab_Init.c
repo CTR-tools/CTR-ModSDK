@@ -2,18 +2,9 @@
 
 extern void *PlayerMaskGrabFuncTable[13];
 
-#ifdef USE_ONLINE
-#include "../AltMods/OnlineCTR/global.h"
-#endif
-
 // when falling off track
 void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 {
-	#ifdef USE_ONLINE		
-	if(octr->boolLerpFrame[d->driverID])
-		return;
-	#endif
-
     struct GameTracker* gGT = sdata->gGT;
     struct Instance* inst = t->inst;
 
