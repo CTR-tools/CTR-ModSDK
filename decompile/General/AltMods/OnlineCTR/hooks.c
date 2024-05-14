@@ -1,3 +1,8 @@
+int OnlineGetNumDrivers()
+{
+	return octr->NumDrivers;
+}
+
 void octr_entryHook()
 {
 	// Until VehBirth_TeleportSelf is rewritten
