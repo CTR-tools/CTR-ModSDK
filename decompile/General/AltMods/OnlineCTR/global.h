@@ -124,9 +124,7 @@ struct SG_MessageTrack
 	unsigned char size : 4;
 	
 	// track ID
-	unsigned char trackID : 5;
-	unsigned char lapID : 2;
-	unsigned char boolAllowWeapons : 1;
+	unsigned char trackID : 8;
 };
 
 // assign character,

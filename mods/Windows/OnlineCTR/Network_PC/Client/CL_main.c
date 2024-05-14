@@ -30,6 +30,11 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
+int posLerpTimer[8];
+unsigned char posNew[8 * 9];
+
+int currstate = 0;
+
 void sendToHostUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
 	enet_peer_send(serverPeer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
@@ -45,6 +50,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	struct SG_Header* recvBuf = packet->data;
 	int slot;
 
+	//printf("received packet with type %i\n",((struct SG_Header*)recvBuf)->type);
 	// switch will compile into a jmp table, no funcPtrs needed
 	switch (((struct SG_Header*)recvBuf)->type)
 	{
@@ -56,7 +62,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->DriverID = r->clientID;
 			octr->NumDrivers = r->numClientsTotal;
 			
-			if (octr->CurrState = LAUNCH_FIRST_INIT)
+			if (octr->CurrState == LAUNCH_FIRST_INIT)
 			{
 				// choose to get host menu or guest menu
 				octr->CurrState = LOBBY_ASSIGN_ROLE;
@@ -133,8 +139,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageCharacter* r = recvBuf;
 
-			int characterID = r->characterID;
 			int clientID = r->clientID;
+			int characterID = r->characterID;
 
 			if (clientID == octr->DriverID) slot = 0;
 			if (clientID < octr->DriverID) slot = clientID + 1;
@@ -165,7 +171,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			struct SG_MessageRaceInput* r = recvBuf;
 
 			int clientID = r->clientID;
-			if (clientID == octr->DriverID) slot = 0;
+			if (clientID == octr->DriverID) {
+				break; // we dont update our own inputs from data sent by server (yet)
+				slot = 0;
+			}
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
@@ -240,16 +249,19 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// this one just uses ClientID directly
 			// because of how kart spawning is modified
 			int clientID = r->clientID;
+			if (clientID == octr->DriverID) {
+				break; // we dont update our own inputs from data sent by server (yet)
+				slot = 0;
+			}
 			if (clientID == octr->DriverID) slot = 0;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
 			// restart lerp
-			//posLerpTimer[slot] = 0;
+			posLerpTimer[slot] = 0;
 
 			// store position, then lerp data
 
-			/*
 			posNew[9 * slot + 0] = r->posX[0];				
 			posNew[9 * slot + 1] = r->posX[1];
 			posNew[9 * slot + 2] = r->posX[2];
@@ -261,7 +273,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			posNew[9 * slot + 6] = r->posZ[0];
 			posNew[9 * slot + 7] = r->posZ[1];
 			posNew[9 * slot + 8] = r->posZ[2];
-			*/
+			
 			break;
 		}
 
@@ -276,6 +288,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// this one just uses ClientID directly
 			// because of how kart spawning is modified
 			int clientID = r->clientID;
+			if (clientID == octr->DriverID) {
+				break; // we dont update our own inputs from data sent by server (yet)
+				slot = 0;
+			}
 			if (clientID == octr->DriverID) slot = 0;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
@@ -379,6 +395,7 @@ void StatePC_Launch_EnterIP()
 	
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
+	printf("connected to server successfully, sent name, going to first init state\n");
 }
 
 void StatePC_Launch_ConnectFailed()
@@ -447,7 +464,7 @@ void StatePC_Lobby_CharacterPick()
 		prev_characterID = mc.characterID;
 		prev_boolLockedIn = mc.boolLockedIn;
 
-		send(CtrMain.socket, &mc, mc.size, 0);
+		sendToHostReliable(&mc, mc.size);
 	}
 	
 	if (mc.boolLockedIn == 1)
@@ -522,7 +539,7 @@ void SendKartInput()
 	prevHold2 = prevHold1;
 	prevHold1 = cg.buttonHold;
 
-	send(CtrMain.socket, &cg, cg.size, 0);
+	sendToHostUnreliable(&cg, cg.size);
 }
 
 void SendKartPos()
@@ -549,7 +566,7 @@ void SendKartPos()
 	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 2];
 	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 3];
 
-	send(CtrMain.socket, &cg, cg.size, 0);
+	sendToHostUnreliable(&cg, cg.size);
 }
 
 void SendKartRot()
@@ -569,7 +586,7 @@ void SendKartRot()
 	cg.kartRot1 = angleBit5;
 	cg.kartRot2 = angleTop8;
 
-	send(CtrMain.socket, &cg, cg.size, 0);
+	sendToHostUnreliable(&cg, cg.size);
 }
 
 void PostParseMessage()
@@ -613,7 +630,7 @@ void PostParseMessage()
 		memcpy(&nextPos[0], &pBuf[psxPtr + 0x2d4], 12);
 
 		// 0x2D4, drop bottom byte
-		/*
+		
 		nextPos[1] = posNew[i * 9 + 0];
 		nextPos[2] = posNew[i * 9 + 1];
 		nextPos[3] = posNew[i * 9 + 2];
@@ -648,7 +665,7 @@ void PostParseMessage()
 			*(int*)&pBuf[psxPtr + 0x2d8] = *(int*)&nextPos[4];
 			*(int*)&pBuf[psxPtr + 0x2dc] = *(int*)&nextPos[8];
 		}
-		*/
+		
 	}
 }
 
@@ -664,7 +681,7 @@ void StatePC_Game_WaitForRace()
 		cg.type = CG_STARTRACE;
 		cg.size = sizeof(struct CG_Header);
 
-		send(CtrMain.socket, &cg, cg.size, 0);
+		sendToHostReliable(&cg, cg.size);
 	}
 
 	PostParseMessage();
@@ -683,14 +700,14 @@ void (*ClientState[]) () =
 	StatePC_Launch_EnterIP,
 	StatePC_Launch_ConnectFailed,
 	StatePC_Launch_FirstInit,
-	StatePC_Lobby_AssignRole/*,
+	StatePC_Lobby_AssignRole,
 	StatePC_Lobby_HostTrackPick,
 	StatePC_Lobby_GuestTrackWait,
 	StatePC_Lobby_CharacterPick,
 	StatePC_Lobby_WaitForLoading,
 	StatePC_Lobby_StartLoading,
 	StatePC_Game_WaitForRace,
-	StatePC_Game_StartRace*/
+	StatePC_Game_StartRace
 };
 
 // for EnumProcessModules
@@ -814,8 +831,11 @@ int main()
 		// then run client update
 
 		octr->time[0]++;
+		if (octr->CurrState != currstate) {
+			currstate = octr->CurrState;
+			printf("changed state to %i\n", currstate);
+		}
 		ClientState[octr->CurrState]();
-		
 		void FrameStall(); FrameStall();
 	}
 

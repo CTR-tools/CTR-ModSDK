@@ -81,10 +81,16 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			// Send ClientID and clientCount back to all clients
 			struct SG_MessageClientStatus mw;
 			mw.type = SG_NEWCLIENT;
-			mw.size = sizeof(struct SG_MessageClientStatus);
-			mw.clientID = id;
 			mw.numClientsTotal = clientCount;
-			broadcastToPeersReliable(&mw, mw.size);
+			mw.size = sizeof(struct SG_MessageClientStatus);
+			for (int j = 0; j < clientCount; j++)
+			{
+				if (!peerInfos[j].peer) {
+					continue;
+				}
+				mw.clientID = j;
+				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
+			}
 		} else {
 			printf("Connection rejected: Peer %u:%u is already connected.\n", peer->address.host, peer->address.port);
 			enet_peer_disconnect_now(peer, 0);
@@ -215,7 +221,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->size = sizeof(struct CG_MessageTrack);
 			s->trackID = r->trackID;
 
-			broadcastToPeersReliable(&s, s->size);
+			broadcastToPeersReliable(s, s->size);
 			break;
 		}
 
@@ -232,6 +238,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			peerInfos[peerID].characterID = s->characterID;
 			peerInfos[peerID].boolLoadSelf = s->boolLockedIn;
+			broadcastToPeersReliable(s, s->size);
 			break;
 		}
 
@@ -252,6 +259,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->size = sizeof(struct SG_MessageRaceInput);
 			s->clientID = peerID;
 			s->buttonHold = r->buttonHold;
+			broadcastToPeersReliable(s, s->size);
 			break;
 		}
 
@@ -264,6 +272,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->size = sizeof(struct SG_MessageRacePos);
 			s->clientID = peerID;
 			memcpy(&s->posX[0], &r->posX[0], 9);
+			broadcastToPeersReliable(s, s->size);
 			break;
 		}
 
@@ -277,6 +286,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->clientID = peerID;
 			s->kartRot1 = r->kartRot1;
 			s->kartRot2 = r->kartRot2;
+			broadcastToPeersReliable(s, s->size);
 			break;
 		}
 
@@ -309,7 +319,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 void ProcessNewMessages() {
 	ENetEvent event;
 	while (enet_host_service(server, &event, 0) > 0) {
-		printf("Received event\n");
+		//printf("Received event\n");
 		switch (event.type) {
 		case ENET_EVENT_TYPE_RECEIVE:
 			ProcessReceiveEvent(event.peer, event.packet);
