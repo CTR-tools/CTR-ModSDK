@@ -59,12 +59,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->DriverID = r->clientID;
 			octr->NumDrivers = r->numClientsTotal;
 			
-			if (octr->CurrState == LAUNCH_FIRST_INIT)
-			{
-				// choose to get host menu or guest menu
-				octr->CurrState = LOBBY_ASSIGN_ROLE;
-			}
-			
+			// choose to get host menu or guest menu
+			octr->CurrState = LOBBY_ASSIGN_ROLE;
 			break;
 		}
 		
@@ -76,7 +72,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->NumDrivers = r->numClientsTotal;
 
 			// fix driver IDs
-			if (clientDropped == octr->DriverID) slot = 0;
+			if (clientDropped == octr->DriverID) break;
 			if (clientDropped < octr->DriverID) slot = clientDropped + 1;
 			if (clientDropped > octr->DriverID) slot = clientDropped;
 
@@ -110,7 +106,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			struct SG_MessageName* r = recvBuf;
 
 			int clientID = r->clientID;
-			if (clientID == octr->DriverID) slot = 0;
+			if (clientID == octr->DriverID) break;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
@@ -123,12 +119,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			struct SG_MessageTrack* r = recvBuf;
 
 			octr->boolLockedInTrack = 1;
-			int trackID = r->trackID;
-			printf("Got Track: %d\n", trackID);
 
 			// set sdata->gGT->trackID
-			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
+			// set sdata->gGT->numLaps
+			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = r->trackID;
+			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (r->lapID * 2) + 1;
 			octr->CurrState = LOBBY_CHARACTER_PICK;
+			
 			break;
 		}
 
@@ -139,7 +136,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			int clientID = r->clientID;
 			int characterID = r->characterID;
 
-			if (clientID == octr->DriverID) slot = 0;
+			if (clientID == octr->DriverID) break;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
