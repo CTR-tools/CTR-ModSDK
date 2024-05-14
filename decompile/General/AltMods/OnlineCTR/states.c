@@ -172,8 +172,14 @@ void StatePS1_Lobby_CharacterPick()
 	if(old != octr->PageNumber)
 		NewPage_Characters();
 	
-	// update real-time
-	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+	// get menu
+	struct RectMenu* b = sdata->ptrActiveMenu;
+	
+	if(b != 0)
+	{
+		// update real-time
+		data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+	}
 }
 
 void StatePS1_Lobby_WaitForLoading()
