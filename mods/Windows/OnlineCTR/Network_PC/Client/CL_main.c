@@ -143,11 +143,16 @@ void ParseMessage()
 				struct SG_MessageTrack* r = recvBuf;
 
 				octr->boolLockedInTrack = 1;
+
 				int trackID = r->trackID;
-				printf("Got Track: %d\n", trackID);
+				int lapID = r->lapID;
+				int numLaps = (lapID * 2) + 1;
+
+				printf("Track: %d, Laps: %d\n", trackID, numLaps);
 
 				// set sdata->gGT->trackID
 				*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
+				*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 				octr->CurrState = LOBBY_CHARACTER_PICK;
 				break;
 			}
