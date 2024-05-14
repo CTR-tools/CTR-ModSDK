@@ -292,6 +292,36 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			break;
 		}
 
+		case CG_RACEDATA:
+		{
+			struct SG_EverythingKart* s = &sgBuffer[0];
+			struct CG_EverythingKart* r = recvBuf;
+
+			s->type = SG_RACEDATA;
+			s->size = sizeof(struct SG_EverythingKart);
+			s->clientID = peerID;
+
+			s->kartRot1 = r->kartRot1;
+			s->kartRot2 = r->kartRot2;
+
+			s->buttonHold = r->buttonHold;
+
+			memcpy(&s->posX[0], &r->posX[0], 9);
+
+			s->kartRot3 = r->kartRot3;
+			s->kartRot4 = r->kartRot4;
+
+			s->kartRot5 = r->kartRot5;
+			s->kartRot6 = r->kartRot6;
+
+			s->kartSpeed1 = r->kartSpeed1;
+			s->kartSpeed2 = r->kartSpeed2;
+
+			broadcastToPeersReliable(s, s->size);
+			break;
+		}
+
+
 		default:
 		{
 			break;

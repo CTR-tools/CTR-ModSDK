@@ -616,8 +616,71 @@ void SendKartRot()
 	sendToHostUnreliable(&cg, cg.size);
 }
 
+void SendEverything() {
+	struct CG_EverythingKart cg;
+	cg.type = CG_RACEDATA;
+	cg.size = sizeof(struct CG_EverythingKart);
+
+	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+
+	// ignore Circle/L2
+	hold &= ~(0xC0);
+
+	// put L1/R1 into one byte
+
+	if ((hold & 0x400) != 0)
+	{
+		hold |= 0x40;
+	}
+
+	if ((hold & 0x800) != 0)
+	{
+		hold |= 0x80;
+	}
+
+	cg.buttonHold = (unsigned char)hold;
+
+	// dont send duplicate input, if input hasnt changed in 3 frames,
+	// this way "curr" and "prev" are both set by client recv
+	if ((cg.buttonHold == prevHold1) && (prevHold1 == prevHold2))
+		return;
+
+	prevHold2 = prevHold1;
+	prevHold1 = cg.buttonHold;
+
+	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+	psxPtr &= 0xffffff;
+
+	// 0x2D4, drop bottom byte
+	cg.posX[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1];
+	cg.posX[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2];
+	cg.posX[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3];
+
+	// 0x2D8, drop bottom byte
+	cg.posY[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1];
+	cg.posY[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2];
+	cg.posY[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3];
+
+	// 0x2DC, drop bottom byte
+	cg.posZ[0] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 1];
+	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 2];
+	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 3];
+
+	unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
+	angle &= 0xfff;
+
+	unsigned char angleBit5 = angle & 0x1f;
+	unsigned char angleTop8 = angle >> 5;
+	cg.kartRot1 = angleBit5;
+	cg.kartRot2 = angleTop8;
+
+	sendToHostUnreliable(&cg, cg.size);
+}
+
 void PostParseMessage()
 {
+	//SendEverything();
+	
 	int gGT_elapsedEventTime = *(int*)&pBuf[(0x80096b20 + 0x1d10) & 0xffffff];
 
 	// divide by 777, 3/4 of of a second
@@ -641,7 +704,7 @@ void PostParseMessage()
 	}
 
 	SendKartInput();
-
+	
 	// lerping position in PostParse immediately
 	// after getting it from Parse, then set real
 	// position one frame later
