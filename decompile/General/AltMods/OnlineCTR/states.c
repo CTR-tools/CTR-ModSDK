@@ -171,6 +171,9 @@ void StatePS1_Lobby_CharacterPick()
 	UpdateMenu();
 	if(old != octr->PageNumber)
 		NewPage_Characters();
+	
+	// update real-time
+	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
 }
 
 void StatePS1_Lobby_WaitForLoading()

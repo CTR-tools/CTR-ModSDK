@@ -233,9 +233,11 @@ void PrintCharacterStats()
 	}
 }
 
+char* onlineLapString = "Laps: 0\0";
 void PrintRecvTrack()
 {
 	char message[32];
+	
 	sprintf(message, "Track: %s", 
 				sdata->lngStrings
 				[
@@ -244,4 +246,9 @@ void PrintRecvTrack()
 			);
 	
 	DecalFont_DrawLine(message,0x8,0x10,FONT_SMALL,PLAYER_BLUE);
+	
+	sprintf(message, "Laps: %d", gGT->numLaps);
+	
+	onlineLapString[6] = '0' + gGT->numLaps;
+	DecalFont_DrawLine(onlineLapString,0x128,0x10,FONT_SMALL,PLAYER_BLUE);
 }
