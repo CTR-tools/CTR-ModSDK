@@ -92,6 +92,9 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			mw.numClientsTotal = clientCount;
 			mw.size = sizeof(struct SG_MessageClientStatus);
 
+			// Set the timeout settings for the host
+			enet_peer_timeout(peer, 1000000, 1000000, 2000);
+
 			for (int j = 0; j < clientCount; j++)
 			{
 				if (!peerInfos[j].peer)
@@ -99,9 +102,6 @@ void ProcessConnectEvent(ENetPeer* peer) {
 
 				mw.clientID = j;
 				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
-
-				// 2-second timer
-				enet_peer_timeout(peer, 1000000, 1000000, 2000);
 			}
 		} 
 		

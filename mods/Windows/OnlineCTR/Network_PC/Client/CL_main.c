@@ -287,6 +287,11 @@ void ProcessNewMessages() {
 		case ENET_EVENT_TYPE_RECEIVE:
 			ProcessReceiveEvent(event.packet);
 			break;
+		case ENET_EVENT_TYPE_DISCONNECT:
+			printf("Server Reboot\n");
+			printf("Closing...\n");
+			exit(0);
+			break;
 		default: break;
 		}
 	}
@@ -432,6 +437,9 @@ void StatePC_Launch_EnterIP()
 	}
 
 	printf("Connection to server succeeded.\n");
+
+	// 2-second timer
+	enet_peer_timeout(serverPeer, 1000000, 1000000, 2000);
 
 	// write name to slot[0]
 	*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
