@@ -411,7 +411,6 @@ void StatePC_Lobby_HostTrackPick()
 	if (!octr->boolLockedInLap)
 		return;
 
-	printf("%d %d\n", octr->boolLockedInTrack, octr->boolLockedInLap);
 	printf("Sending Track to Server\n");
 
 	struct CG_MessageTrack mt;
