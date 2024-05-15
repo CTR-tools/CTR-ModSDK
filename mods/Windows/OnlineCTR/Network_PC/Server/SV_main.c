@@ -66,8 +66,14 @@ void sendToPeerReliable(ENetPeer* peer, const void* data, size_t size) {
 	enet_peer_send(peer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
+
 void ProcessConnectEvent(ENetPeer* peer) {
+	if (!peer) {
+		return;
+	}
 	if (count_connected_peers(peerInfos, MAX_CLIENTS) < MAX_CLIENTS && boolTakingConnections) {
+		char hostname[256];
+		enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
 		// Check if the peer is already connected
 		int index = find_peer_by_address(peerInfos, &peer->address);
 		if (index == -1) {
@@ -75,9 +81,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			int id = find_empty_slot(peerInfos);
 			peerInfos[id].peer = peer;
 			clientCount++;
-			char hostname[256];
-			enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
-			printf("Assigned ID %d to peer %u:%u.\n", id, hostname, peer->address.port);
+			printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
 			// Send ClientID and clientCount back to all clients
 			struct SG_MessageClientStatus mw;
 			mw.type = SG_NEWCLIENT;
@@ -92,7 +96,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
 			}
 		} else {
-			printf("Connection rejected: Peer %u:%u is already connected.\n", peer->address.host, peer->address.port);
+			printf("Connection rejected: Peer %s:%u is already connected.\n", hostname, peer->address.port);
 			enet_peer_disconnect_now(peer, 0);
 		}
 	} else {
@@ -101,6 +105,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 		enet_peer_disconnect_now(peer, 0);
 	}
 }
+
 
 // Function to count the number of connected peers
 int count_connected_peers(const PeerInfo* peers) {
@@ -124,9 +129,9 @@ int find_empty_slot(PeerInfo* peers) {
 }
 
 // Function to find a peer by its address in the peers array
-int find_peer_by_address(const PeerInfo* peers, const ENetAddress* address) {
+int find_peer_by_address(const ENetAddress* address) {
 	for (int i = 0; i < MAX_CLIENTS; ++i) {
-		if (peers[i].peer && memcmp(&peers[i].peer->address, address, sizeof(ENetAddress)) == 0) {
+		if (peerInfos[i].peer && memcmp(&peerInfos[i].peer->address, address, sizeof(ENetAddress)) == 0) {
 			return i; // Peer found
 		}
 	}
@@ -135,11 +140,10 @@ int find_peer_by_address(const PeerInfo* peers, const ENetAddress* address) {
 
 // Function to remove a peer from the peers array
 void remove_peer(ENetPeer* peer) {
-	for (int i = 0; i < MAX_CLIENTS; ++i) {
-		if (peerInfos[i].peer == peer) {
-			peerInfos[i].peer = NULL;
-			break;
-		}
+	int peerIndex = find_peer_by_address(&peer->address);
+	if (peerIndex >= 0) {
+		enet_peer_reset(peerInfos[peerIndex].peer);
+		peerInfos[peerIndex].peer = NULL;
 	}
 }
 
@@ -291,10 +295,13 @@ void ProcessNewMessages() {
 		case ENET_EVENT_TYPE_CONNECT:
 			ProcessConnectEvent(event.peer);
 			break;
-		case ENET_EVENT_TYPE_DISCONNECT:
-			printf("Connection disconnected from %u:%u.\n", event.peer->address.host, event.peer->address.port);
+		case ENET_EVENT_TYPE_DISCONNECT: {
+			char hostname[256];
+			enet_address_get_host_ip(&event.peer->address, hostname, sizeof(hostname));
+			printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
 			remove_peer(&event.peer);
 			break;
+			}
 		}
 	}
 }

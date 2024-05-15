@@ -6,6 +6,8 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -18,12 +20,6 @@
 char* pBuf;
 struct OnlineCTR* octr;
 
-struct SocketCtr
-{
-	SOCKET socket;
-};
-
-struct SocketCtr CtrMain;
 int buttonPrev[8] = { 0 };
 char name[100];
 
@@ -294,8 +290,65 @@ void StatePC_Launch_EnterPID()
 	}
 }
 
-void StatePC_Launch_EnterIP()
-{
+#define SETTINGS_FILE "settings.txt"
+#define NIKO_IP "24.187.10.49" // niko ip
+#define IP_LENGTH INET_ADDRSTRLEN
+
+#pragma optimize("", off)
+char* read_ip_from_settings() {
+	FILE* file;
+	char* ip = (char*)malloc(IP_LENGTH * sizeof(char));
+	int err;
+
+	err = fopen_s(&file, SETTINGS_FILE, "r");
+	if (err != 0) {
+		// File doesn't exist, create it and write default IP
+		err = fopen_s(&file, SETTINGS_FILE, "w");
+		if (err != 0) {
+			perror("Error creating settings file");
+			exit(EXIT_FAILURE);
+		}
+		if (fwrite(NIKO_IP, 1, strlen(NIKO_IP), file) != strlen(NIKO_IP)) {
+			perror("Error writing to settings file");
+			exit(EXIT_FAILURE);
+		}
+		fclose(file);
+		strcpy_s(ip, IP_LENGTH, NIKO_IP); // safer strcpy_s
+	}
+	else {
+		// File exists, read IP from it
+		if (fgets(ip, IP_LENGTH, file) == NULL) {
+			perror("Error reading from settings file");
+			exit(EXIT_FAILURE);
+		}
+		fclose(file);
+		// Remove trailing newline, if any
+		ip[strcspn(ip, "\n")] = '\0';
+	}
+
+	return ip;
+}
+#pragma optimize("", on)
+
+void write_ip_to_settings(const char* ip) {
+	FILE* file;
+	int err;
+
+	err = fopen_s(&file, SETTINGS_FILE, "w");
+	if (err != 0) {
+		perror("Error opening settings file for writing");
+		exit(EXIT_FAILURE);
+	}
+
+	if (fprintf(file, "%s", ip) < 0) {
+		perror("Error writing to settings file");
+		exit(EXIT_FAILURE);
+	}
+
+	fclose(file);
+}
+
+void initialize_client_host() {
 	clientHost = enet_host_create(NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,
 		2 /* allow up 2 channels to be used, 0 and 1 */,
@@ -308,18 +361,17 @@ void StatePC_Launch_EnterIP()
 			"An error occurred while trying to create an ENet client host.\n");
 		exit(EXIT_FAILURE);
 	}
+}
 
-	ENetEvent event;
-	/* Initiate the connection, allocating the two channels 0 and 1. */
-	serverPeer = NULL;
-
+int connect_to_server(const char* ip) {
 	ENetAddress adress;
 	adress.port = 1234;
-
-	// Try Niko's IP, then only enter manually
+	if (serverPeer) {
+		enet_peer_reset(serverPeer);
+	}
+	//Try Niko's IP, then only enter manually
 	// if this server is not open (temporary test)
-	enet_address_set_host(&adress, "24.187.10.49");
-
+	enet_address_set_host(&adress, ip);
 	serverPeer = enet_host_connect(clientHost, &adress, 2, 0);
 
 	if (serverPeer == NULL) {
@@ -327,35 +379,47 @@ void StatePC_Launch_EnterIP()
 		exit(EXIT_FAILURE);
 	}
 
-	/* Wait up to 5 seconds for the connection attempt to succeed. */
-	if (enet_host_service(clientHost, &event, 5000) > 0 &&
+	fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
+	ENetEvent event;
+	/* Wait up to 2 seconds for the connection attempt to succeed. */
+	if (enet_host_service(clientHost, &event, 2000) > 0 &&
 		event.type == ENET_EVENT_TYPE_CONNECT) {
-		printf("Connection to server succeeded.\n");
-	} else {
-		/* Either the 5 seconds are up or a disconnect event was */
-		/* received. Reset the peer in the event the 5 seconds   */
-		/* had run out without any significant eventevent.            */
-		char ip[100];
+		return 1;
+	}
+	/* Either the 2 seconds are up or a disconnect event was */
+	/* received. Reset the peer in the event the 5 seconds   */
+	/* had run out without any significant event.*/
+	return 0;
+}
 
+void StatePC_Launch_EnterIP()
+{
+	initialize_client_host();
+
+	char* ip_address_from_settings = read_ip_from_settings();
+
+	int result = connect_to_server(ip_address_from_settings);
+
+	free(ip_address_from_settings);
+
+	if (result == 0) {
+		// couldnt connect. try asking for another ip and try again.
+		char ip[100];
 		printf("\n");
+		printf("Connection to server failed.\n");
 		printf("Enter IP Address: ");
 		scanf_s("%s", ip, sizeof(ip));
+		//write_ip_to_settings(&ip);
 
-		enet_address_set_host(&adress, &ip);
-
-
-		serverPeer = enet_host_connect(clientHost, &adress, 2, 0);
-
-		if (serverPeer == NULL) {
-			fprintf(stderr, "No available peers for initiating an ENet connection.\n");
-			exit(EXIT_FAILURE);
+		result = connect_to_server(&ip);
+		if (result == 0) {
+			puts("Connection to server failed.");
+			octr->CurrState = LAUNCH_CONNECT_FAILED;
+			return;
 		}
-
-		enet_peer_reset(serverPeer);
-		puts("Connection to server failed.");
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		return;
 	}
+
+	printf("Connection to server succeeded.\n");
 
 	// write name to slot[0]
 	*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
