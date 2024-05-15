@@ -764,13 +764,7 @@ void StateZero()
 	
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 	
-	#if defined(FastBoot) || defined(USE_ONLINE)
-	
-	// diable copyright page
-	sdata->boolFirstBoot = 0;
-	
-	#else
-	
+	#if !defined(FastBoot) && !defined(USE_ONLINE)
 	DECOMP_Music_SetIntro();
 	DECOMP_CseqMusic_StopAll();
 	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
