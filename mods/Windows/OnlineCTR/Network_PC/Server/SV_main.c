@@ -94,7 +94,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 
 			// Set the timeout settings for the host
 			// now 800 for 1.5s timeout, should detect closed clients
-			enet_peer_timeout(peer, 1000000, 1000000, 1500);
+			enet_peer_timeout(peer, 1000000, 1000000, 2000);
 
 			for (int j = 0; j < clientCount; j++)
 			{

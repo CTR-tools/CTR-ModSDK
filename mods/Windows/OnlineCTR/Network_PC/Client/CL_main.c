@@ -302,7 +302,7 @@ void ProcessNewMessages() {
 			// just in case client isnt disconnected
 			printf("Disconnected\n");
 			printf("Rebooting...\n");
-			Sleep(1000);
+			Sleep(2000);
 			system("cls");
 			main();
 			break;
@@ -718,7 +718,7 @@ void StatePC_Game_EndRace()
 			// Sleep() triggers server timeout
 			// just in case client isnt disconnected
 			printf("Rebooting...\n");
-			Sleep(1000);
+			Sleep(2000);
 			system("cls");
 			main();
 		}
