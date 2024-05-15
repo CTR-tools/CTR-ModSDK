@@ -285,7 +285,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		}
 		
 		#ifdef USE_ONLINE
-		if(driver != sdata->gGT->drivers[0])
+		if(driver->driverID != 0)
 			return;
 		#endif
 		
@@ -316,7 +316,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		{
 			driver->BattleHUD.juicedUpCooldown = 10;
 		}
-		
+				
 		pb = &sdata->gGT->pushBuffer[driver->driverID];
 		RB_Fruit_GetScreenCoords(pb, crateInst, &posScreen[0]);
 		
@@ -392,9 +392,14 @@ int DECOMP_RB_CrateFruit_LInC(
 		}
 		newWumpa = random + (newWumpa >> 2) * -4 + 5;
 		
+		#ifdef USE_ONLINE
+		DECOMP_RB_Player_ModifyWumpa(driver, newWumpa);
+		if(driver->driverID != 0) return;
+		#endif
+		
 		driver->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
 		driver->PickupWumpaHUD.numCollected = newWumpa;
-		
+				
 		pb = &sdata->gGT->pushBuffer[driver->driverID];
 		RB_Fruit_GetScreenCoords(pb, driver->instSelf, &posScreen[0]);
 		
@@ -458,6 +463,10 @@ int DECOMP_RB_CrateTime_LInC(
 	driver = driverTh->object;
 	modelID = crateInst->model->id;
 	
+	#ifdef USE_ONLINE
+	if(driver->driverID != 0) return;
+	#endif
+	
 	// if driver turned into AI during end-of-race menu
 	if ((driver->actionsFlagSet & 0x100000) != 0)
 		return;
@@ -483,7 +492,7 @@ int DECOMP_RB_CrateTime_LInC(
 		
 		Voiceline_RequestPlay(0x13, data.characterIDs[driver->driverID], 0x10);
 	}
-	
+		
 	driver->PickupTimeboxHUD.cooldown = FPS_DOUBLE(10);
 	
 	pb = &gGT->pushBuffer[driver->driverID];

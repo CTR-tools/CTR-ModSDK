@@ -336,6 +336,11 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		}
 	}
 
+	#ifdef USE_ONLINE
+	if(driver->driverID != 0)
+		return;
+	#endif
+
 	// if modelIndex == "player" of any kind
 	if (driver->instSelf->thread->modelIndex == 0x18)
 	{

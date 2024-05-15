@@ -45,8 +45,14 @@ void DECOMP_VehStuckProc_MaskGrab_Update(struct Thread *t, struct Driver *d)
         mask->scale = 0x1000;
     }
 
-    // CameraDC flag
-    gGT->cameraDC[d->driverID].flags |= 8;
+
+	#ifdef USE_ONLINE
+	if(d->driverID == 0)
+	#endif
+
+		// CameraDC flag
+		gGT->cameraDC[d->driverID].flags |= 8;
+
 
     VehStuckProc_MaskGrab_FindDestPos(d, d->lastValid);
 

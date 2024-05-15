@@ -84,19 +84,23 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
 
     DECOMP_VehPhysProc_Driving_PhysLinear(t, d);
 
-    if (d->KartStates.RevEngine.boolMaskGrab != 0)
-    {
-        struct CameraDC *cDC = &gGT->cameraDC[d->driverID];
+    if (d->KartStates.RevEngine.boolMaskGrab == 0)
+		return;
+	
+    d->posCurr[1] -= FPS_HALF(0x200);
 
-        cDC->flags |= 0x10;
-        cDC->unk98 = 0x40;
-
-        d->posCurr[1] -= FPS_HALF(0x200);
-
-        // if maskObj exists
-        if (d->KartStates.RevEngine.maskObj != 0)
-            d->KartStates.RevEngine.maskObj->duration = 7680;
-    }
+    // if maskObj exists
+    if (d->KartStates.RevEngine.maskObj != 0)
+        d->KartStates.RevEngine.maskObj->duration = 7680;
+    
+	#ifdef USE_ONLINE
+	if(d->driverID != 0)
+		return;
+	#endif
+	
+	struct CameraDC *cDC = &gGT->cameraDC[d->driverID];
+    cDC->flags |= 0x10;
+    cDC->unk98 = 0x40;
 }
 
 void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)

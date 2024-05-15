@@ -207,6 +207,11 @@ SPINOUT:
 		((gameMode1 & END_OF_RACE) == 0)
 	)
 	{
+		#ifdef USE_ONLINE
+		if(attackDriver->driverID != 0)
+			return;
+		#endif
+		
 		struct PushBuffer* pb = 
 			&sdata->gGT->pushBuffer[attackDriver->driverID];
 		

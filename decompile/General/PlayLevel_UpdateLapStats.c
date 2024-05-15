@@ -94,7 +94,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			else
 			
 				#ifdef USE_ONLINE
-				if(currDriver == gGT->drivers[0])
+				if(currDriver->driverID == 0)
 				#endif
 			
 			{
