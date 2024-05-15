@@ -92,6 +92,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			// if this is not final lap
 			else
+			
+				#ifdef USE_ONLINE
+				if(currDriver == gGT->drivers[0])
+				#endif
+			
 			{
 				// If you're in Arcade, or
 				// If you're in Adventure, or
@@ -191,6 +196,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						gGT->numWinners = 1;
 
 						char driverID = currDriver->driverID;
+						
+						#ifdef USE_ONLINE
+						if(driverID != 0) return;
+						#endif
 
 						// add driver ID to array of confetti winners
 						gGT->winnerIndex[0] = driverID;

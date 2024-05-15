@@ -244,7 +244,7 @@ void MainGameEnd_Initialize(void)
 
                     // increment number of winners,
                     // more people get confetti
-                    gGT->numWinners = gGT->numWinners + 1;
+                    gGT->numWinners++;
                   }
 
                   // amount of confetti particles

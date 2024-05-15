@@ -5,11 +5,6 @@ void DECOMP_UI_SaveLapTime(int numLaps, int lapTime, short driverID)
 	int numMinutes;
 	int PlayerLapIndex;
 
-	#ifdef USE_ONLINE
-	if(driverID != 0)
-		return;
-	#endif
-
 	// PlayerLapIndex
 	// Goes from 0 to 0xd, 0-6 are laps 1-7 for Player 1 in the p1 variables of the LapTimes struct
 	// The 7-0xd range skips over to the p2 variables in the same struct for Player 2's lap 1-7
