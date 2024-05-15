@@ -8,10 +8,8 @@ void DECOMP_Audio_Update1(void)
     struct Driver *d=0;
     u_int maskTempo;
     int iVar7;
-    int iVar8;
     struct GameTracker *gGT = sdata->gGT;
 
-    iVar7 = 0;
     switch (sdata->unkAudioState - 1)
     {
     case 5:
@@ -52,20 +50,31 @@ void DECOMP_Audio_Update1(void)
     case 10:
         DECOMP_Audio_SetMaskSong(0);
 
+		#ifdef USE_ONLINE
+		
+		d = gGT->drivers[0];
+		
+		#else
+
+		// human driver in the lead
         for (i = 0; i < 8; i++)
         {
-            // Get driver, in order of their race rank (1st place, 2nd, etc)
             d = gGT->driversInRaceOrder[i];
 
-            // If the driver pointer is not nullptr
-            if ((d != NULL) &&
-                // If this driver is human, and not AI
-                ((d->actionsFlagSet & 0x100000) == 0))
+            if (
+				(d != NULL) &&
+                ((d->actionsFlagSet & 0x100000) == 0)
+				)
             {
                 break;
             }
-            d = iVar7;
+            d = 0;
         }
+
+		if(d == 0)
+			break;
+		
+		#endif
 
 		#ifndef REBUILD_PS1
         Voiceline_Update();
@@ -90,20 +99,31 @@ void DECOMP_Audio_Update1(void)
     case 11:
         DECOMP_Audio_SetMaskSong(0);
 
+		#ifdef USE_ONLINE
+		
+		d = gGT->drivers[0];
+		
+		#else
+
+		// human driver in the lead
         for (i = 0; i < 8; i++)
         {
-            // Get driver, in order of their race rank (1st place, 2nd, etc)
             d = gGT->driversInRaceOrder[i];
 
-            // If the driver pointer is not nullptr
-            if ((d != NULL) &&
-                // If this driver is human, and not AI
-                ((d->actionsFlagSet & 0x100000) == 0))
+            if (
+				(d != NULL) &&
+                ((d->actionsFlagSet & 0x100000) == 0)
+				)
             {
                 break;
             }
-            d = iVar7;
+            d = 0;
         }
+		
+		if(d == 0)
+			break;
+		
+		#endif
 
 		// if need to XASeek
         if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
@@ -156,20 +176,31 @@ void DECOMP_Audio_Update1(void)
     case 13:
         DECOMP_Audio_SetMaskSong(20);
 
+		#ifdef USE_ONLINE
+		
+		d = gGT->drivers[0];
+		
+		#else
+
+		// human driver in the lead
         for (i = 0; i < 8; i++)
         {
-            // Get driver, in order of their race rank (1st place, 2nd, etc)
             d = gGT->driversInRaceOrder[i];
 
-            // If the driver pointer is not nullptr
-            if ((d != NULL) &&
-                // If this driver is human, and not AI
-                ((d->actionsFlagSet & 0x100000) == 0))
+            if (
+				(d != NULL) &&
+                ((d->actionsFlagSet & 0x100000) == 0)
+				)
             {
                 break;
             }
-            d = iVar7;
+            d = 0;
         }
+		
+		if(d == 0)
+			break;
+		
+		#endif
 
 		#ifndef REBUILD_PS1
         Voiceline_Update();
@@ -190,23 +221,31 @@ void DECOMP_Audio_Update1(void)
         break;
     case 14:
 
-        for (i = 0; i < 8; i++)
+		#ifdef USE_ONLINE
+		
+		d = gGT->drivers[0];
+		
+		#else
+
+		// human driver in the lead
+		for (i = 0; i < 8; i++)
         {
-            // Get driver, in order of their race rank (1st place, 2nd, etc)
             d = gGT->driversInRaceOrder[i];
 
-            // If the driver pointer is not nullptr
-            if ((d != NULL) &&
-                // copy loop iteration
-                (iVar8 = i,
-                 // model is player
-                 d->instSelf->thread->modelIndex == DYNAMIC_PLAYER))
+            if (
+				(d != NULL) &&
+                (d->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
+				)
             {
                 break;
             }
-            d = iVar7;
-            iVar8 = -1;
+            d = 0;
         }
+		
+		if(d == 0)
+			break;
+		
+		#endif
 
 		// if need to XASeek
         if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
@@ -236,7 +275,7 @@ void DECOMP_Audio_Update1(void)
                 if ((gGT->unknownFlags_1d44 & 0x10000000) == 0)
                 {
                     // If you ended a race of a cup
-                    if (((iVar8 == 0) ||
+                    if (((d->driverID == 0) ||
 
                          ((gGT->gameMode1 & ADVENTURE_CUP) != 0)) ||
 
