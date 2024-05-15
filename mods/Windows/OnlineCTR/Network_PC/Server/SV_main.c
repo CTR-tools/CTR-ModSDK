@@ -93,8 +93,8 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			mw.size = sizeof(struct SG_MessageClientStatus);
 
 			// Set the timeout settings for the host
-			// now 800 for 0.8s timeout, should detect closed clients
-			enet_peer_timeout(peer, 1000000, 1000000, 800);
+			// now 800 for 1.5s timeout, should detect closed clients
+			enet_peer_timeout(peer, 1000000, 1000000, 1500);
 
 			for (int j = 0; j < clientCount; j++)
 			{
