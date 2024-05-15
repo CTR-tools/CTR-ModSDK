@@ -29,6 +29,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		if ((firstRank != 0) && ((firstRank->actionsFlagSet & 0x100000) == 0))
 			break;
 	}
+	
+	#ifdef USE_ONLINE
+	firstRank = gGT->drivers[0];
+	#endif
 
 	for(iVar10 = 0; iVar10 < 8; iVar10++)
 	{

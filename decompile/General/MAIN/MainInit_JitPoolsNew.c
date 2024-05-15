@@ -157,6 +157,13 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // normally maxed at 128
   int numParticle = uVar7 >> 5;
   if(numParticle > 120) numParticle = 120;
+  
+  #ifdef USE_ONLINE
+  // fix mystery caves with 8 players,
+  // cause all drivers use P1 exhaust
+  numParticle = 120*10;
+  #endif
+  
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	numParticle,0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,numParticle,0x18,	/*"OscillatorPool"*/0);
 
