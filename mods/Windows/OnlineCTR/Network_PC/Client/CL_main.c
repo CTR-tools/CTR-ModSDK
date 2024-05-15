@@ -288,7 +288,7 @@ void ProcessNewMessages() {
 			ProcessReceiveEvent(event.packet);
 			break;
 		case ENET_EVENT_TYPE_DISCONNECT:
-			printf("Server Reboot\n");
+			printf("Disconnected\n");
 			printf("Closing...\n");
 			exit(0);
 			break;
