@@ -284,12 +284,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			break;
 		}
 
-		case SG_SERVERCLOSED:
-			printf("Server Reboot\n");
-			printf("Closing...\n");
-			exit(0);
-			break;
-
 	default:
 		break;
 	}
@@ -304,9 +298,13 @@ void ProcessNewMessages() {
 			ProcessReceiveEvent(event.packet);
 			break;
 		case ENET_EVENT_TYPE_DISCONNECT:
+			// Sleep() triggers server timeout
+			// just in case client isnt disconnected
 			printf("Disconnected\n");
-			printf("Closing...\n");
-			exit(0);
+			printf("Rebooting...\n");
+			Sleep(1000);
+			system("cls");
+			main();
 			break;
 		default: break;
 		}
@@ -677,6 +675,8 @@ void StatePC_Game_StartRace()
 	SendEverything();
 }
 
+#include <time.h>
+clock_t timeStart;
 void StatePC_Game_EndRace()
 {
 	ProcessNewMessages();
@@ -690,7 +690,7 @@ void StatePC_Game_EndRace()
 
 		struct CG_MessageEndRace cg;
 		cg.type = CG_ENDRACE;
-		cg.size = sizeof(struct CG_Header);
+		cg.size = sizeof(struct CG_MessageEndRace);
 
 		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
 
@@ -700,6 +700,28 @@ void StatePC_Game_EndRace()
 		octr->RaceEnd[octr->numDriversEnded].slot = 0;
 		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
 		octr->numDriversEnded++;
+
+		// if you finished last
+		timeStart = clock();
+	}
+
+	if (octr->numDriversEnded != octr->NumDrivers)
+	{
+		// if you did not finish last
+		timeStart = clock();
+	}
+
+	else
+	{
+		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 5)
+		{
+			// Sleep() triggers server timeout
+			// just in case client isnt disconnected
+			printf("Rebooting...\n");
+			Sleep(1000);
+			system("cls");
+			main();
+		}
 	}
 }
 

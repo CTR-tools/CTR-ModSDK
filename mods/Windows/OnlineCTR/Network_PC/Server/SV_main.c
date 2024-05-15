@@ -93,7 +93,8 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			mw.size = sizeof(struct SG_MessageClientStatus);
 
 			// Set the timeout settings for the host
-			enet_peer_timeout(peer, 1000000, 1000000, 2000);
+			// now 800 for 0.8s timeout, should detect closed clients
+			enet_peer_timeout(peer, 1000000, 1000000, 800);
 
 			for (int j = 0; j < clientCount; j++)
 			{
@@ -340,18 +341,10 @@ void ProcessNewMessages() {
 
 
 				printf("Rebooting...\n");
-
-				struct SG_Header sg;
-				sg.type = SG_SERVERCLOSED;
-				sg.size = sizeof(struct SG_Header);
-
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
 					if (peerInfos[i].peer != NULL)
 					{
-						if (event.peer != peerInfos[i].peer)
-							sendToPeerReliable(peerInfos[i].peer, &sg, sg.size);
-
 						enet_peer_disconnect_now(peerInfos[i].peer, 0);
 						peerInfos[i].peer = NULL;
 						clientCount--;
