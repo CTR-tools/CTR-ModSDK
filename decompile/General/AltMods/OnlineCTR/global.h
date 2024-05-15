@@ -77,6 +77,8 @@ enum ServerGiveMessageType
 	SG_RACEDATA,
 
 	//SG_ENDRACE,
+
+	SG_SERVERCLOSED,
 	
 	SG_COUNT
 };

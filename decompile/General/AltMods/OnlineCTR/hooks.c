@@ -1,3 +1,8 @@
+int OnlineGetNumDrivers()
+{
+	return octr->NumDrivers;
+}
+
 void octr_entryHook()
 {
 	// Until VehBirth_TeleportSelf is rewritten
@@ -21,7 +26,6 @@ void octr_entryHook()
 	
 	// default for first LEV, before gameplay
 	memset(octr, 0, sizeof(struct OnlineCTR));
-	octr->NumDrivers = 1;
 	octr->IsBootedPS1 = 1;
 
 	// FSM for menus

@@ -162,6 +162,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (octr->CurrState < GAME_WAIT_FOR_RACE)
 				break;
 
+			int sdata_Loading_stage =
+				*(int*)&pBuf[0x8008d0f8 & 0xffffff];
+
+			if (sdata_Loading_stage != -1)
+				break;
+
 			struct SG_EverythingKart* r = recvBuf;
 
 			int clientID = r->clientID;
@@ -261,6 +267,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			break;
 		}
+
+		case SG_SERVERCLOSED:
+			printf("Server Reboot\n");
+			printf("Closing...\n");
+			exit(0);
+			break;
 
 	default:
 		break;
@@ -463,7 +475,6 @@ void StatePC_Lobby_HostTrackPick()
 	if (!octr->boolLockedInLap)
 		return;
 
-	printf("%d %d\n", octr->boolLockedInTrack, octr->boolLockedInLap);
 	printf("Sending Track to Server\n");
 
 	struct CG_MessageTrack mt;
@@ -527,7 +538,7 @@ void StatePC_Lobby_WaitForLoading()
 
 	// if recv message to start loading,
 	// change state to StartLoading,
-	// this check happens in ParseMessage
+	// this check happens in ProcessNewMessages
 }
 
 int boolAlreadySent_StartRace = 0;
@@ -793,7 +804,7 @@ int gGT_timer = 0;
 void FrameStall()
 {
 	// wait for next frame
-	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff]) {}
-	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cec) & 0xffffff];
+	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff]) {}
+	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
 }
 #pragma optimize("", on)

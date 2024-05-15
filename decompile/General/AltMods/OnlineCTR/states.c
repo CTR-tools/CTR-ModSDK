@@ -86,6 +86,12 @@ void StatePS1_Lobby_HostTrackPick()
 	// If already picked
 	if(MenuFinished() == 1)
 	{
+		if(sdata->gGT->levelID > TURBO_TRACK)
+		{
+			octr->lapID = 0;
+			octr->boolLockedInLap = 1;
+		}
+		
 		// do this without adding to enum,
 		// cause that means changing PS1/PC
 		void FakeState_Lobby_HostLapPick();
@@ -215,6 +221,7 @@ void StatePS1_Lobby_StartLoading()
 	// stop "most FX", let menu FX ring
 	Music_Stop();
 	howl_StopAudio(1,1,0);
+	sdata->unkAudioState = 0;
 	
 	struct GameTracker* gGT = sdata->gGT;
 	
@@ -230,7 +237,9 @@ void StatePS1_Lobby_StartLoading()
 		gGT->gameMode1 = LOADING | ARCADE_MODE;
 	}
 	
-	// start loading
+	// start loading,
+	// this also kills all threads,
+	// so this wont execute twice
 	sdata->Loading.stage = 0;
 }
 

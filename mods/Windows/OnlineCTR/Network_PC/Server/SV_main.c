@@ -42,6 +42,8 @@ void ServerState_Boot()
 	boolLoadAll = 0;
 	boolRaceAll = 0;
 	boolEndAll = 0;
+	memset(peerInfos, 0, sizeof(peerInfos));
+
 	printf("\nClientCount: 0\n");
 	boolTakingConnections = 1;
 }
@@ -76,7 +78,9 @@ void ProcessConnectEvent(ENetPeer* peer) {
 		enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
 		// Check if the peer is already connected
 		int index = find_peer_by_address(peerInfos, &peer->address);
-		if (index == -1) {
+
+		if (index == -1)
+		{
 			// Find an empty slot in the peers array and assign the new peer to it
 			int id = find_empty_slot(peerInfos);
 			peerInfos[id].peer = peer;
@@ -87,25 +91,34 @@ void ProcessConnectEvent(ENetPeer* peer) {
 			mw.type = SG_NEWCLIENT;
 			mw.numClientsTotal = clientCount;
 			mw.size = sizeof(struct SG_MessageClientStatus);
+
 			for (int j = 0; j < clientCount; j++)
 			{
-				if (!peerInfos[j].peer) {
+				if (!peerInfos[j].peer)
 					continue;
-				}
+
 				mw.clientID = j;
 				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
+
+				// 2-second timer
+				enet_peer_timeout(peer, 1000000, 1000000, 2000);
 			}
-		} else {
+		} 
+		
+		else 
+		{
 			printf("Connection rejected: Peer %s:%u is already connected.\n", hostname, peer->address.port);
 			enet_peer_disconnect_now(peer, 0);
 		}
-	} else {
+	}
+
+	else
+	{
 		// Reject the connection if there are already MAX_PEERS connected or we arent taking connections anymore, since we started
 		printf("Connection rejected: Maximum number of peers reached.\n");
 		enet_peer_disconnect_now(peer, 0);
 	}
 }
-
 
 // Function to count the number of connected peers
 int count_connected_peers(const PeerInfo* peers) {
@@ -286,22 +299,57 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 void ProcessNewMessages() {
 	ENetEvent event;
-	while (enet_host_service(server, &event, 0) > 0) {
+	while (enet_host_service(server, &event, 0) > 0)
+	{
 		//printf("Received event\n");
-		switch (event.type) {
-		case ENET_EVENT_TYPE_RECEIVE:
-			ProcessReceiveEvent(event.peer, event.packet);
-			break;
-		case ENET_EVENT_TYPE_CONNECT:
-			ProcessConnectEvent(event.peer);
-			break;
-		case ENET_EVENT_TYPE_DISCONNECT: {
-			char hostname[256];
-			enet_address_get_host_ip(&event.peer->address, hostname, sizeof(hostname));
-			printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
-			remove_peer(&event.peer);
-			break;
+		switch (event.type)
+		{
+			case ENET_EVENT_TYPE_RECEIVE:
+				ProcessReceiveEvent(event.peer, event.packet);
+				break;
+
+			case ENET_EVENT_TYPE_CONNECT:
+				ProcessConnectEvent(event.peer);
+				break;
+
+			case ENET_EVENT_TYPE_DISCONNECT:
+			{
+				char hostname[256];
+				enet_address_get_host_ip(&event.peer->address, hostname, sizeof(hostname));
+				printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
+
+
+				// What we "should" do is disconnect one peer
+				//remove_peer(&event.peer);
+
+
+				// What we "will" do instead is throw everyone out
+
+
+				printf("Rebooting...\n");
+
+				struct SG_Header sg;
+				sg.type = SG_SERVERCLOSED;
+				sg.size = sizeof(struct SG_Header);
+
+				for (int i = 0; i < MAX_CLIENTS; i++)
+				{
+					if (peerInfos[i].peer != NULL)
+					{
+						if (event.peer != peerInfos[i].peer)
+							sendToPeerReliable(peerInfos[i].peer, &sg, sg.size);
+
+						enet_peer_disconnect_now(peerInfos[i].peer, 0);
+						peerInfos[i].peer = NULL;
+						clientCount--;
+					}
+				}
+
+				printf("Reboot Done\n");
+				ServerState_Boot();
+				break;
 			}
+
 		}
 	}
 }

@@ -124,6 +124,13 @@ void DECOMP_UI_DrawRankedDrivers(void)
         // Show 2 racers
         iVar14 = 2;
       }
+	  
+	  #ifdef USE_ONLINE
+	  int OnlineGetNumDrivers();
+	  int oNumDrivers = OnlineGetNumDrivers();
+	  if(oNumDrivers < 4)
+		  iVar14 = oNumDrivers;
+	  #endif
 
       // start drawing the icons
       iVar15 = 0;
