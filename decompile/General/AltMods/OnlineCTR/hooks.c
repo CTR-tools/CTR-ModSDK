@@ -152,7 +152,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
-RECT windowText = {0x120, 0x40, 0xD0, 0};
+RECT windowText = {0x118, 0x40, 0xD8, 0};
 
 void OnlineEndOfRace()
 {
@@ -177,11 +177,11 @@ void OnlineEndOfRace()
 		
 		DecalFont_DrawLine(
 			message,
-			0x128,0x48+i*0x8,FONT_SMALL,0);
+			0x120,0x48+i*0x8,FONT_SMALL,0);
 				
 		DecalFont_DrawLine(
 			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
-			0x1A8,0x48+i*0x8,FONT_SMALL,0);
+			0x1A0,0x48+i*0x8,FONT_SMALL,0);
 			
 		windowText.h += 8;
 	}
@@ -190,7 +190,7 @@ void OnlineEndOfRace()
 	{
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",
-			0x128,0x48+i*0x8,FONT_SMALL,RED);
+			0x120,0x48+i*0x8,FONT_SMALL,RED);
 			
 		windowText.h += 8;
 	}
