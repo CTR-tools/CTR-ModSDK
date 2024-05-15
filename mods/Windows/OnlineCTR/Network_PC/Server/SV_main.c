@@ -42,6 +42,8 @@ void ServerState_Boot()
 	boolLoadAll = 0;
 	boolRaceAll = 0;
 	boolEndAll = 0;
+	memset(peerInfos, 0, sizeof(peerInfos));
+
 	printf("\nClientCount: 0\n");
 	boolTakingConnections = 1;
 }
@@ -244,6 +246,13 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			break;
 		}
 
+		case CG_LOADING:
+		{
+			// do nothing, just dont kick
+			// client due to inactivity
+			break;
+		}
+
 		case CG_STARTRACE:
 		{
 			printf("Ready to race: %d\n", peerID);
@@ -282,19 +291,41 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 void ProcessNewMessages() {
 	ENetEvent event;
-	while (enet_host_service(server, &event, 0) > 0) {
+	while (enet_host_service(server, &event, 0) > 0)
+	{
 		//printf("Received event\n");
-		switch (event.type) {
+		switch (event.type)
+		{
+
 		case ENET_EVENT_TYPE_RECEIVE:
 			ProcessReceiveEvent(event.peer, event.packet);
 			break;
+
 		case ENET_EVENT_TYPE_CONNECT:
 			ProcessConnectEvent(event.peer);
 			break;
+
 		case ENET_EVENT_TYPE_DISCONNECT:
 			printf("Connection disconnected from %u:%u.\n", event.peer->address.host, event.peer->address.port);
-			remove_peer(&event.peer);
+
+			// What we "should" do is disconnect one peer
+			//remove_peer(&event.peer);
+
+			// What we "will" do instead is throw everyone out
+			printf("Rebooting server\n");
+			for (int i = 0; i < MAX_CLIENTS; i++)
+			{
+				if (peerInfos[i].peer != NULL)
+				{
+					enet_peer_disconnect_now(peerInfos[i].peer, 0);
+					peerInfos[i].peer = NULL;
+					clientCount--;
+				}
+			}
+
+			ServerState_Boot();
 			break;
+
 		}
 	}
 }

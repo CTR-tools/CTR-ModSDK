@@ -186,6 +186,10 @@ enum ClientGiveMessageType
 	CG_TRACK,
 	CG_CHARACTER,
 
+	// so server does not kick
+	// client due to inactivity
+	CG_LOADING,
+
 	// sync
 	CG_STARTRACE,
 	
