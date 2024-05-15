@@ -152,7 +152,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
-RECT windowText = {0x120, 0x40, 0xD0, 8*12};
+RECT windowText = {0x120, 0x40, 0xD0, 0};
 
 void OnlineEndOfRace()
 {
@@ -168,6 +168,8 @@ void OnlineEndOfRace()
 	// if "you" finished race,
 	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
 	
+	windowText.h = 0;
+	
 	int i;
 	for(i = 0; i < octr->numDriversEnded; i++)
 	{
@@ -180,14 +182,21 @@ void OnlineEndOfRace()
 		DecalFont_DrawLine(
 			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
 			0x1A8,0x48+i*0x8,FONT_SMALL,0);
+			
+		windowText.h += 8;
 	}
 	
 	if(octr->numDriversEnded == octr->NumDrivers)
 	{
 		DecalFont_DrawLine(
-			"Rebooting in 5 seconds...",
+			"Restart in 6 seconds",
 			0x128,0x48+i*0x8,FONT_SMALL,RED);
+			
+		windowText.h += 8;
 	}
+	
+	
+	windowText.h += 0x10;
 	
 	struct DB *backBuffer = 
 		sdata->gGT->backBuffer;

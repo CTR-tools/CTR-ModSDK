@@ -713,7 +713,7 @@ void StatePC_Game_EndRace()
 
 	else
 	{
-		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 5)
+		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
 		{
 			// Sleep() triggers server timeout
 			// just in case client isnt disconnected
