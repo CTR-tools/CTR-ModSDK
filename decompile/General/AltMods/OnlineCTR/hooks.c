@@ -41,6 +41,7 @@ void octr_entryHook()
 	octr->funcs[LOBBY_START_LOADING] = StatePS1_Lobby_StartLoading;
 	octr->funcs[GAME_WAIT_FOR_RACE] = StatePS1_Game_WaitForRace;
 	octr->funcs[GAME_START_RACE] = StatePS1_Game_StartRace;
+	octr->funcs[GAME_END_RACE] = StatePS1_Game_EndRace;
 }
 
 // this runs after the end of MainInit_FinalizeInit,
@@ -153,14 +154,30 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 void OnlineEndOfRace()
 {
+	char message[32];
 	struct Driver* d = sdata->gGT->drivers[0];
 	
 	// if "you" are still racing, do nothing
 	if((d->actionsFlagSet & 0x2000000) == 0)
 		return;
 	
+	octr->CurrState = GAME_END_RACE;
+	
 	// if "you" finished race,
 	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
+	
+	for(int i = 0; i < octr->numDriversEnded; i++)
+	{
+		sprintf(message, "%s:", &octr->nameBuffer[octr->RaceEnd[i].slot * 0xc]);
+		
+		DecalFont_DrawLine(
+			message,
+			0x128,0x48+i*0x8,FONT_SMALL,0);
+				
+		DecalFont_DrawLine(
+			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
+			0x1A8,0x48+i*0x8,FONT_SMALL,0);
+	}
 }
 
 void Online_OtherFX_RecycleNew(

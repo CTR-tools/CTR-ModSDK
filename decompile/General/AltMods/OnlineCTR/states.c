@@ -281,4 +281,10 @@ void StatePS1_Game_WaitForRace()
 
 void StatePS1_Game_StartRace()
 {
+	// psx doesnt need to do anything here
+}
+
+void StatePS1_Game_EndRace()
+{
+	// psx doesnt need to do anything here
 }

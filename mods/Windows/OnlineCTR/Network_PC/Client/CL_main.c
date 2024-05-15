@@ -272,6 +272,22 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			break;
 		}
 
+		case SG_ENDRACE:
+		{
+			struct SG_MessageEndRace* r = recvBuf;
+
+			int clientID = r->clientID;
+			if (clientID == octr->DriverID) break;
+			if (clientID < octr->DriverID) slot = clientID + 1;
+			if (clientID > octr->DriverID) slot = clientID;
+
+			octr->RaceEnd[octr->numDriversEnded].slot = slot;
+			memcpy(&octr->RaceEnd[octr->numDriversEnded].time, &r->time[0], 3);
+			octr->numDriversEnded++;
+
+			break;
+		}
+
 		case SG_SERVERCLOSED:
 			printf("Server Reboot\n");
 			printf("Closing...\n");
@@ -478,11 +494,13 @@ void StatePC_Lobby_WaitForLoading()
 }
 
 int boolAlreadySent_StartRace = 0;
+int boolAlreadySent_EndRace = 0;
 void StatePC_Lobby_StartLoading()
 {
 	ProcessNewMessages();
 
 	boolAlreadySent_StartRace = 0;
+	boolAlreadySent_EndRace = 0;
 }
 
 void SendEverything()
@@ -587,6 +605,32 @@ void StatePC_Game_StartRace()
 	SendEverything();
 }
 
+void StatePC_Game_EndRace()
+{
+	ProcessNewMessages();
+
+	if (!boolAlreadySent_EndRace)
+	{
+		boolAlreadySent_EndRace = 1;
+
+		int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+		psxPtr &= 0xffffff;
+
+		struct CG_MessageEndRace cg;
+		cg.type = CG_ENDRACE;
+		cg.size = sizeof(struct CG_Header);
+
+		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
+
+		sendToHostReliable(&cg, cg.size);
+
+		// end race for yourself
+		octr->RaceEnd[octr->numDriversEnded].slot = 0;
+		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
+		octr->numDriversEnded++;
+	}
+}
+
 void (*ClientState[]) () =
 {
 	StatePC_Launch_EnterPID,
@@ -600,7 +644,8 @@ void (*ClientState[]) () =
 	StatePC_Lobby_WaitForLoading,
 	StatePC_Lobby_StartLoading,
 	StatePC_Game_WaitForRace,
-	StatePC_Game_StartRace
+	StatePC_Game_StartRace,
+	StatePC_Game_EndRace
 };
 
 // for EnumProcessModules

@@ -290,6 +290,19 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			break;
 		}
 
+		case CG_ENDRACE:
+		{
+			struct SG_MessageEndRace* s = &sgBuffer[0];
+			struct CG_MessageEndRace* r = recvBuf;
+
+			s->type = SG_ENDRACE;
+			s->size = sizeof(struct SG_MessageEndRace);
+			s->clientID = peerID;
+
+			memcpy(&s->time[0], &r->time[0], 9);
+
+			broadcastToPeersReliable(s, s->size);
+		}
 
 		default:
 		{
