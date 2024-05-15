@@ -77,6 +77,8 @@ enum ServerGiveMessageType
 	SG_RACEDATA,
 
 	//SG_ENDRACE,
+
+	SG_SERVERCLOSED,
 	
 	SG_COUNT
 };
@@ -185,10 +187,6 @@ enum ClientGiveMessageType
 	CG_NAME,
 	CG_TRACK,
 	CG_CHARACTER,
-
-	// so server does not kick
-	// client due to inactivity
-	CG_LOADING,
 
 	// sync
 	CG_STARTRACE,

@@ -272,6 +272,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			break;
 		}
 
+		case SG_SERVERCLOSED:
+			printf("Server Reboot\n");
+			printf("Closing...\n");
+			exit(0);
+			break;
+
 	default:
 		break;
 	}
@@ -478,11 +484,6 @@ void StatePC_Lobby_StartLoading()
 	ProcessNewMessages();
 
 	boolAlreadySent_StartRace = 0;
-
-	struct CG_Header cg;
-	cg.type = CG_LOADING;
-	cg.size = sizeof(struct CG_Header);
-	sendToHostUnreliable(&cg, cg.size);
 }
 
 void SendEverything()

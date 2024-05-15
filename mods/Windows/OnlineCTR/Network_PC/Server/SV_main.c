@@ -68,36 +68,52 @@ void sendToPeerReliable(ENetPeer* peer, const void* data, size_t size) {
 	enet_peer_send(peer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
-void ProcessConnectEvent(ENetPeer* peer) {
-	if (count_connected_peers(peerInfos, MAX_CLIENTS) < MAX_CLIENTS && boolTakingConnections) {
+void ProcessConnectEvent(ENetPeer* peer)
+{
+	if (count_connected_peers(peerInfos, MAX_CLIENTS) < MAX_CLIENTS && boolTakingConnections)
+	{
 		// Check if the peer is already connected
 		int index = find_peer_by_address(peerInfos, &peer->address);
-		if (index == -1) {
+
+		if (index == -1)
+		{
 			// Find an empty slot in the peers array and assign the new peer to it
 			int id = find_empty_slot(peerInfos);
 			peerInfos[id].peer = peer;
 			clientCount++;
+
 			char hostname[256];
 			enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
 			printf("Assigned ID %d to peer %u:%u.\n", id, hostname, peer->address.port);
+
 			// Send ClientID and clientCount back to all clients
 			struct SG_MessageClientStatus mw;
 			mw.type = SG_NEWCLIENT;
 			mw.numClientsTotal = clientCount;
 			mw.size = sizeof(struct SG_MessageClientStatus);
+
 			for (int j = 0; j < clientCount; j++)
 			{
-				if (!peerInfos[j].peer) {
+				if (!peerInfos[j].peer)
 					continue;
-				}
+
 				mw.clientID = j;
 				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
+
+				// 2-second timer
+				enet_peer_timeout(peer, 1000000, 1000000, 2000);
 			}
-		} else {
+		}
+
+		else
+		{
 			printf("Connection rejected: Peer %u:%u is already connected.\n", peer->address.host, peer->address.port);
 			enet_peer_disconnect_now(peer, 0);
 		}
-	} else {
+	}
+
+	else
+	{
 		// Reject the connection if there are already MAX_PEERS connected or we arent taking connections anymore, since we started
 		printf("Connection rejected: Maximum number of peers reached.\n");
 		enet_peer_disconnect_now(peer, 0);
@@ -246,13 +262,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			break;
 		}
 
-		case CG_LOADING:
-		{
-			// do nothing, just dont kick
-			// client due to inactivity
-			break;
-		}
-
 		case CG_STARTRACE:
 		{
 			printf("Ready to race: %d\n", peerID);
@@ -308,21 +317,34 @@ void ProcessNewMessages() {
 		case ENET_EVENT_TYPE_DISCONNECT:
 			printf("Connection disconnected from %u:%u.\n", event.peer->address.host, event.peer->address.port);
 
+
 			// What we "should" do is disconnect one peer
 			//remove_peer(&event.peer);
 
+
 			// What we "will" do instead is throw everyone out
-			printf("Rebooting server\n");
+
+
+			printf("Rebooting...\n");
+
+			struct SG_Header sg;
+			sg.type = SG_SERVERCLOSED;
+			sg.size = sizeof(struct SG_Header);
+
 			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
 				if (peerInfos[i].peer != NULL)
 				{
+					if(event.peer != peerInfos[i].peer)
+						sendToPeerReliable(peerInfos[i].peer, &sg, sg.size);
+
 					enet_peer_disconnect_now(peerInfos[i].peer, 0);
 					peerInfos[i].peer = NULL;
 					clientCount--;
 				}
 			}
 
+			printf("Reboot Done\n");
 			ServerState_Boot();
 			break;
 
