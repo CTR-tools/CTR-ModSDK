@@ -95,6 +95,7 @@ void DECOMP_VehStuckProc_PlantEaten_Animate(struct Thread *t, struct Driver *d)
 		#ifdef USE_ONLINE
 		if(d->driverID != 0)
 			return;
+		#endif
 
         struct PushBuffer* pb = &gGT->pushBuffer[d->driverID];
 
