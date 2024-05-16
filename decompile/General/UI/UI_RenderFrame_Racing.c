@@ -129,17 +129,17 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	cVar22 = '\0';
 	if (playerThread != 0)
-	{
-		#ifdef USE_ONLINE
-		playerThread = gGT->drivers[0]->instSelf->thread;
-		#endif
-		
+	{		
 		// Loop through all player threads
 		do
 		{
 			// pointer to player structure
 			playerStruct = (struct Driver*)playerThread->object;
 
+			#ifdef USE_ONLINE
+			playerStruct = gGT->drivers[0];
+			#endif
+		
 			if
 			(
 				// if player has not driven backwards very far,
@@ -658,7 +658,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			hudStructPtr += 0x14;
 
 			#ifdef USE_ONLINE
-			playerThread = 0;
+			break;
 			#endif
 
 		} while (playerThread != 0);
