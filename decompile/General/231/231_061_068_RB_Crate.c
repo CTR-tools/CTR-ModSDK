@@ -393,8 +393,11 @@ int DECOMP_RB_CrateFruit_LInC(
 		newWumpa = random + (newWumpa >> 2) * -4 + 5;
 		
 		#ifdef USE_ONLINE
-		DECOMP_RB_Player_ModifyWumpa(driver, newWumpa);
-		if(driver->driverID != 0) return;
+		if(driver->driverID != 0)
+		{
+			DECOMP_RB_Player_ModifyWumpa(driver, newWumpa);
+			return;
+		}
 		#endif
 		
 		driver->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
