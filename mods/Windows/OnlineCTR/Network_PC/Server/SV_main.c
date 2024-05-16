@@ -264,7 +264,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 		case CG_STARTRACE:
 		{
-			printf("Ready to race: %d\n", peerID);
+			printf("Ready to Race: %d\n", peerID);
 			peerInfos[peerID].boolRaceSelf = 1;
 			//sendAll = 0;
 			break;
@@ -299,7 +299,23 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->size = sizeof(struct SG_MessageEndRace);
 			s->clientID = peerID;
 
-			memcpy(&s->time[0], &r->time[0], 9);
+			memcpy(&s->time[0], &r->time[0], 3);
+
+			int localTime = 0;
+			memcpy(&localTime, &r->time[0], 3);
+
+			char timeStr[32];
+			sprintf_s(
+				&timeStr[0], 32,
+				"%ld:%ld%ld:%ld%ld",
+				localTime / 0xe100,
+				(localTime / 0x2580) % 6,
+				(localTime / 0x3c0) % 10,
+				((localTime * 10) / 0x3c0) % 10,
+				((localTime * 100) / 0x3c0) % 10
+			);
+
+			printf("End Race: %d %s\n", peerID, timeStr);
 
 			broadcastToPeersReliable(s, s->size);
 		}
