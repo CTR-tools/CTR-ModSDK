@@ -32,12 +32,12 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   driverThread = gGT->threadBuckets[0].thread;
   
   while (driverThread != 0)
-  {
-	#ifdef USE_ONLINE
-	driverThread = gGT->drivers[0]->instSelf->thread;
-	#endif
-	  
+  {	  
     driver = driverThread->object;
+  
+	#ifdef USE_ONLINE
+	driver = gGT->drivers[0];
+	#endif
   
     // Create a new thread for this HUD element
     // 0x38 = size
@@ -210,7 +210,7 @@ lightDir_spec0x30000:
 	hudStruct += 0x14;
 	
 	#ifdef USE_ONLINE
-	driverThread = 0;
+	break;
 	#endif
   }
 

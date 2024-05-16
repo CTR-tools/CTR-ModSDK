@@ -26,8 +26,13 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 		bVar1 = false;
 		pushBuffer = gGT->pushBuffer;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
-		{
+		{			
 			psVar9 = (struct Driver*)psVar12->object;
+
+			#ifdef USE_ONLINE
+			psVar9 = gGT->drivers[0];
+			#endif
+
 			if (psVar9->clockSend)
 			{
 				psVar9->clockSend--;
@@ -66,6 +71,10 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 			}
 LAB_80034e74:
 			pushBuffer = pushBuffer + 1;
+			
+			#ifdef USE_ONLINE
+			break;
+			#endif
 		}
 		gGT->timer = gGT->timer + 1;
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
