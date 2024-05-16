@@ -91,22 +91,21 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			}
 
 			// if this is not final lap
-			else
-			
-				#ifdef USE_ONLINE
-				if(currDriver->driverID == 0)
-				#endif
-			
+			else			
 			{
-				// If you're in Arcade, or
-				// If you're in Adventure, or
-				// If you're in Time Trial
-				if (((gGT->gameMode1 & 0x4a0000) != 0) &&
+				if (
+						// If you're in Arcade, or
+						// If you're in Adventure, or
+						// If you're in Time Trial	
+						((gGT->gameMode1 & 0x4a0000) != 0) &&
 
-					// AND
+						#ifdef USE_ONLINE
+						(currDriver->driverID == 0) &&
+						#endif
 
-					// driver -> instance -> thread -> modelIndex == "player" of any kind
-					(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER))
+						// driver -> instance -> thread -> modelIndex == "player" of any kind
+						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
+					)
 				{
 					// Save Lap Time
 					UI_SaveLapTime(
@@ -149,8 +148,12 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 					// if this is human and not AI
 					if ((currDriver->actionsFlagSet & 0x100000) == 0)
 					{
-						// frames, so the animation lasts 3 seconds
-						sdata->finalLapTextTimer[iVar10] = FPS_DOUBLE(90);
+						#ifdef USE_ONLINE
+						if(currDriver->driverID == 0)
+						#endif
+						
+							// frames, so the animation lasts 3 seconds
+							sdata->finalLapTextTimer[iVar10] = FPS_DOUBLE(90);
 					}
 				}
 			}
