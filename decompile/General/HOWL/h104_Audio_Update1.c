@@ -275,7 +275,7 @@ void DECOMP_Audio_Update1(void)
                 if ((gGT->unknownFlags_1d44 & 0x10000000) == 0)
                 {
 					// defeat music
-					uVar1 = 5,
+					uVar1 = 5;
 					
                     if (
 							(d->driverRank == 0) ||

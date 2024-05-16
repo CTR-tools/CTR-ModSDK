@@ -585,6 +585,17 @@ void SendEverything()
 
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
+	if((hold & 0x2000) != 0)
+	{
+		// Sleep() triggers server timeout
+		// just in case client isnt disconnected
+		printf("Disconnected\n");
+		printf("Rebooting...\n");
+		Sleep(2000);
+		system("cls");
+		main();
+	}
+
 	// ignore Circle/L2
 	hold &= ~(0xC0);
 
