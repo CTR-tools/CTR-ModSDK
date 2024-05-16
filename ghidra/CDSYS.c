@@ -91,7 +91,7 @@ undefined4 FUN_8001c360(int param_1)
   // XA_CurrPos
   DAT_8008d6d4 = 0;
   
-  // XA_PausePos
+  // XA_PauseFrame
   DAT_8008d6ec = 0;
 
   // CDSYS_SetMode_StreamData

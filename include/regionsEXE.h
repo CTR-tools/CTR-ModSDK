@@ -3566,7 +3566,7 @@ struct sData
 
 	#if BUILD >= UsaRetail
 	// 8008d6ec
-	int XA_PausePos;
+	int XA_PauseFrame;
 	#endif
 
 	// 8008bb34 -- SepReview

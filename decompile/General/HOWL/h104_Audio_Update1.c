@@ -127,7 +127,7 @@ void DECOMP_Audio_Update1(void)
 
 		// if need to XASeek
         if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
-            (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
+            (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PauseFrame))
         {
             // far from finish line
             if (2000 < d->distanceToFinish_curr)
@@ -249,7 +249,7 @@ void DECOMP_Audio_Update1(void)
 
 		// if need to XASeek
         if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
-            (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
+            (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PauseFrame))
         {
             // far from finish line
             if (2000 < d->distanceToFinish_curr)

@@ -46,7 +46,7 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	// unused_8008d700
 	
 	sdata->XA_CurrPos = 0;
-	sdata->XA_PausePos = 0;
+	sdata->XA_PauseFrame = 0;
 	
 	DECOMP_CDSYS_SetMode_StreamData();
 	

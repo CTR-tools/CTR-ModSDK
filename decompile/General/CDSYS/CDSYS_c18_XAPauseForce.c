@@ -15,5 +15,5 @@ void DECOMP_CDSYS_XAPauseForce()
 	
 	CdControl(CdlPause, 0, 0);
 	
-	sdata->XA_PausePos = sdata->gGT->frameTimer_MainFrame_ResetDB;
+	sdata->XA_PauseFrame = sdata->gGT->frameTimer_MainFrame_ResetDB;
 }
