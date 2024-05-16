@@ -70,54 +70,63 @@ void sendToPeerReliable(ENetPeer* peer, const void* data, size_t size) {
 
 
 void ProcessConnectEvent(ENetPeer* peer) {
+
 	if (!peer) {
 		return;
 	}
-	if (count_connected_peers(peerInfos, MAX_CLIENTS) < MAX_CLIENTS && boolTakingConnections) {
-		char hostname[256];
-		enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
-		// Check if the peer is already connected
-		int index = find_peer_by_address(peerInfos, &peer->address);
 
-		if (index == -1)
-		{
-			// Find an empty slot in the peers array and assign the new peer to it
-			int id = find_empty_slot(peerInfos);
-			peerInfos[id].peer = peer;
-			clientCount++;
-			printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
-			// Send ClientID and clientCount back to all clients
-			struct SG_MessageClientStatus mw;
-			mw.type = SG_NEWCLIENT;
-			mw.numClientsTotal = clientCount;
-			mw.size = sizeof(struct SG_MessageClientStatus);
-
-			// Set the timeout settings for the host
-			// now 800 for 1.5s timeout, should detect closed clients
-			enet_peer_timeout(peer, 1000000, 1000000, 2000);
-
-			for (int j = 0; j < clientCount; j++)
-			{
-				if (!peerInfos[j].peer)
-					continue;
-
-				mw.clientID = j;
-				sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
-			}
-		} 
-		
-		else 
-		{
-			printf("Connection rejected: Peer %s:%u is already connected.\n", hostname, peer->address.port);
-			enet_peer_disconnect_now(peer, 0);
-		}
+	if (!boolTakingConnections)
+	{
+		printf("Connection rejected: Race in session.\n");
+		enet_peer_disconnect_now(peer, 0);
+		return;
 	}
 
-	else
+	if (count_connected_peers(peerInfos, MAX_CLIENTS) >= MAX_CLIENTS)
 	{
-		// Reject the connection if there are already MAX_PEERS connected or we arent taking connections anymore, since we started
 		printf("Connection rejected: Maximum number of peers reached.\n");
 		enet_peer_disconnect_now(peer, 0);
+		return;
+	}
+
+	char hostname[256];
+	enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
+
+	// Check if the peer is already connected
+	int index = find_peer_by_address(peerInfos, &peer->address);
+
+	if (index != -1)
+	{
+		printf("Connection rejected: Peer %s:%u is already connected.\n", hostname, peer->address.port);
+		enet_peer_disconnect_now(peer, 0);
+		return;
+	}
+
+	// Find an empty slot in the peers array and assign the new peer to it
+	int id = find_empty_slot(peerInfos);
+	peerInfos[id].peer = peer;
+	clientCount++;
+
+	// Debug only, also prints client name from CG_MessageName 
+	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
+
+	// Send ClientID and clientCount back to all clients
+	struct SG_MessageClientStatus mw;
+	mw.type = SG_NEWCLIENT;
+	mw.numClientsTotal = clientCount;
+	mw.size = sizeof(struct SG_MessageClientStatus);
+
+	// Set the timeout settings for the host
+	// now 800 for 1.5s timeout, should detect closed clients
+	enet_peer_timeout(peer, 1000000, 1000000, 2000);
+
+	for (int j = 0; j < clientCount; j++)
+	{
+		if (!peerInfos[j].peer)
+			continue;
+
+		mw.clientID = j;
+		sendToPeerReliable(peerInfos[j].peer, &mw, mw.size);
 	}
 }
 
@@ -241,6 +250,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->lapID = r->lapID;
 			s->boolAllowWeapons = r->boolAllowWeapons;
 
+			printf(
+					"Track: %d, Laps: %d\n",
+					s->trackID,
+					(2*s->lapID)+1
+				);
+
 			broadcastToPeersReliable(s, s->size);
 			break;
 		}
@@ -346,7 +361,19 @@ void ProcessNewMessages() {
 			{
 				char hostname[256];
 				enet_address_get_host_ip(&event.peer->address, hostname, sizeof(hostname));
-				printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
+
+				//printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
+
+				//identify which client ID this came from
+				int peerID = -1;
+				for (int i = 0; i < MAX_CLIENTS; i++) {
+					if (peerInfos[i].peer == event.peer) {
+						peerID = i;
+					}
+				}
+
+				printf("Connection disconnected from %d\n", peerID);
+
 
 
 				// What we "should" do is disconnect one peer
@@ -354,6 +381,7 @@ void ProcessNewMessages() {
 
 
 				// What we "will" do instead is throw everyone out
+
 
 
 				printf("Rebooting...\n");
