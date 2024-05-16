@@ -274,18 +274,18 @@ void DECOMP_Audio_Update1(void)
                 // If you did not just beat N Tropy in Time Trial
                 if ((gGT->unknownFlags_1d44 & 0x10000000) == 0)
                 {
-                    // If you ended a race of a cup
-                    if (((d->driverID == 0) ||
-
-                         ((gGT->gameMode1 & ADVENTURE_CUP) != 0)) ||
-
-                        (uVar1 = 5,
-
-                         // If you are in Arcade or VS cup
-                         (gGT->gameMode2 & CUP_ANY_KIND) != 0))
+					// defeat music
+					uVar1 = 5,
+					
+                    if (
+							(d->driverRank == 0) ||
+							((gGT->gameMode1 & ADVENTURE_CUP) != 0) ||
+							((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					   )
                     {
                         DECOMP_OtherFX_Play(0x5f, 0);
 
+						// victory (fanfare) music
                         uVar1 = 4;
                     }
                 }
