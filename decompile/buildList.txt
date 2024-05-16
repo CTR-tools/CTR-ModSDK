@@ -1,5 +1,5 @@
-// 499+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47 = 869 rewritten so far
-// 499 for every 'common' and ','
+// 498+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 871 rewritten so far
+// 498 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -23,6 +23,7 @@
 // +4 for VehPhysProc_Driving
 // +2 for VehStuckProc_PlantEaten
 // +3 for VehStuckProc_MaskGrab
+// +3 for RB_Block0
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
 // +47 for RB_Block2
@@ -64,10 +65,10 @@ common, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfF
 
 // 231 (incomplete)
 // skip first two
-common, 231, RB_Player_ModifyWumpa, 0x0, General/231/231_002_RB_ModifyWumpa.c
-common, 231, RB_MinePool_Init, 0x0, General/231/231_003_RB_MinePool_Init.c
-common, 231, RB_MinePool_Remove, 0x0, General/231/231_004_RB_MinePool_Remove.c
-common, 231, RB_MinePool_Add, 0x0, General/231/231_005_RB_MinePool_Add.c
+
+// everything from RB_Player_ModifyWumpa to RB_MinePool_Add
+common, 231, RB_Player_ModifyWumpa, 0x0, General/231/231_GROUP_02_05.c
+
 common, 231, RB_Hazard_HurtDriver, 0x0, General/231/231_006_RB_Hazard_HurtDriver.c
 common, 231, RB_Hazard_CollideWithDrivers, 0x0, General/231/231_007_RB_Hazard_CollideWithDrivers.c
 common, 231, RB_Hazard_CollideWithBucket, 0x0, General/231/231_008_RB_Hazard_CollideWithBucket.c
