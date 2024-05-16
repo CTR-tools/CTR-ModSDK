@@ -46,6 +46,11 @@ void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta)
 		driver->numWumpas = 10;
 	}
 	
+	#ifdef USE_ONLINE
+	if(driver->driverID != 0)
+		return;
+	#endif
+	
 	if (
 			// if did not have 10 before
 			(numWumpaOriginal < 10) &&

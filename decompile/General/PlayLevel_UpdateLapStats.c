@@ -184,6 +184,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// you have no weapon
 				currDriver->heldItemID = 0xf;
 
+				#ifdef USE_ONLINE
+				if(currDriver->driverID == 0)
+				#endif
+
 				// If this is human and not AI
 				if ((currDriver->actionsFlagSet & 0x100000) == 0)
 				{
@@ -199,10 +203,6 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						gGT->numWinners = 1;
 
 						char driverID = currDriver->driverID;
-						
-						#ifdef USE_ONLINE
-						if(driverID != 0) return;
-						#endif
 
 						// add driver ID to array of confetti winners
 						gGT->winnerIndex[0] = driverID;
