@@ -173,15 +173,21 @@ void OnlineEndOfRace()
 	int i;
 	for(i = 0; i < octr->numDriversEnded; i++)
 	{
-		sprintf(message, "%s:", &octr->nameBuffer[octr->RaceEnd[i].slot * 0xc]);
+		int slot = octr->RaceEnd[i].slot;
+		
+		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
+		
+		int color = ORANGE;
+		if(slot == 0)
+			color = BLUE;
 		
 		DecalFont_DrawLine(
 			message,
-			0x120,0x48+i*0x8,FONT_SMALL,0);
-				
+			0x120,0x48+i*0x8,FONT_SMALL,color);
+		
 		DecalFont_DrawLine(
 			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
-			0x1A0,0x48+i*0x8,FONT_SMALL,0);
+			0x1A0,0x48+i*0x8,FONT_SMALL,color);
 			
 		windowText.h += 8;
 	}
@@ -191,6 +197,20 @@ void OnlineEndOfRace()
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",
 			0x120,0x48+i*0x8,FONT_SMALL,RED);
+			
+		windowText.h += 8;
+	}
+	
+	else
+	{
+		sprintf(
+			message, 
+			"Waiting for %d more",
+			octr->NumDrivers - octr->numDriversEnded);
+		
+		DecalFont_DrawLine(
+			message,
+			0x120,0x48+i*0x8,FONT_SMALL,PAPU_YELLOW);
 			
 		windowText.h += 8;
 	}

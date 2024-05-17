@@ -1,4 +1,4 @@
-void ThreadFunc()
+void ThreadFunc(struct Thread* t)
 {
 	int i;
 	
@@ -41,8 +41,15 @@ void ThreadFunc()
 		sdata->unkAudioState = 0;
 	
 		// load next level
-		sdata->gGT->gameMode1 = LOADING;
-		sdata->Loading.stage = 0;
+		//sdata->gGT->gameMode1 = LOADING;
+		//sdata->Loading.stage = 0;
+		
+		// load with flag animation
+		DECOMP_MainRaceTrack_RequestLoad(0x32);
+		
+		// kill thread,
+		// dont execute again until game loads
+		t->flags |= 0x800;
 		return;
 	}
 	#endif

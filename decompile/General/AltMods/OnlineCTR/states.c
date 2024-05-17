@@ -283,10 +283,14 @@ void StatePS1_Lobby_StartLoading()
 		gGT->gameMode1 = LOADING | ARCADE_MODE;
 	}
 	
-	// start loading,
-	// this also kills all threads,
-	// so this wont execute twice
-	sdata->Loading.stage = 0;
+	// instant load
+	//sdata->Loading.stage = 0;
+	
+	// load with flag animation
+	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
+	
+	// dont kill thread,
+	// it will die when loading screen covers screen
 }
 
 void StatePS1_Game_WaitForRace()
