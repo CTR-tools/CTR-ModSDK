@@ -85,6 +85,60 @@ int MenuFinished()
 	return *OnPressX_SetLock;
 }
 
+void NewPage_ServerCountry()
+{
+	int i;
+	
+	// override "LAPS" "3/5/7"
+	sdata->lngStrings[0x9a] = "EUR -- 2 rooms";
+	sdata->lngStrings[0x9b] = "USA -- 1 room";
+	sdata->lngStrings[0x9c] = "AUS -- 1 room";
+	sdata->lngStrings[0x9d] = "PRIVATE ROOM";
+	
+	for(i = 0; i < 4; i++)
+	{
+		menuRows[i].stringIndex = 0x9a+i;
+	}
+}
+
+void MenuWrites_ServerCountry()
+{
+	OnPressX_SetPtr = &octr->serverCountry;
+	OnPressX_SetLock = &octr->serverLockIn1;
+}
+
+void NewPage_ServerRoom()
+{
+	int i;
+	
+	// override "LAPS" "3/5/7"
+	sdata->lngStrings[0x9a] = "ROOM 1";
+	sdata->lngStrings[0x9b] = "ROOM 2";
+	sdata->lngStrings[0x9c] = "ROOM 3";
+	sdata->lngStrings[0x9d] = "ROOM 4";
+	
+	for(i = 0; i < 4; i++)
+	{
+		menuRows[i].stringIndex = 0x809a+i;
+	}
+	
+	// all have 1 room except LOOPER with 2
+	int numRooms = 1;
+	if(octr->serverCountry == 0)
+		numRooms = 2;
+	
+	for(i = 0; i < numRooms; i++)
+	{
+		menuRows[i].stringIndex &= 0x7FFF;
+	}
+}
+
+void MenuWrites_ServerRoom()
+{
+	OnPressX_SetPtr = &octr->serverRoom;
+	OnPressX_SetLock = &octr->serverLockIn2;
+}
+
 void NewPage_Tracks()
 {
 	int i;
@@ -107,8 +161,12 @@ void NewPage_Laps()
 {
 	int i;
 	
-	// override "LAPS" with "1"
+	// override "LAPS" with "1",
+	// reset "3" "5" "7" in case overwritten
 	sdata->lngStrings[0x9a] = "1";
+	sdata->lngStrings[0x9b] = "3";
+	sdata->lngStrings[0x9c] = "5";
+	sdata->lngStrings[0x9d] = "7";
 	
 	for(i = 0; i < 4; i++)
 	{

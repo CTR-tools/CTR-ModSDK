@@ -7,14 +7,60 @@ void StatePS1_Launch_EnterPID()
 }
 
 void StatePS1_Launch_EnterIP()
-{	
-	DECOMP_DecalFont_DrawLine(
-		"Client Attached",
-		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|PLAYER_GREEN);
+{
+	// these can share same register with optimization
+	int buttons;
 	
-	DECOMP_DecalFont_DrawLine(
-		"Enter IP Address",
-		0x100,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+	MenuWrites_ServerCountry();
+	
+	// If already picked
+	if(MenuFinished() == 1)
+	{
+		// if picked PRIVATE
+		if(octr->serverCountry == 3)
+		{
+			// lock-in ROOM, skip room selection
+			octr->serverLockIn2 = 1;
+			return;
+		}
+		
+		// do this without adding to enum,
+		// cause that means changing PS1/PC
+		void StatePS1_Launch_EnterRoom();
+		StatePS1_Launch_EnterRoom();
+		return;
+	}
+	
+	// first frame here
+	if(sdata->ptrActiveMenu == 0)
+	{
+		ResetMenu();
+		NewPage_ServerCountry();
+
+	}
+	
+	int old = octr->PageNumber;
+	UpdateMenu();
+	if(old != octr->PageNumber)
+		NewPage_ServerCountry();
+}
+
+void StatePS1_Launch_EnterRoom()
+{
+	// these can share same register with optimization
+	int buttons;
+	
+	MenuWrites_ServerRoom();
+	
+	// If already picked
+	if(MenuFinished() == 1) return;
+	
+	// first frame here
+	if(sdata->ptrActiveMenu == 0)
+	{
+		ResetMenu();
+		NewPage_ServerRoom();
+	}
 }
 
 void StatePS1_Launch_ConnectFailed()

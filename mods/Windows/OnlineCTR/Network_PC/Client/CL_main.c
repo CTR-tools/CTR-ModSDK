@@ -321,6 +321,7 @@ void StatePC_Launch_EnterPID()
 	}
 }
 
+#if 0
 #define SETTINGS_FILE "settings.txt"
 #define NIKO_IP "24.187.10.49" // niko ip
 #define IP_LENGTH INET_ADDRSTRLEN
@@ -410,7 +411,8 @@ int connect_to_server(const char* ip) {
 		exit(EXIT_FAILURE);
 	}
 
-	fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
+	//fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
+
 	ENetEvent event;
 	/* Wait up to 2 seconds for the connection attempt to succeed. */
 	if (enet_host_service(clientHost, &event, 2000) > 0 &&
@@ -422,9 +424,35 @@ int connect_to_server(const char* ip) {
 	/* had run out without any significant event.*/
 	return 0;
 }
+#endif
+
+#define MAKE_ADDR(a, b, c, d) \
+	((a<<0)|(b<<8)|(c<<16)|(d<<24))
+
+const ENetAddress addrList[3] =
+{
+	[0] =
+	{
+		.host = MAKE_ADDR(37, 232, 112, 221),
+		.port = 65001
+	},
+
+	[1] =
+	{
+		.host = MAKE_ADDR(37, 232, 112, 221),
+		.port = 65002
+	},
+
+	[2] =
+	{
+		.host = MAKE_ADDR(24, 187, 10, 49),
+		.port = 65001
+	},
+};
 
 void StatePC_Launch_EnterIP()
 {
+#if 0
 	initialize_client_host();
 
 	char* ip_address_from_settings = read_ip_from_settings();
@@ -449,8 +477,99 @@ void StatePC_Launch_EnterIP()
 			return;
 		}
 	}
+#endif
 
-	printf("Connection to server succeeded.\n");
+	if (octr->serverLockIn2 == 0)
+		return;
+
+	ENetAddress addr;
+
+	switch (octr->serverCountry)
+	{
+		// EUR_LOOPER servers
+		case 0:
+		{
+			enet_address_set_host(&addr, "eur1.online-ctr.net");
+			addr.port = 65001 + octr->serverRoom;
+			break;
+		}
+
+			// USA_NIKO servers
+		case 1:
+		{
+			enet_address_set_host(&addr, "usa1.online-ctr.net");
+			addr.port = 65001 + octr->serverRoom;
+			break;
+		}
+
+		// AUS_MATT servers
+		case 2:
+		{
+			enet_address_set_host(&addr, "aus1.online-ctr.net");
+			addr.port = 65001 + octr->serverRoom;
+			break;
+		}
+
+		// PRIVATE servers
+		default:
+		{
+			char ip[100];
+			printf("Enter IP Address: ");
+			scanf_s("%s", ip, sizeof(ip));
+			printf("\n");
+
+			int port;
+			printf("Enter Port (0-65535): ");
+			scanf_s("%d", &port, sizeof(port));
+			printf("\n");
+
+			enet_address_set_host(&addr, ip);
+			addr.port = port;
+
+			break;
+		}
+	}
+
+	clientHost = enet_host_create(NULL /* create a client host */,
+		1 /* only allow 1 outgoing connection */,
+		2 /* allow up 2 channels to be used, 0 and 1 */,
+		0 /* assume any amount of incoming bandwidth */,
+		0 /* assume any amount of outgoing bandwidth */);
+
+	if (clientHost == NULL)
+	{
+		fprintf(stderr,
+			"An error occurred while trying to create an ENet client host.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if (serverPeer) {
+		enet_peer_reset(serverPeer);
+	}
+
+	serverPeer = enet_host_connect(clientHost, &addr, 2, 0);
+
+	if (serverPeer == NULL) {
+		fprintf(stderr, "No available peers for initiating an ENet connection.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	//fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
+
+	ENetEvent event;
+	/* Wait up to 2 seconds for the connection attempt to succeed. */
+	if (enet_host_service(clientHost, &event, 2000) > 0 &&
+		event.type == ENET_EVENT_TYPE_CONNECT)
+	{
+		printf("Connection to server succeeded.\n");
+	}
+
+	else
+	{
+		puts("Connection to server failed.");
+		octr->CurrState = LAUNCH_CONNECT_FAILED;
+		return;
+	}
 
 	// 2-second timer
 	enet_peer_timeout(serverPeer, 1000000, 1000000, 2000);
@@ -468,7 +587,8 @@ void StatePC_Launch_EnterIP()
 	
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
-	printf("connected to server successfully, sent name, going to first init state\n");
+
+	//printf("connected to server successfully, sent name, going to first init state\n");
 }
 
 void StatePC_Launch_ConnectFailed()

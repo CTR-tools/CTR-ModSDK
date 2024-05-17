@@ -3,6 +3,15 @@
 #include <common.h>
 #endif
 
+enum ServerList
+{
+	EUR_LOOPER_1,
+	EUR_LOOPER_2,
+	USA_NIKO_1,
+	AUS_MATT_1,
+	NUM_SERVERS
+};
+
 enum ClientState
 {
 	LAUNCH_ENTER_PID,
@@ -30,33 +39,32 @@ struct OnlineCTR
 	int IsBootedPS1;
 	
 	// 0x8
-	char PageNumber;
-	char CountPressX;
-	char NumDrivers;
-	char DriverID;
+	unsigned char PageNumber;
+	unsigned char CountPressX;
+	unsigned char NumDrivers;
+	unsigned char DriverID;
 	
 	// 0xc
-	char boolLockedInTrack;
-	char boolLockedInCharacter;
-	char boolLockedInLap;
-	char lapID;
+	unsigned char boolLockedInTrack;
+	unsigned char boolLockedInCharacter;
+	unsigned char boolLockedInLap;
+	unsigned char lapID;
 	
 	// 0x10
+	unsigned char serverCountry;
+	unsigned char serverRoom;
+	unsigned char serverLockIn1;
+	unsigned char serverLockIn2;
+	
+	// determines if client and 
+	// emulator are still connected
 	char time[8];
-
-	// 0x18
+	
 	char boolLockedInCharacters[8];
 
-	// 0x20
 	char nameBuffer[0xC*8];
 
-	// 0x80
 	int numDriversEnded;
-
-	// 0x84
-	int countdownToReset;
-
-	// 0x88
 	struct
 	{
 		int slot;

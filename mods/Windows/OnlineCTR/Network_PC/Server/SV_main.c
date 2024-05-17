@@ -497,9 +497,14 @@ int main()
 	}
 	atexit(enet_deinitialize);
 
+	int port;
+	printf("Enter Port (0-65535): ");
+	scanf_s("%d", &port, sizeof(port));
+	printf("\n");
+
 	ENetAddress address;
 	address.host = ENET_HOST_ANY;
-	address.port = 1234;
+	address.port = port;
 	server = enet_host_create(&address,
 		8      /* allow up to 8 clients*/,
 		2      /* allow up to 2 channels to be used, 0 and 1 */,
@@ -511,7 +516,7 @@ int main()
 			"An error occurred while trying to create an ENet server host.\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("NodeServer ready on port 1234\n\n");
+	printf("NodeServer ready on port %d\n\n", port);
 
 	ServerState_Boot();
 
