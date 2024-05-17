@@ -505,8 +505,9 @@ void StatePC_Launch_EnterIP()
 		// AUS_MATT servers
 		case 2:
 		{
+			// Matt uses 2096 for cloudfare
 			enet_address_set_host(&addr, "aus1.online-ctr.net");
-			addr.port = 65001 + octr->serverRoom;
+			addr.port = 2096 + octr->serverRoom;
 			break;
 		}
 
