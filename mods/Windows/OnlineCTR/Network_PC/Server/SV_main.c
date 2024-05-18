@@ -1,6 +1,11 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#ifdef __WINDOWS__
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
+#endif
+
 #include <stdio.h>
 #include <time.h>
 #include <enet/enet.h>
@@ -120,7 +125,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 	peerInfos[id].peer = peer;
 	clientCount++;
 
-	// Debug only, also prints client name from CG_MessageName 
+	// Debug only, also prints client name from CG_MessageName
 	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
 
 	// Send ClientID and clientCount back to all clients
@@ -508,17 +513,19 @@ void usleep(__int64 usec)
 }
 #endif
 
-int main()
+int main(int argc, char *argv[])
 {
 	printf(__DATE__);
 	printf("\n");
 	printf(__TIME__);
 	printf("\n\n");
 
+	#ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+	#endif
 
 	//initialize enet
 	if (enet_initialize() != 0) {
@@ -528,9 +535,27 @@ int main()
 	atexit(enet_deinitialize);
 
 	int port;
-	printf("Enter Port (0-65535): ");
-	scanf("%d", &port, sizeof(port));
-	printf("\n");
+	int boolIsPortArgument = 0;
+
+	//port argument reading
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
+			boolIsPortArgument = 1;
+			if (i + 1 < argc) {
+				port = atoi(argv[i + 1]);
+				i++; //next is port number
+			} else {
+				fprintf(stderr, "Error: --port or -p requires a value.\n");
+				return 1;
+			}
+		}
+	}
+
+	if(!boolIsPortArgument){
+		printf("Enter Port (0-65535): ");
+		scanf("%d", &port, sizeof(port));
+		printf("\n");
+	}
 
 	ENetAddress address;
 	address.host = ENET_HOST_ANY;
