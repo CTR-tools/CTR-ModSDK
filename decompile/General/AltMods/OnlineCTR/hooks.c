@@ -157,6 +157,7 @@ RECT windowText = {0x118, 0x40, 0xD8, 0};
 void OnlineEndOfRace()
 {
 	char message[32];
+	int numDead = 0;
 	struct Driver* d = sdata->gGT->drivers[0];
 	
 	// if "you" are still racing, do nothing
@@ -171,6 +172,10 @@ void OnlineEndOfRace()
 	windowText.h = 0;
 	
 	int i;
+	for(i = 0; i < octr->NumDrivers; i++)
+		if(octr->nameBuffer[i*0xC] == 0)
+			numDead++;
+	
 	for(i = 0; i < octr->numDriversEnded; i++)
 	{
 		int slot = octr->RaceEnd[i].slot;
@@ -192,7 +197,7 @@ void OnlineEndOfRace()
 		windowText.h += 8;
 	}
 	
-	if(octr->numDriversEnded == octr->NumDrivers)
+	if(octr->numDriversEnded == (octr->NumDrivers-numDead))
 	{
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",

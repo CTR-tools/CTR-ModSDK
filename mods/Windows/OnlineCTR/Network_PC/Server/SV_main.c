@@ -17,6 +17,7 @@
 
 #define MAX_CLIENTS 8
 
+int levelPlayed = 0;
 unsigned char clientCount = 0;
 int boolTakingConnections = 0;
 
@@ -54,6 +55,8 @@ void PrintTime()
 
 void ServerState_Boot()
 {
+	levelPlayed = 0;
+
 	clientCount = 0;
 	boolLoadAll = 0;
 	boolRaceAll = 0;
@@ -268,6 +271,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->lapID = r->lapID;
 			s->boolAllowWeapons = r->boolAllowWeapons;
 
+			levelPlayed = s->trackID;
+
 			printf(
 					"Track: %d, Laps: %d\n",
 					s->trackID,
@@ -377,44 +382,78 @@ void ProcessNewMessages() {
 
 			case ENET_EVENT_TYPE_DISCONNECT:
 			{
-				char hostname[256];
-				enet_address_get_host_ip(&event.peer->address, hostname, sizeof(hostname));
-
-				//printf("Connection disconnected from %s:%u.\n", hostname, event.peer->address.port);
-
 				//identify which client ID this came from
 				int peerID = -1;
-				for (int i = 0; i < MAX_CLIENTS; i++) {
-					if (peerInfos[i].peer == event.peer) {
+				int numAlive = 0;
+				for (int i = 0; i < MAX_CLIENTS; i++)
+				{
+					if (peerInfos[i].peer != 0)
+						numAlive++;
+
+					if (peerInfos[i].peer == event.peer)
 						peerID = i;
-					}
 				}
 
 				printf("Connection disconnected from %d\n", peerID);
 
-
-
-				// What we "should" do is disconnect one peer
-				//remove_peer(&event.peer);
-
-
-				// What we "will" do instead is throw everyone out
-
-
-
-				printf("Rebooting...\n");
-				for (int i = 0; i < MAX_CLIENTS; i++)
+				// What we "should" do is disconnect one peer,
+				// do this for all normal race tracks, and 2+ peers exist
+				if (
+					(levelPlayed <= 18) &&
+					(numAlive > 1)
+				   )
 				{
-					if (peerInfos[i].peer != NULL)
+					enet_peer_disconnect_now(peerInfos[peerID].peer, 0);
+					peerInfos[peerID].peer = NULL;
+
+					// if this client ended race, dont tell
+					// anyone that the client disconnected
+					if (peerInfos[peerID].boolEndSelf != 0)
+						return;
+
+					// dont block gameplay for everyone else
+					peerInfos[peerID].boolLoadSelf = 1;
+					peerInfos[peerID].boolRaceSelf = 1;
+
+					struct SG_MessageName sgBuffer;
+					struct SG_MessageName* s = &sgBuffer;
+
+					s->type = SG_NAME;
+					s->size = sizeof(struct SG_MessageName);
+
+					// send all OTHER names to THIS client
+					for (int j = 0; j < 8; j++)
 					{
-						enet_peer_disconnect_now(peerInfos[i].peer, 0);
-						peerInfos[i].peer = NULL;
-						clientCount--;
+						if (peerInfos[j].peer == 0)
+							continue;
+
+						s->clientID = peerID;
+						memset(&s->name[0], 0, 12);
+
+						sendToPeerReliable(peerInfos[j].peer, s, s->size);
 					}
 				}
 
-				printf("Reboot Done\n");
-				ServerState_Boot();
+				// What we "will" do instead is throw everyone out,
+				// do this only on Battle maps and Adventure Hub,
+				// or if this is the last peer to leave
+				else
+				{
+					printf("Rebooting...\n");
+					for (int i = 0; i < MAX_CLIENTS; i++)
+					{
+						if (peerInfos[i].peer != NULL)
+						{
+							enet_peer_disconnect_now(peerInfos[i].peer, 0);
+							peerInfos[i].peer = NULL;
+							clientCount--;
+						}
+					}
+
+					printf("Reboot Done\n");
+					ServerState_Boot();
+				}
+
 				break;
 			}
 
