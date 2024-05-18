@@ -522,6 +522,7 @@ int main()
 
 	while (1)
 	{
+        usleep(1);
 		ServerState_Tick();
 	}
 }
