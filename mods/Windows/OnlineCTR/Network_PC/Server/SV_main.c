@@ -325,7 +325,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			char timeStr[32];
 
-                        #ifdef _WIN32
+			#ifdef _WIN32
 			sprintf_s(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
@@ -335,7 +335,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
-                        #else
+			#else
 			snprintf(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
@@ -345,7 +345,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
-                        #endif
+			#endif
 
 			printf("End Race: %d %s\n", peerID, timeStr);
 
@@ -502,12 +502,12 @@ int main(int argc, char *argv[])
 	printf(__TIME__);
 	printf("\n\n");
 
-    #ifdef _WIN32
+	#ifdef _WIN32
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
-    #endif
+	#endif
 
 	//initialize enet
 	if (enet_initialize() != 0) {
@@ -517,33 +517,33 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 
 	int port;
-        int boolIsPortArgument = 0;
+	int boolIsPortArgument = 0;
 
-        //port argument reading
-        for (int i = 1; i < argc; i++) {
-            if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
-                boolIsPortArgument = 1;
-                if (i + 1 < argc) {
-                    port = atoi(argv[i + 1]);
-                    i++; //next is port number
-                } else {
-                    fprintf(stderr, "Error: --port or -p requires a value.\n");
-                    return 1;
-                }
-            }
-        }
+	//port argument reading
+	for (int i = 1; i < argc; i++) {
+		if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
+			boolIsPortArgument = 1;
+			if (i + 1 < argc) {
+				port = atoi(argv[i + 1]);
+				i++; //next is port number
+			} else {
+				fprintf(stderr, "Error: --port or -p requires a value.\n");
+				return 1;
+			}
+		}
+	}
 
-        if(!boolIsPortArgument){
-            printf("Enter Port (0-65535): ");
+	if(!boolIsPortArgument){
+		printf("Enter Port (0-65535): ");
 
-            #ifdef _WIN32
-            scanf_s("%d", &port, sizeof(port));
-            #else
-            scanf("%d", &port, sizeof(port));
-            #endif
+		#ifdef _WIN32
+		scanf_s("%d", &port, sizeof(port));
+		#else
+		scanf("%d", &port, sizeof(port));
+		#endif
 
-            printf("\n");
-        }
+		printf("\n");
+	}
 
 	ENetAddress address;
 	address.host = ENET_HOST_ANY;
@@ -565,7 +565,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-        usleep(1);
+		usleep(1);
 		ServerState_Tick();
 	}
 }
