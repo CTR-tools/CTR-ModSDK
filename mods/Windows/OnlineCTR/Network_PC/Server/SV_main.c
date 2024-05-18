@@ -325,7 +325,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			char timeStr[32];
 
-            #ifdef _WIN32
+                        #ifdef _WIN32
 			sprintf_s(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
@@ -335,8 +335,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
-            #else
-			sprintf(
+                        #else
+			snprintf(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
 				localTime / 0xe100,
@@ -345,8 +345,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
-
-            #endif
+                        #endif
 
 			printf("End Race: %d %s\n", peerID, timeStr);
 
