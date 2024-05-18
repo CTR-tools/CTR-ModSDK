@@ -17,7 +17,7 @@ void StatePS1_Launch_EnterIP()
 	if(MenuFinished() == 1)
 	{
 		// if picked PRIVATE
-		if(octr->serverCountry == 3)
+		if((octr->serverCountry&3) == 3)
 		{
 			// lock-in ROOM, skip room selection
 			octr->serverLockIn2 = 1;
