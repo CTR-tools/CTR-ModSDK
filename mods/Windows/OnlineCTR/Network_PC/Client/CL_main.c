@@ -338,7 +338,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-			// USA_NIKO servers
+		// USA_NIKO servers
 		case 1:
 		{
 			enet_address_set_host(&addr, "usa1.online-ctr.net");
@@ -850,12 +850,31 @@ int main()
 	system("pause");
 }
 
+#ifdef __WINDOWS__
+void usleep(__int64 usec)
+{
+	HANDLE timer;
+	LARGE_INTEGER ft;
+
+	ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
+
+	timer = CreateWaitableTimer(NULL, TRUE, NULL);
+	SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);
+	WaitForSingleObject(timer, INFINITE);
+	CloseHandle(timer);
+}
+#endif
+
 #pragma optimize("", off)
 int gGT_timer = 0;
 void FrameStall()
 {
 	// wait for next frame
-	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff]) {}
+	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
+	{
+		usleep(1);
+	}
+
 	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
 }
 #pragma optimize("", on)
