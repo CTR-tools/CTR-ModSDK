@@ -1,8 +1,12 @@
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#endif
+
 #include <stdio.h>
+#include <string.h>
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
@@ -320,6 +324,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memcpy(&localTime, &r->time[0], 3);
 
 			char timeStr[32];
+
+            #ifdef _WIN32
 			sprintf_s(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
@@ -329,6 +335,18 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
+            #else
+			sprintf(
+				&timeStr[0], 32,
+				"%ld:%ld%ld:%ld%ld",
+				localTime / 0xe100,
+				(localTime / 0x2580) % 6,
+				(localTime / 0x3c0) % 10,
+				((localTime * 10) / 0x3c0) % 10,
+				((localTime * 100) / 0x3c0) % 10
+			);
+
+            #endif
 
 			printf("End Race: %d %s\n", peerID, timeStr);
 
@@ -485,10 +503,12 @@ int main(int argc, char *argv[])
 	printf(__TIME__);
 	printf("\n\n");
 
+    #ifdef _WIN32
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+    #endif
 
 	//initialize enet
 	if (enet_initialize() != 0) {
@@ -516,7 +536,13 @@ int main(int argc, char *argv[])
 
     if(!isPortArgument){
         printf("Enter Port (0-65535): ");
+        
+        #ifdef _WIN32
         scanf_s("%d", &port, sizeof(port));
+        #else
+        scanf("%d", &port, sizeof(port));
+        #endif
+
         printf("\n");
     }
 

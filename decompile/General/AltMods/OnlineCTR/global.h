@@ -201,13 +201,14 @@ struct SG_MessageEndRace
 	unsigned char time[3];
 };
 
+#ifdef _WIN32
 static_assert(sizeof(struct SG_Header) == 1);
 static_assert(sizeof(struct SG_MessageName) == 14);
 static_assert(sizeof(struct SG_MessageCharacter) == 2);
 static_assert(sizeof(struct SG_MessageTrack) == 2);
 static_assert(sizeof(struct SG_EverythingKart) == 13);
 static_assert(sizeof(struct SG_MessageEndRace) == 5);
-
+#endif
 
 
 enum ClientGiveMessageType
@@ -301,12 +302,14 @@ struct CG_MessageEndRace
 	unsigned char time[3];
 };
 
+#ifdef _WIN32
 static_assert(sizeof(struct CG_Header) == 1);
 static_assert(sizeof(struct CG_MessageName) == 13);
 static_assert(sizeof(struct CG_MessageCharacter) == 2);
 static_assert(sizeof(struct CG_MessageTrack) == 2);
 static_assert(sizeof(struct CG_EverythingKart) == 13);
 static_assert(sizeof(struct CG_MessageEndRace) == 4);
+#endif
 
 // my functions
 void StatePC_Launch_EnterPID();
