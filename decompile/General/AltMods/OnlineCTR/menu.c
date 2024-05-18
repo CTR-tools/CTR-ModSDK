@@ -152,8 +152,8 @@ void NewPage_ServerRoom()
 		case 1: numRooms = 6; break; // USA Niko
 		case 2: numRooms = 6; break; // MEX Claudio
 		case 3: numRooms = 1; break; // PRIVATE ROOM
-		case 4: numRooms = 1; break; // AUS Matt
-		case 5: numRooms = 1; break; // BZL Pedro
+		case 4: numRooms = 4; break; // BZL Pedro
+		case 5: numRooms = 1; break; // AUS Matt
 		
 	}
 	

@@ -176,9 +176,17 @@ void OnlineEndOfRace()
 		if(octr->nameBuffer[i*0xC] == 0)
 			numDead++;
 	
-	for(i = 0; i < octr->numDriversEnded; i++)
+	for(i = 0; i < octr->NumDrivers; i++)
 	{
+		// skip drivers still racing
+		if(octr->RaceEnd[i].time == 0)
+			continue;
+		
 		int slot = octr->RaceEnd[i].slot;
+		
+		// skip disconnected drivers
+		if(octr->nameBuffer[slot * 0xc] == 0)
+			continue;
 		
 		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
 		
@@ -211,7 +219,7 @@ void OnlineEndOfRace()
 		sprintf(
 			message, 
 			"Waiting for %d more",
-			octr->NumDrivers - octr->numDriversEnded);
+			octr->NumDrivers - (octr->numDriversEnded-numDead));
 		
 		DecalFont_DrawLine(
 			message,

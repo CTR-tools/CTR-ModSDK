@@ -360,20 +360,20 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// AUS_MATT servers
+		// BZL_PEDRO servers
 		case 4:
+		{
+			enet_address_set_host(&addr, "lab.pedrohlc.com");
+			addr.port = 65001 + octr->serverRoom;
+			break;
+		}
+
+		// AUS_MATT servers
+		case 5:
 		{
 			// Matt uses 2096 for cloudfare
 			enet_address_set_host(&addr, "aus1.online-ctr.net");
 			addr.port = 2096 + octr->serverRoom;
-			break;
-		}
-		
-		// BZL_PEDRO servers
-		case 5:
-		{
-			enet_address_set_host(&addr, "lab.pedrohlc.com");
-			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
 
@@ -704,7 +704,12 @@ void StatePC_Game_EndRace()
 		timeStart = clock();
 	}
 
-	if (octr->numDriversEnded != octr->NumDrivers)
+	int numDead = 0;
+	for (int i = 0; i < octr->NumDrivers; i++)
+		if (octr->nameBuffer[i * 0xC] == 0)
+			numDead++;
+
+	if (octr->numDriversEnded < (octr->NumDrivers-numDead))
 	{
 		// if you did not finish last
 		timeStart = clock();
