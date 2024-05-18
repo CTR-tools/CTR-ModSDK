@@ -106,8 +106,8 @@ void NewPage_ServerCountry()
 	else
 	{
 		// override "LAPS" "3/5/7"
-		sdata->lngStrings[0x9a] = "AUS -- 1 room";
-		sdata->lngStrings[0x9b] = "BZL -- 1 room";
+		sdata->lngStrings[0x9a] = "BRZ -- 4 rooms";
+		sdata->lngStrings[0x9b] = "AUS -- 1 room";
 		sdata->lngStrings[0x9c] = "-";
 		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
 		
