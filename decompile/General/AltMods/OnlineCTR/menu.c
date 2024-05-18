@@ -90,8 +90,8 @@ void NewPage_ServerCountry()
 	int i;
 	
 	// override "LAPS" "3/5/7"
-	sdata->lngStrings[0x9a] = "EUR -- 2 rooms";
-	sdata->lngStrings[0x9b] = "USA -- 1 room";
+	sdata->lngStrings[0x9a] = "EUR -- 4 rooms";
+	sdata->lngStrings[0x9b] = "USA -- 4 rooms";
 	sdata->lngStrings[0x9c] = "AUS -- 1 room";
 	sdata->lngStrings[0x9d] = "PRIVATE ROOM";
 	
@@ -122,10 +122,10 @@ void NewPage_ServerRoom()
 		menuRows[i].stringIndex = 0x809a+i;
 	}
 	
-	// all have 1 room except LOOPER with 2
-	int numRooms = 1;
-	if(octr->serverCountry == 0)
-		numRooms = 2;
+	// all 4 rooms except MATT with 1
+	int numRooms = 4;
+	if(octr->serverCountry == 2)
+		numRooms = 1;
 	
 	for(i = 0; i < numRooms; i++)
 	{

@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -6,16 +8,13 @@
 #endif
 
 #include <stdio.h>
-#include <string.h>
+#include <time.h>
+#include <enet/enet.h>
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 
 #pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "AdvApi32.lib")
-
-#include <enet/enet.h>
 
 #define MAX_CLIENTS 8
 
@@ -40,6 +39,20 @@ typedef struct {
 ENetHost* server;
 PeerInfo peerInfos[MAX_CLIENTS] = { NULL };
 
+void PrintTime()
+{
+	time_t timer;
+	char buffer[26];
+	struct tm* tm_info;
+
+	timer = time(NULL);
+	tm_info = localtime(&timer);
+
+	strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
+	printf(buffer);
+	printf("\n");
+}
+
 void ServerState_Boot()
 {
 	clientCount = 0;
@@ -48,7 +61,9 @@ void ServerState_Boot()
 	boolEndAll = 0;
 	memset(peerInfos, 0, sizeof(peerInfos));
 
-	printf("\nClientCount: 0\n");
+	printf("\nServerState_Boot: ");
+	PrintTime();
+
 	boolTakingConnections = 1;
 }
 
@@ -324,18 +339,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memcpy(&localTime, &r->time[0], 3);
 
 			char timeStr[32];
-
-			#ifdef _WIN32
-			sprintf_s(
-				&timeStr[0], 32,
-				"%ld:%ld%ld:%ld%ld",
-				localTime / 0xe100,
-				(localTime / 0x2580) % 6,
-				(localTime / 0x3c0) % 10,
-				((localTime * 10) / 0x3c0) % 10,
-				((localTime * 100) / 0x3c0) % 10
-			);
-			#else
 			snprintf(
 				&timeStr[0], 32,
 				"%ld:%ld%ld:%ld%ld",
@@ -345,7 +348,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 10) / 0x3c0) % 10,
 				((localTime * 100) / 0x3c0) % 10
 			);
-			#endif
 
 			printf("End Race: %d %s\n", peerID, timeStr);
 
@@ -440,7 +442,8 @@ void ServerState_Tick()
 
 		if (boolLoadAll)
 		{
-			printf("Start Loading\n");
+			printf("Start Loading: ");
+			PrintTime();
 
 			struct SG_Header sg;
 			sg.type = SG_STARTLOADING;
@@ -460,7 +463,8 @@ void ServerState_Tick()
 
 		if (boolRaceAll)
 		{
-			printf("Start Race\n");
+			printf("Start Race: ");
+			PrintTime();
 
 			struct SG_Header sg;
 			sg.type = SG_STARTRACE;
@@ -494,6 +498,21 @@ void ServerState_Tick()
 #endif
 	}
 }
+
+#ifdef __WINDOWS__
+void usleep(__int64 usec)
+{
+	HANDLE timer;
+	LARGE_INTEGER ft;
+
+	ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
+
+	timer = CreateWaitableTimer(NULL, TRUE, NULL);
+	SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);
+	WaitForSingleObject(timer, INFINITE);
+	CloseHandle(timer);
+}
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -535,13 +554,7 @@ int main(int argc, char *argv[])
 
 	if(!boolIsPortArgument){
 		printf("Enter Port (0-65535): ");
-
-		#ifdef _WIN32
-		scanf_s("%d", &port, sizeof(port));
-		#else
 		scanf("%d", &port, sizeof(port));
-		#endif
-
 		printf("\n");
 	}
 
