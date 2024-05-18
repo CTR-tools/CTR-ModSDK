@@ -3,6 +3,13 @@
 #include <common.h>
 #endif
 
+#ifdef __GNUC__
+#define STATIC_ASSERT2(test_for_true) \
+    _Static_assert((test_for_true), "(" #test_for_true ") failed")
+#else
+#define STATIC_ASSERT2 static_assert
+#endif
+
 enum ServerList
 {
 	EUR_LOOPER_1,
@@ -201,12 +208,12 @@ struct SG_MessageEndRace
 	unsigned char time[3];
 };
 
-static_assert(sizeof(struct SG_Header) == 1);
-static_assert(sizeof(struct SG_MessageName) == 14);
-static_assert(sizeof(struct SG_MessageCharacter) == 2);
-static_assert(sizeof(struct SG_MessageTrack) == 2);
-static_assert(sizeof(struct SG_EverythingKart) == 13);
-static_assert(sizeof(struct SG_MessageEndRace) == 5);
+STATIC_ASSERT2(sizeof(struct SG_Header) == 1);
+STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14);
+STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2);
+STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2);
+STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 13);
+STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5);
 
 enum ClientGiveMessageType
 {
@@ -299,12 +306,12 @@ struct CG_MessageEndRace
 	unsigned char time[3];
 };
 
-static_assert(sizeof(struct CG_Header) == 1);
-static_assert(sizeof(struct CG_MessageName) == 13);
-static_assert(sizeof(struct CG_MessageCharacter) == 2);
-static_assert(sizeof(struct CG_MessageTrack) == 2);
-static_assert(sizeof(struct CG_EverythingKart) == 13);
-static_assert(sizeof(struct CG_MessageEndRace) == 4);
+STATIC_ASSERT2(sizeof(struct CG_Header) == 1);
+STATIC_ASSERT2(sizeof(struct CG_MessageName) == 13);
+STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2);
+STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2);
+STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 13);
+STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4);
 
 // my functions
 void StatePC_Launch_EnterPID();
