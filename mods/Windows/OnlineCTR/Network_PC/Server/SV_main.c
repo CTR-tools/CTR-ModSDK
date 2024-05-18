@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#ifdef _WIN32
+#ifdef __WINDOWS__
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <winsock2.h>
@@ -521,7 +521,7 @@ int main(int argc, char *argv[])
 	printf(__TIME__);
 	printf("\n\n");
 
-	#ifdef _WIN32
+	#ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
