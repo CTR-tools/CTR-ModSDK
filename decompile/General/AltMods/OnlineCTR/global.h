@@ -37,29 +37,29 @@ struct OnlineCTR
 	// 0x0
 	int CurrState;
 	int IsBootedPS1;
-	
+
 	// 0x8
 	unsigned char PageNumber;
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
 	unsigned char DriverID;
-	
+
 	// 0xc
 	unsigned char boolLockedInTrack;
 	unsigned char boolLockedInCharacter;
 	unsigned char boolLockedInLap;
 	unsigned char lapID;
-	
+
 	// 0x10
 	unsigned char serverCountry;
 	unsigned char serverRoom;
 	unsigned char serverLockIn1;
 	unsigned char serverLockIn2;
-	
-	// determines if client and 
+
+	// determines if client and
 	// emulator are still connected
 	char time[8];
-	
+
 	char boolLockedInCharacters[8];
 
 	char nameBuffer[0xC*8];
@@ -73,7 +73,7 @@ struct OnlineCTR
 
 	// 0xc8
 	// function pointers MUST come last,
-	// cause windows thinks pointers are 
+	// cause windows thinks pointers are
 	// 8 bytes, while PSX thinks 4 bytes
 	void (*funcs[NUM_STATES]) ();
 };
@@ -97,7 +97,7 @@ enum ServerGiveMessageType
 	SG_ENDRACE,
 
 	SG_SERVERCLOSED,
-	
+
 	SG_COUNT
 };
 
@@ -141,7 +141,7 @@ struct SG_MessageTrack
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
-	
+
 	unsigned char trackID : 5;
 	unsigned char lapID : 2;
 	unsigned char boolAllowWeapons : 1;
@@ -153,7 +153,7 @@ struct SG_MessageCharacter
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
-	
+
 	// index 0 - 7
 	// boolLockedIn 0/1
 	// character 0 - 15
@@ -201,15 +201,12 @@ struct SG_MessageEndRace
 	unsigned char time[3];
 };
 
-#ifdef _WIN32
 static_assert(sizeof(struct SG_Header) == 1);
 static_assert(sizeof(struct SG_MessageName) == 14);
 static_assert(sizeof(struct SG_MessageCharacter) == 2);
 static_assert(sizeof(struct SG_MessageTrack) == 2);
 static_assert(sizeof(struct SG_EverythingKart) == 13);
 static_assert(sizeof(struct SG_MessageEndRace) == 5);
-#endif
-
 
 enum ClientGiveMessageType
 {
@@ -248,7 +245,7 @@ struct CG_MessageTrack
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
-	
+
 	unsigned char trackID : 5;
 	unsigned char lapID : 2;
 	unsigned char boolAllowWeapons : 1;
@@ -302,14 +299,12 @@ struct CG_MessageEndRace
 	unsigned char time[3];
 };
 
-#ifdef _WIN32
 static_assert(sizeof(struct CG_Header) == 1);
 static_assert(sizeof(struct CG_MessageName) == 13);
 static_assert(sizeof(struct CG_MessageCharacter) == 2);
 static_assert(sizeof(struct CG_MessageTrack) == 2);
 static_assert(sizeof(struct CG_EverythingKart) == 13);
 static_assert(sizeof(struct CG_MessageEndRace) == 4);
-#endif
 
 // my functions
 void StatePC_Launch_EnterPID();
