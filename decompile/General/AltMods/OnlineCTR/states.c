@@ -61,6 +61,11 @@ void StatePS1_Launch_EnterRoom()
 		ResetMenu();
 		NewPage_ServerRoom();
 	}
+	
+	int old = octr->PageNumber;
+	UpdateMenu();
+	if(old != octr->PageNumber)
+		NewPage_ServerRoom();
 }
 
 void StatePS1_Launch_ConnectFailed()

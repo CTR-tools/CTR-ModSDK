@@ -89,20 +89,35 @@ void NewPage_ServerCountry()
 {
 	int i;
 	
-	// override "LAPS" "3/5/7"
-	sdata->lngStrings[0x9a] = "EUR -- 4 rooms";
-	sdata->lngStrings[0x9b] = "USA -- 4 rooms";
-	sdata->lngStrings[0x9c] = "AUS -- 1 room";
-	sdata->lngStrings[0x9d] = "PRIVATE ROOM";
-	
 	for(i = 0; i < 4; i++)
 	{
 		menuRows[i].stringIndex = 0x9a+i;
+	}
+	
+	if(octr->PageNumber == 0)
+	{
+		// override "LAPS" "3/5/7"
+		sdata->lngStrings[0x9a] = "EUR -- 6 rooms";
+		sdata->lngStrings[0x9b] = "USA -- 6 rooms";
+		sdata->lngStrings[0x9c] = "MEX -- 6 rooms";
+		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
+	}
+	
+	else
+	{
+		// override "LAPS" "3/5/7"
+		sdata->lngStrings[0x9a] = "AUS -- 1 room";
+		sdata->lngStrings[0x9b] = "BZL -- 1 room";
+		sdata->lngStrings[0x9c] = "-";
+		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
+		
+		menuRows[2].stringIndex |= 0x8000;
 	}
 }
 
 void MenuWrites_ServerCountry()
 {
+	pageMax = 1;
 	OnPressX_SetPtr = &octr->serverCountry;
 	OnPressX_SetLock = &octr->serverLockIn1;
 }
@@ -117,24 +132,43 @@ void NewPage_ServerRoom()
 	sdata->lngStrings[0x9c] = "ROOM 3";
 	sdata->lngStrings[0x9d] = "ROOM 4";
 	
+	int pn = octr->PageNumber;
+	sdata->lngStrings[0x9a][5] = '0' + (4*pn+1);
+	sdata->lngStrings[0x9b][5] = '0' + (4*pn+2);
+	sdata->lngStrings[0x9c][5] = '0' + (4*pn+3);
+	sdata->lngStrings[0x9d][5] = '0' + (4*pn+4);
+	
 	for(i = 0; i < 4; i++)
 	{
 		menuRows[i].stringIndex = 0x809a+i;
 	}
 	
-	// all 4 rooms except MATT with 1
-	int numRooms = 4;
-	if(octr->serverCountry == 2)
-		numRooms = 1;
-	
-	for(i = 0; i < numRooms; i++)
+	int numRooms = 0;
+	switch(octr->serverCountry)
 	{
-		menuRows[i].stringIndex &= 0x7FFF;
+		// 6+6+6+1+1=18
+		// Player Cap = 160 players
+		case 0: numRooms = 6; break; // EUR Looper
+		case 1: numRooms = 6; break; // USA Niko
+		case 2: numRooms = 6; break; // MEX Claudio
+		case 3: numRooms = 1; break; // AUS Matt
+		case 4: numRooms = 1; break; // BZL Pedro
+		
+	}
+	
+	for(i = 0; i < 4; i++)
+	{
+		if(4*pn+i < numRooms)
+			menuRows[i].stringIndex &= 0x7FFF;
 	}
 }
 
 void MenuWrites_ServerRoom()
-{
+{	
+	pageMax = 0;
+	if(octr->serverCountry < 3)
+		pageMax = 1;
+	
 	OnPressX_SetPtr = &octr->serverRoom;
 	OnPressX_SetLock = &octr->serverLockIn2;
 }
@@ -206,7 +240,7 @@ void ResetMenu()
 }
 
 void UpdateMenu()
-{
+{	
 	int buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// BTN_LEFT = 0x4
@@ -220,6 +254,18 @@ void UpdateMenu()
 		if (octr->PageNumber < 0) octr->PageNumber = 0;
 		if (octr->PageNumber > pageMax) octr->PageNumber = pageMax;
 	}
+	
+	if(pageMax == 0)
+		return;
+	
+	int string = 
+		(('1' + octr->PageNumber) << 0) |
+		('/' << 8) |
+		(('1' + pageMax) << 16);
+	
+	DECOMP_MainFreeze_ConfigDrawArrows(0xB0, 0x28, &string);
+	
+	DecalFont_DrawLine(&string,0xB0,0x28,FONT_BIG,JUSTIFY_CENTER|WHITE);
 }
 
 void RECTMENU_OnPressX(struct RectMenu* b)
@@ -247,9 +293,6 @@ void PrintClientCountStats()
 	
 	sprintf(message, "ClientID: %d", octr->DriverID);
 	DecalFont_DrawLine(message,0x8,0x20,FONT_SMALL,ORANGE);
-	
-	sprintf(message, "NumTotal: %d", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x8,0x28,FONT_SMALL,ORANGE);
 }
 
 void PrintCharacterStats()

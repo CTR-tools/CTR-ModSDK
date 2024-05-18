@@ -39,7 +39,7 @@ struct OnlineCTR
 	int IsBootedPS1;
 	
 	// 0x8
-	unsigned char PageNumber;
+	char PageNumber; // allow negative
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
 	unsigned char DriverID;

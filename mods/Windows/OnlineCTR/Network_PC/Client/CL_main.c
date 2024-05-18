@@ -304,7 +304,7 @@ void ProcessNewMessages() {
 			printf("Rebooting...\n");
 			Sleep(2000);
 			system("cls");
-			main();
+			octr->CurrState = 0;
 			break;
 		default: break;
 		}
@@ -328,6 +328,12 @@ void StatePC_Launch_EnterIP()
 
 	ENetAddress addr;
 
+	int serverID = 
+		octr->PageNumber*4 + 
+		octr->serverCountry;
+	
+	printf("serverID: %d\n", serverID);
+
 	switch (octr->serverCountry)
 	{
 		// EUR_LOOPER servers
@@ -345,13 +351,29 @@ void StatePC_Launch_EnterIP()
 			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
+		
+		// MEX_CLAUD servers
+		case 2:
+		{
+			enet_address_set_host(&addr, "usa2.online-ctr.net");
+			addr.port = 10666 + octr->serverRoom;
+			break;
+		}
 
 		// AUS_MATT servers
-		case 2:
+		case 4:
 		{
 			// Matt uses 2096 for cloudfare
 			enet_address_set_host(&addr, "aus1.online-ctr.net");
 			addr.port = 2096 + octr->serverRoom;
+			break;
+		}
+		
+		// BZL_PEDRO servers
+		case 5:
+		{
+			enet_address_set_host(&addr, "lab.pedrohlc.com");
+			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
 
@@ -558,7 +580,8 @@ void SendEverything()
 		printf("Rebooting...\n");
 		Sleep(2000);
 		system("cls");
-		main();
+		octr->CurrState = 0;
+		return;
 	}
 
 	// ignore Circle/L2
@@ -696,7 +719,7 @@ void StatePC_Game_EndRace()
 			printf("Rebooting...\n");
 			Sleep(2000);
 			system("cls");
-			main();
+			octr->CurrState = 0;
 		}
 	}
 }
