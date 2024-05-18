@@ -518,33 +518,33 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 
 	int port;
-    bool isPortArgument = false
+        int boolIsPortArgument = 0;
 
-    //port argument reading
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
-            isPortArgument = true
-            if (i + 1 < argc) {
-                port = atoi(argv[i + 1]);
-                i++; //next is port number
-            } else {
-                fprintf(stderr, "Error: --port or -p requires a value.\n");
-                return 1;
+        //port argument reading
+        for (int i = 1; i < argc; i++) {
+            if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
+                boolIsPortArgument = 1;
+                if (i + 1 < argc) {
+                    port = atoi(argv[i + 1]);
+                    i++; //next is port number
+                } else {
+                    fprintf(stderr, "Error: --port or -p requires a value.\n");
+                    return 1;
+                }
             }
         }
-    }
 
-    if(!isPortArgument){
-        printf("Enter Port (0-65535): ");
-        
-        #ifdef _WIN32
-        scanf_s("%d", &port, sizeof(port));
-        #else
-        scanf("%d", &port, sizeof(port));
-        #endif
+        if(!boolIsPortArgument){
+            printf("Enter Port (0-65535): ");
 
-        printf("\n");
-    }
+            #ifdef _WIN32
+            scanf_s("%d", &port, sizeof(port));
+            #else
+            scanf("%d", &port, sizeof(port));
+            #endif
+
+            printf("\n");
+        }
 
 	ENetAddress address;
 	address.host = ENET_HOST_ANY;
