@@ -3,7 +3,7 @@ name: Build main
 on:
   push:
     branches:
-      - main
+      - '**'
 
 permissions:
   contents: read
@@ -28,5 +28,9 @@ jobs:
         run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.gcc'
       - name: Build Decomp Debug Mingw32 Clang
         run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.clang'
-      - name: Build Retail Release Mingw32 Clang
-        run: nix build -L --no-link --keep-going '.?submodules=1#retail.release.mingw32.clang'
+      - name: Build Retail Release Linux32 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#retail.release.native32.gcc'
+      - name: Build Server Release Linux32 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.native32.gcc'
+      - name: Build Server Release ARM32 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.arm32.gcc'

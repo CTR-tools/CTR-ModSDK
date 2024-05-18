@@ -3,8 +3,6 @@
 #ifdef __WINDOWS__
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #endif
 
 #include <stdio.h>
@@ -126,7 +124,7 @@ void ProcessConnectEvent(ENetPeer* peer) {
 	peerInfos[id].peer = peer;
 	clientCount++;
 
-	// Debug only, also prints client name from CG_MessageName 
+	// Debug only, also prints client name from CG_MessageName
 	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
 
 	// Send ClientID and clientCount back to all clients
