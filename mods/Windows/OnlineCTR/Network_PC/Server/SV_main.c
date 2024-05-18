@@ -478,7 +478,7 @@ void ServerState_Tick()
 	}
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	printf(__DATE__);
 	printf("\n");
@@ -498,9 +498,27 @@ int main()
 	atexit(enet_deinitialize);
 
 	int port;
-	printf("Enter Port (0-65535): ");
-	scanf_s("%d", &port, sizeof(port));
-	printf("\n");
+    bool isPortArgument = false
+
+    //port argument reading
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
+            isPortArgument = true
+            if (i + 1 < argc) {
+                port = atoi(argv[i + 1]);
+                i++; //next is port number
+            } else {
+                fprintf(stderr, "Error: --port or -p requires a value.\n");
+                return 1;
+            }
+        }
+    }
+
+    if(!isPortArgument){
+        printf("Enter Port (0-65535): ");
+        scanf_s("%d", &port, sizeof(port));
+        printf("\n");
+    }
 
 	ENetAddress address;
 	address.host = ENET_HOST_ANY;
