@@ -13,6 +13,25 @@ let
   mainProgram = if isWindows then "ctr_srv.exe" else "ctr_srv";
 
   path = "mods/Windows/OnlineCTR/Network_PC/Server";
+
+  cross-enet =
+    if isWindows then
+      enet.overrideAttrs
+        (previousAttrs: {
+          nativeBuildInputs = [ cmake ];
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out/lib
+            cp libenet.a $out/lib/
+
+            runHook postInstall
+          '';
+
+          meta = previousAttrs.meta // { platforms = lib.platforms.all; };
+        })
+    else enet;
 in
 stdenv.mkDerivation (_: {
   pname = "CTR-SRV";
@@ -24,7 +43,7 @@ stdenv.mkDerivation (_: {
     else "source/${path}";
 
   nativeBuildInputs = [ cmake pkg-config ];
-  buildInputs = [ enet ];
+  buildInputs = [ cross-enet ];
 
   # Disables incompatible hardening
   hardeningDisable = [ "format" ];
