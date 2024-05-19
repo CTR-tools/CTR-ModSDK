@@ -80,13 +80,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>../include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\..\externals\enet\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\..\externals\enet\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>../include;$(IncludePath)</IncludePath>
-    <LibraryPath>../lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\..\externals\enet\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\..\externals\enet\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

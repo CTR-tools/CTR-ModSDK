@@ -109,9 +109,9 @@ target_link_options(ctr_bin PUBLIC -fno-pie -no-pie -Wl,-Ttext,0x00500000)
 
 find_package(SDL2 QUIET)
 if(NOT SDL2_FOUND)
-  add_subdirectory("thirdparty/SDL")
+  add_subdirectory("../externals/SDL")
   set(SDL2_LIBRARIES SDL2 SDL2main)
-  set(SDL2_INCLUDE_DIR "thirdparty/SDL/include")
+  set(SDL2_INCLUDE_DIR "../externals/SDL/include")
 endif()
 
 target_link_libraries(ctr_bin ${SDL2_LIBRARIES})
@@ -119,19 +119,19 @@ target_include_directories(ctr_bin PRIVATE ${SDL2_INCLUDE_DIRS})
 
 find_package(OpenAL QUIET)
 if(NOT OpenAL_FOUND)
-  add_subdirectory("thirdparty/openal-soft")
+  add_subdirectory("../externals/openal-soft")
   set(OPENAL_LIBRARY OpenAL)
-  set(OPENAL_INCLUDE_DIR "thirdparty/openal-soft/include")
+  set(OPENAL_INCLUDE_DIR "../externals/openal-soft/include")
 endif()
 
 # === PsyCross ===
 
 file(GLOB_RECURSE PSYCROSS_SRCS_C
-  "thirdparty/PsyCross/*.c" "thirdparty/PsyCross/*.C"
+  "../externals/PsyCross/*.c" "../externals/PsyCross/*.C"
 )
 
 file(GLOB_RECURSE PSYCROSS_SRCS_CPP
-  "thirdparty/PsyCross/*.cpp"
+  "../externals/PsyCross/*.cpp"
 )
 
 set_source_files_properties(${PSYCROSS_SRCS_C} PROPERTIES LANGUAGE C)
@@ -139,7 +139,7 @@ set_source_files_properties(${PSYCROSS_SRCS_CPP} PROPERTIES LANGUAGE CXX)
 
 add_library(psycross_static STATIC ${PSYCROSS_SRCS_C} ${PSYCROSS_SRCS_CPP})
 set_target_properties(psycross_static PROPERTIES OUTPUT_NAME "psycross")
-target_include_directories(psycross_static PUBLIC "thirdparty/PsyCross/include")
+target_include_directories(psycross_static PUBLIC "../externals/PsyCross/include")
 
 target_compile_options(psycross_static PRIVATE -Wno-narrowing)
 
