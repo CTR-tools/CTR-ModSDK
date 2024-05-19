@@ -165,6 +165,7 @@ void OnlineEndOfRace()
 {
 	char message[32];
 	int numDead = 0;
+	int skipRow = 0;
 	struct Driver* d = sdata->gGT->drivers[0];
 	
 	// if "you" are still racing, do nothing
@@ -187,13 +188,19 @@ void OnlineEndOfRace()
 	{
 		// skip drivers still racing
 		if(octr->RaceEnd[i].time == 0)
+		{
+			skipRow++;
 			continue;
+		}
 		
 		int slot = octr->RaceEnd[i].slot;
 		
 		// skip disconnected drivers
 		if(octr->nameBuffer[slot * 0xc] == 0)
+		{
+			skipRow++;
 			continue;
+		}
 		
 		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
 		
@@ -212,11 +219,13 @@ void OnlineEndOfRace()
 		windowText.h += 8;
 	}
 	
+	int lastY = 0x48+(i*0x8)-(skipRow*0x8);
+	
 	if(octr->numDriversEnded == (octr->NumDrivers-numDead))
 	{
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",
-			0x120,0x48+(i*0x8)-(numDead*0x8),FONT_SMALL,RED);
+			0x120,lastY,FONT_SMALL,RED);
 			
 		windowText.h += 8;
 	}
@@ -226,11 +235,11 @@ void OnlineEndOfRace()
 		sprintf(
 			message, 
 			"Waiting for %d more",
-			octr->NumDrivers - (octr->numDriversEnded-numDead));
+			(octr->NumDrivers-numDead) - octr->numDriversEnded);
 		
 		DecalFont_DrawLine(
 			message,
-			0x120,0x48+i*0x8,FONT_SMALL,PAPU_YELLOW);
+			0x120,lastY,FONT_SMALL,PAPU_YELLOW);
 			
 		windowText.h += 8;
 	}

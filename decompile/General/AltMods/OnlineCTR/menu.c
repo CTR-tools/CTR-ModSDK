@@ -307,8 +307,8 @@ void PrintCharacterStats()
 	int color;
 	
 	sprintf(message, "Players: %d/8", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x128,0x40,FONT_SMALL,0);
-	
+	DecalFont_DrawLine(message,0x130,0x58,FONT_SMALL,0);
+
 	for(i = 0; i < octr->NumDrivers; i++)
 	{	
 		// convert client index to local index
@@ -323,7 +323,7 @@ void PrintCharacterStats()
 			PLAYER_GREEN : PLAYER_RED;
 		
 		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
-		DecalFont_DrawLine(message,0x128,0x48+i*0x8,FONT_SMALL,color);
+		DecalFont_DrawLine(message,0x130,0x60+i*0x8,FONT_SMALL,color);
 		
 		if(octr->CurrState < LOBBY_CHARACTER_PICK)
 			continue;
@@ -334,7 +334,7 @@ void PrintCharacterStats()
 					data.characterIDs[slot]
 				].name_LNG_short];
 				
-		DecalFont_DrawLine(characterName,0x1A8,0x48+i*0x8,FONT_SMALL,color);
+		DecalFont_DrawLine(characterName,0x1AC,0x60+i*0x8,FONT_SMALL,color);
 	}
 }
 
