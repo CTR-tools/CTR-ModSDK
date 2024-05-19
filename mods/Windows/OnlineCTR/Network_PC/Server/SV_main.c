@@ -126,7 +126,10 @@ void ProcessConnectEvent(ENetPeer* peer) {
 	// Find an empty slot in the peers array and assign the new peer to it
 	int id = find_empty_slot(peerInfos);
 	peerInfos[id].peer = peer;
-	clientCount++;
+	
+	// if added to end, then increase count
+	if(id == clientCount)
+		clientCount++;
 
 	// Debug only, also prints client name from CG_MessageName
 	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
