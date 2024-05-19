@@ -3,7 +3,7 @@ void StatePS1_Launch_EnterPID()
 {	
 	DECOMP_DecalFont_DrawLine(
 		"Attach Windows Client To Continue",
-		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		0x100,0xA8,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Launch_EnterIP()
@@ -72,11 +72,11 @@ void StatePS1_Launch_ConnectFailed()
 {
 	DECOMP_DecalFont_DrawLine(
 		"Server Not Found",
-		0x100,0x68,FONT_SMALL,JUSTIFY_CENTER|PLAYER_RED);
+		0x100,0xA8,FONT_SMALL,JUSTIFY_CENTER|PLAYER_RED);
 		
 	DECOMP_DecalFont_DrawLine(
 		"Please Try Again",
-		0x100,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		0x100,0xB0,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Launch_FirstInit()
@@ -114,8 +114,13 @@ void StatePS1_Launch_FirstInit()
 	}
 }
 
+extern struct RectMenu menu;
+
 void StatePS1_Lobby_AssignRole()
 {	
+	menu.posX_curr = 0x70; // X position
+	menu.posY_curr = 0x84;  // Y position
+
 	if(octr->DriverID == 0)
 	{		
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
@@ -195,11 +200,11 @@ void StatePS1_Lobby_GuestTrackWait()
 		
 	DECOMP_DecalFont_DrawLine(
 		"waiting for host",
-		menu.posX_curr,0x68,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		menu.posX_curr,0xA8,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 		
 	DECOMP_DecalFont_DrawLine(
 		"to pick the track",
-		menu.posX_curr,0x70,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
+		menu.posX_curr,0xB0,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
 void StatePS1_Lobby_CharacterPick()

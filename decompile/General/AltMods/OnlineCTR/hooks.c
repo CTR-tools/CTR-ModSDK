@@ -18,12 +18,18 @@ void octr_entryHook()
 	*(int*)0x80017318 = 0x3E00008;
 	*(int*)0x8001731c = 0;
 	
+	// remove cutscene threads
+	for(int i = 0x96; i < 0xa6; i++)
+	{
+		data.MetaDataModels[i].LInB = 0;
+	}
+	
 	// ======== Globals ============
 	
 	#if USE_K1 == 1
 	octr = 0x8000C000;
 	#endif
-	
+		
 	// default for first LEV, before gameplay
 	memset(octr, 0, sizeof(struct OnlineCTR));
 	octr->IsBootedPS1 = 1;
@@ -51,7 +57,7 @@ void octr_initHook()
 	void ThreadFunc();
 	
 	// small stack pool, pause thread (those threads can't pause)
-	PROC_BirthWithObject(0x310, ThreadFunc, 0, 0);
+	PROC_BirthWithObject(0x30f, ThreadFunc, 0, 0);
 	
 	sdata->lngStrings[0x17D] = "OnlineCTR";
 	sdata->lngStrings[0x4e] = "OnlineCTR";
@@ -71,7 +77,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	int i;
 	int bitFlag;
 	struct Driver* dr;
-	
+		
 	for(i = 0; i < 8; i++)
 	{
 		gGT->drivers[i] = 0;
@@ -149,7 +155,8 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		#endif
 	}
 	
-	octr->CurrState = GAME_WAIT_FOR_RACE;
+	if(gGT->levelID != 0x26)
+		octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
 RECT windowText = {0x118, 0x40, 0xD8, 0};

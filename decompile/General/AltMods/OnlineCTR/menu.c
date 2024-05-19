@@ -49,8 +49,8 @@ struct RectMenu menu =
 	// custom string made myself
 	.stringIndexTitle = 0x17d, 
 	
-	.posX_curr = 0xB0, // X position
-	.posY_curr = 0x74,  // Y position
+	.posX_curr = 0, // X position
+	.posY_curr = 0,  // Y position
 	
 	.unk1 = 0,
 	
@@ -88,6 +88,9 @@ int MenuFinished()
 void NewPage_ServerCountry()
 {
 	int i;
+	
+	menu.posX_curr = 0x198; // X position
+	menu.posY_curr = 0x84;  // Y position
 	
 	for(i = 0; i < 4; i++)
 	{
@@ -264,9 +267,9 @@ void UpdateMenu()
 		('/' << 8) |
 		(('1' + pageMax) << 16);
 	
-	DECOMP_MainFreeze_ConfigDrawArrows(0xB0, 0x28, &string);
+	DECOMP_MainFreeze_ConfigDrawArrows(menu.posX_curr, 0x38, &string);
 	
-	DecalFont_DrawLine(&string,0xB0,0x28,FONT_BIG,JUSTIFY_CENTER|WHITE);
+	DecalFont_DrawLine(&string,menu.posX_curr,0x38,FONT_BIG,JUSTIFY_CENTER|WHITE);
 }
 
 void RECTMENU_OnPressX(struct RectMenu* b)
@@ -347,8 +350,8 @@ void PrintRecvTrack()
 				]
 			);
 	
-	DecalFont_DrawLine(message,0x8,0x10,FONT_SMALL,PLAYER_BLUE);
+	DecalFont_DrawLine(message,0x8,0x10,FONT_SMALL,PAPU_YELLOW);
 	
 	onlineLapString[6] = '0' + sdata->gGT->numLaps;
-	DecalFont_DrawLine(onlineLapString,0x128,0x10,FONT_SMALL,PLAYER_BLUE);
+	DecalFont_DrawLine(onlineLapString,0x128,0x10,FONT_SMALL,PAPU_YELLOW);
 }
