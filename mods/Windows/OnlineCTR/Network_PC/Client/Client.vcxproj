@@ -72,13 +72,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <LibraryPath>../lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>../include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\..\externals\enet\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\..\externals\enet\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <LibraryPath>../lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>../include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\..\externals\enet\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\..\externals\enet\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
