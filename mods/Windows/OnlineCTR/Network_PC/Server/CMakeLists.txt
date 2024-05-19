@@ -16,7 +16,11 @@ set(SOURCES SV_main.c)
 add_executable(ctr_srv ${SOURCES})
 
 # Link with the enet library
-target_link_libraries(ctr_srv enet)
+if (WIN32)
+    target_link_libraries(ctr_srv enet winmm ws2_32)
+else()
+    target_link_libraries(ctr_srv enet)
+endif()
 
 # Compiler options
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
