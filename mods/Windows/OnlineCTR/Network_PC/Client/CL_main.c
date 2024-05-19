@@ -277,6 +277,29 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
+			struct Gamepad
+			{
+				short unk_0;
+				short unk_1;
+				short stickLX;
+				short stickLY;
+				short stickLX_dontUse1;
+				short stickLY_dontUse1;
+				short stickRX;
+				short stickRY;
+				int buttonsHeldCurrFrame;
+				int buttonsTapped;
+				int buttonsReleased;
+				int buttonsHeldPrevFrame;
+			};
+
+			// make this player hold SQUARE
+			struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
+			pad->buttonsHeldCurrFrame = 0x20;
+			pad->buttonsTapped = 0;
+			pad->buttonsReleased = 0;
+			pad->buttonsHeldPrevFrame = 0x20;
+
 			octr->RaceEnd[octr->numDriversEnded].slot = slot;
 			memcpy(&octr->RaceEnd[octr->numDriversEnded].time, &r->time[0], 3);
 			octr->numDriversEnded++;
@@ -560,24 +583,11 @@ void StatePC_Lobby_StartLoading()
 	boolAlreadySent_EndRace = 0;
 }
 
-int disconMS = 0;
 void DisconSELECT()
 {
-	int ms = *(int*)&pBuf[(0x80096b20 + 0x1d04) & 0xffffff];
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
-	if((hold & 0x2000) == 0)
-	{
-		disconMS = 0;
-	}
-	
-	else
-	{
-		disconMS += ms;
-	}
-	
-	// hold for half-second
-	if(disconMS > 512)
+	if((hold & 0x2000) != 0)
 	{
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
