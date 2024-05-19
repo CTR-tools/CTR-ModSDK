@@ -216,7 +216,7 @@ void OnlineEndOfRace()
 	{
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",
-			0x120,0x48+i*0x8,FONT_SMALL,RED);
+			0x120,0x48+(i*0x8)-(numDead*0x8),FONT_SMALL,RED);
 			
 		windowText.h += 8;
 	}
