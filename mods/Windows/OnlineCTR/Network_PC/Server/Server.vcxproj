@@ -120,13 +120,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__WINDOWS__;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>enet.lib;enet64.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,7 +135,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__WINDOWS__;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__WINDOWS__;_WINSOCK_DEPRECATED_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -147,6 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\externals\enet\callbacks.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\compress.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\host.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\list.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\packet.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\peer.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\protocol.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\unix.c" />
+    <ClCompile Include="..\..\..\..\..\externals\enet\win32.c" />
     <ClCompile Include="SV_main.c" />
   </ItemGroup>
   <ItemGroup>
