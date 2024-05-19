@@ -560,6 +560,36 @@ void StatePC_Lobby_StartLoading()
 	boolAlreadySent_EndRace = 0;
 }
 
+int disconMS = 0;
+void DisconSELECT()
+{
+	int ms = *(int*)&pBuf[(0x80096b20 + 0x1d04) & 0xffffff];
+	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+
+	if((hold & 0x2000) == 0)
+	{
+		disconMS = 0;
+	}
+	
+	else
+	{
+		disconMS += ms;
+	}
+	
+	// hold for half-second
+	if(disconMS > 512)
+	{
+		// Sleep() triggers server timeout
+		// just in case client isnt disconnected
+		printf("Disconnected\n");
+		printf("Rebooting...\n");
+		Sleep(2000);
+		system("cls");
+		octr->CurrState = 0;
+		return;
+	}
+}
+
 void SendEverything()
 {
 	struct CG_EverythingKart cg;
@@ -571,18 +601,6 @@ void SendEverything()
 
 
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-
-	if((hold & 0x2000) != 0)
-	{
-		// Sleep() triggers server timeout
-		// just in case client isnt disconnected
-		printf("Disconnected\n");
-		printf("Rebooting...\n");
-		Sleep(2000);
-		system("cls");
-		octr->CurrState = 0;
-		return;
-	}
 
 	// ignore Circle/L2
 	hold &= ~(0xC0);
@@ -665,6 +683,8 @@ void StatePC_Game_WaitForRace()
 	}
 
 	SendEverything();
+	
+	DisconSELECT();
 }
 
 void StatePC_Game_StartRace()
@@ -672,6 +692,8 @@ void StatePC_Game_StartRace()
 	ProcessNewMessages();
 
 	SendEverything();
+	
+	DisconSELECT();
 }
 
 #include <time.h>
@@ -727,6 +749,8 @@ void StatePC_Game_EndRace()
 			octr->CurrState = 0;
 		}
 	}
+	
+	DisconSELECT();
 }
 
 void (*ClientState[]) () =
