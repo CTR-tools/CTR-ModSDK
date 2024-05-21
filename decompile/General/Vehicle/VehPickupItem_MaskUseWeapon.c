@@ -11,8 +11,9 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
     struct Thread *t;
     struct GameTracker *gGT;
     struct Instance *instance;
-	
     int soundID;
+	
+	gGT = sdata->gGT;
 
     if (
 			(DECOMP_LOAD_IsOpen_RacingOrBattle() == 0) ||
@@ -116,7 +117,7 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
 	// 0x40: uka beam
 	// 0x3E: aku beam
 	
-    modelPtr = gGT->modelPtr[0x3E + ((soundID-0x39)*2)];
+    modelPtr = gGT->modelPtr[0x3E + ((modelID-0x39)*2)];
 
     t = instance->thread;
 
