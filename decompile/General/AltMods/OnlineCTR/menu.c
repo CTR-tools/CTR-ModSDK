@@ -335,7 +335,7 @@ void PrintCharacterStats()
 		int posY = 0x60+h;
 		h += 8;
 		
-		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
+		sprintf(message, "%s:", str);
 		DecalFont_DrawLine(message,0x130,posY,FONT_SMALL,color);
 		
 		if(octr->CurrState < LOBBY_CHARACTER_PICK)
