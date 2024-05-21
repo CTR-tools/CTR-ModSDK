@@ -312,7 +312,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	for (currRank; currRank < 8; currRank++)
 	{
 		#ifdef USE_ONLINE
-		if(currDriver == 0)
+		if(gGT->drivers[currRank] == 0)
 			numDead1++;
 		#endif
 		
