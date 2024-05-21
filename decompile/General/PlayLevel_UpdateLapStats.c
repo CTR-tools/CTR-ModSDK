@@ -394,10 +394,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			{
 				#ifdef USE_ONLINE
 				
-				// dont use kartSpawnOrderArray,
-				// just assume spawning in order of clientID
+				// This is broken, sometimes a hole will appear between
+				// the icons at the startline, if someone disconnects,
+				// nobody knows why, but screw it
 				gGT->drivers[iVar2]->driverRank = numSpawn;
-				gGT->humanPlayerPositions[iVar2-numDead] = numSpawn;
+				gGT->humanPlayerPositions[iVar2-numDead1] = numSpawn;
 				numSpawn++;
 				
 				#else
