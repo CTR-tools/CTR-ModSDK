@@ -1,5 +1,17 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+
+// online can be fragmented
+#define HANDLE_NULL_DRIVER continue
+
+#else
+
+// unmodded wont be fragmented
+#define HANDLE_NULL_DRIVER break
+
+#endif
+
 void DECOMP_PlayLevel_UpdateLapStats(void)
 {
 	u_char bVar1;
@@ -41,9 +53,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// iVar6 = driver struct
 		currDriver = gGT->drivers[iVar10];
 
-		// if driver exists
 		if (currDriver == NULL)
-			continue;
+			HANDLE_NULL_DRIVER;
 		
 		// before and after
 		distToFinish_prev = currDriver->distanceToFinish_curr;
@@ -297,7 +308,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	for (currRank; currRank < 8; currRank++)
 	{
 		if(gGT->drivers[currRank] == 0)
-			break;
+			HANDLE_NULL_DRIVER;
 		
 		// set "min" distance to max
 		minDistance = 0x3fffffff;
@@ -316,7 +327,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver = gGT->drivers[iVar10];
 
 			if(currDriver == 0)
-				break;
+				HANDLE_NULL_DRIVER;
 			
 			if(currDriver->driverRank != -1)
 				continue;
@@ -381,7 +392,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		currDriver = gGT->drivers[iVar10];
 
 		if(currDriver == 0)
-			break;
+			HANDLE_NULL_DRIVER;
 
 		// should be impossible to be -1 here
 		if(currDriver->driverRank > -1)
@@ -396,7 +407,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		currDriver = gGT->drivers[iVar10];
 
 		if (currDriver == NULL)
-			break;
+			HANDLE_NULL_DRIVER;
 
 		int currRank = currDriver->driverRank;
 
@@ -461,7 +472,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver = gGT->drivers[currRank];
 			
 			if(currDriver == NULL)
-				break;
+				HANDLE_NULL_DRIVER;
 			
 			// if driver already finished race
 			if((currDriver->actionsFlagSet & 0x2000000) != 0)
