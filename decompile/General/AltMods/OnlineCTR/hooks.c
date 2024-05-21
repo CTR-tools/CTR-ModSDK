@@ -114,7 +114,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	
 	for(i = 0; i < octr->DriverID; i++)
 	{
-		if(octr->nameBuffer[i*0xC] == 0)
+		if(octr->nameBuffer[(i+1)*0xC] == 0)
 		{
 			numDead++;
 			continue;
@@ -143,7 +143,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	gGT->drivers[0] = dr;
 	
 	// fakeID, teleport
-	dr->driverID = i&bitFlag;
+	dr->driverID = (i-numDead)&bitFlag;
 	VehBirth_TeleportSelf(dr,3,0);
 	
 	// realID
