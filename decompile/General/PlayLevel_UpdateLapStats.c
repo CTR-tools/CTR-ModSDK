@@ -304,9 +304,18 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		}
 	}
 	
+	#ifdef USE_ONLINE
+	int numDead1 = 0;
+	#endif
+	
 	// sort all drivers that have NOT finished race
 	for (currRank; currRank < 8; currRank++)
 	{
+		#ifdef USE_ONLINE
+		if(currDriver == 0)
+			numDead1++;
+		#endif
+		
 		if(gGT->drivers[currRank] == 0)
 			HANDLE_NULL_DRIVER;
 		
@@ -318,7 +327,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 		// lap index
 		iVar9 = -10;
-
+		
 		// look for "next" farthest driver,
 		// out of all unsorted drivers remaining
 		for (iVar10 = 0; iVar10 < 8; iVar10++)
@@ -373,6 +382,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			if (gGT->trafficLightsTimer < 1)
 			{
 				gGT->drivers[iVar2]->driverRank = currRank;
+				
+				#ifdef USE_ONLINE
+				gGT->drivers[iVar2]->driverRank -= numDead1;
+				#endif
 			}
 
 			// if traffic lights >= 1
@@ -382,6 +395,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// to the order that they spawn on the starting line
 				gGT->drivers[iVar2]->driverRank = sdata->kartSpawnOrderArray[iVar2];
 				gGT->humanPlayerPositions[iVar2] = sdata->kartSpawnOrderArray[iVar2];
+				
+				#ifdef USE_ONLINE
+				gGT->drivers[iVar2]->driverRank -= numDead1;
+				gGT->humanPlayerPositions[iVar2] -= numDead1;
+				#endif
 			}
 		}
 	}
