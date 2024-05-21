@@ -306,6 +306,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	
 	#ifdef USE_ONLINE
 	int numDead1 = 0;
+	int numSpawn = 0;
 	#endif
 	
 	// sort all drivers that have NOT finished race
@@ -391,14 +392,21 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// if traffic lights >= 1
 			else
 			{
+				#ifdef USE_ONLINE
+				
+				// dont use kartSpawnOrderArray,
+				// just assume spawning in order of clientID
+				gGT->drivers[iVar2]->driverRank = numSpawn;
+				gGT->humanPlayerPositions[iVar2-numDead] = numSpawn;
+				numSpawn++;
+				
+				#else
+				
 				// set every driver position rank,
 				// to the order that they spawn on the starting line
 				gGT->drivers[iVar2]->driverRank = sdata->kartSpawnOrderArray[iVar2];
 				gGT->humanPlayerPositions[iVar2] = sdata->kartSpawnOrderArray[iVar2];
 				
-				#ifdef USE_ONLINE
-				gGT->drivers[iVar2]->driverRank -= numDead1;
-				gGT->humanPlayerPositions[iVar2] -= numDead1;
 				#endif
 			}
 		}
