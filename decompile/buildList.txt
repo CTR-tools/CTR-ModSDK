@@ -1,5 +1,5 @@
-// 498+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 871 rewritten so far
-// 498 for every 'common' and ','
+// 499+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
+// 499 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -736,6 +736,7 @@ common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_A
 common, exe, VehPickState_NewState, 0x0, General/Vehicle/VehPickState_NewState.c
 
 common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0, General/Vehicle/VehPickupItem_MaskBoolGoodGuy.c
+common, exe, VehPickupItem_MaskUseWeapon, 0x0, General/Vehicle/VehPickupItem_MaskUseWeapon.c
 common, exe, VehPickupItem_ShootNow, 0x0, General/Vehicle/VehPickupItem_ShootNow.c
 common, exe, VehPickupItem_ShootOnCirclePress, 0x0, General/Vehicle/VehPickupItem_ShootOnCirclePress.c
 

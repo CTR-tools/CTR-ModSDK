@@ -125,7 +125,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 
     struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
 
-    // if maskObj
+    // no maskObj in adventure arena mask-grab
     if (mask == NULL)
         return;
 

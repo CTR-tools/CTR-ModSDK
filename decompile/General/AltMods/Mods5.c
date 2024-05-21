@@ -157,16 +157,18 @@ void ui60_entryHook()
 
 	// Gravity
 	{
+		#ifndef USE_ONLINE
 		// decrease from 900 to xxx,
 		// otherwise Hot Air Skyway C-T-R token is impossible,
 		// and some shortcuts are impossible (HAS USF jump to startline)
-		
-		// 900 isnt enough
-		// 800 is too easy
-		// 850 feels about right
-		
 		for(int i = 0; i < NUM_CLASSES; i++)
 			data.metaPhys[0].value[i] = 850;
+		#else
+		// Online Multiplayer doesnt need C-T-R token letters,
+		// make the rest of the game feel more accurate
+		for(int i = 0; i < NUM_CLASSES; i++)
+			data.metaPhys[0].value[i] = 875;
+		#endif
 	}
 
 	// SelectProfile flashing orange/red

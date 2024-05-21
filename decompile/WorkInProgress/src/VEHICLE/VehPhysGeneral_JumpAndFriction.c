@@ -113,7 +113,7 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
         d->jump_InitialVelY = (short)(jumpForce >> 2);
 
         // spring weapon sound
-        OtherFX_Play_Echo(9, 1, d->actionsFlagSet & 1);
+        OtherFX_Play_Echo(9, 1, d->actionsFlagSet & 0x10000);
 
         d->jump_unknown = 0x180;
         goto PROCESS_JUMP;
@@ -173,7 +173,7 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
       d->jump_InitialVelY = d->const_JumpForce;
 
       // play jump sound
-      OtherFX_Play_Echo(8, 1, (d->actionsFlagSet & 1 != 0));
+      OtherFX_Play_Echo(8, 1, d->actionsFlagSet & 0x10000);
     }
 
     // if being forced to jump (by turtles)

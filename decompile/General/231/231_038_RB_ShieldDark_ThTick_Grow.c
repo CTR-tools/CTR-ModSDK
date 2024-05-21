@@ -269,8 +269,12 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   struct Thread* bombTh = bombInst->thread;
   bombTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
 
+  #ifdef USE_ONLINE
+  if(player->driverID == 0)
+  #else
   // if driver is not an AI (human)
   if ((player->actionsFlagSet & 0x100000) == 0)
+  #endif
   {
     // make driver talk
     Voiceline_RequestPlay(13, data.characterIDs[player->driverID], 0x10);
