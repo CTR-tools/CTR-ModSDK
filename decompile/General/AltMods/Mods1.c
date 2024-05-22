@@ -1,6 +1,7 @@
 // OnlineCTR (part 1)
 #ifndef REBUILD_PC
 #ifdef USE_ONLINE
+#include "OnlineCTR/debugcam.c"
 #include "OnlineCTR/global.h"
 #include "OnlineCTR/hooks.c"
 #include "OnlineCTR/menu.c"
