@@ -17,7 +17,7 @@
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
 
-char* pBuf;
+char *pBuf;
 struct OnlineCTR* octr;
 
 int buttonPrev[8] = { 0 };
@@ -74,18 +74,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			for (int i = slot; i < octr->NumDrivers; i++)
 			{
-				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
-					*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
-
-				octr->boolLockedInCharacters[i] =
-					octr->boolLockedInCharacters[i + 1];
+				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] = *(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
+				octr->boolLockedInCharacters[i] = octr->boolLockedInCharacters[i + 1];
 			}
 
 			// clientID is the client disconnected
-			if (octr->DriverID > clientDropped)
-				octr->DriverID--;
+			if (octr->DriverID > clientDropped) octr->DriverID--;
 
-			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
+			printf("Client: Updated identification: %d/%d\n", octr->DriverID, octr->NumDrivers);
 
 			// if you are new host
 			if (octr->DriverID == 0)
@@ -233,13 +229,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			buttonPrev[slot] = curr;
 
-
-
-
 			int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
 			psxPtr &= 0xffffff;
-
-
 
 			*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
 			*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
@@ -253,9 +244,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
 			*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
 
-
-
-
 			int angle =
 				(r->kartRot1) |
 				(r->kartRot2 << 5);
@@ -263,7 +251,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			angle &= 0xfff;
 
 			*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
-
 
 			break;
 		}
@@ -323,15 +310,30 @@ void ProcessNewMessages() {
 		case ENET_EVENT_TYPE_DISCONNECT:
 			// Sleep() triggers server timeout
 			// just in case client isnt disconnected
-			printf("Disconnected\n");
-			printf("Rebooting...\n");
+			printf("\nClient: Disconnected\n");
+			printf("Client: Rebooting...\n");
 			Sleep(2000);
-			system("cls");
+			//system("cls");
 			octr->CurrState = 0;
 			break;
 		default: break;
 		}
 	}
+}
+
+void ShowAnimation()
+{
+	char spinner_chars[] = "|/-\\";
+	static int spinner_length = sizeof(spinner_chars) - 1; // exclude the NULL terminator
+	static int delay = 0;
+	static int i = 0;
+
+	printf("\b%c", spinner_chars[i]); // '\b' moves the cursor back one position
+	fflush(stdout); // ensure the output is printed immediately
+
+	i = (i + 1) % spinner_length;
+
+	printf("\b "); // clear the spinner character when done
 }
 
 void StatePC_Launch_EnterPID()
@@ -344,72 +346,88 @@ void StatePC_Launch_EnterPID()
 	}
 }
 
+void printUntilPeriod(const char *str)
+{
+	int i = 0;
+
+	// loop through each character in the string
+	while (str[i] != '\0')
+	{
+		// break the loop if a period is found
+		if (str[i] == '.') break;
+
+		// print the character
+		putchar(toupper(str[i]));
+		i++;
+	}
+}
+
 void StatePC_Launch_EnterIP()
 {
-	if (octr->serverLockIn2 == 0)
-		return;
+	if (octr->serverLockIn2 == 0) return;
 
 	ENetAddress addr;
+	char dns_string[32] = { 0 };
 
-	int serverID = 
-		octr->PageNumber*4 + 
-		octr->serverCountry;
-	
-	printf("serverID: %d\n", serverID);
+	int serverID =  octr->PageNumber*4 + octr->serverCountry;
 
 	switch (octr->serverCountry)
 	{
-		// EUR_LOOPER servers
+		// EUROPE server
 		case 0:
 		{
-			enet_address_set_host(&addr, "eur1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
 
-		// USA_NIKO servers
+		// USA server
 		case 1:
 		{
-			enet_address_set_host(&addr, "usa1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
 		
-		// MEX_CLAUD servers
+		// USA WEST server
 		case 2:
 		{
-			enet_address_set_host(&addr, "usa2.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
 			addr.port = 10666 + octr->serverRoom;
 			break;
 		}
 
-		// BZL_PEDRO servers
+		// BRAZIL server
 		case 4:
 		{
-			enet_address_set_host(&addr, "lab.pedrohlc.com");
+			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + octr->serverRoom;
 			break;
 		}
 
-		// AUS_MATT servers
+		// AUSTRALIAN server
 		case 5:
 		{
-			// Matt uses 2096 for cloudfare
-			enet_address_set_host(&addr, "aus1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
 			addr.port = 2096 + octr->serverRoom;
 			break;
 		}
 
-		// PRIVATE servers
+		// PRIVATE server
 		default:
 		{
 			char ip[100];
-			printf("Enter IP Address: ");
+			printf("Server IP Address (127.0.0.1): ");
 			scanf_s("%s", ip, sizeof(ip));
 			printf("\n");
 
 			int port;
-			printf("Enter Port (0-65535): ");
+			printf("Server Port (0-65535): ");
 			scanf_s("%d", &port, sizeof(port));
 			printf("\n");
 
@@ -420,6 +438,10 @@ void StatePC_Launch_EnterIP()
 		}
 	}
 
+	printf("\nClient: Attempting to connect to ");
+	printUntilPeriod(dns_string);
+	printf(" (ID: %d)...\n", serverID);
+
 	clientHost = enet_host_create(NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,
 		2 /* allow up 2 channels to be used, 0 and 1 */,
@@ -429,7 +451,7 @@ void StatePC_Launch_EnterIP()
 	if (clientHost == NULL)
 	{
 		fprintf(stderr,
-			"An error occurred while trying to create an ENet client host.\n");
+			"Error: Failed to create an ENet client host!\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -440,7 +462,7 @@ void StatePC_Launch_EnterIP()
 	serverPeer = enet_host_connect(clientHost, &addr, 2, 0);
 
 	if (serverPeer == NULL) {
-		fprintf(stderr, "No available peers for initiating an ENet connection.\n");
+		fprintf(stderr, "Error: No available peers for initiating an ENet connection!\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -451,12 +473,12 @@ void StatePC_Launch_EnterIP()
 	if (enet_host_service(clientHost, &event, 2000) > 0 &&
 		event.type == ENET_EVENT_TYPE_CONNECT)
 	{
-		printf("Connection to server succeeded.\n");
+		printf("Client: Successfully connected  ");
 	}
 
 	else
 	{
-		puts("Connection to server failed.");
+		puts("Error: Failed to connect!");
 		octr->CurrState = LAUNCH_CONNECT_FAILED;
 		return;
 	}
@@ -469,7 +491,7 @@ void StatePC_Launch_EnterIP()
 	*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
 	*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
 
-	struct CG_MessageName m;
+	struct CG_MessageName m = { 0 };
 	m.type = CG_NAME;
 	m.size = sizeof(struct CG_MessageName);
 	memcpy(&m.name[0], &name[0], 0xC);
@@ -483,7 +505,7 @@ void StatePC_Launch_EnterIP()
 
 void StatePC_Launch_ConnectFailed()
 {
-	printf("Unable to connect to server!\n");
+	printf("Error: Unable to connect to the server!\n\n");
 	system("pause");
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
@@ -504,12 +526,11 @@ void StatePC_Lobby_HostTrackPick()
 
 	// boolLockedInLap gets set after
 	// boolLockedInTrack already sets
-	if (!octr->boolLockedInLap)
-		return;
+	if (!octr->boolLockedInLap) return;
 
-	printf("Sending Track to Server\n");
+	printf("\nClient: Sending track to the server...  ");
 
-	struct CG_MessageTrack mt;
+	struct CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
 	mt.size = sizeof(struct CG_MessageTrack);
 
@@ -539,7 +560,7 @@ void StatePC_Lobby_CharacterPick()
 {
 	ProcessNewMessages();
 
-	struct CG_MessageCharacter mc;
+	struct CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
 	mc.size = sizeof(struct CG_MessageCharacter);
 
@@ -591,10 +612,10 @@ void DisconSELECT()
 	{
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
-		printf("Disconnected\n");
-		printf("Rebooting...\n");
+		printf("\nClient: Disconnected\n");
+		printf("Client: Rebooting...\n");
 		Sleep(2000);
-		system("cls");
+		//system("cls");
 		octr->CurrState = 0;
 		return;
 	}
@@ -602,21 +623,17 @@ void DisconSELECT()
 
 void SendEverything()
 {
-	struct CG_EverythingKart cg;
+	struct CG_EverythingKart cg = { 0 };
 	cg.type = CG_RACEDATA;
 	cg.size = sizeof(struct CG_EverythingKart);
 
-
 	// === Buttons ===
-
-
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
 	// ignore Circle/L2
 	hold &= ~(0xC0);
 
 	// put L1/R1 into one byte
-
 	if ((hold & 0x400) != 0)
 	{
 		hold |= 0x40;
@@ -629,10 +646,7 @@ void SendEverything()
 
 	cg.buttonHold = (unsigned char)hold;
 
-
 	// === Position ===
-
-
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
 
@@ -651,10 +665,7 @@ void SendEverything()
 	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 2];
 	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 3];
 
-
 	// === Direction Faced ===
-
-
 	// driver->0x39a (direction facing)
 	unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
 	angle &= 0xfff;
@@ -663,7 +674,6 @@ void SendEverything()
 	unsigned char angleTop8 = angle >> 5;
 	cg.kartRot1 = angleBit5;
 	cg.kartRot2 = angleTop8;
-
 
 	sendToHostUnreliable(&cg, cg.size);
 }
@@ -682,10 +692,10 @@ void StatePC_Game_WaitForRace()
 			((gGT_gameMode1 & 0x40) == 0)
 		)
 	{
-		printf("Ready to Race\n");
+		printf("\nClient: Online race in progress...  ");
 		boolAlreadySent_StartRace = 1;
 
-		struct CG_Header cg;
+		struct CG_Header cg = { 0 };
 		cg.type = CG_STARTRACE;
 		cg.size = sizeof(struct CG_Header);
 
@@ -693,16 +703,13 @@ void StatePC_Game_WaitForRace()
 	}
 
 	SendEverything();
-	
 	DisconSELECT();
 }
 
 void StatePC_Game_StartRace()
 {
 	ProcessNewMessages();
-
 	SendEverything();
-	
 	DisconSELECT();
 }
 
@@ -719,7 +726,7 @@ void StatePC_Game_EndRace()
 		int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 		psxPtr &= 0xffffff;
 
-		struct CG_MessageEndRace cg;
+		struct CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
 		cg.size = sizeof(struct CG_MessageEndRace);
 
@@ -738,8 +745,9 @@ void StatePC_Game_EndRace()
 
 	int numDead = 0;
 	for (int i = 0; i < octr->NumDrivers; i++)
-		if (octr->nameBuffer[i * 0xC] == 0)
-			numDead++;
+	{
+		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
+	}
 
 	if (octr->numDriversEnded < (octr->NumDrivers-numDead))
 	{
@@ -753,52 +761,54 @@ void StatePC_Game_EndRace()
 		{
 			// Sleep() triggers server timeout
 			// just in case client isnt disconnected
-			printf("Rebooting...\n");
-			Sleep(2000);
-			system("cls");
-			octr->CurrState = 0;
+			printf("\nClient: Attempting to reconnect to the server...  ");
+			Sleep(3000);
+			//system("cls");
+			currstate = 1;
+			octr->CurrState = 1;
+			octr->serverLockIn2 = 1;
+
+			return;
 		}
 	}
 	
 	DisconSELECT();
 }
 
-void (*ClientState[]) () =
-{
-	StatePC_Launch_EnterPID,
-	StatePC_Launch_EnterIP,
-	StatePC_Launch_ConnectFailed,
-	StatePC_Launch_FirstInit,
-	StatePC_Lobby_AssignRole,
-	StatePC_Lobby_HostTrackPick,
-	StatePC_Lobby_GuestTrackWait,
-	StatePC_Lobby_CharacterPick,
-	StatePC_Lobby_WaitForLoading,
-	StatePC_Lobby_StartLoading,
-	StatePC_Game_WaitForRace,
-	StatePC_Game_StartRace,
-	StatePC_Game_EndRace
+void (*ClientState[]) () = {
+	StatePC_Launch_EnterPID,		// 0
+	StatePC_Launch_EnterIP,			// 1
+	StatePC_Launch_ConnectFailed,	// 2
+	StatePC_Launch_FirstInit,		// 3
+	StatePC_Lobby_AssignRole,		// 4
+	StatePC_Lobby_HostTrackPick,	// 5
+	StatePC_Lobby_GuestTrackWait,	// 6
+	StatePC_Lobby_CharacterPick,	// 7
+	StatePC_Lobby_WaitForLoading,	// 8
+	StatePC_Lobby_StartLoading,		// 9
+	StatePC_Game_WaitForRace,		// 10
+	StatePC_Game_StartRace,			// 11
+	StatePC_Game_EndRace			// 12
 };
+
 
 // for EnumProcessModules
 #pragma comment(lib, "psapi.lib")
 
 int main()
 {
-	printf(__DATE__);
-	printf("\n");
-	printf(__TIME__);
-	printf("\n\n");
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r); // stores the console's current dimensions
+	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
+	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
 
-	printf("Enter Your Name: ");
+	printf(" OnlineCTR Client (CTRL+C TO QUIT)\n Build %s (%s)\n\n", __DATE__, __TIME__);
+
+	printf(" Online ID: ");
 	scanf_s("%s", name, 100);
 	name[11] = 0;
 	printf("\n");
-
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r); //stores the console's current dimensions
-	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
 
 	int numDuckInstances = 0;
 	char* duckTemplate = "duckstation";
@@ -848,18 +858,19 @@ int main()
 
 	if (numDuckInstances == 0)
 	{
-		printf("DuckStation not found\n");
+		printf("Error: DuckStation is not running!\n\n");
 		system("pause");
 		exit(0);
 	}
+	else printf("Client: DuckStation detected...\n");
 
 	char pidStr[16];
 	if (numDuckInstances > 1)
 	{
-		printf("Multiple ducks detected\n");
-		printf("Please use PID manually\n\n");
+		printf("Warning: Multiple DuckStations detected\n");
+		printf("Please enter the PID manually\n\n");
 
-		printf("Enter DuckStation PID: ");
+		printf("DuckStation PID: ");
 		scanf_s("%s", pidStr, sizeof(pidStr));
 	}
 	else
@@ -873,14 +884,14 @@ int main()
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
 
-	// 8mb RAM
+	// 8 MB RAM
 	const unsigned int size = 0x800000;
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
 	if (pBuf == 0)
 	{
-		printf("Error: Failed to open DuckStation\nTry again\n");
+		printf("Error: Failed to open DuckStation!\n\n");
 		system("pause");
 		system("cls");
 		main();
@@ -890,25 +901,38 @@ int main()
 
 	//initialize enet
 	if (enet_initialize() != 0) {
-		printf(stderr, "Failed to initialize ENet.\n");
+		printf(stderr, "Error: Failed to initialize ENet!\n");
 		return 1;
 	}
 	atexit(enet_deinitialize);
 
+	printf("Client: Waiting for the OnlineCTR binary to load...  ");
+
+	#define CURRENT_STATE_SUCCESS 1
+
 	while (1)
 	{
-		// To do: Check for PS1 system clock tick,
-		// then run client update
-
+		// To do: Check for PS1 system clock tick then run the client update
 		octr->time[0]++;
-		if (octr->CurrState != currstate) {
+
+		if (octr->CurrState != currstate)
+		{
 			currstate = octr->CurrState;
-			printf("changed state to %i\n", currstate);
+
+			if (currstate == CURRENT_STATE_SUCCESS)
+			{
+				printf("\nClient: PlayStation clock found (ID: %i)\n", currstate);
+				printf("Client: Waiting to connect to a server...  ");
+			}
 		}
+
+		ShowAnimation();
+
 		ClientState[octr->CurrState]();
 		void FrameStall(); FrameStall();
 	}
 
+	printf("\n");
 	system("pause");
 }
 
@@ -916,7 +940,7 @@ int main()
 void usleep(__int64 usec)
 {
 	HANDLE timer;
-	LARGE_INTEGER ft;
+	LARGE_INTEGER ft = { 0 };
 
 	ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
 
