@@ -362,6 +362,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			);
 
 			printf("End Race: %d %s\n", peerID, timeStr);
+			peerInfos[peerID].boolEndSelf = 1;
 
 			broadcastToPeersReliable(s, s->size);
 		}

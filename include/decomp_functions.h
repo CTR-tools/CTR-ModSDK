@@ -596,6 +596,9 @@ void DECOMP_RB_MinePool_Init(void);
 void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw);
 void DECOMP_RB_MinePool_Add(struct MineWeapon* mw);
 
+void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t);
+void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh);
+
 struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 	struct Instance* weaponInst, char boolCanSkipParent, 
 	int hitRadius, struct Instance* mineDriverInst

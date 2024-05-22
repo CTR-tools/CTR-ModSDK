@@ -4,10 +4,10 @@ project(OnlineCTR-Server C)
 set(CMAKE_C_STANDARD 99)
 
 # Include directories
-include_directories(${PROJECT_SOURCE_DIR}/../include)
+include_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/include)
 
 # Add the path to the enet library
-link_directories(${PROJECT_SOURCE_DIR}/../lib)
+link_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/lib)
 
 # Source files
 set(SOURCES SV_main.c)
@@ -16,7 +16,11 @@ set(SOURCES SV_main.c)
 add_executable(ctr_srv ${SOURCES})
 
 # Link with the enet library
-target_link_libraries(ctr_srv enet)
+if (WIN32)
+    target_link_libraries(ctr_srv enet winmm ws2_32)
+else()
+    target_link_libraries(ctr_srv enet)
+endif()
 
 # Compiler options
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")

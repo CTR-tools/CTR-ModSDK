@@ -1,5 +1,17 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+
+// online can be fragmented
+#define HANDLE_NULL_DRIVER continue
+
+#else
+
+// unmodded wont be fragmented
+#define HANDLE_NULL_DRIVER break
+
+#endif
+
 void DECOMP_PlayLevel_UpdateLapStats(void)
 {
 	u_char bVar1;
@@ -41,9 +53,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// iVar6 = driver struct
 		currDriver = gGT->drivers[iVar10];
 
-		// if driver exists
 		if (currDriver == NULL)
-			continue;
+			HANDLE_NULL_DRIVER;
 		
 		// before and after
 		distToFinish_prev = currDriver->distanceToFinish_curr;
@@ -293,11 +304,21 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		}
 	}
 	
+	#ifdef USE_ONLINE
+	int numDead1 = 0;
+	int numSpawn = 0;
+	#endif
+	
 	// sort all drivers that have NOT finished race
 	for (currRank; currRank < 8; currRank++)
 	{
+		#ifdef USE_ONLINE
 		if(gGT->drivers[currRank] == 0)
-			break;
+			numDead1++;
+		#endif
+		
+		if(gGT->drivers[currRank] == 0)
+			HANDLE_NULL_DRIVER;
 		
 		// set "min" distance to max
 		minDistance = 0x3fffffff;
@@ -307,7 +328,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 		// lap index
 		iVar9 = -10;
-
+		
 		// look for "next" farthest driver,
 		// out of all unsorted drivers remaining
 		for (iVar10 = 0; iVar10 < 8; iVar10++)
@@ -316,7 +337,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver = gGT->drivers[iVar10];
 
 			if(currDriver == 0)
-				break;
+				HANDLE_NULL_DRIVER;
 			
 			if(currDriver->driverRank != -1)
 				continue;
@@ -362,15 +383,32 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			if (gGT->trafficLightsTimer < 1)
 			{
 				gGT->drivers[iVar2]->driverRank = currRank;
+				
+				#ifdef USE_ONLINE
+				gGT->drivers[iVar2]->driverRank -= numDead1;
+				#endif
 			}
 
 			// if traffic lights >= 1
 			else
 			{
+				#ifdef USE_ONLINE
+				
+				// This is broken, sometimes a hole will appear between
+				// the icons at the startline, if someone disconnects,
+				// nobody knows why, but screw it
+				gGT->drivers[iVar2]->driverRank = numSpawn;
+				gGT->humanPlayerPositions[iVar2-numDead1] = numSpawn;
+				numSpawn++;
+				
+				#else
+				
 				// set every driver position rank,
 				// to the order that they spawn on the starting line
 				gGT->drivers[iVar2]->driverRank = sdata->kartSpawnOrderArray[iVar2];
 				gGT->humanPlayerPositions[iVar2] = sdata->kartSpawnOrderArray[iVar2];
+				
+				#endif
 			}
 		}
 	}
@@ -381,7 +419,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		currDriver = gGT->drivers[iVar10];
 
 		if(currDriver == 0)
-			break;
+			HANDLE_NULL_DRIVER;
 
 		// should be impossible to be -1 here
 		if(currDriver->driverRank > -1)
@@ -396,7 +434,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		currDriver = gGT->drivers[iVar10];
 
 		if (currDriver == NULL)
-			break;
+			HANDLE_NULL_DRIVER;
 
 		int currRank = currDriver->driverRank;
 
@@ -461,7 +499,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver = gGT->drivers[currRank];
 			
 			if(currDriver == NULL)
-				break;
+				HANDLE_NULL_DRIVER;
 			
 			// if driver already finished race
 			if((currDriver->actionsFlagSet & 0x2000000) != 0)

@@ -110,13 +110,25 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	// All clients must spawn drivers in the same order,
 	// so that pointers can be sent over network
 	
+	int numDead = 0;
+	
 	for(i = 0; i < octr->DriverID; i++)
 	{
-		// init, save, fakeID, teleport, realID
+		if(octr->nameBuffer[(i+1)*0xC] == 0)
+		{
+			numDead++;
+			continue;
+		}
+		
+		// init, save
 		dr = DECOMP_VehBirth_Player(i+1);
 		gGT->drivers[i+1] = dr;
-		dr->driverID = i&bitFlag;
+		
+		// fakeID, teleport
+		dr->driverID = (i-numDead)&bitFlag;
 		VehBirth_TeleportSelf(dr,3,0);
+		
+		// realID
 		dr->driverID = i+1;
 		
 		#ifdef USE_60FPS
@@ -126,11 +138,15 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		#endif
 	}
 	
-	// init, save, fakeID, teleport, realID
+	// init, save
 	dr = DECOMP_VehBirth_Player(0);
 	gGT->drivers[0] = dr;
-	dr->driverID = i&bitFlag;
+	
+	// fakeID, teleport
+	dr->driverID = (i-numDead)&bitFlag;
 	VehBirth_TeleportSelf(dr,3,0);
+	
+	// realID
 	dr->driverID = 0;
 	
 	#ifdef USE_60FPS
@@ -141,11 +157,21 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	
 	for(i = i+1; i < octr->NumDrivers; i++)
 	{
-		// init, save, fakeID, teleport, realID
+		if(octr->nameBuffer[i*0xC] == 0)
+		{
+			numDead++;
+			continue;
+		}
+		
+		// init, save
 		dr = DECOMP_VehBirth_Player(i);
 		gGT->drivers[i] = dr;
-		dr->driverID = i&bitFlag;
+		
+		// fakeID, teleport
+		dr->driverID = (i-numDead)&bitFlag;
 		VehBirth_TeleportSelf(dr,3,0);
+		
+		// realID
 		dr->driverID = i;
 		
 		#ifdef USE_60FPS

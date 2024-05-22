@@ -306,8 +306,15 @@ void PrintCharacterStats()
 	int i;
 	int color;
 	
-	sprintf(message, "Players: %d/8", octr->NumDrivers);
+	int numDead = 0;
+	for(i = 0; i < octr->NumDrivers; i++)
+		if(octr->nameBuffer[i*0xC] == 0)
+			numDead++;
+	
+	sprintf(message, "Players: %d/8", (octr->NumDrivers-numDead));
 	DecalFont_DrawLine(message,0x130,0x58,FONT_SMALL,0);
+
+	int h = 0;
 
 	for(i = 0; i < octr->NumDrivers; i++)
 	{	
@@ -316,14 +323,20 @@ void PrintCharacterStats()
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
 
+		char* str = &octr->nameBuffer[slot * 0xc];
+		if(str[0] == 0) continue;
+
 		// 0x19 - red
 		// 0x1A - green
 		int color = 
 			octr->boolLockedInCharacters[i] ? 
 			PLAYER_GREEN : PLAYER_RED;
 		
-		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
-		DecalFont_DrawLine(message,0x130,0x60+i*0x8,FONT_SMALL,color);
+		int posY = 0x60+h;
+		h += 8;
+		
+		sprintf(message, "%s:", str);
+		DecalFont_DrawLine(message,0x130,posY,FONT_SMALL,color);
 		
 		if(octr->CurrState < LOBBY_CHARACTER_PICK)
 			continue;
@@ -334,7 +347,7 @@ void PrintCharacterStats()
 					data.characterIDs[slot]
 				].name_LNG_short];
 				
-		DecalFont_DrawLine(characterName,0x1AC,0x60+i*0x8,FONT_SMALL,color);
+		DecalFont_DrawLine(characterName,0x1AC,posY,FONT_SMALL,color);
 	}
 }
 

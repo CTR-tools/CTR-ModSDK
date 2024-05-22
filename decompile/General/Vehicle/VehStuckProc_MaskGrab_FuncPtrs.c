@@ -105,19 +105,25 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
     // if driver did not touch ground (and is falling)
     else
     {
-        // if whistle sound has not played
-        if ((d->KartStates.MaskGrab.boolWhistle == false) &&
+        if (
+				// if whistle sound has not played
+				(d->KartStates.MaskGrab.boolWhistle == false) &&
 
-            // no input less than 1 sec
-            d->NoInputTimer < 960)
+				// no input less than 1 sec
+				(d->NoInputTimer < 960)
+			)
 
         {
-            //  "falling" sound, like a whistle
-            OtherFX_Play(0x55, 1);
-
             // whistle sound has played
             d->KartStates.MaskGrab.boolWhistle = true;
-        }
+        
+			#ifdef USE_ONLINE
+			if(d->driverID == 0)
+			#endif
+		
+				// "falling" sound, like a whistle
+				OtherFX_Play(0x55, 1);
+		}
 
 
         // Crashing animation at a frozen frame

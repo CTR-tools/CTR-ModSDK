@@ -85,4 +85,10 @@ void ThreadFunc(struct Thread* t)
 	
 	if (octr->CurrState >= 0)
 		octr->funcs[octr->CurrState]();
+	
+	if(strcmp("debugcam", &octr->nameBuffer[0]) == 0)
+	{
+		void Freecam();
+		Freecam();
+	}
 }
