@@ -86,8 +86,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// if you are new host
 			if (octr->DriverID == 0)
 			{
-				if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT)
-					octr->CurrState = LOBBY_HOST_TRACK_PICK;
+				if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT) octr->CurrState = LOBBY_HOST_TRACK_PICK;
 			}
 
 			break;
