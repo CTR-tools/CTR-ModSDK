@@ -4,10 +4,10 @@
 #endif
 
 #ifdef __GNUC__
-#define STATIC_ASSERT2(test_for_true) \
-    _Static_assert((test_for_true), "(" #test_for_true ") failed")
+	#define STATIC_ASSERT2(test_for_true) \
+    extern int __static_assert[(test_for_true) ? 1 : -1] __attribute__((unused)) // GCC
 #else
-#define STATIC_ASSERT2 static_assert
+	#define STATIC_ASSERT2 static_assert // Visual Studio Code
 #endif
 
 enum ServerList
