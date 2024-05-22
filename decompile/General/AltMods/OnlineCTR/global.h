@@ -208,12 +208,12 @@ struct SG_MessageEndRace
 	unsigned char time[3];
 };
 
-STATIC_ASSERT2(sizeof(struct SG_Header) == 1);
-STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14);
-STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2);
-STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2);
-STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 13);
-STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5);
+STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
+STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
+STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 13, "Size of SG_EverythingKart must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5, "Size of SG_MessageEndRace must be 5 bytes");
 
 enum ClientGiveMessageType
 {
@@ -306,14 +306,14 @@ struct CG_MessageEndRace
 	unsigned char time[3];
 };
 
-STATIC_ASSERT2(sizeof(struct CG_Header) == 1);
-STATIC_ASSERT2(sizeof(struct CG_MessageName) == 13);
-STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2);
-STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2);
-STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 13);
-STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4);
+STATIC_ASSERT2(sizeof(struct CG_Header) == 1, "Size of CG_Header must be 1 byte");
+STATIC_ASSERT2(sizeof(struct CG_MessageName) == 13, "Size of CG_MessageName must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2, "Size of CG_MessageCharacter must be 2 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2, "Size of CG_MessageTrack must be 2 bytes");
+STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 13, "Size of CG_EverythingKart must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4, "Size of CG_MessageEndRace must be 4 bytes");
 
-// my functions
+// OnlineCTR functions
 void StatePC_Launch_EnterPID();
 void StatePC_Launch_EnterIP();
 void StatePC_Launch_ConnectFailed();
@@ -326,6 +326,9 @@ void StatePC_Lobby_StartLoading();
 void StatePC_Game_WaitForRace();
 void StatePC_Game_StartRace();
 void StatePC_Game_EndRace();
+
+// console functions
+void ShowAnimation();
 
 #endif
 
