@@ -482,7 +482,6 @@ void StatePC_Launch_EnterIP()
 
 			StaticServerID = 6;
 
-
 			break;
 		}
 	}
@@ -500,18 +499,16 @@ void StatePC_Launch_EnterIP()
 
 	if (clientHost == NULL)
 	{
-		fprintf(stderr,
-			"Error: Failed to create an ENet client host!\n");
+		fprintf(stderr, "Error: Failed to create an ENet client host!\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if (serverPeer) {
-		enet_peer_reset(serverPeer);
-	}
+	if (serverPeer) enet_peer_reset(serverPeer);
 
 	serverPeer = enet_host_connect(clientHost, &addr, 2, 0);
 
-	if (serverPeer == NULL) {
+	if (serverPeer == NULL)
+	{
 		fprintf(stderr, "Error: No available peers for initiating an ENet connection!\n");
 		exit(EXIT_FAILURE);
 	}
@@ -655,6 +652,7 @@ void StatePC_Lobby_WaitForLoading()
 
 int boolAlreadySent_StartRace = 0;
 int boolAlreadySent_EndRace = 0;
+
 void StatePC_Lobby_StartLoading()
 {
 	ProcessNewMessages();
@@ -798,16 +796,13 @@ void StatePC_Game_EndRace()
 	}
 
 	int numDead = 0;
+
 	for (int i = 0; i < octr->NumDrivers; i++)
 	{
 		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
 	}
 
-	if (octr->numDriversEnded < (octr->NumDrivers-numDead))
-	{
-		// if you did not finish last
-		timeStart = clock();
-	}
+	if (octr->numDriversEnded < (octr->NumDrivers-numDead)) timeStart = clock(); // if you did not finish last
 
 	else
 	{
@@ -925,6 +920,7 @@ int main()
 	else printf("Client: DuckStation detected\n");
 
 	char pidStr[16];
+
 	if (numDuckInstances > 1)
 	{
 		printf("Warning: Multiple DuckStations detected\n");
@@ -1015,15 +1011,16 @@ void usleep(__int64 usec)
 #endif
 
 #pragma optimize("", off)
-int gGT_timer = 0;
-void FrameStall()
-{
-	// wait for next frame
-	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
-	{
-		usleep(1);
-	}
+	int gGT_timer = 0;
 
-	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
-}
+	void FrameStall()
+	{
+		// wait for next frame
+		while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
+		{
+			usleep(1);
+		}
+
+		gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
+	}
 #pragma optimize("", on)
