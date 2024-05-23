@@ -2,7 +2,10 @@
 #include <windows.h>
 
 
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
+	#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#endif
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
@@ -19,6 +22,7 @@
 
 char *pBuf;
 struct OnlineCTR* octr;
+static unsigned char serverReconnect = false;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -30,12 +34,12 @@ int currstate = 0;
 
 void sendToHostUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
-	enet_peer_send(serverPeer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
+	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
 void sendToHostReliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
-	enet_peer_send(serverPeer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
+	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
 void ProcessReceiveEvent(ENetPacket* packet)
@@ -102,6 +106,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID > octr->DriverID) slot = clientID;
 
 			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
+
 			break;
 		}
 
@@ -133,6 +138,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
 			octr->boolLockedInCharacters[clientID] = r->boolLockedIn;
+
 			break;
 		}
       
@@ -142,12 +148,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// so screen updates with green names
 			octr->CountPressX = 0;
 			octr->CurrState = LOBBY_START_LOADING;
+
 			break;
 		}
 
 		case SG_STARTRACE:
 		{
 			octr->CurrState = GAME_START_RACE;
+
 			break;
 		}
 
@@ -299,23 +307,30 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	
 }
 
-void ProcessNewMessages() {
+void ProcessNewMessages()
+{
 	ENetEvent event;
-	while (enet_host_service(clientHost, &event, 0) > 0) {
-		switch (event.type) {
-		case ENET_EVENT_TYPE_RECEIVE:
-			ProcessReceiveEvent(event.packet);
-			break;
-		case ENET_EVENT_TYPE_DISCONNECT:
-			// Sleep() triggers server timeout
-			// just in case client isnt disconnected
-			printf("\nClient: Disconnected\n");
-			printf("Client: Rebooting...\n");
-			Sleep(2000);
-			//system("cls");
-			octr->CurrState = 0;
-			break;
-		default: break;
+
+	while (enet_host_service(clientHost, &event, 0) > 0)
+	{
+		switch (event.type)
+		{
+			case ENET_EVENT_TYPE_RECEIVE:
+				ProcessReceiveEvent(event.packet);
+				break;
+
+			case ENET_EVENT_TYPE_DISCONNECT:
+				// Sleep() triggers server timeout
+				// just in case client isnt disconnected
+				printf("\nClient: Disconnected\n");
+				printf("Client: Rebooting...\n");
+				Sleep(2000);
+				//system("cls");
+				octr->CurrState = 0;
+				break;
+
+			default:
+				break;
 		}
 	}
 }
@@ -331,18 +346,19 @@ void ShowAnimation()
 	fflush(stdout); // ensure the output is printed immediately
 
 	i = (i + 1) % spinner_length;
+}
 
-	printf("\b "); // clear the spinner character when done
+void StopAnimation()
+{
+	printf("\b \b\n"); // clear the spinner character when done
+	fflush(stdout); // ensure the output is printed immediately
 }
 
 void StatePC_Launch_EnterPID()
 {
 	// if client connected to DuckStation
 	// before game booted, wait for boot
-	if (octr->IsBootedPS1)
-	{
-		octr->CurrState = LAUNCH_ENTER_IP;
-	}
+	if (octr->IsBootedPS1) octr->CurrState = LAUNCH_ENTER_IP;
 }
 
 void printUntilPeriod(const char *str)
@@ -366,58 +382,84 @@ void StatePC_Launch_EnterIP()
 	if (octr->serverLockIn2 == 0) return;
 
 	ENetAddress addr;
-	char dns_string[32] = { 0 };
+	static unsigned char dns_string[32] = { 0 };
+	static unsigned char StaticServerID;
+	int serverID;
 
-	int serverID =  octr->PageNumber*4 + octr->serverCountry;
+	// attempt to reconnect to the previous server selection
+	if(serverReconnect == true)
+	{
+		// copy the previous selection back
+		octr->serverCountry = StaticServerID;
+	}
+
+	// update the server ID
+	serverID = octr->PageNumber * 4 + octr->serverCountry;
 
 	switch (octr->serverCountry)
 	{
-		// EUROPE server
+		// EUROPE
 		case 0:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
+			StaticServerID = 0;
 			addr.port = 65001 + octr->serverRoom;
+
 			break;
 		}
 
-		// USA server
+		// USA
 		case 1:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
+			StaticServerID = 1;
 			addr.port = 65001 + octr->serverRoom;
+
 			break;
 		}
 		
-		// USA WEST server
+		// USA WEST
 		case 2:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
+			StaticServerID = 2;
 			addr.port = 10666 + octr->serverRoom;
+
 			break;
 		}
 
-		// BRAZIL server
+		case 3:
+		{
+			// SPARE SERVER SLOT AVAILABLE
+			break;
+		}
+
+		// BRAZIL
 		case 4:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
+			StaticServerID = 4;
 			addr.port = 65001 + octr->serverRoom;
+
 			break;
 		}
 
-		// AUSTRALIAN server
+		// AUSTRALIA
 		case 5:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
+			StaticServerID = 5;
 			addr.port = 2096 + octr->serverRoom;
+
 			break;
 		}
 
-		// PRIVATE server
+		// PRIVATE SERVER
 		default:
 		{
 			char ip[100];
@@ -433,13 +475,17 @@ void StatePC_Launch_EnterIP()
 			enet_address_set_host(&addr, ip);
 			addr.port = port;
 
+			StaticServerID = 6;
+
+
 			break;
 		}
 	}
 
-	printf("\nClient: Attempting to connect to ");
+	StopAnimation();
+	printf("Client: Attempting to connect to ");
 	printUntilPeriod(dns_string);
-	printf(" (ID: %d)...\n", serverID);
+	printf(" (ID: %d)...  ", serverID);
 
 	clientHost = enet_host_create(NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,
@@ -468,17 +514,20 @@ void StatePC_Launch_EnterIP()
 	//fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
 
 	ENetEvent event;
-	/* Wait up to 2 seconds for the connection attempt to succeed. */
-	if (enet_host_service(clientHost, &event, 2000) > 0 &&
-		event.type == ENET_EVENT_TYPE_CONNECT)
+
+	// wait up to 2 seconds for the connection attempt to succeed
+	if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 	{
+		StopAnimation();
 		printf("Client: Successfully connected  ");
 	}
 
 	else
 	{
-		puts("Error: Failed to connect!");
+		StopAnimation();
+		printf("Error: Failed to connect!  ");
 		octr->CurrState = LAUNCH_CONNECT_FAILED;
+
 		return;
 	}
 
@@ -504,8 +553,10 @@ void StatePC_Launch_EnterIP()
 
 void StatePC_Launch_ConnectFailed()
 {
+	StopAnimation();
 	printf("Error: Unable to connect to the server!\n\n");
 	system("pause");
+
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
@@ -527,7 +578,8 @@ void StatePC_Lobby_HostTrackPick()
 	// boolLockedInTrack already sets
 	if (!octr->boolLockedInLap) return;
 
-	printf("\nClient: Sending track to the server...  ");
+	StopAnimation();
+	printf("Client: Sending track to the server...  ");
 
 	struct CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
@@ -547,6 +599,7 @@ void StatePC_Lobby_HostTrackPick()
 
 int prev_characterID = -1;
 int prev_boolLockedIn = -1;
+
 void StatePC_Lobby_GuestTrackWait()
 {
 	ProcessNewMessages();
@@ -578,10 +631,7 @@ void StatePC_Lobby_CharacterPick()
 		sendToHostReliable(&mc, mc.size);
 	}
 	
-	if (mc.boolLockedIn == 1)
-	{
-		octr->CurrState = LOBBY_WAIT_FOR_LOADING;
-	}
+	if (mc.boolLockedIn == 1) octr->CurrState = LOBBY_WAIT_FOR_LOADING;
 }
 
 void StatePC_Lobby_WaitForLoading()
@@ -611,11 +661,12 @@ void DisconSELECT()
 	{
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
-		printf("\nClient: Disconnected\n");
-		printf("Client: Rebooting...\n");
+		StopAnimation();
+		printf("Client: Disconnected...  ");
 		Sleep(2000);
 		//system("cls");
 		octr->CurrState = 0;
+
 		return;
 	}
 }
@@ -633,15 +684,8 @@ void SendEverything()
 	hold &= ~(0xC0);
 
 	// put L1/R1 into one byte
-	if ((hold & 0x400) != 0)
-	{
-		hold |= 0x40;
-	}
-
-	if ((hold & 0x800) != 0)
-	{
-		hold |= 0x80;
-	}
+	if ((hold & 0x400) != 0) hold |= 0x40;
+	if ((hold & 0x800) != 0) hold |= 0x80;
 
 	cg.buttonHold = (unsigned char)hold;
 
@@ -691,7 +735,8 @@ void StatePC_Game_WaitForRace()
 			((gGT_gameMode1 & 0x40) == 0)
 		)
 	{
-		printf("\nClient: Online race in progress...  ");
+		StopAnimation();
+		printf("Client: Online race in progress...  ");
 		boolAlreadySent_StartRace = 1;
 
 		struct CG_Header cg = { 0 };
@@ -760,12 +805,16 @@ void StatePC_Game_EndRace()
 		{
 			// Sleep() triggers server timeout
 			// just in case client isnt disconnected
-			printf("\nClient: Attempting to reconnect to the server...  ");
-			Sleep(3000);
+			StopAnimation();
+			printf("Client: Attempting to reconnect to the server...  ");
+			Sleep(5000);
 			//system("cls");
+
+			// reconnection attempt
 			currstate = 1;
 			octr->CurrState = 1;
-			octr->serverLockIn2 = 1;
+			octr->serverLockIn2 = 1; // server selection has been locked in
+			serverReconnect = true; // yes we want to reconnect
 
 			return;
 		}
@@ -818,27 +867,24 @@ int main()
 	DWORD aProcesses[1024], cbNeeded, cProcesses;
 	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
 	cProcesses = cbNeeded / sizeof(DWORD);
+
 	for (int i = 0; i < cProcesses; i++)
 	{
 		DWORD processID = aProcesses[i];
 
 		if (processID != 0)
 		{
-			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |
-				PROCESS_VM_READ,
-				FALSE, processID);
+			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
 
 			if (NULL != hProcess)
 			{
 				HMODULE hMod;
 				DWORD cbNeeded;
 
-				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod),
-					&cbNeeded))
+				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
 				{
 					TCHAR szProcessName[MAX_PATH];
-					GetModuleBaseNameA(hProcess, hMod, szProcessName,
-						sizeof(szProcessName) / sizeof(TCHAR));
+					GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
 
 					char* procName = (char*)&szProcessName[0];
 
@@ -898,11 +944,14 @@ int main()
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
-	//initialize enet
-	if (enet_initialize() != 0) {
+	// initialize enet
+	if (enet_initialize() != 0)
+	{
 		printf(stderr, "Error: Failed to initialize ENet!\n");
+
 		return 1;
 	}
+
 	atexit(enet_deinitialize);
 
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
@@ -920,7 +969,8 @@ int main()
 
 			if (currstate == CURRENT_STATE_SUCCESS)
 			{
-				printf("\nClient: PlayStation clock found (ID: %i)\n", currstate);
+				StopAnimation();
+				printf("Client: PlayStation clock found (ID: %i)\n", currstate);
 				printf("Client: Waiting to connect to a server...  ");
 			}
 		}
