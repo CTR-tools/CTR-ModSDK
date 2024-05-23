@@ -8,6 +8,9 @@
 #define true 1
 #define false 0
 
+#define DONT_SHOW_NAME 0
+#define SHOW_NAME 1
+
 enum ServerList
 {
 	EUR_LOOPER_1,
@@ -335,7 +338,7 @@ struct CG_MessageEndRace
 
 // OnlineCTR functions
 void StatePC_Launch_EnterPID();
-void StatePC_Launch_EnterIP(char reconnect);
+void StatePC_Launch_EnterIP();
 void StatePC_Launch_ConnectFailed();
 void StatePC_Launch_FirstInit();
 void StatePC_Lobby_HostTrackPick();
@@ -348,6 +351,7 @@ void StatePC_Game_StartRace();
 void StatePC_Game_EndRace();
 
 // console functions
+void PrintBanner(char show_name);
 void ShowAnimation();
 void StopAnimation();
 

@@ -317,22 +317,31 @@ void ProcessNewMessages()
 		{
 			case ENET_EVENT_TYPE_RECEIVE:
 				ProcessReceiveEvent(event.packet);
+
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
-				// Sleep() triggers server timeout
-				// just in case client isnt disconnected
-				printf("\nClient: Disconnected\n");
-				printf("Client: Rebooting...\n");
-				Sleep(2000);
-				//system("cls");
+				// command prompt reset
+				system("cls");
+				PrintBanner(SHOW_NAME);
+				printf("\nClient: Disconnected...  ");
+				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
+
 				octr->CurrState = 0;
+
 				break;
 
 			default:
 				break;
 		}
 	}
+}
+
+void PrintBanner(char show_name)
+{
+	printf(" OnlineCTR Client (press CTRL + C to quit)\n Build %s (%s)\n\n", __DATE__, __TIME__);
+
+	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
 }
 
 void ShowAnimation()
@@ -387,11 +396,7 @@ void StatePC_Launch_EnterIP()
 	int serverID;
 
 	// attempt to reconnect to the previous server selection
-	if(serverReconnect == true)
-	{
-		// copy the previous selection back
-		octr->serverCountry = StaticServerID;
-	}
+	if(serverReconnect == true) octr->serverCountry = StaticServerID; // copy the previous selection back
 
 	// update the server ID
 	serverID = octr->PageNumber * 4 + octr->serverCountry;
@@ -483,9 +488,9 @@ void StatePC_Launch_EnterIP()
 	}
 
 	StopAnimation();
-	printf("Client: Attempting to connect to ");
+	printf("Client: Attempting to connect to \"");
 	printUntilPeriod(dns_string);
-	printf(" (ID: %d)...  ", serverID);
+	printf("\" (ID: %d)...  ", serverID);
 
 	clientHost = enet_host_create(NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,
@@ -519,14 +524,17 @@ void StatePC_Launch_EnterIP()
 	if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 	{
 		StopAnimation();
-		printf("Client: Successfully connected  ");
+		printf("Client: Successfully connected!  ");
 	}
 
 	else
 	{
 		StopAnimation();
 		printf("Error: Failed to connect!  ");
+
 		octr->CurrState = LAUNCH_CONNECT_FAILED;
+		currstate = 0;
+		serverReconnect = false;
 
 		return;
 	}
@@ -557,6 +565,8 @@ void StatePC_Launch_ConnectFailed()
 	printf("Error: Unable to connect to the server!\n\n");
 	system("pause");
 
+	serverReconnect = false;
+	currstate = 0;
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
@@ -803,12 +813,13 @@ void StatePC_Game_EndRace()
 	{
 		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
 		{
-			// Sleep() triggers server timeout
-			// just in case client isnt disconnected
 			StopAnimation();
-			printf("Client: Attempting to reconnect to the server...  ");
-			Sleep(5000);
-			//system("cls");
+			printf("Client: Waiting for the server...  ");
+			Sleep(5000); // give the server time to reset
+
+			// command prompt reset
+			system("cls");
+			PrintBanner(SHOW_NAME);
 
 			// reconnection attempt
 			currstate = 1;
@@ -839,7 +850,6 @@ void (*ClientState[]) () = {
 	StatePC_Game_EndRace			// 12
 };
 
-
 // for EnumProcessModules
 #pragma comment(lib, "psapi.lib")
 
@@ -851,11 +861,16 @@ int main()
 	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
 
-	printf(" OnlineCTR Client (CTRL+C TO QUIT)\n Build %s (%s)\n\n", __DATE__, __TIME__);
+	PrintBanner(DONT_SHOW_NAME);
 
-	printf(" Online ID: ");
+	// ask for the users online identification
+	printf(" Enter Online ID: ");
 	scanf_s("%s", name, 100);
-	name[11] = 0;
+	name[11] = 0; // truncate the name
+
+	// show a welcome message
+	system("cls");
+	PrintBanner(SHOW_NAME);
 	printf("\n");
 
 	int numDuckInstances = 0;
@@ -907,7 +922,7 @@ int main()
 		system("pause");
 		exit(0);
 	}
-	else printf("Client: DuckStation detected...\n");
+	else printf("Client: DuckStation detected\n");
 
 	char pidStr[16];
 	if (numDuckInstances > 1)
@@ -953,7 +968,6 @@ int main()
 	}
 
 	atexit(enet_deinitialize);
-
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
 	#define CURRENT_STATE_SUCCESS 1
