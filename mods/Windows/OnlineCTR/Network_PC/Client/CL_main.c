@@ -873,10 +873,24 @@ void StatePC_Game_EndRace()
 	{
 		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
 		{
+			int random_sleep_time;
+
+			// initialize random number generator
+			srand(time(0));
+
 			StopAnimation();
 			StartAnimation();
 			printf("Client: Waiting for the server...  ");
-			Sleep(5000); // give the server time to reset
+			Sleep(3500); // give the server time to reset
+
+			// now add a random delay so we can try to get a fairer choice of lobby hosts
+			random_sleep_time = 100 + rand() % 101; // a value between 100 and 200
+
+			#ifdef __GNUC__
+				usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
+			#else
+				Sleep(random_sleep_time);
+			#endif
 
 			// command prompt reset
 			system("cls");
