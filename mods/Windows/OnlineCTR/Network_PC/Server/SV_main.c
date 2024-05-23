@@ -576,8 +576,9 @@ int main(int argc, char *argv[])
 	#endif
 
 	//initialize enet
-	if (enet_initialize() != 0) {
-		printf(stderr, "Failed to initialize ENet.\n");
+	if (enet_initialize() != 0)
+	{
+		printf(stderr, "Failed to initialize ENet!\n");
 		return 1;
 	}
 	atexit(enet_deinitialize);
@@ -585,23 +586,44 @@ int main(int argc, char *argv[])
 	int port;
 	int boolIsPortArgument = 0;
 
-	//port argument reading
-	for (int i = 1; i < argc; i++) {
-		if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0) {
+	// port argument reading
+	for (int i = 1; i < argc; i++)
+	{
+		if (strcmp(argv[i], "--port") == 0 || strcmp(argv[i], "-p") == 0)
+		{
 			boolIsPortArgument = 1;
-			if (i + 1 < argc) {
+
+			if (i + 1 < argc)
+			{
 				port = atoi(argv[i + 1]);
-				i++; //next is port number
-			} else {
-				fprintf(stderr, "Error: --port or -p requires a value.\n");
+				i++; // next is the port number
+			}
+			else
+			{
+				fprintf(stderr, "Error: --port or -p requires a value!\n");
 				return 1;
 			}
 		}
 	}
 
-	if(!boolIsPortArgument){
+	if(!boolIsPortArgument)
+	{
+	enter_port:
 		printf("Enter Port (0-65535): ");
-		scanf("%d", &port, sizeof(port));
+		int result = scanf("%d", &port);
+
+		if (result == 1) printf("Client: Using port %d UDP\n", port);
+		else if (result == 0)
+		{
+			printf("Error: Input format mismatch. Please enter a valid integer!\n");
+			goto enter_port;
+		}
+		else
+		{
+			printf("Error: Failed to read the input or end of input reached!\n");
+			goto enter_port;
+		}
+
 		printf("\n");
 	}
 
@@ -609,18 +631,18 @@ int main(int argc, char *argv[])
 	address.host = ENET_HOST_ANY;
 	address.port = port;
 	server = enet_host_create(&address,
-		8      /* allow up to 8 clients*/,
-		2      /* allow up to 2 channels to be used, 0 and 1 */,
-		0      /* assume any amount of incoming bandwidth */,
-		0      /* assume any amount of outgoing bandwidth */);
+		8	/* allow up to 8 clients */,
+		2	/* allow up to 2 channels to be used, 0 and 1 */,
+		0	/* assume any amount of incoming bandwidth */,
+		0	/* assume any amount of outgoing bandwidth */);
+
 	if (!server)
 	{
-		fprintf(stderr,
-			"An error occurred while trying to create an ENet server host.\n");
+		fprintf(stderr, "Error: Failed to create an ENet server host!\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("NodeServer ready on port %d\n\n", port);
 
+	printf("Client: Ready on port %d\n\n", port);
 	ServerState_Boot();
 
 	while (1)
