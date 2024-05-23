@@ -324,10 +324,14 @@ void ProcessNewMessages()
 				// command prompt reset
 				system("cls");
 				PrintBanner(SHOW_NAME);
-				printf("\nClient: Disconnected...  ");
+				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
 				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
 
+				// to go the lobby browser
+				currstate = 0;
 				octr->CurrState = 0;
+				octr->serverLockIn2 = 0; // server selection has been locked in
+				serverReconnect = false; // yes we want to reconnect
 
 				break;
 
@@ -344,7 +348,7 @@ void PrintBanner(char show_name)
 	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
 }
 
-void ShowAnimation()
+void StartAnimation()
 {
 	char spinner_chars[] = "|/-\\";
 	static int spinner_length = sizeof(spinner_chars) - 1; // exclude the NULL terminator
@@ -361,6 +365,13 @@ void StopAnimation()
 {
 	printf("\b \b\n"); // clear the spinner character when done
 	fflush(stdout); // ensure the output is printed immediately
+}
+
+void ClearInputBuffer()
+{
+	int c;
+
+	while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void StatePC_Launch_EnterPID()
@@ -388,12 +399,22 @@ void printUntilPeriod(const char *str)
 
 void StatePC_Launch_EnterIP()
 {
-	if (octr->serverLockIn2 == 0) return;
-
 	ENetAddress addr;
 	static unsigned char dns_string[32] = { 0 };
 	static unsigned char StaticServerID;
+	static unsigned char localServer;
 	int serverID;
+
+	// local server
+	char ip[100];
+	char portStr[PORT_SIZE];
+	int port;
+
+	// default port
+	addr.port = 65001;
+
+	// return now if the server selection hasn't been selected yet
+	if (octr->serverLockIn2 == 0) return;
 
 	// attempt to reconnect to the previous server selection
 	if(serverReconnect == true) octr->serverCountry = StaticServerID; // copy the previous selection back
@@ -436,9 +457,69 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
+		// PRIVATE SERVER		
 		case 3:
+		default:
 		{
-			// SPARE SERVER SLOT AVAILABLE
+			StopAnimation();
+
+		private_server_ip:
+			ClearInputBuffer(); // clear any extra input in the buffer
+
+			// IP address
+			printf("\nEnter Server IPV4 Address (127.0.0.1): ");
+
+			if (fgets(ip, sizeof(ip), stdin) == NULL)
+			{
+				printf("\nError: Invalid IPV4 address!\n");
+
+				goto private_server_ip;
+			}
+
+			// remove the newline character (if present)
+			ip[strcspn(ip, "\n")] = '\0';
+
+			// check if the input is empty and set it to the default IP if so
+			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+
+		private_server_port:
+			// port number
+			printf("Server Port (0-65535): ");
+
+			if (fgets(portStr, sizeof(portStr), stdin) == NULL)
+			{
+				printf("\nError: Invalid port input!\n");
+
+				goto private_server_port;
+			}
+
+			// remove the newline character (if present)
+			portStr[strcspn(portStr, "\n")] = '\0';
+
+			// check if the port input is empty
+			if (strlen(portStr) == 0)
+			{
+				printf("\nError: The port value cannot be empty!\n");
+
+				goto private_server_port;
+			}
+
+			// convert the string to an integer and validate the range
+			port = atoi(portStr);
+
+			if (port < 0 || port > 65535)
+			{
+				printf("\nError: Port value out of range!\n");
+
+				goto private_server_port;
+			}
+
+			enet_address_set_host(&addr, ip);
+			addr.port = port;
+
+			localServer = true;
+			//StaticServerID = 3;
+
 			break;
 		}
 
@@ -463,32 +544,12 @@ void StatePC_Launch_EnterIP()
 
 			break;
 		}
-
-		// PRIVATE SERVER
-		default:
-		{
-			char ip[100];
-			printf("Server IP Address (127.0.0.1): ");
-			scanf_s("%s", ip, sizeof(ip));
-			printf("\n");
-
-			int port;
-			printf("Server Port (0-65535): ");
-			scanf_s("%d", &port, sizeof(port));
-			printf("\n");
-
-			enet_address_set_host(&addr, ip);
-			addr.port = port;
-
-			StaticServerID = 6;
-
-			break;
-		}
 	}
 
 	StopAnimation();
 	printf("Client: Attempting to connect to \"");
-	printUntilPeriod(dns_string);
+	if(localServer == false) printUntilPeriod(dns_string);
+	else printf("%s:%d", ip, addr.port);
 	printf("\" (ID: %d)...  ", serverID);
 
 	clientHost = enet_host_create(NULL /* create a client host */,
@@ -559,8 +620,7 @@ void StatePC_Launch_EnterIP()
 void StatePC_Launch_ConnectFailed()
 {
 	StopAnimation();
-	printf("Error: Unable to connect to the server!\n\n");
-	system("pause");
+	printf("Error: Unable to connect to the server!  ");
 
 	serverReconnect = false;
 	currstate = 0;
@@ -670,10 +730,15 @@ void DisconSELECT()
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
 		StopAnimation();
-		printf("Client: Disconnected...  ");
+		printf("Client: Disconnected (ID: DSELECT)...  ");
 		Sleep(2000);
 		//system("cls");
+
+		// to go the lobby browser
+		currstate = 0;
 		octr->CurrState = 0;
+		octr->serverLockIn2 = 0; // server selection has been locked in
+		serverReconnect = false; // yes we want to reconnect
 
 		return;
 	}
@@ -809,6 +874,7 @@ void StatePC_Game_EndRace()
 		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
 		{
 			StopAnimation();
+			StartAnimation();
 			printf("Client: Waiting for the server...  ");
 			Sleep(5000); // give the server time to reset
 
@@ -860,7 +926,7 @@ int main()
 
 	// ask for the users online identification
 	printf(" Enter Online ID: ");
-	scanf_s("%s", name, 100);
+	scanf_s("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
@@ -927,7 +993,7 @@ int main()
 		printf("Please enter the PID manually\n\n");
 
 		printf("DuckStation PID: ");
-		scanf_s("%s", pidStr, sizeof(pidStr));
+		scanf_s("%s", pidStr, (int)sizeof(pidStr));
 	}
 	else
 	{
@@ -985,7 +1051,7 @@ int main()
 			}
 		}
 
-		ShowAnimation();
+		StartAnimation();
 
 		ClientState[octr->CurrState]();
 		void FrameStall(); FrameStall();

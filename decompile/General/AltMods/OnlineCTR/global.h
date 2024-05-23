@@ -5,14 +5,17 @@
 
 #define STATIC_ASSERT2 static_assert
 
-#define true 1
-#define false 0
+#define true				1
+#define false				0
 
-#define DONT_SHOW_NAME 0
-#define SHOW_NAME 1
+#define DONT_SHOW_NAME		0
+#define SHOW_NAME			1
 
-enum ServerList
-{
+#define DEFAULT_IP			"127.0.0.1"
+#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
+#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
+
+enum ServerList {
 	EUR_LOOPER_1,
 	EUR_LOOPER_2,
 	USA_NIKO_1,
@@ -352,7 +355,7 @@ void StatePC_Game_EndRace();
 
 // console functions
 void PrintBanner(char show_name);
-void ShowAnimation();
+void StartAnimation();
 void StopAnimation();
 
 #endif
