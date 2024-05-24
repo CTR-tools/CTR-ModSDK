@@ -155,7 +155,6 @@ void StatePS1_Lobby_HostTrackPick()
 		return;
 	}
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	
 	// first frame here
@@ -182,7 +181,6 @@ void FakeState_Lobby_HostLapPick()
 	// If already picked
 	if(MenuFinished() == 1) return;
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	
 	// first frame here
@@ -195,7 +193,6 @@ void FakeState_Lobby_HostLapPick()
 
 void StatePS1_Lobby_GuestTrackWait()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 		
 	DECOMP_DecalFont_DrawLine(
@@ -218,7 +215,6 @@ void StatePS1_Lobby_CharacterPick()
 	// If already picked
 	if(MenuFinished() == 1) return;
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 			
@@ -246,7 +242,6 @@ void StatePS1_Lobby_CharacterPick()
 
 void StatePS1_Lobby_WaitForLoading()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 	
@@ -259,7 +254,6 @@ void StatePS1_Lobby_WaitForLoading()
 
 void StatePS1_Lobby_StartLoading()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 	

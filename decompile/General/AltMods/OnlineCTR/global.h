@@ -1,15 +1,20 @@
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
-	#include <time.h>
-	#include <windows.h>
 #endif
 
 #ifdef __GNUC__
-	#include <unistd.h> // for the 'usleep()' function
+	
+	#ifdef WINDOWS_INCLUDE
+		#include <unistd.h> // for the 'usleep()' function
+	#endif
+	
 	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message) // GCC
+
 #else
+
 	#define STATIC_ASSERT2 static_assert // Visual Studio Code
+
 #endif
 
 #define true				1
@@ -97,6 +102,9 @@ struct OnlineCTR
 };
 
 #ifdef WINDOWS_INCLUDE
+
+#include <time.h>
+#include <windows.h>
 
 enum ServerGiveMessageType
 {

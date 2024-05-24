@@ -291,14 +291,6 @@ void PrintTimeStamp()
 	DECOMP_DecalFont_DrawLine(__TIME__, WIDE_PICK(170, 228-40), 206, FONT_SMALL, DARK_RED);
 }
 
-void PrintClientCountStats()
-{
-	char message[32];
-	
-	sprintf(message, "ClientID: %d", octr->DriverID);
-	DecalFont_DrawLine(message,0x8,0x20,FONT_SMALL,ORANGE);
-}
-
 void PrintCharacterStats()
 {
 	char message[32];
@@ -349,6 +341,10 @@ void PrintCharacterStats()
 				
 		DecalFont_DrawLine(characterName,0x1AC,posY,FONT_SMALL,color);
 	}
+
+	DecalFont_DrawLine("Return to main menu",0x138,0xb8,FONT_SMALL,0);
+	DecalFont_DrawLine("During Race or Lobby",0x130,0xc0,FONT_SMALL,0);
+	DecalFont_DrawLine("With the Select Button",0x120,0xc8,FONT_SMALL,RED);
 }
 
 char* onlineLapString = "Laps: 0\0";
@@ -363,8 +359,8 @@ void PrintRecvTrack()
 				]
 			);
 	
-	DecalFont_DrawLine(message,0x8,0x10,FONT_SMALL,PAPU_YELLOW);
+	DecalFont_DrawLine(message,0x118,0x38,FONT_SMALL,PAPU_YELLOW);
 	
 	onlineLapString[6] = '0' + sdata->gGT->numLaps;
-	DecalFont_DrawLine(onlineLapString,0x128,0x10,FONT_SMALL,PAPU_YELLOW);
+	DecalFont_DrawLine(onlineLapString,0x11A,0x40,FONT_SMALL,PAPU_YELLOW);
 }

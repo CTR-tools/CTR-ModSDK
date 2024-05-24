@@ -367,6 +367,29 @@ void StopAnimation()
 	fflush(stdout); // ensure the output is printed immediately
 }
 
+void DisconSELECT()
+{
+	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+
+	if((hold & 0x2000) != 0)
+	{
+		// Sleep() triggers server timeout
+		// just in case client isnt disconnected
+		StopAnimation();
+		printf("Client: Disconnected (ID: DSELECT)...  ");
+		Sleep(2000);
+		//system("cls");
+
+		// to go the lobby browser
+		currstate = 0;
+		octr->CurrState = 0;
+		octr->serverLockIn2 = 0; // server selection has been locked in
+		serverReconnect = false; // yes we want to reconnect
+
+		return;
+	}
+}
+
 void ClearInputBuffer()
 {
 	int c;
@@ -721,29 +744,6 @@ void StatePC_Lobby_StartLoading()
 	boolAlreadySent_EndRace = 0;
 }
 
-void DisconSELECT()
-{
-	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-
-	if((hold & 0x2000) != 0)
-	{
-		// Sleep() triggers server timeout
-		// just in case client isnt disconnected
-		StopAnimation();
-		printf("Client: Disconnected (ID: DSELECT)...  ");
-		Sleep(2000);
-		//system("cls");
-
-		// to go the lobby browser
-		currstate = 0;
-		octr->CurrState = 0;
-		octr->serverLockIn2 = 0; // server selection has been locked in
-		serverReconnect = false; // yes we want to reconnect
-
-		return;
-	}
-}
-
 void SendEverything()
 {
 	struct CG_EverythingKart cg = { 0 };
@@ -820,14 +820,12 @@ void StatePC_Game_WaitForRace()
 	}
 
 	SendEverything();
-	DisconSELECT();
 }
 
 void StatePC_Game_StartRace()
 {
 	ProcessNewMessages();
 	SendEverything();
-	DisconSELECT();
 }
 
 #include <time.h>
@@ -905,8 +903,6 @@ void StatePC_Game_EndRace()
 			return;
 		}
 	}
-	
-	DisconSELECT();
 }
 
 void (*ClientState[]) () = {
@@ -939,7 +935,7 @@ int main()
 	PrintBanner(DONT_SHOW_NAME);
 
 	// ask for the users online identification
-	printf(" Enter Online ID: ");
+	printf(" Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
@@ -1064,6 +1060,9 @@ int main()
 				printf("Client: Waiting to connect to a server...  ");
 			}
 		}
+		
+		if (octr->CurrState >= LOBBY_ASSIGN_ROLE)
+			DisconSELECT();
 
 		StartAnimation();
 
