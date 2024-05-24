@@ -3,17 +3,17 @@
 	#include <common.h>
 #endif
 
-#ifdef __GNUC__
-	
+#ifdef __GNUC__ // GCC and Clang
+
 	#ifdef WINDOWS_INCLUDE
 		#include <unistd.h> // for the 'usleep()' function
 	#endif
-	
-	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message) // GCC
 
-#else
+	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
 
-	#define STATIC_ASSERT2 static_assert // Visual Studio Code
+#else // MSVC (Visual Studio)
+
+	#define STATIC_ASSERT2 static_assert
 
 #endif
 
@@ -104,7 +104,10 @@ struct OnlineCTR
 #ifdef WINDOWS_INCLUDE
 
 #include <time.h>
-#include <windows.h>
+
+#ifndef __GNUC__
+	#include <windows.h>
+#endif
 
 enum ServerGiveMessageType
 {
