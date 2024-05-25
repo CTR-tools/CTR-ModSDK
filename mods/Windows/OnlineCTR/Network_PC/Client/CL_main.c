@@ -886,11 +886,6 @@ void StatePC_Game_EndRace()
 	{
 		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
 		{
-			int random_sleep_time;
-
-			// initialize random number generator
-			srand(time(0));
-
 			StopAnimation();
 			StartAnimation();
 			printf("Client: Waiting for the server...  ");
