@@ -61,25 +61,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		elapsedFrames++;
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
-	
-	// Temporary:
-	// move to UI_VsWaitForX when that's done,
-	// this code is new cause multiplayer uses
-	// real 3D wumpa instead of DecalMP wumpa
-	#if 1
-	if(numPlyr > 1)
-	{
-		for(i = 0; i < numPlyr; i++)
-		{
-			struct Instance* instFruitDisp = 
-				gGT->drivers[i]->instFruitDisp;
-		
-			instFruitDisp->scale[0] = 0;
-			instFruitDisp->scale[1] = 0;
-			instFruitDisp->scale[2] = 0;
-		}
-	}
-	#endif
 
 	if (driver->instBigNum->scale[0] != 0x1e00)
 	{

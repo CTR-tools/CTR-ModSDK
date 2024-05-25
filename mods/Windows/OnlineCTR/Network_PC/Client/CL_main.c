@@ -440,7 +440,22 @@ void StatePC_Launch_EnterIP()
 	if (octr->serverLockIn2 == 0) return;
 
 	// attempt to reconnect to the previous server selection
-	if(serverReconnect == true) octr->serverCountry = StaticServerID; // copy the previous selection back
+	if (serverReconnect == true)
+	{
+		octr->serverCountry = StaticServerID;
+
+		int random_sleep_time;
+		srand(time(0));
+
+		// now add a random delay so we can try to get a fairer choice of lobby hosts
+		random_sleep_time = 10 + rand() % 101; // a value between 10 and 110
+
+#ifdef __GNUC__
+		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
+#else
+		Sleep(random_sleep_time);
+#endif
+	}
 
 	// update the server ID
 	serverID = octr->PageNumber * 4 + octr->serverCountry;
@@ -879,16 +894,7 @@ void StatePC_Game_EndRace()
 			StopAnimation();
 			StartAnimation();
 			printf("Client: Waiting for the server...  ");
-			Sleep(3500); // give the server time to reset
-
-			// now add a random delay so we can try to get a fairer choice of lobby hosts
-			random_sleep_time = 100 + rand() % 101; // a value between 100 and 200
-
-			#ifdef __GNUC__
-				usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-			#else
-				Sleep(random_sleep_time);
-			#endif
+			Sleep(2000); // give the server time to reset
 
 			// command prompt reset
 			system("cls");

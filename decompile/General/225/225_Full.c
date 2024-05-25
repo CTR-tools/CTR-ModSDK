@@ -67,22 +67,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
   VsConfigIndex = numPlyr-2;
-  
-  // Temporary:
-  // move to UI_VsWaitForX when that's done,
-  // this code is new cause multiplayer uses
-  // real 3D wumpa instead of DecalMP wumpa
-  #if 1
-  for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
-  {
-	struct Instance* instFruitDisp = 
-		gGT->drivers[iVar10]->instFruitDisp;
-	
-	instFruitDisp->scale[0] = 0;
-	instFruitDisp->scale[1] = 0;
-	instFruitDisp->scale[2] = 0;
-  }
-  #endif
 
   if (sdata->framesSinceRaceEnded < FPS_DOUBLE(0xf0))
   {
