@@ -10,7 +10,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/include)
 link_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/lib)
 
 # Source files
-set(SOURCES SV_main.c)
+set(SOURCES SV_main.c SV_helper.c)
 
 # Create the executable
 add_executable(ctr_srv ${SOURCES})
