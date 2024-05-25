@@ -420,11 +420,11 @@ void printUntilPeriod(const char *str)
 	}
 }
 
+int StaticServerID=0;
 void StatePC_Launch_EnterIP()
 {
 	ENetAddress addr;
 	static unsigned char dns_string[32] = { 0 };
-	static unsigned char StaticServerID;
 	static unsigned char localServer;
 	int serverID;
 
@@ -556,7 +556,7 @@ void StatePC_Launch_EnterIP()
 			addr.port = port;
 
 			localServer = true;
-			//StaticServerID = 3;
+			StaticServerID = 3;
 
 			break;
 		}
@@ -898,8 +898,12 @@ void StatePC_Game_EndRace()
 			// reconnection attempt
 			currstate = 1;
 			octr->CurrState = 1;
-			octr->serverLockIn2 = 1; // server selection has been locked in
-			serverReconnect = true; // yes we want to reconnect
+
+			if (StaticServerID != 3)
+			{
+				octr->serverLockIn2 = 1; // server selection has been locked in
+				serverReconnect = true; // yes we want to reconnect
+			}
 
 			return;
 		}
