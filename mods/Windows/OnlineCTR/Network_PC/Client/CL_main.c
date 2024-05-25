@@ -457,8 +457,7 @@ void StatePC_Launch_EnterIP()
 #endif
 	}
 
-	// update the server ID
-	serverID = octr->PageNumber * 4 + octr->serverCountry;
+	StaticServerID = octr->serverCountry;
 
 	switch (octr->serverCountry)
 	{
@@ -467,7 +466,6 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			StaticServerID = 0;
 			addr.port = 65001 + octr->serverRoom;
 
 			break;
@@ -478,7 +476,6 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			StaticServerID = 1;
 			addr.port = 65001 + octr->serverRoom;
 
 			break;
@@ -489,13 +486,12 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			StaticServerID = 2;
 			addr.port = 10666 + octr->serverRoom;
 
 			break;
 		}
 
-		// PRIVATE SERVER		
+		// PRIVATE SERVER (3 or 7)	
 		case 3:
 		default:
 		{
@@ -556,7 +552,6 @@ void StatePC_Launch_EnterIP()
 			addr.port = port;
 
 			localServer = true;
-			StaticServerID = 3;
 
 			break;
 		}
@@ -566,7 +561,6 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			StaticServerID = 4;
 			addr.port = 65001 + octr->serverRoom;
 
 			break;
@@ -577,7 +571,6 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			StaticServerID = 5;
 			addr.port = 2096 + octr->serverRoom;
 
 			break;
@@ -588,7 +581,7 @@ void StatePC_Launch_EnterIP()
 	printf("Client: Attempting to connect to \"");
 	if(localServer == false) printUntilPeriod(dns_string);
 	else printf("%s:%d", ip, addr.port);
-	printf("\" (ID: %d)...  ", serverID);
+	printf("\" (ID: %d)...  ", StaticServerID);
 
 	clientHost = enet_host_create(NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,
@@ -899,7 +892,8 @@ void StatePC_Game_EndRace()
 			currstate = 1;
 			octr->CurrState = 1;
 
-			if (StaticServerID != 3)
+			// not 3 or 7, not private server
+			if ((StaticServerID&3) != 3)
 			{
 				octr->serverLockIn2 = 1; // server selection has been locked in
 				serverReconnect = true; // yes we want to reconnect
