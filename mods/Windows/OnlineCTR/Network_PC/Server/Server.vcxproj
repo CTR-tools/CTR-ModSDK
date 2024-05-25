@@ -143,7 +143,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>enet.lib;enet64.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -156,6 +156,7 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\protocol.c" />
     <ClCompile Include="..\..\..\..\..\externals\enet\unix.c" />
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c" />
+    <ClCompile Include="SV_helper.c" />
     <ClCompile Include="SV_main.c" />
   </ItemGroup>
   <ItemGroup>

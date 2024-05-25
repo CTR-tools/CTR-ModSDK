@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #ifdef __WINDOWS__
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_NO_WARNINGS
@@ -7,7 +5,6 @@
 #endif
 
 #include <stdio.h>
-#include <time.h>
 #include <enet/enet.h>
 
 #define WINDOWS_INCLUDE
@@ -17,14 +14,18 @@
 
 #define MAX_CLIENTS 8
 
-int levelPlayed = 0;
 unsigned char clientCount = 0;
-int boolTakingConnections = 0;
 
-// must match socket
-int boolLoadAll = 0;
-int boolRaceAll = 0;
-int boolEndAll = 0;
+typedef struct
+{
+	int levelPlayed;
+
+	char boolRoomLocked;
+	char boolLoadAll;
+	char boolRaceAll;
+	char boolEndAll;
+
+} RoomInfo;
 
 typedef struct {
 	ENetPeer* peer;
@@ -37,37 +38,11 @@ typedef struct {
 } PeerInfo;
 
 ENetHost* server;
+
 PeerInfo peerInfos[MAX_CLIENTS] = { NULL };
+RoomInfo roomInfos[1] = { NULL };
 
-void PrintTime()
-{
-	time_t timer;
-	char buffer[26];
-	struct tm* tm_info;
-
-	timer = time(NULL);
-	tm_info = localtime(&timer);
-
-	strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
-	printf(buffer);
-	printf("\n");
-}
-
-void ServerState_Boot()
-{
-	levelPlayed = 0;
-
-	clientCount = 0;
-	boolLoadAll = 0;
-	boolRaceAll = 0;
-	boolEndAll = 0;
-	memset(peerInfos, 0, sizeof(peerInfos));
-
-	printf("\nServerState_Boot: ");
-	PrintTime();
-
-	boolTakingConnections = 1;
-}
+void PrintTime();
 
 void broadcastToPeersUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
@@ -90,42 +65,65 @@ void sendToPeerReliable(ENetPeer* peer, const void* data, size_t size) {
 }
 
 
-void ProcessConnectEvent(ENetPeer* peer) {
-
+void ProcessConnectEvent(ENetPeer* peer)
+{
 	if (!peer) {
 		return;
 	}
 
-	if (!boolTakingConnections)
+
+	// === If Race is in Session ===
+
+
+	// Placeholder, right now 1 server = 1 room,
+	// need to connect to server and then try to get the room
+	// from a CG_Message request to join a room, and this code
+	// should be in a completely different function
+	if (roomInfos[0].boolRoomLocked)
 	{
 		printf("Connection rejected: Race in session.\n");
 		enet_peer_disconnect_now(peer, 0);
 		return;
 	}
 
-	if (count_connected_peers(peerInfos, MAX_CLIENTS) >= MAX_CLIENTS)
+
+	// === If already connected ===
+
+
+	for (int i = 0; i < MAX_CLIENTS; ++i)
+		if (peerInfos[i].peer != 0)
+			if (peerInfos[i].peer->address.host == peer->address.host)
+			{
+				printf("Connection rejected: Peer 0x%08x:%u is already connected.\n",
+					peer->address.host, peer->address.port);
+
+				enet_peer_disconnect_now(peer, 0);
+				return;
+			}
+
+
+	// === If Full, or Empty Slot ===
+
+
+	int id = -1;
+	for (int i = 0; i < MAX_CLIENTS; i++)
+		if (peerInfos[i].peer == 0)
+		{
+			id = i;
+			break;
+		}
+
+	if (id == -1)
 	{
 		printf("Connection rejected: Maximum number of peers reached.\n");
 		enet_peer_disconnect_now(peer, 0);
 		return;
 	}
 
-	char hostname[256];
-	enet_address_get_host_ip(&peer->address, hostname, sizeof(hostname));
 
-	// Check if the peer is already connected
-	int index = find_peer_by_address(peerInfos, &peer->address);
+	// === Connection Accepted ===
 
-	if (index != -1)
-	{
-		printf("Connection rejected: Peer %s:%u is already connected.\n", hostname, peer->address.port);
-		enet_peer_disconnect_now(peer, 0);
-		return;
-	}
 
-	// Find an empty slot in the peers array and assign the new peer to it
-	int id = find_empty_slot(peerInfos);
-	
 	// if added to end, then increase count
 	if(id == clientCount)
 		clientCount++;
@@ -159,55 +157,13 @@ void ProcessConnectEvent(ENetPeer* peer) {
 	}
 }
 
-// Function to count the number of connected peers
-int count_connected_peers(const PeerInfo* peers) {
-	int count = 0;
-	for (int i = 0; i < MAX_CLIENTS; ++i) {
-		if (peers[i].peer) {
-			count++;
-		}
-	}
-	return count;
-}
-
-// Function to find an empty slot in the peers array
-int find_empty_slot(PeerInfo* peers) {
-	for (int i = 0; i < MAX_CLIENTS; ++i) {
-		if (!peers[i].peer) {
-			return i;
-		}
-	}
-	return -1; // No empty slot found
-}
-
-// Function to find a peer by its address in the peers array
-int find_peer_by_address(const ENetAddress* address) {
-	for (int i = 0; i < MAX_CLIENTS; ++i) {
-		if (peerInfos[i].peer && memcmp(&peerInfos[i].peer->address, address, sizeof(ENetAddress)) == 0) {
-			return i; // Peer found
-		}
-	}
-	return -1;
-}
-
-// Function to remove a peer from the peers array
-void remove_peer(ENetPeer* peer) {
-	int peerIndex = find_peer_by_address(&peer->address);
-	if (peerIndex >= 0) {
-		enet_peer_reset(peerInfos[peerIndex].peer);
-		peerInfos[peerIndex].peer = NULL;
-	}
-}
-
 void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 	//identify which client ID this came from
 	int peerID = -1;
-	for (int i = 0; i < MAX_CLIENTS; i++) {
-		if (peerInfos[i].peer == peer) {
+	for (int i = 0; i < MAX_CLIENTS; i++)
+		if (peerInfos[i].peer == peer)
 			peerID = i;
-		}
-	}
 
 	// unknown peer, drop
 	if (peerID < 0) {
@@ -215,11 +171,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 		return;
 	}
 
+	// get room from peerID (wip)
+	RoomInfo* ri = &roomInfos[0];
+
 	struct CG_Header* recvBuf = packet->data;
 	char sgBuffer[16];
 	memset(sgBuffer, 0, 16);
-
-	//int sendAll = 1;
 
 	// switch will compile into a jmp table, no funcPtrs needed
 	switch (((struct CG_Header*)recvBuf)->type)
@@ -237,20 +194,18 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->size = sizeof(struct SG_MessageName);
 
 			// send all OTHER names to THIS client
-			for (int j = 0; j < 8; j++)
+			for (int j = 0; j < MAX_CLIENTS; j++)
 			{
 				if (
-					// skip empty sockets, skip self
-					(peerInfos[j].peer != 0) &&
-					(peerID != j)
+						// skip empty sockets, skip self
+						(peerInfos[j].peer != 0) &&
+						(peerID != j)
 					)
 				{
 					s->clientID = j;
 					memcpy(&s->name[0], &peerInfos[j].name[0], 12);
 
-					// clieint[i] gets 8 messages,
-					// dont send 1 message to all [j]
-					//send(CtrClient[i].socket, s, s->size, 0);
+					// 8 messages to one client
 					sendToPeerReliable(peerInfos[peerID].peer, s, s->size);
 				}
 			}
@@ -268,7 +223,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 		{
 			// clients can only connect during track selection,
 			// once the Client Gives CG_TRACK to server, close it
-			boolTakingConnections = 0;
+			ri->boolRoomLocked = 1;
 
 			struct SG_MessageTrack* s = &sgBuffer[0];
 			struct CG_MessageTrack* r = recvBuf;
@@ -279,7 +234,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->lapID = r->lapID;
 			s->boolAllowWeapons = r->boolAllowWeapons;
 
-			levelPlayed = s->trackID;
+			ri->levelPlayed = s->trackID;
 
 			printf(
 					"Track: %d, Laps: %d\n",
@@ -312,7 +267,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 		{
 			printf("Ready to Race: %d\n", peerID);
 			peerInfos[peerID].boolRaceSelf = 1;
-			//sendAll = 0;
 			break;
 		}
 
@@ -394,6 +348,7 @@ void ProcessNewMessages() {
 				//identify which client ID this came from
 				int peerID = -1;
 				int numAlive = 0;
+
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
 					if (peerInfos[i].peer != 0)
@@ -403,12 +358,15 @@ void ProcessNewMessages() {
 						peerID = i;
 				}
 
+				// get room from peerID (wip)
+				RoomInfo* ri = &roomInfos[0];
+
 				printf("Connection disconnected from %d\n", peerID);
 
 				// What we "should" do is disconnect one peer,
 				// do this for all normal race tracks, and 2+ peers exist
 				if (
-					(levelPlayed <= 18) &&
+					(ri->levelPlayed <= 18) &&
 					(numAlive > 1)
 				   )
 				{
@@ -427,20 +385,12 @@ void ProcessNewMessages() {
 					struct SG_MessageName sgBuffer;
 					struct SG_MessageName* s = &sgBuffer;
 
+					// send NULL name to all OTHER clients
 					s->type = SG_NAME;
 					s->size = sizeof(struct SG_MessageName);
-
-					// send all OTHER names to THIS client
-					for (int j = 0; j < 8; j++)
-					{
-						if (peerInfos[j].peer == 0)
-							continue;
-
-						s->clientID = peerID;
-						memset(&s->name[0], 0, 12);
-
-						sendToPeerReliable(peerInfos[j].peer, s, s->size);
-					}
+					s->clientID = peerID;
+					memset(&s->name[0], 0, 12);
+					broadcastToPeersReliable(s, s->size);
 				}
 
 				// What we "will" do instead is throw everyone out,
@@ -448,19 +398,21 @@ void ProcessNewMessages() {
 				// or if this is the last peer to leave
 				else
 				{
-					printf("Rebooting...\n");
 					for (int i = 0; i < MAX_CLIENTS; i++)
 					{
-						if (peerInfos[i].peer != NULL)
-						{
-							enet_peer_disconnect_now(peerInfos[i].peer, 0);
-							peerInfos[i].peer = NULL;
-							clientCount--;
-						}
+						if (peerInfos[i].peer == 0)
+							continue;
+
+						enet_peer_disconnect_now(peerInfos[i].peer, 0);
+						peerInfos[i].peer = NULL;
+						clientCount--;
 					}
 
-					printf("Reboot Done\n");
-					ServerState_Boot();
+					// get room from peerID (wip)
+					int r = 0;
+
+					void ServerState_RebootRoom(int r);
+					ServerState_RebootRoom(r);
 				}
 
 				break;
@@ -470,110 +422,19 @@ void ProcessNewMessages() {
 	}
 }
 
-void ServerState_Tick()
-{
-	ProcessNewMessages();
-
-	// This must be here,
-	// otherwise dropping a client wont start the race,
-	// while all other drivers are ready to start
-
-	if (clientCount == 0) return;
-
-	if (!boolLoadAll)
-	{
-		boolLoadAll = 1;
-		for (int j = 0; j < clientCount; j++)
-			if (peerInfos[j].boolLoadSelf == 0)
-				boolLoadAll = 0;
-
-		if (boolLoadAll)
-		{
-			printf("Start Loading: ");
-			PrintTime();
-
-			struct SG_Header sg;
-			sg.type = SG_STARTLOADING;
-			sg.size = sizeof(struct SG_Header);
-
-			// send a message to the client
-			broadcastToPeersReliable(&sg, sg.size);
-		}
-	}
-
-	if (!boolRaceAll)
-	{
-		boolRaceAll = 1;
-		for (int j = 0; j < clientCount; j++)
-			if (peerInfos[j].boolRaceSelf == 0)
-				boolRaceAll = 0;
-
-		if (boolRaceAll)
-		{
-			printf("Start Race: ");
-			PrintTime();
-
-			struct SG_Header sg;
-			sg.type = SG_STARTRACE;
-			sg.size = sizeof(struct SG_Header);
-
-			// send a message to the client
-			broadcastToPeersReliable(&sg, sg.size);
-		}
-	}
-
-	if (!boolEndAll)
-	{
-		boolEndAll = 1;
-		for (int j = 0; j < clientCount; j++)
-			if (peerInfos[j].boolEndSelf == 0)
-				boolEndAll = 0;
-
-#if 0
-		if (boolEndAll)
-		{
-			printf("End Race\n");
-
-			struct SG_Header sg;
-			sg.type = SG_ENDRACE;
-			sg.size = sizeof(struct SG_Header);
-
-			// send a message to the client
-			for (int j = 0; j < clientCount; j++)
-				send(CtrClient[j].socket, &sg, sg.size, 0);
-		}
-#endif
-	}
-}
-
-#ifdef __WINDOWS__
-void usleep(__int64 usec)
-{
-	HANDLE timer;
-	LARGE_INTEGER ft;
-
-	ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
-
-	timer = CreateWaitableTimer(NULL, TRUE, NULL);
-	SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);
-	WaitForSingleObject(timer, INFINITE);
-	CloseHandle(timer);
-}
-#endif
-
-int main(int argc, char *argv[])
+void ServerState_FirstBoot(int argc, char** argv)
 {
 	printf(__DATE__);
 	printf("\n");
 	printf(__TIME__);
 	printf("\n\n");
 
-	#ifdef __WINDOWS__
+#ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
-	#endif
+#endif
 
 	//initialize enet
 	if (enet_initialize() != 0)
@@ -606,7 +467,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	if(!boolIsPortArgument)
+	if (!boolIsPortArgument)
 	{
 	enter_port:
 		printf("Enter Port (0-65535): ");
@@ -642,11 +503,112 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Client: Ready on port %d\n\n", port);
-	ServerState_Boot();
+	printf("Server: Ready on port %d\n\n", port);
+}
+
+void ServerState_RebootRoom(int r)
+{
+	// This should only reset clients
+	// in the room, not whole server
+	clientCount = 0;
+
+	RoomInfo* ri = &roomInfos[r];
+	memset(ri, 0, sizeof(RoomInfo));
+
+	// This should not be all peerInfos, just
+	// peerInfos in the server room
+	memset(peerInfos, 0, sizeof(peerInfos));
+
+	printf("\nServerState_RebootRoom: %d", r);
+	PrintTime();
+
+}
+
+void ServerState_Tick()
+{
+	ProcessNewMessages();
+
+	// This must be here,
+	// otherwise dropping a client wont start the race,
+	// while all other drivers are ready to start
+
+	if (clientCount == 0) return;
+
+	for (int r = 0; r < 1; r++)
+	{
+		RoomInfo* ri = &roomInfos[r];
+
+		if (!ri->boolLoadAll)
+		{
+			ri->boolLoadAll = 1;
+			for (int j = 0; j < clientCount; j++)
+				if (peerInfos[j].boolLoadSelf == 0)
+					ri->boolLoadAll = 0;
+
+			if (ri->boolLoadAll)
+			{
+				printf("Start Loading: ");
+				PrintTime();
+
+				struct SG_Header sg;
+				sg.type = SG_STARTLOADING;
+				sg.size = sizeof(struct SG_Header);
+
+				// send a message to the client
+				broadcastToPeersReliable(&sg, sg.size);
+			}
+		}
+
+		if (!ri->boolRaceAll)
+		{
+			ri->boolRaceAll = 1;
+			for (int j = 0; j < clientCount; j++)
+				if (peerInfos[j].boolRaceSelf == 0)
+					ri->boolRaceAll = 0;
+
+			if (ri->boolRaceAll)
+			{
+				printf("Start Race: ");
+				PrintTime();
+
+				struct SG_Header sg;
+				sg.type = SG_STARTRACE;
+				sg.size = sizeof(struct SG_Header);
+
+				// send a message to the client
+				broadcastToPeersReliable(&sg, sg.size);
+			}
+		}
+
+		if (!ri->boolEndAll)
+		{
+			ri->boolEndAll = 1;
+			for (int j = 0; j < clientCount; j++)
+				if (peerInfos[j].boolEndSelf == 0)
+					ri->boolEndAll = 0;
+
+			if (ri->boolEndAll)
+			{
+				printf("End Race: ");
+				PrintTime();
+			}
+		}
+	}
+}
+
+int main(int argc, char** argv)
+{
+	ServerState_FirstBoot(argc, argv);
+
+	for(int r = 0; r < 1; r++)
+		ServerState_RebootRoom(r);
 
 	while (1)
 	{
+		#ifdef __WINDOWS__
+		void usleep(__int64 usec);
+		#endif
+
 		usleep(1);
 		ServerState_Tick();
 	}

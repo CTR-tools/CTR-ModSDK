@@ -48,6 +48,9 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c">
       <Filter>Source Files\enet</Filter>
     </ClCompile>
+    <ClCompile Include="SV_helper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h">
