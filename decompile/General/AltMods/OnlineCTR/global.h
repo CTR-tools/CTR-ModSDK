@@ -21,6 +21,7 @@
 #define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
 #define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
+#define MAX_RETRIES			3 // the amount of retries to attempt a reconnect
 
 enum ServerList {
 	EUR_LOOPER_1,

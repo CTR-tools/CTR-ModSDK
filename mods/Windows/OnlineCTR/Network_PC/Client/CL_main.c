@@ -578,23 +578,35 @@ void StatePC_Launch_EnterIP()
 
 	ENetEvent event;
 
-	// wait up to 2 seconds for the connection attempt to succeed
-	if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+	int retryCount = 0;
+	char connected = false;
+
+	// retry loop to attempt a reconnection
+	while (retryCount < MAX_RETRIES && !connected)
 	{
-		StopAnimation();
-		printf("Client: Successfully connected!  ");
-	}
+		// wait up to 2 seconds for the connection attempt to succeed
+		if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+		{
+			StopAnimation();
+			printf("Client: Successfully connected!  ");
 
-	else
-	{
-		StopAnimation();
-		printf("Error: Failed to connect!  ");
+			connected = true;
+		}
+		else
+		{
+			StopAnimation();
+			printf("Error: Failed to connect! Attempt %d/%d\n", retryCount + 1, MAX_RETRIES);
 
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		currstate = 0;
-		serverReconnect = false;
+			retryCount++;
 
-		return;
+			if (retryCount >= MAX_RETRIES)
+			{
+				octr->CurrState = LAUNCH_CONNECT_FAILED;
+				serverReconnect = false;
+
+				return;
+			}
+		}
 	}
 
 	// 2-second timer
