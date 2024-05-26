@@ -184,10 +184,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// required cause we use 3D wumpa
 				// in multiplayer instead of 2D
 				#if 1
-				if(currRank < gGT->numPlyrCurrGame)
+				if(currDriver->driverID < gGT->numPlyrCurrGame)
 				{
 					struct Instance* instFruitDisp = 
-						gGT->drivers[currRank]->instFruitDisp;
+						gGT->drivers[currDriver->driverID]->instFruitDisp;
 					
 					instFruitDisp->scale[0] = 0;
 					instFruitDisp->scale[1] = 0;

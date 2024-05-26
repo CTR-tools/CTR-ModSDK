@@ -463,7 +463,6 @@ void StatePC_Launch_EnterIP()
 	{
 		octr->serverRoom = StaticRoomID;
 		octr->serverCountry = StaticServerID;
-		printf("Reconnect: %d %d\n", StaticServerID, StaticRoomID);
 
 		int random_sleep_time;
 		srand(time(0));
