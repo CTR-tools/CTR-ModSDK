@@ -894,12 +894,12 @@ void StatePC_Game_EndRace()
 
 	else
 	{
-		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 6)
+		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 4)
 		{
 			StopAnimation();
 			StartAnimation();
 			printf("Client: Waiting for the server...  ");
-			Sleep(2000); // give the server time to reset
+			Sleep(3000); // give the server time to reset
 
 			// command prompt reset
 			system("cls");
@@ -1045,10 +1045,6 @@ int main()
 	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
-
-	// if connected to previous instance of the game
-	if (octr->CurrState > 0)
-		memset(octr, 0, sizeof(struct OnlineCTR));
 
 	// initialize enet
 	if (enet_initialize() != 0)
