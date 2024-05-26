@@ -893,35 +893,38 @@ void StatePC_Game_EndRace()
 		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
 	}
 
+	int timeSinceEnd = (clock() - timeStart) / CLOCKS_PER_SEC;
+
 	// if you did not finish last
 	if (octr->numDriversEnded < (octr->NumDrivers - numDead))
 		timeStart = clock();
 
 	// race is over, 1 second passed
-	else if (((clock() - timeStart) / CLOCKS_PER_SEC) > 1)
+	else if (timeSinceEnd > 1)
 	{
 		StopAnimation();
 		StartAnimation();
 		
 		// disconnect
 		enet_peer_disconnect_now(serverPeer, 0);
-		serverPeer = 0;
 
-		// command prompt reset
-		system("cls");
-		PrintBanner(SHOW_NAME);
-
-		// reconnection attempt
-		octr->CurrState = 0;
-
-		// not 3 or 7, not private server
-		if ((StaticServerID&3) != 3)
+		// race is over, 6 second passed
+		if(timeSinceEnd > 6)
 		{
-			octr->serverLockIn2 = 0; // server selection is not done
-			serverReconnect = true; // yes we want to reconnect
+			// command prompt reset
+			system("cls");
+			PrintBanner(SHOW_NAME);
+	
+			// reset everything
+			octr->CurrState = -1;
+	
+			// not 3 or 7, not private server
+			if ((StaticServerID&3) != 3)
+			{
+				octr->serverLockIn2 = 0; // server selection is not done
+				serverReconnect = true; // yes we want to reconnect
+			}
 		}
-
-		return;
 	}
 }
 
