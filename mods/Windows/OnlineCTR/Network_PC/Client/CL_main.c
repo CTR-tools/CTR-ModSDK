@@ -694,7 +694,7 @@ void StatePC_Lobby_HostTrackPick()
 	ProcessNewMessages();
 
 	// boolLockedInLap gets set after
-	// boolLockedInTrack already sets
+	// boolLockedInLevel already sets
 	if (!octr->boolLockedInLap) return;
 
 	StopAnimation();

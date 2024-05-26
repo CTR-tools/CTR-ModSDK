@@ -192,7 +192,7 @@ void MenuWrites_Tracks()
 {	
 	pageMax = 7;
 	OnPressX_SetPtr = &octr->levelID;
-	OnPressX_SetLock = &octr->boolLockedInTrack;
+	OnPressX_SetLock = &octr->boolLockedInLevel;
 }
 
 void NewPage_Laps()
