@@ -30,8 +30,6 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
-int currstate = 0;
-
 void sendToHostUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
@@ -63,7 +61,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->CurrState = LOBBY_ASSIGN_ROLE;
 			break;
 		}
-		
+
+#if 0
 		case SG_DROPCLIENT:
 		{
 			struct SG_MessageClientStatus* r = recvBuf;
@@ -95,6 +94,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			break;
 		}
+#endif
 
 		case SG_NAME:
 		{
@@ -328,7 +328,6 @@ void ProcessNewMessages()
 				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
 
 				// to go the lobby browser
-				currstate = 0;
 				octr->CurrState = 0;
 				octr->serverLockIn2 = 0; // server selection has been locked in
 				serverReconnect = false; // yes we want to reconnect
@@ -381,7 +380,6 @@ void DisconSELECT()
 		//system("cls");
 
 		// to go the lobby browser
-		currstate = 0;
 		octr->CurrState = 0;
 		octr->serverLockIn2 = 0; // server selection has been locked in
 		serverReconnect = false; // yes we want to reconnect
@@ -401,7 +399,12 @@ void StatePC_Launch_EnterPID()
 {
 	// if client connected to DuckStation
 	// before game booted, wait for boot
-	if (octr->IsBootedPS1) octr->CurrState = LAUNCH_ENTER_IP;
+	if (!octr->IsBootedPS1)
+		return;
+
+	StopAnimation();
+	printf("Client: Waiting to connect to a server...  ");
+	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
 void printUntilPeriod(const char *str)
@@ -421,12 +424,12 @@ void printUntilPeriod(const char *str)
 }
 
 int StaticServerID=0;
+int StaticRoomID=0;
 void StatePC_Launch_EnterIP()
 {
 	ENetAddress addr;
 	static unsigned char dns_string[32] = { 0 };
 	static unsigned char localServer;
-	int serverID;
 
 	// local server
 	char ip[100];
@@ -436,19 +439,34 @@ void StatePC_Launch_EnterIP()
 	// default port
 	addr.port = 65001;
 
-	// return now if the server selection hasn't been selected yet
-	if (octr->serverLockIn2 == 0) return;
+	int sdata_Loading_stage =
+		*(int*)&pBuf[0x8008d0f8 & 0xffffff];
 
-	// attempt to reconnect to the previous server selection
-	if (serverReconnect == true)
+	// quit if in loading screen (force-reconnect)
+	if (sdata_Loading_stage != -1)
+		return;
+
+	// if not doing a force-reconnect
+	if (serverReconnect == false)
 	{
+		// return now if the server selection hasn't been selected yet
+		if (octr->serverLockIn2 == 0)
+			return;
+	}
+
+	// force-reconnect to previous server
+	else
+	{
+		octr->serverRoom = StaticRoomID;
 		octr->serverCountry = StaticServerID;
+		printf("Reconnect: %d %d\n", StaticServerID, StaticRoomID);
 
 		int random_sleep_time;
 		srand(time(0));
 
-		// now add a random delay so we can try to get a fairer choice of lobby hosts
-		random_sleep_time = 10 + rand() % 101; // a value between 10 and 110
+		// now add a random delay so we can try to get a fairer choice of lobby hosts,
+		// 0.5s to 0.75s, must be more than one frame, so proper values reset themselves
+		random_sleep_time = 400 + rand() % 750;
 
 #ifdef __GNUC__
 		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
@@ -457,6 +475,7 @@ void StatePC_Launch_EnterIP()
 #endif
 	}
 
+	StaticRoomID = octr->serverRoom;
 	StaticServerID = octr->serverCountry;
 
 	switch (octr->serverCountry)
@@ -466,7 +485,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + octr->serverRoom;
+			addr.port = 65001 + StaticRoomID;
 
 			break;
 		}
@@ -476,7 +495,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + octr->serverRoom;
+			addr.port = 65001 + StaticRoomID;
 
 			break;
 		}
@@ -486,7 +505,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 10666 + octr->serverRoom;
+			addr.port = 10666 + StaticRoomID;
 
 			break;
 		}
@@ -501,7 +520,7 @@ void StatePC_Launch_EnterIP()
 			ClearInputBuffer(); // clear any extra input in the buffer
 
 			// IP address
-			printf("\nEnter Server IPV4 Address (127.0.0.1): ");
+			printf("\nEnter Server IPV4 Address: ");
 
 			if (fgets(ip, sizeof(ip), stdin) == NULL)
 			{
@@ -561,7 +580,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + octr->serverRoom;
+			addr.port = 65001 + StaticRoomID;
 
 			break;
 		}
@@ -571,7 +590,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 2096 + octr->serverRoom;
+			addr.port = 2096 + StaticRoomID;
 
 			break;
 		}
@@ -622,7 +641,6 @@ void StatePC_Launch_EnterIP()
 		printf("Error: Failed to connect!  ");
 
 		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		currstate = 0;
 		serverReconnect = false;
 
 		return;
@@ -654,7 +672,6 @@ void StatePC_Launch_ConnectFailed()
 	printf("Error: Unable to connect to the server!  ");
 
 	serverReconnect = false;
-	currstate = 0;
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
@@ -889,13 +906,12 @@ void StatePC_Game_EndRace()
 			PrintBanner(SHOW_NAME);
 
 			// reconnection attempt
-			currstate = 1;
-			octr->CurrState = 1;
+			octr->CurrState = 0;
 
 			// not 3 or 7, not private server
 			if ((StaticServerID&3) != 3)
 			{
-				octr->serverLockIn2 = 1; // server selection has been locked in
+				octr->serverLockIn2 = 0; // server selection is not done
 				serverReconnect = true; // yes we want to reconnect
 			}
 
@@ -1030,6 +1046,10 @@ int main()
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
+	// if connected to previous instance of the game
+	if (octr->CurrState > 0)
+		memset(octr, 0, sizeof(struct OnlineCTR));
+
 	// initialize enet
 	if (enet_initialize() != 0)
 	{
@@ -1041,24 +1061,10 @@ int main()
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
-	#define CURRENT_STATE_SUCCESS 1
-
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		octr->time[0]++;
-
-		if (octr->CurrState != currstate)
-		{
-			currstate = octr->CurrState;
-
-			if (currstate == CURRENT_STATE_SUCCESS)
-			{
-				StopAnimation();
-				printf("Client: PlayStation clock found (ID: %i)\n", currstate);
-				printf("Client: Waiting to connect to a server...  ");
-			}
-		}
 		
 		if (octr->CurrState >= LOBBY_ASSIGN_ROLE)
 			DisconSELECT();

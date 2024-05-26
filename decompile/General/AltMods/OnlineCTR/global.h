@@ -113,7 +113,7 @@ enum ServerGiveMessageType
 {
 	// connection
 	SG_NEWCLIENT,
-	SG_DROPCLIENT,
+	SG_DROPCLIENT, // unused
 
 	// lobby
 	SG_NAME,
