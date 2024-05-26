@@ -55,7 +55,8 @@ struct RectMenu menu =
 	.unk1 = 0,
 	
 	// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
-	.state = 3,
+	// 0x100000 disables TRIANGLE button to prevent crashing
+	.state = 0x100003,
 
 	.rows = menuRows,
 
