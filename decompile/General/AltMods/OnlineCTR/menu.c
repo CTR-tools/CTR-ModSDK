@@ -177,8 +177,13 @@ void MenuWrites_ServerRoom()
 	OnPressX_SetLock = &octr->serverLockIn2;
 }
 
+// unused
+int boolLockedInTrack;
+
 void NewPage_Tracks()
 {
+	boolLockedInTrack = 0;
+	
 	int i;
 	
 	for(i = 0; i < 4; i++)
@@ -187,9 +192,6 @@ void NewPage_Tracks()
 			data.metaDataLEV[4*octr->PageNumber+i].name_LNG;
 	}
 }
-
-// unused
-int boolLockedInTrack;
 
 void MenuWrites_Tracks()
 {
@@ -233,7 +235,7 @@ void NewPage_Characters()
 }
 
 void MenuWrites_Characters()
-{
+{	
 	pageMax = 3;
 	OnPressX_SetPtr = &data.characterIDs[0];
 	OnPressX_SetLock = &octr->boolLockedInCharacters[octr->DriverID];

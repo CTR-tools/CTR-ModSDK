@@ -114,10 +114,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageTrack* r = recvBuf;
 
-			// set sdata->gGT->levelID
 			// set sdata->gGT->numLaps
-			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = r->trackID;
 			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (r->lapID * 2) + 1;
+			
+			octr->levelID = r->trackID;
 			octr->CurrState = LOBBY_CHARACTER_PICK;
 			
 			break;
@@ -469,8 +469,8 @@ void StatePC_Launch_EnterIP()
 		srand(time(0));
 
 		// now add a random delay so we can try to get a fairer choice of lobby hosts,
-		// 0.5s to 0.75s, must be more than one frame, so proper values reset themselves
-		random_sleep_time = 400 + rand() % 750;
+		// 0.6s to 0.8s, must be more than one frame, so proper values reset themselves
+		random_sleep_time = 600 + rand() % 200;
 
 #ifdef __GNUC__
 		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
