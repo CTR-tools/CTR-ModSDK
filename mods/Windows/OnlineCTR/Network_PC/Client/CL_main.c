@@ -1075,7 +1075,9 @@ int main()
 
 		StartAnimation();
 
-		ClientState[octr->CurrState]();
+		if (octr->CurrState >= 0)
+			ClientState[octr->CurrState]();
+		
 		void FrameStall(); FrameStall();
 	}
 
