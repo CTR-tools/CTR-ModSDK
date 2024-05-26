@@ -704,7 +704,7 @@ void StatePC_Lobby_HostTrackPick()
 	mt.type = CG_TRACK;
 	mt.size = sizeof(struct CG_MessageTrack);
 
-	mt.trackID = octr->trackID;
+	mt.trackID = octr->levelID;
 	mt.lapID = octr->lapID;
 
 	// sdata->gGT->numLaps
@@ -856,6 +856,8 @@ void StatePC_Game_StartRace()
 	SendEverything();
 }
 
+#include <time.h>
+clock_t timeStart;
 void StatePC_Game_EndRace()
 {
 	ProcessNewMessages();
@@ -880,7 +882,8 @@ void StatePC_Game_EndRace()
 		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
 		octr->numDriversEnded++;
 
-		/*clock_t not needed now*/
+		// if you finished last
+		timeStart = clock();
 	}
 
 	int numDead = 0;
@@ -891,9 +894,11 @@ void StatePC_Game_EndRace()
 	}
 
 	// if you did not finish last
-	if (octr->numDriversEnded < (octr->NumDrivers-numDead)) {/*clock_t not needed now*/};
+	if (octr->numDriversEnded < (octr->NumDrivers - numDead))
+		timeStart = clock();
 
-	else
+	// race is over, 2 seconds passed
+	else if (((clock() - timeStart) / CLOCKS_PER_SEC) > 2)
 	{
 		StopAnimation();
 		StartAnimation();
