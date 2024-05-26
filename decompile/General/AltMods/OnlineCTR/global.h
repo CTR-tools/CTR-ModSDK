@@ -1,15 +1,19 @@
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
-	#include <time.h>
-	#include <windows.h>
 #endif
 
-#ifdef __GNUC__
-	#include <unistd.h> // for the 'usleep()' function
-	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message) // GCC
-#else
-	#define STATIC_ASSERT2 static_assert // Visual Studio Code
+#ifdef __GNUC__ // GCC and Clang
+
+	#ifdef WINDOWS_INCLUDE
+		#include <unistd.h> // for the 'usleep()' function
+	#endif
+
+	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
+
+#else // MSVC (Visual Studio)
+
+	#define STATIC_ASSERT2 static_assert
 #endif
 
 #define true				1
@@ -55,19 +59,23 @@ struct OnlineCTR
 {
 	// 0x0
 	int CurrState;
-	int IsBootedPS1;
 
-	// 0x8
+	// 0x4
 	char PageNumber; // allow negative
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
 	unsigned char DriverID;
 
-	// 0xc
-	unsigned char boolLockedInTrack;
-	unsigned char boolLockedInCharacter;
+	// 0x8
 	unsigned char boolLockedInLap;
+	unsigned char boolLockedInLevel;
 	unsigned char lapID;
+	unsigned char levelID;
+	
+	// 0xC
+	unsigned char IsBootedPS1;
+	unsigned char boolLockedInCharacter;
+	unsigned char padding[2];
 
 	// 0x10
 	unsigned char serverCountry;
@@ -99,11 +107,17 @@ struct OnlineCTR
 
 #ifdef WINDOWS_INCLUDE
 
+#include <time.h>
+
+#ifndef __GNUC__
+	#include <windows.h>
+#endif
+
 enum ServerGiveMessageType
 {
 	// connection
 	SG_NEWCLIENT,
-	SG_DROPCLIENT,
+	SG_DROPCLIENT, // unused
 
 	// lobby
 	SG_NAME,

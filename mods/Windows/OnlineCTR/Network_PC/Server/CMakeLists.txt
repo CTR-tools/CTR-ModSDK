@@ -10,7 +10,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/include)
 link_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/lib)
 
 # Source files
-set(SOURCES SV_main.c)
+set(SOURCES SV_main.c SV_helper.c)
 
 # Create the executable
 add_executable(ctr_srv ${SOURCES})
@@ -25,6 +25,9 @@ endif()
 # Compiler options
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
     target_compile_options(ctr_srv PRIVATE -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration -Wno-return-type)
+else()
+    # Assume GCC
+    target_compile_options(ctr_srv PRIVATE -Wno-implicit-function-declaration -Wno-incompatible-pointer-types)
 endif()
 
 # Debug options

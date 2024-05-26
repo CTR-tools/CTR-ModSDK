@@ -142,7 +142,7 @@ void StatePS1_Lobby_HostTrackPick()
 	// If already picked
 	if(MenuFinished() == 1)
 	{
-		if(sdata->gGT->levelID > TURBO_TRACK)
+		if(octr->levelID > TURBO_TRACK)
 		{
 			octr->lapID = 0;
 			octr->boolLockedInLap = 1;
@@ -155,7 +155,6 @@ void StatePS1_Lobby_HostTrackPick()
 		return;
 	}
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	
 	// first frame here
@@ -182,7 +181,6 @@ void FakeState_Lobby_HostLapPick()
 	// If already picked
 	if(MenuFinished() == 1) return;
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	
 	// first frame here
@@ -195,7 +193,6 @@ void FakeState_Lobby_HostLapPick()
 
 void StatePS1_Lobby_GuestTrackWait()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 		
 	DECOMP_DecalFont_DrawLine(
@@ -218,7 +215,6 @@ void StatePS1_Lobby_CharacterPick()
 	// If already picked
 	if(MenuFinished() == 1) return;
 	
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 			
@@ -246,7 +242,6 @@ void StatePS1_Lobby_CharacterPick()
 
 void StatePS1_Lobby_WaitForLoading()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 	
@@ -259,7 +254,6 @@ void StatePS1_Lobby_WaitForLoading()
 
 void StatePS1_Lobby_StartLoading()
 {
-	PrintClientCountStats();
 	PrintCharacterStats();
 	PrintRecvTrack();
 	
@@ -285,8 +279,8 @@ void StatePS1_Lobby_StartLoading()
 	gGT->gameMode1 = LOADING | BATTLE_MODE;
 	
 	if(
-		(gGT->levelID <= TURBO_TRACK) ||
-		(gGT->levelID >= GEM_STONE_VALLEY)
+		(octr->levelID <= TURBO_TRACK) ||
+		(octr->levelID >= GEM_STONE_VALLEY)
 	  )
 	{
 		// for all other tracks
@@ -297,7 +291,7 @@ void StatePS1_Lobby_StartLoading()
 	//sdata->Loading.stage = 0;
 	
 	// load with flag animation
-	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
+	DECOMP_MainRaceTrack_RequestLoad(octr->levelID);
 	
 	// dont kill thread,
 	// it will die when loading screen covers screen

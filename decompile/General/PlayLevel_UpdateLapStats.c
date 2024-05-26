@@ -180,6 +180,20 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			{
 				// this one racer has now finished the race
 				currDriver->actionsFlagSet |= 0x2000000;
+				
+				// required cause we use 3D wumpa
+				// in multiplayer instead of 2D
+				#if 1
+				if(currDriver->driverID < gGT->numPlyrCurrGame)
+				{
+					struct Instance* instFruitDisp = 
+						gGT->drivers[currDriver->driverID]->instFruitDisp;
+					
+					instFruitDisp->scale[0] = 0;
+					instFruitDisp->scale[1] = 0;
+					instFruitDisp->scale[2] = 0;
+				}
+				#endif
 
 				// === Run on first frame that race ends ===
 
@@ -507,6 +521,20 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			// End the race for this player
 			currDriver->actionsFlagSet |= 0x2000000;
+			
+			// required cause we use 3D wumpa
+			// in multiplayer instead of 2D
+			#if 1
+			if(currRank < gGT->numPlyrCurrGame)
+			{
+				struct Instance* instFruitDisp = 
+					gGT->drivers[currRank]->instFruitDisp;
+				
+				instFruitDisp->scale[0] = 0;
+				instFruitDisp->scale[1] = 0;
+				instFruitDisp->scale[2] = 0;
+			}
+			#endif
 
 			// remove weapon
 			currDriver->heldItemID = 0xf;
