@@ -704,8 +704,7 @@ void StatePC_Lobby_HostTrackPick()
 	mt.type = CG_TRACK;
 	mt.size = sizeof(struct CG_MessageTrack);
 
-	// sdata->gGT->levelID
-	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
+	mt.trackID = octr->trackID;
 	mt.lapID = octr->lapID;
 
 	// sdata->gGT->numLaps
@@ -857,8 +856,6 @@ void StatePC_Game_StartRace()
 	SendEverything();
 }
 
-#include <time.h>
-clock_t timeStart;
 void StatePC_Game_EndRace()
 {
 	ProcessNewMessages();
@@ -883,8 +880,7 @@ void StatePC_Game_EndRace()
 		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
 		octr->numDriversEnded++;
 
-		// if you finished last
-		timeStart = clock();
+		/*clock_t not needed now*/
 	}
 
 	int numDead = 0;
@@ -894,33 +890,30 @@ void StatePC_Game_EndRace()
 		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
 	}
 
-	if (octr->numDriversEnded < (octr->NumDrivers-numDead)) timeStart = clock(); // if you did not finish last
+	// if you did not finish last
+	if (octr->numDriversEnded < (octr->NumDrivers-numDead)) {/*clock_t not needed now*/};
 
 	else
 	{
-		if (((clock() - timeStart)/ CLOCKS_PER_SEC) > 4)
+		StopAnimation();
+		StartAnimation();
+		Sleep(6000); // give the server time to reset
+
+		// command prompt reset
+		system("cls");
+		PrintBanner(SHOW_NAME);
+
+		// reconnection attempt
+		octr->CurrState = 0;
+
+		// not 3 or 7, not private server
+		if ((StaticServerID&3) != 3)
 		{
-			StopAnimation();
-			StartAnimation();
-			printf("Client: Waiting for the server...  ");
-			Sleep(3000); // give the server time to reset
-
-			// command prompt reset
-			system("cls");
-			PrintBanner(SHOW_NAME);
-
-			// reconnection attempt
-			octr->CurrState = 0;
-
-			// not 3 or 7, not private server
-			if ((StaticServerID&3) != 3)
-			{
-				octr->serverLockIn2 = 0; // server selection is not done
-				serverReconnect = true; // yes we want to reconnect
-			}
-
-			return;
+			octr->serverLockIn2 = 0; // server selection is not done
+			serverReconnect = true; // yes we want to reconnect
 		}
+
+		return;
 	}
 }
 
