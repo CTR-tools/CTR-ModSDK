@@ -114,9 +114,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageTrack* r = recvBuf;
 
-			octr->boolLockedInTrack = 1;
-
-			// set sdata->gGT->trackID
+			// set sdata->gGT->levelID
 			// set sdata->gGT->numLaps
 			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = r->trackID;
 			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (r->lapID * 2) + 1;
@@ -439,10 +437,16 @@ void StatePC_Launch_EnterIP()
 	// default port
 	addr.port = 65001;
 
-	int sdata_Loading_stage =
-		*(int*)&pBuf[0x8008d0f8 & 0xffffff];
+	// quit if disconnected, but not loaded 
+	// back into the selection screen yet
+	int gGT_levelID =
+		*(int*)&pBuf[(0x80096b20+0x1a10) & 0xffffff];
+	if (gGT_levelID != 0x26)
+		return;
 
 	// quit if in loading screen (force-reconnect)
+	int sdata_Loading_stage =
+		*(int*)&pBuf[0x8008d0f8 & 0xffffff];
 	if (sdata_Loading_stage != -1)
 		return;
 

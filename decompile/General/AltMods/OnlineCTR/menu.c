@@ -188,11 +188,14 @@ void NewPage_Tracks()
 	}
 }
 
+// unused
+int boolLockedInTrack;
+
 void MenuWrites_Tracks()
 {
 	pageMax = 7;
-	OnPressX_SetPtr = &sdata->gGT->levelID;
-	OnPressX_SetLock = &octr->boolLockedInTrack;
+	OnPressX_SetPtr = &octr->levelID;
+	OnPressX_SetLock = &boolLockedInTrack;
 }
 
 void NewPage_Laps()
@@ -355,7 +358,7 @@ void PrintRecvTrack()
 	sprintf(message, "Track: %s", 
 				sdata->lngStrings
 				[
-					data.metaDataLEV[sdata->gGT->levelID].name_LNG
+					data.metaDataLEV[octr->levelID].name_LNG
 				]
 			);
 	

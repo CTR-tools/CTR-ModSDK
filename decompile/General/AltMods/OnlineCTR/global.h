@@ -68,10 +68,10 @@ struct OnlineCTR
 	unsigned char DriverID;
 
 	// 0xc
-	unsigned char boolLockedInTrack;
 	unsigned char boolLockedInCharacter;
 	unsigned char boolLockedInLap;
 	unsigned char lapID;
+	unsigned char levelID;
 
 	// 0x10
 	unsigned char serverCountry;
