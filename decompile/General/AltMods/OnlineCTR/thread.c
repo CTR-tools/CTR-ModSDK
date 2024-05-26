@@ -43,8 +43,16 @@ void ThreadFunc(struct Thread* t)
 	// if server disconnects mid-game
 	// (currState < 0)
 	
-	if(boolCloseClient || (octr->CurrState < 0))
+	if(
+			(boolCloseClient == 1) || 
+			(octr->CurrState < 0) ||
+			(serverPeer == 0)
+		)
 	{
+		// wait 5 seconds before loading
+		if(serverPeer == 0)
+			Sleep(5000);
+		
 		// reset, including CurrState
 		memset(octr, 0, sizeof(struct OnlineCTR));
 		

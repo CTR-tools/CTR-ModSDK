@@ -469,8 +469,8 @@ void StatePC_Launch_EnterIP()
 		srand(time(0));
 
 		// now add a random delay so we can try to get a fairer choice of lobby hosts,
-		// 0.6s to 0.8s, must be more than one frame, so proper values reset themselves
-		random_sleep_time = 600 + rand() % 200;
+		// 0.01s to 0.31s, must be more than one frame, so proper values reset themselves
+		random_sleep_time = 10 + rand() % 300;
 
 #ifdef __GNUC__
 		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
@@ -897,12 +897,15 @@ void StatePC_Game_EndRace()
 	if (octr->numDriversEnded < (octr->NumDrivers - numDead))
 		timeStart = clock();
 
-	// race is over, 2 seconds passed
-	else if (((clock() - timeStart) / CLOCKS_PER_SEC) > 2)
+	// race is over, 1 second passed
+	else if (((clock() - timeStart) / CLOCKS_PER_SEC) > 1)
 	{
 		StopAnimation();
 		StartAnimation();
-		Sleep(6000); // give the server time to reset
+		
+		// disconnect
+		enet_peer_disconnect_now(serverPeer, 0);
+		serverPeer = 0;
 
 		// command prompt reset
 		system("cls");
