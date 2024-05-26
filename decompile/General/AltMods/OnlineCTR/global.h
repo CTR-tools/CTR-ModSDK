@@ -59,19 +59,23 @@ struct OnlineCTR
 {
 	// 0x0
 	int CurrState;
-	int IsBootedPS1;
 
-	// 0x8
+	// 0x4
 	char PageNumber; // allow negative
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
 	unsigned char DriverID;
 
-	// 0xc
-	unsigned char boolLockedInCharacter;
+	// 0x8
 	unsigned char boolLockedInLap;
+	unsigned char boolLockedInLevel;
 	unsigned char lapID;
 	unsigned char levelID;
+	
+	// 0xC
+	unsigned char IsBootedPS1;
+	unsigned char boolLockedInCharacter;
+	unsigned char padding[2];
 
 	// 0x10
 	unsigned char serverCountry;

@@ -177,9 +177,6 @@ void MenuWrites_ServerRoom()
 	OnPressX_SetLock = &octr->serverLockIn2;
 }
 
-// unused
-int boolLockedInTrack;
-
 void NewPage_Tracks()
 {	
 	int i;
@@ -192,12 +189,10 @@ void NewPage_Tracks()
 }
 
 void MenuWrites_Tracks()
-{
-	boolLockedInTrack = 0;
-	
+{	
 	pageMax = 7;
 	OnPressX_SetPtr = &octr->levelID;
-	OnPressX_SetLock = &boolLockedInTrack;
+	OnPressX_SetLock = &octr->boolLockedInTrack;
 }
 
 void NewPage_Laps()
