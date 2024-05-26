@@ -901,16 +901,16 @@ void StatePC_Game_EndRace()
 
 	// race is over, 1 second passed
 	else if (timeSinceEnd > 1)
-	{
-		StopAnimation();
-		StartAnimation();
-		
+	{		
 		// disconnect
 		enet_peer_disconnect_now(serverPeer, 0);
 
 		// race is over, 6 second passed
-		if(timeSinceEnd > 6)
+		if(timeSinceEnd >= 6)
 		{
+			StopAnimation();
+			StartAnimation();
+
 			// command prompt reset
 			system("cls");
 			PrintBanner(SHOW_NAME);
