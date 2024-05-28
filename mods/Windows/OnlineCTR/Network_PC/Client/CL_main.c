@@ -1,6 +1,21 @@
 #define WIN32_LEAN_AND_MEAN
+#ifdef __WINDOWS__
 #include <windows.h>
+#endif
+#ifdef __linux__
+#include <dirent.h>
+#include <stdint.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
+#define Sleep(time) sleep(time);
+#define strcpy_s(a, b, c) strncpy(a, c, b)
+
+typedef uint32_t DWORD;   // DWORD = unsigned 32 bit value
+typedef uint16_t WORD;    // WORD = unsigned 16 bit value
+typedef uint8_t BYTE;     // BYTE = unsigned 8 bit value
+#endif
 
 #ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
 	#define _WINSOCK_DEPRECATED_NO_WARNINGS
@@ -469,11 +484,7 @@ void StatePC_Launch_EnterIP()
 		// 0.01s to 0.31s, must be more than one frame, so proper values reset themselves
 		random_sleep_time = 10 + rand() % 300;
 
-#ifdef __GNUC__
-		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-#else
 		Sleep(random_sleep_time);
-#endif
 	}
 
 	StaticRoomID = octr->serverRoom;
@@ -960,17 +971,19 @@ void (*ClientState[]) () = {
 
 int main()
 {
+#ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
+#endif
 
 	PrintBanner(DONT_SHOW_NAME);
 
 	// ask for the users online identification
 	printf(" Enter Your Online Name: ");
-	scanf_s("%s", name, (int)sizeof(name));
+	sscanf("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
@@ -982,6 +995,7 @@ int main()
 	char* duckTemplate = "duckstation";
 	int duckPID = -1;
 
+#ifdef __WINDOWS__
 	// copy from
 	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
 	DWORD aProcesses[1024], cbNeeded, cProcesses;
@@ -1049,17 +1063,48 @@ int main()
 
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
+#elif __linux__
+#define SHM_FILE_PREFIX "duckstation_"
+	struct dirent *shm_dir;
+	char duckNameT[100];
+	DIR *shm_d = opendir("/dev/shm/");
+	if (shm_d) {
+		while ((shm_dir = readdir(shm_d)) != NULL) {
+			if (strncmp(shm_dir->d_name, SHM_FILE_PREFIX, strlen(SHM_FILE_PREFIX)) == 0) {
+				strcpy((char *)duckNameT, shm_dir->d_name);
+			}
+		}
+		closedir(shm_d);
+	}
+	//TODO handle error
+	printf("Found shm file : %s\n", duckNameT);
+#endif
 
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
+#ifdef __WINDOWS__
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
 	if (pBuf == 0)
+#elif __linux__
+	int hFile;
+	if ((hFile = shm_open(duckNameT, O_RDWR, 0600)) == -1)
+		printf("Error\n");
+	pBuf = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, hFile, 0);
+	if (pBuf == MAP_FAILED) {
+		printf("Error mmap\n");
+		printf("pBuf %s\n", pBuf);
+	}
+	printf("pBuf: %p\n", pBuf);
+	if (pBuf == MAP_FAILED)
+#endif
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
-		system("pause");
+		getchar();
+#ifdef __WINDOWS__
 		system("cls");
+#endif
 		main();
 	}
 
