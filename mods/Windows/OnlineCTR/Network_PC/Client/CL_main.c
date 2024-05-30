@@ -1006,9 +1006,11 @@ int main()
 
 	int numDuckInstances = 0;
 	char* duckTemplate = "duckstation";
-	int duckPID = -1;
 
 #ifdef __WINDOWS__
+	TCHAR duckNameT[100];
+	int duckPID = -1;
+
 	// copy from
 	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
 	DWORD aProcesses[1024], cbNeeded, cProcesses;
@@ -1047,6 +1049,21 @@ int main()
 			}
 		}
 	}
+#elif __linux__
+	struct dirent *shm_dir;
+	char duckNameT[100];
+	DIR *shm_d = opendir("/dev/shm/");
+	int found = false;
+	if (shm_d) {
+		while ((shm_dir = readdir(shm_d)) != NULL) {
+			if (strncmp(shm_dir->d_name, duckTemplate, strlen(duckTemplate)) == 0) {
+				strcpy((char *)duckNameT, shm_dir->d_name);
+				numDuckInstances++;
+			}
+		}
+		closedir(shm_d);
+	}
+#endif
 
 	if (numDuckInstances == 0)
 	{
@@ -1061,11 +1078,18 @@ int main()
 	if (numDuckInstances > 1)
 	{
 		printf("Warning: Multiple DuckStations detected\n");
+#ifdef __WINDOWS__
 		printf("Please enter the PID manually\n\n");
 
 		printf("DuckStation PID: ");
 		scanf_s("%s", pidStr, (int)sizeof(pidStr));
+#elif __linux__
+		// Can't really do much, just exit
+		system_pause();
+		exit(0);
+#endif
 	}
+#ifdef __WINDOWS__
 	else
 	{
 		sprintf_s(pidStr, 100, "%d", duckPID);
@@ -1074,24 +1098,8 @@ int main()
 	char duckName[100];
 	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
 
-	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
-#elif __linux__
-#define SHM_FILE_PREFIX "duckstation_"
-	struct dirent *shm_dir;
-	char duckNameT[100];
-	DIR *shm_d = opendir("/dev/shm/");
-	if (shm_d) {
-		while ((shm_dir = readdir(shm_d)) != NULL) {
-			if (strncmp(shm_dir->d_name, SHM_FILE_PREFIX, strlen(SHM_FILE_PREFIX)) == 0) {
-				strcpy((char *)duckNameT, shm_dir->d_name);
-			}
-		}
-		closedir(shm_d);
-	}
-	//TODO handle error
-	printf("Found shm file : %s\n", duckNameT);
-#endif
+ #endif
 
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
@@ -1102,14 +1110,14 @@ int main()
 	if (pBuf == 0)
 #elif __linux__
 	int hFile;
-	if ((hFile = shm_open(duckNameT, O_RDWR, 0600)) == -1)
+	if ((hFile = shm_open(duckNameT, O_RDWR, 0600)) == -1) {
 		printf("Error\n");
+	}
 	pBuf = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, hFile, 0);
 	if (pBuf == MAP_FAILED) {
 		printf("Error mmap\n");
 		printf("pBuf %s\n", pBuf);
 	}
-	printf("pBuf: %p\n", pBuf);
 	if (pBuf == MAP_FAILED)
 #endif
 	{
