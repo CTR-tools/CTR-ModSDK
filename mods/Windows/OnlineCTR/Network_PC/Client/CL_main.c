@@ -10,7 +10,6 @@
 #include <fcntl.h>
 
 #define Sleep(time) sleep(time);
-#define strcpy_s(a, b, c) strncpy(a, c, b)
 
 typedef uint32_t DWORD;   // DWORD = unsigned 32 bit value
 typedef uint16_t WORD;    // WORD = unsigned 16 bit value
@@ -495,7 +494,7 @@ void StatePC_Launch_EnterIP()
 		// EUROPE
 		case 0:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			strncpy(dns_string, "eur1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -505,7 +504,7 @@ void StatePC_Launch_EnterIP()
 		// USA
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			strncpy(dns_string, "usa1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -515,7 +514,7 @@ void StatePC_Launch_EnterIP()
 		// USA WEST
 		case 2:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			strncpy(dns_string, "usa2.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 10666 + StaticRoomID;
 
@@ -545,7 +544,7 @@ void StatePC_Launch_EnterIP()
 			ip[strcspn(ip, "\n")] = '\0';
 
 			// check if the input is empty and set it to the default IP if so
-			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+			if (strlen(ip) == 0) strncpy(ip, DEFAULT_IP, IP_ADDRESS_SIZE);
 
 		private_server_port:
 			// port number
@@ -590,7 +589,7 @@ void StatePC_Launch_EnterIP()
 		// BRAZIL
 		case 4:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			strncpy(dns_string, "brz1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -600,7 +599,7 @@ void StatePC_Launch_EnterIP()
 		// AUSTRALIA
 		case 5:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			strncpy(dns_string, "aus1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 2096 + StaticRoomID;
 
