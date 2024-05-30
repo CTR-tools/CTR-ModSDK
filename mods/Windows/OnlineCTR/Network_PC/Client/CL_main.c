@@ -58,6 +58,14 @@ void system_pause() {
 	getchar();
 }
 
+void system_clear() {
+#ifdef __WINDOWS__
+	system_clear();
+#elif __linux__
+	printf("\e[1;1H\e[2J");
+#endif
+}
+
 void ProcessReceiveEvent(ENetPacket* packet)
 {
 	struct SG_Header* recvBuf = packet->data;
@@ -338,7 +346,7 @@ void ProcessNewMessages()
 
 			case ENET_EVENT_TYPE_DISCONNECT:
 				// command prompt reset
-				system("cls");
+				system_clear();
 				PrintBanner(SHOW_NAME);
 				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
 				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
@@ -393,7 +401,7 @@ void DisconSELECT()
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
 		Sleep(2000);
-		//system("cls");
+		//system_clear();
 
 		// to go the lobby browser
 		octr->CurrState = 0;
@@ -939,7 +947,7 @@ void StatePC_Game_EndRace()
 			StartAnimation();
 
 			// command prompt reset
-			system("cls");
+			system_clear();
 			PrintBanner(SHOW_NAME);
 	
 			// reset everything
@@ -992,7 +1000,7 @@ int main()
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
-	system("cls");
+	system_clear();
 	PrintBanner(SHOW_NAME);
 	printf("\n");
 
@@ -1107,9 +1115,7 @@ int main()
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
 		system_pause();
-#ifdef __WINDOWS__
-		system("cls");
-#endif
+		system_clear();
 		main();
 	}
 
