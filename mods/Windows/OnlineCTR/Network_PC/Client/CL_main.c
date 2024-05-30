@@ -52,6 +52,12 @@ void sendToHostReliable(const void* data, size_t size) {
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
+void system_pause() {
+	/* This is portable */
+	printf("Press any key to continue ...\n");
+	getchar();
+}
+
 void ProcessReceiveEvent(ENetPacket* packet)
 {
 	struct SG_Header* recvBuf = packet->data;
@@ -1037,7 +1043,7 @@ int main()
 	if (numDuckInstances == 0)
 	{
 		printf("Error: DuckStation is not running!\n\n");
-		system("pause");
+		system_pause();
 		exit(0);
 	}
 	else printf("Client: DuckStation detected\n");
@@ -1100,7 +1106,7 @@ int main()
 #endif
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
-		getchar();
+		system_pause();
 #ifdef __WINDOWS__
 		system("cls");
 #endif
@@ -1137,7 +1143,7 @@ int main()
 	}
 
 	printf("\n");
-	system("pause");
+	system_pause();
 }
 
 #ifdef __WINDOWS__
