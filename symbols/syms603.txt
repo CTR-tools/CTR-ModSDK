@@ -47,12 +47,45 @@
 800219bc CAM_MapRange_PosPoints
 80021a9c CAM_ThTick
 
-// [few more in between]
-8002414c CDSYS_Init
+// CDSYS
+// unknown 800240a4, part of RCNT
+800240ec CDSYS_GetFilePosInt
+8002414c CDSYS_Init // and sets XA
 // no CDSYS_SetXAToLang,
-// no IRQs
+80024218 CDSYS_XaCallbackCdSync
+80024288 CDSYS_SetMode_StreamAudio
+// unknown 800242e8 -- part of Playing
+8002435c CDSYS_XASeek
+800243a0 CDSYS_XAPlay
+80024428 CDSYS_PauseAtEnd
+8002445c CDSYS_SetMode_StreamData
 
+// COLL
 800244b8 COLL_GetThreadMeta
+800244f0 COLL_Instance
+800249e4 COLL_PerBspLeaf_CheckInstances
+80024b5c COLL_StartSearch_AI
+80024cd8 COLL_StartSearch_Player
+80025db8 COLL_SearchTree_FindQuadblock_Touching
+// no COLL_SearchTree_FindX
+80026094 COLL_TestTriangle_FindClosest_Subfunction2
+
+// unknown 800261cc (jumps halfway through next func)
+80026200 COLL_TestTriangle_FindAny // (and TestTriangle_Unused)
+
+8002658c COLL_TestTriangle_GetNormalVector
+800266cc COLL_PerQuadblock_CheckTriangles_Touching
+800268a0 COLL_PerBspLeaf_CheckQuadblocks_Touching
+8002692c COLL_TestQuadblock_TwoTris
+800269a0 COLL_TestQuadblock_EightTris
+80026aa0 COLL_ResetScratchpadCache
+80026bd8 COLL_TestTriangle_FindClosest_Subfunction1
+80026ef0 COLL_TestTriangle_FindClosest
+800272e4 COLL_PerQuadblock_CheckTriangles_NearPlayer
+80027528 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+800275b4 COLL_TestTriangle_WithClosest
+80027690 COLL_StartSearch_NearPlayer
+80027e64 COLL_Scrub
 
 // [skipping COLL cause who cares]
 

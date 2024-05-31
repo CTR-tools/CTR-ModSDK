@@ -3150,7 +3150,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 }
 
 
-// NOPing this function makes your character constantly jump
+// COLL_TestTriangle_WithClosest
 // param_1 = ptrQuadblock
 // param_2 = triangleID
 // param_3 = 0x1F800108
