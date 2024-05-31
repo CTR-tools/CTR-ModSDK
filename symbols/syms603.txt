@@ -193,4 +193,35 @@
 8002fedc DotLights_Video
 80030114 DotLights_AudioAndVideo
 
+// DropRain ?
+// unknown 800302c0
+// unknown 8003036c
+
+// ElimBG not present
+// Flare not present
+
+80030374 GAMEPAD_Init
+// unknown 80030554 -- shutdown gamepad (mainstate_exit)
+// unknown 80030674
+// unknown 8003072c -- tap and hold
+// unknown 80030a68
+// unknown 80030b54 -- detect ANAJ
+// unknown 80030e44
+// unknown 80030f30
+// unknown 800310f8
+
+// GAMEPAD_JogCon not in this build
+
+80031218 GAMEPAD_ShockFreq
+80031280 GAMEPAD_ShockForce1
+800312e8 GAMEPAD_ShockForce2
+
+// unknown 80031350 -- reset controller count
+// unknown 80031360 -- error msg "Please Insert A Controller"
+
+// GAMEPROG
+// unknown 800313f4 -- memset 0x18
+// unknown 8003141c -- gamesave.sav, read? memset 0x9e30
+// unknown 80031494 -- gamesave.sav write?
+
 8004149c VehBirth_TeleportSelf
