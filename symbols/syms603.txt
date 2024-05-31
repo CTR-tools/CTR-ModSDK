@@ -162,10 +162,11 @@
 // unknown 8002cb48
 // unknown 8002cc48 -- debugfont
 // unknown 8002d178 -- debugfont
+
 // unknown 8002d1a8
 // unknown 8002d738
+// unknown 8002db10
 
-8002db10 DecalFont_DrawLineStrlen
 8002db44 DecalFont_DrawLine
 
 8002dd18 DecalGlobal_Clear
@@ -175,5 +176,21 @@
 
 8002df2c DecalHUD_DrawPolyFT4
 8002e058 DecalHUD_DrawWeapon
+8002e294 DecalHUD_DrawPolyGT4
+
+// DecalMP and DISPLAY_Blur,
+// This version of blur would warp the screen
+// in several directions, cut due to expensive
+// prim parser that did not fit budget
+
+// unknown 8002e3d4
+// unknown 8002e498
+// unknown 8002e560 -- loops each player
+// unknown 8002e714
+// unknown 8002f680 -- another debug Prim parser?
+
+8002fe74 DISPLAY_Swap
+8002fedc DotLights_Video
+80030114 DotLights_AudioAndVideo
 
 8004149c VehBirth_TeleportSelf
