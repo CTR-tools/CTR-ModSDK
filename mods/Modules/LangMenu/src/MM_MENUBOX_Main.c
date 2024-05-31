@@ -25,7 +25,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 
   MM_ParseCheatCodes();
 
-  MM_TogglerowsDifficulty();
+  MM_ToggleRows_Difficulty();
 
   MM_ToggleRows_PlayerCount();
 

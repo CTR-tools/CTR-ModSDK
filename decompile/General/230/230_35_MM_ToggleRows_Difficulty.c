@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_TogglerowsDifficulty(void)
+void DECOMP_MM_ToggleRows_Difficulty(void)
 {
   char bVar1;
   struct GameTracker* gGT;

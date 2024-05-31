@@ -1347,7 +1347,7 @@ void FUN_800acff4(int param_1)
   // MM_ParseCheatCodes
   FUN_800aceb4();
   
-  // MM_TogglerowsDifficulty
+  // MM_ToggleRows_Difficulty
   FUN_800ad678();
   
   // MM_ToggleRows_PlayerCount
@@ -1751,7 +1751,7 @@ void FUN_800AD5E8(int param_1)
   return;
 }
 
-// MM_TogglerowsDifficulty
+// MM_ToggleRows_Difficulty
 void FUN_800ad678(void)
 
 {
