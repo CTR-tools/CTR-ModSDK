@@ -117,9 +117,63 @@
 // unknown 8002a06c
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
-8002a1a4 EmptyFunc
+// unknown 8002a194
+// unknown 8002a1a4
+// unknown 8002a1c4
+// unknown 8002a204
 8002a304 Debug_PrimMem_ZoomOut
+// unknown 8002a960
+// unknown 8002ad28
 
+8002ad5c CTR_Box_DrawWirePrims
+8002adf4 CTR_Box_DrawWireBox
+// unknown 8002afdc (uses GTE)
+// unknown 8002b14c
+// unknown 8002b46c (uses GTE)
+8002b5dc Debug_CountPrimDepths
+// unknown 8002b6d4
+// unknown 8002b714
+// unknown 8002b74c
+// unknown 8002b8f0
+// unknown 8002b9ac
+// unknown 8002be4c
 
+8002be7c CTR_Box_DrawClearBox
+8002bf94 CTR_CycleTex_LEV
+8002c030 CTR_CycleTex_Model
+8002c0d0 CTR_CycleTex_AllModels
+8002c19c CTR_CycleTex_2p3p4pWumpaHUD
+
+// unknown 8002c1c4
+// unknown 8002c2c0
+// unknown 8002c348
+
+8002c4c4 CTR_ClearRenderLists_1P2P
+8002c534 CTR_ClearRenderLists_3P4P
+8002c594 CTR_EmptyFunc_MainFrame_ResetDB
+
+// unknown 8002c618
+// unknown 8002c970
+// unknown 8002c9ec
+// unknown 8002ca68
+// unknown 8002cb0c
+// unknown 8002cb30
+
+// unknown 8002cb48
+// unknown 8002cc48 -- debugfont
+// unknown 8002d178 -- debugfont
+// unknown 8002d1a8
+// unknown 8002d738
+
+8002db10 DecalFont_DrawLineStrlen
+8002db44 DecalFont_DrawLine
+
+8002dd18 DecalGlobal_Clear
+8002dd58 DecalGlobal_Store
+8002de04 DecalGlobal_FindInLEV
+8002dea8 DecalGlobal_FindInMPK
+
+8002df2c DecalHUD_DrawPolyFT4
+8002e058 DecalHUD_DrawWeapon
 
 8004149c VehBirth_TeleportSelf
