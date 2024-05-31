@@ -617,14 +617,20 @@ void FUN_8001d944(int param_1,int param_2)
   // thread -> instance
   iVar9 = *(int *)(param_1 + 0x34);
 
-  if (DAT_1f800146 == 0) {
+  // if no collision with "new" block
+  if (DAT_1f800146 == 0) 
+  {
+	// mid-air
     *(uint *)(iVar9 + 0x70) = ((uint)*(byte *)(param_2 + 0x4a) + 1) * 0x1000000 | 0x4000;
     *(uint *)(iVar9 + 0x28) = *(uint *)(iVar9 + 0x28) & 0xffffbfff;
     *(int *)(param_2 + 0x2d0) = *(int *)(param_2 + 0x2d8) + -0x10000;
   }
 
+  // if collision with "new" block
   else
   {
+	// driver on ground
+	  
     *(uint *)(iVar9 + 0x70) =
          _DAT_1f800178 >> 6 & 0xff | (_DAT_1f800178 >> 0x10 & 0x3fc0) << 2 |
          ((uint)(DAT_1f80017c >> 6) & 0xff) << 0x10 |
