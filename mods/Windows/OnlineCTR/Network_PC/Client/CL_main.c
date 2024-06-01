@@ -22,8 +22,9 @@
 
 char *pBuf;
 struct OnlineCTR* octr;
-static unsigned char serverReconnect = false;
+unsigned char serverReconnect = false;
 
+unsigned char dns_string[32] = { 0 };
 int buttonPrev[8] = { 0 };
 char name[100];
 
@@ -309,7 +310,11 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
+	#define AUTO_RETRY_SECONDS 10
+	#define ESC_KEY 27 // ASCII value for ESC key
+
 	ENetEvent event;
+	char response;
 
 	while (enet_host_service(clientHost, &event, 0) > 0)
 	{
@@ -317,24 +322,71 @@ void ProcessNewMessages()
 		{
 			case ENET_EVENT_TYPE_RECEIVE:
 				ProcessReceiveEvent(event.packet);
-
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
 				// command prompt reset
 				system("cls");
 				PrintBanner(SHOW_NAME);
+<<<<<<< Updated upstream
 				printf("\nClient: Disconnected (Race in Progress, Server Offline, etc)...  ");
 				Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
+=======
+				printf("\nClient: Connection Dropped (IE: Lobby Full or Race in Progress)...  ");
+>>>>>>> Stashed changes
 
+				if(serverReconnect == true) goto retry_loop;
+
+				// ask if they would like to keep retrying
+				do {
+					printf("\n Retry every %d seconds? (Y/N): ", AUTO_RETRY_SECONDS);
+					response = _getch();
+
+					if (response == 'Y' || response == 'y')
+					{
+					retry_loop:
+						serverReconnect = true;
+						printf("\nClient: Retrying in %d seconds (ESC to CANCEL)...  ", AUTO_RETRY_SECONDS);
+
+						for (int i = 0; i < AUTO_RETRY_SECONDS * 10; ++i)
+						{
+							StartAnimation();
+							usleep(100); // sleep for 0.1 second intervals
+
+							if (_kbhit() && _getch() == ESC_KEY)
+							{
+								printf("\nClient: Automatic retrying canceled!");
+								serverReconnect = false;
+								goto terminate_connection;
+							}
+						}
+
+						goto retry_connection;
+					}
+					else if (response == 'N' || response == 'n')
+					{
+						serverReconnect = false;
+						goto terminate_connection;
+					}
+				} while (response != 'Y' && response != 'y' && response != 'N' && response != 'n');
+
+				if (serverReconnect == false)
+				{
+					// exit the loop or handle the disconnection as needed
+					goto terminate_connection;
+				}
+
+				Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
+
+			terminate_connection:
 				// to go the lobby browser
 				currstate = 0;
 				octr->CurrState = 0;
 				octr->serverLockIn2 = 0; // server selection has been locked in
-				serverReconnect = false; // yes we want to reconnect
-
+				serverReconnect = false; // no we don't want to reconnect
 				break;
 
+			retry_connection:
 			default:
 				break;
 		}
@@ -367,6 +419,31 @@ void StopAnimation()
 	fflush(stdout); // ensure the output is printed immediately
 }
 
+<<<<<<< Updated upstream
+=======
+void DisconSELECT()
+{
+	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+
+	if((hold & 0x2000) != 0)
+	{
+		// Sleep() triggers server timeout
+		// just in case client isnt disconnected
+		StopAnimation();
+		printf("Client: Disconnected (User Pressed [SELECT])...  ");
+		Sleep(2000);
+		//system("cls");
+
+		// to go the lobby browser
+		octr->CurrState = 0;
+		octr->serverLockIn2 = 0; // server selection has been locked in
+		serverReconnect = false; // yes we want to reconnect
+
+		return;
+	}
+}
+
+>>>>>>> Stashed changes
 void ClearInputBuffer()
 {
 	int c;
@@ -378,7 +455,15 @@ void StatePC_Launch_EnterPID()
 {
 	// if client connected to DuckStation
 	// before game booted, wait for boot
+<<<<<<< Updated upstream
 	if (octr->IsBootedPS1) octr->CurrState = LAUNCH_ENTER_IP;
+=======
+	if (!octr->IsBootedPS1) return;
+
+	StopAnimation();
+	printf("Client: Waiting to connect to a server...  ");
+	octr->CurrState = LAUNCH_ENTER_IP;
+>>>>>>> Stashed changes
 }
 
 void printUntilPeriod(const char *str)
@@ -397,11 +482,20 @@ void printUntilPeriod(const char *str)
 	}
 }
 
+<<<<<<< Updated upstream
 void StatePC_Launch_EnterIP()
 {
 	ENetAddress addr;
 	static unsigned char dns_string[32] = { 0 };
 	static unsigned char StaticServerID;
+=======
+int StaticServerID=0;
+int StaticRoomID=0;
+
+void StatePC_Launch_EnterIP()
+{
+	ENetAddress addr;
+>>>>>>> Stashed changes
 	static unsigned char localServer;
 	int serverID;
 
@@ -413,6 +507,7 @@ void StatePC_Launch_EnterIP()
 	// default port
 	addr.port = 65001;
 
+<<<<<<< Updated upstream
 	// return now if the server selection hasn't been selected yet
 	if (octr->serverLockIn2 == 0) return;
 
@@ -421,6 +516,46 @@ void StatePC_Launch_EnterIP()
 
 	// update the server ID
 	serverID = octr->PageNumber * 4 + octr->serverCountry;
+=======
+	// quit if disconnected, but not loaded 
+	// back into the selection screen yet
+	int gGT_levelID = *(int*)&pBuf[(0x80096b20+0x1a10) & 0xffffff];
+	if (gGT_levelID != 0x26) return;
+
+	// quit if in loading screen (force-reconnect)
+	int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];
+	if (sdata_Loading_stage != -1) return;
+
+	// if not doing a force-reconnect
+	if (serverReconnect == false)
+	{
+		// return now if the server selection hasn't been selected yet
+		if (octr->serverLockIn2 == 0) return;
+	}
+
+	// force-reconnect to previous server
+	else
+	{
+		octr->serverRoom = StaticRoomID;
+		octr->serverCountry = StaticServerID;
+
+		int random_sleep_time;
+		srand(time(0));
+
+		// now add a random delay so we can try to get a fairer choice of lobby hosts,
+		// 0.01s to 0.31s, must be more than one frame, so proper values reset themselves
+		random_sleep_time = 10 + rand() % 300;
+
+		#ifdef __GNUC__
+			usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
+		#else
+			Sleep(random_sleep_time);
+		#endif
+	}
+
+	StaticRoomID = octr->serverRoom;
+	StaticServerID = octr->serverCountry;
+>>>>>>> Stashed changes
 
 	switch (octr->serverCountry)
 	{
@@ -584,7 +719,11 @@ void StatePC_Launch_EnterIP()
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
 	{
+<<<<<<< Updated upstream
 		// wait up to 2 seconds for the connection attempt to succeed
+=======
+		// wait up to 5 seconds for the connection attempt to succeed
+>>>>>>> Stashed changes
 		if (enet_host_service(clientHost, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			StopAnimation();
@@ -594,8 +733,13 @@ void StatePC_Launch_EnterIP()
 		}
 		else
 		{
+<<<<<<< Updated upstream
 			StopAnimation();
 			printf("Error: Failed to connect! Attempt %d/%d", retryCount + 1, MAX_RETRIES);
+=======
+			StartAnimation();
+			printf("Error: Failed to connect! Attempt %d/%d  ", retryCount + 1, MAX_RETRIES);
+>>>>>>> Stashed changes
 
 			if (retryCount >= MAX_RETRIES)
 			{
@@ -897,6 +1041,7 @@ void StatePC_Game_EndRace()
 			srand(time(0));
 
 			StopAnimation();
+<<<<<<< Updated upstream
 			StartAnimation();
 			printf("Client: Waiting for the server...  ");
 			Sleep(3500); // give the server time to reset
@@ -909,6 +1054,8 @@ void StatePC_Game_EndRace()
 			#else
 				Sleep(random_sleep_time);
 			#endif
+=======
+>>>>>>> Stashed changes
 
 			// command prompt reset
 			system("cls");
