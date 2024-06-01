@@ -245,6 +245,16 @@
 80032ab8 GhostReplay_Init1
 80032cb0 GhostReplay_Init2
 80032e8c GhostTape_Start
+80032f14 GhostTape_WriteMoves
+800332c4 GhostTape_WriteBoosts
+80033324 GhostTape_Destroy
+
+// unknown 80033358
+// unknown 800333c4 -- ghost loading
+// unknown 80033400 -- ghost loading
+
+// HOWL
+80033424 CountSounds
 
 
 8004149c VehBirth_TeleportSelf
