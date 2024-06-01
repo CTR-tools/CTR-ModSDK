@@ -1,3 +1,9 @@
+// Stops Visual Studio from complaining about fopen usage
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -960,6 +966,18 @@ void (*ClientState[]) () = {
 // for EnumProcessModules
 #pragma comment(lib, "psapi.lib")
 
+void ReadUsernameFromFile() {
+	FILE* fptr;
+	fptr = fopen("username.txt", "r");
+
+	if (!fptr)
+		return;
+
+	fgets(name, (int)sizeof(name), fptr);
+	name[11] = 0; // truncate the name
+	fclose(fptr);
+}
+
 int main()
 {
 	HWND console = GetConsoleWindow();
@@ -970,10 +988,14 @@ int main()
 
 	PrintBanner(DONT_SHOW_NAME);
 
-	// ask for the users online identification
-	printf(" Enter Your Online Name: ");
-	scanf_s("%s", name, (int)sizeof(name));
-	name[11] = 0; // truncate the name
+	ReadUsernameFromFile();
+
+	if (name && !name[0]) {
+		// ask for the users online identification
+		printf(" Enter Your Online Name: ");
+		scanf_s("%s", name, (int)sizeof(name));
+		name[11] = 0; // truncate the name
+	}
 
 	// show a welcome message
 	system("cls");
