@@ -220,8 +220,31 @@
 // unknown 80031360 -- error msg "Please Insert A Controller"
 
 // GAMEPROG
-// unknown 800313f4 -- memset 0x18
+// unknown 800313f4 -- memset 0x18 (new adv profile)
 // unknown 8003141c -- gamesave.sav, read? memset 0x9e30
 // unknown 80031494 -- gamesave.sav write?
+// unknown 800314d4 -- InitFullMemcard
+// unknown 800314fc -- set active adv profile
+// unknown 8003152c -- get ptr high score track
+// unknown 80031584
+// unknown 80031600
+// unknown 80031680
+// unknown 800316f8
+
+// NOT Gameprog, not Ghost
+// unknown 80031718
+// unknown 80031814
+// unknown 80031934
+// unknown 80031a68
+// unknown 80031afc
+// unknown 80031c14
+
+800321e8 GhostReplay_ThTick
+80032960 GhostReplay_File1
+80032a54 GhostReplay_File2
+80032ab8 GhostReplay_Init1
+80032cb0 GhostReplay_Init2
+80032e8c GhostTape_Start
+
 
 8004149c VehBirth_TeleportSelf
