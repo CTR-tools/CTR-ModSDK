@@ -117,8 +117,8 @@
 // unknown 8002a06c -- vsync callback
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
-// unknown 8002a194 -- DebugMenu_SetGraphRowCount (maybe)
-// unknown 8002a1a4
+// unknown 8002a194 -- DebugMenu_SetLapCount
+// unknown 8002a1a4 -- empty
 // unknown 8002a1c4 -- DebugMenu_SetGameMode
 // unknown 8002a204
 8002a304 Debug_PrimMem_ZoomOut
