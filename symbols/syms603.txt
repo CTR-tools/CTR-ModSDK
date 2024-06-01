@@ -89,37 +89,37 @@
 
 // unknown 8002869c
 // unknown 8002873c
-// unknown 800287dc
-// unknown 80028814
-// unknown 80028854
-// unknown 80028a6c
-// unknown 80028a98
+// unknown 800287dc -- DebugCamera_SetPathPoint
+// unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId1
+// unknown 80028854 -- DebugMenu_LoadGame_GivenLevelId2
+// unknown 80028a6c -- DebugMenu_LoadGame_GivenLevelId3
+// unknown 80028a98 -- DebugMenu_LoadGame_GivenLevelId4
 // unknown 80028ab0
 // unknown 80028ac8
 // unknown 80028ae0
-// unknown 80028b9c
-// unknown 80028bb8
+// unknown 80028b9c -- DebugMenu_TimeStamp_EndFrame
+// unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
 // unknown 80028c10 -- called from Timer_Init
-// unknown 80028d30
-// unknown 800291ac
-// unknown 8002977c
-// unknown 800297a0
-// unknown 800297b4
+// unknown 80028d30 -- DebugMenu_TimeStamp_DrawOutline
+// unknown 800291ac -- DebugMenu_TimeStamp_DrawNext
+// unknown 8002977c -- DebugMenu_TimeStamp_ExecCurr
+// unknown 800297a0 -- DebugMenu_TimeStamp_OpenMenu
+// unknown 800297b4 -- DebugMenu_TimeStamp_CloseMenu
 // unknown 800297e8
 // unknown 80029cc8
-// unknown 80029d70
-// unknown 80029dc0
+// unknown 80029d70 -- DebugMenu_TimeStamp_DrawChart
+// unknown 80029dc0 -- DebugMenu_TimeStamp_DrawMain
 // unknown 80029e64
 // unknown 80029efc
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
-// unknown 8002a06c
+// unknown 8002a06c -- vsync callback
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
-// unknown 8002a194
+// unknown 8002a194 -- DebugMenu_SetGraphRowCount (maybe)
 // unknown 8002a1a4
-// unknown 8002a1c4
+// unknown 8002a1c4 -- DebugMenu_SetGameMode
 // unknown 8002a204
 8002a304 Debug_PrimMem_ZoomOut
 // unknown 8002a960
