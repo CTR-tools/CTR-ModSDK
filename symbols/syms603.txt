@@ -253,8 +253,63 @@
 // unknown 800333c4 -- ghost loading
 // unknown 80033400 -- ghost loading
 
-// HOWL
+// === Everything below "Ghost" is "Howl"
+
 80033424 CountSounds
+
+80033450 OtherFX_Play
+8003347c OtherFX_Play_Echo
+800334b8 OtherFX_Play_LowLevel
+80033624 OtherFX_Modify
+80033764 OtherFX_Stop1
+// unknown 8003379c 
+// unknown 800338d4 
+// unknown 80033a18
+80033a7c SetReverbMode
+// unknown 80033b38
+// unknown 80033b60
+// unknown 80033b88
+// unknown 80033c18
+// unknown 80033cd0
+// unknown 80033d4c
+// unknown 80033dd8
+// unknown 80033ea4
+// unknown 80033f4c
+// unknown 80034004
+// unknown 800340ac
+// unknown 80034134
+// unknown 8003437c
+800343e8 Bank_ClearInRange
+80034458 Bank_Load
+800344e4 Bank_DestroyLast
+80034538 Bank_DestroyUntilIndex
+8003458c Bank_DestroyAll
+// unknown 800345c4
+// unknown 80034618
+// unknown 80034664
+// unknown 800346c8
+// unknown 80034714
+// unknown 80034770
+8003477c howl_InitGlobals
+80034840 howl_ParseHeader
+800348a4 howl_ParseCseqHeader
+8003491c howl_LoadHeader
+// unknown 80034a18 -- LoadSeqPackData (howlChain doesnt exist yet)
+80034b10 howl_ErasePtrCseqHeader
+80034b34 howl_GetNextNote
+80034b80 cseq_opcode01_noteoff
+80034c8c cseq_opcode03
+80034cf4 howl_InitChannelAttr_Music
+80034ee8 cseq_opcode_from06and07
+8003500c cseq_opcode05_noteon
+800350e0 cseq_opcode06
+8003510c cseq_opcode07
+80035138 cseq_opcode08
+800351cc cseq_opcode09
+800351e0 cseq_opcode0a
+
+80035370 SongPool_FindFreeChannel
+800353ac SongPool_CalculateTempo
 
 
 8004149c VehBirth_TeleportSelf
