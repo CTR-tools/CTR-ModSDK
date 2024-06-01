@@ -40,6 +40,15 @@ void sendToHostReliable(const void* data, size_t size) {
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
+void handleDisconnect() {
+	serverPeer = NULL;
+
+	// go to the lobby browser
+	octr->CurrState = 0;
+	octr->serverLockIn2 = 0; // server selection has been locked in
+	serverReconnect = false; // we don't want to reconnect
+}
+
 void ProcessReceiveEvent(ENetPacket* packet)
 {
 	struct SG_Header* recvBuf = packet->data;
@@ -59,6 +68,26 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			
 			// choose to get host menu or guest menu
 			octr->CurrState = LOBBY_ASSIGN_ROLE;
+			break;
+		}
+
+
+		case SG_LOBBY_FULL: {
+			printf("\n CLIENT: Disconnected (SG_LOBBY_FULL)...  ");
+			handleDisconnect();
+			break;
+		}
+
+
+		case SG_ONGOING_RACE: {
+			printf("\n CLIENT: Disconnected (SG_ONGOING_RACE)...  ");
+			handleDisconnect();
+			break;
+		}
+
+		case SG_ALREADY_CONNECTED: {
+			printf("\n CLIENT: Disconnected (SG_ALREADY_CONNECTED)...  ");
+			handleDisconnect();
 			break;
 		}
 
@@ -314,8 +343,7 @@ void ProcessNewMessages()
 		switch (event.type)
 		{
 			case ENET_EVENT_TYPE_RECEIVE:
-				ProcessReceiveEvent(event.packet);
-
+				ProcessReceiveEvent(event.packet);				
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
@@ -324,12 +352,7 @@ void ProcessNewMessages()
 				PrintBanner(SHOW_NAME);
 				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
 				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
-
-				// to go the lobby browser
-				octr->CurrState = 0;
-				octr->serverLockIn2 = 0; // server selection has been locked in
-				serverReconnect = false; // yes we want to reconnect
-
+				handleDisconnect();
 				break;
 
 			default:
@@ -345,7 +368,7 @@ void PrintBanner(char show_name)
 	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
 }
 
-void StartAnimation()
+void StartSpinner()
 {
 	char spinner_chars[] = "|/-\\";
 	static int spinner_length = sizeof(spinner_chars) - 1; // exclude the NULL terminator
@@ -358,7 +381,7 @@ void StartAnimation()
 	i = (i + 1) % spinner_length;
 }
 
-void StopAnimation()
+void StopSpinner()
 {
 	printf("\b \b\n"); // clear the spinner character when done
 	fflush(stdout); // ensure the output is printed immediately
@@ -370,18 +393,14 @@ void DisconSELECT()
 
 	if((hold & 0x2000) != 0)
 	{
+
+		StopSpinner();
+		printf("Client: Disconnected (ID: DSELECT)...  ");
+		enet_peer_disconnect_now(serverPeer, 0);
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
-		StopAnimation();
-		printf("Client: Disconnected (ID: DSELECT)...  ");
 		Sleep(2000);
-		//system("cls");
-
-		// to go the lobby browser
-		octr->CurrState = 0;
-		octr->serverLockIn2 = 0; // server selection has been locked in
-		serverReconnect = false; // yes we want to reconnect
-
+		handleDisconnect();
 		return;
 	}
 }
@@ -400,7 +419,7 @@ void StatePC_Launch_EnterPID()
 	if (!octr->IsBootedPS1)
 		return;
 
-	StopAnimation();
+	StopSpinner();
 	printf("Client: Waiting to connect to a server...  ");
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
@@ -457,7 +476,6 @@ void StatePC_Launch_EnterIP()
 		if (octr->serverLockIn2 == 0)
 			return;
 	}
-
 	// force-reconnect to previous server
 	else
 	{
@@ -517,7 +535,7 @@ void StatePC_Launch_EnterIP()
 		case 3:
 		default:
 		{
-			StopAnimation();
+			StopSpinner();
 
 		private_server_ip:
 			ClearInputBuffer(); // clear any extra input in the buffer
@@ -599,7 +617,7 @@ void StatePC_Launch_EnterIP()
 		}
 	}
 
-	StopAnimation();
+	StopSpinner();
 	printf("Client: Attempting to connect to \"");
 	if(localServer == false) printUntilPeriod(dns_string);
 	else printf("%s:%d", ip, addr.port);
@@ -641,14 +659,14 @@ void StatePC_Launch_EnterIP()
 		// wait up to 2 seconds for the connection attempt to succeed
 		if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		{
-			StopAnimation();
+			StopSpinner();
 			printf("Client: Successfully connected!  ");
 
 			connected = true;
 		}
 		else
 		{
-			StopAnimation();
+			StopSpinner();
 			printf("Error: Failed to connect! Attempt %d/%d\n", retryCount + 1, MAX_RETRIES);
 
 			retryCount++;
@@ -685,7 +703,7 @@ void StatePC_Launch_EnterIP()
 
 void StatePC_Launch_ConnectFailed()
 {
-	StopAnimation();
+	StopSpinner();
 	printf("Error: Unable to connect to the server!  ");
 
 	serverReconnect = false;
@@ -710,7 +728,7 @@ void StatePC_Lobby_HostTrackPick()
 	// boolLockedInLevel already sets
 	if (!octr->boolLockedInLap) return;
 
-	StopAnimation();
+	StopSpinner();
 	printf("Client: Sending track to the server...  ");
 
 	struct CG_MessageTrack mt = { 0 };
@@ -849,7 +867,7 @@ void StatePC_Game_WaitForRace()
 			((gGT_gameMode1 & 0x40) == 0)
 		)
 	{
-		StopAnimation();
+		StopSpinner();
 		printf("Client: Online race in progress...  ");
 		boolAlreadySent_StartRace = 1;
 
@@ -910,8 +928,9 @@ void StatePC_Game_EndRace()
 
 	// if you did not finish last
 	if (octr->numDriversEnded < (octr->NumDrivers - numDead))
+	{
 		timeStart = clock();
-
+	}
 	// race is over, 1 second passed
 	else if (timeSinceEnd > 1)
 	{		
@@ -921,8 +940,8 @@ void StatePC_Game_EndRace()
 		// race is over, 6 second passed
 		if(timeSinceEnd >= 6)
 		{
-			StopAnimation();
-			StartAnimation();
+			StopSpinner();
+			StartSpinner();
 
 			// command prompt reset
 			system("cls");
@@ -973,7 +992,7 @@ int main()
 	// ask for the users online identification
 	printf(" Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
-	name[11] = 0; // truncate the name
+	name[11] = 0; // truncate the name	
 
 	// show a welcome message
 	system("cls");
@@ -1029,7 +1048,8 @@ int main()
 		system("pause");
 		exit(0);
 	}
-	else printf("Client: DuckStation detected\n");
+
+	printf("Client: DuckStation detected\n");
 
 	char pidStr[16];
 
@@ -1041,10 +1061,10 @@ int main()
 		printf("DuckStation PID: ");
 		scanf_s("%s", pidStr, (int)sizeof(pidStr));
 	}
-	else
-	{
-		sprintf_s(pidStr, 100, "%d", duckPID);
+	else {
+		sprintf_s(pidStr, 16, "%d", duckPID);
 	}
+	
 
 	char duckName[100];
 	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
@@ -1078,6 +1098,8 @@ int main()
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
+	time_t start, end;
+	time(&start);
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
@@ -1086,7 +1108,18 @@ int main()
 		if (octr->CurrState >= LOBBY_ASSIGN_ROLE)
 			DisconSELECT();
 
-		StartAnimation();
+		StartSpinner();
+
+		// Prints server ping
+		if (serverPeer && serverPeer->state == ENET_PEER_STATE_CONNECTED)
+		{
+			time(&end);
+			if (difftime(end, start) >= 5.0)
+			{
+				printf("\n Server ping: %u ms  ", serverPeer->roundTripTime);
+				time(&start);
+			}		
+		}
 
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();

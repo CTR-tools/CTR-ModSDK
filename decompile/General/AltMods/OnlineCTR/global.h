@@ -118,6 +118,10 @@ enum ServerGiveMessageType
 	// connection
 	SG_NEWCLIENT,
 	SG_DROPCLIENT, // unused
+	// Disconnect reasons
+	SG_LOBBY_FULL,
+	SG_ONGOING_RACE,
+	SG_ALREADY_CONNECTED,
 
 	// lobby
 	SG_NAME,
@@ -132,6 +136,12 @@ enum ServerGiveMessageType
 	SG_SERVERCLOSED,
 
 	SG_COUNT
+};
+
+enum DisconnectReasons {
+	D_LOBBY_FULL,
+	D_ONGONG_RACE,
+	D_ALREADY_CONNECTED
 };
 
 // variety of opcodes (start load / start race)
@@ -355,8 +365,8 @@ void StatePC_Game_EndRace();
 
 // console functions
 void PrintBanner(char show_name);
-void StartAnimation();
-void StopAnimation();
+void StartSpinner();
+void StopSpinner();
 
 #endif
 

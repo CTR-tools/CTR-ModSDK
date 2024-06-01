@@ -64,6 +64,32 @@ void sendToPeerReliable(ENetPeer* peer, const void* data, size_t size) {
 	enet_peer_send(peer, 0, packet); //To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
 
+void sendDisconnectReason(ENetPeer* peer, enum DisconnectReasons reason) {
+	char sgBuffer[16];
+	memset(sgBuffer, 0, 16);
+	struct SG_Header* serverMessage = &sgBuffer[0];
+	serverMessage->size = sizeof(struct SG_Header);
+
+	printf("Sending disconnect reason \n");
+	switch (reason) {
+		case D_ALREADY_CONNECTED:
+			serverMessage->type = SG_ALREADY_CONNECTED;
+			break;
+		case D_ONGONG_RACE:
+			serverMessage->type = SG_ONGOING_RACE;
+			break;
+		case D_LOBBY_FULL:
+			serverMessage->type = SG_LOBBY_FULL;
+			break;
+		default:
+			serverMessage->type = SG_DROPCLIENT;
+			break;
+
+	}
+
+	sendToPeerReliable(peer, serverMessage, serverMessage->size);
+}
+
 
 void ProcessConnectEvent(ENetPeer* peer)
 {
@@ -71,9 +97,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 		return;
 	}
 
-
 	// === If Race is in Session ===
-
 
 	// Placeholder, right now 1 server = 1 room,
 	// need to connect to server and then try to get the room
@@ -82,6 +106,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 	if (roomInfos[0].boolRoomLocked)
 	{
 		printf("Connection rejected: Race in session.\n");
+		sendDisconnectReason(peer, D_ONGONG_RACE);
 		enet_peer_disconnect_now(peer, 0);
 		return;
 	}
@@ -89,18 +114,20 @@ void ProcessConnectEvent(ENetPeer* peer)
 
 	// === If already connected ===
 
-
 	for (int i = 0; i < MAX_CLIENTS; ++i)
+	{
 		if (peerInfos[i].peer != 0)
+		{
 			if (peerInfos[i].peer->address.host == peer->address.host)
 			{
 				printf("Connection rejected: Peer 0x%08x:%u is already connected.\n",
 					peer->address.host, peer->address.port);
-
+				sendDisconnectReason(peer, D_ALREADY_CONNECTED);
 				enet_peer_disconnect_now(peer, 0);
 				return;
 			}
-
+		}
+	}
 
 	// === If Full, or Empty Slot ===
 
@@ -116,6 +143,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 	if (id == -1)
 	{
 		printf("Connection rejected: Maximum number of peers reached.\n");
+		sendDisconnectReason(peer, D_LOBBY_FULL);
 		enet_peer_disconnect_now(peer, 0);
 		return;
 	}
@@ -125,7 +153,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 
 
 	// if added to end, then increase count
-	if(id == clientCount)
+	if (id == clientCount)
 		clientCount++;
 
 	// If a client disconnects, bools are set to 1,
