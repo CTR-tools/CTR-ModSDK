@@ -114,7 +114,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageTrack* r = recvBuf;
 
-			octr->boolLockedInTrack = 1;
+			octr->boolLockedInLevel = 1;
 
 			// set sdata->gGT->trackID
 			// set sdata->gGT->numLaps
@@ -324,8 +324,8 @@ void ProcessNewMessages()
 				// command prompt reset
 				system("cls");
 				PrintBanner(SHOW_NAME);
-				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
-				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
+				printf("\nClient: Disconnected (Race in Progress, Server Offline, etc)...  ");
+				Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
 
 				// to go the lobby browser
 				currstate = 0;
@@ -585,7 +585,7 @@ void StatePC_Launch_EnterIP()
 	while (retryCount < MAX_RETRIES && !connected)
 	{
 		// wait up to 2 seconds for the connection attempt to succeed
-		if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+		if (enet_host_service(clientHost, &event, 5000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			StopAnimation();
 			printf("Client: Successfully connected!  ");
@@ -595,17 +595,23 @@ void StatePC_Launch_EnterIP()
 		else
 		{
 			StopAnimation();
-			printf("Error: Failed to connect! Attempt %d/%d\n", retryCount + 1, MAX_RETRIES);
-
-			retryCount++;
+			printf("Error: Failed to connect! Attempt %d/%d", retryCount + 1, MAX_RETRIES);
 
 			if (retryCount >= MAX_RETRIES)
 			{
-				octr->CurrState = LAUNCH_CONNECT_FAILED;
-				serverReconnect = false;
+				// this doesn't work
+				//octr->CurrState = LAUNCH_CONNECT_FAILED;
+
+				// to go the lobby browser
+				currstate = 0;
+				octr->CurrState = 0;
+				octr->serverLockIn2 = 0; // server selection has been locked in
+				serverReconnect = false; // yes we want to reconnect
 
 				return;
 			}
+
+			retryCount++;
 		}
 	}
 
@@ -743,7 +749,7 @@ void DisconSELECT()
 		// just in case client isnt disconnected
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
-		Sleep(2000);
+		Sleep(3000);
 		//system("cls");
 
 		// to go the lobby browser
