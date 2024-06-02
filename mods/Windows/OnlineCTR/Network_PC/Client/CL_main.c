@@ -62,10 +62,48 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageClientStatus* r = recvBuf;
 
+			// === r->ClientID unused ===
+			// This is only for connection response,
+			// NOT used for reordering yet
+
 			// clientID is "you"
-			octr->DriverID = r->clientID;
+			octr->DriverID = 0;
+
 			octr->NumDrivers = r->numClientsTotal;
-			
+
+			if (r->version != VERSION)
+			{
+				system("cls");
+				printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
+				system("pause");
+			}
+
+			// default, disable cheats
+			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
+				~(0x100000 | 0x80000 | 0x400);
+
+			switch (r->special)
+			{
+				// Ordinary day, nothing happening
+				case 0:
+					break;
+
+				// Monday -- icy tracks
+				case 1:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x80000;
+					break;
+
+				// Wednesday -- super turbos
+				case 2:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x100000;
+					break;
+
+				// Friday -- unlimited masks
+				case 3:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x400;
+					break;
+			}
+
 			// choose to get host menu or guest menu
 			octr->CurrState = LOBBY_ASSIGN_ROLE;
 			break;
@@ -511,17 +549,17 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// USA
+		// NYC (USA)
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "sync.kevman95.com");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
 			break;
 		}
 		
-		// USA WEST
+		// Mexico (USA-West)
 		case 2:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");

@@ -1,4 +1,6 @@
 
+#define VERSION 1007
+
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
 #endif
@@ -162,6 +164,12 @@ struct SG_MessageClientStatus
 	// 1-15 for client, and total
 	unsigned char clientID : 4;
 	unsigned char numClientsTotal : 4;
+
+	// server version
+	unsigned short version;
+
+	// special event
+	unsigned short special;
 };
 
 // get name from any client
@@ -245,6 +253,7 @@ struct SG_MessageEndRace
 };
 
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
+STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 6, "Size of SG_MessageClientStatus must be 4 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");

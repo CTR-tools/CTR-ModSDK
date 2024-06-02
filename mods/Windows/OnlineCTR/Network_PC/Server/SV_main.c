@@ -15,6 +15,7 @@
 #define MAX_CLIENTS 8
 
 unsigned char clientCount = 0;
+int overrideEvents = -1;
 
 typedef struct
 {
@@ -167,11 +168,38 @@ void ProcessConnectEvent(ENetPeer* peer)
 	// Debug only, also prints client name from CG_MessageName
 	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
 
+
+			// === mw.ClientID unused ===
+			// This is only for connection response,
+			// NOT used for reordering yet
+
+
 	// Send ClientID and clientCount back to all clients
 	struct SG_MessageClientStatus mw;
 	mw.type = SG_NEWCLIENT;
 	mw.numClientsTotal = clientCount;
+	mw.version = VERSION;
 	mw.size = sizeof(struct SG_MessageClientStatus);
+
+	if (overrideEvents != -1)
+	{
+		mw.special = overrideEvents;
+	}
+
+	else
+	{
+		// ordinary day
+		mw.special = 0;
+
+		// Monday Icy Tracks
+		if (GetWeekDay() == 1) mw.special = 1;
+
+		// Wednesday Super Turbos
+		if (GetWeekDay() == 3) mw.special = 2;
+
+		// Friday Inf Masks
+		if (GetWeekDay() == 5) mw.special = 3;
+	}
 
 	// Set the timeout settings for the host
 	// now 800 for 1.5s timeout, should detect closed clients
@@ -476,6 +504,9 @@ void ServerState_FirstBoot(int argc, char** argv)
 	int port;
 	int boolIsPortArgument = 0;
 
+	int special;
+	int boolIsSpecArgument = 0;
+
 	// port argument reading
 	for (int i = 1; i < argc; i++)
 	{
@@ -486,6 +517,23 @@ void ServerState_FirstBoot(int argc, char** argv)
 			if (i + 1 < argc)
 			{
 				port = atoi(argv[i + 1]);
+				i++; // next is the port number
+			}
+			else
+			{
+				fprintf(stderr, "Error: --port or -p requires a value!\n");
+				return 1;
+			}
+		}
+
+		if (strcmp(argv[i], "--special") == 0 || strcmp(argv[i], "-s") == 0)
+		{
+			boolIsSpecArgument = 1;
+
+			if (i + 1 < argc)
+			{
+				special = atoi(argv[i + 1]);
+				overrideEvents = special;
 				i++; // next is the port number
 			}
 			else
