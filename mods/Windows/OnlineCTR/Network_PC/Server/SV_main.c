@@ -20,10 +20,10 @@ typedef struct
 {
 	int levelPlayed;
 
-	char boolRoomLocked;
-	char boolLoadAll;
-	char boolRaceAll;
-	char boolEndAll;
+	char isRoomLocked;
+	char isEachPeerLoaded;
+	char isEachPeerReadyToRace;
+	char hasEachPeerEndedRace;
 
 } RoomInfo;
 
@@ -32,9 +32,9 @@ typedef struct {
 
 	char name[0xC];
 	char characterID;
-	char boolLoadSelf;
-	char boolRaceSelf;
-	char boolEndSelf;
+	char isLoaded;
+	char isReadyToRace;
+	char hasEndedRace;
 } PeerInfo;
 
 ENetHost* server;
@@ -43,6 +43,8 @@ PeerInfo peerInfos[MAX_CLIENTS] = { NULL };
 RoomInfo roomInfos[1] = { NULL };
 
 void PrintTime();
+void ServerState_RebootRoom(int r);
+void ServerState_FirstBoot(argc, argv);
 
 void broadcastToPeersUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
@@ -103,7 +105,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 	// need to connect to server and then try to get the room
 	// from a CG_Message request to join a room, and this code
 	// should be in a completely different function
-	if (roomInfos[0].boolRoomLocked)
+	if (roomInfos[0].isRoomLocked)
 	{
 		printf("Connection rejected: Race in session.\n");
 		sendDisconnectReason(peer, D_ONGONG_RACE);
@@ -251,7 +253,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 		{
 			// clients can only connect during track selection,
 			// once the Client Gives CG_TRACK to server, close it
-			ri->boolRoomLocked = 1;
+			ri->isRoomLocked = 1;
 
 			struct SG_MessageTrack* s = &sgBuffer[0];
 			struct CG_MessageTrack* r = recvBuf;
@@ -286,7 +288,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->boolLockedIn = r->boolLockedIn;
 
 			peerInfos[peerID].characterID = s->characterID;
-			peerInfos[peerID].boolLoadSelf = s->boolLockedIn;
+			peerInfos[peerID].isLoaded = s->boolLockedIn;
 			broadcastToPeersReliable(s, s->size);
 			break;
 		}
@@ -294,7 +296,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 		case CG_STARTRACE:
 		{
 			printf("Ready to Race: %d\n", peerID);
-			peerInfos[peerID].boolRaceSelf = 1;
+			peerInfos[peerID].isReadyToRace = 1;
 			break;
 		}
 
@@ -344,7 +346,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			);
 
 			printf("End Race: %d %s\n", peerID, timeStr);
-			peerInfos[peerID].boolEndSelf = 1;
+			peerInfos[peerID].hasEndedRace = 1;
 
 			broadcastToPeersReliable(s, s->size);
 		}
@@ -403,12 +405,12 @@ void ProcessNewMessages() {
 
 					// if this client ended race, dont tell
 					// anyone that the client disconnected
-					if (peerInfos[peerID].boolEndSelf != 0)
+					if (peerInfos[peerID].hasEndedRace != 0)
 						return;
 
 					// dont block gameplay for everyone else
-					peerInfos[peerID].boolLoadSelf = 1;
-					peerInfos[peerID].boolRaceSelf = 1;
+					peerInfos[peerID].isLoaded = 1;
+					peerInfos[peerID].isReadyToRace = 1;
 
 					struct SG_MessageName sgBuffer;
 					struct SG_MessageName* s = &sgBuffer;
@@ -439,7 +441,6 @@ void ProcessNewMessages() {
 					// get room from peerID (wip)
 					int r = 0;
 
-					void ServerState_RebootRoom(int r);
 					ServerState_RebootRoom(r);
 				}
 
@@ -564,16 +565,16 @@ void ServerState_Tick()
 
 	for (int r = 0; r < 1; r++)
 	{
-		RoomInfo* ri = &roomInfos[r];
+		RoomInfo* roomInfo = &roomInfos[r];
 
-		if (!ri->boolLoadAll)
+		if (!roomInfo->isEachPeerLoaded)
 		{
-			ri->boolLoadAll = 1;
+			roomInfo->isEachPeerLoaded = 1;
 			for (int j = 0; j < clientCount; j++)
-				if (peerInfos[j].boolLoadSelf == 0)
-					ri->boolLoadAll = 0;
+				if (peerInfos[j].isLoaded == 0)
+					roomInfo->isEachPeerLoaded = 0;
 
-			if (ri->boolLoadAll)
+			if (roomInfo->isEachPeerLoaded)
 			{
 				printf("Start Loading: ");
 				PrintTime();
@@ -587,14 +588,14 @@ void ServerState_Tick()
 			}
 		}
 
-		if (!ri->boolRaceAll)
+		if (!roomInfo->isEachPeerReadyToRace)
 		{
-			ri->boolRaceAll = 1;
+			roomInfo->isEachPeerReadyToRace = 1;
 			for (int j = 0; j < clientCount; j++)
-				if (peerInfos[j].boolRaceSelf == 0)
-					ri->boolRaceAll = 0;
+				if (peerInfos[j].isReadyToRace == 0)
+					roomInfo->isEachPeerReadyToRace = 0;
 
-			if (ri->boolRaceAll)
+			if (roomInfo->isEachPeerReadyToRace)
 			{
 				printf("Start Race: ");
 				PrintTime();
@@ -608,14 +609,14 @@ void ServerState_Tick()
 			}
 		}
 
-		if (!ri->boolEndAll)
+		if (!roomInfo->hasEachPeerEndedRace)
 		{
-			ri->boolEndAll = 1;
+			roomInfo->hasEachPeerEndedRace = 1;
 			for (int j = 0; j < clientCount; j++)
-				if (peerInfos[j].boolEndSelf == 0)
-					ri->boolEndAll = 0;
+				if (peerInfos[j].hasEndedRace == 0)
+					roomInfo->hasEachPeerEndedRace = 0;
 
-			if (ri->boolEndAll)
+			if (roomInfo->hasEachPeerEndedRace)
 			{
 				printf("End Race: ");
 				PrintTime();
@@ -624,9 +625,7 @@ void ServerState_Tick()
 	}
 }
 
-int main(int argc, char** argv)
-{
-	ServerState_FirstBoot(argc, argv);
+int main(int argc, char** argv){
 
 	for(int r = 0; r < 1; r++)
 		ServerState_RebootRoom(r);
