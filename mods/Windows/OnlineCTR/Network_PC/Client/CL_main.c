@@ -1,13 +1,25 @@
 #define WIN32_LEAN_AND_MEAN
+#ifdef __WINDOWS__
 #include <windows.h>
+#endif
+#ifdef __linux__
+#include <dirent.h>
+#include <stdint.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
+#define Sleep(time) sleep(time);
+
+typedef uint32_t DWORD;   // DWORD = unsigned 32 bit value
+typedef uint16_t WORD;    // WORD = unsigned 16 bit value
+typedef uint8_t BYTE;     // BYTE = unsigned 8 bit value
+#endif
 
 #ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
 	#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #endif
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,6 +50,20 @@ void sendToHostUnreliable(const void* data, size_t size) {
 void sendToHostReliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
+}
+
+void system_pause() {
+	/* This is portable */
+	printf("Press any key to continue ...\n");
+	getchar();
+}
+
+void system_clear() {
+#ifdef __WINDOWS__
+	system_clear();
+#elif __linux__
+	printf("\e[1;1H\e[2J");
+#endif
 }
 
 void ProcessReceiveEvent(ENetPacket* packet)
@@ -320,7 +346,7 @@ void ProcessNewMessages()
 
 			case ENET_EVENT_TYPE_DISCONNECT:
 				// command prompt reset
-				system("cls");
+				system_clear();
 				PrintBanner(SHOW_NAME);
 				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
 				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
@@ -375,7 +401,7 @@ void DisconSELECT()
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
 		Sleep(2000);
-		//system("cls");
+		//system_clear();
 
 		// to go the lobby browser
 		octr->CurrState = 0;
@@ -471,11 +497,7 @@ void StatePC_Launch_EnterIP()
 		// 0.01s to 0.31s, must be more than one frame, so proper values reset themselves
 		random_sleep_time = 10 + rand() % 300;
 
-#ifdef __GNUC__
-		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-#else
 		Sleep(random_sleep_time);
-#endif
 	}
 
 	StaticRoomID = octr->serverRoom;
@@ -486,7 +508,7 @@ void StatePC_Launch_EnterIP()
 		// EUROPE
 		case 0:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			strncpy(dns_string, "eur1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -496,7 +518,7 @@ void StatePC_Launch_EnterIP()
 		// USA
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			strncpy(dns_string, "usa1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -506,7 +528,7 @@ void StatePC_Launch_EnterIP()
 		// USA WEST
 		case 2:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			strncpy(dns_string, "usa2.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 10666 + StaticRoomID;
 
@@ -536,7 +558,7 @@ void StatePC_Launch_EnterIP()
 			ip[strcspn(ip, "\n")] = '\0';
 
 			// check if the input is empty and set it to the default IP if so
-			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+			if (strlen(ip) == 0) strncpy(ip, DEFAULT_IP, IP_ADDRESS_SIZE);
 
 		private_server_port:
 			// port number
@@ -581,7 +603,7 @@ void StatePC_Launch_EnterIP()
 		// BRAZIL
 		case 4:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			strncpy(dns_string, "brz1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
@@ -591,7 +613,7 @@ void StatePC_Launch_EnterIP()
 		// AUSTRALIA
 		case 5:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			strncpy(dns_string, "aus1.online-ctr.net", sizeof(dns_string));
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 2096 + StaticRoomID;
 
@@ -925,7 +947,7 @@ void StatePC_Game_EndRace()
 			StartAnimation();
 
 			// command prompt reset
-			system("cls");
+			system_clear();
 			PrintBanner(SHOW_NAME);
 	
 			// reset everything
@@ -962,26 +984,31 @@ void (*ClientState[]) () = {
 
 int main()
 {
+#ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
+#endif
 
 	PrintBanner(DONT_SHOW_NAME);
 
 	// ask for the users online identification
 	printf(" Enter Your Online Name: ");
-	scanf_s("%s", name, (int)sizeof(name));
+	scanf("%s", name);
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
-	system("cls");
+	system_clear();
 	PrintBanner(SHOW_NAME);
 	printf("\n");
 
 	int numDuckInstances = 0;
 	char* duckTemplate = "duckstation";
+
+#ifdef __WINDOWS__
+	TCHAR duckNameT[100];
 	int duckPID = -1;
 
 	// copy from
@@ -1022,11 +1049,26 @@ int main()
 			}
 		}
 	}
+#elif __linux__
+	struct dirent *shm_dir;
+	char duckNameT[100];
+	DIR *shm_d = opendir("/dev/shm/");
+	int found = false;
+	if (shm_d) {
+		while ((shm_dir = readdir(shm_d)) != NULL) {
+			if (strncmp(shm_dir->d_name, duckTemplate, strlen(duckTemplate)) == 0) {
+				strcpy((char *)duckNameT, shm_dir->d_name);
+				numDuckInstances++;
+			}
+		}
+		closedir(shm_d);
+	}
+#endif
 
 	if (numDuckInstances == 0)
 	{
 		printf("Error: DuckStation is not running!\n\n");
-		system("pause");
+		system_pause();
 		exit(0);
 	}
 	else printf("Client: DuckStation detected\n");
@@ -1036,11 +1078,18 @@ int main()
 	if (numDuckInstances > 1)
 	{
 		printf("Warning: Multiple DuckStations detected\n");
+#ifdef __WINDOWS__
 		printf("Please enter the PID manually\n\n");
 
 		printf("DuckStation PID: ");
 		scanf_s("%s", pidStr, (int)sizeof(pidStr));
+#elif __linux__
+		// Can't really do much, just exit
+		system_pause();
+		exit(0);
+#endif
 	}
+#ifdef __WINDOWS__
 	else
 	{
 		sprintf_s(pidStr, 100, "%d", duckPID);
@@ -1049,19 +1098,32 @@ int main()
 	char duckName[100];
 	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
 
-	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
+ #endif
 
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
+#ifdef __WINDOWS__
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
 	if (pBuf == 0)
+#elif __linux__
+	int hFile;
+	if ((hFile = shm_open(duckNameT, O_RDWR, 0600)) == -1) {
+		printf("Error\n");
+	}
+	pBuf = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, hFile, 0);
+	if (pBuf == MAP_FAILED) {
+		printf("Error mmap\n");
+		printf("pBuf %s\n", pBuf);
+	}
+	if (pBuf == MAP_FAILED)
+#endif
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
-		system("pause");
-		system("cls");
+		system_pause();
+		system_clear();
 		main();
 	}
 
@@ -1095,7 +1157,7 @@ int main()
 	}
 
 	printf("\n");
-	system("pause");
+	system_pause();
 }
 
 #ifdef __WINDOWS__
