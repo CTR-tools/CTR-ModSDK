@@ -1,5 +1,5 @@
 
-#define VERSION 1007
+#define VERSION 1008
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
