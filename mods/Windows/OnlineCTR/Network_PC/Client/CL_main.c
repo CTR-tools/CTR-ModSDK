@@ -996,7 +996,7 @@ int main()
 
 	// ask for the users online identification
 	printf(" Enter Your Online Name: ");
-	sscanf("%s", name, (int)sizeof(name));
+	scanf("%s", name);
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
