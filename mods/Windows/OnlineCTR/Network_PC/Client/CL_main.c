@@ -62,7 +62,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageClientStatus* r = recvBuf;
 
-			octr->DriverID = r->ClientID;
+			octr->DriverID = r->clientID;
 			octr->NumDrivers = r->numClientsTotal;
 
 			if (r->version != VERSION)
