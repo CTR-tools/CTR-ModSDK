@@ -284,7 +284,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			// Set the timeout settings for the host
 			// now 800 for 1.5s timeout, should detect closed clients
-			enet_peer_timeout(peer, 1000000, 1000000, 2000);
+			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
 			sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
 			break;

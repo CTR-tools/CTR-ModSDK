@@ -725,7 +725,7 @@ void StatePC_Launch_EnterIP()
 	}
 
 	// 2-second timer
-	enet_peer_timeout(serverPeer, 1000000, 1000000, 2000);
+	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
 
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
