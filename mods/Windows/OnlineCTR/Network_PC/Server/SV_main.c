@@ -607,7 +607,7 @@ void ServerState_FirstBoot(int argc, char** argv)
 	address.host = ENET_HOST_ANY;
 	address.port = port;
 	server = enet_host_create(&address,
-		8	/* allow up to 8 clients */,
+		256	/* 8 clients in 16 rooms (128) plus more people in lobby */,
 		2	/* allow up to 2 channels to be used, 0 and 1 */,
 		0	/* assume any amount of incoming bandwidth */,
 		0	/* assume any amount of outgoing bandwidth */);
