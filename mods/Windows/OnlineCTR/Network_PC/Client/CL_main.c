@@ -75,7 +75,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 				// Monday -- icy tracks
 				case 1:
-					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x80000;
+					//*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x80000;
 					break;
 
 				// Wednesday -- super turbos
@@ -724,9 +724,8 @@ void StatePC_Launch_EnterIP()
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
 	{
-		// wait up to 5 seconds for the connection attempt to succeed
+		// wait up to 3 seconds for the connection attempt to succeed
 		if (enet_host_service(clientHost, &event, 3000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
-		if(0)
 		{
 			StopAnimation();
 			printf("Client: Successfully connected!  ");
