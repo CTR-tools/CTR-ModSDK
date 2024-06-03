@@ -372,9 +372,16 @@ void ProcessNewMessages()
 
 void PrintBanner(char show_name)
 {
-	printf(" OnlineCTR Client (press CTRL + C to quit)\n Build %s (%s)\n\n", __DATE__, __TIME__);
+	printf("    ____        ___            ________________ \n");
+	printf("   / __ \\____  / (_)___  ___  / ____/_  __/ __ \\\n");
+	printf("  / / / / __ \\/ / / __ \\/ _ \\/ /     / / / /_/ /\n");
+	printf(" / /_/ / / / / / / / / /  __/ /___  / / / _, _/ \n");
+	printf(" \\____/_/ /_/_/_/_/ /_/\\___/\\____/ /_/ /_/ |_|  \n\n");
+	printf(" OnlineCTR Client.\n");
+	printf(" Version: %s (%s).\n", __DATE__, __TIME__);
+	printf(" CTRL + C to exit.\n\n");
 
-	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
+	if (show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
 }
 
 void StartAnimation()
@@ -452,6 +459,10 @@ void printUntilPeriod(const char *str)
 		i++;
 	}
 }
+
+// Define global variables to store the last connected address
+char lastConnectedIP[100];
+int lastConnectedPort = -1; // Initialize with default port
 
 int StaticServerID=0;
 int StaticRoomID=0;
@@ -550,12 +561,45 @@ void StatePC_Launch_EnterIP()
 		default:
 		{
 			StopAnimation();
+			printf("Client: Private Room - Chosen...\n");
+
+			//Check for last connected IP.
+			if (lastConnectedPort != -1)
+			{
+				//Was a private server. Ask if they want to connect to previous private room.
+				printf("Client: Private Room - Previous room found.\n");
+				printf("Reconnect to previous private room's IP/Port? (Y/N): ");
+				char reconnectChoice;
+				scanf_s(" %c", &reconnectChoice, sizeof(reconnectChoice));
+
+				//Get choice. Yes.
+				if (reconnectChoice == 'Y' || reconnectChoice == 'y')
+				{
+					strcpy_s(ip, sizeof(ip), lastConnectedIP);
+					port = lastConnectedPort;
+					goto private_server_set;
+				}
+
+				//Get choice. No / Other.
+				else
+				{
+					goto private_server_ip;
+
+				}
+			}
+			else
+			{
+				printf("Client: Private Room - Couldn't find a previous room.");
+			}
+
+
 
 		private_server_ip:
 			ClearInputBuffer(); // clear any extra input in the buffer
 
 			// IP address
-			printf("\nEnter Server IPV4 Address: ");
+			printf("\n\nNew Private Room Connection:");
+			printf("\nServer IPV4 Address: ");
 
 			if (fgets(ip, sizeof(ip), stdin) == NULL)
 			{
@@ -569,6 +613,8 @@ void StatePC_Launch_EnterIP()
 
 			// check if the input is empty and set it to the default IP if so
 			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+
+			strncpy_s(lastConnectedIP, sizeof(lastConnectedIP), ip, IP_ADDRESS_SIZE);
 
 		private_server_port:
 			// port number
@@ -601,10 +647,12 @@ void StatePC_Launch_EnterIP()
 
 				goto private_server_port;
 			}
+			lastConnectedPort = port;
 
+
+		private_server_set:
 			enet_address_set_host(&addr, ip);
 			addr.port = port;
-
 			localServer = true;
 
 			break;
