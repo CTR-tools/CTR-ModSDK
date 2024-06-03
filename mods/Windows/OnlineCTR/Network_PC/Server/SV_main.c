@@ -107,40 +107,33 @@ void SendRoomData(ENetPeer* peer)
 	mr.version = VERSION;
 	mr.size = sizeof(struct SG_MessageRooms);
 
-	// required for bit packing :4
-	mr.numClients01 = roomInfos[0x0].clientCount;
-	mr.numClients02 = roomInfos[0x1].clientCount;
-	mr.numClients03 = roomInfos[0x2].clientCount;
-	mr.numClients04 = roomInfos[0x3].clientCount;
-	mr.numClients05 = roomInfos[0x4].clientCount;
-	mr.numClients06 = roomInfos[0x5].clientCount;
-	mr.numClients07 = roomInfos[0x6].clientCount;
-	mr.numClients08 = roomInfos[0x7].clientCount;
-	mr.numClients09 = roomInfos[0x8].clientCount;
-	mr.numClients10 = roomInfos[0x9].clientCount;
-	mr.numClients11 = roomInfos[0xa].clientCount;
-	mr.numClients12 = roomInfos[0xb].clientCount;
-	mr.numClients13 = roomInfos[0xc].clientCount;
-	mr.numClients14 = roomInfos[0xd].clientCount;
-	mr.numClients15 = roomInfos[0xe].clientCount;
-	mr.numClients16 = roomInfos[0xf].clientCount;
+#define SETUP(x, index) \
+	x = roomInfos[0x0].clientCount; \
+	if (roomInfos[0x0].boolRoomLocked) \
+	{ \
+		if(x == 1) \
+			x = 9; \
+		else \
+			x += 7; \
+	}
 
-	if (roomInfos[0x0].boolRoomLocked) mr.numClients01 = 0xF;
-	if (roomInfos[0x1].boolRoomLocked) mr.numClients02 = 0xF;
-	if (roomInfos[0x2].boolRoomLocked) mr.numClients03 = 0xF;
-	if (roomInfos[0x3].boolRoomLocked) mr.numClients04 = 0xF;
-	if (roomInfos[0x4].boolRoomLocked) mr.numClients05 = 0xF;
-	if (roomInfos[0x5].boolRoomLocked) mr.numClients06 = 0xF;
-	if (roomInfos[0x6].boolRoomLocked) mr.numClients07 = 0xF;
-	if (roomInfos[0x7].boolRoomLocked) mr.numClients08 = 0xF;
-	if (roomInfos[0x8].boolRoomLocked) mr.numClients09 = 0xF;
-	if (roomInfos[0x9].boolRoomLocked) mr.numClients10 = 0xF;
-	if (roomInfos[0xa].boolRoomLocked) mr.numClients11 = 0xF;
-	if (roomInfos[0xb].boolRoomLocked) mr.numClients12 = 0xF;
-	if (roomInfos[0xc].boolRoomLocked) mr.numClients13 = 0xF;
-	if (roomInfos[0xd].boolRoomLocked) mr.numClients14 = 0xF;
-	if (roomInfos[0xe].boolRoomLocked) mr.numClients15 = 0xF;
-	if (roomInfos[0xf].boolRoomLocked) mr.numClients16 = 0xF;
+	// required for bit packing :4
+	SETUP(mr.numClients01, 0x0);
+	SETUP(mr.numClients02, 0x1);
+	SETUP(mr.numClients03, 0x2);
+	SETUP(mr.numClients04, 0x3);
+	SETUP(mr.numClients05, 0x4);
+	SETUP(mr.numClients06, 0x5);
+	SETUP(mr.numClients07, 0x6);
+	SETUP(mr.numClients08, 0x7);
+	SETUP(mr.numClients09, 0x8);
+	SETUP(mr.numClients10, 0x9);
+	SETUP(mr.numClients11, 0xa);
+	SETUP(mr.numClients12, 0xb);
+	SETUP(mr.numClients13, 0xc);
+	SETUP(mr.numClients14, 0xd);
+	SETUP(mr.numClients15, 0xe);
+	SETUP(mr.numClients16, 0xf);
 
 	sendToPeerReliable(peer, &mr, mr.size);
 }

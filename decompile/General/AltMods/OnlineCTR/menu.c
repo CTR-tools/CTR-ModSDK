@@ -152,8 +152,9 @@ void NewPage_ServerRoom()
 		sdata->lngStrings[0x9a+i][5] = GetRoomChar(8*pn + i+1);
 		sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]);
 		
-		if(octr->clientCount[8*pn+i] == 0xf)
-			sdata->lngStrings[0x9a+i][9] = 'x';
+		// handle locked rows
+		if(octr->clientCount[8*pn+i] > 8)
+			sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]) - 7;
 	}
 	
 	int numRooms = GetNumRoom();
@@ -162,7 +163,7 @@ void NewPage_ServerRoom()
 	{
 		// unlock row if...
 		if(8*pn+i < numRooms)
-			if(octr->clientCount[8*pn+i] != 0xf)
+			if(octr->clientCount[8*pn+i] <= 8)
 				menuRows[i].stringIndex &= 0x7FFF;
 	}
 }
