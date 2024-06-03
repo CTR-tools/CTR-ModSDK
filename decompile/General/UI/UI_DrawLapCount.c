@@ -37,7 +37,7 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
  
   char message[8];
   char* str = &message[0];
-  sprintf(str, &sdata->s_intDividing[0], currLaps, numLaps);
+  sprintf(str, &sdata->s_intDividing[0], currLap, numLaps);
  
   #else
   
