@@ -14,58 +14,10 @@ void StatePS1_Launch_EnterIP()
 	MenuWrites_ServerCountry();
 	
 	// If already picked
-	if(MenuFinished() == 1)
-	{
-		// if picked PRIVATE
-		if((octr->serverCountry&3) == 3)
-		{
-			// lock-in ROOM, skip room selection
-			octr->serverLockIn2 = 1;
-			return;
-		}
-		
-		// do this without adding to enum,
-		// cause that means changing PS1/PC
-		void StatePS1_Launch_EnterRoom();
-		StatePS1_Launch_EnterRoom();
-		return;
-	}
-	
-	// first frame here
-	if(sdata->ptrActiveMenu == 0)
-	{
-		ResetMenu();
-		NewPage_ServerCountry();
-
-	}
-	
-	int old = octr->PageNumber;
-	UpdateMenu();
-	if(old != octr->PageNumber)
-		NewPage_ServerCountry();
-}
-
-void StatePS1_Launch_EnterRoom()
-{
-	// these can share same register with optimization
-	int buttons;
-	
-	MenuWrites_ServerRoom();
-	
-	// If already picked
 	if(MenuFinished() == 1) return;
 	
-	// first frame here
-	if(sdata->ptrActiveMenu == 0)
-	{
-		ResetMenu();
-		NewPage_ServerRoom();
-	}
-	
-	int old = octr->PageNumber;
 	UpdateMenu();
-	if(old != octr->PageNumber)
-		NewPage_ServerRoom();
+	NewPage_ServerCountry();
 }
 
 void StatePS1_Launch_ConnectFailed()
@@ -79,16 +31,8 @@ void StatePS1_Launch_ConnectFailed()
 		0x100,0xB0,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
-void StatePS1_Launch_FirstInit()
+void ResetPsxGlobals()
 {
-	// starting at index 381 (0x17d) is
-	// dialogue for adventure hints
-	int i;
-	
-	// initialize string pointer,
-	// this works cause "OnlineCTR" is stored in RDATA
-	sdata->lngStrings[0x17d] = "OnlineCTR";
-	
 	// unlock everything
 	sdata->advProgress.rewards[0] = 0xffffffff;
 	sdata->advProgress.rewards[1] = 0xffffffff;
@@ -107,7 +51,7 @@ void StatePS1_Launch_FirstInit()
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
 
-	for(i = 0; i < 8; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		data.characterIDs[i] = 0;
 		octr->boolLockedInCharacters[i] = 0;
@@ -115,6 +59,28 @@ void StatePS1_Launch_FirstInit()
 }
 
 extern struct RectMenu menu;
+
+// should rename to EnterRoom
+void StatePS1_Launch_FirstInit()
+{
+	// these can share same register with optimization
+	int buttons;
+	
+	DecalFont_DrawLine("For Special Events, pick odd room, 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	DecalFont_DrawLine("For Classic Game, pick even room, 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	
+	MenuWrites_ServerRoom();
+	
+	// If already picked
+	if(MenuFinished() == 1) 
+	{
+		ResetPsxGlobals();
+		return;
+	}
+	
+	UpdateMenu();
+	NewPage_ServerRoom();
+}
 
 void StatePS1_Lobby_AssignRole()
 {	
@@ -157,18 +123,8 @@ void StatePS1_Lobby_HostTrackPick()
 	
 	PrintCharacterStats();
 	
-	// first frame here
-	if(sdata->ptrActiveMenu == 0)
-	{
-		ResetMenu();
-		NewPage_Tracks();
-
-	}
-	
-	int old = octr->PageNumber;
 	UpdateMenu();
-	if(old != octr->PageNumber)
-		NewPage_Tracks();
+	NewPage_Tracks();
 }
 
 void FakeState_Lobby_HostLapPick()
@@ -183,12 +139,8 @@ void FakeState_Lobby_HostLapPick()
 	
 	PrintCharacterStats();
 	
-	// first frame here
-	if(sdata->ptrActiveMenu == 0)
-	{
-		ResetMenu();
-		NewPage_Laps();
-	}
+	UpdateMenu();
+	NewPage_Laps();
 }
 
 void StatePS1_Lobby_GuestTrackWait()
@@ -217,18 +169,9 @@ void StatePS1_Lobby_CharacterPick()
 	
 	PrintCharacterStats();
 	PrintRecvTrack();
-			
-	// first frame here
-	if(sdata->ptrActiveMenu == 0)
-	{
-		ResetMenu();
-		NewPage_Characters();
-	}
 	
-	int old = octr->PageNumber;
 	UpdateMenu();
-	if(old != octr->PageNumber)
-		NewPage_Characters();
+	NewPage_Characters();
 	
 	// get menu
 	struct RectMenu* b = sdata->ptrActiveMenu;
@@ -236,7 +179,7 @@ void StatePS1_Lobby_CharacterPick()
 	if(b != 0)
 	{
 		// update real-time
-		data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+		data.characterIDs[0] = (8 * octr->PageNumber) + b->rowSelected;
 	}
 }
 

@@ -49,6 +49,38 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	// switch will compile into a jmp table, no funcPtrs needed
 	switch (((struct SG_Header*)recvBuf)->type)
 	{
+		case SG_ROOMS:
+		{
+			struct SG_MessageRooms* r = recvBuf;
+
+			// reopen the room menu,
+			// either first time getting rooms,
+			// or refresh after joining refused
+			octr->serverLockIn2 = 0;
+
+			octr->numRooms = r->numRooms;
+			
+			octr->clientCount[0x0] = r->numClients01;
+			octr->clientCount[0x1] = r->numClients02;
+			octr->clientCount[0x2] = r->numClients03;
+			octr->clientCount[0x3] = r->numClients04;
+			octr->clientCount[0x4] = r->numClients05;
+			octr->clientCount[0x5] = r->numClients06;
+			octr->clientCount[0x6] = r->numClients07;
+			octr->clientCount[0x7] = r->numClients08;
+			octr->clientCount[0x8] = r->numClients09;
+			octr->clientCount[0x9] = r->numClients10;
+			octr->clientCount[0xa] = r->numClients11;
+			octr->clientCount[0xb] = r->numClients12;
+			octr->clientCount[0xc] = r->numClients13;
+			octr->clientCount[0xd] = r->numClients14;
+			octr->clientCount[0xe] = r->numClients15;
+			octr->clientCount[0xf] = r->numClients16;
+
+			break;
+		}
+
+		// Assigned to room
 		case SG_NEWCLIENT:
 		{
 			struct SG_MessageClientStatus* r = recvBuf;
@@ -89,44 +121,21 @@ void ProcessReceiveEvent(ENetPacket* packet)
 					break;
 			}
 
+			// reply to server with your name
+			*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
+			*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
+			*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
+
+			struct CG_MessageName m = { 0 };
+			m.type = CG_NAME;
+			m.size = sizeof(struct CG_MessageName);
+			memcpy(&m.name[0], &name[0], 0xC);
+			sendToHostReliable(&m, m.size);
+
 			// choose to get host menu or guest menu
 			octr->CurrState = LOBBY_ASSIGN_ROLE;
 			break;
 		}
-
-#if 0
-		case SG_DROPCLIENT:
-		{
-			struct SG_MessageClientStatus* r = recvBuf;
-
-			int clientDropped = r->clientID;
-			octr->NumDrivers = r->numClientsTotal;
-
-			// fix driver IDs
-			if (clientDropped == octr->DriverID) break;
-			if (clientDropped < octr->DriverID) slot = clientDropped + 1;
-			if (clientDropped > octr->DriverID) slot = clientDropped;
-
-			for (int i = slot; i < octr->NumDrivers; i++)
-			{
-				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] = *(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
-				octr->boolLockedInCharacters[i] = octr->boolLockedInCharacters[i + 1];
-			}
-
-			// clientID is the client disconnected
-			if (octr->DriverID > clientDropped) octr->DriverID--;
-
-			printf("Client: Updated identification: %d/%d\n", octr->DriverID, octr->NumDrivers);
-
-			// if you are new host
-			if (octr->DriverID == 0)
-			{
-				if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT) octr->CurrState = LOBBY_HOST_TRACK_PICK;
-			}
-
-			break;
-		}
-#endif
 
 		case SG_NAME:
 		{
@@ -136,6 +145,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID == octr->DriverID) break;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
+
+			octr->NumDrivers = r->numClientsTotal;
 
 			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
 
@@ -486,7 +497,7 @@ void StatePC_Launch_EnterIP()
 	if (serverReconnect == false)
 	{
 		// return now if the server selection hasn't been selected yet
-		if (octr->serverLockIn2 == 0)
+		if (octr->serverLockIn1 == 0)
 			return;
 	}
 
@@ -510,7 +521,6 @@ void StatePC_Launch_EnterIP()
 #endif
 	}
 
-	StaticRoomID = octr->serverRoom;
 	StaticServerID = octr->serverCountry;
 
 	switch (octr->serverCountry)
@@ -520,7 +530,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + StaticRoomID;
+			addr.port = 65001;
 
 			break;
 		}
@@ -530,7 +540,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "sync.kevman95.com");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + StaticRoomID;
+			addr.port = 65001;
 
 			break;
 		}
@@ -540,14 +550,53 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 10666 + StaticRoomID;
+			addr.port = 10666;
 
 			break;
 		}
 
-		// PRIVATE SERVER (3 or 7)	
+		// BRAZIL
 		case 3:
-		default:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 65001;
+
+			break;
+		}
+
+		// AUSTRALIA
+		case 4:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 2096;
+
+			break;
+		}
+
+		// BETA 1
+		case 5:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "127.0.0.1");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 1234;
+
+			break;
+		}
+
+		// BETA 2
+		case 6:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "127.0.0.1");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 1234;
+
+			break;
+		}
+
+		// PRIVATE SERVER
+		case 7:
 		{
 			StopAnimation();
 
@@ -606,26 +655,6 @@ void StatePC_Launch_EnterIP()
 			addr.port = port;
 
 			localServer = true;
-
-			break;
-		}
-
-		// BRAZIL
-		case 4:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001 + StaticRoomID;
-
-			break;
-		}
-
-		// AUSTRALIA
-		case 5:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 2096 + StaticRoomID;
 
 			break;
 		}
@@ -698,17 +727,6 @@ void StatePC_Launch_EnterIP()
 	// 2-second timer
 	enet_peer_timeout(serverPeer, 1000000, 1000000, 2000);
 
-	// write name to slot[0]
-	*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
-	*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
-	*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
-
-	struct CG_MessageName m = { 0 };
-	m.type = CG_NAME;
-	m.size = sizeof(struct CG_MessageName);
-	memcpy(&m.name[0], &name[0], 0xC);
-	sendToHostReliable(&m, m.size);
-	
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
 
@@ -724,13 +742,63 @@ void StatePC_Launch_ConnectFailed()
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
+int connAttempt = 0;
+int countFrame = 0;
 void StatePC_Launch_FirstInit()
 {
 	ProcessNewMessages();
+
+	countFrame++;
+	if (countFrame == 60)
+	{
+		countFrame = 0;
+
+		// send junk data, to trigger server response
+		struct CG_MessageRoom mr;
+		mr.type = CG_JOINROOM;
+		mr.room = 0xFF;
+		mr.size = sizeof(struct CG_MessageRoom);
+
+		sendToHostReliable(&mr, mr.size);
+	}
+
+	if (serverReconnect)
+	{
+		// assume room chosen
+		octr->serverLockIn2 = 1;
+
+		// have not connected yet
+		connAttempt = 0;
+
+		// no more override code
+		serverReconnect = 0;
+	}
+
+	// wait for room to be chosen
+	if (!octr->serverLockIn2)
+	{
+		connAttempt = 0;
+		return;
+	}
+
+	// dont send CG_JoinRoom twice
+	if (connAttempt == 1)
+		return;
+
+	connAttempt = 1;
+
+	struct CG_MessageRoom mr;
+	mr.type = CG_JOINROOM;
+	mr.room = octr->serverRoom;
+	mr.size = sizeof(struct CG_MessageRoom);
+
+	sendToHostReliable(&mr, mr.size);
 }
 
 void StatePC_Lobby_AssignRole()
 {
+	connAttempt = 0;
+	countFrame = 0;
 	ProcessNewMessages();
 }
 
@@ -962,9 +1030,9 @@ void StatePC_Game_EndRace()
 	
 			// reset everything
 			octr->CurrState = -1;
-	
-			// not 3 or 7, not private server
-			if ((StaticServerID&3) != 3)
+
+			// if not private server
+			if (StaticServerID != 7)
 			{
 				octr->serverLockIn2 = 0; // server selection is not done
 				serverReconnect = true; // yes we want to reconnect

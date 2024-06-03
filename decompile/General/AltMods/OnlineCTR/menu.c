@@ -1,36 +1,13 @@
-struct MenuRow menuRows[5] =
+struct MenuRow menuRows[9] =
 {	
-	{
-		.stringIndex = 0,
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
-		.rowOnPressLeft = 0,
-		.rowOnPressRight = 0,
-	},
-	
-	{
-		.stringIndex = 0,
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 2,
-		.rowOnPressLeft = 1,
-		.rowOnPressRight = 1,
-	},
-	
-	{
-		.stringIndex = 0,
-		.rowOnPressUp = 1,
-		.rowOnPressDown = 3,
-		.rowOnPressLeft = 2,
-		.rowOnPressRight = 2,
-	},
-	
-	{
-		.stringIndex = 0,
-		.rowOnPressUp = 2,
-		.rowOnPressDown = 3,
-		.rowOnPressLeft = 3,
-		.rowOnPressRight = 3,
-	},
+	{0,0,1,0,0},
+	{0,0,2,1,1},
+	{0,1,3,2,2},
+	{0,2,4,3,3},
+	{0,3,5,4,4},
+	{0,4,6,5,5},
+	{0,5,7,6,6},
+	{0,6,7,7,7},
 	
 	// NULL, end of menu
 	{
@@ -47,7 +24,7 @@ void RECTMENU_OnPressX(struct RectMenu* b);
 struct RectMenu menu =
 {
 	// custom string made myself
-	.stringIndexTitle = 0x17d, 
+	.stringIndexTitle = 0x4e, 
 	
 	.posX_curr = 0, // X position
 	.posY_curr = 0,  // Y position
@@ -56,7 +33,7 @@ struct RectMenu menu =
 	
 	// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
 	// 0x100000 disables TRIANGLE button to prevent crashing
-	.state = 0x100003,
+	.state = 0x100083,
 
 	.rows = menuRows,
 
@@ -93,35 +70,34 @@ void NewPage_ServerCountry()
 	menu.posX_curr = 0x198; // X position
 	menu.posY_curr = 0x84;  // Y position
 	
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 0x9a+i;
 	}
 	
-	if(octr->PageNumber == 0)
-	{
-		// override "LAPS" "3/5/7"
-		sdata->lngStrings[0x9a] = "EUR -- 12 rooms";
-		sdata->lngStrings[0x9b] = "USA -- 16 rooms";
-		sdata->lngStrings[0x9c] = "MEX -- 12 rooms";
-		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
-	}
+	// override "LAPS" "3/5/7", 
+	// and other unimportant strings
+	sdata->lngStrings[0x9a] = "Europe";
+	sdata->lngStrings[0x9b] = "USA NYC";
+	sdata->lngStrings[0x9c] = "Mexico";
+	sdata->lngStrings[0x9d] = "Brazil";
+	sdata->lngStrings[0x9e] = "Australia";
+	sdata->lngStrings[0x9f] = "BETA1";
+	sdata->lngStrings[0xa0] = "BETA2";
+	sdata->lngStrings[0xa1] = "PRIVATE ROOM"; // len=14
 	
-	else
-	{
-		// override "LAPS" "3/5/7"
-		sdata->lngStrings[0x9a] = "BRZ -- 4 rooms";
-		sdata->lngStrings[0x9b] = "AUS -- 1 room";
-		sdata->lngStrings[0x9c] = "-";
-		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
-		
-		menuRows[2].stringIndex |= 0x8000;
-	}
+	#ifdef ONLINE_BETA_MODE
+	for(i = 0; i < 5; i++)
+	#else
+	for(i = 5; i < 7; i++)
+	#endif
+	
+		menuRows[i].stringIndex |= 0x8000;
 }
 
 void MenuWrites_ServerCountry()
 {
-	pageMax = 1;
+	pageMax = 0;
 	OnPressX_SetPtr = &octr->serverCountry;
 	OnPressX_SetLock = &octr->serverLockIn1;
 }
@@ -129,21 +105,15 @@ void MenuWrites_ServerCountry()
 int GetNumRoom()
 {
 	int numRooms = 0;
-	
+
+#if 0	
 	switch(octr->serverCountry)
 	{
-		// 6+6+6+1+1=18
-		// Player Cap = 160 players
-		case 0: numRooms = 12; break; // EUR Looper
-		case 1: numRooms = 16; break; // USA Kevman95
-		case 2: numRooms = 12; break; // MEX Claudio
-		case 3: numRooms = 1; break; // PRIVATE ROOM
-		case 4: numRooms = 4; break; // BZL Pedro
-		case 5: numRooms = 1; break; // AUS Matt
-		
+
 	}
+#endif
 	
-	return numRooms;
+	return 16;
 }
 
 int GetRoomChar(int pn)
@@ -165,28 +135,35 @@ void NewPage_ServerRoom()
 	int i;
 	
 	// override "LAPS" "3/5/7"
-	sdata->lngStrings[0x9a] = "ROOM 1";
-	sdata->lngStrings[0x9b] = "ROOM 2";
-	sdata->lngStrings[0x9c] = "ROOM 3";
-	sdata->lngStrings[0x9d] = "ROOM 4";
+	sdata->lngStrings[0x9a] = "ROOM 1 - x/8";
+	sdata->lngStrings[0x9b] = "ROOM 2 - x/8";
+	sdata->lngStrings[0x9c] = "ROOM 3 - x/8";
+	sdata->lngStrings[0x9d] = "ROOM 4 - x/8";
+	sdata->lngStrings[0x9e] = "ROOM 5 - x/8";
+	sdata->lngStrings[0x9f] = "ROOM 6 - x/8";
+	sdata->lngStrings[0xa0] = "ROOM 7 - x/8";
+	sdata->lngStrings[0xa1] = "ROOM 8 - x/8";
 	
 	int pn = octr->PageNumber;
-	sdata->lngStrings[0x9a][5] = GetRoomChar(4*pn+1);
-	sdata->lngStrings[0x9b][5] = GetRoomChar(4*pn+2);
-	sdata->lngStrings[0x9c][5] = GetRoomChar(4*pn+3);
-	sdata->lngStrings[0x9d][5] = GetRoomChar(4*pn+4);
 	
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 0x809a+i;
+		sdata->lngStrings[0x9a+i][5] = GetRoomChar(8*pn + i+1);
+		sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]);
+		
+		if(octr->clientCount[8*pn+i] == 0xf)
+			sdata->lngStrings[0x9a+i][9] = 'x';
 	}
 	
 	int numRooms = GetNumRoom();
 	
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 8; i++)
 	{
-		if(4*pn+i < numRooms)
-			menuRows[i].stringIndex &= 0x7FFF;
+		// unlock row if...
+		if(8*pn+i < numRooms)
+			if(octr->clientCount[8*pn+i] != 0xf)
+				menuRows[i].stringIndex &= 0x7FFF;
 	}
 }
 
@@ -198,7 +175,7 @@ void MenuWrites_ServerRoom()
 	// 2: 9-12 rooms
 
 	int numRooms = GetNumRoom();
-	pageMax = ((numRooms-1)&0xfffc)/4;
+	pageMax = ((numRooms-1)&0xfffc)/8;
 	
 	OnPressX_SetPtr = &octr->serverRoom;
 	OnPressX_SetLock = &octr->serverLockIn2;
@@ -208,16 +185,16 @@ void NewPage_Tracks()
 {	
 	int i;
 	
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 
-			data.metaDataLEV[4*octr->PageNumber+i].name_LNG;
+			data.metaDataLEV[8*octr->PageNumber+i].name_LNG;
 	}
 }
 
 void MenuWrites_Tracks()
 {	
-	pageMax = 7;
+	pageMax = 3;
 	OnPressX_SetPtr = &octr->levelID;
 	OnPressX_SetLock = &octr->boolLockedInLevel;
 }
@@ -236,6 +213,9 @@ void NewPage_Laps()
 	for(i = 0; i < 4; i++)
 	{
 		menuRows[i].stringIndex = 0x9a+i;
+		
+		sdata->lngStrings[0x9a+4+i] = "-";
+		menuRows[4+i].stringIndex = 0x809a+4+i;
 	}
 }
 
@@ -249,29 +229,31 @@ void NewPage_Characters()
 {
 	int i;
 	
-	for(i = 0; i < 4; i++)
+	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 
-			data.MetaDataCharacters[4*octr->PageNumber+i].name_LNG_long;
+			data.MetaDataCharacters[8*octr->PageNumber+i].name_LNG_long;
 	}
 }
 
 void MenuWrites_Characters()
 {	
-	pageMax = 3;
+	pageMax = 1;
 	OnPressX_SetPtr = &data.characterIDs[0];
 	OnPressX_SetLock = &octr->boolLockedInCharacters[octr->DriverID];
 }
 
-void ResetMenu()
-{
-	octr->PageNumber = 0;
-	menu.rowSelected = 0;
-	RECTMENU_Show(&menu);
-}
-
+int pressedX = 0;
 void UpdateMenu()
-{	
+{
+	if (pressedX == 1)
+	{
+		pressedX = 0;
+		menu.rowSelected = 0;
+	}
+	
+	RECTMENU_Show(&menu);
+
 	int buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// BTN_LEFT = 0x4
@@ -294,9 +276,9 @@ void UpdateMenu()
 		('/' << 8) |
 		(('1' + pageMax) << 16);
 	
-	DECOMP_MainFreeze_ConfigDrawArrows(menu.posX_curr, 0x38, &string);
+	DECOMP_MainFreeze_ConfigDrawArrows(menu.posX_curr, 0x48, &string);
 	
-	DecalFont_DrawLine(&string,menu.posX_curr,0x38,FONT_BIG,JUSTIFY_CENTER|WHITE);
+	DecalFont_DrawLine(&string,menu.posX_curr,0x48,FONT_BIG,JUSTIFY_CENTER|WHITE);
 }
 
 void RECTMENU_OnPressX(struct RectMenu* b)
@@ -306,8 +288,11 @@ void RECTMENU_OnPressX(struct RectMenu* b)
 	RECTMENU_Hide(b);
 	sdata->ptrDesiredMenu = 0;
 	
-	*OnPressX_SetPtr = (4 * octr->PageNumber) + b->rowSelected;
+	*OnPressX_SetPtr = (8 * octr->PageNumber) + b->rowSelected;
 	*OnPressX_SetLock = 1;
+	
+	octr->PageNumber = 0;
+	pressedX = 1;
 	
 	RECTMENU_ClearInput();
 }
@@ -327,7 +312,8 @@ void PrintCharacterStats()
 	
 	int gameMode2 = sdata->gGT->gameMode2;
 	
-	char* title = 0;
+	char* title = "Classic Gameplay Mode";
+	
 	if((gameMode2 & 0x80000) != 0)
 	{
 		title = "Monday Icy Tracks";
@@ -341,10 +327,10 @@ void PrintCharacterStats()
 		title = "Friday Unlimited Masks";
 	}
 	
-	if(title != 0)
-	{
-		DecalFont_DrawLine(title,0x100,0x10,FONT_SMALL,JUSTIFY_CENTER|WHITE);
-	}
+	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);
+	
+	
+	
 	
 	int numDead = 0;
 	for(i = 0; i < octr->NumDrivers; i++)

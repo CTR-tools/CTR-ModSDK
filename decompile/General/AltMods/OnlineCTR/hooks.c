@@ -33,21 +33,6 @@ void octr_entryHook()
 	// default for first LEV, before gameplay
 	memset(octr, 0, sizeof(struct OnlineCTR));
 	octr->IsBootedPS1 = 1;
-
-	// FSM for menus
-	octr->funcs[LAUNCH_ENTER_PID] = StatePS1_Launch_EnterPID;
-	octr->funcs[LAUNCH_ENTER_IP] = StatePS1_Launch_EnterIP;
-	octr->funcs[LAUNCH_CONNECT_FAILED] = StatePS1_Launch_ConnectFailed;
-	octr->funcs[LAUNCH_FIRST_INIT] = StatePS1_Launch_FirstInit;
-	octr->funcs[LOBBY_ASSIGN_ROLE] = StatePS1_Lobby_AssignRole;
-	octr->funcs[LOBBY_HOST_TRACK_PICK] = StatePS1_Lobby_HostTrackPick;
-	octr->funcs[LOBBY_GUEST_TRACK_WAIT] = StatePS1_Lobby_GuestTrackWait;
-	octr->funcs[LOBBY_CHARACTER_PICK] = StatePS1_Lobby_CharacterPick;
-	octr->funcs[LOBBY_WAIT_FOR_LOADING] = StatePS1_Lobby_WaitForLoading;
-	octr->funcs[LOBBY_START_LOADING] = StatePS1_Lobby_StartLoading;
-	octr->funcs[GAME_WAIT_FOR_RACE] = StatePS1_Game_WaitForRace;
-	octr->funcs[GAME_START_RACE] = StatePS1_Game_StartRace;
-	octr->funcs[GAME_END_RACE] = StatePS1_Game_EndRace;
 }
 
 // this runs after the end of MainInit_FinalizeInit,
@@ -59,7 +44,6 @@ void octr_initHook()
 	// small stack pool, pause thread (those threads can't pause)
 	PROC_BirthWithObject(0x30f, ThreadFunc, 0, 0);
 	
-	sdata->lngStrings[0x17D] = "OnlineCTR";
 	sdata->lngStrings[0x4e] = "OnlineCTR";
 	
 	struct GameTracker* gGT = sdata->gGT;

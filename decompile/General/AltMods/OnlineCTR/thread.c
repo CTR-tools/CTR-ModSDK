@@ -1,3 +1,20 @@
+void (*funcs[NUM_STATES]) () =
+{
+	StatePS1_Launch_EnterPID,
+	StatePS1_Launch_EnterIP,
+	StatePS1_Launch_ConnectFailed,
+	StatePS1_Launch_FirstInit,
+	StatePS1_Lobby_AssignRole,
+	StatePS1_Lobby_HostTrackPick,
+	StatePS1_Lobby_GuestTrackWait,
+	StatePS1_Lobby_CharacterPick,
+	StatePS1_Lobby_WaitForLoading,
+	StatePS1_Lobby_StartLoading,
+	StatePS1_Game_WaitForRace,
+	StatePS1_Game_StartRace,
+	StatePS1_Game_EndRace
+};
+
 void ThreadFunc(struct Thread* t)
 {
 	int i;
@@ -28,10 +45,10 @@ void ThreadFunc(struct Thread* t)
 	// only disable for no$psx testing,
 	// which can force in-game with 8000c000=LOBBY_START_LOADING
 	#if 1
-	for(i = 3; i >= 0; i--)
+	for(i = 6; i >= 0; i--)
 		octr->time[i+1] = octr->time[i];
 	
-	for(i = 3; i >= 0; i--)
+	for(i = 6; i >= 0; i--)
 		if(octr->time[i+1] != octr->time[i])
 			break;
 	
@@ -84,7 +101,7 @@ void ThreadFunc(struct Thread* t)
 	}
 	
 	if (octr->CurrState >= 0)
-		octr->funcs[octr->CurrState]();
+		funcs[octr->CurrState]();
 	
 	if(strcmp("debugcam", &octr->nameBuffer[0]) == 0)
 	{

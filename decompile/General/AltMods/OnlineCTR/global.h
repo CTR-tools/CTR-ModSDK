@@ -1,5 +1,6 @@
 
-#define VERSION 1007
+#define VERSION 1008
+//#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
@@ -28,14 +29,6 @@
 #define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
 #define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
-
-enum ServerList {
-	EUR_LOOPER_1,
-	EUR_LOOPER_2,
-	USA_NIKO_1,
-	AUS_MATT_1,
-	NUM_SERVERS
-};
 
 enum ClientState
 {
@@ -77,13 +70,16 @@ struct OnlineCTR
 	// 0xC
 	unsigned char IsBootedPS1;
 	unsigned char boolLockedInCharacter;
-	unsigned char padding[2];
+	unsigned char numRooms;
+	unsigned char numDriversEnded;
 
 	// 0x10
 	unsigned char serverCountry;
 	unsigned char serverRoom;
 	unsigned char serverLockIn1;
 	unsigned char serverLockIn2;
+
+	char clientCount[16];
 
 	// determines if client and
 	// emulator are still connected
@@ -93,18 +89,11 @@ struct OnlineCTR
 
 	char nameBuffer[0xC*8];
 
-	int numDriversEnded;
 	struct
 	{
 		int slot;
 		int time;
 	} RaceEnd[8];
-
-	// 0xc8
-	// function pointers MUST come last,
-	// cause windows thinks pointers are
-	// 8 bytes, while PSX thinks 4 bytes
-	void (*funcs[NUM_STATES]) ();
 };
 
 #ifdef WINDOWS_INCLUDE
@@ -118,8 +107,10 @@ struct OnlineCTR
 enum ServerGiveMessageType
 {
 	// connection
+	SG_ROOMS,
+
+	// assign to room
 	SG_NEWCLIENT,
-	SG_DROPCLIENT, // unused
 
 	// lobby
 	SG_NAME,
@@ -142,6 +133,36 @@ struct SG_Header
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
+};
+
+struct SG_MessageRooms
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	unsigned char numRooms;
+	unsigned char version;
+	
+	unsigned char numClients01 : 4;
+	unsigned char numClients02 : 4;
+	unsigned char numClients03 : 4;
+	unsigned char numClients04 : 4;
+	unsigned char numClients05 : 4;
+	unsigned char numClients06 : 4;
+	unsigned char numClients07 : 4;
+	unsigned char numClients08 : 4;
+	
+	unsigned char numClients09 : 4;
+	unsigned char numClients10 : 4;
+	unsigned char numClients11 : 4;
+	unsigned char numClients12 : 4;
+	unsigned char numClients13 : 4;
+	unsigned char numClients14 : 4;
+	unsigned char numClients15 : 4;
+	unsigned char numClients16 : 4;
+
+	// 11 bytes total
 };
 
 // sent to each user when someone connects
@@ -170,8 +191,8 @@ struct SG_MessageName
 	unsigned char size : 4;
 
 	// index 0 - 7
-	unsigned char clientID : 3;
-	unsigned char padding : 5;
+	unsigned char clientID : 4;
+	unsigned char numClientsTotal : 4;
 
 	char name[0xC];
 };
@@ -243,6 +264,7 @@ struct SG_MessageEndRace
 };
 
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
+STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 11, "Size of SG_MessageRooms must be 11 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 6, "Size of SG_MessageClientStatus must be 4 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
@@ -252,6 +274,8 @@ STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5, "Size of SG_MessageEndRace
 
 enum ClientGiveMessageType
 {
+	CG_JOINROOM,
+
 	// lobby
 	CG_NAME,
 	CG_TRACK,
@@ -270,6 +294,15 @@ struct CG_Header
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
+};
+
+struct CG_MessageRoom
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
+
+	unsigned char room;
 };
 
 struct CG_MessageName
