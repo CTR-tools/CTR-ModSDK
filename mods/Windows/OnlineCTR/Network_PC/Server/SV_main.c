@@ -180,7 +180,6 @@ void GetDriverFromRace(ENetPeer* peer, RoomInfo** ri, int* peerID)
 void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 	int peerID = -1;
-	int numAlive = 0;
 
 	RoomInfo* ri = &roomInfos[0];
 
@@ -474,12 +473,13 @@ void ProcessNewMessages() {
 				if (peerID == -1)
 				{
 					enet_peer_disconnect_now(event.peer, 0);
+					printf("Disconnection from Room Selection\n");
 					return;
 				}
 
-				#if 0
-				printf("Connection disconnected from %d\n", peerID);
-				#endif
+				for (int i = 0; i < MAX_CLIENTS; i++)
+					if (ri->peerInfos[i].peer != 0)
+						numAlive++;
 
 				// What we "should" do is disconnect one peer,
 				// do this for all normal race tracks, and 2+ peers exist
@@ -488,6 +488,8 @@ void ProcessNewMessages() {
 					(numAlive > 1)
 				   )
 				{
+					printf("Disconnetion from race, still in session\n");
+
 					enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
 					ri->peerInfos[peerID].peer = NULL;
 
@@ -517,6 +519,8 @@ void ProcessNewMessages() {
 				// or if this is the last peer to leave
 				else
 				{
+					printf("Disconnection from race, kill room\n");
+
 					for (int i = 0; i < MAX_CLIENTS; i++)
 					{
 						if (ri->peerInfos[i].peer == 0)
