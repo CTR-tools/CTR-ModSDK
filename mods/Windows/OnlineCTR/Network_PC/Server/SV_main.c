@@ -294,39 +294,56 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct SG_MessageName* s = &sgBuffer[0];
 			struct CG_MessageName* r = recvBuf;
 
-			s->numClientsTotal = ri->clientCount;
+			BadWordList badWordList;
+			InitializeBadWordList(&badWordList);
 
-			// save new name
-			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
-			printf("%d: %s\n", peerID, r->name);
+			if (WordContainsBadWord(&badWordList, &r->name[0])) {
+				struct SG_MessageBadUsername* m = &sgBuffer[0];
 
-			s->type = SG_NAME;
-			s->size = sizeof(struct SG_MessageName);
+				// name contains bad words, we disconnect the client
+				m->type = SG_BAD_USERNAME;
+				m->size = sizeof(struct SG_MessageBadUsername);
 
-			// send all OTHER names to THIS client
-			for (int j = 0; j < MAX_CLIENTS; j++)
-			{
-				if (
+				printf("\nDisconnecting player %s due to bad username\n", r->name);
+
+				broadcastToPeersReliable(ri, m, m->size);
+				enet_peer_disconnect_now(peer, 0);
+			}
+			else {
+				s->numClientsTotal = ri->clientCount;
+				// save new name
+				memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
+				printf("%d: %s\n", peerID, r->name);
+
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
+
+				// send all OTHER names to THIS client
+				for (int j = 0; j < MAX_CLIENTS; j++)
+				{
+					if (
 						// skip empty sockets, skip self
 						(ri->peerInfos[j].peer != 0) &&
 						(peerID != j)
-					)
-				{
-					s->clientID = j;
-					memcpy(&s->name[0], &ri->peerInfos[j].name[0], 12);
+						)
+					{
+						s->clientID = j;
+						memcpy(&s->name[0], &ri->peerInfos[j].name[0], 12);
 
-					// 8 messages to one client
-					sendToPeerReliable(ri->peerInfos[peerID].peer, s, s->size);
+						// 8 messages to one client
+						sendToPeerReliable(ri->peerInfos[peerID].peer, s, s->size);
+					}
 				}
+
+				// send THIS name to all OTHER clients
+				s->type = SG_NAME;
+				s->size = sizeof(struct SG_MessageName);
+				s->clientID = peerID;
+				memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], 12);
+
+				broadcastToPeersReliable(ri, s, s->size);
 			}
 
-			// send THIS name to all OTHER clients
-			s->type = SG_NAME;
-			s->size = sizeof(struct SG_MessageName);
-			s->clientID = peerID;
-			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], 12);
-
-			broadcastToPeersReliable(ri, s, s->size);
 			break;
 		}
 
@@ -699,6 +716,108 @@ void ServerState_Tick()
 				PrintTime();
 			}
 		}
+	}
+}
+
+void InitializeBadWordList(BadWordList* list) {
+	list->word_count = 0;
+
+	AddBadWord(list, "Ass");
+	AddBadWord(list, "Asshole");
+	AddBadWord(list, "Nigga");
+	AddBadWord(list, "Nigger");
+	AddBadWord(list, "Whore");
+	AddBadWord(list, "Fuck");
+	AddBadWord(list, "Bitch");
+	AddBadWord(list, "Bastard");
+	AddBadWord(list, "Pussy");
+	AddBadWord(list, "Tits");
+	AddBadWord(list, "Titty");
+	AddBadWord(list, "Fucker");
+	AddBadWord(list, "Porn");
+	AddBadWord(list, "Penis");
+	AddBadWord(list, "Vulva");
+	AddBadWord(list, "Anus");
+	AddBadWord(list, "Anal");
+	AddBadWord(list, "Sex");
+	AddBadWord(list, "Balls");
+	AddBadWord(list, "Piss");
+	AddBadWord(list, "Orgasm");
+	AddBadWord(list, "Wank");
+	AddBadWord(list, "Masturbate");
+	AddBadWord(list, "P0rn");
+	AddBadWord(list, "Twat");
+	AddBadWord(list, "Spic");
+	AddBadWord(list, "Shemale");
+	AddBadWord(list, "Cum");
+	AddBadWord(list, "Fag");
+	AddBadWord(list, "Faggot");
+	AddBadWord(list, "Dick");
+	AddBadWord(list, "Ejaculat");
+	AddBadWord(list, "Cunt");
+	AddBadWord(list, "Coom");
+	AddBadWord(list, "Clit");
+	AddBadWord(list, "Cock");
+	AddBadWord(list, "C0ck");
+	AddBadWord(list, "Bum");
+	AddBadWord(list, "Boob");
+	AddBadWord(list, "Boner");
+	AddBadWord(list, "Pussies");
+	AddBadWord(list, "Damn");
+	AddBadWord(list, "Cunnilingus");
+	AddBadWord(list, "Deepthroat");
+	AddBadWord(list, "Arse");
+	AddBadWord(list, "Puke");
+	AddBadWord(list, "Puta");
+	AddBadWord(list, "Smegma");
+	AddBadWord(list, "Prick");
+	AddBadWord(list, "Smut");
+	AddBadWord(list, "Pube");
+	AddBadWord(list, "Fart");
+	AddBadWord(list, "Gay");
+	AddBadWord(list, "Lesbian");
+	AddBadWord(list, "Rectum");
+	AddBadWord(list, "Retard");
+	AddBadWord(list, "Semen");
+	AddBadWord(list, "Shart");
+	AddBadWord(list, "Shit");
+	AddBadWord(list, "Teet");
+	AddBadWord(list, "Twink");
+	AddBadWord(list, "Vagina");
+}
+
+void AddBadWord(BadWordList* list, const char* word) {
+	if (list->word_count < BADWORDS_COUNT) {
+		list->words[list->word_count] = _strdup(word);
+		list->word_count++;
+	}
+	else {
+		printf("Maximum badword list length of %d reached", BADWORDS_COUNT);
+	}
+}
+
+bool WordContainsBadWord(const BadWordList* list, const char* word) {
+	char lowerCaseWord[USERNAME_MAX_LENGTH];
+	strncpy(lowerCaseWord, word, USERNAME_MAX_LENGTH);
+	StringToLowerCase(lowerCaseWord);
+
+	for (int i = 0; i < list->word_count; i++) {
+		char lowerCaseBadWord[BADWORD_MAX_LENGTH];
+		strncpy(lowerCaseBadWord, list->words[i], BADWORD_MAX_LENGTH);
+		StringToLowerCase(lowerCaseBadWord);
+
+		if (strstr(lowerCaseWord, lowerCaseBadWord) != NULL) {
+			printf("\nBad username %s found (contains: %s)\n", word, list->words[i]);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void StringToLowerCase(char* string) {
+	for (int i = 0; string[i]; i++) {
+		string[i] = tolower(string[i]);
 	}
 }
 

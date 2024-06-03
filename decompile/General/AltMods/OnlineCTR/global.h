@@ -30,6 +30,17 @@
 #define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
 
+#include <stdbool.h>
+
+#define USERNAME_MAX_LENGTH 100
+#define BADWORDS_COUNT 100
+#define BADWORD_MAX_LENGTH 50
+
+typedef struct {
+	char* words[BADWORDS_COUNT];
+	int word_count;
+} BadWordList;
+
 enum ClientState
 {
 	LAUNCH_ENTER_PID,
@@ -122,6 +133,7 @@ enum ServerGiveMessageType
 	SG_RACEDATA,
 	SG_ENDRACE,
 
+	SG_BAD_USERNAME,
 	SG_SERVERCLOSED,
 
 	SG_COUNT
@@ -195,6 +207,14 @@ struct SG_MessageName
 	unsigned char numClientsTotal : 4;
 
 	char name[0xC];
+};
+
+// bad username
+struct SG_MessageBadUsername
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+	unsigned char size : 4;
 };
 
 // get track, assigned by host
@@ -399,6 +419,12 @@ void StatePC_Game_EndRace();
 void PrintBanner(char show_name);
 void StartAnimation();
 void StopAnimation();
+
+// username filtering
+void InitializeBadWordList(BadWordList* list);
+void AddBadWord(BadWordList* list, const char* word);
+bool WordContainsBadWord(const BadWordList* list, const char* word);
+void StringToLowerCase(char* string);
 
 #endif
 

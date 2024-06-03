@@ -25,7 +25,7 @@ struct OnlineCTR* octr;
 static unsigned char serverReconnect = false;
 
 int buttonPrev[8] = { 0 };
-char name[100];
+char name[USERNAME_MAX_LENGTH];
 
 ENetHost* clientHost;
 ENetPeer* serverPeer;
@@ -150,6 +150,11 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
 
+			break;
+		}
+
+		case SG_BAD_USERNAME:
+		{
 			break;
 		}
 
