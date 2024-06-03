@@ -108,8 +108,8 @@ void SendRoomData(ENetPeer* peer)
 	mr.size = sizeof(struct SG_MessageRooms);
 
 #define SETUP(x, index) \
-	x = roomInfos[0x0].clientCount; \
-	if (roomInfos[0x0].boolRoomLocked) \
+	x = roomInfos[index].clientCount; \
+	if (roomInfos[index].boolRoomLocked) \
 	{ \
 		if(x == 1) \
 			x = 9; \
