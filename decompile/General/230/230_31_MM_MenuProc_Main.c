@@ -21,7 +21,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
   #endif
 
   DECOMP_MM_ParseCheatCodes();
-  DECOMP_MM_TogglerowsDifficulty();
+  DECOMP_MM_ToggleRows_Difficulty();
   DECOMP_MM_ToggleRows_PlayerCount();
 
   // If you are at the highest hierarchy level of main menu

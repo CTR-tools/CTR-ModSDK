@@ -4,7 +4,7 @@
 // 840/1108
 
 void MM_ParseCheatCodes();
-void MM_TogglerowsDifficulty();
+void MM_ToggleRows_Difficulty();
 void MM_ToggleRows_PlayerCount();
 void MM_Title_MenuUpdate();
 void MM_Title_Init();
@@ -26,7 +26,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 
   MM_ParseCheatCodes();
 
-  MM_TogglerowsDifficulty();
+  MM_ToggleRows_Difficulty();
 
   MM_ToggleRows_PlayerCount();
 

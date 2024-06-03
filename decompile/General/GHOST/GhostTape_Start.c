@@ -8,8 +8,11 @@ void DECOMP_GhostTape_Start(void)
   
   d = gGT->drivers[0];
 
+  // v1 - PizzaHut (June), Spyro2 (July)
+  // v4 - Aug5, Aug14, Sep3, Retail
+
   gh = sdata->GhostRecording.ptrGhost;
-  gh->magic = 0xFFFC;
+  gh->version = -4;
   gh->levelID = gGT->levelID;
   gh->characterID = data.characterIDs[d->driverID];
 

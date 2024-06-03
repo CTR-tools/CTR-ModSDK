@@ -88,7 +88,7 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 				((button & (BTN_TRIANGLE | BTN_SQUARE)) != 0) &&
 
 				// if this is not the top of the menu
-				((m->state & MENU_IS_TOP_OF_HIERARCHY) == 0)
+				((m->state & MENU_CANT_GO_BACK) == 0)
 			)
 			{
 				// process GO BACK

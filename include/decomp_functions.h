@@ -534,7 +534,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu);
 void DECOMP_MM_ToggleRows_PlayerCount();
 void DECOMP_MM_MenuProc_1p2p(struct RectMenu* menu);
 void DECOMP_MM_MenuProc_2p3p4p(struct RectMenu * menu);
-void DECOMP_MM_TogglerowsDifficulty(void);
+void DECOMP_MM_ToggleRows_Difficulty(void);
 void DECOMP_MM_MenuProc_Difficulty(struct RectMenu* menu);
 void DECOMP_MM_MenuProc_SingleCup(struct RectMenu* menu);
 void DECOMP_MM_MenuProc_NewLoad(struct RectMenu* menu);

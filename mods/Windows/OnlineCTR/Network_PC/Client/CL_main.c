@@ -58,9 +58,47 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		if (r->version != VERSION)
 		{
-			system("cls");
-			printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
-			system("pause");
+			struct SG_MessageClientStatus* r = recvBuf;
+
+			octr->DriverID = r->clientID;
+			octr->NumDrivers = r->numClientsTotal;
+
+			if (r->version != VERSION)
+			{
+				system("cls");
+				printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
+				system("pause");
+			}
+
+			// default, disable cheats
+			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
+				~(0x100000 | 0x80000 | 0x400);
+
+			switch (r->special)
+			{
+				// Ordinary day, nothing happening
+				case 0:
+					break;
+
+				// Monday -- icy tracks
+				case 1:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x80000;
+					break;
+
+				// Wednesday -- super turbos
+				case 2:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x100000;
+					break;
+
+				// Friday -- unlimited masks
+				case 3:
+					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x400;
+					break;
+			}
+
+			// choose to get host menu or guest menu
+			octr->CurrState = LOBBY_ASSIGN_ROLE;
+			break;
 		}
 
 		// default, disable cheats
@@ -578,15 +616,22 @@ void StatePC_Launch_EnterIP()
 		break;
 	}
 
-	// NYC (USA)
-	case 1:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "sync.kevman95.com");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 65001 + StaticRoomID;
+		// NYC (USA)
+		case 1:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 65001 + StaticRoomID;
 
-		break;
-	}
+			break;
+		}
+		
+		// Mexico (USA-West)
+		case 2:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 10666 + StaticRoomID;
 
 	// Mexico (USA-West)
 	case 2:
@@ -718,7 +763,7 @@ void StatePC_Launch_EnterIP()
 
 	int retryCount = 0;
 	char connected = false;
-#define MAX_RETRIES 3
+	#define MAX_RETRIES 3
 
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)

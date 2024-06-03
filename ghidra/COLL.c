@@ -601,10 +601,12 @@ void FUN_8001d944(int param_1,int param_2)
   // quadblock under driver
   if (*(int *)(param_2 + 0x350) != 0)
   {
+	// check, if touching same quadblock still
 	// COLL_PerQuadblock_CheckTriangles_Touching
     FUN_8001f41c(*(int *)(param_2 + 0x350),&DAT_1f800108);
   }
 
+  // if no collision is found, search for another
   if (((DAT_1f800146 == 0) && (DAT_1f800134 != 0)) && (*(int *)(DAT_1f800134 + 0x18) != 0))
   {
 	// COLL_SearchTree_FindX, callback
@@ -615,14 +617,20 @@ void FUN_8001d944(int param_1,int param_2)
   // thread -> instance
   iVar9 = *(int *)(param_1 + 0x34);
 
-  if (DAT_1f800146 == 0) {
+  // if no collision with "new" block
+  if (DAT_1f800146 == 0) 
+  {
+	// mid-air
     *(uint *)(iVar9 + 0x70) = ((uint)*(byte *)(param_2 + 0x4a) + 1) * 0x1000000 | 0x4000;
     *(uint *)(iVar9 + 0x28) = *(uint *)(iVar9 + 0x28) & 0xffffbfff;
     *(int *)(param_2 + 0x2d0) = *(int *)(param_2 + 0x2d8) + -0x10000;
   }
 
+  // if collision with "new" block
   else
   {
+	// driver on ground
+	  
     *(uint *)(iVar9 + 0x70) =
          _DAT_1f800178 >> 6 & 0xff | (_DAT_1f800178 >> 0x10 & 0x3fc0) << 2 |
          ((uint)(DAT_1f80017c >> 6) & 0xff) << 0x10 |
@@ -880,7 +888,7 @@ void FUN_8001d944(int param_1,int param_2)
 		(*(char *)(param_2 + 0x376) != '\x05')
 	  )
   {
-	// driver->velocityXYZ
+	// driver->velocityXYZ += normalVec/2
     *(int *)(param_2 + 0x88) =
          *(int *)(param_2 + 0x88) + ((int)((uint)*(ushort *)(param_2 + 0x360) << 0x10) >> 0x11);
     *(int *)(param_2 + 0x8c) =
@@ -926,9 +934,10 @@ LAB_8001e4d0:
     //turn off 1st bit of Actions Flag set (means player is not touching the ground)
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfffffffe;
 
+	// jump_LandingBoost
 	*(short *)(param_2 + 0x3fc) = *(short *)(param_2 + 0x3fc) + *(short *)(puVar3 + 0x1d04);
 
-	// amount of time the player can jump after leaving quadblock, 3-4 frames, 0xa0 milliseconds
+	// jump_CoyoteTimerMS, 3-4 frames, 0xa0 milliseconds
 	iVar9 = (uint)*(ushort *)(param_2 + 0x3f4) - (uint)*(ushort *)(puVar3 + 0x1d04);
     *(undefined2 *)(param_2 + 0x3f4) = (short)iVar9;
 
@@ -937,6 +946,7 @@ LAB_8001e4d0:
       *(undefined2 *)(param_2 + 0x3f4) = 0;
     }
 
+	// frames of lerp
     iVar9 = 7;
     if (*(short *)(param_2 + 0x3f4) == 0) {
       *(undefined2 *)(param_2 + 0x3f2) = 0;
@@ -1183,9 +1193,10 @@ LAB_8001e340:
     iVar9 = 6;
   }
   
+  // inverse
   iVar13 = 8 - iVar9;
   
-  // lerp: 25% of curr normalVec + 75% of desired normalVec
+  // lerp from quadblockNormalVec to normalVecUP
   local_30 = iVar9 * *(short *)(param_2 + 0x368) + iVar13 * *(short *)(param_2 + 0xa4) >> 3;
   local_2c = iVar9 * *(short *)(param_2 + 0x36a) + iVar13 * *(short *)(param_2 + 0xa6) >> 3;
   local_28 = iVar9 * *(short *)(param_2 + 0x36c) + iVar13 * *(short *)(param_2 + 0xa8) >> 3;
@@ -3139,7 +3150,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 }
 
 
-// NOPing this function makes your character constantly jump
+// COLL_TestTriangle_WithClosest
 // param_1 = ptrQuadblock
 // param_2 = triangleID
 // param_3 = 0x1F800108

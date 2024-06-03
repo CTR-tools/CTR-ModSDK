@@ -74,7 +74,7 @@ struct GhostTape
 struct GhostHeader
 {
 	// 0x0
-	short magic;
+	short version;
 	short size;
 	
 	// 0x4

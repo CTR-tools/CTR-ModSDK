@@ -47,24 +47,269 @@
 800219bc CAM_MapRange_PosPoints
 80021a9c CAM_ThTick
 
-// [few more in between]
-8002414c CDSYS_Init
+// CDSYS
+// unknown 800240a4, part of RCNT
+800240ec CDSYS_GetFilePosInt
+8002414c CDSYS_Init // and sets XA
 // no CDSYS_SetXAToLang,
-// no IRQs
+80024218 CDSYS_XaCallbackCdSync
+80024288 CDSYS_SetMode_StreamAudio
+// unknown 800242e8 -- part of Playing
+8002435c CDSYS_XASeek
+800243a0 CDSYS_XAPlay
+80024428 CDSYS_PauseAtEnd
+8002445c CDSYS_SetMode_StreamData
 
+// COLL
 800244b8 COLL_GetThreadMeta
+800244f0 COLL_Instance
+800249e4 COLL_PerBspLeaf_CheckInstances
+80024b5c COLL_StartSearch_AI
+80024cd8 COLL_StartSearch_Player
+80025db8 COLL_SearchTree_FindQuadblock_Touching
+// no COLL_SearchTree_FindX
+80026094 COLL_TestTriangle_FindClosest_Subfunction2
 
-// [skipping COLL cause who cares]
+// unknown 800261cc (jumps halfway through next func)
+80026200 COLL_TestTriangle_FindAny // (and TestTriangle_Unused)
 
-// order a bit different from retail
+8002658c COLL_TestTriangle_GetNormalVector
+800266cc COLL_PerQuadblock_CheckTriangles_Touching
+800268a0 COLL_PerBspLeaf_CheckQuadblocks_Touching
+8002692c COLL_TestQuadblock_TwoTris
+800269a0 COLL_TestQuadblock_EightTris
+80026aa0 COLL_ResetScratchpadCache
+80026bd8 COLL_TestTriangle_FindClosest_Subfunction1
+80026ef0 COLL_TestTriangle_FindClosest
+800272e4 COLL_PerQuadblock_CheckTriangles_NearPlayer
+80027528 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+800275b4 COLL_TestTriangle_WithClosest
+80027690 COLL_StartSearch_NearPlayer
+80027e64 COLL_Scrub
+
+// unknown 8002869c
+// unknown 8002873c
+// unknown 800287dc -- DebugCamera_SetPathPoint
+// unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId1
+// unknown 80028854 -- DebugMenu_LoadGame_GivenLevelId2
+// unknown 80028a6c -- DebugMenu_LoadGame_GivenLevelId3
+// unknown 80028a98 -- DebugMenu_LoadGame_GivenLevelId4
+// unknown 80028ab0
+// unknown 80028ac8
+// unknown 80028ae0
+// unknown 80028b9c -- DebugMenu_TimeStamp_EndFrame
+// unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
+// unknown 80028c10 -- called from Timer_Init
+// unknown 80028d30 -- DebugMenu_TimeStamp_DrawOutline
+// unknown 800291ac -- DebugMenu_TimeStamp_DrawNext
+// unknown 8002977c -- DebugMenu_TimeStamp_ExecCurr
+// unknown 800297a0 -- DebugMenu_TimeStamp_OpenMenu
+// unknown 800297b4 -- DebugMenu_TimeStamp_CloseMenu
+// unknown 800297e8
+// unknown 80029cc8
+// unknown 80029d70 -- DebugMenu_TimeStamp_DrawChart
+// unknown 80029dc0 -- DebugMenu_TimeStamp_DrawMain
+// unknown 80029e64
+// unknown 80029efc
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
+// unknown 8002a06c -- vsync callback
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
-8002a1a4 EmptyFunc
+// unknown 8002a194 -- DebugMenu_SetLapCount
+// unknown 8002a1a4 -- empty
+// unknown 8002a1c4 -- DebugMenu_SetGameMode
+// unknown 8002a204
 8002a304 Debug_PrimMem_ZoomOut
+// unknown 8002a960
+// unknown 8002ad28
 
+8002ad5c CTR_Box_DrawWirePrims
+8002adf4 CTR_Box_DrawWireBox
+// unknown 8002afdc (uses GTE)
+// unknown 8002b14c
+// unknown 8002b46c (uses GTE)
+8002b5dc Debug_CountPrimDepths
+// unknown 8002b6d4
+// unknown 8002b714
+// unknown 8002b74c
+// unknown 8002b8f0
+// unknown 8002b9ac
+// unknown 8002be4c
+
+8002be7c CTR_Box_DrawClearBox
+8002bf94 CTR_CycleTex_LEV
+8002c030 CTR_CycleTex_Model
+8002c0d0 CTR_CycleTex_AllModels
+8002c19c CTR_CycleTex_2p3p4pWumpaHUD
+
+// unknown 8002c1c4
+// unknown 8002c2c0
+// unknown 8002c348
+
+8002c4c4 CTR_ClearRenderLists_1P2P
+8002c534 CTR_ClearRenderLists_3P4P
+8002c594 CTR_EmptyFunc_MainFrame_ResetDB
+
+// unknown 8002c618
+// unknown 8002c970
+// unknown 8002c9ec
+// unknown 8002ca68
+// unknown 8002cb0c
+// unknown 8002cb30
+
+// unknown 8002cb48
+// unknown 8002cc48 -- debugfont
+// unknown 8002d178 -- debugfont
+
+// unknown 8002d1a8
+// unknown 8002d738
+// unknown 8002db10
+
+8002db44 DecalFont_DrawLine
+
+8002dd18 DecalGlobal_Clear
+8002dd58 DecalGlobal_Store
+8002de04 DecalGlobal_FindInLEV
+8002dea8 DecalGlobal_FindInMPK
+
+8002df2c DecalHUD_DrawPolyFT4
+8002e058 DecalHUD_DrawWeapon
+8002e294 DecalHUD_DrawPolyGT4
+
+// DecalMP and DISPLAY_Blur,
+// This version of blur would warp the screen
+// in several directions, cut due to expensive
+// prim parser that did not fit budget
+
+// unknown 8002e3d4
+// unknown 8002e498
+// unknown 8002e560 -- loops each player
+// unknown 8002e714
+// unknown 8002f680 -- another debug Prim parser?
+
+8002fe74 DISPLAY_Swap
+8002fedc DotLights_Video
+80030114 DotLights_AudioAndVideo
+
+// DropRain ?
+// unknown 800302c0
+// unknown 8003036c
+
+// ElimBG not present
+// Flare not present
+
+80030374 GAMEPAD_Init
+// unknown 80030554 -- shutdown gamepad (mainstate_exit)
+// unknown 80030674
+// unknown 8003072c -- tap and hold
+// unknown 80030a68
+// unknown 80030b54 -- detect ANAJ
+// unknown 80030e44
+// unknown 80030f30
+// unknown 800310f8
+
+// GAMEPAD_JogCon not in this build
+
+80031218 GAMEPAD_ShockFreq
+80031280 GAMEPAD_ShockForce1
+800312e8 GAMEPAD_ShockForce2
+
+// unknown 80031350 -- reset controller count
+// unknown 80031360 -- error msg "Please Insert A Controller"
+
+// GAMEPROG
+// unknown 800313f4 -- memset 0x18 (new adv profile)
+// unknown 8003141c -- gamesave.sav, read? memset 0x9e30
+// unknown 80031494 -- gamesave.sav write?
+// unknown 800314d4 -- InitFullMemcard
+// unknown 800314fc -- set active adv profile
+// unknown 8003152c -- get ptr high score track
+// unknown 80031584
+// unknown 80031600
+// unknown 80031680
+// unknown 800316f8
+
+// NOT Gameprog, not Ghost
+// unknown 80031718
+// unknown 80031814
+// unknown 80031934
+// unknown 80031a68
+// unknown 80031afc
+// unknown 80031c14
+
+800321e8 GhostReplay_ThTick
+80032960 GhostReplay_File1
+80032a54 GhostReplay_File2
+80032ab8 GhostReplay_Init1
+80032cb0 GhostReplay_Init2
+80032e8c GhostTape_Start
+80032f14 GhostTape_WriteMoves
+800332c4 GhostTape_WriteBoosts
+80033324 GhostTape_Destroy
+
+// unknown 80033358
+// unknown 800333c4 -- ghost loading
+// unknown 80033400 -- ghost loading
+
+// === Everything below "Ghost" is "Howl"
+
+80033424 CountSounds
+
+80033450 OtherFX_Play
+8003347c OtherFX_Play_Echo
+800334b8 OtherFX_Play_LowLevel
+80033624 OtherFX_Modify
+80033764 OtherFX_Stop1
+// unknown 8003379c 
+// unknown 800338d4 
+// unknown 80033a18
+80033a7c SetReverbMode
+// unknown 80033b38
+// unknown 80033b60
+// unknown 80033b88
+// unknown 80033c18
+// unknown 80033cd0
+// unknown 80033d4c
+// unknown 80033dd8
+// unknown 80033ea4
+// unknown 80033f4c
+// unknown 80034004
+// unknown 800340ac
+// unknown 80034134
+// unknown 8003437c
+800343e8 Bank_ClearInRange
+80034458 Bank_Load
+800344e4 Bank_DestroyLast
+80034538 Bank_DestroyUntilIndex
+8003458c Bank_DestroyAll
+// unknown 800345c4
+// unknown 80034618
+// unknown 80034664
+// unknown 800346c8
+// unknown 80034714
+// unknown 80034770
+8003477c howl_InitGlobals
+80034840 howl_ParseHeader
+800348a4 howl_ParseCseqHeader
+8003491c howl_LoadHeader
+// unknown 80034a18 -- LoadSeqPackData (howlChain doesnt exist yet)
+80034b10 howl_ErasePtrCseqHeader
+80034b34 howl_GetNextNote
+80034b80 cseq_opcode01_noteoff
+80034c8c cseq_opcode03
+80034cf4 howl_InitChannelAttr_Music
+80034ee8 cseq_opcode_from06and07
+8003500c cseq_opcode05_noteon
+800350e0 cseq_opcode06
+8003510c cseq_opcode07
+80035138 cseq_opcode08
+800351cc cseq_opcode09
+800351e0 cseq_opcode0a
+
+80035370 SongPool_FindFreeChannel
+800353ac SongPool_CalculateTempo
 
 
 8004149c VehBirth_TeleportSelf

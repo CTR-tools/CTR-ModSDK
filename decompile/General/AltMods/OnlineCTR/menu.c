@@ -55,7 +55,8 @@ struct RectMenu menu =
 	.unk1 = 0,
 	
 	// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
-	.state = 3,
+	// 0x100000 disables TRIANGLE button to prevent crashing
+	.state = 0x100003,
 
 	.rows = menuRows,
 
@@ -100,9 +101,9 @@ void NewPage_ServerCountry()
 	if(octr->PageNumber == 0)
 	{
 		// override "LAPS" "3/5/7"
-		sdata->lngStrings[0x9a] = "EUR -- 6 rooms";
-		sdata->lngStrings[0x9b] = "USA -- 6 rooms";
-		sdata->lngStrings[0x9c] = "MEX -- 6 rooms";
+		sdata->lngStrings[0x9a] = "EUR -- 12 rooms";
+		sdata->lngStrings[0x9b] = "USA -- 16 rooms";
+		sdata->lngStrings[0x9c] = "MEX -- 12 rooms";
 		sdata->lngStrings[0x9d] = "PRIVATE ROOM";
 	}
 	
@@ -125,6 +126,40 @@ void MenuWrites_ServerCountry()
 	OnPressX_SetLock = &octr->serverLockIn1;
 }
 
+int GetNumRoom()
+{
+	int numRooms = 0;
+	
+	switch(octr->serverCountry)
+	{
+		// 6+6+6+1+1=18
+		// Player Cap = 160 players
+		case 0: numRooms = 12; break; // EUR Looper
+		case 1: numRooms = 16; break; // USA Kevman95
+		case 2: numRooms = 12; break; // MEX Claudio
+		case 3: numRooms = 1; break; // PRIVATE ROOM
+		case 4: numRooms = 4; break; // BZL Pedro
+		case 5: numRooms = 1; break; // AUS Matt
+		
+	}
+	
+	return numRooms;
+}
+
+int GetRoomChar(int pn)
+{
+	if(pn <= 9)
+	{
+		return '0' + pn;
+	}
+	
+	// 10 or more
+	else
+	{
+		return 'A' + (pn-10);
+	}
+}
+
 void NewPage_ServerRoom()
 {
 	int i;
@@ -136,29 +171,17 @@ void NewPage_ServerRoom()
 	sdata->lngStrings[0x9d] = "ROOM 4";
 	
 	int pn = octr->PageNumber;
-	sdata->lngStrings[0x9a][5] = '0' + (4*pn+1);
-	sdata->lngStrings[0x9b][5] = '0' + (4*pn+2);
-	sdata->lngStrings[0x9c][5] = '0' + (4*pn+3);
-	sdata->lngStrings[0x9d][5] = '0' + (4*pn+4);
+	sdata->lngStrings[0x9a][5] = GetRoomChar(4*pn+1);
+	sdata->lngStrings[0x9b][5] = GetRoomChar(4*pn+2);
+	sdata->lngStrings[0x9c][5] = GetRoomChar(4*pn+3);
+	sdata->lngStrings[0x9d][5] = GetRoomChar(4*pn+4);
 	
 	for(i = 0; i < 4; i++)
 	{
 		menuRows[i].stringIndex = 0x809a+i;
 	}
 	
-	int numRooms = 0;
-	switch(octr->serverCountry)
-	{
-		// 6+6+6+1+1=18
-		// Player Cap = 160 players
-		case 0: numRooms = 6; break; // EUR Looper
-		case 1: numRooms = 6; break; // USA Niko
-		case 2: numRooms = 6; break; // MEX Claudio
-		case 3: numRooms = 1; break; // PRIVATE ROOM
-		case 4: numRooms = 4; break; // BZL Pedro
-		case 5: numRooms = 1; break; // AUS Matt
-		
-	}
+	int numRooms = GetNumRoom();
 	
 	for(i = 0; i < 4; i++)
 	{
@@ -169,9 +192,13 @@ void NewPage_ServerRoom()
 
 void MenuWrites_ServerRoom()
 {	
-	pageMax = 0;
-	if(octr->serverCountry < 3)
-		pageMax = 1;
+	// pageMax
+	// 0: 1-4 rooms
+	// 1: 5-8 rooms
+	// 2: 9-12 rooms
+
+	int numRooms = GetNumRoom();
+	pageMax = ((numRooms-1)&0xfffc)/4;
 	
 	OnPressX_SetPtr = &octr->serverRoom;
 	OnPressX_SetLock = &octr->serverLockIn2;
@@ -297,6 +324,27 @@ void PrintCharacterStats()
 	int slot;
 	int i;
 	int color;
+	
+	int gameMode2 = sdata->gGT->gameMode2;
+	
+	char* title = 0;
+	if((gameMode2 & 0x80000) != 0)
+	{
+		title = "Monday Icy Tracks";
+	}
+	if((gameMode2 & 0x100000) != 0)
+	{
+		title = "Wednesday Super Turbo Pads";
+	}
+	if((gameMode2 & 0x400) != 0)
+	{
+		title = "Friday Unlimited Masks";
+	}
+	
+	if(title != 0)
+	{
+		DecalFont_DrawLine(title,0x100,0x10,FONT_SMALL,JUSTIFY_CENTER|WHITE);
+	}
 	
 	int numDead = 0;
 	for(i = 0; i < octr->NumDrivers; i++)
