@@ -582,7 +582,7 @@ void StatePC_Launch_EnterIP()
 		// NYC (USA)
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "sync.kevman95.com");
+			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 65001 + StaticRoomID;
 
