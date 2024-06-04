@@ -400,6 +400,9 @@ void PrintBanner(char show_name);
 void StartAnimation();
 void StopAnimation();
 
+void handleDisconnect();
+void handleAutoRetry();
+
 #endif
 
 #ifndef WINDOWS_INCLUDE

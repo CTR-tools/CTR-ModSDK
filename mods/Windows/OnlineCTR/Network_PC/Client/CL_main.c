@@ -19,16 +19,21 @@
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
+#define AUTO_RETRY_SECONDS 10
+#define ESC_KEY 27 // ASCII value for ESC key
 
 char *pBuf;
 struct OnlineCTR* octr;
 static unsigned char serverReconnect = false;
+static unsigned char isAutoRetryEnabled = false;
 
 int buttonPrev[8] = { 0 };
 char name[100];
 
 ENetHost* clientHost;
 ENetPeer* serverPeer;
+
+void FrameStall();
 
 void sendToHostUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
@@ -38,6 +43,43 @@ void sendToHostUnreliable(const void* data, size_t size) {
 void sendToHostReliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
+}
+
+void handleDisconnect() {
+	Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
+
+	// go to the lobby browser
+	octr->CurrState = 0;
+	octr->serverLockIn2 = 0; // server selection is not done
+	serverReconnect = false; // no we don't want to reconnect
+}
+
+void handleAutoRetry() {
+	printf("\nClient: Retrying in %d seconds (ESC to CANCEL)...  ", AUTO_RETRY_SECONDS);
+	serverReconnect = true;
+	
+	for (int i = 0; i < AUTO_RETRY_SECONDS * 10; ++i)
+	{
+		StartAnimation();
+
+	#ifdef __GNUC__
+			usleep(50 * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
+	#else
+			Sleep(50);
+	#endif
+
+		if (_kbhit() && getch() == ESC_KEY)
+		{
+			StopAnimation();
+			printf("Client: Automatic retrying canceled!  ");
+			serverReconnect = false;
+			isAutoRetryEnabled = false;
+			handleDisconnect();
+			return;
+		}
+	}
+
+	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
 void ProcessReceiveEvent(ENetPacket* packet)
@@ -153,6 +195,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
 
+			printf("\n NUM CLIENTS: %d  ", r->numClientsTotal);
 			octr->NumDrivers = r->numClientsTotal;
 
 			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
@@ -357,87 +400,51 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
-#define AUTO_RETRY_SECONDS 10
-#define ESC_KEY 27 // ASCII value for ESC key
-
 	ENetEvent event;
-	char response = 0;
 
 	while (enet_host_service(clientHost, &event, 0) > 0)
 	{
 		switch (event.type)
 		{
-		case ENET_EVENT_TYPE_RECEIVE:
-			ProcessReceiveEvent(event.packet);
+			case ENET_EVENT_TYPE_RECEIVE:
+				ProcessReceiveEvent(event.packet);
+				break;
 
-			break;
+			case ENET_EVENT_TYPE_DISCONNECT:
+				// command prompt reset
+				system("cls");
+				PrintBanner(SHOW_NAME);
+				printf("\nClient: Connection Dropped (Server Full / Ongoing Race / or Server Offline)...  ");		
 
-		case ENET_EVENT_TYPE_DISCONNECT:
-			// command prompt reset
-			system("cls");
-			PrintBanner(SHOW_NAME);
-			printf("\nClient: Connection Dropped (Server Full or Server Offline)...  ");
+				if (isAutoRetryEnabled) {
+					 handleAutoRetry();
+					 return;
+				}
 
-			if (serverReconnect == true) goto retry_loop;
-
-			// ask if they would like to keep retrying
-			do {
-				printf("\nInput.: Automatically retry every %d seconds? (Y/N): ", AUTO_RETRY_SECONDS);
-				response = _getch();
-
-				if (response == 'Y' || response == 'y')
-				{
-				retry_loop:
-					serverReconnect = true;
-					printf("%c\nClient: Retrying in %d seconds (ESC to CANCEL)...  ", toupper(response), AUTO_RETRY_SECONDS);
-
-					for (int i = 0; i < AUTO_RETRY_SECONDS * 10; ++i)
+				char retryInput = 0;
+				// ask if they would like to keep retrying
+				do {
+					printf("\nAutomatically retry every %d seconds? (Y/N): ", AUTO_RETRY_SECONDS);
+					retryInput = tolower(getch());
+					
+					if (retryInput == 'y')
 					{
-						StartAnimation();
-
-						#ifdef __GNUC__
-							usleep(50 * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-						#else
-							Sleep(50);
-						#endif
-
-						if (_kbhit() && _getch() == ESC_KEY)
-						{
-							StopAnimation();
-							printf("Client: Automatic retrying canceled!  ");
-							serverReconnect = false;
-							goto terminate_connection;
-						}
+						
+						isAutoRetryEnabled = true;
+						handleAutoRetry();
+						return;
 					}
+					else if (retryInput == 'n')
+					{
+						isAutoRetryEnabled = false;
+						handleDisconnect();
+						return;
+					}
+				} while (retryInput != 'y' && retryInput != 'n');				
+				break;
 
-					goto retry_connection;
-				}
-				else if (response == 'N' || response == 'n')
-				{
-					printf("%c  ", toupper(response));
-					serverReconnect = false;
-					goto terminate_connection;
-				}
-			} while (response != 'Y' && response != 'y' && response != 'N' && response != 'n');
-
-			if (serverReconnect == false)
-			{
-				// exit the loop or handle the disconnection as needed
-				goto terminate_connection;
-			}
-
-			Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
-
-		terminate_connection:
-			// to go the lobby browser
-			octr->CurrState = 0;
-			octr->serverLockIn2 = 0; // server selection has been locked in
-			serverReconnect = false; // no we don't want to reconnect
-			break;
-
-		retry_connection:
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 }
@@ -484,13 +491,7 @@ void DisconSELECT()
 		// just in case client isnt disconnected
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
-		Sleep(2000);
-		//system("cls");
-
-		// to go the lobby browser
-		octr->CurrState = 0;
-		octr->serverLockIn2 = 0; // server selection has been locked in
-		serverReconnect = false; // yes we want to reconnect
+		handleDisconnect();
 
 		return;
 	}
@@ -763,31 +764,18 @@ void StatePC_Launch_EnterIP()
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
 	{
+		StopAnimation();
 		// wait up to 3 seconds for the connection attempt to succeed
 		if (enet_host_service(clientHost, &event, 3000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
-		{
-			StopAnimation();
+		{			
 			printf("Client: Successfully connected!  ");
-
 			connected = true;
 		}
 		else
 		{
-			StopAnimation();
-			printf("Error: Failed to connect! Attempt %d/%d...  ", retryCount + 1, MAX_RETRIES);
-
-			if (retryCount >= MAX_RETRIES)
-			{
-				// to go the lobby browser
-				octr->CurrState = LAUNCH_CONNECT_FAILED;
-				octr->serverLockIn2 = 0; // server selection has been locked in
-				serverReconnect = false; // yes we want to reconnect
-
-				return;
-			}
-
-			retryCount++;
+			printf("Error: Failed to connect! Attempt %d/%d...  ", retryCount + 1, MAX_RETRIES);	
 		}
+		retryCount++;
 	}
 
 	// 2 second timer
@@ -802,7 +790,7 @@ void StatePC_Launch_ConnectFailed()
 	StopAnimation();
 	printf("Error: Unable to connect to the server!  ");
 
-	serverReconnect = false;
+	//serverReconnect = false;
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
@@ -835,7 +823,7 @@ void StatePC_Launch_FirstInit()
 		connAttempt = 0;
 
 		// no more override code
-		serverReconnect = 0;
+		//serverReconnect = false;		
 	}
 
 	// wait for room to be chosen
@@ -1135,7 +1123,7 @@ int main()
 	PrintBanner(DONT_SHOW_NAME);
 
 	// ask for the users online identification
-	printf("Input: Enter Your Online Name: ");
+	printf("Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
@@ -1202,7 +1190,7 @@ int main()
 		printf("Warning: Multiple DuckStations detected\n");
 		printf("Please enter the PID manually\n\n");
 
-		printf("Input.: DuckStation PID: ");
+		printf("DuckStation PID: ");
 		scanf_s("%s", pidStr, (int)sizeof(pidStr));
 	}
 	else
@@ -1256,7 +1244,7 @@ int main()
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
 		
-		void FrameStall(); FrameStall();
+		FrameStall();
 	}
 
 	printf("\n");
