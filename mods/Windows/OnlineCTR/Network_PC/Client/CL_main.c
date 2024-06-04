@@ -357,39 +357,99 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
+#define AUTO_RETRY_SECONDS 10
+#define ESC_KEY 27 // ASCII value for ESC key
+
 	ENetEvent event;
+	char response = 0;
 
 	while (enet_host_service(clientHost, &event, 0) > 0)
 	{
 		switch (event.type)
 		{
-			case ENET_EVENT_TYPE_RECEIVE:
-				ProcessReceiveEvent(event.packet);
+		case ENET_EVENT_TYPE_RECEIVE:
+			ProcessReceiveEvent(event.packet);
 
-				break;
+			break;
 
-			case ENET_EVENT_TYPE_DISCONNECT:
-				// command prompt reset
-				system("cls");
-				PrintBanner(SHOW_NAME);
-				printf("\nClient: Disconnected (ENET_EVENT_TYPE_DISCONNECT)...  ");
-				Sleep(2000); // triggers a server timeout (just in case the client isn't disconnected)
+		case ENET_EVENT_TYPE_DISCONNECT:
+			// command prompt reset
+			system("cls");
+			PrintBanner(SHOW_NAME);
+			printf("\nClient: Connection Dropped (Server Full or Server Offline)...  ");
 
-				// to go the lobby browser
-				octr->CurrState = 0;
-				octr->serverLockIn2 = 0; // server selection has been locked in
-				serverReconnect = false; // yes we want to reconnect
+			if (serverReconnect == true) goto retry_loop;
 
-				break;
+			// ask if they would like to keep retrying
+			do {
+				printf("\nInput.: Automatically retry every %d seconds? (Y/N): ", AUTO_RETRY_SECONDS);
+				response = _getch();
 
-			default:
-				break;
+				if (response == 'Y' || response == 'y')
+				{
+				retry_loop:
+					serverReconnect = true;
+					printf("%c\nClient: Retrying in %d seconds (ESC to CANCEL)...  ", toupper(response), AUTO_RETRY_SECONDS);
+
+					for (int i = 0; i < AUTO_RETRY_SECONDS * 10; ++i)
+					{
+						StartAnimation();
+
+						#ifdef __GNUC__
+							usleep(50 * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
+						#else
+							Sleep(50);
+						#endif
+
+						if (_kbhit() && _getch() == ESC_KEY)
+						{
+							StopAnimation();
+							printf("Client: Automatic retrying canceled!  ");
+							serverReconnect = false;
+							goto terminate_connection;
+						}
+					}
+
+					goto retry_connection;
+				}
+				else if (response == 'N' || response == 'n')
+				{
+					printf("%c  ", toupper(response));
+					serverReconnect = false;
+					goto terminate_connection;
+				}
+			} while (response != 'Y' && response != 'y' && response != 'N' && response != 'n');
+
+			if (serverReconnect == false)
+			{
+				// exit the loop or handle the disconnection as needed
+				goto terminate_connection;
+			}
+
+			Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
+
+		terminate_connection:
+			// to go the lobby browser
+			octr->CurrState = 0;
+			octr->serverLockIn2 = 0; // server selection has been locked in
+			serverReconnect = false; // no we don't want to reconnect
+			break;
+
+		retry_connection:
+		default:
+			break;
 		}
 	}
 }
 
 void PrintBanner(char show_name)
 {
+	printf("    ____        ___            ________________ \n");
+	printf("   / __ \\____  / (_)___  ___  / ____/_  __/ __ \\\n");
+	printf("  / / / / __ \\/ / / __ \\/ _ \\/ /     / / / /_/ /\n");
+	printf(" / /_/ / / / / / / / / /  __/ /___  / / / _, _/ \n");
+	printf(" \\____/_/ /_/_/_/_/ /_/\\___/\\____/ /_/ /_/ |_|  \n\n");
+
 	printf(" OnlineCTR Client (press CTRL + C to quit)\n Build %s (%s)\n\n", __DATE__, __TIME__);
 
 	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
@@ -529,7 +589,7 @@ void StatePC_Launch_EnterIP()
 
 	switch (octr->serverCountry)
 	{
-		// EUROPE
+		// EUROPE (Unknown Location)
 		case 0:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
@@ -539,7 +599,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// NYC (USA)
+		// USA (New York City)
 		case 1:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
@@ -549,7 +609,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 		
-		// Mexico (USA-West)
+		// Mexico (USA West)
 		case 2:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
@@ -559,7 +619,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// BRAZIL
+		// BRAZIL (Unknown Location)
 		case 3:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
@@ -569,7 +629,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// AUSTRALIA
+		// AUSTRALIA (Sydney)
 		case 4:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
@@ -579,7 +639,7 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// SINGAPORE
+		// SINGAPORE (Unknown Location)
 		case 5:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
@@ -703,8 +763,8 @@ void StatePC_Launch_EnterIP()
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
 	{
-		// wait up to 2 seconds for the connection attempt to succeed
-		if (enet_host_service(clientHost, &event, 2000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+		// wait up to 3 seconds for the connection attempt to succeed
+		if (enet_host_service(clientHost, &event, 3000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			StopAnimation();
 			printf("Client: Successfully connected!  ");
@@ -714,27 +774,27 @@ void StatePC_Launch_EnterIP()
 		else
 		{
 			StopAnimation();
-			printf("Error: Failed to connect! Attempt %d/%d\n", retryCount + 1, MAX_RETRIES);
-
-			retryCount++;
+			printf("Error: Failed to connect! Attempt %d/%d...  ", retryCount + 1, MAX_RETRIES);
 
 			if (retryCount >= MAX_RETRIES)
 			{
+				// to go the lobby browser
 				octr->CurrState = LAUNCH_CONNECT_FAILED;
-				serverReconnect = false;
+				octr->serverLockIn2 = 0; // server selection has been locked in
+				serverReconnect = false; // yes we want to reconnect
 
 				return;
 			}
+
+			retryCount++;
 		}
 	}
 
-	// 2-second timer
+	// 2 second timer
 	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
 
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_FIRST_INIT;
-
-	//printf("connected to server successfully, sent name, going to first init state\n");
 }
 
 void StatePC_Launch_ConnectFailed()
@@ -1075,7 +1135,7 @@ int main()
 	PrintBanner(DONT_SHOW_NAME);
 
 	// ask for the users online identification
-	printf(" Enter Your Online Name: ");
+	printf("Input: Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
@@ -1142,7 +1202,7 @@ int main()
 		printf("Warning: Multiple DuckStations detected\n");
 		printf("Please enter the PID manually\n\n");
 
-		printf("DuckStation PID: ");
+		printf("Input.: DuckStation PID: ");
 		scanf_s("%s", pidStr, (int)sizeof(pidStr));
 	}
 	else
