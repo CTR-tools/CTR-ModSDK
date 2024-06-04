@@ -63,6 +63,18 @@ int MenuFinished()
 	return *OnPressX_SetLock;
 }
 
+char* countryNames[8] =
+{
+	"Europe",
+	"USA NYC",
+	"Mexico",
+	"Brazil",
+	"Australia",
+	"Singapore",
+	"Beta",
+	"Private Room",
+};
+
 void NewPage_ServerCountry()
 {
 	int i;
@@ -70,26 +82,18 @@ void NewPage_ServerCountry()
 	menu.posX_curr = 0x198; // X position
 	menu.posY_curr = 0x84;  // Y position
 	
+	// override "LAPS" "3/5/7", 
+	// and other unimportant strings
 	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 0x9a+i;
+		sdata->lngStrings[0x9a+i] = countryNames[i];
 	}
 	
-	// override "LAPS" "3/5/7", 
-	// and other unimportant strings
-	sdata->lngStrings[0x9a] = "Europe";
-	sdata->lngStrings[0x9b] = "USA NYC";
-	sdata->lngStrings[0x9c] = "Mexico";
-	sdata->lngStrings[0x9d] = "Brazil";
-	sdata->lngStrings[0x9e] = "Australia";
-	sdata->lngStrings[0x9f] = "BETA1";
-	sdata->lngStrings[0xa0] = "BETA2";
-	sdata->lngStrings[0xa1] = "PRIVATE ROOM"; // len=14
-	
 	#ifdef ONLINE_BETA_MODE
-	for(i = 0; i < 5; i++)
+	for(i = 0; i < 6; i++)
 	#else
-	for(i = 5; i < 7; i++)
+	i = 6;
 	#endif
 	
 		menuRows[i].stringIndex |= 0x8000;
@@ -154,7 +158,7 @@ void NewPage_ServerRoom()
 		
 		// handle locked rows
 		if(octr->clientCount[8*pn+i] > 8)
-			sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]) - 7;
+			sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]) - 8;
 	}
 	
 	int numRooms = GetNumRoom();
@@ -163,7 +167,7 @@ void NewPage_ServerRoom()
 	{
 		// unlock row if...
 		if(8*pn+i < numRooms)
-			if(octr->clientCount[8*pn+i] <= 8)
+			if(octr->clientCount[8*pn+i] <= 7)
 				menuRows[i].stringIndex &= 0x7FFF;
 	}
 }
@@ -331,6 +335,19 @@ void PrintCharacterStats()
 	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);
 	
 	
+	
+	
+	DecalFont_DrawLine(
+		countryNames[octr->serverCountry], 
+		0x10, 0x10, FONT_SMALL, 0);
+		
+	char* roomName = "ROOM x";
+	roomName[5] = GetRoomChar(octr->serverRoom);
+	
+	DecalFont_DrawLine(
+		roomName, 
+		0x10, 0x18, FONT_SMALL, 0);
+		
 	
 	
 	int numDead = 0;

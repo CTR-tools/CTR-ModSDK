@@ -1,5 +1,5 @@
 
-#define VERSION 1008
+#define VERSION 1009
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -140,9 +140,9 @@ struct SG_MessageRooms
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
 	unsigned char size : 4;
-
 	unsigned char numRooms;
-	unsigned char version;
+
+	unsigned short version;
 	
 	unsigned char numClients01 : 4;
 	unsigned char numClients02 : 4;
@@ -162,7 +162,7 @@ struct SG_MessageRooms
 	unsigned char numClients15 : 4;
 	unsigned char numClients16 : 4;
 
-	// 11 bytes total
+	// 12 bytes total
 };
 
 // sent to each user when someone connects
@@ -264,7 +264,7 @@ struct SG_MessageEndRace
 };
 
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
-STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 11, "Size of SG_MessageRooms must be 11 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 12, "Size of SG_MessageRooms must be 12 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 6, "Size of SG_MessageClientStatus must be 4 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");

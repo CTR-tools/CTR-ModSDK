@@ -80,6 +80,24 @@ void StatePS1_Launch_FirstInit()
 	
 	UpdateMenu();
 	NewPage_ServerRoom();
+	
+	int serverTotal = 0;
+	for(int i = 0; i < 16; i++)
+	{
+		int curr = octr->clientCount[i];
+		if(curr > 8) curr -= 8;
+		serverTotal += curr;
+	}
+	
+	char* text = "Server Total: 000";
+	text[14] = '0' + ((serverTotal / 100) % 10);
+	text[15] = '0' + ((serverTotal / 10) % 10);
+	text[16] = '0' + (serverTotal % 10);
+	
+	DecalFont_DrawLine(
+		text,
+		menu.posX_curr,0xb8,
+		FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
 }
 
 void StatePS1_Lobby_AssignRole()
@@ -146,6 +164,9 @@ void FakeState_Lobby_HostLapPick()
 void StatePS1_Lobby_GuestTrackWait()
 {
 	PrintCharacterStats();
+	
+	// close menu
+	sdata->ptrActiveMenu = 0;
 		
 	DECOMP_DecalFont_DrawLine(
 		"waiting for host",

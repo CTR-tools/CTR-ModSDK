@@ -53,6 +53,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageRooms* r = recvBuf;
 
+			if (r->version != VERSION)
+			{
+				system("cls");
+				printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
+				system("pause");
+			}
+
 			// reopen the room menu,
 			// either first time getting rooms,
 			// or refresh after joining refused
@@ -477,9 +484,6 @@ void StatePC_Launch_EnterIP()
 	char portStr[PORT_SIZE];
 	int port;
 
-	// default port
-	addr.port = 65001;
-
 	// quit if disconnected, but not loaded 
 	// back into the selection screen yet
 	int gGT_levelID =
@@ -530,7 +534,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001;
+			addr.port = 64001;
 
 			break;
 		}
@@ -538,9 +542,9 @@ void StatePC_Launch_EnterIP()
 		// NYC (USA)
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "sync.kevman95.com");
+			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001;
+			addr.port = 64001;
 
 			break;
 		}
@@ -550,7 +554,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 10666;
+			addr.port = 64001;
 
 			break;
 		}
@@ -560,7 +564,7 @@ void StatePC_Launch_EnterIP()
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 65001;
+			addr.port = 64001;
 
 			break;
 		}
@@ -575,22 +579,22 @@ void StatePC_Launch_EnterIP()
 			break;
 		}
 
-		// BETA 1
+		// SINGAPORE
 		case 5:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "127.0.0.1");
+			strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 1234;
+			addr.port = 64001;
 
 			break;
 		}
 
-		// BETA 2
+		// BETA
 		case 6:
 		{
 			strcpy_s(dns_string, sizeof(dns_string), "127.0.0.1");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 1234;
+			addr.port = 64001;
 
 			break;
 		}
@@ -1182,8 +1186,9 @@ int main()
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		octr->time[0]++;
-		
-		if (octr->CurrState >= LOBBY_ASSIGN_ROLE)
+
+		// should rename to room selection
+		if (octr->CurrState >= LAUNCH_FIRST_INIT)
 			DisconSELECT();
 
 		StartAnimation();

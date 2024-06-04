@@ -107,15 +107,12 @@ void SendRoomData(ENetPeer* peer)
 	mr.version = VERSION;
 	mr.size = sizeof(struct SG_MessageRooms);
 
+// Turn 1-7 inro 9-15
 #define SETUP(x, index) \
 	x = roomInfos[index].clientCount; \
 	if (roomInfos[index].boolRoomLocked) \
-	{ \
-		if(x == 1) \
-			x = 9; \
-		else \
-			x += 7; \
-	}
+		if(x < 8) \
+			x += 8;
 
 	// required for bit packing :4
 	SETUP(mr.numClients01, 0x0);
