@@ -342,7 +342,7 @@ void PrintCharacterStats()
 		0x10, 0x10, FONT_SMALL, 0);
 		
 	char* roomName = "ROOM x";
-	roomName[5] = GetRoomChar(octr->serverRoom);
+	roomName[5] = GetRoomChar(octr->serverRoom)+1;
 	
 	DecalFont_DrawLine(
 		roomName, 
