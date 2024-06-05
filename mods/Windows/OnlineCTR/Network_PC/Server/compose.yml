@@ -6,5 +6,5 @@ services:
       dockerfile: ./mods/Windows/OnlineCTR/Network_PC/Server/Dockerfile
     ports:
       # Change this port to whatever you like
-      - "42069:42069"
+      - "64001:64001"
     tty: true

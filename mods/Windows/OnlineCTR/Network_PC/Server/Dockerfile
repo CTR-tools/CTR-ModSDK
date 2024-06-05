@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --from=builder /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ctr_srv /app/
 COPY --from=builder /usr/lib/i386-linux-gnu/libenet.* /usr/lib/i386-linux-gnu/
 
-ENV PORT 42069
+ENV PORT 64001
 
 EXPOSE ${PORT}
 
