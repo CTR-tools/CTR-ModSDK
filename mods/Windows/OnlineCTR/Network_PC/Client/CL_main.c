@@ -155,6 +155,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		case SG_BAD_USERNAME:
 		{
+			system("cls");
+			printf("Error: Client disconnected due to bad username");
+			system("pause");
+
 			break;
 		}
 

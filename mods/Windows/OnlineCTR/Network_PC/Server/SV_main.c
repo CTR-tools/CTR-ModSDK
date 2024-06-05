@@ -45,6 +45,8 @@ RoomInfo roomInfos[16] = { NULL };
 
 void PrintTime();
 
+BadWordList* badWordList;
+
 // similar to enet_host_broadcast
 void broadcastToPeersUnreliable(RoomInfo* ri, const void* data, size_t size)
 {
@@ -305,8 +307,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				m->size = sizeof(struct SG_MessageBadUsername);
 
 				printf("\nDisconnecting player %s due to bad username\n", r->name);
-
-				broadcastToPeersReliable(ri, m, m->size);
 				enet_peer_disconnect_now(peer, 0);
 			}
 			else {
@@ -722,68 +722,27 @@ void ServerState_Tick()
 void InitializeBadWordList(BadWordList* list) {
 	list->word_count = 0;
 
-	AddBadWord(list, "Ass");
-	AddBadWord(list, "Asshole");
-	AddBadWord(list, "Nigga");
-	AddBadWord(list, "Nigger");
-	AddBadWord(list, "Whore");
-	AddBadWord(list, "Fuck");
-	AddBadWord(list, "Bitch");
-	AddBadWord(list, "Bastard");
-	AddBadWord(list, "Pussy");
-	AddBadWord(list, "Tits");
-	AddBadWord(list, "Titty");
-	AddBadWord(list, "Fucker");
-	AddBadWord(list, "Porn");
-	AddBadWord(list, "Penis");
-	AddBadWord(list, "Vulva");
-	AddBadWord(list, "Anus");
-	AddBadWord(list, "Anal");
-	AddBadWord(list, "Sex");
-	AddBadWord(list, "Balls");
-	AddBadWord(list, "Piss");
-	AddBadWord(list, "Orgasm");
-	AddBadWord(list, "Wank");
-	AddBadWord(list, "Masturbate");
-	AddBadWord(list, "P0rn");
-	AddBadWord(list, "Twat");
-	AddBadWord(list, "Spic");
-	AddBadWord(list, "Shemale");
-	AddBadWord(list, "Cum");
-	AddBadWord(list, "Fag");
-	AddBadWord(list, "Faggot");
-	AddBadWord(list, "Dick");
-	AddBadWord(list, "Ejaculat");
-	AddBadWord(list, "Cunt");
-	AddBadWord(list, "Coom");
-	AddBadWord(list, "Clit");
-	AddBadWord(list, "Cock");
-	AddBadWord(list, "C0ck");
-	AddBadWord(list, "Bum");
-	AddBadWord(list, "Boob");
-	AddBadWord(list, "Boner");
-	AddBadWord(list, "Pussies");
-	AddBadWord(list, "Damn");
-	AddBadWord(list, "Cunnilingus");
-	AddBadWord(list, "Deepthroat");
-	AddBadWord(list, "Arse");
-	AddBadWord(list, "Puke");
-	AddBadWord(list, "Puta");
-	AddBadWord(list, "Smegma");
-	AddBadWord(list, "Prick");
-	AddBadWord(list, "Smut");
-	AddBadWord(list, "Pube");
-	AddBadWord(list, "Fart");
-	AddBadWord(list, "Gay");
-	AddBadWord(list, "Lesbian");
-	AddBadWord(list, "Rectum");
-	AddBadWord(list, "Retard");
-	AddBadWord(list, "Semen");
-	AddBadWord(list, "Shart");
-	AddBadWord(list, "Shit");
-	AddBadWord(list, "Teet");
-	AddBadWord(list, "Twink");
-	AddBadWord(list, "Vagina");
+	const char badWords[][BADWORD_MAX_LENGTH] = {
+		"anal", "anus", "arse", "ass", "asshole",
+		"balls", "bastard", "bitch", "boner", "boob",
+		"bum", "butt", "c0ck", "c00m", "clit",
+		"cock", "coom", "cum", "cunnilingus", "cunt",
+		"damn", "deepthroat", "dick", "ejaculat", "fag",
+		"faggot", "fart", "fuck", "fucker", "gay",
+		"lesbian", "nigga", "nigger", "masturbate", "orgasm",
+		"p0rn", "penis", "piss", "porn", "prick",
+		"pube", "puke", "pussies", "pussy", "puta",
+		"rectum", "retard", "semen", "sex", "spic",
+		"shart", "shemale", "shit", "smegma", "smut",
+		"teet", "tits", "titty", "twat", "twink",
+		"wank", "whore", "vagina", "vulva"
+	};
+
+	size_t length = sizeof(badWords) / sizeof(*badWords);
+
+	for (int index = 0; index < length; index++) {
+		AddBadWord(list, badWords[index]);
+	}
 }
 
 void AddBadWord(BadWordList* list, const char* word) {
@@ -802,11 +761,7 @@ bool WordContainsBadWord(const BadWordList* list, const char* word) {
 	StringToLowerCase(lowerCaseWord);
 
 	for (int i = 0; i < list->word_count; i++) {
-		char lowerCaseBadWord[BADWORD_MAX_LENGTH];
-		strncpy(lowerCaseBadWord, list->words[i], BADWORD_MAX_LENGTH);
-		StringToLowerCase(lowerCaseBadWord);
-
-		if (strstr(lowerCaseWord, lowerCaseBadWord) != NULL) {
+		if (strstr(lowerCaseWord, list->words[i]) != NULL) {
 			printf("\nBad username %s found (contains: %s)\n", word, list->words[i]);
 			return true;
 		}
@@ -824,6 +779,7 @@ void StringToLowerCase(char* string) {
 int main(int argc, char** argv)
 {
 	ServerState_FirstBoot(argc, argv);
+	InitializeBadWordList(&badWordList);
 
 	for(int r = 0; r < 16; r++)
 		ServerState_RebootRoom(r);

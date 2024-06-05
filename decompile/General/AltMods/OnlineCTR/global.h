@@ -34,7 +34,7 @@
 
 #define USERNAME_MAX_LENGTH 100
 #define BADWORDS_COUNT 100
-#define BADWORD_MAX_LENGTH 50
+#define BADWORD_MAX_LENGTH 20
 
 typedef struct {
 	char* words[BADWORDS_COUNT];
