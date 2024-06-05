@@ -508,6 +508,12 @@ void ProcessNewMessages() {
 				{
 					printf("Disconnection from race, kill room\n");
 
+					printf("End Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
+						(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1,
+						peerID,
+						ri->peerInfos[peerID].name[0],
+						event.peer->address.host);
+
 					for (int i = 0; i < MAX_CLIENTS; i++)
 					{
 						if (ri->peerInfos[i].peer == 0)
@@ -668,7 +674,7 @@ void ServerState_Tick()
 			if (ri->boolLoadAll)
 			{
 				//printf("Start Loading: ");
-				PrintTime();
+				//PrintTime();
 
 				struct SG_Header sg;
 				sg.type = SG_STARTLOADING;
@@ -689,7 +695,7 @@ void ServerState_Tick()
 			if (ri->boolRaceAll)
 			{
 				//printf("Start Race: ");
-				PrintTime();
+				//PrintTime();
 
 				struct SG_Header sg;
 				sg.type = SG_STARTRACE;
