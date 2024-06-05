@@ -109,10 +109,21 @@ void SendRoomData(ENetPeer* peer)
 
 // Turn 1-7 inro 9-15
 #define SETUP(x, index) \
-	x = roomInfos[index].clientCount; \
+	x = roomCount[index]; \
 	if (roomInfos[index].boolRoomLocked) \
 		if(x < 8) \
 			x += 8;
+	
+	// Do NOT use roomInfos[index].clientCount,
+	// cause that doesnt account for empty holes
+	
+	int roomCount[16];
+	memset(&roomCount[0], 0, sizeof(int)*16);
+	
+	for(int i = 0; i < 16; i++)
+		for(int j = 0; j < 8; j++)
+			if (roomInfos[i].peerInfos[j].peer != 0)
+				roomCount[i]++;
 
 	// required for bit packing :4
 	SETUP(mr.numClients01, 0x0);
@@ -165,6 +176,31 @@ void GetDriverFromRace(ENetPeer* peer, RoomInfo** ri, int* peerID)
 		if (*peerID != -1)
 			break;
 	}
+}
+
+void WelcomeNewClient(RoomInfo* ri, int id)
+{
+	// Send acceptance to client
+	struct SG_MessageClientStatus mw;
+	mw.type = SG_NEWCLIENT;
+	mw.clientID = id;
+	mw.numClientsTotal = ri->clientCount;
+	mw.version = VERSION;
+	mw.size = sizeof(struct SG_MessageClientStatus);
+
+	// ordinary day
+	mw.special = 0;
+
+	// Monday Icy Tracks
+	if (GetWeekDay() == 1) mw.special = 1;
+
+	// Wednesday Super Turbos
+	if (GetWeekDay() == 3) mw.special = 2;
+
+	// Friday Inf Masks
+	if (GetWeekDay() == 5) mw.special = 3;
+
+	sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
 }
 
 void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
@@ -240,42 +276,13 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memset(&ri->peerInfos[id], 0, sizeof(PeerInfo));
 
 			ri->peerInfos[id].peer = peer;
-
-			// Send acceptance to client
-			struct SG_MessageClientStatus mw;
-			mw.type = SG_NEWCLIENT;
-			mw.clientID = id;
-			mw.numClientsTotal = ri->clientCount;
-			mw.version = VERSION;
-			mw.size = sizeof(struct SG_MessageClientStatus);
-
-			// odd-numbered index == even-number room
-			// Index 1, 3, 5 -> Room 2, 4, 6
-			if (r->room&1)
-			{
-				mw.special = 0;
-			}
-
-			else
-			{
-				// ordinary day
-				mw.special = 0;
-
-				// Monday Icy Tracks
-				if (GetWeekDay() == 1) mw.special = 1;
-
-				// Wednesday Super Turbos
-				if (GetWeekDay() == 3) mw.special = 2;
-
-				// Friday Inf Masks
-				if (GetWeekDay() == 5) mw.special = 3;
-			}
-
+			
 			// Set the timeout settings for the host
 			// now 800 for 1.5s timeout, should detect closed clients
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
-			sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
+			WelcomeNewClient(ri, id);
+			
 			break;
 		}
 
@@ -471,12 +478,46 @@ void ProcessNewMessages() {
 					if (ri->peerInfos[i].peer != 0)
 						numAlive++;
 
-				// What we "should" do is disconnect one peer,
-				// do this for all normal race tracks, and 2+ peers exist
+				// subtract one, cause one of the peers was still
+				// alive in the for-loop that is about to be nullified
+				numAlive -= 1;
+
+				// Kill lobby under these conditions
 				if (
-					(ri->levelPlayed <= 18) &&
-					(numAlive > 1)
+						// nobody left at all
+						(numAlive == 0) ||
+						
+						(
+							// race in session
+							(ri->boolRaceAll == 1) &&
+				
+							(
+								// nobody to race
+								(numAlive <= 1) ||
+				
+								// battle map or adv map,
+								(ri->levelPlayed > 18)
+							)
+						)
 				   )
+				{
+					printf("Disconnection from race, kill room\n");
+
+					for (int i = 0; i < MAX_CLIENTS; i++)
+					{
+						if (ri->peerInfos[i].peer == 0)
+							continue;
+
+						enet_peer_disconnect_now(ri->peerInfos[i].peer, 0);
+					}
+
+					memset(ri, 0, sizeof(RoomInfo));
+				}
+				
+				// Only disconnect one player as long as
+				// more racers remain on Arcade track,
+				// or if disconnected from Battle/Adv during the race
+				else
 				{
 					printf("Disconnetion from race, still in session\n");
 
@@ -504,29 +545,8 @@ void ProcessNewMessages() {
 					broadcastToPeersReliable(ri, s, s->size);
 				}
 
-				// What we "will" do instead is throw everyone out,
-				// do this only on Battle maps and Adventure Hub,
-				// or if this is the last peer to leave
-				else
-				{
-					printf("Disconnection from race, kill room\n");
-
-					for (int i = 0; i < MAX_CLIENTS; i++)
-					{
-						if (ri->peerInfos[i].peer == 0)
-							continue;
-
-						enet_peer_disconnect_now(ri->peerInfos[i].peer, 0);
-						ri->peerInfos[i].peer = NULL;
-						ri->clientCount--;
-					}
-
-					memset(ri, 0, sizeof(RoomInfo));
-				}
-
 				break;
 			}
-
 		}
 	}
 }
@@ -615,14 +635,7 @@ void ServerState_FirstBoot(int argc, char** argv)
 	printf("Server: Ready on port %d\n\n", port);
 }
 
-void ServerState_RebootRoom(int r)
-{
-	memset(&roomInfos[0], 0, sizeof(RoomInfo)*16);
-	printf("\nServerState_RebootRoom: %d", r);
-	PrintTime();
-
-}
-
+int endTime = 0;
 void ServerState_Tick()
 {
 	ProcessNewMessages();
@@ -685,8 +698,38 @@ void ServerState_Tick()
 
 			if (ri->boolEndAll)
 			{
-				printf("End Race: ");
+				printf("Terminate Race: ");
 				PrintTime();
+				
+				endTime = clock();
+			}
+		}
+		
+		else
+		{
+			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
+			{
+				printf("Reset Room: ");
+				PrintTime();
+				
+				for (int i = 0; i < MAX_CLIENTS; i++)
+				{
+					if (ri->peerInfos[i].peer == 0)
+						continue;
+					
+					ri->peerInfos[i].boolLoadSelf = 0;
+					ri->peerInfos[i].boolRaceSelf = 0;
+					ri->peerInfos[i].boolEndSelf = 0;
+						
+					// tell all clients to reset
+					WelcomeNewClient(ri, i);
+				}
+
+				ri->levelPlayed = 0;
+				ri->boolRoomLocked = 0;
+				ri->boolLoadAll = 0;
+				ri->boolRaceAll = 0;
+				ri->boolEndAll = 0;
 			}
 		}
 	}
@@ -695,9 +738,6 @@ void ServerState_Tick()
 int main(int argc, char** argv)
 {
 	ServerState_FirstBoot(argc, argv);
-
-	for(int r = 0; r < 16; r++)
-		ServerState_RebootRoom(r);
 
 	while (1)
 	{

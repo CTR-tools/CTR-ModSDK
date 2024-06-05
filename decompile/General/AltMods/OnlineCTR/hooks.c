@@ -182,6 +182,10 @@ void OnlineEndOfRace()
 	if((d->actionsFlagSet & 0x2000000) == 0)
 		return;
 	
+	// if client reset to ASSIGN_ROLE after end-of-race
+	if(octr->CurrState < GAME_START_RACE)
+		return;
+	
 	octr->CurrState = GAME_END_RACE;
 	
 	// if "you" finished race,

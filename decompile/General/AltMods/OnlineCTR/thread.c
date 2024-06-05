@@ -46,10 +46,10 @@ void ThreadFunc(struct Thread* t)
 	// which can force in-game with 8000c000=LOBBY_START_LOADING
 	#if 1
 	for(i = 6; i >= 0; i--)
-		octr->time[i+1] = octr->time[i];
+		octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
 	
 	for(i = 6; i >= 0; i--)
-		if(octr->time[i+1] != octr->time[i])
+		if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 			break;
 	
 	// if client didn't update the game in 4 frames
@@ -60,8 +60,16 @@ void ThreadFunc(struct Thread* t)
 	// if server disconnects mid-game
 	// (currState < 0)
 	
-	if(boolCloseClient || (octr->CurrState < 0))
+	// prevent reset if still in main menu
+	if((gGT->levelID == 0x26) && (octr->CurrState < 0))
 	{
+		octr->CurrState = 0;
+		octr->serverLockIn1 = 0;
+		octr->serverLockIn2 = 0;
+	}
+	
+	if(boolCloseClient || (octr->CurrState < 0))
+	{		
 		// reset, including CurrState
 		memset(octr, 0, sizeof(struct OnlineCTR));
 		
@@ -87,13 +95,8 @@ void ThreadFunc(struct Thread* t)
 		return;
 	}
 	#endif
-	
-	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
-	{
-		void PrintTimeStamp();
-		PrintTimeStamp();
-	}
-	
+		
+	// gameplay
 	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
 	{
 		void DrawOverheadNames();
@@ -102,6 +105,38 @@ void ThreadFunc(struct Thread* t)
 	
 	if (octr->CurrState >= 0)
 		funcs[octr->CurrState]();
+	
+	// not gameplay, must draw LAST
+	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
+	{
+		void PrintTimeStamp();
+		PrintTimeStamp();
+		
+		// if not viewing planet
+		if(gGT->levelID != 0x26)
+		{
+			RECT r;
+			r.x = 8;
+			r.y = 8;
+			r.w = 0x200;
+			r.h = 0xd8;
+
+			// draw menu now because it is drawn
+			// later, which puts it behind our background
+			if(sdata->ptrActiveMenu != 0)
+			{
+				// clear width, then get width
+				int width = 0;
+				DECOMP_RECTMENU_GetWidth(sdata->ptrActiveMenu, &width, 1);
+			
+				// draw
+				DECOMP_RECTMENU_DrawSelf(sdata->ptrActiveMenu, 0, 0, (int)width);
+			}
+
+			DECOMP_RECTMENU_DrawInnerRect(
+				&r, 0, gGT->backBuffer->otMem.startPlusFour);
+		}
+	}
 	
 	if(strcmp("debugcam", &octr->nameBuffer[0]) == 0)
 	{

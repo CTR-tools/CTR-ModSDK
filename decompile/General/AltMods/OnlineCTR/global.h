@@ -1,5 +1,5 @@
 
-#define VERSION 1009
+#define VERSION 1010
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -79,14 +79,18 @@ struct OnlineCTR
 	unsigned char serverLockIn1;
 	unsigned char serverLockIn2;
 
+	// 0x14
 	char clientCount[16];
 
+	// 0x24
 	// determines if client and
 	// emulator are still connected
-	char time[8];
+	char windowsClientSync[8];
 
+	// 0x2c
 	char boolLockedInCharacters[8];
 
+	// 0x34
 	char nameBuffer[0xC*8];
 
 	struct

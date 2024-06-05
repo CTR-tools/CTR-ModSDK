@@ -21,7 +21,14 @@
 
 //#define USE_VR		// Virtual Reality
 
-
+#ifdef USE_ONLINE
+//#define USE_60FPS
+#define USE_16BY9
+#define USE_BOOSTBAR
+#define USE_RAMEX
+#define USE_BIGQUEUE
+#define USE_HIGH1P
+#endif
 
 #ifdef USE_60FPS
 #define FPS_DOUBLE(x) ((x)*2)

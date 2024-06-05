@@ -22,7 +22,6 @@
 
 char *pBuf;
 struct OnlineCTR* octr;
-static unsigned char serverReconnect = false;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -106,6 +105,11 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
 				~(0x100000 | 0x80000 | 0x400);
 
+			// odd-numbered index == even-number room
+			// Index 1, 3, 5 -> Room 2, 4, 6
+			if (octr->serverRoom & 1)
+				r->special = 0;
+
 			switch (r->special)
 			{
 				// Ordinary day, nothing happening
@@ -127,6 +131,19 @@ void ProcessReceiveEvent(ENetPacket* packet)
 					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x400;
 					break;
 			}
+
+			// offset 0x8
+			octr->boolLockedInLap = 0;
+			octr->boolLockedInLevel = 0;
+			octr->lapID = 0;
+			octr->levelID = 0;
+			
+			octr->boolLockedInCharacter = 0;
+			octr->numDriversEnded = 0;
+			
+			memset(&octr->boolLockedInCharacters[0], 0, 8);
+			memset(&octr->nameBuffer[0], 0, 0xC*8);
+			memset(&octr->RaceEnd[0], 0, 8*8);
 
 			// reply to server with your name
 			*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
@@ -378,64 +395,10 @@ void ProcessNewMessages()
 			PrintBanner(SHOW_NAME);
 			printf("\nClient: Connection Dropped (Server Full or Server Offline)...  ");
 
-			if (serverReconnect == true) goto retry_loop;
-
-			// ask if they would like to keep retrying
-			do {
-				printf("\nInput.: Automatically retry every %d seconds? (Y/N): ", AUTO_RETRY_SECONDS);
-				response = _getch();
-
-				if (response == 'Y' || response == 'y')
-				{
-				retry_loop:
-					serverReconnect = true;
-					printf("%c\nClient: Retrying in %d seconds (ESC to CANCEL)...  ", toupper(response), AUTO_RETRY_SECONDS);
-
-					for (int i = 0; i < AUTO_RETRY_SECONDS * 10; ++i)
-					{
-						StartAnimation();
-
-						#ifdef __GNUC__
-							usleep(50 * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-						#else
-							Sleep(50);
-						#endif
-
-						if (_kbhit() && _getch() == ESC_KEY)
-						{
-							StopAnimation();
-							printf("Client: Automatic retrying canceled!  ");
-							serverReconnect = false;
-							goto terminate_connection;
-						}
-					}
-
-					goto retry_connection;
-				}
-				else if (response == 'N' || response == 'n')
-				{
-					printf("%c  ", toupper(response));
-					serverReconnect = false;
-					goto terminate_connection;
-				}
-			} while (response != 'Y' && response != 'y' && response != 'N' && response != 'n');
-
-			if (serverReconnect == false)
-			{
-				// exit the loop or handle the disconnection as needed
-				goto terminate_connection;
-			}
-
-			Sleep(3000); // triggers a server timeout (just in case the client isn't disconnected)
-
-		terminate_connection:
 			// to go the lobby browser
-			octr->CurrState = 0;
-			octr->serverLockIn2 = 0; // server selection has been locked in
-			serverReconnect = false; // no we don't want to reconnect
+			octr->CurrState = -1;
 			break;
 
-		retry_connection:
 		default:
 			break;
 		}
@@ -484,13 +447,10 @@ void DisconSELECT()
 		// just in case client isnt disconnected
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
-		Sleep(2000);
-		//system("cls");
+		enet_peer_disconnect_now(serverPeer, 0);
 
 		// to go the lobby browser
-		octr->CurrState = 0;
-		octr->serverLockIn2 = 0; // server selection has been locked in
-		serverReconnect = false; // yes we want to reconnect
+		octr->CurrState = -1;
 
 		return;
 	}
@@ -557,33 +517,9 @@ void StatePC_Launch_EnterIP()
 	if (sdata_Loading_stage != -1)
 		return;
 
-	// if not doing a force-reconnect
-	if (serverReconnect == false)
-	{
-		// return now if the server selection hasn't been selected yet
-		if (octr->serverLockIn1 == 0)
-			return;
-	}
-
-	// force-reconnect to previous server
-	else
-	{
-		octr->serverRoom = StaticRoomID;
-		octr->serverCountry = StaticServerID;
-
-		int random_sleep_time;
-		srand(time(0));
-
-		// now add a random delay so we can try to get a fairer choice of lobby hosts,
-		// 0.01s to 0.31s, must be more than one frame, so proper values reset themselves
-		random_sleep_time = 10 + rand() % 300;
-
-#ifdef __GNUC__
-		usleep(random_sleep_time * 1000); // multiplied by 1,000 to convert milliseconds to microseconds
-#else
-		Sleep(random_sleep_time);
-#endif
-	}
+	// return now if the server selection hasn't been selected yet
+	if (octr->serverLockIn1 == 0)
+		return;
 
 	StaticServerID = octr->serverCountry;
 
@@ -781,7 +717,6 @@ void StatePC_Launch_EnterIP()
 				// to go the lobby browser
 				octr->CurrState = LAUNCH_CONNECT_FAILED;
 				octr->serverLockIn2 = 0; // server selection has been locked in
-				serverReconnect = false; // yes we want to reconnect
 
 				return;
 			}
@@ -801,8 +736,6 @@ void StatePC_Launch_ConnectFailed()
 {
 	StopAnimation();
 	printf("Error: Unable to connect to the server!  ");
-
-	serverReconnect = false;
 	octr->CurrState = LAUNCH_ENTER_IP;
 }
 
@@ -824,18 +757,6 @@ void StatePC_Launch_FirstInit()
 		mr.size = sizeof(struct CG_MessageRoom);
 
 		sendToHostReliable(&mr, mr.size);
-	}
-
-	if (serverReconnect)
-	{
-		// assume room chosen
-		octr->serverLockIn2 = 1;
-
-		// have not connected yet
-		connAttempt = 0;
-
-		// no more override code
-		serverReconnect = 0;
 	}
 
 	// wait for room to be chosen
@@ -1069,40 +990,6 @@ void StatePC_Game_EndRace()
 	{
 		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
 	}
-
-	int timeSinceEnd = (clock() - timeStart) / CLOCKS_PER_SEC;
-
-	// if you did not finish last
-	if (octr->numDriversEnded < (octr->NumDrivers - numDead))
-		timeStart = clock();
-
-	// race is over, 1 second passed
-	else if (timeSinceEnd > 1)
-	{		
-		// disconnect
-		enet_peer_disconnect_now(serverPeer, 0);
-
-		// race is over, 6 second passed
-		if(timeSinceEnd >= 6)
-		{
-			StopAnimation();
-			StartAnimation();
-
-			// command prompt reset
-			system("cls");
-			PrintBanner(SHOW_NAME);
-	
-			// reset everything
-			octr->CurrState = -1;
-
-			// if not private server
-			if (StaticServerID != 7)
-			{
-				octr->serverLockIn2 = 0; // server selection is not done
-				serverReconnect = true; // yes we want to reconnect
-			}
-		}
-	}
 }
 
 void (*ClientState[]) () = {
@@ -1245,7 +1132,7 @@ int main()
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
-		octr->time[0]++;
+		octr->windowsClientSync[0]++;
 
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_FIRST_INIT)
