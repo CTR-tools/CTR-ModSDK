@@ -1007,21 +1007,20 @@ LAB_8001e4d0:
 					(1 < *(byte *)(iVar13 + 8))
 				) &&
 
-				// if big skip is detected, how?
+				// Is this a ghidra fail?
+				// Could this be (checkpoint-newDist)*8?
+				// That would mean (trackLen/4) < (checkpoint-newDist)
+				(
 
-				// track length * 2
-				((int)((uint)(*(ushort *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6) >> 2) << 3)
+					// track length * 2
+					((int)((uint)(*(ushort *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6) >> 2) << 3)
 
-				// less than
-				<
+					// less than
+					<
 
-				// distanceToFinish_checkpoint - 8x dist_to_finish of quadblock touched
-				(int)(*(int *)(param_2 + 0x48c) + (uint)*(ushort *)(iVar13 + 6) * -8))
-
-				// if it were inverted, would it make any more sense?:
-				// if 8x dist_to_finish of quadblock touched - distanceToFinish_checkpoint
-				// <, or >,
-				// track length * 2?
+					// distanceToFinish_checkpoint - newDistToFinish*8
+					(int)(*(int *)(param_2 + 0x48c) - (uint)*(ushort *)(iVar13 + 6) * 8))
+				)
 			  )
 		  {
 			// player needs to be mask grabbed, illegal shortcut
