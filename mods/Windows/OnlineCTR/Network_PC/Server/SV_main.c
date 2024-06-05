@@ -264,6 +264,30 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				return;
 			}
 
+			// Avoid duplicate connection (from multiple CG_Room messages)
+			for (int i = 0; i < MAX_CLIENTS; i++)
+			{
+				// Peer is valid
+				if (ri->peerInfos[i].peer != 0)
+				{
+					// Peer matches IP of another in the room
+					if (ri->peerInfos[i].peer->address.host == peer->address.host)
+					{
+						// === This is NOT 64001 port ===
+						// This is a special port that determines which "local IP"
+						// to connect to, after the message goes to the router IP,
+						// even 2x clients + 2x duckstation will have different ports
+
+						// Peer matches port of another in the room
+						if (ri->peerInfos[i].peer->address.port == peer->address.port)
+						{
+							// cancel duplicate connection
+							return;
+						}
+					}
+				}
+			}
+
 
 			// === Connection Accepted ===
 
