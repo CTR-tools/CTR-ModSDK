@@ -1,5 +1,5 @@
 
-#define VERSION 1010
+#define VERSION 1011
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
