@@ -1009,7 +1009,7 @@ LAB_8001e4d0:
 
 				// if big skip is detected, how?
 
-				// track length * 2 ?
+				// track length * 2
 				((int)((uint)(*(ushort *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6) >> 2) << 3)
 
 				// less than
@@ -1038,27 +1038,27 @@ LAB_8001e4d0:
 
             if (
 					(
-						// if more than 50% track completion
+						// if not in the first 7% of lap progression
 						(
-							// quadblock just touched
-							// lev->restartPts[ quadblock (driver 0xa0) -> respawn_index ] -> dist to finish
+							// checkpoint->distToFinish
 							(uint)*(ushort *)(iVar13 + 6) <
 
-							// track length / 2
+							// 93% track length
 							(uint)((int)((uint)uVar2 * 0xf) >> 4)
 						) &&
 
-						// last valid quadblock
-						// lev->restartPts[ quadblock (driver 0x354) -> respawn_index ] is valid
+						// last valid quadblock has a "valid" checkpoint index
 						(bVar4 = *(byte *)(*(int *)(param_2 + 0x354) + 0x3e), bVar4 != 0xff)
 					) &&
 
-					// if backtracked more than 25% completion in one jump
+					// can not skip more than 25% of track
 					(
 					  (uint)*(ushort *)
 
 					    // last valid quadblock
 						// lev->restartPts[ quadblock (driver 0x354) -> respawn_index ] -> dist to finish
+						
+						// checkpointPrev->distToFinish
 						((uint)bVar4 * 0xc + *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6)
 
 						+
@@ -1068,8 +1068,7 @@ LAB_8001e4d0:
 
 						<
 
-						// quadblock just touched
-						// lev->restartPts[ quadblock (driver 0xa0) -> respawn_index ] -> dist to finish
+						// checkpointCurr->distToFinish
 						(uint)*(ushort *)(iVar13 + 6)
 					)
 			   )
