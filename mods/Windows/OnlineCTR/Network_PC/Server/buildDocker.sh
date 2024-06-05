@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
 
-cp -r ../../../../../externals/enet/ .
-cp -r ../../../../../decompile/ .
+# Copy files needed for server
+cp -r ../../../../../externals/enet .
+cp -r ../../../../../decompile .
 
-#have to git add . in NixOS
-git add .
-rm ./enet/.git
-rm -r ./enet/.github
+# Check if the OS is NixOS
+if [ "$(uname -s)" == "Linux" ] && grep -q 'NixOS' /etc/issue; then
+    # NixOS-specific commands
+    git add enet decompile
+    rm ./enet/.git
+    rm -r ./enet/.github
+fi
 
-sleep 2
-docker build -t nomadics/ctrserver:latest .
+# Build Docker image
+docker build -t ctr-psx-server:latest .
 
-sleep 2
-#clean
+# Clean up
 rm -rf ./enet
 rm -rf ./decompile
 
-#reverse the first git add .
-git add .
+# Reverse the git add (only on NixOS)
+if [ "$(uname -s)" == "Linux" ] && grep -q 'NixOS' /etc/issue; then
+    git reset HEAD enet decompile
+fi
