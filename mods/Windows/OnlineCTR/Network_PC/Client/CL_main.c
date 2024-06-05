@@ -448,6 +448,7 @@ void DisconSELECT()
 		StopAnimation();
 		printf("Client: Disconnected (ID: DSELECT)...  ");
 		enet_peer_disconnect_now(serverPeer, 0);
+		serverPeer = 0;
 
 		// to go the lobby browser
 		octr->CurrState = -1;
@@ -508,6 +509,8 @@ void StatePC_Launch_EnterIP()
 	// back into the selection screen yet
 	int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20+0x1a10) & 0xffffff];
+
+	// must be in cutscene level to see country selector
 	if (gGT_levelID != 0x26)
 		return;
 
@@ -516,6 +519,12 @@ void StatePC_Launch_EnterIP()
 		*(int*)&pBuf[0x8008d0f8 & 0xffffff];
 	if (sdata_Loading_stage != -1)
 		return;
+
+	if (serverPeer != 0)
+	{
+		enet_peer_disconnect_now(serverPeer, 0);
+		serverPeer = 0;
+	}
 
 	// return now if the server selection hasn't been selected yet
 	if (octr->serverLockIn1 == 0)
@@ -678,7 +687,11 @@ void StatePC_Launch_EnterIP()
 		exit(EXIT_FAILURE);
 	}
 
-	if (serverPeer) enet_peer_reset(serverPeer);
+	if (serverPeer != 0)
+	{
+		enet_peer_disconnect_now(serverPeer, 0);
+		serverPeer = 0;
+	}
 
 	serverPeer = enet_host_connect(clientHost, &addr, 2, 0);
 
