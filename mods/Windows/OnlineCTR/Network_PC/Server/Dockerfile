@@ -10,8 +10,8 @@ RUN mkdir -p /root/CTR-ModSDK/externals/enet
 RUN mkdir -p /root/CTR-ModSDK/decompile
 
 
-COPY . /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
-COPY enet /root/CTR-ModSDK/externals/enet/
+COPY mods/Windows/OnlineCTR/Network_PC/Server /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server
+COPY externals/enet /root/CTR-ModSDK/externals/enet/
 COPY decompile /root/CTR-ModSDK/decompile
 
 WORKDIR /root/CTR-ModSDK/externals/enet/
@@ -27,7 +27,7 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY --from=builder /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ctr_srv /app/
 
-ENV PORT 8080
+ENV PORT 42069
 
 EXPOSE ${PORT}
 
