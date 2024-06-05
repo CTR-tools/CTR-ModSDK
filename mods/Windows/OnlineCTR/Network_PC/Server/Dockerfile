@@ -9,14 +9,11 @@ RUN mkdir -p /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
 RUN mkdir -p /root/CTR-ModSDK/externals/enet
 RUN mkdir -p /root/CTR-ModSDK/decompile
 
-# Use absolute paths for copying files
+
 COPY . /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
 COPY enet /root/CTR-ModSDK/externals/enet/
 COPY decompile /root/CTR-ModSDK/decompile
 
-
-# Debug step to list files
-RUN ls -la /root/CTR-ModSDK/externals/enet/
 
 RUN cd /root/CTR-ModSDK/externals/enet/ && autoreconf -vfi
 RUN chmod +x /root/CTR-ModSDK/externals/enet/configure
