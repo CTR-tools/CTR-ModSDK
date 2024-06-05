@@ -1,32 +1,34 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder
 
 ENV TZ=Asia/Kuwait \
     DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y cmake make gcc libenet-dev libtool autoconf automake build-essential
+RUN apt-get update && apt-get install -y cmake libenet-dev libtool autoconf build-essential
 
 RUN mkdir -p /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
 RUN mkdir -p /root/CTR-ModSDK/externals/enet
 RUN mkdir -p /root/CTR-ModSDK/decompile
 
 
-COPY . /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
-COPY enet /root/CTR-ModSDK/externals/enet/
+COPY mods/Windows/OnlineCTR/Network_PC/Server /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server
+COPY externals/enet /root/CTR-ModSDK/externals/enet/
 COPY decompile /root/CTR-ModSDK/decompile
 
+WORKDIR /root/CTR-ModSDK/externals/enet/
+RUN autoreconf -vfi && chmod +x ./configure && ./configure && make && make install
 
-RUN cd /root/CTR-ModSDK/externals/enet/ && autoreconf -vfi
-RUN chmod +x /root/CTR-ModSDK/externals/enet/configure
-RUN cd /root/CTR-ModSDK/externals/enet/ && ./configure
-RUN cd /root/CTR-ModSDK/externals/enet/ && cmake CMakeLists.txt
-RUN cd /root/CTR-ModSDK/externals/enet/ && make
-RUN cd /root/CTR-ModSDK/externals/enet/ && make install
+WORKDIR /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
+RUN cmake CMakeLists.txt && make
 
-RUN cd /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
-RUN cd /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ && cmake CMakeLists.txt
-RUN cd /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ && make
+FROM ubuntu:24.04 AS final
 
+RUN apt-get update && apt-get install -y libenet-dev
+RUN mkdir -p /app
+WORKDIR /app
+COPY --from=builder /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ctr_srv /app/
 
-EXPOSE 8080
+ENV PORT 42069
 
-ENTRYPOINT ["/root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/entrypoint.sh"]
+EXPOSE ${PORT}
+
+ENTRYPOINT /app/ctr_srv -p ${PORT}
