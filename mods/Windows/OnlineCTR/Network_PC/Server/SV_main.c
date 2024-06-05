@@ -695,8 +695,9 @@ void ServerState_Tick()
 		{
 			ri->boolLoadAll = 1;
 			for (int j = 0; j < ri->clientCount; j++)
-				if (ri->peerInfos[j].boolLoadSelf == 0)
-					ri->boolLoadAll = 0;
+				if (ri->peerInfos[j].peer != 0)
+					if (ri->peerInfos[j].boolLoadSelf == 0)
+						ri->boolLoadAll = 0;
 
 			if (ri->boolLoadAll)
 			{
@@ -716,8 +717,9 @@ void ServerState_Tick()
 		{
 			ri->boolRaceAll = 1;
 			for (int j = 0; j < ri->clientCount; j++)
-				if (ri->peerInfos[j].boolRaceSelf == 0)
-					ri->boolRaceAll = 0;
+				if (ri->peerInfos[j].peer != 0)
+					if (ri->peerInfos[j].boolRaceSelf == 0)
+						ri->boolRaceAll = 0;
 
 			if (ri->boolRaceAll)
 			{
@@ -737,8 +739,9 @@ void ServerState_Tick()
 		{
 			ri->boolEndAll = 1;
 			for (int j = 0; j < ri->clientCount; j++)
-				if (ri->peerInfos[j].boolEndSelf == 0)
-					ri->boolEndAll = 0;
+				if (ri->peerInfos[j].peer != 0)
+					if (ri->peerInfos[j].boolEndSelf == 0)
+						ri->boolEndAll = 0;
 
 			if (ri->boolEndAll)
 			{
