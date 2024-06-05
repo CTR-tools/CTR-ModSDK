@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder
 
 ENV TZ=Asia/Kuwait \
     DEBIAN_FRONTEND=noninteractive
@@ -20,6 +20,15 @@ RUN autoreconf -vfi && chmod +x ./configure && ./configure && make && make insta
 WORKDIR /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/
 RUN cmake CMakeLists.txt && make
 
-EXPOSE 8080
+FROM ubuntu:24.04 AS final
 
-ENTRYPOINT ["/root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/entrypoint.sh"]
+RUN apt-get update && apt-get install -y libenet-dev
+RUN mkdir -p /app
+WORKDIR /app
+COPY --from=builder /root/CTR-ModSDK/mods/Windows/OnlineCTR/Network_PC/Server/ctr_srv /app/
+
+ENV PORT 8080
+
+EXPOSE ${PORT}
+
+ENTRYPOINT /app/ctr_srv -p ${PORT}
