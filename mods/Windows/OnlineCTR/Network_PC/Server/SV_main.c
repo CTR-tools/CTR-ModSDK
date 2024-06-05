@@ -583,6 +583,7 @@ void ProcessNewMessages() {
 					s->type = SG_NAME;
 					s->size = sizeof(struct SG_MessageName);
 					s->clientID = peerID;
+					s->numClientsTotal = ri->clientCount;
 					memset(&s->name[0], 0, 12);
 
 					broadcastToPeersReliable(ri, s, s->size);
