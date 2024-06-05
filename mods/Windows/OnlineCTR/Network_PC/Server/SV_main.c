@@ -295,7 +295,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			// save new name
 			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
-			printf("%d: %s\n", peerID, r->name);
+
+			printf("New Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
+				(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo))+1,
+				peerID,
+				r->name,
+				peer->address.host);
 
 			s->type = SG_NAME;
 			s->size = sizeof(struct SG_MessageName);
@@ -427,7 +432,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				((localTime * 100) / 0x3c0) % 10
 			);
 
-			printf("End Race: %d %s\n", peerID, timeStr);
+			//printf("End Race: %d %s\n", peerID, timeStr);
 			ri->peerInfos[peerID].boolEndSelf = 1;
 
 			broadcastToPeersReliable(ri, s, s->size);
@@ -520,6 +525,12 @@ void ProcessNewMessages() {
 				else
 				{
 					printf("Disconnetion from race, still in session\n");
+
+					printf("End Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
+						(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1,
+						peerID,
+						ri->peerInfos[peerID].name[0],
+						event.peer->address.host);
 
 					enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
 					ri->peerInfos[peerID].peer = NULL;
@@ -656,7 +667,7 @@ void ServerState_Tick()
 
 			if (ri->boolLoadAll)
 			{
-				printf("Start Loading: ");
+				//printf("Start Loading: ");
 				PrintTime();
 
 				struct SG_Header sg;
@@ -677,7 +688,7 @@ void ServerState_Tick()
 
 			if (ri->boolRaceAll)
 			{
-				printf("Start Race: ");
+				//printf("Start Race: ");
 				PrintTime();
 
 				struct SG_Header sg;
@@ -698,7 +709,7 @@ void ServerState_Tick()
 
 			if (ri->boolEndAll)
 			{
-				printf("Terminate Race: ");
+				printf("Terminate Race: Room=%d ", r+1);
 				PrintTime();
 				
 				endTime = clock();
@@ -709,7 +720,7 @@ void ServerState_Tick()
 		{
 			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
 			{
-				printf("Reset Room: ");
+				printf("Reset Room: Room=%d ", r+1);
 				PrintTime();
 				
 				for (int i = 0; i < MAX_CLIENTS; i++)
