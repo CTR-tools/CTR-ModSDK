@@ -22,6 +22,6 @@ COPY --from=builder /usr/lib/i386-linux-gnu/libenet.* /usr/lib/i386-linux-gnu/
 
 ENV PORT 64001
 
-EXPOSE ${PORT}
+EXPOSE ${PORT}/udp
 
 ENTRYPOINT /app/ctr_srv -p ${PORT}
