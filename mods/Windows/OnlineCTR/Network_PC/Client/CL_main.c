@@ -971,7 +971,7 @@ void StatePC_Game_StartRace()
 	// Friday demo mode camera
 	if(octr->special == 3)
 		if(gGT_levelID < 18)
-			*(short*)&pBuf[(0x80098028 + 0x1a10) & 0xffffff] = 0x20;
+			*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
 }
 
 #include <time.h>
