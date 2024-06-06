@@ -74,6 +74,13 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// update distance driven backwards
 		currDriver->distanceDrivenBackwards = drivenBackwards;
 
+		// === Natty Video ===
+		// https://www.youtube.com/watch?v=lDaT2rY6GKI
+		
+		// Part A: Start-line -> 32000 distToFinish
+		// Part B: 32000 distToFinish -> 1200 distToFinish
+		// Part C: 1200 distToFinish -> Finish-line 
+
 		if (
 				// crossed finishline (forwards)
 				(distToFinish_prev < 1200) &&

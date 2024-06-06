@@ -989,6 +989,13 @@ LAB_8001e4d0:
 		// if checkpointIndex is valid
 		else
 		{
+		  // === Natty Video ===
+		  // https://www.youtube.com/watch?v=lDaT2rY6GKI
+		  
+		  // Part A: Start-line -> 32000 distToFinish
+		  // Part B: 32000 distToFinish -> 1200 distToFinish
+		  // Part C: 1200 distToFinish -> Finish-line
+			
 		  // level -> respawn points
           iVar13 = *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) +
 

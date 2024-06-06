@@ -103,12 +103,17 @@ void FUN_800414f4(void)
         }
       }
 
-	  // 0x4b0 = 1200
+	  // === Natty Video ===
+	  // https://www.youtube.com/watch?v=lDaT2rY6GKI
+	  
+	  // Part A: Start-line -> 32000 distToFinish
+	  // Part B: 32000 distToFinish -> 1200 distToFinish
+	  // Part C: 1200 distToFinish -> Finish-line
 
 	  // if player just finished lap
       if (
 	       // if distance to finish was low last frame
-			(iVar8 < 0x4b0) &&
+			(iVar8 < 1200) &&
 
 			// now suddenly high
 			(32000 < *(int *)(iVar6 + 0x488))
