@@ -995,6 +995,9 @@ LAB_8001e4d0:
 		  // Part A: Start-line -> 32000 distToFinish
 		  // Part B: 32000 distToFinish -> 1200 distToFinish
 		  // Part C: 1200 distToFinish -> Finish-line
+		  
+		  // NMZ Shortcut occurs if a quadblock in Part B
+		  // is assigned to checkpoint 0 or 1, such as Papu Pyramid
 			
 		  // level -> respawn points
           iVar13 = *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) +
