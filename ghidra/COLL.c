@@ -1052,7 +1052,7 @@ LAB_8001e4d0:
 
 			// Can not skip 25% of trackLen BACKWARD,
 			// unless invalid checkpoint (papu pyramid bridge), or
-			// unless lap progress < 7% (so you can cross backwards)
+			// unless lap progress < 7% (crossed finishline)
             if (
 					(
 						// if not in the first 7% of lap progression
