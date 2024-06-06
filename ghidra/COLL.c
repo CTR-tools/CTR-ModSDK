@@ -1004,22 +1004,24 @@ LAB_8001e4d0:
 
 					// checkpointIndex * 0xc
                    (uint)*(byte *)(iVar13 + 0x3e) * 0xc;
-
+		  
+		  
+		  
+		  // Can not skip 25% of trackLen FORWARD,
+		  // unless you're in an NMZ, or if finishline is crossed backwards
           if (
-				// if driver is not exempt from skipping big track portion
-				(
-					// if racer didn't cross the startline backwards
-					((*(uint *)(param_2 + 0x2c8) & 0x1000000) == 0) &&
+				// if racer didn't cross the startline backwards
+				((*(uint *)(param_2 + 0x2c8) & 0x1000000) == 0) &&
 
-					// if respawn->0x8 is not 0, or 1,
-					// if these are not the quadblocks right behind the finish line,
-					// if this is not a No-Mask-Zone (NMZ),
-					(1 < *(byte *)(iVar13 + 8))
-				) &&
+				// if respawn->0x8 is not 0, or 1,
+				// if these are not the quadblocks right behind the finish line,
+				// if this is not a No-Mask-Zone (NMZ),
+				(1 < *(byte *)(iVar13 + 8)) &&
 
 				// Is this a ghidra fail?
 				// Could this be (checkpoint-newDist)*8?
-				// That would mean (trackLen/4) < (checkpoint-newDist)
+				// That would mean (trackLen/4) < (checkpoint-newDist),
+				// means can not go FORWARDS more than 25% of track
 				(
 
 					// track length * 2
@@ -1037,14 +1039,20 @@ LAB_8001e4d0:
             *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
           }
 
-		  // if crossed startline forwards,
-		  // or not in nmz, or (some other math?)
+
+
+		  // If not mask-grabbed yet
           else
 		  {
+
 			// track length
 			// level -> respawn points[0] -> dist_to_finish
             uVar2 = *(ushort *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6);
 
+
+			// Can not skip 25% of trackLen BACKWARD,
+			// unless invalid checkpoint (papu pyramid bridge), or
+			// unless lap progress < 7% (so you can cross backwards)
             if (
 					(
 						// if not in the first 7% of lap progression
@@ -1060,7 +1068,7 @@ LAB_8001e4d0:
 						(bVar4 = *(byte *)(*(int *)(param_2 + 0x354) + 0x3e), bVar4 != 0xff)
 					) &&
 
-					// can not skip more than 25% of track
+					// can not go BACKWARD more than 25% of track
 					(
 					  (uint)*(ushort *)
 
@@ -1070,6 +1078,7 @@ LAB_8001e4d0:
 						// checkpointPrev->distToFinish
 						((uint)bVar4 * 0xc + *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6)
 
+						// increasing distance (backwards)
 						+
 
 						// track length / 4
