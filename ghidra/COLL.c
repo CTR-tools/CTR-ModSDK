@@ -1037,8 +1037,8 @@ LAB_8001e4d0:
             *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
           }
 
-		  // if there was not an illegal shortcut,
-		  // or if you're in an NMZ
+		  // if crossed startline forwards,
+		  // or not in nmz, or (some other math?)
           else
 		  {
 			// track length
