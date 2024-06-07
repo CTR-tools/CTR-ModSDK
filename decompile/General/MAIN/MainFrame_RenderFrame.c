@@ -45,7 +45,7 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 u_int MM_Video_CheckIfFinished(int param_1);
 
-#ifdef USE_60FPS
+#ifdef USE_60FPS || USE_HIGH1P
 void PatchModel_60fps(struct Model* m)
 {
 	struct ModelHeader* h;
@@ -107,6 +107,10 @@ void PatchModel_60fps(struct Model* m)
 		h[i].maxDistanceLOD = 0;
 	}
 	#endif
+	
+	#ifndef USE_60FPS
+	return;
+	#endif
 
 	// loop through headers
 	for(i = 0; i < m->numHeaders; i++)
@@ -160,9 +164,11 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 		struct Model* m = i->model;
 		if(m == 0) return;
 		
+		#ifdef USE_60FPS
 		// need this, or it'll somehow become
 		// 0x13 instead of 0x14? May as well leave it here
 		i->animFrame = FPS_DOUBLE(10);
+		#endif
 		
 		// make an exception for driver when 233 is still
 		// loaded, and aku/uka says "congratulations, you win"
@@ -196,7 +202,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 {
 	struct Level* lev = gGT->level1;
 	
-	#ifdef USE_60FPS
+	#ifdef USE_60FPS || USE_HIGH1P
 	if ((gGT->renderFlags & 0x20) != 0)
 		ScanInstances_60FPS(gGT);
 	#endif
