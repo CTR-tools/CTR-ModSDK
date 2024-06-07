@@ -53,13 +53,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageClientStatus* r = recvBuf;
 
-			// === r->ClientID unused ===
-			// This is only for connection response,
-			// NOT used for reordering yet
-
-			// clientID is "you"
-			octr->DriverID = 0;
-
+			octr->DriverID = r->ClientID;
 			octr->NumDrivers = r->numClientsTotal;
 
 			if (r->version != VERSION)

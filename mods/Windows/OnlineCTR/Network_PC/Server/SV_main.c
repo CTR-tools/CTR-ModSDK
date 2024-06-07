@@ -138,12 +138,6 @@ void ProcessConnectEvent(ENetPeer* peer)
 	// Debug only, also prints client name from CG_MessageName
 	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
 
-
-			// === mw.ClientID unused ===
-			// This is only for connection response,
-			// NOT used for reordering yet
-
-
 	// Send ClientID and clientCount back to all clients
 	struct SG_MessageClientStatus mw;
 	mw.type = SG_NEWCLIENT;
