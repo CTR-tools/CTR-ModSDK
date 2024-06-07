@@ -44,33 +44,27 @@ void Freecam()
 	// there might be a matrix in pushBuffer anyways, need more research
 	ConvertRotToMatrix(&matrix, gGT->pushBuffer[0].rot);
 
-	if (buttons & BTN_LEFT)
-	{
-		// Subtract the "right" vector of matrix
-		gGT->pushBuffer[0].pos[0] -= speed * matrix.m[0][0] >> 11;
-		gGT->pushBuffer[0].pos[2] -= speed * matrix.m[0][2] >> 11;
-	}
 
-	else if (buttons & BTN_RIGHT)
-	{
-		// Add the "right" vector of matrix
-		gGT->pushBuffer[0].pos[0] += speed * matrix.m[0][0] >> 11;
-		gGT->pushBuffer[0].pos[2] += speed * matrix.m[0][2] >> 11;
-	}
 
-	if (buttons & BTN_UP)
-	{
-		// Add the "forward" vector of matrix
-		gGT->pushBuffer[0].pos[0] += speed * matrix.m[2][0] >> 11;
-		gGT->pushBuffer[0].pos[2] += speed * matrix.m[2][2] >> 11;
-	}
+	int scale = 0;
+	if (buttons & BTN_LEFT) scale = -1;
+	if (buttons & BTN_RIGHT) scale = 1;
 
-	else if (buttons & BTN_DOWN)
-	{
-		// Subtract the "forward" vector of matrix
-		gGT->pushBuffer[0].pos[0] -= speed * matrix.m[2][0] >> 11;
-		gGT->pushBuffer[0].pos[2] -= speed * matrix.m[2][2] >> 11;
-	}
+	// Add the "right" vector of matrix
+	gGT->pushBuffer[0].pos[0] += scale * speed * matrix.m[0][0] >> 11;
+	gGT->pushBuffer[0].pos[2] += scale * speed * matrix.m[0][2] >> 11;
+
+
+
+	scale = 0;
+	if (buttons & BTN_UP) scale = 1;
+	if (buttons & BTN_DOWN) scale = -1;
+
+	// Add the "forward" vector of matrix
+	gGT->pushBuffer[0].pos[0] += scale * speed * matrix.m[2][0] >> 11;
+	gGT->pushBuffer[0].pos[2] += scale * speed * matrix.m[2][2] >> 11;
+
+
 
 	if (buttons & BTN_L1) gGT->pushBuffer[0].pos[1] -= speed;
 	if (buttons & BTN_R1) gGT->pushBuffer[0].pos[1] += speed;

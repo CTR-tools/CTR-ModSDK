@@ -730,7 +730,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 					else
 					{
 						#ifndef REBUILD_PS1
-						DECOMP_UI_RenderFrame_CrystChall();
+							#ifndef USE_ONLINE
+							DECOMP_UI_RenderFrame_CrystChall();
+							#endif
 						#endif
 					}
 				}

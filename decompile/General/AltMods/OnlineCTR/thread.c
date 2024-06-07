@@ -1,9 +1,9 @@
 void (*funcs[NUM_STATES]) () =
 {
 	StatePS1_Launch_EnterPID,
-	StatePS1_Launch_EnterIP,
-	StatePS1_Launch_ConnectFailed,
-	StatePS1_Launch_FirstInit,
+	StatePS1_Launch_PickServer,
+	StatePS1_Launch_PickRoom,
+	StatePS1_Launch_Error,
 	StatePS1_Lobby_AssignRole,
 	StatePS1_Lobby_HostTrackPick,
 	StatePS1_Lobby_GuestTrackWait,
@@ -15,12 +15,22 @@ void (*funcs[NUM_STATES]) () =
 	StatePS1_Game_EndRace
 };
 
+RECT endRaceRECT =
+{
+	.x = 8,
+	.y = 8,
+	.w = 0x200-0x20,
+	.h = 0xc8,
+};
+
 void ThreadFunc(struct Thread* t)
 {
 	int i;
 	
 	struct GameTracker* gGT = sdata->gGT;
-	if(gGT->levelID == 0x26)
+	octr->boolPlanetLEV = gGT->levelID == 0x26;
+		
+	if(octr->boolPlanetLEV)
 	{
 		*(int*)0x800ae54c = 0x3e00008;
 		*(int*)0x800ae550 = 0;
@@ -55,27 +65,31 @@ void ThreadFunc(struct Thread* t)
 	// if client didn't update the game in 4 frames
 	int boolCloseClient = 
 		(i == -1) &&
-		(octr->CurrState >= LAUNCH_FIRST_INIT);
+		(octr->CurrState > LAUNCH_ENTER_PID);
 		
-	// if server disconnects mid-game
-	// (currState < 0)
-	
-	// prevent reset if still in main menu
-	if((gGT->levelID == 0x26) && (octr->CurrState < 0))
-	{
-		octr->CurrState = 0;
-		octr->serverLockIn1 = 0;
-		octr->serverLockIn2 = 0;
-	}
-	
+	// if client closed, or server disconnected
 	if(boolCloseClient || (octr->CurrState < 0))
-	{		
-		// reset, including CurrState
-		memset(octr, 0, sizeof(struct OnlineCTR));
-		
+	{
 		sdata->ptrActiveMenu = 0;
-		octr_entryHook();
+		
+		if(octr->boolPlanetLEV)
+		{
+			// if closed==1, go to 0 ("please open client")
+			// if closed==0, go to 1 (server select)
+			octr->CurrState = !boolCloseClient;
+			
+			octr->serverLockIn1 = 0;
+			octr->serverLockIn2 = 0;
+			return;
+		}
 
+		// calls memset on OnlineCTR struct
+		octr_entryHook();
+		
+		// if closed==1, go to 0 ("please open client")
+		// if closed==0, go to 1 (server select)
+		octr->CurrState = !boolCloseClient;
+		
 		// stop music, 
 		// stop "most FX", let menu FX ring
 		Music_Stop();
@@ -105,7 +119,7 @@ void ThreadFunc(struct Thread* t)
 	
 	if (octr->CurrState >= 0)
 		funcs[octr->CurrState]();
-	
+			
 	// not gameplay, must draw LAST
 	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)
 	{
@@ -113,28 +127,24 @@ void ThreadFunc(struct Thread* t)
 		PrintTimeStamp();
 		
 		// if not viewing planet
-		if(gGT->levelID != 0x26)
+		if(!octr->boolPlanetLEV)
 		{
-			RECT r;
-			r.x = 8;
-			r.y = 8;
-			r.w = 0x200;
-			r.h = 0xd8;
-
+			struct RectMenu* m = sdata->ptrActiveMenu;
+			
 			// draw menu now because it is drawn
 			// later, which puts it behind our background
-			if(sdata->ptrActiveMenu != 0)
+			if(m != 0)
 			{
 				// clear width, then get width
 				int width = 0;
-				DECOMP_RECTMENU_GetWidth(sdata->ptrActiveMenu, &width, 1);
+				DECOMP_RECTMENU_GetWidth(m, &width, 1);
 			
 				// draw
-				DECOMP_RECTMENU_DrawSelf(sdata->ptrActiveMenu, 0, 0, (int)width);
+				DECOMP_RECTMENU_DrawSelf(m, 0, 0, (int)width);
 			}
 
 			DECOMP_RECTMENU_DrawInnerRect(
-				&r, 0, gGT->backBuffer->otMem.startPlusFour);
+				&endRaceRECT, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
 	

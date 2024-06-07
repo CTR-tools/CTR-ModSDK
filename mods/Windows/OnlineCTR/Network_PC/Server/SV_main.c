@@ -107,6 +107,7 @@ void SendRoomData(ENetPeer* peer)
 	mr.version = VERSION;
 	mr.size = sizeof(struct SG_MessageRooms);
 
+
 // Turn 1-7 inro 9-15
 #define SETUP(x, index) \
 	x = roomCount[index]; \
@@ -153,7 +154,7 @@ void ProcessConnectEvent(ENetPeer* peer)
 	}
 
 	// Debug only, also prints client name from CG_MessageName
-	// printf("Assigned ID %d to peer %s:%u.\n", id, hostname, peer->address.port);
+	// printf("Connection from: %u:%u.\n", peer->address.host, peer->address.port);
 
 	SendRoomData(peer);
 
@@ -185,7 +186,6 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 	mw.type = SG_NEWCLIENT;
 	mw.clientID = id;
 	mw.numClientsTotal = ri->clientCount;
-	mw.version = VERSION;
 	mw.size = sizeof(struct SG_MessageClientStatus);
 
 	// ordinary day
@@ -301,8 +301,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			ri->peerInfos[id].peer = peer;
 			
-			// Set the timeout settings for the host
-			// now 800 for 1.5s timeout, should detect closed clients
+			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
 			WelcomeNewClient(ri, id);
@@ -475,7 +474,6 @@ void ProcessNewMessages() {
 	ENetEvent event;
 	while (enet_host_service(server, &event, 0) > 0)
 	{
-		//printf("Received event\n");
 		switch (event.type)
 		{
 			case ENET_EVENT_TYPE_RECEIVE:
@@ -592,6 +590,8 @@ void ProcessNewMessages() {
 				break;
 			}
 		}
+
+		enet_packet_destroy(event.packet);
 	}
 }
 

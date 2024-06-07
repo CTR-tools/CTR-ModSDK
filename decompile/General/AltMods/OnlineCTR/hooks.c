@@ -29,10 +29,11 @@ void octr_entryHook()
 	#if USE_K1 == 1
 	octr = 0x8000C000;
 	#endif
-		
+	
 	// default for first LEV, before gameplay
 	memset(octr, 0, sizeof(struct OnlineCTR));
 	octr->IsBootedPS1 = 1;
+	octr->ver_psx = VERSION;
 }
 
 // this runs after the end of MainInit_FinalizeInit,

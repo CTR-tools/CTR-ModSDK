@@ -1,4 +1,6 @@
 
+extern struct RectMenu menu;
+
 void StatePS1_Launch_EnterPID()
 {	
 	DECOMP_DecalFont_DrawLine(
@@ -6,7 +8,7 @@ void StatePS1_Launch_EnterPID()
 		0x100,0xA8,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
-void StatePS1_Launch_EnterIP()
+void StatePS1_Launch_PickServer()
 {
 	// these can share same register with optimization
 	int buttons;
@@ -20,26 +22,11 @@ void StatePS1_Launch_EnterIP()
 	NewPage_ServerCountry();
 }
 
-void StatePS1_Launch_ConnectFailed()
-{
-	DECOMP_DecalFont_DrawLine(
-		"Server Not Found",
-		0x100,0xA8,FONT_SMALL,JUSTIFY_CENTER|PLAYER_RED);
-		
-	DECOMP_DecalFont_DrawLine(
-		"Please Try Again",
-		0x100,0xB0,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
-}
-
 void ResetPsxGlobals()
 {
-	// unlock everything
-	sdata->advProgress.rewards[0] = 0xffffffff;
-	sdata->advProgress.rewards[1] = 0xffffffff;
-	sdata->advProgress.rewards[2] = 0xffffffff;
-	sdata->advProgress.rewards[3] = 0xffffffff;
-	sdata->advProgress.rewards[4] = 0xffffffff;
-	sdata->advProgress.rewards[5] = 0xffffffff;
+	// unlock everything (0,1,2,3,4,5)
+	for(int i = 0; i < 6; i++)
+		sdata->advProgress.rewards[i] = 0xffffffff;
 	
 	// 8mb RAM expansion, for emulators that support it.
 	// Needed for 3 or more players on Adv Hub
@@ -58,17 +45,15 @@ void ResetPsxGlobals()
 	}
 }
 
-extern struct RectMenu menu;
-
 // should rename to EnterRoom
-void StatePS1_Launch_FirstInit()
+void StatePS1_Launch_PickRoom()
 {
 	// these can share same register with optimization
 	int buttons;
 	
-	DecalFont_DrawLine("For Special Events, pick odd room, 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
-	DecalFont_DrawLine("For Classic Game, pick even room, 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
-	
+	DecalFont_DrawLine("Special Events in odd rooms: 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	DecalFont_DrawLine("Classic Games in even rooms: 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+		
 	MenuWrites_ServerRoom();
 	
 	// If already picked
@@ -98,6 +83,25 @@ void StatePS1_Launch_FirstInit()
 		text,
 		menu.posX_curr,0xb8,
 		FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+}
+
+void StatePS1_Launch_Error()
+{
+	char str[32];
+	
+	sprintf(str, "XDELTA: %d", octr->ver_psx);
+	DECOMP_DecalFont_DrawLine(str,0x100,0x98-2,FONT_SMALL,JUSTIFY_CENTER);
+	
+	sprintf(str, "CLIENT: %d", octr->ver_pc);
+	DECOMP_DecalFont_DrawLine(str,0x100,0xA0-2,FONT_SMALL,JUSTIFY_CENTER);
+	
+	sprintf(str, "SERVER: %d", octr->ver_server);
+	DECOMP_DecalFont_DrawLine(str,0x100,0xA8-2,FONT_SMALL,JUSTIFY_CENTER);
+	
+	char* str2 = "PLEASE UPDATE ALL 3 TO PLAY";
+	DECOMP_DecalFont_DrawLine(str2,0x100,0xB0-2,FONT_SMALL,JUSTIFY_CENTER);
+	
+	sdata->ptrActiveMenu = 0;
 }
 
 void StatePS1_Lobby_AssignRole()
@@ -261,6 +265,14 @@ void StatePS1_Lobby_StartLoading()
 	// it will die when loading screen covers screen
 }
 
+RECT drawTimeRECT =
+{
+	.x = 0xffec,
+	.y = 0x46 - 3,
+	.w = 0x228,
+	.h = 0
+};
+
 void StatePS1_Game_WaitForRace()
 {
 	struct GameTracker* gGT = sdata->gGT;
@@ -272,29 +284,24 @@ void StatePS1_Game_WaitForRace()
 	// Copy from DrawUnpluggedMsg
 	
 	int posY;
-	RECT window;
 	int i;
 	
-	// position of error
-	posY = data.errorPosY[sdata->errorMessagePosIndex];
+	posY = 0x46;
+	drawTimeRECT.h = 0;
 	
-	window.x = 0xffec;
-	window.y = posY - 3;
-	window.w = 0x228;
-	window.h = 0;
-	
-	// PLEASE CONNECT A CONTROLLER
 	DECOMP_DecalFont_DrawLine(
 		"WAITING FOR PLAYERS...",
-		0x100, posY + window.h, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+		0x100, posY + drawTimeRECT.h, 
+		FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 		
 	// add for each line
-	window.h += 8;
+	drawTimeRECT.h += 8;
 	
 	// add 3 pixels above, 3 pixels bellow
-	window.h += 6;
+	drawTimeRECT.h += 6;
 		
-	DECOMP_RECTMENU_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
+	DECOMP_RECTMENU_DrawInnerRect(
+		&drawTimeRECT, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void StatePS1_Game_StartRace()

@@ -52,11 +52,19 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageRooms* r = recvBuf;
 
+			octr->ver_pc = VERSION;
+			octr->ver_server = r->version;
+
 			if (r->version != VERSION)
 			{
-				system("cls");
-				printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
-				system("pause");
+				octr->CurrState = LAUNCH_ERROR;
+				return;
+			}
+
+			if (octr->ver_psx != VERSION)
+			{
+				octr->CurrState = LAUNCH_ERROR;
+				return;
 			}
 
 			// reopen the room menu,
@@ -93,13 +101,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			octr->DriverID = r->clientID;
 			octr->NumDrivers = r->numClientsTotal;
-
-			if (r->version != VERSION)
-			{
-				system("cls");
-				printf("Error: Client v%d does not match Server v%d\n", VERSION, r->version);
-				system("pause");
-			}
 
 			// default, disable cheats
 			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
@@ -386,7 +387,6 @@ void ProcessNewMessages()
 		{
 		case ENET_EVENT_TYPE_RECEIVE:
 			ProcessReceiveEvent(event.packet);
-
 			break;
 
 		case ENET_EVENT_TYPE_DISCONNECT:
@@ -402,6 +402,8 @@ void ProcessNewMessages()
 		default:
 			break;
 		}
+
+		enet_packet_destroy(event.packet);
 	}
 }
 
@@ -473,7 +475,7 @@ void StatePC_Launch_EnterPID()
 
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
-	octr->CurrState = LAUNCH_ENTER_IP;
+	octr->CurrState = LAUNCH_PICK_SERVER;
 }
 
 void printUntilPeriod(const char *str)
@@ -494,7 +496,7 @@ void printUntilPeriod(const char *str)
 
 int StaticServerID=0;
 int StaticRoomID=0;
-void StatePC_Launch_EnterIP()
+void StatePC_Launch_PickServer()
 {
 	ENetAddress addr;
 	static unsigned char dns_string[32] = { 0 };
@@ -728,9 +730,7 @@ void StatePC_Launch_EnterIP()
 			if (retryCount >= MAX_RETRIES)
 			{
 				// to go the lobby browser
-				octr->CurrState = LAUNCH_CONNECT_FAILED;
-				octr->serverLockIn2 = 0; // server selection has been locked in
-
+				octr->CurrState = -1;
 				return;
 			}
 
@@ -738,23 +738,21 @@ void StatePC_Launch_EnterIP()
 		}
 	}
 
-	// 2 second timer
+	// 5 seconds
 	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
 
 	octr->DriverID = -1;
-	octr->CurrState = LAUNCH_FIRST_INIT;
+	octr->CurrState = LAUNCH_PICK_ROOM;
 }
 
-void StatePC_Launch_ConnectFailed()
+void StatePC_Launch_Error()
 {
-	StopAnimation();
-	printf("Error: Unable to connect to the server!  ");
-	octr->CurrState = LAUNCH_ENTER_IP;
+	// do nothing
 }
 
 int connAttempt = 0;
 int countFrame = 0;
-void StatePC_Launch_FirstInit()
+void StatePC_Launch_PickRoom()
 {
 	ProcessNewMessages();
 
@@ -1007,9 +1005,9 @@ void StatePC_Game_EndRace()
 
 void (*ClientState[]) () = {
 	StatePC_Launch_EnterPID,		// 0
-	StatePC_Launch_EnterIP,			// 1
-	StatePC_Launch_ConnectFailed,	// 2
-	StatePC_Launch_FirstInit,		// 3
+	StatePC_Launch_PickServer,		// 1
+	StatePC_Launch_PickRoom,		// 2
+	StatePC_Launch_Error,			// 3
 	StatePC_Lobby_AssignRole,		// 4
 	StatePC_Lobby_HostTrackPick,	// 5
 	StatePC_Lobby_GuestTrackWait,	// 6
@@ -1148,7 +1146,7 @@ int main()
 		octr->windowsClientSync[0]++;
 
 		// should rename to room selection
-		if (octr->CurrState >= LAUNCH_FIRST_INIT)
+		if (octr->CurrState >= LAUNCH_PICK_ROOM)
 			DisconSELECT();
 
 		StartAnimation();

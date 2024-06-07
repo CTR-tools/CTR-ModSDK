@@ -1,5 +1,5 @@
 
-#define VERSION 1011
+#define VERSION 1012
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -33,9 +33,9 @@
 enum ClientState
 {
 	LAUNCH_ENTER_PID,
-	LAUNCH_ENTER_IP,
-	LAUNCH_CONNECT_FAILED,
-	LAUNCH_FIRST_INIT,
+	LAUNCH_PICK_SERVER,
+	LAUNCH_PICK_ROOM,
+	LAUNCH_ERROR,
 	LOBBY_ASSIGN_ROLE,
 	LOBBY_HOST_TRACK_PICK,
 	LOBBY_GUEST_TRACK_WAIT,
@@ -98,6 +98,12 @@ struct OnlineCTR
 		int slot;
 		int time;
 	} RaceEnd[8];
+	
+	int ver_psx;
+	int ver_pc;
+	int ver_server;
+	
+	int boolPlanetLEV;
 };
 
 #ifdef WINDOWS_INCLUDE
@@ -179,9 +185,6 @@ struct SG_MessageClientStatus
 	// 1-15 for client, and total
 	unsigned char clientID : 4;
 	unsigned char numClientsTotal : 4;
-
-	// server version
-	unsigned short version;
 
 	// special event
 	unsigned short special;
@@ -269,7 +272,7 @@ struct SG_MessageEndRace
 
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
 STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 12, "Size of SG_MessageRooms must be 12 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 6, "Size of SG_MessageClientStatus must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 4, "Size of SG_MessageClientStatus must be 4 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
@@ -387,9 +390,9 @@ STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4, "Size of CG_MessageEndRace
 
 // OnlineCTR functions
 void StatePC_Launch_EnterPID();
-void StatePC_Launch_EnterIP();
-void StatePC_Launch_ConnectFailed();
-void StatePC_Launch_FirstInit();
+void StatePC_Launch_PickServer();
+void StatePC_Launch_PickRoom();
+void StatePC_Launch_Error();
 void StatePC_Lobby_HostTrackPick();
 void StatePC_Lobby_GuestTrackWait();
 void StatePC_Lobby_CharacterPick();
@@ -419,9 +422,9 @@ void StopAnimation();
 
 	// my functions
 	void StatePS1_Launch_EnterPID();
-	void StatePS1_Launch_EnterIP();
-	void StatePS1_Launch_ConnectFailed();
-	void StatePS1_Launch_FirstInit();
+	void StatePS1_Launch_PickServer();
+	void StatePS1_Launch_Error();
+	void StatePS1_Launch_PickRoom();
 	void StatePS1_Lobby_AssignRole();
 	void StatePS1_Lobby_HostTrackPick();
 	void StatePS1_Lobby_GuestTrackWait();

@@ -892,7 +892,11 @@ void DECOMP_UI_RenderFrame_Racing()
 	
 			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
 			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
+			
+			#ifndef USE_ONLINE
 			DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
+			#endif
+			
 			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
 	
 			mapPosX = 500;

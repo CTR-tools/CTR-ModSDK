@@ -304,8 +304,12 @@ void RECTMENU_OnPressX(struct RectMenu* b)
 
 void PrintTimeStamp()
 {
-	DECOMP_DecalFont_DrawLine(__DATE__, WIDE_PICK(5, 100-40), 206, FONT_SMALL, DARK_RED);
-	DECOMP_DecalFont_DrawLine(__TIME__, WIDE_PICK(170, 228-40), 206, FONT_SMALL, DARK_RED);
+	int boolEndOfRace = !octr->boolPlanetLEV;
+	
+	int posX = 56 + 0xC*boolEndOfRace;
+	int posY = 198 - 0xC*boolEndOfRace;
+	DECOMP_DecalFont_DrawLine(__TIME__, posX, posY, FONT_SMALL, DARK_RED);
+	DECOMP_DecalFont_DrawLine(__DATE__, posX, posY+8, FONT_SMALL, DARK_RED);
 }
 
 void PrintCharacterStats()
@@ -319,6 +323,7 @@ void PrintCharacterStats()
 	
 	char* title = "Classic Gameplay Mode";
 	
+	#if 0
 	if((gameMode2 & 0x80000) != 0)
 	{
 		title = "Monday Icy Tracks";
@@ -327,6 +332,8 @@ void PrintCharacterStats()
 	{
 		title = "Wednesday Super Turbo Pads";
 	}
+	#endif
+	
 	if((gameMode2 & 0x400) != 0)
 	{
 		title = "Friday Unlimited Masks";
@@ -355,10 +362,17 @@ void PrintCharacterStats()
 		if(octr->nameBuffer[i*0xC] == 0)
 			numDead++;
 	
+	int posX;
+	int boolEndOfRace = !octr->boolPlanetLEV;
+	
+	posX = 0x130 - 0x20*boolEndOfRace;
 	sprintf(message, "Players: %d/8", (octr->NumDrivers-numDead));
-	DecalFont_DrawLine(message,0x130,0x58,FONT_SMALL,0);
+	DecalFont_DrawLine(message,posX,0x58,FONT_SMALL,0);
 
 	int h = 0;
+
+	// UI-test
+	// octr->NumDrivers = 8;
 
 	for(i = 0; i < octr->NumDrivers; i++)
 	{	
@@ -368,6 +382,10 @@ void PrintCharacterStats()
 		if(i > octr->DriverID) slot = i;
 
 		char* str = &octr->nameBuffer[slot * 0xc];
+		
+		// UI-test
+		// str[0] = 'A';
+		
 		if(str[0] == 0) continue;
 
 		// 0x19 - red
@@ -379,8 +397,9 @@ void PrintCharacterStats()
 		int posY = 0x60+h;
 		h += 8;
 		
+		posX = 0x130 - 0x20*boolEndOfRace;
 		sprintf(message, "%s:", str);
-		DecalFont_DrawLine(message,0x130,posY,FONT_SMALL,color);
+		DecalFont_DrawLine(message,posX,posY,FONT_SMALL,color);
 		
 		if(octr->CurrState < LOBBY_CHARACTER_PICK)
 			continue;
@@ -390,13 +409,16 @@ void PrintCharacterStats()
 				data.MetaDataCharacters[
 					data.characterIDs[slot]
 				].name_LNG_short];
-				
-		DecalFont_DrawLine(characterName,0x1AC,posY,FONT_SMALL,color);
+
+		posX = 0x1AC - 0x20*boolEndOfRace;
+		DecalFont_DrawLine(characterName,posX,posY,FONT_SMALL,color);
 	}
 
-	DecalFont_DrawLine("Return to main menu",0x138,0xb8,FONT_SMALL,0);
-	DecalFont_DrawLine("During Race or Lobby",0x130,0xc0,FONT_SMALL,0);
-	DecalFont_DrawLine("With the Select Button",0x120,0xc8,FONT_SMALL,RED);
+	posX = 0x138 - 0x20*boolEndOfRace;
+	int posY = 0xb8 - 0xC*boolEndOfRace;
+	DecalFont_DrawLine("Return to main menu",posX,posY,FONT_SMALL,0);
+	DecalFont_DrawLine("During Race or Lobby",posX-0x8,posY+0x8,FONT_SMALL,0);
+	DecalFont_DrawLine("With the Select Button",posX-0x18,posY+0x10,FONT_SMALL,RED);
 }
 
 char* onlineLapString = "Laps: 0\0";
@@ -411,8 +433,15 @@ void PrintRecvTrack()
 				]
 			);
 	
-	DecalFont_DrawLine(message,0x118,0x38,FONT_SMALL,PAPU_YELLOW);
+	int boolEndOfRace = !octr->boolPlanetLEV;
+	
+	// UI-test
+	// boolEndOfRace = 1;
+	
+	int posX = 0x118 - 0x20*boolEndOfRace;
+	
+	DecalFont_DrawLine(message,posX,0x38,FONT_SMALL,PAPU_YELLOW);
 	
 	onlineLapString[6] = '0' + sdata->gGT->numLaps;
-	DecalFont_DrawLine(onlineLapString,0x11A,0x40,FONT_SMALL,PAPU_YELLOW);
+	DecalFont_DrawLine(onlineLapString,posX+2,0x40,FONT_SMALL,PAPU_YELLOW);
 }
