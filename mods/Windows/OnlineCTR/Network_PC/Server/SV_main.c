@@ -428,7 +428,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			memcpy(&s->posX[0], &r->posX[0], 9);
 
-			broadcastToPeersReliable(ri, s, s->size);
+			broadcastToPeersUnreliable(ri, s, s->size);
 			break;
 		}
 
