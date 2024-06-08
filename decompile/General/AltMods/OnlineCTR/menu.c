@@ -451,7 +451,7 @@ void PrintRecvTrack()
 	
 	int posX = 0x118 - 0x20*boolEndOfRace;
 	
-	int numLaps = sdata->gGT->numLaps
+	int numLaps = sdata->gGT->numLaps;
 	onlineLapString[6] = '0' + ((numLaps / 100) % 10);
 	onlineLapString[7] = '0' + ((numLaps / 10) % 10);
 	onlineLapString[8] = '0' + (numLaps % 10);
