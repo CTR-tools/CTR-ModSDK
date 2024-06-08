@@ -215,12 +215,25 @@ void NewPage_Laps()
 	sdata->lngStrings[0x9c] = "5";
 	sdata->lngStrings[0x9d] = "7";
 	
+	// Monday event
+	sdata->lngStrings[0x9e] = "30";
+	sdata->lngStrings[0x9f] = "60";
+	sdata->lngStrings[0xa0] = "90";
+	sdata->lngStrings[0xa1] = "120";
+	
+	
 	for(i = 0; i < 4; i++)
 	{
+		// default, set all to unlocked
 		menuRows[i].stringIndex = 0x9a+i;
+		menuRows[4+i].stringIndex = 0x9a+4+i;
 		
-		sdata->lngStrings[0x9a+4+i] = "-";
-		menuRows[4+i].stringIndex = 0x809a+4+i;
+		// if not monday
+		if(octr->special != 1)
+		{
+			sdata->lngStrings[0x9a+4+i] = "-";
+			menuRows[4+i].stringIndex = 0x809a+4+i;
+		}
 	}
 }
 
@@ -419,7 +432,7 @@ void PrintCharacterStats()
 	DecalFont_DrawLine("With the Select Button",posX-0x18,posY+0x10,FONT_SMALL,RED);
 }
 
-char* onlineLapString = "Laps: 0\0";
+char* onlineLapString = "Laps: 000\0";
 void PrintRecvTrack()
 {
 	char message[32];
@@ -438,8 +451,11 @@ void PrintRecvTrack()
 	
 	int posX = 0x118 - 0x20*boolEndOfRace;
 	
-	DecalFont_DrawLine(message,posX,0x38,FONT_SMALL,PAPU_YELLOW);
+	int numLaps = sdata->gGT->numLaps
+	onlineLapString[6] = '0' + ((numLaps / 100) % 10);
+	onlineLapString[7] = '0' + ((numLaps / 10) % 10);
+	onlineLapString[8] = '0' + (numLaps % 10);
 	
-	onlineLapString[6] = '0' + sdata->gGT->numLaps;
+	DecalFont_DrawLine(message,posX,0x38,FONT_SMALL,PAPU_YELLOW);
 	DecalFont_DrawLine(onlineLapString,posX+2,0x40,FONT_SMALL,PAPU_YELLOW);
 }

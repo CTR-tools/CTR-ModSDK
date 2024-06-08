@@ -80,8 +80,9 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	// milliseconds elapsed in race
 	msElapsed = driver->timeElapsedInRace;
 
-	// if number of laps is 7
-	if (gGT->numLaps == '\a')
+	// OG game was "== 7"
+	// but now expand for Online
+	if (gGT->numLaps >= 7)
 	{
 		// less than 99:59:99
 		if ((char)(msElapsed / 0x8ca00) < 10)
@@ -179,8 +180,9 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		strFlags_but_its_also_posY = (u_short)((gGT->timer & FPS_DOUBLE(2)) == 0) << 2;
 	}
 
-	// if number of laps is 7
-	if (gGT->numLaps == '\a')
+	// OG game was "== 7"
+	// but now expand for Online
+	if (gGT->numLaps >= 7)
 	{
 		// String for amount of time in total race
 		totalTimeString = &rdata.s_timeString_empty[0];
@@ -225,13 +227,17 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	// Draw String
 	DECOMP_DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
 
+	#ifdef USE_ONLINE
+	return;
+	#endif
+
 	if
 	(
 		// If you're not in a Relic Race
 		((gGT->gameMode1 & RELIC_RACE) == 0) ||
 		((flags & 2) != 0)
 	)
-	{
+	{		
 		// If you're not in Arcade mode,
 		// nor Time Trial, nor adventure mode
 		if ((gGT->gameMode1 & (ARCADE_MODE | TIME_TRIAL | ADVENTURE_MODE)) == 0)
@@ -255,7 +261,10 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		{
 			if ((numLaps <= (int)lapIndex) && (numLaps < (char)gGT->numLaps))
 			{
-				DECOMP_UI_SaveLapTime(lapIndex, gGT->elapsedEventTime - driver->lapTime, (u_int)driver->driverID);
+				DECOMP_UI_SaveLapTime(
+					lapIndex, 
+					gGT->elapsedEventTime - driver->lapTime, 
+					(u_int)driver->driverID);
 
 				// custom code for optimization using this unrelated variable
 				iVar5 = (u_int)driver->driverID * 7 + numLaps;
@@ -354,6 +363,10 @@ LAB_8004f84c:
 			}
 		} while( 1 );
 	}
+	
+	
+	// === Relic Race Only ===
+
 
 	// Draw (blue,gold,plat) based on the "next" goal
 	if ((gGT->unknownFlags_1d44 & 0x2000000) == 0)

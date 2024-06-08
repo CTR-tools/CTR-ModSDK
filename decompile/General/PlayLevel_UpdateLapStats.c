@@ -118,30 +118,20 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						((gGT->gameMode1 & 0x4a0000) != 0) &&
 
 						#ifdef USE_ONLINE
-						(currDriver->driverID == 0) &&
+						(0) && // disable while online
 						#endif
 
 						// driver -> instance -> thread -> modelIndex == "player" of any kind
 						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 					)
 				{
-					// Save Lap Time
 					UI_SaveLapTime(
-						// Lap Counter
 						currDriver->lapIndex,
-
-						// time on clock - lap time
 						gGT->elapsedEventTime - currDriver->lapTime,
-
-						// Player / AI structure + 0x4a shows driver index (0-7)
 						currDriver->driverID);
 
-					// Keep track of each lap time for time trial or relic race
 
-					// lap counter
 					gGT->lapTime[currDriver->lapIndex] =
-
-						// time on clock - lap time
 						gGT->elapsedEventTime - currDriver->lapTime;
 				}
 

@@ -801,8 +801,16 @@ void StatePC_Lobby_HostTrackPick()
 	mt.trackID = octr->levelID;
 	mt.lapID = octr->lapID;
 
+	// 1,3,5,7
+	int numLaps = (mt.lapID * 2) + 1;
+	
+	if(mt.lapID == 4) numLaps = 30;
+	if(mt.lapID == 5) numLaps = 60;
+	if(mt.lapID == 6) numLaps = 90;
+	if(mt.lapID == 7) numLaps = 120;
+
 	// sdata->gGT->numLaps
-	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (mt.lapID * 2) + 1;
+	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 
 	sendToHostReliable(&mt, mt.size);
 
