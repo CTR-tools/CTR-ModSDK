@@ -7,6 +7,11 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 	int currTimer;
 	int newTimer;
 	
+	#ifdef USE_ONLINE
+	if(sdata->gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
+	
 	turtleObj = t->object;
 	turtleInst = t->inst;
 	

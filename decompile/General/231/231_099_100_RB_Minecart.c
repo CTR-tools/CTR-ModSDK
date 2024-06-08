@@ -90,6 +90,11 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	short i;
 	short pos[3];
 	
+	#ifdef USE_ONLINE
+	if(sdata->gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
+	
 	minecartInst = t->inst;
 	minecartObj = (struct Minecart*)t->object;
 	

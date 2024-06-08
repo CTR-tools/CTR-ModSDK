@@ -17,6 +17,11 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	gGT = sdata->gGT;
 	level = gGT->level1;
 	
+	#ifdef USE_ONLINE
+	if(gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
+	
 // Unused, this was for the Baron (Crash 3 airplane)
 // that would be on Hot Air Skyway. Sewer Speedway
 // barrel has zero animation frames, so it's removed

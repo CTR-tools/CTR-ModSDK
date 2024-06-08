@@ -1,6 +1,6 @@
 
 #define VERSION 1012
-//#define ONLINE_BETA_MODE
+#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
@@ -78,19 +78,24 @@ struct OnlineCTR
 	unsigned char serverRoom;
 	unsigned char serverLockIn1;
 	unsigned char serverLockIn2;
-
+	
 	// 0x14
+	unsigned char boolPlanetLEV;
+	unsigned char boolClientBusy;
+	short padding;
+
+	// 0x18
 	char clientCount[16];
 
-	// 0x24
+	// 0x28
 	// determines if client and
 	// emulator are still connected
 	char windowsClientSync[8];
 
-	// 0x2c
+	// 0x30
 	char boolLockedInCharacters[8];
 
-	// 0x34
+	// 0x38
 	char nameBuffer[0xC*8];
 
 	struct
@@ -102,8 +107,6 @@ struct OnlineCTR
 	int ver_psx;
 	int ver_pc;
 	int ver_server;
-	
-	int boolPlanetLEV;
 };
 
 #ifdef WINDOWS_INCLUDE

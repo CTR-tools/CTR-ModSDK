@@ -287,6 +287,10 @@ int DECOMP_RB_CrateWeapon_LInC(
 		#ifdef USE_ONLINE
 		if(driver->driverID != 0)
 			return;
+		
+		// do nothing at end of race
+		if((driver->actionsFlagSet & 0x2000000) != 0)
+			return;
 		#endif
 		
 		// == give driver weapon ==

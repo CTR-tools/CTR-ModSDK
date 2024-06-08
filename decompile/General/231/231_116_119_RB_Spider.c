@@ -196,6 +196,11 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
   struct Instance* coll;
   struct Spider* spider;
 
+  #ifdef USE_ONLINE
+  if(sdata->gGT->trafficLightsTimer > 3600)
+	return;
+  #endif
+
   spider = t->object;
   spiderInst = t->inst;
 

@@ -81,6 +81,11 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	struct Armadillo* armObj;
 	int i;
 	
+	#ifdef USE_ONLINE
+	if(sdata->gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
+	
 	armInst = t->inst;
 	armObj = (struct Armadillo*)t->object;
 	

@@ -532,6 +532,9 @@ void StatePC_Launch_PickServer()
 	if (octr->serverLockIn1 == 0)
 		return;
 
+	// === Now Selecting Country ===
+	octr->boolClientBusy = 1;
+
 	StaticServerID = octr->serverCountry;
 
 	switch (octr->serverCountry)
@@ -596,10 +599,10 @@ void StatePC_Launch_PickServer()
 			break;
 		}
 
-		// BETA
+		// BETA (New Jersey)
 		case 6:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "127.0.0.1");
+			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -729,8 +732,9 @@ void StatePC_Launch_PickServer()
 
 			if (retryCount >= MAX_RETRIES)
 			{
-				// to go the lobby browser
-				octr->CurrState = -1;
+				// to go the country select
+				octr->CurrState = 1;
+				octr->boolClientBusy = 0;
 				return;
 			}
 
@@ -743,6 +747,7 @@ void StatePC_Launch_PickServer()
 
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_PICK_ROOM;
+	octr->boolClientBusy = 0;
 }
 
 void StatePC_Launch_Error()

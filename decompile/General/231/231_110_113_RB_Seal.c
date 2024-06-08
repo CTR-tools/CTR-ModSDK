@@ -13,7 +13,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 	char kartStatePrev;
 	
 	gGT = sdata->gGT;
-	
+		
 	// check players
 	hitInst = 
 		(struct Instance*)LinkedCollide_Radius(
@@ -160,6 +160,11 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	struct Instance* sealInst;
 	struct Seal* sealObj;
 	int i;
+	
+	#ifdef USE_ONLINE
+	if(sdata->gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
 	
 	sealInst = t->inst;
 	sealObj = (struct Seal*)t->object;

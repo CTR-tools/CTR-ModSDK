@@ -55,12 +55,23 @@ void ThreadFunc(struct Thread* t)
 	// only disable for no$psx testing,
 	// which can force in-game with 8000c000=LOBBY_START_LOADING
 	#if 1
-	for(i = 6; i >= 0; i--)
-		octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
 	
-	for(i = 6; i >= 0; i--)
-		if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
-			break;
+	// if client is intentionally idle
+	if(octr->boolClientBusy)
+	{
+		i = 6;
+	}
+	
+	// if client should not be idle
+	else
+	{
+		for(i = 6; i >= 0; i--)
+			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
+	
+		for(i = 6; i >= 0; i--)
+			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
+				break;
+	}
 	
 	// if client didn't update the game in 4 frames
 	int boolCloseClient = 
@@ -119,6 +130,14 @@ void ThreadFunc(struct Thread* t)
 	
 	if (octr->CurrState >= 0)
 		funcs[octr->CurrState]();
+	
+	// if connecting, or entering IP
+	if (octr->boolClientBusy)
+	{
+		DecalFont_DrawLine(
+			"SEE CLIENT WINDOW",
+			0x100,0x80,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	}
 			
 	// not gameplay, must draw LAST
 	if (octr->CurrState <= LOBBY_WAIT_FOR_LOADING)

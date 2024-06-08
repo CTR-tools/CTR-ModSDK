@@ -12,6 +12,11 @@ void DECOMP_RB_Snowball_ThTick(struct Thread* t)
 	int baseShort;
 	struct SpawnType2* ptrSpawnType2;
 	
+	#ifdef USE_ONLINE
+	if(sdata->gGT->trafficLightsTimer > 3600)
+		return;
+	#endif
+	
 	snowInst = t->inst;
 	snowObj = (struct Snowball*)t->object;
 	
