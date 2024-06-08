@@ -162,8 +162,16 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			struct SG_MessageTrack* r = recvBuf;
 
+			// 1,3,5,7
+			int numLaps = (r->lapID * 2) + 1;
+			
+			if(r->lapID == 4) numLaps = 30;
+			if(r->lapID == 5) numLaps = 60;
+			if(r->lapID == 6) numLaps = 90;
+			if(r->lapID == 7) numLaps = 120;
+
 			// set sdata->gGT->numLaps
-			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = (r->lapID * 2) + 1;
+			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 			
 			octr->levelID = r->trackID;
 			octr->CurrState = LOBBY_CHARACTER_PICK;

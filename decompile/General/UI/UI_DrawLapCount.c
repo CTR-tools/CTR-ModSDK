@@ -31,18 +31,22 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
 
     type = FONT_BIG;
     flags = (JUSTIFY_RIGHT | PERIWINKLE);
-	
-  	#if 0
-  	// OG game used sprintf in 1P/2P mode,
-  	// for old beta races that could have
-  	// lap counts of 3,4,5,10,15,20
-  	#endif
   }
   
-  sdata->s_printDividing[0] = currLap + '0';
-  sdata->s_printDividing[2] = numLaps + '0';
+  #ifdef USE_ONLINE
+ 
+  char message[8];
+  char* str = &message[0];
+  sprintf(str, &sdata->s_intDividing[0], currLaps, numLaps);
+ 
+  #else
+  
+  char* str = &sdata->s_printDividing[0];
+  str[0] = currLap + '0';
+  str[2] = numLaps + '0';
 
+  #endif
+ 
   // draw string
-  DECOMP_DecalFont_DrawLine(&sdata->s_printDividing[0],posX,(posY + 8),type,flags);
-  return;
+  DECOMP_DecalFont_DrawLine(str,posX,(posY + 8),type,flags);
 }

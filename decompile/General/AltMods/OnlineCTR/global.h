@@ -216,8 +216,7 @@ struct SG_MessageTrack
 	unsigned char size : 4;
 
 	unsigned char trackID : 5;
-	unsigned char lapID : 2;
-	unsigned char boolAllowWeapons : 1;
+	unsigned char lapID : 3;
 };
 
 // assign character,
@@ -333,8 +332,7 @@ struct CG_MessageTrack
 	unsigned char size : 4;
 
 	unsigned char trackID : 5;
-	unsigned char lapID : 2;
-	unsigned char boolAllowWeapons : 1;
+	unsigned char lapID : 3;
 };
 
 // character message
