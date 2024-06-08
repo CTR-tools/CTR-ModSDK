@@ -37,6 +37,10 @@ typedef struct
 	char boolRaceAll;
 	char boolEndAll;
 
+	// tracks time since a player has been marked
+	// as locked in
+	time_t lockedInStartTime;
+
 } RoomInfo;
 
 ENetHost* server;
@@ -694,15 +698,50 @@ void ServerState_Tick()
 		if (!ri->boolLoadAll)
 		{
 			ri->boolLoadAll = 1;
+
+			double secondsSinceLockedIn = 0;
+			if (ri->lockedInStartTime)
+				secondsSinceLockedIn = difftime(time(0), ri->lockedInStartTime);
+
 			for (int j = 0; j < ri->clientCount; j++)
+			{
 				if (ri->peerInfos[j].peer != 0)
+				{
 					if (ri->peerInfos[j].boolLoadSelf == 0)
+					{
 						ri->boolLoadAll = 0;
+						// If 60 seconds have passed after somebody has locked in,
+						// kick all non locked in players
+						if (secondsSinceLockedIn >= 60)
+						{
+							enet_peer_disconnect_now(ri->peerInfos[j].peer, 0);
+							ri->peerInfos[j].peer = NULL;
+							struct SG_MessageName sgBuffer;
+							struct SG_MessageName* s = &sgBuffer;
+
+							// send NULL name to all OTHER clients
+							s->type = SG_NAME;
+							s->size = sizeof(struct SG_MessageName);
+							s->clientID = j;
+							s->numClientsTotal = ri->clientCount;
+							memset(&s->name[0], 0, 12);
+
+							broadcastToPeersReliable(ri, s, s->size);
+						}												
+					}
+					// If somebody is locked in,
+					// start the locked in timer
+					else if (!ri->lockedInStartTime) {
+						ri->lockedInStartTime = time(0);
+					}
+				}
+			}		
 
 			if (ri->boolLoadAll)
 			{
 				//printf("Start Loading: ");
 				//PrintTime();
+				ri->lockedInStartTime = NULL;
 
 				struct SG_Header sg;
 				sg.type = SG_STARTLOADING;

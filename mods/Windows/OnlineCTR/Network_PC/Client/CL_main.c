@@ -375,9 +375,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
-#define AUTO_RETRY_SECONDS 10
-#define ESC_KEY 27 // ASCII value for ESC key
-
 	ENetEvent event;
 	char response = 0;
 
