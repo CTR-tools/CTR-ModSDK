@@ -1,6 +1,6 @@
 
-#define VERSION 1012
-#define ONLINE_BETA_MODE
+#define VERSION 1013
+//#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
