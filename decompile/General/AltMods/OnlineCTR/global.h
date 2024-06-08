@@ -1,5 +1,5 @@
 
-#define VERSION 1013
+#define VERSION 1012
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -82,7 +82,8 @@ struct OnlineCTR
 	// 0x14
 	unsigned char boolPlanetLEV;
 	unsigned char boolClientBusy;
-	short padding;
+	unsigned char special;
+	char padding;
 
 	// 0x18
 	char clientCount[16];

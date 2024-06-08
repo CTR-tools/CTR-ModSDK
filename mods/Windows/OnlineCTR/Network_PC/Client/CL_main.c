@@ -111,27 +111,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (octr->serverRoom & 1)
 				r->special = 0;
 
-			switch (r->special)
-			{
-				// Ordinary day, nothing happening
-				case 0:
-					break;
-
-				// Monday -- icy tracks
-				case 1:
-					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x80000;
-					break;
-
-				// Wednesday -- super turbos
-				case 2:
-					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x100000;
-					break;
-
-				// Friday -- unlimited masks
-				case 3:
-					*(int*)&pBuf[0x80096b28 & 0xffffff] |= 0x400;
-					break;
-			}
+			octr->special = r->special;
 
 			// offset 0x8
 			octr->boolLockedInLap = 0;

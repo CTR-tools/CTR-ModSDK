@@ -319,24 +319,22 @@ void PrintCharacterStats()
 	int i;
 	int color;
 	
-	int gameMode2 = sdata->gGT->gameMode2;
 	
 	char* title = "Classic Gameplay Mode";
 	
-	#if 0
-	if((gameMode2 & 0x80000) != 0)
+	if(octr->special == 1)
 	{
-		title = "Monday Icy Tracks";
+		title = "Monday Extra Laps";
 	}
-	if((gameMode2 & 0x100000) != 0)
-	{
-		title = "Wednesday Super Turbo Pads";
-	}
-	#endif
 	
-	if((gameMode2 & 0x400) != 0)
+	if(octr->special == 2)
 	{
-		title = "Friday Unlimited Masks";
+		title = "Wednesday Max Stats";
+	}
+	
+	if(octr->special == 3)
+	{
+		title = "Friday Demo Cam";
 	}
 	
 	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);

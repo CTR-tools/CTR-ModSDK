@@ -190,15 +190,9 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 
 	// ordinary day
 	mw.special = 0;
-
-	// Monday Icy Tracks
-	if (GetWeekDay() == 1) mw.special = 1;
-
-	// Wednesday Super Turbos
-	if (GetWeekDay() == 3) mw.special = 2;
-
-	// Friday Inf Masks
-	if (GetWeekDay() == 5) mw.special = 3;
+	if (GetWeekDay() == 1) mw.special = 1; // Monday
+	if (GetWeekDay() == 3) mw.special = 2; // Wednesday
+	if (GetWeekDay() == 5) mw.special = 3; // Friday
 
 	sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
 }
