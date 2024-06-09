@@ -196,11 +196,6 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 	gGT = sdata->gGT;
 	elapsedTimeMS = gGT->elapsedTimeMS;
 	
-	#ifdef USE_ONLINE
-	if(gGT->trafficLightsTimer > 3600)
-		return;
-	#endif
-	
 	fireInst = t->inst;
 	fireObj = t->object;
 	

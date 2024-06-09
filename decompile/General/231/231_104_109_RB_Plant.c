@@ -391,11 +391,6 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 	struct Instance* plantInst;
 	struct Plant* plantObj;
 	
-	#ifdef USE_ONLINE
-	if(sdata->gGT->trafficLightsTimer > 3600)
-		return;
-	#endif
-	
 	plantInst = t->inst;
 	plantObj = (struct Plant*)t->object;	
 	

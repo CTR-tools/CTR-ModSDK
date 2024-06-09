@@ -264,6 +264,19 @@ LAB_80035098:
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
 				}
+
+#ifdef USE_ONLINE
+				// synchronize track hazards
+				if(
+					(iVar4 == STATIC) ||
+					(iVar4 == SPIDER)
+				)
+				{
+					if(gGT->trafficLightsTimer > 3600)
+						continue;
+				}
+#endif
+
 #ifndef REBUILD_PS1
 				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);
 #else

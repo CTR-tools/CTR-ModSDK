@@ -312,11 +312,6 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	
 	struct GameTracker* gGT = sdata->gGT;
 	
-	#ifdef USE_ONLINE
-	if(gGT->trafficLightsTimer > 3600)
-		return;
-	#endif
-	
 	fjInst = t->inst;
 	fjObj = (struct FlameJet*)t->object;
 	
