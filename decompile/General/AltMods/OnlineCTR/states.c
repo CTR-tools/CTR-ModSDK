@@ -9,10 +9,7 @@ void StatePS1_Launch_EnterPID()
 }
 
 void StatePS1_Launch_PickServer()
-{
-	// these can share same register with optimization
-	int buttons;
-	
+{	
 	MenuWrites_ServerCountry();
 	
 	// If already picked
@@ -47,10 +44,7 @@ void ResetPsxGlobals()
 
 // should rename to EnterRoom
 void StatePS1_Launch_PickRoom()
-{
-	// these can share same register with optimization
-	int buttons;
-	
+{	
 	DecalFont_DrawLine("Special Events in odd rooms: 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
 	DecalFont_DrawLine("Classic Games in even rooms: 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
 		
@@ -121,10 +115,7 @@ void StatePS1_Lobby_AssignRole()
 }
 
 void StatePS1_Lobby_HostTrackPick()
-{
-	// these can share same register with optimization
-	int buttons;
-	
+{	
 	MenuWrites_Tracks();
 	
 	// If already picked
@@ -150,10 +141,7 @@ void StatePS1_Lobby_HostTrackPick()
 }
 
 void FakeState_Lobby_HostLapPick()
-{
-	// these can share same register with optimization
-	int buttons;
-	
+{	
 	MenuWrites_Laps();
 	
 	// If already picked
@@ -182,11 +170,7 @@ void StatePS1_Lobby_GuestTrackWait()
 }
 
 void StatePS1_Lobby_CharacterPick()
-{
-	// these can share same register with optimization
-	int buttons;
-	int i;
-	
+{	
 	MenuWrites_Characters();
 	
 	// If already picked

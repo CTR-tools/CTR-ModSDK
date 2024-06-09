@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 {
 	u_int metaPhysSize;
@@ -12,6 +16,11 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 	int engineID = 
 		data.MetaDataCharacters
 			[data.characterIDs[driver->driverID]].engineID;
+
+	#ifdef USE_ONLINE
+	// Wednesday max stats
+	if(octr->special == 2) engineID = 4;
+	#endif
 
 	for(i = 0; i < 65; i++)
 	{

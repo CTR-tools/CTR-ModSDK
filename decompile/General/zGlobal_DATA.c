@@ -7548,7 +7548,6 @@ struct Data data =
 // EurRetail and JpnRetail dont start
 // gravity at offset 0x416, it starts at 0x41a,
 // need to make the offets compatible later on
-#if (BUILD >= JpnTrial) || defined(USE_PENTA)
 	#define PHYSWRAP(b, c, d, e, f, g, h) \
 		.offset = b, 		\
 		.size = c, 			\
@@ -7557,15 +7556,7 @@ struct Data data =
 		.value[2] = f, 		\
 		.value[3] = g,		\
 		.value[4] = h
-#else
-	#define PHYSWRAP(b, c, d, e, f, g, h) \
-		.offset = b, 		\
-		.size = c, 			\
-		.value[0] = d, 		\
-		.value[1] = e, 		\
-		.value[2] = f, 		\
-		.value[3] = g
-#endif
+
 
 	.metaPhys =
 	{

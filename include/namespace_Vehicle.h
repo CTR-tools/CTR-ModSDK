@@ -267,17 +267,15 @@ enum EngineClass
 	// polar, pura, roo (penta in ntsc)
 	TURN,
 
-	#if (BUILD >= JpnTrial) || defined(USE_PENTA)
 	// penta
 	MAX,
-	#endif
 
 	NUM_CLASSES
 };
 
 struct MetaPhys
 {
-	#if (BUILD >= JpnTrial) || !defined(USE_PENTA)
+	#if (BUILD >= JpnTrial)
 	char* unusedDebugStr;
 	#endif
 
