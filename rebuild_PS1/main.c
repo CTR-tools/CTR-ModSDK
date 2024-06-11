@@ -428,8 +428,6 @@
 #include "../decompile/General/Timer/Timer_Destroy.c"
 
 // UI
-#include "../decompile/General/UI/UI_SaveLapTime.c"
-
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
 #include "../decompile/General/Vehicle/VehBirth_TeleportSelf.c"

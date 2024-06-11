@@ -111,21 +111,18 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// if this is not final lap
 			else			
 			{
+				#ifndef USE_ONLINE
 				if (
 						// If you're in Arcade, or
 						// If you're in Adventure, or
 						// If you're in Time Trial	
 						((gGT->gameMode1 & 0x4a0000) != 0) &&
 
-						#ifdef USE_ONLINE
-						(0) && // disable while online
-						#endif
-
 						// driver -> instance -> thread -> modelIndex == "player" of any kind
 						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 					)
 				{
-					UI_SaveLapTime(
+					DECOMP_UI_SaveLapTime(
 						currDriver->lapIndex,
 						gGT->elapsedEventTime - currDriver->lapTime,
 						currDriver->driverID);
@@ -134,6 +131,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 					gGT->lapTime[currDriver->lapIndex] =
 						gGT->elapsedEventTime - currDriver->lapTime;
 				}
+				#endif
 
 				// time on the clock
 				currDriver->lapTime = gGT->elapsedEventTime;

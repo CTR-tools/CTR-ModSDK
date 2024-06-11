@@ -1,5 +1,5 @@
-// 499+43+33+27+38+14+18+35+45+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
-// 499 for every 'common' and ','
+// 498+43+33+27+38+14+18+35+46+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
+// 498 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -8,7 +8,7 @@
 // 14 for 230_Block2
 // 18 for 230_Block3
 // 35 for 232 adv hub
-// 45 for UI Block #1
+// 46 for UI Block #1
 // 12 for MAIN block
 // +6 for ElimBG
 // +9 for GAMEPAD Block #1
@@ -643,10 +643,8 @@ common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c
 common, exe, Timer_Destroy, 0x0, General/Timer/Timer_Destroy.c
 
 // UI
-common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
-
-// everything between UI_SaveLapTime and UI_VsQuipReadDriver
-// skip Wumpa2p3p4p cause the function is never called
+// everything from UI_SaveLapTime to UI_RenderFrame_CrystChall
+// skip Wumpa2p3p4p (never called in rewrite), UI_VsXXX comes next
 common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock1.c
 
 // UI_VsQuip (5x functions here)

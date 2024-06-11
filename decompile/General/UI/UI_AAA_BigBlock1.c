@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifndef USE_ONLINE
+#include "UI_SaveLapTime.c"
+#endif
+
 #include "UI_ThTick_CountPickup.c"
 #include "UI_ThTick_Reward.c"
 
