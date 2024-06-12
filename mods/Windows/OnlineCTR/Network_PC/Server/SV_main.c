@@ -754,7 +754,7 @@ void ServerState_Tick()
 			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
 			{
 				PrintPrefix(r + 1);
-				printf("Room has been resetted\n");
+				printf("Room has been reset\n");
 				
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
