@@ -45,6 +45,17 @@ RoomInfo roomInfos[16] = { NULL };
 
 void PrintTime();
 
+void PrintPrefix(const int roomId)
+{
+	printf("[");
+	PrintTime();
+	if (roomId != -1) {
+		printf(" | Room %d] ", roomId);
+	} else {
+		printf(" | General] ");
+	}
+}
+
 // similar to enet_host_broadcast
 void broadcastToPeersUnreliable(RoomInfo* ri, const void* data, size_t size)
 {
@@ -313,8 +324,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			// save new name
 			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
 
-			printf("New Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
-				(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo))+1,
+			PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+			printf("Player %d is identified now as %s [%08x]\n",
 				peerID,
 				r->name,
 				peer->address.host);
@@ -365,13 +376,10 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			ri->levelPlayed = s->trackID;
 
-#if 0
-			printf(
-					"Track: %d, Laps: %d\n",
+			PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+			printf("Track #%d and %d laps were selected\n",
 					s->trackID,
-					(2*s->lapID)+1
-				);
-#endif
+					(2*s->lapID)+1);
 
 			broadcastToPeersReliable(ri, s, s->size);
 			break;
@@ -492,7 +500,7 @@ void ProcessNewMessages() {
 				if (peerID == -1)
 				{
 					enet_peer_disconnect_now(event.peer, 0);
-					printf("Disconnection from Room Selection\n");
+					//printf("Disconnection from Room Selection\n");
 					return;
 				}
 
@@ -523,13 +531,12 @@ void ProcessNewMessages() {
 						)
 				   )
 				{
-					printf("Disconnection from race, kill room\n");
-
-					printf("End Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
-						(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1,
-						peerID,
+					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+					printf("Player %s (%d) disconnected from room\n",
 						&ri->peerInfos[peerID].name[0],
-						event.peer->address.host);
+						peerID);
+					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+					printf("Room has been killed as no players are left\n");
 
 					for (int i = 0; i < MAX_CLIENTS; i++)
 					{
@@ -547,13 +554,10 @@ void ProcessNewMessages() {
 				// or if disconnected from Battle/Adv during the race
 				else
 				{
-					printf("Disconnetion from race, still in session\n");
-
-					printf("End Name: Room=%d, Index=%d: name=%s, IP=%08x\n",
-						(((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1,
-						peerID,
+					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+					printf("Player %s (%d) disconnected from room\n",
 						&ri->peerInfos[peerID].name[0],
-						event.peer->address.host);
+						peerID);
 
 					enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
 					ri->peerInfos[peerID].peer = NULL;
@@ -669,7 +673,8 @@ void ServerState_FirstBoot(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	printf("Server: Ready on port %d\n\n", port);
+	PrintPrefix(-1);
+	printf("Ready on port %d\n", port);
 }
 
 int endTime = 0;
@@ -738,9 +743,8 @@ void ServerState_Tick()
 
 			if (ri->boolEndAll)
 			{
-				printf("Terminate Race: Room=%d ", r+1);
-				PrintTime();
-				
+				PrintPrefix(r+1);
+				printf("Race has terminated, resetting room soon\n");
 				endTime = clock();
 			}
 		}
@@ -749,8 +753,8 @@ void ServerState_Tick()
 		{
 			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
 			{
-				printf("Reset Room: Room=%d ", r+1);
-				PrintTime();
+				PrintPrefix(r + 1);
+				printf("Room has been resetted\n");
 				
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{

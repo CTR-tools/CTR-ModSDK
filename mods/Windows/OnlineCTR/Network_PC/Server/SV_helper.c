@@ -29,7 +29,6 @@ void PrintTime()
 
 	strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
 	printf(buffer);
-	printf("\n");
 }
 
 int GetWeekDay()
