@@ -37,6 +37,8 @@ typedef struct
 	char boolRaceAll;
 	char boolEndAll;
 
+    int endTime;
+
 } RoomInfo;
 
 ENetHost* server;
@@ -672,7 +674,6 @@ void ServerState_FirstBoot(int argc, char** argv)
 	printf("Server: Ready on port %d\n\n", port);
 }
 
-int endTime = 0;
 void ServerState_Tick()
 {
 	ProcessNewMessages();
@@ -741,13 +742,13 @@ void ServerState_Tick()
 				printf("Terminate Race: Room=%d ", r+1);
 				PrintTime();
 				
-				endTime = clock();
+				ri->endTime = clock();
 			}
 		}
 		
 		else
 		{
-			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
+			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC) >= 6)
 			{
 				printf("Reset Room: Room=%d ", r+1);
 				PrintTime();
@@ -770,6 +771,7 @@ void ServerState_Tick()
 				ri->boolLoadAll = 0;
 				ri->boolRaceAll = 0;
 				ri->boolEndAll = 0;
+                ri->endTime = 0;
 			}
 		}
 	}
