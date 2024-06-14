@@ -14,6 +14,13 @@
 
 #define MAX_CLIENTS 8
 
+
+#ifdef __WINDOWS__
+#define CLOCKS_PER_SEC_FIX CLOCKS_PER_SEC
+#else
+#define CLOCKS_PER_SEC_FIX ((clock_t)100000) // Original value (1000000), I removed one zero
+#endif
+
 typedef struct {
 	ENetPeer* peer;
 
@@ -748,7 +755,7 @@ void ServerState_Tick()
 		
 		else
 		{
-			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC) >= 6)
+			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC_FIX) >= 6)
 			{
 				printf("Reset Room: Room=%d ", r+1);
 				PrintTime();
