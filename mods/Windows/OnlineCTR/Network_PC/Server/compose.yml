@@ -1,0 +1,10 @@
+version: "3"
+services:
+  ctr-psx-server:
+    build:
+      context: ../../../../../
+      dockerfile: ./mods/Windows/OnlineCTR/Network_PC/Server/Dockerfile
+    ports:
+      # Change this port to whatever you like
+      - "64001:64001/udp"
+    tty: true

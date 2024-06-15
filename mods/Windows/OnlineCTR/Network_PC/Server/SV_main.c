@@ -14,6 +14,13 @@
 
 #define MAX_CLIENTS 8
 
+
+#ifdef __WINDOWS__
+#define CLOCKS_PER_SEC_FIX CLOCKS_PER_SEC
+#else
+#define CLOCKS_PER_SEC_FIX ((clock_t)100000) // Original value (1000000), I removed one zero
+#endif
+
 typedef struct {
 	ENetPeer* peer;
 
@@ -36,6 +43,8 @@ typedef struct
 	char boolLoadAll;
 	char boolRaceAll;
 	char boolEndAll;
+
+    int endTime;
 
 } RoomInfo;
 
@@ -677,7 +686,6 @@ void ServerState_FirstBoot(int argc, char** argv)
 	printf("Ready on port %d\n", port);
 }
 
-int endTime = 0;
 void ServerState_Tick()
 {
 	ProcessNewMessages();
@@ -745,13 +753,13 @@ void ServerState_Tick()
 			{
 				PrintPrefix(r+1);
 				printf("Race has terminated, resetting room soon\n");
-				endTime = clock();
+				ri->endTime = clock();
 			}
 		}
 		
 		else
 		{
-			if ( ( (clock() - endTime) / CLOCKS_PER_SEC) >= 6)
+			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC_FIX) >= 6)
 			{
 				PrintPrefix(r + 1);
 				printf("Room has been reset\n");
@@ -774,6 +782,7 @@ void ServerState_Tick()
 				ri->boolLoadAll = 0;
 				ri->boolRaceAll = 0;
 				ri->boolEndAll = 0;
+                ri->endTime = 0;
 			}
 		}
 	}

@@ -803,7 +803,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if any transition is over
 					if(gGT->pushBuffer_UI.fadeFromBlack_currentValue > 0xfff)
 					{
+						#ifndef USE_ONLINE
 						DECOMP_UI_RenderFrame_AdvHub();
+						#endif
 					}
 				}
 				
