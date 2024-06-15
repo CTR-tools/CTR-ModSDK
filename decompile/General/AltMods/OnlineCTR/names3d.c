@@ -25,6 +25,13 @@ int GetOverheadLen(struct Driver* d)
 	gte_stsxy(&ptrDest->Screen_posX);
 	gte_stsz(&ptrDest->Screen_posZ);
 	
+	// if mirror mode
+	if(octr->special != 0)
+	{
+		ptrDest->World_posX = 
+		0x200 - ptrDest->World_posX;
+	}
+	
 	int posZ = ptrDest->Screen_posZ;
 	
 	if(posZ < 150) return 0;

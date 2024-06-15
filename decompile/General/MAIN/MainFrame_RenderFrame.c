@@ -1740,7 +1740,14 @@ void RenderSubmit(struct GameTracker* gGT)
 		
 	gGT->bool_DrawOTag_InProgress = 1;
 	
-	DrawOTag(&gGT->pushBuffer[0].ptrOT[0x3ff]);
+	void* ot = &gGT->pushBuffer[0].ptrOT[0x3ff];
+	
+#ifdef USE_ONLINE
+	void OnlineMirrorMode(u_long* ot);
+	OnlineMirrorMode(ot);
+#endif
+	
+	DrawOTag(ot);
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }

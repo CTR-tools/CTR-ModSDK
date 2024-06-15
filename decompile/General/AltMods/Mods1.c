@@ -8,6 +8,7 @@
 #include "OnlineCTR/names3d.c"
 #include "OnlineCTR/states.c"
 #include "OnlineCTR/thread.c"
+#include "OnlineCTR/zMirrorMode.c"
 #endif
 #endif
 
