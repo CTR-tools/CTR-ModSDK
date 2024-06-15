@@ -56,9 +56,9 @@
 #include "UI_DrawSlideMeter.c"
 #include "UI_DrawRankedDrivers.c"
 #include "UI_RenderFrame_Racing.c"
-#include "UI_RenderFrame_AdvHub.c"
 
 #ifndef USE_ONLINE
+#include "UI_RenderFrame_AdvHub.c"
 #include "UI_RenderFrame_CrystChall.c"
 #endif
 
