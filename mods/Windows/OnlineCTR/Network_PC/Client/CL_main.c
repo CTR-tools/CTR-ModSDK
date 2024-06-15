@@ -293,17 +293,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
 			psxPtr &= 0xffffff;
 
-			*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1] = r->posX[0];
-			*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2] = r->posX[1];
-			*(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3] = r->posX[2];
-
-			*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1] = r->posY[0];
-			*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2] = r->posY[1];
-			*(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3] = r->posY[2];
-
-			*(unsigned char*)&pBuf[psxPtr + 0x2dc + 1] = r->posZ[0];
-			*(unsigned char*)&pBuf[psxPtr + 0x2dc + 2] = r->posZ[1];
-			*(unsigned char*)&pBuf[psxPtr + 0x2dc + 3] = r->posZ[2];
+			// lossless compression, bottom byte is never used,
+			// cause psx renders with 3 bytes, and top byte
+			// is never used due to world scale (just pure luck)
+			*(int*)&pBuf[psxPtr + 0x2d4] = ((int)r->posX) * 256;
+			*(int*)&pBuf[psxPtr + 0x2d8] = ((int)r->posY) * 256;
+			*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
 
 			int angle =
 				(r->kartRot1) |
@@ -904,20 +899,12 @@ void SendEverything()
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 	psxPtr &= 0xffffff;
 
-	// 0x2D4, drop bottom byte
-	cg.posX[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 1];
-	cg.posX[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 2];
-	cg.posX[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d4 + 3];
-
-	// 0x2D8, drop bottom byte
-	cg.posY[0] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 1];
-	cg.posY[1] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 2];
-	cg.posY[2] = *(unsigned char*)&pBuf[psxPtr + 0x2d8 + 3];
-
-	// 0x2DC, drop bottom byte
-	cg.posZ[0] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 1];
-	cg.posZ[1] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 2];
-	cg.posZ[2] = *(unsigned char*)&pBuf[psxPtr + 0x2dc + 3];
+	// lossless compression, bottom byte is never used,
+	// cause psx renders with 3 bytes, and top byte
+	// is never used due to world scale (just pure luck)
+	cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
+	cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
+	cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
 
 	// === Direction Faced ===
 	// driver->0x39a (direction facing)

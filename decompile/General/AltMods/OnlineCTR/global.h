@@ -1,5 +1,5 @@
 
-#define VERSION 1013
+#define VERSION 1014
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -256,11 +256,11 @@ struct SG_EverythingKart
 
 	// byte[4-12]
 
-	unsigned char posX[3];
-	unsigned char posY[3];
-	unsigned char posZ[3];
+	short posX;
+	short posY;
+	short posZ;
 
-	// 13 bytes
+	// 10 bytes
 };
 
 struct SG_MessageEndRace
@@ -279,7 +279,7 @@ STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 4, "Size of SG_MessageCl
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 13, "Size of SG_EverythingKart must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 10, "Size of SG_EverythingKart must be 13 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5, "Size of SG_MessageEndRace must be 5 bytes");
 
 enum ClientGiveMessageType
@@ -367,11 +367,11 @@ struct CG_EverythingKart
 
 	// byte[4-12]
 
-	unsigned char posX[3];
-	unsigned char posY[3];
-	unsigned char posZ[3];
+	short posX;
+	short posY;
+	short posZ;
 
-	// 13 bytes
+	// 10 bytes
 };
 
 struct CG_MessageEndRace
@@ -387,7 +387,7 @@ STATIC_ASSERT2(sizeof(struct CG_Header) == 1, "Size of CG_Header must be 1 byte"
 STATIC_ASSERT2(sizeof(struct CG_MessageName) == 13, "Size of CG_MessageName must be 13 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2, "Size of CG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2, "Size of CG_MessageTrack must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 13, "Size of CG_EverythingKart must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 10, "Size of CG_EverythingKart must be 13 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4, "Size of CG_MessageEndRace must be 4 bytes");
 
 // OnlineCTR functions

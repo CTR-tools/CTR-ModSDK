@@ -436,7 +436,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			s->buttonHold = r->buttonHold;
 
-			memcpy(&s->posX[0], &r->posX[0], 9);
+			memcpy(&s->posX, &r->posX, 6);
 
 			broadcastToPeersUnreliable(ri, s, s->size);
 			break;
