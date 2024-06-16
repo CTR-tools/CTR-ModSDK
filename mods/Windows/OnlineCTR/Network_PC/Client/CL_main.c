@@ -29,6 +29,22 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
+struct Gamepad
+{
+	short unk_0;
+	short unk_1;
+	short stickLX;
+	short stickLY;
+	short stickLX_dontUse1;
+	short stickLY_dontUse1;
+	short stickRX;
+	short stickRY;
+	int buttonsHeldCurrFrame;
+	int buttonsTapped;
+	int buttonsReleased;
+	int buttonsHeldPrevFrame;
+};
+
 void sendToHostUnreliable(const void* data, size_t size) {
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
@@ -155,6 +171,17 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
 
+			// handle disconnection
+			if (r->name[0] == 0)
+			{
+				// make this player hold SQUARE
+				struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
+				pad->buttonsHeldCurrFrame = 0x20;
+				pad->buttonsTapped = 0;
+				pad->buttonsReleased = 0;
+				pad->buttonsHeldPrevFrame = 0x20;
+			}
+
 			break;
 		}
 
@@ -257,22 +284,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// released
 			int rel = prev & ~curr;
 
-			struct Gamepad
-			{
-				short unk_0;
-				short unk_1;
-				short stickLX;
-				short stickLY;
-				short stickLX_dontUse1;
-				short stickLY_dontUse1;
-				short stickRX;
-				short stickRY;
-				int buttonsHeldCurrFrame;
-				int buttonsTapped;
-				int buttonsReleased;
-				int buttonsHeldPrevFrame;
-			};
-
 			struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
 			pad->buttonsHeldCurrFrame = curr;
 			pad->buttonsTapped = tap;
@@ -319,22 +330,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID == octr->DriverID) break;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;
-
-			struct Gamepad
-			{
-				short unk_0;
-				short unk_1;
-				short stickLX;
-				short stickLY;
-				short stickLX_dontUse1;
-				short stickLY_dontUse1;
-				short stickRX;
-				short stickRY;
-				int buttonsHeldCurrFrame;
-				int buttonsTapped;
-				int buttonsReleased;
-				int buttonsHeldPrevFrame;
-			};
 
 			// make this player hold SQUARE
 			struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
