@@ -1013,7 +1013,7 @@ void (*ClientState[]) () = {
 // for EnumProcessModules
 #pragma comment(lib, "psapi.lib")
 
-int main()
+int main(int argc, char *argv[])
 {
 	HWND console = GetConsoleWindow();
 	RECT r;
@@ -1023,10 +1023,24 @@ int main()
 
 	PrintBanner(DONT_SHOW_NAME);
 
-	// ask for the users online identification
-	printf("Input: Enter Your Online Name: ");
-	scanf_s("%s", name, (int)sizeof(name));
-	name[11] = 0; // truncate the name
+	if (argc == 2) //1 for prog, 1 for username
+	{
+		argv[1][11] = 0; // truncate the name
+		printf("Online Name passed via args: %s", argv[1]);
+		strcpy_s(name, 12, argv[1]); // including null term
+	}
+	else if (argc == 1)
+	{
+		// ask for the users online identification
+		printf("Input: Enter Your Online Name: ");
+		scanf_s("%s", name, (int)sizeof(name));
+		name[11] = 0; // truncate the name
+	}
+	else
+	{
+		printf("Bad number of arguments passed to main(). Either pass no arguments, or just your CTROnline username");
+		exit(-1);
+	}
 
 	// show a welcome message
 	system("cls");
@@ -1115,7 +1129,7 @@ int main()
 		printf("Error: Failed to open DuckStation!\n\n");
 		system("pause");
 		system("cls");
-		main();
+		main(argc, argv);
 	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
