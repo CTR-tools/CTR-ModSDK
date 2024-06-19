@@ -53,5 +53,8 @@
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="DSPINE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

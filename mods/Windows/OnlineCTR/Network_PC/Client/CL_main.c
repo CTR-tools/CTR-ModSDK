@@ -1,6 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-
+#include <WinSock2.h>
 
 #ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
 	#define _WINSOCK_DEPRECATED_NO_WARNINGS
@@ -19,9 +19,139 @@
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
+#include "DSPINE.h"
 
-char *pBuf;
-struct OnlineCTR* octr;
+unsigned int pBufAddress;
+unsigned int octrAddress;
+
+SOCKET dspineSocket;
+
+SOCKET getSocket() //every call to getSocket should be bookmatched by a call to closeSocket.
+{
+	//https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-basic-winsock-application
+	WSADATA wsadata;
+	int ires;
+	ires = WSAStartup(MAKEWORD(2, 2), &wsadata);
+	if (ires != 0)
+	{
+		printf("WSAStartup failed with code: %d\n", ires);
+		return;
+	}
+	struct addrinfo *result = NULL, *ptr = NULL, hints;
+	ZeroMemory(&hints, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_socktype = SOCK_STREAM;
+	hints.ai_protocol = IPPROTO_TCP;
+	ires = getaddrinfo("localhost", "28011", &hints, &result); //DS PINE
+	if (ires != 0)
+	{
+		printf("getaddrinfo failed with code: %d\n", ires);
+		WSACleanup();
+		return;
+	}
+	SOCKET sock = INVALID_SOCKET;
+	ptr = result;
+	sock = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
+	if (sock == INVALID_SOCKET)
+	{
+		printf("Error at socket(): %ld\n", WSAGetLastError());
+		freeaddrinfo(result);
+		WSACleanup();
+		return;
+	}
+	ires = connect(sock, ptr->ai_addr, (int)ptr->ai_addrlen);
+	if (ires == SOCKET_ERROR)
+	{
+		closesocket(sock);
+		printf("Error trying to connect socket: %ld\n", WSAGetLastError());
+		sock = INVALID_SOCKET;
+	}
+	freeaddrinfo(result);
+	if (sock == INVALID_SOCKET)
+	{
+		printf("Unable to connect to DS PINE!\n");
+		WSACleanup();
+		return 1;
+	}
+	return sock;
+}
+
+void closeSocket(SOCKET* socket) //should be preceded by a call to getSocket
+{
+	if (*socket != INVALID_SOCKET)
+		closeSocket(socket);
+	WSACleanup();
+}
+
+//int exchange(SOCKET* socket, char buf[9]) //returns 0 if success, response stored in buf[0 through 4] 
+//{
+//	int res;
+//	res = send(*socket, buf, 9, 0);
+//	if (res == SOCKET_ERROR) {
+//		printf("send failed: %d\n", WSAGetLastError());
+//		closesocket(socket);
+//		WSACleanup();
+//		return 1;
+//	}
+//	res = recv(*socket, buf, 5, 0);
+//	if (res == 5)
+//		; //very good
+//	else if (res == 0)
+//		; //connection closed
+//	else if (res > 0)
+//		; //fragment?
+//	else
+//	{
+//		printf("recv failed: %d\n", WSAGetLastError());
+//		return 1;
+//	}
+//	return 0;
+//}
+
+void readMemorySegment(unsigned int addr, size_t len, char* buf)
+{
+	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
+	//https://github.com/stenzek/duckstation/pull/3230
+	char sendBuffer[10] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
+	char recieveBuffer[13];
+	size_t roundedLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
+	for (size_t i = 0; i < roundedLen; i += 8)
+	{ //8 byte transfer(s)
+		sendBuffer[4] = DSPINEMsgRead64;
+		unsigned int offsetaddr = addr + i;
+		sendBuffer[0] = 10 & 0xFF; //10 = packetSize
+		sendBuffer[1] = (10 >> 8) & 0xFF; //10 = packetSize
+		sendBuffer[2] = (10 >> 16) & 0xFF; //10 = packetSize
+		sendBuffer[3] = (10 >> 24) & 0xFF; //10 = packetSize
+
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+
+		send(dspineSocket, sendBuffer, 10, 0); //10 = packetSize
+		int recvLen = recv(dspineSocket, recieveBuffer, 13, 0);
+		if (recvLen == 13/* && recieveBuffer[0] == 0*/)
+			; //very good
+		else if (recvLen == SOCKET_ERROR)
+		{
+			printf("recv failed: %d\n", WSAGetLastError());
+		}
+		else
+			exit(-69420); //could be caused by many things.
+		for (size_t c = 0; c < 8; c++)
+			if (i + c < len)
+				buf[i + c] = recieveBuffer[c + 5];
+	}
+}
+
+void writeMemorySegment(unsigned int addr, size_t len, char* buf)
+{
+
+}
+
+char *pBuf; //raw emu memory I think
+struct OnlineCTR* octr; //structure created within raw emu memory I think
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -1067,6 +1197,14 @@ void (*ClientState[]) () = {
 
 int main(int argc, char *argv[])
 {
+	//todo: sigint handler, close socket before quit
+	
+	//*then* do this
+	dspineSocket = getSocket();
+
+	pBufAddress = 0; //is it 0?
+	octrAddress = pBufAddress + (0x8000C000 & 0xffffff);
+
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
@@ -1085,7 +1223,7 @@ int main(int argc, char *argv[])
 	{
 		// ask for the users online identification
 		printf("Input: Enter Your Online Name: ");
-		scanf_s("%s", name, (int)sizeof(name));
+		//scanf_s("%s", name, (int)sizeof(name)); //uncomment me
 		name[11] = 0; // truncate the name
 	}
 	else
@@ -1171,10 +1309,14 @@ int main(int argc, char *argv[])
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
 
+
+
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+
+	//char match[32] = "\0\0\0\0        \x3\0\0\0        \fZ'\r      \0\0\0\0       \0\0\0\";
 
 	if (pBuf == 0)
 	{
@@ -1185,7 +1327,7 @@ int main(int argc, char *argv[])
 	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
-
+	
 	// initialize enet
 	if (enet_initialize() != 0)
 	{
@@ -1197,10 +1339,18 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
+	//strcpy_s((char*)pBuf, 17, "bananas!bananas!");
+
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
+		
+		//octr->windowsClientSync[0]++;
+		char buf[sizeof(struct OnlineCTR)];
+		readMemorySegment(octrAddress, sizeof(struct OnlineCTR), buf);
+		struct OnlineCTR* octr = &(buf[0]);
 		octr->windowsClientSync[0]++;
+		writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), buf);
 
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_PICK_ROOM)
