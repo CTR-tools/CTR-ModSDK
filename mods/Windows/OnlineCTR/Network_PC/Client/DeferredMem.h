@@ -45,6 +45,7 @@ private:
 	unsigned int address;
 	bool volat;
 	char* buf;
+	char* originalBuf;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf
 public:
 	ps1ptr() { } //for static init only, do not actually use this.
@@ -61,7 +62,9 @@ public:
 	{
 		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
 		readMemorySegment(address, sizeof(T), buf);
-		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; }); //when the shared_ptr dies, free the char* off the heap.
+		originalBuf = new char[sizeof(T)];
+		memcpy(originalBuf, buf, sizeof(T));
+		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; delete[] originalBuf; }); //when the shared_ptr dies, free the char* off the heap.
 	}
 	operator ptrtype() const
 	{
@@ -72,7 +75,10 @@ public:
 	/// </summary>
 	void commit()
 	{
-		writeMemorySegment(address, sizeof(T), buf);
+		if (memcmp(buf, originalBuf, sizeof(T)) == 0)
+			printf("Commit() called but nothing was changed!");
+		else
+			writeMemorySegment(address, sizeof(T), buf);
 	}
 	/// <summary>
 	/// Re-fetches the memory this ps1ptr represents from ps1 memory.
