@@ -61,7 +61,7 @@ public:
 	{
 		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
 		readMemorySegment(address, sizeof(T), buf);
-		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; });
+		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; }); //when the shared_ptr dies, free the char* off the heap.
 	}
 	operator ptrtype() const
 	{
@@ -79,8 +79,7 @@ public:
 	/// </summary>
 	void refresh()
 	{
-		readMemorySegment(address, sizeof(T), buf);
-		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; });
+		readMemorySegment(address, sizeof(T), buf); //change the underlying data of the shared_ptr
 	}
 	ptrtype get()
 	{
