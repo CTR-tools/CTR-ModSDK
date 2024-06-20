@@ -21,10 +21,10 @@
 
 //#define USE_VR		// Virtual Reality
 
+#define USE_BOOSTBAR
 #ifdef USE_ONLINE
 //#define USE_60FPS
 #define USE_16BY9
-#define USE_BOOSTBAR
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_HIGH1P
@@ -49,7 +49,7 @@
 #define WIDE_34(x) (((x)*750)/1000)
 #define WIDE_PICK(x,y) (y)
 #else
-#define WIDE_34(x) (x)	
+#define WIDE_34(x) (x)
 #define WIDE_PICK(x,y) (x)
 #endif
 
@@ -58,12 +58,12 @@
 #endif
 
 #include <macros.h>
-#include <stdbool.h>
+#include <prim.h>
 
 // =============================
 
 // Alphabetical order was rearranged
-// so that the PCH file can be built 
+// so that the PCH file can be built
 // properly. In the end this should
 // be fixed so they can be alphabetical
 

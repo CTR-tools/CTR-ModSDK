@@ -1,5 +1,17 @@
-// Version = MDD of release, all 1999
-// For example, May 7 would be 507
+#ifndef MACROS_H
+#define MACROS_H
+
+#include <stdbool.h>
+#include <stdint.h>
+
+typedef uint64_t u64;
+typedef int64_t  s64;
+typedef uint32_t u32;
+typedef int32_t  s32;
+typedef uint16_t u16;
+typedef int16_t  s16;
+typedef uint8_t  u8;
+typedef int8_t   s8;
 
 #define AugReview 805
 #define SepReview 903
@@ -21,8 +33,10 @@
 #define SECOND (FPS * ELAPSED_MS)
 #define MINUTE (SECOND * 60)
 
-#define true 1
-#define false 0
+#define SECONDS(x) ((s32)(((float)x) * SECOND))
+#define MINUTES(x) ((s32)(((float)x) * MINUTE))
+
+#define nullptr ((void *) 0)
 
 #ifndef REBUILD_PC
 #define force_inline static inline __attribute__((always_inline))
@@ -50,3 +64,5 @@
 
 #define aspectratiodownsample(int) \
 	(int*4)/7
+
+#endif
