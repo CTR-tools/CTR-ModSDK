@@ -40,7 +40,7 @@
 //         |           |  |           |                       |
 // format: VV VV VV VV WW XX XX XX XX YY YY YY YY YY YY YY YY ??
 //
-// reply:  
+// reply:  XX YY YY YY YY
 
 #define DSPINEMsgRead8 0            /**< Read 8 bit value to memory. */
 #define DSPINEMsgRead16 1           /**< Read 16 bit value to memory. */

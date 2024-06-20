@@ -21,8 +21,8 @@
 #include <enet/enet.h>
 #include "DeferredMem.h"
 
-char* pBuf;
- OnlineCTR* octr;
+ps1mem pBuf;
+ps1ptr<OnlineCTR> octr;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -1141,15 +1141,17 @@ int main()
 
 	if (numDuckInstances > 1)
 	{
-		printf("Warning: Multiple DuckStations detected\n");
+		printf("Warning: Multiple DuckStations detected, close additional DuckStations and restart this application.\n");
+		exit(-69420);
+		/*printf("Warning: Multiple DuckStations detected\n");
 		printf("Please enter the PID manually\n\n");
 
 		printf("Input.: DuckStation PID: ");
-		scanf_s("%s", pidStr, (int)sizeof(pidStr));
+		scanf_s("%s", pidStr, (int)sizeof(pidStr));*/
 	}
 	else
 	{
-		sprintf_s(pidStr, 100, "%d", duckPID);
+		sprintf_s(pidStr, 16, "%d", duckPID);
 	}
 
 	char duckName[100];
@@ -1158,8 +1160,12 @@ int main()
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
 
+	//this call is only good if we're certain duckstation is *running* (and pine is enabled,
+	// but that needs to be done manually by the user or by the INI config).
+	defMemInit();
+
 	// 8 MB RAM
-	const unsigned int size = 0x800000;
+	/*const unsigned int size = 0x800000;
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
@@ -1171,8 +1177,10 @@ int main()
 		main();
 	}
 
-	octr = ( OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
-
+	octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];*/
+	pBuf = ps1mem(0);
+	octr = pBuf.at<OnlineCTR>(0x8000C000 & 0xffffff);
+	
 	// initialize enet
 	if (enet_initialize() != 0)
 	{
@@ -1187,16 +1195,18 @@ int main()
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
-		octr->windowsClientSync[0]++;
+		//octr->windowsClientSync[0]++;
+		(*octr.get()).windowsClientSync[0]++;
+		octr.commit();
 
 		// should rename to room selection
-		if (octr->CurrState >= LAUNCH_PICK_ROOM)
+		if (octr.get()->CurrState >= LAUNCH_PICK_ROOM)
 			DisconSELECT();
 
 		StartAnimation();
 
-		if (octr->CurrState >= 0)
-			ClientState[octr->CurrState]();
+		if (octr.get()->CurrState >= 0)
+			ClientState[octr.get()->CurrState]();
 
 		void FrameStall(); FrameStall();
 	}

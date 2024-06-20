@@ -45,7 +45,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf);
 //	}
 //};
 
-void init()
+void defMemInit()
 {
 	dspineSocket = getSocket();
 }
@@ -185,6 +185,20 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		else
 			exit(-69420); //could be caused by many things.
 	}
+
+	//this section takes care of the leftover bit at the end that isn't divisible by 8.
+	//unfortunately, this implementation currently reads the existing 8-byte block, then just
+	//overwrites the leftover bit at the beginning of said 8-byte block, and recommits it.
+	//
+	//that means, for any call that isn't exactly a multiple of 8 bytes, will consist of
+	//n/8 (rounded down) api write calls, followed by 1 read call, followed by 1 more write call.
+	//the limiting behavior of this diminishes api-calls=O(~n), but for small n (which is most
+	//of the calls), it's more like api-calls=3*O(~n) (e.g., 15 bytes, one write, one read, one more write).
+	//
+	//It would be a lot better if the API supported larger memory batch copies, and it very well might,
+	//But for the life of me I can't find *good* and *ACCURATE* documentation on PINE.
+	//see DSPINE.h for some detail on the inaccuracy of the claims of the API.
+
 	size_t rem = (len % 8 == 0) ? 0 : (8 - (len % 8));
 	unsigned int offsetaddr = addr + whole;
 	readMemorySegment(offsetaddr, 8, &buf[9]);
@@ -204,15 +218,90 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		exit(-69420); //could be caused by many things.
 }
 
-/// <summary>
-/// Reads the specified address from PS1 (emulator RAM) and casts it as a unique pointer.
-///
-/// The object itself is only a copy of emulator RAM, so to commit changes, use writeObject
-/// </summary>
 template<typename T>
-std::unique_ptr<T, std::function<void(T*)>> readObject(unsigned int addr)
+class ps1ptr
 {
-	char buf[] = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
-	readMemorySegment(addr, sizeof(T), buf);
-	return std::unique_ptr<T, std::function<void(T*)>>((T*)&buf[0], [](T* val) { delete[] buf; });
-}
+	/// <summary>
+	/// Note to future maintainers:
+	///
+	/// The largest element of latency when communicating with emulator RAM is probably read/writeMemorySegment.
+	///
+	/// Each of these calls actually just splits up the memory into 8-byte chuncks and read/writes them via PINE
+	/// (8 bytes is the largest size the API supports I believe).
+	///
+	/// *if* when you readMemorySegment in the ctor/refresh, you made an additional "reference copy" of the data,
+	/// when it comes time to commit(), you can walk through the data and only make calls for the data that *actually*
+	/// changed.
+	///
+	/// If you're working with a large data structure (e.g., CTROnline = 228 bytes), and only a *single* byte was changed,
+	/// You can reduce the number of API calls within writeMemorySegment() from approximately 228/8 to 1.
+	///
+	/// However, these benefits disappear e.g., if many "scattered" changes were made throughout the data structure, and that
+	/// many locations were changed such that for every block of 8 bytes within the structure, at least 1 byte within that
+	/// segment was changed. In this case, the number of API calls is the same as if you just committed the whole structure.
+	/// (which is no worse then what is currently being done).
+	/// </summary>
+
+public:
+	typedef std::shared_ptr<T> ptrtype;
+private:
+	unsigned int address;
+	char* buf;
+	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf
+public:
+	/// <summary>
+	/// Reads the specified address from PS1 (emulator RAM), copies it, and creates a shared_ptr.
+	///
+	/// The object itself is only a copy of emulator RAM, so to commit changes, use commit().
+	/// If changes have been made to emulator RAM, use refresh() to re-fetch the underlying memory.
+	///
+	/// When this object falls out of scope, any changes made will *not* be automatically committed.
+	/// Do it yourself.
+	/// </summary>
+	ps1ptr(unsigned int addr) : address(addr)
+	{
+		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
+		readMemorySegment(address, sizeof(T), buf);
+		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; });
+	}
+	operator ptrtype() const
+	{
+		return bufferedVal;
+	}
+	/// <summary>
+	/// Writes the memory this ps1ptr represents back to ps1 memory.
+	/// </summary>
+	void commit()
+	{
+		writeMemorySegment(address, sizeof(T), buf);
+	}
+	/// <summary>
+	/// Re-fetches the memory this ps1ptr represents from ps1 memory.
+	/// </summary>
+	void refresh()
+	{
+		readMemorySegment(address, sizeof(T), buf);
+		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; });
+	}
+	ptrtype get()
+	{
+		return bufferedVal;
+	}
+};
+
+class ps1mem
+{
+private:
+	unsigned int address;
+public:
+	ps1mem(unsigned int addr) : address(addr) { }
+
+	/// <summary>
+	/// Creates a ps1ptr of the specified address, offset by the address of this ps1mem.
+	/// </summary>
+	template<typename T>
+	ps1ptr<T> at(unsigned int addr)
+	{
+		return ps1ptr<T>(addr + address);
+	}
+};
