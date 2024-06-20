@@ -849,8 +849,8 @@ void StatePC_Launch_PickServer()
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
 	{
-		// wait up to 3 seconds for the connection attempt to succeed
-		if (enet_host_service(clientHost, &event, 3000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
+		// wait up to 10 seconds for the connection attempt to succeed
+		if (enet_host_service(clientHost, &event, 10000) > 0 && event.type == ENET_EVENT_TYPE_CONNECT)
 		{
 			StopAnimation();
 			printf("Client: Successfully connected!  ");
@@ -876,8 +876,8 @@ void StatePC_Launch_PickServer()
 		}
 	}
 
-	// 5 seconds
-	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
+	// 20 seconds
+	enet_peer_timeout(serverPeer, 1000000, 1000000, 20000);
 
 	octr.refresh();
 	octr.get()->DriverID = -1;
