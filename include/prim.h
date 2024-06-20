@@ -1,7 +1,7 @@
 #ifndef REDHOT_GPU_H
 #define REDHOT_GPU_H
 
-#include <redhot/types.h>
+#include <macros.h>
 
 typedef union Tag
 {

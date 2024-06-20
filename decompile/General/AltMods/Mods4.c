@@ -1,6 +1,4 @@
 #include <common.h>
-#include <redhot/gpu.h>
-#include <redhot/time.h>
 
 #ifdef USE_BOOSTBAR
 void DrawBoostBar(short posX, short posY, struct Driver* driver)
