@@ -23,43 +23,54 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 	absolutePositionInt = (int)absolutePosition;
 
 	angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / FPS_DOUBLE(5));
-		
+
 	// if driver "just" passed another driver
 	if (absolutePositionInt < drawnPositionInt)
 	{
+		#ifdef USE_ONLINE
+		ptrPos[0] = (short)(angle * 0x14 >> 0xc) + 10;
+		#else
 		ptrPos[0] = (short)(angle * 0x14 >> 0xc) + 0x14;
+		#endif
 	}
 
 	// if driver "was" passed by another driver
 	else
 	{
+		#ifdef USE_ONLINE
+		ptrPos[0] = 10 - (short)(angle * 0x14 >> 0xc);
+		#else
 		ptrPos[0] = 0x14 - (short)(angle * 0x14 >> 0xc);
+		#endif
 	}
-	
+
 	// absolutePositionInt - drawnPositionInt is either -1 or +1
 	// 0x1b is vertical size of the icon
-	
-	ptrPos[1] = 
-		
+	#ifdef USE_ONLINE
+	ptrPos[1] = 47 + (drawnPosition * 20) + (((((absolutePositionInt - drawnPositionInt) * 20) * (int)frameCounter) * 4) / (FPS_DOUBLE(5)*4));
+	#else
+	ptrPos[1] =
+
 		// Y value where all icons start
-		0x39 + 
-		
+		0x39 +
+
 		// start Y before transition
-		(drawnPosition * 0x1b) + 
-		
+		(drawnPosition * 0x1b) +
+
 		// transition per frame
 		(
 			// distance to travel
 			(
 				(((absolutePositionInt - drawnPositionInt) * 0x1b)
-			
+
 				// move more each frame
 				* (int)frameCounter) * 4
 			)
-			
+
 			// divide distance down
 			/ (FPS_DOUBLE(5)*4)
 		);
-	
+	#endif
+
 	return;
 }

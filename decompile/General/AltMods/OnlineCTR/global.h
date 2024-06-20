@@ -1,3 +1,5 @@
+#ifndef ONLINE_GLOBAL_H
+#define ONLINE_GLOBAL_H
 
 #define VERSION 1014
 //#define ONLINE_BETA_MODE
@@ -66,7 +68,7 @@ struct OnlineCTR
 	unsigned char boolLockedInLevel;
 	unsigned char lapID;
 	unsigned char levelID;
-	
+
 	// 0xC
 	unsigned char IsBootedPS1;
 	unsigned char boolLockedInCharacter;
@@ -78,7 +80,7 @@ struct OnlineCTR
 	unsigned char serverRoom;
 	unsigned char serverLockIn1;
 	unsigned char serverLockIn2;
-	
+
 	// 0x14
 	unsigned char boolPlanetLEV;
 	unsigned char boolClientBusy;
@@ -104,7 +106,7 @@ struct OnlineCTR
 		int slot;
 		int time;
 	} RaceEnd[8];
-	
+
 	int ver_psx;
 	int ver_pc;
 	int ver_server;
@@ -157,7 +159,7 @@ struct SG_MessageRooms
 	unsigned char numRooms;
 
 	unsigned short version;
-	
+
 	unsigned char numClients01 : 4;
 	unsigned char numClients02 : 4;
 	unsigned char numClients03 : 4;
@@ -166,7 +168,7 @@ struct SG_MessageRooms
 	unsigned char numClients06 : 4;
 	unsigned char numClients07 : 4;
 	unsigned char numClients08 : 4;
-	
+
 	unsigned char numClients09 : 4;
 	unsigned char numClients10 : 4;
 	unsigned char numClients11 : 4;
@@ -436,4 +438,6 @@ void StopAnimation();
 	void StatePS1_Game_WaitForRace();
 	void StatePS1_Game_StartRace();
 	void StatePS1_Game_EndRace();
+#endif
+
 #endif

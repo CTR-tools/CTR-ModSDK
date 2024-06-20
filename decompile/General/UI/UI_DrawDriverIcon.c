@@ -8,20 +8,31 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
 	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
 	unsigned int rightX = posX + FP_Mult(width, scale);
-	#if BUILD != EurRetail
-		unsigned int topY = (posY < 166) ? posY : 165;
-		unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 166) ? (posY + FP_Mult(height, scale)) : 165;
+	#ifdef USE_ONLINE
+		unsigned int topY = posY;
+		unsigned int bottomY = posY + FP_Mult(height, scale);
 	#else
-		unsigned int topY = (posY < 176) ? posY : 175;
-		unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 176) ? (posY + FP_Mult(height, scale)) : 175;
+		#if BUILD != EurRetail
+			unsigned int topY = (posY < 166) ? posY : 165;
+			unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 166) ? (posY + FP_Mult(height, scale)) : 165;
+		#else
+			unsigned int topY = (posY < 176) ? posY : 175;
+			unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 176) ? (posY + FP_Mult(height, scale)) : 175;
+		#endif
 	#endif
-	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - posY;
 
 	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
+
+	#ifdef USE_ONLINE
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, icon->texLayout.v2, icon->texLayout.u3, icon->texLayout.v3);
+	#else
+	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - posY;
 	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	#endif
+
 	p->clut = icon->texLayout.clut;
 	p->tpage = icon->texLayout.tpage;
-	
+
 	#ifdef REBUILD_PC
 	*(int*)p->r0 = color;
 	setPolyFT4(p);
@@ -33,7 +44,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 	{
 		setTransparency(p, transparency);
 	}
-	
+
 	#ifdef USE_16BY9
 	// widescreen, need to scale X by 75%,
 	// so subtract 12% from left and 12% from right
@@ -43,7 +54,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 	p->x1 -= len;
 	p->x3 -= len;
 	#endif
-	
+
 	primMem->curr = p + 1;
 
 	return;

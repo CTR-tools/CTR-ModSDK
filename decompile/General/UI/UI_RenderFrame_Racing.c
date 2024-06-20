@@ -42,7 +42,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	u_int mapPosY;
 
 	#ifdef USE_ONLINE
-	offset = WIDE_PICK(-0x18, -0x20);
+	offset = WIDE_PICK(-19, -27);
 	#else
 	offset = 0;
 	#endif
@@ -212,9 +212,9 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				#ifdef USE_ONLINE
 				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
-				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset, hudStructPtr[8].y, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[8].x + offset + 17, hudStructPtr[8].y - 7, playerStruct);
 				DECOMP_UI_DrawSpeedBG();
-				DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x + WIDE_34(12), hudStructPtr[6].y, playerStruct);
 				#else
 				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
 				DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x, hudStructPtr[6].y, playerStruct);
@@ -229,8 +229,12 @@ void DECOMP_UI_RenderFrame_Racing()
 				// If you're not in Battle Mode
 				if ((gameMode1 & BATTLE_MODE) == 0)
 				{
+					#ifdef USE_ONLINE
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
+					#else
 					// Draw powerslide meter
 					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset, hudStructPtr[8].y, playerStruct);
+					#endif
 				}
 
 				// If you are not in Time Trial or Relic Race

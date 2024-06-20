@@ -1,4 +1,5 @@
 #include <common.h>
+#include "../AltMods/OnlineCTR/global.h"
 
 // Draw player icons on left side of screen
 // in Arcade mode and Boss mode, and draws
@@ -8,25 +9,25 @@ int DriverIndex_GetDamageColor(int iVar14)
 {
 	struct GameTracker* gGT = sdata->gGT;
 	struct Driver* d = gGT->drivers[iVar14];
-	
+
     int iVar12 = d->damageColorTimer;
-	
+
 	// make icon white
 	int local_30 = 0x808080;
 
 	// -30 to -1
-    if (iVar12 < 0) 
+    if (iVar12 < 0)
 	{
 		local_30 = 0;
 		int strength = (iVar12 + 30) * 4;
 		local_30 += strength;
 		local_30 += (0xFF-strength) * 0x100;
 		local_30 += strength * 0x10000;
-	
+
 		#ifdef USE_60FPS
 		if(gGT->timer & 1)
 		#endif
-	
+
 		// one frame closer to zero
 		d->damageColorTimer += 1;
     }
@@ -39,11 +40,11 @@ int DriverIndex_GetDamageColor(int iVar14)
 		local_30 += (0xFF-strength);
 		local_30 += strength * 0x100;
 		local_30 += strength * 0x10000;
-	
+
 		#ifdef USE_60FPS
 		if(gGT->timer & 1)
 		#endif
-	
+
 		// one frame closer to zero
 		d->damageColorTimer -= 1;
     }
@@ -51,7 +52,7 @@ int DriverIndex_GetDamageColor(int iVar14)
 	return local_30;
 }
 
-void DECOMP_UI_DrawRankedDrivers(void) 
+void DECOMP_UI_DrawRankedDrivers(void)
 {
     u_short uVar1;
     char bVar2;
@@ -74,7 +75,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
     u_short *puVar16;
     short *psVar17;
     u_short uVar18;
-    short posXY[2];
+    SVec2 pos;
     short local_44;
     short local_40;
     short local_3e;
@@ -85,19 +86,19 @@ void DECOMP_UI_DrawRankedDrivers(void)
     u_int local_2c;
 
     gGT = sdata->gGT;
-	
+
 	int numPlyr = gGT->numPlyrCurrGame;
 
-    if (numPlyr == 1) 
+    if (numPlyr == 1)
 	{
       // Number of racers that have finished race
       numRacersFinished = 0;
 
       // incremented when looping through player structures
 
-      for (iVar14 = 0; iVar14 < 8; iVar14++) 
+      for (iVar14 = 0; iVar14 < 8; iVar14++)
 	  {
-        if (data.rankIconsTransitionTimer[iVar14] == 0) 
+        if (data.rankIconsTransitionTimer[iVar14] == 0)
 		{
           // player structure + 0x482 is your rank in the race
           // 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
@@ -108,7 +109,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
         if ((gGT->drivers[iVar14] != 0) &&
 
           //if racer finished the race
-          ((gGT->drivers[iVar14]->actionsFlagSet&0x2000000) != 0)) 
+          ((gGT->drivers[iVar14]->actionsFlagSet&0x2000000) != 0))
 		{
           // count how many racers have finished
           numRacersFinished++;
@@ -119,16 +120,16 @@ void DECOMP_UI_DrawRankedDrivers(void)
       iVar14 = 4;
 
       // If you're in a Boss Race
-      if (gGT->gameMode1 < 0) 
+      if (gGT->gameMode1 < 0)
 	  {
         // Show 2 racers
         iVar14 = 2;
       }
-	  
+
 	  #ifdef USE_ONLINE
 	  int OnlineGetNumDrivers();
 	  int oNumDrivers = OnlineGetNumDrivers();
-	  if(oNumDrivers < 4)
+	  if(oNumDrivers < 9)
 		  iVar14 = oNumDrivers;
 	  #endif
 
@@ -137,90 +138,106 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
 	  // height to draw rank (this bitshifts later)
 	  iVar12 = 0x380000;
-	  
-	  for (iVar15 = 0; iVar15 < iVar14; iVar15++) 
+
+	  for (iVar15 = 0; iVar15 < iVar14; iVar15++)
 	  {
 		// make the text white by default
 		txtColor = 4;
-	  
+
 		// if racer has finished the race
 		if (iVar15 < numRacersFinished) {
 			// make the text red
 			txtColor = 3;
 		}
-		
+
 		// draw rank number: '1', '2', '3', '4'
 		sdata->s_spacebar[0] = (char) iVar15 + '1';
+		#ifdef USE_ONLINE
+		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 29, iVar15 * 20 + 46, 2, txtColor);
+		#else
 		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 0x34, iVar12 >> 0x10, 2, txtColor);
-		
+		#endif
+
 		// add to Y, which mekes it lower on screen
 		iVar12 = iVar12 + 0x1b0000;
 	  }
 
-      for (iVar14 = 0; iVar14 < 8; iVar14++) 
+      for (iVar14 = 0; iVar14 < 8; iVar14++)
 	  {
         short* curr = &data.rankIconsCurr[iVar14];
-	  
+
 	    short* des = &data.rankIconsDesired[iVar14];
-		  
+
         if (
           // if player structure pointer is not nullptr
           (gGT->drivers[iVar14] != 0) &&
 
           // if you haven't gotten to the last driver
           ((*des + 1) < 9)
-        ) 
+        )
 		{
 		  local_30 = DriverIndex_GetDamageColor(iVar14);
 
           psVar13 = &data.rankIconsTransitionTimer[iVar14];
 
 		  // placeholder
-		  posXY[0] = -100;
+		  pos.x = -100;
 
 		  // icon not transitioning
-          if (*psVar13 == 0) 
+          if (*psVar13 == 0)
 		  {
             // get absolute pos-rank of driver
             iVar12 = *des;
 
             // if current == desired
-            if (iVar12 == *curr) 
+            if (iVar12 == *curr)
 			{
               // if top positions
-              if (iVar12 < 4) 
+
+			  #ifdef USE_ONLINE
+			  pos.x = 10;
+			  pos.y = 47 + iVar12 * 20;
+			  #else
+			  if (iVar12 < 4)
 			  {
-				posXY[0] = 0x14;
-				posXY[1] = iVar12 * 0x1b + 0x39;
+				pos.x = 0x14;
+				pos.y = iVar12 * 0x1b + 0x39;
               }
-			  else continue;
+			  else { continue; }
+			  #endif
             }
           }
 
 		  // === Icon Transitioning ===
-		  if(posXY[0] == -100)
+		  if(pos.x == -100)
 		  {
 			DECOMP_UI_Lerp2D_Angular(
-				&posXY[0],
+				(short *)&pos,
 				*curr,
 				*des,
 				*psVar13
 			);
-			
+
             psVar13[0]++;
-            
-		    if (*psVar13 >= FPS_DOUBLE(5)) 
+
+		    if (*psVar13 >= FPS_DOUBLE(5))
 		    {
               *psVar13 = 0;
               *curr = *des;
             }
 		  }
 
-          DECOMP_UI_DrawDriverIcon(
+		  #ifdef USE_ONLINE
+		  short iconScale = FP(0.75);
+		  #else
+          short iconScale = FP(1);
+		  #endif
+
+		  DECOMP_UI_DrawDriverIcon(
 
             gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
 
-            posXY[0], posXY[1],
+            pos.x, pos.y,
 
             // pointer to PrimMem struct
             &gGT->backBuffer->primMem,
@@ -228,13 +245,22 @@ void DECOMP_UI_DrawRankedDrivers(void)
             // pointer to OT memory
             gGT->pushBuffer_UI.ptrOT,
 
-            1, 0x1000, local_30);
+            1, iconScale, local_30);
+
+		  #ifdef USE_ONLINE
+		  DECOMP_DecalFont_DrawLineStrlen(
+			&octr->nameBuffer[iVar14 * 0xC],
+			3,
+			pos.x + 43,
+			pos.y + 7,
+			FONT_SMALL, iVar14 == 0 ? JUSTIFY_CENTER | BLUE : JUSTIFY_CENTER | ORANGE);
+		  #endif
         }
       }
     }
-      
+
 	// if this is multiplayer
-    else 
+    else
 	{
       puVar16 = &data.rankIconsTransitionTimer[0];
       iVar15 = 0;
@@ -242,7 +268,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  int totalNumDrivers;
       totalNumDrivers = numPlyr + gGT->numBotsNextGame;
 
-      for (iVar14 = 0; iVar14 < totalNumDrivers; iVar14++) 
+      for (iVar14 = 0; iVar14 < totalNumDrivers; iVar14++)
 	  {
         // puVar5 increases by 4 for each iteration
 
@@ -253,11 +279,11 @@ void DECOMP_UI_DrawRankedDrivers(void)
         if (
 				//if racer is in first lap and
 				(gGT->drivers[iVar14]->lapIndex == 0) &&
-				
+
 				//racer crossed the startline backwards
 				//this is when race starts and you're behind the finish line
 				((gGT->drivers[iVar14]->actionsFlagSet&0x1000000) != 0)
-        ) 
+        )
 		{
           LAB_80052b00:
             // icon posX is zero,
@@ -316,7 +342,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
 		int posX = uVar11 + 5;
 		int posY = 0x66;
-		
+
 		#ifdef USE_NEW2P
 		if(numPlyr == 2)
 		{
@@ -348,79 +374,79 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	warpballThread = gGT->threadBuckets[TRACKING].thread;
 	  	warpballThread != 0;
 	  	warpballThread = warpballThread->siblingThread
-	  ) 
+	  )
 	  {
 	  	// Get Instance from Thread
 	  	warpballInst = warpballThread->inst;
-	  
+
 	  	// if not warpball, skip
-	  	if (warpballInst->model->id != 0x36) 
+	  	if (warpballInst->model->id != 0x36)
 	  		continue;
-	  	
+
 	  	// pointer to path data
 	  	struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
-	  	
+
 	  	struct TrackerWeapon* tw = warpballInst->thread->object;
-	  	
+
 	  	iVar4 = tw->nodeCurrIndex;
 	  	iVar12 = 0;
-	  
+
 	  	if (gGT->level1->cnt_restart_points < 1) continue;
 	  	if (iVar4 < 0) continue;
-	  
+
 	  	int pos[4];
 	  	pos[0] = warpballInst->matrix.t[0];
 	  	pos[1] = warpballInst->matrix.t[1];
 	  	pos[2] = warpballInst->matrix.t[2];
-	  	
+
 	  	struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
 	  	struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
-	  	
+
 #ifndef REBUILD_PC
 	  	short vec1[4];
 	  	vec1[0] = cn1->pos[0] - cn2->pos[0];
 	  	vec1[1] = cn1->pos[1] - cn2->pos[1];
 	  	vec1[2] = cn1->pos[2] - cn2->pos[2];
 	  	MATH_VectorNormalize(&vec1[0]);
-	  
+
 	  	short vec2[4];
 	  	vec2[0] = pos[0] - cn1->pos[0];
 	  	vec2[1] = pos[1] - cn1->pos[1];
 	  	vec2[2] = pos[2] - cn1->pos[2];
-	  	
+
 	  	// replace R11R12 and R13R21
 	  	gte_ldsvrtrow0(&vec1[0]);
-	  	
+
 	  	// required short
 	  	gte_ldv0(&vec2[0]);
-	  	
+
 	  	gte_mvmva(0,0,0,3,0);
-	  
+
 	  	// replace stMAC1
 	  	gte_stlvnl0(&iVar15);
 #endif
-	  
+
 	  	iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
 	  	iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
 	  	iVar12 = iVar3 % iVar15;
-	  	
+
 	  	#if 0
 	  	if (uVar1 == 0) trap(0x1c00);
 	  	if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
 	  	#endif
-	  
+
 	  	iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
 	  	iVar12 = iVar15 - iVar12;
 	  	iVar15 = iVar15 / 0x1d1;
-	  	
+
 	  	#if 0
 	  	if (iVar15 == 0) trap(0x1c00);
 	  	if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
 	  	#endif
-		
+
 		int posX = (iVar12 / iVar15) + 5;
 		int posY = 0x66;
-		
+
 		#ifdef USE_NEW2P
 		if(numPlyr == 2)
 		{
@@ -428,18 +454,18 @@ void DECOMP_UI_DrawRankedDrivers(void)
 			posY = (((iVar12 / iVar15) + 5) * 0xd8) / 0x200;
 		}
 		#endif
-	  
+
 	  	DECOMP_DecalHUD_DrawWeapon(
 	  	// warpball icon
 	  	gGT->ptrIcons[0xe],
 	  	posX, posY,
-	  
+
 	  	// pointer to PrimMem struct
 	  	&gGT->backBuffer->primMem,
-	  
+
 	  	// pointer to OT memory
 	  	gGT->pushBuffer_UI.ptrOT,
-	  
+
 	  	TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
 	  }
 	}

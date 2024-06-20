@@ -3,6 +3,7 @@
 // at bottom of file
 #ifdef USE_ONLINE
 extern unsigned int DrawSpeedBG_Colors[11];
+extern short speedometerBG_vertData[108];
 #else
 extern unsigned short DrawSpeedBG_Colors[6*2];
 #endif
@@ -21,10 +22,11 @@ void DECOMP_UI_DrawSpeedBG(void)
 
   gGT = sdata->gGT;
 
-  vertData = &data.speedometerBG_vertData;
   #ifdef USE_ONLINE
+  vertData = &speedometerBG_vertData;
   upperHalf = &vertData[0];
   #else
+  vertData = &data.speedometerBG_vertData;
   upperHalf = &vertData[sizeof(data.speedometerBG_vertData) / (sizeof(short) * 2)];
   #endif
   backDB = gGT->backBuffer;
@@ -35,7 +37,7 @@ void DECOMP_UI_DrawSpeedBG(void)
   numColors = 6;
   #endif
   #ifdef USE_ONLINE
-  offset = 0x1C0;
+  offset = 0x1C5;
   #else
   offset = 0x1e0;
   #endif
@@ -128,7 +130,11 @@ void DECOMP_UI_DrawSpeedBG(void)
 	vertData += 4;
   }
 
+  #ifdef USE_ONLINE
+  vertData = &speedometerBG_vertData;
+  #else
   vertData = &data.speedometerBG_vertData;
+  #endif
 
   for (i = 0; i < numColors; i++)
   {
@@ -193,5 +199,22 @@ unsigned int DrawSpeedBG_Colors[11] =
   SPEEDO_VIOLET, SPEEDO_VIOLET,
   SPEEDO_BLUE, SPEEDO_CYAN,
   SPEEDO_CYAN
+};
+short speedometerBG_vertData[108] =
+{
+  WIDE_34(-65), 16, WIDE_34(-54), 13, WIDE_34(-70), 0, WIDE_34(-58), 0,
+  WIDE_34(-65), -16, WIDE_34(-54), -13, WIDE_34(-50), -29, WIDE_34(-42), -24,
+  WIDE_34(-25), -39, WIDE_34(-21), -32, WIDE_34(0), -42, WIDE_34(0), -35,
+  WIDE_34(25), -39, WIDE_34(21), -32, WIDE_34(50), -29, WIDE_34(42), -24,
+  WIDE_34(65), -16, WIDE_34(54), -13, WIDE_34(70), 0,    WIDE_34(58), 0,
+  WIDE_34(65), 16, WIDE_34(54), 13, WIDE_34(25), 39, WIDE_34(21), 32,
+  WIDE_34(50), 29, WIDE_34(42), 24, WIDE_34(-65), 16, WIDE_34(-48), 11,
+  WIDE_34(-70), 0, WIDE_34(-51), 0, WIDE_34(-65), -16, WIDE_34(-48), -11,
+  WIDE_34(-50), -29, WIDE_34(-37), -21, WIDE_34(-25), -39, WIDE_34(-18), -29,
+  WIDE_34(0), -42, WIDE_34(0), -31, WIDE_34(25), -39, WIDE_34(18), -29,
+  WIDE_34(50), -29, WIDE_34(37), -21,    WIDE_34(65), -16, WIDE_34(48), -11,
+  WIDE_34(70), 0, WIDE_34(51), 0, WIDE_34(65), 16, WIDE_34(48), 11,
+  WIDE_34(50), 29, WIDE_34(37), 21, WIDE_34(25), 39, WIDE_34(37), 29,
+  WIDE_34(25), -39, WIDE_34(18), -29,
 };
 #endif

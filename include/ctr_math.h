@@ -1,5 +1,33 @@
 #pragma once
 
+// vectors //
+
+typedef struct SVec2
+{
+	short x;
+	short y;
+} SVec2;
+
+typedef struct SVec3
+{
+	short x;
+	short y;
+	short z;
+} SVec3;
+
+typedef struct Vec2
+{
+	int x;
+	int y;
+} Vec2;
+
+typedef struct Vec3
+{
+	int x;
+	int y;
+	int z;
+} Vec3;
+
 // trigonometry //
 
 struct TrigTable
