@@ -87,12 +87,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		if (r->version != VERSION)
 		{
 			octr.get()->CurrState = LAUNCH_ERROR;
+			octr.commit();
 			return;
 		}
 
 		if (octr.get()->ver_psx != VERSION)
 		{
 			octr.get()->CurrState = LAUNCH_ERROR;
+			octr.commit();
 			return;
 		}
 
@@ -209,6 +211,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		// choose to get host menu or guest menu
 		octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
+		octr.commit();
 		break;
 	}
 
@@ -596,6 +599,7 @@ void StatePC_Launch_EnterPID()
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
 	octr.get()->CurrState = LAUNCH_PICK_SERVER;
+	octr.commit();
 }
 
 void printUntilPeriod(const char* str)
@@ -982,6 +986,7 @@ void StatePC_Lobby_HostTrackPick()
 	sendToHostReliable(&mt, sizeof(struct CG_MessageTrack));
 
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
+	octr.commit();
 }
 
 int prev_characterID = -1;
@@ -1434,6 +1439,24 @@ void usleep(__int64 usec)
 #pragma optimize("", off)
 int gGT_timer = 0; //imo this should be a static local var in FrameStall()
 
+//void FrameStall()
+//{
+//	// wait for next frame
+//	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1cf8) & 0xffffff);
+//	unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
+//	ps1ptr<int> val = pBuf.at<int>(addr);
+//	while (gGT_timer == (*val.get()))
+//	{
+//		usleep(1);
+//		/*ptr.refresh();
+//		val = pBuf.at<int>((unsigned int)(*ptr.get()));*/
+//		val.refresh();
+//	}
+//	val.refresh();
+//
+//	gGT_timer = (*val.get());
+//}
+
 void FrameStall()
 {
 	// wait for next frame
@@ -1446,7 +1469,6 @@ void FrameStall()
 		val.refresh();
 	}
 	val.refresh();
-
 	gGT_timer = (*val.get());
 }
 #pragma optimize("", on)
