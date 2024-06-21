@@ -177,7 +177,7 @@ struct ChannelStats* DECOMP_Channel_AllocSlot(
 	int flags,
 	struct ChannelAttr* attr);
 struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
-	int type, int soundID, int updateFlags, 
+	int type, int soundID, int updateFlags,
 	struct ChannelAttr* attr);
 void DECOMP_Channel_SearchFX_Destroy(
 	int type, int soundID, int flags);
@@ -243,7 +243,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst);
 // JitPool
 int DECOMP_JitPool_Add(struct JitPool* AP);
 void DECOMP_JitPool_Clear(struct JitPool* AP);
-void DECOMP_JitPool_Init(struct JitPool* AP, 
+void DECOMP_JitPool_Init(struct JitPool* AP,
 	int maxItems, int itemSize, char* name);
 void DECOMP_JitPool_Remove(struct JitPool* AP, struct Item* item);
 
@@ -366,7 +366,7 @@ void DECOMP_RECTMENU_Show(struct RectMenu* m);
 int DECOMP_MixRNG_Scramble();
 
 struct Thread* DECOMP_PROC_BirthWithObject(
-	int flags, void* funcThTick, 
+	int flags, void* funcThTick,
 	char* name, struct Thread* relativeTh);
 void DECOMP_PROC_CheckAllForDead();
 void DECOMP_PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
@@ -436,6 +436,8 @@ void DECOMP_UI_DrawRankedDrivers(void);
 
 void DECOMP_UI_RenderFrame_AdvHub(void);
 void DECOMP_UI_RenderFrame_Racing();
+
+void DECOMP_UI_SaveLapTime(int numLaps, int lapTime, short driverID);
 
 void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY);
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
@@ -560,7 +562,7 @@ void* DECOMP_MM_TrackSelect_GetMenuPtr();
 void DECOMP_MM_CupSelect_Init(void);
 void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu);
 void DECOMP_MM_Battle_CloseSubMenu(struct RectMenu* menu);
-void DECOMP_MM_Battle_DrawIcon_Weapon(struct Icon *icon, 
+void DECOMP_MM_Battle_DrawIcon_Weapon(struct Icon *icon,
 		u_int posX, int posY, struct PrimMem *primMem, u_int *ot,
         char transparency, short param_7, u_short param_8, u_int *color);
 void DECOMP_MM_Battle_Init(void);
@@ -600,13 +602,13 @@ void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t);
 void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh);
 
 struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
-	struct Instance* weaponInst, char boolCanSkipParent, 
+	struct Instance* weaponInst, char boolCanSkipParent,
 	int hitRadius, struct Instance* mineDriverInst
 );
 
 struct Instance* DECOMP_RB_Hazard_CollideWithBucket(
-	struct Instance* weaponInst, 
-	struct Thread* weaponTh, struct Thread* bucket, 
+	struct Instance* weaponInst,
+	struct Thread* weaponTh, struct Thread* bucket,
 	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
 );
 
@@ -667,7 +669,7 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	struct WarpPad* warppadObj,
 	int index,
 	int x, int y, int z);
-	
+
 void DECOMP_AH_WarpPad_ThTick(struct Thread* t);
 void DECOMP_AH_WarpPad_ThDestroy(struct Thread* t);
 void DECOMP_AH_WarpPad_LInB(struct Instance* inst);
@@ -681,24 +683,24 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst);
 void DECOMP_AH_Door_ThDestroy(struct Thread* t);
 void DECOMP_AH_Door_ThTick(struct Thread* t);
 void DECOMP_AH_Door_LInB(struct Instance *inst);
-	
+
 void DECOMP_AH_Map_LoadSave_Prim(
-	short* vertPos, char* vertCol, 
+	short* vertPos, char* vertCol,
 	void* ot, struct PrimMem* primMem);
-	
+
 void DECOMP_AH_Map_LoadSave_Full(
-	int posX, int posY, 
+	int posX, int posY,
 	short* vertPos, char* vertCol,
 	int unk800, int angle);
-	
+
 void DECOMP_AH_Map_HubArrow(
-	int posX, int posY, 
+	int posX, int posY,
 	short* vertPos, char* vertCol,
 	int unk800, int angle);
-	
+
 void DECOMP_AH_Map_HubArrowOutter(
 	void* hubPtrs, int arrowIndex,
-	int posX, int posY, 
+	int posX, int posY,
 	int inputAngle, int type);
 
 void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2);
@@ -716,7 +718,7 @@ void DECOMP_AH_MaskHint_SetAnim(int scale);
 
 void DECOMP_AH_MaskHint_SpawnParticles(
 	short numParticles,struct ParticleEmitter* emSet,int maskAnim);
-	
+
 void DECOMP_AH_MaskHint_LerpVol(int param_1);
 void DECOMP_AH_MaskHint_Update();
 

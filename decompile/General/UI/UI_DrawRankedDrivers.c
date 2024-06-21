@@ -129,6 +129,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  #ifdef USE_ONLINE
 	  int OnlineGetNumDrivers();
 	  int oNumDrivers = OnlineGetNumDrivers();
+	  int onlinePos = 0;
 	  if(oNumDrivers < 9)
 		  iVar14 = oNumDrivers;
 	  #endif
@@ -141,6 +142,10 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
 	  for (iVar15 = 0; iVar15 < iVar14; iVar15++)
 	  {
+		#ifdef USE_ONLINE
+		if (!octr->nameBuffer[iVar15 * 0xC]) { continue; }
+		#endif
+
 		// make the text white by default
 		txtColor = 4;
 
@@ -151,10 +156,12 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		}
 
 		// draw rank number: '1', '2', '3', '4'
-		sdata->s_spacebar[0] = (char) iVar15 + '1';
 		#ifdef USE_ONLINE
-		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 29, iVar15 * 20 + 46, 2, txtColor);
+		sdata->s_spacebar[0] = (char) onlinePos + '1';
+		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 29, onlinePos * 20 + 52, 2, txtColor);
+		++onlinePos;
 		#else
+		sdata->s_spacebar[0] = (char) iVar15 + '1';
 		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 0x34, iVar12 >> 0x10, 2, txtColor);
 		#endif
 
@@ -164,8 +171,11 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
       for (iVar14 = 0; iVar14 < 8; iVar14++)
 	  {
-        short* curr = &data.rankIconsCurr[iVar14];
+		#ifdef USE_ONLINE
+		if (!octr->nameBuffer[iVar14 * 0xC]) { continue; }
+		#endif
 
+        short* curr = &data.rankIconsCurr[iVar14];
 	    short* des = &data.rankIconsDesired[iVar14];
 
         if (
@@ -196,7 +206,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
 			  #ifdef USE_ONLINE
 			  pos.x = 10;
-			  pos.y = 47 + iVar12 * 20;
+			  pos.y = 53 + iVar12 * 20;
 			  #else
 			  if (iVar12 < 4)
 			  {

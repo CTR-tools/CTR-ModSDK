@@ -47,7 +47,7 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 	// absolutePositionInt - drawnPositionInt is either -1 or +1
 	// 0x1b is vertical size of the icon
 	#ifdef USE_ONLINE
-	ptrPos[1] = 47 + (drawnPosition * 20) + (((((absolutePositionInt - drawnPositionInt) * 20) * (int)frameCounter) * 4) / (FPS_DOUBLE(5)*4));
+	ptrPos[1] = 53 + (drawnPosition * 20) + (((((absolutePositionInt - drawnPositionInt) * 20) * (int)frameCounter) * 4) / (FPS_DOUBLE(5)*4));
 	#else
 	ptrPos[1] =
 

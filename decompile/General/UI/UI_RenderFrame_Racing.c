@@ -204,10 +204,12 @@ void DECOMP_UI_RenderFrame_Racing()
 			if
 			(
 				// numPlyrCurrGame is less than 2 (1P mode)
-				(numPlyr < 2) &&
-
+				(numPlyr < 2)
+				#ifndef USE_ONLINE
+				&&
 				// if want to draw speedometer
 				((sdata->HudAndDebugFlags & 8) != 0)
+				#endif
 			)
 			{
 				#ifdef USE_ONLINE
@@ -575,7 +577,9 @@ void DECOMP_UI_RenderFrame_Racing()
 
 				sVar1 = hudStructPtr[5].x;
 				sVar2 = hudStructPtr[5].y;
+				#ifndef USE_ONLINE
 				DECOMP_UI_DrawPosSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
+				#endif
 
 				if (numPlyr > 2)
 				{
@@ -888,11 +892,12 @@ void DECOMP_UI_RenderFrame_Racing()
 		if
 		(
 			(
-				(numPlyr == 1) &&
-
+				(numPlyr == 1)
+				#ifndef USE_ONLINE
+				&&
 				// if want to draw map, not speedometer
 				(sdata->HudAndDebugFlags & 8) == 0
-
+				#endif
 			) ||
 
 			(numPlyr == 3)
@@ -910,7 +915,11 @@ void DECOMP_UI_RenderFrame_Racing()
 			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
 
 			mapPosX = 500;
+			#ifdef USE_ONLINE
+			mapPosY = 145;
+			#else
 			mapPosY = 195;
+			#endif
 
 			if (numPlyr == 3)
 			{

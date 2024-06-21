@@ -30,7 +30,11 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   #else
   maxScale = scale + driver->const_SacredFireSpeed >> 8;
   #endif
+  #ifdef USE_ONLINE
+	speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0) << 0x10;
+  #else
   speed = driver->unk36E << 0x10; // is this actually speed?
+  #endif
   minScale = 0;
   iVar9 = iVar9 >> 0x18;
   if (scale < speed >> 0x10) {

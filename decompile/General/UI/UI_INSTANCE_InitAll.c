@@ -8,18 +8,18 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   u_int gameMode1;
   u_int relicType;
   int iVar5;
-  
+
   #if 0
   undefined2 *puVar6;
   undefined2 *puVar7;
   #endif
-  
+
   int i;
 
   gGT = sdata->gGT;
   sdata->menuReadyToPass &= 0xfffffffe;
   gGT->renderFlags |= 0x8000;
-  
+
   gameMode1 = gGT->gameMode1;
 
   // For most of the function
@@ -34,7 +34,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	  if(gGT->numPlyrCurrGame != 1)
 		  return;
 	  #endif
-		
+
       DECOMP_UI_INSTANCE_BirthWithThread(0x61,	DECOMP_UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
       DECOMP_UI_INSTANCE_BirthWithThread(99,	DECOMP_UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
       DECOMP_UI_INSTANCE_BirthWithThread(0x62,	DECOMP_UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
@@ -42,11 +42,11 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	  #ifndef REBUILD_PS1
       GAMEPROG_AdvPercent(&sdata->advProgress);
       #endif
-	  
+
 	  return;
     }
 
-    if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0) 
+    if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0)
 	{
 
 // Mistake? Why would this happen if there's no icons in these modes?
@@ -91,9 +91,9 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 		  // 1 if sapphire is unlocked (show gold)
 		  relicType = CHECK_ADV_BIT(sdata->advProgress.rewards, (gGT->levelID + 0x16));
 	  }
-	  
+
 	  // if unlocked gold or unlocked platinum
-      else 
+      else
 	  {
 		// put platinum time on screen
         relicType = 2;
@@ -108,17 +108,17 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       sdata->relicTime_1sec = (relicTime / 0x3c0) % 10;
       sdata->relicTime_10ms = ((relicTime * 100) / 0x3c0) % 10;
       sdata->relicTime_1ms = ((relicTime * 1000) / 0x3c0) % 10;
-	  
+
       return;
     }
-	
+
 	// used for multiplayer wumpa
     sdata->ptrPushBufferUI = NULL;
 	if (1 < gGT->numPlyrCurrGame)
 	{
       sdata->ptrPushBufferUI = &sdata->pushBuffer_DecalMP;
     }
-	
+
 // skipping pixelLOD
 #if 0
 	// second half of pixel-LOD pushBuffer, copy from PushBuffer_UI
@@ -130,7 +130,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     sdata->dataLibFiller[60] = gGT->pushBuffer_UI.matrix_ViewProj.t[0];
     sdata->dataLibFiller[64] = gGT->pushBuffer_UI.matrix_ViewProj.t[1];
     sdata->dataLibFiller[68] = gGT->pushBuffer_UI.matrix_ViewProj.t[2];
-	
+
 	// first half of pixel-LOD pushBuffer, copy from PushBuffer_UI
     sdata->dataLibFiller[0] = gGT->pushBuffer_UI.pos[0];
     sdata->dataLibFiller[2] = gGT->pushBuffer_UI.pos[1];
@@ -146,7 +146,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
 	// Replace PushBufferUI with regular PushBuffer,
 	// workaround for decompile, and it just looks better
-    sdata->ptrFruitDisp = 
+    sdata->ptrFruitDisp =
 		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
 
     if (
@@ -155,15 +155,17 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 			// If you're not in Battle Mode
 			((gameMode1 & BATTLE_MODE) == 0)
 		)
-	{
+	  {
+      #ifndef USE_ONLINE
       DECOMP_UI_INSTANCE_BirthWithThread(0x38,DECOMP_UI_ThTick_big1,2,0,0,/*sdata->s_big1*/0);
+      #endif
     }
 
 	// If you're not in Adventure Mode
     if ((gameMode1 & ADVENTURE_MODE) == 0) {
       return;
     }
-	
+
 	#ifndef USE_ONLINE
     sdata->ptrHudC = DECOMP_UI_INSTANCE_BirthWithThread(0x93,DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
     sdata->ptrHudT = DECOMP_UI_INSTANCE_BirthWithThread(0x94,DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
@@ -190,7 +192,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
   // Make a token
   sdata->ptrToken = DECOMP_UI_INSTANCE_BirthWithThread(0x7d,DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
-	
+
   // make copy of Token pointer
   token = sdata->ptrToken;
 
@@ -203,4 +205,3 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   token->flags |= 0x80;
   return;
 }
- 

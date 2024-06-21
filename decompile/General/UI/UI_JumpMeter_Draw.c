@@ -64,12 +64,12 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	{
 		#ifdef USE_ONLINE
 		jumpMeter = driver->jumpMeter;
-		colorAndCode = jumpMeter > 0 ? 0x28faa7a7 : 0x28ffffff;
+		colorAndCode = 0x28ffffff;
 		if (0x27f < jumpMeter)
 		{
 			if (jumpMeter < 0x3c0)
 			{
-				colorAndCode = 0x28a7faa7;
+				colorAndCode = 0x28a7faa7; // green
 			}
 			else
 			{
