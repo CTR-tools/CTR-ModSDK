@@ -1,8 +1,12 @@
 #pragma once
+#ifndef DEF_MEM //include guard
+#define DEF_MEM
+
 #include <WinSock2.h>
 #include "DSPINE.h"
 #include <memory>
 #include <functional>
+#include <stdio.h>
 
 
 extern void defMemInit();
@@ -10,6 +14,8 @@ extern SOCKET getSocket();
 extern void closeSocket(SOCKET* socket);
 extern void readMemorySegment(unsigned int addr, size_t len, char* buf);
 extern void writeMemorySegment(unsigned int addr, size_t len, char* buf);
+
+static int sssends = 0, nnnosends = 0;
 
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
@@ -75,10 +81,28 @@ public:
 	/// </summary>
 	void commit()
 	{
-		if (memcmp(buf, originalBuf, sizeof(T)) == 0)
-			printf("Commit() called but nothing was changed!");
-		else
-			writeMemorySegment(address, sizeof(T), buf);
+		for (size_t i = 0; i < sizeof(T); i += 8)
+		{
+			if (memcmp(buf + i, originalBuf + i, 8) != 0)
+			{
+				//TODO: instead of writing the dirty memory,
+				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
+				//*then* writeMemorySegment() that entire chunk.
+				writeMemorySegment(address, 8, buf + i);
+				if (address == (0x8000C000 & 0xffffff))
+					sssends++;
+			}
+			else
+				nnnosends++;
+		}
+		size_t rem = (sizeof(T) % 8 == 0) ? 0 : (8 - (sizeof(T) % 8));
+		if (rem != 0 && memcmp(buf - (sizeof(T) - 8), originalBuf - (sizeof(T) - 8), rem))
+		{
+			writeMemorySegment(address, rem, buf - (sizeof(T) - 8));
+			sssends++;
+		}
+		memcpy(originalBuf, buf, sizeof(T));
+		printf("sends: %d, nosends: %d", sssends, nnnosends);
 	}
 	/// <summary>
 	/// Re-fetches the memory this ps1ptr represents from ps1 memory.
@@ -86,6 +110,7 @@ public:
 	void refresh()
 	{
 		readMemorySegment(address, sizeof(T), buf); //change the underlying data of the shared_ptr
+		memcpy(originalBuf, buf, sizeof(T));
 	}
 	ptrtype get()
 	{
@@ -118,3 +143,5 @@ public:
 
 	void writeRaw(unsigned int addr, short val);
 };
+
+#endif //DEF_MEM

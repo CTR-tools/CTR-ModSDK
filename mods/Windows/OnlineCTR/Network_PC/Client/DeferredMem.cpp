@@ -59,6 +59,13 @@ SOCKET getSocket() //every call to getSocket should be bookmatched by a call to 
 	}
 	else
 		printf("DuckStation PINE socket acquired.\n");
+	//u_long mode = 1;
+	//ires = ioctlsocket(sock, FIONBIO, &mode); //make the socket non-blocking
+	//if (ires == SOCKET_ERROR)
+	//{
+	//	printf("Unable to put the socket into non-blocking mode.\n");
+	//	return NULL;
+	//}
 	return sock;
 }
 
@@ -91,6 +98,7 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 	size_t roundedLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{ //8 byte transfer(s)
+		//send section
 		unsigned int offsetaddr = addr + i;
 
 		sendBuffer[5] = offsetaddr & 0xFF;
@@ -98,7 +106,11 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
 
-		send(dspineSocket, sendBuffer, 10, 0); //10 = packetSize
+		send(dspineSocket, sendBuffer, 10, 0); //10 = packetSize	
+	}
+	for (size_t i = 0; i < roundedLen; i += 8)
+	{
+		//recieve section
 		int recvLen = recv(dspineSocket, recieveBuffer, 13, 0);
 		if (recvLen == 13 && recieveBuffer[0] == 13)
 			; //very good
@@ -126,6 +138,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	size_t whole = len - (len % 8);
 	for (size_t i = 0; i < whole; i += 8)
 	{ //8 byte transfer(s)
+		//send section
 		unsigned int offsetaddr = addr + i;
 
 		sendBuffer[5] = offsetaddr & 0xFF;
@@ -142,6 +155,10 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[16] = buf[i + 7];
 
 		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
+	}
+	for (size_t i = 0; i < whole; i += 8)
+	{
+		//recieve section
 		int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
 		if (recvLen == 5 && recieveBuffer[0] == 5)
 			; //very good
@@ -167,22 +184,27 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	//see DSPINE.h for some detail on the inaccuracy of the claims of the API.
 
 	size_t rem = (len % 8 == 0) ? 0 : (8 - (len % 8));
-	unsigned int offsetaddr = addr + whole;
-	readMemorySegment(offsetaddr, 8, &buf[9]);
-	sendBuffer[5] = offsetaddr & 0xFF;
-	sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-	sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-	sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-	send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
-	int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
-	if (recvLen == 5 && recieveBuffer[0] == 5)
-		; //very good
-	else if (recvLen == SOCKET_ERROR)
+	if (rem != 0) //this section needs testing
 	{
-		printf("recv failed: %d\n", WSAGetLastError());
+		unsigned int offsetaddr = addr + whole;
+		readMemorySegment(offsetaddr, 8, &sendBuffer[9]); //this was buf[9], which may have been causing heap overrun
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+		for (size_t i = 0; i < rem; i++)
+			sendBuffer[9 + i] = buf[whole + i];
+		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
+		int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
+		if (recvLen == 5 && recieveBuffer[0] == 5)
+			; //very good
+		else if (recvLen == SOCKET_ERROR)
+		{
+			printf("recv failed: %d\n", WSAGetLastError());
+		}
+		else
+			exit(-69420); //could be caused by many things.
 	}
-	else
-		exit(-69420); //could be caused by many things.
 }
 
 void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8
