@@ -1439,36 +1439,35 @@ void usleep(__int64 usec)
 #pragma optimize("", off)
 int gGT_timer = 0; //imo this should be a static local var in FrameStall()
 
+//ORIGINAL:
+
+//int gGT_timer = 0;
+//
 //void FrameStall()
 //{
 //	// wait for next frame
-//	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1cf8) & 0xffffff);
-//	unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
-//	ps1ptr<int> val = pBuf.at<int>(addr);
-//	while (gGT_timer == (*val.get()))
+//	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
 //	{
 //		usleep(1);
-//		/*ptr.refresh();
-//		val = pBuf.at<int>((unsigned int)(*ptr.get()));*/
-//		val.refresh();
 //	}
-//	val.refresh();
 //
-//	gGT_timer = (*val.get());
+//	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
 //}
 
 void FrameStall()
 {
 	// wait for next frame
-	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1cf8) & 0xffffff);
-	unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
-	ps1ptr<int> val = pBuf.at<int>(addr);
-	while (gGT_timer == (*val.get()))
+	
+	//"frames" seems to be "number of frames drawn"
+	//see this line in ghidra/MAIN.c: (FUN_80034bbc(int param_1))
+	//*(int*)(param_1 + 0x1cf8) = *(int*)(param_1 + 0x1cf8) + 1;
+	ps1ptr<int> frames = pBuf.at<int>((0x80096b20 + 0x1cf8) & 0xffffff);
+	while (gGT_timer == (*frames.get()))
 	{
 		usleep(1);
-		val.refresh();
+		frames.refresh();
 	}
-	val.refresh();
-	gGT_timer = (*val.get());
+	frames.refresh();
+	gGT_timer = (*frames.get());
 }
 #pragma optimize("", on)
