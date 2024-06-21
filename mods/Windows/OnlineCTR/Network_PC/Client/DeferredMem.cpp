@@ -26,7 +26,7 @@ SOCKET getSocket() //every call to getSocket should be bookmatched by a call to 
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
-	ires = getaddrinfo("localhost", "28011", &hints, &result); //DS PINE
+	ires = getaddrinfo("127.0.0.1", "28011", &hints, &result); //DS PINE (switching to 127.0.0.1 may skip local DNS?)
 	if (ires != 0)
 	{
 		printf("getaddrinfo failed with code: %d\n", ires);

@@ -80,7 +80,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	{
 		SG_MessageRooms* r = reinterpret_cast<SG_MessageRooms*>(recvBuf);
 
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		octr.get()->ver_pc = VERSION;
 		octr.get()->ver_server = r->version;
 
@@ -132,7 +134,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	{
 		SG_MessageClientStatus* r = reinterpret_cast<SG_MessageClientStatus*>(recvBuf);
 
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		octr.get()->DriverID = r->clientID;
 		octr.get()->NumDrivers = r->numClientsTotal;
 
@@ -218,7 +222,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		SG_MessageName* r = reinterpret_cast<SG_MessageName*>(recvBuf);
 
 		int clientID = r->clientID;
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		if (clientID == octr.get()->DriverID) break;
 		if (clientID < octr.get()->DriverID) slot = clientID + 1;
 		if (clientID > octr.get()->DriverID) slot = clientID;
@@ -262,7 +268,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		(*numLapsV.get()) = numLaps;
 		numLapsV.commit();
 
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh();
 		octr.get()->levelID = r->trackID;
 		octr.get()->CurrState = LOBBY_CHARACTER_PICK;
 		octr.commit();
@@ -277,7 +285,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		int clientID = r->clientID;
 		int characterID = r->characterID;
 
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		if (clientID == octr.get()->DriverID) break;
 		if (clientID < octr.get()->DriverID) slot = clientID + 1;
 		if (clientID > octr.get()->DriverID) slot = clientID;
@@ -296,7 +306,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	{
 		// variable reuse, wait a few frames,
 		// so screen updates with green names
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		octr.get()->CountPressX = 0;
 		octr.get()->CurrState = LOBBY_START_LOADING;
 		octr.commit();
@@ -305,7 +317,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 	case SG_STARTRACE:
 	{
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		octr.get()->CurrState = GAME_START_RACE;
 		octr.commit();
 		break;
@@ -314,7 +328,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	case SG_RACEDATA:
 	{
 		// wait for drivers to be initialized
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
 			break;
 
@@ -328,7 +344,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
 
 		int clientID = r->clientID;
-		octr.refresh();
 		if (clientID == octr.get()->DriverID) break;
 		if (clientID < octr.get()->DriverID) slot = clientID + 1;
 		if (clientID > octr.get()->DriverID) slot = clientID;
@@ -436,7 +451,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			struct OnlineCTR* octr = &(octrbuf[0]);
 
 		int clientID = r->clientID;
-		octr.refresh();
+		//since this is called via the loop in main, this function call
+		//is immediately preceeded by a memory sync, so this isn't necessary.
+		//octr.refresh(); 
 		if (clientID == octr.get()->DriverID) break;
 		if (clientID < octr.get()->DriverID) slot = clientID + 1;
 		if (clientID > octr.get()->DriverID) slot = clientID;
