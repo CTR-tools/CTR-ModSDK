@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <Psapi.h>
-#include <time.h>
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -1343,19 +1342,8 @@ int main()
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
-	constexpr long reportIter = 60;
-	long i = 0;
-	//long times[60];
-	long time = 0, prevTime;
 	while (1)
 	{
-		//times[i % 60] = clock();
-		prevTime = time;
-		time = clock();
-		if (i % reportIter == 0)
-		{
-			printf("asdf: %f", ((double)(time - prevTime) / CLOCKS_PER_SEC));
-		}
 		// To do: Check for PS1 system clock tick then run the client update
 		//octr->windowsClientSync[0]++;
 		octr.refresh();
@@ -1371,8 +1359,7 @@ int main()
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
-		void FrameStall(); FrameStall(); //wtf is this forward declaration
-		i++;
+		void FrameStall(); FrameStall();
 	}
 
 	printf("\n");
