@@ -15,8 +15,6 @@ extern void closeSocket(SOCKET* socket);
 extern void readMemorySegment(unsigned int addr, size_t len, char* buf);
 extern void writeMemorySegment(unsigned int addr, size_t len, char* buf);
 
-static int sssends = 0, nnnosends = 0;
-
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
 class ps1ptr
@@ -89,20 +87,14 @@ public:
 				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
 				//*then* writeMemorySegment() that entire chunk.
 				writeMemorySegment(address, 8, buf + i);
-				if (address == (0x8000C000 & 0xffffff))
-					sssends++;
 			}
-			else
-				nnnosends++;
 		}
 		size_t rem = (sizeof(T) % 8 == 0) ? 0 : (8 - (sizeof(T) % 8));
 		if (rem != 0 && memcmp(buf - (sizeof(T) - 8), originalBuf - (sizeof(T) - 8), rem))
 		{
 			writeMemorySegment(address, rem, buf - (sizeof(T) - 8));
-			sssends++;
 		}
 		memcpy(originalBuf, buf, sizeof(T));
-		printf("sends: %d, nosends: %d", sssends, nnnosends);
 	}
 	/// <summary>
 	/// Re-fetches the memory this ps1ptr represents from ps1 memory.
