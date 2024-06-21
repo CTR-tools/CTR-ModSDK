@@ -70,8 +70,11 @@ public:
 		memcpy(originalBuf, buf, sizeof(T));
 		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; delete[] originalBuf; }); //when the shared_ptr dies, free the char* off the heap.
 	}
-	operator ptrtype() const
+	operator ptrtype() const 
 	{
+		//this should be an implicit conversion operator between ps1ptr<T> to ptrtype,
+		//but for some reason it doesn't usually work (probably because coercion is too weak
+		//in most cases). Use .get() instead.
 		return bufferedVal;
 	}
 	/// <summary>

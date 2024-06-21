@@ -144,9 +144,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		// default, disable cheats
 		/**(int*)&pBuf[0x80096b28 & 0xffffff] &=
 			~(0x100000 | 0x80000 | 0x400);*/
-		ps1ptr<int*> cheatsPtr = pBuf.at<int*>(0x80096b28 & 0xffffff);
-		unsigned int cheatsAddr = (unsigned int)(*cheatsPtr.get());
-		ps1ptr<int> cheats = pBuf.at<int>(cheatsAddr);
+		ps1ptr<int> cheats = pBuf.at<int>(0x80096b28 & 0xffffff);
 		(*cheats.get()) &= ~(0x100000 | 0x80000 | 0x400);
 		cheats.commit();
 >>>>>>> 283f2cc6 (All the code has been switched to pine but the heap is getting corrupted :()
@@ -235,9 +233,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		if (r->name[0] == 0)
 		{
 			// make this player hold SQUARE
-			ps1ptr<Gamepad*> gamepadPtr = pBuf.at<Gamepad*>((0x80096804 + (slot * 0x50)) & 0xffffff);
-			unsigned int gamepadAddr = (unsigned int)*(gamepadPtr.get());
-			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(gamepadAddr);
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
 			gamepad.get()->buttonsHeldCurrFrame = 0x20;
 			gamepad.get()->buttonsTapped = 0;
 			gamepad.get()->buttonsReleased = 0;
@@ -262,9 +258,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		// set sdata->gGT->numLaps
 		//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-		ps1ptr<char*> numLapsPtr = pBuf.at<char*>((0x80096b20 + 0x1d33) & 0xffffff);
-		unsigned int numLapsAddr = (unsigned int)(*numLapsPtr.get());
-		ps1ptr<char> numLapsV = pBuf.at<char>(numLapsAddr);
+		ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff);
 		(*numLapsV.get()) = numLaps;
 		numLapsV.commit();
 
@@ -289,9 +283,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		if (clientID > octr.get()->DriverID) slot = clientID;
 
 		//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-		ps1ptr<short*> charIdPtr = pBuf.at<short*>((0x80086e84 + 2 * slot) & 0xffffff);
-		unsigned int charIdAddr = (unsigned int)(*charIdPtr.get());
-		ps1ptr<short> characterIDV = pBuf.at<short>(charIdAddr);
+		ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff);
 		(*characterIDV.get()) = characterID;
 		characterIDV.commit();
 
@@ -328,9 +320,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		/*int sdata_Loading_stage =
 			*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
-		ps1ptr<int*> sdata_Loading_stagePtr = pBuf.at<int*>(0x8008d0f8 & 0xffffff);
-		unsigned int sdata_Loading_stageAddr = (unsigned int)(*sdata_Loading_stagePtr.get());
-		ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(sdata_Loading_stageAddr);
+		ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
 
 		if ((*sdata_Loading_stage.get()) != -1)
 			break;
@@ -368,9 +358,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		// released
 		int rel = prev & ~curr;
 
-		ps1ptr<Gamepad*> gamepadPtr = pBuf.at<Gamepad*>((0x80096804 + (slot * 0x50)) & 0xffffff);
-		unsigned int gamepadAddr = (unsigned int)*(gamepadPtr.get());
-		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(gamepadAddr);
+		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
 		gamepad.get()->buttonsHeldCurrFrame = curr;
 		gamepad.get()->buttonsTapped = tap;
 		gamepad.get()->buttonsReleased = rel;
@@ -389,32 +377,24 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		buttonPrev[slot] = curr;
 
 		//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-		ps1ptr<int*> psxPtrPtr = pBuf.at<int*>((0x8009900c + (slot * 4)) & 0xffffff);
-		unsigned int psxAddr = (unsigned int)(*psxPtrPtr.get());
-		ps1ptr<int> psxPtr = pBuf.at<int>(psxAddr);
+		ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff);
 		(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 		// lossless compression, bottom byte is never used,
 		// cause psx renders with 3 bytes, and top byte
 		// is never used due to world scale (just pure luck)
 		//*(int*)&pBuf[psxPtr + 0x2d4] = ((int)r->posX) * 256;
-		ps1ptr<int*> xPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int xAddr = (unsigned int)(*xPtr.get());
-		ps1ptr<int> x = pBuf.at<int>(xAddr);
+		ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
 		(*x.get()) = ((int)r->posX) * 256;
 		x.commit();
 
 		//*(int*)&pBuf[psxPtr + 0x2d8] = ((int)r->posY) * 256;
-		ps1ptr<int*> yPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int yAddr = (unsigned int)(*yPtr.get());
-		ps1ptr<int> y = pBuf.at<int>(yAddr);
+		ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
 		(*y.get()) = ((int)r->posY) * 256;
 		x.commit();
 
 		//*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
-		ps1ptr<int*> zPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int zAddr = (unsigned int)(*zPtr.get());
-		ps1ptr<int> z = pBuf.at<int>(zAddr);
+		ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
 		(*z.get()) = ((int)r->posZ) * 256;
 		x.commit();
 
@@ -425,9 +405,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		angle &= 0xfff;
 
 		//*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
-		ps1ptr<unsigned short*> anglePtr = pBuf.at<unsigned short*>((*psxPtr.get()) + 0x39a);
-		unsigned int angleAddr = (unsigned int)(*anglePtr.get());
-		ps1ptr<unsigned short> angleV = pBuf.at<unsigned short>(angleAddr);
+		ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a);
 		(*angleV.get()) = (short)angle;
 		angleV.commit();
 
@@ -465,9 +443,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		// make this player hold SQUARE
 		//Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
-		ps1ptr<Gamepad*> gamepadPtr = pBuf.at<Gamepad*>((0x80096804 + (slot * 0x50)) & 0xffffff);
-		unsigned int gamepadAddr = (unsigned int)*(gamepadPtr.get());
-		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(gamepadAddr);
+		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
 		gamepad.get()->buttonsHeldCurrFrame = 0x20;
 		gamepad.get()->buttonsTapped = 0;
 		gamepad.get()->buttonsReleased = 0;
@@ -559,9 +535,7 @@ void StopAnimation()
 void DisconSELECT()
 {
 	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-	ps1ptr<int*> holdPtr = pBuf.at<int*>((0x80096804 + 0x10) & 0xffffff);
-	unsigned int holdAddr = (unsigned int)(*holdPtr.get());
-	ps1ptr<int> hold = pBuf.at<int>(holdAddr);
+	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff);
 
 	if (((*hold.get()) & 0x2000) != 0)
 	{
@@ -635,9 +609,7 @@ void StatePC_Launch_PickServer()
 	// back into the selection screen yet
 	/*int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
-	ps1ptr<int*> gGT_levelIDPtr = pBuf.at<int*>((0x80096b20 + 0x1a10) & 0xffffff);
-	unsigned int gGT_levelIDAddr = (unsigned int)(*gGT_levelIDPtr.get());
-	ps1ptr<int> gGT_levelID = pBuf.at<int>(gGT_levelIDAddr);
+	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
 
 	// must be in cutscene level to see country selector
 	if ((*gGT_levelID.get()) != 0x26)
@@ -646,9 +618,7 @@ void StatePC_Launch_PickServer()
 	// quit if in loading screen (force-reconnect)
 	/*int sdata_Loading_stage =
 		*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
-	ps1ptr<int*> sdata_Loading_stagePtr = pBuf.at<int*>(0x8008d0f8 & 0xffffff);
-	unsigned int sdata_Loading_stageAddr = (unsigned int)(*sdata_Loading_stagePtr.get());
-	ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(sdata_Loading_stageAddr);
+	ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
 
 	if ((*sdata_Loading_stage.get()) != -1)
 		return;
@@ -977,9 +947,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	// sdata->gGT->numLaps
 	//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-	ps1ptr<char*> numLapsPtr = pBuf.at<char*>((0x80096b20 + 0x1d33) & 0xffffff);
-	unsigned int numLapsAddr = (unsigned int)(*numLapsPtr.get());
-	ps1ptr<char> numLapsV = pBuf.at<char>(numLapsAddr);
+	ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff);
 	(*numLapsV.get()) = numLaps;
 	numLapsV.commit();
 
@@ -1009,9 +977,7 @@ void StatePC_Lobby_CharacterPick()
 
 	// data.characterIDs[0]
 	//mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-	ps1ptr<char*> charIdPtr = pBuf.at<char*>(0x80086e84 & 0xffffff);
-	unsigned int charIdAddr = (unsigned int)(*charIdPtr.get());
-	ps1ptr<char> characterID = pBuf.at<char>(charIdAddr);
+	ps1ptr<char> characterID = pBuf.at<char>(0x80086e84 & 0xffffff);
 	mc.characterID = (*characterID.get());
 
 	octr.refresh();
@@ -1062,9 +1028,7 @@ void SendEverything()
 
 	// === Buttons ===
 	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-	ps1ptr<int*> holdPtr = pBuf.at<int*>((0x80096804 + 0x10) & 0xffffff);
-	unsigned int holdAddr = (unsigned int)(*holdPtr.get());
-	ps1ptr<int> hold = pBuf.at<int>(holdAddr);
+	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff);
 
 	// ignore Circle/L2
 	(*hold.get()) &= ~(0xC0);
@@ -1077,9 +1041,7 @@ void SendEverything()
 
 	// === Position ===
 	//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-	ps1ptr<int*> psxPtrPtr = pBuf.at<int*>(0x8009900c & 0xffffff);
-	unsigned int psxAddr = (unsigned int)(*psxPtrPtr.get());
-	ps1ptr<int> psxPtr = pBuf.at<int>(psxAddr);
+	ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c & 0xffffff);
 	(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 	// lossless compression, bottom byte is never used,
@@ -1091,29 +1053,21 @@ void SendEverything()
 	// on a track-by-track basis.
 
 	//cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
-	ps1ptr<int*> xPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-	unsigned int xAddr = (unsigned int)(*xPtr.get());
-	ps1ptr<int> x = pBuf.at<int>(xAddr);
-	cg.posX = (short)(*x.get());
+	ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
+	cg.posX = (short)(*x.get() / 256);
 
 	//cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
-	ps1ptr<int*> yPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-	unsigned int yAddr = (unsigned int)(*yPtr.get());
-	ps1ptr<int> y = pBuf.at<int>(yAddr);
-	cg.posY = (short)(*y.get());
+	ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
+	cg.posY = (short)(*y.get() / 256);
 
 	//cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
-	ps1ptr<int*> zPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-	unsigned int zAddr = (unsigned int)(*zPtr.get());
-	ps1ptr<int> z = pBuf.at<int>(zAddr);
-	cg.posZ = (short)(*z.get());
+	ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
+	cg.posZ = (short)(*z.get() / 256);
 
 	// === Direction Faced ===
 	// driver->0x39a (direction facing)
 	//unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
-	ps1ptr<unsigned short*> anglePtr = pBuf.at<unsigned short*>((*psxPtr.get()) + 0x39a);
-	unsigned int angleAddr = (unsigned int)(*anglePtr.get());
-	ps1ptr<unsigned short> angle = pBuf.at<unsigned short>(angleAddr);
+	ps1ptr<unsigned short> angle = pBuf.at<unsigned short>((*psxPtr.get()) + 0x39a);
 	(*angle.get()) &= 0xfff; //in original code it was done to the variable, not the mem, so don't commit.
 
 	unsigned char angleBit5 = (*angle.get()) & 0x1f;
@@ -1153,9 +1107,7 @@ void StatePC_Game_WaitForRace()
 	ProcessNewMessages();
 
 	//int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
-	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x0) & 0xffffff);
-	unsigned int addr = (unsigned int)(*ptr.get());
-	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>(addr);
+	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>((0x80096b20 + 0x0) & 0xffffff);
 
 	if (
 		// only send once
@@ -1184,9 +1136,7 @@ void StatePC_Game_StartRace()
 
 	/*int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
-	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1a10) & 0xffffff);
-	unsigned int addr = (unsigned int)(*ptr.get());
-	ps1ptr<int> gGT_levelID = pBuf.at<int>(addr);
+	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
 
 	octr.refresh();
 	// Friday demo mode camera
@@ -1194,10 +1144,8 @@ void StatePC_Game_StartRace()
 		if ((*gGT_levelID.get()) < 18)
 		{
 			//*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
-			ps1ptr<short*> ptr = pBuf.at<short*>((0x80098028) & 0xffffff);
-			unsigned int addr = (unsigned int)(*ptr.get());
-			ps1ptr<short> val = pBuf.at<short>(addr);
-			val = 0x20;
+			ps1ptr<short> val = pBuf.at<short>((0x80098028) & 0xffffff);
+			(*val.get()) = 0x20;
 			val.commit();
 		}
 }
@@ -1214,9 +1162,7 @@ void StatePC_Game_EndRace()
 		boolAlreadySent_EndRace = 1;
 
 		//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-		ps1ptr<int*> ptr = pBuf.at<int*>(0x8009900c & 0xffffff);
-		unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
-		ps1ptr<int> psxPtr = pBuf.at<int>(addr);
+		ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c & 0xffffff);
 
 		(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
@@ -1224,8 +1170,7 @@ void StatePC_Game_EndRace()
 		cg.type = CG_ENDRACE;
 		cg.size = sizeof(CG_MessageEndRace);
 		
-		ps1ptr<int*> timePtr = pBuf.at<int*>((*psxPtr.get()) + 0x514);
-		ps1ptr<int> time = pBuf.at<int>((unsigned int)(*timePtr.get()));
+		ps1ptr<int> time = pBuf.at<int>((*psxPtr.get()) + 0x514);
 		memcpy(&cg.time[0], &(*time.get()), 3);
 
 		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
