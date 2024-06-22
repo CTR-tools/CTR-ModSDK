@@ -68,12 +68,21 @@ void ThreadFunc(struct Thread* t)
 	// if client should not be idle
 	else
 	{
+		//This one just seems to copy values further back in the array
 		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
 			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
-	
+
+		//...but what is this one doing?
+		//I get that we "want" it to break to prevent i from getting decrimented into
+		//oblivion (and therefore causing an official desync), but once i gets
+		//decrimented, it's never restored back to "full" except at
+		//if(octr->boolClientBusy) ?
+		//does that mean if the client.exe misses out on even a single frame,
+		//it's never getting that "i" decriment back?
 		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
 			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 				break;
+		//what am I not understanding?
 	}
 
 	// if client didn't update the game in 4 frames
