@@ -293,13 +293,9 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		if (driver->lapIndex > 0)
 		{
 			int oldLapSaveIndex = currLapSaveIndex ^ 1;
-			if (driver->lapIndex == 1)
+			if (savedLapTimes[oldLapSaveIndex] < bestLap)
 			{
 				bestLap = savedLapTimes[oldLapSaveIndex];
-				CopyLapTime(bestLapString, savedLapTimesString[oldLapSaveIndex]);
-			}
-			else if (savedLapTimes[oldLapSaveIndex] < bestLap)
-			{
 				CopyLapTime(bestLapString, savedLapTimesString[oldLapSaveIndex]);
 			}
 			CopyLapTime(lastLapString, savedLapTimesString[oldLapSaveIndex]);

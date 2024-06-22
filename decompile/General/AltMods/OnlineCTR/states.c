@@ -296,6 +296,7 @@ static void Ghostify()
 extern struct CheckpointTracker checkpointTracker[8];
 extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
 static bool initRace = true;
+extern int bestLap;
 
 static void OnRaceInit()
 {
@@ -309,6 +310,7 @@ static void OnRaceInit()
 	{
 		checkpointTimes[i] = 0;
 	}
+	bestLap = MINUTES(10);
 }
 
 void StatePS1_Game_WaitForRace()
