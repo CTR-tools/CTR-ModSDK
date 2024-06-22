@@ -13,7 +13,7 @@
 
 #include "../AltMods/Mods2.c"
 
-void Mods2_EndOfFile()
+void __attribute__ ((section (".end"))) Mods2_EndOfFile()
 {
 	// leave empty
 }

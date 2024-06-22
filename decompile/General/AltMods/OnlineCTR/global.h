@@ -121,6 +121,8 @@ typedef struct CheckpointTracker
 	int currCheckpoint;
 	int timer;
 	unsigned drawFlags;
+	unsigned char raceFinished;
+	unsigned char padding;
 	char displayTime[10];
 } CheckpointTracker;
 

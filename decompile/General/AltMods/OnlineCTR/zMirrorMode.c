@@ -1,3 +1,5 @@
+#include <common.h>
+#include "global.h"
 
 #define COLOR 1
 void ParseOT(u_long* startOT)
@@ -9,7 +11,7 @@ void ParseOT(u_long* startOT)
   int centerX;
   int centerY;
   int backup;
-  
+
   unsigned int endOT;
   int windowWidth;
 
@@ -21,10 +23,10 @@ void ParseOT(u_long* startOT)
 	// dont flip TitleFlag
 	startOT-=4;
   }
-  
+
   // stop when ptrOT-4 is in tag, so ptrOT-0 is flipped
   endOT = (unsigned int)gGT->pushBuffer[gGT->numPlyrCurrGame-1].ptrOT-4;
-  
+
   windowWidth = gGT->pushBuffer[0].rect.w;
 
   // divide by two (more zoom out)
@@ -108,7 +110,7 @@ void ParseOT(u_long* startOT)
 	  ((POLY_FT3*)header)->v0 = ((POLY_FT3*)header)->v1;
 	  ((POLY_FT3*)header)->v1 = backup;
       break;
-	  
+
 	// 0x30 PolyG3
     case 0x30:
       ((POLY_G3*)header)->x0 = (windowWidth - ((POLY_G3*)header)->x0);
@@ -194,7 +196,7 @@ void ParseOT(u_long* startOT)
 	  ((POLY_G4*)header)->b2 = backup;
 #endif
 	  break;
-	  
+
 	// 0x2C PolyFT4
     case 0x2c:
       ((POLY_FT4*)header)->x0 = (windowWidth - ((POLY_FT4*)header)->x0);
@@ -350,23 +352,23 @@ void OnlineMirrorMode(u_long* startOT)
 	// restore default
 	data.hud_1P_P1[0xC].x = 286;
 	// do NOT set 2p3p4p, this is online only
-		
+
 	SwapDirection(0);
-	
+
 	// no special event
 	if (octr->special == 0)
 		return;
-	
+
 	// no mirroring on this track
 	if (sdata->gGT->levelID >= INTRO_RACE_TODAY)
 		return;
-	
+
 	// flip the wumpa shine manually
 	// I know this sucks, whatever
 	data.hud_1P_P1[0xC].x = 0xAA;
 	// do NOT set 2p3p4p, this is online only
-	
+
 	SwapDirection(1);
-	
+
 	ParseOT(startOT);
 }

@@ -1,3 +1,6 @@
+#include <common.h>
+#include "global.h"
+
 struct MenuRow menuRows[9] =
 {
 	{0,0,1,0,0},

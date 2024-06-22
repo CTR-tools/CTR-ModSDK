@@ -50,9 +50,9 @@
 #include "UI_DrawNumCrystal.c"
 #include "UI_DrawNumTimebox.c"
 #include "UI_DrawSpeedBG.c"
-#include "UI_DrawSpeedNeedle.c" 
+#include "UI_DrawSpeedNeedle.c"
 #include "UI_JumpMeter_Draw.c"
-#include "UI_JumpMeter_Update.c" 
+#include "UI_JumpMeter_Update.c"
 #include "UI_DrawSlideMeter.c"
 #include "UI_DrawRankedDrivers.c"
 #include "UI_RenderFrame_Racing.c"
@@ -66,7 +66,7 @@
 
 #include "../AltMods/Mods1.c"
 
-void Mods1_EndOfFile()
+void __attribute__ ((section (".end"))) Mods1_EndOfFile()
 {
 	// leave empty
 }

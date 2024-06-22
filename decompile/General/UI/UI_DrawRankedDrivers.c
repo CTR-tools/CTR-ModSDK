@@ -133,9 +133,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  #ifdef USE_ONLINE
 	  int OnlineGetNumDrivers();
 	  int oNumDrivers = OnlineGetNumDrivers();
-	  int onlinePos = 0;
-	  if(oNumDrivers < 9)
-		  iVar14 = oNumDrivers;
+	  if(oNumDrivers < 9) { iVar14 = oNumDrivers; }
 	  #endif
 
       // start drawing the icons
@@ -144,12 +142,9 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  // height to draw rank (this bitshifts later)
 	  iVar12 = 0x380000;
 
+	  #ifndef USE_ONLINE
 	  for (iVar15 = 0; iVar15 < iVar14; iVar15++)
 	  {
-		#ifdef USE_ONLINE
-		if (!octr->nameBuffer[iVar15 * 0xC]) { continue; }
-		#endif
-
 		// make the text white by default
 		txtColor = 4;
 
@@ -160,18 +155,13 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		}
 
 		// draw rank number: '1', '2', '3', '4'
-		#ifdef USE_ONLINE
-		sdata->s_spacebar[0] = (char) onlinePos + '1';
-		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 29, onlinePos * 20 + 52, 2, txtColor);
-		++onlinePos;
-		#else
 		sdata->s_spacebar[0] = (char) iVar15 + '1';
 		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 0x34, iVar12 >> 0x10, 2, txtColor);
-		#endif
 
 		// add to Y, which mekes it lower on screen
 		iVar12 = iVar12 + 0x1b0000;
 	  }
+	  #endif
 
       for (iVar14 = 0; iVar14 < 8; iVar14++)
 	  {
@@ -222,6 +212,17 @@ void DECOMP_UI_DrawRankedDrivers(void)
             }
           }
 
+		  #ifdef USE_ONLINE
+		  short iconScale = FP(0.75);
+		  UpdateCheckpointTracker(iVar14);
+		  txtColor = 4;
+		  if (checkpointTracker[iVar15].raceFinished) { txtColor = 3; }
+		  sdata->s_spacebar[0] = (char) *curr + '1';
+		  DECOMP_DecalFont_DrawLine(&sdata->s_spacebar[0], 29, 53 + *curr * 20, 2, txtColor);
+		  #else
+          short iconScale = FP(1);
+		  #endif
+
 		  // === Icon Transitioning ===
 		  if(pos.x == -100)
 		  {
@@ -241,12 +242,6 @@ void DECOMP_UI_DrawRankedDrivers(void)
             }
 		  }
 
-		  #ifdef USE_ONLINE
-		  short iconScale = FP(0.75);
-		  #else
-          short iconScale = FP(1);
-		  #endif
-
 		  DECOMP_UI_DrawDriverIcon(
 
             gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
@@ -262,7 +257,6 @@ void DECOMP_UI_DrawRankedDrivers(void)
             1, iconScale, local_30);
 
 		  #ifdef USE_ONLINE
-		  UpdateCheckpointTracker(iVar14);
 		  if (checkpointTracker[iVar14].timer > 0)
 		  {
 			DECOMP_DecalFont_DrawLineStrlen(

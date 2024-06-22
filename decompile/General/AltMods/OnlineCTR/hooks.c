@@ -1,3 +1,6 @@
+#include <common.h>
+#include "global.h"
+
 int OnlineGetNumDrivers()
 {
 	return octr->NumDrivers;
@@ -9,7 +12,7 @@ void octr_entryHook()
 	// AdvHub, replace default spawn with unused
 	// start-line spawn, turn BEQ to JMP
 	*(char*)0x80058072 = 0;
-	
+
 	// BOTS_Adv_AdjustDifficulty(); must be called before
 	// initializing any AI, either BOTS_Driver_Init or
 	// from BOTS_Driver_Convert. If AIs are wanted, then
@@ -17,19 +20,19 @@ void octr_entryHook()
 	// just disable BOTS_Driver_Convert
 	*(int*)0x80017318 = 0x3E00008;
 	*(int*)0x8001731c = 0;
-	
+
 	// remove cutscene threads
 	for(int i = 0x96; i < 0xa6; i++)
 	{
 		data.MetaDataModels[i].LInB = 0;
 	}
-	
+
 	// ======== Globals ============
-	
+
 	#if USE_K1 == 1
 	octr = 0x8000C000;
 	#endif
-	
+
 	// default for first LEV, before gameplay
 	memset(octr, 0, sizeof(struct OnlineCTR));
 	octr->IsBootedPS1 = 1;
@@ -41,12 +44,12 @@ void octr_entryHook()
 void octr_initHook()
 {
 	void ThreadFunc();
-	
+
 	// small stack pool, pause thread (those threads can't pause)
 	PROC_BirthWithObject(0x30f, ThreadFunc, 0, 0);
-	
+
 	sdata->lngStrings[0x4e] = "OnlineCTR";
-	
+
 	struct GameTracker* gGT = sdata->gGT;
 	if(gGT->levelID <= TURBO_TRACK)
 	{
@@ -58,30 +61,30 @@ void octr_initHook()
 
 // replace MainInit_Drivers
 void OnlineInit_Drivers(struct GameTracker* gGT)
-{	
+{
 	int i;
 	int bitFlag;
 	struct Driver* dr;
-		
+
 	for(i = 0; i < 8; i++)
 	{
 		gGT->drivers[i] = 0;
 		sdata->kartSpawnOrderArray[i] = i;
 	}
-	
+
 	// if first boot
 	if(gGT->levelID == CREDITS_POLAR)
 	{
 		gGT->drivers[0] = VehBirth_Player(0);
 		return;
 	}
-	
+
 	if(DECOMP_LOAD_IsOpen_RacingOrBattle())
 		DECOMP_RB_MinePool_Init();
-	
+
 	// 8 spawn positions
 	bitFlag = 7;
-	
+
 	// override for battle maps
 	if(
 		(gGT->levelID > TURBO_TRACK) &&
@@ -91,12 +94,12 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		// 4 spawn positions
 		bitFlag = 3;
 	}
-	
+
 	// All clients must spawn drivers in the same order,
 	// so that pointers can be sent over network
-	
+
 	int numDead = 0;
-	
+
 	for(i = 0; i < octr->DriverID; i++)
 	{
 		if(octr->nameBuffer[(i+1)*0xC] == 0)
@@ -104,42 +107,42 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 			numDead++;
 			continue;
 		}
-		
+
 		// init, save
 		dr = DECOMP_VehBirth_Player(i+1);
 		gGT->drivers[i+1] = dr;
-		
+
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
 		VehBirth_TeleportSelf(dr,3,0);
-		
+
 		// realID
 		dr->driverID = i+1;
-		
+
 		#ifdef USE_60FPS
 		// needed cause VehBirth_TeleportSelf
 		// has not been rewritten yet for decomp
 		dr->instSelf->animFrame = FPS_DOUBLE(10);
 		#endif
 	}
-	
+
 	// init, save
 	dr = DECOMP_VehBirth_Player(0);
 	gGT->drivers[0] = dr;
-	
+
 	// fakeID, teleport
 	dr->driverID = (i-numDead)&bitFlag;
 	VehBirth_TeleportSelf(dr,3,0);
-	
+
 	// realID
 	dr->driverID = 0;
-	
+
 	#ifdef USE_60FPS
 	// needed cause VehBirth_TeleportSelf
 	// has not been rewritten yet for decomp
 	dr->instSelf->animFrame = FPS_DOUBLE(10);
 	#endif
-	
+
 	for(i = i+1; i < octr->NumDrivers; i++)
 	{
 		if(octr->nameBuffer[i*0xC] == 0)
@@ -147,25 +150,25 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 			numDead++;
 			continue;
 		}
-		
+
 		// init, save
 		dr = DECOMP_VehBirth_Player(i);
 		gGT->drivers[i] = dr;
-		
+
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
 		VehBirth_TeleportSelf(dr,3,0);
-		
+
 		// realID
 		dr->driverID = i;
-		
+
 		#ifdef USE_60FPS
 		// needed cause VehBirth_TeleportSelf
 		// has not been rewritten yet for decomp
 		dr->instSelf->animFrame = FPS_DOUBLE(10);
 		#endif
 	}
-	
+
 	if(gGT->levelID != 0x26)
 		octr->CurrState = GAME_WAIT_FOR_RACE;
 }
@@ -178,27 +181,27 @@ void OnlineEndOfRace()
 	int numDead = 0;
 	int skipRow = 0;
 	struct Driver* d = sdata->gGT->drivers[0];
-	
+
 	// if "you" are still racing, do nothing
 	if((d->actionsFlagSet & 0x2000000) == 0)
 		return;
-	
+
 	// if client reset to ASSIGN_ROLE after end-of-race
 	if(octr->CurrState < GAME_START_RACE)
 		return;
-	
+
 	octr->CurrState = GAME_END_RACE;
-	
+
 	// if "you" finished race,
 	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
-	
+
 	windowText.h = 0;
-	
+
 	int i;
 	for(i = 0; i < octr->NumDrivers; i++)
 		if(octr->nameBuffer[i*0xC] == 0)
 			numDead++;
-	
+
 	for(i = 0; i < octr->NumDrivers; i++)
 	{
 		// skip drivers still racing
@@ -207,66 +210,66 @@ void OnlineEndOfRace()
 			skipRow++;
 			continue;
 		}
-		
+
 		int slot = octr->RaceEnd[i].slot;
-		
+
 		// skip disconnected drivers
 		if(octr->nameBuffer[slot * 0xc] == 0)
 		{
 			skipRow++;
 			continue;
 		}
-		
+
 		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
-		
+
 		int color = ORANGE;
 		if(slot == 0)
 			color = BLUE;
-		
+
 		DecalFont_DrawLine(
 			message,
 			0x120,0x48+i*0x8,FONT_SMALL,color);
-		
+
 		DecalFont_DrawLine(
 			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
 			0x1A0,0x48+i*0x8,FONT_SMALL,color);
-			
+
 		windowText.h += 8;
 	}
-	
+
 	int lastY = 0x48+(i*0x8)-(skipRow*0x8);
-	
+
 	if(octr->numDriversEnded == (octr->NumDrivers-numDead))
 	{
 		DecalFont_DrawLine(
 			"Restart in 6 seconds",
 			0x120,lastY,FONT_SMALL,RED);
-			
+
 		windowText.h += 8;
 	}
-	
+
 	else
 	{
 		sprintf(
-			message, 
+			message,
 			"Waiting for %d more",
 			(octr->NumDrivers-numDead) - octr->numDriversEnded);
-		
+
 		DecalFont_DrawLine(
 			message,
 			0x120,lastY,FONT_SMALL,PAPU_YELLOW);
-			
+
 		windowText.h += 8;
 	}
-	
-	
+
+
 	windowText.h += 0x10;
-	
-	struct DB *backBuffer = 
+
+	struct DB *backBuffer =
 		sdata->gGT->backBuffer;
 
 	DECOMP_RECTMENU_DrawInnerRect(
-		&windowText, 1, 
+		&windowText, 1,
 		backBuffer->otMem.startPlusFour);
 }
 
@@ -274,7 +277,7 @@ void Online_OtherFX_RecycleNew(
 		u_int* soundID_Count, u_int newSoundID, u_int modifyFlags)
 {
 	struct Driver* d = sdata->gGT->drivers[0];
-	
+
 	if(
 		((int)soundID_Count != (int)&d->driverAudioPtrs[0]) &&
 		((int)soundID_Count != (int)&d->driverAudioPtrs[1]) &&
@@ -286,9 +289,9 @@ void Online_OtherFX_RecycleNew(
 		// In the future, modify Vol/LR
 		return;
 	}
-	
+
 	int local = *soundID_Count;
-	
+
     if (
 		// if this sound is already playing
 		(local != 0) &&
@@ -298,7 +301,7 @@ void Online_OtherFX_RecycleNew(
 	   )
     {
         OtherFX_Stop1(local);
-        
+
 		*soundID_Count = 0;
 		local = 0;
     }
@@ -308,7 +311,7 @@ void Online_OtherFX_RecycleNew(
         // if this is a new sound
         if (local == 0)
         {
-            *soundID_Count = 
+            *soundID_Count =
 				OtherFX_Play_LowLevel(newSoundID & 0xffff, 0, modifyFlags);
         }
         // if not a new sound,

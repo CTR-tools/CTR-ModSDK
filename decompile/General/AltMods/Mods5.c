@@ -1,5 +1,5 @@
-// used for boost bar (part 2)
-// used for 60FPS
+#include <common.h>
+
 #ifdef USE_BOOSTBAR
 void uibb_entryHook()
 {

@@ -37,7 +37,7 @@
 
 #include "../AltMods/Mods4.c"
 
-void Mods4_EndOfFile()
+void __attribute__ ((section (".end"))) Mods4_EndOfFile()
 {
 	// leave empty
 }

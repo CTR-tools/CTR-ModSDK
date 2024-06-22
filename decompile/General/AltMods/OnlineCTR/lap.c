@@ -79,12 +79,13 @@ void UpdateCheckpointTracker(int driverID)
 				checkpointTracker[driverID].displayTime[8] = '\0';
 				checkpointTracker[driverID].drawFlags = RED;
 			}
-			if (cp == MAX_LAPS * CPS_PER_LAP) { checkpointTracker[driverID].timer = HOURS(100); }
-			else
+			if (cp == sdata->gGT->numLaps * CPS_PER_LAP)
 			{
-				checkpointTracker[driverID].currCheckpoint++;
-				checkpointTracker[driverID].timer = SECONDS(3);
+				checkpointTracker[driverID].timer = HOURS(100);
+				checkpointTracker[driverID].raceFinished = 1;
 			}
+			else { checkpointTracker[driverID].timer = SECONDS(3); }
+			checkpointTracker[driverID].currCheckpoint++;
 		}
 	}
 }

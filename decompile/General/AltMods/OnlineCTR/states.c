@@ -281,17 +281,15 @@ static void Ghostify()
 	struct Thread *fireThread;
 	struct GameTracker *gGT = sdata->gGT;
 	struct Icon **ptrIconArray;
+	struct Instance *inst;
 
 	for (unsigned driverID = 1; driverID < 8; driverID++)
 	{
 		gGT->drivers[driverID]->wheelSprites = ICONGROUP_GETICONS(gGT->iconGroup[0xC]);
-		Instance_Ghostify(gGT->drivers[driverID]->instSelf, driverID, true);
-		fireThread = gGT->threadBuckets[TURBO].thread;
-		if (!fireThread) { continue; }
-
-		turboObj = (struct Turbo *)fireThread->object;
-		Instance_Ghostify(fireThread->inst, driverID, false);
-		Instance_Ghostify(turboObj->inst, driverID, false);
+		inst = gGT->drivers[driverID]->instSelf;
+		if (!inst) { continue; }
+		inst->flags |= 0x60000;
+		inst->alphaScale = 0xA00;
 	}
 }
 
@@ -336,6 +334,7 @@ static void OnRaceInit()
 	{
 		checkpointTracker[i].currCheckpoint = 0;
 		checkpointTracker[i].timer = 0;
+		checkpointTracker[i].raceFinished = 0;
 	}
 	for (int i = 0; i < MAX_LAPS * CPS_PER_LAP; i++)
 	{

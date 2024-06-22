@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+#include "OnlineCTR/names3d.c"
+#endif
+
 #ifdef USE_BOOSTBAR
 void DrawBoostBar(short posX, short posY, struct Driver* driver)
 {

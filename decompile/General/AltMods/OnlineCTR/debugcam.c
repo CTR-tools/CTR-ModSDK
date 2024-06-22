@@ -1,3 +1,6 @@
+#include <common.h>
+#include "global.h"
+
 void Freecam()
 {
 	int loop;

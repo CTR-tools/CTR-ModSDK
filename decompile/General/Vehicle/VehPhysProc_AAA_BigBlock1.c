@@ -15,7 +15,7 @@
 
 #include "../AltMods/Mods5.c"
 
-void Mods5_EndOfFile()
+void __attribute__ ((section (".end"))) Mods5_EndOfFile()
 {
 	// leave empty
 }

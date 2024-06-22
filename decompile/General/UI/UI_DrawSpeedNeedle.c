@@ -31,7 +31,13 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   maxScale = scale + driver->const_SacredFireSpeed >> 8;
   #endif
   #ifdef USE_ONLINE
-	speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0) << 0x10;
+  char speedBigStr[3];
+	speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
+  int speedInt = speed >> 8;
+  speedBigStr[0] = ((speedInt / 100) % 10) + '0';
+  speedBigStr[1] = ((speedInt / 10) % 10) + '0';
+  speedBigStr[2] = (speedInt % 10) + '0';
+  speed = speed << 0x10;
   #else
   speed = driver->unk36E << 0x10; // is this actually speed?
   #endif
@@ -155,5 +161,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   *(int *)p = *primmemCurr | 0x6000000;
   *primmemCurr = (u_int) p & 0xffffff;
 
-  return;
+  #ifdef USE_ONLINE
+  DECOMP_DecalFont_DrawLineStrlen(speedBigStr, 3, posX + 0x36, posY + 46, FONT_SMALL, PAPU_YELLOW);
+  #endif
 }

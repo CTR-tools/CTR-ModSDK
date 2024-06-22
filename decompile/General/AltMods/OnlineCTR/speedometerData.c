@@ -6,7 +6,7 @@
 #define SPEEDO_PINK 0xcb00d8
 #define SPEEDO_PURPLE 0xff21a4
 #define SPEEDO_BLUE 0xf31818
-unsigned int DrawSpeedBG_Colors[11] __attribute__ ((section (".text"))) =
+unsigned int DrawSpeedBG_Colors[11] =
 {
   SPEEDO_GREEN, SPEEDO_GREEN,
   SPEEDO_GREEN, SPEEDO_YELLOW,
@@ -15,7 +15,7 @@ unsigned int DrawSpeedBG_Colors[11] __attribute__ ((section (".text"))) =
   SPEEDO_PURPLE, SPEEDO_PURPLE,
   SPEEDO_BLUE
 };
-short speedometerBG_vertData[108] __attribute__ ((section (".text"))) =
+short speedometerBG_vertData[108] =
 {
   WIDE_34(-65), 16, WIDE_34(-54), 13, WIDE_34(-70), 0, WIDE_34(-58), 0,
   WIDE_34(-65), -16, WIDE_34(-54), -13, WIDE_34(-50), -29, WIDE_34(-42), -24,
