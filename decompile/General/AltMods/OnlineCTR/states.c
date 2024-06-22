@@ -1,3 +1,5 @@
+#include <common.h>
+#include "global.h"
 
 extern struct RectMenu menu;
 
@@ -324,12 +326,34 @@ void StatePS1_Game_WaitForRace()
 		&drawTimeRECT, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
+extern struct CheckpointTracker checkpointTracker[8];
+extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
+static bool initRace = true;
+
+static void OnRaceInit()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		checkpointTracker[i].currCheckpoint = 0;
+		checkpointTracker[i].timer = 0;
+	}
+	for (int i = 0; i < MAX_LAPS * CPS_PER_LAP; i++)
+	{
+		checkpointTimes[i] = 0;
+	}
+}
+
 void StatePS1_Game_StartRace()
 {
-	// psx doesnt need to do anything here
+	if (initRace)
+	{
+		OnRaceInit();
+		initRace = false;
+	}
+	Ghostify();
 }
 
 void StatePS1_Game_EndRace()
 {
-	// psx doesnt need to do anything here
+	initRace = true;
 }

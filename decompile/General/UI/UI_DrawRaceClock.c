@@ -16,7 +16,7 @@ extern int savedLapTimes[2];
 extern int bestLap;
 
 void SaveLapTime(int index, int lapTime);
-void CopyLapTime(char * dst, char * src);
+void CopyLapTime(char * restrict dst, char * restrict src);
 #endif
 
 // used for both finished lap time and current race time

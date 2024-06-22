@@ -112,6 +112,18 @@ struct OnlineCTR
 	int ver_server;
 };
 
+#define NUM_PLAYERS 8
+#define MAX_LAPS 7
+#define CPS_PER_LAP 2
+
+typedef struct CheckpointTracker
+{
+	int currCheckpoint;
+	int timer;
+	unsigned drawFlags;
+	char displayTime[10];
+} CheckpointTracker;
+
 #ifdef WINDOWS_INCLUDE
 
 #include <time.h>

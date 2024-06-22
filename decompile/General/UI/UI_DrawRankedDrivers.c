@@ -5,6 +5,10 @@
 // in Arcade mode and Boss mode, and draws
 // icons in multiplayer on the midY axis (and warpball)
 
+#ifdef USE_ONLINE
+extern struct CheckpointTracker checkpointTracker[8];
+#endif
+
 int DriverIndex_GetDamageColor(int iVar14)
 {
 	struct GameTracker* gGT = sdata->gGT;
@@ -258,12 +262,32 @@ void DECOMP_UI_DrawRankedDrivers(void)
             1, iconScale, local_30);
 
 		  #ifdef USE_ONLINE
-		  DECOMP_DecalFont_DrawLineStrlen(
-			&octr->nameBuffer[iVar14 * 0xC],
-			3,
-			pos.x + 43,
-			pos.y + 7,
-			FONT_SMALL, iVar14 == 0 ? JUSTIFY_CENTER | BLUE : JUSTIFY_CENTER | ORANGE);
+		  UpdateCheckpointTracker(iVar14);
+		  if (checkpointTracker[iVar14].timer > 0)
+		  {
+			DECOMP_DecalFont_DrawLineStrlen(
+				checkpointTracker[iVar14].displayTime,
+				10,
+				pos.x + 30,
+				pos.y + 9,
+				FONT_SMALL, checkpointTracker[iVar14].drawFlags);
+			checkpointTracker[iVar14].timer -= sdata->gGT->elapsedTimeMS;
+			DECOMP_DecalFont_DrawLineStrlen(
+				&octr->nameBuffer[iVar14 * 0xC],
+				3,
+				pos.x + 45,
+				pos.y + 1,
+				FONT_SMALL, iVar14 == 0 ? JUSTIFY_CENTER | BLUE : JUSTIFY_CENTER | ORANGE);
+		  }
+		  else
+		  {
+			DECOMP_DecalFont_DrawLineStrlen(
+				&octr->nameBuffer[iVar14 * 0xC],
+				3,
+				pos.x + 45,
+				pos.y + 7,
+				FONT_SMALL, iVar14 == 0 ? JUSTIFY_CENTER | BLUE : JUSTIFY_CENTER | ORANGE);
+		  }
 		  #endif
         }
       }

@@ -1,6 +1,5 @@
 // used for 16x9 (part 1)
 // used for oxide
-#include "OnlineCTR/ui.c"
 
 #ifdef USE_16BY9
 void ui16by9_ViewProj(struct PushBuffer* pb)
