@@ -37,13 +37,19 @@ void DECOMP_UI_RenderFrame_Racing()
 	struct DB *backBuffer;
 	struct Thread* turboThread;
 	struct Turbo* turboThreadObject;
-	
+	int offset;
 	u_int mapPosX;
 	u_int mapPosY;
-	
+
+	#ifdef USE_ONLINE
+	offset = WIDE_PICK(-19, -27);
+	#else
+	offset = 0;
+	#endif
+
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
-	
+
 	int numPlyr = gGT->numPlyrCurrGame;
 	int gameMode1 = gGT->gameMode1;
 
@@ -66,7 +72,7 @@ void DECOMP_UI_RenderFrame_Racing()
 		for(i = 0; i < 8; i++)
 		{
 			data.rankIconsTransitionTimer[i] = 0;
-			
+
 			pbVar6 = &sdata->kartSpawnOrderArray[i];
 
 			data.rankIconsCurr[i] = (u_short)*pbVar6;
@@ -129,7 +135,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	cVar22 = '\0';
 	if (playerThread != 0)
-	{		
+	{
 		// Loop through all player threads
 		do
 		{
@@ -139,7 +145,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			#ifdef USE_ONLINE
 			playerStruct = gGT->drivers[0];
 			#endif
-		
+
 			if
 			(
 				// if player has not driven backwards very far,
@@ -198,23 +204,25 @@ void DECOMP_UI_RenderFrame_Racing()
 			if
 			(
 				// numPlyrCurrGame is less than 2 (1P mode)
-				(numPlyr < 2) &&
-
+				(numPlyr < 2)
+				#ifndef USE_ONLINE
+				&&
 				// if want to draw speedometer
 				((sdata->HudAndDebugFlags & 8) != 0)
+				#endif
 			)
 			{
-				// draw spedometer needle
-				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x, hudStructPtr[9].y, playerStruct);
-
-				// draw jump meter
-				DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x, hudStructPtr[6].y, playerStruct);
-
-				// Draw Powerslide Meter
-				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
-
-				// draw background of spedometer
+				#ifdef USE_ONLINE
+				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[8].x + offset + 17, hudStructPtr[8].y - 7, playerStruct);
 				DECOMP_UI_DrawSpeedBG();
+				#else
+				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x, hudStructPtr[6].y, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset, hudStructPtr[8].y, playerStruct);
+				DECOMP_UI_DrawSpeedBG();
+				#endif
 			}
 
 			//if racer hasn't finished the race
@@ -223,8 +231,12 @@ void DECOMP_UI_RenderFrame_Racing()
 				// If you're not in Battle Mode
 				if ((gameMode1 & BATTLE_MODE) == 0)
 				{
+					#ifdef USE_ONLINE
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
+					#else
 					// Draw powerslide meter
-					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset, hudStructPtr[8].y, playerStruct);
+					#endif
 				}
 
 				// If you are not in Time Trial or Relic Race
@@ -295,10 +307,10 @@ void DECOMP_UI_RenderFrame_Racing()
 						// set timer value
 						playerStruct->PickupWumpaHUD.cooldown = partTimeVariable1;
 					}
-					
+
 					struct Icon** iconPtrArray =
 						ICONGROUP_GETICONS(gGT->iconGroup[0xB]);
-			
+
 					// "wumpaposter" icon group
 					DECOMP_DecalHUD_DrawPolyFT4
 					(
@@ -321,10 +333,10 @@ void DECOMP_UI_RenderFrame_Racing()
 					struct Instance* curr;
 					LetterCTR_Pos[0] = hudStructPtr[0x12].x;
 					LetterCTR_Pos[1] = hudStructPtr[0x12].y;
-					
+
 					// C-Letter
 					if (playerStruct->PickupLetterHUD.modelID == 0x93)
-					{	
+					{
 						curr = sdata->ptrHudC;
 					}
 
@@ -332,7 +344,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					else if (playerStruct->PickupLetterHUD.modelID == 0x94)
 					{
 						LetterCTR_Pos[0] += 0x1d;
-						LetterCTR_Pos[1] -= 1;	
+						LetterCTR_Pos[1] -= 1;
 						curr = sdata->ptrHudT;
 					}
 
@@ -342,7 +354,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						LetterCTR_Pos[0] += 0x3a;
 						curr = sdata->ptrHudR;
 					}
-					
+
 					// make visible
 					*(u_int *)&curr->flags &= 0xffffff7f;
 
@@ -447,7 +459,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 							// Make a negative number positive
 							partTimeVariable1 = -partTimeVariable1;
-							
+
 						}
 
 						else
@@ -523,9 +535,9 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				DECOMP_AA_EndEvent_DisplayTime((u_int)playerStruct->driverID, 0);
-			}	
+			}
 #endif
-			
+
 			partTimeVariable5 = gameMode1;
 
 			// If you are in Relic Race, and not in battle mode,
@@ -565,7 +577,9 @@ void DECOMP_UI_RenderFrame_Racing()
 
 				sVar1 = hudStructPtr[5].x;
 				sVar2 = hudStructPtr[5].y;
+				#ifndef USE_ONLINE
 				DECOMP_UI_DrawPosSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
+				#endif
 
 				if (numPlyr > 2)
 				{
@@ -574,7 +588,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 					// icon pointer, specifically for the big rank icons that start at 0x19
 					iconPtr = gGT->ptrIcons[(int)playerStruct->driverRank + 0x19];
-					
+
 					LAB_80053aec:
 
 					DECOMP_DecalHUD_DrawPolyGT4
@@ -604,18 +618,18 @@ void DECOMP_UI_RenderFrame_Racing()
 			else if ((partTimeVariable5 & 0x200020) == 0x200020)
 			{
 				partTimeVariable5 = (u_int)((gGT->timer & 1) == 0);
-		
+
 				// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
 				DECOMP_UI_DrawPosSuffix(hudStructPtr[5].x, hudStructPtr[5].y, playerStruct, (short)(partTimeVariable5 << 2));
-		
+
 				// Get Color Data
 				ptrColor = data.ptrColor[partTimeVariable5];
-		
+
 				// pointer to icon
 				// get rank icon of each battle team after battle is over
 				// OH GOD THIS IS CONVOLUTED and probably wrong --Super
 				iconPtr = gGT->ptrIcons[gGT->battleSetup.finishedRankOfEachTeam[playerStruct->BattleHUD.teamID] + 0x19];
-		
+
 				goto LAB_80053aec;
 			}
 			LAB_80053af4:
@@ -681,7 +695,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 		turboThread = 0;
 		turboThreadObject = 0;
-		
+
 		if ((gGT->gameMode2 & CHEAT_TURBOCOUNT) != 0)
 		{
 
@@ -710,7 +724,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				// Get number of boosts
 				sVar1 = playerStruct->numTurbos;
 			}
-			
+
 			// sdata->TurboDisplayPos_Only1P
 			// Position of counter
 			// 0 = offscreen
@@ -782,9 +796,9 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				// Interpolate the turbo counter slide in from the right
 				DECOMP_UI_Lerp2D_Linear(
-					&turboCount_Pos[0], 
-					0x2c8, 0x20, 
-					500, 0x20, 
+					&turboCount_Pos[0],
+					0x2c8, 0x20,
+					500, 0x20,
 					sdata->TurboDisplayPos_Only1P, 10);
 
 				// The actual counter number will continue to
@@ -878,58 +892,63 @@ void DECOMP_UI_RenderFrame_Racing()
 		if
 		(
 			(
-				(numPlyr == 1) &&
-	
+				(numPlyr == 1)
+				#ifndef USE_ONLINE
+				&&
 				// if want to draw map, not speedometer
 				(sdata->HudAndDebugFlags & 8) == 0
-				
+				#endif
 			) ||
-	
+
 			(numPlyr == 3)
 		)
 		{
 			local_30[0] = 0;
-	
+
 			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
 			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
-			
+
 			#ifndef USE_ONLINE
 			DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
 			#endif
-			
+
 			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
-	
+
 			mapPosX = 500;
+			#ifdef USE_ONLINE
+			mapPosY = 145;
+			#else
 			mapPosY = 195;
-	
+			#endif
+
 			if (numPlyr == 3)
 			{
 				mapPosX -= 60;
 				mapPosY += 10;
 			}
-	
+
 			// Draw the map
 			DECOMP_UI_Map_DrawMap
 			(
 				// top half and bottom half
 				gGT->ptrIcons[3],
 				gGT->ptrIcons[4],
-				
+
 				// X and Y
 				mapPosX, mapPosY,
-	
+
 				// Pointer to primary memory
 				&gGT->backBuffer->primMem,
-	
+
 				// pointer to OT memory
 				gGT->pushBuffer_UI.ptrOT,
-	
+
 				// color, in this case white
 				1
 			);
 		}
 	}
-	
+
 	bVar3 = false;
 
 	// loop counter
@@ -974,7 +993,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					// Basically, out of all human players, if you did not come in last
 					((int)playerStruct->driverRank < (int)numPlyr - 1) &&
 
-					// If you're not in Battle Mode 
+					// If you're not in Battle Mode
 					// (winner of battle wont use this function)
 					((gameMode1 & BATTLE_MODE) == 0)
 				)
@@ -991,7 +1010,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				}
 
 				DECOMP_DecalFont_DrawLine(
-					pbVar6, 
+					pbVar6,
 					pb->rect.x + (pb->rect.w >> 1),			// midpointX
 					pb->rect.y + (pb->rect.h >> 1) - 0x1e,	// midpointY
 					FONT_BIG, (JUSTIFY_CENTER | ORANGE));
@@ -1028,7 +1047,7 @@ void DECOMP_UI_RenderFrame_Racing()
 		(
 			// If game is not paused
 			((gameMode1 & PAUSE_ALL) == 0) &&
-			
+
 			//item roll is done
 			(!bVar3)
 		) &&

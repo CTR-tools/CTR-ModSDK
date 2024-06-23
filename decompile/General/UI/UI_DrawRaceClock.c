@@ -7,6 +7,18 @@ struct
 } rdata = { 0 };
 #endif
 
+#ifdef USE_ONLINE
+extern char timeString[];
+extern char bestLapString[];
+extern char lastLapString[];
+extern char savedLapTimesString[2][6];
+extern int savedLapTimes[2];
+extern int bestLap;
+
+void SaveLapTime(int index, int lapTime);
+void CopyLapTime(char * restrict dst, char * restrict src);
+#endif
+
 // used for both finished lap time and current race time
 void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver)
 {
@@ -18,7 +30,6 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	// 3: Only used to check if lap 1 should flash (which is when it's the fastest lap)
 	// 4: Only used to check if lap 2 should flash (which is when it's the fastest lap)
 	// 5: Only used to check if lap 3 should flash (which is when it's the fastest lap)
-
 	struct GameTracker* gGT;
 	short sVar1;
 	int stringColor;
@@ -29,15 +40,15 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	int numParamY;
 	int iVar7;
 	u_int fontType;
-	
+
 	int msElapsed;
 	int str;
 	int posX;
 	int numLaps;
 	int levID;
-	
+
 	int strOffset;
-	
+
 	char msOnes;
 	u_short uVar11;
 	short *lapTextHeight;
@@ -50,10 +61,14 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	char minutesOnes;
 	char minutesTens;
 	char acStack80 [8];
-	
+	#ifdef USE_ONLINE
+	char timeChars[9];
+	char * pTimeString;
+	#endif
+
 	u_short textPosX;
 	u_short textPosY;
-	
+
 	char *local_38;
 	int unbitshiftTextPosX;
 	int bitshiftTextPosX;
@@ -69,6 +84,16 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		return;
 	}
 
+	#ifdef USE_ONLINE // 99:59:59:99
+	timeChars[0] = 9;
+	timeChars[1] = 9;
+	timeChars[2] = 5;
+	timeChars[3] = 9;
+	timeChars[4] = 5;
+	timeChars[5] = 9;
+	timeChars[6] = 9;
+	timeChars[7] = 9;
+	#else
 	// set default time to 99:59:99
 	minutesTens = 9;
 	minutesOnes = 9;
@@ -76,10 +101,36 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	secondsOnes = 9;
 	msTens = 9;
 	msOnes = 9;
-	
+	#endif
+
 	// milliseconds elapsed in race
 	msElapsed = driver->timeElapsedInRace;
 
+	#ifdef USE_ONLINE
+	if ((msElapsed / HOURS(10)) < 10) { timeChars[0] = (char) ((msElapsed / HOURS(10)) % 10); }
+	timeChars[1] = (char) ((msElapsed / HOURS(1)) % 10);
+	timeChars[2] = (char) ((msElapsed / MINUTES(10)) % 6);
+	timeChars[3] = (char) ((msElapsed / MINUTES(1)) % 10);
+	timeChars[4] = (char) ((msElapsed / SECONDS(10)) % 6);
+	timeChars[5] = (char) ((msElapsed / SECONDS(1)) % 10);
+	timeChars[6] = (char) (((msElapsed * 10) / SECONDS(1)) % 10);
+	timeChars[7] = (char) (((msElapsed * 100) / SECONDS(1)) % 10);
+	timeChars[8] = (char) (((msElapsed * 1000) / SECONDS(1)) % 10);
+
+	int timeIndex = 2;
+	int j = 3;
+	if (timeChars[1] > 0) { timeIndex = 0; j = 0; }
+
+	pTimeString = &timeString[j];
+	for (int i = timeIndex; i < 8; i++)
+	{
+		timeString[j] = timeChars[i] + '0';
+		if (((i + 1) % 2) == 0) { j++; }
+		j++;
+	}
+
+	timeString[j - 1] = timeChars[8] + '0';
+	#else
 	// OG game was "== 7"
 	// but now expand for Online
 	if (gGT->numLaps >= 7)
@@ -88,7 +139,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		if ((char)(msElapsed / 0x8ca00) < 10)
 		{
 			minutesTens = (char)(msElapsed / 0x8ca00) % 10;
-			
+
 			goto setRestOfTime;
 		}
 	}
@@ -107,6 +158,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 			msOnes = (char)(((msElapsed * 100) / 0x3c0) % 10);
 		}
 	}
+	#endif
 
 	if ((flags & 1) == 0)
 	{
@@ -180,6 +232,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		strFlags_but_its_also_posY = (u_short)((gGT->timer & FPS_DOUBLE(2)) == 0) << 2;
 	}
 
+	#ifndef USE_ONLINE
 	// OG game was "== 7"
 	// but now expand for Online
 	if (gGT->numLaps >= 7)
@@ -189,7 +242,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 		// Convert each number from the binary version of the number to the ascii version of the number by adding ascii value of '0'
 		totalTimeString[0] = minutesTens + '0';
-		
+
 		strOffset = 1;
 	}
 
@@ -201,13 +254,14 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 		strOffset = 0;
 	}
-	
+
 	// Convert each number from the binary version of the number to the ascii version of the number by adding ascii value of '0'
 	totalTimeString[strOffset+0] = minutesOnes + '0';
 	totalTimeString[strOffset+2] = secondsTens + '0';
 	totalTimeString[strOffset+3] = secondsOnes + '0';
 	totalTimeString[strOffset+5] = msTens + '0';
 	totalTimeString[strOffset+6] = msOnes + '0';
+	#endif
 
 	// If in-race, reuse X and Y positions used for the TIME/TIME TRIAL text in the top left corner of the HUD for the actual time itself
 	// Except set the Y position to be lower
@@ -225,19 +279,40 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	}
 
 	// Draw String
-	DECOMP_DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
-
 	#ifdef USE_ONLINE
-	return;
+	DECOMP_DecalFont_DrawLine(pTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
+	#else
+	DECOMP_DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
 	#endif
 
+	#ifdef USE_ONLINE
+	int currLapSaveIndex = driver->lapIndex % 2;
+	if (driver->driverID == 0)
+	{
+		SaveLapTime(currLapSaveIndex, gGT->elapsedEventTime - driver->lapTime);
+		if (driver->lapIndex > 0)
+		{
+			int oldLapSaveIndex = currLapSaveIndex ^ 1;
+			if (savedLapTimes[oldLapSaveIndex] < bestLap)
+			{
+				bestLap = savedLapTimes[oldLapSaveIndex];
+				CopyLapTime(bestLapString, savedLapTimesString[oldLapSaveIndex]);
+			}
+			CopyLapTime(lastLapString, savedLapTimesString[oldLapSaveIndex]);
+			DECOMP_DecalFont_DrawLine(bestLapString, posX, textPosY + 0x18, FONT_SMALL, RED);
+			DECOMP_DecalFont_DrawLine(&bestLapString[6], posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18, FONT_SMALL, PERIWINKLE);
+			DECOMP_DecalFont_DrawLine(lastLapString, posX, textPosY + 0x18 + 8, FONT_SMALL, RED);
+			DECOMP_DecalFont_DrawLine(&lastLapString[6], posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18 + 8, FONT_SMALL, PERIWINKLE);
+		}
+	}
+	#else
 	if
 	(
 		// If you're not in a Relic Race
 		((gGT->gameMode1 & RELIC_RACE) == 0) ||
 		((flags & 2) != 0)
 	)
-	{		
+	{
 		// If you're not in Arcade mode,
 		// nor Time Trial, nor adventure mode
 		if ((gGT->gameMode1 & (ARCADE_MODE | TIME_TRIAL | ADVENTURE_MODE)) == 0)
@@ -262,8 +337,8 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 			if ((numLaps <= (int)lapIndex) && (numLaps < (char)gGT->numLaps))
 			{
 				DECOMP_UI_SaveLapTime(
-					lapIndex, 
-					gGT->elapsedEventTime - driver->lapTime, 
+					lapIndex,
+					gGT->elapsedEventTime - driver->lapTime,
 					(u_int)driver->driverID);
 
 				// custom code for optimization using this unrelated variable
@@ -291,7 +366,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 					// if this is lap 2, and if lap 2 should flash
 					((numLaps == 1) && ((flags & 0x10) != 0)) ||
-					
+
 					// if this is lap 3, and if lap 3 should flash
 					((numLaps == 2) && ((flags & 0x20) != 0))
 				)
@@ -363,8 +438,8 @@ LAB_8004f84c:
 			}
 		} while( 1 );
 	}
-	
-	
+
+
 	// === Relic Race Only ===
 
 
@@ -377,7 +452,7 @@ LAB_8004f84c:
 		// 3a is bit index for unlocking plat relics
 		// 28 is bit index for unlocking gold relics
 		// 16 is bit index for unlocking blue relics
-		
+
 		// if you have gold, draw platinum
 		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (gGT->levelID + 0x28)) != 0)
 		{
@@ -455,5 +530,5 @@ LAB_8004f378:
 	sdata->raceClockStr[5] = sdata->relicTime_10ms + '0';
 	sdata->raceClockStr[6] = sdata->relicTime_1ms + '0';
 	DECOMP_DecalFont_DrawLine(sdata->raceClockStr, (int)(short)uVar11, (int)strFlags_but_its_also_posY, FONT_BIG, (int)(short)(stringColor_but_its_also_relicColor & (0xffff ^ JUSTIFY_RIGHT)));
-	return;
+	#endif
 }

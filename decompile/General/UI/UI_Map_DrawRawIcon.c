@@ -15,6 +15,9 @@ void DECOMP_UI_Map_DrawRawIcon(
   posY = param_2[2];
 
   DECOMP_UI_Map_GetIconPos(ptrMap,&posX,&posY);
+  #ifdef USE_ONLINE
+  posY -= 50;
+  #endif
 
   ptrColor = data.ptrColor[colorID];
 
@@ -28,6 +31,6 @@ void DECOMP_UI_Map_DrawRawIcon(
 	gGT->pushBuffer_UI.ptrOT,
     ptrColor[0], ptrColor[1], ptrColor[2], ptrColor[3],
 	0, (int)scale);
-	
+
   return;
 }

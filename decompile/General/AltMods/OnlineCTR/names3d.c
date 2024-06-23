@@ -1,13 +1,16 @@
+#include <common.h>
+#include "global.h"
+
 struct MyData
 {
 	short World_posX;
 	short World_posY;
 	short World_posZ;
 	short World_posW;
-	
+
 	short Screen_posX;
 	short Screen_posY;
-	
+
 	int Screen_posZ;
 };
 
@@ -18,15 +21,15 @@ int GetOverheadLen(struct Driver* d)
 	ptrDest->World_posY = (d->posCurr[1] >> 8) + 0x19;
 	ptrDest->World_posZ = d->posCurr[2] >> 8;
 	ptrDest->World_posW = 0;
-	
+
 	gte_ldv0(&ptrDest->World_posX);
 
 	gte_rtps();
 	gte_stsxy(&ptrDest->Screen_posX);
 	gte_stsz(&ptrDest->Screen_posZ);
-	
+
 	int posZ = ptrDest->Screen_posZ;
-	
+
 	if(posZ < 150) return 0;
 	if(posZ < 190) return 6;
 	if(posZ < 234) return 5;
@@ -75,32 +78,32 @@ void DrawOverheadCalibration()
 {
 	int i;
 	MATRIX* m;
-	
+
 	// temporary
 	char message[16];
 
 	struct GameTracker* gGT = sdata->gGT;
 	struct MyData* ptrDest = (struct MyData*)0x1f800108;
-	
+
 	if(octr->DriverID == 0)
 	{
 		gGT->drivers[0]->posCurr[0] = 0;
 		gGT->drivers[0]->angle = 0;
 	}
-		
+
 	m = &gGT->drivers[0]->instSelf->matrix;
 	sprintf(message, "%d", gGT->drivers[0]->posCurr[0] >> 8);
 	DecalFont_DrawLine(
 		message,
 		0x100, 8*3,
 		FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-		
+
 	sprintf(message, "%d", 0x19+(gGT->drivers[0]->posCurr[1] >> 8));
 	DecalFont_DrawLine(
 		message,
 		0x100, 8*4,
 		FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-		
+
 	sprintf(message, "%d", gGT->drivers[0]->posCurr[2] >> 8);
 	DecalFont_DrawLine(
 		message,
@@ -115,14 +118,14 @@ void DrawOverheadCalibration()
 	gte_rtps();
 	gte_stsxy(&ptrDest->Screen_posX);
 	gte_stsz(&ptrDest->Screen_posZ);
-	
+
 	int leftX = ptrDest->Screen_posX;
 		DecalFont_DrawLine(
 			"A",
-			ptrDest->Screen_posX, 
-			ptrDest->Screen_posY-0x4, 
+			ptrDest->Screen_posX,
+			ptrDest->Screen_posY-0x4,
 			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-	
+
 	ptrDest->World_posX = (gGT->drivers[1]->posCurr[0] >> 8) + 0x19;
 	ptrDest->World_posY = (gGT->drivers[1]->posCurr[1] >> 8) + 0x19;
 	ptrDest->World_posZ = gGT->drivers[1]->posCurr[2] >> 8;
@@ -131,20 +134,20 @@ void DrawOverheadCalibration()
 	gte_rtps();
 	gte_stsxy(&ptrDest->Screen_posX);
 	gte_stsz(&ptrDest->Screen_posZ);
-	
+
 	int rightX = ptrDest->Screen_posX;
 		DecalFont_DrawLine(
 			"A",
-			ptrDest->Screen_posX, 
-			ptrDest->Screen_posY-0x4, 
+			ptrDest->Screen_posX,
+			ptrDest->Screen_posY-0x4,
 			FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-			
+
 	sprintf(message, "%d", leftX - rightX);
 	DecalFont_DrawLine(
 		message,
 		0x100, 8*8,
 		FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
-		
+
 	ptrDest->World_posX = (gGT->drivers[1]->posCurr[0] >> 8) + 0;
 	ptrDest->World_posY = (gGT->drivers[1]->posCurr[1] >> 8) + 0x19;
 	ptrDest->World_posZ = gGT->drivers[1]->posCurr[2] >> 8;
@@ -153,7 +156,7 @@ void DrawOverheadCalibration()
 	gte_rtps();
 	gte_stsxy(&ptrDest->Screen_posX);
 	gte_stsz(&ptrDest->Screen_posZ);
-		
+
 	sprintf(message, "%d", ptrDest->Screen_posZ);
 	DecalFont_DrawLine(
 		message,
@@ -174,42 +177,42 @@ void DrawOverheadNames()
 	m = &gGT->pushBuffer[0].matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
-	
+
 	#if 0
 	DrawOverheadCalibration();
 	#endif
-	
+
 	// start from P2
 	i = 1;
 	int color = (JUSTIFY_CENTER | ORANGE);
-	
+
 	if((gGT->gameMode1 & START_OF_RACE) != 0)
 	{
 		// start from P1
 		i = 0;
 		color = (JUSTIFY_CENTER | BLUE);
-		
+
 	}
 
 	for(i; i < octr->NumDrivers; i++)
 	{
 		int len = GetOverheadLen(gGT->drivers[i]);
 		if(len == 0) continue;
-		
+
 		// if mirror mode
 		if(octr->special != 0)
 		{
-			ptrDest->Screen_posX = 
+			ptrDest->Screen_posX =
 			0x200 - ptrDest->Screen_posX;
 		}
 
 		DECOMP_DecalFont_DrawLineStrlen(
 			&octr->nameBuffer[i * 0xC],
 			len,
-			ptrDest->Screen_posX, 
-			ptrDest->Screen_posY-0x4, 
+			ptrDest->Screen_posX,
+			ptrDest->Screen_posY-0x4,
 			FONT_SMALL, color);
-		
+
 		// all players except P1
 		color = (JUSTIFY_CENTER | ORANGE);
 	}

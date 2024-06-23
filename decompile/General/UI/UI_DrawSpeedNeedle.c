@@ -25,12 +25,30 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 
   scale = driver->const_SpeedometerScale_ClassStat;
   iVar9 = scale << 0x10;
+  #ifdef USE_ONLINE
+  maxScale = 0x6400 >> 8; // USF
+  #else
   maxScale = scale + driver->const_SacredFireSpeed >> 8;
+  #endif
+  #ifdef USE_ONLINE
+  char speedBigStr[3];
+	speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
+  int speedInt = speed >> 8;
+  speedBigStr[0] = ((speedInt / 100) % 10) + '0';
+  speedBigStr[1] = ((speedInt / 10) % 10) + '0';
+  speedBigStr[2] = (speedInt % 10) + '0';
+  speed = speed << 0x10;
+  #else
   speed = driver->unk36E << 0x10; // is this actually speed?
+  #endif
   minScale = 0;
   iVar9 = iVar9 >> 0x18;
   if (scale < speed >> 0x10) {
+    #ifdef USE_ONLINE
+    maxRange = 0x300;
+    #else
     maxRange = 0x700;
+    #endif
     minRange = 0x980;
     minScale = (iVar9 * 0x1a5e0) / 64000;
   } else {
@@ -67,7 +85,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   }
 
   if (p == 0) return;
-    
+
   setPolyG3(p);
   setRGB0(p, 0x5b, 0x5b, 0);
   setRGB1(p, 0x32, 0x2b, 1);
@@ -143,5 +161,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   *(int *)p = *primmemCurr | 0x6000000;
   *primmemCurr = (u_int) p & 0xffffff;
 
-  return;
+  #ifdef USE_ONLINE
+  DECOMP_DecalFont_DrawLineStrlen(speedBigStr, 3, posX + 0x36, posY + 46, FONT_SMALL, PAPU_YELLOW);
+  #endif
 }

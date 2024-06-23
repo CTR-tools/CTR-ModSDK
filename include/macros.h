@@ -32,9 +32,11 @@ typedef int8_t   s8;
 #define SCREEN_WIDTH 512
 #define SECOND (FPS * ELAPSED_MS)
 #define MINUTE (SECOND * 60)
+#define HOUR (MINUTE * 60)
 
 #define SECONDS(x) ((s32)(((float)x) * SECOND))
 #define MINUTES(x) ((s32)(((float)x) * MINUTE))
+#define HOURS(x)   ((s32)(((float)x) * HOUR))
 
 #define nullptr ((void *) 0)
 

@@ -1,23 +1,22 @@
-// used for boost bar (part 2)
-// used for 60FPS
+#include <common.h>
 
 #ifdef USE_BOOSTBAR
 void uibb_entryHook()
 {
 	struct UiElement2D* ptrHudData;
-	
+
 	// This is already 206
 	// data.hud_1P_P1[8].y
-	
+
 	// Change all these, should be
-	// same value as hud_1P_P1.y 
+	// same value as hud_1P_P1.y
 	data.hud_2P_P1[8].y -= 6;
 	data.hud_2P_P2[8].y -= 6;
 	data.hud_4P_P1[8].y -= 6;
 	data.hud_4P_P2[8].y -= 6;
 	data.hud_4P_P3[8].y -= 6;
 	data.hud_4P_P4[8].y -= 6;
-	
+
 	// lapcount that draws above bootbar
 	data.hud_2P_P1[1].y -= 6;
 	data.hud_2P_P2[1].y -= 6;
@@ -46,7 +45,7 @@ void NewCallback231()
 		// set thread->cooldown to 1 frame,
 		// run thread at 30fps, in 60fps gameplay
 	}
-	
+
 	DECOMP_LOAD_Callback_Overlay_231();
 }
 
@@ -68,7 +67,7 @@ struct Particle* NewParticleInit(struct LinkedList* param_1)
 	// NOTE: Need to add workaround for RB_Explosion_InitPotion,
 	// VehEmitter_DriverMain, when those functions are rewritten,
 	// can't do VehEmitter_Sparks_Ground due to byte budget
-	
+
 	// Workaround, use unused variable to force particles on "any"
 	// frame. This is required for effects that spawn 10x particles
 	// on the same frame (MaskGrab, AkuHints, SpitTire, VehEmitter)
@@ -79,14 +78,14 @@ struct Particle* NewParticleInit(struct LinkedList* param_1)
 		// see VehEmitter_DriverMain and call to VehEmitter_Terrain_Ground
 		if(sdata->gGT->timer & 2) return 0;
 	}
-	
+
 	struct Particle* p =
 		(struct Particle*)LIST_RemoveFront(param_1);
-	
+
 	// remove patching for 60fps
 	p->axis[0x9].startVal = 0;
 	p->axis[0xA].startVal = 0;
-	
+
 	return p;
 }
 
@@ -100,7 +99,7 @@ int BoolCheckExhaust(struct Driver* d)
 	// 		3P4P: driverID == gGT->timer&3
 	//	bots:
 	//		driverID&3 == gGT->timer&3
-	
+
 	// 60fps FAIL conditions:
 	//	humans:
 	//		1P:   gGT->timer&1
@@ -108,11 +107,11 @@ int BoolCheckExhaust(struct Driver* d)
 	//		3P4P: gGT->timer&4
 	//	bots:
 	//		gGT->timer&4
-	
+
 	struct GameTracker* gGT = sdata->gGT;
 	int numPlyr = gGT->numPlyrCurrGame;
 	int timer = gGT->timer;
-	
+
 	// human
 	if(d->driverID < numPlyr)
 	{
@@ -121,13 +120,13 @@ int BoolCheckExhaust(struct Driver* d)
 			if((timer&1) != 0)
 				return 0;
 		}
-		
+
 		else if(numPlyr == 2)
 		{
 			if((timer&2) != 0)
 				return 0;
 		}
-		
+
 		// 3p/4p
 		else
 		{
@@ -135,14 +134,14 @@ int BoolCheckExhaust(struct Driver* d)
 				return 0;
 		}
 	}
-	
+
 	// AI
 	else
 	{
 		if((timer&4) != 0)
 			return 0;
 	}
-	
+
 	return 1;
 }
 
@@ -181,7 +180,7 @@ void ui60_entryHook()
 	{
 		// Intro Camera Fly-in
 		// Need to fix camera zoom to player
-		
+
 		// these are in FollowDriver_Normal
 		*(unsigned short*)0x8001AF6C = 0x14A;
 		*(unsigned short*)0x8001AF80 = 0x12D;
@@ -194,11 +193,11 @@ void ui60_entryHook()
 		// nextDriver->weaponCooldown
 		*(short*)0x800412ac = FPS_DOUBLE(0xFF);
 		*(short*)0x800412b0 = FPS_DOUBLE(0xF0);
-		
+
 		// nextDriver->weaponCooldown (same func, different place)
 		*(short*)0x8004149c = FPS_DOUBLE(0xFF);
 		*(short*)0x800414a0 = FPS_DOUBLE(0xF0);
-		
+
 		// BOTS_GotoStartingLine cooldown
 		*(short*)0x80017144 = FPS_DOUBLE(0xFF);
 		*(short*)0x80017148 = FPS_DOUBLE(0x12c);
@@ -226,7 +225,7 @@ void ui60_entryHook()
 		*(unsigned short*)0x80040c24 = FPS_DOUBLE(0x10);
 		*(unsigned short*)0x80040c40 = FPS_DOUBLE(0xC);
 		*(int*)0x80040c50 = 0x31900;
-		
+
 		// double & 0x10
 		// double + 0xc
 		// double <<2 to <<4

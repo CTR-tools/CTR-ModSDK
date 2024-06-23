@@ -24,7 +24,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
   int iVar15;
   int numDrivers;
   short sVar18;
-  
+
   u_short local_58[2];
 
   gGT = sdata->gGT;
@@ -41,28 +41,28 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 	{
 		DECOMP_RaceFlag_BeginTransition(1);
 	}
-	
+
 	if(!DECOMP_RaceFlag_IsFullyOnScreen())
 		return;
-	
+
 	// Assume FullyOnScreen
 	DECOMP_RaceFlag_SetCanDraw(1);
-	
+
     // disable loading screen,
     // set amount of confetti to zero
     gGT -> confetti.numParticles_max = 0;
     gGT -> confetti.unk2 = 0;
     gGT -> renderFlags &= 0x1000;
   }
-  
+
   // Conditions to increment frame counter
   if (
-		(sdata->framesSinceRaceEnded < 0xf0) || 
+		(sdata->framesSinceRaceEnded < 0xf0) ||
 		(
 			(sdata->framesSinceRaceEnded < 400) &&
-			((sdata->menuReadyToPass & 8) != 0)  
+			((sdata->menuReadyToPass & 8) != 0)
 		)
-	) 
+	)
   {
     sdata->framesSinceRaceEnded++;
   }
@@ -72,35 +72,35 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
 		// If you press Cross or Circle
 		((sdata->AnyPlayerTap & 0x50) != 0)
-	) 
+	)
   {
     sdata->framesSinceRaceEnded = 60;
     sdata->numIconsEOR = numDrivers;
     DECOMP_RECTMENU_ClearInput();
   }
-  
-  if ((sdata->menuReadyToPass & 4) == 0) 
+
+  if ((sdata->menuReadyToPass & 4) == 0)
   {
     local_38 = -0x32;
     local_30 = 0x1e;
-  } 
-  
-  else 
+  }
+
+  else
   {
     local_38 = 0x1e;
     local_30 = -0x32;
   }
-  
-  if (sdata->framesSinceRaceEnded <= 0xf0) 
+
+  if (sdata->framesSinceRaceEnded <= 0xf0)
   {
     uVar9 = 0xffffff6a;
     uVar14 = 0x100;
     local_90 = 0x1e;
     iVar12 = (int) local_38;
     framesPassed = sdata->framesSinceRaceEnded;
-  } 
-  
-  else 
+  }
+
+  else
   {
     uVar9 = 0x100;
     iVar12 = 0x1e;
@@ -110,29 +110,29 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
   }
 
   DECOMP_UI_Lerp2D_Linear(
-	&local_58[0], uVar9, iVar12, 
+	&local_58[0], uVar9, iVar12,
 	uVar14, local_90, framesPassed, 0x14);
 
   // "FINAL"
   int index = 0x22E;
   int cupID = gGT->cup.cupID;
-  
-  if ((sdata->menuReadyToPass & 4) == 0) 
+
+  if ((sdata->menuReadyToPass & 4) == 0)
   {
     // Level ID
     index = data.metaDataLEV[gGT->levelID].name_LNG;
-  } 
-  
-  else if (gGT->cup.trackIndex != 3) 
+  }
+
+  else if (gGT->cup.trackIndex != 3)
   {
   	// If not in Arcade or VS cup
-  	if ((gGT->gameMode2 & 0x10) == 0) 
+  	if ((gGT->gameMode2 & 0x10) == 0)
   	{
   		index = data.AdvCups[cupID].lngIndex_CupName;
   	}
-  
+
   	// If Arcade or VS cup
-  	else 
+  	else
   	{
   		index = data.ArcadeCups[cupID].lngIndex_CupName;
   	}
@@ -140,14 +140,14 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
   // title text
   DECOMP_DecalFont_DrawLine(
-	sdata->lngStrings[index], 
-	local_58[0], local_58[1]-0x11, 
+	sdata->lngStrings[index],
+	local_58[0], local_58[1]-0x11,
 	1, 0xffff8000);
-	
+
   // STANDINGS
   DECOMP_DecalFont_DrawLine(
-	sdata->lngStrings[0xCA], 
-	local_58[0], local_58[1], 
+	sdata->lngStrings[0xCA],
+	local_58[0], local_58[1],
 	1, 0xffff8000);
 
   // 24 characters, in case of other
@@ -164,18 +164,18 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
     gGT->cup.trackIndex + 1);
 
   DECOMP_DecalFont_DrawLine(
-	text, 
-	local_58[0], local_58[1]+0x11, 
+	text,
+	local_58[0], local_58[1]+0x11,
 	2, 0xffff8000);
 
   if (
-		(sdata->framesSinceRaceEnded == (sdata->framesSinceRaceEnded / 10) * 10) 
+		(sdata->framesSinceRaceEnded == (sdata->framesSinceRaceEnded / 10) * 10)
 		&& (sdata->numIconsEOR < numDrivers)
-	) 
+	)
   {
     sdata->numIconsEOR++;
   }
-  
+
   // OPTIMIZATION, replace all pushBuffer RECT values
   //struct PushBuffer* pb = &gGT->pushBuffer[0];
   int rectX = 0;
@@ -186,9 +186,9 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
   // Race with no AIs (9,6,3,1)
   int* points = &data.cupPointsPerPosition[0];
-  
+
   // If VS cup (not purple gem, or adv/arcade)
-  if (numDrivers <= 4) 
+  if (numDrivers <= 4)
   {
   	// 3,2,1,0
   	points = &points[4+(4-numDrivers)];
@@ -214,21 +214,21 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
       else {
 
         // Basically, if you're in 2P Arcade
-        if (numDrivers == 6) 
+        if (numDrivers == 6)
 		{
           uVar9 = 0x42;
-          
+
 		  if (i < 3) {
             sVar7 = rectX;
             sVar5 = 0x60 * sVar5 + 0x20;
-          } 
-		  
+          }
+
 		  else {
             sVar5 = sVar5 + -2;
-            
+
 			LAB_800568b8:
               uVar9 = 0x79;
-			  
+
             sVar7 = rectX;
             sVar5 = 0x60 * sVar5 + 0x60;
           }
@@ -238,37 +238,37 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
         else {
 
           // If VS cup of any kind
-          if (gGT->numBotsNextGame == 0) 
+          if (gGT->numBotsNextGame == 0)
 		  {
             uVar9 = 0x6c;
             sVar7 = rectX + (short)((rectW - (numDrivers * 0x5a) + 0xc) / 2) + sVar18;
             goto LAB_800568d8;
           }
-          
+
 		  uVar9 = 0x42;
           if (3 < i) {
             sVar1 = rectW;
             sVar5 = sVar5 + -4;
             goto LAB_800568b8;
           }
-          
+
 		  sVar7 = rectX;
           sVar5 = 0x60 * sVar5 + 0x20;
         }
-        
+
 		LAB_800568d4:
           sVar7 = sVar7 + sVar5;
       }
-      
+
 	  LAB_800568d8:
-      
-	  if (sdata->framesSinceRaceEnded <= 0xf0) 
+
+	  if (sdata->framesSinceRaceEnded <= 0xf0)
 	  {
         iVar10 = 0x296;
         iVar15 = (int) sVar7;
         framesPassed = sdata->framesSinceRaceEnded - (i*10);
       }
-      
+
 	  else {
         iVar10 = (int) sVar7;
         iVar15 = -0x96;
@@ -277,18 +277,18 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
       // Interpolate fly-in variables over 0x14 frames
       DECOMP_UI_Lerp2D_Linear(
-		&local_58[0], 
-		iVar10, uVar9, 
-		iVar15, uVar9, 
+		&local_58[0],
+		iVar10, uVar9,
+		iVar15, uVar9,
 		framesPassed, 0x14);
 
       // %d
       sprintf(text, &sdata->s_int, i + 1);
 
       DecalFont_DrawLine(
-		text, 
-		local_58[0] + 0x20, 
-		local_58[1] - 1, 
+		text,
+		local_58[0] + 0x20,
+		local_58[1] - 1,
 		2, 3);
 
 	  struct Driver* d;
@@ -316,7 +316,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 			]
 		  ].iconID
 		],
-		
+
 		local_58[0], local_58[1],
 
         &gGT->backBuffer->primMem,
@@ -325,23 +325,23 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
       // If this is the first screen of cup standings,
       // where you see just amount of points added
-      if ((sdata->menuReadyToPass & 4) == 0) 
+      if ((sdata->menuReadyToPass & 4) == 0)
 	  {
         iVar12 = 0;
-	
+
 		if(i < 4)
 			iVar12 = points[i];
-		
+
         *(int*)&text[0] = '+' + (('0' + iVar12)<<8);
       }
 
       // if this is not the first page,
       // so now you see total points of drivers
-      else 
+      else
 	  {
         // The amount of points that each player has, in a cup
         sprintf(
-			text, &sdata->s_longInt[0], 
+			text, &sdata->s_longInt[0],
 			gGT->cup.points[data.cupPositionPerPlayer[i]]);
       }
 
@@ -349,43 +349,43 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
       // draw string for number of points
       DecalFont_DrawLine(
-		text, 
+		text,
 		local_58[0] + 0x2d,
-		local_58[1] + 6, 
+		local_58[1] + 6,
 		1, 1);
     }
 
   // If this is the first screen of cup standings,
   // where you see just amount of points added
-  if ((sdata->menuReadyToPass & 4) == 0) 
+  if ((sdata->menuReadyToPass & 4) == 0)
   {
     // fly-in interpolation
     DECOMP_UI_Lerp2D_Linear(
-		&local_58[0], 
-		-10, (int)local_38, 
-		-10, 9, 
+		&local_58[0],
+		-10, (int)local_38,
+		-10, 9,
 		sdata->framesSinceRaceEnded, 0x14);
   }
 
   // if it's not...
   else {
-    if (sdata->framesSinceRaceEnded <= 0xf0) 
+    if (sdata->framesSinceRaceEnded <= 0xf0)
 	{
       local_58[0] = -10;
       local_58[1] = 9;
-    } 
-	
-	else 
+    }
+
+	else
 	{
       // fly-in interpolation
       DECOMP_UI_Lerp2D_Linear(
-		&local_58[0], 
-		-10, 9, 
-		-10, (int)local_30, 
+		&local_58[0],
+		-10, 9,
+		-10, (int)local_30,
 		sdata->framesSinceRaceEnded + -0xf0, 0x14);
     }
   }
-  
+
   RECT r;
   r.x = local_58[0];
   r.y = local_58[1];
@@ -423,8 +423,8 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
       RECTMENU_ClearInput();
     }
   }
-  
-  else 
+
+  else
   {
     sdata->numIconsEOR = 1;
     sdata->framesSinceRaceEnded = 0;
@@ -437,16 +437,16 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
     // If the "4" flag was not enabled till just now,
     // If this is the first frame of Track Standings
-    if (uVar8 == 0) 
+    if (uVar8 == 0)
 	{
 	  if(numDrivers > 4)
 		  numDrivers = 4;
 
-      for (i = 0; i < numDrivers; i++) 
+      for (i = 0; i < numDrivers; i++)
 	  {
         // the amount of points this player has in the cup
         gGT->cup.points[gGT->driversInRaceOrder[i]->driverID] +=
-	  
+
           // Incremented by
           // The amount of points that should be awarded to each position
           points[i];
@@ -457,7 +457,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
     }
 
     // If this is not the first frame of track standings
-    else 
+    else
 	{
       sdata->menuReadyToPass = uVar6;
 
@@ -472,45 +472,45 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
       // Increment Track Number by 1 (0-3 in the cup)
 	  gGT->cup.trackIndex++;
-	  
+
       int cupTrack = gGT->cup.trackIndex;
 
       // If this is not the last race in the cup
-      if (cupTrack < 4) 
+      if (cupTrack < 4)
 	  {
 		// If not in Arcade or VS cup
-		if ((gGT->gameMode2 & 0x10) == 0) 
+		if ((gGT->gameMode2 & 0x10) == 0)
 		{
 			index = data.advCupTrackIDs[(4*cupID)+cupTrack];
 		}
-	
+
 		// If Arcade or VS cup
-		else 
+		else
 		{
 			index = data.ArcadeCups[cupID].CupTrack[cupTrack].trackID;
 		}
-		  
+
 		MainRaceTrack_RequestLoad(index);
       }
 
       // If this was the last race in the cup
       // If the cup is over
-      else 
+      else
 	  {
 		if ((gGT->gameMode2 & 0x10) != 0)
 			UI_CupStandings_FinalizeCupRanks();
-		
+
         gGT->cup.trackIndex = 0;
 
         // Array with the final ranking of each player
         ranks = &data.cupPositionPerPlayer[0];
-        for (i = 0; i < 8; i++) 
+        for (i = 0; i < 8; i++)
 		{
 		  struct Driver* d;
 		  d = gGT->drivers[ranks[i]];
-			
+
           // If driver is not nullptr
-          if (d != 0) 
+          if (d != 0)
 		  {
             // Set final ranking of each player
             d->driverRank = (short) i;
@@ -521,11 +521,11 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
         }
 
         Podium_InitModels(gGT);
-		
+
 		i = gGT->cup.cupID;
-		  
+
         // If this is an Adventure Cup
-        if ((gGT->gameMode2 & 0x10) == 0) 
+        if ((gGT->gameMode2 & 0x10) == 0)
 		{
           // Array with the ranking of each player
           gGT->levelID = i + 100;
@@ -535,20 +535,20 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           sdata->Loading.OnBegin.RemBitsConfig0 |= 0x10000000;
 
           // If player 1 won the cup
-          if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID) 
+          if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID)
 		  {
             int bitIndex = 0x6a + i;
 			int* rewardsSet = &sdata->advProgress.rewards[0];
-			
-            if (CHECK_ADV_BIT(rewardsSet, bitIndex) == 0) 
+
+            if (CHECK_ADV_BIT(rewardsSet, bitIndex) == 0)
 			{
 			  UNLOCK_ADV_BIT(rewardsSet, bitIndex);
-			  
+
 			  // unlock Roo, Papu, Joe, Pinstripe, FCrash
 			  bitIndex = 7 + i;
 			  rewardsSet = &sdata->gameProgress.unlocks[0];
 			  UNLOCK_ADV_BIT(rewardsSet, bitIndex);
-				
+
               // Set podium reward model to Gem
               gGT->podiumRewardID = 0x5f;
             }
@@ -558,7 +558,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           }
 
           // If player 1 did not win the cup
-          else 
+          else
 		  {
             if (sdata->advProgress.timesLostCupRace[i] < 10)
 				sdata->advProgress.timesLostCupRace[i]++;
@@ -566,28 +566,28 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
         }
 
         // If this is not an Adventure Cup
-        else 
+        else
 		{
 		  // === Naughty Dog Bug ===
 		  // If driver[1] is an AI in a 1P cup,
 		  // then you still get completion credit
-		  
+
           // If Player 1 or Player 2 won the cup
           if (((gGT->drivers[0]->driverRank) == 0) ||
             (((gGT->drivers[1]->driverRank) == 0)) &&
 
             // If you're in Arcade Mode
-            ((gGT->gameMode1 & ARCADE_MODE) != 0)) 
+            ((gGT->gameMode1 & ARCADE_MODE) != 0))
 		  {
 			int difficulty = (gGT->arcadeDifficulty/0x50)-1;
 			if(difficulty > 2) difficulty = 2;
-			
-			int* rewardsSet = 
+
+			int* rewardsSet =
 				&sdata->gameProgress.unlocks[0];
-			
-			int baseIndex = 
+
+			int baseIndex =
 				sdata->UnlockBitIndex.CupCompletion_prev[difficulty];
-			
+
 			// if track was not unlocked "previously",
 			// this writes when TakeCupProgress is saved
 			int bitIndex = baseIndex + gGT->cup.cupID;
@@ -595,15 +595,15 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 			{
               // lets 233 know to prompt the Save Game box
               gGT->gameMode2 |= 0x1000;
-			  
-			  baseIndex = 
+
+			  baseIndex =
 				sdata->UnlockBitIndex.CupCompletion_curr[difficulty];
-			
+
 			  bitIndex = baseIndex + gGT->cup.cupID;
 			  UNLOCK_ADV_BIT(rewardsSet, bitIndex);
-			  
+
 			  int boolUnlockMap = 1;
-              for (i = 0; i < 4; i++) 
+              for (i = 0; i < 4; i++)
 			  {
                 // if any of four cups on this difficulty was not won
 				bitIndex = baseIndex + i;
@@ -616,7 +616,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
               }
 
               // If new Battle unlocked
-              if (boolUnlockMap) 
+              if (boolUnlockMap)
 			  {
 				bitIndex = sdata->UnlockBitIndex.UnlockBattleMap[difficulty];
 				UNLOCK_ADV_BIT(rewardsSet, bitIndex);
@@ -630,7 +630,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           // Set podium's reward model to "Empty"
           gGT->podiumRewardID = 0x38;
         }
-		
+
         // Level ID for Gemstone Valley (podiums)
         MainRaceTrack_RequestLoad(0x19);
       }
@@ -640,7 +640,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
 #include "../AltMods/Mods8.c"
 
-void Mods8_EndOfFile()
+void __attribute__ ((section (".end"))) Mods8_EndOfFile()
 {
 	// leave empty
 }

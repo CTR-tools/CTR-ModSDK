@@ -10,7 +10,7 @@
 
 #include "../AltMods/Mods6.c"
 
-void Mods6_EndOfFile()
+void __attribute__ ((section (".end"))) Mods6_EndOfFile()
 {
 	// leave empty
 }
