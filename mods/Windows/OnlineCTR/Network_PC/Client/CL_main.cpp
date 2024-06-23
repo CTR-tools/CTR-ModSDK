@@ -1330,6 +1330,7 @@ int main()
 	//this call is only good if we're certain duckstation is *running* (and pine is enabled,
 	// but that needs to be done manually by the user or by the INI config).
 	defMemInit();
+	//Sleep(5000);
 
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
@@ -1367,15 +1368,15 @@ int main()
 		//yes I know I know, we can't do this, we must use PINE (see commented out code below).
 		//but since this is faster, this actually solves windowsClientSync for now, so I've been
 		//using it to understand its behavior as it confuses me a bit.
-		OGpBuf[0xc000 + iii]++;
+		//OGpBuf[0xc000 + iii]++;
 		//if we can make windowsClientSync a unilateral overwrite (i.e., = 1 instead of ++)
 		//then we can just *not* read and write only, skipping ~50% of latency, or maybe ~99%
 		//of client loop slowdown if we make write non-blocking.
 
 		//we need to get this working.
-		/*octr.refresh();
-		(*octr.get()).windowsClientSync[0] = (*octr.get()).windowsClientSync[0] + 1;
-		octr.commit();*/
+		octr.refresh();
+		(*octr.get()).windowsClientSync[0]++;// = (*octr.get()).windowsClientSync[0] + 1;
+		octr.commit();
 
 		//constexpr int i = (0x8000C000 & 0xffffff) + offsetof(OnlineCTR, windowsClientSync[0]);
 

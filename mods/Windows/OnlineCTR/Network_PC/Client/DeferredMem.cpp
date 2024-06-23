@@ -2,15 +2,22 @@
 #include <WinSock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
+#include <atomic>
+#include <thread>
 
 SOCKET dspineSocket;
+std::atomic<int> outstandingReads = 0;
+std::thread recvWorker;
+
+void recvThread();
 
 void defMemInit()
 {
-	dspineSocket = getSocket();
+	dspineSocket = initSocket();
+	recvWorker = std::thread{ recvThread };
 }
 
-SOCKET getSocket() //every call to getSocket should be bookmatched by a call to closeSocket.
+SOCKET initSocket() //every call to initSocket should be bookmatched by a call to closeSocket.
 {
 	//https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-basic-winsock-application
 	WSADATA wsadata;
@@ -69,11 +76,38 @@ SOCKET getSocket() //every call to getSocket should be bookmatched by a call to 
 	return sock;
 }
 
-void closeSocket(SOCKET* socket) //should be preceded by a call to getSocket
+void closeSocket(SOCKET* socket) //should be preceded by a call to initSocket
 {
 	if (*socket != INVALID_SOCKET)
 		closeSocket(socket);
 	WSACleanup();
+}
+
+void recvThread()
+{
+	constexpr unsigned int recvBufLen = 5;
+	char recieveBuffer[recvBufLen];
+
+	while (true)
+	{
+		while (outstandingReads > 0)
+		{
+			WSAPOLLFD fdarr = { 0 };
+			fdarr.fd = dspineSocket;
+			fdarr.events = POLLRDNORM;
+			WSAPoll(&fdarr, 1, -1);
+			int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+			if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
+				outstandingReads--; //very good
+			else 
+			{
+				if (recvLen < recvBufLen)
+					printf("recv returned less than required buffer length ");
+				printf("recv AAA failed: %d\n", WSAGetLastError());
+				exit(-69420); //could be caused by many things.
+			}
+		}
+	}
 }
 
 /*
@@ -85,6 +119,7 @@ void closeSocket(SOCKET* socket) //should be preceded by a call to getSocket
 
 void readMemorySegment(unsigned int addr, size_t len, char* buf)
 {
+	while (outstandingReads > 0) { ; } //wait for no more recvs
 	constexpr unsigned int sendBufLen = 10;
 	constexpr unsigned int recvBufLen = 13;
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
@@ -115,32 +150,51 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
 		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-
-		send(dspineSocket, sendBuffer, recvBufLen, 0); //10 = packetSize	
+		
+		send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize	
 	}
 	//poll?
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{
 		//recieve section
+		//int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+		//u_long mode = 0;
+		//if (ioctlsocket(dspineSocket, FIONBIO, &mode) == SOCKET_ERROR)
+		//{
+		//	printf("Unable to put the socket into blocking mode.\n");
+		//	exit(-42069);
+		//}
+		WSAPOLLFD fdarr = { 0 };
+		fdarr.fd = dspineSocket;
+		fdarr.events = POLLRDNORM;
+		WSAPoll(&fdarr, 1, -1);
 		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
 		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
 			; //very good
 		else if (recvLen == SOCKET_ERROR)
 		{
-			printf("recv failed: %d\n", WSAGetLastError());
+			if (recvLen < recvBufLen)
+				printf("recv returned less than required buffer length ");
+			printf("recv BBB failed: %d\n", WSAGetLastError());
 		}
 		else
 			exit(-69420); //could be caused by many things.
 		for (size_t c = 0; c < 8; c++)
 			if (i + c < len)
 				buf[i + c] = recieveBuffer[c + 5];
+		/*mode = 1;
+		if (ioctlsocket(dspineSocket, FIONBIO, &mode) == SOCKET_ERROR)
+		{
+			printf("Unable to put the socket into non-blocking mode.\n");
+			exit(-42069);
+		}*/
 	}
 }
 
 void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 {
 	constexpr unsigned int sendBufLen = 18;
-	constexpr unsigned int recvBufLen = 5;
+	//constexpr unsigned int recvBufLen = 5;
 	//TODO:
 	/*
 	* Make send non-blocking, and make recv's SOCKET_ERROR check &
@@ -160,7 +214,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //18 = packetSize
 	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //18 = packetSize
 	sendBuffer[4] = DSPINEMsgWrite64;
-	char recieveBuffer[recvBufLen]; //idk
+	//char recieveBuffer[recvBufLen];
 	size_t whole = len - (len % 8);
 	for (size_t i = 0; i < whole; i += 8)
 	{ //8 byte transfer(s)
@@ -179,23 +233,30 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[14] = buf[i + 5];
 		sendBuffer[15] = buf[i + 6];
 		sendBuffer[16] = buf[i + 7];
-
+		outstandingReads++;
 		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
 	}
 	//recv should call back to a function that ensures 'very good' case, otherwise exit (unrecoverable).
-	for (size_t i = 0; i < whole; i += 8)
-	{
-		//recieve section
-		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-			; //very good
-		else if (recvLen == SOCKET_ERROR)
-		{
-			printf("recv failed: %d\n", WSAGetLastError());
-		}
-		else
-			exit(-69420); //could be caused by many things.
-	}
+	//for (size_t i = 0; i < whole; i += 8)
+	//{
+	//	//recieve section
+	//	int recvLen = WSAEWOULDBLOCK;
+	//	while (recvLen == WSAEWOULDBLOCK)
+	//	{
+	//		//TODO: switch to non-busy waiting
+	//		//for somre reason theres a lot of conlicting opinions
+	//		//about poll, select and others.
+	//		recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+	//	}
+	//	if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
+	//		; //very good
+	//	else if (recvLen == SOCKET_ERROR)
+	//	{
+	//		printf("recv failed: %d\n", WSAGetLastError());
+	//	}
+	//	else
+	//		exit(-69420); //could be caused by many things.
+	//}
 
 	//this section takes care of the leftover bit at the end that isn't divisible by 8.
 	//unfortunately, this implementation currently reads the existing 8-byte block, then just
@@ -222,16 +283,17 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
 		for (size_t i = 0; i < rem; i++)
 			sendBuffer[9 + i] = buf[whole + i];
+		outstandingReads++;
 		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
-		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen)
-			; //very good
-		else if (recvLen == SOCKET_ERROR)
-		{
-			printf("recv failed: %d\n", WSAGetLastError());
-		}
-		else
-			exit(-69420); //could be caused by many things.
+		//int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+		//if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen)
+		//	; //very good
+		//else if (recvLen == SOCKET_ERROR)
+		//{
+		//	printf("recv failed: %d\n", WSAGetLastError());
+		//}
+		//else
+		//	exit(-69420); //could be caused by many things.
 	}
 }
 

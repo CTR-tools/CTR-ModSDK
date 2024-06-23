@@ -10,7 +10,7 @@
 
 
 extern void defMemInit();
-extern SOCKET getSocket();
+extern SOCKET initSocket();
 extern void closeSocket(SOCKET* socket);
 extern void readMemorySegment(unsigned int addr, size_t len, char* buf);
 extern void writeMemorySegment(unsigned int addr, size_t len, char* buf);
@@ -82,6 +82,7 @@ public:
 	/// </summary>
 	void commit()
 	{
+		//constexpr int aaa = offsetof(OnlineCTR, windowsClientSync); // = 40
 		for (size_t i = 0; i < sizeof(T); i += 8)
 		{
 			if (memcmp(buf + i, originalBuf + i, 8) != 0)
@@ -89,7 +90,7 @@ public:
 				//TODO: instead of writing the dirty memory,
 				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
 				//*then* writeMemorySegment() that entire chunk.
-				writeMemorySegment(address, 8, buf + i);
+				writeMemorySegment(address + i, 8, buf + i);
 			}
 		}
 		size_t rem = (sizeof(T) % 8 == 0) ? 0 : (8 - (sizeof(T) % 8));
