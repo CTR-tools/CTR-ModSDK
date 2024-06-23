@@ -18,6 +18,9 @@
 
 
 
+//The PR https://github.com/stenzek/duckstation/pull/3219 seems to have some slightly more accurate
+//information, that said, these comments reflect my observations.
+
 //I believe this is how it's actually formatted (at least for DSPINEMsgRead64):
 //         Packet size (the literal value 10 occupies these 4 bytes) (9 bytes once the ds bug is fixed)
 //         |           IPC Message Event (1 byte)
@@ -26,10 +29,10 @@
 //         |           |  |           |
 // format: XX XX XX XX YY ZZ ZZ ZZ ZZ ??
 //         Packet size (the literal value 13 occupies this 1 byte).
-//         |  These 4 bytes are always 0??? (this might be the reply code 0 extended???)
-//         |  |           Memory at that address
-//         |  |           |
-// reply:  XX YY YY YY YY ZZ ZZ ZZ ZZ ZZ ZZ ZZ ZZ
+//         |           Reply code (00 if success, FF if fail)
+//         |           |  Memory at that address
+//         |           |  |
+// reply:  XX XX XX XX YY ZZ ZZ ZZ ZZ ZZ ZZ ZZ ZZ
 
 //I believe this is how it's actually formatted (at least for DSPINEMsgWrite64):
 //         Packet size (the literal value 18 occupies these 4 bytes) (17 bytes once the ds bug is fixed)
@@ -39,8 +42,10 @@
 //         |           |  |           |                       Empty (duckstation has a bug, and an unused byte at the end is required).
 //         |           |  |           |                       |
 // format: VV VV VV VV WW XX XX XX XX YY YY YY YY YY YY YY YY ??
-//
-// reply:  XX YY YY YY YY
+//         Packet size (the literal value 5 occupies this 1 byte).
+//         |           Reply code (00 if success, FF if fail)
+//         |           |
+// reply:  XX XX XX XX YY
 
 #define DSPINEMsgRead8 0            /**< Read 8 bit value to memory. */
 #define DSPINEMsgRead16 1           /**< Read 16 bit value to memory. */

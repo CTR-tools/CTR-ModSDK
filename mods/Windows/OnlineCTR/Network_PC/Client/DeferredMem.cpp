@@ -59,13 +59,13 @@ SOCKET getSocket() //every call to getSocket should be bookmatched by a call to 
 	}
 	else
 		printf("DuckStation PINE socket acquired.\n");
-	//u_long mode = 1;
-	//ires = ioctlsocket(sock, FIONBIO, &mode); //make the socket non-blocking
-	//if (ires == SOCKET_ERROR)
-	//{
-	//	printf("Unable to put the socket into non-blocking mode.\n");
-	//	return NULL;
-	//}
+	u_long mode = 1;
+	ires = ioctlsocket(sock, FIONBIO, &mode); //make the socket non-blocking
+	if (ires == SOCKET_ERROR)
+	{
+		printf("Unable to put the socket into non-blocking mode.\n");
+		return NULL;
+	}
 	return sock;
 }
 
@@ -85,6 +85,8 @@ void closeSocket(SOCKET* socket) //should be preceded by a call to getSocket
 
 void readMemorySegment(unsigned int addr, size_t len, char* buf)
 {
+	constexpr unsigned int sendBufLen = 10;
+	constexpr unsigned int recvBufLen = 13;
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
 	//https://github.com/stenzek/duckstation/pull/3230
 
@@ -96,13 +98,13 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 
 	//either make socket blocking again *or* find non-busy wait soln
 	//to wait for when recv() is ready to give us data
-	char sendBuffer[10] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
-	sendBuffer[0] = 10 & 0xFF; //10 = packetSize
-	sendBuffer[1] = (10 >> 8) & 0xFF; //10 = packetSize
-	sendBuffer[2] = (10 >> 16) & 0xFF; //10 = packetSize
-	sendBuffer[3] = (10 >> 24) & 0xFF; //10 = packetSize
+	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
+	sendBuffer[0] = sendBufLen & 0xFF; //10 = packetSize
+	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //10 = packetSize
+	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //10 = packetSize
+	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //10 = packetSize
 	sendBuffer[4] = DSPINEMsgRead64;
-	char recieveBuffer[13];
+	char recieveBuffer[recvBufLen];
 	size_t roundedLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{ //8 byte transfer(s)
@@ -114,13 +116,14 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
 
-		send(dspineSocket, sendBuffer, 10, 0); //10 = packetSize	
+		send(dspineSocket, sendBuffer, recvBufLen, 0); //10 = packetSize	
 	}
+	//poll?
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{
 		//recieve section
-		int recvLen = recv(dspineSocket, recieveBuffer, 13, 0);
-		if (recvLen == 13 && recieveBuffer[0] == 13)
+		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
 			; //very good
 		else if (recvLen == SOCKET_ERROR)
 		{
@@ -136,6 +139,8 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 
 void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 {
+	constexpr unsigned int sendBufLen = 18;
+	constexpr unsigned int recvBufLen = 5;
 	//TODO:
 	/*
 	* Make send non-blocking, and make recv's SOCKET_ERROR check &
@@ -149,13 +154,13 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	*/
 
 	//ensure socket is set to non-blocking
-	char sendBuffer[18] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; //18 = packetSize
-	sendBuffer[0] = 18 & 0xFF; //18 = packetSize
-	sendBuffer[1] = (18 >> 8) & 0xFF; //18 = packetSize
-	sendBuffer[2] = (18 >> 16) & 0xFF; //18 = packetSize
-	sendBuffer[3] = (18 >> 24) & 0xFF; //18 = packetSize
+	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; //18 = packetSize
+	sendBuffer[0] = sendBufLen & 0xFF; //18 = packetSize
+	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //18 = packetSize
+	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //18 = packetSize
+	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //18 = packetSize
 	sendBuffer[4] = DSPINEMsgWrite64;
-	char recieveBuffer[100]; //idk
+	char recieveBuffer[recvBufLen]; //idk
 	size_t whole = len - (len % 8);
 	for (size_t i = 0; i < whole; i += 8)
 	{ //8 byte transfer(s)
@@ -175,14 +180,14 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[15] = buf[i + 6];
 		sendBuffer[16] = buf[i + 7];
 
-		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
+		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
 	}
 	//recv should call back to a function that ensures 'very good' case, otherwise exit (unrecoverable).
 	for (size_t i = 0; i < whole; i += 8)
 	{
 		//recieve section
-		int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
-		if (recvLen == 5 && recieveBuffer[0] == 5)
+		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
 			; //very good
 		else if (recvLen == SOCKET_ERROR)
 		{
@@ -217,9 +222,9 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
 		for (size_t i = 0; i < rem; i++)
 			sendBuffer[9 + i] = buf[whole + i];
-		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
-		int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
-		if (recvLen == 5 && recieveBuffer[0] == 5)
+		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
+		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen)
 			; //very good
 		else if (recvLen == SOCKET_ERROR)
 		{
