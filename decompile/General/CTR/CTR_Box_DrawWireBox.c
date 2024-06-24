@@ -8,14 +8,18 @@ void DECOMP_CTR_Box_DrawWireBox(RECT * r, Color color, void * ot)
 
     const PrimCode primCode = { .line = { .renderCode = RenderCode_Line, .polyline = 1 } };
     color.code = primCode;
-
     p->colorCode = color;
-    p->v[0].pos.x = r->x;
-    p->v[0].pos.y = r->y;
-    p->v[1].pos.x = r->x + r->w;
-    p->v[1].pos.y = r->y;
-    p->v[2].pos.x = r->x + r->w;
-    p->v[2].pos.y = r->y + r->h;
+
+    s16 topX = r->x;
+    s16 topY = r->y;
+    s16 bottomX = r->x + r->w;
+    s16 bottomY = r->y + r->h;
+    p->v[0].pos.x = topX;
+    p->v[0].pos.y = topY;
+    p->v[1].pos.x = bottomX;
+    p->v[1].pos.y = topY;
+    p->v[2].pos.x = bottomX;
+    p->v[2].pos.y = bottomY;
     p->end = 0x55555555;
 
     AddPrimitive(p, ot);
@@ -23,12 +27,12 @@ void DECOMP_CTR_Box_DrawWireBox(RECT * r, Color color, void * ot)
     if (p == nullptr) { return; }
 
     p->colorCode = color;
-    p->v[0].pos.x = r->x;
-    p->v[0].pos.y = r->y;
-    p->v[1].pos.x = r->x;
-    p->v[1].pos.y = r->y + r->h;
-    p->v[2].pos.x = r->x + r->w;
-    p->v[2].pos.y = r->y + r->h;
+    p->v[0].pos.x = topX;
+    p->v[0].pos.y = topY;
+    p->v[1].pos.x = topX;
+    p->v[1].pos.y = bottomY;
+    p->v[2].pos.x = bottomX;
+    p->v[2].pos.y = bottomY;
     p->end = 0x55555555;
 
     AddPrimitive(p, ot);
