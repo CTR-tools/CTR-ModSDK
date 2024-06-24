@@ -8,16 +8,20 @@ void DECOMP_CTR_Box_DrawSolidBox(RECT * r, Color color, u_long * ot)
 
     const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1 } };
     color.code = primCode;
-
     p->colorCode = color;
-    p->v[0].pos.x = r->x;
-    p->v[0].pos.y = r->y;
-    p->v[1].pos.x = r->x + r->w;
-    p->v[1].pos.y = r->y;
-    p->v[2].pos.x = r->x;
-    p->v[2].pos.y = r->y + r->h;
-    p->v[3].pos.x = r->x + r->w;
-    p->v[3].pos.y = r->y + r->h;
+
+    s16 topX = r->x;
+    s16 topY = r->y;
+    s16 bottomX = r->x + r->w;
+    s16 bottomY = r->y + r->h;
+    p->v[0].pos.x = topX;
+    p->v[0].pos.y = topY;
+    p->v[1].pos.x = bottomX;
+    p->v[1].pos.y = topY;
+    p->v[2].pos.x = topX;
+    p->v[2].pos.y = bottomY;
+    p->v[3].pos.x = bottomX;
+    p->v[3].pos.y = bottomY;
 
     AddPrimitive(p, ot);
 }
