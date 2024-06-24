@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CS_Podium_Camera_ThTick(struct Thread *th)
+void DECOMP_CS_Podium_Camera_ThTick(struct Thread *th)
 {
   short rewardId;
   u_short uVar4;
@@ -41,7 +41,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
   if ((((OVR_233.cutsceneState != 0) ||
 
         // if pressed Start to skip scene
-        (*(u_int *)0x800b0b84 != 0)) &&
+        (OVR_233.unknown2 != 0)) &&
 
        // if cup is beaten now, that was not previously beaten
        ((gGT->gameMode2 & 0x1000) != 0)) &&
@@ -109,11 +109,12 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
   }
   else
   {
+    // if you win this cup for the first time
     if ((gGT->gameMode2 & 0x1000) != 0)
       goto LAB_800af2ec;
 
     // PRESS * TO CONTINUE
-    DecalFont_DrawLine(sdata->lngStrings[0xC9], 256, 190, FONT_BIG, (0xffff0000 | JUSTIFY_CENTER));
+    DecalFont_DrawLine(sdata->lngStrings[0xC9], 256, 190, FONT_BIG, (ORANGE | JUSTIFY_CENTER));
   }
 
   if (((gGT->gameMode2 & 0x1000) == 0) && (sdata->ptrActiveMenu == NULL))
@@ -281,6 +282,6 @@ LAB_800af2ec:
   // If you tap the "Start" button
   if ((sdata->gGamepads->gamepad[0].buttonsTapped & BTN_START) != 0)
   {
-    *(u_int *)0x800b0b84 = 1;
+    OVR_233.unknown2 = 1;
   }
 }

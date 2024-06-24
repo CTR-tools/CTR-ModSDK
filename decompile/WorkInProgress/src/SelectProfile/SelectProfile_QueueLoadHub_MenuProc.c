@@ -5,7 +5,7 @@ void DECOMP_SelectProfile_QueueLoadHub_MenuProc(struct RectMenu* menu)
   struct GameTracker* gGT = sdata->gGT;
 
   // set level ID to main menu
-  gGT->levelID = 0x27;
+  gGT->levelID = MAIN_MENU_LEVEL;
 
   // change character ID to icon ID
   data.characterIDs[0] = sdata->advProgress.characterID;
@@ -15,5 +15,4 @@ void DECOMP_SelectProfile_QueueLoadHub_MenuProc(struct RectMenu* menu)
 
   // make Menu invisible
   RECTMENU_Hide(mb);
-  return;
 }

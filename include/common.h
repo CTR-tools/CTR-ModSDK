@@ -28,6 +28,7 @@
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_HIGH1P
+//#define USE_ENGINESWAP  // Online only, for now
 #endif
 
 #ifdef USE_60FPS

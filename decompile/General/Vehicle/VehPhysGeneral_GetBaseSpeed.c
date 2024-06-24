@@ -40,7 +40,7 @@ int DECOMP_VehPhysGeneral_GetBaseSpeed(struct Driver* driver)
   // {0, 0x42e, 2, 14640, 15020, 15400, 14450}
   // {0, 0x42c, 2, 13140, 13520, 13900, 12950}
   // subtraction = 1500
-  int netSpeedStat = (((driver->const_AccelSpeed_ClassStat - driver->const_Speed_ClassStat) * 0x1000) / 5) - 1;
+  int netSpeedStat = (((driver->const_RevEngine_Limit - driver->const_Speed_ClassStat) * 0x1000) / 5) - 1;
 
   #endif
 

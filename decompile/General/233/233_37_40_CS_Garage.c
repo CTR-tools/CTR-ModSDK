@@ -10,7 +10,7 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
         gGarage.numFramesCurr_ZoomOut = 0;
 
 #ifndef REBUILD_PS1
-		// both howl
+        // both howl
         Garage_Init();
         Garage_Enter(sdata->advCharSelectIndex_curr);
 #endif
@@ -35,345 +35,321 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
 
 #ifdef USE_OXIDE
 char OXIDE_GarageUnlockFlags[] =
-{
-	// [x] = y
-	// [characterID-8] = unlockFlag (unlocks[0] & 1<<self)
+    {
+        // [x] = y
+        // [characterID-8] = unlockFlag (unlocks[0] & 1<<self)
 
-	0x0A,
-	0x08,
-	0x07,
-	0x09,
-	0x05,
-	0x06,
-	0x0B,
-	0x0C,
+        0x0A,
+        0x08,
+        0x07,
+        0x09,
+        0x05,
+        0x06,
+        0x0B,
+        0x0C,
 
 };
 
 int OXIDE_GarageGetNext(int curr, int dir)
 {
-	do
-	{
-		// go to next
-		curr += dir;
-		curr &= 0xf;
-	
-	// repeat search if new character is locked
-	} while(
-			// character has unlock condition
-			(curr >= 8) &&
-			
-			(
-				// locked
-				(
-					sdata->gameProgress.unlocks[0] &
-					(1 << OXIDE_GarageUnlockFlags[curr-8])
-				) == 0
-			)
-		   );
-		   
-	return curr;
+    do
+    {
+        // go to next
+        curr += dir;
+        curr &= 0xf;
+
+        // repeat search if new character is locked
+    } while (
+        // character has unlock condition
+        (curr >= 8) &&
+
+        (
+            // locked
+            (
+                sdata->gameProgress.unlocks[0] &
+                (1 << OXIDE_GarageUnlockFlags[curr - 8])) == 0));
+
+    return curr;
 }
 #endif
 
 void DECOMP_CS_Garage_MenuProc(void)
 {
-    char bVar1;
-    short sVar3;
-    short sVar4;
-    int iVar5;
-    short *puVar6;
-    int iVar7;
-    u_int uVar9;
-    u_int *puVar11;
-    int iVar12;
-    u_int *puVar13;
-    int iVar14;
-    int iVar16;
-    int iVar17;
-    int* ptrColor;
-    int uVar19;
-    u_short uVar21;
-    u_int uVar22;
-    short local_70;
-    short local_6e;
-    short local_6c;
-    short local_6a;
-    u_int local_68;
-    int local_64;
-    u_int local_60;
-    int local_5c;
-    u_short local_40;
-    int local_30;
-    int local_2c;
-
+    short garageFrames;
+    short *barLen;
+    u_short classNamePosX;
+    int i;
+    u_int statNamePosX;
+    u_int statBarPosX;
+    
+    u_int currSelectIndex = sdata->advCharSelectIndex_curr;
     struct GameTracker *gGT = sdata->gGT;
-	struct PrimMem* primMem = &gGT->backBuffer->primMem;
-	struct MetaDataCHAR* MDC = &data.MetaDataCharacters[sdata->advCharSelectIndex_curr];
-	int nameIndex = MDC->name_LNG_long;
-	RECT r;
-	
-	#ifdef USE_OXIDE
-	if(
-		// if Crash selected
-		(sdata->advCharSelectIndex_curr == 0) &&
-		(gGarage.numFramesCurr_GarageMove == 0) &&
-		
-		// if at least one character unlocked
-		((sdata->gameProgress.unlocks[0] & 0x1FE0) != 0)
-	  )
-	{
-		// button
-		int buttonTap = sdata->AnyPlayerTap;
+    struct PrimMem *primMem = &gGT->backBuffer->primMem;
+    struct MetaDataCHAR *MDC = &data.MetaDataCharacters[currSelectIndex];
+    int nameIndex = MDC->name_LNG_long;
+    RECT r;
 
-		// left
-		if((buttonTap & BTN_L1) == BTN_L1)
-			gGarage.unusedFrameCount =
-				OXIDE_GarageGetNext(
-					gGarage.unusedFrameCount, -1);
+#ifdef USE_OXIDE
+    if (
+        // if Crash selected
+        (charSelectIndex == 0) &&
+        (gGarage.numFramesCurr_GarageMove == 0) &&
 
-		// right
-		else if((buttonTap & BTN_R1) == BTN_R1)
-			gGarage.unusedFrameCount =
-				OXIDE_GarageGetNext(
-					gGarage.unusedFrameCount, 1);
-		
-		MDC = &data.MetaDataCharacters[gGarage.unusedFrameCount];
-		nameIndex = MDC->name_LNG_long;
+        // if at least one character unlocked
+        ((sdata->gameProgress.unlocks[0] & 0x1FE0) != 0))
+    {
+        // button
+        int buttonTap = sdata->AnyPlayerTap;
 
-		DECOMP_DecalFont_DrawLine
-		(
-			"PRESS L1 OR R1 TO SWAP",
-			0x100,					// midpoint
-			0xc8,					// near bottom
-			FONT_SMALL,				// small text
-			(JUSTIFY_CENTER | ORANGE)	// center
-		);
-	}
-	#endif
+        // left
+        if ((buttonTap & BTN_L1) == BTN_L1)
+            gGarage.unusedFrameCount =
+                OXIDE_GarageGetNext(
+                    gGarage.unusedFrameCount, -1);
+
+        // right
+        else if ((buttonTap & BTN_R1) == BTN_R1)
+            gGarage.unusedFrameCount =
+                OXIDE_GarageGetNext(
+                    gGarage.unusedFrameCount, 1);
+
+        MDC = &data.MetaDataCharacters[gGarage.unusedFrameCount];
+        nameIndex = MDC->name_LNG_long;
+
+        DECOMP_DecalFont_DrawLine(
+            "PRESS L1 OR R1 TO SWAP",
+            0x100,                    // midpoint
+            0xc8,                     // near bottom
+            FONT_SMALL,               // small text
+            (JUSTIFY_CENTER | ORANGE) // center
+        );
+    }
+#endif
 
     // CameraDC, freecam mode
     gGT->cameraDC[0].cameraMode = 3;
 
-	#ifdef USE_60FPS
-	if( (gGT->timer & 1) == 0)
-		sVar4 = gGarage.numFramesCurr_GarageMove;
-	else
-	#endif
+#ifdef USE_60FPS
+    if ((gGT->timer & 1) == 0)
+        sVar4 = gGarage.numFramesCurr_GarageMove;
+    else
+#endif
 
-		// subtract transition timer by one frame
-		sVar4 = gGarage.numFramesCurr_GarageMove - 1;
+        // subtract transition timer by one frame
+		garageFrames = gGarage.numFramesCurr_GarageMove - 1;
 
     // if mid-transition, skip some code
     if (gGarage.numFramesCurr_GarageMove != 0)
-        goto LAB_800b821c;
+        goto SKIP_CONTROLS;
 
-    // At this point, there must not be a transition
-    // between drivers, so start drawing the UI
-	
-	#if 0
+        // At this point, there must not be a transition
+        // between drivers, so start drawing the UI
+
+#if 0
 	// count frames in garage?
     gGarage.unusedFrameCount++;
-	#endif
-	
+#endif
+
+#ifndef USE_ENGINESWAP
     // animate growth of all three stat bars
-    for (iVar7 = 0; iVar7 < 3; iVar7++)
+    for (i = 0; i < 3; i++)
     {
-		short* bar = &gGarage.barLen[iVar7];
-		short stat = gGarage.barStat[MDC->engineID*3 + iVar7];
-		
-		#ifdef USE_16BY9
-		stat = WIDE_34(stat);
-		#endif
-		
-		// half bar length, half speed per frame, just add 1
-		#if (defined(USE_60FPS) && defined(USE_16BY9))
-			#define BAR_RATE 1
-		#else
-			#define BAR_RATE 3
-		#endif
-		
-        if (*bar < stat)	*bar = *bar + BAR_RATE;
-        if (stat < *bar)	*bar = stat;
+        barLen = &gGarage.barLen[i];
+        short stat = gGarage.barStat[MDC->engineID * 3 + i];
+
+#ifdef USE_16BY9
+        stat = WIDE_34(stat);
+#endif
+
+// half bar length, half speed per frame, just add 1
+#if (defined(USE_60FPS) && defined(USE_16BY9))
+#define BAR_RATE 1
+#else
+#define BAR_RATE 3
+#endif
+
+        if (*barLen < stat)
+            *barLen = *barLen + BAR_RATE;
+        if (stat < *barLen)
+            *barLen = stat;
     }
 
     if (
-			// Tiny Tiger
-			(nameIndex == 0x2e) ||
-        
-			(
-				uVar19 = 0x17f,
-				
-				// Pura
-				nameIndex == 0x33
-			)
-		)
+        // Tiny Tiger
+        (nameIndex == 46) ||
+
+        (statNamePosX = 383,
+
+         // Pura
+         nameIndex == 51))
     {
-        uVar19 = 0x81;
-        local_40 = 0x80;
-        uVar22 = 0x8b;
+        statNamePosX = 129;
+        classNamePosX = 128;
+        statBarPosX = 139;
     }
     else
     {
-        local_40 = 0x180;
-        uVar22 = 0x189;
+        classNamePosX = 384;
+        statBarPosX = 393;
     }
 
     // "Speed"
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x245], uVar19, 0x1e, 1, 0x4022);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x245], statNamePosX, 30, FONT_BIG, JUSTIFY_RIGHT | ORANGE_RED);
 
     // "Accel"
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x246], uVar19, 0x2d, 1, 0x4021);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x246], statNamePosX, 45, FONT_BIG, JUSTIFY_RIGHT | LIME_GREEN);
 
     // "Turn"
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x247], uVar19, 0x3c, 1, 0x4020);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x247], statNamePosX, 60, FONT_BIG, JUSTIFY_RIGHT | BLUE);
 
-	int engineID = MDC->engineID;
+    int engineID = MDC->engineID;
 
     // 0x248 - Beginner
-	// EngineID == 3
-	iVar7 = 0;
-	
-	// 0x24A - Advanced
-	if (engineID == 2) iVar7 = 2;
-	
-	// 0x249 - Intermediate
-    if (engineID < 2) iVar7 = 1;
+    // EngineID == 3
+    i = 0;
 
-    iVar17 = 0;
-    uVar21 = 0x21;
-    local_2c = 0x28;
-    local_30 = 0x22;
+    // 0x24A - Advanced
+    if (engineID == 2)
+        i = 2;
 
-	#if 0
+    // 0x249 - Intermediate
+    if (engineID < 2)
+        i = 1;
+
+    // 7 pixels tall
+    u_short statBarStart_Y = 33;
+    u_short statBarEnd_Y = 40;
+
+    u_short statBarShadows_Y = 34;
+
+#if 0
 	// remove array at 800b85f0,
 	// it's 0x248, 0x249, 0x24A,
-	// instead just do 0x248 + iVar1
-	#endif
+	// instead just do 0x248 + index
+#endif
 
-    // Draw a string
-    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x248+iVar7], (u_int)local_40, 0xf, 1, 0xffff8000);
+    // Draw class name
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x248 + i], classNamePosX, 15, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
     // bar length (animated)
-    short* puVar20 = &gGarage.barLen[0];
 
-    do
-    {		
-		r.x = uVar22;
-		r.y = uVar21;
-		r.w = *puVar20;
-		r.h = 7;
-		
-		// outline color white
-        //local_60 = *(int*)0x800b7780;
-		local_60 = 0xFFFFFF;
+    for (i = 0; i < 3; i++)
+    {
+        barLen = &gGarage.barLen[i];
 
-        DECOMP_CTR_Box_DrawWireBox(
-			&r, &local_60,
-			gGT->pushBuffer_UI.ptrOT, primMem);
+        // bar outline
+        r.x = statBarPosX;
+        r.y = statBarStart_Y;
+        r.w = *barLen;
+        r.h = 7;
 
-		r.x = uVar22 + 1;
-		r.y = local_30;
-        r.w = *puVar20 - 2;
-		r.h = 5;
-
-		// outline color black
-		local_60 = local_60 & 0xff000000;
+        // outline color white at 0x800b7780
+        u_int outlineColor = 0xFFFFFF;
 
         DECOMP_CTR_Box_DrawWireBox(
-			&r, &local_60,
+            &r, &outlineColor,
             gGT->pushBuffer_UI.ptrOT, primMem);
-			
-        iVar16 = 0;
 
-        // color data of bars (blue green yellow red)
-        puVar13 = &gGarage.barColors[0];
+        // bar shadows
+        r.x = statBarPosX + 1;
+        r.y = statBarShadows_Y;
+        r.w = *barLen - 2;
+        r.h = 5;
 
-		int segmentLength = WIDE_PICK(13, 10);
+        // outline color black (shadows)
+        outlineColor &= 0xff000000;
 
-        iVar7 = 0;
-        iVar14 = segmentLength;
-        do
+        DECOMP_CTR_Box_DrawWireBox(
+            &r, &outlineColor,
+            gGT->pushBuffer_UI.ptrOT, primMem);
+
+        int segmentLen = WIDE_PICK(13, 10);
+        int segmentStart = 0;
+        int segmentEnd = segmentLen;
+
+        for (int segmentIndex = 0; segmentIndex < 7; segmentIndex++)
         {
-            iVar12 = segmentLength;
-            if ((short)*puVar20 <= iVar14)
+            // color data of bars (blue green yellow red)
+            u_int *barColor = &gGarage.barColors[segmentIndex];
+            short currSegmentLen = (short)segmentLen;
+
+            if (*barLen <= segmentEnd)
             {
-                iVar12 = (u_int)*puVar20 - iVar7;
+                currSegmentLen = *barLen - segmentStart;
             }
-            sVar4 = (short)iVar12;
-            iVar5 = (iVar12 << 0x10) >> 0x10;
-            if (iVar12 << 0x10 < 0)
+
+            if ((int)currSegmentLen << 0x10 < 0)
             {
-                sVar4 = 0;
-                iVar5 = 0;
+                currSegmentLen = 0;
             }
-            if (iVar7 + iVar5 <= (int)(short)*puVar20)
+
+            if (segmentStart + currSegmentLen <= *barLen)
             {
                 // primMem curr
-                POLY_G4* p = primMem->curr;
+                POLY_G4 *p = primMem->curr;
 
                 // quit if prim mem runs out
-                if (p+2 >= primMem->end)
-					return;
-				
-				primMem->curr = p + 1;
+                if (p + 2 >= primMem->end)
+                    return;
+
+                primMem->curr = p + 1;
 
                 // color data
-                *(int*)&p->r0 = puVar13[0] | 0x38000000;
-                *(int*)&p->r1 = puVar13[1] | 0x38000000;
-                *(int*)&p->r2 = puVar13[0] | 0x38000000;
-				*(int*)&p->r3 = puVar13[1] | 0x38000000;
+                *(int *)&p->r0 = barColor[0] | 0x38000000;
+                *(int *)&p->r1 = barColor[1] | 0x38000000;
+                *(int *)&p->r2 = barColor[0] | 0x38000000;
+                *(int *)&p->r3 = barColor[1] | 0x38000000;
 
-                sVar3 = (short)uVar22 + (short)iVar7;
-                p->x0 = sVar3;
-                p->y0 = uVar21;
-                p->x1 = sVar3 + sVar4;
-                p->y1 = uVar21;
-                p->x2 = sVar3;
-                p->y2 = (short)local_2c;
-                p->x3 = sVar3 + sVar4;
-                p->y3 = (short)local_2c;
+                short segmentX = statBarPosX + segmentStart;
+
+                // top left
+                p->x0 = segmentX;
+                p->y0 = statBarStart_Y;
+
+                // top right
+                p->x1 = segmentX + currSegmentLen;
+                p->y1 = statBarStart_Y;
+
+                // bottom left
+                p->x2 = segmentX;
+                p->y2 = statBarEnd_Y;
+
+                // bottom right
+                p->x3 = segmentX + currSegmentLen;
+                p->y3 = statBarEnd_Y;
 
                 // pointer to OT memory
-                void* ot = gGT->pushBuffer_UI.ptrOT;
+                void *ot = gGT->pushBuffer_UI.ptrOT;
 
-				*(int*)p = (*(int*)ot & 0xffffff) | 0x8000000;
-				*(int*)ot = (int)p & 0xffffff;
+                *(int *)p = (*(int *)ot & 0xffffff) | 0x8000000;
+                *(int *)ot = (int)p & 0xffffff;
             }
-			
-			// color index
-            puVar13 = puVar13 + 1;
-			
-			// segment index
-            iVar16 = iVar16 + 1;
-			
-            iVar7 = iVar7 + segmentLength;
-            iVar14 = iVar14 + segmentLength;
-        
-		} while (iVar16 < 6);
-		
-		// 15 pixels lower Y axis
-        uVar21 = uVar21 + 0xf;
-        local_2c = local_2c + 0xf;
-        local_30 = local_30 + 0xf;
-		
-        puVar20 = puVar20 + 1;
-        iVar17 = iVar17 + 1;
-		
-    } while (iVar17 < 3);
 
-    // "Intermediate"
-    sVar4 = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
+            segmentStart += segmentLen;
+            segmentEnd += segmentLen;
+        }
 
-    r.x = (local_40 - (sVar4 >> 1)) + -6;
-    r.y = 0xb;
-    r.w = sVar4 + 0xc;
-    r.h = 0x44;
+        // 15 pixels lower Y axis
+        statBarStart_Y += 15;
+        statBarEnd_Y += 15;
+        statBarShadows_Y += 15;
+    }
+
+    // "Intermediate" (longest class name)
+    short classMaxLen = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
+
+    // Stats box
+    r.x = (classNamePosX - (classMaxLen >> 1)) - 6;
+    r.y = 11;
+    r.w = classMaxLen + 12;
+    r.h = 68;
 
     // Draw 2D Menu rectangle background
     DECOMP_RECTMENU_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 
-	#if 0
+#endif
+
+#if 0
 	// Original game uses array at 800b85d8,
 	// we remove the usage cause it's just 0,1,2,3,4,5,6,7,
 	// this array is used in Oxide Fix (Garage_Init+0x80),
@@ -381,68 +357,60 @@ void DECOMP_CS_Garage_MenuProc(void)
 	
 	// otherwise would be
 	// lngStrings[metadata[800b85d8[charSelectIndex]].nameLNG]
-	#endif
+#endif
 
-	char* name = sdata->lngStrings[nameIndex];
+    char *name = sdata->lngStrings[nameIndex];
 
+    // Draw character name
     DECOMP_DecalFont_DrawLine(name, 0x100, 0xb4, 1, 0xffff8000);
-    
-	iVar7 = 0;
+
+    char arrowColor = ORANGE;
+
+    // blink arrows
     if ((sdata->frameCounter & FPS_DOUBLE(4)) == 0)
     {
-        iVar7 = 3;
+        arrowColor = RED;
     }
-	
-    iVar17 = DECOMP_DecalFont_GetLineWidth(name, 1) >> 1;
 
     // Color data
-    ptrColor = data.ptrColor[iVar7];
+    int *arrowColors = data.ptrColor[arrowColor];
 
-	struct Icon** iconPtrArray =
-		ICONGROUP_GETICONS(gGT->iconGroup[4]);
+    int nameLen = DECOMP_DecalFont_GetLineWidth(name, 1) >> 1;
 
-    // Draw arrow pointing Left
-    DECOMP_DecalHUD_Arrow2D(
-        iconPtrArray[0x38],
-        0xec - iVar17,
-        0xbb,
+    int arrowPos[2] = {236 - nameLen, nameLen + 274};
+    int arrowRot[2] = {0x800, 0};
 
-        primMem,
-        gGT->pushBuffer_UI.ptrOT,
+    struct Icon **iconPtrArray =
+        ICONGROUP_GETICONS(gGT->iconGroup[4]);
 
-        ptrColor[0], ptrColor[1], 
-		ptrColor[2], ptrColor[3],
-		
-		0, 0x1000, 0x800);
+    for (i = 0; i < 2; i++)
+    {
+        DECOMP_DecalHUD_Arrow2D(
+            iconPtrArray[0x38],
+            arrowPos[i],
+            187,
 
-    // Draw arrow pointing Right
-    DECOMP_DecalHUD_Arrow2D(
-        iconPtrArray[0x38],
-        iVar17 + 0x112,
-        0xbb,
+            primMem,
+            gGT->pushBuffer_UI.ptrOT,
 
-        primMem,
-		gGT->pushBuffer_UI.ptrOT,
+            arrowColors[0], arrowColors[1],
+            arrowColors[2], arrowColors[3],
 
-        ptrColor[0], ptrColor[1], 
-		ptrColor[2], ptrColor[3],
-		
-		0, 0x1000, 0);
+            0, 0x1000, arrowRot[i]);
+    }
 
-    sVar4 = gGarage.numFramesCurr_GarageMove;
+    garageFrames = gGarage.numFramesCurr_GarageMove;
 
-    if (
-        ((gGT->renderFlags & 0x1000) != 0) ||
+    if (((gGT->renderFlags & 0x1000) != 0) ||
 
         (
             // If you dont press Triangle, Cross, Circle, or Square
             ((sdata->AnyPlayerTap & 0x40070) == 0) &&
 
-             // If you dont press D-pad
-             ((sdata->AnyPlayerHold & 0xc) == 0)
-		)
-	   )
-        goto LAB_800b821c;
+            // If you dont press D-pad
+            ((sdata->AnyPlayerHold & 0xc) == 0)))
+
+        goto SKIP_CONTROLS;
 
     // If you dont press D-pad
     if ((sdata->AnyPlayerHold & 0xc) == 0)
@@ -456,15 +424,15 @@ void DECOMP_CS_Garage_MenuProc(void)
                 // Play Sound
                 DECOMP_OtherFX_Play(2, 1);
 
-                sVar4 = gGarage.numFramesCurr_ZoomIn;
+                garageFrames = gGarage.numFramesCurr_ZoomIn;
                 if (gGarage.boolSelected == 1)
                 {
                     gGarage.boolSelected = 0;
-                    bVar1 = gGarage.numFramesCurr_ZoomIn < gGarage.numFramesMax_Zoom;
                     gGT->gameMode2 &= ~GARAGE_OSK;
-                    if (bVar1)
+
+                    if (garageFrames < gGarage.numFramesMax_Zoom)
                     {
-                        gGarage.numFramesCurr_ZoomOut = gGarage.numFramesMax_Zoom - sVar4;
+                        gGarage.numFramesCurr_ZoomOut = gGarage.numFramesMax_Zoom - garageFrames;
                     }
                 }
                 else
@@ -492,7 +460,7 @@ void DECOMP_CS_Garage_MenuProc(void)
 
             // if false
             if (gGarage.boolSelected == 0)
-            {	
+            {
                 // make it true
                 gGarage.boolSelected = 1;
             }
@@ -500,22 +468,22 @@ void DECOMP_CS_Garage_MenuProc(void)
             // if true
             else
             {
-				// if pressed X twice quickly
+                // if pressed X twice quickly
                 if (gGarage.boolSelected == 1)
                 {
                     // set desiredMenu to OSK (on-screen keyboard)
                     sdata->ptrDesiredMenu = &data.menuSubmitName;
 
-                    data.characterIDs[0] = sdata->advCharSelectIndex_curr;
+                    data.characterIDs[0] = currSelectIndex;
                     sdata->advProgress.characterID = data.characterIDs[0];
 
-					#ifdef USE_OXIDE
-					if (data.characterIDs[0] == 0)
-					{
-						data.characterIDs[0] = gGarage.unusedFrameCount;
-						sdata->advProgress.characterID = data.characterIDs[0];
-					}
-					#endif
+#ifdef USE_OXIDE
+                    if (data.characterIDs[0] == 0)
+                    {
+                        data.characterIDs[0] = gGarage.unusedFrameCount;
+                        sdata->advProgress.characterID = data.characterIDs[0];
+                    }
+#endif
 
                     DECOMP_SubmitName_RestoreName(0);
                     DECOMP_OtherFX_Play(1, 1);
@@ -523,20 +491,18 @@ void DECOMP_CS_Garage_MenuProc(void)
             }
         }
     }
-	
-	// if using D-pad
+
+    // if using D-pad
     else
     {
-		// erase animated bars
-		iVar7 = 2;
-        puVar6 = &gGarage.barLen[2];
-        do
+#ifndef USE_ENGINESWAP
+        // erase animated bars
+        for (i = 2; i > -1; i--)
         {
-            *puVar6 = 0;
-            puVar6 -= 1;
-            iVar7--;
-        } while (-1 < iVar7);
-
+            barLen = &gGarage.barLen[i];
+            *barLen = 0;
+        }
+#endif
         // Play Sound
         DECOMP_OtherFX_Play(0, 1);
 
@@ -546,7 +512,7 @@ void DECOMP_CS_Garage_MenuProc(void)
             // If you dont press Right
             if ((sdata->AnyPlayerHold & 8) != 0)
             {
-                uVar21 = sdata->advCharSelectIndex_curr + 1;
+                currSelectIndex++;
                 goto LAB_800b8084;
             }
         }
@@ -554,30 +520,30 @@ void DECOMP_CS_Garage_MenuProc(void)
         // If you press Left
         else
         {
-            uVar21 = sdata->advCharSelectIndex_curr - 1;
+            currSelectIndex--;
+
         LAB_800b8084:
 
             // previous equals current
             sdata->advCharSelectIndex_prev = sdata->advCharSelectIndex_curr;
 
-			// clamp 0-7
-			uVar21 = uVar21 & 7;
-
-            sdata->advCharSelectIndex_curr = uVar21;
+            // clamp 0-7
+            currSelectIndex &= 7;
+            sdata->advCharSelectIndex_curr = currSelectIndex;
 
 #ifndef REBUILD_PS1
-            Garage_MoveLR(uVar21);
+            Garage_MoveLR(currSelectIndex);
 #endif
         }
-		
-		// reset frame counter to max number of frames
-        gGarage.numFramesCurr_GarageMove =  gGarage.numFramesMax_GarageMove;
-		
+
+        // reset frame counter to max number of frames
+        gGarage.numFramesCurr_GarageMove = gGarage.numFramesMax_GarageMove;
+
         if (gGarage.numFramesCurr_ZoomIn < gGarage.numFramesMax_Zoom)
         {
             gGarage.numFramesCurr_ZoomOut = gGarage.numFramesMax_Zoom - gGarage.numFramesCurr_ZoomIn;
         }
-		
+
         gGarage.boolSelected = 0;
         gGT->gameMode2 &= ~GARAGE_OSK;
     }
@@ -585,197 +551,202 @@ void DECOMP_CS_Garage_MenuProc(void)
     // clear gamepad input (for menus)
     DECOMP_RECTMENU_ClearInput();
 
-    sVar4 = gGarage.numFramesCurr_GarageMove;
-LAB_800b821c:
-    gGarage.numFramesCurr_GarageMove = sVar4;
+    garageFrames = gGarage.numFramesCurr_GarageMove;
+SKIP_CONTROLS:
+    gGarage.numFramesCurr_GarageMove = garageFrames;
 
     // if frames remaing for zoom camera
     if (0 < gGarage.numFramesCurr_ZoomIn)
     {
-		#ifdef USE_60FPS
-		if(gGT->timer & 1)
-		#endif
-		
-			// decrease zoom frame timer
-			gGarage.numFramesCurr_ZoomIn--;
+#ifdef USE_60FPS
+        if (gGT->timer & 1)
+#endif
+
+            // decrease zoom frame timer
+            gGarage.numFramesCurr_ZoomIn--;
     }
 
-	// if pressed X once, and waited for countdown clock
+    // if pressed X once, and waited for countdown clock
     if ((gGarage.boolSelected == 1) && (gGarage.numFramesCurr_ZoomIn == 0))
-	{
-		if(
-				// frames remaining for animation
-				(0x3b < gGarage.delayOneSecond) ||
-				((gGT->gameMode2 & GARAGE_OSK) != 0)
-		  )
-		{
-			// set desiredMenu to OSK (on-screen keyboard)
-			sdata->ptrDesiredMenu = &data.menuSubmitName;
-	
-			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
-			sdata->advProgress.characterID = data.characterIDs[0];
-			
-			#ifdef USE_OXIDE
-			if(data.characterIDs[0] == 0)
-			{
-				data.characterIDs[0] = gGarage.unusedFrameCount;
-				sdata->advProgress.characterID = data.characterIDs[0];
-			}
-			#endif
+    {
+        if (
+            // frames remaining for animation
+            (FPS_DOUBLE(59) < gGarage.delayOneSecond) ||
+            ((gGT->gameMode2 & GARAGE_OSK) != 0))
+        {
+            #ifdef USE_ENGINESWAP
+            sdata->ptrDesiredMenu = &garageEngineSelect;
+            #else
+            // set desiredMenu to OSK (on-screen keyboard)
+            sdata->ptrDesiredMenu = &data.menuSubmitName;
+            #endif
 
-			DECOMP_SubmitName_RestoreName(0);
-			DECOMP_OtherFX_Play(1, 1);
-		}
-		
-		else
-		{
-			#ifdef USE_60FPS
-			if(gGT->timer & 1)
-			#endif
-				gGarage.delayOneSecond++;
-		}
-	}
-	
-	#ifdef REBUILD_PC
-	if(sdata->ptrDesiredMenu == &data.menuSubmitName)
-	{
-		// flush async key state buffer, otherwise
-		// tapping Enter "before" picking a garage
-		// character, then picking character, will
-		// immediately warp you to the adv hub, with
-		// no time to type the name
-		int NikoGetEnterKey();
-		NikoGetEnterKey();
-	}
-	#endif
+            data.characterIDs[0] = currSelectIndex;
+            sdata->advProgress.characterID = data.characterIDs[0];
+
+#ifdef USE_OXIDE
+            if (data.characterIDs[0] == 0)
+            {
+                data.characterIDs[0] = gGarage.unusedFrameCount;
+                sdata->advProgress.characterID = data.characterIDs[0];
+            }
+#endif
+
+            DECOMP_SubmitName_RestoreName(0);
+            DECOMP_OtherFX_Play(1, 1);
+        }
+
+        else
+        {
+#ifdef USE_60FPS
+            if (gGT->timer & 1)
+#endif
+                gGarage.delayOneSecond++;
+        }
+    }
+
+#ifdef REBUILD_PC
+    if (sdata->ptrDesiredMenu == &data.menuSubmitName)
+    {
+        // flush async key state buffer, otherwise
+        // tapping Enter "before" picking a garage
+        // character, then picking character, will
+        // immediately warp you to the adv hub, with
+        // no time to type the name
+        int NikoGetEnterKey();
+        NikoGetEnterKey();
+    }
+#endif
 
     if (gGarage.boolSelected == 0)
     {
         gGarage.numFramesCurr_ZoomIn = gGarage.numFramesMax_Zoom;
     }
-	
+
     if (gGarage.numFramesCurr_ZoomOut != 0)
     {
-		#ifdef USE_60FPS
-		if(gGT->timer & 1)
-		#endif
-			gGarage.numFramesCurr_ZoomOut--;
+#ifdef USE_60FPS
+        if (gGT->timer & 1)
+#endif
+            gGarage.numFramesCurr_ZoomOut--;
     }
-    
+
+    u_int prevSelectIndex = sdata->advCharSelectIndex_prev;
+
     // Pura->Crash
-    if ((sdata->advCharSelectIndex_curr == 0) && (sdata->advCharSelectIndex_prev == 7))
-        sVar4 = 0xf0 - gGarage.numFramesCurr_GarageMove;
+    if ((currSelectIndex == 0) && (prevSelectIndex == 7))
+        garageFrames = 240 - gGarage.numFramesCurr_GarageMove;
 
     // Crash->Pura
-    else if ((sdata->advCharSelectIndex_curr == 7) && (sdata->advCharSelectIndex_prev == 0))
-		sVar4 = gGarage.numFramesCurr_GarageMove + 0xd2;
+    else if ((currSelectIndex == 7) && (prevSelectIndex == 0))
+		garageFrames = gGarage.numFramesCurr_GarageMove + 210;
 
     // Move Right
-    else if (sdata->advCharSelectIndex_prev < sdata->advCharSelectIndex_curr)
-        sVar4 = sdata->advCharSelectIndex_curr * 0x1e - gGarage.numFramesCurr_GarageMove;
+    else if (prevSelectIndex < currSelectIndex)
+        garageFrames = currSelectIndex * 30 - gGarage.numFramesCurr_GarageMove;
 
     // Move Left
     else
-        sVar4 = sdata->advCharSelectIndex_curr * 0x1e + gGarage.numFramesCurr_GarageMove;
+        garageFrames = currSelectIndex * 30 + gGarage.numFramesCurr_GarageMove;
 
     // animation frame index,
     // pointer to position,
     // pointer to rotation
 
     int getPath;
-	short pos[3];
-	short rot[3];
-    DECOMP_CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
-	
-	#ifdef USE_60FPS
-	
-	// if transitioning
-	if(gGarage.numFramesCurr_GarageMove != 0)
-	{
-		// if counter wasn't moved this frame
-		if((gGT->timer & 1) == 0)
-		{
-			// Pura->Crash
+    short camPos[3];
+    short camRot[3];
+    DECOMP_CAM_Path_Move((int)garageFrames, &camPos[0], &camRot[0], &getPath);
+
+#ifdef USE_60FPS
+
+    // if transitioning
+    if (gGarage.numFramesCurr_GarageMove != 0)
+    {
+        // if counter wasn't moved this frame
+        if ((gGT->timer & 1) == 0)
+        {
+            // Pura->Crash
 			if ((sdata->advCharSelectIndex_curr == 0) && (sdata->advCharSelectIndex_prev == 7))
-				sVar4 = 0xf0 - (gGarage.numFramesCurr_GarageMove-1);
-		
-			// Crash->Pura
+				sVar4 = 240 - (gGarage.numFramesCurr_GarageMove-1);
+
+            // Crash->Pura
 			else if ((sdata->advCharSelectIndex_curr == 7) && (sdata->advCharSelectIndex_prev == 0))
-				sVar4 = (gGarage.numFramesCurr_GarageMove-1) + 0xd2;
-		
-			// Move Right
+				sVar4 = (gGarage.numFramesCurr_GarageMove-1) + 210;
+
+            // Move Right
 			else if (sdata->advCharSelectIndex_prev < sdata->advCharSelectIndex_curr)
-				sVar4 = sdata->advCharSelectIndex_curr * 0x1e - (gGarage.numFramesCurr_GarageMove-1);
-		
-			// Move Left
-			else
-				sVar4 = sdata->advCharSelectIndex_curr * 0x1e + (gGarage.numFramesCurr_GarageMove-1);
-			
-			short pos2[3];
-			short rot2[3];
+				sVar4 = sdata->advCharSelectIndex_curr * 30 - (gGarage.numFramesCurr_GarageMove-1);
+
+            // Move Left
+            else
+				sVar4 = sdata->advCharSelectIndex_curr * 30 + (gGarage.numFramesCurr_GarageMove-1);
+
+            short pos2[3];
+            short rot2[3];
 			DECOMP_CAM_Path_Move((int)sVar4, &pos2[0], &rot2[0], &getPath);
-		
-			pos[0] = (pos[0] + pos2[0]) / 2;
-			pos[1] = (pos[1] + pos2[1]) / 2;
-			pos[2] = (pos[2] + pos2[2]) / 2;
-			
-			int diff = rot[1] - rot2[1];
+
+            pos[0] = (pos[0] + pos2[0]) / 2;
+            pos[1] = (pos[1] + pos2[1]) / 2;
+            pos[2] = (pos[2] + pos2[2]) / 2;
+
+            int diff = rot[1] - rot2[1];
 			if(diff < 0) diff = -diff;
-			
-			// on the one frame that jumps from
-			// 359 degrees -> 1 degree, just ignore
-			// interpolation. Nobody will notice a one-frame
-			// gap between Polar and Pura where it reuses the
-			// old frame's rotation, with lerp'd position
-			if(diff < 0x800)
-			{
-				rot[0] = (rot[0] + rot2[0]) / 2;
-				rot[1] = (rot[1] + rot2[1]) / 2;
-				rot[2] = (rot[2] + rot2[2]) / 2;
-			}
-		}
-	}
-	
-	#endif
+
+            // on the one frame that jumps from
+            // 359 degrees -> 1 degree, just ignore
+            // interpolation. Nobody will notice a one-frame
+            // gap between Polar and Pura where it reuses the
+            // old frame's rotation, with lerp'd position
+            if (diff < 0x800)
+            {
+                rot[0] = (rot[0] + rot2[0]) / 2;
+                rot[1] = (rot[1] + rot2[1]) / 2;
+                rot[2] = (rot[2] + rot2[2]) / 2;
+            }
+        }
+    }
+
+#endif
 
     // set position and rotation to pushBuffer
-    gGT->pushBuffer[0].pos[0] = pos[0];
-    gGT->pushBuffer[0].pos[1] = pos[1];
-    gGT->pushBuffer[0].pos[2] = pos[2];
-	
-    gGT->pushBuffer[0].rot[0] = rot[0];
-    gGT->pushBuffer[0].rot[1] = rot[1];
-    gGT->pushBuffer[0].rot[2] = rot[2];
+    gGT->pushBuffer[0].pos[0] = camPos[0];
+    gGT->pushBuffer[0].pos[1] = camPos[1];
+    gGT->pushBuffer[0].pos[2] = camPos[2];
 
-	iVar7 = gGarage.numFramesCurr_ZoomOut;
-    if (iVar7 == 0)
+    gGT->pushBuffer[0].rot[0] = camRot[0];
+    gGT->pushBuffer[0].rot[1] = camRot[1];
+    gGT->pushBuffer[0].rot[2] = camRot[2];
+
+    int zoom = gGarage.numFramesCurr_ZoomOut;
+    if (zoom == 0)
     {
-        iVar7 = (gGarage.numFramesMax_Zoom - gGarage.numFramesCurr_ZoomIn) *
+        zoom = (gGarage.numFramesMax_Zoom - gGarage.numFramesCurr_ZoomIn) *
                 (gGarage.fovMax - gGarage.fovMin);
-	}
+    }
     else
     {
-        iVar7 = iVar7 * (gGarage.fovMax - gGarage.fovMin);
+        zoom = zoom * (gGarage.fovMax - gGarage.fovMin);
     }
-	
-    iVar7 = gGarage.fovMin + iVar7 / gGarage.numFramesMax_Zoom;
-    
-	gGT->pushBuffer[0].distanceToScreen_CURR = iVar7;
-    gGT->pushBuffer[0].distanceToScreen_PREV = iVar7;
+
+    zoom = gGarage.fovMin + zoom / gGarage.numFramesMax_Zoom;
+
+    gGT->pushBuffer[0].distanceToScreen_CURR = zoom;
+    gGT->pushBuffer[0].distanceToScreen_PREV = zoom;
 }
 
-struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void)
+struct RectMenu *DECOMP_CS_Garage_GetMenuPtr(void)
 {
-  return &gGarage.menuGarage;
+    return &gGarage.menuGarage;
 }
 
 void DECOMP_CS_Garage_Init(void)
 {
-  // go to 3D character selection
-  sdata->ptrActiveMenu = &gGarage.menuGarage;
+    // go to 3D character selection
+    sdata->ptrActiveMenu = &gGarage.menuGarage;
 
-  gGarage.menuGarage.state &= 0xfffffffb;
+    gGarage.menuGarage.state &= ~(ONLY_DRAW_TITLE);
 
-  // 0 = just entered garage
-  DECOMP_CS_Garage_ZoomOut(0);
+    // 0 = just entered garage
+    DECOMP_CS_Garage_ZoomOut(0);
 }

@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1014
+#define VERSION 1015
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -71,7 +71,11 @@ struct OnlineCTR
 
 	// 0xC
 	unsigned char IsBootedPS1;
-	unsigned char boolLockedInCharacter;
+	#ifdef USE_ENGINESWAP
+		unsigned char boolLockedInEngine;
+	#else
+		unsigned char boolLockedInCharacter;
+	#endif
 	unsigned char numRooms;
 	unsigned char numDriversEnded;
 
@@ -98,7 +102,12 @@ struct OnlineCTR
 	// 0x30
 	char boolLockedInCharacters[8];
 
+	#ifdef USE_ENGINESWAP
 	// 0x38
+	char engines[8];
+	#endif
+	
+	// 0x40
 	char nameBuffer[0xC*8];
 
 	struct

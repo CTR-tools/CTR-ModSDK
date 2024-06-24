@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_UI_VsQuipDrawAll(void) {
+void DECOMP_UI_VsQuipDrawAll(void)
+{
   short posX;
   short posY;
   short width;
@@ -12,13 +13,12 @@ void DECOMP_UI_VsQuipDrawAll(void) {
   struct GameTracker* gGT = sdata->gGT;
   struct ThreadBucket* bucket;
   short i;
-  char acStack160[128];
+  char printStack[128];
 
   // pointer to first Player thread
   bucket = &gGT->threadBuckets[0];
   // initialize iterator
   i = 0;
-
   // if thread exists
   if (bucket != 0) {
 
@@ -42,9 +42,9 @@ void DECOMP_UI_VsQuipDrawAll(void) {
       // 0 - PAUSED, 1 - RESTART, 21A - The Dominator, etc
       printIndex = (short*)d->EndOfRaceComment_lngIndex;
 
-      if ((( & sdata->Battle_EndOfRace.Flags_PressX)[i] & 2) == 0 &&
+      if (((&sdata->Battle_EndOfRace.Flags_PressX)[i] & 2) == 0 &&
 
-        // make sure the comment is valid
+          // make sure the comment is valid
         (printIndex != 0)) {
 
         printIndex[1] = 0;
@@ -58,33 +58,33 @@ void DECOMP_UI_VsQuipDrawAll(void) {
         // if the comment is conjoined
         else {
           // Add two strings together
-          sprintf(acStack160, "%s%s",
+          sprintf(printStack, "%s%s",
 
-            // original end-of-race comment
-            sdata->lngStrings[*printIndex],
+                  // original end-of-race comment
+                  sdata->lngStrings[*printIndex],
 
-            // second part of comment,
-            // lngIndex of driver,
-            // for stuff like "hit by Crash Bandicoot" or something
+                  // second part of comment,
+                  // lngIndex of driver,
+                  // for stuff like "hit by Crash Bandicoot" or something
 
-            sdata->lngStrings[data.MetaDataCharacters[d->EndOfRaceComment_characterID].name_LNG_long]);
+                  sdata->lngStrings[data.MetaDataCharacters[d->EndOfRaceComment_characterID].name_LNG_long]);
 
           // Overwrite the stack pointer to print
-          print = acStack160;
+          print = printStack;
         }
 
         // Draw the string with a box around it
         RECTMENU_DrawQuip(
-          // The string to print
-          print,
+            // The string to print
+            print,
 
-          // X-position of pushBuffer, plus 50% of width
-          (posX + (width >> 1)),
+            // X-position of pushBuffer, plus 50% of width
+            (posX + (width >> 1)),
 
-          // Y-position of pushBuffer, plus 12% of height
-          (posY + (height >> 3)),
+            // Y-position of pushBuffer, plus 12% of height
+            (posY + (height >> 3)),
 
-          0, 3, 0xffff8000, 4);
+            0, 3, JUSTIFY_RIGHT, 4);
       }
 
       // next player thread
