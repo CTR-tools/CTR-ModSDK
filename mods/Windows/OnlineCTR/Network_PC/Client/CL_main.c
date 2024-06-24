@@ -135,7 +135,11 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->lapID = 0;
 			octr->levelID = 0;
 			
-			octr->boolLockedInCharacter = 0;
+			#ifdef USE_ENGINESWAP
+				octr->boolLockedInEngine = 0;
+			#else
+				octr->boolLockedInCharacter = 0;
+			#endif
 			octr->numDriversEnded = 0;
 			
 			memset(&octr->boolLockedInCharacters[0], 0, 8);
@@ -192,9 +196,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// 1,3,5,7
 			int numLaps = (r->lapID * 2) + 1;
 			
-			if(r->lapID == 4) numLaps = 30;
-			if(r->lapID == 5) numLaps = 60;
-			if(r->lapID == 6) numLaps = 90;
+			if(r->lapID == 4) numLaps = 15;
+			if(r->lapID == 5) numLaps = 30;
+			if(r->lapID == 6) numLaps = 60;
 			if(r->lapID == 7) numLaps = 120;
 
 			// set sdata->gGT->numLaps
@@ -829,7 +833,9 @@ void StatePC_Lobby_GuestTrackWait()
 void StatePC_Lobby_CharacterPick()
 {
 	ProcessNewMessages();
-
+	#ifdef USE_ENGINESWAP
+		if (!octr->boolLockedInEngine) return;
+	#endif
 	struct CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
 	mc.size = sizeof(struct CG_MessageCharacter);
@@ -951,9 +957,11 @@ void StatePC_Game_StartRace()
 		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
 	// Friday demo mode camera
+	#if 0
 	if(octr->special == 3)
 		if(gGT_levelID < 18)
 			*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
+	#endif
 }
 
 #include <time.h>

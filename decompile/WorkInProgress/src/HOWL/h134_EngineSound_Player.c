@@ -99,7 +99,7 @@ void EngineSound_Player(struct Driver *driver)
     if ((driver->actionsFlagSet & 0x100000) == 0)
     {
         sVar4 = driver->fill_3B6[0];
-        sVar2 = driver->const_AccelSpeed_ClassStat;
+        sVar2 = driver->const_RevEngine_Limit;
         uVar9 = 0xe6;
     }
 
@@ -107,7 +107,7 @@ void EngineSound_Player(struct Driver *driver)
     else
     {
         sVar4 = driver->fill_3B6[0];
-        sVar2 = driver->const_AccelSpeed_ClassStat;
+        sVar2 = driver->const_RevEngine_Limit;
         uVar9 = 0xbe;
     }
 
@@ -125,7 +125,7 @@ void EngineSound_Player(struct Driver *driver)
     if ((driver->actionsFlagSet & 0x100000) == 0)
     {
         sVar4 = driver->fill_3B6[1];
-        sVar2 = driver->const_AccelSpeed_ClassStat;
+        sVar2 = driver->const_RevEngine_Limit;
         sVar3 = driver->const_SacredFireSpeed;
         uVar9 = 200;
     }
@@ -134,7 +134,7 @@ void EngineSound_Player(struct Driver *driver)
     else
     {
         sVar4 = driver->fill_3B6[1];
-        sVar2 = driver->const_AccelSpeed_ClassStat;
+        sVar2 = driver->const_RevEngine_Limit;
         sVar3 = driver->const_SacredFireSpeed;
         uVar9 = 0xbe;
     }

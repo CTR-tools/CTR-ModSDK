@@ -1,37 +1,37 @@
 #include <common.h>
 
+#define MULT27_16(x) ((x * 108000) / 64000)
+
 void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 {
-  int minScale = 0;
-  #ifdef USE_ONLINE
-  int maxScale = 100; // USF
-  #else
-  int maxScale = accelSpeed + FP8_INT(driver->const_SacredFireSpeed);
-  #endif
-  #ifdef USE_ONLINE
-	int speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
-  #else
   int speed = driver->unk36E; // is this actually speed?
+  int revLimit = driver->const_RevEngine_Limit;
+  #ifdef USE_ONLINE
+
+  if (!driver->kartState == KS_ENGINE_REVVING)
+    speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
+
   #endif
-  int minAngle, maxAngle;
-  int accelSpeedInt = FP8_INT(driver->const_AccelSpeed_ClassStat);
-  if (driver->const_AccelSpeed_ClassStat < speed) {
+  int minScale, maxScale, minAngle, maxAngle;
+  if (driver->const_RevEngine_Limit < speed) {
     #ifdef USE_ONLINE
     maxAngle = ANG(67.5);
+    maxScale = 100; // USF
     #else
-    maxRange = ANG(157.5);
+    maxAngle = ANG(157.5);
+    maxScale = FP8_INT(revLimit + driver->const_SacredFireSpeed);
     #endif
     minAngle = ANG(213.75);
-    minScale = (accelSpeedInt * 108000) / 64000;
+    minScale = FP8_INT(revLimit);
   } else {
-    maxAngle = ANG(213.75);
     minAngle = ANG(305.20);
-    maxScale = accelSpeedInt;
+    maxAngle = ANG(213.75);
+    minScale = 0;
+    maxScale = FP8_INT(revLimit);
   }
 
-  int speedScale = (FP8_INT(speed) * 108000) / 64000;
-  maxScale = (maxScale * 108000) / 64000;
-  int angle1 = DECOMP_VehCalc_MapToRange(speedScale, minScale, maxScale, minAngle, maxAngle);
+  int speedScale = FP8_INT(speed);
+  int angle1 = DECOMP_VehCalc_MapToRange(MULT27_16(speedScale), MULT27_16(minScale), MULT27_16(maxScale), minAngle, maxAngle);
   int angle2 = angle1 + ANG(90);
 
   int cos[2] = {DECOMP_MATH_Cos(angle1), DECOMP_MATH_Cos(angle2)};
