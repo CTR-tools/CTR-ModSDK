@@ -6,12 +6,13 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 {
   int speed = driver->unk36E; // is this actually speed?
   int revLimit = driver->const_RevEngine_Limit;
-  #ifdef USE_ONLINE
 
+  #ifdef USE_ONLINE
   if (!driver->kartState == KS_ENGINE_REVVING)
     speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
 
   #endif
+
   int minScale, maxScale, minAngle, maxAngle;
   if (driver->const_RevEngine_Limit < speed) {
     #ifdef USE_ONLINE
@@ -41,11 +42,11 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   GetPrimMem(p);
   if (p == nullptr) { return; }
 
-  const PolyCode renderCode = (PolyCode){.gouraud = 1, .renderCode = RENDER_CODE_POLYGON};
+  const PolyCode renderCode = {.gouraud = 1, .renderCode = RenderCode_Polygon};
 
-  p->v[0].color = (ColorCode){.r = 91, .g = 91, .b = 0, .code = renderCode};
-  p->v[1].color = (ColorCode){.r = 50, .g = 43, .b = 1};
-  p->v[2].color = (ColorCode){.r = 255, .g = 187, .b = 0};
+  p->v[0].color = MakeColorCode(91, 91, 0,renderCode);
+  p->v[1].color = MakeColor(50, 43, 1);
+  p->v[2].color = MakeColor(255, 187, 0);
 
   /* Needle is distorted in the y axis by a factor of 0.625 */
   const int needleHeight = 60;
@@ -81,9 +82,9 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   GetPrimMem(p);
   if (p == nullptr) { return; }
 
-  p->v[0].color = (ColorCode){.r = 255, .g = 255, .b = 255, .code = renderCode};
-  p->v[1].color = (ColorCode){.r = 156, .g = 105, .b = 0};
-  p->v[2].color = (ColorCode){.r = 255, .g = 255, .b = 0};
+  p->v[0].color = MakeColorCode(255, 255, 255, renderCode);
+  p->v[1].color = MakeColor(156, 105, 0);
+  p->v[2].color = MakeColor(255, 255, 0);
 
   yLen = FP_INT(cos[1] * (needleWidth + 2)) * FP8(1.25);
   if (yLen < 0) {
