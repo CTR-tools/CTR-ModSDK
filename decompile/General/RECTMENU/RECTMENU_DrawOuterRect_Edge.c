@@ -5,7 +5,9 @@ void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_lo
 	if ((param_3 & 0x20) == 0)
 	{
 		// solid border
-		DECOMP_CTR_Box_DrawSolidBox(r, rgb, otMem, &sdata->gGT->backBuffer->primMem);
+		Color color;
+		color.self = *rgb;
+		DECOMP_CTR_Box_DrawSolidBox(r, color, otMem);
 	}
 	else
 	{

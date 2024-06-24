@@ -123,7 +123,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
     }
 
 	// optimization, dont do this here, it's duplicated in the OG game
-	// in MainStats_RestartRaceCountLoss, which happens at the start of 
+	// in MainStats_RestartRaceCountLoss, which happens at the start of
 	// battle, not just when you restart a race
 	#if 0
 	// Reset team points
@@ -168,16 +168,16 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
 				{
 					// play sound
 					DECOMP_OtherFX_Play(0, 1);
-	
+
 					// Move your icon to the left
 					gGT->battleSetup.teamOfEachPlayer[i]--;
 				}
-	
+
 				// clear the gamepad input so that it
 				// does not use this frame's input on the next frame
 				sdata->buttonTapPerPlayer[i] = 0;
 			}
-	
+
 			// If you press Right on D-Pad or move stick to the Right
 			if ((sdata->buttonTapPerPlayer[i] & 8) != 0)
 			{
@@ -187,11 +187,11 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
 				{
 					// play sound
 					DECOMP_OtherFX_Play(0, 1);
-	
+
 					// Move your icon to the right
 					gGT->battleSetup.teamOfEachPlayer[i]++;
 				}
-	
+
 				// clear the gamepad input so that it
 				// does not use this frame's input on the next frame
 				sdata->buttonTapPerPlayer[i] = 0;
@@ -212,7 +212,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
         if ((short)sdata->battleSetupExpandMenu < 0)
         {
 			int buttonTapP1 = sdata->buttonTapPerPlayer[0];
-			
+
             // If you dont press Up
             if ((buttonTapP1 & 1) == 0)
             {
@@ -540,7 +540,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
         DECOMP_RECTMENU_ClearInput();
     }
 
-	struct TransitionMeta* tmbattle = 
+	struct TransitionMeta* tmbattle =
 		&D230.transitionMeta_battle[0];
 
     // "SETUP BATTLE"
@@ -568,10 +568,10 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
     }
 
     DECOMP_RECTMENU_DrawSelf(
-		&D230.menuBattleType, 
+		&D230.menuBattleType,
 		tmbattle[0].currX + 0x9c + WIDE_PICK(0,25),
 		tmbattle[0].currY + 0x24, WIDE_34(0x134));
-		
+
     local_38 = 0xd;
     DECOMP_RECTMENU_GetHeight(&D230.menuBattleType, &local_38, 0);
     sVar6 = local_38 + 0x20;
@@ -594,7 +594,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
             if (D230.menuBattleType.rowSelected == 2)
             {
                 D230.menuBattleLengthLifeTime.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
-				
+
                 if (sdata->battleSetupExpandMenu != 1)
                 {
                     D230.menuBattleLengthLifeTime.state |= 0x40;
@@ -603,13 +603,13 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                 {
                     D230.menuBattleLengthLifeTime.state |= 0x100;
                 }
-				
+
                 DECOMP_RECTMENU_DrawSelf(&D230.menuBattleLengthLifeTime,
 					tmbattle[2].currX + 0x9c + WIDE_PICK(0,25),
 					tmbattle[2].currY + sVar6 + 4, WIDE_34(0x8e));
-								 
+
                 D230.menuBattleLengthLifeLife.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
-                
+
 				if (sdata->battleSetupExpandMenu != 10)
                 {
                     D230.menuBattleLengthLifeLife.state |= 0x40;
@@ -618,11 +618,11 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
                 {
                     D230.menuBattleLengthLifeLife.state |= 0x100;
                 }
-				
+
                 DECOMP_RECTMENU_DrawSelf(&D230.menuBattleLengthLifeLife,
 					tmbattle[2].currX + 0x142 - WIDE_PICK(0,16),
 					tmbattle[2].currY + sVar6 + 4, WIDE_34(0x8e));
-								 
+
                 local_38 = 0xd;
                 DECOMP_RECTMENU_GetHeight(&D230.menuBattleLengthLifeTime, &local_38, 0);
                 local_36 = 0xd;
@@ -639,9 +639,9 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
             goto LAB_800b25f0;
         box = &D230.menuBattleLengthPoints;
     }
-    
+
 	box->state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
-	
+
     if (sdata->battleSetupExpandMenu != 1)
     {
         box->state |= 0x40;
@@ -650,17 +650,17 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
     {
         box->state |= 0x100;
     }
-    
-	DECOMP_RECTMENU_DrawSelf(box, 
+
+	DECOMP_RECTMENU_DrawSelf(box,
 		tmbattle[2].currX + 0x9c + WIDE_PICK(0,25),
 		tmbattle[2].currY + sVar6 + 4, WIDE_34(0x134));
-    
+
 	local_38 = 0xd;
     DECOMP_RECTMENU_GetHeight(box, &local_38, 0);
     sVar20 = local_38 + sVar6;
-	
+
 LAB_800b25f0:
-    
+
 	iVar8 = 0x9f;
 
     // "TEAMS:"
@@ -687,7 +687,7 @@ LAB_800b25f0:
                 iVar16 = iVar16 + WIDE_34(0x2a);
             }
         }
-			
+
         i = iVar16 + 4;
     }
 
@@ -726,7 +726,7 @@ LAB_800b25f0:
 					gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
 					(int)tmbattle[4].currX + (int)sVar6 + WIDE_PICK(0,25),
 					(int)tmbattle[4].currY + (int)sVar20 + 6,
-	
+
 					&gGT->backBuffer->primMem,
 					gGT->pushBuffer_UI.ptrOT,
 					1, 0x1000);
@@ -737,13 +737,14 @@ LAB_800b25f0:
         local_48.x = tmbattle[4].currX + (short)iVar8 + WIDE_PICK(0,25);
         local_48.y = tmbattle[4].currY + sVar20 + 5;
         iVar8 = iVar8 + (u_int)uVar4;
-        
+
 		local_48.w = uVar4;
 
+        Color color;
+        color.self = data.ptrColor[PLAYER_BLUE+i];
         DECOMP_CTR_Box_DrawSolidBox(
-			&local_48, data.ptrColor[PLAYER_BLUE+i],
-			gGT->backBuffer->otMem.startPlusFour,
-            &gGT->backBuffer->primMem);
+			&local_48, color,
+			gGT->backBuffer->otMem.startPlusFour);
     }
 
     if (sdata->battleSetupRowHighlighted == 2)
@@ -758,7 +759,7 @@ LAB_800b25f0:
 			gGT->backBuffer->otMem.startPlusFour,
 			&gGT->backBuffer->primMem);
     }
-	
+
     local_40.w = WIDE_34(0x140);
     local_40.h = 0x24;
     local_40.x = tmbattle[4].currX + 0x96 + WIDE_PICK(0,25);
@@ -820,8 +821,8 @@ LAB_800b25f0:
     // the player from starting the Battle
     if (j == 0)
     {
-        D230.menuBattleStartGame.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW); 
-		
+        D230.menuBattleStartGame.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+
         if (sdata->battleSetupExpandMenu != 5)
         {
             D230.menuBattleStartGame.state |= SHOW_ONLY_HIGHLIT_ROW;
@@ -830,10 +831,10 @@ LAB_800b25f0:
         {
             D230.menuBattleStartGame.state |= 0x100;
         }
-        DECOMP_RECTMENU_DrawSelf(&D230.menuBattleStartGame, 
+        DECOMP_RECTMENU_DrawSelf(&D230.menuBattleStartGame,
 				tmbattle[8].currX + 0x9c + WIDE_PICK(0,25),
 				tmbattle[8].currY + sVar20 + 0x78, WIDE_34(0x134));
-				
+
         local_38 = 0xd;
         DECOMP_RECTMENU_GetHeight(&D230.menuBattleStartGame, &local_38, 0);
     }
@@ -858,7 +859,7 @@ LAB_800b25f0:
 
     // Loop through all 11 weapon icons
     for (i = 0; i < 11; i++)
-    {		
+    {
         iVar8 = (int)(short)i;
         j = (iVar8 / 6);
 
@@ -874,10 +875,10 @@ LAB_800b25f0:
 
         // iVar4 % 6
         // Go to 2nd row after 6th icon
-        iVar13 = (u_int)local_40.x + 6 + 
-					(iVar8 % 6) * WIDE_34(0x34) + 
+        iVar13 = (u_int)local_40.x + 6 +
+					(iVar8 % 6) * WIDE_34(0x34) +
 					j * WIDE_34(0x1a);
-					
+
         j = (u_int)local_40.y + 2 +
 				j * 0x20;
 

@@ -1,33 +1,23 @@
 #include <common.h>
 
-void DECOMP_CTR_Box_DrawSolidBox(RECT* r, u_int* colorPtr, u_long* otMem, struct PrimMem* primMem)
+void DECOMP_CTR_Box_DrawSolidBox(RECT * r, Color color, u_long * ot)
 {
-	struct PrimMem* primmemCurr = (struct PrimMem*)primMem->curr;
-	POLY_F4* p = NULL;
-	
-	if (primmemCurr <= (struct PrimMem*)primMem->endMin100)
-	{
-		p = (POLY_F4*)primmemCurr;
-		primMem->curr = p + 1;
-	}
+	PolyF4 * p;
+    GetPrimMem(p);
+    if (p == nullptr) { return; }
 
-	if (p == NULL) return;
+    const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1 } };
+    color.code = primCode;
 
-    *(int*)&p->r0 = *colorPtr;
-	p->code = 0x28;
-	
-    p->x0 = r->x;
-    p->y0 = r->y;
+    p->colorCode = color;
+    p->v[0].pos.x = r->x;
+    p->v[0].pos.y = r->y;
+    p->v[1].pos.x = r->x + r->w;
+    p->v[1].pos.y = r->y;
+    p->v[2].pos.x = r->x;
+    p->v[2].pos.y = r->y + r->h;
+    p->v[3].pos.x = r->x + r->w;
+    p->v[3].pos.y = r->y + r->h;
 
-    p->x1 = (r->x + r->w);
-    p->y1 =  r->y;
-
-    p->x2 = r->x;
-    p->y2 = (r->y + r->h);
-
-    p->x3 = (r->x + r->w);
-    p->y3 = (r->y + r->h);
-
-	p->tag = *otMem & 0xffffff | 0x5000000;
-    *otMem = (u_int)p & 0xffffff;
+    AddPrimitive(p, ot);
 }
