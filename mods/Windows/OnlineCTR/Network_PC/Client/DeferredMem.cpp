@@ -201,145 +201,124 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	//this will not function with this client without this option set to 1.
 	//(However, duckstations with this fix will have no issues with the fix applied).
 	//Set to 1 to enable the fix, set to 0 to disable it.
-	#define applyBufferFix 1
-	#define maxSendBufLen 17 * 50 //must be >= 34
-#if maxSendBufLen < 34
-#error maxSendBufLen must be at least 34
-#endif
-	char sendBuffer[maxSendBufLen]; //keep in mind this is on the stack
-	size_t sendBufPtr = 0;
-	size_t whole = len - (len % 8); //is a multiple of 8
+#define applyBufferFix 1
+	constexpr unsigned int sendBufLen = 17 + applyBufferFix;
+	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+	sendBuffer[0] = sendBufLen & 0xFF; //18 = packetSize
+	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //18 = packetSize
+	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //18 = packetSize
+	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //18 = packetSize
+	sendBuffer[4] = DSPINEMsgWrite64;
+	//char recieveBuffer[recvBufLen];
+	size_t whole = len - (len % 8);
 	size_t rem = len - whole; //whatever is left over.
-	for (size_t i = 0; i < whole; i += 8) //1 loop iter uses 17 bytes.
-	{
-		sendBuffer[sendBufPtr + 0] = 17 & 0xFF;
-		sendBuffer[sendBufPtr + 1] = (17 >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 2] = (17 >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 3] = (17 >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite64;
+	size_t i = 0;
+	for (; i < whole; i += 8)
+	{ //8 byte transfer(s)
+		//send section
 		unsigned int offsetaddr = addr + i;
-		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
-		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 9] = buf[i + 0];
-		sendBuffer[sendBufPtr + 10] = buf[i + 1];
-		sendBuffer[sendBufPtr + 11] = buf[i + 2];
-		sendBuffer[sendBufPtr + 12] = buf[i + 3];
-		sendBuffer[sendBufPtr + 13] = buf[i + 4];
-		sendBuffer[sendBufPtr + 14] = buf[i + 5];
-		sendBuffer[sendBufPtr + 15] = buf[i + 6];
-		sendBuffer[sendBufPtr + 16] = buf[i + 7];
-		sendBufPtr += 17;
-		outstandingReads++; //this line must come before send or race condition
-		if (sendBufPtr + 17 > maxSendBufLen)
-		{ //we're full, time to send.
-			int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-			if (res != (sendBufPtr + applyBufferFix))
-			{
-				if (res == SOCKET_ERROR)
-				{
-					exit(-69420);
-				}
-				else
-				{
-					//partial send???
-					exit(-69420);
-				}
-			}
-			sendBufPtr = 0;
-		}
-	}
-	int reqSize = ((rem & 4) != 0 ? 13 : 0) + ((rem & 2) != 0 ? 11 : 0) + ((rem & 1) != 0 ? 10 : 0);
-	if (sendBufPtr + reqSize > maxSendBufLen)
-	{ //we would be >=full if we did the rem sends.
-		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-		if (res != (sendBufPtr + applyBufferFix))
+
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[9] = buf[i + 0];
+		sendBuffer[10] = buf[i + 1];
+		sendBuffer[11] = buf[i + 2];
+		sendBuffer[12] = buf[i + 3];
+		sendBuffer[13] = buf[i + 4];
+		sendBuffer[14] = buf[i + 5];
+		sendBuffer[15] = buf[i + 6];
+		sendBuffer[16] = buf[i + 7];
+		outstandingReads++;
+		int res = send(dspineSocket, sendBuffer, sendBufLen, 0);
+		if (res != sendBufLen)
 		{
 			if (res == SOCKET_ERROR)
-			{
 				exit(-69420);
-			}
 			else
-			{
-				//partial send???
-				exit(-69420);
-			}
+				exit(-69420); //partial send???
 		}
-		sendBufPtr = 0;
 	}
-	unsigned int offsetaddr = addr + whole;
 	//note: rem is [0-7] inclusive
-	//if all three of these run, sendBuffer must be at least 34 bytes.
+	unsigned int offsetaddr = addr + whole;
 	if ((rem & 4) != 0) //we need a 4
 	{
 		int sz = 9 + 4;
-		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
-		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite32;
-		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
-		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
-		sendBuffer[sendBufPtr + 10] = buf[sendBufPtr + whole + 1];
-		sendBuffer[sendBufPtr + 11] = buf[sendBufPtr + whole + 2];
-		sendBuffer[sendBufPtr + 12] = buf[sendBufPtr + whole + 3];
+		sendBuffer[0] = sz & 0xFF;
+		sendBuffer[1] = (sz >> 8) & 0xFF;
+		sendBuffer[2] = (sz >> 16) & 0xFF;
+		sendBuffer[3] = (sz >> 24) & 0xFF;
+		sendBuffer[4] = DSPINEMsgWrite32;
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[9] = buf[i + whole + 0];
+		sendBuffer[10] = buf[i + whole + 1];
+		sendBuffer[11] = buf[i + whole + 2];
+		sendBuffer[12] = buf[i + whole + 3];
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 4;
-		sendBufPtr += sz;
+		i += 4;
+		int res = send(dspineSocket, sendBuffer, sz, 0);
+		if (res != sz)
+		{
+			if (res == SOCKET_ERROR)
+				exit(-69420);
+			else
+				exit(-69420); //partial send???
+		}
 	}
 	if ((rem & 2) != 0)
 	{
 		int sz = 9 + 2;
-		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
-		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite16;
-		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
-		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
-		sendBuffer[sendBufPtr + 10] = buf[sendBufPtr + whole + 1];
+		sendBuffer[0] = sz & 0xFF;
+		sendBuffer[1] = (sz >> 8) & 0xFF;
+		sendBuffer[2] = (sz >> 16) & 0xFF;
+		sendBuffer[3] = (sz >> 24) & 0xFF;
+		sendBuffer[4] = DSPINEMsgWrite16;
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[9] = buf[i + whole + 0];
+		sendBuffer[10] = buf[i + whole + 1];
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 2;
-		sendBufPtr += sz;
+		i += 2;
+		int res = send(dspineSocket, sendBuffer, sz, 0);
+		if (res != sz)
+		{
+			if (res == SOCKET_ERROR)
+				exit(-69420);
+			else
+				exit(-69420); //partial send???
+		}
 	}
 	if ((rem & 1) != 0)
 	{
 		int sz = 9 + 1;
-		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
-		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite8;
-		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
-		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
+		sendBuffer[0] = sz & 0xFF;
+		sendBuffer[1] = (sz >> 8) & 0xFF;
+		sendBuffer[2] = (sz >> 16) & 0xFF;
+		sendBuffer[3] = (sz >> 24) & 0xFF;
+		sendBuffer[4] = DSPINEMsgWrite8;
+		sendBuffer[5] = offsetaddr & 0xFF;
+		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[9] = buf[i + whole + 0];
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 1;
-		sendBufPtr += sz;
-	}
-	if (sendBufPtr != 0)
-	{
-		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-		if (res != (sendBufPtr + applyBufferFix))
+		i += 1;
+		int res = send(dspineSocket, sendBuffer, sz, 0);
+		if (res != sz)
 		{
 			if (res == SOCKET_ERROR)
-			{
 				exit(-69420);
-			}
 			else
-			{
-				//partial send???
-				exit(-69420);
-			}
+				exit(-69420); //partial send???
 		}
 	}
 }

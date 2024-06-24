@@ -82,8 +82,9 @@ public:
 	/// </summary>
 	void commit()
 	{
-		//constexpr int aaa = offsetof(OnlineCTR, windowsClientSync); // = 40
-		for (size_t i = 0; i < sizeof(T); i += 8)
+		size_t whole = sizeof(T) - (sizeof(T) % 8);
+		size_t rem = sizeof(T) - whole;
+		for (size_t i = 0; i < whole; i += 8)
 		{
 			if (memcmp(buf + i, originalBuf + i, 8) != 0)
 			{
@@ -93,10 +94,9 @@ public:
 				writeMemorySegment(address + i, 8, buf + i);
 			}
 		}
-		size_t rem = (sizeof(T) % 8 == 0) ? 0 : (8 - (sizeof(T) % 8));
-		if (rem != 0 && memcmp(buf - (sizeof(T) - 8), originalBuf - (sizeof(T) - 8), rem))
+		if (rem != 0 && memcmp(buf + whole, originalBuf + whole, rem) != 0)
 		{
-			writeMemorySegment(address, rem, buf - (sizeof(T) - 8));
+			writeMemorySegment(address + whole, rem, buf + whole);
 		}
 		memcpy(originalBuf, buf, sizeof(T));
 	}
