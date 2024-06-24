@@ -23,7 +23,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	box.h = barHeight;
 	DECOMP_CTR_Box_DrawWireBox(&box, &boxColor, gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
 
-	const PolyCode renderCode = (PolyCode){.quad = 1, .renderCode = RENDER_CODE_POLYGON};
+	const PolyCode renderCode = {.quad = 1, .renderCode = RenderCode_Polygon};
 	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, renderCode); // red color, ready to boost
 
 	if (driver->const_turboLowRoomWarning * ELAPSED_MS < driver->turbo_MeterRoomLeft) {

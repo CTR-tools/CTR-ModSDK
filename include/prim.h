@@ -3,9 +3,13 @@
 
 #include <macros.h>
 
-#define LINE_SIZE 2
-#define TRI_SIZE  3
-#define QUAD_SIZE 4
+enum VertexCount
+{
+    VertexCount_Point = 1,
+    VertexCount_Line = 2,
+    VertexCount_Tri = 3,
+    VertexCount_Quad = 4,
+};
 
 typedef union Tag
 {
@@ -38,9 +42,12 @@ typedef union Texpage
     u32 self;
 } Texpage;
 
-#define RENDER_CODE_POLYGON 1
-#define RENDER_CODE_LINE 2
-#define RENDER_CODE_RECTANGLE 3
+enum RenderCode
+{
+    RenderCode_Polygon = 1,
+    RenderCode_Line = 2,
+    RenderCode_Rectangle = 3,
+};
 
 typedef union PolyCode
 {
@@ -68,7 +75,10 @@ typedef union ColorCode
     u32 self;
 } ColorCode;
 
+typedef ColorCode Color;
+
 #define MakeColorCode(red, green, blue, renderCode) (ColorCode){.r = red, .g = green, .b = blue, .code = renderCode}
+#define MakeColor(red, green, blue) (Color){.r = red, .g = green, .b = blue}
 
 typedef union Point
 {
@@ -158,66 +168,66 @@ typedef struct GTVertex
 typedef struct LineG2
 {
     Tag tag;
-    GVertex v[LINE_SIZE];
+    GVertex v[VertexCount_Line];
 } LineG2;
 
 typedef struct PolyG3
 {
     Tag tag;
-    GVertex v[TRI_SIZE];
+    GVertex v[VertexCount_Tri];
 } PolyG3;
 
 typedef struct PolyG4
 {
     Tag tag;
-    GVertex v[QUAD_SIZE];
+    GVertex v[VertexCount_Quad];
 } PolyG4;
 
 typedef struct PolyGT3
 {
     Tag tag;
-    GTVertex v[TRI_SIZE];
+    GTVertex v[VertexCount_Tri];
 } PolyGT3;
 
 typedef struct PolyGT4
 {
     Tag tag;
-    GTVertex v[QUAD_SIZE];
+    GTVertex v[VertexCount_Quad];
 } PolyGT4;
 
 typedef struct LineF2
 {
     Tag tag;
 	ColorCode colorCode;
-	FVertex v[LINE_SIZE];
+	FVertex v[VertexCount_Line];
 } LineF2;
 
 typedef struct PolyF3
 {
 	Tag tag;
 	ColorCode colorCode;
-	FVertex v[TRI_SIZE];
+	FVertex v[VertexCount_Tri];
 } PolyF3;
 
 typedef struct PolyF4
 {
 	Tag tag;
 	ColorCode colorCode;
-	FVertex v[QUAD_SIZE];
+	FVertex v[VertexCount_Quad];
 } PolyF4;
 
 typedef struct PolyFT3
 {
     Tag tag;
     ColorCode colorCode;
-    FTVertex v[TRI_SIZE];
+    FTVertex v[VertexCount_Tri];
 } PolyFT3;
 
 typedef struct PolyFT4
 {
     Tag tag;
     ColorCode colorCode;
-    FTVertex v[QUAD_SIZE];
+    FTVertex v[VertexCount_Quad];
 } PolyFT4;
 
 #define fPolyCode color.code
