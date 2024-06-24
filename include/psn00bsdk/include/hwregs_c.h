@@ -5,7 +5,11 @@
 
 #pragma once
 
+#ifdef INTELLISENSE_HINT
+#include <stdint-gcc.h>
+#else
 #include <stdint.h>
+#endif
 
 #define _ADDR8(addr)		((volatile uint8_t *) (addr))
 #define _ADDR16(addr)		((volatile uint16_t *) (addr))

@@ -21,7 +21,12 @@
 
 #pragma once
 
+#ifdef INTELLISENSE_HINT
+#include <stdint-gcc.h>
+#else
 #include <stdint.h>
+#endif
+
 #include <stddef.h>
 #include <psn00bsdk/include/hwregs_c.h>
 

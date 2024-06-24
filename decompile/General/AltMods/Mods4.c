@@ -72,7 +72,7 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	for (int i = 0; i < 2; i++)
 	{
 		PolyF4 * p;
-		GetPrimitiveMem(p, PolyF4, backDB->primMem.curr, backDB->primMem.endMin100)
+		GetPrimMem(p);
 		if (p == nullptr) { return; }
 
 		p->colorCode = colorCode;

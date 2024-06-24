@@ -23,7 +23,11 @@
 
 #pragma once
 
+#ifdef INTELLISENSE_HINT
+#include <stdint-gcc.h>
+#else
 #include <stdint.h>
+#endif
 
 /* Enum definitions */
 
@@ -735,7 +739,7 @@ int CdReadSync(int mode, uint8_t *result);
  * fast as possible and shall not call any function that relies on interrupts
  * being enabled.
  *
- * @param func 
+ * @param func
  * @return Previously set callback or NULL
  *
  * @see CdRead(), CdReadSync()

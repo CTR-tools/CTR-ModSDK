@@ -10,10 +10,14 @@
  *
  * Reference: https://gist.github.com/scanlime/5042071
  */
- 
+
 #pragma once
 
+#ifdef INTELLISENSE_HINT
+#include <stdint-gcc.h>
+#else
 #include <stdint.h>
+#endif
 
 /* Controller type and button definitions */
 
