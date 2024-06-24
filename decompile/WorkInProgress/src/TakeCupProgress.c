@@ -20,7 +20,7 @@ void DECOMP_TakeCupProgress_MenuProc(struct RectMenu* menu)
                 460,    FONT_BIG,
                 
 				//Yellow, text flag
-                (0xffff0000 | JUSTIFY_CENTER));
+                (ORANGE | JUSTIFY_CENTER));
         }
     }
     else
