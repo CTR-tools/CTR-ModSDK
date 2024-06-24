@@ -76,7 +76,7 @@ void ThreadFunc(struct Thread* t)
 				break;
 	}
 
-	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES
+	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES - 2 frames.
 	int boolCloseClient = (i == -1) && (octr->CurrState > LAUNCH_ENTER_PID);
 
 		

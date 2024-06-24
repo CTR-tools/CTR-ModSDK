@@ -89,28 +89,35 @@ void closeSocket(SOCKET* socket) //should be preceded by a call to initSocket
 
 void recvThread()
 {
-	constexpr unsigned int recvBufLen = 5;
-	char recieveBuffer[recvBufLen];
-
-	while (true)
+	try
 	{
-		while (outstandingReads > 0)
+		constexpr unsigned int recvBufLen = 5;
+		char recieveBuffer[recvBufLen];
+
+		while (true)
 		{
-			WSAPOLLFD fdarr = { 0 };
-			fdarr.fd = dspineSocket;
-			fdarr.events = POLLRDNORM;
-			WSAPoll(&fdarr, 1, -1);
-			int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-			if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-				outstandingReads--; //very good
-			else 
+			while (outstandingReads > 0)
 			{
-				if (recvLen < recvBufLen)
-					printf("recv returned less than required buffer length ");
-				printf("recv AAA failed: %d\n", WSAGetLastError());
-				exit(-69420); //could be caused by many things.
+				WSAPOLLFD fdarr = { 0 };
+				fdarr.fd = dspineSocket;
+				fdarr.events = POLLRDNORM;
+				WSAPoll(&fdarr, 1, -1);
+				int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+				if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
+					outstandingReads--; //very good
+				else 
+				{
+					if (recvLen < recvBufLen)
+						printf("recv returned less than required buffer length ");
+					printf("recv AAA failed: %d\n", WSAGetLastError());
+					exit(-69420); //could be caused by many things.
+				}
 			}
 		}
+	}
+	catch (...)
+	{
+		printf("recvThread() threw something!");
 	}
 }
 
@@ -228,7 +235,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		if (sendBufPtr + 17 > maxSendBufLen)
 		{ //we're full, time to send.
 			int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-			if (res != sendBufPtr)
+			if (res != (sendBufPtr + applyBufferFix))
 			{
 				if (res == SOCKET_ERROR)
 				{
@@ -247,7 +254,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	if (sendBufPtr + reqSize > maxSendBufLen)
 	{ //we would be >=full if we did the rem sends.
 		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-		if (res != sendBufPtr)
+		if (res != (sendBufPtr + applyBufferFix))
 		{
 			if (res == SOCKET_ERROR)
 			{
@@ -322,7 +329,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	if (sendBufPtr != 0)
 	{
 		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
-		if (res != sendBufPtr)
+		if (res != (sendBufPtr + applyBufferFix))
 		{
 			if (res == SOCKET_ERROR)
 			{

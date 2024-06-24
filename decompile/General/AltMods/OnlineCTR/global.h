@@ -42,13 +42,6 @@
 #define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
 
- // 2 seconds to be very tolerant on client
-#ifdef USE_60FPS
-#define DISCONNECT_AT_UNSYNCED_FRAMES   120
-#else
-#define DISCONNECT_AT_UNSYNCED_FRAMES   60
-#endif
-
 enum ClientState
 {
 	LAUNCH_ENTER_PID,

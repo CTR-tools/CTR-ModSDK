@@ -2,7 +2,7 @@
 
 //Based on my (TheUbMunster)'s testing, this description of the """api"""
 //from the comment in https://github.com/stenzek/duckstation/blob/master/src/core/pine_server.cpp
-//is straight up not correct
+//is straight up not correct (at time of writing)
 
 // example IPC messages: MsgRead/Write 
 // refer to the client doc for more info on the format 
