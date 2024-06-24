@@ -210,9 +210,9 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 
 	// ordinary day
 	mw.special = 0;
-	if (GetWeekDay() == 1) mw.special = 1; // Monday
-	if (GetWeekDay() == 3) mw.special = 2; // Wednesday
-	if (GetWeekDay() == 5) mw.special = 3; // Friday
+	if (GetWeekDay() == 2) mw.special = 1; // Tuesday
+	if (GetWeekDay() == 4) mw.special = 2; // Thursday
+	if (GetWeekDay() == 6) mw.special = 3; // Saturday
 
 	sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
 }
