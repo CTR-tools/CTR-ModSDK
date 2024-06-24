@@ -5,7 +5,7 @@
 #include "OnlineCTR/menu.c"
 #include "OnlineCTR/states.c"
 #include "OnlineCTR/thread.c"
-//#include "OnlineCTR/zMirrorMode.c"
+#include "OnlineCTR/zMirrorMode.c"
 #include "OnlineCTR/speedometerData.c"
 #endif
 #endif

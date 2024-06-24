@@ -1,7 +1,7 @@
 #include <common.h>
 
 #ifdef USE_ONLINE
-#include "AltMods/OnlineCTR/global.h"
+
 // online can be fragmented
 #define HANDLE_NULL_DRIVER continue
 
@@ -27,7 +27,6 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	int iVar10;
 	int iVar13;
 	int currRank;
-	int startArea;
 	struct GameTracker *gGT = sdata->gGT;
 
 	iVar9 = 0;
@@ -81,20 +80,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// Part A: Start-line -> 32000 distToFinish
 		// Part B: 32000 distToFinish -> 1200 distToFinish
 		// Part C: 1200 distToFinish -> Finish-line 
-		startArea = 32000;
-		#ifdef USE_ONLINE
 
-		// Skipless only at rooms 9-C
-		int skiplessRoom = octr->serverRoom - 8;
-		if ((skiplessRoom > -1) && (skiplessRoom <= 3))
-			//fixed startline glitch by making the game check if at most 1/15th of the lap is skipped. 
-			startArea = (gGT->level1->ptr_restart_points[0].distToFinish * 15)/2;
-		
-		#endif
 		if (
 				// crossed finishline (forwards)
 				(distToFinish_prev < 1200) &&
-				(distToFinish_curr > startArea)
+				(distToFinish_curr > 32000)
 			)
 		{	
 			// Set racer's distance driven backwards to zero

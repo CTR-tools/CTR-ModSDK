@@ -49,7 +49,7 @@ void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d)
     d->KartStates.RevEngine.unk[1] = 0;
 
     d->KartStates.RevEngine.boostMeter =
-		d->const_RevEngine_Limit + d->const_RevEngine_Limit / 3;
+		d->const_AccelSpeed_ClassStat + d->const_AccelSpeed_ClassStat / 3;
 }
 
 void *PlayerRevEngineFuncTable[13] =

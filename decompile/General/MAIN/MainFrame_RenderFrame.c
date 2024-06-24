@@ -1741,11 +1741,10 @@ void RenderSubmit(struct GameTracker* gGT)
 	gGT->bool_DrawOTag_InProgress = 1;
 
 	void* ot = &gGT->pushBuffer[0].ptrOT[0x3ff];
-#if 0
+
 #ifdef USE_ONLINE
 	void OnlineMirrorMode(u_long* ot);
 	OnlineMirrorMode(ot);
-#endif
 #endif
 
 	DrawOTag(ot);

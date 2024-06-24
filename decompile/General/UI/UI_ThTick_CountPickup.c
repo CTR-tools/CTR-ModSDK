@@ -67,12 +67,15 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket)
   if ((*(int*)&gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) 
   {
     // make visible
-    inst->flags &= ~(HIDE_MODEL);
+    flags = inst->flags & 0xffffff7f;
   } 
   
   else 
   {
     // make invisible
-    inst->flags |= HIDE_MODEL;
+    flags = inst->flags | 0x80;
   }
+  
+  inst->flags = flags;
+  return;
 }

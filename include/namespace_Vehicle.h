@@ -894,7 +894,7 @@ struct Driver
 	short const_Speed_ClassStat; // OK
 
 	// 0x42E - 0x0C
-	short const_RevEngine_Limit; // OK
+	short const_AccelSpeed_ClassStat; // OK
 
 	// 0x430 - 0x0D
 	short const_SingleTurboSpeed; // OK

@@ -38,11 +38,11 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
 		(d->KartStates.RevEngine.maskObj != NULL))
 		 d->KartStates.RevEngine.maskObj->duration = 0;
 
-    if ((d->const_RevEngine_Limit < d->KartStates.RevEngine.fireLevel) &&
+    if ((d->const_AccelSpeed_ClassStat < d->KartStates.RevEngine.fireLevel) &&
         (d->KartStates.RevEngine.unk[1] & 3) == 0)
     {
         // While not moving, if you rev'd your engine less than...
-        if (d->KartStates.RevEngine.boostMeter < (d->const_RevEngine_Limit + d->const_SacredFireSpeed))
+        if (d->KartStates.RevEngine.boostMeter < (d->const_AccelSpeed_ClassStat + d->const_SacredFireSpeed))
         {
             // You get a small boost
             revFireLevel = 0x20;
@@ -196,7 +196,7 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
         d->KartStates.RevEngine.unk[0] = 0;
 
         // if curr rev > ???
-        if (d->const_RevEngine_Limit < d->KartStates.RevEngine.fireLevel)
+        if (d->const_AccelSpeed_ClassStat < d->KartStates.RevEngine.fireLevel)
         {
             d->KartStates.RevEngine.unk[0] = 1;
         }
@@ -204,14 +204,14 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
     if ((d->KartStates.RevEngine.unk[0] != 0) &&
 
         // curr rev < ???
-        (d->KartStates.RevEngine.fireLevel < d->const_RevEngine_Limit))
+        (d->KartStates.RevEngine.fireLevel < d->const_AccelSpeed_ClassStat))
     {
         d->KartStates.RevEngine.unk[0] = 0;
 
         uVar6 = DECOMP_VehCalc_InterpBySpeed(
 				d->KartStates.RevEngine.boostMeter,
 				FPS_HALF(d->const_SacredFireSpeed / 3 + 3),
-				d->const_SacredFireSpeed + d->const_RevEngine_Limit);
+				d->const_SacredFireSpeed + d->const_AccelSpeed_ClassStat);
 
         d->KartStates.RevEngine.boostMeter = uVar6;
     }
@@ -223,7 +223,7 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d)
 
         // max rev = ???
         d->KartStates.RevEngine.boostMeter =
-            d->const_RevEngine_Limit + d->const_SacredFireSpeed / 3;
+            d->const_AccelSpeed_ClassStat + d->const_SacredFireSpeed / 3;
     }
 
     // if curr rev >= 1
@@ -295,7 +295,7 @@ LAB_80067dec:
     {
 
         // if curr rev < ???
-        if (d->KartStates.RevEngine.fireLevel < d->const_RevEngine_Limit)
+        if (d->KartStates.RevEngine.fireLevel < d->const_AccelSpeed_ClassStat)
         {
             d->revEngineState = 0;
         }
@@ -309,7 +309,7 @@ LAB_80067dec:
         d->revEngineState = 2;
     }
 
-    iVar4 = d->const_RevEngine_Limit;
+    iVar4 = d->const_AccelSpeed_ClassStat;
 
     // ??? = curr rev
     d->unk36E = d->KartStates.RevEngine.fireLevel;

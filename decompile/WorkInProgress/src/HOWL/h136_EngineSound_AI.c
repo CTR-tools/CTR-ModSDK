@@ -9,7 +9,7 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
   u_int volume;
   u_int distort;
 
-  speedoScale = param_1->const_RevEngine_Limit;
+  speedoScale = param_1->const_AccelSpeed_ClassStat;
 
   if (speedoScale < 0)
     speedoScale = -speedoScale;
@@ -71,7 +71,7 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
 
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
-  desiredVolume = DECOMP_VehCalc_MapToRange(param_1->fill_3B6[0], 0, param_1->const_RevEngine_Limit, 0x82, 0xe6);
+  desiredVolume = DECOMP_VehCalc_MapToRange(param_1->fill_3B6[0], 0, param_1->const_AccelSpeed_ClassStat, 0x82, 0xe6);
 
   if (param_4 < 2000 && 200 < param_4)
   {
@@ -90,7 +90,7 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
 
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
-  speedoScale = DECOMP_VehCalc_MapToRange(param_1->fill_3B6[1], 0, param_1->const_RevEngine_Limit, 0x3c, 0xaa);
+  speedoScale = DECOMP_VehCalc_MapToRange(param_1->fill_3B6[1], 0, param_1->const_AccelSpeed_ClassStat, 0x3c, 0xaa);
   param_5 = param_5 >> 3;
 
   if (param_5 < -0x14)

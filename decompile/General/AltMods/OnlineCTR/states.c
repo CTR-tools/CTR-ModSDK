@@ -176,15 +176,8 @@ void StatePS1_Lobby_CharacterPick()
 	MenuWrites_Characters();
 
 	// If already picked
-	if(MenuFinished() == 1)
-	{
-		#ifdef USE_ENGINESWAP
-		void FakeState_Lobby_EnginePick();
-		FakeState_Lobby_EnginePick();
-		#endif
-		return;
-	} 
-	
+	if(MenuFinished() == 1) return;
+
 	PrintCharacterStats();
 	PrintRecvTrack();
 
@@ -200,23 +193,7 @@ void StatePS1_Lobby_CharacterPick()
 		data.characterIDs[0] = (8 * octr->PageNumber) + b->rowSelected;
 	}
 }
-#ifdef USE_ENGINESWAP
-void FakeState_Lobby_EnginePick()
-{	
-	MenuWrites_Engine();
-	
-	// If already picked
-	if(MenuFinished() == 1) return;
-	
-	PrintCharacterStats();
 
-	// update real-time
-	DrawStatsBox(0x100, 112, menu.rowSelected);
-	
-	UpdateMenu();
-	NewPage_Engine();
-}
-#endif
 void StatePS1_Lobby_WaitForLoading()
 {
 	PrintCharacterStats();

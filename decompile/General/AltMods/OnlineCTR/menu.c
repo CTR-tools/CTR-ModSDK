@@ -2,7 +2,7 @@
 #include "global.h"
 
 struct MenuRow menuRows[9] =
-	{
+{
 	{0,0,1,0,0},
 	{0,0,2,1,1},
 	{0,1,3,2,2},
@@ -12,49 +12,49 @@ struct MenuRow menuRows[9] =
 	{0,5,7,6,6},
 	{0,6,7,7,7},
 
-		// NULL, end of menu
-		{
-			.stringIndex = 0xFFFF,
-			.rowOnPressUp = 0,
-			.rowOnPressDown = 0,
-			.rowOnPressLeft = 0,
-			.rowOnPressRight = 0,
+	// NULL, end of menu
+	{
+		.stringIndex = 0xFFFF,
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 0,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
 	}
 };
 
 void RECTMENU_OnPressX(struct RectMenu* b);
 
 struct RectMenu menu =
-	{
-		// custom string made myself
-		.stringIndexTitle = 0x4e,
+{
+	// custom string made myself
+	.stringIndexTitle = 0x4e,
 
-		.posX_curr = 0, // X position
-		.posY_curr = 0,  // Y position
+	.posX_curr = 0, // X position
+	.posY_curr = 0,  // Y position
 
-		.unk1 = 0,
+	.unk1 = 0,
 
-		// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
-		// 0x100000 disables TRIANGLE button to prevent crashing
-		.state = 0x100083,
+	// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
+	// 0x100000 disables TRIANGLE button to prevent crashing
+	.state = 0x100083,
 
-		.rows = menuRows,
+	.rows = menuRows,
 
-		.funcPtr = RECTMENU_OnPressX,
+	.funcPtr = RECTMENU_OnPressX,
 
-		.drawStyle = 0x4,	// 0xF0 looks like load/save
+	.drawStyle = 0x4,	// 0xF0 looks like load/save
 
-		.posX_prev = 0,
-		.posY_prev = 0,
+	.posX_prev = 0,
+	.posY_prev = 0,
 
-		.rowSelected = 0,
-		.unk1c = 0,
-		.unk1e = 0,
-		.width = 0,
-		.height = 0,
+	.rowSelected = 0,
+	.unk1c = 0,
+	.unk1e = 0,
+	.width = 0,
+	.height = 0,
 
-		.ptrNextBox_InHierarchy = 0,
-		.ptrPrevBox_InHierarchy = 0,
+	.ptrNextBox_InHierarchy = 0,
+	.ptrPrevBox_InHierarchy = 0,
 };
 
 char* OnPressX_SetPtr;
@@ -67,15 +67,15 @@ int MenuFinished()
 }
 
 char* countryNames[8] =
-	{
-		"Europe",
-		"USA NYC",
-		"Mexico",
-		"Brazil",
-		"Australia",
-		"Singapore",
-		"Beta",
-		"Private Room",
+{
+	"Europe",
+	"USA NYC",
+	"Mexico",
+	"Brazil",
+	"Australia",
+	"Singapore",
+	"Beta",
+	"Private Room",
 };
 
 void NewPage_ServerCountry()
@@ -93,11 +93,11 @@ void NewPage_ServerCountry()
 		sdata->lngStrings[0x9a+i] = countryNames[i];
 	}
 
-#ifdef ONLINE_BETA_MODE
+	#ifdef ONLINE_BETA_MODE
 	for(i = 0; i < 6; i++)
-#else
+	#else
 	i = 6;
-#endif
+	#endif
 
 		menuRows[i].stringIndex |= 0x8000;
 }
@@ -217,9 +217,11 @@ void NewPage_Laps()
 	sdata->lngStrings[0x9b] = "3";
 	sdata->lngStrings[0x9c] = "5";
 	sdata->lngStrings[0x9d] = "7";
-	sdata->lngStrings[0x9e] = "15";
-	sdata->lngStrings[0x9f] = "30";
-	sdata->lngStrings[0xa0] = "60";
+
+	// Monday event
+	sdata->lngStrings[0x9e] = "30";
+	sdata->lngStrings[0x9f] = "60";
+	sdata->lngStrings[0xa0] = "90";
 	sdata->lngStrings[0xa1] = "120";
 
 
@@ -229,14 +231,12 @@ void NewPage_Laps()
 		menuRows[i].stringIndex = 0x9a+i;
 		menuRows[4+i].stringIndex = 0x9a+4+i;
 
-#if 0
 		// if not monday
 		if(octr->special != 1)
 		{
 			sdata->lngStrings[0x9a+4+i] = "-";
 			menuRows[4+i].stringIndex = 0x809a+4+i;
 		}
-#endif
 	}
 }
 
@@ -263,34 +263,8 @@ void MenuWrites_Characters()
 	OnPressX_SetPtr = &data.characterIDs[0];
 	OnPressX_SetLock = &octr->boolLockedInCharacters[octr->DriverID];
 }
-#ifdef USE_ENGINESWAP
-void NewPage_Engine()
-{
-	sdata->lngStrings[0x9a] = "Balanced";
-	sdata->lngStrings[0x9b] = "Accel";
-	sdata->lngStrings[0x9c] = "Speed";
-	sdata->lngStrings[0x9d] = "Turn";
-	// sdata->lngStrings[0x9e] = "Max";
-	
-	menuRows[3].rowOnPressDown = 3;
-
-	for (int i = 0; i < 4; i++)
-	{
-		menuRows[i].stringIndex = 0x9a + i;
-		menuRows[4 + i].stringIndex = -1;
-	}
-}
-
-void MenuWrites_Engine()
-{
-	pageMax = 0;
-	OnPressX_SetPtr = &octr->engines[octr->DriverID];
-	OnPressX_SetLock = &octr->boolLockedInEngine;
-}
-#endif
 
 int pressedX = 0;
-
 void UpdateMenu()
 {
 	if (pressedX == 1)
@@ -331,9 +305,7 @@ void UpdateMenu()
 void RECTMENU_OnPressX(struct RectMenu* b)
 {
 	int i;
-	#ifdef USE_ENGINESWAP
-	menuRows[3].rowOnPressDown = 4; // reset row controls
-	#endif
+
 	RECTMENU_Hide(b);
 	sdata->ptrDesiredMenu = 0;
 
@@ -363,21 +335,22 @@ void PrintCharacterStats()
 	int i;
 	int color;
 
-	char *title = "Classic Gameplay Mode";
 
-	if (octr->special == 1)
+	char* title = "Classic Gameplay Mode";
+
+	if(octr->special == 1)
 	{
-		title = "Moon Mode";
+		title = "Monday Extra Laps";
 	}
 
-	if (octr->special == 2)
+	if(octr->special == 2)
 	{
-		title = "Mega Drifts";
+		title = "Wednesday Max Stats";
 	}
 
-	if (octr->special == 3)
+	if(octr->special == 3)
 	{
-		title = "Backwards Day";
+		title = "Friday Demo Cam";
 	}
 
 	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);
@@ -395,6 +368,8 @@ void PrintCharacterStats()
 	DecalFont_DrawLine(
 		roomName,
 		0x10, 0x18, FONT_SMALL, 0);
+
+
 
 	int numDead = 0;
 	for(i = 0; i < octr->NumDrivers; i++)
@@ -466,7 +441,7 @@ void PrintRecvTrack()
 	char message[32];
 
 	sprintf(message, "Track: %s",
-			sdata->lngStrings
+				sdata->lngStrings
 				[
 					data.metaDataLEV[octr->levelID].name_LNG
 				]

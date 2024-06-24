@@ -200,13 +200,11 @@ void DrawOverheadNames()
 		if(len == 0) continue;
 
 		// if mirror mode
-		#if 0
 		if(octr->special != 0)
 		{
 			ptrDest->Screen_posX =
 			0x200 - ptrDest->Screen_posX;
 		}
-		#endif
 
 		DECOMP_DecalFont_DrawLineStrlen(
 			&octr->nameBuffer[i * 0xC],
