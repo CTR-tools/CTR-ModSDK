@@ -37,12 +37,10 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	box.h = fullHeight;
 
 	struct DB * backDB = gGT->backBuffer;
-	int boxColor = 0;
 
 	DECOMP_CTR_Box_DrawWireBox(
-		&box, &boxColor,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		&box, MakeColor(0, 0, 0),
+		gGT->pushBuffer_UI.ptrOT);
 
 	int topY = posY - fullHeight;
 
@@ -53,20 +51,20 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 		blue: full-saffi
 		purple: saffi */
 
-	PolyCode renderCode = {.quad = 1, .renderCode = RenderCode_Polygon};
-	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, renderCode); // red
+	PrimCode primCode = { .poly = { .quad = 1, .renderCode = RenderCode_Polygon } };
+	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, primCode); // red
 
 	if (driver->reserves < 0) {
-		colorCode = MakeColorCode(0xFF, 0x0, 0xFF, renderCode); // purple
+		colorCode = MakeColorCode(0xFF, 0x0, 0xFF, primCode); // purple
 	}
 	else if (meterLength == fullWidth) {
-		colorCode = MakeColorCode(0, 0, 0xFF, renderCode); // blue
+		colorCode = MakeColorCode(0, 0, 0xFF, primCode); // blue
 	}
 	else if (driver->reserves >= SECONDS(4)) {
-		colorCode = MakeColorCode(0, 0xFF, 0, renderCode); // green
+		colorCode = MakeColorCode(0, 0xFF, 0, primCode); // green
 	}
 	else if (driver->reserves >= SECONDS(2)) {
-		colorCode = MakeColorCode(0xFF, 0xFF, 0, renderCode); // yellow
+		colorCode = MakeColorCode(0xFF, 0xFF, 0, primCode); // yellow
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -87,7 +85,7 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 		AddPrimitive(p, gGT->pushBuffer_UI.ptrOT);
 
 		// Gray color for Prim #2
-		colorCode = MakeColorCode(0x80, 0x80, 0x80, renderCode);
+		colorCode = MakeColorCode(0x80, 0x80, 0x80, primCode);
 		meterLength = fullWidth;
 	}
 }

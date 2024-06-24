@@ -49,19 +49,39 @@ enum RenderCode
     RenderCode_Rectangle = 3,
 };
 
-typedef union PolyCode
+typedef union PrimCode
 {
-    struct
+    union
     {
-        u8 rawTex           : 1; /* raw texture / modulation */
-        u8 semiTransparency : 1; /* semi-transparent / opaque */
-        u8 textured         : 1; /* textured / untextured */
-        u8 quad             : 1; /* 4 / 3 vertices */
-        u8 gouraud          : 1; /* gouraud / flat shading */
-        u8 renderCode       : 3; /* 0b001 = Polygon */
+        struct
+        {
+            u8 rawTex               : 1; /* raw texture / modulation */
+            u8 semiTransparency     : 1; /* semi-transparent / opaque */
+            u8 textured             : 1; /* textured / untextured */
+            u8 quad                 : 1; /* 4 / 3 vertices */
+            u8 gouraud              : 1; /* gouraud / flat shading */
+            u8 renderCode           : 3; /* enum RenderCode */
+        } poly;
+        struct
+        {
+            u8 unused               : 1; /* raw texture / modulation */
+            u8 semiTransparency     : 1; /* semi-transparent / opaque */
+            u8 unused2              : 1; /* textured / untextured */
+            u8 polyline             : 1; /* polyline / single line */
+            u8 gouraud              : 1; /* gouraud / flat shading */
+            u8 renderCode           : 3; /* enum RenderCode */
+        } line;
+        struct
+        {
+            u8 rawTex               : 1; /* raw texture / modulation */
+            u8 semiTransparency     : 1; /* semi-transparent / opaque */
+            u8 textured             : 1; /* textured / untextured */
+            u8 rectSize             : 2; /* rect size */
+            u8 renderCode           : 3; /* enum RenderCode */
+        } rect;
     };
     u8 code;
-} PolyCode;
+} PrimCode;
 
 typedef union ColorCode
 {
@@ -70,7 +90,7 @@ typedef union ColorCode
         u8 r;
         u8 g;
         u8 b;
-        PolyCode code;
+        PrimCode code;
     };
     u32 self;
 } ColorCode;
@@ -201,6 +221,14 @@ typedef struct LineF2
 	ColorCode colorCode;
 	FVertex v[VertexCount_Line];
 } LineF2;
+
+typedef struct LineF3
+{
+    Tag tag;
+	ColorCode colorCode;
+	FVertex v[VertexCount_Tri];
+    u32 end;
+} LineF3;
 
 typedef struct PolyF3
 {
