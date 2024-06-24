@@ -38,9 +38,9 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   GetPrimMem(p);
   if (p == nullptr) { return; }
 
-  const PolyCode renderCode = {.gouraud = 1, .renderCode = RenderCode_Polygon};
+  const PrimCode primCode = { .poly = { .gouraud = 1, .renderCode = RenderCode_Polygon } };
 
-  p->v[0].color = MakeColorCode(91, 91, 0,renderCode);
+  p->v[0].color = MakeColorCode(91, 91, 0, primCode);
   p->v[1].color = MakeColor(50, 43, 1);
   p->v[2].color = MakeColor(255, 187, 0);
 
@@ -78,7 +78,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   GetPrimMem(p);
   if (p == nullptr) { return; }
 
-  p->v[0].color = MakeColorCode(255, 255, 255, renderCode);
+  p->v[0].color = MakeColorCode(255, 255, 255, primCode);
   p->v[1].color = MakeColor(156, 105, 0);
   p->v[2].color = MakeColor(255, 255, 0);
 

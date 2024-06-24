@@ -14,20 +14,19 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	}
 
 	RECT box;
-	int boxColor = 0;
 	short topX = posX - barWidth;
 	short topY = posY - barHeight;
 	box.x = topX;
 	box.y = topY;
 	box.w = barWidth;
 	box.h = barHeight;
-	DECOMP_CTR_Box_DrawWireBox(&box, &boxColor, gGT->pushBuffer_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, MakeColor(0, 0, 0), gGT->pushBuffer_UI.ptrOT);
 
-	const PolyCode renderCode = {.quad = 1, .renderCode = RenderCode_Polygon};
-	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, renderCode); // red color, ready to boost
+	const PrimCode primCode = { .poly = { .quad = 1, .renderCode = RenderCode_Polygon } };
+	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, primCode); // red color, ready to boost
 
 	if (driver->const_turboLowRoomWarning * ELAPSED_MS < driver->turbo_MeterRoomLeft) {
-		colorCode = MakeColorCode(0, 0xFF, 0, renderCode); // green color, no boost yet
+		colorCode = MakeColorCode(0, 0xFF, 0, primCode); // green color, no boost yet
 	}
 
 	for(int i = 0; i < 2; i++)
@@ -49,7 +48,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		p->v[3].pos.x = posX;
 
 		AddPrimitive(p, gGT->pushBuffer_UI.ptrOT);
-		colorCode = MakeColorCode(0x80, 0x80, 0x80, renderCode); // Gray color for background bar
+		colorCode = MakeColorCode(0x80, 0x80, 0x80, primCode); // Gray color for background bar
 		meterLength = barWidth;
 	}
 

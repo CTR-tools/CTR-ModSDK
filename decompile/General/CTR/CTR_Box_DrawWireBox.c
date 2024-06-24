@@ -1,42 +1,35 @@
 #include <common.h>
 
-void DECOMP_CTR_Box_DrawWireBox(RECT *r, u_char *rgb, void *ot, struct PrimMem *primMem)
+void DECOMP_CTR_Box_DrawWireBox(RECT * r, Color color, void * ot)
 {
-  LINE_F3 *p;
+    LineF3 * p;
+    GetPrimMem(p);
+    if (p == nullptr) { return; }
 
-  p = primMem->curr;
-  if (p > primMem->endMin100)
-	return;
-  primMem->curr = p + 1;
+    const PrimCode primCode = { .line = { .renderCode = RenderCode_Line, .polyline = 1 } };
+    color.code = primCode;
 
-  // set Poly_LineF3 len, code, and padding
-  setLineF3(p);
-  
-  // RGB
-  setRGB0(p, rgb[0], rgb[1], rgb[2]);
-  
-  setXY3(p,
-         r->x, r->y,                    // XY0
-         (r->x + r->w), r->y,           // XY1
-         (r->x + r->w), (r->y + r->h)); // XY2
-  
-  AddPrim(ot, p);
+    p->colorCode = color;
+    p->v[0].pos.x = r->x;
+    p->v[0].pos.y = r->y;
+    p->v[1].pos.x = r->x + r->w;
+    p->v[1].pos.y = r->y;
+    p->v[2].pos.x = r->x + r->w;
+    p->v[2].pos.y = r->y + r->h;
+    p->end = 0x55555555;
 
-  p = primMem->curr;
-  if (p > primMem->endMin100)
-	return;
-  primMem->curr = p + 1;
+    AddPrimitive(p, ot);
+    GetPrimMem(p);
+    if (p == nullptr) { return; }
 
-  // set Poly_LineF3 len, code, and padding
-  setLineF3(p);
-  
-  // RGB
-  setRGB0(p, rgb[0], rgb[1], rgb[2]);
-  
-  setXY3(p,
-         r->x, r->y,                    // XY0
-         r->x, (r->y + r->h),           // XY1
-         (r->x + r->w), (r->y + r->h)); // XY2
-  
-  AddPrim(ot, p);
+    p->colorCode = color;
+    p->v[0].pos.x = r->x;
+    p->v[0].pos.y = r->y;
+    p->v[1].pos.x = r->x;
+    p->v[1].pos.y = r->y + r->h;
+    p->v[2].pos.x = r->x + r->w;
+    p->v[2].pos.y = r->y + r->h;
+    p->end = 0x55555555;
+
+    AddPrimitive(p, ot);
 }
