@@ -1,5 +1,7 @@
 #include <common.h>
 
+#include "../prim.c"
+
 #ifndef USE_ONLINE
 #include "UI_SaveLapTime.c"
 #endif

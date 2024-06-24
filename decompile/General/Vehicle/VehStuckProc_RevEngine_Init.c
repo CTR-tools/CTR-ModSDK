@@ -48,8 +48,8 @@ void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d)
     d->KartStates.RevEngine.unk[0] = 0;
     d->KartStates.RevEngine.unk[1] = 0;
 
-    d->KartStates.RevEngine.boostMeter = 
-		d->const_SpeedometerScale_ClassStat + d->const_SpeedometerScale_ClassStat / 3;
+    d->KartStates.RevEngine.boostMeter =
+		d->const_AccelSpeed_ClassStat + d->const_AccelSpeed_ClassStat / 3;
 }
 
 void *PlayerRevEngineFuncTable[13] =
@@ -64,7 +64,7 @@ void *PlayerRevEngineFuncTable[13] =
 	NULL,
 	NULL,
 	NULL,
-	
+
 	#ifndef REBUILD_PS1
 	VehPhysForce_TranslateMatrix,
 	DECOMP_VehStuckProc_RevEngine_Animate,

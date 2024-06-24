@@ -51,9 +51,15 @@ struct TrigTable
 
 // fixed point //
 
+#define FRACTIONAL_BITS_8 8
+#define FP8_ONE (1 << FRACTIONAL_BITS_8)
+#define FP8_INT(x) ((x) >> FRACTIONAL_BITS_8)
+#define FP8(x) ((int)(((float)x) * FP8_ONE))
+
 #define FRACTIONAL_BITS 12
 #define FP_ONE (1 << FRACTIONAL_BITS)
-#define FP(x) ((short)(((float)x) * FP_ONE))
+#define FP_INT(x) ((x) >> FRACTIONAL_BITS)
+#define FP(x) ((int)(((float)x) * FP_ONE))
 
 short FP_Div(short a, short b); // see fp.c
 

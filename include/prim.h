@@ -1,7 +1,11 @@
-#ifndef REDHOT_GPU_H
-#define REDHOT_GPU_H
+#ifndef PRIM_H
+#define PRIM_H
 
 #include <macros.h>
+
+#define LINE_SIZE 2
+#define TRI_SIZE  3
+#define QUAD_SIZE 4
 
 typedef union Tag
 {
@@ -14,25 +18,6 @@ typedef union Tag
 } Tag;
 
 /* Primitives */
-
-#define TRI_SIZE  3
-#define QUAD_SIZE 4
-
-#define GetPrimitiveMem(pPrim, PrimType, pMem, pEndMem) \
-	if (pMem <= pEndMem) { \
-		pPrim = (PrimType *) pMem; \
-		pMem = pPrim + 1; \
-		pPrim->tag.size = (sizeof(PrimType) - sizeof(Tag)) >> 2; \
-	} else { pPrim = nullptr; }
-
-#define AddPrimitive(pPrim, pOt) \
-    pPrim->tag.addr = ((Tag *)pOt)->addr; \
-    ((Tag *)pOt)->addr = (u32) pPrim
-
-#define fPolyCode color.code
-#define gPolyCode v[0].color.code
-#define polyClut v[0].clut
-#define polyTpage v[1].tpage
 
 typedef union Texpage
 {
@@ -170,6 +155,12 @@ typedef struct GTVertex
 
 /* Primitive types */
 
+typedef struct LineG2
+{
+    Tag tag;
+    GVertex v[LINE_SIZE];
+} LineG2;
+
 typedef struct PolyG3
 {
     Tag tag;
@@ -193,6 +184,13 @@ typedef struct PolyGT4
     Tag tag;
     GTVertex v[QUAD_SIZE];
 } PolyGT4;
+
+typedef struct LineF2
+{
+    Tag tag;
+	ColorCode colorCode;
+	FVertex v[LINE_SIZE];
+} LineF2;
 
 typedef struct PolyF3
 {
@@ -221,5 +219,15 @@ typedef struct PolyFT4
     ColorCode colorCode;
     FTVertex v[QUAD_SIZE];
 } PolyFT4;
+
+#define fPolyCode color.code
+#define gPolyCode v[0].color.code
+#define polyClut v[0].clut
+#define polyTpage v[1].tpage
+
+void GetPrimitiveMem(void ** ppPrim, size_t primSize);
+void AddPrimitive(void * pPrim, void * pOt);
+
+#define GetPrimMem(p) GetPrimitiveMem((void **) &p, sizeof(*p))
 
 #endif

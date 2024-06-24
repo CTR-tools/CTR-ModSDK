@@ -16,7 +16,11 @@
 
 #pragma once
 
+#ifdef INTELLISENSE_HINT
+#include <stdint-gcc.h>
+#else
 #include <stdint.h>
+#endif
 
 #define ONE (1 << 12)
 

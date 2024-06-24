@@ -328,10 +328,10 @@ struct Driver
 	struct Icon** wheelSprites;
 	// 0x4
 	unsigned short wheelSize;
-	
+
     // 0x6
     // Front wheel rotation sprite frame offset
-    // Also controls the LR panning of the Engine Sound 
+    // Also controls the LR panning of the Engine Sound
     // Default: 0
     // Steering left ranges between 0 to 64
     // Steering right ranges between 0 to -64 (if we display it as a signed number)
@@ -412,7 +412,7 @@ struct Driver
 
 	#if BUILD >= EurRetail
 	short compilerPadding_0x4E;
-	
+
 	// 0x50
 	// highest amount of consecutive turbos in a race
 	// exclusive to Japan Retail
@@ -462,10 +462,10 @@ struct Driver
 	// 0xA4
 	short normalVecUP[3];
 	short unkAA;
-	
+
 	// 0xac
 	short spsHitPos[4];
-	
+
 	// 0xb4
 	short spsNormalVec[4];
 
@@ -525,7 +525,7 @@ struct Driver
 	// ?
 	// ?
 	// 0x80000000 - dropping mine
-	
+
 
 	// 0x2C8
 	unsigned int actionsFlagSet;
@@ -611,7 +611,7 @@ struct Driver
 	// forced to jump while on turtles,
 	// should we say "forcedJump_turtles"?
 	char forcedJump_trampoline;
-	
+
 	// 0x367
 	// clock effect
 	char clockFlash;
@@ -648,13 +648,13 @@ struct Driver
 
 	// 0x384
 	short posWallColl[3];
-	
+
 	// 0x38A
 	short scrubMeta8;
 
 	// 0x38C
 	short speed;
-	
+
 	// 0x38E
 	short speedApprox;
 
@@ -675,10 +675,10 @@ struct Driver
 
 	// 0x39A
 	short angle;
-	
+
 	// 0x39C
 	short baseSpeed;
-	
+
 	// 0x39E
 	short fireSpeed;
 
@@ -699,7 +699,7 @@ struct Driver
 	short unkVectorZ;
 	// 0x3B2
 	short unk_offset3B2;
-	
+
 	// 0x3B4
 	short rotationSpinRate; // again?
 
@@ -736,12 +736,12 @@ struct Driver
 	short unknowndriverBaseSpeed;
 
 	// 0x3C6 0x3C8
-	// in VehPhysProc_Driving_PhysLinear, 
-	// and VehPhysForce_AccelTerrainSlope, 
+	// in VehPhysProc_Driving_PhysLinear,
+	// and VehPhysForce_AccelTerrainSlope,
 	// and VehPhysProc_SpinLast_Update
 	short turnAngleCurr;
 	short turnAnglePrev;
-	
+
 	// 0x3CA
 	short unk3CA;
 
@@ -751,7 +751,7 @@ struct Driver
 
 	// 0x3D2
 	short unk_LerpToForwards;
-	
+
 	// 0x3d4
     // This is a UNION between kart states
 	short unk3D4[3];
@@ -843,15 +843,15 @@ struct Driver
 	// 0x40C
 	// when jumping and when hitting ground
 	short jumpSquishStretch;
-	
+
 	short unk40E;
-	
+
 	// 0x410
 	// used to calculate the other ^^
 	short jumpSquishStretch2;
-	
+
 	short unk412;
-	
+
 	// 0x414 (physics/terrain related)
 	short filler_short;
 
@@ -894,7 +894,7 @@ struct Driver
 	short const_Speed_ClassStat; // OK
 
 	// 0x42E - 0x0C
-	short const_SpeedometerScale_ClassStat; // OK
+	short const_AccelSpeed_ClassStat; // OK
 
 	// 0x430 - 0x0D
 	short const_SingleTurboSpeed; // OK
@@ -932,28 +932,28 @@ struct Driver
 
 	// 0x444 - 0x18
 	short const_unk444;
-	
+
 	// 0x446 - 0x19
 	char const_SteerAccel_Stage4_FirstFrame;
-	
+
 	// 0x447 - 0x1A
 	char const_SteerAccel_Stage2_FirstFrame;
-	
+
 	// 0x448 - 0x1B
 	char const_SteerAccel_Stage2_FrameLength;
 
 	// not part of metaPhys
 	char boolFirstFrameSinceRevEngine;
-	
+
 	// 0x44a - 0x1C
 	short const_SteerAccel_Stage1_MaxSteer;
-	
+
 	// 0x44c - 0x1D
 	short const_SteerAccel_Stage1_MinSteer;
 
 	// 0x44e - 0x1E (const 0x80)
 	short unk44e;
-	
+
 	// 0x450 - 0x1F (const zero)
 	short unk450;
 
@@ -967,7 +967,7 @@ struct Driver
 	// and then 457 is just the top
 	// byte of the short
 	char unusedPadding;
-	
+
 	// all related to VehPhysGeneral_LerpToForwards
     // only affected by steering without sliding
 	char unk457; // 0x22 kart model angle lerp rotation Limit max*
@@ -981,22 +981,22 @@ struct Driver
 	// resist turning at low speed
 	char const_turnResistMin;
 	char const_turnResistMax;
-	
+
 	// 0x45e, 0x45f - 0x28, 0x29
 	// hold drift in direction it started,
 	// compared to switching direction "SwitchWay"
 	char const_SteerVel_DriftSwitchWay;
 	char const_SteerVel_DriftStandard;
-	
+
 	// all VehPhysProc_PowerSlide_PhysAngular
 	// or VehPhysProc_PowerSlide_Finalize
 	char unk460; // 0x460 - 0x2A
 	char unk461; // 0x461 - 0x2B
 	char unk462; // 0x462 - 0x2C
-	
+
 	// 0x463 - 0x2D
 	char const_Drifting_FramesTillSpinout;
-	
+
 	// 0x464, 0x466, 0x468 - 0x2E, 0x2F, 0x30
 	short unk464; // impact turning?
 	short unk466; // impact turning?
@@ -1058,7 +1058,7 @@ struct Driver
 
 	// 0x498
 	struct Instance* instBigNum;
-	
+
 	// 0x49c
 	struct Instance* instFruitDisp;
 
@@ -1082,25 +1082,25 @@ struct Driver
 	{
 		// 0x4b0
 		int cooldown;
-		
+
 		// 0x4b4
 		short startX;
 		short startY;
-		
+
 	} PickupTimeboxHUD;
 
 	struct
 	{
 		// 0x4b8
 		int cooldown;
-		
+
 		// 0x4bc
 		short startX;
 		short startY;
 
 		// 0x4c0
 		int numCollected;
-		
+
 	} PickupWumpaHUD;
 
 	struct
@@ -1167,17 +1167,17 @@ struct Driver
 
 	// 0x4fc
 	short wakeScale;
-	
+
 	// 0x4fe
 	// 0, 1, 2, depending on rev level
 	char revEngineState;
 
 	// 0x4ff
 	char ChangeState_param2;
-	
+
 	// 0x500
 	int ChangeState_param3;
-	
+
 	// 0x504
 	int ChangeState_param4;
 
@@ -1238,7 +1238,7 @@ struct Driver
 
 	// 0x550 (not an int)
 	short highestJump;
-	
+
 	// 0x552
 	short longestShot;
 
@@ -1265,16 +1265,16 @@ struct Driver
 
 	// 0x55c
 	char numTimesMissileLaunched;
-	
+
 	// 0x55d
 	char numTimesMissileHitYou;
-	
+
 	// 0x55e
 	char numTimesBombHitYou;
-	
+
 	// 0x55f
 	char numTimesMotionlessPotionHitYou;
-	
+
 	// 0x560
 	char numTimesAttackedByPlayer[8];
 
@@ -1286,7 +1286,7 @@ struct Driver
 
 	// 0x56a
 	char numTimesMaskGrab;
-	
+
 	// 0x56b
 	// padding for the next int
 	char unused_alignment_56b;
@@ -1300,17 +1300,17 @@ struct Driver
 
 	// 0x570
 	int EndOfRaceComment_characterID;
-	
+
 	// 0x574
 	int NumMissilesComparedToNumAttacks;
 
 	// 0x578
 	// probably for "comeback kid!" comment
 	int TimeWinningDriverSpentLastPlace;
-	
+
 	// 0x57c
 	int numTimesAttacked;
-	
+
 	// ==== End of Quip Data ====
 
 	// 0x580 - 0x598
@@ -1325,107 +1325,107 @@ struct Driver
 
 			// 0x582
 			short driftBoostTimeMS;
-			
+
 			// 0x584
 			short driftTotalTimeMS;
-			
+
 			// 0x586
 			char numBoostsAttempted;
 
 			// 0x587
 			char numBoostsSuccess;
-			
+
 			// == end ==
-			
+
 		} Drifting;
-		
+
 		// state 2
 		struct
 		{
 			// 0x580
 			short driftSpinRate;
-			
+
 			// 0x582
 			short spinDir;
-			
+
 			// more?
-			
+
 		} Spinning;
-		
+
 		// state 4
 		struct
 		{
 			// 0x580
 			// object connected to thread
 			struct MaskHeadWeapon* maskObj;
-			
+
 			// == Needs More Research ==
-			
+
 			// 0x584
 			int boostMeter;
-			
+
 			// 0x588
 			int fireLevel;
-			
+
 			// 0x58c
 			short timeMS;
 
 			// 0x58e
 			short unk58e;
-			
+
 			// 0x590
 			short unk590;
 
 			// 0x592
 			unsigned char unk[2];
-			
+
 			// 0x594
 			int boolMaskGrab;
-			
+
 			// == end ==
-			
+
 		} RevEngine;
-		
+
 		// state 5
 		struct
 		{
 			// 0x580
 			// object connected to thread
 			struct MaskHeadWeapon* maskObj;
-			
+
 			// 0x584
 			short AngleAxis_NormalVec[3];
-	
+
 			// 0x58a
 			short animFrame;
-	
+
 			// 0x58c
 			char boolParticlesSpawned;
 			char boolStillFalling;
 			char boolLiftingPlayer;
 			char boolWhistle;
-			
+
 			// 0x590
 			char unused[8];
-						
+
 		} MaskGrab;
-		
+
 		// state 5
 		struct
 		{
 			// 0x580
 			char boolInited;
-			
+
 			// == end ==
-			
+
 		} EatenByPlant;
-		
+
 		// state 6
 		struct
 		{
 			char boolPlayBackwards;
 		} Blasted;
-		
+
 		// state 10
 		struct
 		{
@@ -1440,7 +1440,7 @@ struct Driver
 			// 0x590
 			int beamHeight;
 		} Warp;
-		
+
 	} KartStates;
 
 	// 0x598
@@ -1453,10 +1453,10 @@ struct Driver
 
 	// 0x5a4
 	struct NavFrame* botNavFrame;
-	
+
 	int unk5a8;
 	int unk5ac;
-	
+
 	// 0x5b0
 	// unsigned int flags
 	// & 0x010 - is blasted? Something to do with damage
@@ -1477,52 +1477,52 @@ struct Driver
 	// incline rotXZ
 	// probably only for AIs
 	char unk5bc[0x34];
-	
+
 	// 0x5d4
 	// AI speed
-	
+
 	// 0x5f0
 	int ai_posBackup[3];
-	
+
 	// 0x5fc
 	short ai_rot4[4];
-	
+
 	// 0x604
 	int ai_progress_cooldown;
 
 	// 0x608
 	short ai_rotY_608;
-	
+
 	// 0x60a
 	short ai_quadblock_checkpointIndex;
 
 	// 0x60c
 	short estimatePos[3];
-	
+
 	// 0x612
 	char estimateRotNav[3];
 	char estimateRotCurrY;
 
 	// 0x616
 	short distToNextNavXYZ;
-	
+
 	// 0x618
 	short distToNextNavXZ;
-	
+
 	// 0x61A
 	short unk61a;
 	int unk61c;
-	
+
 	// 0x620
 	struct MaskHeadWeapon* maskObj;
-	
+
 	// 0x624
 	short weaponCooldown;
 
 	// 0x626
 	// short ??? // Something set when blasted ?
 	short unk626;
-	
+
 	// 0x628
 	int unk628;
 
