@@ -33,7 +33,7 @@ void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer);
 
 void DECOMP_CTR_Box_DrawWireBox(RECT * r, Color color, void * ot);
 void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_long* ot, struct PrimMem* primMem);
-void DECOMP_CTR_Box_DrawSolidBox(RECT* r, u_int* colorPtr, u_long* otMem, struct PrimMem* primMem);
+void DECOMP_CTR_Box_DrawSolidBox(RECT * r, Color color, u_long * ot);
 
 // decal
 void DECOMP_DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);

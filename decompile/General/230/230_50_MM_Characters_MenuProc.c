@@ -46,31 +46,31 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	u_int characterSelectString;
 	short playerIcon;
 	int direction;
-	
+
 	short* psVar22;
 	struct CharacterSelectMeta* csm_Active;
-	
+
 	struct GameTracker* gGT = sdata->gGT;
-	
+
 	for (i = 0; i < 4; i++)
 	{
 		globalIconPerPlayer[i] = D230.characterMenuID[data.characterIDs[i]];
 	}
-	
+
 	// if menu is not in focus
-	if (D230.isMenuTransitioning != 1) 
+	if (D230.isMenuTransitioning != 1)
 	{
 		DECOMP_MM_TransitionInOut(D230.ptrTransitionMeta, (int)D230.transitionFrames, FPS_DOUBLE(8));
 	}
 
 	DECOMP_MM_Characters_SetMenuLayout();
 	DECOMP_MM_Characters_DrawWindows(1);
-	
+
 	// if transitioning in
-	if (D230.isMenuTransitioning == 0) 
+	if (D230.isMenuTransitioning == 0)
 	{
 		// if no more frames
-		if (D230.transitionFrames == 0) 
+		if (D230.transitionFrames == 0)
 		{
 			// menu is now in focus
 			D230.isMenuTransitioning = 1;
@@ -82,35 +82,35 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	}
 
 	// if transitioning out
-	if (D230.isMenuTransitioning == 2) 
+	if (D230.isMenuTransitioning == 2)
 	{
 		// increase frame
 		D230.transitionFrames++;
-		
+
 		// if more than 12 frames
-		if (D230.transitionFrames > FPS_DOUBLE(12)) 
+		if (D230.transitionFrames > FPS_DOUBLE(12))
 		{
 			// Make a backup of the characters
 			// you selected in character selection screen
 			DECOMP_MM_Characters_BackupIDs();
-			
+
 			DECOMP_MM_Characters_HideDrivers();
-		
+
 			// if returning to main menu
-			if (D230.movingToTrackMenu == 0) 
+			if (D230.movingToTrackMenu == 0)
 			{
 				DECOMP_MM_JumpTo_Title_Returning();
 				return;
 			}
-		
+
 			// if you are in a cup
-			if ((gGT->gameMode2 & CUP_ANY_KIND) != 0) 
+			if ((gGT->gameMode2 & CUP_ANY_KIND) != 0)
 			{
 				sdata->ptrDesiredMenu = &D230.menuCupSelect;
 				DECOMP_MM_CupSelect_Init();
 				return;
 			}
-		
+
 			// if going to track selection
 			sdata->ptrDesiredMenu = &D230.menuTrackSelect;
 			DECOMP_MM_TrackSelect_Init();
@@ -122,10 +122,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	{
 		// 3P character selection
 		case 2:
-	
+
 			// If you have a lot of characters unlocked, do not draw SELECT CHARACTER
 			if (D230.isRosterExpanded) goto dontDrawSelectCharacter;
-	
+
 			// SELECT
 			DECOMP_DecalFont_DrawLine
 			(
@@ -135,20 +135,20 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_BIG;
-		
+
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[97];
-			
+
 			posX = D230.ptrTransitionMeta[15].currX + 0x9c;
 			posY = D230.ptrTransitionMeta[15].currY + 0x26;
 			break;
-		
+
 		// 4P character selection
 		case 3:
-		
+
 			// If Fake Crash is unlocked, do not draw "Select Character"
 			if (sdata->gameProgress.unlocks[0] & 0x800) goto dontDrawSelectCharacter;
-		
+
 			// SELECT
 			DECOMP_DecalFont_DrawLine
 			(
@@ -158,34 +158,34 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				FONT_CREDITS, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_CREDITS;
-		
+
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[97];
-		
+
 			posX = D230.ptrTransitionMeta[15].currX + 0xfc;
 			posY = D230.ptrTransitionMeta[15].currY + 0x18;
 			break;
-		
+
 		// If you are in 1P or 2P character selection,
 		// when you do NOT have a lot of characters selected
 		case 4:
 		case 5:
 			characterSelectType = FONT_BIG;
-		
+
 			// SELECT CHARACTER
 			characterSelectString = sdata->lngStrings[95];
-		
+
 			posX = D230.ptrTransitionMeta[15].currX + 0xfc;
 			posY = D230.ptrTransitionMeta[15].currY + 10;
 			break;
-			
+
 		default:
 			goto dontDrawSelectCharacter;
 	}
-	
+
 	// Draw String
 	DECOMP_DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
-	
+
 	dontDrawSelectCharacter:
 
 	globalIconPerPlayerPtr = &globalIconPerPlayer[0];
@@ -195,18 +195,18 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		characterSelectFlags5bit = (u_short)(1 << i);
 		globalIconPerPlayerCopy = globalIconPerPlayerPtr[i];
 		globalIconPerPlayerCopy2 = globalIconPerPlayerCopy;
-	
+
 		DECOMP_MM_Characters_AnimateColors(auStack120, i, (int)(short)(sdata->characterSelectFlags & characterSelectFlags5bit));
-		
+
 		puVar26 = &D230.csm_Active[globalIconPerPlayerCopy];
-		
+
 		if
 		(
-			(D230.isMenuTransitioning == 1) && 
+			(D230.isMenuTransitioning == 1) &&
 			(
 				// get input from this player
-				button = sdata->buttonTapPerPlayer[i], 
-			
+				button = sdata->buttonTapPerPlayer[i],
+
 				// If you press the D-Pad, or Cross, Square, Triangle, Circle
 				button & (BTN_TRIANGLE | BTN_CIRCLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)
 			)
@@ -216,58 +216,58 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			if (((int)(short)sdata->characterSelectFlags >> i & 1U) == 0)
 			{
 				// If you pressed any of the D-pad buttons
-				if ((button & (BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)) != 0) 
+				if ((button & (BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)) != 0)
 				{
 					local_50 = 0;
-			
+
 					// If you do not press Up
-					if ((button & BTN_UP) == 0) 
-					{	
+					if ((button & BTN_UP) == 0)
+					{
 						// If you do not press Down
-						if ((button & BTN_DOWN) == 0) 
+						if ((button & BTN_DOWN) == 0)
 						{
 							// This must be if you press Left,
 							// because the variable will change
 							// if it is anything that isn't Left
-								
+
 							// Left
 							direction = 2;
-				
+
 							// If you press Left
 							if ((button & BTN_LEFT) != 0) goto LAB_800aec08;
-				
+
 							// At this point, you must have pressed Right
-				
+
 							// Right
 							direction = 3;
-				
+
 							// Move down character selection list
 							D230.characterSelect_MoveDir[i] = 1;
 						}
-			
+
 						// If you pressed Down
-						else 
+						else
 						{
 							// Down
 							direction = 1;
-			
+
 							// Move down character selection list
 							D230.characterSelect_MoveDir[i] = 1;
 						}
 					}
-		
+
 					// If you pressed Up
-					else 
+					else
 					{
 						// Up
 						direction = 0;
 						LAB_800aec08:
 						// If you press Up or Left
-			
+
 						// Move up character selection list
 						(D230.characterSelect_MoveDir)[i] = 0xffff;
 					}
-		
+
 					j = i;
 					globalIconPerPlayerPtr2 = &globalIconPerPlayerPtr[j];
 					globalIconPerPlayerCopy3 = globalIconPerPlayerCopy2;
@@ -275,8 +275,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					{
 						globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy3);
 						globalIconPerPlayerCopy4 = globalIconPerPlayerCopy2;
-						
-						if (globalIconPerPlayerCopy2 == globalIconPerPlayerCopy3) 
+
+						if (globalIconPerPlayerCopy2 == globalIconPerPlayerCopy3)
 						{
 							local_50 = 1;
 							nextDriver = DECOMP_MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
@@ -318,7 +318,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 												(button = DECOMP_MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
 											)
 										)
-									) 
+									)
 									{
 										nextDriver = DECOMP_MM_Characters_GetNextDriver((u_int)(u_char)D230.getNextDriver2[direction], (int)(short)*globalIconPerPlayerPtr2);
 										globalIconPerPlayerCopy5 = (int)nextDriver;
@@ -338,7 +338,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 							}
 						}
 						bVar2 = false;
-			
+
 						for (k = 0; k < gGT->numPlyrNextGame; k++)
 						{
 							if((k != j) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[k]))
@@ -347,8 +347,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 								break;
 							}
 						}
-							
-						if (globalIconPerPlayerCopy3 << 0x10 != globalIconPerPlayerCopy2 << 0x10) 
+
+						if (globalIconPerPlayerCopy3 << 0x10 != globalIconPerPlayerCopy2 << 0x10)
 						{
 							// Play sound
 							DECOMP_OtherFX_Play(0, 1);
@@ -364,7 +364,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					} while (bVar2);
 				}
 				globalIconPerPlayerCopy = (u_short)globalIconPerPlayerCopy2;
-		
+
 				for (j = 0; j < gGT->numPlyrNextGame; j++)
 				{
 					if ((j != i) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[j]))
@@ -373,66 +373,66 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					}
 					globalIconPerPlayerCopy = (u_short)globalIconPerPlayerCopy2;
 				}
-		
+
 				// If this player pressed Cross or Circle
-				if (((sdata->buttonTapPerPlayer)[i] & (BTN_CIRCLE | BTN_CROSS_one)) != 0) 
+				if (((sdata->buttonTapPerPlayer)[i] & (BTN_CIRCLE | BTN_CROSS_one)) != 0)
 				{
 					// this player has now selected a character
 					sdata->characterSelectFlags = sdata->characterSelectFlags | (u_short)(1 << i);
-		
+
 					numPlyrNextGame = gGT->numPlyrNextGame;
 
 					// Play sound
 					DECOMP_OtherFX_Play(1,1);
-		
+
 					// if all players have selected their characters
-					if ((int)(short)sdata->characterSelectFlags == (1 << numPlyrNextGame)-1) 
+					if ((int)(short)sdata->characterSelectFlags == (1 << numPlyrNextGame)-1)
 					{
 						// move to track selection
 						D230.movingToTrackMenu = 1;
 						D230.isMenuTransitioning = 2;
 					}
 				}
-		
+
 				if
 				(
 					// if this is the first iteration of the loop
-					((i & 0xffff) == 0) && 
-			
+					((i & 0xffff) == 0) &&
+
 					// if you press Square or Triangle
 					((sdata->buttonTapPerPlayer[0] & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0)
-				) 
+				)
 				{
 					// return to main menu
 					D230.movingToTrackMenu = 0;
 					D230.isMenuTransitioning = 2;
-		
+
 					// Play sound
 					DECOMP_OtherFX_Play(2, 1);
 				}
 			}
-			else 
+			else
 			{
 				// if you press Square or Triangle
-				if ((button & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0) 
+				if ((button & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0)
 				{
 					// Play sound
 					DECOMP_OtherFX_Play(2, 1);
-		
+
 					// this player has de-selected their character
 					sdata->characterSelectFlags = sdata->characterSelectFlags & ~characterSelectFlags5bit;
 				}
 			}
-	
+
 			// clear input
 			sdata->buttonTapPerPlayer[i] = 0;
 		}
-		
+
 		globalIconPerPlayerPtr[i] = globalIconPerPlayerCopy;
-		
+
 		// transition of each icon
 		iVar24 = &D230.ptrTransitionMeta[globalIconPerPlayerCopy];
-		
+
 		#ifdef USE_OXIDE
 		if (globalIconPerPlayerCopy == NITROS_OXIDE)
 		{
@@ -440,14 +440,14 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			iVar24 = &D230.ptrTransitionMeta[FAKE_CRASH];
 		}
 		#endif
-		
+
 		r80.x = ((struct TransitionMeta*)iVar24)->currX + *puVar26;
 		r80.y = ((struct TransitionMeta*)iVar24)->currY + puVar26[1];
 		r80.w = 0x34;
 		r80.h = 0x21;
-	
+
 		// if player has not selected a character
-		if (((sdata->characterSelectFlags >> i) & 1U) == 0) 
+		if (((sdata->characterSelectFlags >> i) & 1U) == 0)
 		{
 			// draw string
 			// "1", "2", "3", "4", above the character icon
@@ -464,22 +464,22 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		{
 			puVar12 = &D230.characterSelect_Outline;
 		}
-	
+
 		DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-			&r80, puVar12, 0, 
+			&r80, puVar12, 0,
 			gGT->backBuffer->otMem.startPlusFour);
 	}
 
 	DECOMP_MM_Characters_PreventOverlap();
-	
+
 	csm_Active = D230.csm_Active;
-	
+
 #ifndef USE_OXIDE
 	#define NUM_ICONS 0xF
 #else
 	#define NUM_ICONS 0x10
 #endif
-	
+
 	// loop through character icons
 	for (i = 0; i < NUM_ICONS; i++)
 	{
@@ -489,12 +489,12 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// If Icon is unlocked by default,
 			// dont use iVar8, must be interpeted as "short"
 			((short)csm_Active->unlockFlags == -1) ||
-			
+
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
 			(((sdata->gameProgress.unlocks[iVar8>>5] >> (iVar8&0x1f)) & 1) != 0)
-		) 
+		)
 		{
 			iconColor = D230.characterSelect_NeutralColor;
 
@@ -503,7 +503,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				if
 				(
 					((short)i == globalIconPerPlayer[j]) &&
-			
+
 					// if player selected a character
 					 (((int)(short)sdata->characterSelectFlags >> (j & 0x1fU) & 1U) != 0)
 				)
@@ -511,9 +511,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					iconColor = D230.characterSelect_ChosenColor;
 				}
 			}
-		
+
 			iVar8 = &D230.ptrTransitionMeta[i];
-			
+
 			#ifdef USE_OXIDE
 			if (i == NITROS_OXIDE)
 			{
@@ -534,41 +534,41 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				iconColor, iconColor, iconColor, iconColor, TRANS_50_DECAL, FP(1.0)
 			);
 		}
-		
+
 		csm_Active++;
 	}
-	
+
 	// reset
 	csm_Active = D230.csm_Active;
-	
+
 	for (i = 0; i < 4; i++)
 	{
 		data.characterIDs[i] = csm_Active[(int)globalIconPerPlayer[i]].characterID;
 	}
-	
+
 	for (i = 0; i < gGT->numPlyrNextGame; i++)
 	{
 		j = i;
 		playerIcon = globalIconPerPlayer[j];
 		csm_Active = &D230.csm_Active[playerIcon];
-	
+
 		// if player has not selected a character
-		if (((int)(short)sdata->characterSelectFlags >> j & 1U) == 0) 
+		if (((int)(short)sdata->characterSelectFlags >> j & 1U) == 0)
 		{
 			DECOMP_MM_Characters_AnimateColors
 			(
 				&colorRGBA, j,
-					
+
 				// flags of which characters are selected
 				(int)(short)(sdata->characterSelectFlags & (u_short)(1 << j))
 			);
-				
+
 			colorRGBA[0] = (u_char)((int)((u_int)colorRGBA[0] << 2) / 5);
 			colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 			colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 
 			iVar8 = &D230.ptrTransitionMeta[playerIcon];
-			
+
 			#ifdef USE_OXIDE
 			if (playerIcon == NITROS_OXIDE)
 			{
@@ -576,42 +576,38 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				iVar8 = &D230.ptrTransitionMeta[FAKE_CRASH];
 			}
 			#endif
-			
+
 			r80.x = ((struct TransitionMeta*)iVar8)->currX + csm_Active->posX + 3;
 			r80.y = ((struct TransitionMeta*)iVar8)->currY + csm_Active->posY + 2;
 			r80.w = 0x2e;
 			r80.h = 0x1d;
 
+			Color color = *(Color *) &colorRGBA;
 			// this draws the flashing blue square that appears when you highlight a character in the character select screen
-			DECOMP_CTR_Box_DrawSolidBox
-			(
-				&r80, &colorRGBA,
-				gGT->backBuffer->otMem.startPlusFour,
-				&gGT->backBuffer->primMem
-			);
+			DECOMP_CTR_Box_DrawSolidBox(&r80, color, gGT->backBuffer->otMem.startPlusFour);
 		}
 		if
 		(
 			(D230.timerPerPlayer[j] == 0) &&
 			(D230.characterSelect_charIDs_curr[j] == data.characterIDs[j])
-		) 
+		)
 		{
 			// get number of players
 			numPlyrNextGame = gGT->numPlyrNextGame;
-	
+
 			// if number of players is 1 or 2
 			fontType = FONT_CREDITS;
-	
+
 			// if number of players is 3 or 4
 			if (numPlyrNextGame >= 3) fontType = FONT_SMALL;
-	
+
 			iVar8 = &D230.ptrTransitionMeta[j+0x10];
 			sVar10 = ((struct TransitionMeta*)iVar8)->currY + D230.characterSelect_ptrWindowXY[j*2+1];
 			sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
 
 			if ((numPlyrNextGame == 4) && (j > 1)) sVar6 = sVar10 + sVar6 - 6;
 			else							  sVar6 = sVar10 + D230.textPos + sVar6;
-	
+
 			// draw string
 			DECOMP_DecalFont_DrawLine
 			(
@@ -620,11 +616,11 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				(int)sVar6, fontType, (JUSTIFY_CENTER | ORANGE)
 			);
 		}
-		
+
 		// spin the character
 		D230.characterSelect_angle[i] += FPS_HALF(0x40);
 	}
-	
+
 	// reset
 	csm_Active = D230.csm_Active;
 
@@ -632,17 +628,17 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	for (i = 0; i < NUM_ICONS; i++)
 	{
 		iVar8 = csm_Active[i].unlockFlags;
-		
+
 		if
 		(
 			// If Icon is unlocked (from array of icons)
 			((short)csm_Active[i].unlockFlags == -1) ||
-			
+
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
 			((sdata->gameProgress.unlocks[iVar8 >> 5] >> (iVar8 & 0x1fU) & 1) != 0)
-		) 
+		)
 		{
 			iVar8 = &D230.ptrTransitionMeta[i];
 
@@ -659,15 +655,15 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			r68.w = 0x34;
 			r68.h = 0x21;
-		
+
 			// Draw 2D Menu rectangle background
 			DECOMP_RECTMENU_DrawInnerRect(
 				&r68, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
-	
+
 	// if number of players is not zero
-	if (gGT->numPlyrNextGame != 0) 
+	if (gGT->numPlyrNextGame != 0)
 	{
 		psVar22 = D230.characterSelect_ptrWindowXY;
 
@@ -675,60 +671,60 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		{
 			j = i;
 			iVar8 = &D230.ptrTransitionMeta[j];
-			
+
 			// store window width and height in one 4-byte variable
 			r60.x = *(short *)(iVar8 + 0xa6) + *psVar22;
 			r60.y = *(short *)(iVar8 + 0xa8) + psVar22[1];
 			r60.w = D230.characterSelect_sizeX;
 			r60.h = D230.characterSelect_sizeY;
-			
+
 			DECOMP_MM_Characters_AnimateColors
 			(
-				&colorRGBA, j, 
-				
+				&colorRGBA, j,
+
 				// flags of which characters are selected
 				((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1
 			);
-			
+
 			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				&r60, &colorRGBA, 0, 
+				&r60, &colorRGBA, 0,
 				gGT->backBuffer->otMem.startPlusFour);
-			
+
 			// if player selected a character
-			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0) 
+			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0)
 			{
 				r58.x = r60.x;
 				r58.y = r60.y;
 				r58.w = r60.w;
 				r58.h = r60.h;
-				
+
 				for (iVar8 = 0; iVar8 < 2; iVar8++)
 				{
 					r58.x += 3;
 					r58.y += 2;
 					r58.w -= 6;
 					r58.h -= 4;
-					
+
 					colorRGBA[0] = (u_char)((int)((u_int)colorRGBA[0] << 2) / 5);
 					colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
-					
+
 					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-						&r58, &colorRGBA, 0, 
+						&r58, &colorRGBA, 0,
 						gGT->backBuffer->otMem.startPlusFour);
 				}
 			}
 			psVar22 = psVar22 + 2;
-		
+
 			// Draw 2D Menu rectangle background
 			DECOMP_RECTMENU_DrawInnerRect(
 				&r60, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
-			
+
 			// not screen-space anymore,
 			// this is viewport-space
 			r60.x = 0;
 			r60.y = 0;
-			
+
 			DECOMP_RECTMENU_DrawRwdBlueRect
 			(
 				&r60.x, &D230.characterSelect_BlueRectColors[0],

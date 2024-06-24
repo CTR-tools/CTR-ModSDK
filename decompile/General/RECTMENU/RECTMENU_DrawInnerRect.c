@@ -2,9 +2,9 @@
 
 /**
  * @brief Draws an inner rectangle for a menu box with various styles depending on the type.
- *        This function is part of the UI system for drawing menu boxes and allows for different 
+ *        This function is part of the UI system for drawing menu boxes and allows for different
  *        styles like transparent or solid black, as well as additional customizations.
- *        The function adjusts the dimensions and style of the rectangle based on type 
+ *        The function adjusts the dimensions and style of the rectangle based on type
  *        and then draws it using specific graphical functions.
  * Byte budget: 508/572
  * Function Identifier: FUN_800457b0
@@ -43,9 +43,9 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 	adjustedRect.w = r->w;
 	adjustedRect.h = r->h;
 
-	if ((type & 8) == 0) 
+	if ((type & 8) == 0)
 	{
-		if ((type & 2) == 0) 
+		if ((type & 2) == 0)
 		{
 			// Modify RECT components directly
 			adjustedRect.x += 3;
@@ -54,7 +54,7 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 			adjustedRect.h -= 4;
 		}
 
-		if ((type & 1) == 0) 
+		if ((type & 1) == 0)
 		{
 			drawMode = ((type & 0x100) != 0) ? 2 : 0;
 			colorDataSpecial = ((type & 0x100) != 0) ? &sdata->DrawSolidBoxData[1] : &sdata->DrawSolidBoxData[2];
@@ -64,25 +64,23 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 				&adjustedRect, colorDataSpecial, drawMode, ot,
 				&sdata->gGT->backBuffer->primMem
 			);
-		} 
-		else 
+		}
+		else
 		{
-			DECOMP_CTR_Box_DrawSolidBox
-			(
-				&adjustedRect, &sdata->DrawSolidBoxData[0], ot,
-				&sdata->gGT->backBuffer->primMem
-			);
+			Color color;
+			color.self = sdata->DrawSolidBoxData[0];
+			DECOMP_CTR_Box_DrawSolidBox(&adjustedRect, color, ot);
 		}
 	}
 
 	// Draw shadow under the menu
-	if ((type & 4) == 0) 
+	if ((type & 4) == 0)
 	{
 		short horizontalOffset = ((type & 0x80) != 0) ? WIDE_34(4) : WIDE_34(0xc);
 		short verticalOffset = ((type & 0x40) != 0) ? 2 : 6;
 
 		adjustedRect.x = r->x + r->w;
-		adjustedRect.y = r->y + verticalOffset;	
+		adjustedRect.y = r->y + verticalOffset;
 		adjustedRect.w = horizontalOffset;
 		adjustedRect.h = r->h;
 
@@ -94,7 +92,7 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 		);
 
 		adjustedRect.x = r->x + horizontalOffset;
-		adjustedRect.y = r->y + r->h;	
+		adjustedRect.y = r->y + r->h;
 		adjustedRect.w = r->w - horizontalOffset;
 		adjustedRect.h = verticalOffset;
 
