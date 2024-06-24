@@ -53,7 +53,7 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 		blue: full-saffi
 		purple: saffi */
 
-	PolyCode renderCode = (PolyCode){.quad = 1, .renderCode = RENDER_CODE_POLYGON};
+	PolyCode renderCode = {.quad = 1, .renderCode = RenderCode_Polygon};
 	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, renderCode); // red
 
 	if (driver->reserves < 0) {

@@ -45,19 +45,17 @@ void DECOMP_UI_DrawSpeedBG(void)
   {
 	// white
     DECOMP_CTR_Box_DrawWirePrims(
-		upperHalf[0] + offset, upperHalf[1] + 0xbe,
-		upperHalf[2] + offset, upperHalf[3] + 0xbe,
-		0xff, 0xff, 0xff,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){upperHalf[0] + offset, upperHalf[1] + 0xbe},
+		(Point){upperHalf[2] + offset, upperHalf[3] + 0xbe},
+		MakeColor(0xff, 0xff, 0xff),
+		gGT->pushBuffer_UI.ptrOT);
 
 	// black
     DECOMP_CTR_Box_DrawWirePrims(
-		upperHalf[0] + offset + 1, upperHalf[1] + 0xbf,
-		upperHalf[2] + offset + 1, upperHalf[3] + 0xbf,
-		0, 0, 0,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){upperHalf[0] + offset + 1, upperHalf[1] + 0xbf},
+		(Point){upperHalf[2] + offset + 1, upperHalf[3] + 0xbf},
+		MakeColor(0, 0, 0),
+		gGT->pushBuffer_UI.ptrOT);
 
 	upperHalf += 4;
   }
@@ -66,35 +64,31 @@ void DECOMP_UI_DrawSpeedBG(void)
   {
 	// white
     DECOMP_CTR_Box_DrawWirePrims(
-		vertData[0] + offset, vertData[1] + 0xbe,
-		vertData[4] + offset, vertData[5] + 0xbe,
-		0xff, 0xff, 0xff,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){vertData[0] + offset, vertData[1] + 0xbe},
+		(Point){vertData[4] + offset, vertData[5] + 0xbe},
+		MakeColor(0xff, 0xff, 0xff),
+		gGT->pushBuffer_UI.ptrOT);
 
 	// white
     DECOMP_CTR_Box_DrawWirePrims(
-		vertData[2] + offset, vertData[3] + 0xbe,
-		vertData[6] + offset, vertData[7] + 0xbe,
-		0xff, 0xff, 0xff,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){vertData[2] + offset, vertData[3] + 0xbe},
+		(Point){vertData[6] + offset, vertData[7] + 0xbe},
+		MakeColor(0xff, 0xff, 0xff),
+		gGT->pushBuffer_UI.ptrOT);
 
 	// black
     DECOMP_CTR_Box_DrawWirePrims(
-		vertData[0] + offset + 1, vertData[1] + 0xbf,
-		vertData[4] + offset + 1, vertData[5] + 0xbf,
-		0, 0, 0,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){vertData[0] + offset + 1, vertData[1] + 0xbf},
+		(Point){vertData[4] + offset + 1, vertData[5] + 0xbf},
+		MakeColor(0, 0, 0),
+		gGT->pushBuffer_UI.ptrOT);
 
 	// black
     DECOMP_CTR_Box_DrawWirePrims(
-		vertData[2] + offset + 1, vertData[3] + 0xbf,
-		vertData[6] + offset + 1, vertData[7] + 0xbf,
-		0, 0, 0,
-		gGT->pushBuffer_UI.ptrOT,
-		&backDB->primMem);
+		(Point){vertData[2] + offset + 1, vertData[3] + 0xbf},
+		(Point){vertData[6] + offset + 1, vertData[7] + 0xbf},
+		MakeColor(0, 0, 0),
+		gGT->pushBuffer_UI.ptrOT);
 
     // reset prim
     p = backDB->primMem.curr;
