@@ -17,42 +17,43 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
     short sVar12;
     RECT box;
 	char hintsFound[32];
+    Color color;
 
     gGT = sdata->gGT;
     bVar3 = false;
-    
+
 	iVar11 = 0;
     DECOMP_MainFreeze_SafeAdvDestroy();
-    
+
 	iVar10 = 0;
     sdata->advProgress.rewards[3] |= 0x400000;
-	
+
 	int numHintsFound = 0;
-	
+
 	int i = 0;
     short* ptrLngID = &D232.hintMenu_lngIndexArr[0];
-	
+
 	for(/**/; *ptrLngID > -1; ptrLngID++, i++)
 	{
 		int hintID = (ptrLngID[0] - 0x17b)/2;
 		int bitIndex = hintID + 0x76;
-		
+
 		if (CHECK_ADV_BIT(sdata->advProgress.rewards, bitIndex) != 0)
 		{
 			hintsFound[numHintsFound] = i;
 			numHintsFound++;
 		}
 	}
-	
+
 	sVar9 = numHintsFound+1;
-	
+
     if (menu->rowSelected > numHintsFound)
         menu->rowSelected = numHintsFound;
-	
+
     if (
 		(D232.hintMenu_scrollIndex > (numHintsFound + -4)) &&
         (
-			D232.hintMenu_scrollIndex = (short)(numHintsFound + -4), 
+			D232.hintMenu_scrollIndex = (short)(numHintsFound + -4),
 			D232.hintMenu_scrollIndex < 0
 		)
 	   )
@@ -60,7 +61,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         D232.hintMenu_scrollIndex = 0;
     }
 
-	int lngIndex = 
+	int lngIndex =
 		D232.hintMenu_lngIndexArr
 		[
 			hintsFound[menu->rowSelected]
@@ -68,7 +69,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
 
     // if viewing a hint
     if (D232.hintMenu_boolViewHint != 0)
-    {			
+    {
         DECOMP_AH_HintMenu_MaskPosRot();
 
         if (D232.maskCooldown > 0)
@@ -80,9 +81,9 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
             (
 				(
 					// if no XA is playing anymore
-					uVar6 = DECOMP_VehTalkMask_boolNoXA(), 
-					(uVar6 & 0xffff) != 0 || 
-					
+					uVar6 = DECOMP_VehTalkMask_boolNoXA(),
+					(uVar6 & 0xffff) != 0 ||
+
 					// allowed to leave hint
 					(D232.maskCooldown == 0))
 				)
@@ -96,24 +97,24 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         }
 
         DECOMP_DecalFont_DrawLine(
-			sdata->lngStrings[lngIndex+0], 
-			0x100, 0x2c, 
+			sdata->lngStrings[lngIndex+0],
+			0x100, 0x2c,
 			1, 0xffff8000);
-        
+
 		// height of multiLine
 		iVar11 = DECOMP_DecalFont_DrawMultiLine(
-			sdata->lngStrings[lngIndex+1], 
-			0x96, 0x3f, 
+			sdata->lngStrings[lngIndex+1],
+			0x96, 0x3f,
 			0x14e, 2, 0);
 
         // "EXIT"
 		char* strExit = sdata->lngStrings[0x17a];
-        
+
 		DECOMP_DecalFont_DrawLine(
-			strExit, 
-			0x100, iVar11 + 0x4f, 
+			strExit,
+			0x100, iVar11 + 0x4f,
 			1, 0xffff8000);
-        
+
 		iVar10 = DECOMP_DecalFont_GetLineWidth(strExit, 1);
 
         iVar7 = (iVar10 + 6) * 0x10000;
@@ -122,18 +123,16 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-        DECOMP_CTR_Box_DrawClearBox(
-			&box, &sdata->menuRowHighlight_Normal,
-			TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour,
-			&gGT->backBuffer->primMem);
-        
+        color.self = sdata->menuRowHighlight_Normal;
+        DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+
 		box.y = 0x3c;
         box.x = -0xe;
         box.w = 0x21c;
         box.h = 2;
 
-        DECOMP_RECTMENU_DrawOuterRect_Edge(
-			&box, &sdata->battleSetup_Color_UI_1, 0x20, gGT->backBuffer->otMem.startPlusFour);
+        color.self = sdata->battleSetup_Color_UI_1;
+        DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
 
         box.y = 0x28;
         box.h = (short)iVar11 + 0x3b;
@@ -194,7 +193,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
                     // If there is no loading in progress
                     if ((sdata->load_inProgress == 0) && (sdata->XA_State == 0))
                     {
-                        sdata->instMaskHints3D = 
+                        sdata->instMaskHints3D =
 							DECOMP_VehTalkMask_Init();
 
                         D232.maskCooldown = FPS_DOUBLE(30);
@@ -208,7 +207,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
                         // talking mask instance
                         inst = sdata->instMaskHints3D;
                         inst->flags |= 0x400;
-	
+
 						struct InstDrawPerPlayer* idpp =
 							INST_GETIDPP(inst);
 
@@ -261,7 +260,7 @@ LAB_800b38cc:
 
     // Draw the "Hints" string
     DECOMP_DecalFont_DrawLine(
-		sdata->lngStrings[0x178+(uVar6==0)], 
+		sdata->lngStrings[0x178+(uVar6==0)],
 		0x100, 0x2c, 1, 0xffff8000);
 
     if (D232.hintMenu_scrollIndex + 5 <= menu->rowSelected)
@@ -323,25 +322,22 @@ LAB_800b38cc:
     box.y = (menu->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-    DECOMP_CTR_Box_DrawClearBox(
-		&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-        gGT->backBuffer->otMem.startPlusFour,
-        &gGT->backBuffer->primMem);
+    color.self = sdata->menuRowHighlight_Normal;
+    DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 
     box.y = 0x3c;
     box.h = 2;
     box.x = -0x14;
     box.w = 0x228;
-    
-	DECOMP_RECTMENU_DrawOuterRect_Edge(
-		&box, &sdata->battleSetup_Color_UI_1, 0x20, 
-		gGT->backBuffer->otMem.startPlusFour);
-	
+
+    color.self = sdata->battleSetup_Color_UI_1;
+	DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
+
     box.y = 0x28;
     box.h = (short)iVar10 + 0x2b;
     box.x = -0x14;
     box.w = 0x228;
-    
+
 	DECOMP_RECTMENU_DrawInnerRect(
 		&box, 4, gGT->backBuffer->otMem.startPlusFour);
 

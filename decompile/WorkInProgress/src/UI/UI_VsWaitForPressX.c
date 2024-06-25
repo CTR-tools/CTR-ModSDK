@@ -15,7 +15,7 @@ void DECOMP_UI_VsWaitForPressX(void)
   short local_4e;
   char *local_38;
   char *local_34;
-  
+
   *(int*)&shortArr3P4P[0] = 0x350055;
   *(int*)&shortArr3P4P[2] = 0x3500aa;
   *(int*)&shortArr3P4P[4] = 0x430055;
@@ -187,12 +187,8 @@ void DECOMP_UI_VsWaitForPressX(void)
         r.w = viewport->w;
         r.h = viewport->h;
 
-        CTR_Box_DrawClearBox(&r, local_34, 0,
-
-                             gGT->backBuffer->otMem.startPlusFour,
-
-                             // pointer to PrimMem struct
-                             &gGT->backBuffer->primMem);
+        Color color = *(Color *)local_34;
+        DECOMP_CTR_Box_DrawClearBox(&r, color, 0, gGT->backBuffer->otMem.startPlusFour);
 
         // If player presses Square, to go back to view End-Of-Race comment,
         // or in Battle mode this includes "Hit You / You Hit" screen

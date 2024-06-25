@@ -1497,13 +1497,15 @@ void WindowBoxLines(struct GameTracker* gGT)
 
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
+		Color color;
+		color.self = *data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE];
 		DECOMP_RECTMENU_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->pushBuffer[i].rect,4,2,
 
 			// color data
-			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE],
+			color,
 
 			0,
 

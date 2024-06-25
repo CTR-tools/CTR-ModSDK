@@ -7,7 +7,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   int maxScale = 100; // USF
 	int speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
   #else
-  int maxScale = driver->const_AccelSpeed_ClassStat + FP8_INT(driver->const_SacredFireSpeed);
+  int maxScale = FP8_INT(driver->const_AccelSpeed_ClassStat) + FP8_INT(driver->const_SacredFireSpeed);
   int speed = driver->unk36E; // is this actually speed?
   #endif
   int minAngle, maxAngle;

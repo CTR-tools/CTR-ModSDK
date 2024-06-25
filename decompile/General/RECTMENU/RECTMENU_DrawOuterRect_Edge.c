@@ -1,18 +1,8 @@
 #include <common.h>
 
-void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem)
+void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT* r, Color color, u_int param_3, u_long * otMem)
 {
-	if ((param_3 & 0x20) == 0)
-	{
-		// solid border
-		Color color;
-		color.self = *rgb;
-		DECOMP_CTR_Box_DrawSolidBox(r, color, otMem);
-	}
-	else
-	{
-		// transparent border
-		DECOMP_CTR_Box_DrawClearBox(r, rgb, TRANS_50_DECAL, otMem, &sdata->gGT->backBuffer->primMem);
-	}
-	return;
+	param_3 & 0x20 ?
+	DECOMP_CTR_Box_DrawClearBox(r, color, TRANS_50_DECAL, otMem) :
+	DECOMP_CTR_Box_DrawSolidBox(r, color, otMem);
 }
