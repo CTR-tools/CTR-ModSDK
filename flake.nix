@@ -40,14 +40,6 @@
             };
           };
           mkOnlineClient = withDebug: {
-            native32 = with pkgs32; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
-            };
-            arm32 = with pkgsARM32; {
-              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
-            };
             mingw32 = with pkgsCross.mingw32; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; inherit withDebug; };
               clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
