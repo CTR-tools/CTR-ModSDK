@@ -50,11 +50,11 @@
             };
             mingw32 = with pkgsCross.mingw32; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             mingwW64 = with pkgsCross.mingwW64; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; inherit withDebug; };
-              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Client { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
           };
         in
