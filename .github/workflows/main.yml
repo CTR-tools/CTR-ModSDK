@@ -46,4 +46,9 @@ jobs:
           name: online-server-windows
           path: |
             ${{ runner.temp }}/result/online-server.release.mingw32.gcc/bin
-            ${{ runner.temp }}/result/online-server.release.mingwW64.gcc/bin
+      - name: Upload client artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: online-client-windows
+          path: |
+            ${{ runner.temp }}/result/online-client.release.mingwW64.gcc/bin
