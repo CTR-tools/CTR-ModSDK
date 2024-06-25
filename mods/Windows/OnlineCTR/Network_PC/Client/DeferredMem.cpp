@@ -88,6 +88,7 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	if (sock == INVALID_SOCKET)
 	{
 		printf("Unable to connect to DuckStation PINE!\n");
+		closesocket(sock);
 		WSACleanup();
 		return NULL;
 	}
@@ -98,6 +99,14 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	if (ires == SOCKET_ERROR)
 	{
 		printf("Unable to put the socket into non-blocking mode.\n");
+		return NULL;
+	}
+	int enable = 1;
+	ires = setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char*)&enable, sizeof(int));
+	if (ires != 0)
+	{
+		printf("Unable to enable TCP_NODELAY (disables nagle's algorithm).\n");
+		WSACleanup();
 		return NULL;
 	}
 	return sock;
