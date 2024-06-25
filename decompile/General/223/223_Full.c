@@ -123,10 +123,10 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	d = gGT->drivers[0];
 	relic = sdata->ptrRelic;
 	adv = &sdata->advProgress;
-	
+
 	// testing
 	//d->numTimeCrates = gGT->timeCratesInLEV;
-	
+
 	// change color
 	txtColor = (gGT->timer & 1) ? 0xffff8000 : 0xffff8004;
 
@@ -136,13 +136,13 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	// set color of relic in Instance
 	relic->colorRGBA =
-	
+
 		// check if platinum is unlocked, set platinum color
 		(CHECK_ADV_BIT(adv->rewards, bitIndex)) ? 0xffede90 :
-		
+
 		// check if gold is unlocked, set gold color
-		(CHECK_ADV_BIT(adv->rewards, (bitIndex - 0x12) )) ? 0xd8d2090 : 
-		
+		(CHECK_ADV_BIT(adv->rewards, (bitIndex - 0x12) )) ? 0xd8d2090 :
+
 		// if sapphire, keep original color
 		relic->colorRGBA;
 
@@ -173,7 +173,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 			// that would have been taken to draw "PERFECT" text
 			sdata->framesSinceRaceEnded = FPS_DOUBLE(140);
 		}
-	
+
 		// if race ended 229-250 frames ago
 		if (((u_int)(sdata->framesSinceRaceEnded - FPS_DOUBLE(21)) < FPS_DOUBLE(229)) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0))
 		{
@@ -205,13 +205,13 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	// interpolate fly-in
 	DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		startX, 0x32, 
-		0x100, endY, 
+		&pos[0],
+		startX, 0x32,
+		0x100, endY,
 		startFrame, FPS_DOUBLE(0x14));
 
 	DECOMP_UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
-	
+
 	if ((gGT->unknownFlags_1d44 & 0x2000000) != 0)
 	{
 		// if race ended less than 491 frames ago
@@ -249,9 +249,9 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		startY = DECOMP_UI_ConvertY_2(0xa2, 0x100);
 
 		DECOMP_UI_Lerp2D_Linear(
-			&pos[0], 
-			startX, startY, 
-			endX, startY, 
+			&pos[0],
+			startX, startY,
+			endX, startY,
 			startFrame, FPS_DOUBLE(0x14));
 	}
 
@@ -275,9 +275,9 @@ LAB_800a0594:
 
 	// interpolate fly-in
 	DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		startX, 0x20, 
-		0x100, endY, 
+		&pos[0],
+		startX, 0x20,
+		0x100, endY,
 		startFrame, FPS_DOUBLE(0x14));
 
 	// if race ended less than 16.333 seconds ago
@@ -297,9 +297,9 @@ LAB_800a0594:
 
 	// interpolate fly-in
 	DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		200, 0x79, 
-		endX, 0x79, 
+		&pos[0],
+		200, 0x79,
+		endX, 0x79,
 		startFrame, FPS_DOUBLE(0x14));
 
 	sdata->ptrTimebox1->matrix.t[0] = DECOMP_UI_ConvertX_2(pos[0], 0x100);
@@ -326,9 +326,9 @@ LAB_800a0594:
 			{
 				// interpolate fly-in
 				DECOMP_UI_Lerp2D_Linear(
-					&pos[0], 
-					-0x96, 0x8a, 
-					0x100, 0x8a, 
+					&pos[0],
+					-0x96, 0x8a,
+					0x100, 0x8a,
 					framesElapsed - FPS_DOUBLE(80), FPS_DOUBLE(0x14));
 
 				if (framesElapsed == FPS_DOUBLE(0x50))
@@ -345,9 +345,9 @@ LAB_800a0594:
 		{
 			// interpolate fly-in
 			DECOMP_UI_Lerp2D_Linear(
-				&pos[0], 
-				0x100, 0x8a, 
-				0x296, 0x8a, 
+				&pos[0],
+				0x100, 0x8a,
+				0x296, 0x8a,
 				framesElapsed - FPS_DOUBLE(250), FPS_DOUBLE(0x14));
 
 		LAB_800a07f8:
@@ -366,10 +366,10 @@ LAB_800a0594:
 			if (framesElapsed >= FPS_DOUBLE(160))
 			{
 				startFrame = (framesElapsed - FPS_DOUBLE(160)) / 5;
-				
+
 				if (startFrame > 10)
 					startFrame = 10;
-				
+
 				else if (startFrame != 0 && ((framesElapsed - FPS_DOUBLE(160)) % 5 == 0))
 				{
 					// reduce the number of frames it took for the player to finish the race
@@ -377,7 +377,7 @@ LAB_800a0594:
 					d->timeElapsedInRace -= 960;
 					OtherFX_Play(99, 1);
 				}
-				
+
 				// "-%d"
 				sprintf(auStack56, "-%d", 10-startFrame);
 			}
@@ -396,9 +396,9 @@ LAB_800a0594:
 
 		// interpolate fly-in
 		DECOMP_UI_Lerp2D_Linear(
-			&pos[0], 
-			startX, uVar11, 
-			0x199, endY, 
+			&pos[0],
+			startX, uVar11,
+			0x199, endY,
 			framesElapsed - FPS_DOUBLE(140), FPS_DOUBLE(0x14));
 
 		// Draw String
@@ -418,14 +418,14 @@ LAB_800a096c:
 		startFrame = framesElapsed - FPS_DOUBLE(490);
 
 	LAB_800a0a64:
-	
+
 		// interpolate fly-in
 		DECOMP_UI_Lerp2D_Linear(
-			&pos[0], 
-			startX, 0x50, 
-			sVar6, 0x50, 
+			&pos[0],
+			startX, 0x50,
+			sVar6, 0x50,
 			startFrame, FPS_DOUBLE(0x14));
-		
+
 		// "RELIC AWARDED!"
 		DecalFont_DrawLine(
 			sdata->lngStrings[0x160], pos[0], pos[1], 1, txtColor);
@@ -480,9 +480,9 @@ LAB_800a096c:
 
 		// Interpolate fly-in
 		DECOMP_UI_Lerp2D_Linear(
-			&pos[0], 
-			startX, 0x50, 
-			sVar6, 0x50, 
+			&pos[0],
+			startX, 0x50,
+			sVar6, 0x50,
 			startFrame, FPS_DOUBLE(0x14));
 
 		// "NEW HIGH SCORE!"
@@ -499,9 +499,9 @@ LAB_800a0b58:
 	{
 		// Interpolate, vertical fly-out??
 		DECOMP_UI_Lerp2D_Linear(
-			&pos[0], 
-			-0xa, 0xc, 
-			-0xa, -0x58, 
+			&pos[0],
+			-0xa, 0xc,
+			-0xa, -0x58,
 			framesElapsed - FPS_DOUBLE(490), FPS_DOUBLE(0x14));
 	}
 
@@ -572,9 +572,9 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 
 	// interpolate fly-in
 	DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		startX, startY, 
-		startX, startY, 
+		&pos[0],
+		startX, startY,
+		startX, startY,
 		sdata->framesSinceRaceEnded, FPS_DOUBLE(0x14));
 
 	// "BEST TIMES"
@@ -593,7 +593,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 		{
 			// make name color flash every odd frame
 			nameColor = (gGT->timer & FPS_DOUBLE(2)) ? 4 : nameColor;
-			
+
 			// flash color of time
 			timeColor = ((gGT->timer & FPS_DOUBLE(2)) << FPS_LEFTSHIFT(1));
 		}
@@ -610,7 +610,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 
 		u_int iconColor = 0x808080;
 
-		// Draw Character Icon 
+		// Draw Character Icon
 		RECTMENU_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
 							startX - 0x52, timebox_Y,
 
@@ -619,11 +619,11 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 
 							// pointer to OT mem
 							gGT->pushBuffer_UI.ptrOT,
-							
+
 							// color of each corner
-							iconColor, iconColor, 
-							iconColor, iconColor, 
-							
+							iconColor, iconColor,
+							iconColor, iconColor,
+
 							1, 0x1000);
 
 		// Draw Name
@@ -640,12 +640,12 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 			box.w = 0xab;
 			box.h = 0x1a;
 
+			Color color;
+			color.self = sdata->menuRowHighlight_Normal;
 			// Draw a rectangle to highlight your time on the "Best Times" list
-			CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+			DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL,
 								 // pointer to OT mem
-								 gGT->pushBuffer_UI.ptrOT,
-								 // pointer to PrimMem struct
-								 &gGT->backBuffer->primMem);
+								 gGT->pushBuffer_UI.ptrOT);
 		}
 		currRowY += 0x1a;
 	}
@@ -654,10 +654,10 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 	{
 		// "YOUR TIME"
 		DecalFont_DrawLine(sdata->lngStrings[0xC5], startX, startY + 0x95, 1, 0xffff8000);
-		
+
 		// make a string for your current track time
 		timeString = RECTMENU_DrawTime(gGT->drivers[0]->timeElapsedInRace);
-		
+
 		// color
 		timeColor = 0xffff8000;
 	}

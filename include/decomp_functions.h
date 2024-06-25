@@ -32,7 +32,7 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b);
 void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer);
 
 void DECOMP_CTR_Box_DrawWireBox(RECT * r, Color color, void * ot);
-void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_long* ot, struct PrimMem* primMem);
+void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color color, int transparency, u_long * ot);
 void DECOMP_CTR_Box_DrawSolidBox(RECT * r, Color color, u_long * ot);
 
 // decal
@@ -351,9 +351,9 @@ void DECOMP_RECTMENU_ClearInput();
 void DECOMP_RECTMENU_CollectInput();
 void DECOMP_RECTMENU_ProcessState();
 int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m);
-void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
-void DECOMP_RECTMENU_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, short param_3, u_long* otMem);
-void DECOMP_RECTMENU_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int* rgb, short param_5, u_long* otMem);
+void DECOMP_RECTMENU_DrawOuterRect_Edge(RECT * r, Color color, u_int param_3, u_long * otMem);
+void DECOMP_RECTMENU_DrawOuterRect_HighLevel(RECT* r, Color color, short param_3, u_long* otMem);
+void DECOMP_RECTMENU_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, Color color, short param_5, u_long* otMem);
 u_char* DECOMP_RECTMENU_DrawTime(int milliseconds);
 void DECOMP_RECTMENU_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
 void DECOMP_RECTMENU_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);

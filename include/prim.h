@@ -42,6 +42,12 @@ typedef union Texpage
     u32 self;
 } Texpage;
 
+typedef struct
+{
+    Tag tag;
+    Texpage texpage;
+} TPage;
+
 enum RenderCode
 {
     RenderCode_Polygon = 1,

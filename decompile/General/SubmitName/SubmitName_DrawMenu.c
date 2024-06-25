@@ -51,7 +51,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 		{
 			nameLength++;
 		}
-		
+
 		currNameEntered++;
 	}
 
@@ -69,8 +69,8 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	{
 		for (j = 0; j < 13; j++)
 		{
-			// Not certain if this is "needed" by the Japan version, 
-			// or if this was a mistake, by using "int" and pointer to int, that 
+			// Not certain if this is "needed" by the Japan version,
+			// or if this was a mistake, by using "int" and pointer to int, that
 			// makes a 4-byte string that works fine, have not tested japan yet
 
 #if 0
@@ -116,7 +116,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 			DECOMP_DecalFont_DrawLine(
 				&keyboardString,
 
-				//j*22 + 116, 
+				//j*22 + 116,
 				j * WIDE_PICK(22, 17) + WIDE_PICK(116, 148),
 
 				i * 18 + 88,
@@ -128,27 +128,27 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 
 	// PLEASE ENTER YOUR NAME
 	DECOMP_DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
-	
+
 	// player name
 	DECOMP_DecalFont_DrawLine(
-		gGT->currNameEntered, 
-		
+		gGT->currNameEntered,
+
 		// original name max len = 8,
 		// 192 = 256 - iconW(16) * halfMaxLen(4)
 		WIDE_PICK(192,  208),
-		
-		68, 
+
+		68,
 		FONT_BIG, WHITE);
-	
+
 	if (((sdata->typeTimer & FPS_DOUBLE(2)) != 0) && (currNameLength < 16))
 	{
 		currNameWidth = DECOMP_DecalFont_GetLineWidth(gGT->currNameEntered, FONT_BIG);
-		
+
 		DECOMP_DecalFont_DrawLine(
-			sdata->str_underscore, 
-			currNameWidth + WIDE_PICK(192,  208), 
-			
-			68, 
+			sdata->str_underscore,
+			currNameWidth + WIDE_PICK(192,  208),
+
+			68,
 			FONT_BIG, ORANGE);
 	}
 
@@ -186,7 +186,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	// r.w = 32
 	// r.w = 448
 
-	// in 16x9, 
+	// in 16x9,
 	// subtract 1/8 from r.x
 	// subtract 1/4 from r.w
 	r.x = WIDE_PICK(32, 88);
@@ -194,9 +194,9 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 
 	r.y = 62;
 	r.h = 2;
-	DECOMP_RECTMENU_DrawOuterRect_Edge(
-		&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20,
-		gGT->backBuffer->otMem.startPlusFour);
+	Color color;
+	color.self = sdata->battleSetup_Color_UI_1;
+	DECOMP_RECTMENU_DrawOuterRect_Edge(&r, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
 
 	r.y = 39;
 	r.h = 130;
