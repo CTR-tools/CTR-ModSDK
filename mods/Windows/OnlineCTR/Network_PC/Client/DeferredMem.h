@@ -2,18 +2,36 @@
 #ifndef DEF_MEM //include guard
 #define DEF_MEM
 
+#ifdef _WIN64 //windows
 #include <WinSock2.h>
+#include <windows.h>
+#include <ws2tcpip.h>
+#else //assume posix
+#error todo...
+//todo:
+//include whatever headers we need for posix socket types.
+#endif
+
 #include "DSPINE.h"
 #include <memory>
 #include <functional>
-#include <stdio.h>
 
 
-extern void defMemInit();
-extern SOCKET initSocket();
-extern void closeSocket(SOCKET* socket);
-extern void readMemorySegment(unsigned int addr, size_t len, char* buf);
-extern void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
+void defMemInit();
+static void readMemorySegment(unsigned int addr, size_t len, char* buf);
+static void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
+static void recvThread();
+#if _WIN64 //windows
+SOCKET initSocket();
+void uninitSocket(SOCKET* socket);
+#else //assume posix
+#error todo...
+//todo:
+//declare functions initSocket() and uninitSocket() using the equivalent posix data type for SOCKET
+//Note: the remainder of this file likely shouldn't need to be modified for the sake of posix sockets.
+#endif
+
+
 
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
@@ -140,10 +158,8 @@ public:
 	}
 
 	//these are useful for unconditional writes.
-
-	void writeRaw(unsigned int addr, char val);
-
-	void writeRaw(unsigned int addr, short val);
+	//void writeRaw(unsigned int addr, char val);
+	//void writeRaw(unsigned int addr, short val);
 };
 
 #endif //DEF_MEM

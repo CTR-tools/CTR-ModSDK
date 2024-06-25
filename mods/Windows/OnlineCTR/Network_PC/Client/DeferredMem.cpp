@@ -1,27 +1,46 @@
 //TODO: similar to CL_main.cpp/blockUntilDuckstationIsOpen(), we need to
 //make the various includes for this file platform independent & change
 //socket impl as necessary.
-
-#include "DeferredMem.h"
+#ifdef _WIN64 //windows
 #include <WinSock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
+#else //assume posix
+#error todo...
+//todo:
+//include whatever headers we need for posix sockets & posix sockets implementations.
+#endif
+
+#include "DeferredMem.h"
 #include <atomic>
 #include <thread>
+#include <mutex>
 
+#if _WIN64 //windows
 SOCKET dspineSocket;
+#else //assume posix
+#error todo...
+//todo:
+//declare a variable of whatever type a posix socket is.
+#endif
 std::atomic<int> outstandingReads = 0;
 std::thread recvWorker;
-
-void recvThread();
+std::mutex recvMutex = std::mutex{};
 
 void defMemInit()
 {
+#if _WIN64 //windows
 	dspineSocket = initSocket();
+#else //assume posix
+#error todo...
+	//todo:
+	//call posix version of initSocket() and assign to the posix dspineSocket variable.
+#endif
 	recvWorker = std::thread{ recvThread };
 }
 
-SOCKET initSocket() //every call to initSocket should be bookmatched by a call to closeSocket.
+#if _WIN64 //windows
+SOCKET initSocket() //every call to initSocket should be bookmatched by a call to uninitSocket.
 {
 	//https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-basic-winsock-application
 	WSADATA wsadata;
@@ -80,71 +99,76 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	return sock;
 }
 
-void closeSocket(SOCKET* socket) //should be preceded by a call to initSocket
+void uninitSocket(SOCKET* socket) //should be preceded by a call to initSocket
 {
 	if (*socket != INVALID_SOCKET)
-		closeSocket(socket);
-	WSACleanup();
+	{
+		WSACleanup();
+	}
 }
+#else //assume posix
+#error todo...
+//todo:
+//implement a posix version of initSocket
+//it should:
+//	1. create a socket in family AF_INET
+//  2. type of SOCK_STREAM (if that granularity exists)
+//  3. of protocol TCP
+//  4. for ip address 127.0.0.1/localhost and port 28011
+//  5. if applicable during socket construction, specify that send()/recv() are *non-blocking*
+//	6. ensure that it's connected
+//  7. if anything fails, log why, and clean up.
+//  8. return the created socket if creation succeeded.
+
+//implement a posix version of uninitSocket
+//it should:
+//	1. close connection (if open), clean up & invalidate a socket.
+#endif
 
 void recvThread()
 {
-	try
-	{
-		constexpr unsigned int recvBufLen = 5;
-		char recieveBuffer[recvBufLen];
+	constexpr unsigned int recvBufLen = 5;
+	char recieveBuffer[recvBufLen];
 
-		while (true)
-		{
-			while (outstandingReads > 0)
-			{
-				WSAPOLLFD fdarr = { 0 };
-				fdarr.fd = dspineSocket;
-				fdarr.events = POLLRDNORM;
-				WSAPoll(&fdarr, 1, -1);
-				int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-				if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-					outstandingReads--; //very good
-				else 
-				{
-					if (recvLen < recvBufLen)
-						printf("recv returned less than required buffer length ");
-					printf("recv AAA failed: %d\n", WSAGetLastError());
-					exit(-69420); //could be caused by many things.
-				}
-			}
-		}
-	}
-	catch (...)
+	while (true)
 	{
-		printf("recvThread() threw something!");
+		recvMutex.lock();
+		while (outstandingReads > 0)
+		{
+#if _WIN64 //windows
+			WSAPOLLFD fdarr = { 0 };
+			fdarr.fd = dspineSocket;
+			fdarr.events = POLLRDNORM;
+			WSAPoll(&fdarr, 1, -1);
+			int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
+			if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
+				outstandingReads--; //very good
+			else 
+			{
+				if (recvLen < recvBufLen)
+					printf("recv returned less than required buffer length ");
+				printf("recv AAA failed: %d\n", WSAGetLastError());
+				exit(-69420); //could be caused by many things.
+			}
+#else //assume posix
+#error todo...
+			//todo:
+			//this should poll/select for a recv event
+			//then recv of (maximum) length recvBufLen
+			//ensure that the length that was recvd was indeed recvBufLen
+			//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
+			//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
+			//if any "ensures" fail, then we have reached an unrecoverable error,
+			//assume that the socket connection is bad and reset and/or close the client.
+#endif
+		}
+		recvMutex.unlock();
 	}
 }
 
-/* Relevant to read/writeMemorySegment
-*
-* It seems that the duckstation pine_server.cpp (see void PINEServer::PINESocket::ProcessCommandsInBuffer())
-* is written in such a way that if you send a bunch of "concatenated packets" in a single send, it's still handled well
-* & splits them up into their individual packets.
-*
-* However, this only works if https://github.com/stenzek/duckstation/pull/3230 is implemented.
-*
-* That means if we implement an algorithm to buffer everything, then send either
-* 1. when the buffer is full
-* 2. a minimum of X times per second (for latency)
-*
-* might reduce network traffic on localhost, which could be critical in high-throughput gameplay segments.
-*/
-
-//static bool formulatePacket(char* resultBuf, size_t maxLen, int DSPINEMode, unsigned int addr = (unsigned int)nullptr, char* data)
-//{
-//
-//}
-
 void readMemorySegment(unsigned int addr, size_t len, char* buf)
 {
-	//TODO: mutex
-	while (outstandingReads > 0) { ; } //wait for no more recvs
+	recvMutex.lock();
 	constexpr unsigned int sendBufLen = 10;
 	constexpr unsigned int recvBufLen = 13;
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
@@ -167,12 +191,25 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
 		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-		
-		send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize	
+
+#if _WIN64 //windows
+		int res = send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize
+		if (res != sendBufLen)
+		{
+			if (res == SOCKET_ERROR)
+				exit(-69420);
+			else
+				exit(-69420); //partial send???
+		}
+#else //assume posix
+#error todo...
+		//posix non-blocking send
+#endif
 	}
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{
 		//recieve section
+#if _WIN64 //windows
 		WSAPOLLFD fdarr = { 0 };
 		fdarr.fd = dspineSocket;
 		fdarr.events = POLLRDNORM;
@@ -188,16 +225,27 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		}
 		else
 			exit(-69420); //could be caused by many things.
+#else //assume posix
+#error todo...
+		//posix poll/select until at least recvBufLen worth of data is ready
+		//posix recv a maximum of recvBufLen worth of data
+		//ensure the length that was recvd == recvBufLen
+		//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
+		//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
+		//if any "ensures" fail, then we have reached an unrecoverable error,
+		//assume that the socket connection is bad and reset and/or close the client.
+#endif
 		for (size_t c = 0; c < 8; c++)
 			if (i + c < len)
 				buf[i + c] = recieveBuffer[c + 5];
 	}
+	recvMutex.unlock();
 }
 
 void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 {
 	if (blocking)
-		while (outstandingReads > 0) { ; } //wait for no more recvs
+		recvMutex.lock();
 	//This macro accounts & compensates for a bug present in duckstation that was fixed in
 	//https://github.com/stenzek/duckstation/pull/3230 versions of duckstation older than
 	//this will not function with this client without this option set to 1.
@@ -233,6 +281,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		sendBuffer[15] = buf[i + 6];
 		sendBuffer[16] = buf[i + 7];
 		outstandingReads++;
+#ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sendBufLen, 0);
 		if (res != sendBufLen)
 		{
@@ -241,6 +290,9 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 			else
 				exit(-69420); //partial send???
 		}
+#else //assume posix
+		//posix non-blocking send of size sendBufLen
+#endif
 	}
 	//note: rem is [0-7] inclusive
 	unsigned int offsetaddr = addr + whole;
@@ -263,6 +315,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 4;
 		i += 4;
+#ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
@@ -271,6 +324,9 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 			else
 				exit(-69420); //partial send???
 		}
+#else //assume posix
+		//posix non-blocking send of size sz
+#endif
 	}
 	if ((rem & 2) != 0)
 	{
@@ -289,6 +345,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 2;
 		i += 2;
+#ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
@@ -297,6 +354,9 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 			else
 				exit(-69420); //partial send???
 		}
+#else //assume posix
+		//posix non-blocking send of size sz
+#endif
 	}
 	if ((rem & 1) != 0)
 	{
@@ -314,6 +374,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		outstandingReads++; //this line must come before send or race condition
 		offsetaddr += 1;
 		i += 1;
+#ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
@@ -322,21 +383,24 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 			else
 				exit(-69420); //partial send???
 		}
+#else //assume posix
+		//posix non-blocking send of size sz
+#endif
 	}
 	if (blocking)
-		while (outstandingReads > 0) { ; } //wait for no more recvs
+		recvMutex.unlock();
 }
 
-void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8
-{
-	char buf[sizeof(char)] = { val };
-	writeMemorySegment(addr, sizeof(char), buf);
-}
-
-void ps1mem::writeRaw(unsigned int addr, short val)
-{
-	char buf[sizeof(short)];
-	buf[0] = val & 0xFF; //this might be the wrong endianness
-	buf[1] = (val >> 8) & 0xFF;
-	writeMemorySegment(addr, sizeof(short), buf);
-}
+//void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8
+//{
+//	char buf[sizeof(char)] = { val };
+//	writeMemorySegment(addr, sizeof(char), buf);
+//}
+//
+//void ps1mem::writeRaw(unsigned int addr, short val)
+//{
+//	char buf[sizeof(short)];
+//	buf[0] = val & 0xFF; //this might be the wrong endianness
+//	buf[1] = (val >> 8) & 0xFF;
+//	writeMemorySegment(addr, sizeof(short), buf);
+//}
