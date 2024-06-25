@@ -28,7 +28,7 @@ RECT endRaceRECT =
 
 void ThreadFunc(struct Thread* t)
 {
-	int i;
+	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
 	octr->boolPlanetLEV = gGT->levelID == 0x26;
@@ -62,22 +62,22 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = 6;
+		// isIdle = 0; // <- unnecesary but i'll leave for readability
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = 6; i >= 0; i--)
-			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
-
-		for(i = 6; i >= 0; i--)
-			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
-				break;
+        // If windowsClientSync hasn't been updated, it means it is idle/gone/lagging
+        if(octr->windowsClientSync == octr->lastWindowsClientSync){
+            isIdle = 1; // the counter is the same as last, start unsync procedure
+        } else {
+            octr->lastWindowsClientSync = octr->windowsClientSync; // client did update, change last counter
+        }
 	}
 
     // count frames that the client didn't update the game
-    if(i==-1 && octr->CurrState > LAUNCH_ENTER_PID){
+    if(isIdle==1 && octr->CurrState > LAUNCH_ENTER_PID){
         octr->frames_unsynced++;
     } else {
         octr->frames_unsynced = 0;

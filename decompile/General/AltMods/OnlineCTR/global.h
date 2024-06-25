@@ -100,7 +100,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[8];
+	char windowsClientSync;
 
 	// 0x30
 	char boolLockedInCharacters[8];
@@ -120,6 +120,9 @@ struct OnlineCTR
 
     // Frames that the client didn't update
     int frames_unsynced;
+
+    // Last windowsClientSync counter
+	char lastWindowsClientSync;
 };
 
 #define NUM_PLAYERS 8
