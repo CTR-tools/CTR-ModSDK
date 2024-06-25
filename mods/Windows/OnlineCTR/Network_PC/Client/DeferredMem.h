@@ -18,9 +18,9 @@
 
 
 void defMemInit();
-static void readMemorySegment(unsigned int addr, size_t len, char* buf);
-static void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
-static void recvThread();
+void readMemorySegment(unsigned int addr, size_t len, char* buf);
+void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
+void recvThread();
 #if _WIN64 //windows
 SOCKET initSocket();
 void uninitSocket(SOCKET* socket);

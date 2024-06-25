@@ -22,7 +22,7 @@ SOCKET dspineSocket;
 #endif
 std::atomic<int> outstandingReads = 0;
 std::thread recvWorker;
-std::mutex recvMutex = std::mutex{};
+std::mutex recvMutex;
 
 void defMemInit()
 {
