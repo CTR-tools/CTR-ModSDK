@@ -1,6 +1,3 @@
-//TODO: similar to CL_main.cpp/blockUntilDuckstationIsOpen(), we need to
-//make the various includes for this file platform independent & change
-//socket impl as necessary.
 #ifdef _WIN64 //windows
 #include <WinSock2.h>
 #include <windows.h>
@@ -291,6 +288,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 				exit(-69420); //partial send???
 		}
 #else //assume posix
+#error todo...
 		//posix non-blocking send of size sendBufLen
 #endif
 	}
@@ -325,6 +323,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 				exit(-69420); //partial send???
 		}
 #else //assume posix
+#error todo...
 		//posix non-blocking send of size sz
 #endif
 	}
@@ -355,6 +354,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 				exit(-69420); //partial send???
 		}
 #else //assume posix
+#error todo...
 		//posix non-blocking send of size sz
 #endif
 	}
@@ -384,6 +384,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 				exit(-69420); //partial send???
 		}
 #else //assume posix
+#error todo...
 		//posix non-blocking send of size sz
 #endif
 	}

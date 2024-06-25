@@ -37,30 +37,6 @@ void uninitSocket(SOCKET* socket);
 template<typename T>
 class ps1ptr
 {
-	/// <summary>
-	/// Note to future maintainers:
-	///
-	/// The largest element of latency when communicating with emulator RAM is probably read/writeMemorySegment.
-	///
-	/// Each of these calls actually just splits up the memory into 8-byte chuncks and read/writes them via PINE
-	/// (8 bytes is the largest size the API supports I believe).
-	///
-	/// *if* when you readMemorySegment in the ctor/refresh, you made an additional "reference copy" of the data,
-	/// when it comes time to commit(), you can walk through the data and only make calls for the data that *actually*
-	/// changed.
-	///
-	/// If you're working with a large data structure (e.g., CTROnline = 228 bytes), and only a *single* byte was changed,
-	/// You can reduce the number of API calls within writeMemorySegment() from approximately 228/8 to 1.
-	///
-	/// However, these benefits disappear e.g., if many "scattered" changes were made throughout the data structure, and that
-	/// many locations were changed such that for every block of 8 bytes within the structure, at least 1 byte within that
-	/// segment was changed. In this case, the number of API calls is the same as if you just committed the whole structure.
-	/// (which is no worse then what is currently being done).
-	///
-	/// If it's possible to enable a nagle-esq algorithm on the sockets, that might be benifical (keep in mind traffic is
-	/// from CLIENT.EXE -> localhost, so latency should be sub-millisecond probably).
-	/// </summary>
-
 public:
 	typedef std::shared_ptr<T> ptrtype;
 private:
@@ -69,9 +45,10 @@ private:
 	bool didNotPrefetch;
 	char* buf;
 	char* originalBuf;
-	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf
+	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf and originalBuf
 public:
-	ps1ptr() { } //for static init only, do not actually use this.
+	//for static initialization only, do not actually ever call this.
+	ps1ptr() { }
 	/// <summary>
 	/// Reads the specified address from PS1 (emulator RAM), copies it, and creates a shared_ptr.
 	///
@@ -81,6 +58,12 @@ public:
 	/// When this object falls out of scope, any changes made will *not* be automatically committed.
 	/// Do it yourself.
 	/// </summary>
+	/// <param name="addr">The address of PS1 memory to represent</param>
+	/// <param name="doNotPrefetch">If true, this ps1ptr will not prefetch the contents of that memory.
+	/// This is useful if you plan on completely overwriting this portion of memory, saving latency.
+	/// However, an object in this state will always commit it's entire buffer to ps1 memory every
+	/// time it is commited, so make sure *all* of the memory this ps1ptr represents is set as you intend.</param>
+	/// <param name="volatileAccess">If true, will automatically refresh() for you upon every call to get()</param>
 	ps1ptr(unsigned int addr, bool doNotPrefetch = false, bool volatileAccess = false) : address(addr), volat(volatileAccess)
 	{
 		didNotPrefetch = doNotPrefetch;
@@ -122,6 +105,9 @@ public:
 			writeMemorySegment(address + whole, rem, buf + whole, blocking);
 		}
 		memcpy(originalBuf, buf, sizeof(T));
+		didNotPrefetch = false; //if it was true, well, we just overwrote *all* the mem this ps1ptr represents,
+								//so the copy we have is indeed up-to-date. We can now treat this as though it was
+								//prefetched since it's contents are now accurate.
 	}
 	/// <summary>
 	/// Re-fetches the memory this ps1ptr represents from ps1 memory.
@@ -129,7 +115,7 @@ public:
 	void refresh()
 	{
 		readMemorySegment(address, sizeof(T), buf); //change the underlying data of the shared_ptr
-		didNotPrefetch |= true;
+		didNotPrefetch = false;
 		memcpy(originalBuf, buf, sizeof(T));
 	}
 	ptrtype get()
