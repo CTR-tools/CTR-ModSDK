@@ -73,10 +73,10 @@ struct OnlineCTR
 	int CurrState;
 
 	// 0x4
-	unsigned char DriverID;
 	char PageNumber; // allow negative
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
+	unsigned char DriverID;
 
 	// 0x8
 	unsigned char boolLockedInLap;
@@ -108,7 +108,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and emulator are still connected
 	// Note: this macro is used elsewhere
-#define CLIENT_SYNC_BUFFER_LENGTH 32 //was 8
+#define CLIENT_SYNC_BUFFER_LENGTH 24 //was 8, but 8 is just *too slow* for 60fps
 	char windowsClientSync[CLIENT_SYNC_BUFFER_LENGTH];
 
 	// 0x30
