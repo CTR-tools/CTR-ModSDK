@@ -1,3 +1,6 @@
+#include <common.h>
+#include "global.h"
+
 void (*funcs[NUM_STATES]) () =
 {
 	StatePS1_Launch_EnterPID,
@@ -19,7 +22,7 @@ RECT endRaceRECT =
 {
 	.x = 8,
 	.y = 8,
-	.w = 0x200 - 0x20,
+	.w = 0x200-0x20,
 	.h = 0xc8,
 };
 
@@ -59,23 +62,24 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = CLIENT_SYNC_BUFFER_LENGTH;
+		i = CLIENT_SYNC_BUFFER_LENGTH - 2;
 	}
 
 	// if client should not be idle
 	else
 	{
-		for (i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
-			octr->windowsClientSync[i + 1] = octr->windowsClientSync[i];
+		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
+			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
 
-		for (i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
-			if (octr->windowsClientSync[i + 1] != octr->windowsClientSync[i])
+		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
+			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 				break;
 	}
 
-	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES - 2 frames.
-	int boolCloseClient = (i == -1) && (octr->CurrState > LAUNCH_ENTER_PID);
-
+	// if client didn't update the game in CLIENT_SYNC_BUFFER_LENGTH - 4 *or* CLIENT_SYNC_BUFFER_LENGTH / 2 frames (idk which).
+	int boolCloseClient =
+		(i == -1) &&
+		(octr->CurrState > LAUNCH_ENTER_PID);
 
 		
 	// if client closed, or server disconnected
@@ -101,7 +105,7 @@ void ThreadFunc(struct Thread* t)
 		// if closed==0, go to 1 (server select)
 		octr->CurrState = !boolCloseClient;
 
-		// stop music, 
+		// stop music,
 		// stop "most FX", let menu FX ring
 		Music_Stop();
 		howl_StopAudio(1,1,0);
