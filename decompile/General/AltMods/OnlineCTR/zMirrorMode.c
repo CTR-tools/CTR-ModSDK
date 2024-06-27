@@ -355,8 +355,12 @@ void OnlineMirrorMode(u_long* startOT)
 
 	SwapDirection(0);
 
+	// Mirror Mode Disabled
+	#if 0
 	// no special event
 	if (octr->special == 0)
+	#endif	
+	
 		return;
 
 	// no mirroring on this track

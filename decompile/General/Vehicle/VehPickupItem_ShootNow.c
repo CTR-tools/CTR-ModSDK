@@ -4,6 +4,10 @@ void RB_GenericMine_ThTick(struct Thread* t);
 void RB_ShieldDark_ThTick_Grow(struct Thread* t);
 void RB_Warpball_ThTick(struct Thread* t);
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 {
 	struct Instance* dInst;
@@ -13,6 +17,20 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 	struct TrackerWeapon* tw;
 	struct GameTracker* gGT = sdata->gGT;
 	int modelID;
+	
+	#ifdef USE_ONLINE
+	if(d->driverID == 0)
+	{
+		octr->Shoot[0].boolJuiced = 0;
+		if(d->numWumpas >= 10) octr->Shoot[0].boolJuiced = 1;
+		
+		// do not send weaponID, cause missile/bomb share
+		octr->Shoot[0].Weapon = d->heldItemID;
+		octr->Shoot[0].flags = flags & 3;
+		
+		octr->Shoot[0].boolNow = 1;	
+	}
+	#endif
 	
 	switch(weaponID)
 	{

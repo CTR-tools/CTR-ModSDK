@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 enum ItemSet
 {
 	ITEMSET_Race1=0,
@@ -47,7 +51,15 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) == 0)
 		{
 			// Choose Itemset based on number of Drivers
-			switch(gGT->numPlyrCurrGame + gGT->numBotsNextGame)
+			int mode = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
+			
+			#ifdef USE_ONLINE
+			mode = octr->NumDrivers;
+			if(octr->NumDrivers == 1) mode = 2;
+			if(octr->NumDrivers == 7) mode = 8;
+			#endif
+			
+			switch(mode)
 			{
 				// if boss race
 				case 2:

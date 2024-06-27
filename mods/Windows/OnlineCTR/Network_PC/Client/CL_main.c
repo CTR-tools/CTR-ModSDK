@@ -120,7 +120,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// default, disable cheats
 			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
-				~(0x100000 | 0x80000 | 0x400);
+				~(0x100000 | 0x80000 | 0x400 | 0x400000);
 
 			// odd-numbered index == even-number room
 			// Index 1, 3, 5 -> Room 2, 4, 6
@@ -128,6 +128,17 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				r->special = 0;
 
 			octr->special = r->special;
+
+#if 1
+			// need to print, or compiler optimization throws this all away
+			printf("\nSpecial:%d\n", octr->special);
+
+			// Inf Masks
+			if (octr->special == 2) *(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400;
+
+			// Inf Bombs
+			if (octr->special == 3) *(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400000;
+#endif
 
 			// offset 0x8
 			octr->boolLockedInLap = 0;
@@ -149,9 +160,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			struct CG_MessageName m = { 0 };
 			m.type = CG_NAME;
-			m.size = sizeof(struct CG_MessageName);
 			memcpy(&m.name[0], &name[0], 0xC);
-			sendToHostReliable(&m, m.size);
+			sendToHostReliable(&m, sizeof(struct CG_MessageName));
 
 			// choose to get host menu or guest menu
 			octr->CurrState = LOBBY_ASSIGN_ROLE;
@@ -318,6 +328,30 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			angle &= 0xfff;
 
 			*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
+
+			// keep setting to 200,
+			// and if !boolReserves, let it fall to zero
+			if (r->boolReserves)
+				*(short*)&pBuf[psxPtr + 0x3E2] = 200;
+
+			*(short*)&pBuf[psxPtr + 0x30] = r->wumpa;
+
+			break;
+		}
+
+		case SG_WEAPON:
+		{
+			struct SG_MessageWeapon* r = recvBuf;
+
+			int clientID = r->clientID;
+			if (clientID == octr->DriverID) break;
+			if (clientID < octr->DriverID) slot = clientID + 1;
+			if (clientID > octr->DriverID) slot = clientID;
+
+			octr->Shoot[slot].boolNow = 1;
+			octr->Shoot[slot].Weapon = r->weapon;
+			octr->Shoot[slot].boolJuiced = r->juiced;
+			octr->Shoot[slot].flags = r->flags;
 
 			break;
 		}
@@ -744,13 +778,12 @@ void StatePC_Launch_PickRoom()
 	{
 		countFrame = 0;
 
-		// send junk data, to trigger server response
+		// send junk data,
+		// this triggers server response
 		struct CG_MessageRoom mr;
 		mr.type = CG_JOINROOM;
 		mr.room = 0xFF;
-		mr.size = sizeof(struct CG_MessageRoom);
-
-		sendToHostReliable(&mr, mr.size);
+		sendToHostReliable(&mr, sizeof(struct CG_MessageRoom));
 	}
 
 	// wait for room to be chosen
@@ -769,9 +802,7 @@ void StatePC_Launch_PickRoom()
 	struct CG_MessageRoom mr;
 	mr.type = CG_JOINROOM;
 	mr.room = octr->serverRoom;
-	mr.size = sizeof(struct CG_MessageRoom);
-
-	sendToHostReliable(&mr, mr.size);
+	sendToHostReliable(&mr, sizeof(struct CG_MessageRoom));
 }
 
 void StatePC_Lobby_AssignRole()
@@ -794,7 +825,6 @@ void StatePC_Lobby_HostTrackPick()
 
 	struct CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
-	mt.size = sizeof(struct CG_MessageTrack);
 
 	mt.trackID = octr->levelID;
 	mt.lapID = octr->lapID;
@@ -810,7 +840,7 @@ void StatePC_Lobby_HostTrackPick()
 	// sdata->gGT->numLaps
 	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 
-	sendToHostReliable(&mt, mt.size);
+	sendToHostReliable(&mt, sizeof(struct CG_MessageTrack));
 
 	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
@@ -832,7 +862,6 @@ void StatePC_Lobby_CharacterPick()
 
 	struct CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
-	mc.size = sizeof(struct CG_MessageCharacter);
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
@@ -846,7 +875,7 @@ void StatePC_Lobby_CharacterPick()
 		prev_characterID = mc.characterID;
 		prev_boolLockedIn = mc.boolLockedIn;
 
-		sendToHostReliable(&mc, mc.size);
+		sendToHostReliable(&mc, sizeof(struct CG_MessageCharacter));
 	}
 	
 	if (mc.boolLockedIn == 1) octr->CurrState = LOBBY_WAIT_FOR_LOADING;
@@ -876,7 +905,6 @@ void SendEverything()
 {
 	struct CG_EverythingKart cg = { 0 };
 	cg.type = CG_RACEDATA;
-	cg.size = sizeof(struct CG_EverythingKart);
 
 	// === Buttons ===
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
@@ -911,7 +939,31 @@ void SendEverything()
 	cg.kartRot1 = angleBit5;
 	cg.kartRot2 = angleTop8;
 
-	sendToHostUnreliable(&cg, cg.size);
+	char wumpa = *(unsigned char*)&pBuf[psxPtr + 0x30];
+	cg.wumpa = wumpa;
+
+	// must be read as unsigned, even though game uses signed,
+	// has to do with infinite reserves when the number is negative
+	unsigned short reserves = *(unsigned short*)&pBuf[psxPtr + 0x3E2];
+	cg.boolReserves = (reserves > 200);
+
+	// TO DO: No Fire Level yet
+
+	sendToHostUnreliable(&cg, sizeof(struct CG_EverythingKart));
+
+	if (octr->Shoot[0].boolNow == 1)
+	{
+		octr->Shoot[0].boolNow = 0;
+
+		struct CG_MessageWeapon w = { 0 };
+
+		w.type = CG_WEAPON;
+		w.weapon = octr->Shoot[0].Weapon;
+		w.juiced = octr->Shoot[0].boolJuiced;
+		w.flags = octr->Shoot[0].flags;
+
+		sendToHostReliable(&w, sizeof(struct CG_MessageWeapon));
+	}
 }
 
 void StatePC_Game_WaitForRace()
@@ -934,9 +986,7 @@ void StatePC_Game_WaitForRace()
 
 		struct CG_Header cg = { 0 };
 		cg.type = CG_STARTRACE;
-		cg.size = sizeof(struct CG_Header);
-
-		sendToHostReliable(&cg, cg.size);
+		sendToHostReliable(&cg, sizeof(struct CG_Header));
 	}
 
 	SendEverything();
@@ -947,6 +997,8 @@ void StatePC_Game_StartRace()
 	ProcessNewMessages();
 	SendEverything();
 
+	// not using this special event
+	#if 0
 	int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
@@ -954,6 +1006,7 @@ void StatePC_Game_StartRace()
 	if(octr->special == 3)
 		if(gGT_levelID < 18)
 			*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
+	#endif
 }
 
 #include <time.h>
@@ -971,11 +1024,10 @@ void StatePC_Game_EndRace()
 
 		struct CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
-		cg.size = sizeof(struct CG_MessageEndRace);
 
 		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
 
-		sendToHostReliable(&cg, cg.size);
+		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
 
 		// end race for yourself
 		octr->RaceEnd[octr->numDriversEnded].slot = 0;

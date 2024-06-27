@@ -345,12 +345,12 @@ void PrintCharacterStats()
 
 	if(octr->special == 2)
 	{
-		title = "Wednesday Max Stats";
+		title = "Wednesday Inf Masks";
 	}
 
 	if(octr->special == 3)
 	{
-		title = "Friday Demo Cam";
+		title = "Friday Inf Bombs";
 	}
 
 	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);

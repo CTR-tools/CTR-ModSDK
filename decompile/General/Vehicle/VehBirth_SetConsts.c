@@ -17,9 +17,12 @@ void DECOMP_VehBirth_SetConsts(struct Driver* driver)
 		data.MetaDataCharacters
 			[data.characterIDs[driver->driverID]].engineID;
 
-	#ifdef USE_ONLINE
-	// Wednesday max stats
-	if(octr->special == 2) engineID = 4;
+	// Not using this special event
+	#if 0
+		#ifdef USE_ONLINE
+		// Wednesday max stats
+		if(octr->special == 2) engineID = 4;
+		#endif
 	#endif
 
 	for(i = 0; i < 65; i++)
