@@ -2,180 +2,116 @@
 
 // at bottom of file
 #ifdef USE_ONLINE
-extern unsigned int DrawSpeedBG_Colors[11];
-extern short speedometerBG_vertData[108];
+extern const Color DrawSpeedBG_Colors[11];
+extern const Point speedometerData[2][22];
 #else
-extern unsigned short DrawSpeedBG_Colors[6*2];
+extern const Color DrawSpeedBG_Colors[7];
 #endif
 
 // speedometer background
 void DECOMP_UI_DrawSpeedBG(void)
 {
-  struct GameTracker* gGT;
-  u_int color_gradient0, color_gradient1;
-  u_long* ot;
-  POLY_G4 *p;
-  short* vertData;
-  short* upperHalf;
-  struct DB* backDB;
-  int i, numColors, offset;
-
-  gGT = sdata->gGT;
-
   #ifdef USE_ONLINE
-  vertData = &speedometerBG_vertData;
-  upperHalf = &vertData[0];
+  Point * vertexes = &speedometerData[0];
+  Point * vertexesExtLine = &speedometerData[1];
+  int pointCount = sizeof(speedometerData) / (sizeof(Point) * 2);
+  const short xOffset = 453;
   #else
-  vertData = &data.speedometerBG_vertData;
-  upperHalf = &vertData[sizeof(data.speedometerBG_vertData) / (sizeof(short) * 2)];
+  Point * vertexes = &data.speedometerBG_vertData[0];
+  Point * vertexesExtLine = &data.speedometerBG_vertData[1];
+  int pointCount = sizeof(data.speedometerBG_vertData) / (sizeof(Point) * 2);
+  const short xOffset = 480;
   #endif
-  backDB = gGT->backBuffer;
+  const short yOffset = 190;
 
-  #ifdef USE_ONLINE
-  numColors = 10;
-  #else
-  numColors = 6;
-  #endif
-  #ifdef USE_ONLINE
-  offset = 0x1C5;
-  #else
-  offset = 0x1e0;
-  #endif
-  for (i = 0; i < numColors + 1; i++)
+  /* Draw the horizontal lines - they're a bit wider than the speedometer width */
+  for (int i = 0; i < pointCount; i += 2)
   {
-	// white
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){upperHalf[0] + offset, upperHalf[1] + 0xbe},
-		(Point){upperHalf[2] + offset, upperHalf[3] + 0xbe},
-		MakeColor(0xff, 0xff, 0xff),
-		gGT->pushBuffer_UI.ptrOT);
-
-	// black
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){upperHalf[0] + offset + 1, upperHalf[1] + 0xbf},
-		(Point){upperHalf[2] + offset + 1, upperHalf[3] + 0xbf},
-		MakeColor(0, 0, 0),
-		gGT->pushBuffer_UI.ptrOT);
-
-	upperHalf += 4;
+    Point pt[2];
+    pt[0] = MakePoint(vertexesExtLine[i].x + xOffset, vertexesExtLine[i].y + yOffset);
+    pt[1] = MakePoint(vertexesExtLine[i + 1].x + xOffset, vertexesExtLine[i + 1].y + yOffset);
+    DECOMP_CTR_Box_DrawWirePrims(pt[0], pt[1], MakeColor(0xff, 0xff, 0xff), sdata->gGT->pushBuffer_UI.ptrOT);
+    DECOMP_CTR_Box_DrawWirePrims(MakePoint(pt[0].x + 1, pt[0].y + 1), MakePoint(pt[1].x + 1, pt[1].y + 1), MakeColor(0, 0, 0), sdata->gGT->pushBuffer_UI.ptrOT);
   }
 
-  for (i = 0; i < numColors; i++)
+  /* Draw the vertical lines and colors */
+  int colorIndex = 0;
+  for (int i = 0; i < pointCount - 2; i += 2)
   {
-	// white
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){vertData[0] + offset, vertData[1] + 0xbe},
-		(Point){vertData[4] + offset, vertData[5] + 0xbe},
-		MakeColor(0xff, 0xff, 0xff),
-		gGT->pushBuffer_UI.ptrOT);
+    Point pt[4];
+    for (int j = 0; j < 4; j++) {
+      pt[j] = MakePoint(vertexes[i + j].x + xOffset, vertexes[i + j].y + yOffset);
+    }
+    DECOMP_CTR_Box_DrawWirePrims(pt[0], pt[2], MakeColor(0xff, 0xff, 0xff), sdata->gGT->pushBuffer_UI.ptrOT);
+    DECOMP_CTR_Box_DrawWirePrims(pt[1], pt[3], MakeColor(0xff, 0xff, 0xff), sdata->gGT->pushBuffer_UI.ptrOT);
+    DECOMP_CTR_Box_DrawWirePrims(MakePoint(pt[0].x + 1, pt[0].y + 1), MakePoint(pt[2].x + 1, pt[2].y + 1), MakeColor(0, 0, 0), sdata->gGT->pushBuffer_UI.ptrOT);
+    DECOMP_CTR_Box_DrawWirePrims(MakePoint(pt[1].x + 1, pt[1].y + 1), MakePoint(pt[3].x + 1, pt[3].y + 1), MakeColor(0, 0, 0), sdata->gGT->pushBuffer_UI.ptrOT);
 
-	// white
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){vertData[2] + offset, vertData[3] + 0xbe},
-		(Point){vertData[6] + offset, vertData[7] + 0xbe},
-		MakeColor(0xff, 0xff, 0xff),
-		gGT->pushBuffer_UI.ptrOT);
+    PolyG4 * p;
+    GetPrimMem(p);
+    if (p == nullptr) { return; }
 
-	// black
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){vertData[0] + offset + 1, vertData[1] + 0xbf},
-		(Point){vertData[4] + offset + 1, vertData[5] + 0xbf},
-		MakeColor(0, 0, 0),
-		gGT->pushBuffer_UI.ptrOT);
-
-	// black
-    DECOMP_CTR_Box_DrawWirePrims(
-		(Point){vertData[2] + offset + 1, vertData[3] + 0xbf},
-		(Point){vertData[6] + offset + 1, vertData[7] + 0xbf},
-		MakeColor(0, 0, 0),
-		gGT->pushBuffer_UI.ptrOT);
-
-    // reset prim
-    p = backDB->primMem.curr;
-    if (p > (u_long *)backDB->primMem.endMin100)
-		return;
-    backDB->primMem.curr = p + 1;
-
-    #ifdef USE_ONLINE
-    color_gradient0 = DrawSpeedBG_Colors[i + 0];
-    color_gradient1 = DrawSpeedBG_Colors[i + 1];
-    #else
-    color_gradient0 = DrawSpeedBG_Colors[i*2 + 0];
-    color_gradient1 = DrawSpeedBG_Colors[i*2 + 1];
-    #endif
-
-    *(int*)&p->r0 = color_gradient0; // RGB0
-    *(int*)&p->r1 = color_gradient0; // RGB1
-    *(int*)&p->r2 = color_gradient1; // RGB2
-    *(int*)&p->r3 = color_gradient1; // RGB3
-
-    setPolyG4(p);
-    setXY4(p,
-    vertData[0] + offset, vertData[1] + 0xbe,
-    vertData[2] + offset, vertData[3] + 0xbe,
-    vertData[4] + offset, vertData[5] + 0xbe,
-    vertData[6] + offset, vertData[7] + 0xbe);
-
-	// inline AddPrim
-    ot = gGT->pushBuffer_UI.ptrOT;
-    *(int*)p = *ot | 0x8000000;
-    *ot = (u_int)p & 0xffffff;
-
-	vertData += 4;
+    const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .gouraud = 1, .quad = 1 } };
+    ColorCode colorBottom = DrawSpeedBG_Colors[colorIndex];
+    ColorCode colorTop = DrawSpeedBG_Colors[colorIndex + 1];
+    ++colorIndex;
+    for (int j = 0; j < 2; j++)
+    {
+      p->v[j].pos = pt[j];
+      p->v[j].color = colorBottom;
+      p->v[j + 2].pos = pt[j + 2];
+      p->v[j + 2].color = colorTop;
+    }
+    p->gPolyCode = primCode;
+    AddPrimitive(p, sdata->gGT->pushBuffer_UI.ptrOT);
   }
 
-  #ifdef USE_ONLINE
-  vertData = &speedometerBG_vertData;
-  #else
-  vertData = &data.speedometerBG_vertData;
-  #endif
-
-  for (i = 0; i < numColors; i++)
+  typedef struct TPage_PolyG3
   {
-    p = backDB->primMem.curr;
-    if (p > (u_long *)backDB->primMem.endMin100)
-		return;
-    backDB->primMem.curr = p + 1;
+    TPage t;
+		PolyG3 p;
+  } TPage_PolyG3;
 
-    setlen(p, 8);
-    setcode(p, 0xe1);
-    setRGB0(p, 0, 0xa, 0);
-    setRGB1(p, 0, 0, 0);
-    setRGB2(p, 0, 0, 0);
-    setRGB3(p, 0, 0, 0);
-#ifndef REBUILD_PC
-    p->pad0 = 0x32;
-#else
-	p->pad1 = 0x32; // PsyCross numbers 1,2,3 instead of 0,1,2
-#endif
-    setXY4(p, 0, 0,
-    vertData[2] + offset, vertData[3] + 0xbe,
-    vertData[6] + offset, vertData[7] + 0xbe,
-    data.speedometerBG_vertData[0x1a] + offset, data.speedometerBG_vertData[3] + 0xbe);
+  /* Draw transparent background */
+  s16 p2x = vertexes[pointCount - 1].x + xOffset;
+  s16 p2y = vertexes[1].y + yOffset;
+  for (int i = 0; i < pointCount - 2; i += 2)
+  {
+    TPage_PolyG3 * p;
+    GetPrimMem(p);
+    if (p == nullptr) { return; }
 
-	ot = gGT->pushBuffer_UI.ptrOT;
+    p->t.texpage = (Texpage){ .code = 0xE1, .dither = 1 };
+    p->p.tag.self = 0;
 
-	// inline AddPrim
-    *(int*)p = *ot | 0x8000000;
-    *ot = (u_int)p & 0xffffff;
+    Color color = MakeColor(0, 0, 0);
+    const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .gouraud = 1, .semiTransparency = 1 } };
 
-	vertData += 4;
+    for (int j = 0; j < 3; j++) {
+      p->p.v[j].color = color;
+    }
+    p->p.gPolyCode = primCode;
+
+    p->p.v[0].pos.x = vertexes[i + 1].x + xOffset;
+    p->p.v[0].pos.y = vertexes[i + 1].y + yOffset;
+    p->p.v[1].pos.x = vertexes[i + 3].x + xOffset;
+    p->p.v[1].pos.y = vertexes[i + 3].y + yOffset;
+    p->p.v[2].pos.x = p2x;
+    p->p.v[2].pos.y = p2y;
+    AddPrimitive(p, sdata->gGT->pushBuffer_UI.ptrOT);
   }
-  return;
 }
 
 #ifndef USE_ONLINE
-#define SPEEDO_GREEN 0xb500
-#define SPEEDO_YELLOW 0xd1ff
-#define SPEEDO_RED 0xdb
+#define SPEEDO_GREEN MakeColor(0, 0xb5, 0)
+#define SPEEDO_YELLOW MakeColor(0xff, 0xd1, 0)
+#define SPEEDO_RED MakeColor(0xdb, 0, 0)
 
-unsigned short DrawSpeedBG_Colors[6*2] =
+const Color DrawSpeedBG_Colors[7] =
 {
 	SPEEDO_GREEN, SPEEDO_GREEN,
 	SPEEDO_GREEN, SPEEDO_GREEN,
-	SPEEDO_GREEN, SPEEDO_YELLOW,
 	SPEEDO_YELLOW, SPEEDO_RED,
-	SPEEDO_RED, SPEEDO_RED,
-	SPEEDO_RED, SPEEDO_RED
+	SPEEDO_RED,
 };
 #endif
