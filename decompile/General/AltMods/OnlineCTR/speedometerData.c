@@ -1,34 +1,47 @@
 #include <common.h>
 
-#define SPEEDO_GREEN 0x00b500
-#define SPEEDO_YELLOW 0x00b5db
-#define SPEEDO_RED 0x0000db
-#define SPEEDO_PINK 0xcb00d8
-#define SPEEDO_PURPLE 0xff21a4
-#define SPEEDO_BLUE 0xf31818
-unsigned int DrawSpeedBG_Colors[11] =
+#define SPEEDO_GREEN MakeColor(0, 0xb5, 0)
+#define SPEEDO_YELLOW MakeColor(0xdb, 0xb5, 0)
+#define SPEEDO_RED MakeColor(0xdb, 0, 0)
+#define SPEEDO_PINK MakeColor(0xd8, 0, 0xcb)
+#define SPEEDO_PURPLE MakeColor(0xa4, 0x21, 0xff)
+#define SPEEDO_BLUE MakeColor(0x18, 0x18, 0xf3)
+const Color DrawSpeedBG_Colors[11] =
 {
   SPEEDO_GREEN, SPEEDO_GREEN,
   SPEEDO_GREEN, SPEEDO_YELLOW,
   SPEEDO_RED, SPEEDO_RED,
   SPEEDO_RED, SPEEDO_PINK,
   SPEEDO_PURPLE, SPEEDO_PURPLE,
-  SPEEDO_BLUE
+  SPEEDO_BLUE,
 };
-short speedometerBG_vertData[108] =
+
+const Point speedometerData[2][22] =
 {
-  WIDE_34(-65), 16, WIDE_34(-54), 13, WIDE_34(-70), 0, WIDE_34(-58), 0,
-  WIDE_34(-65), -16, WIDE_34(-54), -13, WIDE_34(-50), -29, WIDE_34(-42), -24,
-  WIDE_34(-25), -39, WIDE_34(-21), -32, WIDE_34(0), -42, WIDE_34(0), -35,
-  WIDE_34(25), -39, WIDE_34(21), -32, WIDE_34(50), -29, WIDE_34(42), -24,
-  WIDE_34(65), -16, WIDE_34(54), -13, WIDE_34(70), 0,    WIDE_34(58), 0,
-  WIDE_34(65), 16, WIDE_34(54), 13, WIDE_34(25), 39, WIDE_34(21), 32,
-  WIDE_34(50), 29, WIDE_34(42), 24, WIDE_34(-65), 16, WIDE_34(-48), 11,
-  WIDE_34(-70), 0, WIDE_34(-51), 0, WIDE_34(-65), -16, WIDE_34(-48), -11,
-  WIDE_34(-50), -29, WIDE_34(-37), -21, WIDE_34(-25), -39, WIDE_34(-18), -29,
-  WIDE_34(0), -42, WIDE_34(0), -31, WIDE_34(25), -39, WIDE_34(18), -29,
-  WIDE_34(50), -29, WIDE_34(37), -21,    WIDE_34(65), -16, WIDE_34(48), -11,
-  WIDE_34(70), 0, WIDE_34(51), 0, WIDE_34(65), 16, WIDE_34(48), 11,
-  WIDE_34(50), 29, WIDE_34(37), 21, WIDE_34(25), 39, WIDE_34(37), 29,
-  WIDE_34(25), -39, WIDE_34(18), -29,
-};
+		{
+			{ .x = WIDE_34(-65), .y = 16 },  { .x = WIDE_34(-54), .y = 13 },
+			{ .x = WIDE_34(-70), .y = 0 },   { .x = WIDE_34(-58), .y = 0 },
+			{ .x = WIDE_34(-65), .y = -16 }, { .x = WIDE_34(-54), .y = -13 },
+			{ .x = WIDE_34(-50), .y = -29 }, { .x = WIDE_34(-42), .y = -24 },
+			{ .x = WIDE_34(-25), .y = -39 }, { .x = WIDE_34(-21), .y = -32 },
+			{ .x = WIDE_34(0), .y = -42 },   { .x = WIDE_34(0), .y = -35 },
+			{ .x = WIDE_34(25), .y = -39 },  { .x = WIDE_34(21), .y = -32 },
+      { .x = WIDE_34(50), .y = -29 }, { .x = WIDE_34(42), .y = -24 },
+      { .x = WIDE_34(65), .y = -16 }, { .x = WIDE_34(54), .y = -13 },
+      { .x = WIDE_34(70), .y = 0 },   { .x = WIDE_34(58), .y = 0 },
+      { .x = WIDE_34(65), .y = 16 },  { .x = WIDE_34(54), .y = 13 },
+		},
+		{
+			{ .x = WIDE_34(-65), .y = 16 },  { .x = WIDE_34(-48), .y = 11 },
+			{ .x = WIDE_34(-70), .y = 0 },   { .x = WIDE_34(-51), .y = 0 },
+			{ .x = WIDE_34(-65), .y = -16 }, { .x = WIDE_34(-48), .y = -11 },
+			{ .x = WIDE_34(-50), .y = -29 }, { .x = WIDE_34(-37), .y = -21 },
+			{ .x = WIDE_34(-25), .y = -39 }, { .x = WIDE_34(-18), .y = -29 },
+			{ .x = WIDE_34(0), .y = -42 },   { .x = WIDE_34(0), .y = -31 },
+			{ .x = WIDE_34(25), .y = -39 },  { .x = WIDE_34(18), .y = -29 },
+      { .x = WIDE_34(50), .y = -29 }, { .x = WIDE_34(37), .y = -21 },
+      { .x = WIDE_34(65), .y = -16 }, { .x = WIDE_34(48), .y = -11 },
+      { .x = WIDE_34(70), .y = 0 },   { .x = WIDE_34(51), .y = 0 },
+      { .x = WIDE_34(65), .y = 16 },  { .x = WIDE_34(48), .y = 11 },
+		},
+	};
