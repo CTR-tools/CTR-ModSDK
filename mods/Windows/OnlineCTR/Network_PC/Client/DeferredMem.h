@@ -34,15 +34,20 @@ class ps1ptr
 	/// many locations were changed such that for every block of 8 bytes within the structure, at least 1 byte within that
 	/// segment was changed. In this case, the number of API calls is the same as if you just committed the whole structure.
 	/// (which is no worse then what is currently being done).
+	///
+	/// If it's possible to enable a nagle-esq algorithm on the sockets, that might be benifical (keep in mind traffic is
+	/// from CLIENT.EXE -> localhost, so latency should be sub-millisecond probably).
 	/// </summary>
 
 public:
 	typedef std::shared_ptr<T> ptrtype;
 private:
 	unsigned int address;
+	bool volat;
 	char* buf;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf
 public:
+	ps1ptr() { } //for static init only, do not actually use this.
 	/// <summary>
 	/// Reads the specified address from PS1 (emulator RAM), copies it, and creates a shared_ptr.
 	///
@@ -52,7 +57,7 @@ public:
 	/// When this object falls out of scope, any changes made will *not* be automatically committed.
 	/// Do it yourself.
 	/// </summary>
-	ps1ptr(unsigned int addr) : address(addr)
+	ps1ptr(unsigned int addr, bool volatileAccess = false) : address(addr), volat(volatileAccess)
 	{
 		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
 		readMemorySegment(address, sizeof(T), buf);
@@ -79,6 +84,8 @@ public:
 	}
 	ptrtype get()
 	{
+		if (volat) //similar in concept to volatile memory, but after your usage you still have to manually commit.
+			refresh();
 		return bufferedVal;
 	}
 };
@@ -88,6 +95,7 @@ class ps1mem
 private:
 	unsigned int address;
 public:
+	ps1mem() { } //for static init only, do not actually use this.
 	ps1mem(unsigned int addr) : address(addr) { }
 
 	/// <summary>
