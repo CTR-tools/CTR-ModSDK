@@ -223,7 +223,7 @@ struct SG_MessageClientStatus
 	unsigned char numClientsTotal : 4;
 
 	// special event
-	unsigned short special : 4;
+	unsigned char special : 4;
 };
 
 // get name from any client
