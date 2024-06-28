@@ -22,7 +22,7 @@
 //         Packet size (the literal value 10 occupies these 4 bytes) (9 bytes once the ds bug is fixed)
 //         |           IPC Message Event (1 byte)
 //         |           |  Address (4 bytes)
-//         |           |  |           Empty (duckstation has a bug, and an empty byte at the end is required).
+//         |           |  |           Empty (duckstation has a bug, and an unused byte at the end is required).
 //         |           |  |           |
 // format: XX XX XX XX YY ZZ ZZ ZZ ZZ ??
 //         Packet size (the literal value 13 occupies this 1 byte).
@@ -30,6 +30,17 @@
 //         |  |           Memory at that address
 //         |  |           |
 // reply:  XX YY YY YY YY ZZ ZZ ZZ ZZ ZZ ZZ ZZ ZZ
+
+//I believe this is how it's actually formatted (at least for DSPINEMsgWrite64):
+//         Packet size (the literal value 18 occupies these 4 bytes) (17 bytes once the ds bug is fixed)
+//         |           IPC Message Event (1 byte)
+//         |           |  Address (4 bytes)
+//         |           |  |           The value to write to memory
+//         |           |  |           |                       Empty (duckstation has a bug, and an unused byte at the end is required).
+//         |           |  |           |                       |
+// format: VV VV VV VV WW XX XX XX XX YY YY YY YY YY YY YY YY ??
+//
+// reply:  
 
 #define DSPINEMsgRead8 0            /**< Read 8 bit value to memory. */
 #define DSPINEMsgRead16 1           /**< Read 16 bit value to memory. */
