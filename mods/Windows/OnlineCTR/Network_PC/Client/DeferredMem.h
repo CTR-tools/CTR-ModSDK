@@ -19,7 +19,7 @@
 
 void defMemInit();
 void readMemorySegment(unsigned int addr, size_t len, char* buf);
-void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
+void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blocking = false*/);
 void recvThread();
 #if _WIN64 //windows
 SOCKET initSocket();
@@ -64,10 +64,9 @@ public:
 	/// However, an object in this state will always commit it's entire buffer to ps1 memory every
 	/// time it is commited, so make sure *all* of the memory this ps1ptr represents is set as you intend.</param>
 	/// <param name="volatileAccess">If true, will automatically refresh() for you upon every call to get()</param>
-	ps1ptr(unsigned int addr, bool doNotPrefetch = false, bool volatileAccess = false) : address(addr), volat(volatileAccess)
+	ps1ptr(unsigned int addr, bool doNotPrefetch = false, bool volatileAccess = false) : address(addr), didNotPrefetch(doNotPrefetch), volat(volatileAccess)
 	{
-		didNotPrefetch = doNotPrefetch;
-		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
+		buf = new char[sizeof(T)];
 		originalBuf = new char[sizeof(T)];
 		if (!doNotPrefetch)
 			readMemorySegment(address, sizeof(T), buf);
@@ -86,7 +85,7 @@ public:
 	/// <summary>
 	/// Writes the memory this ps1ptr represents back to ps1 memory.
 	/// </summary>
-	void commit(bool blocking = false)
+	void commit(/*bool blocking = false*/)
 	{
 		size_t whole = sizeof(T) - (sizeof(T) % 8);
 		size_t rem = sizeof(T) - whole;
@@ -97,12 +96,12 @@ public:
 				//TODO: instead of writing the dirty memory,
 				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
 				//*then* writeMemorySegment() that entire chunk.
-				writeMemorySegment(address + i, 8, buf + i, blocking);
+				writeMemorySegment(address + i, 8, buf + i/*, blocking*/);
 			}
 		}
 		if (rem != 0 && (memcmp(buf + whole, originalBuf + whole, rem) != 0 || didNotPrefetch))
 		{
-			writeMemorySegment(address + whole, rem, buf + whole, blocking);
+			writeMemorySegment(address + whole, rem, buf + whole/*, blocking*/);
 		}
 		memcpy(originalBuf, buf, sizeof(T));
 		didNotPrefetch = false; //if it was true, well, we just overwrote *all* the mem this ps1ptr represents,
@@ -117,6 +116,16 @@ public:
 		readMemorySegment(address, sizeof(T), buf); //change the underlying data of the shared_ptr
 		didNotPrefetch = false;
 		memcpy(originalBuf, buf, sizeof(T));
+	}
+	void partialRefresh(unsigned int offset, size_t length)
+	{
+		if (offset + length > sizeof(T))
+		{
+			printf("Trying to partial refresh beyond the buffer length exit(18)!");
+			exit(18);
+		}
+		readMemorySegment(address + offset, length, buf); //change the underlying data of the shared_ptr
+		memcpy(originalBuf + offset, buf + offset, length);
 	}
 	ptrtype get()
 	{

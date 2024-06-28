@@ -21,17 +21,6 @@
 #include <enet/enet.h>
 #include "DeferredMem.h"
 
-//TODO:
-/*
-* - finish all the red errors
-* - go through the code and for each ps1ptr make sure there aren't any functions
-* in-between where they're created and where they're used that could modify that
-* memory, and if so, put a refresh after the function calls, or move their creations
-* as close as possible to their usages.
-* - go through the code and for each ps1ptr that's written to, make sure it's committed.
-* - switch everthing that should be a reinterpret_cast into one (unsigned int addrs)
-*/
-
 ps1mem pBuf = ps1mem{};
 ps1ptr<OnlineCTR> octr = ps1ptr<OnlineCTR>{};
 //char* OGpBuf;
@@ -285,7 +274,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	case SG_RACEDATA:
 	{
 		// wait for drivers to be initialized
-		octr.refresh();
+		// since this happens every frame, it's worth hyper-optimizing, hence the atypical refresh
+		int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
+		octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);
+		//NOTE: as of writing, this switch case *only uses* these members of octr
+		// * CurrState
+		// * DriverID
+		//If at any point this changes, you must update the .partialRefresh to account for it.
 		if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
 			break;
 
@@ -778,8 +773,8 @@ void StatePC_Launch_PickServer()
 
 	if (clientHost == NULL)
 	{
-		fprintf(stderr, "Error: Failed to create an ENet client host!\n");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: Failed to create an ENet client host! exit(3)\n");
+		exit(3);
 	}
 
 	if (serverPeer != 0)
@@ -792,8 +787,8 @@ void StatePC_Launch_PickServer()
 
 	if (serverPeer == NULL)
 	{
-		fprintf(stderr, "Error: No available peers for initiating an ENet connection!\n");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: No available peers for initiating an ENet connection! exit(4)\n");
+		exit(4);
 	}
 
 	//fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);

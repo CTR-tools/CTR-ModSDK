@@ -64,14 +64,19 @@ enum ClientState
 // 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
+	// NOTE: PINE support changed this structure a bit, it's important that CurrState and DriverID are the first
+	// two members of this class, and that there are no other members between them. If you absolutely *need* to
+	// change this, then know that you'll also need to fix
+	// Client.exe/CL_main.cpp/ProcessReceiveEvent(ENetPacket* packet)/switch case "SG_RACEDATA"
+	// (see comment on .partialRefresh())
 	// 0x0
 	int CurrState;
 
 	// 0x4
+	unsigned char DriverID;
 	char PageNumber; // allow negative
 	unsigned char CountPressX;
 	unsigned char NumDrivers;
-	unsigned char DriverID;
 
 	// 0x8
 	unsigned char boolLockedInLap;

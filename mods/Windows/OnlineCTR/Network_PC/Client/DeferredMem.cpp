@@ -11,7 +11,8 @@
 #include "DeferredMem.h"
 #include <atomic>
 #include <thread>
-#include <mutex>
+#include <semaphore>
+#include <condition_variable>
 
 #if _WIN64 //windows
 SOCKET dspineSocket;
@@ -20,9 +21,11 @@ SOCKET dspineSocket;
 //todo:
 //declare a variable of whatever type a posix socket is.
 #endif
-std::atomic<int> outstandingReads = 0;
+//std::atomic<int> outstandingReads = std::atomic<int>{ 0 }; //this is covered by mutex
+int outstandingReads = 0; //this is covered by mutex
 std::thread recvWorker;
 std::mutex recvMutex;
+std::condition_variable recvCond;
 
 void defMemInit()
 {
@@ -127,9 +130,14 @@ void recvThread()
 	constexpr unsigned int recvBufLen = 5;
 	char recieveBuffer[recvBufLen];
 
-	while (true)
+	while (true) //todo: std::condition_variable or similar
 	{
-		recvMutex.lock();
+		//.notify_all() is necessary here because if writeMemorySegment().notify_all() is called and neither
+		//recvThread or readMemorySegment() is waiting, then nothing can come around to re-notify, resulting
+		//in deadlock. This .notify_all will wake up readMemorySegment().wait() if it's waiting.
+		recvCond.notify_all();
+		std::unique_lock<std::mutex> um{ recvMutex };
+		recvCond.wait(um, [] { return outstandingReads > 0; });
 		while (outstandingReads > 0)
 		{
 #if _WIN64 //windows
@@ -139,13 +147,16 @@ void recvThread()
 			WSAPoll(&fdarr, 1, -1);
 			int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
 			if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
+			{
 				outstandingReads--; //very good
+				//printf("recvThread dec %d\n", outstandingReads.load());
+			}
 			else 
 			{
 				if (recvLen < recvBufLen)
 					printf("recv returned less than required buffer length ");
-				printf("recv AAA failed: %d\n", WSAGetLastError());
-				exit(-69420); //could be caused by many things.
+				printf("recv failed exit(5): %d\n", WSAGetLastError());
+				exit(5); //could be caused by many things.
 			}
 #else //assume posix
 #error todo...
@@ -159,13 +170,20 @@ void recvThread()
 			//assume that the socket connection is bad and reset and/or close the client.
 #endif
 		}
-		recvMutex.unlock();
+
 	}
 }
 
 void readMemorySegment(unsigned int addr, size_t len, char* buf)
 {
-	recvMutex.lock();
+	//.notify_all() is necessary here because if writeMemorySegment().notify_all() is called and neither
+	//recvThread or readMemorySegment() is waiting, then nothing can come around to re-notify, resulting
+	//in deadlock. This .notify_all will wake up recvThread().wait() if it's waiting.
+	recvCond.notify_all();
+	std::unique_lock<std::mutex> um{ recvMutex };
+	recvCond.wait(um, [] { return outstandingReads == 0; });
+	/*if (outstandingReads != 0)
+		printf("BAD");*/
 	constexpr unsigned int sendBufLen = 10;
 	constexpr unsigned int recvBufLen = 13;
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
@@ -193,10 +211,11 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		int res = send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize
 		if (res != sendBufLen)
 		{
+			printf("send() failed exit(6/7)!");
 			if (res == SOCKET_ERROR)
-				exit(-69420);
+				exit(6);
 			else
-				exit(-69420); //partial send???
+				exit(7); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -218,10 +237,14 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		{
 			if (recvLen < recvBufLen)
 				printf("recv returned less than required buffer length "); //if this starts becoming a problem then we need recv in a buffer loop.
-			printf("recv BBB failed: %d\n", WSAGetLastError());
+			printf("recv failed exit(8): %d\n", WSAGetLastError());
+			exit(8);
 		}
 		else
-			exit(-69420); //could be caused by many things.
+		{
+			printf("recv() failed exit(9)!");
+			exit(9); //could be caused by many things.
+		}
 #else //assume posix
 #error todo...
 		//posix poll/select until at least recvBufLen worth of data is ready
@@ -236,13 +259,11 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 			if (i + c < len)
 				buf[i + c] = recieveBuffer[c + 5];
 	}
-	recvMutex.unlock();
 }
 
-void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
+void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blocking*/)
 {
-	if (blocking)
-		recvMutex.lock();
+	std::lock_guard<std::mutex> lock{ recvMutex };
 	//This macro accounts & compensates for a bug present in duckstation that was fixed in
 	//https://github.com/stenzek/duckstation/pull/3230 versions of duckstation older than
 	//this will not function with this client without this option set to 1.
@@ -278,14 +299,16 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		sendBuffer[15] = buf[i + 6];
 		sendBuffer[16] = buf[i + 7];
 		outstandingReads++;
+		//printf("write inc %d\n", outstandingReads.load());
 #ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sendBufLen, 0);
 		if (res != sendBufLen)
 		{
+			printf("send() failed exit(10/11)!");
 			if (res == SOCKET_ERROR)
-				exit(-69420);
+				exit(10);
 			else
-				exit(-69420); //partial send???
+				exit(11); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -311,16 +334,18 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		sendBuffer[11] = buf[i + whole + 2];
 		sendBuffer[12] = buf[i + whole + 3];
 		outstandingReads++; //this line must come before send or race condition
+		//printf("write inc %d\n", outstandingReads.load());
 		offsetaddr += 4;
 		i += 4;
 #ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
+			printf("send() failed exit(12/13)!");
 			if (res == SOCKET_ERROR)
-				exit(-69420);
+				exit(12);
 			else
-				exit(-69420); //partial send???
+				exit(13); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -342,16 +367,18 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		sendBuffer[9] = buf[i + whole + 0];
 		sendBuffer[10] = buf[i + whole + 1];
 		outstandingReads++; //this line must come before send or race condition
+		//printf("write inc %d\n", outstandingReads.load());
 		offsetaddr += 2;
 		i += 2;
 #ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
+			printf("send() failed exit(14/15)!");
 			if (res == SOCKET_ERROR)
-				exit(-69420);
+				exit(14);
 			else
-				exit(-69420); //partial send???
+				exit(15); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -372,24 +399,25 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
 		sendBuffer[9] = buf[i + whole + 0];
 		outstandingReads++; //this line must come before send or race condition
+		//printf("write inc %d\n", outstandingReads.load());
 		offsetaddr += 1;
 		i += 1;
 #ifdef _WIN64 //windows
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
+			printf("send() failed exit(16/17)!");
 			if (res == SOCKET_ERROR)
-				exit(-69420);
+				exit(16);
 			else
-				exit(-69420); //partial send???
+				exit(17); //partial send???
 		}
 #else //assume posix
 #error todo...
 		//posix non-blocking send of size sz
 #endif
 	}
-	if (blocking)
-		recvMutex.unlock();
+	recvCond.notify_all();
 }
 
 //void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8
