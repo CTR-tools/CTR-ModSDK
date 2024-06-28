@@ -1744,7 +1744,7 @@ void RenderSubmit(struct GameTracker* gGT)
 
 	void* ot = &gGT->pushBuffer[0].ptrOT[0x3ff];
 
-#ifdef USE_ONLINE
+#if 0 && defined(USE_ONLINE)
 	void OnlineMirrorMode(u_long* ot);
 	OnlineMirrorMode(ot);
 #endif

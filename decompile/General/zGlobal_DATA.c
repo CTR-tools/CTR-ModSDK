@@ -1718,9 +1718,9 @@ struct Data data =
 	.font_charPixWidth =
 	{
 		0,	// DEBUG (removed)
-		WIDE_PICK(17, 13),	// BIG
-		WIDE_PICK(13, 10),	// SMALL
-		WIDE_PICK(14, 11),	// CREDITS
+		WIDE_34(17),	// BIG
+		WIDE_34(13),	// SMALL
+		WIDE_34(14),	// CREDITS
 	},
 
 	#if BUILD >= UsaRetail
@@ -1736,9 +1736,9 @@ struct Data data =
 	.font_puncPixWidth =
 	{
 		0,	// DEBUG (removed)
-		WIDE_PICK(11, 8),	// BIG
-		WIDE_PICK(7, 5),	// SMALL
-		WIDE_PICK(11, 8),	// CREDITS
+		WIDE_34(11),	// BIG
+		WIDE_34(7),	// SMALL
+		WIDE_34(11),	// CREDITS
 	},
 
 	// starts at ascii 0x21 '!'
