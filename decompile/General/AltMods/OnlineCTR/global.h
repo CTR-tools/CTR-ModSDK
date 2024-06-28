@@ -25,16 +25,6 @@
 //#define true				1
 //#define false				0
 
-//#define DONT_SHOW_NAME		0
-//#define SHOW_NAME			1
-//
-//#define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
-//#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
-//#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
-
-//#define true				            1
-//#define false				            0
-
 #define DONT_SHOW_NAME		            0
 #define SHOW_NAME			            1
 
@@ -64,11 +54,6 @@ enum ClientState
 // 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
-	// NOTE: PINE support changed this structure a bit, it's important that CurrState and DriverID are the first
-	// two members of this class, and that there are no other members between them. If you absolutely *need* to
-	// change this, then know that you'll also need to fix
-	// Client.exe/CL_main.cpp/ProcessReceiveEvent(ENetPacket* packet)/switch case "SG_RACEDATA"
-	// (see comment on .partialRefresh())
 	// 0x0
 	int CurrState;
 

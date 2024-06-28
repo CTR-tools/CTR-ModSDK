@@ -82,7 +82,6 @@ void ThreadFunc(struct Thread* t)
 		(i == -1) &&
 		(octr->CurrState > LAUNCH_ENTER_PID);
 
-		
 	// if client closed, or server disconnected
 	if(boolCloseClient || (octr->CurrState < 0))
 	{
