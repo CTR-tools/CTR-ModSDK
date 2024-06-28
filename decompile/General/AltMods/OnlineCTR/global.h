@@ -25,12 +25,29 @@
 //#define true				1
 //#define false				0
 
-#define DONT_SHOW_NAME		0
-#define SHOW_NAME			1
+//#define DONT_SHOW_NAME		0
+//#define SHOW_NAME			1
+//
+//#define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
+//#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
+//#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
 
-#define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
-#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
-#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
+//#define true				            1
+//#define false				            0
+
+#define DONT_SHOW_NAME		            0
+#define SHOW_NAME			            1
+
+#define DEFAULT_IP			            "127.0.0.1" // the default IP address we want to use for private lobbies
+#define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
+#define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
+
+ // 2 seconds to be very tolerant on client
+#ifdef USE_60FPS
+#define DISCONNECT_AT_UNSYNCED_FRAMES   120
+#else
+#define DISCONNECT_AT_UNSYNCED_FRAMES   60
+#endif
 
 enum ClientState
 {
@@ -111,6 +128,7 @@ struct OnlineCTR
 	int ver_pc;
 	int ver_server;
 
+<<<<<<< HEAD
 	// slot[0] is for game to tell client to send
 	// slot[1+] is for client to tell game to shoot
 	struct
@@ -120,6 +138,10 @@ struct OnlineCTR
 		unsigned char flags;
 		unsigned char boolNow;
 	} Shoot[8];
+=======
+	// Frames that the client didn't update
+	int frames_unsynced;
+>>>>>>> 8b767009 (applying PR #145 seems to have fixed a LOT of the issues)
 };
 
 #define NUM_PLAYERS 8
