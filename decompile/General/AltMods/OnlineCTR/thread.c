@@ -3,27 +3,27 @@
 
 void (*funcs[NUM_STATES]) () =
 {
-	StatePS1_Launch_EnterPID,
-	StatePS1_Launch_PickServer,
-	StatePS1_Launch_PickRoom,
-	StatePS1_Launch_Error,
-	StatePS1_Lobby_AssignRole,
-	StatePS1_Lobby_HostTrackPick,
-	StatePS1_Lobby_GuestTrackWait,
-	StatePS1_Lobby_CharacterPick,
-	StatePS1_Lobby_WaitForLoading,
-	StatePS1_Lobby_StartLoading,
-	StatePS1_Game_WaitForRace,
-	StatePS1_Game_StartRace,
-	StatePS1_Game_EndRace
+    StatePS1_Launch_EnterPID,
+    StatePS1_Launch_PickServer,
+    StatePS1_Launch_PickRoom,
+    StatePS1_Launch_Error,
+    StatePS1_Lobby_AssignRole,
+    StatePS1_Lobby_HostTrackPick,
+    StatePS1_Lobby_GuestTrackWait,
+    StatePS1_Lobby_CharacterPick,
+    StatePS1_Lobby_WaitForLoading,
+    StatePS1_Lobby_StartLoading,
+    StatePS1_Game_WaitForRace,
+    StatePS1_Game_StartRace,
+    StatePS1_Game_EndRace
 };
 
 RECT endRaceRECT =
 {
-	.x = 8,
-	.y = 8,
-	.w = 0x200-0x20,
-	.h = 0xc8,
+    .x = 8,
+    .y = 8,
+    .w = 0x200-0x20,
+    .h = 0xc8,
 };
 
 void ThreadFunc(struct Thread* t)
@@ -71,13 +71,13 @@ void ThreadFunc(struct Thread* t)
 		for (i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
 			octr->windowsClientSync[i + 1] = octr->windowsClientSync[i];
 
-		for (i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
-			if (octr->windowsClientSync[i + 1] != octr->windowsClientSync[i])
-				break;
-	}
+        for (i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
+            if (octr->windowsClientSync[i + 1] != octr->windowsClientSync[i])
+                break;
+    }
 
-	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES - 2 frames.
-	int boolCloseClient = (i == -1) && (octr->CurrState > LAUNCH_ENTER_PID);
+    // close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES - 2 frames.
+    int boolCloseClient = (i == -1) && (octr->CurrState > LAUNCH_ENTER_PID);
 
 		
 	// if client closed, or server disconnected
