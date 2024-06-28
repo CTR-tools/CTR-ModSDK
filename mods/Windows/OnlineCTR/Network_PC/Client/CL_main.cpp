@@ -253,9 +253,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		if (clientID > octr.get()->DriverID) slot = clientID;
 
 		//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-		ps1ptr<short*> charIdPtr = pBuf.at<short*>((0x80086e84 + 2 * slot) & 0xffffff);
-		unsigned int charIdAddr = (unsigned int)(*charIdPtr.get());
-		ps1ptr<short> characterIDV = pBuf.at<short>(charIdAddr);
+		ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
 		(*characterIDV.get()) = characterID;
 		characterIDV.commit();
 
@@ -364,15 +362,15 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		// cause psx renders with 3 bytes, and top byte
 		// is never used due to world scale (just pure luck)
 		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
-		ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
+		ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, true); //don't prefetch since we're unilaterally overwriting.
 		(*x.get()) = ((int)r->posX) * 256;
 
 		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
-		ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
+		ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, true); //don't prefetch since we're unilaterally overwriting.
 		(*y.get()) = ((int)r->posY) * 256;
 
 		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
-		ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
+		ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, true); //don't prefetch since we're unilaterally overwriting.
 		(*z.get()) = ((int)r->posZ) * 256;
 
 		int angle =
@@ -384,7 +382,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		//printf("recv x:%d y:%d z:%d", *x.get(), *y.get(), *z.get());
 
 		//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
-		ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a);
+		ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, true); //don't prefetch since we're unilaterally overwriting.
 		(*angleV.get()) = (short)angle;
 
 		angleV.commit();

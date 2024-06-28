@@ -48,6 +48,7 @@ public:
 private:
 	unsigned int address;
 	bool volat;
+	bool didNotPrefetch;
 	char* buf;
 	char* originalBuf;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf
@@ -62,11 +63,15 @@ public:
 	/// When this object falls out of scope, any changes made will *not* be automatically committed.
 	/// Do it yourself.
 	/// </summary>
-	ps1ptr(unsigned int addr, bool volatileAccess = false) : address(addr), volat(volatileAccess)
+	ps1ptr(unsigned int addr, bool doNotPrefetch = false, bool volatileAccess = false) : address(addr), volat(volatileAccess)
 	{
+		didNotPrefetch = doNotPrefetch;
 		buf = new char[sizeof(T)]/*()*/; //not necessary since we overwrite it with readMemorySegment
-		readMemorySegment(address, sizeof(T), buf);
 		originalBuf = new char[sizeof(T)];
+		if (!doNotPrefetch)
+			readMemorySegment(address, sizeof(T), buf);
+		else
+			memset(buf, 0, sizeof(T));
 		memcpy(originalBuf, buf, sizeof(T));
 		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; delete[] originalBuf; }); //when the shared_ptr dies, free the char* off the heap.
 	}
@@ -86,7 +91,7 @@ public:
 		size_t rem = sizeof(T) - whole;
 		for (size_t i = 0; i < whole; i += 8)
 		{
-			if (memcmp(buf + i, originalBuf + i, 8) != 0)
+			if (memcmp(buf + i, originalBuf + i, 8) != 0 || didNotPrefetch)
 			{
 				//TODO: instead of writing the dirty memory,
 				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
@@ -94,7 +99,7 @@ public:
 				writeMemorySegment(address + i, 8, buf + i, blocking);
 			}
 		}
-		if (rem != 0 && memcmp(buf + whole, originalBuf + whole, rem) != 0)
+		if (rem != 0 && (memcmp(buf + whole, originalBuf + whole, rem) != 0 || didNotPrefetch))
 		{
 			writeMemorySegment(address + whole, rem, buf + whole, blocking);
 		}
@@ -106,6 +111,7 @@ public:
 	void refresh()
 	{
 		readMemorySegment(address, sizeof(T), buf); //change the underlying data of the shared_ptr
+		didNotPrefetch |= true;
 		memcpy(originalBuf, buf, sizeof(T));
 	}
 	ptrtype get()
@@ -128,9 +134,9 @@ public:
 	/// Creates a ps1ptr of the specified address, offset by the address of this ps1mem.
 	/// </summary>
 	template<typename T>
-	ps1ptr<T> at(unsigned int addr)
+	ps1ptr<T> at(unsigned int addr, bool doNotPrefetch = false, bool volatileAccess = false)
 	{
-		return ps1ptr<T>(addr + address);
+		return ps1ptr<T>(addr + address, doNotPrefetch, volatileAccess);
 	}
 
 	//these are useful for unconditional writes.
