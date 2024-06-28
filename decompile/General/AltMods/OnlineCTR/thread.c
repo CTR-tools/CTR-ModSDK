@@ -76,7 +76,7 @@ void ThreadFunc(struct Thread* t)
 				break;
 	}
 
-	// if client didn't update the game in 4 frames
+	// if client didn't update the game in CLIENT_SYNC_BUFFER_LENGTH - 2 frames
 	int boolCloseClient =
 		(i == -1) &&
 		(octr->CurrState > LAUNCH_ENTER_PID);
