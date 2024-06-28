@@ -1,20 +1,10 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#endif
-
-#include <winsock2.h>
-#include <ws2tcpip.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <Psapi.h>
-
-#pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "AdvApi32.lib")
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
