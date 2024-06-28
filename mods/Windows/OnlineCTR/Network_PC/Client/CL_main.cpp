@@ -16,7 +16,6 @@
 
 ps1mem pBuf = ps1mem{};
 ps1ptr<OnlineCTR> octr = ps1ptr<OnlineCTR>{};
-//char* OGpBuf;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -57,347 +56,403 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 	//printf("received packet with type %i\n",((struct SG_Header*)recvBuf)->type);
 	// switch will compile into a jmp table, no funcPtrs needed
-	switch (((SG_Header*)recvBuf)->type)
+	switch (recvBuf->type)
 	{
-	case SG_ROOMS:
-	{
-		SG_MessageRooms* r = reinterpret_cast<SG_MessageRooms*>(recvBuf);
-
-		octr.refresh(); 
-		octr.get()->ver_pc = VERSION;
-		octr.get()->ver_server = r->version;
-
-		if (r->version != VERSION)
+		case SG_ROOMS:
 		{
-			octr.get()->CurrState = LAUNCH_ERROR;
+			SG_MessageRooms* r = reinterpret_cast<SG_MessageRooms*>(recvBuf);
+
+			octr.refresh(); 
+			octr.get()->ver_pc = VERSION;
+			octr.get()->ver_server = r->version;
+
+			if (r->version != VERSION)
+			{
+				octr.get()->CurrState = LAUNCH_ERROR;
+				octr.commit();
+				return;
+			}
+
+			if (octr.get()->ver_psx != VERSION)
+			{
+				octr.get()->CurrState = LAUNCH_ERROR;
+				octr.commit();
+				return;
+			}
+
+			// reopen the room menu,
+			// either first time getting rooms,
+			// or refresh after joining refused
+			octr.get()->serverLockIn2 = 0;
+
+			octr.get()->numRooms = r->numRooms;
+
+			octr.get()->clientCount[0x0] = r->numClients01;
+			octr.get()->clientCount[0x1] = r->numClients02;
+			octr.get()->clientCount[0x2] = r->numClients03;
+			octr.get()->clientCount[0x3] = r->numClients04;
+			octr.get()->clientCount[0x4] = r->numClients05;
+			octr.get()->clientCount[0x5] = r->numClients06;
+			octr.get()->clientCount[0x6] = r->numClients07;
+			octr.get()->clientCount[0x7] = r->numClients08;
+			octr.get()->clientCount[0x8] = r->numClients09;
+			octr.get()->clientCount[0x9] = r->numClients10;
+			octr.get()->clientCount[0xa] = r->numClients11;
+			octr.get()->clientCount[0xb] = r->numClients12;
+			octr.get()->clientCount[0xc] = r->numClients13;
+			octr.get()->clientCount[0xd] = r->numClients14;
+			octr.get()->clientCount[0xe] = r->numClients15;
+			octr.get()->clientCount[0xf] = r->numClients16;
+
 			octr.commit();
-			return;
+
+			break;
 		}
 
-		if (octr.get()->ver_psx != VERSION)
+		// Assigned to room
+		case SG_NEWCLIENT:
 		{
-			octr.get()->CurrState = LAUNCH_ERROR;
+			SG_MessageClientStatus* r = reinterpret_cast<SG_MessageClientStatus*>(recvBuf);
+
+			octr.refresh();
+			octr.get()->DriverID = r->clientID;
+			octr.get()->NumDrivers = r->numClientsTotal;
+
+			// default, disable cheats
+			/**(int*)&pBuf[0x80096b28 & 0xffffff] &=
+				~(0x100000 | 0x80000 | 0x400 | 0x400000);*/
+			ps1ptr<int> cheats = pBuf.at<int>(0x80096b28 & 0xffffff);
+			(*cheats.get()) &= ~(0x100000 | 0x80000 | 0x400 | 0x400000);
+			cheats.commit();
+
+			// odd-numbered index == even-number room
+			// Index 1, 3, 5 -> Room 2, 4, 6
+			if (octr.get()->serverRoom & 1)
+				r->special = 0;
+
+			octr.get()->special = r->special;
+
+#if 1
+			// need to print, or compiler optimization throws this all away
+			printf("\nSpecial:%d\n", octr->special);
+
+			// Inf Masks
+			if (octr.get()->special == 2)
+			{
+				//*(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400;
+				ps1ptr<int> infMasks = pBuf.at<int>((0x80096b28) & 0xffffff);
+				(*infMasks.get()) = 0x400;
+				infMasks.commit();
+			}
+
+			// Inf Bombs
+			if (octr.get()->special == 3)
+			{
+				//*(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400000;
+				ps1ptr<int> infBombs = pBuf.at<int>((0x80096b28) & 0xffffff);
+				(*infBombs.get()) = 0x400000;
+				infBombs.commit();
+			}
+#endif
+
+			// offset 0x8
+			octr.get()->boolLockedInLap = 0;
+			octr.get()->boolLockedInLevel = 0;
+			octr.get()->lapID = 0;
+			octr.get()->levelID = 0;
+
+			octr.get()->boolLockedInCharacter = 0;
+			octr.get()->numDriversEnded = 0;
+
+			memset(&octr.get()->boolLockedInCharacters[0], 0, 8);
+			memset(&octr.get()->nameBuffer[0], 0, 0xC * 8);
+			memset(&octr.get()->RaceEnd[0], 0, 8 * 8);
+
+			// reply to server with your name
+			*(int*)&octr.get()->nameBuffer[0] = *(int*)&name[0];
+			*(int*)&octr.get()->nameBuffer[4] = *(int*)&name[4];
+			*(int*)&octr.get()->nameBuffer[8] = *(int*)&name[8];
+
+			CG_MessageName m = { 0 };
+			m.type = CG_NAME;
+			memcpy(&m.name[0], &name[0], 0xC);
+			sendToHostReliable(&m, sizeof(struct CG_MessageName));
+
+			// choose to get host menu or guest menu
+			octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
 			octr.commit();
-			return;
+			break;
 		}
 
-		// reopen the room menu,
-		// either first time getting rooms,
-		// or refresh after joining refused
-		octr.get()->serverLockIn2 = 0;
-
-		octr.get()->numRooms = r->numRooms;
-
-		octr.get()->clientCount[0x0] = r->numClients01;
-		octr.get()->clientCount[0x1] = r->numClients02;
-		octr.get()->clientCount[0x2] = r->numClients03;
-		octr.get()->clientCount[0x3] = r->numClients04;
-		octr.get()->clientCount[0x4] = r->numClients05;
-		octr.get()->clientCount[0x5] = r->numClients06;
-		octr.get()->clientCount[0x6] = r->numClients07;
-		octr.get()->clientCount[0x7] = r->numClients08;
-		octr.get()->clientCount[0x8] = r->numClients09;
-		octr.get()->clientCount[0x9] = r->numClients10;
-		octr.get()->clientCount[0xa] = r->numClients11;
-		octr.get()->clientCount[0xb] = r->numClients12;
-		octr.get()->clientCount[0xc] = r->numClients13;
-		octr.get()->clientCount[0xd] = r->numClients14;
-		octr.get()->clientCount[0xe] = r->numClients15;
-		octr.get()->clientCount[0xf] = r->numClients16;
-
-		octr.commit();
-
-		break;
-	}
-
-	// Assigned to room
-	case SG_NEWCLIENT:
-	{
-		SG_MessageClientStatus* r = reinterpret_cast<SG_MessageClientStatus*>(recvBuf);
-
-		octr.refresh(); 
-		octr.get()->DriverID = r->clientID;
-		octr.get()->NumDrivers = r->numClientsTotal;
-
-		// default, disable cheats
-		/**(int*)&pBuf[0x80096b28 & 0xffffff] &=
-			~(0x100000 | 0x80000 | 0x400);*/
-		ps1ptr<int> cheats = pBuf.at<int>(0x80096b28 & 0xffffff);
-		(*cheats.get()) &= ~(0x100000 | 0x80000 | 0x400);
-		cheats.commit();
-
-		// odd-numbered index == even-number room
-		// Index 1, 3, 5 -> Room 2, 4, 6
-		if (octr.get()->serverRoom & 1)
-			r->special = 0;
-
-		octr.get()->special = r->special;
-
-		// offset 0x8
-		octr.get()->boolLockedInLap = 0;
-		octr.get()->boolLockedInLevel = 0;
-		octr.get()->lapID = 0;
-		octr.get()->levelID = 0;
-
-		octr.get()->boolLockedInCharacter = 0;
-		octr.get()->numDriversEnded = 0;
-
-		memset(&octr.get()->boolLockedInCharacters[0], 0, 8);
-		memset(&octr.get()->nameBuffer[0], 0, 0xC * 8);
-		memset(&octr.get()->RaceEnd[0], 0, 8 * 8);
-
-		// reply to server with your name
-		*(int*)&octr.get()->nameBuffer[0] = *(int*)&name[0];
-		*(int*)&octr.get()->nameBuffer[4] = *(int*)&name[4];
-		*(int*)&octr.get()->nameBuffer[8] = *(int*)&name[8];
-
-		CG_MessageName m = { 0 };
-		m.type = CG_NAME;
-		m.size = sizeof(CG_MessageName);
-		memcpy(&m.name[0], &name[0], 0xC);
-		sendToHostReliable(&m, m.size);
-
-		// choose to get host menu or guest menu
-		octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
-		octr.commit();
-		break;
-	}
-
-	case SG_NAME:
-	{
-		SG_MessageName* r = reinterpret_cast<SG_MessageName*>(recvBuf);
-
-		int clientID = r->clientID;
-		octr.refresh(); 
-		if (clientID == octr.get()->DriverID) break;
-		if (clientID < octr.get()->DriverID) slot = clientID + 1;
-		if (clientID > octr.get()->DriverID) slot = clientID;
-
-		octr.get()->NumDrivers = r->numClientsTotal;
-
-		memcpy(&octr.get()->nameBuffer[slot * 0xC], &r->name[0], 12);
-
-		octr.commit();
-
-		// handle disconnection
-		if (r->name[0] == 0)
+		case SG_NAME:
 		{
+			SG_MessageName* r = reinterpret_cast<SG_MessageName*>(recvBuf);
+
+			int clientID = r->clientID;
+			octr.refresh(); 
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
+			octr.get()->NumDrivers = r->numClientsTotal;
+
+			memcpy(&octr.get()->nameBuffer[slot * 0xC], &r->name[0], 12);
+
+			octr.commit();
+
+			// handle disconnection
+			if (r->name[0] == 0)
+			{
+				// make this player hold SQUARE
+				ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
+				gamepad.get()->buttonsHeldCurrFrame = 0x20;
+				gamepad.get()->buttonsTapped = 0;
+				gamepad.get()->buttonsReleased = 0;
+				gamepad.get()->buttonsHeldPrevFrame = 0x20;
+				gamepad.commit();
+			}
+
+			break;
+		}
+
+		case SG_TRACK:
+		{
+			SG_MessageTrack* r = reinterpret_cast<SG_MessageTrack*>(recvBuf);
+
+			// 1,3,5,7
+			int numLaps = (r->lapID * 2) + 1;
+
+			if (r->lapID == 4) numLaps = 30;
+			if (r->lapID == 5) numLaps = 60;
+			if (r->lapID == 6) numLaps = 90;
+			if (r->lapID == 7) numLaps = 120;
+
+			// set sdata->gGT->numLaps
+			//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
+			ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
+			(*numLapsV.get()) = numLaps;
+			numLapsV.commit();
+
+			octr.refresh();
+			octr.get()->levelID = r->trackID;
+			octr.get()->CurrState = LOBBY_CHARACTER_PICK;
+			octr.commit();
+
+			break;
+		}
+
+		case SG_CHARACTER:
+		{
+			SG_MessageCharacter* r = reinterpret_cast<SG_MessageCharacter*>(recvBuf);
+
+			unsigned char clientID = r->clientID;
+			unsigned char characterID = r->characterID;
+
+			octr.refresh(); 
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
+			//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
+			ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
+			(*characterIDV.get()) = characterID;
+			characterIDV.commit();
+
+			octr.get()->boolLockedInCharacters[clientID] = r->boolLockedIn;
+			octr.commit();
+
+			break;
+		}
+
+		case SG_STARTLOADING:
+		{
+			// variable reuse, wait a few frames,
+			// so screen updates with green names
+			octr.refresh(); 
+			octr.get()->CountPressX = 0;
+			octr.get()->CurrState = LOBBY_START_LOADING;
+			octr.commit();
+			break;
+		}
+
+		case SG_STARTRACE:
+		{
+			octr.refresh(); 
+			octr.get()->CurrState = GAME_START_RACE;
+			octr.commit();
+			break;
+		}
+
+		case SG_RACEDATA:
+		{
+			// wait for drivers to be initialized
+			// since this happens every frame, it's worth hyper-optimizing, hence the atypical refresh
+			int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
+			octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);
+			//NOTE: as of writing, this switch case *only uses* these members of octr
+			// * CurrState
+			// * DriverID
+			//If at any point this changes, you must update the .partialRefresh to account for it.
+			if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
+				break;
+
+			/*int sdata_Loading_stage =
+				*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
+			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
+
+			if ((*sdata_Loading_stage.get()) != -1)
+				break;
+
+			SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
+
+			int clientID = r->clientID;
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
+			int curr = r->buttonHold;
+
+			// sneak L1/R1 into one byte,
+			// remove Circle/L2
+
+			if ((curr & 0x40) != 0)
+			{
+				curr &= ~(0x40);
+				curr |= 0x400;
+			}
+
+			if ((curr & 0x80) != 0)
+			{
+				curr &= ~(0x80);
+				curr |= 0x800;
+			}
+
+			int prev = buttonPrev[slot];
+
+			// tapped
+			int tap = ~prev & curr;
+
+			// released
+			int rel = prev & ~curr;
+
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
+			gamepad.get()->buttonsHeldCurrFrame = curr;
+			gamepad.get()->buttonsTapped = tap;
+			gamepad.get()->buttonsReleased = rel;
+			gamepad.get()->buttonsHeldPrevFrame = prev;
+
+			// In this order: Up, Down, Left, Right
+			if ((gamepad.get()->buttonsHeldCurrFrame & 1) != 0) gamepad.get()->stickLY = 0;
+			else if ((gamepad.get()->buttonsHeldCurrFrame & 2) != 0) gamepad.get()->stickLY = 0xFF;
+			else gamepad.get()->stickLY = 0x80;
+
+			if ((gamepad.get()->buttonsHeldCurrFrame & 4) != 0) gamepad.get()->stickLX = 0;
+			else if ((gamepad.get()->buttonsHeldCurrFrame & 8) != 0) gamepad.get()->stickLX = 0xFF;
+			else gamepad.get()->stickLX = 0x80;
+
+			gamepad.commit();
+
+			buttonPrev[slot] = curr;
+
+			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
+			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff);
+			(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
+
+			// lossless compression, bottom byte is never used,
+			// cause psx renders with 3 bytes, and top byte
+			// is never used due to world scale (just pure luck)
+			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
+			ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, true); //don't prefetch since we're unilaterally overwriting.
+			(*x.get()) = ((int)r->posX) * 256;
+
+			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
+			ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, true); //don't prefetch since we're unilaterally overwriting.
+			(*y.get()) = ((int)r->posY) * 256;
+
+			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
+			ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, true); //don't prefetch since we're unilaterally overwriting.
+			(*z.get()) = ((int)r->posZ) * 256;
+
+			int angle =
+				(r->kartRot1) |
+				(r->kartRot2 << 5);
+
+			angle &= 0xfff;
+
+			//printf("recv x:%d y:%d z:%d", *x.get(), *y.get(), *z.get());
+
+			//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
+			ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, true); //don't prefetch since we're unilaterally overwriting.
+			(*angleV.get()) = (short)angle;
+
+			angleV.commit();
+			x.commit();
+			y.commit();
+			z.commit();
+
+			// keep setting to 200,
+			// and if !boolReserves, let it fall to zero
+			if (r->boolReserves)
+			{
+				//*(short*)&pBuf[psxPtr + 0x3E2] = 200;
+				ps1ptr<short> reserves = pBuf.at<short>((*psxPtr.get()) + 0x3E2, true); //don't prefetch since we're unilaterally overwriting.
+				(*reserves.get()) = 200;
+				reserves.commit();
+			}
+
+			//*(short*)&pBuf[psxPtr + 0x30] = r->wumpa;
+			ps1ptr<short> wumpa = pBuf.at<short>((*psxPtr.get()) + 0x30, true); //don't prefetch since we're unilaterally overwriting.
+			(*wumpa.get()) = r->wumpa;
+			wumpa.commit();
+
+			break;
+		}
+
+		case SG_WEAPON:
+		{
+			SG_MessageWeapon* r = reinterpret_cast<SG_MessageWeapon*>(recvBuf);
+
+			octr.refresh();
+			int clientID = r->clientID;
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
+			octr.get()->Shoot[slot].boolNow = 1;
+			octr.get()->Shoot[slot].Weapon = r->weapon;
+			octr.get()->Shoot[slot].boolJuiced = r->juiced;
+			octr.get()->Shoot[slot].flags = r->flags;
+			octr.commit();
+
+			break;
+		}
+
+		case SG_ENDRACE:
+		{
+			SG_MessageEndRace* r = reinterpret_cast<SG_MessageEndRace*>(recvBuf);
+
+			int clientID = r->clientID;
+			octr.refresh(); 
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
 			// make this player hold SQUARE
+			//Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
 			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
 			gamepad.get()->buttonsHeldCurrFrame = 0x20;
 			gamepad.get()->buttonsTapped = 0;
 			gamepad.get()->buttonsReleased = 0;
 			gamepad.get()->buttonsHeldPrevFrame = 0x20;
 			gamepad.commit();
-		}
 
-		break;
-	}
+			octr.get()->RaceEnd[octr.get()->numDriversEnded].slot = slot;
+			memcpy(&octr.get()->RaceEnd[octr.get()->numDriversEnded].time, &r->time[0], 3);
+			octr.get()->numDriversEnded++;
+			octr.commit();
 
-	case SG_TRACK:
-	{
-		SG_MessageTrack* r = reinterpret_cast<SG_MessageTrack*>(recvBuf);
-
-		// 1,3,5,7
-		int numLaps = (r->lapID * 2) + 1;
-
-		if (r->lapID == 4) numLaps = 30;
-		if (r->lapID == 5) numLaps = 60;
-		if (r->lapID == 6) numLaps = 90;
-		if (r->lapID == 7) numLaps = 120;
-
-		// set sdata->gGT->numLaps
-		//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-		ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff);
-		(*numLapsV.get()) = numLaps;
-		numLapsV.commit();
-
-		octr.refresh();
-		octr.get()->levelID = r->trackID;
-		octr.get()->CurrState = LOBBY_CHARACTER_PICK;
-		octr.commit();
-
-		break;
-	}
-
-	case SG_CHARACTER:
-	{
-		SG_MessageCharacter* r = reinterpret_cast<SG_MessageCharacter*>(recvBuf);
-
-		unsigned char clientID = r->clientID;
-		unsigned char characterID = r->characterID;
-
-		octr.refresh(); 
-		if (clientID == octr.get()->DriverID) break;
-		if (clientID < octr.get()->DriverID) slot = clientID + 1;
-		if (clientID > octr.get()->DriverID) slot = clientID;
-
-		//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-		ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
-		(*characterIDV.get()) = characterID;
-		characterIDV.commit();
-
-		octr.get()->boolLockedInCharacters[clientID] = r->boolLockedIn;
-		octr.commit();
-
-		break;
-	}
-
-	case SG_STARTLOADING:
-	{
-		// variable reuse, wait a few frames,
-		// so screen updates with green names
-		octr.refresh(); 
-		octr.get()->CountPressX = 0;
-		octr.get()->CurrState = LOBBY_START_LOADING;
-		octr.commit();
-		break;
-	}
-
-	case SG_STARTRACE:
-	{
-		octr.refresh(); 
-		octr.get()->CurrState = GAME_START_RACE;
-		octr.commit();
-		break;
-	}
-
-	case SG_RACEDATA:
-	{
-		// wait for drivers to be initialized
-		// since this happens every frame, it's worth hyper-optimizing, hence the atypical refresh
-		int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
-		octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);
-		//NOTE: as of writing, this switch case *only uses* these members of octr
-		// * CurrState
-		// * DriverID
-		//If at any point this changes, you must update the .partialRefresh to account for it.
-		if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
 			break;
-
-		/*int sdata_Loading_stage =
-			*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
-		ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
-
-		if ((*sdata_Loading_stage.get()) != -1)
-			break;
-
-		SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
-
-		int clientID = r->clientID;
-		if (clientID == octr.get()->DriverID) break;
-		if (clientID < octr.get()->DriverID) slot = clientID + 1;
-		if (clientID > octr.get()->DriverID) slot = clientID;
-
-		int curr = r->buttonHold;
-
-		// sneak L1/R1 into one byte,
-		// remove Circle/L2
-
-		if ((curr & 0x40) != 0)
-		{
-			curr &= ~(0x40);
-			curr |= 0x400;
 		}
-
-		if ((curr & 0x80) != 0)
-		{
-			curr &= ~(0x80);
-			curr |= 0x800;
-		}
-
-		int prev = buttonPrev[slot];
-
-		// tapped
-		int tap = ~prev & curr;
-
-		// released
-		int rel = prev & ~curr;
-
-		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
-		gamepad.get()->buttonsHeldCurrFrame = curr;
-		gamepad.get()->buttonsTapped = tap;
-		gamepad.get()->buttonsReleased = rel;
-		gamepad.get()->buttonsHeldPrevFrame = prev;
-
-		// In this order: Up, Down, Left, Right
-		if ((gamepad.get()->buttonsHeldCurrFrame & 1) != 0) gamepad.get()->stickLY = 0;
-		else if ((gamepad.get()->buttonsHeldCurrFrame & 2) != 0) gamepad.get()->stickLY = 0xFF;
-		else gamepad.get()->stickLY = 0x80;
-
-		if ((gamepad.get()->buttonsHeldCurrFrame & 4) != 0) gamepad.get()->stickLX = 0;
-		else if ((gamepad.get()->buttonsHeldCurrFrame & 8) != 0) gamepad.get()->stickLX = 0xFF;
-		else gamepad.get()->stickLX = 0x80;
-
-		gamepad.commit();
-
-		buttonPrev[slot] = curr;
-
-		//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-		ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff);
-		(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
-
-		// lossless compression, bottom byte is never used,
-		// cause psx renders with 3 bytes, and top byte
-		// is never used due to world scale (just pure luck)
-		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
-		ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, true); //don't prefetch since we're unilaterally overwriting.
-		(*x.get()) = ((int)r->posX) * 256;
-
-		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
-		ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, true); //don't prefetch since we're unilaterally overwriting.
-		(*y.get()) = ((int)r->posY) * 256;
-
-		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
-		ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, true); //don't prefetch since we're unilaterally overwriting.
-		(*z.get()) = ((int)r->posZ) * 256;
-
-		int angle =
-			(r->kartRot1) |
-			(r->kartRot2 << 5);
-
-		angle &= 0xfff;
-
-		//printf("recv x:%d y:%d z:%d", *x.get(), *y.get(), *z.get());
-
-		//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
-		ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, true); //don't prefetch since we're unilaterally overwriting.
-		(*angleV.get()) = (short)angle;
-
-		angleV.commit();
-		x.commit();
-		y.commit();
-		z.commit();
-
-		break;
-	}
-
-	case SG_ENDRACE:
-	{
-		SG_MessageEndRace* r = reinterpret_cast<SG_MessageEndRace*>(recvBuf);
-
-		int clientID = r->clientID;
-		octr.refresh(); 
-		if (clientID == octr.get()->DriverID) break;
-		if (clientID < octr.get()->DriverID) slot = clientID + 1;
-		if (clientID > octr.get()->DriverID) slot = clientID;
-
-		// make this player hold SQUARE
-		//Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
-		ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
-		gamepad.get()->buttonsHeldCurrFrame = 0x20;
-		gamepad.get()->buttonsTapped = 0;
-		gamepad.get()->buttonsReleased = 0;
-		gamepad.get()->buttonsHeldPrevFrame = 0x20;
-		gamepad.commit();
-
-		octr.get()->RaceEnd[octr.get()->numDriversEnded].slot = slot;
-		memcpy(&octr.get()->RaceEnd[octr.get()->numDriversEnded].time, &r->time[0], 3);
-		octr.get()->numDriversEnded++;
-		octr.commit();
-
-		break;
-	}
 
 	default:
 		break;
@@ -787,8 +842,8 @@ void StatePC_Launch_PickServer()
 		}
 	}
 
-	// 20 seconds
-	enet_peer_timeout(serverPeer, 1000000, 1000000, 20000);
+	// 5 seconds
+	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
 
 	octr.refresh();
 	octr.get()->DriverID = -1;
@@ -817,9 +872,8 @@ void StatePC_Launch_PickRoom()
 		CG_MessageRoom mr;
 		mr.type = CG_JOINROOM;
 		mr.room = 0xFF;
-		mr.size = sizeof(CG_MessageRoom);
 
-		sendToHostReliable(&mr, mr.size);
+		sendToHostReliable(&mr, sizeof(CG_MessageRoom));
 	}
 
 	octr.refresh();
@@ -839,9 +893,8 @@ void StatePC_Launch_PickRoom()
 	CG_MessageRoom mr;
 	mr.type = CG_JOINROOM;
 	mr.room = octr.get()->serverRoom;
-	mr.size = sizeof(CG_MessageRoom);
 
-	sendToHostReliable(&mr, mr.size);
+	sendToHostReliable(&mr, sizeof(CG_MessageRoom));
 }
 
 void StatePC_Lobby_AssignRole()
@@ -865,7 +918,6 @@ void StatePC_Lobby_HostTrackPick()
 
 	CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
-	mt.size = sizeof(CG_MessageTrack);
 
 	mt.trackID = (octr.get())->levelID;
 	mt.lapID = (octr.get())->lapID;
@@ -884,7 +936,7 @@ void StatePC_Lobby_HostTrackPick()
 	(*numLapsV.get()) = numLaps;
 	numLapsV.commit();
 
-	sendToHostReliable(&mt, mt.size);
+	sendToHostReliable(&mt, sizeof(CG_MessageTrack));
 
 	octr.refresh();
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
@@ -908,7 +960,6 @@ void StatePC_Lobby_CharacterPick()
 
 	CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
-	mc.size = sizeof(CG_MessageCharacter);
 
 	// data.characterIDs[0]
 	//mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
@@ -926,7 +977,7 @@ void StatePC_Lobby_CharacterPick()
 		prev_characterID = mc.characterID;
 		prev_boolLockedIn = mc.boolLockedIn;
 
-		sendToHostReliable(&mc, mc.size);
+		sendToHostReliable(&mc, sizeof(CG_MessageCharacter));
 	}
 
 	if (mc.boolLockedIn == 1)
@@ -959,9 +1010,10 @@ void StatePC_Lobby_StartLoading()
 
 void SendEverything()
 {
+	//TODO: aggregate adjacent memory (e.g., xyz into a single fetch)
+
 	CG_EverythingKart cg = { 0 };
 	cg.type = CG_RACEDATA;
-	cg.size = sizeof(CG_EverythingKart);
 
 	// === Buttons ===
 	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
@@ -1012,7 +1064,34 @@ void SendEverything()
 	cg.kartRot1 = angleBit5;
 	cg.kartRot2 = angleTop8;
 
-	sendToHostUnreliable(&cg, cg.size);
+	//char wumpa = *(unsigned char*)&pBuf[psxPtr + 0x30];
+	ps1ptr<char> wumpa = pBuf.at<char>((*psxPtr.get()) + 0x30);
+	cg.wumpa = (*wumpa.get());
+
+	// must be read as unsigned, even though game uses signed,
+	// has to do with infinite reserves when the number is negative
+	//unsigned short reserves = *(unsigned short*)&pBuf[psxPtr + 0x3E2];
+	ps1ptr<unsigned char> reserves = pBuf.at<unsigned char>((*psxPtr.get()) + 0x3e2);
+	cg.boolReserves = ((*reserves.get()) > 200);
+
+	// TO DO: No Fire Level yet
+
+	sendToHostUnreliable(&cg, sizeof(CG_EverythingKart));
+
+	octr.refresh();
+	if (octr.get()->Shoot[0].boolNow == 1)
+	{
+		octr.get()->Shoot[0].boolNow = 0;
+
+		CG_MessageWeapon w = { 0 };
+
+		w.type = CG_WEAPON;
+		w.weapon = octr.get()->Shoot[0].Weapon;
+		w.juiced = octr.get()->Shoot[0].boolJuiced;
+		w.flags = octr.get()->Shoot[0].flags;
+
+		sendToHostReliable(&w, sizeof(CG_MessageWeapon));
+	}
 }
 
 void StatePC_Game_WaitForRace()
@@ -1036,9 +1115,8 @@ void StatePC_Game_WaitForRace()
 
 		CG_Header cg = { 0 };
 		cg.type = CG_STARTRACE;
-		cg.size = sizeof(CG_Header);
 
-		sendToHostReliable(&cg, cg.size);
+		sendToHostReliable(&cg, sizeof(CG_Header));
 	}
 
 	SendEverything();
@@ -1082,12 +1160,11 @@ void StatePC_Game_EndRace()
 
 		CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
-		cg.size = sizeof(CG_MessageEndRace);
 		
 		ps1ptr<int> time = pBuf.at<int>((*psxPtr.get()) + 0x514);
 		memcpy(&cg.time[0], &(*time.get()), 3);
 
-		sendToHostReliable(&cg, cg.size);
+		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
 
 		// end race for yourself
 		octr.refresh();
