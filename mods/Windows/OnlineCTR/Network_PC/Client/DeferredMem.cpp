@@ -13,6 +13,7 @@
 #endif
 
 #include "DeferredMem.h"
+#include "Util.h"
 #include <atomic>
 #include <thread>
 #include <semaphore>
@@ -31,7 +32,7 @@ std::thread recvWorker;
 std::mutex recvMutex;
 std::condition_variable recvCond;
 
-void defMemInit()
+bool defMemInit()
 {
 #if _WIN64 //windows
 	dspineSocket = initSocket();
@@ -40,7 +41,21 @@ void defMemInit()
 	//todo:
 	//call posix version of initSocket() and assign to the posix dspineSocket variable.
 #endif
-	recvWorker = std::thread{ recvThread };
+	if (dspineSocket != INVALID_SOCKET)
+	{
+		recvWorker = std::thread{ recvThread };
+		return true;
+	}
+	else
+		return false;
+}
+bool socketValid()
+{
+#if _WIN64 //windows
+	return dspineSocket != INVALID_SOCKET;
+#else //assume posix
+#error todo...
+#endif
 }
 
 #if _WIN64 //windows
@@ -60,7 +75,7 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
-	ires = getaddrinfo("127.0.0.1", "28011", &hints, &result); //DS PINE (switching to 127.0.0.1 may skip local DNS?)
+	ires = getaddrinfo("127.0.0.1", "28011", &hints, &result); //DS PINE
 	if (ires != 0)
 	{
 		printf("getaddrinfo failed with code: %d\n", ires);
@@ -99,6 +114,8 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	if (ires == SOCKET_ERROR)
 	{
 		printf("Unable to put the socket into non-blocking mode.\n");
+		closesocket(sock);
+		WSACleanup();
 		return NULL;
 	}
 	int enable = 1;
@@ -106,6 +123,7 @@ SOCKET initSocket() //every call to initSocket should be bookmatched by a call t
 	if (ires != 0)
 	{
 		printf("Unable to enable TCP_NODELAY (disables nagle's algorithm).\n");
+		closesocket(sock);
 		WSACleanup();
 		return NULL;
 	}
@@ -168,8 +186,8 @@ void recvThread()
 			{
 				if (recvLen < recvBufLen)
 					printf("recv returned less than required buffer length ");
-				printf("recv failed exit(5): %d\n", WSAGetLastError());
-				exit(5); //could be caused by many things.
+				printf("recv failed: %d\n", WSAGetLastError());
+				exit_execv(5); //could be caused by many things.
 			}
 #else //assume posix
 #error todo...
@@ -224,11 +242,11 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		int res = send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize
 		if (res != sendBufLen)
 		{
-			printf("send() failed exit(6/7)!");
+			printf("send() failed!\n");
 			if (res == SOCKET_ERROR)
-				exit(6);
+				exit_execv(6);
 			else
-				exit(7); //partial send???
+				exit_execv(7); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -250,13 +268,13 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		{
 			if (recvLen < recvBufLen)
 				printf("recv returned less than required buffer length "); //if this starts becoming a problem then we need recv in a buffer loop.
-			printf("recv failed exit(8): %d\n", WSAGetLastError());
-			exit(8);
+			printf("recv failed: %d\n", WSAGetLastError());
+			exit_execv(8);
 		}
 		else
 		{
-			printf("recv() failed exit(9)!");
-			exit(9); //could be caused by many things.
+			printf("recv() failed!\n");
+			exit_execv(9); //could be caused by many things.
 		}
 #else //assume posix
 #error todo...
@@ -317,11 +335,11 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blockin
 		int res = send(dspineSocket, sendBuffer, sendBufLen, 0);
 		if (res != sendBufLen)
 		{
-			printf("send() failed exit(10/11)!");
+			printf("send() failed!\n");
 			if (res == SOCKET_ERROR)
-				exit(10);
+				exit_execv(10);
 			else
-				exit(11); //partial send???
+				exit_execv(11); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -354,11 +372,11 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blockin
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
-			printf("send() failed exit(12/13)!");
+			printf("send() failed!\n");
 			if (res == SOCKET_ERROR)
-				exit(12);
+				exit_execv(12);
 			else
-				exit(13); //partial send???
+				exit_execv(13); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -387,11 +405,11 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blockin
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
-			printf("send() failed exit(14/15)!");
+			printf("send() failed!\n");
 			if (res == SOCKET_ERROR)
-				exit(14);
+				exit_execv(14);
 			else
-				exit(15); //partial send???
+				exit_execv(15); //partial send???
 		}
 #else //assume posix
 #error todo...
@@ -419,11 +437,11 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blockin
 		int res = send(dspineSocket, sendBuffer, sz, 0);
 		if (res != sz)
 		{
-			printf("send() failed exit(16/17)!");
+			printf("send() failed!\n");
 			if (res == SOCKET_ERROR)
-				exit(16);
+				exit_execv(16);
 			else
-				exit(17); //partial send???
+				exit_execv(17); //partial send???
 		}
 #else //assume posix
 #error todo...

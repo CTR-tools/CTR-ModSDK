@@ -13,11 +13,13 @@
 #endif
 
 #include "DSPINE.h"
+#include "Util.h"
 #include <memory>
 #include <functional>
 
 
-void defMemInit();
+bool defMemInit();
+bool socketValid();
 void readMemorySegment(unsigned int addr, size_t len, char* buf);
 void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blocking = false*/);
 void recvThread();
@@ -121,8 +123,8 @@ public:
 	{
 		if (offset + length > sizeof(T))
 		{
-			printf("Trying to partial refresh beyond the buffer length exit(18)!");
-			exit(18);
+			printf("Trying to partial refresh beyond the buffer length!\n");
+			exit_execv(18);
 		}
 		readMemorySegment(address + offset, length, buf); //change the underlying data of the shared_ptr
 		memcpy(originalBuf + offset, buf + offset, length);

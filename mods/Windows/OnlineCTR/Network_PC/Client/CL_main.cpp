@@ -5,11 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <Psapi.h>
+#include <chrono>
+#include <thread>
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
 #include "DeferredMem.h"
+#include "Util.h"
 
 ps1mem pBuf = ps1mem{};
 ps1ptr<OnlineCTR> octr = ps1ptr<OnlineCTR>{};
@@ -763,8 +766,8 @@ void StatePC_Launch_PickServer()
 
 	if (clientHost == NULL)
 	{
-		fprintf(stderr, "Error: Failed to create an ENet client host! exit(3)\n");
-		exit(3);
+		fprintf(stderr, "Error: Failed to create an ENet client host!\n");
+		exit_execv(3);
 	}
 
 	if (serverPeer != 0)
@@ -777,8 +780,8 @@ void StatePC_Launch_PickServer()
 
 	if (serverPeer == NULL)
 	{
-		fprintf(stderr, "Error: No available peers for initiating an ENet connection! exit(4)\n");
-		exit(4);
+		fprintf(stderr, "Error: No available peers for initiating an ENet connection!\n");
+		exit_execv(4);
 	}
 
 	//fprintf(stderr, "Trying to establish connection with server at %s:%i\n", ip, adress.port);
@@ -1204,8 +1207,11 @@ void (*ClientState[]) () = {
 // for EnumProcessModules
 #pragma comment(lib, "psapi.lib")
 
-int main()
+char* progName;
+
+int main(int argc, char *argv[])
 {
+	progName = argv[0];
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
@@ -1213,6 +1219,11 @@ int main()
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
 
 	PrintBanner(DONT_SHOW_NAME);
+
+	if (argc >= 3)
+	{
+		printf("Program was reset due to: %s\n", argv[2]);
+	}
 
 	// ask for the users online identification
 	printf("Input: Enter Your Online Name: ");
@@ -1224,85 +1235,27 @@ int main()
 	PrintBanner(SHOW_NAME);
 	printf("\n");
 
-	int numDuckInstances = 0;
-	const char* duckTemplate = "duckstation";
-	int duckPID = -1;
-
-	// copy from
-	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
-	DWORD aProcesses[1024], cbNeeded, cProcesses;
-	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
-	cProcesses = cbNeeded / sizeof(DWORD);
-
-	for (int i = 0; i < cProcesses; i++)
-	{
-		DWORD processID = aProcesses[i];
-
-		if (processID != 0)
-		{
-			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
-
-			if (NULL != hProcess)
-			{
-				HMODULE hMod;
-				DWORD cbNeeded;
-
-				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
-				{
-					char szProcessName[MAX_PATH];
-					for (size_t i = 0; i < MAX_PATH; i++)
-						szProcessName[i] = '\0';
-					GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(char));
-
-					char* procName = (char*)&szProcessName[0];
-
-					if (
-						(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
-						(*(int*)&procName[4] == *(int*)&duckTemplate[4])
-						)
-					{
-						numDuckInstances++;
-						duckPID = processID;
-					}
-				}
-			}
-		}
-	}
-
-	if (numDuckInstances == 0)
-	{
-		printf("Error: DuckStation is not running!\n\n");
-		system("pause");
-		exit(0);
-	}
-	else printf("Client: DuckStation detected\n");
-
-	char pidStr[16];
-
-	if (numDuckInstances > 1)
-	{
-		printf("Warning: Multiple DuckStations detected, close additional DuckStations and restart this application.\n");
-		exit(-69420);
-		/*printf("Warning: Multiple DuckStations detected\n");
-		printf("Please enter the PID manually\n\n");
-
-		printf("Input.: DuckStation PID: ");
-		scanf_s("%s", pidStr, (int)sizeof(pidStr));*/
-	}
-	else
-	{
-		sprintf_s(pidStr, 16, "%d", duckPID);
-	}
-
-	char duckName[100];
-	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
-
-	TCHAR duckNameT[100];
-	swprintf(duckNameT, 100, L"%hs", duckName);
-
 	//this call is only good if we're certain duckstation is *running* (and pine is enabled,
 	// but that needs to be done manually by the user or by the INI config).
-	defMemInit();
+	while (!defMemInit()) //returns true if socket is good
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	}
+
+	//this probably isn't necessary.
+	//auto socketStillValid = [&argv]()
+	//{
+	//	while (socketValid())
+	//	{
+	//		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	//	}
+	//	exit_execv(19); //this probably usually wont be called, bc if the socket is bad
+	//					//the read/write functions that are *constantly* being called will
+	//					//happen first, but if it's on the meny screen, this might happen
+	//					//instead.
+	//};
+
+	//std::thread socketValidThread = std::thread{ socketStillValid };
 
 	// 8 MB RAM
 	/*const unsigned int size = 0x800000;
