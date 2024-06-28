@@ -194,8 +194,10 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 	}
 }
 
-void writeMemorySegment(unsigned int addr, size_t len, char* buf)
+void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking)
 {
+	if (blocking)
+		while (outstandingReads > 0) { ; } //wait for no more recvs
 	//This macro accounts & compensates for a bug present in duckstation that was fixed in
 	//https://github.com/stenzek/duckstation/pull/3230 versions of duckstation older than
 	//this will not function with this client without this option set to 1.
@@ -244,7 +246,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	unsigned int offsetaddr = addr + whole;
 	if ((rem & 4) != 0) //we need a 4
 	{
-		int sz = 9 + 4;
+		int sz = 9 + 4 + applyBufferFix;
 		sendBuffer[0] = sz & 0xFF;
 		sendBuffer[1] = (sz >> 8) & 0xFF;
 		sendBuffer[2] = (sz >> 16) & 0xFF;
@@ -272,7 +274,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	}
 	if ((rem & 2) != 0)
 	{
-		int sz = 9 + 2;
+		int sz = 9 + 2 + applyBufferFix;
 		sendBuffer[0] = sz & 0xFF;
 		sendBuffer[1] = (sz >> 8) & 0xFF;
 		sendBuffer[2] = (sz >> 16) & 0xFF;
@@ -298,7 +300,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	}
 	if ((rem & 1) != 0)
 	{
-		int sz = 9 + 1;
+		int sz = 9 + 1 + applyBufferFix;
 		sendBuffer[0] = sz & 0xFF;
 		sendBuffer[1] = (sz >> 8) & 0xFF;
 		sendBuffer[2] = (sz >> 16) & 0xFF;
@@ -321,6 +323,8 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 				exit(-69420); //partial send???
 		}
 	}
+	if (blocking)
+		while (outstandingReads > 0) { ; } //wait for no more recvs
 }
 
 void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8

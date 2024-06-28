@@ -101,9 +101,10 @@ struct OnlineCTR
 	char clientCount[16];
 
 	// 0x28
-	// determines if client and
-	// emulator are still connected
-	char windowsClientSync[8];
+	// determines if client and emulator are still connected
+	// Note: this macro is used elsewhere
+#define CLIENT_SYNC_BUFFER_LENGTH 32 //was 8
+	char windowsClientSync[CLIENT_SYNC_BUFFER_LENGTH];
 
 	// 0x30
 	char boolLockedInCharacters[8];

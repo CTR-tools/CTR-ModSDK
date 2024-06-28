@@ -34,6 +34,7 @@
 
 ps1mem pBuf = ps1mem{};
 ps1ptr<OnlineCTR> octr = ps1ptr<OnlineCTR>{};
+//char* OGpBuf;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -243,8 +244,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	{
 		SG_MessageCharacter* r = reinterpret_cast<SG_MessageCharacter*>(recvBuf);
 
-		int clientID = r->clientID;
-		int characterID = r->characterID;
+		unsigned char clientID = r->clientID;
+		unsigned char characterID = r->characterID;
 
 		octr.refresh();
 		if (clientID == octr.get()->DriverID) break;
@@ -362,26 +363,17 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		// lossless compression, bottom byte is never used,
 		// cause psx renders with 3 bytes, and top byte
 		// is never used due to world scale (just pure luck)
-		//*(int*)&pBuf[psxPtr + 0x2d4] = ((int)r->posX) * 256;
-		ps1ptr<int*> xPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int xAddr = (unsigned int)(*xPtr.get());
-		ps1ptr<int> x = pBuf.at<int>(xAddr);
+		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
+		ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
 		(*x.get()) = ((int)r->posX) * 256;
-		x.commit();
 
-		//*(int*)&pBuf[psxPtr + 0x2d8] = ((int)r->posY) * 256;
-		ps1ptr<int*> yPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int yAddr = (unsigned int)(*yPtr.get());
-		ps1ptr<int> y = pBuf.at<int>(yAddr);
+		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
+		ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
 		(*y.get()) = ((int)r->posY) * 256;
-		y.commit();
 
-		//*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
-		ps1ptr<int*> zPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
-		unsigned int zAddr = (unsigned int)(*zPtr.get());
-		ps1ptr<int> z = pBuf.at<int>(zAddr);
+		//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
+		ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
 		(*z.get()) = ((int)r->posZ) * 256;
-		z.commit();
 
 		int angle =
 			(r->kartRot1) |
@@ -389,12 +381,16 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		angle &= 0xfff;
 
-		//*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
-		ps1ptr<unsigned short*> anglePtr = pBuf.at<unsigned short*>((*psxPtr.get()) + 0x39a);
-		unsigned int angleAddr = (unsigned int)(*anglePtr.get());
-		ps1ptr<unsigned short> angleV = pBuf.at<unsigned short>(angleAddr);
+		//printf("recv x:%d y:%d z:%d", *x.get(), *y.get(), *z.get());
+
+		//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
+		ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a);
 		(*angleV.get()) = (short)angle;
+
 		angleV.commit();
+		x.commit();
+		y.commit();
+		z.commit();
 
 		break;
 	}
@@ -923,7 +919,7 @@ void StatePC_Lobby_HostTrackPick()
 	mt.lapID = (octr.get())->lapID;
 
 	// 1,3,5,7
-	int numLaps = (mt.lapID * 2) + 1;
+	char numLaps = (mt.lapID * 2) + 1;
 
 	if (mt.lapID == 4) numLaps = 30;
 	if (mt.lapID == 5) numLaps = 60;

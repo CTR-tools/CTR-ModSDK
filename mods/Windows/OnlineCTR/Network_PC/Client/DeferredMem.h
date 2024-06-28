@@ -13,7 +13,7 @@ extern void defMemInit();
 extern SOCKET initSocket();
 extern void closeSocket(SOCKET* socket);
 extern void readMemorySegment(unsigned int addr, size_t len, char* buf);
-extern void writeMemorySegment(unsigned int addr, size_t len, char* buf);
+extern void writeMemorySegment(unsigned int addr, size_t len, char* buf, bool blocking = false);
 
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
@@ -80,7 +80,7 @@ public:
 	/// <summary>
 	/// Writes the memory this ps1ptr represents back to ps1 memory.
 	/// </summary>
-	void commit()
+	void commit(bool blocking = false)
 	{
 		size_t whole = sizeof(T) - (sizeof(T) % 8);
 		size_t rem = sizeof(T) - whole;
@@ -91,12 +91,12 @@ public:
 				//TODO: instead of writing the dirty memory,
 				//keep looking ahead until the first non-dirty memory OR until the end of the buffer
 				//*then* writeMemorySegment() that entire chunk.
-				writeMemorySegment(address + i, 8, buf + i);
+				writeMemorySegment(address + i, 8, buf + i, blocking);
 			}
 		}
 		if (rem != 0 && memcmp(buf + whole, originalBuf + whole, rem) != 0)
 		{
-			writeMemorySegment(address + whole, rem, buf + whole);
+			writeMemorySegment(address + whole, rem, buf + whole, blocking);
 		}
 		memcpy(originalBuf, buf, sizeof(T));
 	}
