@@ -122,7 +122,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>__WINDOWS__;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/wc4005 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

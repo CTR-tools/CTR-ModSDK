@@ -110,10 +110,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	// even making this ridiculously long isn't enough for PINE
-	// something else must be going on...
-#define CLIENT_SYNC_BUFFER_LENGTH 64 //was 8
-	char windowsClientSync[CLIENT_SYNC_BUFFER_LENGTH];
+	char windowsClientSync[8];
 
 	// 0x30
 	char boolLockedInCharacters[8];
@@ -131,7 +128,6 @@ struct OnlineCTR
 	int ver_pc;
 	int ver_server;
 
-<<<<<<< HEAD
 	// slot[0] is for game to tell client to send
 	// slot[1+] is for client to tell game to shoot
 	struct
@@ -141,10 +137,6 @@ struct OnlineCTR
 		unsigned char flags;
 		unsigned char boolNow;
 	} Shoot[8];
-=======
-	// Frames that the client didn't update
-	int frames_unsynced;
->>>>>>> 8b767009 (applying PR #145 seems to have fixed a LOT of the issues)
 };
 
 #define NUM_PLAYERS 8

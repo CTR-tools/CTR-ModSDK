@@ -1,3 +1,7 @@
+//TODO: similar to CL_main.cpp/blockUntilDuckstationIsOpen(), we need to
+//make the various includes for this file platform independent & change
+//socket impl as necessary.
+
 #include "DeferredMem.h"
 #include <WinSock2.h>
 #include <windows.h>
@@ -110,29 +114,35 @@ void recvThread()
 	}
 }
 
-/*
-* I'm not sure if I understand the PINE api quite correctly, but it might be possible
-* to queue and batch read/write commands (which would probably be good).
+/* Relevant to read/writeMemorySegment
 *
-* send it out when the gigabuffer is full and/or X times per second.
+* It seems that the duckstation pine_server.cpp (see void PINEServer::PINESocket::ProcessCommandsInBuffer())
+* is written in such a way that if you send a bunch of "concatenated packets" in a single send, it's still handled well
+* & splits them up into their individual packets.
+*
+* However, this only works if https://github.com/stenzek/duckstation/pull/3230 is implemented.
+*
+* That means if we implement an algorithm to buffer everything, then send either
+* 1. when the buffer is full
+* 2. a minimum of X times per second (for latency)
+*
+* might reduce network traffic on localhost, which could be critical in high-throughput gameplay segments.
 */
+
+//static bool formulatePacket(char* resultBuf, size_t maxLen, int DSPINEMode, unsigned int addr = (unsigned int)nullptr, char* data)
+//{
+//
+//}
 
 void readMemorySegment(unsigned int addr, size_t len, char* buf)
 {
+	//TODO: mutex
 	while (outstandingReads > 0) { ; } //wait for no more recvs
 	constexpr unsigned int sendBufLen = 10;
 	constexpr unsigned int recvBufLen = 13;
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
 	//https://github.com/stenzek/duckstation/pull/3230
 
-	//ensure no outstanding recvs() (e.g., from writeMemorySegment)
-	//bc we don't want to confuse those recvs with recvs for this function
-	//since we're using tcp, we can increment a counter on write sends,
-	//and decriment it on write recvs, and just sit and wait until there
-	//are no outstanding recvs() (i.e., counter == 0)
-
-	//either make socket blocking again *or* find non-busy wait soln
-	//to wait for when recv() is ready to give us data
 	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
 	sendBuffer[0] = sendBufLen & 0xFF; //10 = packetSize
 	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //10 = packetSize
@@ -153,28 +163,20 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		
 		send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize	
 	}
-	//poll?
 	for (size_t i = 0; i < roundedLen; i += 8)
 	{
 		//recieve section
-		//int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-		//u_long mode = 0;
-		//if (ioctlsocket(dspineSocket, FIONBIO, &mode) == SOCKET_ERROR)
-		//{
-		//	printf("Unable to put the socket into blocking mode.\n");
-		//	exit(-42069);
-		//}
 		WSAPOLLFD fdarr = { 0 };
 		fdarr.fd = dspineSocket;
 		fdarr.events = POLLRDNORM;
-		WSAPoll(&fdarr, 1, -1);
+		WSAPoll(&fdarr, 1, -1); //blocks until we have some data ready
 		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
 		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
 			; //very good
 		else if (recvLen == SOCKET_ERROR)
 		{
 			if (recvLen < recvBufLen)
-				printf("recv returned less than required buffer length ");
+				printf("recv returned less than required buffer length "); //if this starts becoming a problem then we need recv in a buffer loop.
 			printf("recv BBB failed: %d\n", WSAGetLastError());
 		}
 		else
@@ -182,118 +184,156 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 		for (size_t c = 0; c < 8; c++)
 			if (i + c < len)
 				buf[i + c] = recieveBuffer[c + 5];
-		/*mode = 1;
-		if (ioctlsocket(dspineSocket, FIONBIO, &mode) == SOCKET_ERROR)
-		{
-			printf("Unable to put the socket into non-blocking mode.\n");
-			exit(-42069);
-		}*/
 	}
 }
 
 void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 {
-	constexpr unsigned int sendBufLen = 18;
-	//constexpr unsigned int recvBufLen = 5;
-	//TODO:
-	/*
-	* Make send non-blocking, and make recv's SOCKET_ERROR check &
-	* recieveBuffer[0] == 5 check happen on another thread.
-	*
-	* Write only needs to be fire & forget, and if a error does occur
-	* during this process, it's unrecoverable so we don't need it synced
-	*
-	* Unfortunately I don't see how this strategy can apply to readMemorySegment()
-	* since we actually need the recv() data right now.
-	*/
-
-	//ensure socket is set to non-blocking
-	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; //18 = packetSize
-	sendBuffer[0] = sendBufLen & 0xFF; //18 = packetSize
-	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //18 = packetSize
-	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //18 = packetSize
-	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //18 = packetSize
-	sendBuffer[4] = DSPINEMsgWrite64;
-	//char recieveBuffer[recvBufLen];
-	size_t whole = len - (len % 8);
-	for (size_t i = 0; i < whole; i += 8)
-	{ //8 byte transfer(s)
-		//send section
-		unsigned int offsetaddr = addr + i;
-
-		sendBuffer[5] = offsetaddr & 0xFF;
-		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[9] = buf[i + 0];
-		sendBuffer[10] = buf[i + 1];
-		sendBuffer[11] = buf[i + 2];
-		sendBuffer[12] = buf[i + 3];
-		sendBuffer[13] = buf[i + 4];
-		sendBuffer[14] = buf[i + 5];
-		sendBuffer[15] = buf[i + 6];
-		sendBuffer[16] = buf[i + 7];
-		outstandingReads++;
-		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
-	}
-	//recv should call back to a function that ensures 'very good' case, otherwise exit (unrecoverable).
-	//for (size_t i = 0; i < whole; i += 8)
-	//{
-	//	//recieve section
-	//	int recvLen = WSAEWOULDBLOCK;
-	//	while (recvLen == WSAEWOULDBLOCK)
-	//	{
-	//		//TODO: switch to non-busy waiting
-	//		//for somre reason theres a lot of conlicting opinions
-	//		//about poll, select and others.
-	//		recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-	//	}
-	//	if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-	//		; //very good
-	//	else if (recvLen == SOCKET_ERROR)
-	//	{
-	//		printf("recv failed: %d\n", WSAGetLastError());
-	//	}
-	//	else
-	//		exit(-69420); //could be caused by many things.
-	//}
-
-	//this section takes care of the leftover bit at the end that isn't divisible by 8.
-	//unfortunately, this implementation currently reads the existing 8-byte block, then just
-	//overwrites the leftover bit at the beginning of said 8-byte block, and recommits it.
-	//
-	//that means, for any call that isn't exactly a multiple of 8 bytes, will consist of
-	//n/8 (rounded down) api write calls, followed by 1 read call, followed by 1 more write call.
-	//the limiting behavior of this diminishes api-calls=O(~n), but for small n (which is most
-	//of the calls), it's more like api-calls=3*O(~n) (e.g., 15 bytes, one write, one read, one more write).
-	//
-	//It would be a lot better if the API supported larger memory batch copies, and it very well might,
-	//But for the life of me I can't find *good* and *ACCURATE* documentation on PINE.
-	//see DSPINE.h for some detail on the inaccuracy of the claims of the API.
-
-	size_t rem = (len % 8 == 0) ? 0 : (8 - (len % 8));
-	if (rem != 0) //this section needs testing
+	//This macro accounts & compensates for a bug present in duckstation that was fixed in
+	//https://github.com/stenzek/duckstation/pull/3230 versions of duckstation older than
+	//this will not function with this client without this option set to 1.
+	//(However, duckstations with this fix will have no issues with the fix applied).
+	//Set to 1 to enable the fix, set to 0 to disable it.
+	#define applyBufferFix 1
+	#define maxSendBufLen 17 * 50 //must be >= 34
+#if maxSendBufLen < 34
+#error maxSendBufLen must be at least 34
+#endif
+	char sendBuffer[maxSendBufLen]; //keep in mind this is on the stack
+	size_t sendBufPtr = 0;
+	size_t whole = len - (len % 8); //is a multiple of 8
+	size_t rem = len - whole; //whatever is left over.
+	for (size_t i = 0; i < whole; i += 8) //1 loop iter uses 17 bytes.
 	{
-		//TODO: change this to not require a read (writes only).
-		unsigned int offsetaddr = addr + whole;
-		readMemorySegment(offsetaddr, 8, &sendBuffer[9]);
-		sendBuffer[5] = offsetaddr & 0xFF;
-		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-		for (size_t i = 0; i < rem; i++)
-			sendBuffer[9 + i] = buf[whole + i];
-		outstandingReads++;
-		send(dspineSocket, sendBuffer, sendBufLen, 0); //18 = packetSize
-		//int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-		//if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen)
-		//	; //very good
-		//else if (recvLen == SOCKET_ERROR)
-		//{
-		//	printf("recv failed: %d\n", WSAGetLastError());
-		//}
-		//else
-		//	exit(-69420); //could be caused by many things.
+		sendBuffer[sendBufPtr + 0] = 17 & 0xFF;
+		sendBuffer[sendBufPtr + 1] = (17 >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 2] = (17 >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 3] = (17 >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite64;
+		unsigned int offsetaddr = addr + i;
+		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
+		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 9] = buf[i + 0];
+		sendBuffer[sendBufPtr + 10] = buf[i + 1];
+		sendBuffer[sendBufPtr + 11] = buf[i + 2];
+		sendBuffer[sendBufPtr + 12] = buf[i + 3];
+		sendBuffer[sendBufPtr + 13] = buf[i + 4];
+		sendBuffer[sendBufPtr + 14] = buf[i + 5];
+		sendBuffer[sendBufPtr + 15] = buf[i + 6];
+		sendBuffer[sendBufPtr + 16] = buf[i + 7];
+		sendBufPtr += 17;
+		outstandingReads++; //this line must come before send or race condition
+		if (sendBufPtr + 17 > maxSendBufLen)
+		{ //we're full, time to send.
+			int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
+			if (res != sendBufPtr)
+			{
+				if (res == SOCKET_ERROR)
+				{
+					exit(-69420);
+				}
+				else
+				{
+					//partial send???
+					exit(-69420);
+				}
+			}
+			sendBufPtr = 0;
+		}
+	}
+	int reqSize = ((rem & 4) != 0 ? 13 : 0) + ((rem & 2) != 0 ? 11 : 0) + ((rem & 1) != 0 ? 10 : 0);
+	if (sendBufPtr + reqSize > maxSendBufLen)
+	{ //we would be >=full if we did the rem sends.
+		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
+		if (res != sendBufPtr)
+		{
+			if (res == SOCKET_ERROR)
+			{
+				exit(-69420);
+			}
+			else
+			{
+				//partial send???
+				exit(-69420);
+			}
+		}
+		sendBufPtr = 0;
+	}
+	unsigned int offsetaddr = addr + whole;
+	//note: rem is [0-7] inclusive
+	//if all three of these run, sendBuffer must be at least 34 bytes.
+	if ((rem & 4) != 0) //we need a 4
+	{
+		int sz = 9 + 4;
+		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
+		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite32;
+		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
+		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
+		sendBuffer[sendBufPtr + 10] = buf[sendBufPtr + whole + 1];
+		sendBuffer[sendBufPtr + 11] = buf[sendBufPtr + whole + 2];
+		sendBuffer[sendBufPtr + 12] = buf[sendBufPtr + whole + 3];
+		outstandingReads++; //this line must come before send or race condition
+		offsetaddr += 4;
+		sendBufPtr += sz;
+	}
+	if ((rem & 2) != 0)
+	{
+		int sz = 9 + 2;
+		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
+		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite16;
+		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
+		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
+		sendBuffer[sendBufPtr + 10] = buf[sendBufPtr + whole + 1];
+		outstandingReads++; //this line must come before send or race condition
+		offsetaddr += 2;
+		sendBufPtr += sz;
+	}
+	if ((rem & 1) != 0)
+	{
+		int sz = 9 + 1;
+		sendBuffer[sendBufPtr + 0] = sz & 0xFF;
+		sendBuffer[sendBufPtr + 1] = (sz >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 2] = (sz >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 3] = (sz >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 4] = DSPINEMsgWrite8;
+		sendBuffer[sendBufPtr + 5] = offsetaddr & 0xFF;
+		sendBuffer[sendBufPtr + 6] = (offsetaddr >> 8) & 0xFF;
+		sendBuffer[sendBufPtr + 7] = (offsetaddr >> 16) & 0xFF;
+		sendBuffer[sendBufPtr + 8] = (offsetaddr >> 24) & 0xFF;
+		sendBuffer[sendBufPtr + 9] = buf[sendBufPtr + whole + 0];
+		outstandingReads++; //this line must come before send or race condition
+		offsetaddr += 1;
+		sendBufPtr += sz;
+	}
+	if (sendBufPtr != 0)
+	{
+		int res = send(dspineSocket, sendBuffer, sendBufPtr + applyBufferFix, 0);
+		if (res != sendBufPtr)
+		{
+			if (res == SOCKET_ERROR)
+			{
+				exit(-69420);
+			}
+			else
+			{
+				//partial send???
+				exit(-69420);
+			}
+		}
 	}
 }
 
