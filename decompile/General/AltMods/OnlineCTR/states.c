@@ -206,8 +206,11 @@ void StatePS1_Lobby_WaitForLoading()
 		FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
+static bool initRace = true;
+
 void StatePS1_Lobby_StartLoading()
 {
+	initRace = true;
 	PrintCharacterStats();
 	PrintRecvTrack();
 
@@ -295,7 +298,6 @@ static void Ghostify()
 
 extern struct CheckpointTracker checkpointTracker[8];
 extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
-static bool initRace = true;
 extern int bestLap;
 
 static void OnRaceInit()
@@ -348,7 +350,7 @@ void StatePS1_Game_WaitForRace()
 
 	DECOMP_RECTMENU_DrawInnerRect(
 		&drawTimeRECT, 1, gGT->backBuffer->otMem.startPlusFour);
-		
+
 	for(i = 0; i < 8; i++)
 	{
 		octr->Shoot[i].boolNow = 0;
@@ -361,26 +363,26 @@ void StatePS1_Game_StartRace()
 {
 	int i;
 	Ghostify();
-	
+
 	for(i = 1; i < 8; i++)
 	{
 		if(octr->Shoot[i].boolNow != 0)
 		{
 			octr->Shoot[i].boolNow = 0;
-			
+
 			struct Driver* d = sdata->gGT->drivers[i];
-			
+
 			if(octr->Shoot[i].boolJuiced)
 				d->numWumpas = 10;
-			
+
 			d->heldItemID = octr->Shoot[i].Weapon;
-			
+
 			// copy/paste from ShootOnCirclePress
 			int weapon;
 			weapon = d->heldItemID;
-		
+
 			// Missiles and Bombs share code,
-			// Change Bomb1x, Bomb3x, Missile3x, to Missile1x	
+			// Change Bomb1x, Bomb3x, Missile3x, to Missile1x
 			if(
 				(weapon == 1) ||
 				(weapon == 10) ||
@@ -389,10 +391,10 @@ void StatePS1_Game_StartRace()
 			{
 				weapon = 2;
 			}
-			
+
 			DECOMP_VehPickupItem_ShootNow(
-				d, 
-				weapon, 
+				d,
+				weapon,
 				octr->Shoot[i].flags);
 		}
 	}
@@ -400,5 +402,4 @@ void StatePS1_Game_StartRace()
 
 void StatePS1_Game_EndRace()
 {
-	initRace = true;
 }

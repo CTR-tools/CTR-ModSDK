@@ -214,8 +214,8 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				#ifdef USE_ONLINE
 				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
-				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
-				DECOMP_UI_JumpMeter_Draw(hudStructPtr[8].x + offset + 17, hudStructPtr[8].y - 7, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y + 3, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[8].x + offset + 18, hudStructPtr[8].y - 7, playerStruct);
 				DECOMP_UI_DrawSpeedBG();
 				#else
 				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
@@ -232,7 +232,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				if ((gameMode1 & BATTLE_MODE) == 0)
 				{
 					#ifdef USE_ONLINE
-					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y, playerStruct);
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y + 3, playerStruct);
 					#else
 					// Draw powerslide meter
 					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset, hudStructPtr[8].y, playerStruct);

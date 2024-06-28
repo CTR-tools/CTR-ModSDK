@@ -53,6 +53,10 @@
 #define WIDE_PICK(x,y) (x)
 #endif
 
+#ifdef USE_ONLINE
+extern int driverReserves;
+#endif
+
 #ifndef REBUILD_PC
 #include <gccHeaders.h>
 #endif
