@@ -48,12 +48,18 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c">
       <Filter>Source Files\enet</Filter>
     </ClCompile>
+    <ClCompile Include="DeferredMem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="DSPINE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeferredMem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

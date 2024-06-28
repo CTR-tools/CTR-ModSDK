@@ -158,9 +158,11 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\unix.c" />
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c" />
     <ClCompile Include="CL_main.cpp" />
+    <ClCompile Include="DeferredMem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h" />
+    <ClInclude Include="DeferredMem.h" />
     <ClInclude Include="DSPINE.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

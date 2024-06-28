@@ -905,16 +905,19 @@ void SendEverything()
 	cg.type = CG_RACEDATA;
 
 	// === Buttons ===
-	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096804 + 0x10) & 0xffffff);
+	unsigned int addr = (unsigned int)(*ptr.get());
+	ps1ptr<int> hold = pBuf.at<int>(addr);
 
 	// ignore Circle/L2
-	hold &= ~(0xC0);
+	(*hold.get()) &= ~(0xC0);
 
 	// put L1/R1 into one byte
-	if ((hold & 0x400) != 0) hold |= 0x40;
-	if ((hold & 0x800) != 0) hold |= 0x80;
+	if (((*hold.get()) & 0x400) != 0) (*hold.get()) |= 0x40;
+	if (((*hold.get()) & 0x800) != 0) (*hold.get()) |= 0x80;
 
-	cg.buttonHold = (unsigned char)hold;
+	cg.buttonHold = (unsigned char)(*hold.get());
 
 	// === Position ===
 	int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
@@ -923,6 +926,11 @@ void SendEverything()
 	// lossless compression, bottom byte is never used,
 	// cause psx renders with 3 bytes, and top byte
 	// is never used due to world scale (just pure luck)
+	// Addendum by TheUbMunster:
+	// once custom tracks start to become a thing, if they
+	// ever use "world scale", this should probably be applied
+	// on a track-by-track basis.
+
 	cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
 	cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
 	cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
@@ -968,14 +976,17 @@ void StatePC_Game_WaitForRace()
 {
 	ProcessNewMessages();
 
-	int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
+	//int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
+	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x0) & 0xffffff);
+	unsigned int addr = (unsigned int)(*ptr.get());
+	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>(addr);
 
 	if (
 		// only send once
 		(!boolAlreadySent_StartRace) &&
 
 		// after camera fly-in is done
-		((gGT_gameMode1 & 0x40) == 0)
+		(((*gGT_gameMode1.get()) & 0x40) == 0)
 		)
 	{
 		StopAnimation();
@@ -995,15 +1006,27 @@ void StatePC_Game_StartRace()
 	ProcessNewMessages();
 	SendEverything();
 
-	int gGT_levelID =
-		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
+	/*int gGT_levelID =
+		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
+	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1a10) & 0xffffff);
+	unsigned int addr = (unsigned int)(*ptr.get());
+	ps1ptr<int> gGT_levelID = pBuf.at<int>(addr);
 
+	octr.refresh();
 	// Friday demo mode camera
-	if (octr->special == 3)
-		if (gGT_levelID < 18)
-			*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
+	if (octr.get()->special == 3)
+		if ((*gGT_levelID.get()) < 18)
+		{
+			//*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
+			ps1ptr<short*> ptr = pBuf.at<short*>((0x80098028) & 0xffffff);
+			unsigned int addr = (unsigned int)(*ptr.get());
+			ps1ptr<short> val = pBuf.at<short>(addr);
+			val = 0x20;
+			val.commit();
+		}
 }
 
+//imo all includes should go at the top
 #include <time.h>
 clock_t timeStart;
 void StatePC_Game_EndRace()
@@ -1014,24 +1037,29 @@ void StatePC_Game_EndRace()
 	{
 		boolAlreadySent_EndRace = 1;
 
-		int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-		psxPtr &= 0xffffff;
+		//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
+		ps1ptr<int*> ptr = pBuf.at<int*>(0x8009900c & 0xffffff);
+		unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
+		ps1ptr<int> psxPtr = pBuf.at<int>(addr);
+
+		(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 		CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
-
-		//char* aa = &pBuf[psxPtr + 0x514]; //deref game mem
-		char aa[4] = { 0,0,0,0 };
-		readMemorySegment(pBufAddress + psxPtr + 0x514, 4, aa);
-
-		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
+		cg.size = sizeof(CG_MessageEndRace);
+		
+		ps1ptr<int*> timePtr = pBuf.at<int*>((*psxPtr.get()) + 0x514);
+		ps1ptr<int> time = pBuf.at<int>((unsigned int)(*timePtr.get()));
+		memcpy(&cg.time[0], &(*time.get()), 3);
 
 		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
 
 		// end race for yourself
-		octr->RaceEnd[octr->numDriversEnded].slot = 0;
-		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
-		octr->numDriversEnded++;
+		octr.refresh();
+		(octr.get())->RaceEnd[(octr.get())->numDriversEnded].slot = 0;
+		(octr.get())->RaceEnd[(octr.get())->numDriversEnded].time = (*time.get());
+		(octr.get())->numDriversEnded++;
+		octr.commit();
 
 		// if you finished last
 		timeStart = clock();
@@ -1039,9 +1067,10 @@ void StatePC_Game_EndRace()
 
 	int numDead = 0;
 
-	for (int i = 0; i < octr->NumDrivers; i++)
+	for (int i = 0; i < (octr.get())->NumDrivers; i++)
 	{
-		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
+		if ((octr.get())->nameBuffer[i * 0xC] == 0)
+			numDead++; //what is this used for?
 	}
 }
 
@@ -1196,6 +1225,7 @@ int main()
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		//octr->windowsClientSync[0]++;
+		octr.refresh();
 		(*octr.get()).windowsClientSync[0]++;
 		octr.commit();
 
@@ -1208,7 +1238,7 @@ int main()
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
-		void FrameStall(); FrameStall();
+		void FrameStall(); FrameStall(); //wtf is this forward declaration
 	}
 
 	printf("\n");
@@ -1231,16 +1261,21 @@ void usleep(__int64 usec)
 #endif
 
 #pragma optimize("", off)
-int gGT_timer = 0;
+int gGT_timer = 0; //imo this should be a static local var in FrameStall()
 
 void FrameStall()
 {
 	// wait for next frame
-	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
+	ps1ptr<int*> ptr = pBuf.at<int*>((0x80096b20 + 0x1cf8) & 0xffffff);
+	unsigned int addr = (unsigned int)(*ptr.get()); //presumably the address the pointer points to doesn't change?
+	ps1ptr<int> val = pBuf.at<int>(addr);
+	while (gGT_timer == (*val.get()))
 	{
 		usleep(1);
+		val.refresh();
 	}
+	val.refresh();
 
-	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
+	gGT_timer = (*val.get());
 }
 #pragma optimize("", on)
