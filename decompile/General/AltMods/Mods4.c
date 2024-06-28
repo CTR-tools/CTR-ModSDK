@@ -1,9 +1,7 @@
 #include <common.h>
 
 #ifdef USE_ONLINE
-#include "OnlineCTR/names3d.c"
-
-void statsUpgrade()
+void StatsUpgrade()
 {
 	/*
 		Stat 9 is acceleration,
@@ -25,7 +23,7 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	struct GameTracker * gGT = sdata->gGT;
 
 	short fullHeight = 3;
-	int fullWidth = WIDE_PICK(0x31, 0x25);
+	int fullWidth = WIDE_34(49);
 
 	short meterLength = ((driver->reserves * 0xE)/0x960);
 	if ((meterLength > fullWidth) || (driver->reserves < 0)) { meterLength = fullWidth; }

@@ -89,8 +89,8 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		#else
 		*(u_int *)&p->r0 = 0x28ffffff;
 		#endif
-		p->x1 = posX + WIDE_34(0xe);
-		p->x3 = posX + WIDE_34(0xe);
+		p->x1 = posX + WIDE_34(13);
+		p->x3 = posX + WIDE_34(13);
 		p->x0 = box.x;
 		p->y0 = box.y;
 		p->y1 = box.y;

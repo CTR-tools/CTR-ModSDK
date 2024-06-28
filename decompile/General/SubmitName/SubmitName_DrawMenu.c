@@ -190,7 +190,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 	// subtract 1/8 from r.x
 	// subtract 1/4 from r.w
 	r.x = WIDE_PICK(32, 88);
-	r.w = WIDE_PICK(448, 336);
+	r.w = WIDE_34(448);
 
 	r.y = 62;
 	r.h = 2;

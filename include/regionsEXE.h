@@ -3635,7 +3635,8 @@ struct sData
 
 #else // had to, we were desperate
 
-		short UV;
+		unsigned char u;
+		unsigned char v;
 		short padding[3];
 
 #endif
