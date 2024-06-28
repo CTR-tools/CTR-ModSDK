@@ -1,9 +1,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <WinSock2.h>
 
 #ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
-	#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #endif
 
 #include <winsock2.h>
@@ -11,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <Psapi.h>
 
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -19,169 +19,10 @@
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
-#include "DSPINE.h"
+#include "DeferredMem.h"
 
-unsigned int pBufAddress;
-unsigned int octrAddress;
-
-SOCKET dspineSocket;
-
-SOCKET getSocket() //every call to getSocket should be bookmatched by a call to closeSocket.
-{
-	//https://learn.microsoft.com/en-us/windows/win32/winsock/creating-a-basic-winsock-application
-	WSADATA wsadata;
-	int ires;
-	ires = WSAStartup(MAKEWORD(2, 2), &wsadata);
-	if (ires != 0)
-	{
-		printf("WSAStartup failed with code: %d\n", ires);
-		return;
-	}
-	struct addrinfo *result = NULL, *ptr = NULL, hints;
-	ZeroMemory(&hints, sizeof(hints));
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = IPPROTO_TCP;
-	ires = getaddrinfo("localhost", "28011", &hints, &result); //DS PINE
-	if (ires != 0)
-	{
-		printf("getaddrinfo failed with code: %d\n", ires);
-		WSACleanup();
-		return;
-	}
-	SOCKET sock = INVALID_SOCKET;
-	ptr = result;
-	sock = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
-	if (sock == INVALID_SOCKET)
-	{
-		printf("Error at socket(): %ld\n", WSAGetLastError());
-		freeaddrinfo(result);
-		WSACleanup();
-		return;
-	}
-	ires = connect(sock, ptr->ai_addr, (int)ptr->ai_addrlen);
-	if (ires == SOCKET_ERROR)
-	{
-		closesocket(sock);
-		printf("Error trying to connect socket: %ld\n", WSAGetLastError());
-		sock = INVALID_SOCKET;
-	}
-	freeaddrinfo(result);
-	if (sock == INVALID_SOCKET)
-	{
-		printf("Unable to connect to DuckStation PINE!\n");
-		WSACleanup();
-		return 1;
-	}
-	else
-		printf("DuckStation PINE socket acquired.\n");
-	return sock;
-}
-
-void closeSocket(SOCKET* socket) //should be preceded by a call to getSocket
-{
-	if (*socket != INVALID_SOCKET)
-		closeSocket(socket);
-	WSACleanup();
-}
-
-void readMemorySegment(unsigned int addr, size_t len, char* buf)
-{
-	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
-	//https://github.com/stenzek/duckstation/pull/3230
-
-	char sendBuffer[10] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
-	sendBuffer[0] = 10 & 0xFF; //10 = packetSize
-	sendBuffer[1] = (10 >> 8) & 0xFF; //10 = packetSize
-	sendBuffer[2] = (10 >> 16) & 0xFF; //10 = packetSize
-	sendBuffer[3] = (10 >> 24) & 0xFF; //10 = packetSize
-	sendBuffer[4] = DSPINEMsgRead64;
-	char recieveBuffer[13];
-	size_t roundedLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
-	for (size_t i = 0; i < roundedLen; i += 8)
-	{ //8 byte transfer(s)
-		unsigned int offsetaddr = addr + i;
-
-		sendBuffer[5] = offsetaddr & 0xFF;
-		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-
-		send(dspineSocket, sendBuffer, 10, 0); //10 = packetSize
-		int recvLen = recv(dspineSocket, recieveBuffer, 13, 0);
-		if (recvLen == 13 && recieveBuffer[0] == 13)
-			; //very good
-		else if (recvLen == SOCKET_ERROR)
-		{
-			printf("recv failed: %d\n", WSAGetLastError());
-		}
-		else
-			exit(-69420); //could be caused by many things.
-		for (size_t c = 0; c < 8; c++)
-			if (i + c < len)
-				buf[i + c] = recieveBuffer[c + 5];
-	}
-}
-
-void writeMemorySegment(unsigned int addr, size_t len, char* buf)
-{
-	char sendBuffer[18] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; //18 = packetSize
-	sendBuffer[0] = 18 & 0xFF; //18 = packetSize
-	sendBuffer[1] = (18 >> 8) & 0xFF; //18 = packetSize
-	sendBuffer[2] = (18 >> 16) & 0xFF; //18 = packetSize
-	sendBuffer[3] = (18 >> 24) & 0xFF; //18 = packetSize
-	sendBuffer[4] = DSPINEMsgWrite64;
-	char recieveBuffer[100]; //idk
-	size_t whole = len - (len % 8);
-	for (size_t i = 0; i < whole; i += 8)
-	{ //8 byte transfer(s)
-		unsigned int offsetaddr = addr + i;
-
-		sendBuffer[5] = offsetaddr & 0xFF;
-		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-		sendBuffer[9] = buf[i + 0];
-		sendBuffer[10] = buf[i + 1];
-		sendBuffer[11] = buf[i + 2];
-		sendBuffer[12] = buf[i + 3];
-		sendBuffer[13] = buf[i + 4];
-		sendBuffer[14] = buf[i + 5];
-		sendBuffer[15] = buf[i + 6];
-		sendBuffer[16] = buf[i + 7];
-
-		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
-		int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
-		if (recvLen == 5 && recieveBuffer[0] == 5)
-			; //very good
-		else if (recvLen == SOCKET_ERROR)
-		{
-			printf("recv failed: %d\n", WSAGetLastError());
-		}
-		else
-			exit(-69420); //could be caused by many things.
-	}
-	size_t rem = (len % 8 == 0) ? 0 : (8 - (len % 8));
-	unsigned int offsetaddr = addr + whole;
-	readMemorySegment(offsetaddr, 8, &buf[9]);
-	sendBuffer[5] = offsetaddr & 0xFF;
-	sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-	sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-	sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-	send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
-	int recvLen = recv(dspineSocket, recieveBuffer, 100, 0);
-	if (recvLen == 5 && recieveBuffer[0] == 5)
-		; //very good
-	else if (recvLen == SOCKET_ERROR)
-	{
-		printf("recv failed: %d\n", WSAGetLastError());
-	}
-	else
-		exit(-69420); //could be caused by many things.
-}
-
-//char *pBuf; //raw emu memory I think
-//struct OnlineCTR* octr; //structure created within raw emu memory I think
+char* pBuf;
+ OnlineCTR* octr;
 
 int buttonPrev[8] = { 0 };
 char name[100];
@@ -217,87 +58,77 @@ void sendToHostReliable(const void* data, size_t size) {
 
 void ProcessReceiveEvent(ENetPacket* packet)
 {
-	struct SG_Header* recvBuf = packet->data;
+	SG_Header* recvBuf = reinterpret_cast<SG_Header*>(packet->data);
 	int slot;
 
 	//printf("received packet with type %i\n",((struct SG_Header*)recvBuf)->type);
 	// switch will compile into a jmp table, no funcPtrs needed
-	switch (((struct SG_Header*)recvBuf)->type)
+	switch (((SG_Header*)recvBuf)->type)
 	{
-		case SG_ROOMS:
+	case SG_ROOMS:
+	{
+		SG_MessageRooms* r = reinterpret_cast<SG_MessageRooms*>(recvBuf);
+
+		octr->ver_pc = VERSION;
+		octr->ver_server = r->version;
+
+		if (r->version != VERSION)
 		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
-
-			struct SG_MessageRooms* r = recvBuf;
-
-			octr->ver_pc = VERSION;
-			octr->ver_server = r->version;
-
-			if (r->version != VERSION)
-			{
-				octr->CurrState = LAUNCH_ERROR;
-				return;
-			}
-
-			if (octr->ver_psx != VERSION)
-			{
-				octr->CurrState = LAUNCH_ERROR;
-				return;
-			}
-
-			// reopen the room menu,
-			// either first time getting rooms,
-			// or refresh after joining refused
-			octr->serverLockIn2 = 0;
-
-			octr->numRooms = r->numRooms;
-			
-			octr->clientCount[0x0] = r->numClients01;
-			octr->clientCount[0x1] = r->numClients02;
-			octr->clientCount[0x2] = r->numClients03;
-			octr->clientCount[0x3] = r->numClients04;
-			octr->clientCount[0x4] = r->numClients05;
-			octr->clientCount[0x5] = r->numClients06;
-			octr->clientCount[0x6] = r->numClients07;
-			octr->clientCount[0x7] = r->numClients08;
-			octr->clientCount[0x8] = r->numClients09;
-			octr->clientCount[0x9] = r->numClients10;
-			octr->clientCount[0xa] = r->numClients11;
-			octr->clientCount[0xb] = r->numClients12;
-			octr->clientCount[0xc] = r->numClients13;
-			octr->clientCount[0xd] = r->numClients14;
-			octr->clientCount[0xe] = r->numClients15;
-			octr->clientCount[0xf] = r->numClients16;
-
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-			break;
+			octr->CurrState = LAUNCH_ERROR;
+			return;
 		}
 
-		// Assigned to room
-		case SG_NEWCLIENT:
+		if (octr->ver_psx != VERSION)
 		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
+			octr->CurrState = LAUNCH_ERROR;
+			return;
+		}
 
-			struct SG_MessageClientStatus* r = recvBuf;
+		// reopen the room menu,
+		// either first time getting rooms,
+		// or refresh after joining refused
+		octr->serverLockIn2 = 0;
 
-			octr->DriverID = r->clientID;
-			octr->NumDrivers = r->numClientsTotal;
+		octr->numRooms = r->numRooms;
+
+		octr->clientCount[0x0] = r->numClients01;
+		octr->clientCount[0x1] = r->numClients02;
+		octr->clientCount[0x2] = r->numClients03;
+		octr->clientCount[0x3] = r->numClients04;
+		octr->clientCount[0x4] = r->numClients05;
+		octr->clientCount[0x5] = r->numClients06;
+		octr->clientCount[0x6] = r->numClients07;
+		octr->clientCount[0x7] = r->numClients08;
+		octr->clientCount[0x8] = r->numClients09;
+		octr->clientCount[0x9] = r->numClients10;
+		octr->clientCount[0xa] = r->numClients11;
+		octr->clientCount[0xb] = r->numClients12;
+		octr->clientCount[0xc] = r->numClients13;
+		octr->clientCount[0xd] = r->numClients14;
+		octr->clientCount[0xe] = r->numClients15;
+		octr->clientCount[0xf] = r->numClients16;
+
+		break;
+	}
+
+	// Assigned to room
+	case SG_NEWCLIENT:
+	{
+		SG_MessageClientStatus* r = reinterpret_cast<SG_MessageClientStatus*>(recvBuf);
+
+		octr->DriverID = r->clientID;
+		octr->NumDrivers = r->numClientsTotal;
 
 			// default, disable cheats
 			*(int*)&pBuf[0x80096b28 & 0xffffff] &=
 				~(0x100000 | 0x80000 | 0x400 | 0x400000);
 
-			// odd-numbered index == even-number room
-			// Index 1, 3, 5 -> Room 2, 4, 6
-			if (octr->serverRoom & 1)
-				r->special = 0;
+		// odd-numbered index == even-number room
+		// Index 1, 3, 5 -> Room 2, 4, 6
+		if (octr->serverRoom & 1)
+			r->special = 0;
 
-			octr->special = r->special;
+		octr->special = r->special;
 
 #if 1
 			// need to print, or compiler optimization throws this all away
@@ -323,223 +154,184 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			memset(&octr->nameBuffer[0], 0, 0xC*8); //deref game mem
 			memset(&octr->RaceEnd[0], 0, 8*8); //deref game mem
 
-			// reply to server with your name
-			*(int*)&octr->nameBuffer[0] = *(int*)&name[0]; //deref game mem
-			*(int*)&octr->nameBuffer[4] = *(int*)&name[4]; //deref game mem
-			*(int*)&octr->nameBuffer[8] = *(int*)&name[8]; //deref game mem
+		// reply to server with your name
+		*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
+		*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
+		*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
 
 			struct CG_MessageName m = { 0 };
 			m.type = CG_NAME;
 			memcpy(&m.name[0], &name[0], 0xC);
 			sendToHostReliable(&m, sizeof(struct CG_MessageName));
 
-			// choose to get host menu or guest menu
-			octr->CurrState = LOBBY_ASSIGN_ROLE;
+		// choose to get host menu or guest menu
+		octr->CurrState = LOBBY_ASSIGN_ROLE;
+		break;
+	}
 
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
+	case SG_NAME:
+	{
+		SG_MessageName* r = reinterpret_cast<SG_MessageName*>(recvBuf);
 
-			break;
-		}
+		int clientID = r->clientID;
+		if (clientID == octr->DriverID) break;
+		if (clientID < octr->DriverID) slot = clientID + 1;
+		if (clientID > octr->DriverID) slot = clientID;
 
-		case SG_NAME:
+		octr->NumDrivers = r->numClientsTotal;
+
+		memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
+
+		// handle disconnection
+		if (r->name[0] == 0)
 		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
-
-			struct SG_MessageName* r = recvBuf;
-
-			int clientID = r->clientID;
-			if (clientID == octr->DriverID) break;
-			if (clientID < octr->DriverID) slot = clientID + 1;
-			if (clientID > octr->DriverID) slot = clientID;
-
-			octr->NumDrivers = r->numClientsTotal;
-
-			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12); //deref game mem
-
-			// handle disconnection
-			if (r->name[0] == 0)
-			{
-				// make this player hold SQUARE
-				struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
-				pad->buttonsHeldCurrFrame = 0x20;
-				pad->buttonsTapped = 0;
-				pad->buttonsReleased = 0;
-				pad->buttonsHeldPrevFrame = 0x20;
-			}
-
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-			break;
+			// make this player hold SQUARE
+			 Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
+			pad->buttonsHeldCurrFrame = 0x20;
+			pad->buttonsTapped = 0;
+			pad->buttonsReleased = 0;
+			pad->buttonsHeldPrevFrame = 0x20;
 		}
 
-		case SG_TRACK:
+		break;
+	}
+
+	case SG_TRACK:
+	{
+		SG_MessageTrack* r = reinterpret_cast<SG_MessageTrack*>(recvBuf);
+
+		// 1,3,5,7
+		int numLaps = (r->lapID * 2) + 1;
+
+		if (r->lapID == 4) numLaps = 30;
+		if (r->lapID == 5) numLaps = 60;
+		if (r->lapID == 6) numLaps = 90;
+		if (r->lapID == 7) numLaps = 120;
+
+		// set sdata->gGT->numLaps
+		*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
+
+		octr->levelID = r->trackID;
+		octr->CurrState = LOBBY_CHARACTER_PICK;
+
+		break;
+	}
+
+	case SG_CHARACTER:
+	{
+		SG_MessageCharacter* r = reinterpret_cast<SG_MessageCharacter*>(recvBuf);
+
+		int clientID = r->clientID;
+		int characterID = r->characterID;
+
+		if (clientID == octr->DriverID) break;
+		if (clientID < octr->DriverID) slot = clientID + 1;
+		if (clientID > octr->DriverID) slot = clientID;
+
+		*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
+		octr->boolLockedInCharacters[clientID] = r->boolLockedIn;
+
+		break;
+	}
+
+	case SG_STARTLOADING:
+	{
+		// variable reuse, wait a few frames,
+		// so screen updates with green names
+		octr->CountPressX = 0;
+		octr->CurrState = LOBBY_START_LOADING;
+
+		break;
+	}
+
+	case SG_STARTRACE:
+	{
+		octr->CurrState = GAME_START_RACE;
+
+		break;
+	}
+
+	case SG_RACEDATA:
+	{
+		// wait for drivers to be initialized
+		if (octr->CurrState < GAME_WAIT_FOR_RACE)
+			break;
+
+		int sdata_Loading_stage =
+			*(int*)&pBuf[0x8008d0f8 & 0xffffff];
+
+		if (sdata_Loading_stage != -1)
+			break;
+
+		SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
+
+		int clientID = r->clientID;
+		if (clientID == octr->DriverID) break;
+		if (clientID < octr->DriverID) slot = clientID + 1;
+		if (clientID > octr->DriverID) slot = clientID;
+
+		int curr = r->buttonHold;
+
+		// sneak L1/R1 into one byte,
+		// remove Circle/L2
+
+		if ((curr & 0x40) != 0)
 		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
-
-			struct SG_MessageTrack* r = recvBuf;
-
-			// 1,3,5,7
-			int numLaps = (r->lapID * 2) + 1;
-			
-			if(r->lapID == 4) numLaps = 30;
-			if(r->lapID == 5) numLaps = 60;
-			if(r->lapID == 6) numLaps = 90;
-			if(r->lapID == 7) numLaps = 120;
-
-			// set sdata->gGT->numLaps
-			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-			
-			octr->levelID = r->trackID;
-			octr->CurrState = LOBBY_CHARACTER_PICK;
-
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-			break;
+			curr &= ~(0x40);
+			curr |= 0x400;
 		}
 
-		case SG_CHARACTER:
+		if ((curr & 0x80) != 0)
 		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
-
-			struct SG_MessageCharacter* r = recvBuf;
-
-			int clientID = r->clientID;
-			int characterID = r->characterID;
-
-			if (clientID == octr->DriverID) break;
-			if (clientID < octr->DriverID) slot = clientID + 1;
-			if (clientID > octr->DriverID) slot = clientID;
-
-			*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-			octr->boolLockedInCharacters[clientID] = r->boolLockedIn;
-
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-			break;
-		}
-      
-		case SG_STARTLOADING:
-		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
-
-			// variable reuse, wait a few frames,
-			// so screen updates with green names
-			octr->CountPressX = 0;
-			octr->CurrState = LOBBY_START_LOADING;
-
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-			break;
+			curr &= ~(0x80);
+			curr |= 0x800;
 		}
 
-		case SG_STARTRACE:
-		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
+		int prev = buttonPrev[slot];
 
-			octr->CurrState = GAME_START_RACE;
+		// tapped
+		int tap = ~prev & curr;
 
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
+		// released
+		int rel = prev & ~curr;
 
-			break;
-		}
+		Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
+		pad->buttonsHeldCurrFrame = curr;
+		pad->buttonsTapped = tap;
+		pad->buttonsReleased = rel;
+		pad->buttonsHeldPrevFrame = prev;
 
-		case SG_RACEDATA:
-		{
-			char octrbuf[sizeof(struct OnlineCTR)];
-			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-			struct OnlineCTR* octr = &(octrbuf[0]);
+		// In this order: Up, Down, Left, Right
+		if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
+		else if ((pad->buttonsHeldCurrFrame & 2) != 0) pad->stickLY = 0xFF;
+		else pad->stickLY = 0x80;
 
-			// wait for drivers to be initialized
-			if (octr->CurrState < GAME_WAIT_FOR_RACE)
-				break;
+		if ((pad->buttonsHeldCurrFrame & 4) != 0) pad->stickLX = 0;
+		else if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;
+		else pad->stickLX = 0x80;
 
-			int sdata_Loading_stage =
-				*(int*)&pBuf[0x8008d0f8 & 0xffffff];
+		buttonPrev[slot] = curr;
 
-			if (sdata_Loading_stage != -1)
-				break;
+		int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
+		psxPtr &= 0xffffff;
 
-			struct SG_EverythingKart* r = recvBuf;
+		// lossless compression, bottom byte is never used,
+		// cause psx renders with 3 bytes, and top byte
+		// is never used due to world scale (just pure luck)
+		*(int*)&pBuf[psxPtr + 0x2d4] = ((int)r->posX) * 256;
+		*(int*)&pBuf[psxPtr + 0x2d8] = ((int)r->posY) * 256;
+		*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
 
-			int clientID = r->clientID;
-			if (clientID == octr->DriverID) break;
-			if (clientID < octr->DriverID) slot = clientID + 1;
-			if (clientID > octr->DriverID) slot = clientID;
+		int angle =
+			(r->kartRot1) |
+			(r->kartRot2 << 5);
 
-			int curr = r->buttonHold;
+		angle &= 0xfff;
 
-			// sneak L1/R1 into one byte,
-			// remove Circle/L2
+		*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
 
-			if ((curr & 0x40) != 0)
-			{
-				curr &= ~(0x40);
-				curr |= 0x400;
-			}
-
-			if ((curr & 0x80) != 0)
-			{
-				curr &= ~(0x80);
-				curr |= 0x800;
-			}
-
-			int prev = buttonPrev[slot];
-
-			// tapped
-			int tap = ~prev & curr;
-
-			// released
-			int rel = prev & ~curr;
-
-			struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
-			pad->buttonsHeldCurrFrame = curr;
-			pad->buttonsTapped = tap;
-			pad->buttonsReleased = rel;
-			pad->buttonsHeldPrevFrame = prev;
-
-			// In this order: Up, Down, Left, Right
-			if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
-			else if ((pad->buttonsHeldCurrFrame & 2) != 0) pad->stickLY = 0xFF;
-			else pad->stickLY = 0x80;
-
-			if ((pad->buttonsHeldCurrFrame & 4) != 0) pad->stickLX = 0;
-			else if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;
-			else pad->stickLX = 0x80;
-
-			buttonPrev[slot] = curr;
-
-			int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-			psxPtr &= 0xffffff;
-
-			// lossless compression, bottom byte is never used,
-			// cause psx renders with 3 bytes, and top byte
-			// is never used due to world scale (just pure luck)
-			*(int*)&pBuf[psxPtr + 0x2d4] = ((int)r->posX) * 256;
-			*(int*)&pBuf[psxPtr + 0x2d8] = ((int)r->posY) * 256;
-			*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
-
-			int angle =
-				(r->kartRot1) |
-				(r->kartRot2 << 5);
-
-			angle &= 0xfff;
-
-			*(short*)&pBuf[psxPtr + 0x39a] = (short)angle;
-
-			//writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf); //octr is not being written to.
-
-			break;
-		}
+		break;
+	}
 
 		case SG_WEAPON:
 		{
@@ -564,41 +356,33 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 			struct OnlineCTR* octr = &(octrbuf[0]);
 
-			struct SG_MessageEndRace* r = recvBuf;
+		int clientID = r->clientID;
+		if (clientID == octr->DriverID) break;
+		if (clientID < octr->DriverID) slot = clientID + 1;
+		if (clientID > octr->DriverID) slot = clientID;
 
-			int clientID = r->clientID;
-			if (clientID == octr->DriverID) break;
-			if (clientID < octr->DriverID) slot = clientID + 1;
-			if (clientID > octr->DriverID) slot = clientID;
+		// make this player hold SQUARE
+		Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
+		pad->buttonsHeldCurrFrame = 0x20;
+		pad->buttonsTapped = 0;
+		pad->buttonsReleased = 0;
+		pad->buttonsHeldPrevFrame = 0x20;
 
-			// make this player hold SQUARE
-			struct Gamepad* pad = &pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff];
-			pad->buttonsHeldCurrFrame = 0x20;
-			pad->buttonsTapped = 0;
-			pad->buttonsReleased = 0;
-			pad->buttonsHeldPrevFrame = 0x20;
+		octr->RaceEnd[octr->numDriversEnded].slot = slot;
+		memcpy(&octr->RaceEnd[octr->numDriversEnded].time, &r->time[0], 3);
+		octr->numDriversEnded++;
 
-			octr->RaceEnd[octr->numDriversEnded].slot = slot;
-			memcpy(&octr->RaceEnd[octr->numDriversEnded].time, &r->time[0], 3);
-			octr->numDriversEnded++;
-
-			//writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf); //octr is not being written to.
-
-			break;
-		}
+		break;
+	}
 
 	default:
 		break;
 	}
-	
+
 }
 
 void ProcessNewMessages()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 #define AUTO_RETRY_SECONDS 10
 #define ESC_KEY 27 // ASCII value for ESC key
 
@@ -629,8 +413,6 @@ void ProcessNewMessages()
 
 		enet_packet_destroy(event.packet);
 	}
-
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 }
 
 void PrintBanner(char show_name)
@@ -643,7 +425,7 @@ void PrintBanner(char show_name)
 
 	printf(" OnlineCTR Client (press CTRL + C to quit)\n Build %s (%s)\n\n", __DATE__, __TIME__);
 
-	if(show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
+	if (show_name == true) printf(" Welcome to OnlineCTR %s!\n", name);
 }
 
 void StartAnimation()
@@ -667,13 +449,9 @@ void StopAnimation()
 
 void DisconSELECT()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
 
-	if((hold & 0x2000) != 0)
+	if ((hold & 0x2000) != 0)
 	{
 		// Sleep() triggers server timeout
 		// just in case client isnt disconnected
@@ -684,9 +462,9 @@ void DisconSELECT()
 
 		// to go the lobby browser
 		octr->CurrState = -1;
-	}
 
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
+		return;
+	}
 }
 
 void ClearInputBuffer()
@@ -698,10 +476,6 @@ void ClearInputBuffer()
 
 void StatePC_Launch_EnterPID()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	// if client connected to DuckStation
 	// before game booted, wait for boot
 	if (!octr->IsBootedPS1)
@@ -710,11 +484,9 @@ void StatePC_Launch_EnterPID()
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
 	octr->CurrState = LAUNCH_PICK_SERVER;
-
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 }
 
-void printUntilPeriod(const char *str)
+void printUntilPeriod(const char* str)
 {
 	int i = 0;
 
@@ -730,17 +502,13 @@ void printUntilPeriod(const char *str)
 	}
 }
 
-int StaticServerID=0;
-int StaticRoomID=0;
+int StaticServerID = 0;
+int StaticRoomID = 0;
 void StatePC_Launch_PickServer()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	ENetAddress addr;
-	static unsigned char dns_string[32] = { 0 };
-	static unsigned char localServer;
+	static char dns_string[32] = { 0 };
+	static char localServer;
 
 	// local server
 	char ip[100];
@@ -750,7 +518,7 @@ void StatePC_Launch_PickServer()
 	// quit if disconnected, but not loaded 
 	// back into the selection screen yet
 	int gGT_levelID =
-		*(int*)&pBuf[(0x80096b20+0x1a10) & 0xffffff];
+		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
 	// must be in cutscene level to see country selector
 	if (gGT_levelID != 0x26)
@@ -774,150 +542,149 @@ void StatePC_Launch_PickServer()
 
 	// === Now Selecting Country ===
 	octr->boolClientBusy = 1;
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 
 	StaticServerID = octr->serverCountry;
 
 	switch (octr->serverCountry)
 	{
 		// EUROPE (Unknown Location)
-		case 0:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+	case 0:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
 
-			break;
+		break;
+	}
+
+	// USA (New York City)
+	case 1:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
+
+		break;
+	}
+
+	// Mexico (USA West)
+	case 2:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
+
+		break;
+	}
+
+	// BRAZIL (Unknown Location)
+	case 3:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
+
+		break;
+	}
+
+	// AUSTRALIA (Sydney)
+	case 4:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 2096;
+
+		break;
+	}
+
+	// SINGAPORE (Unknown Location)
+	case 5:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
+
+		break;
+	}
+
+	// BETA (New Jersey)
+	case 6:
+	{
+		strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+		enet_address_set_host(&addr, dns_string);
+		addr.port = 64001;
+
+		break;
+	}
+
+	// PRIVATE SERVER
+	case 7:
+	{
+		StopAnimation();
+
+	private_server_ip:
+		ClearInputBuffer(); // clear any extra input in the buffer
+
+		// IP address
+		printf("\nEnter Server IPV4 Address: ");
+
+		if (fgets(ip, sizeof(ip), stdin) == NULL)
+		{
+			printf("\nError: Invalid IPV4 address!\n");
+
+			goto private_server_ip;
 		}
 
-		// USA (New York City)
-		case 1:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+		// remove the newline character (if present)
+		ip[strcspn(ip, "\n")] = '\0';
 
-			break;
-		}
-		
-		// Mexico (USA West)
-		case 2:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+		// check if the input is empty and set it to the default IP if so
+		if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
 
-			break;
+	private_server_port:
+		// port number
+		printf("Server Port (0-65535): ");
+
+		if (fgets(portStr, sizeof(portStr), stdin) == NULL)
+		{
+			printf("\nError: Invalid port input!\n");
+
+			goto private_server_port;
 		}
 
-		// BRAZIL (Unknown Location)
-		case 3:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+		// remove the newline character (if present)
+		portStr[strcspn(portStr, "\n")] = '\0';
 
-			break;
+		// check if the port input is empty
+		if (strlen(portStr) == 0)
+		{
+			printf("\nError: The port value cannot be empty!\n");
+
+			goto private_server_port;
 		}
 
-		// AUSTRALIA (Sydney)
-		case 4:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 2096;
+		// convert the string to an integer and validate the range
+		port = atoi(portStr);
 
-			break;
+		if (port < 0 || port > 65535)
+		{
+			printf("\nError: Port value out of range!\n");
+
+			goto private_server_port;
 		}
 
-		// SINGAPORE (Unknown Location)
-		case 5:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+		enet_address_set_host(&addr, ip);
+		addr.port = port;
 
-			break;
-		}
+		localServer = true;
 
-		// BETA (New Jersey)
-		case 6:
-		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
-
-			break;
-		}
-
-		// PRIVATE SERVER
-		case 7:
-		{
-			StopAnimation();
-
-		private_server_ip:
-			ClearInputBuffer(); // clear any extra input in the buffer
-
-			// IP address
-			printf("\nEnter Server IPV4 Address: ");
-
-			if (fgets(ip, sizeof(ip), stdin) == NULL)
-			{
-				printf("\nError: Invalid IPV4 address!\n");
-
-				goto private_server_ip;
-			}
-
-			// remove the newline character (if present)
-			ip[strcspn(ip, "\n")] = '\0';
-
-			// check if the input is empty and set it to the default IP if so
-			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
-
-		private_server_port:
-			// port number
-			printf("Server Port (0-65535): ");
-
-			if (fgets(portStr, sizeof(portStr), stdin) == NULL)
-			{
-				printf("\nError: Invalid port input!\n");
-
-				goto private_server_port;
-			}
-
-			// remove the newline character (if present)
-			portStr[strcspn(portStr, "\n")] = '\0';
-
-			// check if the port input is empty
-			if (strlen(portStr) == 0)
-			{
-				printf("\nError: The port value cannot be empty!\n");
-
-				goto private_server_port;
-			}
-
-			// convert the string to an integer and validate the range
-			port = atoi(portStr);
-
-			if (port < 0 || port > 65535)
-			{
-				printf("\nError: Port value out of range!\n");
-
-				goto private_server_port;
-			}
-
-			enet_address_set_host(&addr, ip);
-			addr.port = port;
-
-			localServer = true;
-
-			break;
-		}
+		break;
+	}
 	}
 
 	StopAnimation();
 	printf("Client: Attempting to connect to \"");
-	if(localServer == false) printUntilPeriod(dns_string);
+	if (localServer == false) printUntilPeriod(dns_string);
 	else printf("%s:%d", ip, addr.port);
 	printf("\" (ID: %d)...  ", StaticServerID);
 
@@ -953,7 +720,7 @@ void StatePC_Launch_PickServer()
 
 	int retryCount = 0;
 	char connected = false;
-	#define MAX_RETRIES 3
+#define MAX_RETRIES 3
 
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
@@ -976,7 +743,6 @@ void StatePC_Launch_PickServer()
 				// to go the country select
 				octr->CurrState = 1;
 				octr->boolClientBusy = 0;
-				writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 				return;
 			}
 
@@ -990,7 +756,6 @@ void StatePC_Launch_PickServer()
 	octr->DriverID = -1;
 	octr->CurrState = LAUNCH_PICK_ROOM;
 	octr->boolClientBusy = 0;
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 }
 
 void StatePC_Launch_Error()
@@ -1002,10 +767,6 @@ int connAttempt = 0;
 int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	ProcessNewMessages();
 
 	countFrame++;
@@ -1034,14 +795,12 @@ void StatePC_Launch_PickRoom()
 
 	connAttempt = 1;
 
-	struct CG_MessageRoom mr;
+	 CG_MessageRoom mr;
 	mr.type = CG_JOINROOM;
 	mr.room = octr->serverRoom;
-	mr.size = sizeof(struct CG_MessageRoom);
+	mr.size = sizeof( CG_MessageRoom);
 
 	sendToHostReliable(&mr, mr.size);
-
-	//writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf); //octr is not being written to.
 }
 
 void StatePC_Lobby_AssignRole()
@@ -1053,10 +812,6 @@ void StatePC_Lobby_AssignRole()
 
 void StatePC_Lobby_HostTrackPick()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	ProcessNewMessages();
 
 	// boolLockedInLap gets set after
@@ -1066,7 +821,7 @@ void StatePC_Lobby_HostTrackPick()
 	StopAnimation();
 	printf("Client: Sending track to the server...  ");
 
-	struct CG_MessageTrack mt = { 0 };
+	 CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
 
 	mt.trackID = octr->levelID;
@@ -1074,11 +829,11 @@ void StatePC_Lobby_HostTrackPick()
 
 	// 1,3,5,7
 	int numLaps = (mt.lapID * 2) + 1;
-	
-	if(mt.lapID == 4) numLaps = 30;
-	if(mt.lapID == 5) numLaps = 60;
-	if(mt.lapID == 6) numLaps = 90;
-	if(mt.lapID == 7) numLaps = 120;
+
+	if (mt.lapID == 4) numLaps = 30;
+	if (mt.lapID == 5) numLaps = 60;
+	if (mt.lapID == 6) numLaps = 90;
+	if (mt.lapID == 7) numLaps = 120;
 
 	// sdata->gGT->numLaps
 	*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
@@ -1086,8 +841,6 @@ void StatePC_Lobby_HostTrackPick()
 	sendToHostReliable(&mt, sizeof(struct CG_MessageTrack));
 
 	octr->CurrState = LOBBY_CHARACTER_PICK;
-
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 }
 
 int prev_characterID = -1;
@@ -1103,34 +856,27 @@ void StatePC_Lobby_GuestTrackWait()
 
 void StatePC_Lobby_CharacterPick()
 {
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-
 	ProcessNewMessages();
 
-	struct CG_MessageCharacter mc = { 0 };
+	 CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-
 	mc.boolLockedIn = octr->boolLockedInCharacters[octr->DriverID];
 
-	if(
+	if (
 		(prev_characterID != mc.characterID) ||
 		(prev_boolLockedIn != mc.boolLockedIn)
-	  )
+		)
 	{
 		prev_characterID = mc.characterID;
 		prev_boolLockedIn = mc.boolLockedIn;
 
 		sendToHostReliable(&mc, sizeof(struct CG_MessageCharacter));
 	}
-	
-	if (mc.boolLockedIn == 1) octr->CurrState = LOBBY_WAIT_FOR_LOADING;
 
-	//writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf); //octr is not being written to.
+	if (mc.boolLockedIn == 1) octr->CurrState = LOBBY_WAIT_FOR_LOADING;
 }
 
 void StatePC_Lobby_WaitForLoading()
@@ -1155,7 +901,7 @@ void StatePC_Lobby_StartLoading()
 
 void SendEverything()
 {
-	struct CG_EverythingKart cg = { 0 };
+	CG_EverythingKart cg = { 0 };
 	cg.type = CG_RACEDATA;
 
 	// === Buttons ===
@@ -1222,31 +968,21 @@ void StatePC_Game_WaitForRace()
 {
 	ProcessNewMessages();
 
-
-
-	//char* a = &pBuf[(0x80096b20 + 0x0) & 0xffffff]; //deref game mem
-	char ptrBuf[sizeof(int*)] = { 0,0,0,0 };
-	readMemorySegment(pBufAddress + ((0x80096b20 + 0x0) & 0xffffff), sizeof(int*), ptrBuf);
-	//int* b = (int*)a;
-	int* b = ((int*)&ptrBuf[0]);
-	char gGT_gameMode1Buf[sizeof(int)];
-	readMemorySegment((unsigned int)b, sizeof(int), gGT_gameMode1Buf);
-	//int gGT_gameMode1 = *b; //deref game mem
-	int gGT_gameMode1 = *((int*)&gGT_gameMode1Buf[0]);
+	int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
 
 	if (
-			// only send once
-			(!boolAlreadySent_StartRace) &&
-			
-			// after camera fly-in is done
-			((gGT_gameMode1 & 0x40) == 0)
+		// only send once
+		(!boolAlreadySent_StartRace) &&
+
+		// after camera fly-in is done
+		((gGT_gameMode1 & 0x40) == 0)
 		)
 	{
 		StopAnimation();
 		printf("Client: Online race in progress...  ");
 		boolAlreadySent_StartRace = 1;
 
-		struct CG_Header cg = { 0 };
+		 CG_Header cg = { 0 };
 		cg.type = CG_STARTRACE;
 		sendToHostReliable(&cg, sizeof(struct CG_Header));
 	}
@@ -1259,27 +995,13 @@ void StatePC_Game_StartRace()
 	ProcessNewMessages();
 	SendEverything();
 
-	char ptrbuf[sizeof(int*)];
-	readMemorySegment(pBufAddress + ((0x80096b20 + 0x1a10) & 0xffffff), sizeof(int*), ptrbuf);
-	char buf[sizeof(int)];
-	readMemorySegment(*((int*)ptrbuf[0]), sizeof(int), buf);
-	int gGT_levelID = *((int*)buf[0]);
+	int gGT_levelID =
+		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
 	// Friday demo mode camera
-	if(octr->special == 3)
+	if (octr->special == 3)
 		if (gGT_levelID < 18)
-		{
-			//*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
-			char buf[2];
-			readMemorySegment(pBufAddress + ((0x80098028) & 0xffffff), 2, buf);
-			*((short*)&buf[0]) = 0x20;
-			writeMemorySegment(pBufAddress + ((0x80098028) & 0xffffff), 2, buf);
-		}
-
-	//writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf); //octr is not being written to.
+			*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
 }
 
 #include <time.h>
@@ -1288,50 +1010,28 @@ void StatePC_Game_EndRace()
 {
 	ProcessNewMessages();
 
-	char octrbuf[sizeof(struct OnlineCTR)];
-	readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-	struct OnlineCTR* octr = &(octrbuf[0]);
-	
 	if (!boolAlreadySent_EndRace)
 	{
 		boolAlreadySent_EndRace = 1;
 
-		//char* a = &pBuf[0x8009900c & 0xffffff]; //deref game mem
-		char a[4] = { 0,0,0,0 };
-		readMemorySegment(pBufAddress, 4, a);
-		int* b = (int*)a;
-		//int psxPtr = *b; //deref game mem
-		char psxPtrBuf[4] = { 0,0,0,0 };
-		readMemorySegment((unsigned int)b, 4, psxPtrBuf);
-		int psxPtr = *((int*)&psxPtrBuf[0]);
+		int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
 		psxPtr &= 0xffffff;
 
-		struct CG_MessageEndRace cg = { 0 };
+		CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
 
 		//char* aa = &pBuf[psxPtr + 0x514]; //deref game mem
 		char aa[4] = { 0,0,0,0 };
 		readMemorySegment(pBufAddress + psxPtr + 0x514, 4, aa);
 
-		memcpy(&cg.time[0], aa, 3);
+		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
 
 		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
 
 		// end race for yourself
 		octr->RaceEnd[octr->numDriversEnded].slot = 0;
-		writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-
-		int* bb = (int*)aa;
-		//int resTime = *bb; //deref game mem
-		int resTimeBuf[4] = { 0,0,0,0 };
-		readMemorySegment((unsigned int)bb, 4, resTimeBuf);
-		int resTime = *((int*)&resTimeBuf[0]);
-
-		{ //this must be atomic (no interdispersed function calls)
-			octr->RaceEnd[octr->numDriversEnded].time = resTime;
-			octr->numDriversEnded++;
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-		}
+		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
+		octr->numDriversEnded++;
 
 		// if you finished last
 		timeStart = clock();
@@ -1343,8 +1043,6 @@ void StatePC_Game_EndRace()
 	{
 		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
 	}
-
-	writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
 }
 
 void (*ClientState[]) () = {
@@ -1368,14 +1066,6 @@ void (*ClientState[]) () = {
 
 int main()
 {
-	//todo: sigint handler, close socket before quit
-	
-	//*then* do this
-	dspineSocket = getSocket();
-
-	pBufAddress = 0; //is it 0?
-	octrAddress = pBufAddress + (0x8000C000 & 0xffffff);
-
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
@@ -1386,8 +1076,7 @@ int main()
 
 	// ask for the users online identification
 	printf("Input: Enter Your Online Name: ");
-	//scanf_s("%s", name, (int)sizeof(name)); //uncomment me
-	strcpy_s(name, 13, "TheUbMunster"); //comment me
+	scanf_s("%s", name, (int)sizeof(name));
 	name[11] = 0; // truncate the name
 
 	// show a welcome message
@@ -1395,101 +1084,99 @@ int main()
 	PrintBanner(SHOW_NAME);
 	printf("\n");
 
-	//int numDuckInstances = 0;
-	//char* duckTemplate = "duckstation";
-	//int duckPID = -1;
+	int numDuckInstances = 0;
+	const char* duckTemplate = "duckstation";
+	int duckPID = -1;
 
 	// copy from
 	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
-	//DWORD aProcesses[1024], cbNeeded, cProcesses;
-	//EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
-	//cProcesses = cbNeeded / sizeof(DWORD);
+	DWORD aProcesses[1024], cbNeeded, cProcesses;
+	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
+	cProcesses = cbNeeded / sizeof(DWORD);
 
-	//for (int i = 0; i < cProcesses; i++)
-	//{
-	//	DWORD processID = aProcesses[i];
+	for (int i = 0; i < cProcesses; i++)
+	{
+		DWORD processID = aProcesses[i];
 
-	//	if (processID != 0)
-	//	{
-	//		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
+		if (processID != 0)
+		{
+			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
 
-	//		if (NULL != hProcess)
-	//		{
-	//			HMODULE hMod;
-	//			DWORD cbNeeded;
+			if (NULL != hProcess)
+			{
+				HMODULE hMod;
+				DWORD cbNeeded;
 
-	//			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
-	//			{
-	//				TCHAR szProcessName[MAX_PATH];
-	//				GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
+				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
+				{
+					char szProcessName[MAX_PATH];
+					for (size_t i = 0; i < MAX_PATH; i++)
+						szProcessName[i] = '\0';
+					GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(char));
 
-	//				char* procName = (char*)&szProcessName[0];
+					char* procName = (char*)&szProcessName[0];
 
-	//				if (
-	//					(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
-	//					(*(int*)&procName[4] == *(int*)&duckTemplate[4])
-	//					)
-	//				{
-	//					numDuckInstances++;
-	//					duckPID = processID;
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
+					if (
+						(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
+						(*(int*)&procName[4] == *(int*)&duckTemplate[4])
+						)
+					{
+						numDuckInstances++;
+						duckPID = processID;
+					}
+				}
+			}
+		}
+	}
 
-	//if (numDuckInstances == 0)
-	//{
-	//	printf("Error: DuckStation is not running!\n\n");
-	//	system("pause");
-	//	exit(0);
-	//}
-	//else printf("Client: DuckStation detected\n");
+	if (numDuckInstances == 0)
+	{
+		printf("Error: DuckStation is not running!\n\n");
+		system("pause");
+		exit(0);
+	}
+	else printf("Client: DuckStation detected\n");
 
-	//char pidStr[16];
+	char pidStr[16];
 
-	//if (numDuckInstances > 1)
-	//{
-	//	printf("Warning: Multiple DuckStations detected\n");
-	//	printf("Please enter the PID manually\n\n");
+	if (numDuckInstances > 1)
+	{
+		printf("Warning: Multiple DuckStations detected\n");
+		printf("Please enter the PID manually\n\n");
 
-	//	printf("Input.: DuckStation PID: ");
-	//	scanf_s("%s", pidStr, (int)sizeof(pidStr));
-	//}
-	//else
-	//{
-	//	sprintf_s(pidStr, 100, "%d", duckPID);
-	//}
+		printf("Input.: DuckStation PID: ");
+		scanf_s("%s", pidStr, (int)sizeof(pidStr));
+	}
+	else
+	{
+		sprintf_s(pidStr, 100, "%d", duckPID);
+	}
 
-	//char duckName[100];
-	//sprintf_s(duckName, 100, "duckstation_%s", pidStr);
+	char duckName[100];
+	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
 
-	//TCHAR duckNameT[100];
-	//swprintf(duckNameT, 100, L"%hs", duckName);
+	TCHAR duckNameT[100];
+	swprintf(duckNameT, 100, L"%hs", duckName);
 
+	// 8 MB RAM
+	const unsigned int size = 0x800000;
+	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
+	if (pBuf == 0)
+	{
+		printf("Error: Failed to open DuckStation!\n\n");
+		system("pause");
+		system("cls");
+		main();
+	}
 
-	//// 8 MB RAM
-	//const unsigned int size = 0x800000;
-	//HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-	//pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+	octr = ( OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
-	////char match[32] = "\0\0\0\0        \x3\0\0\0        \fZ'\r      \0\0\0\0       \0\0\0\";
-
-	//if (pBuf == 0)
-	//{
-	//	printf("Error: Failed to open DuckStation!\n\n");
-	//	system("pause");
-	//	system("cls");
-	//	main();
-	//}
-
-	//octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
-	
 	// initialize enet
 	if (enet_initialize() != 0)
 	{
-		printf(stderr, "Error: Failed to initialize ENet!\n");
+		fprintf(stderr, "Error: Failed to initialize ENet!\n");
 
 		return 1;
 	}
@@ -1497,20 +1184,10 @@ int main()
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
-	//strcpy_s((char*)pBuf, 17, "bananas!bananas!");
-
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
-		
-		//octr->windowsClientSync[0]++;
-		char octrbuf[sizeof(struct OnlineCTR)];
-		readMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-		struct OnlineCTR* octr = &(octrbuf[0]);
-		{ //this must be atomic (no interdispersed function calls)
-			octr->windowsClientSync[0]++;
-			writeMemorySegment(octrAddress, sizeof(struct OnlineCTR), octrbuf);
-		}
+		octr->windowsClientSync[0]++;
 
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_PICK_ROOM)
@@ -1520,7 +1197,7 @@ int main()
 
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
-		
+
 		void FrameStall(); FrameStall();
 	}
 
@@ -1544,25 +1221,16 @@ void usleep(__int64 usec)
 #endif
 
 #pragma optimize("", off)
-	int gGT_timer = 0;
+int gGT_timer = 0;
 
-	void FrameStall()
+void FrameStall()
+{
+	// wait for next frame
+	while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
 	{
-		unsigned int firstAddr = pBufAddress + ((0x80096b20 + 0x1cf8) & 0xffffff);
-		char abuf[sizeof(int*)];
-		readMemorySegment(firstAddr, sizeof(int*), abuf);
-		int* ptr = ((int*)&abuf[0]);
-		char intBuf[sizeof(int)];
-		readMemorySegment((unsigned int)ptr, sizeof(int), intBuf);
-		int val = *((int*)&intBuf[0]);
-		// wait for next frame
-		while (gGT_timer == val)
-		{
-			usleep(1);
-			readMemorySegment((unsigned int)ptr, sizeof(int), intBuf);
-			val = *((int*)&intBuf[0]);
-		}
-
-		gGT_timer = val;
+		usleep(1);
 	}
+
+	gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
+}
 #pragma optimize("", on)

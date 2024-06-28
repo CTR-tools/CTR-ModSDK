@@ -22,8 +22,8 @@
 
 #endif
 
-#define true				1
-#define false				0
+//#define true				1
+//#define false				0
 
 #define DONT_SHOW_NAME		0
 #define SHOW_NAME			1
