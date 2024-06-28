@@ -62,16 +62,16 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = 6;
+		i = CLIENT_SYNC_BUFFER_LENGTH;
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = 6; i >= 0; i--)
+		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
 			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
-
-		for(i = 6; i >= 0; i--)
+	
+		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
 			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 				break;
 	}

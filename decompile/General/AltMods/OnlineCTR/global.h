@@ -110,7 +110,10 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[8];
+	// even making this ridiculously long isn't enough for PINE
+	// something else must be going on...
+#define CLIENT_SYNC_BUFFER_LENGTH 64 //was 8
+	char windowsClientSync[CLIENT_SYNC_BUFFER_LENGTH];
 
 	// 0x30
 	char boolLockedInCharacters[8];

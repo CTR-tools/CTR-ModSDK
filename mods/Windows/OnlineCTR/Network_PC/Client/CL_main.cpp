@@ -1332,11 +1332,11 @@ int main()
 	defMemInit();
 
 	// 8 MB RAM
-	/*const unsigned int size = 0x800000;
+	const unsigned int size = 0x800000;
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
-
-	if (pBuf == 0)
+	char* OGpBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+	int iii = offsetof(OnlineCTR, windowsClientSync);
+	if (OGpBuf == 0)
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
 		system("pause");
@@ -1344,7 +1344,7 @@ int main()
 		main();
 	}
 
-	octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];*/
+	//octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 	pBuf = ps1mem(0);
 	octr = pBuf.at<OnlineCTR>(0x8000C000 & 0xffffff);
 	
@@ -1363,9 +1363,21 @@ int main()
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		//octr->windowsClientSync[0]++;
-		octr.refresh();
-		(*octr.get()).windowsClientSync[0]++;
-		octr.commit();
+
+		//yes I know I know, we can't do this, we must use PINE (see commented out code below).
+		//but since this is faster, this actually solves windowsClientSync for now, so I've been
+		//using it to understand its behavior as it confuses me a bit.
+		OGpBuf[0xc000 + iii]++;
+		//if we can make windowsClientSync a unilateral overwrite (i.e., = 1 instead of ++)
+		//then we can just *not* read and write only, skipping ~50% of latency, or maybe ~99%
+		//of client loop slowdown if we make write non-blocking.
+
+		//we need to get this working.
+		/*octr.refresh();
+		(*octr.get()).windowsClientSync[0] = (*octr.get()).windowsClientSync[0] + 1;
+		octr.commit();*/
+
+		//constexpr int i = (0x8000C000 & 0xffffff) + offsetof(OnlineCTR, windowsClientSync[0]);
 
 		// should rename to room selection
 		if (octr.get()->CurrState >= LAUNCH_PICK_ROOM)

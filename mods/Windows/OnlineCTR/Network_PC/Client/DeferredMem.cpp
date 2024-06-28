@@ -88,6 +88,14 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
 	//https://github.com/stenzek/duckstation/pull/3230
 
+	//ensure no outstanding recvs() (e.g., from writeMemorySegment)
+	//bc we don't want to confuse those recvs with recvs for this function
+	//since we're using tcp, we can increment a counter on write sends,
+	//and decriment it on write recvs, and just sit and wait until there
+	//are no outstanding recvs() (i.e., counter == 0)
+
+	//either make socket blocking again *or* find non-busy wait soln
+	//to wait for when recv() is ready to give us data
 	char sendBuffer[10] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
 	sendBuffer[0] = 10 & 0xFF; //10 = packetSize
 	sendBuffer[1] = (10 >> 8) & 0xFF; //10 = packetSize
@@ -128,6 +136,19 @@ void readMemorySegment(unsigned int addr, size_t len, char* buf)
 
 void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 {
+	//TODO:
+	/*
+	* Make send non-blocking, and make recv's SOCKET_ERROR check &
+	* recieveBuffer[0] == 5 check happen on another thread.
+	*
+	* Write only needs to be fire & forget, and if a error does occur
+	* during this process, it's unrecoverable so we don't need it synced
+	*
+	* Unfortunately I don't see how this strategy can apply to readMemorySegment()
+	* since we actually need the recv() data right now.
+	*/
+
+	//ensure socket is set to non-blocking
 	char sendBuffer[18] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }; //18 = packetSize
 	sendBuffer[0] = 18 & 0xFF; //18 = packetSize
 	sendBuffer[1] = (18 >> 8) & 0xFF; //18 = packetSize
@@ -156,6 +177,7 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 
 		send(dspineSocket, sendBuffer, 18, 0); //18 = packetSize
 	}
+	//recv should call back to a function that ensures 'very good' case, otherwise exit (unrecoverable).
 	for (size_t i = 0; i < whole; i += 8)
 	{
 		//recieve section
@@ -186,8 +208,9 @@ void writeMemorySegment(unsigned int addr, size_t len, char* buf)
 	size_t rem = (len % 8 == 0) ? 0 : (8 - (len % 8));
 	if (rem != 0) //this section needs testing
 	{
+		//TODO: change this to not require a read (writes only).
 		unsigned int offsetaddr = addr + whole;
-		readMemorySegment(offsetaddr, 8, &sendBuffer[9]); //this was buf[9], which may have been causing heap overrun
+		readMemorySegment(offsetaddr, 8, &sendBuffer[9]);
 		sendBuffer[5] = offsetaddr & 0xFF;
 		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
 		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
