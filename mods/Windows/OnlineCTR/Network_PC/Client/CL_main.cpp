@@ -173,8 +173,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			memcpy(&m.name[0], &name[0], 0xC);
 			sendToHostReliable(&m, sizeof(struct CG_MessageName));
 
-		octr.commit();
-
 		// choose to get host menu or guest menu
 		octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
 		break;
@@ -261,6 +259,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		characterIDV.commit();
 
 		octr.get()->boolLockedInCharacters[clientID] = r->boolLockedIn;
+		octr.commit();
 
 		break;
 	}
@@ -340,7 +339,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		gamepad.get()->buttonsTapped = tap;
 		gamepad.get()->buttonsReleased = rel;
 		gamepad.get()->buttonsHeldPrevFrame = prev;
-		gamepad.commit();
 
 		// In this order: Up, Down, Left, Right
 		if ((gamepad.get()->buttonsHeldCurrFrame & 1) != 0) gamepad.get()->stickLY = 0;
@@ -350,6 +348,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		if ((gamepad.get()->buttonsHeldCurrFrame & 4) != 0) gamepad.get()->stickLX = 0;
 		else if ((gamepad.get()->buttonsHeldCurrFrame & 8) != 0) gamepad.get()->stickLX = 0xFF;
 		else gamepad.get()->stickLX = 0x80;
+
+		gamepad.commit();
 
 		buttonPrev[slot] = curr;
 
@@ -374,14 +374,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		unsigned int yAddr = (unsigned int)(*yPtr.get());
 		ps1ptr<int> y = pBuf.at<int>(yAddr);
 		(*y.get()) = ((int)r->posY) * 256;
-		x.commit();
+		y.commit();
 
 		//*(int*)&pBuf[psxPtr + 0x2dc] = ((int)r->posZ) * 256;
 		ps1ptr<int*> zPtr = pBuf.at<int*>((*psxPtr.get()) + 0x2d4);
 		unsigned int zAddr = (unsigned int)(*zPtr.get());
 		ps1ptr<int> z = pBuf.at<int>(zAddr);
 		(*z.get()) = ((int)r->posZ) * 256;
-		x.commit();
+		z.commit();
 
 		int angle =
 			(r->kartRot1) |
@@ -916,7 +916,7 @@ void StatePC_Lobby_HostTrackPick()
 	StopAnimation();
 	printf("Client: Sending track to the server...  ");
 
-	 CG_MessageTrack mt = { 0 };
+	CG_MessageTrack mt = { 0 };
 	mt.type = CG_TRACK;
 
 	mt.trackID = (octr.get())->levelID;
@@ -940,6 +940,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	sendToHostReliable(&mt, sizeof(struct CG_MessageTrack));
 
+	octr.refresh();
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
 }
 
@@ -984,6 +985,7 @@ void StatePC_Lobby_CharacterPick()
 
 	if (mc.boolLockedIn == 1)
 	{
+		octr.refresh();
 		octr.get()->CurrState = LOBBY_WAIT_FOR_LOADING;
 		octr.commit();
 	}
@@ -1021,7 +1023,7 @@ void SendEverything()
 	ps1ptr<int> hold = pBuf.at<int>(holdAddr);
 
 	// ignore Circle/L2
-	(*hold.get()) &= ~(0xC0);
+	(*hold.get()) &= ~(0xC0); //in original code it was done to the variable, not the mem, so don't commit.
 
 	// put L1/R1 into one byte
 	if (((*hold.get()) & 0x400) != 0) (*hold.get()) |= 0x40;
@@ -1123,7 +1125,7 @@ void StatePC_Game_WaitForRace()
 		printf("Client: Online race in progress...  ");
 		boolAlreadySent_StartRace = 1;
 
-		 CG_Header cg = { 0 };
+		CG_Header cg = { 0 };
 		cg.type = CG_STARTRACE;
 		sendToHostReliable(&cg, sizeof(struct CG_Header));
 	}
