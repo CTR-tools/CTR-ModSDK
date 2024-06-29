@@ -89,7 +89,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->serverLockIn2 = 0;
 
 			octr->numRooms = r->numRooms;
-			
+
 			octr->clientCount[0x0] = r->numClients01;
 			octr->clientCount[0x1] = r->numClients02;
 			octr->clientCount[0x2] = r->numClients03;
@@ -124,12 +124,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// odd-numbered index == even-number room
 			// Index 1, 3, 5 -> Room 2, 4, 6
+#if 0
 			if (octr->serverRoom & 1)
 				r->special = 0;
-
+#endif
+			r->special = 0;
 			octr->special = r->special;
 
-#if 1
+#if 0
 			// need to print, or compiler optimization throws this all away
 			printf("\nSpecial:%d\n", octr->special);
 
@@ -145,10 +147,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->boolLockedInLevel = 0;
 			octr->lapID = 0;
 			octr->levelID = 0;
-			
+
 			octr->boolLockedInCharacter = 0;
 			octr->numDriversEnded = 0;
-			
+
 			memset(&octr->boolLockedInCharacters[0], 0, 8);
 			memset(&octr->nameBuffer[0], 0, 0xC*8);
 			memset(&octr->RaceEnd[0], 0, 8*8);
@@ -201,7 +203,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// 1,3,5,7
 			int numLaps = (r->lapID * 2) + 1;
-			
+
 			if(r->lapID == 4) numLaps = 30;
 			if(r->lapID == 5) numLaps = 60;
 			if(r->lapID == 6) numLaps = 90;
@@ -209,10 +211,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// set sdata->gGT->numLaps
 			*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-			
+
 			octr->levelID = r->trackID;
 			octr->CurrState = LOBBY_CHARACTER_PICK;
-			
+
 			break;
 		}
 
@@ -232,7 +234,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			break;
 		}
-      
+
 		case SG_STARTLOADING:
 		{
 			// variable reuse, wait a few frames,
@@ -382,7 +384,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 	default:
 		break;
 	}
-	
+
 }
 
 void ProcessNewMessages()
@@ -519,7 +521,7 @@ void StatePC_Launch_PickServer()
 	char portStr[PORT_SIZE];
 	int port;
 
-	// quit if disconnected, but not loaded 
+	// quit if disconnected, but not loaded
 	// back into the selection screen yet
 	int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20+0x1a10) & 0xffffff];
@@ -570,7 +572,7 @@ void StatePC_Launch_PickServer()
 
 			break;
 		}
-		
+
 		// Mexico (USA West)
 		case 2:
 		{
@@ -831,7 +833,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	// 1,3,5,7
 	int numLaps = (mt.lapID * 2) + 1;
-	
+
 	if(mt.lapID == 4) numLaps = 30;
 	if(mt.lapID == 5) numLaps = 60;
 	if(mt.lapID == 6) numLaps = 90;
@@ -877,7 +879,7 @@ void StatePC_Lobby_CharacterPick()
 
 		sendToHostReliable(&mc, sizeof(struct CG_MessageCharacter));
 	}
-	
+
 	if (mc.boolLockedIn == 1) octr->CurrState = LOBBY_WAIT_FOR_LOADING;
 }
 
@@ -975,7 +977,7 @@ void StatePC_Game_WaitForRace()
 	if (
 			// only send once
 			(!boolAlreadySent_StartRace) &&
-			
+
 			// after camera fly-in is done
 			((gGT_gameMode1 & 0x40) == 0)
 		)
@@ -1196,7 +1198,7 @@ int main()
 
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
-		
+
 		void FrameStall(); FrameStall();
 	}
 
