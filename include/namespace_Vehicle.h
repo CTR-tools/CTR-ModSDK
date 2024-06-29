@@ -1548,6 +1548,10 @@ struct Driver
 	short ghostBoolStarted;
 	short unk636;
 
+	#ifdef USE_ONLINE
+	int uncappedReserves;
+	#endif
+
 	// 0x638
 	// end of ghost struct (as determined by memset)
 
@@ -1565,6 +1569,6 @@ _Static_assert(sizeof(struct MetaPhys) == 0x20);
 _Static_assert(sizeof(struct MetaPhys) == 0x1C);
 #endif
 
-#if BUILD == UsaRetail
+#if BUILD == UsaRetail && !defined(USE_ONLINE)
 _Static_assert(sizeof(struct Driver) == 0x638);
 #endif

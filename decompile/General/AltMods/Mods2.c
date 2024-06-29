@@ -18,9 +18,10 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	short fullHeight = 3;
 	#ifdef USE_ONLINE
 	short fullWidth = WIDE_34(96);
-	int numBarsFilled = driver->reserves / SECONDS(1);
-	int numFullBarsFilled = driver->reserves / SECONDS(5);
-	int reserveLength = driver->reserves % SECONDS(5);
+	int reserves = driver->reserves + driver->uncappedReserves;
+	int numFullBarsFilled = reserves / SECONDS(5);
+	int numBarsFilled = reserves / SECONDS(1);
+	int reserveLength = reserves % SECONDS(5);
 	int meterLength = (fullWidth * reserveLength) / SECONDS(5);
 	posX += 35;
 	#else
@@ -66,19 +67,22 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	const PrimCode primCode = { .poly = { .quad = 1, .renderCode = RenderCode_Polygon } };
 
 	#ifdef USE_ONLINE
-	char barNumberStr[2];
-	int strLen = 2;
-	if (numFullBarsFilled < 10)
+	char barNumberStr[3];
+	barNumberStr[0] = (numBarsFilled / 100) + '0';
+	barNumberStr[1] = (numBarsFilled / 10) + '0';
+	barNumberStr[2] = (numBarsFilled % 10) + '0';
+	if (numBarsFilled < 10)
 	{
-		barNumberStr[0] = (numFullBarsFilled % 10) + '0';
-		strLen--;
+		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[2], 1, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
+	}
+	else if (numBarsFilled < 100)
+	{
+		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[1], 2, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 	}
 	else
 	{
-		barNumberStr[0] = (numFullBarsFilled / 10) + '0';
-		barNumberStr[1] = (numFullBarsFilled % 10) + '0';
+		DECOMP_DecalFont_DrawLineStrlen(barNumberStr, 3, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 	}
-	DECOMP_DecalFont_DrawLineStrlen(barNumberStr, strLen, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 
 	ColorCode colorCode;
 	ColorCode bgBarColor = barEmptyColor;
