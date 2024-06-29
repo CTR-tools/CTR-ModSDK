@@ -68,14 +68,14 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 
 	#ifdef USE_ONLINE
 	char barNumberStr[3];
-	barNumberStr[0] = (numBarsFilled / 100) + '0';
-	barNumberStr[1] = (numBarsFilled / 10) + '0';
-	barNumberStr[2] = (numBarsFilled % 10) + '0';
-	if (numBarsFilled < 10)
+	barNumberStr[0] = (numFullBarsFilled / 100) + '0';
+	barNumberStr[1] = (numFullBarsFilled / 10) + '0';
+	barNumberStr[2] = (numFullBarsFilled % 10) + '0';
+	if (numFullBarsFilled < 10)
 	{
 		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[2], 1, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 	}
-	else if (numBarsFilled < 100)
+	else if (numFullBarsFilled < 100)
 	{
 		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[1], 2, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 	}
