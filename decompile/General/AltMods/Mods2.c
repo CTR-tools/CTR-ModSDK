@@ -4,6 +4,12 @@
 
 #ifdef USE_ONLINE
 Color HsvToRgb(int h, int s, int v);
+
+void FixReservesIncrement(struct Driver * driver, int reserves)
+{
+	if (driver->reserves > 30000) { driver->uncappedReserves += reserves; }
+	else { driver->reserves += reserves; }
+}
 #endif
 
 #ifdef USE_BOOSTBAR

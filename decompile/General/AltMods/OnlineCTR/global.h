@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1015
+#define VERSION 1016
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -223,7 +223,7 @@ struct SG_MessageClientStatus
 	unsigned char numClientsTotal : 4;
 
 	// special event
-	unsigned short special : 4;
+	unsigned char special : 4;
 };
 
 // get name from any client

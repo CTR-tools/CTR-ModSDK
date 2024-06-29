@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifdef USE_ONLINE
+void FixReservesIncrement(struct Driver * driver, int reserves);
+#endif
+
 // param1 - driver
 // param2 - reserves to add
 // param3 - add type
@@ -20,7 +24,6 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 	struct Instance* turboInst2;
 
 	struct GameTracker* gGT = sdata->gGT;
-	printf("reserves: %d %X\n", reserves, &driver->reserves);
 	if
 	(
 		// if this is a turbo pad
@@ -318,8 +321,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 	{
 		// increase reserves BY param2
 		#ifdef USE_ONLINE
-		if (driver->reserves > 30000) { driver->uncappedReserves += reserves; }
-		else { driver->reserves += reserves; }
+		FixReservesIncrement(driver, reserves);
 		#else
 		driver->reserves += reserves;
 		#endif
@@ -337,8 +339,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		if (oldOTT < reserves)
 		{
 			#ifdef USE_ONLINE
-			if (driver->reserves > 30000) { driver->uncappedReserves += (reserves - oldOTT); }
-			else { driver->reserves += (reserves - oldOTT); }
+			FixReservesIncrement(driver, reserves - oldOTT);
 			#else
 			driver->reserves += 			(reserves - oldOTT);
 			#endif

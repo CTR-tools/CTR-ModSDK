@@ -47,8 +47,10 @@ void ResetPsxGlobals()
 // should rename to EnterRoom
 void StatePS1_Launch_PickRoom()
 {
+	#if 0
 	DecalFont_DrawLine("Special Events in odd rooms: 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
 	DecalFont_DrawLine("Classic Games in even rooms: 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	#endif
 
 	MenuWrites_ServerRoom();
 
