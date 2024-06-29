@@ -133,13 +133,13 @@ void SendRoomData(ENetPeer* peer)
 	if (roomInfos[index].boolRoomLocked) \
 		if(x < 8) \
 			x += 8;
-	
+
 	// Do NOT use roomInfos[index].clientCount,
 	// cause that doesnt account for empty holes
-	
+
 	int roomCount[16];
 	memset(&roomCount[0], 0, sizeof(int)*16);
-	
+
 	for(int i = 0; i < 16; i++)
 		for(int j = 0; j < 8; j++)
 			if (roomInfos[i].peerInfos[j].peer != 0)
@@ -208,9 +208,11 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 
 	// ordinary day
 	mw.special = 0;
+#if 0
 	if (GetWeekDay() == 1) mw.special = 1; // Monday
 	if (GetWeekDay() == 3) mw.special = 2; // Wednesday
 	if (GetWeekDay() == 5) mw.special = 3; // Friday
+#endif
 
 	sendToPeerReliable(ri->peerInfos[id].peer, &mw, sizeof(struct SG_MessageClientStatus));
 }
@@ -312,12 +314,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memset(&ri->peerInfos[id], 0, sizeof(PeerInfo));
 
 			ri->peerInfos[id].peer = peer;
-			
+
 			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
 			WelcomeNewClient(ri, id);
-			
+
 			break;
 		}
 
@@ -534,15 +536,15 @@ void ProcessNewMessages() {
 				if (
 						// nobody left at all
 						(numAlive == 0) ||
-						
+
 						(
 							// race in session
 							(ri->boolRaceAll == 1) &&
-				
+
 							(
 								// nobody to race
 								(numAlive <= 1) ||
-				
+
 								// battle map or adv map,
 								(ri->levelPlayed > 18)
 							)
@@ -566,7 +568,7 @@ void ProcessNewMessages() {
 
 					memset(ri, 0, sizeof(RoomInfo));
 				}
-				
+
 				// Only disconnect one player as long as
 				// more racers remain on Arcade track,
 				// or if disconnected from Battle/Adv during the race
@@ -754,23 +756,23 @@ void ServerState_Tick()
 				ri->endTime = clock();
 			}
 		}
-		
+
 		else
 		{
 			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC_FIX) >= 6)
 			{
 				PrintPrefix(r + 1);
 				printf("Room has been reset\n");
-				
+
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
 					if (ri->peerInfos[i].peer == 0)
 						continue;
-					
+
 					ri->peerInfos[i].boolLoadSelf = 0;
 					ri->peerInfos[i].boolRaceSelf = 0;
 					ri->peerInfos[i].boolEndSelf = 0;
-						
+
 					// tell all clients to reset
 					WelcomeNewClient(ri, i);
 				}
