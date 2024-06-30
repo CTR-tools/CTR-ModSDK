@@ -41,7 +41,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 				D230.menuCupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
 				D230.menuCupSelect.state |= EXECUTE_FUNCPTR;
             }
-			
+
 			else
 			{
 				elapsedFrames--;
@@ -73,7 +73,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 
                     // set track index to zero, to go to first track
                     gGT->cup.trackIndex = 0;
-					
+
                     // set cupID to the cup selected
                     gGT->cup.cupID = menu->rowSelected;
 
@@ -90,7 +90,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
             }
         }
     }
-	
+
 	#ifdef USE_NEWCUPS
 	if(D230.cupSel_transitionState != 2)
 	{
@@ -105,15 +105,15 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
     DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[0xBF],
 		(D230.transitionMeta_cupSel[4].currX + 0x100),
-		(D230.transitionMeta_cupSel[4].currY + 0x10), 
+		(D230.transitionMeta_cupSel[4].currY + 0x10),
 		1, 0xffff8000);
-		
+
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
         // Use solid color
         txtColor = 0xffff8000;
-		
+
         // If this cup is the one you selected
         if (cupIndex == menu->rowSelected)
         {
@@ -127,7 +127,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 
         // draw the name of the cup
         DECOMP_DecalFont_DrawLine(
-			sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],                  
+			sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],
 			startX + 0xa2, startY + 0x44, 3, txtColor);
 
         startX = startX + 0x4e;
@@ -168,7 +168,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
         {
 			int posX = (startX + (trackIndex &1) * 0x54);
 			int posY = (startY + (trackIndex>>1) * 0x23);
-			
+
 			#ifdef USE_16BY9
 			if (trackIndex &1)
 			{
@@ -176,12 +176,12 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 				posX -= 10;
 			}
 			else
-			{				
+			{
 				// left icons move 12% of 0x54, to the right
 				posX += 10;
 			}
 			#endif
-			
+
             // Draw Icon of each track
             DECOMP_RECTMENU_DrawPolyGT4(
 				gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
@@ -194,7 +194,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
 				D230.cupSel_Color,
 				0, FP(0.5));
         }
-		
+
         if (cupIndex == menu->rowSelected)
         {
 			// highlight box
@@ -203,18 +203,17 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
             cupBox.w = 174;
             cupBox.h = 74;
 
-            DECOMP_CTR_Box_DrawClearBox(
-				&cupBox, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-				gGT->backBuffer->otMem.startPlusFour,
-				&gGT->backBuffer->primMem);
+            Color color;
+            color.self = sdata->menuRowHighlight_Normal;
+            DECOMP_CTR_Box_DrawClearBox(&cupBox, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
         }
-		
+
 		// background box
         cupBox.x = startX - 6;
         cupBox.y = startY - 4;
         cupBox.w = 180;
         cupBox.h = 78;
-        
+
 		DECOMP_RECTMENU_DrawInnerRect(
 			&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
     }

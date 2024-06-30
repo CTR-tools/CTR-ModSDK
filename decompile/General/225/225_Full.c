@@ -60,9 +60,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   sStack104 = 0;
   uStack88 = 1;
   sStack80 = 0;
-  
+
   memset(asStack128, 0, 8);
-  
+
   sStack72 = 0;
   gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
@@ -122,36 +122,36 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
   // fly-in interpolation
   DECOMP_UI_Lerp2D_Linear(
-	&pos[0], 
-	0x296, uVar13, 
-	uVar7, uVar13, 
+	&pos[0],
+	0x296, uVar13,
+	uVar7, uVar13,
 	iVar11, FPS_DOUBLE(5));
 
   iVar14 = uVar13 + 0x28;
 
   // "Versus" or "Battle"
   DecalFont_DrawLine(
-	sdata->lngStrings[iVar10], 
-	pos[0], pos[1], 
+	sdata->lngStrings[iVar10],
+	pos[0], pos[1],
 	1, 0xffff8000);
 
   // STANDINGS
   DecalFont_DrawLine(
-	sdata->lngStrings[0xCA], 
-	pos[0], (pos[1] + 0x11), 
+	sdata->lngStrings[0xCA],
+	pos[0], (pos[1] + 0x11),
 	1, 0xffff8000);
 
   iVar10 = uStack96;
   iVar11 = 0;
-  
+
   {
     iStack60 = iVar10;
     uStack52 = (u_int)(iVar10 < 3);
     iStack48 = FPS_DOUBLE(0x1e);
     iStack44 = FPS_DOUBLE(5);
-	
+
     for (iVar11 = 0; iVar11 < iStack60; iVar11++)
-    {	
+    {
       sVar1 = asStack128[gGT->battleSetup.unk1dc8[iVar11]];
       sVar5 = (short)iVar14;
       if (iStack48 < sdata->framesSinceRaceEnded)
@@ -167,9 +167,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
       // fly-in interpolation
       DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		0x296, sVar5, 
-		uVar7, sVar5, 
+		&pos[0],
+		0x296, sVar5,
+		uVar7, sVar5,
 		iVar10, FPS_DOUBLE(5));
 
       sVar9 = 0;
@@ -178,7 +178,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       if ((gGT->gameMode1 & 0x20) == 0)
       {
         uStack112 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + uStack88];
-		
+
         // Draw character icon
         DecalHUD_DrawPolyFT4(
 			gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[gGT->battleSetup.unk1dc8[iVar11]]->driverID]].iconID],
@@ -194,7 +194,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
             1, 0x1000);
       }
-      
+
 	  // if battle mode
       else
       {
@@ -223,10 +223,10 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
               1, 0x1000);
           }
         }
-        
+
 		iVar14 = sVar1 * 0x1b + iVar14 + 10;
       }
-	  
+
       uStack88 = uStack88 + 1;
       sVar1 = 2;
       if (uStack52 == 0)
@@ -261,7 +261,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           }
 
           iVar2 = iVar10 + 1;
-		  
+
           // string for each player rank and count from standings (0x1e80)
           sprintf(acStack160, "%d%s-%2.02ld", iVar2,
                   sdata->lngStrings[((short *)0x800a0200)[iVar10]],
@@ -286,10 +286,10 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       {
         sVar1 = (short)iVar11;
       }
-	  
+
       iStack48 = iStack48 + FPS_DOUBLE(5);
       iStack44 = iStack44 + FPS_DOUBLE(5);
-	  
+
 	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
       sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((short *)0x800a0200)[sVar1]]);
 
@@ -321,9 +321,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
       if (uVar3 != uVar13)
         goto LAB_8009ff4c;
-	
+
 	  // === PushBuffer is the winner ===
-	
+
       sStack104 = 1;
 
 	  // default
@@ -337,7 +337,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         view->rect.w -= FPS_HALF(0xc);
         view->distanceToScreen_CURR = 0x80;
       }
-	  
+
 	  // vertical 2P split
 	  #else
       if (
@@ -350,12 +350,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         view->distanceToScreen_CURR = 0x80;
       }
 	  #endif
-	  
+
       // fly-in interpolation
       DECOMP_UI_Lerp2D_Linear(
-		&pos[0], 
-		view->rect.x, view->rect.y, 
-		0x14, 0xc, 
+		&pos[0],
+		view->rect.x, view->rect.y,
+		0x14, 0xc,
 		sdata->framesSinceRaceEnded, FPS_DOUBLE(25));
 
       box.x = pos[0] - 3;
@@ -363,16 +363,18 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       box.w = view->rect.w + 6;
       box.h = view->rect.h + 4;
 
-      RECTMENU_DrawOuterRect_HighLevel(&box, &sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
+      Color color;
+      color.self = sdata->battleSetup_Color_UI_1;
+      DECOMP_RECTMENU_DrawOuterRect_HighLevel(&box, color, 0, gGT->backBuffer->otMem.startPlusFour);
 
       view->rect.x = pos[0];
       view->rect.y = pos[1];
     }
-	
+
 	// === Winner already found ===
     else
     {
-		
+
 	// === PushBuffer is not winner ===
     LAB_8009ff4c:
 
@@ -383,7 +385,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         view->rect.w -= FPS_HALF(10);
         view->rect.h -= FPS_HALF(6);
       }
-	  
+
 	  #ifdef USE_NEW2P
 	  // this is required cause rendering is stopped
 	  // if h<0, but not if w<0, and w reaches zero
@@ -396,7 +398,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 	  #endif
     }
   }
-	
+
   if (((sdata->menuReadyToPass & 1) == 0) && (FPS_DOUBLE(25) < sdata->framesSinceRaceEnded))
   {
     // if you're in battle mode.

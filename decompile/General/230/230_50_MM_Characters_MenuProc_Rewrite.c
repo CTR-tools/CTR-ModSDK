@@ -329,9 +329,10 @@ force_inline void PLAYERPOLLING_MM_Characters_MenuProc(struct CharacterSelectMet
 			characterSlotHighlightColor = &D230.characterSelect_Outline;
 		}
 
+		Color color = *(Color *) characterSlotHighlightColor;
 		DECOMP_RECTMENU_DrawOuterRect_HighLevel
 		(
-			&r80, characterSlotHighlightColor, 0,
+			&r80, color, 0,
 			gGT->backBuffer->otMem.startPlusFour
 		);
 	}
@@ -641,8 +642,9 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 				((int)(short)sdata->characterSelectFlags >> i ^ 1U) & 1
 			);
 
+			Color color = *(Color *) &colorRGBA;
 			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				&r60, &colorRGBA, 0,
+				&r60, color, 0,
 				gGT->backBuffer->otMem.startPlusFour);
 
 			// if player selected a character
@@ -667,8 +669,9 @@ force_inline void DISPLAYRECTMENU_MM_Characters_MenuProc(int* characterMenuIDPer
 					colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 
+					color = *(Color *) colorRGBA;
 					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-						&r58, &colorRGBA, 0,
+						&r58, color, 0,
 						gGT->backBuffer->otMem.startPlusFour);
 				}
 			}

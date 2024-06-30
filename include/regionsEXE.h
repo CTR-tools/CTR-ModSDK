@@ -2344,7 +2344,7 @@ struct Data
 	// 0x800852e0 -- JpnTrial
 	// 0x80086708 -- EurRetail
 	// 0x8008978c -- JpnRetail
-	short speedometerBG_vertData[0x38];
+	Point speedometerBG_vertData[2][14];
 
 	// 0x800864DC
 	// LNG index for end-of-race comments
@@ -3635,7 +3635,8 @@ struct sData
 
 #else // had to, we were desperate
 
-		short UV;
+		unsigned char u;
+		unsigned char v;
 		short padding[3];
 
 #endif

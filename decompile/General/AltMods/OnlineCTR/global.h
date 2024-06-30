@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1014
+#define VERSION 1016
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -118,6 +118,16 @@ struct OnlineCTR
 	int ver_pc;
 	int ver_server;
 
+	// slot[0] is for game to tell client to send
+	// slot[1+] is for client to tell game to shoot
+	struct
+	{
+		unsigned char boolJuiced;
+		unsigned char Weapon;
+		unsigned char flags;
+		unsigned char boolNow;
+	} Shoot[8];
+
     // Frames that the client didn't update
     int frames_unsynced;
 
@@ -163,6 +173,7 @@ enum ServerGiveMessageType
 
 	SG_STARTRACE,
 	SG_RACEDATA,
+	SG_WEAPON,
 	SG_ENDRACE,
 
 	SG_SERVERCLOSED,
@@ -175,14 +186,18 @@ struct SG_Header
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+
+	// Left over from TCP prototype, not needed anymore.
+	// In new UDP system, some packets have recycled this
+	unsigned char padding : 4;
 };
 
 struct SG_MessageRooms
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
+
 	unsigned char numRooms;
 
 	unsigned short version;
@@ -213,14 +228,15 @@ struct SG_MessageClientStatus
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
 
-	// 1-15 for client, and total
+	// 1-15 for client
 	unsigned char clientID : 4;
+
+	// 1-15
 	unsigned char numClientsTotal : 4;
 
 	// special event
-	unsigned short special;
+	unsigned char special : 4;
 };
 
 // get name from any client
@@ -228,7 +244,7 @@ struct SG_MessageName
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
 
 	// index 0 - 7
 	unsigned char clientID : 4;
@@ -242,7 +258,7 @@ struct SG_MessageTrack
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
 
 	unsigned char trackID : 5;
 	unsigned char lapID : 3;
@@ -253,7 +269,6 @@ struct SG_MessageCharacter
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
 
 	// index 0 - 7
 	// boolLockedIn 0/1
@@ -261,6 +276,9 @@ struct SG_MessageCharacter
 	unsigned char clientID : 3;
 	unsigned char boolLockedIn : 1;
 	unsigned char characterID : 4;
+
+	// can be used for Engine type, or more characters
+	unsigned char padding : 4;
 };
 
 struct SG_EverythingKart
@@ -269,7 +287,10 @@ struct SG_EverythingKart
 
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+
+	// does not include fire level yet
+	unsigned char wumpa : 3;
+	unsigned char boolReserves : 1;
 
 	// byte[1-2]
 
@@ -292,24 +313,40 @@ struct SG_EverythingKart
 	// 10 bytes
 };
 
+struct SG_MessageWeapon
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+
+	// driver who used weapon
+	unsigned char clientID : 3;
+	unsigned char juiced : 1;
+
+	// 0-15
+	unsigned char weapon : 4;
+	unsigned char flags : 2;
+	unsigned char padding : 2;
+};
+
 struct SG_MessageEndRace
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
 
-	unsigned char clientID;
+	unsigned char clientID : 4;
+
 	unsigned char time[3];
 };
 
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
 STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 12, "Size of SG_MessageRooms must be 12 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 4, "Size of SG_MessageClientStatus must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 2, "Size of SG_MessageClientStatus must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageName) == 14, "Size of SG_MessageName must be 14 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 10, "Size of SG_EverythingKart must be 13 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 5, "Size of SG_MessageEndRace must be 5 bytes");
+STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 10, "Size of SG_EverythingKart must be 10 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageWeapon) == 2, "Size of SG_MessageWeapon must be 2 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 4, "Size of SG_MessageEndRace must be 4 bytes");
 
 enum ClientGiveMessageType
 {
@@ -322,6 +359,7 @@ enum ClientGiveMessageType
 
 	CG_STARTRACE,
 	CG_RACEDATA,
+	CG_WEAPON,
 	CG_ENDRACE,
 
 	CG_COUNT
@@ -332,14 +370,17 @@ struct CG_Header
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+
+	// Left over from TCP prototype, not needed anymore.
+	// In new UDP system, some packets have recycled this
+	unsigned char padding : 4;
 };
 
 struct CG_MessageRoom
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
 
 	unsigned char room;
 };
@@ -348,7 +389,7 @@ struct CG_MessageName
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
 
 	char name[0xC];
 };
@@ -358,7 +399,7 @@ struct CG_MessageTrack
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+	unsigned char padding : 4;
 
 	unsigned char trackID : 5;
 	unsigned char lapID : 3;
@@ -369,13 +410,14 @@ struct CG_MessageCharacter
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
 
 	// character 0 - 15
 	// lockedIn 0/1
 	unsigned char characterID : 4;
 	unsigned char boolLockedIn : 1;
-	unsigned char padding : 3;
+
+	// can be used for Engine type, or more characters
+	unsigned char padding : 7;
 };
 
 struct CG_EverythingKart
@@ -384,7 +426,10 @@ struct CG_EverythingKart
 
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+
+	// does not include fire level yet
+	unsigned char wumpa : 3;
+	unsigned char boolReserves : 1;
 
 	// bit-compressed driver->0x39A
 	unsigned char kartRot1;
@@ -403,11 +448,28 @@ struct CG_EverythingKart
 	// 10 bytes
 };
 
+struct CG_MessageWeapon
+{
+	// 15 types, 15 bytes max
+	unsigned char type : 4;
+
+	// can be used for desired target
+	unsigned char juiced : 1;
+	unsigned char padding : 1;
+	unsigned char flags : 2;
+
+	// 0-15
+	unsigned char weapon : 4;
+
+	unsigned char padding2 : 4;
+};
+
 struct CG_MessageEndRace
 {
 	// 15 types, 15 bytes max
 	unsigned char type : 4;
-	unsigned char size : 4;
+
+	unsigned char padding : 4;
 
 	unsigned char time[3];
 };
@@ -416,7 +478,8 @@ STATIC_ASSERT2(sizeof(struct CG_Header) == 1, "Size of CG_Header must be 1 byte"
 STATIC_ASSERT2(sizeof(struct CG_MessageName) == 13, "Size of CG_MessageName must be 13 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2, "Size of CG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2, "Size of CG_MessageTrack must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 10, "Size of CG_EverythingKart must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 10, "Size of CG_EverythingKart must be 10 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageWeapon) == 2, "Size of CG_MessageWeapon must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 4, "Size of CG_MessageEndRace must be 4 bytes");
 
 // OnlineCTR functions

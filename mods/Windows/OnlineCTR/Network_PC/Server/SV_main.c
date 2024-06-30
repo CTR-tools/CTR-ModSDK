@@ -125,7 +125,6 @@ void SendRoomData(ENetPeer* peer)
 	mr.type = SG_ROOMS;
 	mr.numRooms = 16;
 	mr.version = VERSION;
-	mr.size = sizeof(struct SG_MessageRooms);
 
 
 // Turn 1-7 inro 9-15
@@ -134,13 +133,13 @@ void SendRoomData(ENetPeer* peer)
 	if (roomInfos[index].boolRoomLocked) \
 		if(x < 8) \
 			x += 8;
-	
+
 	// Do NOT use roomInfos[index].clientCount,
 	// cause that doesnt account for empty holes
-	
+
 	int roomCount[16];
 	memset(&roomCount[0], 0, sizeof(int)*16);
-	
+
 	for(int i = 0; i < 16; i++)
 		for(int j = 0; j < 8; j++)
 			if (roomInfos[i].peerInfos[j].peer != 0)
@@ -164,7 +163,7 @@ void SendRoomData(ENetPeer* peer)
 	SETUP(mr.numClients15, 0xe);
 	SETUP(mr.numClients16, 0xf);
 
-	sendToPeerReliable(peer, &mr, mr.size);
+	sendToPeerReliable(peer, &mr, sizeof(struct SG_MessageRooms));
 }
 
 void ProcessConnectEvent(ENetPeer* peer)
@@ -206,15 +205,16 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 	mw.type = SG_NEWCLIENT;
 	mw.clientID = id;
 	mw.numClientsTotal = ri->clientCount;
-	mw.size = sizeof(struct SG_MessageClientStatus);
 
 	// ordinary day
 	mw.special = 0;
+#if 0
 	if (GetWeekDay() == 1) mw.special = 1; // Monday
 	if (GetWeekDay() == 3) mw.special = 2; // Wednesday
 	if (GetWeekDay() == 5) mw.special = 3; // Friday
+#endif
 
-	sendToPeerReliable(ri->peerInfos[id].peer, &mw, mw.size);
+	sendToPeerReliable(ri->peerInfos[id].peer, &mw, sizeof(struct SG_MessageClientStatus));
 }
 
 void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
@@ -314,12 +314,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memset(&ri->peerInfos[id], 0, sizeof(PeerInfo));
 
 			ri->peerInfos[id].peer = peer;
-			
+
 			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
 			WelcomeNewClient(ri, id);
-			
+
 			break;
 		}
 
@@ -340,9 +340,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				peer->address.host);
 
 			s->type = SG_NAME;
-			s->size = sizeof(struct SG_MessageName);
 
-			// send all OTHER names to THIS client
+			// send all OTHER (8) names to THIS (1) client
 			for (int j = 0; j < MAX_CLIENTS; j++)
 			{
 				if (
@@ -351,21 +350,17 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 						(peerID != j)
 					)
 				{
+					// send all OTHER (8) names to THIS (1) client
 					s->clientID = j;
 					memcpy(&s->name[0], &ri->peerInfos[j].name[0], 12);
-
-					// 8 messages to one client
-					sendToPeerReliable(ri->peerInfos[peerID].peer, s, s->size);
+					sendToPeerReliable(ri->peerInfos[peerID].peer, s, sizeof(struct SG_MessageName));
 				}
 			}
 
-			// send THIS name to all OTHER clients
-			s->type = SG_NAME;
-			s->size = sizeof(struct SG_MessageName);
+			// send THIS (1) name to all OTHER (8) clients
 			s->clientID = peerID;
 			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], 12);
-
-			broadcastToPeersReliable(ri, s, s->size);
+			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 			break;
 		}
 
@@ -379,7 +374,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct CG_MessageTrack* r = recvBuf;
 
 			s->type = SG_TRACK;
-			s->size = sizeof(struct CG_MessageTrack);
 			s->trackID = r->trackID;
 			s->lapID = r->lapID;
 
@@ -390,7 +384,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 					s->trackID,
 					(2*s->lapID)+1);
 
-			broadcastToPeersReliable(ri, s, s->size);
+			broadcastToPeersReliable(ri, s, sizeof(struct CG_MessageTrack));
 			break;
 		}
 
@@ -400,7 +394,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct CG_MessageCharacter* r = recvBuf;
 
 			s->type = SG_CHARACTER;
-			s->size = sizeof(struct SG_MessageCharacter);
 			s->clientID = peerID;
 			s->characterID = r->characterID;
 			s->boolLockedIn = r->boolLockedIn;
@@ -408,7 +401,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			ri->peerInfos[peerID].characterID = s->characterID;
 			ri->peerInfos[peerID].boolLoadSelf = s->boolLockedIn;
 
-			broadcastToPeersReliable(ri, s, s->size);
+			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageCharacter));
 			break;
 		}
 
@@ -428,7 +421,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct CG_EverythingKart* r = recvBuf;
 
 			s->type = SG_RACEDATA;
-			s->size = sizeof(struct SG_EverythingKart);
 			s->clientID = peerID;
 
 			s->kartRot1 = r->kartRot1;
@@ -436,9 +428,28 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			s->buttonHold = r->buttonHold;
 
+			s->boolReserves = r->boolReserves;
+			s->wumpa = r->wumpa;
+
 			memcpy(&s->posX, &r->posX, 6);
 
-			broadcastToPeersUnreliable(ri, s, s->size);
+			broadcastToPeersUnreliable(ri, s, sizeof(struct SG_EverythingKart));
+			break;
+		}
+
+		case CG_WEAPON:
+		{
+			struct SG_MessageWeapon* s = &sgBuffer[0];
+			struct CG_MessageWeapon* r = recvBuf;
+
+			s->type = SG_WEAPON;
+			s->clientID = peerID;
+
+			s->weapon = r->weapon;
+			s->juiced = r->juiced;
+			s->flags = r->flags;
+
+			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon));
 			break;
 		}
 
@@ -448,7 +459,6 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct CG_MessageEndRace* r = recvBuf;
 
 			s->type = SG_ENDRACE;
-			s->size = sizeof(struct SG_MessageEndRace);
 			s->clientID = peerID;
 
 			memcpy(&s->time[0], &r->time[0], 3);
@@ -470,7 +480,8 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			//printf("End Race: %d %s\n", peerID, timeStr);
 			ri->peerInfos[peerID].boolEndSelf = 1;
 
-			broadcastToPeersReliable(ri, s, s->size);
+			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageEndRace));
+			break;
 		}
 
 		default:
@@ -525,15 +536,15 @@ void ProcessNewMessages() {
 				if (
 						// nobody left at all
 						(numAlive == 0) ||
-						
+
 						(
 							// race in session
 							(ri->boolRaceAll == 1) &&
-				
+
 							(
 								// nobody to race
 								(numAlive <= 1) ||
-				
+
 								// battle map or adv map,
 								(ri->levelPlayed > 18)
 							)
@@ -557,7 +568,7 @@ void ProcessNewMessages() {
 
 					memset(ri, 0, sizeof(RoomInfo));
 				}
-				
+
 				// Only disconnect one player as long as
 				// more racers remain on Arcade track,
 				// or if disconnected from Battle/Adv during the race
@@ -585,12 +596,11 @@ void ProcessNewMessages() {
 
 					// send NULL name to all OTHER clients
 					s->type = SG_NAME;
-					s->size = sizeof(struct SG_MessageName);
 					s->clientID = peerID;
 					s->numClientsTotal = ri->clientCount;
 					memset(&s->name[0], 0, 12);
 
-					broadcastToPeersReliable(ri, s, s->size);
+					broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 				}
 
 				break;
@@ -707,15 +717,10 @@ void ServerState_Tick()
 
 			if (ri->boolLoadAll)
 			{
-				//printf("Start Loading: ");
-				//PrintTime();
-
+				// send to all clients
 				struct SG_Header sg;
 				sg.type = SG_STARTLOADING;
-				sg.size = sizeof(struct SG_Header);
-
-				// send a message to the client
-				broadcastToPeersReliable(ri, &sg, sg.size);
+				broadcastToPeersReliable(ri, &sg, sizeof(struct SG_Header));
 			}
 		}
 
@@ -729,15 +734,10 @@ void ServerState_Tick()
 
 			if (ri->boolRaceAll)
 			{
-				//printf("Start Race: ");
-				//PrintTime();
-
+				// send to all clients
 				struct SG_Header sg;
 				sg.type = SG_STARTRACE;
-				sg.size = sizeof(struct SG_Header);
-
-				// send a message to the client
-				broadcastToPeersReliable(ri, &sg, sg.size);
+				broadcastToPeersReliable(ri, &sg, sizeof(struct SG_Header));
 			}
 		}
 
@@ -756,23 +756,23 @@ void ServerState_Tick()
 				ri->endTime = clock();
 			}
 		}
-		
+
 		else
 		{
 			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC_FIX) >= 6)
 			{
 				PrintPrefix(r + 1);
 				printf("Room has been reset\n");
-				
+
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
 					if (ri->peerInfos[i].peer == 0)
 						continue;
-					
+
 					ri->peerInfos[i].boolLoadSelf = 0;
 					ri->peerInfos[i].boolRaceSelf = 0;
 					ri->peerInfos[i].boolEndSelf = 0;
-						
+
 					// tell all clients to reset
 					WelcomeNewClient(ri, i);
 				}

@@ -1,92 +1,50 @@
-#include <common.h>
-
+#ifdef USE_BOOSTBAR
 #ifdef USE_ONLINE
-#include "OnlineCTR/names3d.c"
 
-void statsUpgrade()
+Color HsvToRgb(int h, int s, int v)
 {
-	/*
-		Stat 9 is acceleration,
-		Stats 11 and 12 speed related
-	*/
-	for (int i = 9; i < 13; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			data.metaPhys[i].value[j] = data.metaPhys[i].value[4]; // copy MAX
-		}
-	}
+    Color rgb;
+	h = h & 0xFF; // modulo 256
+    int region, remainder, p, q, t;
+
+    if (s == 0)
+    {
+        rgb.r = v;
+        rgb.g = v;
+        rgb.b = v;
+        return rgb;
+    }
+
+    region = h / 43;
+    remainder = (h - (region * 43)) * 6;
+
+    p = (v * (255 - s)) >> 8;
+    q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+    t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+
+    switch (region)
+    {
+        case 0:
+            rgb.r = v; rgb.g = t; rgb.b = p;
+            break;
+        case 1:
+            rgb.r = q; rgb.g = v; rgb.b = p;
+            break;
+        case 2:
+            rgb.r = p; rgb.g = v; rgb.b = t;
+            break;
+        case 3:
+            rgb.r = p; rgb.g = q; rgb.b = v;
+            break;
+        case 4:
+            rgb.r = t; rgb.g = p; rgb.b = v;
+            break;
+        default:
+            rgb.r = v; rgb.g = p; rgb.b = q;
+            break;
+    }
+
+    return rgb;
 }
 #endif
-
-#ifdef USE_BOOSTBAR
-void DrawBoostBar(short posX, short posY, struct Driver* driver)
-{
-	struct GameTracker * gGT = sdata->gGT;
-
-	short fullHeight = 3;
-	int fullWidth = WIDE_PICK(0x31, 0x25);
-
-	short meterLength = ((driver->reserves * 0xE)/0x960);
-	if ((meterLength > fullWidth) || (driver->reserves < 0)) { meterLength = fullWidth; }
-
-	RECT box;
-	box.x = posX - fullWidth;
-	box.y = posY - fullHeight;
-	box.w = fullWidth;
-	box.h = fullHeight;
-
-	struct DB * backDB = gGT->backBuffer;
-
-	DECOMP_CTR_Box_DrawWireBox(
-		&box, MakeColor(0, 0, 0),
-		gGT->pushBuffer_UI.ptrOT);
-
-	int topY = posY - fullHeight;
-
-	/* === BoostBar ===
-		red: 0-2s
-		yellow: 2s-4s
-		green: 4s-full
-		blue: full-saffi
-		purple: saffi */
-
-	PrimCode primCode = { .poly = { .quad = 1, .renderCode = RenderCode_Polygon } };
-	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, primCode); // red
-
-	if (driver->reserves < 0) {
-		colorCode = MakeColorCode(0xFF, 0x0, 0xFF, primCode); // purple
-	}
-	else if (meterLength == fullWidth) {
-		colorCode = MakeColorCode(0, 0, 0xFF, primCode); // blue
-	}
-	else if (driver->reserves >= SECONDS(4)) {
-		colorCode = MakeColorCode(0, 0xFF, 0, primCode); // green
-	}
-	else if (driver->reserves >= SECONDS(2)) {
-		colorCode = MakeColorCode(0xFF, 0xFF, 0, primCode); // yellow
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		PolyF4 * p;
-		GetPrimMem(p);
-		if (p == nullptr) { return; }
-
-		p->colorCode = colorCode;
-		p->v[0].pos.x = posX - meterLength;
-		p->v[0].pos.y = topY;
-		p->v[1].pos.x = posX;
-		p->v[1].pos.y = topY;
-		p->v[2].pos.x = posX - meterLength;
-		p->v[2].pos.y = posY;
-		p->v[3].pos.x = posX;
-		p->v[3].pos.y = posY;
-		AddPrimitive(p, gGT->pushBuffer_UI.ptrOT);
-
-		// Gray color for Prim #2
-		colorCode = MakeColorCode(0x80, 0x80, 0x80, primCode);
-		meterLength = fullWidth;
-	}
-}
 #endif

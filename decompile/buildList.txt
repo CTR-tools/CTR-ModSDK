@@ -231,7 +231,7 @@ common, exe, CTR_CycleTex_Model, 0x0, General/CTR/CTR_CycleTex_Model.c
 common, exe, CTR_MatrixToRot, 0x0, General/CTR/CTR_MatrixToRot.c
 
 // DebugFont
-common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers.c, DebugFont.bin
+//common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers.c, DebugFont.bin
 
 // DecalFont
 common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c
@@ -372,8 +372,8 @@ common, exe, Music_Start, 0x0, General/HOWL/h116_Music_Start.c
 common, exe, Music_End, 0x0, General/HOWL/h117_Music_End.c
 common, exe, Music_GetHighestSongPlayIndex, 0x0, General/HOWL/h118_Music_GetHighestSongPlayIndex.c
 
-// GTE_AudioLR_Inst 
-// GTE_AudioLR_Driver 
+// GTE_AudioLR_Inst
+// GTE_AudioLR_Driver
 // GTE_GetSquaredLength
 common, exe, OtherFX_RecycleNew, 0x0, General/HOWL/h122_OtherFX_RecycleNew.c
 // OtherFX_RecycleMute
@@ -512,7 +512,7 @@ common, exe, MEMCARD_ChecksumLoad, 0x0, General/MEMCARD/MEMCARD_ChecksumLoad.c
 common, exe, MEMCARD_StringInit, 0x0, General/MEMCARD/MEMCARD_StringInit.c
 common, exe, MEMCARD_StringSet, 0x0, General/MEMCARD/MEMCARD_StringSet.c
 common, exe, MEMCARD_InitCard, 0x0, General/MEMCARD/MEMCARD_InitCard.c
-common, exe, MEMCARD_CloseCard, 0x0, General/MEMCARD/MEMCARD_CloseCard.c 
+common, exe, MEMCARD_CloseCard, 0x0, General/MEMCARD/MEMCARD_CloseCard.c
 common, exe, MEMCARD_GetNextSwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextSwEvent.c
 common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent.c
 common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c

@@ -1497,13 +1497,15 @@ void WindowBoxLines(struct GameTracker* gGT)
 
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
+		Color color;
+		color.self = *data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE];
 		DECOMP_RECTMENU_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->pushBuffer[i].rect,4,2,
 
 			// color data
-			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE],
+			color,
 
 			0,
 
@@ -1742,7 +1744,7 @@ void RenderSubmit(struct GameTracker* gGT)
 
 	void* ot = &gGT->pushBuffer[0].ptrOT[0x3ff];
 
-#ifdef USE_ONLINE
+#if 0 && defined(USE_ONLINE)
 	void OnlineMirrorMode(u_long* ot);
 	OnlineMirrorMode(ot);
 #endif

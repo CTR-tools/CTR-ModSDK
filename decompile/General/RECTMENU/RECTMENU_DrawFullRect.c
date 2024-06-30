@@ -31,7 +31,9 @@ void DECOMP_RECTMENU_DrawFullRect(struct RectMenu* menu, RECT *inner)
         outer.h = 2;
         outer.w = inner->w - 6;
 
-        DECOMP_RECTMENU_DrawOuterRect_Edge(&outer, rgb, (menu->drawStyle | 0x20), gGT->backBuffer->otMem.startPlusFour);
+        Color color;
+        color.self = *rgb;
+        DECOMP_RECTMENU_DrawOuterRect_Edge(&outer, color, (menu->drawStyle | 0x20), gGT->backBuffer->otMem.startPlusFour);
     }
     DECOMP_RECTMENU_DrawInnerRect(inner, menu->drawStyle, gGT->backBuffer->otMem.startPlusFour);
 }

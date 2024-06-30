@@ -29,6 +29,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	short globalIconPerPlayer[4];
 	RECT r80;
 	u_char auStack120[8];
+	Color color;
 
 	u_char colorRGBA[4];
 
@@ -465,8 +466,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			puVar12 = &D230.characterSelect_Outline;
 		}
 
+		color = *(Color *) puVar12;
 		DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-			&r80, puVar12, 0,
+			&r80, color, 0,
 			gGT->backBuffer->otMem.startPlusFour);
 	}
 
@@ -686,8 +688,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1
 			);
 
+			color = *(Color *) &colorRGBA;
 			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				&r60, &colorRGBA, 0,
+				&r60, color, 0,
 				gGT->backBuffer->otMem.startPlusFour);
 
 			// if player selected a character
@@ -709,8 +712,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 
+					color = *(Color *) &colorRGBA;
 					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-						&r58, &colorRGBA, 0,
+						&r58, color, 0,
 						gGT->backBuffer->otMem.startPlusFour);
 				}
 			}

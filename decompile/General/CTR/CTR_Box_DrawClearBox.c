@@ -1,42 +1,36 @@
 #include <common.h>
 
-void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_long* ot, struct PrimMem* primMem)
+void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color color, int transparency, u_long * ot)
 {
-	typedef struct
+	typedef struct TPage_PolyF4
 	{
-		u_int tag;
-		u_int tpage;
-		POLY_F4 f4;
-	} multiCmdPacket;
+		TPage t;
+		PolyF4 p;
+	} TPage_PolyF4;
 
-	void* primMem_curr = primMem->curr;
-	multiCmdPacket* p = 0;
+	TPage_PolyF4 * p;
+	GetPrimMem(p);
+	if (p == nullptr) { return; }
 
-	if (primMem_curr <= primMem->endMin100)
-	{
-		primMem->curr = (void *)((int)primMem_curr + sizeof(multiCmdPacket));
-		p = (multiCmdPacket*)primMem_curr;
-	}
-	if (p != 0)
-	{
-		setlen(p, 7);
-		p->tpage = (transparency << 5) | 0xe1000a00;
-#ifdef REBUILD_PC
-		p->tpage |= 0x400; // set dfe=1
-#endif
+	p->t.texpage = (Texpage){ .code = 0xE1, .semiTransparency = transparency, .dither = 1 };
+	p->p.tag.self = 0;
 
-		*(int*)&p->f4.tag = 0;
-		*(int*)&p->f4.r0 = *colorPtr;
-		p->f4.code = 0x2A;
+	const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1, .semiTransparency = 1 } };
+	color.code = primCode;
+	p->p.colorCode = color;
 
-		short rightX = r->x + r->w;
-		short bottomY = r->y + r->h;
+	s16 topX = r->x;
+	s16 topY = r->y;
+	s16 bottomX = r->x + r->w;
+	s16 bottomY = r->y + r->h;
+	p->p.v[0].pos.x = topX;
+	p->p.v[0].pos.y = topY;
+	p->p.v[1].pos.x = bottomX;
+	p->p.v[1].pos.y = topY;
+	p->p.v[2].pos.x = topX;
+	p->p.v[2].pos.y = bottomY;
+	p->p.v[3].pos.x = bottomX;
+	p->p.v[3].pos.y = bottomY;
 
-		p->f4.x0 = r->x, 	p->f4.y0 = r->y;
-		p->f4.x1 = rightX,	p->f4.y1 = r->y;
-		p->f4.x2 = r->x, 	p->f4.y2 = bottomY;
-		p->f4.x3 = rightX,	p->f4.y3 = bottomY;
-
-		AddPrim(ot, p);
-	}
+	AddPrimitive(p, ot);
 }

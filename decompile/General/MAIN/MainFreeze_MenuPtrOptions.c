@@ -13,7 +13,7 @@ typedef struct
 force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* menu, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
 	struct GameTracker* gGT = sdata->gGT;
-	
+
 	// get number of ordinary gamepads and/or "analog controllers" connected, and which players are using which
 
 	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
@@ -24,12 +24,12 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* me
 		if
 		(
 			(
-				(ptrControllerPacket == 0) || 
+				(ptrControllerPacket == 0) ||
 				(ptrControllerPacket->isControllerConnected != 0)
 			) ||
-			
+
 			(
-				(ptrControllerPacket->controllerData != ((PAD_ID_JOGCON << 4) | 3)) && 
+				(ptrControllerPacket->controllerData != ((PAD_ID_JOGCON << 4) | 3)) &&
 				(ptrControllerPacket->controllerData != ((PAD_ID_NEGCON << 4) | 3))
 			)
 		)
@@ -105,14 +105,14 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct RectMenu* menu,
 
 				if (sdata->AnyPlayerHold & BTN_LEFT)  volume -= FPS_HALF(4);
 				if (sdata->AnyPlayerHold & BTN_RIGHT) volume += FPS_HALF(4);
-				
+
 				if(volume < 0) volume = 0;
 				if(volume > 0xff) volume = 0xff;
 
 				howl_VolumeSet(menu->rowSelected, volume);
 			}
 			break;
-		
+
 		// Mode	(Stereo/Mono)
 		case 3:
 			// clear test sound
@@ -183,7 +183,7 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct RectMenu* menu,
 force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* menu, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
 	struct GameTracker* gGT = sdata->gGT;
-	
+
 	// note: multitap only works if it's connected to the P1 slot
 	int isMultitap = (sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4));
 
@@ -219,7 +219,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	// drawStyle needs research...
 	menu->drawStyle &= 0xfeff;
-	if (gGT->numPlyrCurrGame > 2) 
+	if (gGT->numPlyrCurrGame > 2)
 		menu->drawStyle |= 0x100;
 
 	int volumeSliderTriangleLeftMargin = 0;
@@ -233,16 +233,16 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	// "OPTIONS"
 	DecalFont_DrawLine(
-		sdata->lngStrings[324], 
-		256, 
-		26 + (menuRowsNegativePadding / 2), 
+		sdata->lngStrings[324],
+		256,
+		26 + (menuRowsNegativePadding / 2),
 		FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	int volumeSliderWidth = 380 - (30 + volumeSliderTriangleLeftMargin);
 
 	struct OTMem* otMem = &gGT->backBuffer->otMem;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
-		
+
 	// draw volume sliders
 	for(int i = 0; i <3; i++)
 	{
@@ -261,15 +261,15 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			// 0, 1
 			volumeSliderTriangleLeftPosX + 56,
 			volumeSliderPosY + 58,
-			
+
 			// 2, 3
 			volumeSliderTriangleLeftPosX + volumeSliderWidth + 56,
 			volumeSliderPosY + 48,
-			
+
 			// 4, 5
 			0,0
 		};
-		
+
 		volumeSliderTriangle[4] = volumeSliderTriangle[2];
 		volumeSliderTriangle[5] = volumeSliderTriangle[1];
 
@@ -280,13 +280,12 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			.w = 3,
 			.h = 10
 		};
-		
-		CTR_Box_DrawSolidBox(
-			&volumeSliderBar, 
-			(u_int *)(data.Options_VolumeSlider_Colors + 0xc), 
-			otMem->startPlusFour, 
-			primMem);
-		
+		Color color = *(Color *)(data.Options_VolumeSlider_Colors + 0xc);
+		DECOMP_CTR_Box_DrawSolidBox(
+			&volumeSliderBar,
+			color,
+			otMem->startPlusFour);
+
 		RECT volumeSliderBarOutline =
 		{
 			.x = volumeSliderBarPosX,
@@ -294,32 +293,32 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			.w = 5,
 			.h = 12
 		};
-		
-		CTR_Box_DrawSolidBox(
-			&volumeSliderBarOutline, 
-			(u_int *)(data.Options_VolumeSlider_Colors + 0x10), 
-			otMem->startPlusFour, 
-			primMem);
-		
+
+		color = *(Color *)(data.Options_VolumeSlider_Colors + 0x10);
+		DECOMP_CTR_Box_DrawSolidBox(
+			&volumeSliderBarOutline,
+			color,
+			otMem->startPlusFour);
+
 		RECTMENU_DrawRwdTriangle(
-			volumeSliderTriangle, 
-			data.Options_VolumeSlider_Colors, 
-			otMem->startPlusFour, 
+			volumeSliderTriangle,
+			data.Options_VolumeSlider_Colors,
+			otMem->startPlusFour,
 			primMem);
-		
+
 		// "FX:" "MUSIC:" "VOICE:"
 		DecalFont_DrawLine(
-			sdata->lngStrings[data.Options_StringIDs_Audio[i]], 
-			76, 
-			50 + (menuRowsNegativePadding / 2) + (i * 10), 
+			sdata->lngStrings[data.Options_StringIDs_Audio[i]],
+			76,
+			50 + (menuRowsNegativePadding / 2) + (i * 10),
 			FONT_SMALL, ORANGE);
 	}
 
 	// "MODE:"
 	DecalFont_DrawLine(
-		sdata->lngStrings[332], 
-		76, 
-		80 + (menuRowsNegativePadding / 2), 
+		sdata->lngStrings[332],
+		76,
+		80 + (menuRowsNegativePadding / 2),
 		FONT_SMALL, ORANGE);
 
 	// 333: MONO
@@ -328,23 +327,23 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	// "MONO", "STEREO"
 	DecalFont_DrawLine(
-		sdata->lngStrings[333 + mode], 
-		436, 
-		80 + (menuRowsNegativePadding / 2), 
+		sdata->lngStrings[333 + mode],
+		436,
+		80 + (menuRowsNegativePadding / 2),
 		FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
 
 	if (gamepad->numGamepads != 0)
 	{
 		// "DUAL SHOCK:"
 		DecalFont_DrawLine(
-			sdata->lngStrings[330], 
-			76, 
-			90 + (menuRowsNegativePadding / 2), 
+			sdata->lngStrings[330],
+			76,
+			90 + (menuRowsNegativePadding / 2),
 			FONT_SMALL, ORANGE);
 
-		int lineWidth_controller1A = 
+		int lineWidth_controller1A =
 			DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], FONT_SMALL);
-		
+
 		// width can change depending on language
 		int lineWidth_vibrateOff = DecalFont_GetLineWidth(sdata->lngStrings[326], FONT_SMALL);
 		int lineWidth_vibrateOn = DecalFont_GetLineWidth(sdata->lngStrings[325], FONT_SMALL);
@@ -358,8 +357,8 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			int gamepadConnected = false;
 			int dualShockRowColor = ORANGE;
 			int currPad = gamepad->gamepadId[i];
-			
-			struct ControllerPacket* ptrControllerPacket = 
+
+			struct ControllerPacket* ptrControllerPacket =
 				sdata->gGamepads->gamepad[currPad].ptrControllerPacket;
 
 			if (ptrControllerPacket == 0 || ptrControllerPacket->isControllerConnected != 0)
@@ -368,11 +367,11 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 				dualShockRowColor = GRAY;
 			}
 
-			int rowY = 
+			int rowY =
 				100 + (menuRowsNegativePadding / 2) + (i * 10);
 
-			// "CONTROLLER 1", "CONTROLLER 2", 
-			// "CONTROLLER 1A", "CONTROLLER 1B", 
+			// "CONTROLLER 1", "CONTROLLER 2",
+			// "CONTROLLER 1A", "CONTROLLER 1B",
 			// "CONTROLLER 1C", "CONTROLLER 1D"
 			DecalFont_DrawLine
 			(
@@ -384,7 +383,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 			// ON: 0
 			// OFF: 1
-			int boolDisabled = 
+			int boolDisabled =
 				(gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0;
 
 			dualShockRowColor = GRAY;
@@ -399,9 +398,9 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			// 326: "VIBRATE OFF"
 
 			DecalFont_DrawLine(
-				sdata->lngStrings[325 + boolDisabled], 
-				lineWidth_vibrateOn + lineWidth_controller1A + 10, 
-				rowY, 
+				sdata->lngStrings[325 + boolDisabled],
+				lineWidth_vibrateOn + lineWidth_controller1A + 10,
+				rowY,
 				FONT_SMALL, dualShockRowColor);
 		}
 	}
@@ -410,9 +409,9 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	{
 		// "CONFIGURE ANALOG:"
 		DecalFont_DrawLine(
-			sdata->lngStrings[336], 
-			76, 
-			90 + (menuRowsNegativePadding / 2) + analogRowPosY, 
+			sdata->lngStrings[336],
+			76,
+			90 + (menuRowsNegativePadding / 2) + analogRowPosY,
 			FONT_SMALL, ORANGE);
 
 		for(int i = 0; i < gamepad->numAnalogs; i++)
@@ -431,9 +430,9 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	// "EXIT"
 	DecalFont_DrawLine(
-		sdata->lngStrings[331], 
-		76, 
-		140 - (menuRowsNegativePadding / 2), 
+		sdata->lngStrings[331],
+		76,
+		140 - (menuRowsNegativePadding / 2),
 		FONT_SMALL, ORANGE);
 
 	RECT cursor =
@@ -443,10 +442,12 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		.w = 364,
 		.h = data.Options_HighlightBar[menu->rowSelected].sizeY
 	};
-	
-	CTR_Box_DrawClearBox(
-		&cursor, &sdata->menuRowHighlight_Normal, 
-		TRANS_50_DECAL, otMem->startPlusFour, primMem);
+
+	Color color;
+	color.self = sdata->menuRowHighlight_Normal;
+	DECOMP_CTR_Box_DrawClearBox(
+		&cursor, color,
+		TRANS_50_DECAL, otMem->startPlusFour);
 
 	RECT titleSeparatorLine =
 	{
@@ -455,10 +456,11 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		.w = 380,
 		.h = 2
 	};
-	
-	RECTMENU_DrawOuterRect_Edge(
-		&titleSeparatorLine, 
-		(u_int)&sdata->battleSetup_Color_UI_1, 
+
+	color.self = sdata->battleSetup_Color_UI_1;
+	DECOMP_RECTMENU_DrawOuterRect_Edge(
+		&titleSeparatorLine,
+		color,
 		0x20, otMem->startPlusFour);
 
 	RECT menuBG =
@@ -468,7 +470,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		.w = 400,
 		.h = 135 - menuRowsNegativePadding
 	};
-	
+
 	RECTMENU_DrawInnerRect(
 		&menuBG, 4, otMem->startPlusFour);
 }

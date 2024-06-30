@@ -10,7 +10,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 {
 	struct GameTracker* gGT;
 	int gameMode2;
-	
+
 	char kartState;
 	char heldItemID;
 	short noItemTimer;
@@ -84,17 +84,32 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	for(i = 0; i < 14; i++)
 	{
 		short* val = (short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
+		#ifdef USE_ONLINE
+		if (i == 0)
+		{
+			if (driver->reserves == 0) { driver->uncappedReserves = 0; }
+
+			if (driver->uncappedReserves > 0) { driver->uncappedReserves = max(driver->uncappedReserves - msPerFrame, 0); }
+			else if (driver->reserves > 0) { driver->reserves = max(driver->reserves - msPerFrame, 0); }
+		}
+		else if (*val > 0)
+		{
+			*val -= msPerFrame;
+			if(*val < 0) *val = 0;
+		}
+		#else
 		if(*val > 0)
 		{
 			*val -= msPerFrame;
 			if(*val < 0) *val = 0;
 		}
+		#endif
 	}
-	
+
 	if(driver->reserves > 0) driver->timeSpentUsingReserves += msPerFrame;
 	if(driver->set_0xF0_OnWallRub > 0) driver->timeSpentAgainstWall += msPerFrame;
 	if(driver->burnTimer > 0) driver->timeSpentBurnt += msPerFrame;
-	if(driver->squishTimer > 0) driver->timeSpentSquished += msPerFrame;	
+	if(driver->squishTimer > 0) driver->timeSpentSquished += msPerFrame;
 
 	// If Super Engine Cheat is not enabled
 	if (!(gameMode2 & CHEAT_ENGINE))
@@ -111,11 +126,11 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		(driver->invisibleTimer != 0) &&
 		((gameMode2 & CHEAT_INVISIBLE) == 0)
 	)
-	{		
+	{
 		driver->invisibleTimer -= msPerFrame;
-		
+
 		// if newly visible
-		if(driver->invisibleTimer <= 0) 
+		if(driver->invisibleTimer <= 0)
 		{
 			driver->invisibleTimer = 0;
 			driver->instSelf->flags = driver->instFlagsBackup;
@@ -178,13 +193,13 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 
 	// === Determine Hazard ===
-	
+
 
 	driverRankItemValue = 4;
 
 	// if you have a raincloud over your head from potion
-	if (driver->thCloud != 0) 
-		driverRankItemValue = 
+	if (driver->thCloud != 0)
+		driverRankItemValue =
 			((struct RainCloud*)driver->thCloud->object)->boolScrollItem;
 
 	// get approximate speed
@@ -317,10 +332,10 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		}
 		driver->hazardTimer = driverTimerNegativeFinal;
 	}
-	
-	
+
+
 	// === Item Roll ===
-	
+
 
 	// if Held Item = None (rolling)
 	if (driver->heldItemID == 0x10)
@@ -358,7 +373,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 
 	// === Item Used By Player ===
-	
+
 
 	// Make Item fade away from icon
 	if (driver->noItemTimer > 0) driver->noItemTimer--;
@@ -382,52 +397,52 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		// take away weapon
 		*(u_char*)&driver->heldItemID = 0xf;
 	}
-	
-	
+
+
 	// === Normal Vector ===
-	
-	
+
+
 	// action flags
 	driver->actionsFlagSetPrevFrame = actionsFlagSetCopy;
-	
+
 	// backup rotation
 	*(u_int*)&driver->rotPrev.x = *(u_int*)&driver->rotCurr.x;
 	driver->rotPrev.z = driver->rotCurr.z;
-	
+
 	// backup position
 	driver->posPrev[0] = driver->posCurr[0];
 	driver->posPrev[1] = driver->posCurr[1];
 	driver->posPrev[2] = driver->posCurr[2];
-	
+
 	// unknown
 	driver->jumpHeightPrev = driver->jumpHeightCurr;
 	driver->turnAnglePrev = driver->turnAngleCurr;
 
 	// ??? --Super
 	uVar20 = actionsFlagSetCopy & 0x7f1f83d5;
-	
+
 	// disable input if opening adv hub door with key
 	if ((gameMode2 & 0x4004) != 0)
 	{
 		driver->actionsFlagSet = uVar20;
 		return;
 	}
-	
+
 	// destination
 	normDst = &driver->AxisAngle4_normalVec[0];
 	if(driver->normalVecID == -1) normDst = &driver->AxisAngle3_normalVec[0];
 	driver->normalVecID = 0;
-	
+
 	// source
 	normSrc = &driver->AxisAngle2_normalVec[0];
 	if ((actionsFlagSetCopy & 1) != 0) normSrc = &driver->AxisAngle1_normalVec[0];
-	
+
 	// copy
 	*(u_int*)&normDst[0] = *(u_int*)&normSrc[0];
 	normDst[2] = normSrc[2];
-	
-	
-	
+
+
+
 	// === Check Mask Weapon ===
 
 
@@ -438,7 +453,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		// If thread->modelIndex is Aku or Uka
 		if
 		(
-			(*(short*)&driverItemThread->modelIndex == 0x3a) || 
+			(*(short*)&driverItemThread->modelIndex == 0x3a) ||
 			(*(short*)&driverItemThread->modelIndex == 0x39)
 		)
 		{
@@ -453,7 +468,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 
 	// === Check Buttons ===
-	
+
 
 	// pointer to gamepad input of current player (driver)
 	ptrgamepad = &sdata->gGamepads->gamepad[(u_int)driver->driverID];
@@ -474,10 +489,10 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 	// state of kart
 	kartState = driver->kartState;
-	
-	
+
+
 	// === Check Weapons ===
-	
+
 
 	if
 	(
@@ -514,15 +529,15 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 			driver->instBubbleHold = 0;
 			goto CheckJumpButtons;
 		}
-		
+
 		// item is rolling
 		if (driver->itemRollTimer != 0)
 		{
-			// circle button ends timer, if 
+			// circle button ends timer, if
 			// less than 70 frames (2.3s) remain
 			if (driver->itemRollTimer < FPS_DOUBLE(70))
 				driver->itemRollTimer = 0;
-			
+
 			// skip weapon firing check
 			goto CheckJumpButtons;
 		}
@@ -536,7 +551,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		heldItemID = driver->heldItemID;
 		if
 		(
-			(heldItemID != 0xF) && 
+			(heldItemID != 0xF) &&
 			(heldItemID != 0x10) &&
 			(driver->noItemTimer == 0) &&
 			(driverRankItemValue != 1) &&
@@ -545,7 +560,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		{
 			// This driver wants to fire a weapon
 			actionsFlagSetCopy |= 0x8000;
-			
+
 			// if numHeldItems == 0
 			// wait a full second before next weapon
 			driver->noItemTimer = FPS_DOUBLE(0x1e);
@@ -556,17 +571,17 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 				// if numHeldItems > 0,
 				// wait 5 frames before next weapon use
 				driver->noItemTimer = FPS_DOUBLE(5);
-			
+
 				// not spring weapon
 				if (heldItemID != 5)
 				{
 					// only reduce numHeldItem if not using item cheats
 					if ((gameMode2 & (CHEAT_BOMBS | CHEAT_TURBO | CHEAT_MASK)) == 0) driver->numHeldItems--;
 				}
-				
+
 				// no spring in final game
 				#if 0
-				
+
 				// If you have the Spring weapon
 				else
 				{
@@ -578,16 +593,16 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 						driver->numHeldItems--;
 					}
 				}
-				
+
 				#endif
 			}
 		}
 	}
 
-	
+
 	// === Drift Section ===
-	
-	
+
+
 CheckJumpButtons:
 
 	// Check for Tapping L1 and R1
@@ -678,8 +693,8 @@ CheckJumpButtons:
 		// If you are not holding Cross
 		if(cross == 0)
 		{
-			unk0x80 = DECOMP_VehPhysJoystick_ReturnToRest(stickRY, 0x80, 0); 
-			
+			unk0x80 = DECOMP_VehPhysJoystick_ReturnToRest(stickRY, 0x80, 0);
+
 			if(unk0x80 > -1)
 			{
 				actionsFlagSetCopy |= 0x400000;
@@ -704,19 +719,19 @@ CheckJumpButtons:
 		// you have Reserves and you aren't slowing down
 		cross = 0x10;
 	}
-	
-	
+
+
 	// === Gas/Brake section ===
-	
+
 
 	stickLY = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((gGT->gameMode1 & END_OF_RACE) == 0) 
+	if ((gGT->gameMode1 & END_OF_RACE) == 0)
 	{
 		stickLY = ptrgamepad->stickLY;
 	}
-	
+
 	if
 	(
 		(driver->simpTurnState < 0) ||
@@ -735,12 +750,12 @@ CheckJumpButtons:
 		actionsFlagSetCopy &= 0x9fffffff;
 	}
 	approximateSpeed2 = 0;
-	
+
 	// with zero wumpa, should be const_Speed_ClassStat (13140 for Crash Bandicoot)
 	// this works for both decomp and original
-	
-	// with one wumpa, (25600 in rewrite, 13169 in original) 
-	
+
+	// with one wumpa, (25600 in rewrite, 13169 in original)
+
 	#ifdef REBUILD_PC
 	// buggy, experimental
 	//driverBaseSpeed = DECOMP_VehPhysGeneral_GetBaseSpeed(driver);
@@ -749,7 +764,7 @@ CheckJumpButtons:
 	// original, for decomp
 	driverBaseSpeed = VehPhysGeneral_GetBaseSpeed(driver);
 	#endif
-	
+
 	driverBaseSpeedUshort = driverBaseSpeed;
 
 	// If you are not holding Square
@@ -775,16 +790,16 @@ CheckJumpButtons:
 		if (driverSpeedSmth2 < 1)
 		{
 			if
-			(	
+			(
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						unk0x80 = DECOMP_VehPhysJoystick_ReturnToRest(stickLY, 0x80, 0), 
-						
+						unk0x80 = DECOMP_VehPhysJoystick_ReturnToRest(stickLY, 0x80, 0),
+
 						(unk0x80 > 99) ||
 
 						(
-							(unk0x80 > 0) && 
+							(unk0x80 > 0) &&
 							((actionsFlagSetCopy & 0x20000) != 0)
 						)
 					)
@@ -793,15 +808,15 @@ CheckJumpButtons:
 			{
 				// driver is steering?
 				actionsFlagSetCopy |= 0x20000;
-		
+
 				driverSpeedSmth2 = -driver->const_BackwardSpeed;
 				goto LAB_80062548;
 			}
-			
+
 			driverSpeedOrSmth = driverBaseSpeed * driverSpeedOrSmth;
 			driverSpeedSmth2 = driverSpeedOrSmth >> 7;
 			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = (driverSpeedOrSmth + 0x7f) >> 7;
-			
+
 			// remove flag for reversing
 			goto LAB_8006253c;
 		}
@@ -843,29 +858,29 @@ CheckJumpButtons:
 					driverSpeedOrSmth = driverBaseSpeed * -driverSpeedOrSmth;
 					if (driverSpeedOrSmth < 0) driverSpeedOrSmth += 0xff;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
-					
+
 					// gas and brake together
 					actionsFlagSetCopy |= 0x20;
-					
+
 					goto LAB_80062548;
 				}
-				
+
 				if (0 < driverSpeedOrSmth)
 				{
 					driverSpeedOrSmth = driver->const_BackwardSpeed * -driverSpeedOrSmth;
 					if (driverSpeedOrSmth < 0) driverSpeedOrSmth += 0xff;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
-					
+
 					// reversing, and gas+brake
 					goto LAB_8006248c;
 				}
-				
+
 				// driverSpeedOrSmth == 0,
 				// no gas, only brake
-				
+
 				// using the brake
 				actionsFlagSetCopy |= 8;
-				
+
 				driverSpeedSmth2 = approximateSpeed2;
 			}
 			// If you are holding cross, or you have Reserves
@@ -873,7 +888,7 @@ CheckJumpButtons:
 			{
 				// gas and brake together
 				actionsFlagSetCopy |= 0x20;
-				
+
 				driverSpeedSmth2 = driverBaseSpeed / 2;
 			}
 			goto LAB_8006253c;
@@ -881,11 +896,11 @@ CheckJumpButtons:
 		driverSpeedOrSmth = driver->const_BackwardSpeed * -3;
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
 		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = (driverSpeedOrSmth + 3) >> 2;
-		
+
 		LAB_8006248c:
 		// reversing engine, and brakes
 		actionsFlagSetCopy |= 0x20020;
-		
+
 		LAB_80062548:
 		uVar20 = actionsFlagSetCopy & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
@@ -896,7 +911,7 @@ CheckJumpButtons:
 	{
 		driver->timeSpentReversing += gGT->elapsedTimeMS;
 	}
-	
+
 	// not driving backwards
 	else
 	{
@@ -906,13 +921,13 @@ CheckJumpButtons:
 			if (0 < approximateSpeed2)
 			{
 				// not holding brake
-				if ((uVar20 & 0x400020) == 0) 
+				if ((uVar20 & 0x400020) == 0)
 				{
 					driver->actionsFlagSet = uVar20;
 
 					// fire level, depending on numWumpa
 					superEngineFireLevel = 0x80;
-					if (driver->numWumpas > 9) 
+					if (driver->numWumpas > 9)
 						superEngineFireLevel = 0x100;
 
 					// add 0.12s reserves
@@ -927,12 +942,12 @@ CheckJumpButtons:
 	// if accel prevention (hold square)
 	actionsFlagSetCopy = uVar20 & 8;
 	if (actionsFlagSetCopy != 0)
-	{		
+	{
 		// high speed
 		if (
-				(driver->speedApprox > 0x300) || 
+				(driver->speedApprox > 0x300) ||
 				(driver->speedApprox < -0x300)
-			) 
+			)
 		{
 			// record amount of time with high speed
 			driver->timeSpentWithHighSpeed += msPerFrame;
@@ -944,7 +959,7 @@ CheckJumpButtons:
 		(driver->mashingXMakesItBig == 0) ||
 
 		(
-			(driver->kartState != KS_NORMAL) && 
+			(driver->kartState != KS_NORMAL) &&
 			(driver->kartState != KS_ANTIVSHIFT)
 		)
 	)
@@ -973,12 +988,12 @@ CheckJumpButtons:
 		//Racer struct + 0x39E = Racer's Base Speed
 		*(u_short*)&driver->fireSpeed = approximateSpeed2;
 	}
-	
+
 	// brakes
 	if ((uVar20 & 0x800020) == 0)
 	{
 #ifdef REBUILD_PC
-		// no collision, no "found" quadblock, no "known" 
+		// no collision, no "found" quadblock, no "known"
 		// terrain, so for now, assume asphalt
 		driver->terrainMeta1 = &data.MetaDataTerrain[0];
 		driver->terrainMeta2 = &data.MetaDataTerrain[0];
@@ -1012,7 +1027,7 @@ CheckJumpButtons:
 
 	// default steer strength from class stats
 	iVar14 = driver->const_TurnRate + (driver->turnConst << 1) / 5;
-	
+
 	// if mashing X button
 	if ((driver->mashXUnknown > 6) && (approximateSpeed < 0x2600))
 	{
@@ -1020,7 +1035,7 @@ CheckJumpButtons:
 		iVar14 = 0x5a;
 		goto UseTurnRate;
 	}
-	
+
 	// rubbing on wall now, or recently
 	if (driver->set_0xF0_OnWallRub != 0)
 	{
@@ -1028,7 +1043,7 @@ CheckJumpButtons:
 		iVar14 = 0x30;
 		goto UseTurnRate;
 	}
-	
+
 	// === not rubbing on wall now, or recently ===
 
 	// if not holding Square (& 0x8)
@@ -1038,7 +1053,7 @@ CheckJumpButtons:
 		// use const_TurnRate + turnConst<<1/5
 		goto UseTurnRate;
 	}
-	
+
 	// if only holding Square
 	if (cross == 0)
 	{
@@ -1048,7 +1063,7 @@ CheckJumpButtons:
 	}
 
 	// === if holding Square + Cross ===
-	
+
 	// absolute value driver speed
 	driverSpeedCopy = driver->speed;
 	if (driverSpeedCopy < 0) driverSpeedCopy = -driverSpeedCopy;
@@ -1056,22 +1071,22 @@ CheckJumpButtons:
 	// As speed increases, turn rate decreases
 	iVar14 = DECOMP_VehCalc_MapToRange
 	(
-		driverSpeedCopy, 
-		0x300,	driver->const_Speed_ClassStat / 2, 
+		driverSpeedCopy,
+		0x300,	driver->const_Speed_ClassStat / 2,
 		0x40,	iVar14
 	);
-	
+
 UseTurnRate:
 
 	// Steer, based on strength, and LeftStickX
 	iVar14 = DECOMP_VehPhysJoystick_GetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
 	// no desired steer
-	if (-iVar14 == 0) 
+	if (-iVar14 == 0)
 	{
 		driver->numFramesSpentSteering = 10000;
 	}
-	
+
 	// desired steer
 	else
 	{
@@ -1079,24 +1094,24 @@ UseTurnRate:
 		if ((iVar14 < 1) || (driver->simpTurnState < 0))
 		{
 			// desired steer right, or active steer right
-			if ((-1 < iVar14) || (0 < driver->simpTurnState)) 
+			if ((-1 < iVar14) || (0 < driver->simpTurnState))
 			{
 				// active steer has not changed
 				goto SkipSetSteer;
 			}
-			
+
 			// active steer left
 			uVar20 = uVar20 | 0x10;
 		}
-		
-		else 
+
+		else
 		{
 			// active steer right
 			uVar20 = uVar20 & 0xffffffef;
 		}
 		driver->numFramesSpentSteering = 0;
 	}
-	
+
 SkipSetSteer:
 
 	*(u_char*)&driver->simpTurnState = (char)-iVar14;
@@ -1132,29 +1147,29 @@ SkipSetSteer:
 			driver->unkSpeedValue1 -= sVar13;
 		}
 	}
-	
+
 	// alternate tire colors each frame,
 	// if 2e808080 is detected (&1==0),
 	// if not RevEngine, and if unkSpeedVal
 	if
 	(
-		(driver->unkSpeedValue1 < 1) && 
+		(driver->unkSpeedValue1 < 1) &&
 		((driver->tireColor & 1) == 0) &&
 		(kartState != KS_ENGINE_REVVING)
 	)
 	{
 		//reset 0x3BC
 		driver->unkSpeedValue1 = 0x1e00;
-		
+
 		driver->tireColor = 0x2e606061;
 	}
-	
+
 	// default tire color
 	else
 	{
 		driver->tireColor = 0x2e808080;
 	}
-	
+
 	driver->actionsFlagSet = uVar20;
 	return;
 }
