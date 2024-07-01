@@ -1,9 +1,12 @@
 #include <common.h>
-#ifdef USE_ONLINE
-#include "../AltMods/OnlineCTR/global.h"
-#endif
 
 typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
+
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver);
+extern CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
+#endif
 
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
@@ -232,15 +235,9 @@ LAB_80035098:
 							if (pcVar5 != 0)
 							{
 								#ifdef USE_ONLINE
-								int gameModeBackup = gGT->gameMode1;
-								if (!checkpointTracker[psVar9->driverID].raceFinished)
-								{
-									gGT->gameMode1 &= ~(END_OF_RACE);
-								}
-								#endif
+								RunVehicleThread(pcVar5, psVar12, psVar9);
+								#else
 								pcVar5(psVar12, psVar9);
-								#ifdef USE_ONLINE
-								gGT->gameMode1 = gameModeBackup;
 								#endif
 							}
 
