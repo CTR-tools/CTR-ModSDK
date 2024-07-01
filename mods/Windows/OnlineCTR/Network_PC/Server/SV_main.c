@@ -533,31 +533,26 @@ void ProcessNewMessages() {
 				// alive in the for-loop that is about to be nullified
 				numAlive -= 1;
 
-				// Kill lobby under these conditions
-				if (
-						// nobody left at all
-						(numAlive == 0) ||
+				PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+				printf("Player %s (%d) disconnected from room\n",
+					&ri->peerInfos[peerID].name[0],
+					peerID);
 
-						(
-							// race in session
-							(ri->boolRaceAll == 1) &&
-
-							(
-								// nobody to race
-								(numAlive <= 1) ||
-
-								// battle map or adv map,
-								(ri->levelPlayed > 18)
-							)
-						)
-				   )
+				// no players are left
+				int noneAlive = numAlive == 0;
+				//race is in session and (1 or less players OR non-race map) //shouldn't it be AND not OR?
+				int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) || (ri->levelPlayed > 18));
+				// Kill lobby under either of these conditions
+				int killLobby = noneAlive || oneOrLessOrNonRaceMap;
+				if (killLobby)
 				{
 					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-					printf("Player %s (%d) disconnected from room\n",
-						&ri->peerInfos[peerID].name[0],
-						peerID);
-					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-					printf("Room has been killed as no players are left\n");
+					if (noneAlive)
+						printf("Room has been killed as no players are left\n");
+					else if (oneOrLessOrNonRaceMap)
+						printf("Room has been killed as 1 or less players or non-race map\n");
+					else
+						printf("Room has been killed\n");
 
 					for (int i = 0; i < MAX_CLIENTS; i++)
 					{
@@ -569,17 +564,11 @@ void ProcessNewMessages() {
 
 					memset(ri, 0, sizeof(RoomInfo));
 				}
-
 				// Only disconnect one player as long as
 				// more racers remain on Arcade track,
 				// or if disconnected from Battle/Adv during the race
 				else
 				{
-					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-					printf("Player %s (%d) disconnected from room\n",
-						&ri->peerInfos[peerID].name[0],
-						peerID);
-
 					enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
 					ri->peerInfos[peerID].peer = NULL;
 

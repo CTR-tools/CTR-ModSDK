@@ -22,15 +22,15 @@
 
 #endif
 
-#define true				1
-#define false				0
+//#define true				1
+//#define false				0
 
-#define DONT_SHOW_NAME		0
-#define SHOW_NAME			1
+#define DONT_SHOW_NAME		            0
+#define SHOW_NAME			            1
 
-#define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
-#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
-#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
+#define DEFAULT_IP			            "127.0.0.1" // the default IP address we want to use for private lobbies
+#define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
+#define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
 
 enum ClientState
 {
@@ -60,7 +60,7 @@ typedef struct raceStats
 	int bestLap;
 } raceStats;
 
-// This can be 0x400 bytes max:
+// This can be 0x400 (1024) bytes max:
 // 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
@@ -103,7 +103,8 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[MAX_NUM_PLAYERS];
+#define WIN_CLIENT_SYNC_LEN 64
+	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
 
 	// 0x30
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];
@@ -127,6 +128,8 @@ struct OnlineCTR
 		unsigned char boolNow;
 	} Shoot[MAX_NUM_PLAYERS];
 };
+
+STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2

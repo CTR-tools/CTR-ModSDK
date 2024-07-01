@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CL_main.c">
+    <ClCompile Include="CL_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\externals\enet\callbacks.c">
@@ -48,10 +48,25 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c">
       <Filter>Source Files\enet</Filter>
     </ClCompile>
+    <ClCompile Include="DeferredMem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DSPINE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DeferredMem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
