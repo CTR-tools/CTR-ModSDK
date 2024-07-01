@@ -16,15 +16,15 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	struct Instance *hudR;
 	struct Instance *hudToken;
 	struct UiElement3D *letter;
-	
+
 	char i;
 	char tokenUnlock;
 	char numPlyr;
 	char totalPlyr;
-	
+
 	short letterPos[2];
 	short txtPos[2];
-	
+
 	short t;
 	short elapsedFrames;
 	short levSpawn;
@@ -88,7 +88,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			lerpEndY = lerpStartY + 0x10;
 			currFrame = elapsedFrames;
 			lerpFrames = FPS_DOUBLE(8);
-			
+
 			// If you have not unlocked this CTR Token
 			bitIndex = gGT->levelID + 0x4C;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
@@ -102,7 +102,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				if (elapsedFrames > FPS_DOUBLE(230))
 				{
 					currFrame = elapsedFrames - FPS_DOUBLE(230);
-					
+
 					lerpStartX += 0x10;
 					lerpStartY += 0x50;
 					lerpEndX = -400;
@@ -113,23 +113,23 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				else if (elapsedFrames > FPS_DOUBLE(140))
 				{
 					currFrame = elapsedFrames - FPS_DOUBLE(140);
-					
+
 					lerpStartX += 0x10;
 					lerpStartY += 0x10;
 					lerpEndX = hudCTR->x - 0x10;
 					lerpEndY = hudCTR->y + 0x50;
-					
+
 					if (hudToken->scale[0] < 0x2001)
 					{
 						hudToken->scale[0] += FPS_HALF(0x200);
 						hudToken->scale[1] += FPS_HALF(0x200);
 						hudToken->scale[2] += FPS_HALF(0x200);
 					}
-	
+
 					if (hudC->scale[0] == 0x800)
 						OtherFX_Play(0x67, 1);
 
-					// original code said < 0x2200, but the 
+					// original code said < 0x2200, but the
 					// actual desired value is 0x2400, needs
 					// this change so 60fps doesn't stop at
 					// 0x2200 when stepping at half speed
@@ -142,46 +142,46 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 							hudLetters[i]->scale[2] += FPS_HALF(0x400);
 						}
 					}
-					
+
 					// Naughty Dog Bug: This was supposed to lerp off-screen at elapsedFrames > 230,
 					// but they passed "elapsedFrames-50" instead of "elapsedFrames-230", kills effect.
 					//	txtStartX = 0x100;
 					//	txtEndX = -150;
 					//	currFrame = elapsedFrames - 50;
-					
+
 					// lerp on-screen: CTR TOKEN AWARDED
 					txtStartX = 0x264;
 					txtEndX = 0x100;
-					
+
 					DECOMP_UI_Lerp2D_Linear(
-						&txtPos[0], 
-						txtStartX, 0xA6, 
-						txtEndX, 0xA6, 
+						&txtPos[0],
+						txtStartX, 0xA6,
+						txtEndX, 0xA6,
 						currFrame, FPS_DOUBLE(8));
-					
+
 					txtColor = (gGT->timer & FPS_DOUBLE(1)) ? 0xFFFF8003 : 0xFFFF8004;
-					
+
 					DecalFont_DrawLine(
-						sdata->lngStrings[0x16F], 
-						txtPos[0], txtPos[1], 
+						sdata->lngStrings[0x16F],
+						txtPos[0], txtPos[1],
 						1, txtColor);
 				}
 
 				DECOMP_UI_Lerp2D_Linear(
-					&letterPos[0], 
-					lerpStartX, lerpStartY, 
-					lerpEndX, lerpEndY, 
+					&letterPos[0],
+					lerpStartX, lerpStartY,
+					lerpEndX, lerpEndY,
 					currFrame, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
 				hudToken->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
-				
+
 				// variable reuse, frame timers
 				lerpStartY = FPS_DOUBLE(120);
 				lerpEndY = FPS_DOUBLE(160);
 			}
-			
+
 			// If you already have this CTR Token unlocked
 			else
 			{
@@ -189,58 +189,58 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				if (elapsedFrames > FPS_DOUBLE(300))
 				{
 					currFrame = elapsedFrames - FPS_DOUBLE(300);
-					
+
 					lerpStartX = hudCTR->x + 0x10;
 					lerpStartY = hudCTR->y + 0x10;
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
 					lerpFrames = FPS_DOUBLE(10);
 				}
-				
+
 				DECOMP_UI_Lerp2D_Linear(
-					&letterPos[0], 
-					lerpStartX, lerpStartY, 
-					lerpEndX, lerpEndY, 
+					&letterPos[0],
+					lerpStartX, lerpStartY,
+					lerpEndX, lerpEndY,
 					currFrame, lerpFrames);
-				
+
 				// variable reuse, frame timers
 				lerpStartY = 0;
 				lerpEndY = 0;
-				
+
 				scaleDown = 0;
 			}
-			
+
 			for (i = 0; i < 3; i++)
 			{
 				hudLetters[i]->matrix.t[0] = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
 				hudLetters[i]->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
-		
+
 		// If you did not collect all 3 letters (C, T, and R), or you lost the race,
 		// do this for the first 30 seconds (900 frames)
 		else if (elapsedFrames < FPS_DOUBLE(900))
 		{
 			driver->PickupLetterHUD.numCollected = 0;
-			
+
 			for (i = 0; i < 3; i++)
 			{
 				if (
 						// letter is visible
 						((hudLetters[i]->flags & HIDE_MODEL) == 0) &&
-					
+
 						// delay letter (6 frames apart)
 						(elapsedFrames > FPS_DOUBLE(6*i)) &&
-					
+
 						// letter not fully off-screen
 						(-300 < hudLetters[i]->matrix.t[1])
 					)
 				{
 					letter = hudLetters[i]->thread->object;
-					
+
 					// move X position (yes, C-Letter only, Naughty Dog bug?)
 					hudLetters[0]->matrix.t[0] += letter->vel[0];
-					
+
 					// make the letter fall off the screen
 					hudLetters[i]->matrix.t[1] -= letter->vel[1];
 
@@ -306,9 +306,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			// interpolate fly-in
 			DECOMP_UI_Lerp2D_Linear(
-				&letterPos[0], 
-				lerpStartX, 0x60, 
-				lerpEndX, 0x60, 
+				&letterPos[0],
+				lerpStartX, 0x60,
+				lerpEndX, 0x60,
 				currFrame, FPS_DOUBLE(10));
 
 			str_number = (char)i + '1';
@@ -319,7 +319,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			// Draw the driver's character icon
 			DECOMP_UI_DrawDriverIcon(
-			
+
 				gGT->ptrIcons[
 					data.MetaDataCharacters[
 						data.characterIDs[
@@ -327,15 +327,12 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						]
 					].iconID],
 
-				letterPos[0], 0x60,
-
-				// pointer to PrimMem struct
-				&gGT->backBuffer->primMem,
+				MakePoint(letterPos[0], 0x60),
 
 				// pointer to OT mem
 				gGT->pushBuffer_UI.ptrOT,
 
-				1, 0x1000, 0x808080);
+				1, 0x1000, MakeColor(0x80, 0x80, 0x80));
 		}
 	}
 
@@ -452,7 +449,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			{
 				// Go to Podium after returning to Adventure Hub
 				gGT->podiumRewardID = 99; // key
-				
+
 				// hot air skyway
 				if (gGT->levelID == 7)
 				{
@@ -466,7 +463,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// If you have 4 keys (only here if you beat oxide)
 		else
 		{
-			// Always go to podium after oxide, 
+			// Always go to podium after oxide,
 			// with no key (0x38 = empty)
 			gGT->podiumRewardID = 0x38;
 
@@ -500,7 +497,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// Unlock reward
 		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 	}
-	
+
 	// if trophy is not won,
 	// Dingo Bingo needs to win trophy and token in the same race
 	bitIndex = gGT->levelID + 6;
@@ -508,7 +505,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	{
 		// unlock tropy
 		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
-		
+
 		// go to podium with trophy
 		gGT->podiumRewardID = 0x62;
 	}
@@ -537,11 +534,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	gGT = sdata->gGT;
 	driver = gGT->drivers[driverId];
-	
+
 	// stop after 12 seconds
 	if(driver->framesSinceRaceEnded_forThisDriver > FPS_DOUBLE(360))
 		return;
-	
+
 	numPlyr = gGT->numPlyrCurrGame;
 	hudArray = data.hudStructPtr[numPlyr - 1];
 	hud = &hudArray[driverId * 0x14]; // to-do, use enum where 0x14 is number of hud
@@ -587,14 +584,14 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		// clear gamepad input (for menus)
 		RECTMENU_ClearInput();
 	}
-	
+
 	tenseconds = (framesElapsed + param_2 > FPS_DOUBLE(300));
 
 	// === Draw BigNum ===
 
 	// Player 2
 	lerpEndY = 0x41;
-	
+
 	// Player 1
 	#ifdef USE_NEW2P
 	if(numPlyr == 1)
@@ -607,11 +604,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	{
 		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
 		endFrame = FPS_DOUBLE(0xf);
-		
+
 		lerpStartX = -0xae;
 		lerpEndX = DECOMP_UI_ConvertX_2(-100, hud[2].z);
 		lerpStartY = lerpEndY;
-		
+
 		#ifdef USE_NEW2P
 		if(driverId == 1)
 		{
@@ -620,17 +617,17 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		}
 		#endif
 	}
-	
+
 	// If not
 	else
 	{
 		currFrame = framesElapsed;
 		endFrame = FPS_DOUBLE(0x1e);
-		
+
 		lerpStartX = DECOMP_UI_ConvertX_2(hud[2].x, hud[2].z);
 		lerpStartY = DECOMP_UI_ConvertY_2(hud[2].y, hud[2].z);
 		lerpEndX = -0xae;
-		
+
 		#ifdef USE_NEW2P
 		if(driverId == 1)
 			lerpEndX = 0xae;
@@ -639,30 +636,30 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// interpolate fly-in positionXY
 	DECOMP_UI_Lerp2D_Linear(
-		&posXY[0], 
-		lerpStartX, lerpStartY, 
-		lerpEndX, lerpEndY, 
+		&posXY[0],
+		lerpStartX, lerpStartY,
+		lerpEndX, lerpEndY,
 		currFrame, endFrame);
-	
+
 	bigNum->matrix.t[0] = posXY[0];
 	bigNum->matrix.t[1] = posXY[1];
 
 	// interpolate scale to 0x1e00
 	DECOMP_UI_Lerp2D_Linear(
-		&posXY[0], 
-		hud[2].scale, 0, 
-		0x1e00, 0, 
+		&posXY[0],
+		hud[2].scale, 0,
+		0x1e00, 0,
 		framesElapsed, FPS_DOUBLE(30));
-	
+
 	bigNum->scale[0] = posXY[0];
 	bigNum->scale[1] = posXY[0];
 	bigNum->scale[2] = posXY[0];
 
 	// === Draw Suffix ===
-	
+
 	// Player 2
 	lerpEndY = 0x89;
-	
+
 	// Player 1
 	#ifdef USE_NEW2P
 	if(numPlyr == 1)
@@ -675,7 +672,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = 0x78;
 		lerpStartY = lerpEndY;
 		lerpEndX = -0x3c;
-		
+
 		#ifdef USE_NEW2P
 		if (driverId == 1)
 		{
@@ -689,7 +686,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = hud[5].x;
 		lerpStartY = hud[5].y;
 		lerpEndX = 0x78;
-		
+
 		#ifdef USE_NEW2P
 		if (driverId == 1)
 			lerpEndX = 0x1d0;
@@ -697,77 +694,77 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 
 	DECOMP_UI_Lerp2D_Linear(
-		&posXY[0], 
-		lerpStartX, lerpStartY, 
-		lerpEndX, lerpEndY, 
+		&posXY[0],
+		lerpStartX, lerpStartY,
+		lerpEndX, lerpEndY,
 		currFrame, endFrame);
-	
+
 	DECOMP_UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
 
 	// === DrawRaceClock ===
-	
+
 	// default
 	#ifdef USE_NEW2P
 	if(numPlyr == 1)
 	{
 	#endif
-	
+
 		lerpEndY = 0xc3;
 		if (driverId == 0)
 			lerpEndY = 0x3e;
-		
+
 		if (tenseconds)
 		{
 			lerpStartX = 0x150;
 			lerpEndX = 0x27c;
 		}
-	
+
 		else
 		{
 			lerpStartX = 0x218;
 			lerpEndX = 0x150;
 		}
-	
+
 	// new
 	#ifdef USE_NEW2P
 	}
-	
+
 	else
 	{
 		lerpEndY = 0x3e;
-		
+
 		if (tenseconds)
 		{
 			currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
 			endFrame = FPS_DOUBLE(0xf);
-			
+
 			lerpStartX = gGT->pushBuffer[driverId].rect.x + 0x70;
-			
+
 			lerpEndX = 0x268;
 			if (driverId == 0)
 				lerpEndX = -0x90;
 		}
-		
+
 		else
 		{
 			currFrame = framesElapsed;
 			endFrame = FPS_DOUBLE(0x1e);
-			
+
 			lerpStartX = 0x268;
 			if (driverId == 0)
 				lerpStartX = -0x90;
-	
+
 			lerpEndX = gGT->pushBuffer[driverId].rect.x + 0x70;
 		}
 	}
 	#endif
-	
+
 	DECOMP_UI_Lerp2D_Linear(
-		&posXY[0], 
-		lerpStartX, lerpEndY, 
-		lerpEndX, lerpEndY, 
+		&posXY[0],
+		lerpStartX, lerpEndY,
+		lerpEndX, lerpEndY,
 		currFrame, endFrame);
-	
+
 	DECOMP_UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 
 	// "TOTAL"

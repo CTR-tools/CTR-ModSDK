@@ -433,7 +433,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver);
 void DECOMP_UI_JumpMeter_Update(struct Driver * d);
 void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver);
 void DECOMP_UI_DrawRankedDrivers(void);
-
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, Point point, u_long* ot, unsigned transparency, int scale, Color color);
 void DECOMP_UI_RenderFrame_AdvHub(void);
 void DECOMP_UI_RenderFrame_Racing();
 

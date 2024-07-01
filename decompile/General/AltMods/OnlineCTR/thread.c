@@ -170,9 +170,11 @@ void ThreadFunc(struct Thread* t)
 		}
 	}
 
-	if(strcmp("debugcam", &octr->nameBuffer[0]) == 0)
+	#if 0
+	if(strcmp("debugcam", octr->nameBuffer[0]) == 0)
 	{
 		void Freecam();
 		Freecam();
 	}
+	#endif
 }

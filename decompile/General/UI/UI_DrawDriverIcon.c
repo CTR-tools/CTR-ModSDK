@@ -1,61 +1,77 @@
 #include <common.h>
 
-void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color)
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, Point point, u_long* ot, unsigned transparency, int scale, Color color)
 {
-	POLY_FT4* p = (POLY_FT4*)primMem->curr;
-	addPolyFT4(ot, p);
+	PolyFT4 * p;
+	GetPrimMem(p);
+	if (p == nullptr) { return; }
 
-	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
-	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
-	unsigned int rightX = posX + FP_Mult(width, scale);
+	const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1, .textured = 1 } };
+	color.code = primCode;
+	p->colorCode = color;
+
+	int width = icon->texLayout.u1 - icon->texLayout.u0;
+	int height = icon->texLayout.v2 - icon->texLayout.v0;
+	int topX = point.x;
+	int bottomX = topX + FP_Mult(width, scale);
 	#ifdef USE_ONLINE
-		unsigned int topY = posY;
-		unsigned int bottomY = posY + FP_Mult(height, scale);
+		int topY = point.y;
+		int bottomY = topY + FP_Mult(height, scale);
 	#else
 		#if BUILD != EurRetail
-			unsigned int topY = (posY < 166) ? posY : 165;
-			unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 166) ? (posY + FP_Mult(height, scale)) : 165;
+			int topY = (point.y < 166) ? point.y : 165;
+			int bottomY = ((topY + FP_Mult(height, scale)) < 166) ? (topY + FP_Mult(height, scale)) : 165;
 		#else
-			unsigned int topY = (posY < 176) ? posY : 175;
-			unsigned int bottomY = ((posY + FP_Mult(height, scale)) < 176) ? (posY + FP_Mult(height, scale)) : 175;
+			int topY = (point.y < 176) ? point.y : 175;
+			int bottomY = ((topY + FP_Mult(height, scale)) < 176) ? (topY + FP_Mult(height, scale)) : 175;
 		#endif
 	#endif
 
-	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
-
-	#ifdef USE_ONLINE
-	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, icon->texLayout.v2, icon->texLayout.u3, icon->texLayout.v3);
-	#else
-	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - posY;
-	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	#ifdef USE_16BY9
+	int len = ((bottomX - topX) * 125) / 1000;
+	topX += len;
+	bottomX -= len;
 	#endif
 
-	p->clut = icon->texLayout.clut;
-	p->tpage = icon->texLayout.tpage;
+	p->v[0].pos.x = topX;
+	p->v[0].pos.y = topY;
+	p->v[1].pos.x = bottomX;
+	p->v[1].pos.y = topY;
+	p->v[2].pos.x = topX;
+	p->v[2].pos.y = bottomY;
+	p->v[3].pos.x = bottomX;
+	p->v[3].pos.y = bottomY;
 
-	#ifdef REBUILD_PC
-	*(int*)p->r0 = color;
-	setPolyFT4(p);
-	#else
-	setColor0(p, color);
-	#endif
+	p->polyClut.self = icon->texLayout.clut;
+	p->polyTpage.self = icon->texLayout.tpage;
 
 	if (transparency)
 	{
-		setTransparency(p, transparency);
+		p->polyTpage.semiTransparency = transparency - 1;
+		p->colorCode.code.poly.semiTransparency = 1;
 	}
 
-	#ifdef USE_16BY9
-	// widescreen, need to scale X by 75%,
-	// so subtract 12% from left and 12% from right
-	int len = ((p->x1 - p->x0) * 125) / 1000;
-	p->x0 += len;
-	p->x2 += len;
-	p->x1 -= len;
-	p->x3 -= len;
+	#ifdef USE_ONLINE
+	p->v[0].texCoords.u = icon->texLayout.u0;
+	p->v[0].texCoords.v = icon->texLayout.v0;
+	p->v[1].texCoords.u = icon->texLayout.u1;
+	p->v[1].texCoords.v = icon->texLayout.v1;
+	p->v[2].texCoords.u = icon->texLayout.u2;
+	p->v[2].texCoords.v = icon->texLayout.v2;
+	p->v[3].texCoords.u = icon->texLayout.u3;
+	p->v[3].texCoords.v = icon->texLayout.v3;
+	#else
+	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - point.y;
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	p->v[0].texCoords.u = icon->texLayout.u0;
+	p->v[0].texCoords.v = icon->texLayout.v0;
+	p->v[1].texCoords.u = icon->texLayout.u1;
+	p->v[1].texCoords.v = icon->texLayout.v1;
+	p->v[2].texCoords.u = icon->texLayout.u2;
+	p->v[2].texCoords.v = bottomV;
+	p->v[3].texCoords.u = icon->texLayout.u3;
+	p->v[3].texCoords.v = bottomV;
 	#endif
 
-	primMem->curr = p + 1;
-
-	return;
+	AddPrimitive(p, ot);
 }

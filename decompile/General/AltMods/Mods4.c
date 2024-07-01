@@ -1,3 +1,22 @@
+#ifdef USE_ONLINE
+#include "OnlineCTR/names3d.c"
+#include "OnlineCTR/endOfRaceUI_Camera.c"
+
+typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
+
+void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver)
+{
+    bool restore = false;
+    if ((sdata->gGT->gameMode1 & END_OF_RACE) && !checkpointTracker[driver->driverID].raceFinished)
+    {
+        sdata->gGT->gameMode1 &= ~(END_OF_RACE);
+        restore = true;
+    }
+    func(thread, driver);
+    if (restore) { sdata->gGT->gameMode1 |= END_OF_RACE; }
+}
+#endif
+
 #ifdef USE_BOOSTBAR
 #ifdef USE_ONLINE
 

@@ -317,11 +317,10 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 		  ].iconID
 		],
 
-		local_58[0], local_58[1],
+		MakePoint(local_58[0], local_58[1]),
 
-        &gGT->backBuffer->primMem,
         gGT->pushBuffer_UI.ptrOT,
-        1, 0x1000, 0x808080);
+        1, 0x1000, MakeColor(0x80, 0x80, 0x80));
 
       // If this is the first screen of cup standings,
       // where you see just amount of points added

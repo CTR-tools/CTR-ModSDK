@@ -386,7 +386,7 @@ void PrintCharacterStats()
 
 	int numDead = 0;
 	for(i = 0; i < octr->NumDrivers; i++)
-		if(octr->nameBuffer[i*0xC] == 0)
+		if(octr->nameBuffer[i][0] == 0)
 			numDead++;
 
 	int posX;
@@ -408,7 +408,7 @@ void PrintCharacterStats()
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
 
-		char* str = &octr->nameBuffer[slot * 0xc];
+		char* str = octr->nameBuffer[slot];
 
 		// UI-test
 		// str[0] = 'A';

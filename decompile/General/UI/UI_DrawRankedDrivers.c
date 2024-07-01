@@ -5,10 +5,6 @@
 // in Arcade mode and Boss mode, and draws
 // icons in multiplayer on the midY axis (and warpball)
 
-#ifdef USE_ONLINE
-extern struct CheckpointTracker checkpointTracker[8];
-#endif
-
 int DriverIndex_GetDamageColor(int iVar14)
 {
 	struct GameTracker* gGT = sdata->gGT;
@@ -79,7 +75,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
     u_short *puVar16;
     short *psVar17;
     u_short uVar18;
-    SVec2 pos;
+    Point pos;
     short local_44;
     short local_40;
     short local_3e;
@@ -166,7 +162,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
       for (iVar14 = 0; iVar14 < 8; iVar14++)
 	  {
 		#ifdef USE_ONLINE
-		if (!octr->nameBuffer[iVar14 * 0xC]) { continue; }
+		if (!octr->nameBuffer[iVar14][0]) { continue; }
 		#endif
 
         short* curr = &data.rankIconsCurr[iVar14];
@@ -242,19 +238,17 @@ void DECOMP_UI_DrawRankedDrivers(void)
             }
 		  }
 
+		  Color color;
+		  color.self = local_30;
 		  DECOMP_UI_DrawDriverIcon(
 
             gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
 
-            pos.x, pos.y,
+            pos,
 
-            // pointer to PrimMem struct
-            &gGT->backBuffer->primMem,
-
-            // pointer to OT memory
             gGT->pushBuffer_UI.ptrOT,
 
-            1, iconScale, local_30);
+            1, iconScale, color);
 
 		  #ifdef USE_ONLINE
 		  if (checkpointTracker[iVar14].timer > 0)
@@ -267,7 +261,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 				FONT_SMALL, checkpointTracker[iVar14].drawFlags);
 			checkpointTracker[iVar14].timer -= sdata->gGT->elapsedTimeMS;
 			DECOMP_DecalFont_DrawLineStrlen(
-				&octr->nameBuffer[iVar14 * 0xC],
+				octr->nameBuffer[iVar14],
 				3,
 				pos.x + 45,
 				pos.y + 1,
@@ -276,7 +270,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		  else
 		  {
 			DECOMP_DecalFont_DrawLineStrlen(
-				&octr->nameBuffer[iVar14 * 0xC],
+				octr->nameBuffer[iVar14],
 				3,
 				pos.x + 45,
 				pos.y + 7,
