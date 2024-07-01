@@ -11,9 +11,6 @@ struct
 extern char timeString[];
 extern char bestLapString[];
 extern char lastLapString[];
-extern char savedLapTimesString[2][6];
-extern int savedLapTimes[2];
-extern int bestLap;
 
 void SaveLapTime(int index, int lapTime);
 void CopyLapTime(char * restrict dst, char * restrict src);
@@ -93,6 +90,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	timeChars[5] = 9;
 	timeChars[6] = 9;
 	timeChars[7] = 9;
+	timeChars[8] = 9;
 	#else
 	// set default time to 99:59:99
 	minutesTens = 9;
@@ -107,15 +105,18 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	msElapsed = driver->timeElapsedInRace;
 
 	#ifdef USE_ONLINE
-	if ((msElapsed / HOURS(10)) < 10) { timeChars[0] = (char) ((msElapsed / HOURS(10)) % 10); }
-	timeChars[1] = (char) ((msElapsed / HOURS(1)) % 10);
-	timeChars[2] = (char) ((msElapsed / MINUTES(10)) % 6);
-	timeChars[3] = (char) ((msElapsed / MINUTES(1)) % 10);
-	timeChars[4] = (char) ((msElapsed / SECONDS(10)) % 6);
-	timeChars[5] = (char) ((msElapsed / SECONDS(1)) % 10);
-	timeChars[6] = (char) (((msElapsed * 10) / SECONDS(1)) % 10);
-	timeChars[7] = (char) (((msElapsed * 100) / SECONDS(1)) % 10);
-	timeChars[8] = (char) (((msElapsed * 1000) / SECONDS(1)) % 10);
+	if ((msElapsed / HOURS(10)) < 10)
+	{
+		timeChars[0] = (char) ((msElapsed / HOURS(10)) % 10);
+		timeChars[1] = (char) ((msElapsed / HOURS(1)) % 10);
+		timeChars[2] = (char) ((msElapsed / MINUTES(10)) % 6);
+		timeChars[3] = (char) ((msElapsed / MINUTES(1)) % 10);
+		timeChars[4] = (char) ((msElapsed / SECONDS(10)) % 6);
+		timeChars[5] = (char) ((msElapsed / SECONDS(1)) % 10);
+		timeChars[6] = (char) (((msElapsed * 10) / SECONDS(1)) % 10);
+		timeChars[7] = (char) (((msElapsed * 100) / SECONDS(1)) % 10);
+		timeChars[8] = (char) (((msElapsed * 1000) / SECONDS(1)) % 10);
+	}
 
 	int timeIndex = 2;
 	int j = 3;
@@ -289,16 +290,8 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	int currLapSaveIndex = driver->lapIndex % 2;
 	if (driver->driverID == 0)
 	{
-		SaveLapTime(currLapSaveIndex, gGT->elapsedEventTime - driver->lapTime);
 		if (driver->lapIndex > 0)
 		{
-			int oldLapSaveIndex = currLapSaveIndex ^ 1;
-			if (savedLapTimes[oldLapSaveIndex] < bestLap)
-			{
-				bestLap = savedLapTimes[oldLapSaveIndex];
-				CopyLapTime(bestLapString, savedLapTimesString[oldLapSaveIndex]);
-			}
-			CopyLapTime(lastLapString, savedLapTimesString[oldLapSaveIndex]);
 			DECOMP_DecalFont_DrawLine(bestLapString, posX, textPosY + 0x18, FONT_SMALL, RED);
 			DECOMP_DecalFont_DrawLine(&bestLapString[6], posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18, FONT_SMALL, PERIWINKLE);
 			DECOMP_DecalFont_DrawLine(lastLapString, posX, textPosY + 0x18 + 8, FONT_SMALL, RED);

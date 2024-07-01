@@ -2,6 +2,12 @@
 
 typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver);
+extern CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
+#endif
+
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	char bVar1;
@@ -19,14 +25,14 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	struct PushBuffer* pushBuffer;
 	int iVar11;
 	struct Thread* psVar12;
-	
+
 	bVar1 = true;
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
 		bVar1 = false;
 		pushBuffer = gGT->pushBuffer;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
-		{			
+		{
 			psVar9 = (struct Driver*)psVar12->object;
 
 			#ifdef USE_ONLINE
@@ -71,7 +77,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 			}
 LAB_80034e74:
 			pushBuffer = pushBuffer + 1;
-			
+
 			#ifdef USE_ONLINE
 			break;
 			#endif
@@ -142,10 +148,10 @@ LAB_80034e74:
 		{
 			gGT->elapsedEventTime = 0;
 		}
-		
+
 		DECOMP_CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
 		DECOMP_CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
-		
+
 		psVar8 = 0;
 		psVar9 = 0;
 
@@ -176,7 +182,7 @@ LAB_80035098:
 		(
 			((psVar8 != 0) && (psVar9 != 0)) &&
 			(
-				iVar4 = (u_int)(u_char)psVar9->numTimesAttacking - (u_int)(u_char)psVar8->numTimesAttacking, 
+				iVar4 = (u_int)(u_char)psVar9->numTimesAttacking - (u_int)(u_char)psVar8->numTimesAttacking,
 				psVar8->quip2 < iVar4
 			)
 		)
@@ -189,12 +195,12 @@ LAB_80035098:
 			(
 				(
 					// if threads are not paused
-					((gGT->gameMode1 & PAUSE_THREADS) == 0) || 
-					
+					((gGT->gameMode1 & PAUSE_THREADS) == 0) ||
+
 					// if bucket can not be paused
 					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)
-				) && 
-				
+				) &&
+
 				// if threads exist
 				(gGT->threadBuckets[iVar4].thread != 0)
 			)
@@ -210,7 +216,7 @@ LAB_80035098:
 					#ifdef USE_HIGHMP
 					int backupPlyrCount;
 					#endif
-					
+
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
 					// at the same time, that's why the stages exist
@@ -221,16 +227,20 @@ LAB_80035098:
 							// if PLYR converted to robotcar at end of race,
 							// dont run funcPtrs from inside driver struct
 							if (psVar12->funcThTick != 0) continue;
-						
+
 							psVar9 = (struct Driver*)psVar12->object;
-							
+
 							pcVar5 = psVar9->funcPtrs[iVar11];
-							
+
 							if (pcVar5 != 0)
 							{
+								#ifdef USE_ONLINE
+								RunVehicleThread(pcVar5, psVar12, psVar9);
+								#else
 								pcVar5(psVar12, psVar9);
+								#endif
 							}
-							
+
 							#ifdef USE_60FPS
 								#ifndef REBUILD_PS1
 									// if this function just ran
@@ -240,14 +250,14 @@ LAB_80035098:
 										// otherwise wheelie gets bugged
 										if(psVar9->instSelf->animIndex == 3)
 										{
-											psVar9->matrixIndex = 
+											psVar9->matrixIndex =
 											psVar9->matrixIndex >> 1;
 										}
 									}
 								#endif
 							#endif
 						}
-						
+
 						// rig collisions to high-poly,
 						// wait until Stage 2 finishes, cause PhysLinear
 						// uses gGT->numPlyrCurrGame for VehPhysGeneral_SetHeldItem
@@ -259,7 +269,7 @@ LAB_80035098:
 						}
 						#endif
 					}
-					
+
 					#ifdef USE_HIGHMP
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
@@ -290,11 +300,11 @@ LAB_80035098:
 #endif
 		DECOMP_GhostTape_WriteMoves(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
-		
+
 #ifndef REBUILD_PS1
 
 		#ifdef USE_60FPS
-		
+
 		// This does not fix Underwater, or particles with function pointers
 		for(struct Particle* p = gGT->particleList_ordinary; p != 0; p = p->next)
 		{
@@ -306,7 +316,7 @@ LAB_80035098:
 				if (p->axis[0x9].startVal != 0) continue;
 					p->axis[0x9].startVal = 4;
 			}
-			
+
 			// TireAxis is not in use
 			else
 			{
@@ -314,26 +324,26 @@ LAB_80035098:
 				if (p->axis[0xA].startVal != 0) continue;
 					p->axis[0xA].startVal = 4;
 			}
-			
+
 			// === If unpatched particle ===
 
 			p->framesLeftInLife *= 2;
-			
+
 			for(int axis = 0; axis < 0xb; axis++)
 			{
 				p->axis[axis].velocity /= 2;
 				p->axis[axis].accel /= 2;
 			}
 		}
-		
+
 		// For byte budget, forget heat warp,
 		// it only draws in Tiger Temple anyway
-		
+
 		//for(struct Particle* p = gGT->particleList_heatWarp; p != 0; p = p->next)
 		//{
 		//	p->axis[7].velocity = 0x30;
 		//}
-		
+
 		#endif // 60fps
 
 		Particle_UpdateAllParticles();
@@ -352,7 +362,7 @@ LAB_80035098:
 #endif
 		}
 	}
-	
+
 	uVar5 = DECOMP_LOAD_IsOpen_RacingOrBattle();
 	if (uVar5 != 0)
 	{
@@ -374,7 +384,7 @@ LAB_80035098:
 	{
 		DECOMP_Audio_Update1();
 	}
-	
+
 	gGT->gameMode1_prevFrame = gGT->gameMode1;
 	uVar5 = DECOMP_GAMEPAD_GetNumConnected(gGamepads);
 	uVar3 = gGT->gameMode1;
@@ -396,7 +406,7 @@ LAB_80035098:
 				{
 					DECOMP_RECTMENU_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
-					
+
 					DECOMP_MainFrame_TogglePauseAudio(0);
 					DECOMP_OtherFX_Play(1, 1);
 
@@ -430,7 +440,7 @@ LAB_80035098:
 									(
 #ifndef REBUILD_PS1
 										uVar3 = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
-										(uVar3 & 0xffff) == 0 && 
+										(uVar3 & 0xffff) == 0 &&
 #endif
 										((gGT->gameMode1 & PAUSE_ALL) == 0)
 									)
@@ -442,7 +452,7 @@ LAB_80035098:
 					)
 					{
 						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
-						
+
 						DECOMP_MainFreeze_IfPressStart();
 
 						gGT->cooldownfromPauseUntilUnpause = FPS_DOUBLE(5);
@@ -475,7 +485,7 @@ LAB_80035098:
 				}
 
 				sVar2 = DECOMP_SubmitName_DrawMenu(0x140);
-				
+
 				// if not done yet
 				if (sVar2 == 0)
 				{
@@ -489,7 +499,7 @@ LAB_80035098:
 				if (sVar2 == 1)
 				{
 					*(u_short*)&sdata->unk_saveGame_related = 0;
-					
+
 					SelectProfile_ToggleMode(0x41);
 
 					DECOMP_RECTMENU_Show(&data.menuWarning2);

@@ -63,21 +63,21 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = CLIENT_SYNC_BUFFER_LENGTH - 2;
+		i = MAX_NUM_PLAYERS - 2;
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
+		for(i = MAX_NUM_PLAYERS - 2; i >= 0; i--)
 			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
 
-		for(i = CLIENT_SYNC_BUFFER_LENGTH - 2; i >= 0; i--)
+		for(i = MAX_NUM_PLAYERS - 2; i >= 0; i--)
 			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 				break;
 	}
 
-	// if client didn't update the game in CLIENT_SYNC_BUFFER_LENGTH - 4 *or* CLIENT_SYNC_BUFFER_LENGTH / 2 frames (idk which).
+	// if client didn't update the game in MAX_NUM_PLAYERS - 4 *or* MAX_NUM_PLAYERS / 2 frames (idk which).
 	int boolCloseClient =
 		(i == -1) &&
 		(octr->CurrState > LAUNCH_ENTER_PID);
@@ -171,9 +171,11 @@ void ThreadFunc(struct Thread* t)
 		}
 	}
 
-	if(strcmp("debugcam", &octr->nameBuffer[0]) == 0)
+	#if 0
+	if(strcmp("debugcam", octr->nameBuffer[0]) == 0)
 	{
 		void Freecam();
 		Freecam();
 	}
+	#endif
 }

@@ -38,7 +38,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	itemSet = ITEMSET_BattleCustom;
 
 	// 5th Itemset (Battle Mode Default Itemset, 0x34de)
-	if (gGT->battleSetup.enabledWeapons == 0x34de) 
+	if (gGT->battleSetup.enabledWeapons == 0x34de)
 		itemSet = ITEMSET_BattleDefault;
 
 	// Not in Battle Mode
@@ -52,13 +52,13 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		{
 			// Choose Itemset based on number of Drivers
 			int mode = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
-			
-			#ifdef USE_ONLINE
+
+			#if 0 && defined(USE_ONLINE)
 			mode = octr->NumDrivers;
 			if(octr->NumDrivers == 1) mode = 2;
 			if(octr->NumDrivers == 7) mode = 8;
 			#endif
-			
+
 			switch(mode)
 			{
 				// if boss race
@@ -140,10 +140,10 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 					}
 			}
 		}
-		
-		// if you have 4th-place itemset on first lap, 
+
+		// if you have 4th-place itemset on first lap,
 		// then override to 3rd place
-		if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0) 
+		if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0)
 			itemSet = ITEMSET_Race3;
 	}
 
@@ -163,7 +163,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		case ITEMSET_BossRace:
 			driver->heldItemID = charPtr[itemSet][(rng * numWeapons[itemSet]) / 0xc8];
 			break;
-			
+
 		// uses int array instead of char,
 		// should fix that later, requires 230 rewrite
 		case ITEMSET_BattleCustom:
@@ -194,14 +194,14 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		if (bossFails < 0x3)
 		{
 			// Replace Clock, Mask,  with 3 Missiles
-			if ((u_int)driver->heldItemID - 0x7 < 0x3) 
+			if ((u_int)driver->heldItemID - 0x7 < 0x3)
 				driver->heldItemID = 0xb;
 		}
 
 		else if (bossFails < 0x4)
 		{
 			// Replace Clock, Mask with 3 Missiles
-			if ((u_int)driver->heldItemID - 0x7 < 0x2) 
+			if ((u_int)driver->heldItemID - 0x7 < 0x2)
 				driver->heldItemID = 0xb;
 		}
 
@@ -212,16 +212,16 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		}
 
 		// Replace 3 Missiles with 1 Missile if racing Komodo Joe
-		if (gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb) 
+		if (gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb)
 			driver->heldItemID = 0x2;
 	}
 
 #if 0
 	// === Removed ND Code ===
 	// Spring is not in the RNG anyway
-	
+
 	// Replace unused Spring item with Turbo
-	if (driver->heldItemID == 0x5) 
+	if (driver->heldItemID == 0x5)
 		driver->heldItemID = 0x0;
 #endif
 
@@ -229,7 +229,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	if (driver->heldItemID == 0x9)
 	{
 		// if nobody has warpball, then set flag that somebody has it
-		if ((gGT->gameMode1 & WARPBALL_HELD) == 0) 
+		if ((gGT->gameMode1 & WARPBALL_HELD) == 0)
 			gGT->gameMode1 |= WARPBALL_HELD;
 
 		// if somebody has warpball already, then give 3 missiles
@@ -248,7 +248,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 		)
 	{
 		// if less than 2 drivers have 3 missiles, then increase number of drivers that have it
-		if (gGT->numPlayersWith3Missiles < 2)	
+		if (gGT->numPlayersWith3Missiles < 2)
 			gGT->numPlayersWith3Missiles++;
 
 		// if 2 drivers already have 3 missiles, now you have 1 missile
@@ -256,7 +256,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	}
 
 	// Set number of held items
-	if ((u_int)driver->heldItemID - 0xA < 0x2) 
+	if ((u_int)driver->heldItemID - 0xA < 0x2)
 		driver->numHeldItems = 0x3;
 
 	return;

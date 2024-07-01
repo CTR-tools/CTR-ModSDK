@@ -5,7 +5,9 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   int minScale = 0;
   #ifdef USE_ONLINE
   int maxScale = 100; // USF
-	int speed = MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
+	int speed = driver->kartState == KS_ENGINE_REVVING ?
+              driver->unk36E :
+              MATH_FastSqrt((driver->xSpeed * driver->xSpeed) + (driver->zSpeed * driver->zSpeed), 0);
   #else
   int maxScale = FP8_INT(driver->const_AccelSpeed_ClassStat) + FP8_INT(driver->const_SacredFireSpeed);
   int speed = driver->unk36E; // is this actually speed?

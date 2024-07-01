@@ -24,7 +24,7 @@
 typedef struct {
 	ENetPeer* peer;
 
-	char name[0xC];
+	char name[NAME_LEN];
 	char characterID;
 	char boolLoadSelf;
 	char boolRaceSelf;
@@ -133,13 +133,13 @@ void SendRoomData(ENetPeer* peer)
 	if (roomInfos[index].boolRoomLocked) \
 		if(x < 8) \
 			x += 8;
-	
+
 	// Do NOT use roomInfos[index].clientCount,
 	// cause that doesnt account for empty holes
-	
+
 	int roomCount[16];
-	memset(&roomCount[0], 0, sizeof(int)*16);
-	
+	memset(&roomCount[0], 0, sizeof(roomCount));
+
 	for(int i = 0; i < 16; i++)
 		for(int j = 0; j < 8; j++)
 			if (roomInfos[i].peerInfos[j].peer != 0)
@@ -208,9 +208,11 @@ void WelcomeNewClient(RoomInfo* ri, int id)
 
 	// ordinary day
 	mw.special = 0;
+#if 0
 	if (GetWeekDay() == 1) mw.special = 1; // Monday
 	if (GetWeekDay() == 3) mw.special = 2; // Wednesday
 	if (GetWeekDay() == 5) mw.special = 3; // Friday
+#endif
 
 	sendToPeerReliable(ri->peerInfos[id].peer, &mw, sizeof(struct SG_MessageClientStatus));
 }
@@ -226,7 +228,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 	struct CG_Header* recvBuf = packet->data;
 	char sgBuffer[16];
-	memset(sgBuffer, 0, 16);
+	memset(sgBuffer, 0, sizeof(sgBuffer));
 
 	if (((struct CG_Header*)recvBuf)->type != CG_JOINROOM)
 	{
@@ -312,12 +314,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			memset(&ri->peerInfos[id], 0, sizeof(PeerInfo));
 
 			ri->peerInfos[id].peer = peer;
-			
+
 			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
 			WelcomeNewClient(ri, id);
-			
+
 			break;
 		}
 
@@ -329,7 +331,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->numClientsTotal = ri->clientCount;
 
 			// save new name
-			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
+			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], NAME_LEN);
 
 			PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
 			printf("Player %d is identified now as %s [%08x]\n",
@@ -350,14 +352,14 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				{
 					// send all OTHER (8) names to THIS (1) client
 					s->clientID = j;
-					memcpy(&s->name[0], &ri->peerInfos[j].name[0], 12);
+					memcpy(&s->name[0], &ri->peerInfos[j].name[0], NAME_LEN);
 					sendToPeerReliable(ri->peerInfos[peerID].peer, s, sizeof(struct SG_MessageName));
 				}
 			}
 
 			// send THIS (1) name to all OTHER (8) clients
 			s->clientID = peerID;
-			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], 12);
+			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], NAME_LEN);
 			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 			break;
 		}
@@ -459,10 +461,11 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->type = SG_ENDRACE;
 			s->clientID = peerID;
 
-			memcpy(&s->time[0], &r->time[0], 3);
+			memcpy(&s->courseTime, &r->courseTime, sizeof(r->courseTime));
+			memcpy(&s->lapTime, &r->lapTime, sizeof(r->lapTime));
 
 			int localTime = 0;
-			memcpy(&localTime, &r->time[0], 3);
+			memcpy(&localTime, &r->courseTime, sizeof(r->courseTime));
 
 			char timeStr[32];
 			snprintf(
@@ -540,7 +543,8 @@ void ProcessNewMessages() {
 				//race is in session and (1 or less players OR non-race map) //shouldn't it be AND not OR?
 				int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) || (ri->levelPlayed > 18));
 				// Kill lobby under either of these conditions
-				if (noneAlive || oneOrLessOrNonRaceMap)
+				int killLobby = noneAlive || oneOrLessOrNonRaceMap;
+				if (killLobby)
 				{
 					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
 					if (noneAlive)
@@ -584,7 +588,7 @@ void ProcessNewMessages() {
 					s->type = SG_NAME;
 					s->clientID = peerID;
 					s->numClientsTotal = ri->clientCount;
-					memset(&s->name[0], 0, 12);
+					memset(&s->name[0], 0, sizeof(s->name));
 
 					broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 				}
@@ -742,23 +746,23 @@ void ServerState_Tick()
 				ri->endTime = clock();
 			}
 		}
-		
+
 		else
 		{
 			if ( ( (clock() - ri->endTime) / CLOCKS_PER_SEC_FIX) >= 6)
 			{
 				PrintPrefix(r + 1);
 				printf("Room has been reset\n");
-				
+
 				for (int i = 0; i < MAX_CLIENTS; i++)
 				{
 					if (ri->peerInfos[i].peer == 0)
 						continue;
-					
+
 					ri->peerInfos[i].boolLoadSelf = 0;
 					ri->peerInfos[i].boolRaceSelf = 0;
 					ri->peerInfos[i].boolEndSelf = 0;
-						
+
 					// tell all clients to reset
 					WelcomeNewClient(ri, i);
 				}
