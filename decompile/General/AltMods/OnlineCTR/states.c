@@ -209,10 +209,12 @@ void StatePS1_Lobby_WaitForLoading()
 }
 
 static bool initRace = true;
+static bool endRace = true;
 
 void StatePS1_Lobby_StartLoading()
 {
 	initRace = true;
+	endRace = true;
 	PrintCharacterStats();
 	PrintRecvTrack();
 
@@ -288,7 +290,7 @@ static void Ghostify()
 	struct Icon **ptrIconArray;
 	struct Instance *inst;
 
-	for (unsigned driverID = 1; driverID < 8; driverID++)
+	for (int driverID = 1; driverID < MAX_NUM_PLAYERS; driverID++)
 	{
 		gGT->drivers[driverID]->wheelSprites = ICONGROUP_GETICONS(gGT->iconGroup[0xC]);
 		inst = gGT->drivers[driverID]->instSelf;
@@ -298,13 +300,11 @@ static void Ghostify()
 	}
 }
 
-extern struct CheckpointTracker checkpointTracker[8];
 extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
-extern int bestLap;
 
 static void OnRaceInit()
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < MAX_NUM_PLAYERS; i++)
 	{
 		checkpointTracker[i].currCheckpoint = 0;
 		checkpointTracker[i].timer = 0;
@@ -314,7 +314,7 @@ static void OnRaceInit()
 	{
 		checkpointTimes[i] = 0;
 	}
-	bestLap = MINUTES(10);
+	sdata->gGT->drivers[0]->bestLapTime = HOURS(10);
 }
 
 void StatePS1_Game_WaitForRace()
@@ -402,6 +402,30 @@ void StatePS1_Game_StartRace()
 	}
 }
 
+extern int currCam;
+
+static void OnRaceEnd()
+{
+	struct Driver ** drivers = sdata->gGT->drivers;
+	bool foundRacer = false;
+	for (int driverID = 1; driverID < MAX_NUM_PLAYERS; driverID++)
+	{
+		/* Undo wheel ghostify */
+		drivers[driverID]->wheelSprites = ICONGROUP_GETICONS(sdata->gGT->iconGroup[0]);
+
+		if (!foundRacer && octr->nameBuffer[driverID][0] && !checkpointTracker[driverID].raceFinished)
+		{
+			currCam = driverID;
+			foundRacer = true;
+		}
+	}
+}
+
 void StatePS1_Game_EndRace()
 {
+	if (endRace)
+	{
+		OnRaceEnd();
+		endRace = false;
+	}
 }

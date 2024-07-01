@@ -1,3 +1,8 @@
+#ifdef USE_ONLINE
+#include "OnlineCTR/names3d.c"
+#include "OnlineCTR/endOfRaceUI_Camera.c"
+#endif
+
 #ifdef USE_BOOSTBAR
 #ifdef USE_ONLINE
 

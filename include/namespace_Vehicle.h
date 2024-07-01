@@ -1549,7 +1549,8 @@ struct Driver
 	short unk636;
 
 	#ifdef USE_ONLINE
-	int uncappedReserves;
+	int uncappedReserves; // 0x638
+	int bestLapTime; // 0x63A
 	#endif
 
 	// 0x638

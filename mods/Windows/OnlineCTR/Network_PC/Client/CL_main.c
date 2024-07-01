@@ -151,18 +151,16 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->boolLockedInCharacter = 0;
 			octr->numDriversEnded = 0;
 
-			memset(&octr->boolLockedInCharacters[0], 0, 8);
-			memset(&octr->nameBuffer[0], 0, 0xC*8);
-			memset(&octr->RaceEnd[0], 0, 8*8);
+			memset(&octr->boolLockedInCharacters[0], 0, sizeof(octr->boolLockedInCharacters));
+			memset(&octr->nameBuffer[0], 0, sizeof(octr->nameBuffer));
+			memset(&octr->raceStats[0], 0, sizeof(octr->raceStats));
 
 			// reply to server with your name
-			*(int*)&octr->nameBuffer[0] = *(int*)&name[0];
-			*(int*)&octr->nameBuffer[4] = *(int*)&name[4];
-			*(int*)&octr->nameBuffer[8] = *(int*)&name[8];
+			memcpy(&octr->nameBuffer[0], &name, NAME_LEN);
 
 			struct CG_MessageName m = { 0 };
 			m.type = CG_NAME;
-			memcpy(&m.name[0], &name[0], 0xC);
+			memcpy(&m.name[0], &name[0], sizeof(m.name));
 			sendToHostReliable(&m, sizeof(struct CG_MessageName));
 
 			// choose to get host menu or guest menu
@@ -181,7 +179,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			octr->NumDrivers = r->numClientsTotal;
 
-			memcpy(&octr->nameBuffer[slot * 0xC], &r->name[0], 12);
+			memcpy(&octr->nameBuffer[slot], &r->name[0], NAME_LEN);
 
 			// handle disconnection
 			if (r->name[0] == 0)
@@ -361,7 +359,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		case SG_ENDRACE:
 		{
 			struct SG_MessageEndRace* r = recvBuf;
-
 			int clientID = r->clientID;
 			if (clientID == octr->DriverID) break;
 			if (clientID < octr->DriverID) slot = clientID + 1;
@@ -374,8 +371,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			pad->buttonsReleased = 0;
 			pad->buttonsHeldPrevFrame = 0x20;
 
-			octr->RaceEnd[octr->numDriversEnded].slot = slot;
-			memcpy(&octr->RaceEnd[octr->numDriversEnded].time, &r->time[0], 3);
+			octr->raceStats[octr->numDriversEnded].slot = slot;
+			memcpy(&octr->raceStats[octr->numDriversEnded].finalTime, &r->courseTime, sizeof(r->courseTime));
+			memcpy(&octr->raceStats[octr->numDriversEnded].bestLap, &r->lapTime, sizeof(r->lapTime));
 			octr->numDriversEnded++;
 
 			break;
@@ -1027,13 +1025,14 @@ void StatePC_Game_EndRace()
 		struct CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
 
-		memcpy(&cg.time[0], &pBuf[psxPtr + 0x514], 3);
-
+		memcpy(&cg.courseTime, &pBuf[psxPtr + DRIVER_COURSE_OFFSET], sizeof(cg.courseTime));
+		memcpy(&cg.lapTime, &pBuf[psxPtr + DRIVER_BESTLAP_OFFSET], sizeof(cg.courseTime));
 		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
 
 		// end race for yourself
-		octr->RaceEnd[octr->numDriversEnded].slot = 0;
-		octr->RaceEnd[octr->numDriversEnded].time = *(int*)&pBuf[psxPtr + 0x514];
+		octr->raceStats[octr->numDriversEnded].slot = 0;
+		octr->raceStats[octr->numDriversEnded].finalTime = *(int*)&pBuf[psxPtr + DRIVER_COURSE_OFFSET];
+		octr->raceStats[octr->numDriversEnded].bestLap = *(int*)&pBuf[psxPtr + DRIVER_BESTLAP_OFFSET];
 		octr->numDriversEnded++;
 
 		// if you finished last
@@ -1044,7 +1043,7 @@ void StatePC_Game_EndRace()
 
 	for (int i = 0; i < octr->NumDrivers; i++)
 	{
-		if (octr->nameBuffer[i * 0xC] == 0) numDead++;
+		if (octr->nameBuffer[i][0] == 0) numDead++;
 	}
 }
 

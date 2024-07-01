@@ -102,7 +102,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 	for(i = 0; i < octr->DriverID; i++)
 	{
-		if(octr->nameBuffer[(i+1)*0xC] == 0)
+		if(octr->nameBuffer[i+1][0] == 0)
 		{
 			numDead++;
 			continue;
@@ -145,7 +145,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 	for(i = i+1; i < octr->NumDrivers; i++)
 	{
-		if(octr->nameBuffer[i*0xC] == 0)
+		if(octr->nameBuffer[i][0] == 0)
 		{
 			numDead++;
 			continue;
@@ -173,104 +173,34 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 
+bool HasRaceEnded()
+{
+	int numPlayersDisconnected = 0;
+	for (int i = 0; i < octr->NumDrivers; i++)
+	{
+		if (octr->nameBuffer[i][0] == 0) { numPlayersDisconnected++; }
+	}
+	return octr->numDriversEnded == (octr->NumDrivers - numPlayersDisconnected);
+}
+
 RECT windowText = {0x118, 0x40, 0xD8, 0};
 
+void EndOfRace_Camera();
+void EndOfRace_Icons();
 void OnlineEndOfRace()
 {
-	char message[32];
-	int numDead = 0;
-	int skipRow = 0;
-	struct Driver* d = sdata->gGT->drivers[0];
-
-	// if "you" are still racing, do nothing
-	if((d->actionsFlagSet & 0x2000000) == 0)
-		return;
-
-	// if client reset to ASSIGN_ROLE after end-of-race
-	if(octr->CurrState < GAME_START_RACE)
-		return;
-
+	struct Driver * driver = sdata->gGT->drivers[0];
+	if (((driver->actionsFlagSet & 0x2000000) == 0) ||
+		(octr->CurrState < GAME_START_RACE)) { return; }
 	octr->CurrState = GAME_END_RACE;
 
-	// if "you" finished race,
-	DECOMP_DecalFont_DrawLine("FINISHED!", 0x100, 206, FONT_SMALL, JUSTIFY_CENTER|ORANGE);
+	EndOfRace_Camera();
+	EndOfRace_Icons();
 
-	windowText.h = 0;
-
-	int i;
-	for(i = 0; i < octr->NumDrivers; i++)
-		if(octr->nameBuffer[i*0xC] == 0)
-			numDead++;
-
-	for(i = 0; i < octr->NumDrivers; i++)
+	if (HasRaceEnded())
 	{
-		// skip drivers still racing
-		if(octr->RaceEnd[i].time == 0)
-		{
-			skipRow++;
-			continue;
-		}
-
-		int slot = octr->RaceEnd[i].slot;
-
-		// skip disconnected drivers
-		if(octr->nameBuffer[slot * 0xc] == 0)
-		{
-			skipRow++;
-			continue;
-		}
-
-		sprintf(message, "%s:", &octr->nameBuffer[slot * 0xc]);
-
-		int color = ORANGE;
-		if(slot == 0)
-			color = BLUE;
-
-		DecalFont_DrawLine(
-			message,
-			0x120,0x48+i*0x8,FONT_SMALL,color);
-
-		DecalFont_DrawLine(
-			DECOMP_RECTMENU_DrawTime(octr->RaceEnd[i].time),
-			0x1A0,0x48+i*0x8,FONT_SMALL,color);
-
-		windowText.h += 8;
+		DecalFont_DrawLine("Restart in 6 seconds", 256, 108, FONT_BIG, JUSTIFY_CENTER | RED);
 	}
-
-	int lastY = 0x48+(i*0x8)-(skipRow*0x8);
-
-	if(octr->numDriversEnded == (octr->NumDrivers-numDead))
-	{
-		DecalFont_DrawLine(
-			"Restart in 6 seconds",
-			0x120,lastY,FONT_SMALL,RED);
-
-		windowText.h += 8;
-	}
-
-	else
-	{
-		sprintf(
-			message,
-			"Waiting for %d more",
-			(octr->NumDrivers-numDead) - octr->numDriversEnded);
-
-		DecalFont_DrawLine(
-			message,
-			0x120,lastY,FONT_SMALL,PAPU_YELLOW);
-
-		windowText.h += 8;
-	}
-
-
-	windowText.h += 0x10;
-
-	struct DB *backBuffer =
-		sdata->gGT->backBuffer;
-
-	DECOMP_RECTMENU_DrawInnerRect(
-		&windowText, 1,
-		backBuffer->otMem.startPlusFour);
 }
 
 void Online_OtherFX_RecycleNew(
