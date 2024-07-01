@@ -60,7 +60,7 @@ typedef struct raceStats
 	int bestLap;
 } raceStats;
 
-// This can be 0x400 bytes max:
+// This can be 0x400 (1024) bytes max:
 // 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
@@ -103,7 +103,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-#define WIN_CLIENT_SYNC_LEN 24
+#define WIN_CLIENT_SYNC_LEN 32
 	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
 
 	// 0x30
@@ -128,6 +128,8 @@ struct OnlineCTR
 		unsigned char boolNow;
 	} Shoot[MAX_NUM_PLAYERS];
 };
+
+STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2

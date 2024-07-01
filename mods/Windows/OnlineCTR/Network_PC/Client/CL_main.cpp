@@ -40,6 +40,11 @@ struct Gamepad
 };
 
 void sendToHostUnreliable(const void* data, size_t size) {
+	//TheUbMunster says: so I get that these can arrive out of order (or even not at all)
+	//is there a timestamp/counter in the packet so that if packets are sent a->b->c and recieved a->c->b
+	//that b won't overwrite c when recieved, because c is more recent than b (and therefore more accurate)?
+	//If this isn't inherint, maybe enet has the ability to do this built-in.
+
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
 }
@@ -621,8 +626,10 @@ void StatePC_Launch_PickServer()
 	if ((*sdata_Loading_stage.get()) != -1)
 		return;
 
-	if (serverPeer != 0)
+	if (serverPeer != 0) 
 	{
+		//when it dc's it ends up here. Either this is causing the enet dc or the client is bugged to call this function again when it shouldn't
+		printf("non-null enet server peer during server connection (case 1), disconnecting from old server...");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}
@@ -794,6 +801,7 @@ void StatePC_Launch_PickServer()
 
 	if (serverPeer != 0)
 	{
+		printf("non-null enet server peer during server connection (case 2), disconnecting from old server...");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}
@@ -1043,17 +1051,26 @@ void SendEverything()
 	// ever use "world scale", this should probably be applied
 	// on a track-by-track basis.
 
+	//this should be 3x faster than 3 non-concurrent reads (see old code below).
+	//todo: automate concurrent reads so this isn't necessary.
+	struct pos { int x, y, z; };
+	STATIC_ASSERT2(sizeof(pos) == 12, "single fetch pos (xyz) trick only works if the structure is the correct size to occupy 0x2d4 through 0x2dc + sizeof(int)");
+	ps1ptr<pos> xyz = pBuf.at<pos>((*psxPtr.get()) + 0x2d4);
+	cg.posX = (short)((*xyz.get()).x / 256);
+	cg.posY = (short)((*xyz.get()).y / 256);
+	cg.posZ = (short)((*xyz.get()).z / 256);
+
 	//cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
-	ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
-	cg.posX = (short)(*x.get() / 256);
+	//ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
+	//cg.posX = (short)(*x.get() / 256);
 
 	//cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
-	ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
-	cg.posY = (short)(*y.get() / 256);
+	//ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
+	//cg.posY = (short)(*y.get() / 256);
 
 	//cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
-	ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
-	cg.posZ = (short)(*z.get() / 256);
+	//ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
+	//cg.posZ = (short)(*z.get() / 256);
 
 	// === Direction Faced ===
 	// driver->0x39a (direction facing)

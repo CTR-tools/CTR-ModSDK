@@ -77,6 +77,45 @@ void ThreadFunc(struct Thread* t)
 				break;
 	}
 
+	//debug info
+	//static char literallyAnyClientSync = 0;
+	char top_vals[33]/*, bot_vals[33]*/;
+	for (char ii = 0; ii < 32; ii++)
+	{
+		//if (octr->windowsClientSync[ii] != 0/* || octr->windowsClientSync[ii + 32] != 0*/)
+		//	literallyAnyClientSync |= 1;
+		char c = octr->windowsClientSync[ii];
+		if (c == 0)
+			c = '0';
+		else
+		{
+			c = c + 'A' - 1;
+			c = (c < 'A') ? '.' : c;
+			c = (c > 'Z') ? '.' : c;
+		}
+		top_vals[ii] = c;
+		//bot_vals[ii] = octr->windowsClientSync[ii + 32] == 0 ? '0' : '1';
+	}
+	top_vals[32] /*= bot_vals[32]*/ = '\0';
+	//DecalFont_DrawLine((literallyAnyClientSync ? "t" : "f"), 0x100, 0x30, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
+	DecalFont_DrawLine(top_vals, 0x100, 0x38, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
+	//DecalFont_DrawLine(bot_vals, 0x100, 0x40, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
+	char ptr[] = { 'p','t','r',':',' ','x','x','x','x','x','x','x','x','\0' }; //ind 5-12
+	//0 = 30
+	//9 = 39
+	//A = 41
+	//F = 46 //8000c027
+	/*int ptrAddr = (int)&octr;
+	for (char iii = 0; iii < 8; iii++)
+	{
+		if ((ptrAddr & 0xf) <= 9)
+			ptr[12 - iii] = '0' + (ptrAddr & 0xf);
+		else
+			ptr[12 - iii] = 'A' + ((ptrAddr & 0xf) - 10);
+		ptrAddr >>= 4;
+	}
+	DecalFont_DrawLine(ptr, 0x100, 0x48, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);*/
+
 	// if client didn't update the game in WIN_CLIENT_SYNC_LEN - 4 *or* WIN_CLIENT_SYNC_LEN / 2 frames (idk which).
 	int boolCloseClient =
 		(i == -1) &&
