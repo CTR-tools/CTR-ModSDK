@@ -217,26 +217,37 @@ void NewPage_Laps()
 	sdata->lngStrings[0x9b] = "3";
 	sdata->lngStrings[0x9c] = "5";
 	sdata->lngStrings[0x9d] = "7";
+	sdata->lngStrings[0x9e] = "-";
+	sdata->lngStrings[0x9f] = "-";
+	sdata->lngStrings[0xa0] = "-";
+	sdata->lngStrings[0xa1] = "-";
 
+	#if 0
 	// Monday event
 	sdata->lngStrings[0x9e] = "30";
 	sdata->lngStrings[0x9f] = "60";
 	sdata->lngStrings[0xa0] = "90";
 	sdata->lngStrings[0xa1] = "120";
+	#endif
 
 
 	for(i = 0; i < 4; i++)
 	{
 		// default, set all to unlocked
 		menuRows[i].stringIndex = 0x9a+i;
+		menuRows[4+i].stringIndex = 0x809a+4+i;
+		#if 0
 		menuRows[4+i].stringIndex = 0x9a+4+i;
+		#endif
 
+		#if 0
 		// if not monday
 		if(octr->special != 1)
 		{
 			sdata->lngStrings[0x9a+4+i] = "-";
 			menuRows[4+i].stringIndex = 0x809a+4+i;
 		}
+		#endif
 	}
 }
 
@@ -336,6 +347,7 @@ void PrintCharacterStats()
 	int color;
 
 
+	#if 0
 	char* title = "Classic Gameplay Mode";
 
 	if(octr->special == 1)
@@ -354,6 +366,7 @@ void PrintCharacterStats()
 	}
 
 	DecalFont_DrawLine(title,0x100,0x18,FONT_SMALL,JUSTIFY_CENTER|WHITE);
+	#endif
 
 
 
@@ -373,7 +386,7 @@ void PrintCharacterStats()
 
 	int numDead = 0;
 	for(i = 0; i < octr->NumDrivers; i++)
-		if(octr->nameBuffer[i*0xC] == 0)
+		if(octr->nameBuffer[i][0] == 0)
 			numDead++;
 
 	int posX;
@@ -395,7 +408,7 @@ void PrintCharacterStats()
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
 
-		char* str = &octr->nameBuffer[slot * 0xc];
+		char* str = octr->nameBuffer[slot];
 
 		// UI-test
 		// str[0] = 'A';

@@ -3,8 +3,15 @@
 void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 {
 	const struct GameTracker * gGT = sdata->gGT;
-	int barWidth = WIDE_PICK(0x31, 0x25);
+	int barWidth = WIDE_34(49);
+	#ifdef USE_ONLINE
+	const int xOffset = 2;
+	int barHeight = 10;
+	posX += xOffset;
+	barWidth += xOffset;
+	#else
 	int barHeight = gGT->numPlyrCurrGame > 2 ? 3 : 7;
+	#endif
 
 	int meterLength = 0;
 	if (driver->turbo_MeterRoomLeft != 0) {
@@ -54,6 +61,10 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 
 	#ifdef USE_BOOSTBAR
 	void DrawBoostBar(short posX, short posY, struct Driver* driver);
-	DrawBoostBar(posX, posY+5, driver);
+	#ifdef USE_ONLINE
+	DrawBoostBar(posX - xOffset, posY + 5, driver);
+	#else
+	DrawBoostBar(posX, posY + 5, driver);
+	#endif
 	#endif
 }

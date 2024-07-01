@@ -2,6 +2,13 @@
 
 #ifdef USE_ONLINE
 
+extern char bestLapString[];
+extern char lastLapString[];
+extern char savedLapTimesString[2][6];
+
+void SaveLapTime(int index, int lapTime);
+void CopyLapTime(char * restrict dst, char * restrict src);
+
 // online can be fragmented
 #define HANDLE_NULL_DRIVER continue
 
@@ -41,7 +48,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		if ((firstRank != 0) && ((firstRank->actionsFlagSet & 0x100000) == 0))
 			break;
 	}
-	
+
 	#ifdef USE_ONLINE
 	firstRank = gGT->drivers[0];
 	#endif
@@ -49,13 +56,13 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	for(iVar10 = 0; iVar10 < 8; iVar10++)
 	{
 		gGT->driversInRaceOrder[iVar10] = NULL;
-		
+
 		// iVar6 = driver struct
 		currDriver = gGT->drivers[iVar10];
 
 		if (currDriver == NULL)
 			HANDLE_NULL_DRIVER;
-		
+
 		// before and after
 		distToFinish_prev = currDriver->distanceToFinish_curr;
 		VehLap_UpdateProgress(currDriver);
@@ -66,7 +73,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		// clamp minimum
 		if (drivenBackwards < 0)
 			drivenBackwards = 0;
-		
+
 		// clamp to max
 		else if (drivenBackwards > 1000)
 			drivenBackwards = 1000;
@@ -76,17 +83,17 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 		// === Natty Video ===
 		// https://www.youtube.com/watch?v=lDaT2rY6GKI
-		
+
 		// Part A: Start-line -> 32000 distToFinish
 		// Part B: 32000 distToFinish -> 1200 distToFinish
-		// Part C: 1200 distToFinish -> Finish-line 
+		// Part C: 1200 distToFinish -> Finish-line
 
 		if (
 				// crossed finishline (forwards)
 				(distToFinish_prev < 1200) &&
 				(distToFinish_curr > 32000)
 			)
-		{	
+		{
 			// Set racer's distance driven backwards to zero
 			currDriver->distanceDrivenBackwards = 0;
 
@@ -94,13 +101,28 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			if ((currDriver->actionsFlagSet & 0x1000000) != 0)
 			{
 				currDriver->actionsFlagSet &= ~(0x1000000);
-				
+
 				// skip next 46 lines of code
 				goto LAB_800418b4;
 			}
 
 			// update checkpoint with distToFinish
 			currDriver->distanceToFinish_checkpoint = distToFinish_curr;
+
+			#ifdef USE_ONLINE
+			if (iVar10 == 0)
+			{
+				int currLapSaveIndex = currDriver->lapIndex % 2;
+				int currLapTime = gGT->elapsedEventTime - currDriver->lapTime;
+				SaveLapTime(currLapSaveIndex, currLapTime);
+				if (currLapTime < currDriver->bestLapTime)
+				{
+					currDriver->bestLapTime = currLapTime;
+					CopyLapTime(bestLapString, savedLapTimesString[currLapSaveIndex]);
+				}
+				CopyLapTime(lastLapString, savedLapTimesString[currLapSaveIndex]);
+			}
+			#endif
 
 			// If finished last lap, clamp
 			if (gGT->numLaps < (currDriver->lapIndex + 1))
@@ -109,13 +131,13 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			}
 
 			// if this is not final lap
-			else			
+			else
 			{
 				#ifndef USE_ONLINE
 				if (
 						// If you're in Arcade, or
 						// If you're in Adventure, or
-						// If you're in Time Trial	
+						// If you're in Time Trial
 						((gGT->gameMode1 & 0x4a0000) != 0) &&
 
 						// driver -> instance -> thread -> modelIndex == "player" of any kind
@@ -157,7 +179,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						#ifdef USE_ONLINE
 						if(currDriver->driverID == 0)
 						#endif
-						
+
 							// frames, so the animation lasts 3 seconds
 							sdata->finalLapTextTimer[iVar10] = FPS_DOUBLE(90);
 					}
@@ -167,7 +189,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// If did not just finish race
 			if (lapCounter != gGT->numLaps)
 				goto LAB_800418b4;
-			
+
 			// === If did just finish race ===
 
 			// if racer hadn't finished the race
@@ -175,15 +197,15 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			{
 				// this one racer has now finished the race
 				currDriver->actionsFlagSet |= 0x2000000;
-				
+
 				// required cause we use 3D wumpa
 				// in multiplayer instead of 2D
 				#if 1
 				if(currDriver->driverID < gGT->numPlyrCurrGame)
 				{
-					struct Instance* instFruitDisp = 
+					struct Instance* instFruitDisp =
 						gGT->drivers[currDriver->driverID]->instFruitDisp;
-					
+
 					instFruitDisp->scale[0] = 0;
 					instFruitDisp->scale[1] = 0;
 					instFruitDisp->scale[2] = 0;
@@ -261,10 +283,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			// if player did not JUST cross finish backwards
 			else
-			{	
-				unsigned int trackLen = 
+			{
+				unsigned int trackLen =
 					gGT->level1->ptr_restart_points[0].distToFinish;
-				
+
 				if (
 					// if player did not EVER cross finish backwards
 					((currDriver->actionsFlagSet & 0x1000000) == 0) &&
@@ -282,7 +304,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 					currDriver->distanceToFinish_checkpoint = distToFinish_curr;
 				}
 			}
-			
+
 		LAB_800418b4:
 			// if racer hasn't finished the race
 			if ((currDriver->actionsFlagSet & 0x2000000) == 0)
@@ -312,12 +334,12 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currRank = newRank;
 		}
 	}
-	
+
 	#ifdef USE_ONLINE
 	int numDead1 = 0;
 	int numSpawn = 0;
 	#endif
-	
+
 	// sort all drivers that have NOT finished race
 	for (currRank; currRank < 8; currRank++)
 	{
@@ -325,10 +347,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		if(gGT->drivers[currRank] == 0)
 			numDead1++;
 		#endif
-		
+
 		if(gGT->drivers[currRank] == 0)
 			HANDLE_NULL_DRIVER;
-		
+
 		// set "min" distance to max
 		minDistance = 0x3fffffff;
 
@@ -337,7 +359,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 		// lap index
 		iVar9 = -10;
-		
+
 		// look for "next" farthest driver,
 		// out of all unsorted drivers remaining
 		for (iVar10 = 0; iVar10 < 8; iVar10++)
@@ -347,13 +369,13 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 			if(currDriver == 0)
 				HANDLE_NULL_DRIVER;
-			
+
 			if(currDriver->driverRank != -1)
 				continue;
-			
+
 			// driver lap index
 			iVar4 = currDriver->lapIndex;
-			
+
 			// if drive backwards behind startline
 			if((currDriver->actionsFlagSet & 0x1000000) != 0)
 				iVar4 -= 1;
@@ -392,7 +414,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			if (gGT->trafficLightsTimer < 1)
 			{
 				gGT->drivers[iVar2]->driverRank = currRank;
-				
+
 				#ifdef USE_ONLINE
 				gGT->drivers[iVar2]->driverRank -= numDead1;
 				#endif
@@ -402,21 +424,21 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			else
 			{
 				#ifdef USE_ONLINE
-				
+
 				// This is broken, sometimes a hole will appear between
 				// the icons at the startline, if someone disconnects,
 				// nobody knows why, but screw it
 				gGT->drivers[iVar2]->driverRank = numSpawn;
 				gGT->humanPlayerPositions[iVar2-numDead1] = numSpawn;
 				numSpawn++;
-				
+
 				#else
-				
+
 				// set every driver position rank,
 				// to the order that they spawn on the starting line
 				gGT->drivers[iVar2]->driverRank = sdata->kartSpawnOrderArray[iVar2];
 				gGT->humanPlayerPositions[iVar2] = sdata->kartSpawnOrderArray[iVar2];
-				
+
 				#endif
 			}
 		}
@@ -453,7 +475,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				(gGT->humanPlayerPositions[iVar10] < currRank)
 			)
 		{
-			int characterID = 
+			int characterID =
 				data.characterIDs[gGT->driversInRaceOrder[currRank-1]->driverID];
 
 			// Make driver talk
@@ -461,32 +483,30 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		}
 		gGT->humanPlayerPositions[iVar10] = currRank;
 	}
-	
+
 	// If already finished race
 	if ((gGT->gameMode1 & END_OF_RACE) != 0)
 		return;
-	
+
 	#ifdef USE_ONLINE
 	if((gGT->drivers[0]->actionsFlagSet & 0x2000000) != 0)
 	{
 		MainGameEnd_Initialize();
 	}
-	
-	// Ignore all other end-conditions
 	return;
-	#endif
-		
+	#else
+
 	int numPlyr = gGT->numPlyrCurrGame;
-	
+
 	// Check if race should end
 	if (
 		(
 			// 1P game, with 1 human finished
-			(numPlyr == 1) && 
+			(numPlyr == 1) &&
 			(iVar13 > 0)
-			
-		) || 
-		
+
+		) ||
+
 		(
 			// Multiplayer VS, all finished except one
 			(numPlyr > 1) &&
@@ -496,7 +516,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 
 		(
 			// Arcade mode, all humans finished
-			((gGT->gameMode1 & ARCADE_MODE) != 0) && 
+			((gGT->gameMode1 & ARCADE_MODE) != 0) &&
 			(numPlyr <= iVar13)
 		)
 	   )
@@ -506,25 +526,25 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		{
 			// Get address of each player structure
 			currDriver = gGT->drivers[currRank];
-			
+
 			if(currDriver == NULL)
 				HANDLE_NULL_DRIVER;
-			
+
 			// if driver already finished race
 			if((currDriver->actionsFlagSet & 0x2000000) != 0)
 				continue;
 
 			// End the race for this player
 			currDriver->actionsFlagSet |= 0x2000000;
-			
+
 			// required cause we use 3D wumpa
 			// in multiplayer instead of 2D
 			#if 1
 			if(currRank < gGT->numPlyrCurrGame)
 			{
-				struct Instance* instFruitDisp = 
+				struct Instance* instFruitDisp =
 					gGT->drivers[currRank]->instFruitDisp;
-				
+
 				instFruitDisp->scale[0] = 0;
 				instFruitDisp->scale[1] = 0;
 				instFruitDisp->scale[2] = 0;
@@ -537,18 +557,19 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// skip AIs
 			if ((currDriver->actionsFlagSet & 0x100000) != 0)
 				continue;
-			
+
 			// === VS Mode ===
-			
+
 			// Make the player Blasted
 			VehPickState_NewState(currDriver, 2, currDriver, 0);
 
 			// Reduce counters for AttackingPlayer and AttackedByPlayer
 			currDriver->numTimesAttackedByPlayer[currDriver->driverID]--;
 			currDriver->numTimesAttackingPlayer[currDriver->driverID]--;
-			
+
 		}
-		
+
 		MainGameEnd_Initialize();
 	}
+	#endif
 }

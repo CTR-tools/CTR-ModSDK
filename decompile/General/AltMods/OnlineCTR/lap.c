@@ -1,10 +1,8 @@
 #include <common.h>
 #include "global.h"
 
-extern CheckpointTracker checkpointTracker[NUM_PLAYERS];
 extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
 extern char savedLapTimesString[2][6];
-extern int savedLapTimes[2];
 
 void ElapsedTimeToLapTime(char * dst, int elapsedTime)
 {
@@ -102,6 +100,5 @@ void CopyLapTime(char * restrict dst, char * restrict src)
 
 void SaveLapTime(int index, int lapTime)
 {
-	savedLapTimes[index] = lapTime;
 	ElapsedTimeToLapTime(&savedLapTimesString[index], lapTime);
 }
