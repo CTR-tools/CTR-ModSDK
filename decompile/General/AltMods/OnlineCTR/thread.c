@@ -79,12 +79,12 @@ void ThreadFunc(struct Thread* t)
 
 	//debug info
 	//static char literallyAnyClientSync = 0;
-	char top_vals[33]/*, bot_vals[33]*/;
+	char top_vals[33], bot_vals[33];
 	for (char ii = 0; ii < 32; ii++)
 	{
 		//if (octr->windowsClientSync[ii] != 0/* || octr->windowsClientSync[ii + 32] != 0*/)
 		//	literallyAnyClientSync |= 1;
-		char c = octr->windowsClientSync[ii];
+		/*char c = octr->windowsClientSync[ii];
 		if (c == 0)
 			c = '0';
 		else
@@ -93,13 +93,15 @@ void ThreadFunc(struct Thread* t)
 			c = (c < 'A') ? '.' : c;
 			c = (c > 'Z') ? '.' : c;
 		}
-		top_vals[ii] = c;
-		//bot_vals[ii] = octr->windowsClientSync[ii + 32] == 0 ? '0' : '1';
+		top_vals[ii] = c;*/
+		char tc = (octr->windowsClientSync[ii] % 10) + '0', bc = (octr->windowsClientSync[ii + 32] % 10) + '0';
+		top_vals[ii] = tc;
+		bot_vals[ii] = bc;
 	}
-	top_vals[32] /*= bot_vals[32]*/ = '\0';
+	top_vals[32] = bot_vals[32] = '\0';
 	//DecalFont_DrawLine((literallyAnyClientSync ? "t" : "f"), 0x100, 0x30, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
 	DecalFont_DrawLine(top_vals, 0x100, 0x38, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
-	//DecalFont_DrawLine(bot_vals, 0x100, 0x40, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
+	DecalFont_DrawLine(bot_vals, 0x100, 0x40, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
 	char ptr[] = { 'p','t','r',':',' ','x','x','x','x','x','x','x','x','\0' }; //ind 5-12
 	//0 = 30
 	//9 = 39

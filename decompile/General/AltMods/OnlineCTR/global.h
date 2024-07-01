@@ -103,7 +103,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-#define WIN_CLIENT_SYNC_LEN 32
+#define WIN_CLIENT_SYNC_LEN 64
 	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
 
 	// 0x30
