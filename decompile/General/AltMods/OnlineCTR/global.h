@@ -103,7 +103,8 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[MAX_NUM_PLAYERS];
+#define WIN_CLIENT_SYNC_LEN 24
+	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
 
 	// 0x30
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];

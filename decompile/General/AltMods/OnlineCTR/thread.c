@@ -63,21 +63,21 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = MAX_NUM_PLAYERS - 2;
+		i = WIN_CLIENT_SYNC_LEN - 2;
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = MAX_NUM_PLAYERS - 2; i >= 0; i--)
+		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
 			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
 
-		for(i = MAX_NUM_PLAYERS - 2; i >= 0; i--)
+		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
 			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
 				break;
 	}
 
-	// if client didn't update the game in MAX_NUM_PLAYERS - 4 *or* MAX_NUM_PLAYERS / 2 frames (idk which).
+	// if client didn't update the game in WIN_CLIENT_SYNC_LEN - 4 *or* WIN_CLIENT_SYNC_LEN / 2 frames (idk which).
 	int boolCloseClient =
 		(i == -1) &&
 		(octr->CurrState > LAUNCH_ENTER_PID);
