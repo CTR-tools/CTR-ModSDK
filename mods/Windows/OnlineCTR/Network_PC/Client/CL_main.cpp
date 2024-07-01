@@ -127,14 +127,17 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// odd-numbered index == even-number room
 			// Index 1, 3, 5 -> Room 2, 4, 6
+#if 0 // don't forget to delete this #if when enabling events.
 			if (octr.get()->serverRoom & 1)
 				r->special = 0;
-
+#endif
+			r->special = 0; // don't forget to delete this when enabling events.
 			octr.get()->special = r->special;
 
-#if 1
+#if 0
+			// given the PINE changes, the below comment may no longer be accurate.
 			// need to print, or compiler optimization throws this all away
-			printf("\nSpecial:%d\n", octr->special);
+			printf("\nSpecial:%d\n", octr.get()->special);
 
 			// Inf Masks
 			if (octr.get()->special == 2)
@@ -164,19 +167,17 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr.get()->boolLockedInCharacter = 0;
 			octr.get()->numDriversEnded = 0;
 
-			memset(&octr.get()->boolLockedInCharacters[0], 0, 8);
-			memset(&octr.get()->nameBuffer[0], 0, 0xC * 8);
-			memset(&octr.get()->RaceEnd[0], 0, 8 * 8);
+			memset(&octr.get()->boolLockedInCharacters[0], 0, sizeof(octr.get()->boolLockedInCharacters));
+			memset(&octr.get()->nameBuffer[0], 0, sizeof(octr.get()->nameBuffer));
+			memset(&octr.get()->raceStats[0], 0, sizeof(octr.get()->raceStats));
 
 			// reply to server with your name
-			*(int*)&octr.get()->nameBuffer[0] = *(int*)&name[0];
-			*(int*)&octr.get()->nameBuffer[4] = *(int*)&name[4];
-			*(int*)&octr.get()->nameBuffer[8] = *(int*)&name[8];
+			memcpy(&octr.get()->nameBuffer[0], &name, NAME_LEN);
 
 			CG_MessageName m = { 0 };
 			m.type = CG_NAME;
-			memcpy(&m.name[0], &name[0], 0xC);
-			sendToHostReliable(&m, sizeof(struct CG_MessageName));
+			memcpy(&m.name[0], &name[0], sizeof(m.name));
+			sendToHostReliable(&m, sizeof(CG_MessageName));
 
 			// choose to get host menu or guest menu
 			octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
@@ -196,7 +197,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			octr.get()->NumDrivers = r->numClientsTotal;
 
-			memcpy(&octr.get()->nameBuffer[slot * 0xC], &r->name[0], 12);
+			memcpy(&octr.get()->nameBuffer[slot], &r->name[0], NAME_LEN);
 
 			octr.commit();
 
@@ -446,8 +447,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			gamepad.get()->buttonsHeldPrevFrame = 0x20;
 			gamepad.commit();
 
-			octr.get()->RaceEnd[octr.get()->numDriversEnded].slot = slot;
-			memcpy(&octr.get()->RaceEnd[octr.get()->numDriversEnded].time, &r->time[0], 3);
+			octr.get()->raceStats[octr.get()->numDriversEnded].slot = slot;
+			memcpy(&octr.get()->raceStats[octr.get()->numDriversEnded].finalTime, &r->courseTime, sizeof(r->courseTime));
+			memcpy(&octr.get()->raceStats[octr.get()->numDriversEnded].bestLap, &r->lapTime, sizeof(r->lapTime));
 			octr.get()->numDriversEnded++;
 			octr.commit();
 
@@ -638,138 +640,138 @@ void StatePC_Launch_PickServer()
 	switch (octr.get()->serverCountry)
 	{
 		// EUROPE (Unknown Location)
-	case 0:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// USA (New York City)
-	case 1:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// Mexico (USA West)
-	case 2:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// BRAZIL (Unknown Location)
-	case 3:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// AUSTRALIA (Sydney)
-	case 4:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 2096;
-
-		break;
-	}
-
-	// SINGAPORE (Unknown Location)
-	case 5:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// BETA (New Jersey)
-	case 6:
-	{
-		strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
-		enet_address_set_host(&addr, dns_string);
-		addr.port = 64001;
-
-		break;
-	}
-
-	// PRIVATE SERVER
-	case 7:
-	{
-		StopAnimation();
-
-	private_server_ip:
-		ClearInputBuffer(); // clear any extra input in the buffer
-
-		// IP address
-		printf("\nEnter Server IPV4 Address: ");
-
-		if (fgets(ip, sizeof(ip), stdin) == NULL)
+		case 0:
 		{
-			printf("\nError: Invalid IPV4 address!\n");
+			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
 
-			goto private_server_ip;
+			break;
 		}
 
-		// remove the newline character (if present)
-		ip[strcspn(ip, "\n")] = '\0';
-
-		// check if the input is empty and set it to the default IP if so
-		if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
-
-	private_server_port:
-		// port number
-		printf("Server Port (0-65535): ");
-
-		if (fgets(portStr, sizeof(portStr), stdin) == NULL)
+		// USA (New York City)
+		case 1:
 		{
-			printf("\nError: Invalid port input!\n");
+			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
 
-			goto private_server_port;
+			break;
 		}
 
-		// remove the newline character (if present)
-		portStr[strcspn(portStr, "\n")] = '\0';
-
-		// check if the port input is empty
-		if (strlen(portStr) == 0)
+		// Mexico (USA West)
+		case 2:
 		{
-			printf("\nError: The port value cannot be empty!\n");
+			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
 
-			goto private_server_port;
+			break;
 		}
 
-		// convert the string to an integer and validate the range
-		port = atoi(portStr);
-
-		if (port < 0 || port > 65535)
+		// BRAZIL (Unknown Location)
+		case 3:
 		{
-			printf("\nError: Port value out of range!\n");
+			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
 
-			goto private_server_port;
+			break;
 		}
 
-		enet_address_set_host(&addr, ip);
-		addr.port = port;
+		// AUSTRALIA (Sydney)
+		case 4:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 2096;
 
-		localServer = true;
+			break;
+		}
 
-		break;
-	}
+		// SINGAPORE (Unknown Location)
+		case 5:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
+
+			break;
+		}
+
+		// BETA (New Jersey)
+		case 6:
+		{
+			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;
+
+			break;
+		}
+
+		// PRIVATE SERVER
+		case 7:
+		{
+			StopAnimation();
+
+		private_server_ip:
+			ClearInputBuffer(); // clear any extra input in the buffer
+
+			// IP address
+			printf("\nEnter Server IPV4 Address: ");
+
+			if (fgets(ip, sizeof(ip), stdin) == NULL)
+			{
+				printf("\nError: Invalid IPV4 address!\n");
+
+				goto private_server_ip;
+			}
+
+			// remove the newline character (if present)
+			ip[strcspn(ip, "\n")] = '\0';
+
+			// check if the input is empty and set it to the default IP if so
+			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+
+		private_server_port:
+			// port number
+			printf("Server Port (0-65535): ");
+
+			if (fgets(portStr, sizeof(portStr), stdin) == NULL)
+			{
+				printf("\nError: Invalid port input!\n");
+
+				goto private_server_port;
+			}
+
+			// remove the newline character (if present)
+			portStr[strcspn(portStr, "\n")] = '\0';
+
+			// check if the port input is empty
+			if (strlen(portStr) == 0)
+			{
+				printf("\nError: The port value cannot be empty!\n");
+
+				goto private_server_port;
+			}
+
+			// convert the string to an integer and validate the range
+			port = atoi(portStr);
+
+			if (port < 0 || port > 65535)
+			{
+				printf("\nError: Port value out of range!\n");
+
+				goto private_server_port;
+			}
+
+			enet_address_set_host(&addr, ip);
+			addr.port = port;
+
+			localServer = true;
+
+			break;
+		}
 	}
 
 	StopAnimation();
@@ -1127,6 +1129,8 @@ void StatePC_Game_StartRace()
 	ProcessNewMessages();
 	SendEverything();
 
+	// not using this special event
+#if 0
 	/*int gGT_levelID =
 		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
 	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
@@ -1141,6 +1145,7 @@ void StatePC_Game_StartRace()
 			(*val.get()) = 0x20;
 			val.commit();
 		}
+#endif
 }
 
 //imo all includes should go at the top
@@ -1161,17 +1166,23 @@ void StatePC_Game_EndRace()
 		CG_MessageEndRace cg = { 0 };
 		cg.type = CG_ENDRACE;
 		
-		ps1ptr<int> time = pBuf.at<int>((*psxPtr.get()) + 0x514);
-		memcpy(&cg.time[0], &(*time.get()), 3);
+		ps1ptr<int> courseTime = pBuf.at<int>((*psxPtr.get()) + DRIVER_COURSE_OFFSET);
+		ps1ptr<int> bestLapTime = pBuf.at<int>((*psxPtr.get()) + DRIVER_BESTLAP_OFFSET);
 
-		sendToHostReliable(&cg, sizeof(struct CG_MessageEndRace));
+		memcpy(&cg.courseTime, &(*courseTime.get()), sizeof(cg.courseTime));
+		memcpy(&cg.lapTime, &(*bestLapTime.get()), sizeof(cg.courseTime));
+
+		sendToHostReliable(&cg, sizeof(CG_MessageEndRace));
 
 		// end race for yourself
 		octr.refresh();
-		(octr.get())->RaceEnd[(octr.get())->numDriversEnded].slot = 0;
-		(octr.get())->RaceEnd[(octr.get())->numDriversEnded].time = (*time.get());
-		(octr.get())->numDriversEnded++;
+		octr.get()->raceStats[octr.get()->numDriversEnded].slot = 0;
+		octr.get()->raceStats[octr.get()->numDriversEnded].finalTime = (*courseTime.get());
+		octr.get()->raceStats[octr.get()->numDriversEnded].bestLap = (*bestLapTime.get());
+		octr.get()->numDriversEnded++;
 		octr.commit();
+
+
 
 		// if you finished last
 		timeStart = clock();
@@ -1181,7 +1192,7 @@ void StatePC_Game_EndRace()
 
 	for (int i = 0; i < (octr.get())->NumDrivers; i++)
 	{
-		if ((octr.get())->nameBuffer[i * 0xC] == 0)
+		if ((octr.get())->nameBuffer[i][0] == 0)
 			numDead++; //what is this used for?
 	}
 }
