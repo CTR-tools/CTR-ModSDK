@@ -28,7 +28,7 @@ RECT endRaceRECT =
 
 void ThreadFunc(struct Thread* t)
 {
-	int i;
+	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
 	octr->boolPlanetLEV = gGT->levelID == 0x26;
@@ -62,24 +62,29 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = WIN_CLIENT_SYNC_LEN - 2;
+		// isIdle = 0; // <- unnecesary but i'll leave for readability
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
-			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
-
-		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
-			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
-				break;
+        // If windowsClientSync hasn't been updated, it means it is idle/gone/lagging
+        if(octr->windowsClientSync == octr->lastWindowsClientSync){
+            isIdle = 1; // the counter is the same as last, start unsync procedure
+        } else {
+            octr->lastWindowsClientSync = octr->windowsClientSync; // client did update, change last counter
+        }
 	}
 
-	// if client didn't update the game in 4 frames
-	int boolCloseClient =
-		(i == -1) &&
-		(octr->CurrState > LAUNCH_ENTER_PID);
+    // count frames that the client didn't update the game
+    if(isIdle==1 && octr->CurrState > LAUNCH_ENTER_PID){
+        octr->frames_unsynced++;
+    } else {
+        octr->frames_unsynced = 0;
+    }
+
+	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES
+	int boolCloseClient = (octr->frames_unsynced > DISCONNECT_AT_UNSYNCED_FRAMES);
 
 	// if client closed, or server disconnected
 	if(boolCloseClient || (octr->CurrState < 0))

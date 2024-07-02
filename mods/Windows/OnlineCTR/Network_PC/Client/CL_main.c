@@ -1187,7 +1187,7 @@ int main()
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
-		octr->windowsClientSync[0]++;
+		octr->windowsClientSync++;
 
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_PICK_ROOM)
