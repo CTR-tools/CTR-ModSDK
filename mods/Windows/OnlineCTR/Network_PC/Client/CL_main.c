@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <psapi.h>
+
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
@@ -1160,12 +1162,14 @@ int main()
 
 	// 8 MB RAM
 	const unsigned int size = 0x800000;
-	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+	HANDLE hFile = OpenFileMappingW(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
 	if (pBuf == 0)
 	{
 		printf("Error: Failed to open DuckStation!\n\n");
+		printf("\n");
 		system("pause");
 		system("cls");
 		main();
