@@ -73,22 +73,9 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 	const PrimCode primCode = { .poly = { .quad = 1, .renderCode = RenderCode_Polygon } };
 
 	#ifdef USE_ONLINE
-	char barNumberStr[3];
-	barNumberStr[0] = (numFullBarsFilled / 100) + '0';
-	barNumberStr[1] = (numFullBarsFilled / 10) + '0';
-	barNumberStr[2] = (numFullBarsFilled % 10) + '0';
-	if (numFullBarsFilled < 10)
-	{
-		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[2], 1, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
-	}
-	else if (numFullBarsFilled < 100)
-	{
-		DECOMP_DecalFont_DrawLineStrlen(&barNumberStr[1], 2, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
-	}
-	else
-	{
-		DECOMP_DecalFont_DrawLineStrlen(barNumberStr, 3, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
-	}
+	char s_barsCompleted[15];
+	sprintf(s_barsCompleted, "%d", numBarsFilled);
+	DECOMP_DecalFont_DrawLine(s_barsCompleted, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 
 	ColorCode colorCode;
 	ColorCode bgBarColor = barEmptyColor;

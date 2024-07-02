@@ -50,8 +50,9 @@ enum ClientState
 	NUM_STATES
 };
 
-#define NAME_LEN 9
+#define NAME_LEN 10
 #define MAX_NUM_PLAYERS 8
+#define WIN_CLIENT_SYNC_LEN 8
 
 typedef struct raceStats
 {
@@ -103,7 +104,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[MAX_NUM_PLAYERS];
+	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
 
 	// 0x30
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];
@@ -130,6 +131,16 @@ struct OnlineCTR
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2
+
+typedef struct TotalTime
+{
+	int hours;
+	int minutes;
+	int seconds;
+	int miliseconds;
+} TotalTime;
+
+void ElapsedTimeToTotalTime(TotalTime * totalTime, int elapsedTime);
 
 typedef struct CheckpointTracker
 {
@@ -333,12 +344,12 @@ struct SG_MessageEndRace
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
 STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 12, "Size of SG_MessageRooms must be 12 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 2, "Size of SG_MessageClientStatus must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageName) == 11, "Size of SG_MessageName must be 14 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageName) == 12, "Size of SG_MessageName must be 12 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 10, "Size of SG_EverythingKart must be 10 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageWeapon) == 2, "Size of SG_MessageWeapon must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 12, "Size of SG_MessageEndRace must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 12, "Size of SG_MessageEndRace must be 12 bytes");
 
 enum ClientGiveMessageType
 {
@@ -469,12 +480,12 @@ struct CG_MessageEndRace
 #define DRIVER_BESTLAP_OFFSET 0x63c
 
 STATIC_ASSERT2(sizeof(struct CG_Header) == 1, "Size of CG_Header must be 1 byte");
-STATIC_ASSERT2(sizeof(struct CG_MessageName) == 10, "Size of CG_MessageName must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageName) == 11, "Size of CG_MessageName must be 11 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2, "Size of CG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2, "Size of CG_MessageTrack must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 10, "Size of CG_EverythingKart must be 10 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageWeapon) == 2, "Size of CG_MessageWeapon must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 12, "Size of CG_MessageEndRace must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 12, "Size of CG_MessageEndRace must be 12 bytes");
 
 // OnlineCTR functions
 void StatePC_Launch_EnterPID();

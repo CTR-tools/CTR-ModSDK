@@ -1079,7 +1079,7 @@ int main()
 	// ask for the users online identification
 	printf("Input: Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
-	name[11] = 0; // truncate the name
+	name[NAME_LEN - 1] = 0; // truncate the name
 
 	// show a welcome message
 	system("cls");
