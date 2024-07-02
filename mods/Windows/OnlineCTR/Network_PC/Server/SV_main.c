@@ -24,7 +24,7 @@
 typedef struct {
 	ENetPeer* peer;
 
-	char name[0xC];
+	char name[NAME_LEN];
 	char characterID;
 	char boolLoadSelf;
 	char boolRaceSelf;
@@ -138,7 +138,7 @@ void SendRoomData(ENetPeer* peer)
 	// cause that doesnt account for empty holes
 
 	int roomCount[16];
-	memset(&roomCount[0], 0, sizeof(int)*16);
+	memset(&roomCount[0], 0, sizeof(roomCount));
 
 	for(int i = 0; i < 16; i++)
 		for(int j = 0; j < 8; j++)
@@ -228,7 +228,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 	struct CG_Header* recvBuf = packet->data;
 	char sgBuffer[16];
-	memset(sgBuffer, 0, 16);
+	memset(sgBuffer, 0, sizeof(sgBuffer));
 
 	if (((struct CG_Header*)recvBuf)->type != CG_JOINROOM)
 	{
@@ -331,7 +331,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->numClientsTotal = ri->clientCount;
 
 			// save new name
-			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], 12);
+			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], NAME_LEN);
 
 			PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
 			printf("Player %d is identified now as %s [%08x]\n",
@@ -352,14 +352,14 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 				{
 					// send all OTHER (8) names to THIS (1) client
 					s->clientID = j;
-					memcpy(&s->name[0], &ri->peerInfos[j].name[0], 12);
+					memcpy(&s->name[0], &ri->peerInfos[j].name[0], NAME_LEN);
 					sendToPeerReliable(ri->peerInfos[peerID].peer, s, sizeof(struct SG_MessageName));
 				}
 			}
 
 			// send THIS (1) name to all OTHER (8) clients
 			s->clientID = peerID;
-			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], 12);
+			memcpy(&s->name[0], &ri->peerInfos[peerID].name[0], NAME_LEN);
 			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 			break;
 		}
@@ -461,10 +461,11 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->type = SG_ENDRACE;
 			s->clientID = peerID;
 
-			memcpy(&s->time[0], &r->time[0], 3);
+			memcpy(&s->courseTime, &r->courseTime, sizeof(r->courseTime));
+			memcpy(&s->lapTime, &r->lapTime, sizeof(r->lapTime));
 
 			int localTime = 0;
-			memcpy(&localTime, &r->time[0], 3);
+			memcpy(&localTime, &r->courseTime, sizeof(r->courseTime));
 
 			char timeStr[32];
 			snprintf(
@@ -598,7 +599,7 @@ void ProcessNewMessages() {
 					s->type = SG_NAME;
 					s->clientID = peerID;
 					s->numClientsTotal = ri->clientCount;
-					memset(&s->name[0], 0, 12);
+					memset(&s->name[0], 0, sizeof(s->name));
 
 					broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 				}

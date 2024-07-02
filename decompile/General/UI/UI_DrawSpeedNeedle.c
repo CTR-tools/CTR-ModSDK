@@ -111,11 +111,9 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   AddPrimitive(p, sdata->gGT->pushBuffer_UI.ptrOT);
 
   #ifdef USE_ONLINE
-  char speedBigStr[3];
+  char s_speed[15];
   int speedInt = FP8_INT(speed);
-  speedBigStr[0] = ((speedInt / 100) % 10) + '0';
-  speedBigStr[1] = ((speedInt / 10) % 10) + '0';
-  speedBigStr[2] = (speedInt % 10) + '0';
-  DECOMP_DecalFont_DrawLineStrlen(speedBigStr, 3, posX + 0x36, posY + 46, FONT_SMALL, PAPU_YELLOW);
+  sprintf(s_speed, "%d", speedInt);
+  DECOMP_DecalFont_DrawLine(s_speed, posX + 60, posY + 46, FONT_SMALL, PAPU_YELLOW);
   #endif
 }
