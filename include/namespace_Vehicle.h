@@ -1551,6 +1551,7 @@ struct Driver
 	#ifdef USE_ONLINE
 	int uncappedReserves; // 0x638
 	int bestLapTime; // 0x63A
+	int currLapTime;
 	#endif
 
 	// 0x638

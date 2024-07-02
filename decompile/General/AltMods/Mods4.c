@@ -1,6 +1,5 @@
 #ifdef USE_ONLINE
 #include "OnlineCTR/names3d.c"
-#include "OnlineCTR/endOfRaceUI_Camera.c"
 
 typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 

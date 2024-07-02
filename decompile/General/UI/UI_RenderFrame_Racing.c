@@ -213,7 +213,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				#ifdef USE_ONLINE
-				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset, hudStructPtr[9].y, playerStruct);
+				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x + offset + 2, hudStructPtr[9].y, playerStruct);
 				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x + offset - 8, hudStructPtr[8].y + 3, playerStruct);
 				DECOMP_UI_JumpMeter_Draw(hudStructPtr[8].x + offset + 18, hudStructPtr[8].y - 7, playerStruct);
 				DECOMP_UI_DrawSpeedBG();

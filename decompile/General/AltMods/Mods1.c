@@ -5,7 +5,7 @@
 #include "OnlineCTR/menu.c"
 #include "OnlineCTR/states.c"
 #include "OnlineCTR/thread.c"
-#include "OnlineCTR/endOfRaceUI_Icons.c"
+#include "OnlineCTR/endOfRaceUI.c"
 
 void StatsUpgrade()
 {
