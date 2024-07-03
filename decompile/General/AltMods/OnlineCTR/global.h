@@ -22,15 +22,22 @@
 
 #endif
 
-#define true				1
-#define false				0
+#define true				            1
+#define false				            0
 
-#define DONT_SHOW_NAME		0
-#define SHOW_NAME			1
+#define DONT_SHOW_NAME		            0
+#define SHOW_NAME			            1
 
-#define DEFAULT_IP			"127.0.0.1" // the default IP address we want to use for private lobbies
-#define IP_ADDRESS_SIZE		16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
-#define PORT_SIZE			6 // the port number as a string (0-65535 + '\0')
+#define DEFAULT_IP			            "127.0.0.1" // the default IP address we want to use for private lobbies
+#define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
+#define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
+
+ // 2 seconds to be very tolerant on client
+#ifdef USE_60FPS
+#define DISCONNECT_AT_UNSYNCED_FRAMES   120
+#else
+#define DISCONNECT_AT_UNSYNCED_FRAMES   60
+#endif
 
 enum ClientState
 {
@@ -52,7 +59,6 @@ enum ClientState
 
 #define NAME_LEN 10
 #define MAX_NUM_PLAYERS 8
-#define WIN_CLIENT_SYNC_LEN 8
 
 typedef struct raceStats
 {
@@ -104,7 +110,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
+	char windowsClientSync;
 
 	// 0x30
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];
@@ -127,6 +133,12 @@ struct OnlineCTR
 		unsigned char flags;
 		unsigned char boolNow;
 	} Shoot[MAX_NUM_PLAYERS];
+
+    // Frames that the client didn't update
+    int frames_unsynced;
+
+    // Last windowsClientSync counter
+	char lastWindowsClientSync;
 };
 
 #define MAX_LAPS 7
