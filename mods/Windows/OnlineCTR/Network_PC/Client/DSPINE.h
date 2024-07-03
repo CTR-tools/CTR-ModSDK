@@ -66,18 +66,19 @@
 #define DSPINEMsgUnimplemented 0xFF /**< Unimplemented IPC message. */
 
 // Only struct impl for Read64, Write8/16/32/64, no more were needed at time of writing.
+// if future maintainers need more, make sure to update the DSPINESend/Recv unions at the bottom of this file.
 
 #pragma pack(push, 1) //api requires packed, this pragma works for VC++ and GCC, maybe some others
 struct DSPINERead64Send
 {
-	unsigned int packetSize = sizeof(DSPINERead64Send); //should be sizeof(DSPINERead64Send) (9)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINERead64Send) (9)
 	unsigned char DSPINEMsgIPC = DSPINEMsgRead64; //one of the "DSPINEMsg" defines in DSPINE.h
 	unsigned int address;
 };
 
 struct DSPINERead64Recv
 {
-	unsigned int packetSize = sizeof(DSPINERead64Recv); //should be sizeof(DSPINERead64Recv) (13)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINERead64Recv) (13)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
 	union
 	{
@@ -88,21 +89,25 @@ struct DSPINERead64Recv
 
 struct DSPINEWrite8Send
 {
-	unsigned int packetSize = sizeof(DSPINEWrite8Send); //should be sizeof(DSPINEWrite8Send) (10)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite8Send) (10)
 	unsigned char DSPINEMsgIPC = DSPINEMsgWrite8; //one of the "DSPINEMsg" defines in DSPINE.h
 	unsigned int address;
-	unsigned char data;
+	union
+	{
+		unsigned char whole;
+		char bytes[1];
+	} data;
 };
 
 struct DSPINEWrite8Recv
 {
-	unsigned int packetSize = sizeof(DSPINEWrite8Recv); //should be sizeof(DSPINEWrite8Recv) (5)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite8Recv) (5)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
 };
 
 struct DSPINEWrite16Send
 {
-	unsigned int packetSize = sizeof(DSPINEWrite16Send); //should be sizeof(DSPINEWrite16Send) (11)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite16Send) (11)
 	unsigned char DSPINEMsgIPC = DSPINEMsgWrite16; //one of the "DSPINEMsg" defines in DSPINE.h
 	unsigned int address;
 	union
@@ -114,13 +119,13 @@ struct DSPINEWrite16Send
 
 struct DSPINEWrite16Recv
 {
-	unsigned int packetSize = sizeof(DSPINEWrite16Recv); //should be sizeof(DSPINEWrite16Recv) (5)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite16Recv) (5)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
 };
 
 struct DSPINEWrite32Send
 {
-	unsigned int packetSize = sizeof(DSPINEWrite32Send); //should be sizeof(DSPINEWrite32Send) (13)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite32Send) (13)
 	unsigned char DSPINEMsgIPC = DSPINEMsgWrite32; //one of the "DSPINEMsg" defines in DSPINE.h
 	unsigned int address;
 	union
@@ -132,13 +137,14 @@ struct DSPINEWrite32Send
 
 struct DSPINEWrite32Recv
 {
-	unsigned int packetSize = sizeof(DSPINEWrite32Recv); //should be sizeof(DSPINEWrite32Recv) (5)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite32Recv) (5)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
 };
 
 struct DSPINEWrite64Send
 {
-	unsigned int packetSize = sizeof(DSPINEWrite64Send); //should be sizeof(DSPINEWrite64Send) (17)
+	/*static const unsigned int recvPacketSize = sizeof(DSPINEWrite64Recv);*/
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite64Send) (17)
 	unsigned char DSPINEMsgIPC = DSPINEMsgWrite64; //one of the "DSPINEMsg" defines in DSPINE.h
 	unsigned int address;
 	union
@@ -150,7 +156,37 @@ struct DSPINEWrite64Send
 
 struct DSPINEWrite64Recv
 {
-	unsigned int packetSize = sizeof(DSPINEWrite64Recv); //should be sizeof(DSPINEWrite64Recv) (5)
+	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite64Recv) (5)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
+};
+
+//unions for send/recv
+
+union DSPINESend
+{
+	struct SharedHeader
+	{
+		unsigned int packetSize;
+		unsigned char DSPINEMsgIPC;
+	} shared_header;
+	DSPINERead64Send read64;
+	DSPINEWrite8Send write8;
+	DSPINEWrite16Send write16;
+	DSPINEWrite32Send write32;
+	DSPINEWrite64Send write64;
+};
+
+union DSPINERecv
+{
+	struct SharedHeader
+	{
+		unsigned int packetSize;
+		unsigned char DSPINEMsgReplyCode;
+	} shared_header;
+	DSPINERead64Recv read64;
+	DSPINEWrite8Recv write8;
+	DSPINEWrite16Recv write16;
+	DSPINEWrite32Recv write32;
+	DSPINEWrite64Recv write64;
 };
 #pragma pack(pop)

@@ -33,30 +33,6 @@ void uninitSocket(SOCKET* socket);
 //Note: the remainder of this file likely shouldn't need to be modified for the sake of posix sockets.
 #endif
 
-/*
-* NEW PINE HANDLING:
-*
-* at program start, initialize the global variable pineSendsCount to 0, and pineRecvsCount to 0.
-* asyncronously perform:
-*	- every time a PINE api call is made (one or more wrapped calls to tcp send), make the call, make an empty dictionary entry for this
-*	call with pineSendsCount as they key, and the increment this variable. 
-*	- every time a PINE api call gets returned, go to the dictionary[pineRecvsCount]
-*	and fill the entry with this api return value, then increment pineRecvsCount.
-*
-* requires:
-*	- a method to send a PINE api call in the above fashion
-*	- a method to query whether or not a previously made PINE api call (with previously provided id) has already been fufilled.
-*	- a method to block until a previously made PINE api call is fully complete.
-*
-* ps1ptr utilizes as:
-*	- ctor(false) does not prefetch, but ctor(true) does.
-*	- refresh() automatically makes PINE api call and blocks until it's complete and refreshes the represented memory
-*		* alternatively refresh(false) makes PINE api call but does not block until it completes, should be matched with wait_refresh() before calling get()
-*	- if get() is called while a PINE api call is in progress, then abort
-*		* if refresh() was called, this can't happen, if refresh(false) was called, then wait_refresh() unmarks "PINE api call in progress".
-*/
-
-
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
 class ps1ptr
