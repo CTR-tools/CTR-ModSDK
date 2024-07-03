@@ -165,6 +165,9 @@ typedef struct CheckpointTracker
 
 extern CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
 
+void EndOfRace_Camera();
+void EndOfRace_Icons();
+
 #ifdef WINDOWS_INCLUDE
 
 #include <time.h>

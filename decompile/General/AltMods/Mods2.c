@@ -74,7 +74,7 @@ void DrawBoostBar(short posX, short posY, struct Driver* driver)
 
 	#ifdef USE_ONLINE
 	char s_barsCompleted[15];
-	sprintf(s_barsCompleted, "%d", numBarsFilled);
+	sprintf(s_barsCompleted, "%d", numFullBarsFilled);
 	DECOMP_DecalFont_DrawLine(s_barsCompleted, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
 
 	ColorCode colorCode;

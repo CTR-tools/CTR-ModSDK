@@ -57,11 +57,16 @@ void EndOfRace_Icons()
 {
     char s_time[15];
     TotalTime tt;
-    const int spacing = 150;
-    const int iconHeight = 25;
-    const short xStart = 0;
-    Point pos = MakePoint(xStart, 20);
+    const int playersPerRow = 4;
+    const int rectSpace = 5;
+    const int iconSpacing = 126;
+    const int iconHeight = 28;
+    const int xStart = 0;
+    const int yStart = 20;
     const int scale = FP(1);
+    int playersFinished = 0;
+    int rectHeightMultiplier = 1;
+    Point pos = MakePoint(xStart, yStart);
     UpdateBestTimes();
     for (int i = 0; i < octr->NumDrivers; i++)
     {
@@ -74,7 +79,14 @@ void EndOfRace_Icons()
         DECOMP_DecalFont_DrawLineStrlen(&racePos, 1, pos.x + 27, pos.y, FONT_SMALL, RED);
         DECOMP_DecalFont_DrawLineStrlen(octr->nameBuffer[index], NAME_LEN, pos.x + 38, pos.y + 1, FONT_SMALL, index == 0 ? BLUE : ORANGE);
         ElapsedTimeToTotalTime(&tt, octr->raceStats[i].finalTime);
-        sprintf(s_time, "%d:%02d:%02d.%03d", tt.hours, tt.minutes, tt.seconds, tt.miliseconds);
+        if (tt.hours > 0)
+        {
+            sprintf(s_time, "%d:%02d:%02d", tt.hours, tt.minutes, tt.seconds);
+        }
+        else
+        {
+            sprintf(s_time, "%d:%02d.%03d", tt.minutes, tt.seconds, tt.miliseconds);
+        }
         DECOMP_DecalFont_DrawLine(s_time, pos.x + 38, pos.y + 8 + 1, FONT_SMALL, index == bestCourseIndex ? TINY_GREEN : WHITE);
         ElapsedTimeToTotalTime(&tt, octr->raceStats[i].bestLap);
         tt.minutes = min(tt.minutes, 9);
@@ -82,11 +94,15 @@ void EndOfRace_Icons()
         DECOMP_DecalFont_DrawLine(s_time, pos.x + 38, pos.y + 16 + 1, FONT_SMALL, index == bestLapIndex ? TINY_GREEN : WHITE);
         DECOMP_UI_DrawDriverIcon(icon, pos, sdata->gGT->pushBuffer_UI.ptrOT, 1, scale, MakeColor(0x80, 0x80, 0x80));
 
-        pos.x += 126;
-        if (i == 3)
+        pos.x += iconSpacing;
+        playersFinished++;
+        if (playersFinished == playersPerRow)
         {
             pos.x = xStart;
             pos.y += iconHeight;
         }
+        else if (playersFinished > playersPerRow) { rectHeightMultiplier = 2; }
     }
+    const RECT bgRect = {.x = 0, .y = yStart - rectSpace, .w = 512, .h = rectSpace * 2 + iconHeight * rectHeightMultiplier - 3};
+    DECOMP_RECTMENU_DrawInnerRect(&bgRect, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
