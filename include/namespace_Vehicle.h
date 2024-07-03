@@ -321,6 +321,12 @@ struct Turbo
    short fireVisibilityCooldown;
 };
 
+struct JitPoolHeader
+{
+	struct JitPool * next;
+	struct JitPool * prev;
+};
+
 // for Players, AIs and Ghosts
 struct Driver
 {
@@ -1550,10 +1556,14 @@ struct Driver
 
 	#ifdef USE_ONLINE
 	int uncappedReserves; // 0x638
-	int bestLapTime; // 0x63A
-	int currLapTime;
+	int bestLapTime; // 0x63C
+	int currLapTime; // 0x640
+	char meterGrade[2]; // 0x644
+	short meterGradeTimer; // 0x646
+	int gradeColor; // 0x648
 	#endif
 
+	struct JitPoolHeader jitPoolHeader;
 	// 0x638
 	// end of ghost struct (as determined by memset)
 

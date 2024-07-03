@@ -44,12 +44,12 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
       uVar9 = 0x1000;
     }
 
-    else 
+    else
 	{
 	  // Main Menu, bare minimum
       uVar9 = 0x400;
 
-      if (gGT->levelID == ADVENTURE_CHARACTER_SELECT) 
+      if (gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 	  {
         uVar9 = 0x800;
       }
@@ -84,7 +84,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // ThreadPool
   DECOMP_JitPool_Init(
-	&gGT->JitPools.thread, numThread, 
+	&gGT->JitPools.thread, numThread,
 	sizeof(struct Thread), /*"ThreadPool"*/0);
 
 
@@ -94,11 +94,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   sdata->mempack[0].firstFreeByte = 0x8000F000;
 #endif
 
-	
+
   // normally maxed at 32
   int numMedium = uVar7 >> 7;
   if(numMedium > 20) numMedium = 20;
-  
+
   // MediumStackPool
   // OG game was 0x80+8,
   // now changed to 0x60+8 (optimized Warppad)
@@ -115,11 +115,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // normally maxed at 128
   int numInstance = uVar9 >> 5;
-  
+
   // InstancePool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.instance, numInstance,
-	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr), 
+	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr),
 	/*"InstancePool"*/0);
 
 
@@ -148,30 +148,30 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // OG game used 0x670 for driver, should be 0x640,
   // maybe intended to mix RainPool into Driver struct?
-  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	0x640,	/*"LargeStackPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	sizeof(struct Driver),	/*"LargeStackPool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	0x28,	/*"RainPool"*/0);
 
 
-  
+
   // Must be 64 in adventure arena,
   // normally maxed at 128
   int numParticle = uVar7 >> 5;
   if(numParticle > 120) numParticle = 120;
-  
+
   #ifdef USE_ONLINE
   // fix mystery caves with 8 players,
   // cause all drivers use P1 exhaust
   numParticle = 120*10;
   #endif
-  
+
   DECOMP_JitPool_Init(&gGT->JitPools.particle, 	numParticle,0x7c,	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,numParticle,0x18,	/*"OscillatorPool"*/0);
 
 
 
 #ifdef REBUILD_PS1
-  // original CTR code, still used for 
-  // REBUILD_PS1 and REBUILD_PC cause those 
+  // original CTR code, still used for
+  // REBUILD_PS1 and REBUILD_PC cause those
   // builds dont have OG game's bloatful RDATA
   gGT->ptrRenderBucketInstance = DECOMP_MEMPACK_AllocMem(uVar9/*,"RENDER_BUCKET_INSTANCE"*/);
 #else
@@ -206,11 +206,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   }
 
   for (int i = 0; i < numPlyr; i++)
-  {			
-    data.PtrClipBuffer[i] = 
-		DECOMP_MEMPACK_AllocMem( 
+  {
+    data.PtrClipBuffer[i] =
+		DECOMP_MEMPACK_AllocMem(
 			DECOMP_MainDB_GetClipSize(gGT->levelID, numPlyr) << 2
 			/*,"Clip Buffer"*/);
-  } 
+  }
 }
 
