@@ -2,28 +2,17 @@
 #include "global.h"
 
 extern unsigned int checkpointTimes[(MAX_LAPS * CPS_PER_LAP) + 1];
-extern char savedLapTimesString[2][6];
+CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
 
-void ElapsedTimeToLapTime(char * dst, int elapsedTime)
+void ElapsedTimeToTotalTime(TotalTime * totalTime, int elapsedTime)
 {
-	int numMinutes = elapsedTime / MINUTES(1);
-	if (numMinutes > 9)
-	{
-		dst[0] = 9;
-		dst[1] = 5;
-		dst[2] = 9;
-		dst[3] = 9;
-		dst[4] = 9;
-		dst[5] = 9;
-		return;
-	}
-
-	dst[0] = numMinutes;
-	dst[1] = (elapsedTime / SECONDS(10)) % 6;
-	dst[2] = (elapsedTime / SECONDS(1)) % 10;
-	dst[3] = ((elapsedTime * 10) / SECONDS(1)) % 10;
-	dst[4] = ((elapsedTime * 100) / SECONDS(1)) % 10;
-	dst[5] = ((elapsedTime * 1000) / SECONDS(1)) % 10;
+	totalTime->hours = elapsedTime / HOURS(1);
+	elapsedTime -= HOURS(1) * totalTime->hours;
+	totalTime->minutes = elapsedTime / MINUTES(1);
+	elapsedTime -= MINUTES(1) * totalTime->minutes;
+	totalTime->seconds = elapsedTime / SECONDS(1);
+	elapsedTime -= SECONDS(1) * totalTime->seconds;
+	totalTime->miliseconds = (elapsedTime * 1000) / SECONDS(1);
 }
 
 void UpdateCheckpointTracker(int driverID)
@@ -49,32 +38,22 @@ void UpdateCheckpointTracker(int driverID)
 		int cpIndex = cp % CPS_PER_LAP;
 		if (progress < trackPoints[cpIndex] && progress > trackPoints[cpIndex + 1])
 		{
+			TotalTime tt;
 			if (checkpointTimes[cp] == 0)
 			{
 				checkpointTimes[cp] = driver->timeElapsedInRace;
-				ElapsedTimeToLapTime(time, driver->timeElapsedInRace);
-				checkpointTracker[driverID].displayTime[0] = time[0] + '0';
-				checkpointTracker[driverID].displayTime[1] = ':';
-				checkpointTracker[driverID].displayTime[2] = time[1] + '0';
-				checkpointTracker[driverID].displayTime[3] = time[2] + '0';
-				checkpointTracker[driverID].displayTime[4] = '.';
-				checkpointTracker[driverID].displayTime[5] = time[3] + '0';
-				checkpointTracker[driverID].displayTime[6] = time[4] + '0';
-				checkpointTracker[driverID].displayTime[7] = '\0';
+				ElapsedTimeToTotalTime(&tt, driver->timeElapsedInRace);
+				tt.minutes = min(tt.minutes, 9);
+				tt.miliseconds /= 10;
+				sprintf(checkpointTracker[driverID].displayTime, "%d:%02d.%02d", tt.minutes, tt.seconds, tt.miliseconds);
 				checkpointTracker[driverID].drawFlags = TINY_GREEN;
 			}
 			else
 			{
-				ElapsedTimeToLapTime(time, driver->timeElapsedInRace - checkpointTimes[cp]);
-				checkpointTracker[driverID].displayTime[0] = '+';
-				checkpointTracker[driverID].displayTime[1] = time[0] + '0';
-				checkpointTracker[driverID].displayTime[2] = ':';
-				checkpointTracker[driverID].displayTime[3] = time[1] + '0';
-				checkpointTracker[driverID].displayTime[4] = time[2] + '0';
-				checkpointTracker[driverID].displayTime[5] = '.';
-				checkpointTracker[driverID].displayTime[6] = time[3] + '0';
-				checkpointTracker[driverID].displayTime[7] = time[4] + '0';
-				checkpointTracker[driverID].displayTime[8] = '\0';
+				ElapsedTimeToTotalTime(&tt, driver->timeElapsedInRace - checkpointTimes[cp]);
+				tt.minutes = min(tt.minutes, 9);
+				tt.miliseconds /= 10;
+				sprintf(checkpointTracker[driverID].displayTime, "+%d:%02d.%02d", tt.minutes, tt.seconds, tt.miliseconds);
 				checkpointTracker[driverID].drawFlags = RED;
 			}
 			if (cp == sdata->gGT->numLaps * CPS_PER_LAP)
@@ -86,19 +65,4 @@ void UpdateCheckpointTracker(int driverID)
 			checkpointTracker[driverID].currCheckpoint++;
 		}
 	}
-}
-
-void CopyLapTime(char * restrict dst, char * restrict src)
-{
-	dst[6] = src[0] + '0';
-	dst[8] = src[1] + '0';
-	dst[9] = src[2] + '0';
-	dst[11] = src[3] + '0';
-	dst[12] = src[4] + '0';
-	dst[13] = src[5] + '0';
-}
-
-void SaveLapTime(int index, int lapTime)
-{
-	ElapsedTimeToLapTime(&savedLapTimesString[index], lapTime);
 }

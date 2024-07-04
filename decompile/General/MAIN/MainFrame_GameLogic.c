@@ -5,7 +5,6 @@ typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 #ifdef USE_ONLINE
 #include "../AltMods/OnlineCTR/global.h"
 void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver);
-extern CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
 #endif
 
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -232,14 +231,14 @@ LAB_80035098:
 
 							pcVar5 = psVar9->funcPtrs[iVar11];
 
+							#ifdef USE_ONLINE
+							RunVehicleThread(pcVar5, psVar12, psVar9);
+							#else
 							if (pcVar5 != 0)
 							{
-								#ifdef USE_ONLINE
-								RunVehicleThread(pcVar5, psVar12, psVar9);
-								#else
 								pcVar5(psVar12, psVar9);
-								#endif
 							}
+							#endif
 
 							#ifdef USE_60FPS
 								#ifndef REBUILD_PS1

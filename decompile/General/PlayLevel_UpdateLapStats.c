@@ -2,13 +2,6 @@
 
 #ifdef USE_ONLINE
 
-extern char bestLapString[];
-extern char lastLapString[];
-extern char savedLapTimesString[2][6];
-
-void SaveLapTime(int index, int lapTime);
-void CopyLapTime(char * restrict dst, char * restrict src);
-
 // online can be fragmented
 #define HANDLE_NULL_DRIVER continue
 
@@ -113,14 +106,11 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			if (iVar10 == 0)
 			{
 				int currLapSaveIndex = currDriver->lapIndex % 2;
-				int currLapTime = gGT->elapsedEventTime - currDriver->lapTime;
-				SaveLapTime(currLapSaveIndex, currLapTime);
-				if (currLapTime < currDriver->bestLapTime)
+				currDriver->currLapTime = gGT->elapsedEventTime - currDriver->lapTime;
+				if (currDriver->currLapTime < currDriver->bestLapTime)
 				{
-					currDriver->bestLapTime = currLapTime;
-					CopyLapTime(bestLapString, savedLapTimesString[currLapSaveIndex]);
+					currDriver->bestLapTime = currDriver->currLapTime;
 				}
-				CopyLapTime(lastLapString, savedLapTimesString[currLapSaveIndex]);
 			}
 			#endif
 

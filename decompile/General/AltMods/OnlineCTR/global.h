@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1016
+#define VERSION 1017
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -32,6 +32,13 @@
 #define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
 
+ // 2 seconds to be very tolerant on client
+#ifdef USE_60FPS
+#define DISCONNECT_AT_UNSYNCED_FRAMES   120
+#else
+#define DISCONNECT_AT_UNSYNCED_FRAMES   60
+#endif
+
 enum ClientState
 {
 	LAUNCH_ENTER_PID,
@@ -50,7 +57,7 @@ enum ClientState
 	NUM_STATES
 };
 
-#define NAME_LEN 9
+#define NAME_LEN 10
 #define MAX_NUM_PLAYERS 8
 
 typedef struct raceStats
@@ -103,8 +110,7 @@ struct OnlineCTR
 	// 0x28
 	// determines if client and
 	// emulator are still connected
-#define WIN_CLIENT_SYNC_LEN 64
-	char windowsClientSync[WIN_CLIENT_SYNC_LEN];
+	char windowsClientSync;
 
 	// 0x30
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];
@@ -127,12 +133,28 @@ struct OnlineCTR
 		unsigned char flags;
 		unsigned char boolNow;
 	} Shoot[MAX_NUM_PLAYERS];
+
+    // Frames that the client didn't update
+    int frames_unsynced;
+
+    // Last windowsClientSync counter
+	char lastWindowsClientSync;
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2
+
+typedef struct TotalTime
+{
+	int hours;
+	int minutes;
+	int seconds;
+	int miliseconds;
+} TotalTime;
+
+void ElapsedTimeToTotalTime(TotalTime * totalTime, int elapsedTime);
 
 typedef struct CheckpointTracker
 {
@@ -144,6 +166,9 @@ typedef struct CheckpointTracker
 } CheckpointTracker;
 
 extern CheckpointTracker checkpointTracker[MAX_NUM_PLAYERS];
+
+void EndOfRace_Camera();
+void EndOfRace_Icons();
 
 #ifdef WINDOWS_INCLUDE
 
@@ -336,12 +361,12 @@ struct SG_MessageEndRace
 STATIC_ASSERT2(sizeof(struct SG_Header) == 1, "Size of SG_Header must be 1 byte");
 STATIC_ASSERT2(sizeof(struct SG_MessageRooms) == 12, "Size of SG_MessageRooms must be 12 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageClientStatus) == 2, "Size of SG_MessageClientStatus must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageName) == 11, "Size of SG_MessageName must be 14 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageName) == 12, "Size of SG_MessageName must be 12 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageCharacter) == 2, "Size of SG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageTrack) == 2, "Size of SG_MessageTrack must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct SG_EverythingKart) == 10, "Size of SG_EverythingKart must be 10 bytes");
 STATIC_ASSERT2(sizeof(struct SG_MessageWeapon) == 2, "Size of SG_MessageWeapon must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 12, "Size of SG_MessageEndRace must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct SG_MessageEndRace) == 12, "Size of SG_MessageEndRace must be 12 bytes");
 
 enum ClientGiveMessageType
 {
@@ -472,12 +497,12 @@ struct CG_MessageEndRace
 #define DRIVER_BESTLAP_OFFSET 0x63c
 
 STATIC_ASSERT2(sizeof(struct CG_Header) == 1, "Size of CG_Header must be 1 byte");
-STATIC_ASSERT2(sizeof(struct CG_MessageName) == 10, "Size of CG_MessageName must be 13 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageName) == 11, "Size of CG_MessageName must be 11 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageCharacter) == 2, "Size of CG_MessageCharacter must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageTrack) == 2, "Size of CG_MessageTrack must be 2 bytes");
 STATIC_ASSERT2(sizeof(struct CG_EverythingKart) == 10, "Size of CG_EverythingKart must be 10 bytes");
 STATIC_ASSERT2(sizeof(struct CG_MessageWeapon) == 2, "Size of CG_MessageWeapon must be 2 bytes");
-STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 12, "Size of CG_MessageEndRace must be 4 bytes");
+STATIC_ASSERT2(sizeof(struct CG_MessageEndRace) == 12, "Size of CG_MessageEndRace must be 12 bytes");
 
 // OnlineCTR functions
 void StatePC_Launch_EnterPID();
