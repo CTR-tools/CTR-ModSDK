@@ -48,9 +48,15 @@ uint FUN_80046a90(short param_1)
   if ((param_1 == 8) && ((DAT_8009aa30 & 6) != 0)) {
     return 1;
   }
+  
   uVar1 = 0;
-  if ((((DAT_8009aa30 & 6) == 0) && (DAT_8009aa3e == DAT_8009aa42)) &&
-     (DAT_8009aa40 == DAT_8009aa44)) {
+  
+  if (
+		((DAT_8009aa30 & 6) == 0) && 
+		(DAT_8009aa3e == DAT_8009aa42) &&
+		(DAT_8009aa40 == DAT_8009aa44)
+	) 
+  {
     uVar1 = (uint)(DAT_8009aa34 == param_1);
   }
   return uVar1;
