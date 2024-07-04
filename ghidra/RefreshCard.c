@@ -425,7 +425,7 @@ void FUN_800471ac(void)
 }
 
 
-
+// sets on-screen message (save/load/error)
 void FUN_800471c4(undefined2 param_1)
 
 {
@@ -588,6 +588,7 @@ LAB_80047544:
 	// if loading ghost profile
 	if (DAT_8008d478 == 5)
 	{
+	  // Loading
       FUN_800471c4(4);
 
 	  // ghost profile (save or load?)
@@ -602,6 +603,7 @@ LAB_80047544:
 		  // memcard action = null
           DAT_8008d478 = 2;
           
+		  // Saving
 		  FUN_800471c4(3);
 
 		  // 800859e4
@@ -644,6 +646,7 @@ LAB_8004753c:
             DAT_80099294 = *(undefined4 *)(&DAT_8009aa70 + iVar2);
             DAT_80099298 = (&DAT_8009aa74)[iVar2];
 
+			// Saving
 			FUN_800471c4(3);
 
 			// Name of Ghost profile to save to
@@ -665,6 +668,7 @@ LAB_8004753c:
             break;
           }
 		  
+		  // Saving
           FUN_800471c4(3);
 		  
 		  // BASCUS-94426G name
