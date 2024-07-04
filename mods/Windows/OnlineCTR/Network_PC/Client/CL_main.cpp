@@ -1301,7 +1301,7 @@ int main(int argc, char *argv[])
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		octr.refresh();
-		(*octr.get()).windowsClientSync[0]++;
+		(*octr.get()).windowsClientSync++;
 		octr.commit();
 
 		// should rename to room selection
