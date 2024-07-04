@@ -674,7 +674,7 @@
 
 // only called from 800472d0
 // unknown 80046a74
-// unknown 80046a90
+80046a90 RefreshCard_GetResult
 80046b1c RefreshCard_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
 
 // only called from 80047a58 (decode)

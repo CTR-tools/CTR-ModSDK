@@ -4767,30 +4767,65 @@ struct sData
 	} LoadSaveData[12];
 
 	// 0x8009AA30
+	// & 1: frame2->frame1
 	int memcardUnk1;
+		
+	// return
+	// 0 - MC_RETURN_IOE
+	// 1 - MC_RETURN TIMEOUT
+	// 2 - MC_RETURN_NOCARD
+	// 3 - MC_RETURN_NEWCARD
+	// 4 - MC_RETURN_FULL
+	// 5 - MC_RETURN_UNFORMATTED
+	// 6 - MC_RETURN_NODATA
+	// 7 - MC_RETURN_SUCCESS
+		
+	// result
+	// 0 - MC_RESULT_ERROR_NOCARD
+	// 1 - MC_RESULT_FULL
+	// 2 - MC_RESULT_ERROR_TIMEOUT
+	// 3 - MC_RESULT_NEWCARD
+	// 4 - MC_RESULT_READY_LOAD
+	// 5 - MC_RESULT_ERROR_NODATA
+	// 6 - MC_RESULT_ERROR_UNFORMATTED
+	// 7 - MC_RESULT_READY_SAVE
+	// 8 - MC_RESULT_FINISHED
+		
+	// 8009AA34
+	short desired_memcardResult;
 	
-	// 0x8009AA34
-	int memcardUnk2;
+	// action
+	// 1 - MC_ACTION_GetInfo
+	// 2 - MC_ACTION_Save
+	// 3 - MC_ACTION_Load
+	// 4 - MC_ACTION_Format
+	// 5 - MC_ACTION_Erase
 	
 	// 8009aa36
+	short frame1_memcardAction;
 
 	// 8009aa38
-	int memcardSlot_copy1;
+	short frame1_memcardSlot;
 	
 	// 8009aa3a
+	short frame2_memcardAction;
 	
 	// 8009aa3c
-	int memcardSlot_copy2;
+	short frame2_memcardSlot;
 	
 	// 8009aa3e
+	short frame3_memcardAction;
 	
 	// 8009aa40
-	int memcardSlot_copy3;
+	short frame3_memcardSlot;
 	
 	// 8009aa42
+	short frame4_memcardAction;
 	
 	// 8009aa44
-	int memcardSlot_copy4;
+	short frame4_memcardSlot;
+	
+	short padding8009aa46;
 
 	// 8009aa48
 	char* ghostProfile_fileName;
