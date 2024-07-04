@@ -4714,8 +4714,7 @@ struct sData
 	char s_bu00_BASCUS_94426_slots[0x20];
 
 	// 800990c4
-	// ghost profile: file name?
-	char s_unk_someOtherMemcardString[0x20];
+	char s_memcardFindGhostFile[0x20];
 
 	// 80094d68 -- Aug14
 	// 80097C78 -- SepReview
