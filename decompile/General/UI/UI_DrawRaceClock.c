@@ -8,12 +8,7 @@ struct
 #endif
 
 #ifdef USE_ONLINE
-extern char timeString[];
-extern char bestLapString[];
-extern char lastLapString[];
-
-void SaveLapTime(int index, int lapTime);
-void CopyLapTime(char * restrict dst, char * restrict src);
+#include "../AltMods/OnlineCTR/global.h"
 #endif
 
 // used for both finished lap time and current race time
@@ -58,10 +53,6 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	char minutesOnes;
 	char minutesTens;
 	char acStack80 [8];
-	#ifdef USE_ONLINE
-	char timeChars[9];
-	char * pTimeString;
-	#endif
 
 	u_short textPosX;
 	u_short textPosY;
@@ -81,17 +72,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		return;
 	}
 
-	#ifdef USE_ONLINE // 99:59:59:99
-	timeChars[0] = 9;
-	timeChars[1] = 9;
-	timeChars[2] = 5;
-	timeChars[3] = 9;
-	timeChars[4] = 5;
-	timeChars[5] = 9;
-	timeChars[6] = 9;
-	timeChars[7] = 9;
-	timeChars[8] = 9;
-	#else
+	#ifndef USE_ONLINE // 99:59:59:99
 	// set default time to 99:59:99
 	minutesTens = 9;
 	minutesOnes = 9;
@@ -105,32 +86,8 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	msElapsed = driver->timeElapsedInRace;
 
 	#ifdef USE_ONLINE
-	if ((msElapsed / HOURS(10)) < 10)
-	{
-		timeChars[0] = (char) ((msElapsed / HOURS(10)) % 10);
-		timeChars[1] = (char) ((msElapsed / HOURS(1)) % 10);
-		timeChars[2] = (char) ((msElapsed / MINUTES(10)) % 6);
-		timeChars[3] = (char) ((msElapsed / MINUTES(1)) % 10);
-		timeChars[4] = (char) ((msElapsed / SECONDS(10)) % 6);
-		timeChars[5] = (char) ((msElapsed / SECONDS(1)) % 10);
-		timeChars[6] = (char) (((msElapsed * 10) / SECONDS(1)) % 10);
-		timeChars[7] = (char) (((msElapsed * 100) / SECONDS(1)) % 10);
-		timeChars[8] = (char) (((msElapsed * 1000) / SECONDS(1)) % 10);
-	}
-
-	int timeIndex = 2;
-	int j = 3;
-	if (timeChars[1] > 0) { timeIndex = 0; j = 0; }
-
-	pTimeString = &timeString[j];
-	for (int i = timeIndex; i < 8; i++)
-	{
-		timeString[j] = timeChars[i] + '0';
-		if (((i + 1) % 2) == 0) { j++; }
-		j++;
-	}
-
-	timeString[j - 1] = timeChars[8] + '0';
+	TotalTime tt;
+	ElapsedTimeToTotalTime(&tt, msElapsed);
 	#else
 	// OG game was "== 7"
 	// but now expand for Online
@@ -281,22 +238,27 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 	// Draw String
 	#ifdef USE_ONLINE
-	DECOMP_DecalFont_DrawLine(pTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
+	char displayTime[15]; // 99:59:59.999 or BEST: 9:59.999
+	sprintf(displayTime, "%d:%02d:%02d.%03d", tt.hours, tt.minutes, tt.seconds, tt.miliseconds);
+	DECOMP_DecalFont_DrawLine(displayTime, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
 	#else
 	DECOMP_DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
 	#endif
 
 	#ifdef USE_ONLINE
-	int currLapSaveIndex = driver->lapIndex % 2;
-	if (driver->driverID == 0)
+	if ((driver->driverID == 0) && (driver->lapIndex > 0))
 	{
-		if (driver->lapIndex > 0)
-		{
-			DECOMP_DecalFont_DrawLine(bestLapString, posX, textPosY + 0x18, FONT_SMALL, RED);
-			DECOMP_DecalFont_DrawLine(&bestLapString[6], posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18, FONT_SMALL, PERIWINKLE);
-			DECOMP_DecalFont_DrawLine(lastLapString, posX, textPosY + 0x18 + 8, FONT_SMALL, RED);
-			DECOMP_DecalFont_DrawLine(&lastLapString[6], posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18 + 8, FONT_SMALL, PERIWINKLE);
-		}
+		ElapsedTimeToTotalTime(&tt, driver->bestLapTime);
+		tt.minutes = min(tt.minutes, 9);
+		sprintf(displayTime, "%d:%02d.%03d", tt.minutes, tt.seconds, tt.miliseconds);
+		DECOMP_DecalFont_DrawLine("BEST: ", posX, textPosY + 0x18, FONT_SMALL, RED);
+		DECOMP_DecalFont_DrawLine(displayTime, posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18, FONT_SMALL, PERIWINKLE);
+
+		ElapsedTimeToTotalTime(&tt, driver->currLapTime);
+		tt.minutes = min(tt.minutes, 9);
+		sprintf(displayTime, "%d:%02d.%03d", tt.minutes, tt.seconds, tt.miliseconds);
+		DECOMP_DecalFont_DrawLine("LAST: ", posX, textPosY + 0x18 + 8, FONT_SMALL, RED);
+		DECOMP_DecalFont_DrawLine(displayTime, posX + data.font_charPixWidth[FONT_SMALL] * 5, textPosY + 0x18 + 8, FONT_SMALL, PERIWINKLE);
 	}
 	#else
 	if

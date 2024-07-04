@@ -1,13 +1,15 @@
 #ifdef USE_ONLINE
 #include "OnlineCTR/names3d.c"
-#include "OnlineCTR/endOfRaceUI_Camera.c"
 
 typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 
 void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver)
 {
+    UpdateCheckpointTracker(driver->driverID);
+    if (func == nullptr) { return; }
+
     bool restore = false;
-    if ((sdata->gGT->gameMode1 & END_OF_RACE) && !checkpointTracker[driver->driverID].raceFinished)
+    if ((sdata->gGT->gameMode1 & END_OF_RACE) && (checkpointTracker[driver->driverID].raceFinished == 0))
     {
         sdata->gGT->gameMode1 &= ~(END_OF_RACE);
         restore = true;
@@ -17,9 +19,7 @@ void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver*
 }
 #endif
 
-#ifdef USE_BOOSTBAR
 #ifdef USE_ONLINE
-
 Color HsvToRgb(int h, int s, int v)
 {
     Color rgb;
@@ -65,5 +65,4 @@ Color HsvToRgb(int h, int s, int v)
 
     return rgb;
 }
-#endif
 #endif

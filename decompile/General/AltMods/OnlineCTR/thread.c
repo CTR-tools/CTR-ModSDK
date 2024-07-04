@@ -29,7 +29,7 @@ RECT endRaceRECT =
 
 void ThreadFunc(struct Thread* t)
 {
-	int i;
+	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
 	octr->boolPlanetLEV = gGT->levelID == 0x26;
@@ -63,65 +63,29 @@ void ThreadFunc(struct Thread* t)
 	// if client is intentionally idle
 	if(octr->boolClientBusy)
 	{
-		i = WIN_CLIENT_SYNC_LEN - 2;
+		// isIdle = 0; // <- unnecesary but i'll leave for readability
 	}
 
 	// if client should not be idle
 	else
 	{
-		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
-			octr->windowsClientSync[i+1] = octr->windowsClientSync[i];
-
-		for(i = WIN_CLIENT_SYNC_LEN - 2; i >= 0; i--)
-			if(octr->windowsClientSync[i+1] != octr->windowsClientSync[i])
-				break;
+        // If windowsClientSync hasn't been updated, it means it is idle/gone/lagging
+        if(octr->windowsClientSync == octr->lastWindowsClientSync){
+            isIdle = 1; // the counter is the same as last, start unsync procedure
+        } else {
+            octr->lastWindowsClientSync = octr->windowsClientSync; // client did update, change last counter
+        }
 	}
 
-	//debug info
-	//static char literallyAnyClientSync = 0;
-	//char top_vals[33], bot_vals[33];
-	//for (char ii = 0; ii < 32; ii++)
-	//{
-	//	//if (octr->windowsClientSync[ii] != 0/* || octr->windowsClientSync[ii + 32] != 0*/)
-	//	//	literallyAnyClientSync |= 1;
-	//	/*char c = octr->windowsClientSync[ii];
-	//	if (c == 0)
-	//		c = '0';
-	//	else
-	//	{
-	//		c = c + 'A' - 1;
-	//		c = (c < 'A') ? '.' : c;
-	//		c = (c > 'Z') ? '.' : c;
-	//	}
-	//	top_vals[ii] = c;*/
-	//	char tc = (octr->windowsClientSync[ii] % 10) + '0', bc = (octr->windowsClientSync[ii + 32] % 10) + '0';
-	//	top_vals[ii] = tc;
-	//	bot_vals[ii] = bc;
-	//}
-	//top_vals[32] = bot_vals[32] = '\0';
-	//DecalFont_DrawLine((literallyAnyClientSync ? "t" : "f"), 0x100, 0x30, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
-	//DecalFont_DrawLine(top_vals, 0x100, 0x38, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
-	//DecalFont_DrawLine(bot_vals, 0x100, 0x40, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);
-	//char ptr[] = { 'p','t','r',':',' ','x','x','x','x','x','x','x','x','\0' }; //ind 5-12
-	//0 = 30
-	//9 = 39
-	//A = 41
-	//F = 46 //8000c027
-	/*int ptrAddr = (int)&octr;
-	for (char iii = 0; iii < 8; iii++)
-	{
-		if ((ptrAddr & 0xf) <= 9)
-			ptr[12 - iii] = '0' + (ptrAddr & 0xf);
-		else
-			ptr[12 - iii] = 'A' + ((ptrAddr & 0xf) - 10);
-		ptrAddr >>= 4;
-	}
-	DecalFont_DrawLine(ptr, 0x100, 0x48, FONT_SMALL, JUSTIFY_CENTER | PAPU_YELLOW);*/
+    // count frames that the client didn't update the game
+    if(isIdle==1 && octr->CurrState > LAUNCH_ENTER_PID){
+        octr->frames_unsynced++;
+    } else {
+        octr->frames_unsynced = 0;
+    }
 
-	// if client didn't update the game in WIN_CLIENT_SYNC_LEN - 4 *or* WIN_CLIENT_SYNC_LEN / 2 frames (idk which).
-	int boolCloseClient =
-		(i == -1) &&
-		(octr->CurrState > LAUNCH_ENTER_PID);
+	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES
+	int boolCloseClient = (octr->frames_unsynced > DISCONNECT_AT_UNSYNCED_FRAMES);
 
 	// if client closed, or server disconnected
 	if(boolCloseClient || (octr->CurrState < 0))
