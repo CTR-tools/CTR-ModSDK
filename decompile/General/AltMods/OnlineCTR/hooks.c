@@ -48,8 +48,6 @@ void octr_initHook()
 	// small stack pool, pause thread (those threads can't pause)
 	PROC_BirthWithObject(0x30f, ThreadFunc, 0, 0);
 
-	sdata->lngStrings[0x4e] = "OnlineCTR";
-
 	struct GameTracker* gGT = sdata->gGT;
 	if(gGT->levelID <= TURBO_TRACK)
 	{
@@ -190,18 +188,17 @@ void OnlineEndOfRace()
 	struct Driver * driver = sdata->gGT->drivers[0];
 	if (((driver->actionsFlagSet & 0x2000000) == 0) ||
 		(octr->CurrState < GAME_START_RACE)) { return; }
+
 	octr->CurrState = GAME_END_RACE;
 
 	static unsigned frameCounter = 0;
-
 	EndOfRace_Camera();
 	EndOfRace_Icons();
-	int color = frameCounter & 1 ? RED : WHITE;
+	int color = frameCounter++ & 1 ? RED : WHITE;
 	if (HasRaceEnded())
 	{
 		DecalFont_DrawLine("Restart in 6 seconds", 256, 108, FONT_BIG, JUSTIFY_CENTER | color);
 	}
-	frameCounter++;
 }
 
 void Online_OtherFX_RecycleNew(

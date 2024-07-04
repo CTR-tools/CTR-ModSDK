@@ -210,7 +210,6 @@ void DECOMP_UI_DrawRankedDrivers(void)
 
 		  #ifdef USE_ONLINE
 		  short iconScale = FP(0.75);
-		  UpdateCheckpointTracker(iVar14);
 		  txtColor = 4;
 		  if (checkpointTracker[iVar15].raceFinished) { txtColor = 3; }
 		  sdata->s_spacebar[0] = (char) *curr + '1';

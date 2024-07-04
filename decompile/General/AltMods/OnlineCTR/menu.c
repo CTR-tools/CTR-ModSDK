@@ -288,20 +288,11 @@ void UpdateMenu()
 
 	int buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 
-	// BTN_LEFT = 0x4
-	// BTN_RIGHT = 0x8
-	// some crazy math to optimize this
+	if (buttons & BTN_LEFT) { octr->PageNumber = max(0, octr->PageNumber - 1); }
+	if (buttons & BTN_RIGHT) { octr->PageNumber = min(pageMax, octr->PageNumber + 1); }
+	if (buttons & (BTN_LEFT | BTN_RIGHT)) { DECOMP_OtherFX_Play(0, 1); }
 
-	if(buttons & 0xC)
-	{
-		octr->PageNumber += (buttons-6)/2;
-
-		if (octr->PageNumber < 0) octr->PageNumber = 0;
-		if (octr->PageNumber > pageMax) octr->PageNumber = pageMax;
-	}
-
-	if(pageMax == 0)
-		return;
+	if (pageMax == 0) { return; }
 
 	int string =
 		(('1' + octr->PageNumber) << 0) |
