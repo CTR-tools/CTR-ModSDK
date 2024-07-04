@@ -575,6 +575,8 @@ void FUN_800472d0(void)
     DAT_8008d478 = 2;
 	
     FUN_800471c4();
+	
+	// MC_ACTION_Format
     uVar5 = 4;
 
 	// 800859e4
@@ -630,7 +632,10 @@ LAB_80047544:
 		  // 8008d470 -> 800992E4, holds all memory card bytes
           local_20 = PTR_DAT_8008d470;
 LAB_8004753c:
+
+		  // MC_ACTION_Save
           uVar5 = 2;
+		  
           goto LAB_80047544;
         }
       }
@@ -754,6 +759,7 @@ LAB_800479bc:
 			// "Loading..."
             FUN_800471c4(4);
 			
+			// MC_ACTION_Load
             uVar5 = 3;
 
 			// 800859e4
@@ -768,8 +774,12 @@ LAB_800479bc:
 			// 8008d470 -> 800992E4, holds all memory card bytes
             local_20 = PTR_DAT_8008d470;
 LAB_800479f4:
-            bVar1 = false;
-            FUN_80046b1c(0,uVar5,pcVar6,puVar7,local_20,local_1c);
+            
+			bVar1 = false;
+            
+			// action is save/load/format/erase
+			FUN_80046b1c(0,uVar5,pcVar6,puVar7,local_20,local_1c);
+			
             DAT_8008d984 = 0;
             goto LAB_80047a08;
           }
@@ -878,8 +888,7 @@ LAB_800479f4:
 				  // NULL
                   FUN_800471c4(8);
 
-				  // 800859e4
-				  // BASCUS-94426-SLOTS
+				  // 1 = MC_ACTION_GetInfo
                   FUN_80046b1c(0,1,s_BASCUS_94426_SLOTS_800859e4,0,0,0);
 
 				  bVar1 = false;
@@ -961,8 +970,7 @@ LAB_80047984:
           FUN_800471c4(local_1c);
         }
 
-		// 800859e4
-		// BASCUS-94426-SLOTS
+		// 1 = MC_ACTION_GetInfo
         FUN_80046b1c(0,1,s_BASCUS_94426_SLOTS_800859e4,0,0,0);
 
 		bVar1 = false;
@@ -990,8 +998,7 @@ LAB_80047984:
 LAB_800476b4:
   FUN_800471c4(local_1c);
 
-  // 800859e4
-  // BASCUS-94426-SLOTS
+  // 1 = MC_ACTION_GetInfo
   FUN_80046b1c(0,1,s_BASCUS_94426_SLOTS_800859e4,0,0,0);
 
   DAT_8008d984 = 1;
@@ -999,8 +1006,7 @@ LAB_800476b4:
 LAB_80047a08:
   if ((bVar1) && (iVar2 = FUN_80046a90(8), iVar2 == 0))
   {
-	// 800859e4
-	// BASCUS-94426-SLOTS
+	// 1 = MC_ACTION_GetInfo
     FUN_80046b1c(0,1,s_BASCUS_94426_SLOTS_800859e4,0,0,0);
   }
   return;
