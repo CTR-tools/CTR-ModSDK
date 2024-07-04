@@ -53,6 +53,8 @@ uint FUN_80046a90(short param_1)
   
   if (
 		((DAT_8009aa30 & 6) == 0) && 
+		
+		// if frame3 == frame4
 		(DAT_8009aa3e == DAT_8009aa42) &&
 		(DAT_8009aa40 == DAT_8009aa44)
 	) 
