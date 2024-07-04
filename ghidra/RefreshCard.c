@@ -604,7 +604,7 @@ LAB_80047544:
 	  // Loading
       FUN_800471c4(4);
 
-	  // ghost profile (save or load?)
+	  // 3 = MC_ACTION_Load
 	  FUN_80046b1c(0,3,&DAT_8009aa60 + (int)DAT_8009aa5a * 0x34,0,DAT_8008d754,0x3e00);
     }
     else {
@@ -641,7 +641,7 @@ LAB_8004753c:
       }
       else {
         
-		// if saving ghost profile
+		// if deleting
 		if (DAT_8008d478 == 6) 
 		{
           if (-1 < (int)DAT_8009aa56)
@@ -665,7 +665,10 @@ LAB_8004753c:
 			// Saving
 			FUN_800471c4(3);
 
-			// Name of Ghost profile to save to
+			// Erase old profile to make
+			// room for new profile being saved?
+
+			// 5 = MC_ACTION_Erase
             FUN_80046b1c(0,5,&DAT_80099284,0,0,0);
 
             DAT_8008d984 = 0;
@@ -1070,7 +1073,7 @@ void FUN_80047a58(void)
       break;
 
     case 5:
-	  // MEMCARD_EraseFile (unused)
+	  // MEMCARD_EraseFile
       iVar4 = FUN_8003e6d4((int)DAT_8009aa38,DAT_8009aa48);
     }
   }
