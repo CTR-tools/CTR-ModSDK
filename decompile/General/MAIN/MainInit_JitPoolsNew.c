@@ -153,7 +153,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // OG game used 0x670 for driver, should be 0x640,
   // maybe intended to mix RainPool into Driver struct?
   DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	sizeof(struct Item) + sizeof(struct Driver),	/*"LargeStackPool"*/0);
-  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	sizeof(struct Item) + 0x20,	/*"RainPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	sizeof(struct RainLocal),	/*"RainPool"*/0);
 
 
 
