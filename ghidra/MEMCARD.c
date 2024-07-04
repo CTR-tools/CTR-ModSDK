@@ -476,7 +476,7 @@ undefined4 FUN_8003db54(void)
 // MEMCARD_NewTask
 // param1 slotIndex
 // param2 name
-// param3 pointer to memcard
+// param3 pointer to profile
 // param4 memcard size
 undefined4 FUN_8003db98(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
@@ -487,7 +487,8 @@ undefined4 FUN_8003db98(undefined4 param_1,undefined4 param_2,undefined4 param_3
   // MEMCARD_StringSet
   FUN_8003d730(&DAT_800990a4,param_1,param_2);
 
-  // pointer to memcard 800992e4
+  // pointer to profile
+  // either Save Source, or Load Destination
   DAT_8008d408 = param_3;
 
   // reset to 8 attempts before quitting
@@ -1011,6 +1012,8 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
         DAT_8008d8cc = DAT_8008d8cc & 0xfffffffb;
         DAT_800857a3 = (byte)(DAT_8008d8d8 + param_5 * 2 + 0x1fff >> 0xd);
       }
+	  
+	  // clear icon
       iVar2 = 0;
       do {
         iVar4 = iVar2 + 2;
@@ -1018,6 +1021,8 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
         (&DAT_800857a5)[iVar2] = 0x40;
         iVar2 = iVar4;
       } while (iVar4 < 0x40);
+	  
+	  // file icon
       cVar1 = *param_3;
       iVar2 = 0;
       while ((cVar1 != '\0' && (iVar2 < 0x40))) {

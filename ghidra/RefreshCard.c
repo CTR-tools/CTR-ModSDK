@@ -77,15 +77,16 @@ void FUN_80046b1c(undefined2 param_1,undefined2 param_2,undefined4 param_3,undef
   // param1 always zero?
   DAT_8009aa44 = param_1;
 
-  // Name of the save
+  // Save filename (BASCUS...)
   DAT_8009aa48 = param_3;
 
+  // Save icon (crash/ghost/psyqhand)
   DAT_8009aa4c = param_4;
 
-  // if reading, copy data to this address
+  // pointer to tape (not memcard)
   DAT_8009aa50 = param_5;
 
-  // if reading, copy data of this size
+  // size (3E00)
   DAT_8009aa54 = param_6;
   return;
 }

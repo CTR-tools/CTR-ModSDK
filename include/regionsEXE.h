@@ -2008,7 +2008,7 @@ struct Data
 		char data28_afterSlots[0x28];
 		#elif BUILD == UsaRetail || BUILD == EurRetail || BUILD == JpnRetail
 		// 0x800859F8
-		unsigned char data38[0x38];
+		unsigned char memcardIcon_HeaderSLOTS[0x38];
 		#endif
 
 		// Something changed in JPN
@@ -4726,10 +4726,12 @@ struct sData
 	struct Mempack mempack[3]; // each is 0x60 bytes
 
 	// 80099204
-	char fillerAfterMempack[0xE0];
+	char fillerAfterMempack[0xA0];
 
 	// 80099264 (time string at end of time trial race)
-	// 800992a4 (ghost profile related)
+	
+	// 800992a4
+	char memcardIcon_HeaderGHOST[0x40];
 
 	// 800992E4
 	// literally every byte of memory card,
@@ -4762,16 +4764,47 @@ struct sData
 	} LoadSaveData[12];
 
 	// 0x8009AA30
-	char unk_Between_LoadSave_And_Ghosts[0x2c];
+	int memcardUnk1;
+	
+	// 0x8009AA34
+	int memcardUnk2;
 
-	// related to memcard
-	// FUN_80046b1c handles 8009aa30 to 8009aa58
+	// 8009aa38
+	int memcardSlot_copy1;
+	
+	// 8009aa3c
+	int memcardSlot_copy2;
+	
+	// 8009aa40
+	int memcardSlot_copy3;
+	
+	// 8009aa44
+	int memcardSlot_copy4;
 
-	// [no hole]
+	// 8009aa48
+	char* ghostProfile_fileName;
+	
+	// 8009aa4c
+	char* ghostProfile_fileIconHeader;
 
-	// 8009aa56 -- Ghost Profile Index (load or save)?
-	// 8009aa58 -- Ghost Profile Index (load or save)?
-	// 8009aa5a -- Ghost Profile Index (load or save)?
+	// 8009aa50
+	// Points to Destination (ghost load)
+	// Points to Source (ghost save)
+	struct GhostHeader* ghostProfile_ptrGhostHeader;
+	
+	// 8009aa54 -- Size (saving = 3E00)
+	short ghostProfile_size3E00;
+
+	// 8009aa56
+	// only set for one frame,
+	// then resets to -1
+	short ghostProfile_rowSelect;
+	
+	// 8009aa58
+	short ghostProfile_indexSave;
+	
+	// 8009aa5a
+	short ghostProfile_indexLoad;
 
 	// 8009aa5c
 	int numGhostProfilesSaved;
