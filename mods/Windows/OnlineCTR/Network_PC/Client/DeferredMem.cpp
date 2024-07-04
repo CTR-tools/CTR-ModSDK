@@ -19,7 +19,7 @@
 #include <semaphore>
 #include <condition_variable>
 #include <map>
-#include <optional>
+#include <vector>
 
 #if _WIN64 //windows
 SOCKET dspineSocket;
@@ -29,10 +29,12 @@ SOCKET dspineSocket;
 //declare a variable of whatever type a posix socket is.
 #endif
 //std::atomic<int> outstandingReads = std::atomic<int>{ 0 }; //this is covered by mutex
-int outstandingReads = 0; //this is covered by mutex
+//int outstandingReads = 0; //this is covered by mutex
 std::thread recvWorker;
-std::mutex recvMutex;
-std::condition_variable recvCond;
+//std::mutex recvMutex;
+//std::condition_variable recvCond;
+
+std::mutex pineObjsMutex;
 
 bool defMemInit()
 {
@@ -158,6 +160,17 @@ void uninitSocket(SOCKET* socket) //should be preceded by a call to initSocket
 //	1. close connection (if open), clean up & invalidate a socket.
 #endif
 
+void recvThread()
+{
+	while (true)
+	{
+		//recvCond.notify_all();
+		//std::unique_lock<std::mutex> um{ recvMutex };
+		//recvCond.wait(um, [] { return outstandingReads > 0; });
+		pineRecv();
+	}
+}
+
 /*
 * NEW PINE HANDLING:
 *
@@ -181,16 +194,10 @@ void uninitSocket(SOCKET* socket) //should be preceded by a call to initSocket
 *		* if refresh() was called, this can't happen, if refresh(false) was called, then wait_refresh() unmarks "PINE api call in progress".
 */
 
-typedef unsigned long long internalPineApiID;
+
 
 internalPineApiID pineSendsCount = 0, pineRecvsCount = 0;
-struct DSPINESendRecvPair
-{
-	DSPINESend sendData;
-	DSPINERecv recvData;
-	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
-};
-std::map<internalPineApiID, DSPINESendRecvPair> pineRecvObjs{};
+std::map<internalPineApiID, DSPINESendRecvPair> pineObjs{};
 
 internalPineApiID pineSend(DSPINESend sendObj)
 { //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
@@ -210,75 +217,135 @@ internalPineApiID pineSend(DSPINESend sendObj)
 	//posix non-blocking send
 	#endif
 	//critical region (syncronize access pls)
-	pineRecvObjs.insert(std::pair<internalPineApiID, DSPINESendRecvPair>{ pineSendsCount, DSPINESendRecvPair{ sendObj, DSPINERecv{} } });
+	{
+		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		pineObjs.insert(std::pair<internalPineApiID, DSPINESendRecvPair>{ pineSendsCount, DSPINESendRecvPair{ sendObj, DSPINERecv{} } });
+	}
 	//end critical region
 	return pineSendsCount++;
 }
 
 void pineRecv()
 { //on another thread
-	while (true)
+	DSPINERecv recvData{};
+	#if _WIN64 //windows
+	WSAPOLLFD fdarr = { 0 };
+	fdarr.fd = dspineSocket;
+	fdarr.events = POLLRDNORM;
+	WSAPoll(&fdarr, 1, -1); //block until something is waiting in tcp buffer.
+	int recvLen = recv(dspineSocket, (char*)&recvData, sizeof(DSPINERecv::SharedHeader), 0);
+	if (recvLen == sizeof(DSPINERecv::SharedHeader) &&
+		//recvData.shared_header.packetSize == /*whatever size this recv is meant to be*/ &&
+		recvData.shared_header.DSPINEMsgReplyCode == 0)
+	{ //very good
+	}
+	else 
 	{
-		DSPINERecv recvData{};
-		#if _WIN64 //windows
-		WSAPOLLFD fdarr = { 0 };
-		fdarr.fd = dspineSocket;
-		fdarr.events = POLLRDNORM;
-		WSAPoll(&fdarr, 1, -1); //block until something is waiting in tcp buffer.
-		int recvLen = recv(dspineSocket, (char*)&recvData, sizeof(DSPINERecv::SharedHeader), 0);
-		if (recvLen == sizeof(DSPINERecv::SharedHeader) &&
-			//recvData.shared_header.packetSize == /*whatever size this recv is meant to be*/ &&
-			recvData.shared_header.DSPINEMsgReplyCode == 0)
+		if (recvLen < sizeof(DSPINERecv::SharedHeader)) //todo: make consumer buffer for this
+			printf("recv returned less than required buffer length (?packet fragmentation?) "); //partial recv could be solved by coroutine
+		printf("recv failed: %d\n", WSAGetLastError());
+		exit_execv(5); //could be caused by many things.
+	}
+	unsigned int remainingSize = recvData.shared_header.packetSize - sizeof(DSPINERecv::SharedHeader);
+	if (remainingSize != 0)
+	{
+		//no need to poll bc the first 5 bytes of this packet (which have already been parsed) and whatever remains
+		//(regardless of packet size) should never have been fragmented (hopefully!)
+		recvLen = recv(dspineSocket, ((char*)&recvData) + sizeof(DSPINERecv::SharedHeader), remainingSize, 0);
+		if (recvLen == remainingSize)
 		{ //very good
 		}
-		else 
+		else
 		{
-			if (recvLen < sizeof(DSPINERecv::SharedHeader))
+			if (recvLen < remainingSize) //todo: make consumer buffer for this
 				printf("recv returned less than required buffer length (?packet fragmentation?) "); //partial recv could be solved by coroutine
+			else
+				printf("recv returned ?*MORE*? than the required buffer length (corrupted stack)??? ");
 			printf("recv failed: %d\n", WSAGetLastError());
 			exit_execv(5); //could be caused by many things.
 		}
-		unsigned int remainingSize = recvData.shared_header.packetSize - sizeof(DSPINERecv::SharedHeader);
-		if (remainingSize != 0)
-		{
-			//no need to poll bc the first 5 bytes of this packet (which have already been parsed) and whatever remains
-			//(regardless of packet size) should never have been fragmented (hopefully!)
-			recvLen = recv(dspineSocket, ((char*)&recvData) + sizeof(DSPINERecv::SharedHeader), remainingSize, 0);
-			if (recvLen == remainingSize)
-			{ //very good
-			}
-			else
-			{
-				if (recvLen < remainingSize)
-					printf("recv returned less than required buffer length (?packet fragmentation?) "); //partial recv could be solved by coroutine
-				else
-					printf("recv returned ?*MORE*? than the required buffer length (corrupted stack)??? ");
-				printf("recv failed: %d\n", WSAGetLastError());
-				exit_execv(5); //could be caused by many things.
-			}
-		}
-		#else //assume posix
-		#error todo...
-		//todo:
-		//this should poll/select for a recv event
-		//then recv of (maximum) length recvBufLen
-		//ensure that the length that was recvd was indeed recvBufLen
-		//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
-		//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
-		//if any "ensures" fail, then we have reached an unrecoverable error,
-		//assume that the socket connection is bad and reset and/or close the client.
-		#endif
-		//critical region (syncronize access pls)
-		pineRecvObjs.at(pineRecvsCount).recvData = recvData;
-		//end critical region
-		pineRecvsCount++;
 	}
+	#else //assume posix
+	#error todo...
+	//todo:
+	//this should poll/select for a recv event
+	//then recv of (maximum) length recvBufLen
+	//ensure that the length that was recvd was indeed recvBufLen
+	//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
+	//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
+	//if any "ensures" fail, then we have reached an unrecoverable error,
+	//assume that the socket connection is bad and reset and/or close the client.
+	#endif
+	//critical region (syncronize access pls)
+	{
+		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		pineObjs.at(pineRecvsCount).recvData = recvData;
+	}
+	//end critical region
+	pineRecvsCount++;
+
+	//raise event in a message loop for the main thread that something was recieved, update any/all things that may have a pine api call pending (e.g., ps1ptr.refresh)
 }
 
-typedef unsigned long long pineApiID;
-
 pineApiID pineApiRequestCount = 0;
-std::map<pineApiID, std::pair<pineApiID, size_t>> pineApiRequests{};
+std::map<pineApiID, std::pair<internalPineApiID, size_t>> pineApiRequests{};
+
+void removeOldPineData(pineApiID id)
+{
+	auto startAndLength = pineApiRequests.at(id);
+	internalPineApiID start = startAndLength.first;
+	size_t length = startAndLength.second;
+	//critical region (syncronize access pls)
+	{
+		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		for (size_t i = 0; i < length; i++)
+		{
+			pineObjs.erase(start + i);
+		}
+	}
+	//end critical region
+}
+
+bool isPineDataPresent(pineApiID id)
+{
+	bool isAllPresent = true;
+	auto startAndLength = pineApiRequests.at(id);
+	internalPineApiID start = startAndLength.first;
+	size_t length = startAndLength.second;
+	//critical region (syncronize access pls)
+	{
+		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		for (size_t i = 0; i < length; i++)
+		{
+			/*bool thisOneIsPresent = (pineObjs.find(start + i) != pineObjs.end());
+			isAllPresent &= thisOneIsPresent;*/
+
+			//when this function is called, all entries in the dict exist, they may or may not have the
+			//recv entry populated though, so we need to determine if they're all populated
+		}
+	}
+	//end critical region
+	return isAllPresent;
+}
+
+std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
+{
+	std::vector<DSPINESendRecvPair> segment{};
+	auto startAndLength = pineApiRequests.at(id);
+	internalPineApiID start = startAndLength.first;
+	size_t length = startAndLength.second;
+	//critical region (syncronize access pls)
+	{
+		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		for (size_t i = 0; i < length; i++)
+		{
+			DSPINESendRecvPair obj = pineObjs.at(start + i);
+			segment.push_back(obj);
+		}
+	}
+	//end critical region
+	return segment;
+}
 
 pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 {
@@ -300,7 +367,7 @@ pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 			pineSend(sendObj);
 		sendCount++;
 	}
-	pineApiRequests.insert(std::pair<pineApiID, std::pair<pineApiID, size_t>>{pineApiRequestCount, std::pair<pineApiID, size_t>{firstSendID, sendCount}});
+	pineApiRequests.insert(std::pair<pineApiID, std::pair<internalPineApiID, size_t>>{pineApiRequestCount, std::pair<internalPineApiID, size_t>{firstSendID, sendCount}});
 	return pineApiRequestCount++;
 }
 
@@ -368,7 +435,7 @@ pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf)
 		sendCount++;
 		offset += 1;
 	}
-	pineApiRequests.insert(std::pair<pineApiID, std::pair<pineApiID, size_t>>{pineApiRequestCount, std::pair<pineApiID, size_t>{firstSendID, sendCount}});
+	pineApiRequests.insert(std::pair<pineApiID, std::pair<internalPineApiID, size_t>>{pineApiRequestCount, std::pair<internalPineApiID, size_t>{firstSendID, sendCount}});
 	return pineApiRequestCount++;
 }
 

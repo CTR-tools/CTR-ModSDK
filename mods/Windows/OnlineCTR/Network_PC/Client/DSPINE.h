@@ -168,6 +168,7 @@ union DSPINESend
 	{
 		unsigned int packetSize;
 		unsigned char DSPINEMsgIPC;
+		unsigned int address;
 	} shared_header;
 	DSPINERead64Send read64;
 	DSPINEWrite8Send write8;

@@ -67,21 +67,21 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			SG_MessageRooms* r = reinterpret_cast<SG_MessageRooms*>(recvBuf);
 
-			octr.refresh(); 
+			octr.blockingRead(); 
 			octr.get()->ver_pc = VERSION;
 			octr.get()->ver_server = r->version;
 
 			if (r->version != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
-				octr.commit();
+				octr.startWrite();
 				return;
 			}
 
 			if (octr.get()->ver_psx != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
-				octr.commit();
+				octr.startWrite();
 				return;
 			}
 
@@ -109,7 +109,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr.get()->clientCount[0xe] = r->numClients15;
 			octr.get()->clientCount[0xf] = r->numClients16;
 
-			octr.commit();
+			octr.startWrite();
 
 			break;
 		}
@@ -119,7 +119,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			SG_MessageClientStatus* r = reinterpret_cast<SG_MessageClientStatus*>(recvBuf);
 
-			octr.refresh();
+			octr.blockingRead();
 			octr.get()->DriverID = r->clientID;
 			octr.get()->NumDrivers = r->numClientsTotal;
 
@@ -128,7 +128,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				~(0x100000 | 0x80000 | 0x400 | 0x400000);*/
 			ps1ptr<int> cheats = pBuf.at<int>(0x80096b28 & 0xffffff);
 			(*cheats.get()) &= ~(0x100000 | 0x80000 | 0x400 | 0x400000);
-			cheats.commit();
+			cheats.startWrite();
 
 			// odd-numbered index == even-number room
 			// Index 1, 3, 5 -> Room 2, 4, 6
@@ -186,7 +186,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// choose to get host menu or guest menu
 			octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
-			octr.commit();
+			octr.startWrite();
 			break;
 		}
 
@@ -195,7 +195,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			SG_MessageName* r = reinterpret_cast<SG_MessageName*>(recvBuf);
 
 			int clientID = r->clientID;
-			octr.refresh(); 
+			octr.blockingRead(); 
 			if (clientID == octr.get()->DriverID) break;
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
@@ -204,7 +204,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			memcpy(&octr.get()->nameBuffer[slot], &r->name[0], NAME_LEN);
 
-			octr.commit();
+			octr.startWrite();
 
 			// handle disconnection
 			if (r->name[0] == 0)
@@ -215,7 +215,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				gamepad.get()->buttonsTapped = 0;
 				gamepad.get()->buttonsReleased = 0;
 				gamepad.get()->buttonsHeldPrevFrame = 0x20;
-				gamepad.commit();
+				gamepad.startWrite();
 			}
 
 			break;
@@ -237,12 +237,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 			ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
 			(*numLapsV.get()) = numLaps;
-			numLapsV.commit();
+			numLapsV.startWrite();
 
-			octr.refresh();
+			octr.blockingRead();
 			octr.get()->levelID = r->trackID;
 			octr.get()->CurrState = LOBBY_CHARACTER_PICK;
-			octr.commit();
+			octr.startWrite();
 
 			break;
 		}
@@ -254,7 +254,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			unsigned char clientID = r->clientID;
 			unsigned char characterID = r->characterID;
 
-			octr.refresh(); 
+			octr.blockingRead(); 
 			if (clientID == octr.get()->DriverID) break;
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
@@ -262,10 +262,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
 			ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
 			(*characterIDV.get()) = characterID;
-			characterIDV.commit();
+			characterIDV.startWrite();
 
 			octr.get()->boolLockedInCharacters[clientID] = r->boolLockedIn;
-			octr.commit();
+			octr.startWrite();
 
 			break;
 		}
@@ -274,18 +274,18 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			// variable reuse, wait a few frames,
 			// so screen updates with green names
-			octr.refresh(); 
+			octr.blockingRead(); 
 			octr.get()->CountPressX = 0;
 			octr.get()->CurrState = LOBBY_START_LOADING;
-			octr.commit();
+			octr.startWrite();
 			break;
 		}
 
 		case SG_STARTRACE:
 		{
-			octr.refresh(); 
+			octr.blockingRead();
 			octr.get()->CurrState = GAME_START_RACE;
-			octr.commit();
+			octr.startWrite();
 			break;
 		}
 
@@ -293,8 +293,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			// wait for drivers to be initialized
 			// since this happens every frame, it's worth hyper-optimizing, hence the atypical refresh
-			int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
-			octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);
+			/*int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
+			octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);*/
+			octr.blockingRead();
 			//NOTE: as of writing, this switch case *only uses* these members of octr
 			// * CurrState
 			// * DriverID
@@ -356,7 +357,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			else if ((gamepad.get()->buttonsHeldCurrFrame & 8) != 0) gamepad.get()->stickLX = 0xFF;
 			else gamepad.get()->stickLX = 0x80;
 
-			gamepad.commit();
+			gamepad.startWrite();
 
 			buttonPrev[slot] = curr;
 
@@ -391,10 +392,10 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, true); //don't prefetch since we're unilaterally overwriting.
 			(*angleV.get()) = (short)angle;
 
-			angleV.commit();
-			x.commit();
-			y.commit();
-			z.commit();
+			angleV.startWrite();
+			x.startWrite();
+			y.startWrite();
+			z.startWrite();
 
 			// keep setting to 200,
 			// and if !boolReserves, let it fall to zero
@@ -403,13 +404,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				//*(short*)&pBuf[psxPtr + 0x3E2] = 200;
 				ps1ptr<short> reserves = pBuf.at<short>((*psxPtr.get()) + 0x3E2, true); //don't prefetch since we're unilaterally overwriting.
 				(*reserves.get()) = 200;
-				reserves.commit();
+				reserves.startWrite();
 			}
 
 			//*(short*)&pBuf[psxPtr + 0x30] = r->wumpa;
 			ps1ptr<short> wumpa = pBuf.at<short>((*psxPtr.get()) + 0x30, true); //don't prefetch since we're unilaterally overwriting.
 			(*wumpa.get()) = r->wumpa;
-			wumpa.commit();
+			wumpa.startWrite();
 
 			break;
 		}
@@ -418,7 +419,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			SG_MessageWeapon* r = reinterpret_cast<SG_MessageWeapon*>(recvBuf);
 
-			octr.refresh();
+			octr.blockingRead();
 			int clientID = r->clientID;
 			if (clientID == octr.get()->DriverID) break;
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
@@ -428,7 +429,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr.get()->Shoot[slot].Weapon = r->weapon;
 			octr.get()->Shoot[slot].boolJuiced = r->juiced;
 			octr.get()->Shoot[slot].flags = r->flags;
-			octr.commit();
+			octr.startWrite();
 
 			break;
 		}
@@ -438,7 +439,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			SG_MessageEndRace* r = reinterpret_cast<SG_MessageEndRace*>(recvBuf);
 
 			int clientID = r->clientID;
-			octr.refresh(); 
+			octr.blockingRead(); 
 			if (clientID == octr.get()->DriverID) break;
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
@@ -450,13 +451,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			gamepad.get()->buttonsTapped = 0;
 			gamepad.get()->buttonsReleased = 0;
 			gamepad.get()->buttonsHeldPrevFrame = 0x20;
-			gamepad.commit();
+			gamepad.startWrite();
 
 			octr.get()->raceStats[octr.get()->numDriversEnded].slot = slot;
 			memcpy(&octr.get()->raceStats[octr.get()->numDriversEnded].finalTime, &r->courseTime, sizeof(r->courseTime));
 			memcpy(&octr.get()->raceStats[octr.get()->numDriversEnded].bestLap, &r->lapTime, sizeof(r->lapTime));
 			octr.get()->numDriversEnded++;
-			octr.commit();
+			octr.startWrite();
 
 			break;
 		}
@@ -490,9 +491,9 @@ void ProcessNewMessages()
 			printf("\nClient: Connection Dropped (Server Full or Server Offline)...  ");
 
 			// to go the lobby browser
-			octr.refresh();
+			octr.blockingRead();
 			octr.get()->CurrState = -1;
-			octr.commit();
+			octr.startWrite();
 			break;
 
 		default:
@@ -550,9 +551,9 @@ void DisconSELECT()
 		serverPeer = 0;
 
 		// to go the lobby browser
-		octr.refresh();
+		octr.blockingRead();
 		octr.get()->CurrState = -1;
-		octr.commit();
+		octr.startWrite();
 
 		return;
 	}
@@ -569,14 +570,14 @@ void StatePC_Launch_EnterPID()
 {
 	// if client connected to DuckStation
 	// before game booted, wait for boot
-	octr.refresh();
+	octr.blockingRead();
 	if (!octr.get()->IsBootedPS1)
 		return;
 
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
 	octr.get()->CurrState = LAUNCH_PICK_SERVER;
-	octr.commit();
+	octr.startWrite();
 }
 
 void printUntilPeriod(const char* str)
@@ -635,13 +636,13 @@ void StatePC_Launch_PickServer()
 	}
 
 	// return now if the server selection hasn't been selected yet
-	octr.refresh();
+	octr.blockingRead();
 	if (octr.get()->serverLockIn1 == 0)
 		return;
 
 	// === Now Selecting Country ===
 	octr.get()->boolClientBusy = 1; //this probably needs to be atomic to avoid race conditions, but I don't know if that's possible
-	octr.commit();
+	octr.startWrite();
 	StaticServerID = octr.get()->serverCountry;
 
 	switch (octr.get()->serverCountry)
@@ -841,10 +842,10 @@ void StatePC_Launch_PickServer()
 			if (retryCount >= MAX_RETRIES)
 			{
 				// to go the country select
-				octr.refresh();
+				octr.blockingRead();
 				octr.get()->CurrState = 1;
 				octr.get()->boolClientBusy = 0;
-				octr.commit();
+				octr.startWrite();
 				return;
 			}
 
@@ -855,11 +856,11 @@ void StatePC_Launch_PickServer()
 	// 5 seconds
 	enet_peer_timeout(serverPeer, 1000000, 1000000, 5000);
 
-	octr.refresh();
+	octr.blockingRead();
 	octr.get()->DriverID = -1;
 	octr.get()->CurrState = LAUNCH_PICK_ROOM;
 	octr.get()->boolClientBusy = 0;
-	octr.commit();
+	octr.startWrite();
 }
 
 void StatePC_Launch_Error()
@@ -886,7 +887,7 @@ void StatePC_Launch_PickRoom()
 		sendToHostReliable(&mr, sizeof(CG_MessageRoom));
 	}
 
-	octr.refresh();
+	octr.blockingRead();
 	// wait for room to be chosen
 	if (!octr.get()->serverLockIn2)
 	{
@@ -920,7 +921,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	// boolLockedInLap gets set after
 	// boolLockedInLevel already sets
-	octr.refresh();
+	octr.blockingRead();
 	if (!(octr.get())->boolLockedInLap) return;
 
 	StopAnimation();
@@ -944,13 +945,12 @@ void StatePC_Lobby_HostTrackPick()
 	//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
 	ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff);
 	(*numLapsV.get()) = numLaps;
-	numLapsV.commit();
+	numLapsV.startWrite();
 
 	sendToHostReliable(&mt, sizeof(CG_MessageTrack));
 
-	octr.refresh();
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
-	octr.commit();
+	octr.startWrite();
 }
 
 int prev_characterID = -1;
@@ -976,7 +976,7 @@ void StatePC_Lobby_CharacterPick()
 	ps1ptr<char> characterID = pBuf.at<char>(0x80086e84 & 0xffffff);
 	mc.characterID = (*characterID.get());
 
-	octr.refresh();
+	octr.blockingRead();
 	mc.boolLockedIn = octr.get()->boolLockedInCharacters[octr.get()->DriverID];
 
 	if (
@@ -992,9 +992,8 @@ void StatePC_Lobby_CharacterPick()
 
 	if (mc.boolLockedIn == 1)
 	{
-		octr.refresh();
 		octr.get()->CurrState = LOBBY_WAIT_FOR_LOADING;
-		octr.commit();
+		octr.blockingWrite();
 	}
 }
 
@@ -1097,7 +1096,7 @@ void SendEverything()
 
 	sendToHostUnreliable(&cg, sizeof(CG_EverythingKart));
 
-	octr.refresh();
+	octr.blockingRead();
 	if (octr.get()->Shoot[0].boolNow == 1)
 	{
 		octr.get()->Shoot[0].boolNow = 0;
@@ -1192,12 +1191,12 @@ void StatePC_Game_EndRace()
 		sendToHostReliable(&cg, sizeof(CG_MessageEndRace));
 
 		// end race for yourself
-		octr.refresh();
+		octr.blockingRead();
 		octr.get()->raceStats[octr.get()->numDriversEnded].slot = 0;
 		octr.get()->raceStats[octr.get()->numDriversEnded].finalTime = (*courseTime.get());
 		octr.get()->raceStats[octr.get()->numDriversEnded].bestLap = (*bestLapTime.get());
 		octr.get()->numDriversEnded++;
-		octr.commit();
+		octr.startWrite();
 
 
 
@@ -1300,9 +1299,12 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
-		octr.refresh();
+		octr.blockingRead();
+		//technechally windowsClientSync just needs to *change* every frame.
+		//perhaps instead of reading, keep a local counter, increment that, and then
+		//write it (without needing a blocking read first).
 		(*octr.get()).windowsClientSync++;
-		octr.commit();
+		octr.startWrite(); //anyone who may encounter this when not finished writing, will block before continuing.
 
 		// should rename to room selection
 		if (octr.get()->CurrState >= LAUNCH_PICK_ROOM)
@@ -1347,9 +1349,8 @@ void FrameStall()
 	while (gGT_timer == (*frames.get()))
 	{
 		usleep(1);
-		frames.refresh();
+		frames.blockingRead();
 	}
-	frames.refresh();
 	gGT_timer = (*frames.get());
 }
 #pragma optimize("", on)
