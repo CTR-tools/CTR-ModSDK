@@ -608,6 +608,7 @@ LAB_80047544:
 		  // BASCUS-94426-SLOTS
           pcVar6 = s_BASCUS_94426_SLOTS_800859e4;
 
+		  // memcardIcon_HeaderSLOTS
 		  puVar7 = (undefined4 *)&DAT_800859f8;
 
 		  // size of memory card buffer
@@ -663,8 +664,13 @@ LAB_8004753c:
             DAT_8009aa5c = DAT_8009aa5c + -1;
             break;
           }
+		  
           FUN_800471c4(3);
+		  
+		  // BASCUS-94426G name
           pcVar6 = (char *)&DAT_80085a30;
+		  
+		  // memcardIcon_HeaderGHOST
           puVar7 = &DAT_800992a4;
 
 		  // size of two memcard slots

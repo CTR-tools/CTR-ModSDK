@@ -4726,9 +4726,13 @@ struct sData
 	struct Mempack mempack[3]; // each is 0x60 bytes
 
 	// 80099204
-	char fillerAfterMempack[0xA0];
+	char fillerAfterMempack[0x60];
 
 	// 80099264 (time string at end of time trial race)
+	char ghostStrTrackTime[0x20];
+	
+	// 80099284
+	char ghostFileNameFinal[0x20];
 	
 	// 800992a4
 	char memcardIcon_HeaderGHOST[0x40];
