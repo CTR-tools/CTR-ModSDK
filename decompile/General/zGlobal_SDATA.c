@@ -368,7 +368,9 @@ struct sData sdata_static =
 	.ptrToMemcardBuffer2 = &sdata_static.memcardBytes[0],
 #endif
 	
-	.unk8008d478 = 0x50002,
+	.mcStart = 2,
+	
+	.mcScreenText = 5,
 	
 	.LoadSave_SpinRateY = {64, -47, 51, 0},
 	

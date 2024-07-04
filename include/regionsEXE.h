@@ -3208,7 +3208,7 @@ struct sData
 	
 	// 8008d478
 	// MC Start
-	short unk8008d478;
+	short mcStart;
 
 	// 0 - MC_SCREEN_WARNING_NOCARD
 	// 1 - MC_SCREEN_WARNING_UNFORMATTED
