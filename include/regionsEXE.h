@@ -3199,6 +3199,12 @@ struct sData
 	// pointer to memcard bytes (again?) 800992E4
 	void* ptrToMemcardBuffer2;
 
+	// 2 - NULL
+	// 3 - MC_START_SAVE_MAIN
+	// 4 - NULL
+	// 5 - MC_START_LOAD_GHOST
+	// 6 - MC_START_SAVE_GHOST
+	// 7 - MC_START_LOAD_MAIN
 	int unk8008d478;
 
 	// 8008d47c

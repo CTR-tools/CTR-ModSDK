@@ -409,11 +409,7 @@ void FUN_80047034(undefined4 *param_1,undefined4 *param_2)
 
 
 // RefreshCard_StartMemcardAction
-// 2 = null
-// 3 = save main CTR save file (adv, high score, etc)
-// 5 = load ghost profile
-// 6 = save ghost files
-// 7 = load main ctr save file (adv, high score, etc)
+// MC_START_xxx enum from regionsEXE.h
 void FUN_80047198(undefined2 param_1)
 
 {
@@ -561,7 +557,7 @@ void FUN_800472d0(void)
     break;
   case 1:
   
-	// if not loading profile
+	// If not MC_START_LOAD_MAIN
     if (DAT_8008d478 != 7) 
 	{
 	  // memcard action = null
@@ -569,7 +565,8 @@ void FUN_800472d0(void)
       goto LAB_800475b4;
     }
 	
-	// if DAT_8008d478 == 7, continue here...
+	// From here on...
+	// MC_START_LOAD_MAIN
 	
 	// memcard action = null
     DAT_8008d478 = 2;
@@ -598,7 +595,7 @@ LAB_80047544:
   case 8:
   case 9:
 
-	// if loading ghost profile
+	// MC_START_LOAD_GHOST
 	if (DAT_8008d478 == 5)
 	{
 	  // Loading
@@ -610,7 +607,7 @@ LAB_80047544:
     else {
       if (DAT_8008d478 < 6) 
 	  {
-		// if saving main CTR save file
+		// MC_START_SAVE_MAIN
         if (DAT_8008d478 == 3) 
 		{
 		  // memcard action = null
@@ -641,9 +638,10 @@ LAB_8004753c:
       }
       else {
         
-		// if deleting
+		// MC_START_SAVE_GHOST
 		if (DAT_8008d478 == 6) 
 		{
+		  // First Frame of Overwriting Old Save
           if (-1 < (int)DAT_8009aa56)
 		  {
 			// Get offset in array based on index,
@@ -812,7 +810,7 @@ LAB_800479f4:
           
 		  if (DAT_8008d47a == 3) 
 		  {
-			// if saving ghost profile
+			// MC_START_SAVE_GHOST
             if (DAT_8008d478 == 6) {
               if (-1 < DAT_8009aa56) {
                 DAT_8009aa56 = -1;
@@ -916,7 +914,7 @@ LAB_800479f4:
 			goto LAB_800479bc;
           }
 		  
-		  // if loading ghost profile
+		  // MC_START_LOAD_GHOST
           if (DAT_8008d478 == 5)
 		  {
 			// you want to show a ghost during a race
