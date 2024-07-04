@@ -57,7 +57,12 @@ uint FUN_80046a90(short param_1)
 }
 
 
-
+// param1 - memcardSlot
+// param2 - action
+// param3 - filename
+// param4 - memcard icon header
+// param5 - ghostHeader
+// param6 - size
 void FUN_80046b1c(undefined2 param_1,undefined2 param_2,undefined4 param_3,undefined4 param_4,
                  undefined4 param_5,undefined2 param_6)
 
@@ -67,6 +72,12 @@ void FUN_80046b1c(undefined2 param_1,undefined2 param_2,undefined4 param_3,undef
 
   DAT_8009aa30 = DAT_8009aa30 & 0xfffffff7;
 
+  // 1 - GetInfo
+  // 2 - Save
+  // 3 - Load
+  // 4 - Format
+  // 5 - Erase
+  // see similar variable "switch(DAT_8009aa36)"
   DAT_8009aa3a = param_2;
 
   // slotIndex
@@ -83,7 +94,7 @@ void FUN_80046b1c(undefined2 param_1,undefined2 param_2,undefined4 param_3,undef
   // Save icon (crash/ghost/psyqhand)
   DAT_8009aa4c = param_4;
 
-  // pointer to tape (not memcard)
+  // pointer to ghostHeader (not memcard)
   DAT_8009aa50 = param_5;
 
   // size (3E00)
@@ -786,7 +797,7 @@ LAB_800479f4:
               if (-1 < DAT_8009aa56) {
                 DAT_8009aa56 = -1;
 				
-				/// "Saving..."
+				// "Saving..."
                 FUN_800471c4(3);
                 
 				uVar5 = 2;

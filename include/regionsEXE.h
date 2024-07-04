@@ -4771,15 +4771,23 @@ struct sData
 	
 	// 0x8009AA34
 	int memcardUnk2;
+	
+	// 8009aa36
 
 	// 8009aa38
 	int memcardSlot_copy1;
 	
+	// 8009aa3a
+	
 	// 8009aa3c
 	int memcardSlot_copy2;
 	
+	// 8009aa3e
+	
 	// 8009aa40
 	int memcardSlot_copy3;
+	
+	// 8009aa42
 	
 	// 8009aa44
 	int memcardSlot_copy4;
