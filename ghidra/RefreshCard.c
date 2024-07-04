@@ -432,7 +432,7 @@ void FUN_800471ac(void)
 }
 
 
-// sets on-screen message (save/load/error)
+// RefreshCard_SetScreenText
 void FUN_800471c4(undefined2 param_1)
 
 {
@@ -546,7 +546,10 @@ void FUN_800472d0(void)
   undefined *local_20;
 
   bVar1 = false;
-  switch(DAT_8008d47a) {
+  switch(DAT_8008d47a) 
+  {
+	  
+  // MC_SCREEN_WARNING_NOCARD
   case 0:
     bVar1 = true;
     
@@ -555,6 +558,8 @@ void FUN_800472d0(void)
 	
     DAT_8008d984 = 1;
     break;
+
+  // MC_SCREEN_WARNING_UNFORMATTED
   case 1:
   
 	// If not MC_START_LOAD_MAIN
@@ -571,6 +576,7 @@ void FUN_800472d0(void)
 	// memcard action = null
     DAT_8008d478 = 2;
 	
+	// RefreshCard_SetScreenText
     FUN_800471c4();
 	
 	// MC_ACTION_Format
@@ -587,10 +593,17 @@ LAB_80047544:
     FUN_80046b1c(0,uVar5,pcVar6,puVar7,local_20,local_1c);
     DAT_8008d984 = 0;
     break;
+	
+  // MC_SCREEN_CHECKING
+  // MC_SCREEN_ERROR_FULL
   case 5:
   case 6:
     bVar1 = true;
     break;
+	
+  // MC_SCREEN_ERROR_READ
+  // MC_SCREEN_NULL
+  // MC_SCREEN_ERROR_NODATA
   case 7:
   case 8:
   case 9:
@@ -598,7 +611,7 @@ LAB_80047544:
 	// MC_START_LOAD_GHOST
 	if (DAT_8008d478 == 5)
 	{
-	  // Loading
+	  // RefreshCard_SetScreenText(MC_SCREEN_LOADING)
       FUN_800471c4(4);
 
 	  // 3 = MC_ACTION_Load
@@ -613,7 +626,7 @@ LAB_80047544:
 		  // memcard action = null
           DAT_8008d478 = 2;
           
-		  // Saving
+		  // RefreshCard_SetScreenText(MC_SCREEN_SAVING)
 		  FUN_800471c4(3);
 
 		  // 800859e4
@@ -660,7 +673,7 @@ LAB_8004753c:
             DAT_80099294 = *(undefined4 *)(&DAT_8009aa70 + iVar2);
             DAT_80099298 = (&DAT_8009aa74)[iVar2];
 
-			// Saving
+			// RefreshCard_SetScreenText(MC_SCREEN_SAVING)
 			FUN_800471c4(3);
 
 			// Erase old profile to make
@@ -685,7 +698,7 @@ LAB_8004753c:
             break;
           }
 		  
-		  // Saving
+		  // RefreshCard_SetScreenText(MC_SCREEN_SAVING)
           FUN_800471c4(3);
 		  
 		  // BASCUS-94426G name
@@ -711,7 +724,10 @@ LAB_800475b4:
   
   // RefreshCard_GetResult(MC_RESULT_NEWCARD)
   iVar2 = FUN_80046a90(3);
-  if (iVar2 != 0) {
+  
+  // if new card
+  if (iVar2 != 0) 
+  {
     FUN_800471e8();
 
 	// RefreshCard_GetNumGhostsTotal
@@ -728,7 +744,10 @@ LAB_800475b4:
   {
 	// RefreshCard_GetResult(MC_RESULT_FULL)
     iVar2 = FUN_80046a90(1);
-    local_1c = 6;
+    
+	// MC_SCREEN_ERROR_FULL
+	local_1c = 6;
+	
     if (iVar2 == 0) {
       
 	  // RefreshCard_GetResult(MC_RESULT_ERROR_TIMEOUT)
@@ -757,7 +776,7 @@ LAB_800479bc:
 			// reset gameProg (again?)
 			DAT_8008d968 = 0;
 			
-			// "Loading..."
+			// RefreshCard_SetScreenText(MC_SCREEN_LOADING)
             FUN_800471c4(4);
 			
 			// MC_ACTION_Load
@@ -796,7 +815,7 @@ LAB_800479f4:
 
             FUN_800471e8();
 			
-			// "Warning, memcard unformatted"
+			// MC_SCREEN_WARNING_UNFORMATTED
             local_1c = 1;
             
 			goto LAB_800476b4;
@@ -808,14 +827,16 @@ LAB_800479f4:
           
 		  DAT_8008d984 = 1;
           
+		  // MC_SCREEN_SAVING
 		  if (DAT_8008d47a == 3) 
 		  {
 			// MC_START_SAVE_GHOST
-            if (DAT_8008d478 == 6) {
+            if (DAT_8008d478 == 6) 
+			{
               if (-1 < DAT_8009aa56) {
                 DAT_8009aa56 = -1;
 				
-				// "Saving..."
+				// RefreshCard_SetScreenText(MC_SCREEN_SAVING)
                 FUN_800471c4(3);
                 
 				uVar5 = 2;
@@ -862,6 +883,8 @@ LAB_800479f4:
               *puVar7 = DAT_8009abfc;
             }
             DAT_8008d964 = 1;
+			
+			// MC_SCREEN_NULL
             local_1c = 8;
             
 			// memcard action = null
@@ -869,7 +892,9 @@ LAB_800479f4:
 			
             goto LAB_80047984;
           }
-          if (DAT_8008d47a < 4) {
+          if (DAT_8008d47a < 4) 
+		  {
+			// MC_SCREEN_FORMATTING
             if (DAT_8008d47a == 2)
 			{
 			  // RefreshCard_GetNumGhostsTotal
@@ -886,7 +911,7 @@ LAB_800479f4:
 				  // GAMEPROG_InitFullMemcard
                   FUN_80026c24(PTR_DAT_8008d474);
 
-				  // NULL
+				  // RefreshCard_SetScreenText(MC_SCREEN_NULL)
                   FUN_800471c4(8);
 
 				  // 1 = MC_ACTION_GetInfo
@@ -905,14 +930,22 @@ LAB_800479f4:
             }
             goto LAB_80047a08;
           }
-          if (DAT_8008d47a != 4) {
+		  
+		  // if not MC_SCREEN_LOADING
+          if (DAT_8008d47a != 4) 
+		  {
+			// if not MC_SCREEN_CHECKING
             if (DAT_8008d47a != 5) goto LAB_80047a08;
+
+			// if MC_SCREEN_CHECKING
 
 			// RefreshCard_GetNumGhostsTotal
             FUN_80047224();
 
 			goto LAB_800479bc;
           }
+		  
+		  // === if MC_SCREEN_LOADING ===
 		  
 		  // MC_START_LOAD_GHOST
           if (DAT_8008d478 == 5)
@@ -921,6 +954,8 @@ LAB_800479f4:
             DAT_8008d958 = 1;
 
 			DAT_8008d964 = 1;
+			
+			// MC_SCREEN_NULL
             local_1c = 8;
           }
           else
@@ -934,6 +969,7 @@ LAB_800479f4:
 			  // RefreshCard_GameProgressAndOptions
               FUN_80047230();
 
+			  // MC_SCREEN_NULL
               local_1c = 8;
             }
             else
@@ -943,11 +979,13 @@ LAB_800479f4:
 
               FUN_800471e8();
 			  
-			  // "No Data"
+			  // MC_SCREEN_ERROR_NODATA
               local_1c = 9;
             }
           }
-          FUN_800471c4(local_1c);
+          
+		  // RefreshCard_SetScreenText
+		  FUN_800471c4(local_1c);
 		  
 		  // memcard action = null
           DAT_8008d478 = 2;
@@ -961,13 +999,31 @@ LAB_800479f4:
           FUN_800471e8();
           DAT_8008d984 = 1;
 		  
-		  // "No Data"
+		  // MC_SCREEN_ERROR_NODATA
           local_1c = 9;
 		  
-          if ((DAT_8008d978 != 0) && ((DAT_8008d978 < 0 || (local_1c = 8, 2 < DAT_8008d978))))
-          goto LAB_80047a08;
+          if (
+				(DAT_8008d978 != 0) && 
+				(
+					(
+						DAT_8008d978 < 0 || 
+						(
+							// MC_SCREEN_NULL
+							local_1c = 8, 
+							
+							2 < DAT_8008d978
+						)
+					)
+				)
+			 )
+		  {
+			goto LAB_80047a08;
+		  }
+			
 LAB_80047984:
           DAT_8008d984 = 1;
+		  
+		  // RefreshCard_SetScreenText
           FUN_800471c4(local_1c);
         }
 
@@ -981,7 +1037,7 @@ LAB_80047984:
 	  // TIMEOUT (no card)
       FUN_800471e8();
 	  
-	  // "Error occured while reading memory card"
+	  // MC_SCREEN_ERROR_READ
       local_1c = 7;
     }
   }
@@ -993,10 +1049,12 @@ LAB_80047984:
 	// RefreshCard_GetNumGhostsTotal
     FUN_80047224();
 
-	// "Warning, no memory card"
+	// MC_SCREEN_WARNING_NOCARD
 	local_1c = 0;
   }
 LAB_800476b4:
+
+  // RefreshCard_SetScreenText
   FUN_800471c4(local_1c);
 
   // 1 = MC_ACTION_GetInfo

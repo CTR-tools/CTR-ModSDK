@@ -689,7 +689,7 @@
 800471ac RefreshCard_StopMemcardAction
 
 // all these are only called from 800472d0
-// unknown 800471c4
+800471c4 RefreshCard_SetScreenText
 // unknown 800471e8
 80047224 RefreshCard_GetNumGhostsTotal
 80047230 RefreshCard_GameProgressAndOptions
