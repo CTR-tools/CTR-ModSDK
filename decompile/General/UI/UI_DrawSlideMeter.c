@@ -30,10 +30,6 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	DECOMP_CTR_Box_DrawWireBox(&box, MakeColor(0, 0, 0), gGT->pushBuffer_UI.ptrOT);
 
 	#ifdef USE_ONLINE
-	/*
-		F > 50% | 50% < D < 65% | 65% < C < 80%
-		80% < B < 90% | 90% < A < 95% | 95% < A+
-	*/
 	if (driver->driverID == 0 && driver->meterGradeTimer > 0)
 	{
 		driver->meterGradeTimer -= gGT->elapsedTimeMS;

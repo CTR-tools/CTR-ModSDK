@@ -10,12 +10,28 @@ void StatePS1_Launch_EnterPID()
 		0x100,0xA8,FONT_SMALL,JUSTIFY_CENTER|ORANGE);
 }
 
+extern char* countryNames[8];
+bool initString = true;
+
 void StatePS1_Launch_PickServer()
 {
+	if (initString)
+	{
+		strcpy(sdata->lngStrings[0x4e], "OnlineCTR");
+		initString = false;
+	}
 	MenuWrites_ServerCountry();
 
 	// If already picked
-	if(MenuFinished() == 1) return;
+	if(MenuFinished() == 1)
+	{
+		if (!initString)
+		{
+			strcpy(sdata->lngStrings[0x4e], countryNames[octr->serverCountry]);
+			initString = true;
+		}
+		return;
+	}
 
 	UpdateMenu();
 	NewPage_ServerCountry();
@@ -402,8 +418,6 @@ void StatePS1_Game_StartRace()
 	}
 }
 
-extern int currCam;
-
 static void OnRaceEnd()
 {
 	struct Driver ** drivers = sdata->gGT->drivers;
@@ -415,7 +429,7 @@ static void OnRaceEnd()
 
 		if (!foundRacer && octr->nameBuffer[driverID][0] && !checkpointTracker[driverID].raceFinished)
 		{
-			currCam = driverID;
+			sdata->gGT->cameraDC[0].driverToFollow = drivers[driverID];
 			foundRacer = true;
 		}
 	}
