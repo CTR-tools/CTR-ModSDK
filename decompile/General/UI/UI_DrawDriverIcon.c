@@ -62,7 +62,6 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, Point point, u_long* ot, unsign
 	p->v[3].texCoords.v = icon->texLayout.v3;
 	#else
 	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - point.y;
-	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
 	p->v[0].texCoords.u = icon->texLayout.u0;
 	p->v[0].texCoords.v = icon->texLayout.v0;
 	p->v[1].texCoords.u = icon->texLayout.u1;
