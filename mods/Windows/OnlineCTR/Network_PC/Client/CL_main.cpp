@@ -293,19 +293,31 @@ void ProcessReceiveEvent(ENetPacket* packet)
 		{
 			//int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];
 			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff, false);
+
+			//begin concurrent fetch
+			octr.startRead();
+			sdata_Loading_stage.startRead();
+
+			//block to finalize concurrent fetch
+			octr.waitRead();
+			sdata_Loading_stage.waitRead();
+
+			SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
+
+			int clientID = r->clientID;
+			if (clientID == octr.get()->DriverID) break;
+			if (clientID < octr.get()->DriverID) slot = clientID + 1;
+			if (clientID > octr.get()->DriverID) slot = clientID;
+
 			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff, false);
 			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
 			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff, false);
 
 			//begin concurrent fetch
-			octr.startRead();
-			sdata_Loading_stage.startRead();
 			gamepad.startRead();
 			psxPtr.startRead();
 
 			//block to finalize concurrent fetch
-			octr.waitRead();
-			sdata_Loading_stage.waitRead();
 			gamepad.waitRead();
 			psxPtr.waitRead();
 
@@ -316,12 +328,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if ((*sdata_Loading_stage.get()) != -1)
 				break;
 
-			SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
-
-			int clientID = r->clientID;
-			if (clientID == octr.get()->DriverID) break;
-			if (clientID < octr.get()->DriverID) slot = clientID + 1;
-			if (clientID > octr.get()->DriverID) slot = clientID;
 
 			int curr = r->buttonHold;
 
