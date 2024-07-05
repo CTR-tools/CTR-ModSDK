@@ -18,6 +18,7 @@
 #include <functional>
 #include <vector>
 
+//TODO: make as few of these public as possible.
 
 bool defMemInit();
 bool socketValid();
@@ -44,7 +45,7 @@ internalPineApiID pineSend(DSPINESend sendObj);
 void pineRecv();
 typedef unsigned long long pineApiID;
 void removeOldPineData(pineApiID id);
-bool isPineDataPresent(pineApiID id);
+void waitUntilPineDataPresent(pineApiID id);
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id);
 pineApiID send_readMemorySegment(unsigned int addr, size_t len);
 pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf);
@@ -122,7 +123,7 @@ public:
 	{
 		if (pState != reading)
 			exit_execv(69); //todo abort bad
-		while (!isPineDataPresent(outstandingAPIID)) { ; }
+		waitUntilPineDataPresent(outstandingAPIID);
 		std::vector<DSPINESendRecvPair> pineData = getPineDataSegment(outstandingAPIID);
 		//reads should be of the form: 8? 8? 8? 8? ... (excess is ignored if not a multiple of 8)
 		for (size_t i = 0; i < pineData.size(); i++)
@@ -152,7 +153,7 @@ public:
 	{
 		if (pState != writing)
 			exit_execv(69); //todo abort bad
-		while (!isPineDataPresent(outstandingAPIID)) { ; }
+		waitUntilPineDataPresent(outstandingAPIID);
 		//std::vector<DSPINESendRecvPair> pineData = getPineDataSegment(outstandingAPIID);
 		//currently nothing needs to be done with pineData
 		removeOldPineData(outstandingAPIID); //integrity & proper sizes are verified by the api functions

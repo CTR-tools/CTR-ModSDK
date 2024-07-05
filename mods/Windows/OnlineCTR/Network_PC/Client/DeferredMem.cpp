@@ -223,12 +223,15 @@ internalPineApiID pineSend(DSPINESend sendObj)
 	#endif
 	//critical region (syncronize access pls)
 	{
-		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
 		pineObjs.insert(std::pair<internalPineApiID, std::pair<DSPINESendRecvPair, bool>>{ pineSendsCount, std::pair<DSPINESendRecvPair, bool>{ DSPINESendRecvPair{ sendObj, DSPINERecv{} }, false } });
 	}
 	//end critical region
 	return pineSendsCount++;
 }
+
+std::mutex waitPineDataMutex;
+std::condition_variable waitPineDataCV;
 
 void pineRecv()
 { //on another thread
@@ -283,15 +286,14 @@ void pineRecv()
 	#endif
 	//critical region (syncronize access pls)
 	{
-		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
 		auto& e = pineObjs.at(pineRecvsCount);
 		e.first.recvData = recvData;
 		e.second = true;
 	}
 	//end critical region
 	pineRecvsCount++;
-
-	//raise event in a message loop for the main thread that something was recieved, update any/all things that may have a pine api call pending (e.g., ps1ptr.refresh)
+	waitPineDataCV.notify_one();
 }
 
 pineApiID pineApiRequestCount = 0;
@@ -304,7 +306,7 @@ void removeOldPineData(pineApiID id)
 	size_t length = startAndLength.second;
 	//critical region (syncronize access pls)
 	{
-		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < length; i++)
 		{
 			pineObjs.erase(start + i);
@@ -322,7 +324,7 @@ bool isPineDataPresent(pineApiID id)
 	size_t length = startAndLength.second;
 	//critical region (syncronize access pls)
 	{
-		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < length; i++)
 		{
 			isAllPresent &= pineObjs.at(start + i).second; //this bool is only true when it's been recvd
@@ -330,6 +332,12 @@ bool isPineDataPresent(pineApiID id)
 	}
 	//end critical region
 	return isAllPresent;
+}
+
+void waitUntilPineDataPresent(pineApiID id)
+{
+	std::unique_lock<std::mutex> ul{ waitPineDataMutex };
+	waitPineDataCV.wait(ul, [=] { return isPineDataPresent(id); });
 }
 
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
@@ -340,7 +348,7 @@ std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
 	size_t length = startAndLength.second;
 	//critical region (syncronize access pls)
 	{
-		std::unique_lock<std::mutex> um{ pineObjsMutex };
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < length; i++)
 		{
 			DSPINESendRecvPair obj = pineObjs.at(start + i).first;
