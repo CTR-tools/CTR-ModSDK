@@ -48,7 +48,7 @@ void removeOldPineData(pineApiID id);
 void waitUntilPineDataPresent(pineApiID id);
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id);
 pineApiID send_readMemorySegment(unsigned int addr, size_t len);
-pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf);
+pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf, char* originalBuf = nullptr);
 
 //https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl
 template<typename T>
@@ -65,10 +65,10 @@ public:
 	typedef std::shared_ptr<T> ptrtype;
 private:
 	unsigned int address;
-	/*bool volat;
-	bool didNotPrefetch;*/
+	/*bool volat;*/
+	bool didPrefetch;
 	char* buf;
-	//char* originalBuf;
+	char* originalBuf;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf and originalBuf
 	pineState pState = none;
 	pineApiID outstandingAPIID;
@@ -85,20 +85,23 @@ public:
 	/// Do it yourself.
 	/// </summary>
 	/// <param name="addr">The address of PS1 memory to represent</param>
-	/// <param name="doNotPrefetch">If true, this ps1ptr will not prefetch the contents of that memory.
+	/// <param name="prefetch">If false, this ps1ptr will not prefetch the contents of that memory upon construction.
 	/// This is useful if you plan on completely overwriting this portion of memory, saving latency.
 	/// However, an object in this state will always commit it's entire buffer to ps1 memory every
 	/// time it is commited, so make sure *all* of the memory this ps1ptr represents is set as you intend.</param>
 	/// <param name="volatileAccess">If true, will automatically refresh() for you upon every call to get()</param>
-	ps1ptr(unsigned int addr, bool doNotPrefetch = false/*, bool volatileAccess = false*/) : address(addr)/*, didNotPrefetch(doNotPrefetch), volat(volatileAccess)*/
+	ps1ptr(unsigned int addr, bool prefetch = true/*, bool volatileAccess = false*/) : address(addr), didPrefetch(prefetch)/*, volat(volatileAccess)*/
 	{
 		buf = new char[sizeof(T)];
-		//originalBuf = new char[sizeof(T)];
-		memset(buf, 0, sizeof(T));
-		//memcpy(originalBuf, buf, sizeof(T));
-		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; /*delete[] originalBuf;*/ }); //when the shared_ptr dies, free the char* off the heap.
-		if (!doNotPrefetch)
+		originalBuf = new char[sizeof(T)];
+		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; delete[] originalBuf; }); //when the shared_ptr dies, free the char* off the heap.
+		if (prefetch)
 			blockingRead();
+		else
+		{
+			memset(buf, 0, sizeof(T));
+			memcpy(originalBuf, buf, sizeof(T));
+		}
 	}
 	void blockingRead()
 	{
@@ -134,6 +137,8 @@ public:
 			memcpy(buf + bufInd, dat.recvData.read64.data.bytes, len);
 		}
 		removeOldPineData(outstandingAPIID);
+		memcpy(originalBuf, buf, sizeof(T));
+		didPrefetch = true; //if we've read, we can treat this object (from this point on) as if it was prefetched.
 		//at the very end
 		pState = none;
 	}
@@ -146,7 +151,8 @@ public:
 	{
 		if (pState != none)
 			exit_execv(69); //todo abort bad
-		outstandingAPIID = send_writeMemorySegment(address, sizeof(T), buf);
+		outstandingAPIID = send_writeMemorySegment(address, sizeof(T), buf, didPrefetch ? originalBuf : nullptr);
+		didPrefetch = true; //if we've written, we can treat this object (from this point on) as if it was prefetched, because it now *is* the canonical memory state
 		pState = writing;
 	}
 	void waitWrite()
@@ -247,14 +253,10 @@ public:
 	/// Creates a ps1ptr of the specified address, offset by the address of this ps1mem.
 	/// </summary>
 	template<typename T>
-	ps1ptr<T> at(unsigned int addr, bool doNotPrefetch = false/*, bool volatileAccess = false*/)
+	ps1ptr<T> at(unsigned int addr, bool prefetch = true/*, bool volatileAccess = false*/)
 	{
-		return ps1ptr<T>(addr + address, doNotPrefetch/*, volatileAccess*/);
+		return ps1ptr<T>(addr + address, prefetch/*, volatileAccess*/);
 	}
-
-	//these are useful for unconditional writes.
-	//void writeRaw(unsigned int addr, char val);
-	//void writeRaw(unsigned int addr, short val);
 };
 
 #endif //DEF_MEM

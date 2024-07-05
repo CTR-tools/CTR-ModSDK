@@ -235,7 +235,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// set sdata->gGT->numLaps
 			//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-			ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff, false); //don't prefetch since we're unilaterally overwriting.
 			(*numLapsV.get()) = numLaps;
 			numLapsV.startWrite();
 
@@ -260,7 +260,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID > octr.get()->DriverID) slot = clientID;
 
 			//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-			ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, false); //don't prefetch since we're unilaterally overwriting.
 			(*characterIDV.get()) = characterID;
 			characterIDV.startWrite();
 
@@ -291,21 +291,27 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		case SG_RACEDATA:
 		{
-			// wait for drivers to be initialized
-			// since this happens every frame, it's worth hyper-optimizing, hence the atypical refresh
-			/*int startOffset = offsetof(OnlineCTR, CurrState), endOffset = offsetof(OnlineCTR, DriverID), endSize = sizeof(unsigned char);
-			octr.partialRefresh(startOffset, (endOffset - startOffset) + endSize);*/
-			octr.blockingRead();
-			//NOTE: as of writing, this switch case *only uses* these members of octr
-			// * CurrState
-			// * DriverID
-			//If at any point this changes, you must update the .partialRefresh to account for it.
+			//int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];
+			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff, false);
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff, false);
+			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
+			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff, false);
+
+			//begin concurrent fetch
+			octr.startRead();
+			sdata_Loading_stage.startRead();
+			gamepad.startRead();
+			psxPtr.startRead();
+
+			//block to finalize concurrent fetch
+			octr.waitRead();
+			sdata_Loading_stage.waitRead();
+			gamepad.waitRead();
+			psxPtr.waitRead();
+
 			if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
 				break;
 
-			/*int sdata_Loading_stage =
-				*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
-			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
 
 			if ((*sdata_Loading_stage.get()) != -1)
 				break;
@@ -342,7 +348,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// released
 			int rel = prev & ~curr;
 
-			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
 			gamepad.get()->buttonsHeldCurrFrame = curr;
 			gamepad.get()->buttonsTapped = tap;
 			gamepad.get()->buttonsReleased = rel;
@@ -361,35 +366,30 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			buttonPrev[slot] = curr;
 
-			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff);
 			(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 			// lossless compression, bottom byte is never used,
 			// cause psx renders with 3 bytes, and top byte
 			// is never used due to world scale (just pure luck)
 			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
-			ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, false); //don't prefetch since we're unilaterally overwriting.
 			(*x.get()) = ((int)r->posX) * 256;
 
 			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
-			ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, false); //don't prefetch since we're unilaterally overwriting.
 			(*y.get()) = ((int)r->posY) * 256;
 
 			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
-			ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, false); //don't prefetch since we're unilaterally overwriting.
 			(*z.get()) = ((int)r->posZ) * 256;
 
 			int angle =
 				(r->kartRot1) |
 				(r->kartRot2 << 5);
-
 			angle &= 0xfff;
 
-			//printf("recv x:%d y:%d z:%d", *x.get(), *y.get(), *z.get());
-
 			//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
-			ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, false); //don't prefetch since we're unilaterally overwriting.
 			(*angleV.get()) = (short)angle;
 
 			angleV.startWrite();
@@ -397,18 +397,18 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			y.startWrite();
 			z.startWrite();
 
+			//*(short*)&pBuf[psxPtr + 0x3E2] = 200;
+			ps1ptr<short> reserves = pBuf.at<short>((*psxPtr.get()) + 0x3E2, false); //don't prefetch since we're unilaterally overwriting.
 			// keep setting to 200,
 			// and if !boolReserves, let it fall to zero
 			if (r->boolReserves)
 			{
-				//*(short*)&pBuf[psxPtr + 0x3E2] = 200;
-				ps1ptr<short> reserves = pBuf.at<short>((*psxPtr.get()) + 0x3E2, true); //don't prefetch since we're unilaterally overwriting.
 				(*reserves.get()) = 200;
 				reserves.startWrite();
 			}
 
 			//*(short*)&pBuf[psxPtr + 0x30] = r->wumpa;
-			ps1ptr<short> wumpa = pBuf.at<short>((*psxPtr.get()) + 0x30, true); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<short> wumpa = pBuf.at<short>((*psxPtr.get()) + 0x30, false); //don't prefetch since we're unilaterally overwriting.
 			(*wumpa.get()) = r->wumpa;
 			wumpa.startWrite();
 
@@ -1019,23 +1019,8 @@ void StatePC_Lobby_StartLoading()
 
 void SendEverything()
 {
-	//TODO: aggregate adjacent memory (e.g., xyz into a single fetch)
-
 	CG_EverythingKart cg = { 0 };
 	cg.type = CG_RACEDATA;
-
-	// === Buttons ===
-	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff);
-
-	// ignore Circle/L2
-	(*hold.get()) &= ~(0xC0); //in original code it was done to the variable, not the mem, so don't commit.
-
-	// put L1/R1 into one byte
-	if (((*hold.get()) & 0x400) != 0) (*hold.get()) |= 0x40;
-	if (((*hold.get()) & 0x800) != 0) (*hold.get()) |= 0x80;
-
-	cg.buttonHold = (unsigned char)(*hold.get());
 
 	// === Position ===
 	//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
@@ -1046,35 +1031,67 @@ void SendEverything()
 	// cause psx renders with 3 bytes, and top byte
 	// is never used due to world scale (just pure luck)
 	// Addendum by TheUbMunster:
-	// once custom tracks start to become a thing, if they
-	// ever use "world scale", this should probably be applied
-	// on a track-by-track basis.
-
-	//this should be 3x faster than 3 non-concurrent reads (see old code below).
-	//todo: automate concurrent reads so this isn't necessary.
-	struct pos { int x, y, z; };
-	STATIC_ASSERT2(sizeof(pos) == 12, "single fetch pos (xyz) trick only works if the structure is the correct size to occupy 0x2d4 through 0x2dc + sizeof(int)");
-	ps1ptr<pos> xyz = pBuf.at<pos>((*psxPtr.get()) + 0x2d4);
-	cg.posX = (short)((*xyz.get()).x / 256);
-	cg.posY = (short)((*xyz.get()).y / 256);
-	cg.posZ = (short)((*xyz.get()).z / 256);
+	// once custom tracks start to become a thing, if they ever use "world scale",
+	// this optimization should probably be applied on a track-by-track basis.
 
 	//cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
-	//ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4);
-	//cg.posX = (short)(*x.get() / 256);
+	ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, false);
 
 	//cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
-	//ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8);
-	//cg.posY = (short)(*y.get() / 256);
+	ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, false);
 
 	//cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
-	//ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc);
-	//cg.posZ = (short)(*z.get() / 256);
+	ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, false);
 
 	// === Direction Faced ===
 	// driver->0x39a (direction facing)
 	//unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
-	ps1ptr<unsigned short> angle = pBuf.at<unsigned short>((*psxPtr.get()) + 0x39a);
+	ps1ptr<unsigned short> angle = pBuf.at<unsigned short>((*psxPtr.get()) + 0x39a, false);
+
+	//char wumpa = *(unsigned char*)&pBuf[psxPtr + 0x30];
+	ps1ptr<char> wumpa = pBuf.at<char>((*psxPtr.get()) + 0x30, false);
+
+	// must be read as unsigned, even though game uses signed,
+	// has to do with infinite reserves when the number is negative
+	//unsigned short reserves = *(unsigned short*)&pBuf[psxPtr + 0x3E2];
+	ps1ptr<unsigned char> reserves = pBuf.at<unsigned char>((*psxPtr.get()) + 0x3e2, false);
+
+	// === Buttons ===
+	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
+	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff, false);
+
+	//begin concurrent fetch
+	x.startRead();
+	y.startRead();
+	z.startRead();
+	angle.startRead();
+	wumpa.startRead();
+	reserves.startRead();
+	hold.startRead();
+	octr.startRead();
+
+	//block to finalize concurrent fetch
+	x.waitRead();
+	y.waitRead();
+	z.waitRead();
+	angle.waitRead();
+	wumpa.waitRead();
+	reserves.waitRead();
+	hold.waitRead();
+	octr.waitRead();
+
+	// ignore Circle/L2
+	(*hold.get()) &= ~(0xC0); //in original code it was done to the variable, not the mem, so don't commit.
+
+	// put L1/R1 into one byte
+	if (((*hold.get()) & 0x400) != 0) (*hold.get()) |= 0x40;
+	if (((*hold.get()) & 0x800) != 0) (*hold.get()) |= 0x80;
+
+	cg.buttonHold = (unsigned char)(*hold.get());
+
+	cg.posX = (short)(*x.get() / 256);
+	cg.posY = (short)(*y.get() / 256);
+	cg.posZ = (short)(*z.get() / 256);
 	(*angle.get()) &= 0xfff; //in original code it was done to the variable, not the mem, so don't commit.
 
 	unsigned char angleBit5 = (*angle.get()) & 0x1f;
@@ -1082,21 +1099,15 @@ void SendEverything()
 	cg.kartRot1 = angleBit5;
 	cg.kartRot2 = angleTop8;
 
-	//char wumpa = *(unsigned char*)&pBuf[psxPtr + 0x30];
-	ps1ptr<char> wumpa = pBuf.at<char>((*psxPtr.get()) + 0x30);
 	cg.wumpa = (*wumpa.get());
 
-	// must be read as unsigned, even though game uses signed,
-	// has to do with infinite reserves when the number is negative
-	//unsigned short reserves = *(unsigned short*)&pBuf[psxPtr + 0x3E2];
-	ps1ptr<unsigned char> reserves = pBuf.at<unsigned char>((*psxPtr.get()) + 0x3e2);
 	cg.boolReserves = ((*reserves.get()) > 200);
 
 	// TO DO: No Fire Level yet
 
 	sendToHostUnreliable(&cg, sizeof(CG_EverythingKart));
 
-	octr.blockingRead();
+	//octr.blockingRead(); //concurrently read in the block above.
 	if (octr.get()->Shoot[0].boolNow == 1)
 	{
 		octr.get()->Shoot[0].boolNow = 0;

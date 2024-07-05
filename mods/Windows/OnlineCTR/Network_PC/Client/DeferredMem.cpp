@@ -208,6 +208,14 @@ internalPineApiID pineSend(DSPINESend sendObj)
 { //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
 	//tcp send
 	#if _WIN64 //windows
+	//critical region (syncronize access pls)
+	{
+		//need to add it first because the second we send (right after this) the recv thread might try
+		//to add it *before* we've even made the entry for it, which would be bad.
+		std::lock_guard<std::mutex> um{ pineObjsMutex };
+		pineObjs.insert(std::pair<internalPineApiID, std::pair<DSPINESendRecvPair, bool>>{ pineSendsCount, std::pair<DSPINESendRecvPair, bool>{ DSPINESendRecvPair{ sendObj, DSPINERecv{} }, false } });
+	}
+	//end critical region
 	int res = send(dspineSocket, (const char*)&sendObj, sendObj.shared_header.packetSize, 0);
 	if (res != sendObj.shared_header.packetSize)
 	{
@@ -221,12 +229,6 @@ internalPineApiID pineSend(DSPINESend sendObj)
 	#error todo...
 	//posix non-blocking send
 	#endif
-	//critical region (syncronize access pls)
-	{
-		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		pineObjs.insert(std::pair<internalPineApiID, std::pair<DSPINESendRecvPair, bool>>{ pineSendsCount, std::pair<DSPINESendRecvPair, bool>{ DSPINESendRecvPair{ sendObj, DSPINERecv{} }, false } });
-	}
-	//end critical region
 	return pineSendsCount++;
 }
 
@@ -293,23 +295,26 @@ void pineRecv()
 	}
 	//end critical region
 	pineRecvsCount++;
-	waitPineDataCV.notify_one();
+	waitPineDataCV.notify_all();
 }
 
 pineApiID pineApiRequestCount = 0;
-std::map<pineApiID, std::pair<internalPineApiID, size_t>> pineApiRequests{};
+std::map<pineApiID, std::vector<internalPineApiID>> pineApiRequests{};
 
 void removeOldPineData(pineApiID id)
 {
-	auto startAndLength = pineApiRequests.at(id);
-	internalPineApiID start = startAndLength.first;
-	size_t length = startAndLength.second;
+	//TODO:
+	//1. mark this entry as uncared for
+	//2. loop through all uncared for entries, and if they're complete, remove them and their entry
+
+
+	auto& dat = pineApiRequests.at(id);
 	//critical region (syncronize access pls)
 	{
 		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		for (size_t i = 0; i < length; i++)
+		for (size_t i = 0; i < dat.size(); i++)
 		{
-			pineObjs.erase(start + i);
+			pineObjs.erase(dat[i]);
 		}
 	}
 	//end critical region
@@ -319,15 +324,13 @@ void removeOldPineData(pineApiID id)
 bool isPineDataPresent(pineApiID id)
 {
 	bool isAllPresent = true;
-	auto startAndLength = pineApiRequests.at(id);
-	internalPineApiID start = startAndLength.first;
-	size_t length = startAndLength.second;
+	auto& dat = pineApiRequests.at(id);
 	//critical region (syncronize access pls)
 	{
 		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		for (size_t i = 0; i < length; i++)
+		for (size_t i = 0; i < dat.size(); i++)
 		{
-			isAllPresent &= pineObjs.at(start + i).second; //this bool is only true when it's been recvd
+			isAllPresent &= pineObjs.at(dat[i]).second; //this bool is only true when it's been recvd
 		}
 	}
 	//end critical region
@@ -336,22 +339,23 @@ bool isPineDataPresent(pineApiID id)
 
 void waitUntilPineDataPresent(pineApiID id)
 {
-	std::unique_lock<std::mutex> ul{ waitPineDataMutex };
-	waitPineDataCV.wait(ul, [=] { return isPineDataPresent(id); });
+	//std::unique_lock<std::mutex> ul{ waitPineDataMutex };
+	while (!isPineDataPresent(id)) { std::this_thread::sleep_for(std::chrono::milliseconds(1)); }
+	//this deadlocks occasionally, idk why
+	/*if (!isPineDataPresent(id))
+		waitPineDataCV.wait(ul, [=] { return isPineDataPresent(id); });*/
 }
 
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
 {
 	std::vector<DSPINESendRecvPair> segment{};
-	auto startAndLength = pineApiRequests.at(id);
-	internalPineApiID start = startAndLength.first;
-	size_t length = startAndLength.second;
+	auto& dat = pineApiRequests.at(id);
 	//critical region (syncronize access pls)
 	{
 		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		for (size_t i = 0; i < length; i++)
+		for (size_t i = 0; i < dat.size(); i++)
 		{
-			DSPINESendRecvPair obj = pineObjs.at(start + i).first;
+			DSPINESendRecvPair obj = pineObjs.at(dat[i]).first;
 			segment.push_back(obj);
 		}
 	}
@@ -363,8 +367,7 @@ pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 {
 	if (len == 0)
 		exit_execv(69); //this function only works if you attempt to read a non-zero length of memory.
-	pineApiID firstSendID = 0;
-	size_t sendCount = 0; //should always result in roundedUpLen / 8
+	std::vector<internalPineApiID> iids{};
 	//size_t roundedUpLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
 	size_t roundedUpLen = ((len & 0x7) != 0) ? (len & ~0x7) + 8 : len; //should be identical to above
 	for (size_t i = 0; i < roundedUpLen; i += 8)
@@ -373,390 +376,89 @@ pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 		//TODO: verify that this assigns members like packetsize etc. correctly automatically.
 		sendObj.read64 = DSPINERead64Send{};
 		sendObj.read64.address = addr + i;
-		if (sendCount == 0) //ternary doesn't work bc we need pineSend to execute regardless
-			firstSendID = pineSend(sendObj);
-		else
-			pineSend(sendObj);
-		sendCount++;
+		iids.push_back(pineSend(sendObj));
 	}
-	pineApiRequests.insert(std::pair<pineApiID, std::pair<internalPineApiID, size_t>>{pineApiRequestCount, std::pair<internalPineApiID, size_t>{firstSendID, sendCount}});
+	pineApiRequests.insert(std::pair<pineApiID, std::vector<internalPineApiID>>{pineApiRequestCount, iids});
 	return pineApiRequestCount++;
 }
 
-pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf)
+pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf, char* originalBuf)
 {
 	if (len == 0)
 		exit_execv(69); //this function only works if you attempt to write a non-zero length of memory.
-	pineApiID firstSendID = 0;
-	size_t sendCount = 0; //may not necessarily result in whole / 8
-	size_t whole = len - (len % 8);
-	size_t rem = len - whole; //whatever is left over.
-	//size_t i = 0;
-	for (size_t i = 0; i < whole; i += 8)
+	std::vector<internalPineApiID> iids{};
+	auto dispatchContig = [&iids](unsigned int address, size_t length, char* buffer)
 	{
-		DSPINESend sendObj{};
-		//TODO: verify that this assigns members like packetsize etc. correctly automatically.
-		sendObj.write64 = DSPINEWrite64Send{};
-		sendObj.write64.address = addr + i;
-		memcpy(sendObj.write64.data.bytes, buf + i, 8);		
-		if (sendCount == 0) //ternary doesn't work bc we need pineSend to execute regardless
-			firstSendID = pineSend(sendObj);
-		else
-			pineSend(sendObj);
-		sendCount++;
-	}
-	//note: rem is [0-7] inclusive
-	//unsigned int offsetaddr = addr + whole;
-	unsigned int offset = 0;
-	if ((rem & 4) != 0) //we need a 4
+		pineApiID firstSendID = 0;
+		size_t sendCount = 0; //may not necessarily result in whole / 8
+		size_t whole = length - (length % 8);
+		size_t rem = length - whole; //whatever is left over.
+		//size_t i = 0;
+		for (size_t i = 0; i < whole; i += 8)
+		{
+			DSPINESend sendObj{};
+			//TODO: verify that this assigns members like packetsize etc. correctly automatically.
+			sendObj.write64 = DSPINEWrite64Send{};
+			sendObj.write64.address = address + i;
+			memcpy(sendObj.write64.data.bytes, buffer + i, 8);
+			iids.push_back(pineSend(sendObj));
+		}
+		//note: rem is [0-7] inclusive
+		//unsigned int offsetaddr = addr + whole;
+		unsigned int offset = 0;
+		if ((rem & 4) != 0) //we need a 4
+		{
+			DSPINESend sendObj{};
+			sendObj.write32 = DSPINEWrite32Send{};
+			sendObj.write32.address = address + whole + offset;
+			memcpy(sendObj.write32.data.bytes, buffer + whole + offset, 4);
+			iids.push_back(pineSend(sendObj));
+			offset += 4;
+		}
+		if ((rem & 2) != 0) //we need a 2
+		{
+			DSPINESend sendObj{};
+			sendObj.write16 = DSPINEWrite16Send{};
+			sendObj.write16.address = address + whole + offset;
+			memcpy(sendObj.write16.data.bytes, buffer + whole + offset, 2);
+			iids.push_back(pineSend(sendObj));
+			offset += 2;
+		}
+		if ((rem & 1) != 0) //we need a 2
+		{
+			DSPINESend sendObj{};
+			sendObj.write8 = DSPINEWrite8Send{};
+			sendObj.write8.address = address + whole + offset;
+			memcpy(sendObj.write8.data.bytes, buffer + whole + offset, 1);
+			iids.push_back(pineSend(sendObj));
+			offset += 1;
+		}
+	};
+	if (originalBuf == nullptr)
 	{
-		DSPINESend sendObj{};
-		sendObj.write32 = DSPINEWrite32Send{};
-		sendObj.write32.address = addr + whole + offset;
-		memcpy(sendObj.write32.data.bytes, buf + whole + offset, 4);
-		if (sendCount == 0) //ternary doesn't work bc we need pineSend to execute regardless
-			firstSendID = pineSend(sendObj);
-		else
-			pineSend(sendObj);
-		sendCount++;
-		offset += 4;
+		dispatchContig(addr, len, buf);
 	}
-	if ((rem & 2) != 0) //we need a 2
+	else
 	{
-		DSPINESend sendObj{};
-		sendObj.write16 = DSPINEWrite16Send{};
-		sendObj.write16.address = addr + whole + offset;
-		memcpy(sendObj.write16.data.bytes, buf + whole + offset, 2);
-		if (sendCount == 0) //ternary doesn't work bc we need pineSend to execute regardless
-			firstSendID = pineSend(sendObj);
-		else
-			pineSend(sendObj);
-		sendCount++;
-		offset += 2;
+		pineApiID firstSendID = 0;
+		size_t sendCount = 0;
+		long mismatchStart = -1, mismatchLength = 1;
+		for (size_t i = 0; i < len; i++)
+		{
+			if (mismatchStart != -1 && buf[i] != originalBuf[i])
+				mismatchLength++; //we already have a mismatch, make it longer
+			if (mismatchStart == -1 && buf[i] != originalBuf[i])
+				mismatchStart = i; //start a new mismatch
+			if (mismatchStart != -1 && buf[i] == originalBuf[i])
+			{ //end of the mismatch, now dispatch
+				dispatchContig(addr + mismatchStart, mismatchLength, buf + mismatchStart);
+
+				mismatchStart = -1; mismatchLength = 1; //at the very end
+			}
+		}
+		if (mismatchStart != -1)
+			dispatchContig(addr + mismatchStart, mismatchLength, buf + mismatchStart);
 	}
-	if ((rem & 1) != 0) //we need a 2
-	{
-		DSPINESend sendObj{};
-		sendObj.write8 = DSPINEWrite8Send{};
-		sendObj.write8.address = addr + whole + offset;
-		memcpy(sendObj.write8.data.bytes, buf + whole + offset, 1);
-		if (sendCount == 0) //ternary doesn't work bc we need pineSend to execute regardless
-			firstSendID = pineSend(sendObj);
-		else
-			pineSend(sendObj);
-		sendCount++;
-		offset += 1;
-	}
-	pineApiRequests.insert(std::pair<pineApiID, std::pair<internalPineApiID, size_t>>{pineApiRequestCount, std::pair<internalPineApiID, size_t>{firstSendID, sendCount}});
+	pineApiRequests.insert(std::pair<pineApiID, std::vector<internalPineApiID>>{pineApiRequestCount, iids});
 	return pineApiRequestCount++;
 }
-
-/*OLD (for reference during refactor)*/
-//void recvThread()
-//{
-//	constexpr unsigned int recvBufLen = 5;
-//	char recieveBuffer[recvBufLen];
-//
-//	while (true) //todo: std::condition_variable or similar
-//	{
-//		//.notify_all() is necessary here because if writeMemorySegment().notify_all() is called and neither
-//		//recvThread or readMemorySegment() is waiting, then nothing can come around to re-notify, resulting
-//		//in deadlock. This .notify_all will wake up readMemorySegment().wait() if it's waiting.
-//		recvCond.notify_all();
-//		std::unique_lock<std::mutex> um{ recvMutex };
-//		recvCond.wait(um, [] { return outstandingReads > 0; });
-//		while (outstandingReads > 0)
-//		{
-//#if _WIN64 //windows
-//			WSAPOLLFD fdarr = { 0 };
-//			fdarr.fd = dspineSocket;
-//			fdarr.events = POLLRDNORM;
-//			WSAPoll(&fdarr, 1, -1);
-//			int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-//			if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-//			{
-//				outstandingReads--; //very good
-//				//printf("recvThread dec %d\n", outstandingReads.load());
-//			}
-//			else 
-//			{
-//				if (recvLen < recvBufLen)
-//					printf("recv returned less than required buffer length ");
-//				printf("recv failed: %d\n", WSAGetLastError());
-//				exit_execv(5); //could be caused by many things.
-//			}
-//#else //assume posix
-//#error todo...
-//			//todo:
-//			//this should poll/select for a recv event
-//			//then recv of (maximum) length recvBufLen
-//			//ensure that the length that was recvd was indeed recvBufLen
-//			//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
-//			//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
-//			//if any "ensures" fail, then we have reached an unrecoverable error,
-//			//assume that the socket connection is bad and reset and/or close the client.
-//#endif
-//		}
-//
-//	}
-//}
-//
-//void readMemorySegment(unsigned int addr, size_t len, char* buf)
-//{
-//	//.notify_all() is necessary here because if writeMemorySegment().notify_all() is called and neither
-//	//recvThread or readMemorySegment() is waiting, then nothing can come around to re-notify, resulting
-//	//in deadlock. This .notify_all will wake up recvThread().wait() if it's waiting.
-//	recvCond.notify_all();
-//	std::unique_lock<std::mutex> um{ recvMutex };
-//	recvCond.wait(um, [] { return outstandingReads == 0; });
-//	/*if (outstandingReads != 0)
-//		printf("BAD");*/
-//	constexpr unsigned int sendBufLen = 10;
-//	constexpr unsigned int recvBufLen = 13;
-//	//sendBuffer is 10 instead of 9 bc of this bug in ds, can revert when fixed.
-//	//https://github.com/stenzek/duckstation/pull/3230
-//
-//	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0 }; //10 = packetSize
-//	sendBuffer[0] = sendBufLen & 0xFF; //10 = packetSize
-//	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //10 = packetSize
-//	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //10 = packetSize
-//	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //10 = packetSize
-//	sendBuffer[4] = DSPINEMsgRead64;
-//	char recieveBuffer[recvBufLen];
-//	size_t roundedLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
-//	for (size_t i = 0; i < roundedLen; i += 8)
-//	{ //8 byte transfer(s)
-//		//send section
-//		unsigned int offsetaddr = addr + i;
-//
-//		sendBuffer[5] = offsetaddr & 0xFF;
-//		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-//		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-//		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-//
-//#if _WIN64 //windows
-//		int res = send(dspineSocket, sendBuffer, sendBufLen, 0); //10 = packetSize
-//		if (res != sendBufLen)
-//		{
-//			printf("send() failed!\n");
-//			if (res == SOCKET_ERROR)
-//				exit_execv(6);
-//			else
-//				exit_execv(7); //partial send???
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix non-blocking send
-//#endif
-//	}
-//	for (size_t i = 0; i < roundedLen; i += 8)
-//	{
-//		//recieve section
-//#if _WIN64 //windows
-//		WSAPOLLFD fdarr = { 0 };
-//		fdarr.fd = dspineSocket;
-//		fdarr.events = POLLRDNORM;
-//		WSAPoll(&fdarr, 1, -1); //blocks until we have some data ready
-//		int recvLen = recv(dspineSocket, recieveBuffer, recvBufLen, 0);
-//		if (recvLen == recvBufLen && recieveBuffer[0] == recvBufLen && recieveBuffer[4] == 0)
-//			; //very good
-//		else if (recvLen == SOCKET_ERROR)
-//		{
-//			if (recvLen < recvBufLen)
-//				printf("recv returned less than required buffer length "); //if this starts becoming a problem then we need recv in a buffer loop.
-//			printf("recv failed: %d\n", WSAGetLastError());
-//			exit_execv(8);
-//		}
-//		else
-//		{
-//			printf("recv() failed!\n");
-//			exit_execv(9); //could be caused by many things.
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix poll/select until at least recvBufLen worth of data is ready
-//		//posix recv a maximum of recvBufLen worth of data
-//		//ensure the length that was recvd == recvBufLen
-//		//ensure that recieveBuffer[0] == recvBufLen (PINE PROTOCOL)
-//		//ensure that recieveBuffer[4] == 0 (PINE PROTOCOL)
-//		//if any "ensures" fail, then we have reached an unrecoverable error,
-//		//assume that the socket connection is bad and reset and/or close the client.
-//#endif
-//		for (size_t c = 0; c < 8; c++)
-//			if (i + c < len)
-//				buf[i + c] = recieveBuffer[c + 5];
-//	}
-//}
-//
-//void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blocking*/)
-//{
-//	std::lock_guard<std::mutex> lock{ recvMutex };
-//	//This macro accounts & compensates for a bug present in duckstation that was fixed in
-//	//https://github.com/stenzek/duckstation/pull/3230 versions of duckstation older than
-//	//this will not function with this client without this option set to 1.
-//	//(However, duckstations with this fix will have no issues with the fix applied).
-//	//Set to 1 to enable the fix, set to 0 to disable it.
-//#define applyBufferFix 1
-//	constexpr unsigned int sendBufLen = 17 + applyBufferFix;
-//	char sendBuffer[sendBufLen] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
-//	sendBuffer[0] = sendBufLen & 0xFF; //18 = packetSize
-//	sendBuffer[1] = (sendBufLen >> 8) & 0xFF; //18 = packetSize
-//	sendBuffer[2] = (sendBufLen >> 16) & 0xFF; //18 = packetSize
-//	sendBuffer[3] = (sendBufLen >> 24) & 0xFF; //18 = packetSize
-//	sendBuffer[4] = DSPINEMsgWrite64;
-//	//char recieveBuffer[recvBufLen];
-//	size_t whole = len - (len % 8);
-//	size_t rem = len - whole; //whatever is left over.
-//	size_t i = 0;
-//	for (; i < whole; i += 8)
-//	{ //8 byte transfer(s)
-//		//send section
-//		unsigned int offsetaddr = addr + i;
-//
-//		sendBuffer[5] = offsetaddr & 0xFF;
-//		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-//		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-//		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-//		sendBuffer[9] = buf[i + 0];
-//		sendBuffer[10] = buf[i + 1];
-//		sendBuffer[11] = buf[i + 2];
-//		sendBuffer[12] = buf[i + 3];
-//		sendBuffer[13] = buf[i + 4];
-//		sendBuffer[14] = buf[i + 5];
-//		sendBuffer[15] = buf[i + 6];
-//		sendBuffer[16] = buf[i + 7];
-//		outstandingReads++;
-//		//printf("write inc %d\n", outstandingReads.load());
-//#ifdef _WIN64 //windows
-//		int res = send(dspineSocket, sendBuffer, sendBufLen, 0);
-//		if (res != sendBufLen)
-//		{
-//			printf("send() failed!\n");
-//			if (res == SOCKET_ERROR)
-//				exit_execv(10);
-//			else
-//				exit_execv(11); //partial send???
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix non-blocking send of size sendBufLen
-//#endif
-//	}
-//	//note: rem is [0-7] inclusive
-//	unsigned int offsetaddr = addr + whole;
-//	if ((rem & 4) != 0) //we need a 4
-//	{
-//		int sz = 9 + 4 + applyBufferFix;
-//		sendBuffer[0] = sz & 0xFF;
-//		sendBuffer[1] = (sz >> 8) & 0xFF;
-//		sendBuffer[2] = (sz >> 16) & 0xFF;
-//		sendBuffer[3] = (sz >> 24) & 0xFF;
-//		sendBuffer[4] = DSPINEMsgWrite32;
-//		sendBuffer[5] = offsetaddr & 0xFF;
-//		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-//		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-//		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-//		sendBuffer[9] = buf[i + whole + 0];
-//		sendBuffer[10] = buf[i + whole + 1];
-//		sendBuffer[11] = buf[i + whole + 2];
-//		sendBuffer[12] = buf[i + whole + 3];
-//		outstandingReads++; //this line must come before send or race condition
-//		//printf("write inc %d\n", outstandingReads.load());
-//		offsetaddr += 4;
-//		i += 4;
-//#ifdef _WIN64 //windows
-//		int res = send(dspineSocket, sendBuffer, sz, 0);
-//		if (res != sz)
-//		{
-//			printf("send() failed!\n");
-//			if (res == SOCKET_ERROR)
-//				exit_execv(12);
-//			else
-//				exit_execv(13); //partial send???
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix non-blocking send of size sz
-//#endif
-//	}
-//	if ((rem & 2) != 0)
-//	{
-//		int sz = 9 + 2 + applyBufferFix;
-//		sendBuffer[0] = sz & 0xFF;
-//		sendBuffer[1] = (sz >> 8) & 0xFF;
-//		sendBuffer[2] = (sz >> 16) & 0xFF;
-//		sendBuffer[3] = (sz >> 24) & 0xFF;
-//		sendBuffer[4] = DSPINEMsgWrite16;
-//		sendBuffer[5] = offsetaddr & 0xFF;
-//		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-//		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-//		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-//		sendBuffer[9] = buf[i + whole + 0];
-//		sendBuffer[10] = buf[i + whole + 1];
-//		outstandingReads++; //this line must come before send or race condition
-//		//printf("write inc %d\n", outstandingReads.load());
-//		offsetaddr += 2;
-//		i += 2;
-//#ifdef _WIN64 //windows
-//		int res = send(dspineSocket, sendBuffer, sz, 0);
-//		if (res != sz)
-//		{
-//			printf("send() failed!\n");
-//			if (res == SOCKET_ERROR)
-//				exit_execv(14);
-//			else
-//				exit_execv(15); //partial send???
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix non-blocking send of size sz
-//#endif
-//	}
-//	if ((rem & 1) != 0)
-//	{
-//		int sz = 9 + 1 + applyBufferFix;
-//		sendBuffer[0] = sz & 0xFF;
-//		sendBuffer[1] = (sz >> 8) & 0xFF;
-//		sendBuffer[2] = (sz >> 16) & 0xFF;
-//		sendBuffer[3] = (sz >> 24) & 0xFF;
-//		sendBuffer[4] = DSPINEMsgWrite8;
-//		sendBuffer[5] = offsetaddr & 0xFF;
-//		sendBuffer[6] = (offsetaddr >> 8) & 0xFF;
-//		sendBuffer[7] = (offsetaddr >> 16) & 0xFF;
-//		sendBuffer[8] = (offsetaddr >> 24) & 0xFF;
-//		sendBuffer[9] = buf[i + whole + 0];
-//		outstandingReads++; //this line must come before send or race condition
-//		//printf("write inc %d\n", outstandingReads.load());
-//		offsetaddr += 1;
-//		i += 1;
-//#ifdef _WIN64 //windows
-//		int res = send(dspineSocket, sendBuffer, sz, 0);
-//		if (res != sz)
-//		{
-//			printf("send() failed!\n");
-//			if (res == SOCKET_ERROR)
-//				exit_execv(16);
-//			else
-//				exit_execv(17); //partial send???
-//		}
-//#else //assume posix
-//#error todo...
-//		//posix non-blocking send of size sz
-//#endif
-//	}
-//	recvCond.notify_all();
-//}
-//
-//void ps1mem::writeRaw(unsigned int addr, char val) //this should probably use DSPINEMsgWrite8
-//{
-//	char buf[sizeof(char)] = { val };
-//	writeMemorySegment(addr, sizeof(char), buf);
-//}
-//
-//void ps1mem::writeRaw(unsigned int addr, short val)
-//{
-//	char buf[sizeof(short)];
-//	buf[0] = val & 0xFF; //this might be the wrong endianness
-//	buf[1] = (val >> 8) & 0xFF;
-//	writeMemorySegment(addr, sizeof(short), buf);
-//}
