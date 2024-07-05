@@ -197,7 +197,12 @@ void recvThread()
 
 
 internalPineApiID pineSendsCount = 0, pineRecvsCount = 0;
-std::map<internalPineApiID, DSPINESendRecvPair> pineObjs{};
+/// <summary>
+/// Upon a call to pineSend(), an entry in this collection will be made, where the value contains
+/// just the "send" portion of the DSPINESendRecvPair if the bool is false, and the value contains
+/// both portions of the DSPINESendRecvPair if the bool is true.
+/// </summary>
+std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineObjs{};
 
 internalPineApiID pineSend(DSPINESend sendObj)
 { //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
@@ -219,7 +224,7 @@ internalPineApiID pineSend(DSPINESend sendObj)
 	//critical region (syncronize access pls)
 	{
 		std::unique_lock<std::mutex> um{ pineObjsMutex };
-		pineObjs.insert(std::pair<internalPineApiID, DSPINESendRecvPair>{ pineSendsCount, DSPINESendRecvPair{ sendObj, DSPINERecv{} } });
+		pineObjs.insert(std::pair<internalPineApiID, std::pair<DSPINESendRecvPair, bool>>{ pineSendsCount, std::pair<DSPINESendRecvPair, bool>{ DSPINESendRecvPair{ sendObj, DSPINERecv{} }, false } });
 	}
 	//end critical region
 	return pineSendsCount++;
@@ -279,7 +284,9 @@ void pineRecv()
 	//critical region (syncronize access pls)
 	{
 		std::unique_lock<std::mutex> um{ pineObjsMutex };
-		pineObjs.at(pineRecvsCount).recvData = recvData;
+		auto& e = pineObjs.at(pineRecvsCount);
+		e.first.recvData = recvData;
+		e.second = true;
 	}
 	//end critical region
 	pineRecvsCount++;
@@ -304,6 +311,7 @@ void removeOldPineData(pineApiID id)
 		}
 	}
 	//end critical region
+	pineApiRequests.erase(id); //don't need this anymore.
 }
 
 bool isPineDataPresent(pineApiID id)
@@ -317,11 +325,7 @@ bool isPineDataPresent(pineApiID id)
 		std::unique_lock<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < length; i++)
 		{
-			/*bool thisOneIsPresent = (pineObjs.find(start + i) != pineObjs.end());
-			isAllPresent &= thisOneIsPresent;*/
-
-			//when this function is called, all entries in the dict exist, they may or may not have the
-			//recv entry populated though, so we need to determine if they're all populated
+			isAllPresent &= pineObjs.at(start + i).second; //this bool is only true when it's been recvd
 		}
 	}
 	//end critical region
@@ -339,7 +343,7 @@ std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
 		std::unique_lock<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < length; i++)
 		{
-			DSPINESendRecvPair obj = pineObjs.at(start + i);
+			DSPINESendRecvPair obj = pineObjs.at(start + i).first;
 			segment.push_back(obj);
 		}
 	}

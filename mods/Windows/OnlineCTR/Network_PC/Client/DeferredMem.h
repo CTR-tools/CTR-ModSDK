@@ -69,7 +69,7 @@ private:
 	char* buf;
 	//char* originalBuf;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf and originalBuf
-	pineState pState;
+	pineState pState = none;
 	pineApiID outstandingAPIID;
 public:
 	//for static initialization only, do not actually ever call this.
@@ -161,6 +161,13 @@ public:
 	}
 	ptrtype get()
 	{
+		//This allows for waitWrite() to not need to be called before get().
+		if (pState == writing)
+		{
+			//TODO: since writes cause canonical state immediately, this can be optimized to not wait, and instead just mark this as
+			//not needed. waitWrite is currently needed to clean up the old pine data (prevent mem leak).
+			waitWrite();
+		}
 		if (pState != none)
 			exit_execv(69); //todo abort bad
 		return bufferedVal;
