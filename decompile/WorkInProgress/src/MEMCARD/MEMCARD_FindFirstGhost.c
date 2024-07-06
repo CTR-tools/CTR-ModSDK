@@ -20,6 +20,6 @@ char *DECOMP_MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
     {
         sdata->unk_card_8008D404 = 0xf;
         strcpy(firstEntry->name, someEntry.name); // 0x80
-        return sdata->s_unk_someOtherMemcardString;
+        return &sdata->s_memcardFindGhostFile[0];
     }
 }

@@ -101,10 +101,12 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // MediumStackPool
   // OG game was 0x80+8,
-  // now changed to 0x60+8 (optimized Warppad)
+  // now changed to 0x60+8 (optimized WarpPad)
+  // WarpPad is the largest struct that uses MedStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.mediumStack, numMedium,
-	0x60 + sizeof(void*)*2, /*"MediumStackPool"*/0);
+	sizeof(struct Item) + sizeof(struct WarpPad), 
+	/*"MediumStackPool"*/0);
 
 // original ps1 with fragmented memory
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
@@ -129,10 +131,12 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // SmallStackPool
   // OG game was 0x40+8,
-  // changed now to 0x38+8 (UI_Element3d)
+  // changed now to 0x38+8 (og UiElement3D)
+  // UiElement3D is the largest struct that uses SmallStackPool
   DECOMP_JitPool_Init(
 	&gGT->JitPools.smallStack, numSmall,
-	0x38 + sizeof(void*)*2, /*"SmallStackPool"*/0);
+	sizeof(struct Item) + sizeof(struct UiElement3D),  
+	/*"SmallStackPool"*/0);
 
 
 
@@ -148,8 +152,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // OG game used 0x670 for driver, should be 0x640,
   // maybe intended to mix RainPool into Driver struct?
-  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	sizeof(struct Driver),	/*"LargeStackPool"*/0);
-  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	0x28,	/*"RainPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.largeStack,numDriver, 	sizeof(struct Item) + sizeof(struct Driver),	/*"LargeStackPool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.rain, 		numDriver,	sizeof(struct RainLocal),	/*"RainPool"*/0);
 
 
 
@@ -164,7 +168,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   numParticle = 120*10;
   #endif
 
-  DECOMP_JitPool_Init(&gGT->JitPools.particle, 	numParticle,0x7c,	/*"ParticlePool"*/0);
+  DECOMP_JitPool_Init(&gGT->JitPools.particle, 	numParticle,sizeof(struct Particle),	/*"ParticlePool"*/0);
   DECOMP_JitPool_Init(&gGT->JitPools.oscillator,numParticle,0x18,	/*"OscillatorPool"*/0);
 
 

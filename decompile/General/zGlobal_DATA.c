@@ -4168,7 +4168,7 @@ struct Data data =
 
 	.s_BASCUS_94426_SLOTS = "BASCUS-94426-SLOTS",
 
-	.data38 =
+	.memcardIcon_HeaderSLOTS =
 	{
 		0x82, 0x62, 0x82, 0x73,
 		0x82, 0x71, 0x81, 0x46,

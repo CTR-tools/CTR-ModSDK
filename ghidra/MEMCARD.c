@@ -476,7 +476,7 @@ undefined4 FUN_8003db54(void)
 // MEMCARD_NewTask
 // param1 slotIndex
 // param2 name
-// param3 pointer to memcard
+// param3 pointer to profile
 // param4 memcard size
 undefined4 FUN_8003db98(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
@@ -487,7 +487,8 @@ undefined4 FUN_8003db98(undefined4 param_1,undefined4 param_2,undefined4 param_3
   // MEMCARD_StringSet
   FUN_8003d730(&DAT_800990a4,param_1,param_2);
 
-  // pointer to memcard 800992e4
+  // pointer to profile
+  // either Save Source, or Load Destination
   DAT_8008d408 = param_3;
 
   // reset to 8 attempts before quitting
@@ -517,7 +518,7 @@ void FUN_8003dbf8(void)
 }
 
 
-// Read from memory card
+// MEMCARD_ReadFile
 // parameters are start and end offsets
 undefined4 FUN_8003dc30(long param_1,long param_2)
 
@@ -528,18 +529,21 @@ undefined4 FUN_8003dc30(long param_1,long param_2)
   lVar1 = lseek(DAT_8008d40c,param_1,0);
 
   // read to memcard buffer in RAM, param_2 size
-  if ((lVar1 != -1) && (lVar1 = read(DAT_8008d40c,DAT_8008d408,param_2), lVar1 != -1)) {
+  if ((lVar1 != -1) && (lVar1 = read(DAT_8008d40c,DAT_8008d408,param_2), lVar1 != -1)) 
+  {
+	// MC_RETURN_SUCCESS
     return 7;
   }
 
   // close memcard file
   FUN_8003dbf8();
 
+  // MC_RETURN TIMEOUT
   return 1;
 }
 
 
-// Write to memory card
+// MEMCARD_WriteFile
 // start offset, pointer to data, end offset
 undefined4 FUN_8003dc9c(long param_1,void *param_2,long param_3)
 
@@ -550,13 +554,16 @@ undefined4 FUN_8003dc9c(long param_1,void *param_2,long param_3)
   lVar1 = lseek(DAT_8008d40c,param_1,0);
 
   // write to memcard buffer in RAM, param_3 size
-  if ((lVar1 != -1) && (lVar1 = write(DAT_8008d40c,param_2,param_3), lVar1 != -1)) {
+  if ((lVar1 != -1) && (lVar1 = write(DAT_8008d40c,param_2,param_3), lVar1 != -1)) 
+  {
+	// MC_RETURN_SUCCESS
     return 7;
   }
 
   // close memcard file
   FUN_8003dbf8();
 
+  // MC_RETURN TIMEOUT
   return 1;
 }
 
@@ -632,6 +639,7 @@ int FUN_8003ddac(void)
           lVar1 = _card_load(DAT_8008d8b8);
         } while (lVar1 != 1);
 
+		// MC_RETURN_SUCCESS
         return 7;
       }
       if ((DAT_8008d8cc & 2) == 0)
@@ -639,6 +647,7 @@ int FUN_8003ddac(void)
 		// zero free bytes on memcard
         DAT_8008d8ac = 0;
 
+		// MC_RETURN_UNFORMATTED
 		iVar3 = 5;
       }
     }
@@ -653,19 +662,27 @@ int FUN_8003ddac(void)
 
           return iVar3;
         }
+		
+		// MC_RETURN_SUCCESS
         return 7;
       }
+	  
       FUN_8003db54();
-      do {
+      
+	  do {
         lVar1 = _card_clear(DAT_8008d8b8);
       } while (lVar1 != 1);
+	  
       iVar3 = FUN_8003dae4();
-      if (iVar3 == 0) {
+      
+	  if (iVar3 == 0) {
         DAT_8008d404 = 2;
         FUN_8003db54();
         do {
           lVar1 = _card_load(DAT_8008d8b8);
         } while (lVar1 != 1);
+		
+		// MC_RETURN_SUCCESS
         return 7;
       }
     }
@@ -684,16 +701,25 @@ int FUN_8003ddac(void)
 	  // MEMCARD_GetFreeBytes
       FUN_8003dd10(DAT_8008d8b8);
 
+	  // MC_RETURN_NEWCARD
       return 3;
     }
-    if (iVar3 == 3) {
+    
+	if (iVar3 == 3) 
+	{
       DAT_8008d404 = 0;
       DAT_8008d8cc = DAT_8008d8cc & 0xfffffffc;
+	  
+	  // MC_RETURN_UNFORMATTED
       return 5;
     }
-    if (iVar3 == 7) {
+	
+    if (iVar3 == 7) 
+	{
+	  // MC_RETURN_SUCCESS
       return 7;
     }
+	
 LAB_8003df38:
     DAT_8008d404 = 0;
     break;
@@ -753,12 +779,16 @@ LAB_8003df38:
       if ((DAT_8008d8cc & 8) == 0) {
         DAT_8008d8b0 = 0;
         DAT_8008d8d0 = 0;
+		
+		// MC_RETURN_SUCCESS
         return 7;
       }
       goto switchD_8003dde0_caseD_5;
     }
 
-    if (iVar3 == 7) {
+    if (iVar3 == 7) 
+	{
+	  // MC_RETURN_SUCCESS
       return 7;
     }
 
@@ -788,7 +818,9 @@ switchD_8003dde0_caseD_5:
 	{
 	  // if checksumLoad returned 7, then the checksum
 	  // is not finished processing, it will continue next frame
-      if (iVar3 == 7) {
+      if (iVar3 == 7) 
+	  {
+		// MC_RETURN_SUCCESS
         return 7;
       }
 
@@ -833,6 +865,7 @@ LAB_8003e1fc:
 		// MEMCARD_GetFreeBytes
         FUN_8003dd10(DAT_8008d8b8);
 
+		// MC_RETURN_IOE
         return 0;
       }
       iVar3 = DAT_8008d404 + -9;
@@ -849,7 +882,9 @@ LAB_8003e1e4:
 
 	else
 	{
-      if (iVar3 == 7) {
+      if (iVar3 == 7) 
+	  {
+		// MC_RETURN_SUCCESS
         return 7;
       }
 
@@ -872,7 +907,7 @@ LAB_8003e1e4:
       iVar3 = DAT_8008d8d8;
     }
 
-	// write to memory card
+	// MEMCARD_WriteFile
     iVar3 = FUN_8003dc9c(iVar4,puVar5,iVar3);
     break;
   case 0xd:
@@ -910,9 +945,13 @@ undefined4 FUN_8003e238(long param_1)
 	} while (lVar2 != 1);
 
 	DAT_8008d410 = 8;
+	
+	// MC_RETURN_SUCCESS
     uVar1 = 7;
   }
-  else {
+  else 
+  {
+	// MC_RETURN TIMEOUT
     uVar1 = 1;
   }
   return uVar1;
@@ -955,6 +994,8 @@ undefined4 FUN_8003e29c(param1, param2, param3, param4, param5)
 	{
 	  // close memcard file
       FUN_8003dbf8();
+	  
+	  // MC_RETURN_NODATA
       uVar2 = 6;
     }
     else {
@@ -975,7 +1016,9 @@ undefined4 FUN_8003e29c(param1, param2, param3, param4, param5)
       uVar2 = FUN_8003dc30(0,0x80);
     }
   }
-  else {
+  else 
+  {
+	// MC_RETURN TIMEOUT
     uVar2 = 1;
   }
   return uVar2;
@@ -1011,6 +1054,8 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
         DAT_8008d8cc = DAT_8008d8cc & 0xfffffffb;
         DAT_800857a3 = (byte)(DAT_8008d8d8 + param_5 * 2 + 0x1fff >> 0xd);
       }
+	  
+	  // clear icon
       iVar2 = 0;
       do {
         iVar4 = iVar2 + 2;
@@ -1018,6 +1063,8 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
         (&DAT_800857a5)[iVar2] = 0x40;
         iVar2 = iVar4;
       } while (iVar4 < 0x40);
+	  
+	  // file icon
       cVar1 = *param_3;
       iVar2 = 0;
       while ((cVar1 != '\0' && (iVar2 < 0x40))) {
@@ -1059,7 +1106,7 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
       if (DAT_8008d40c != -1) {
         DAT_8008d404 = 9;
 
-		// write to memory card, given pointer to icon
+		// MEMCARD_WriteFile
 		// and the size of the icon, psyq hand
         uVar3 = FUN_8003dc9c(0,&DAT_800857a0,DAT_8008d8d8);
 
@@ -1068,9 +1115,13 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
 
 	  // close memcard file
       FUN_8003dbf8(0);
+	  
+	  // MC_RETURN_FULL
       return 4;
     }
   }
+  
+  // MC_RETURN TIMEOUT
   return 1;
 }
 
@@ -1105,10 +1156,14 @@ undefined4 FUN_8003e51c(long param_1)
       } while (lVar2 != 1);
 
 	  DAT_8008d410 = 8;
+	  
+	  // MC_RETURN_SUCCESS
       uVar3 = 7;
     }
   }
-  else {
+  else 
+  {
+	// MC_RETURN TIMEOUT
     uVar3 = 1;
   }
   return uVar3;
@@ -1131,12 +1186,17 @@ undefined4 FUN_8003e59c(undefined4 param_1,undefined4 param_2)
   // 0x0001 = FWRITE, for writing
   DAT_8008d40c = open(acStack72,0x8002);
 
-  if (DAT_8008d40c == -1) {
+  if (DAT_8008d40c == -1) 
+  {
+	// MC_RETURN_NODATA
     uVar1 = 6;
   }
-  else {
+  else 
+  {
     close(DAT_8008d40c);
     DAT_8008d40c = -1;
+	
+	// MC_RETURN_IOE
     uVar1 = 0;
   }
   return uVar1;

@@ -1,5 +1,5 @@
-// 498+43+33+27+38+14+18+35+46+12+6+9+1+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
-// 498 for every 'common' and ','
+// 497+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
+// 497 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -12,7 +12,7 @@
 // 12 for MAIN block
 // +6 for ElimBG
 // +9 for GAMEPAD Block #1
-// +1 for DebugFont
+// +2 for DebugAndDecalBlock
 // +1 for DropRain
 // +1 for 222
 // +2 for 223
@@ -230,11 +230,10 @@ common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR/CTR_CycleTex_AllModels.c
 common, exe, CTR_CycleTex_Model, 0x0, General/CTR/CTR_CycleTex_Model.c
 common, exe, CTR_MatrixToRot, 0x0, General/CTR/CTR_MatrixToRot.c
 
-// DebugFont
-//common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers.c, DebugFont.bin
+// DebugFont, and DecalFont_GetLineWidth
+common, exe, DebugFont_Init, 0x0, General/DebugAndDecalBlock.c
 
 // DecalFont
-common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont/DecalFont_DrawLineStrlen.c
 common, exe, DecalFont_DrawLine, 0x0, General/DecalFont/DecalFont_DrawLine.c
 common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont/DecalFont_DrawLineOT.c

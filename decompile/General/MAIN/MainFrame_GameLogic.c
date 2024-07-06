@@ -272,6 +272,10 @@ LAB_80035098:
 					#ifdef USE_HIGHMP
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
+					
+					#ifdef USE_ONLINE
+					octr->readyToSend = 1;
+					#endif
 				}
 
 #ifdef USE_ONLINE
