@@ -768,7 +768,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	DECOMP_UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 
 	// "TOTAL"
-	width = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
+	width = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
 
 	r.x = (posXY[0] - width) + -6;
 	r.y = (posXY[1] - r.h) + 0xd;

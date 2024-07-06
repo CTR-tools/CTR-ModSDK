@@ -316,7 +316,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	d = gGT->drivers[0];
 
 	// "TOTAL"
-	textWidth = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
+	textWidth = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
 
 	// === Naughty Dog Bug ===
 	// Start and End is the same

@@ -227,7 +227,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	for(int i = 0; i < 3; i++)
 	{
 		//"FX:", "MUSIC:", "VOICE:"
-		int lineWidth = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Audio[i]], FONT_SMALL);
+		int lineWidth = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Audio[i]], FONT_SMALL);
 		if (volumeSliderTriangleLeftMargin < lineWidth) volumeSliderTriangleLeftMargin = lineWidth;
 	}
 
@@ -342,11 +342,11 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			FONT_SMALL, ORANGE);
 
 		int lineWidth_controller1A =
-			DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], FONT_SMALL);
+			DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], FONT_SMALL);
 
 		// width can change depending on language
-		int lineWidth_vibrateOff = DecalFont_GetLineWidth(sdata->lngStrings[326], FONT_SMALL);
-		int lineWidth_vibrateOn = DecalFont_GetLineWidth(sdata->lngStrings[325], FONT_SMALL);
+		int lineWidth_vibrateOff = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[326], FONT_SMALL);
+		int lineWidth_vibrateOn = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[325], FONT_SMALL);
 		if (lineWidth_vibrateOn < lineWidth_vibrateOff) lineWidth_vibrateOn = lineWidth_vibrateOff;
 
 		lineWidth_vibrateOn = (lineWidth_controller1A + lineWidth_vibrateOn + 10);
