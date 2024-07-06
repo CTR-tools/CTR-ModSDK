@@ -177,7 +177,7 @@ void recvThread()
 * at program start, initialize the global variable pineSendsCount to 0, and pineRecvsCount to 0.
 * asyncronously perform:
 *	- every time a PINE api call is made (one or more wrapped calls to tcp send), make the call, make an empty dictionary entry for this
-*	call with pineSendsCount as they key, and the increment this variable. 
+*	call with pineSendsCount as they key, and the increment this variable.
 *	- every time a PINE api call gets returned, go to the dictionary[pineRecvsCount]
 *	and fill the entry with this api return value, then increment pineRecvsCount.
 *
@@ -234,6 +234,7 @@ internalPineApiID pineSend(DSPINESend sendObj)
 
 std::mutex waitPineDataMutex;
 std::condition_variable waitPineDataCV;
+std::atomic<bool> recvRan = false;
 
 void pineRecv()
 { //on another thread
@@ -249,7 +250,7 @@ void pineRecv()
 		recvData.shared_header.DSPINEMsgReplyCode == 0)
 	{ //very good
 	}
-	else 
+	else
 	{
 		if (recvLen < sizeof(DSPINERecv::SharedHeader)) //todo: make consumer buffer for this
 			printf("recv returned less than required buffer length (?packet fragmentation?) "); //partial recv could be solved by coroutine
@@ -295,6 +296,8 @@ void pineRecv()
 	}
 	//end critical region
 	pineRecvsCount++;
+	std::unique_lock<std::mutex> ul { waitPineDataMutex };
+	recvRan = true;
 	waitPineDataCV.notify_all();
 }
 
@@ -339,11 +342,15 @@ bool isPineDataPresent(pineApiID id)
 
 void waitUntilPineDataPresent(pineApiID id)
 {
-	//std::unique_lock<std::mutex> ul{ waitPineDataMutex };
-	while (!isPineDataPresent(id)) { std::this_thread::sleep_for(std::chrono::milliseconds(1)); }
-	//this deadlocks occasionally, idk why
-	/*if (!isPineDataPresent(id))
-		waitPineDataCV.wait(ul, [=] { return isPineDataPresent(id); });*/
+	std::unique_lock<std::mutex> ul{ waitPineDataMutex };
+	while (!isPineDataPresent(id))
+	{
+		while (!recvRan)
+		{
+			waitPineDataCV.wait(ul);
+		}
+		recvRan = false;
+	}
 }
 
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
