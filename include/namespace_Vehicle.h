@@ -1561,9 +1561,10 @@ struct Driver
 	char meterGrade[2]; // 0x644
 	short meterGradeTimer; // 0x646
 	int gradeColor; // 0x648
+	
+	struct JitPoolHeader jitPoolHeader;
 	#endif
 
-	struct JitPoolHeader jitPoolHeader;
 	// 0x638
 	// end of ghost struct (as determined by memset)
 

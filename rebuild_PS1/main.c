@@ -64,10 +64,9 @@
 #include "../decompile/General/CTR/CTR_CycleTex_AllModels.c"
 #include "../decompile/General/CTR/CTR_CycleTex_Model.c"
 
-#include "../decompile/General/DebugFont/DebugFont_Init.c"
-#include "../decompile/General/DebugFont/DebugFont_DrawNumbers.c"
+// DebugFont and DecalFont_GetLineWidth
+#include "../decompile/General/DebugAndDecalBlock.c"
 
-#include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLine.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineOT.c"

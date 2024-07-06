@@ -1241,7 +1241,7 @@ LAB_800495ac:
 		// OtherFX_Play
 		FUN_80028468(1,1);
 
-		// load main ctr memcard file (adv, high score, etc)
+		// (MC_START_LOAD_MAIN)
         FUN_80047198(7);
 		
         iVar10 = 0;
@@ -1315,7 +1315,7 @@ LAB_800495ac:
 		// MEMCARD_SetIcon to CrashHead
         FUN_8003d4e4(0);
 
-		// save main CTR save file (3 = main file)
+		// (MC_START_SAVE_MAIN)
 		FUN_80047198(3);
 		
         DAT_8008d928 = 1;
@@ -1372,7 +1372,7 @@ LAB_80049624:
   if (!bVar1) goto LAB_800499e4;
   if (DAT_8008d47a == 1) 
   {
-	// load main ctr file (adv, high scores, etc)
+	// (MC_START_LOAD_MAIN)
     FUN_80047198(7);
     
 	goto LAB_800499e4;
@@ -1439,7 +1439,7 @@ LAB_80049624:
 		// set selected ghost profile index
         DAT_8009aa5a = *(undefined2 *)(param_1 + 0x1a);
 
-		// load ghost profile
+		// (MC_START_LOAD_GHOST)
         FUN_80047198(5);
 		
         goto LAB_800499e0;
@@ -1538,7 +1538,7 @@ LAB_80049624:
 	// MEMCARD_SetIcon to CrashHead
     FUN_8003d4e4(0);
 
-	// save main CTR save file (3 = main file)
+	// (MC_START_SAVE_MAIN)
 	FUN_80047198(3);
 	
     DAT_8008d928 = 1;
@@ -1590,7 +1590,7 @@ LAB_800499e4:
 	  // MEMCARD_SetIcon to GhostIcon
       FUN_8003d4e4(1);
 
-	  // save ghost profile (6 = ghost)
+	  // (MC_START_SAVE_GHOST)
       FUN_80047198(6);
 	  
       DAT_8008d8fa = 1;

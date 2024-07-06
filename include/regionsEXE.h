@@ -2008,7 +2008,7 @@ struct Data
 		char data28_afterSlots[0x28];
 		#elif BUILD == UsaRetail || BUILD == EurRetail || BUILD == JpnRetail
 		// 0x800859F8
-		unsigned char data38[0x38];
+		unsigned char memcardIcon_HeaderSLOTS[0x38];
 		#endif
 
 		// Something changed in JPN
@@ -3199,7 +3199,30 @@ struct sData
 	// pointer to memcard bytes (again?) 800992E4
 	void* ptrToMemcardBuffer2;
 
-	int unk8008d478;
+	// 2 - NULL
+	// 3 - MC_START_SAVE_MAIN
+	// 4 - NULL
+	// 5 - MC_START_LOAD_GHOST
+	// 6 - MC_START_SAVE_GHOST
+	// 7 - MC_START_LOAD_MAIN
+	
+	// 8008d478
+	// MC Start
+	short mcStart;
+
+	// 0 - MC_SCREEN_WARNING_NOCARD
+	// 1 - MC_SCREEN_WARNING_UNFORMATTED
+	// 2 - MC_SCREEN_FORMATTING
+	// 3 - MC_SCREEN_SAVING
+	// 4 - MC_SCREEN_LOADING
+	// 5 - MC_SCREEN_CHECKING
+	// 6 - MC_SCREEN_ERROR_FULL
+	// 7 - MC_SCREEN_ERROR_READ
+	// 8 - MC_SCREEN_NULL
+	// 9 - MC_SCREEN_ERROR_NODATA
+	
+	// 8008d47a
+	short mcScreenText;
 
 	// 8008d47c
 	short LoadSave_SpinRateY[4];
@@ -4714,8 +4737,7 @@ struct sData
 	char s_bu00_BASCUS_94426_slots[0x20];
 
 	// 800990c4
-	// ghost profile: file name?
-	char s_unk_someOtherMemcardString[0x20];
+	char s_memcardFindGhostFile[0x20];
 
 	// 80094d68 -- Aug14
 	// 80097C78 -- SepReview
@@ -4726,10 +4748,16 @@ struct sData
 	struct Mempack mempack[3]; // each is 0x60 bytes
 
 	// 80099204
-	char fillerAfterMempack[0xE0];
+	char fillerAfterMempack[0x60];
 
 	// 80099264 (time string at end of time trial race)
-	// 800992a4 (ghost profile related)
+	char ghostStrTrackTime[0x20];
+	
+	// 80099284
+	char ghostFileNameFinal[0x20];
+	
+	// 800992a4
+	char memcardIcon_HeaderGHOST[0x40];
 
 	// 800992E4
 	// literally every byte of memory card,
@@ -4762,16 +4790,90 @@ struct sData
 	} LoadSaveData[12];
 
 	// 0x8009AA30
-	char unk_Between_LoadSave_And_Ghosts[0x2c];
+	// & 1: frame2->frame1
+	int memcardUnk1;
+		
+	// return
+	// 0 - MC_RETURN_IOE
+	// 1 - MC_RETURN TIMEOUT
+	// 2 - MC_RETURN_NOCARD
+	// 3 - MC_RETURN_NEWCARD
+	// 4 - MC_RETURN_FULL
+	// 5 - MC_RETURN_UNFORMATTED
+	// 6 - MC_RETURN_NODATA
+	// 7 - MC_RETURN_SUCCESS
+		
+	// result
+	// 0 - MC_RESULT_ERROR_NOCARD
+	// 1 - MC_RESULT_FULL
+	// 2 - MC_RESULT_ERROR_TIMEOUT
+	// 3 - MC_RESULT_NEWCARD
+	// 4 - MC_RESULT_READY_LOAD
+	// 5 - MC_RESULT_ERROR_NODATA
+	// 6 - MC_RESULT_ERROR_UNFORMATTED
+	// 7 - MC_RESULT_READY_SAVE
+	// 8 - MC_RESULT_FINISHED
+		
+	// 8009AA34
+	short desired_memcardResult;
+	
+	// action
+	// 1 - MC_ACTION_GetInfo
+	// 2 - MC_ACTION_Save
+	// 3 - MC_ACTION_Load
+	// 4 - MC_ACTION_Format
+	// 5 - MC_ACTION_Erase
+	
+	// 8009aa36
+	short frame1_memcardAction;
 
-	// related to memcard
-	// FUN_80046b1c handles 8009aa30 to 8009aa58
+	// 8009aa38
+	short frame1_memcardSlot;
+	
+	// 8009aa3a
+	short frame2_memcardAction;
+	
+	// 8009aa3c
+	short frame2_memcardSlot;
+	
+	// 8009aa3e
+	short frame3_memcardAction;
+	
+	// 8009aa40
+	short frame3_memcardSlot;
+	
+	// 8009aa42
+	short frame4_memcardAction;
+	
+	// 8009aa44
+	short frame4_memcardSlot;
+	
+	short padding8009aa46;
 
-	// [no hole]
+	// 8009aa48
+	char* ghostProfile_fileName;
+	
+	// 8009aa4c
+	char* ghostProfile_fileIconHeader;
 
-	// 8009aa56 -- Ghost Profile Index (load or save)?
-	// 8009aa58 -- Ghost Profile Index (load or save)?
-	// 8009aa5a -- Ghost Profile Index (load or save)?
+	// 8009aa50
+	// Points to Destination (ghost load)
+	// Points to Source (ghost save)
+	struct GhostHeader* ghostProfile_ptrGhostHeader;
+	
+	// 8009aa54 -- Size (saving = 3E00)
+	short ghostProfile_size3E00;
+
+	// 8009aa56
+	// only set for one frame,
+	// then resets to -1
+	short ghostProfile_rowSelect;
+	
+	// 8009aa58
+	short ghostProfile_indexSave;
+	
+	// 8009aa5a
+	short ghostProfile_indexLoad;
 
 	// 8009aa5c
 	int numGhostProfilesSaved;

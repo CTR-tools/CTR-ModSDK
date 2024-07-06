@@ -139,6 +139,9 @@ struct OnlineCTR
 
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
+	
+	// when to start the client.exe loop
+	int readyToSend;
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");

@@ -1,8 +1,6 @@
 #include <common.h>
 
 #include "../prim.c"
-#include "../DebugFont/DebugFont_Init.c"
-#include "../DebugFont/DebugFont_DrawNumbers.c"
 
 #ifndef USE_ONLINE
 #include "UI_SaveLapTime.c"
