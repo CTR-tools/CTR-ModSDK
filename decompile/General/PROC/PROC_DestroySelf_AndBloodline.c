@@ -9,7 +9,7 @@ void DECOMP_PROC_DestroySelf(struct Thread* t)
 	if(t->funcThDestroy != 0)
 		t->funcThDestroy(t);
 	
-	// useless?
+	// used by RB_Follower
 	t->timesDestroyed++;
 	
 	// destroy object attached,

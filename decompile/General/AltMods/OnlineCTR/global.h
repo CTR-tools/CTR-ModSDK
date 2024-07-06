@@ -139,6 +139,9 @@ struct OnlineCTR
 
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
+	
+	// when to start the client.exe loop
+	int readyToSend;
 };
 
 #define MAX_LAPS 7

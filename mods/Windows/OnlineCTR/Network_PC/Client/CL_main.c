@@ -1221,16 +1221,14 @@ void usleep(__int64 usec)
 #endif
 
 #pragma optimize("", off)
-	int gGT_timer = 0;
-
 	void FrameStall()
 	{
 		// wait for next frame
-		while (gGT_timer == *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff])
+		while (octr->readyToSend == 0)
 		{
 			usleep(1);
 		}
 
-		gGT_timer = *(int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
+		octr->readyToSend = 0;
 	}
 #pragma optimize("", on)
