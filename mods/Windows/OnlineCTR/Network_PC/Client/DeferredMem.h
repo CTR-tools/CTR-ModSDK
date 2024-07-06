@@ -179,6 +179,10 @@ public:
 			exit_execv(69); //todo abort bad
 		return bufferedVal;
 	}
+	unsigned int get_address()
+	{
+		return address;
+	}
 	~ps1ptr()
 	{
 		//TODO: instead of blocking & waiting, just removeOldPineData in a way

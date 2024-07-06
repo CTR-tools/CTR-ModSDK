@@ -1304,17 +1304,15 @@ void usleep(__int64 usec)
 #pragma optimize("", off)
 void FrameStall()
 {
-	static int gGT_timer = 0;
 	// wait for next frame
-
-	//"frames" seems to be "number of frames drawn"
-	//see this line in ghidra/MAIN.c: (FUN_80034bbc(int param_1))
-	ps1ptr<int> frames = pBuf.at<int>((0x80096b20 + 0x1cf8) & 0xffffff);
-	while (gGT_timer == (*frames.get()))
+	ps1ptr<int> OCTRreadyToSend = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, readyToSend));
+	while ((*OCTRreadyToSend.get()) == 0)
 	{
 		usleep(1);
-		frames.blockingRead();
+		OCTRreadyToSend.blockingRead();
 	}
-	gGT_timer = (*frames.get());
+
+	(*OCTRreadyToSend.get()) = 0;
+	OCTRreadyToSend.startWrite();
 }
 #pragma optimize("", on)
