@@ -1305,14 +1305,16 @@ void usleep(__int64 usec)
 void FrameStall()
 {
 	// wait for next frame
-	ps1ptr<int> OCTRreadyToSend = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, readyToSend));
+	//TODO: make this a submember of octr
+	ps1ptr<int> OCTRreadyToSend = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, readyToSend));//octr.createSubmemberPtr<int>(offsetof(OnlineCTR, readyToSend));
 	while ((*OCTRreadyToSend.get()) == 0)
 	{
 		usleep(1);
 		OCTRreadyToSend.blockingRead();
 	}
 
-	(*OCTRreadyToSend.get()) = 0;
-	OCTRreadyToSend.startWrite();
+	//(*OCTRreadyToSend.get()) = 0;
+	//OCTRreadyToSend.startWrite();
+	(*octr.get()).readyToSend = 0; //functionally the same as above, but doesn't race with octr.
 }
 #pragma optimize("", on)

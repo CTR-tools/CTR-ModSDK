@@ -324,6 +324,11 @@ void removeOldPineData(pineApiID id)
 	pineApiRequests.erase(id); //don't need this anymore.
 }
 
+void markPineDataAsUncaredFor(pineApiID id)
+{
+
+}
+
 bool isPineDataPresent(pineApiID id)
 {
 	bool isAllPresent = true;

@@ -61,14 +61,17 @@ private:
 		reading,
 		writing,
 	};
+	template<typename U> friend class ps1ptr;
 public:
 	typedef std::shared_ptr<T> ptrtype;
 private:
+
 	unsigned int address;
 	/*bool volat;*/
 	bool didPrefetch;
 	char* buf;
 	char* originalBuf;
+	std::shared_ptr<void> parentIfPresent;
 	ptrtype bufferedVal; //implicit dtor will delete this, which deletes the buf and originalBuf
 	pineState pState = none;
 	pineApiID outstandingAPIID;
@@ -94,6 +97,7 @@ public:
 	{
 		buf = new char[sizeof(T)];
 		originalBuf = new char[sizeof(T)];
+		parentIfPresent = nullptr;
 		bufferedVal = ptrtype((T*)&buf[0], [=](T* val) { delete[] buf; delete[] originalBuf; }); //when the shared_ptr dies, free the char* off the heap.
 		if (prefetch)
 			blockingRead();
@@ -102,6 +106,28 @@ public:
 			memset(buf, 0, sizeof(T));
 			memcpy(originalBuf, buf, sizeof(T));
 		}
+	}
+	//TODO: this needs work
+	/// <summary>
+	/// This ctor is for if you want to make a ps1ptr that represents just a portion of an existing ps1ptr.
+	/// e.g., if you intend to have very high usage of a submember of some other ps1ptr like octr, this can lighten the
+	/// load on TCP/PINE. (See example in FrameStall in CL_main.cpp)
+	/// </summary>
+	template<typename U>
+	ps1ptr(ps1ptr<U> parentPtr, size_t offset)
+	{
+		buf = parentPtr.buf + offset;
+		originalBuf = parentPtr.originalBuf + offset;
+		parentIfPresent = parentPtr.bufferedVal; //this is only saved for the sake of strong reference counting.
+		bufferedVal = std::shared_ptr<T>((T*)&buf[0], [=](T* val) { /* do nothing, underlying mem is destroyed with parent */ });
+		address = parentPtr.address + offset;
+		didPrefetch = true; //functionally desirable in this case
+	}
+	//TODO: this needs work
+	template<typename U>
+	ps1ptr<U> createSubmemberPtr(size_t offset)
+	{
+		return ps1ptr<U>{*this, offset};
 	}
 	void blockingRead()
 	{
@@ -183,6 +209,7 @@ public:
 	{
 		return address;
 	}
+
 	~ps1ptr()
 	{
 		//TODO: instead of blocking & waiting, just removeOldPineData in a way
