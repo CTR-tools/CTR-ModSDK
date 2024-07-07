@@ -57,7 +57,7 @@ enum ClientState
 	NUM_STATES
 };
 
-#define NAME_LEN 10
+#define NAME_LEN 9
 #define MAX_NUM_PLAYERS 8
 
 typedef struct raceStats
@@ -116,7 +116,7 @@ struct OnlineCTR
 	char boolLockedInCharacters[MAX_NUM_PLAYERS];
 
 	// 0x38
-	char nameBuffer[MAX_NUM_PLAYERS][NAME_LEN];
+	char nameBuffer[MAX_NUM_PLAYERS][NAME_LEN + 1]; //+1 for nullterm
 
 	raceStats raceStats[MAX_NUM_PLAYERS];
 

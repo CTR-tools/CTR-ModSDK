@@ -152,7 +152,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->numDriversEnded = 0;
 
 			memset(&octr->boolLockedInCharacters[0], 0, sizeof(octr->boolLockedInCharacters));
-			memset(&octr->nameBuffer[0], 0, sizeof(octr->nameBuffer));
+			memset(&octr->nameBuffer[0], 0, sizeof(octr->nameBuffer)); //set all chars to '\0'
 			memset(&octr->raceStats[0], 0, sizeof(octr->raceStats));
 
 			// reply to server with your name
