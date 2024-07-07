@@ -308,29 +308,40 @@ pineApiID pineApiRequestCount = 0;
 /// </summary>
 std::map<pineApiID, std::pair<std::vector<internalPineApiID>, bool>> pineApiRequests{};
 
-//void removeOldPineData(pineApiID id)
-//{
-//	//TODO:
-//	//1. mark this entry as uncared for
-//	//2. loop through all uncared for entries, and if they're complete, remove them and their entry
-//
-//
-//	auto& dat = pineApiRequests.at(id).first;
-//	//critical region (syncronize access pls)
-//	{
-//		std::lock_guard<std::mutex> um{ pineObjsMutex };
-//		for (size_t i = 0; i < dat.size(); i++)
-//		{
-//			pineObjs.erase(dat[i]);
-//		}
-//	}
-//	//end critical region
-//	pineApiRequests.erase(id); //don't need this anymore.
-//}
-
 void markPineDataForGC(pineApiID id)
 {
 	auto& dat = pineApiRequests.at(id).second = false;
+}
+
+void GCDeadPineData()
+{
+	std::vector<pineApiID> toRemove{};
+	std::vector<internalPineApiID> intToRemove{};
+	for (auto& e : pineApiRequests)
+	{
+		if (!e.second.second && isPineDataPresent(e.first))
+		{
+			toRemove.push_back(e.first);
+			for (auto& iid : e.second.first)
+			{
+				intToRemove.push_back(iid);
+			}
+		}
+	}
+	//remove eligible data.
+	for (auto& id : toRemove)
+	{
+		pineApiRequests.erase(id);
+	}
+	//critical region (syncronize access pls)
+	std::lock_guard<std::mutex> um{ pineObjsMutex };
+	{
+		for (auto& iid : intToRemove)
+		{
+			pineObjs.erase(iid);
+		}
+	}
+	//end critical region
 }
 
 bool isPineDataPresent(pineApiID id)

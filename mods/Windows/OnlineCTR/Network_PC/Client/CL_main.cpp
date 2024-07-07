@@ -1284,6 +1284,8 @@ int main(int argc, char *argv[])
 		octr.startWrite();
 
 		void FrameStall(); FrameStall();
+
+		GCDeadPineData(); //this is probably a decent place to do this.
 	}
 
 	printf("\n");
