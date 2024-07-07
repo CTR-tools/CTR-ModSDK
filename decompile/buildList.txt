@@ -230,16 +230,16 @@ common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR/CTR_CycleTex_AllModels.c
 common, exe, CTR_CycleTex_Model, 0x0, General/CTR/CTR_CycleTex_Model.c
 common, exe, CTR_MatrixToRot, 0x0, General/CTR/CTR_MatrixToRot.c
 
-// DebugFont, and DecalFont_GetLineWidth
+// DebugFont, and DecalFont_GetLineWidthStrlen
 common, exe, DebugFont_Init, 0x0, General/DebugAndDecalBlock.c
 
 // DecalFont
+common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont/DecalFont_DrawLineStrlen.c
 common, exe, DecalFont_DrawLine, 0x0, General/DecalFont/DecalFont_DrawLine.c
 common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont/DecalFont_DrawLineOT.c
 common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont/DecalFont_DrawMultiLineStrlen.c
 common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont/DecalFont_DrawMultiLine.c
-common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont/DecalFont_GetLineWidthStrlen.c
 
 // DecalGlobal
 common, exe, DecalGlobal_Clear, 0x0, General/DecalGlobal/DecalGlobal_Clear.c
