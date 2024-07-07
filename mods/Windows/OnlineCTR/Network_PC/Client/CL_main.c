@@ -394,6 +394,9 @@ void ProcessNewMessages()
 	ENetEvent event;
 	char response = 0;
 
+	if (clientHost == 0)
+		return;
+
 	while (enet_host_service(clientHost, &event, 0) > 0)
 	{
 		switch (event.type)
@@ -773,7 +776,7 @@ int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
 	countFrame++;
-	if (countFrame == 60)
+	if (countFrame == octr->desiredFPS)
 	{
 		countFrame = 0;
 
