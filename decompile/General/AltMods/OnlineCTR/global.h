@@ -272,7 +272,7 @@ struct SG_MessageName
 	unsigned char clientID : 4;
 	unsigned char numClientsTotal : 4;
 
-	char name[NAME_LEN];
+	char name[NAME_LEN + 1];
 };
 
 // get track, assigned by host
@@ -412,7 +412,7 @@ struct CG_MessageName
 	unsigned char type : 4;
 	unsigned char padding : 4;
 
-	char name[NAME_LEN];
+	char name[NAME_LEN + 1];
 };
 
 // get track, assigned by host
