@@ -609,6 +609,7 @@ void StatePC_Launch_PickServer()
 	// === Now Selecting Country ===
 	octr.get()->boolClientBusy = 1; //this probably needs to be atomic to avoid race conditions, but I don't know if that's possible
 	StaticServerID = octr.get()->serverCountry;
+	octr.startWrite();
 
 	switch (octr.get()->serverCountry)
 	{
@@ -809,6 +810,7 @@ void StatePC_Launch_PickServer()
 				// to go the country select
 				octr.get()->CurrState = 1;
 				octr.get()->boolClientBusy = 0;
+				octr.startWrite();
 				return;
 			}
 
@@ -822,6 +824,7 @@ void StatePC_Launch_PickServer()
 	octr.get()->DriverID = -1;
 	octr.get()->CurrState = LAUNCH_PICK_ROOM;
 	octr.get()->boolClientBusy = 0;
+	octr.startWrite();
 }
 
 void StatePC_Launch_Error()

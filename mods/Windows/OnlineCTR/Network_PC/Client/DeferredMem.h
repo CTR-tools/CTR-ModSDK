@@ -175,6 +175,12 @@ public:
 	}
 	void startWrite()
 	{
+		if (pState == writing)
+		{
+			//TODO: since writes cause canonical state immediately, this can be optimized to not wait, and instead just mark this as
+			//not needed. waitWrite is currently needed to clean up the old pine data (prevent mem leak).
+			waitWrite();
+		}
 		if (pState != none)
 			exit_execv(69); //todo abort bad
 		outstandingAPIID = send_writeMemorySegment(address, sizeof(T), buf, didPrefetch ? originalBuf : nullptr);
