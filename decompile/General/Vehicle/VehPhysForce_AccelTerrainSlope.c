@@ -1,6 +1,35 @@
 #include <common.h>
 
-void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
+void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver * driver)
+{
+	driver->accel.x = 0;
+	driver->accel.y = 0;
+	driver->accel.z = 0;
+
+	int speedApprox = abs(driver->speedApprox);
+	if (speedApprox <= FP8(3) ||
+		driver->actionsFlagSet & ACTION_WARP ||
+		driver->kartState == KS_CRASHING ||
+		driver->set_0xF0_OnWallRub ||
+		!(driver->actionsFlagSet & ACTION_TOUCH_GROUND) ||
+		driver->terrainMeta1->const_0x100 == 0) { return; }
+
+	int angleLimit = driver->unk457;
+	int angle = driver->turnAngleCurr - driver->turnAnglePrev;
+	angle = clamp(angle, -angleLimit, angleLimit);
+	int sin = MATH_Sin(angle);
+
+	SVec3 vec = {
+		.x = FP_MULT(FP8_MULT(driver->terrainMeta1->const_0x100, FP8(-8)), sin),
+		.y = 0,
+		.z = 0
+		};
+	SVec3 accel;
+	RotateVector(&accel, &vec);
+	driver->accel = accel;
+}
+
+/*void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
 {
 	u_int terrain_meta;
 	int angleLimit;
@@ -12,9 +41,9 @@ void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
 	speedApprox = driver->speedApprox;
 
 	// erase accel
-	driver->accelXYZ[0] = 0;
-	driver->accelXYZ[1] = 0;
-	driver->accelXYZ[2] = 0;
+	driver->accel.x = 0;
+	driver->accel.y = 0;
+	driver->accel.z = 0;
 
 	if (speedApprox < 0)
 		speedApprox = -speedApprox;
@@ -23,7 +52,7 @@ void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
 	if (speedApprox >= 0x301)
 	{
 		terrain_meta = driver->terrainMeta1->const_0x100;
-		
+
 		if (
 			// not on warppad, not crashing, not wall rubbing,
 			// must be on quadblock, but not on ice or flying
@@ -35,12 +64,12 @@ void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
 		{
 
 			#ifdef REBUILD_PS1
-			
+
 			// placeholder, flat terrain ONLY
-			driver->accelXYZ[0] = speedApprox; // SINE * accel
-			driver->accelXYZ[1] = 0;
-			driver->accelXYZ[2] = 0; // COS * accel;
-			
+			driver->accel.x = speedApprox; // SINE * accel
+			driver->accel.y = 0;
+			driver->accel.z = 0; // COS * accel;
+
 			#else
 			// kart angle cap from 'straight to camera'
 			angleLimit = driver->unk457;
@@ -75,12 +104,12 @@ void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver)
 			// new acceleration vector,
 			// based on FORWARD DIR of kart
 			gte_stlvnl0(accel);
-			driver->accelXYZ[0] = accel;
+			driver->accel.x = accel;
 			gte_stlvnl1(accel);
-			driver->accelXYZ[1] = accel;
+			driver->accel.y = accel;
 			gte_stlvnl2(accel);
-			driver->accelXYZ[2] = accel;
+			driver->accel.z = accel;
 			#endif
 		}
 	}
-}
+}*/

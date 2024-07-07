@@ -16,7 +16,7 @@
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
 //#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
-//#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
+#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
 
 //#define USE_VR		// Virtual Reality
@@ -58,6 +58,8 @@
 #endif
 
 #include <macros.h>
+#include <ctr_math.h>
+#include <ctr_gte.h>
 #include <prim.h>
 
 // =============================
@@ -109,7 +111,6 @@
 #include <ovr_231.h>
 #include <ovr_232.h>
 #include <ovr_233.h>
-#include <ctr_math.h>
 #include <regionsEXE.h>
 
 #ifndef REBUILD_PC
