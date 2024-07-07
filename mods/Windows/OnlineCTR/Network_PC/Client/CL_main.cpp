@@ -607,6 +607,7 @@ void StatePC_Launch_PickServer()
 		return;
 
 	// === Now Selecting Country ===
+	//instead of octr, maybe do a separate variable.
 	octr.get()->boolClientBusy = 1; //this probably needs to be atomic to avoid race conditions, but I don't know if that's possible
 	StaticServerID = octr.get()->serverCountry;
 	octr.startWrite();

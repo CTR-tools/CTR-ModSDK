@@ -302,37 +302,41 @@ void pineRecv()
 }
 
 pineApiID pineApiRequestCount = 0;
-std::map<pineApiID, std::vector<internalPineApiID>> pineApiRequests{};
+/// <summary>
+/// A single "pineApiID" correlates to a group of "internalPineApiID". If the boolean is true,
+/// then the entry is active, if it's false, then it's marked for the garbage collector.
+/// </summary>
+std::map<pineApiID, std::pair<std::vector<internalPineApiID>, bool>> pineApiRequests{};
 
-void removeOldPineData(pineApiID id)
+//void removeOldPineData(pineApiID id)
+//{
+//	//TODO:
+//	//1. mark this entry as uncared for
+//	//2. loop through all uncared for entries, and if they're complete, remove them and their entry
+//
+//
+//	auto& dat = pineApiRequests.at(id).first;
+//	//critical region (syncronize access pls)
+//	{
+//		std::lock_guard<std::mutex> um{ pineObjsMutex };
+//		for (size_t i = 0; i < dat.size(); i++)
+//		{
+//			pineObjs.erase(dat[i]);
+//		}
+//	}
+//	//end critical region
+//	pineApiRequests.erase(id); //don't need this anymore.
+//}
+
+void markPineDataForGC(pineApiID id)
 {
-	//TODO:
-	//1. mark this entry as uncared for
-	//2. loop through all uncared for entries, and if they're complete, remove them and their entry
-
-
-	auto& dat = pineApiRequests.at(id);
-	//critical region (syncronize access pls)
-	{
-		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		for (size_t i = 0; i < dat.size(); i++)
-		{
-			pineObjs.erase(dat[i]);
-		}
-	}
-	//end critical region
-	pineApiRequests.erase(id); //don't need this anymore.
-}
-
-void markPineDataAsUncaredFor(pineApiID id)
-{
-
+	auto& dat = pineApiRequests.at(id).second = false;
 }
 
 bool isPineDataPresent(pineApiID id)
 {
 	bool isAllPresent = true;
-	auto& dat = pineApiRequests.at(id);
+	auto& dat = pineApiRequests.at(id).first;
 	//critical region (syncronize access pls)
 	{
 		std::lock_guard<std::mutex> um{ pineObjsMutex };
@@ -361,7 +365,7 @@ void waitUntilPineDataPresent(pineApiID id)
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
 {
 	std::vector<DSPINESendRecvPair> segment{};
-	auto& dat = pineApiRequests.at(id);
+	auto& dat = pineApiRequests.at(id).first;
 	//critical region (syncronize access pls)
 	{
 		std::lock_guard<std::mutex> um{ pineObjsMutex };
@@ -390,7 +394,7 @@ pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 		sendObj.read64.address = addr + i;
 		iids.push_back(pineSend(sendObj));
 	}
-	pineApiRequests.insert(std::pair<pineApiID, std::vector<internalPineApiID>>{pineApiRequestCount, iids});
+	pineApiRequests.insert(std::pair<pineApiID, std::pair<std::vector<internalPineApiID>, bool>>{pineApiRequestCount, std::pair<std::vector<internalPineApiID>, bool>{ iids, true }});
 	return pineApiRequestCount++;
 }
 
@@ -471,6 +475,6 @@ pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf, char
 		if (mismatchStart != -1)
 			dispatchContig(addr + mismatchStart, mismatchLength, buf + mismatchStart);
 	}
-	pineApiRequests.insert(std::pair<pineApiID, std::vector<internalPineApiID>>{pineApiRequestCount, iids});
+	pineApiRequests.insert(std::pair<pineApiID, std::pair<std::vector<internalPineApiID>, bool>>{pineApiRequestCount, std::pair<std::vector<internalPineApiID>, bool>{ iids, true }});
 	return pineApiRequestCount++;
 }
