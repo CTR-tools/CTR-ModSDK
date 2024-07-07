@@ -6,9 +6,9 @@ void DECOMP_VehPhysForce_ConvertSpeedToVec(struct Driver* driver)
   short cos;
   int y_component;
   u_int angle;
-  
+
   // moved here, for byte budget
-  int* velocity = &driver->velocityXYZ[0];
+  int* velocity = &driver->velocity;
 
   angle = driver->axisRotationY;
   sine = (short)DECOMP_MATH_Sin(angle);
@@ -20,7 +20,7 @@ void DECOMP_VehPhysForce_ConvertSpeedToVec(struct Driver* driver)
   angle = driver->axisRotationX;
   cos = (short)DECOMP_MATH_Cos(angle);
   sine = (short)DECOMP_MATH_Sin(angle);
-  
+
   velocity[0] = (y_component * sine) >> 12;
   velocity[2] = (y_component * cos) >> 12;
 }

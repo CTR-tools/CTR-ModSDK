@@ -42,13 +42,13 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread *t, struct Driver *d)
             sinkSpeed = -0x1000 - d->posCurr[1];
 
             // set driver velY
-            if (d->velocityXYZ[1] < sinkSpeed)
-                d->velocityXYZ[1] = sinkSpeed;
+            if (d->velocity.y < sinkSpeed)
+                d->velocity.y = sinkSpeed;
         }
     }
 
 	#ifndef REBUILD_PC
-    VehPhysForce_OnGravity(d, &d->velocityXYZ[0]);
+    VehPhysForce_OnGravity(d, &d->velocity.x);
 	#endif
 
     // driver is not touching quadblock
@@ -66,20 +66,20 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread *t, struct Driver *d)
     d->unkAA = 0;
 
 	#ifdef REBUILD_PC
-	d->accelXYZ[1] = 1; // move upward
+	d->accel.y = 1; // move upward
 	#endif
-	
+
     // increase velocity by acceleration
     for (char i = 0; i < 3; i++)
 	{
 		// comes from Driver_AccesTerrainSlope called previously
-        d->velocityXYZ[i] += d->accelXYZ[i];
-		
+        d->velocity.v[i] += d->accel.v[i];
+
 		// temporary replacement to
 		// COLL (which does velocity) and
 		// VehPhysForce_TranslateMatrix (which does matrix)
 		#ifdef REBUILD_PC
-		d->posCurr[i] += d->velocityXYZ[i];
+		d->posCurr[i] += d->velocity.v[i];
 		d->instSelf->matrix.t[i] = d->posCurr[i] >> 8;
 		#endif
 	}
