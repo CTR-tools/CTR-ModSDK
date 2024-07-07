@@ -5,6 +5,16 @@ typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 #ifdef USE_ONLINE
 #include "../AltMods/OnlineCTR/global.h"
 void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver);
+
+#pragma optimize("", off)
+	void FrameStall()
+	{
+		// wait for PC client to reset
+		while (octr->sleepControl == 1)
+		{}
+	}
+#pragma optimize("", on)
+
 #endif
 
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -204,6 +214,58 @@ LAB_80035098:
 				(gGT->threadBuckets[iVar4].thread != 0)
 			)
 			{
+				
+// online multiplayer
+#ifdef USE_ONLINE
+
+				// synchronize track hazards
+				if(
+					(iVar4 == STATIC) ||
+					(iVar4 == SPIDER)
+				)
+				{
+					if(gGT->trafficLightsTimer > 3600)
+						continue;
+				}
+				
+				if (iVar4 == 0)
+				{
+					struct Driver* dOnline = gGT->drivers[0];
+					struct Thread* dThread = dOnline->instSelf->thread;
+					
+					DECOMP_VehPickupItem_ShootOnCirclePress(dOnline);
+				
+					// This only works because we have NO collision
+					// and therefore NO bounce physics, update P1
+					// first, then update other drivers later
+					
+					if(dThread->funcThTick == 0)
+						for(iVar11 = 0; iVar11 < 13; iVar11++)
+							if(dOnline->funcPtrs[iVar11] != 0)
+								RunVehicleThread(dOnline->funcPtrs[iVar11], dThread, dOnline);
+					
+					octr->desiredFPS = FPS_DOUBLE(30);
+					octr->sleepControl = 1;
+					
+					// stall
+					FrameStall();
+					
+					for(int other = 1; other < 8; other++)
+					{
+						dOnline = gGT->drivers[other];
+						if(dOnline == 0) continue;
+						
+						dOnline->instSelf->thread;
+					
+						if(dThread->funcThTick == 0)
+							for(iVar11 = 0; iVar11 < 13; iVar11++)
+								if(dOnline->funcPtrs[iVar11] != 0)
+									RunVehicleThread(dOnline->funcPtrs[iVar11], dThread, dOnline);
+					}
+				}
+				
+// offline
+#else
 				if (iVar4 == 0)
 				{
 
@@ -272,23 +334,9 @@ LAB_80035098:
 					#ifdef USE_HIGHMP
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
-					
-					#ifdef USE_ONLINE
-					octr->readyToSend = 1;
-					#endif
-				}
-
-#ifdef USE_ONLINE
-				// synchronize track hazards
-				if(
-					(iVar4 == STATIC) ||
-					(iVar4 == SPIDER)
-				)
-				{
-					if(gGT->trafficLightsTimer > 3600)
-						continue;
 				}
 #endif
+
 
 #ifndef REBUILD_PS1
 				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);

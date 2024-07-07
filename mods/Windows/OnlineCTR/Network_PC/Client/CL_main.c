@@ -29,6 +29,10 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
+#ifdef __WINDOWS__
+void usleep(__int64 usec);
+#endif
+
 struct Gamepad
 {
 	short unk_0;
@@ -387,9 +391,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
-#define AUTO_RETRY_SECONDS 10
-#define ESC_KEY 27 // ASCII value for ESC key
-
 	ENetEvent event;
 	char response = 0;
 
@@ -771,8 +772,6 @@ int connAttempt = 0;
 int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
-	ProcessNewMessages();
-
 	countFrame++;
 	if (countFrame == 60)
 	{
@@ -809,13 +808,10 @@ void StatePC_Lobby_AssignRole()
 {
 	connAttempt = 0;
 	countFrame = 0;
-	ProcessNewMessages();
 }
 
 void StatePC_Lobby_HostTrackPick()
 {
-	ProcessNewMessages();
-
 	// boolLockedInLap gets set after
 	// boolLockedInLevel already sets
 	if (!octr->boolLockedInLap) return;
@@ -850,16 +846,12 @@ int prev_boolLockedIn = -1;
 
 void StatePC_Lobby_GuestTrackWait()
 {
-	ProcessNewMessages();
-
 	prev_characterID = -1;
 	prev_boolLockedIn = -1;
 }
 
 void StatePC_Lobby_CharacterPick()
 {
-	ProcessNewMessages();
-
 	struct CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
 
@@ -883,8 +875,6 @@ void StatePC_Lobby_CharacterPick()
 
 void StatePC_Lobby_WaitForLoading()
 {
-	ProcessNewMessages();
-
 	// if recv message to start loading,
 	// change state to StartLoading,
 	// this check happens in ProcessNewMessages
@@ -895,8 +885,6 @@ int boolAlreadySent_EndRace = 0;
 
 void StatePC_Lobby_StartLoading()
 {
-	ProcessNewMessages();
-
 	boolAlreadySent_StartRace = 0;
 	boolAlreadySent_EndRace = 0;
 }
@@ -968,8 +956,6 @@ void SendEverything()
 
 void StatePC_Game_WaitForRace()
 {
-	ProcessNewMessages();
-
 	int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
 
 	if (
@@ -994,7 +980,6 @@ void StatePC_Game_WaitForRace()
 
 void StatePC_Game_StartRace()
 {
-	ProcessNewMessages();
 	SendEverything();
 
 	// not using this special event
@@ -1013,8 +998,6 @@ void StatePC_Game_StartRace()
 clock_t timeStart;
 void StatePC_Game_EndRace()
 {
-	ProcessNewMessages();
-
 	if (!boolAlreadySent_EndRace)
 	{
 		boolAlreadySent_EndRace = 1;
@@ -1195,10 +1178,29 @@ int main()
 
 		StartAnimation();
 
+		// Wait for PSX to have P1 data,
+		// which is set at octr->sleepControl
+		void FrameStall(); FrameStall();
+
+		// Send data
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
-
-		void FrameStall(); FrameStall();
+		
+		// wait a bit, to RECV other messages
+		// 1,000,000 = 1 second
+		// 33,333 = 1 frame
+		// 15000 = half frame,
+		// duckstation overclock will compensate
+		if(octr->desiredFPS == 30)
+			usleep(15000); // half-frame 30fps
+		else
+			usleep(3000); // fifth-frame 60fps
+		
+		// now check for new RECV message
+		ProcessNewMessages();
+		
+		// allow PSX to resume
+		octr->sleepControl = 0;
 	}
 
 	printf("\n");
@@ -1224,11 +1226,9 @@ void usleep(__int64 usec)
 	void FrameStall()
 	{
 		// wait for next frame
-		while (octr->readyToSend == 0)
+		while (octr->sleepControl == 0)
 		{
 			usleep(1);
 		}
-
-		octr->readyToSend = 0;
 	}
 #pragma optimize("", on)
