@@ -138,14 +138,14 @@ public:
 	}
 	void startRead()
 	{
-		if (pState == reading)
-			waitRead();
-		else if (pState == writing)
-			waitWrite();
+		if (pState == reading) //this was waitRead();
+			markPineDataForGC(outstandingAPIID);
+		else if (pState == writing) //this was waitWrite();
+			markPineDataForGC(outstandingAPIID);
 		//if (pState != none)
 		//	exit_execv(69); //todo abort bad
 		outstandingAPIID = send_readMemorySegment(address, sizeof(T));
-		pState = reading;
+		pState = reading; //set as reading regardless of what it was before
 	}
 	void waitRead()
 	{
@@ -178,13 +178,14 @@ public:
 	{
 		if (pState == reading)
 			waitRead();
-		else if (pState == writing)
-			waitWrite();
+		else if (pState == writing) //this was waitWrite();
+			markPineDataForGC(outstandingAPIID);
 		//if (pState != none)
 		//	exit_execv(69); //todo abort bad
 		outstandingAPIID = send_writeMemorySegment(address, sizeof(T), buf, didPrefetch ? originalBuf : nullptr);
+		memcpy(originalBuf, buf, sizeof(T));
 		didPrefetch = true; //if we've written, we can treat this object (from this point on) as if it was prefetched, because it now *is* the canonical memory state
-		pState = writing;
+		pState = writing; //set as writing regardless of what it was before
 	}
 	void waitWrite()
 	{
@@ -206,7 +207,9 @@ public:
 		{
 			//TODO: since writes cause canonical state immediately, this can be optimized to not wait, and instead just mark this as
 			//not needed. waitWrite is currently needed to clean up the old pine data (prevent mem leak).
-			waitWrite();
+			//was waitWrite();
+			waitUntilPineDataPresent(outstandingAPIID);
+			pState = none; //no longer considered writing
 		}
 		if (pState != none)
 			exit_execv(69); //todo abort bad
