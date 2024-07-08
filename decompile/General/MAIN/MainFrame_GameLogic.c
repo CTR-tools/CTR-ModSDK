@@ -250,8 +250,30 @@ LAB_80035098:
 						
 						if(dThread->funcThTick == 0)
 							for(iVar11 = 0; iVar11 < 13; iVar11++)
-								if(dOnline->funcPtrs[iVar11] != 0)
-									RunVehicleThread(dOnline->funcPtrs[iVar11], dThread, dOnline);
+							{
+								pcVar5 dOnline->funcPtrs[iVar11];
+								
+								if(pcVar5 != 0)
+								{
+									RunVehicleThread(pcVar5, dThread, dOnline);
+									
+									#ifdef USE_60FPS
+										#ifndef REBUILD_PS1
+											// if this function just ran
+											if(pcVar5 == VehFrameProc_Driving)
+											{
+												// only if jumping animation,
+												// otherwise wheelie gets bugged
+												if(psVar9->instSelf->animIndex == 3)
+												{
+													psVar9->matrixIndex =
+													psVar9->matrixIndex >> 1;
+												}
+											}
+										#endif
+									#endif
+								}
+							}
 						
 						octr->desiredFPS = FPS_DOUBLE(30);
 						octr->sleepControl = 1;
@@ -269,8 +291,30 @@ LAB_80035098:
 					
 						if(dThread->funcThTick == 0)
 							for(iVar11 = 0; iVar11 < 13; iVar11++)
-								if(dOnline->funcPtrs[iVar11] != 0)
-									RunVehicleThread(dOnline->funcPtrs[iVar11], dThread, dOnline);
+							{
+								pcVar5 dOnline->funcPtrs[iVar11];
+								
+								if(pcVar5 != 0)
+								{
+									RunVehicleThread(pcVar5, dThread, dOnline);
+									
+									#ifdef USE_60FPS
+										#ifndef REBUILD_PS1
+											// if this function just ran
+											if(pcVar5 == VehFrameProc_Driving)
+											{
+												// only if jumping animation,
+												// otherwise wheelie gets bugged
+												if(psVar9->instSelf->animIndex == 3)
+												{
+													psVar9->matrixIndex =
+													psVar9->matrixIndex >> 1;
+												}
+											}
+										#endif
+									#endif
+								}
+							}
 					}
 				}
 				
