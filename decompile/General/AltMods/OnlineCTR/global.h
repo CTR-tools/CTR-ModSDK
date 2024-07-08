@@ -140,8 +140,9 @@ struct OnlineCTR
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
 	
-	// when to start the client.exe loop
-	int readyToSend;
+	// control when PSX and PC send/recv
+	int sleepControl;
+	int desiredFPS;
 };
 
 #define MAX_LAPS 7
