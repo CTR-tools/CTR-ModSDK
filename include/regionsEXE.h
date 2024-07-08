@@ -48,8 +48,8 @@ struct Terrain
 	int slowUntilSpeed;
 
 	// 0x10
-	// unless on "ice" or "none", then it's zero
-	int const_0x100;
+	// 0% ice, 100% road
+	int counterSteerRatio;
 
 	int unk14;
 
@@ -3205,7 +3205,7 @@ struct sData
 	// 5 - MC_START_LOAD_GHOST
 	// 6 - MC_START_SAVE_GHOST
 	// 7 - MC_START_LOAD_MAIN
-	
+
 	// 8008d478
 	// MC Start
 	short mcStart;
@@ -3220,7 +3220,7 @@ struct sData
 	// 7 - MC_SCREEN_ERROR_READ
 	// 8 - MC_SCREEN_NULL
 	// 9 - MC_SCREEN_ERROR_NODATA
-	
+
 	// 8008d47a
 	short mcScreenText;
 
@@ -4752,10 +4752,10 @@ struct sData
 
 	// 80099264 (time string at end of time trial race)
 	char ghostStrTrackTime[0x20];
-	
+
 	// 80099284
 	char ghostFileNameFinal[0x20];
-	
+
 	// 800992a4
 	char memcardIcon_HeaderGHOST[0x40];
 
@@ -4792,7 +4792,7 @@ struct sData
 	// 0x8009AA30
 	// & 1: frame2->frame1
 	int memcardUnk1;
-		
+
 	// return
 	// 0 - MC_RETURN_IOE
 	// 1 - MC_RETURN TIMEOUT
@@ -4802,7 +4802,7 @@ struct sData
 	// 5 - MC_RETURN_UNFORMATTED
 	// 6 - MC_RETURN_NODATA
 	// 7 - MC_RETURN_SUCCESS
-		
+
 	// result
 	// 0 - MC_RESULT_ERROR_NOCARD
 	// 1 - MC_RESULT_FULL
@@ -4813,46 +4813,46 @@ struct sData
 	// 6 - MC_RESULT_ERROR_UNFORMATTED
 	// 7 - MC_RESULT_READY_SAVE
 	// 8 - MC_RESULT_FINISHED
-		
+
 	// 8009AA34
 	short desired_memcardResult;
-	
+
 	// action
 	// 1 - MC_ACTION_GetInfo
 	// 2 - MC_ACTION_Save
 	// 3 - MC_ACTION_Load
 	// 4 - MC_ACTION_Format
 	// 5 - MC_ACTION_Erase
-	
+
 	// 8009aa36
 	short frame1_memcardAction;
 
 	// 8009aa38
 	short frame1_memcardSlot;
-	
+
 	// 8009aa3a
 	short frame2_memcardAction;
-	
+
 	// 8009aa3c
 	short frame2_memcardSlot;
-	
+
 	// 8009aa3e
 	short frame3_memcardAction;
-	
+
 	// 8009aa40
 	short frame3_memcardSlot;
-	
+
 	// 8009aa42
 	short frame4_memcardAction;
-	
+
 	// 8009aa44
 	short frame4_memcardSlot;
-	
+
 	short padding8009aa46;
 
 	// 8009aa48
 	char* ghostProfile_fileName;
-	
+
 	// 8009aa4c
 	char* ghostProfile_fileIconHeader;
 
@@ -4860,7 +4860,7 @@ struct sData
 	// Points to Destination (ghost load)
 	// Points to Source (ghost save)
 	struct GhostHeader* ghostProfile_ptrGhostHeader;
-	
+
 	// 8009aa54 -- Size (saving = 3E00)
 	short ghostProfile_size3E00;
 
@@ -4868,10 +4868,10 @@ struct sData
 	// only set for one frame,
 	// then resets to -1
 	short ghostProfile_rowSelect;
-	
+
 	// 8009aa58
 	short ghostProfile_indexSave;
-	
+
 	// 8009aa5a
 	short ghostProfile_indexLoad;
 

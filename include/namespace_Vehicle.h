@@ -980,7 +980,7 @@ struct Driver
 
 	// all related to VehPhysGeneral_LerpToForwards
     // only affected by steering without sliding
-	char unk457; // 0x22 kart model angle lerp rotation Limit max*
+	char angleMaxCounterSteer; // 0x22 kart model angle lerp rotation Limit max*
 	char unk458; // 0x23 kart model angle lerp rotation Limit min*
 	char unk459; // 0x24 kart model angle lerp rotation strength/ratio max*
 	char unk45a; // 0x25 kart model angle lerp rotation strength/ratio min*
