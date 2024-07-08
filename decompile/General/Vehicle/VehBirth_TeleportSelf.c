@@ -44,7 +44,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
     levId = gGT->levelID;
     prevLev = gGT->prevLEV;
-    
+
     boolSpawnAtBossDoor = false;
 
     // by default, dont spawn by a hub door
@@ -55,7 +55,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     {
         return;
     }
-	
+
     // ground and wall quadblock flags
     sps->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
 
@@ -71,15 +71,15 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     if ((spawnFlag & 1) == 0)
     {
         // Ordinary player position
-        posBottom[0] = (short)(d->posCurr[0] >> 8);
-        posBottom[1] = (short)(d->posCurr[1] >> 8) + 0x80;
-        posBottom[2] = (short)(d->posCurr[2] >> 8);
+        posBottom[0] = (short)(d->posCurr.x >> 8);
+        posBottom[1] = (short)(d->posCurr.y >> 8) + 0x80;
+        posBottom[2] = (short)(d->posCurr.z >> 8);
     }
 
     // if you are spawning into the world for the first time,
     // could be startline, or adv hub spawn in several places
     else
-    {	
+    {
         // spawn in front of hub door, beach-to-gemstone
         if (
             // If you are at podium after winning a Key
@@ -166,7 +166,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             // spawn outside boss door
             boolSpawnAtBossDoor = true;
         }
-		
+
         // if not spawning at hub door (door not found)
         if (levInstDef == NULL)
         {
@@ -215,10 +215,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
                         // if you just came from any of these...
                         if (
-							(prevLev == MAIN_MENU_LEVEL) || 
+							(prevLev == MAIN_MENU_LEVEL) ||
 							(prevLev == ADVENTURE_CHARACTER_SELECT) ||
-                            (prevLev == -1) || 
-							(prevLev == SCRAPBOOK) || 
+                            (prevLev == -1) ||
+							(prevLev == SCRAPBOOK) ||
 							((unsigned int)(prevLev - 0x2c) < 0x14)
 							)
                             goto LAB_80058158;
@@ -248,7 +248,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         else
         {
             gameMode2 |= VEH_FREEZE_DOOR;
-            
+
             // do trigonometry to take hub door
             angle = levInstDef->rot[1];
 
@@ -272,12 +272,12 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     posTop[0] = posBottom[0];
     posTop[1] = posBottom[1] - 0x100;
     posTop[2] = posBottom[2];
-	
+
 	#ifdef REBUILD_PC
-	
+
 	for(int i = 0; i < 7; i++)
 		sdata->kartSpawnOrderArray[i] = i;
-	
+
     // position index on starting line
     posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
 
@@ -285,19 +285,19 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->rotCurr.x = posRot->rot[0];
     d->rotCurr.y = posRot->rot[1] + 0x400;
     d->rotCurr.z = posRot->rot[2];
-	
-    d->posCurr[0] = posRot->pos[0] << 8;
-    d->posCurr[1] = (posRot->pos[1]-0x40) << 8;
-    d->posCurr[2] = posRot->pos[2] << 8;
-	
+
+    d->posCurr.x = posRot->pos[0] << 8;
+    d->posCurr.y = (posRot->pos[1]-0x40) << 8;
+    d->posCurr.z = posRot->pos[2] << 8;
+
 	d->instSelf->matrix.t[0] = posRot->pos[0];
 	d->instSelf->matrix.t[1] = (posRot->pos[1]-0x40);
 	d->instSelf->matrix.t[2] = posRot->pos[2];
 
     ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
-	
+
 	#else
-		
+
     COLL_SearchTree_FindQuadblock_Touching(&posTop[0], &posBottom[0], sps, 0);
 
     // if collision was not found
@@ -317,11 +317,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     }
 
     // set all normal vectors to spawn
-    d->AxisAngle1_normalVec[0] = d->AxisAngle3_normalVec[0];
+    d->AxisAngle1_normalVec.x = d->AxisAngle3_normalVec[0];
     d->AxisAngle2_normalVec[0] = d->AxisAngle3_normalVec[0];
-    d->AxisAngle1_normalVec[1] = d->AxisAngle3_normalVec[1];
+    d->AxisAngle1_normalVec.y = d->AxisAngle3_normalVec[1];
     d->AxisAngle2_normalVec[1] = d->AxisAngle3_normalVec[1];
-    d->AxisAngle1_normalVec[2] = d->AxisAngle3_normalVec[2];
+    d->AxisAngle1_normalVec.z = d->AxisAngle3_normalVec[2];
     d->AxisAngle2_normalVec[2] = d->AxisAngle3_normalVec[2];
 
     for (i = 0; i < 1; i++) // maybe this is done two times, because it was a do-while?
@@ -334,18 +334,18 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     }
 
     // player structure X, Y, Z
-    d->posCurr[0] = (int)(sps->Union.QuadBlockColl.hitPos[0]) << 8;
-    d->posCurr[1] = (int)(sps->Union.QuadBlockColl.hitPos[1] + spawnPosY) * 0x100;
-    d->posCurr[2] = (int)(sps->Union.QuadBlockColl.hitPos[2]) << 8;
+    d->posCurr.x = (int)(sps->Union.QuadBlockColl.hitPos[0]) << 8;
+    d->posCurr.y = (int)(sps->Union.QuadBlockColl.hitPos[1] + spawnPosY) * 0x100;
+    d->posCurr.z = (int)(sps->Union.QuadBlockColl.hitPos[2]) << 8;
 
     // duplicate of coordinate variables
-    d->posPrev[0] = d->posCurr[0];
-    d->posPrev[1] = d->posCurr[1];
-    d->posPrev[2] = d->posCurr[2];
+    d->posPrev.x = d->posCurr.x;
+    d->posPrev.y = d->posCurr.y;
+    d->posPrev.z = d->posCurr.z;
 
     // save quadblock height
     d->quadBlockHeight = (int) sps->Union.QuadBlockColl.hitPos[1] << 8;
-	
+
 	#endif
 
     // if you are spawning into the world for the first time,
@@ -433,10 +433,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
                     if (
 							// If you just came from the main menu
 							(gGT->prevLEV == MAIN_MENU_LEVEL) ||
-							
+
 							// If you just came from "nothing"
 							(gGT->prevLEV == -1) ||
-							
+
 							// if WarpPad_ReturnToMap failed to find a matching portal
 							(warppadRot == NULL)
                         )
@@ -487,12 +487,12 @@ LAB_80058568:
 
     // halfway
     d->instSelf->animFrame = FPS_DOUBLE(10);
-	
+
 	#if 0 // 10 =
 		VehFrameInst_GetStartFrame(
-			
+
 			0, // midpoint
-			
+
 			VehFrameInst_GetNumAnimFrames(
 				d->instSelf, 	// driver instance
 				0				// anim #0, steer
@@ -536,9 +536,9 @@ LAB_80058568:
         d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 
         // set OnInit function
-        d->funcPtrs[0] = 
-			((gGT->gameMode1 & ADVENTURE_ARENA) == 0) 
-				? DECOMP_VehStuckProc_RevEngine_Init 
+        d->funcPtrs[0] =
+			((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
+				? DECOMP_VehStuckProc_RevEngine_Init
 				: DECOMP_VehPhysProc_Driving_Init;
 	}
 

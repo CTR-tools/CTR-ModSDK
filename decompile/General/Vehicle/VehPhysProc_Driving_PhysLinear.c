@@ -410,9 +410,9 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	driver->rotPrev.z = driver->rotCurr.z;
 
 	// backup position
-	driver->posPrev[0] = driver->posCurr[0];
-	driver->posPrev[1] = driver->posCurr[1];
-	driver->posPrev[2] = driver->posCurr[2];
+	driver->posPrev.x = driver->posCurr.x;
+	driver->posPrev.y = driver->posCurr.y;
+	driver->posPrev.z = driver->posCurr.z;
 
 	// unknown
 	driver->jumpHeightPrev = driver->jumpHeightCurr;
@@ -435,7 +435,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 	// source
 	normSrc = &driver->AxisAngle2_normalVec[0];
-	if ((actionsFlagSetCopy & 1) != 0) normSrc = &driver->AxisAngle1_normalVec[0];
+	if ((actionsFlagSetCopy & 1) != 0) normSrc = &driver->AxisAngle1_normalVec.x;
 
 	// copy
 	*(u_int*)&normDst[0] = *(u_int*)&normSrc[0];

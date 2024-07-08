@@ -67,6 +67,11 @@ enum LevelID
 	SCRAPBOOK
 };
 
+enum TerrainType
+{
+	TERRAIN_MUD = 14,
+};
+
 // transparent parameter of getTPage()
 enum BlendMode
 {
@@ -126,7 +131,7 @@ struct PVS
 	int* visLeafSrc;
 	int* visFaceSrc;
 	struct Instance** visInstSrc;
-	
+
 	// either OVert or SCVert
 	int* visExtraSrc;
 };
@@ -151,7 +156,7 @@ struct QuadBlock
 		(doubleSided ? 1 : 0) << 31)
 	*/
 	/*
-		//where 5 bits of faceFlags are 
+		//where 5 bits of faceFlags are
 		3 bits Rotation = x & 7;
 		2 bits faceMode = (x >> 3) & 3;
 	*/
@@ -239,9 +244,9 @@ struct BSP
 		{
 			// 0x10
 			int unk1;
-			
+
 			// 0x14
-			// the code keeps looping through the 
+			// the code keeps looping through the
 			// array until it finds a 4-byte 0x00000000
 			// to determine end of list
 			struct BSP* bspHitboxArray;
@@ -252,14 +257,14 @@ struct BSP
 			// 0x1C
 			struct QuadBlock* ptrQuadBlockArray;
 		} leaf;
-		
+
 		// 0x10
 		struct
 		{
 			// 0x10
 			short unkShort[6];
 			// see FUN_8001d0c4
-			
+
 			// 0x1C
 			// These are always InstDef, not converted to Instance
 			struct InstDef* instDef;
@@ -274,7 +279,7 @@ struct LevVertex
 {
 	// 0x0
 	short pos[3];
-	
+
 	// 0x6
 	// FUN_8001ef50
 	u_short flags;
@@ -358,7 +363,7 @@ struct VisMem
 	// 0x00-0x3F are all DST
 	// 0x40-0x7F are all SRC
 	// SRC constantly copies to DST
-	// DST never changes 
+	// DST never changes
 	// SRC always changes based on CamDC
 	// why is the copy needed?
 
@@ -442,7 +447,7 @@ enum ST1
 struct SpawnType1
 {
 	int count;
-	
+
 	//void* pointers[0];
 };
 #define ST1_GETPOINTERS(x) \
@@ -462,16 +467,16 @@ struct CheckpointNode
 {
 	// 0x0
 	short pos[3];
-	
+
 	// 0x6
 	unsigned short distToFinish;
-	
+
 	// 0x8
 	unsigned char nextIndex_forward;
 	unsigned char nextIndex_left;
 	unsigned char nextIndex_backward;
 	unsigned char nextIndex_right;
-	
+
 	// 0xC -- size
 };
 
@@ -492,10 +497,10 @@ struct Skybox
 {
 	int numVertex;
 	struct ShortVertex* ptrVertex;
-	
+
 	short numFaces[NUM_SKYBOX_SEGMENTS];
 	struct SkyboxFace* ptrFaces[NUM_SKYBOX_SEGMENTS];
-	
+
 	// struct SkyboxFace allFaces[0];
 };
 #define SKY_GETFACES(x) \
@@ -724,7 +729,7 @@ struct Level
 
 	// 0x190
 	struct VisMem* visMem;
-	
+
 	char footer[0x60];
 };
 

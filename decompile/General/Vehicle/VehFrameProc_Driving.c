@@ -15,7 +15,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
     struct Instance *inst = t->inst;
 
     if (
-			(d->instTntRecv == 0) && 
+			(d->instTntRecv == 0) &&
 			(d->kartState != KS_WARP_PAD)
 		)
     {
@@ -28,8 +28,8 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         }
         // if player height is far from quadblock height
         if (
-			(0x600 < d->jumpHeightCurr || inst->animIndex == 3) && 
-			(0x8000 < d->posCurr[1] - d->quadBlockHeight)
+			(0x600 < d->jumpHeightCurr || inst->animIndex == 3) &&
+			(0x8000 < d->posCurr.y - d->quadBlockHeight)
 			)
         {
             // jumping animation
@@ -41,7 +41,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
 
     numFrames = VehFrameInst_GetNumAnimFrames(inst, currAnimIndex);
 
-    if (numFrames <= 0) return;    
+    if (numFrames <= 0) return;
 
     // if animation changes
     if (animType != currAnimIndex)
@@ -71,7 +71,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             else if (currAnimIndex == 2)
             {
                 animSpeed = 1;
-				
+
                 d->matrixIndex = *(char *)&inst->animFrame;
             }
 
@@ -84,7 +84,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             // kart animation frame
             currFrame = *(char *)&inst->animFrame;
             d->matrixIndex = currFrame;
-            
+
             // kart animation Index
             if (currFrame == 0)
                 d->matrixArray = 0;
@@ -95,7 +95,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         numFrames = VehFrameInst_GetNumAnimFrames(inst, animType);
 
         if (numFrames <= 0) return;
-        
+
         // set animation
         inst->animIndex = (char)animType;
         // starting frame
@@ -116,14 +116,14 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             short burnTimer = d->burnTimer;
             // not currently burned or just start burning
             if ((burnTimer == 0) || (479 < burnTimer))
-            {   
+            {
                 // negative turning stat while braking
                 iVar9 = -0x40;
                 // if you're not in accel prevention
                 if ((d->actionsFlagSet & 8) == 0)
                 {
                     iVar7 = d->simpTurnState;
-					
+
                     // negative character's turn stat
                     animType = d->const_TurnRate;
 					iVar9 = -animType;
@@ -140,7 +140,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             else
             {
                 iVar9 = (((burnTimer >> 5) % 5) >> 2) - 8 + iVar9;
-                
+
                 inst->animFrame = (short)iVar9;
                 struct Particle *p = Particle_Init(0, gGT->iconGroup[1], &data.emSet_BurnSmoke[0]);
                 if (p != NULL)
@@ -153,14 +153,14 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         }
     }
     else
-    {   
+    {
         // jump animation
         if (animType == 3)
         {
             interp = VehCalc_InterpBySpeed(inst->animFrame, 1, numFrames - 1);
             inst->animFrame = interp;
 
-            if (d->kartState == KS_MASK_GRABBED) return;                
+            if (d->kartState == KS_MASK_GRABBED) return;
 
             char charID = data.characterIDs[d->driverID];
 
@@ -178,13 +178,13 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             default:
                 charID += 7;
             }
-            
+
 			// set AnimType based on charID
             d->matrixArray = charID;
-			
+
             // set animation frame (needs FPS_HALF)
             d->matrixIndex = *(char *)&inst->animFrame;
-            
+
 			return;
         }
         // last frame

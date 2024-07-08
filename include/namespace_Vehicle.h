@@ -463,14 +463,14 @@ struct Driver
 	Vec3 velocity;
 
 	// 0x94
-	int vec3_originToCenter[3];
+	Vec3 originToCenter;
 
 	// 0xA0 - quadblock currently touched,
 	// it is zero while airborne
 	struct QuadBlock* currBlockTouching;
 
 	// 0xA4
-	short normalVecUP[3];
+	SVec3 normalVecUP;
 	short unkAA;
 
 	// 0xac
@@ -547,11 +547,11 @@ struct Driver
 	int quadBlockHeight;
 
 	// 0x2D4
-	int posCurr[3];
+	Vec3 posCurr;
 
 	// 0x2E0
 	// used for velocity in 231
-	int posPrev[3];
+	Vec3 posPrev;
 
 	// 0x2EC
 	// This is render rotation, not velocity direction,
@@ -615,7 +615,7 @@ struct Driver
 	// 0x360
 	// used in PhysLinear, reset in VehPhysForce_OnApplyForces, calculated in StartSearch,
 	// all three are funcPtrs in the driver struct, in that order of operation
-	short AxisAngle1_normalVec[3];
+	SVec3 AxisAngle1_normalVec;
 
 	// 0x366
 	// forced to jump while on turtles,

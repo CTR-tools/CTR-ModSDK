@@ -24,9 +24,9 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   *(int *)(d + 0x5d0) = 0;
   *(int *)(d + 0x5cc) = 0;
 
-  d->ai_posBackup[0] = d->posCurr[0];
-  d->ai_posBackup[1] = d->posCurr[1];
-  d->ai_posBackup[2] = d->posCurr[2];
+  d->ai_posBackup[0] = d->posCurr.x;
+  d->ai_posBackup[1] = d->posCurr.y;
+  d->ai_posBackup[2] = d->posCurr.z;
 
   d->unk5a8 = 0;
 
@@ -47,7 +47,7 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   d->ai_rot4[2] = 0;
   d->rotCurr.x = 0;
   d->rotPrev.x = 0;
-  
+
   d->turnAngleCurr = 0;
 
   // turn on 21st flag of actions flag set, means driver is AI

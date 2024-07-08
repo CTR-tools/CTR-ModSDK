@@ -50,9 +50,9 @@ void DECOMP_EngineSound_NearestAIs(void)
           pb = gGT->pushBuffer[iVar10];
 
           // Subtract robotcar position from pushBuffer position
-          distX = pb->pos[0] - (short)robot->posCurr[0];
-          distY = pb->pos[1] - (short)robot->posCurr[1];
-          distZ = pb->pos[2] - (short)robot->posCurr[2];
+          distX = pb->pos[0] - (short)robot->posCurr.x;
+          distY = pb->pos[1] - (short)robot->posCurr.y;
+          distZ = pb->pos[2] - (short)robot->posCurr.z;
 
           // Distance formula in 3D
           dist = SquareRoot0(distX * distX + distY * distY + distZ * distZ);
