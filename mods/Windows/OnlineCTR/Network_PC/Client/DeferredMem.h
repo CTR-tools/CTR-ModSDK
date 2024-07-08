@@ -147,7 +147,7 @@ public:
 	void waitRead()
 	{
 		if (pState != reading)
-			exit_execv(69); //todo abort bad
+			exit_execv(13); //todo abort bad
 		waitUntilPineDataPresent(outstandingAPIID);
 
 		std::vector<DSPINESendRecvPair> pineData = getPineDataSegment(outstandingAPIID);
@@ -187,7 +187,7 @@ public:
 	void waitWrite()
 	{
 		if (pState != writing)
-			exit_execv(69); //todo abort bad
+			exit_execv(12); //todo abort bad
 		waitUntilPineDataPresent(outstandingAPIID);
 
 		//currently nothing needs to be done with pineData
@@ -206,7 +206,7 @@ public:
 			pState = none; //no longer considered writing
 		}
 		if (pState != none)
-			exit_execv(69); //todo abort bad
+			exit_execv(14); //todo abort bad
 		return bufferedVal;
 	}
 	unsigned int get_address()

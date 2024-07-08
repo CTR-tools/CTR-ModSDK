@@ -374,7 +374,7 @@ std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
 pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 {
 	if (len == 0)
-		exit_execv(69); //this function only works if you attempt to read a non-zero length of memory.
+		exit_execv(10); //this function only works if you attempt to read a non-zero length of memory.
 	std::vector<internalPineApiID> iids{};
 	//size_t roundedUpLen = len + ((len % 8 != 0) ? (8 - (len % 8)) : 0);
 	size_t roundedUpLen = ((len & 0x7) != 0) ? (len & ~0x7) + 8 : len; //should be identical to above
@@ -393,7 +393,7 @@ pineApiID send_readMemorySegment(unsigned int addr, size_t len)
 pineApiID send_writeMemorySegment(unsigned int addr, size_t len, char* buf, char* originalBuf)
 {
 	if (len == 0)
-		exit_execv(69); //this function only works if you attempt to write a non-zero length of memory.
+		exit_execv(11); //this function only works if you attempt to write a non-zero length of memory.
 	std::vector<internalPineApiID> iids{};
 	auto dispatchContig = [&iids](unsigned int address, size_t length, char* buffer)
 	{
