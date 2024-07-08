@@ -38,7 +38,7 @@ void DECOMP_BOTS_MaskGrab(struct Thread *botThread)
     *(int *)(bot + 0x5f4) = midpoint;
     bot->posPrev[1] = midpoint;
     bot->quadBlockHeight = midpoint;
-    
+
     // midpointZ between nav frames
     midpoint = (frame->pos[2] + (nextframe->pos[2] - frame->pos[2]) / 2) * 0x100;
     *(int *)(bot + 0x5f8) = midpoint;
@@ -82,9 +82,9 @@ void DECOMP_BOTS_MaskGrab(struct Thread *botThread)
     }
 
     // posY, plus height to be dropped from
-    bot->posCurr[0] = bot->ai_posBackup[0];
-    bot->posCurr[2] = bot->ai_posBackup[2];
-    bot->posCurr[1] = bot->bot->ai_posBackup[1] + 0x10000;
+    bot->posCurr.x = bot->ai_posBackup[0];
+    bot->posCurr.y = bot->ai_posBackup[2];
+    bot->posCurr.z = bot->bot->ai_posBackup[1] + 0x10000;
 
     mask = VehPickupItem_MaskUseWeapon(bot, 1);
 

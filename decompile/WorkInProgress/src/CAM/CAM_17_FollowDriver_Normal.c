@@ -204,10 +204,10 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     gte_rtv0();
     gte_stlvnl((VECTOR *)(scratchpad + 0x27c));
 
-    *(int *)(scratchpad + 600) = d->posCurr[0] >> 8;
-    *(int *)(scratchpad + 0x25c) = d->posCurr[1] >> 8;
+    *(int *)(scratchpad + 600) = d->posCurr.x >> 8;
+    *(int *)(scratchpad + 0x25c) = d->posCurr.y >> 8;
     *(int *)(scratchpad + 600) += *(int *)(scratchpad + 0x27c);
-    *(int *)(scratchpad + 0x260) = d->posCurr[2] >> 8;
+    *(int *)(scratchpad + 0x260) = d->posCurr.z >> 8;
     *(int *)(scratchpad + 0x260) += *(int *)(scratchpad + 0x284);
     *(int *)(scratchpad + 0x240) += *(int *)(scratchpad + 600);
 
@@ -316,7 +316,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         *(short *)(cDC + 0xc2) = 0;
         cDC->framesZoomingOut = 0;
     }
-	
+
     if (((d->kartState != KS_BLASTED) && ((d->actionsFlagSet & 1) != 0)) &&
         (cDC->unk_c6 != 0))
     {
@@ -409,17 +409,17 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         // quadblock->quadFlags & 0x4100
         ((*(u_short *)(*(int *)(scratchpad + 0x80) + 0x12) & 0x4100) != 0))
     {
-        if (*(int *)(scratchpad + 0x244) < (int)cDC->framesZoomingOut + (d->posCurr[1] >> 8))
+        if (*(int *)(scratchpad + 0x244) < (int)cDC->framesZoomingOut + (d->posCurr.y >> 8))
         {
             *(short *)(cDC + 0xc2) = 8;
             *(short *)(cDC + 0xc0) = cDC->framesZoomingOut;
-            *(int *)(scratchpad + 0x244) = (int)cDC->framesZoomingOut + (d->posCurr[1] >> 8);
+            *(int *)(scratchpad + 0x244) = (int)cDC->framesZoomingOut + (d->posCurr.y >> 8);
 
             goto LAB_8001ab04;
         }
 
         *(short *)(cDC + 0xc2) = 8;
-        *(short *)(cDC + 0xc0) = *(short *)(scratchpad + 0x244) - (short)(d->posCurr[1] >> 8);
+        *(short *)(cDC + 0xc0) = *(short *)(scratchpad + 0x244) - (short)(d->posCurr.y >> 8);
     }
 
     else
@@ -445,13 +445,13 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             *(int *)(scratchpad + 0x244) =
 
                 (8 - x) * *(int *)(scratchpad + 0x244) +
-                    x * ((int)*(short *)(cDC + 0xc0) + (d->posCurr[1] >> 8)) >>
+                    x * ((int)*(short *)(cDC + 0xc0) + (d->posCurr.y >> 8)) >>
                 3;
 
             *(short *)(cDC + 0xc2) += -1;
         }
     }
-    cDC->framesZoomingOut = *(short *)(scratchpad + 0x244) - (d->posCurr[1] >> 8);
+    cDC->framesZoomingOut = *(short *)(scratchpad + 0x244) - (d->posCurr.y >> 8);
 LAB_8001ab04:
 
     // if mask grabs you when you're underwater
@@ -471,13 +471,13 @@ LAB_8001ab04:
         pb->rot[2] -= (pb->rot[2] >> 3);
 
         // camera dirX, cameraPosX minus driverPosX
-        *(int *)(scratchpad + 0x24c) = (int)pb->pos[0] - (d->posCurr[0] >> 8);
+        *(int *)(scratchpad + 0x24c) = (int)pb->pos[0] - (d->posCurr.x >> 8);
 
         // camera dirY, cameraPosY minus driverPosY, plus something else
-        *(int *)(scratchpad + 0x250) = (int)pb->pos[1] - ((d->posCurr[1] >> 8) + (int)zoom->angle[2]);
+        *(int *)(scratchpad + 0x250) = (int)pb->pos[1] - ((d->posCurr.y >> 8) + (int)zoom->angle[2]);
 
         // camera dirZ, cameraPosZ minus driverPosZ
-        *(int *)(scratchpad + 0x254) = (int)pb->pos[2] - (d->posCurr[2] >> 8);
+        *(int *)(scratchpad + 0x254) = (int)pb->pos[2] - (d->posCurr.z >> 8);
 
         if ((pb->rot[0] < 0x800) && (0x800 < pb->rot[0] + 0x10))
         {
@@ -663,8 +663,8 @@ LAB_8001ab04:
 
         // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
         CAM_ProcessTransition(
-			&pb->pos[0], &pb->rot[0], 
-			&local_40, &local_38, 
+			&pb->pos[0], &pb->rot[0],
+			&local_40, &local_38,
 			&pb->pos[0], &pb->rot[0],
 			x);
 

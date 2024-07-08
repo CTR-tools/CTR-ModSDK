@@ -69,6 +69,11 @@ typedef union Vec4
 	s32 v[4];
 } Vec4;
 
+typedef struct Matrix {
+	s16 m[3][3];
+	Vec3 t;
+} Matrix;
+
 // trigonometry //
 
 struct TrigTable

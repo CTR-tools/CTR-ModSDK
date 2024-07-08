@@ -17,9 +17,9 @@ struct MyData
 int GetOverheadLen(struct Driver* d)
 {
 	struct MyData* ptrDest = (struct MyData*)0x1f800108;
-	ptrDest->World_posX = d->posCurr[0] >> 8;
-	ptrDest->World_posY = (d->posCurr[1] >> 8) + 0x19;
-	ptrDest->World_posZ = d->posCurr[2] >> 8;
+	ptrDest->World_posX = d->posCurr.x >> 8;
+	ptrDest->World_posY = (d->posCurr.y >> 8) + 25;
+	ptrDest->World_posZ = d->posCurr.z >> 8;
 	ptrDest->World_posW = 0;
 
 	gte_ldv0(&ptrDest->World_posX);

@@ -92,7 +92,7 @@ LAB_8005ec70:
 
 	// position X, Y and Z
 	for (char i = 0; i < 3; i++)
-		pos[i] = (u_short)((u_int)driver->posCurr[i] >> 8);
+		pos[i] = (u_short)((u_int)driver->posCurr.v[i] >> 8);
 
 	// if collision is not disabled for this thread
 	if ((thread->flags & 0x1000) == 0)

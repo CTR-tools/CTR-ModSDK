@@ -5,7 +5,7 @@ void StateZero();
 //#define FastBoot
 
 u_int DECOMP_main()
-{	
+{
 	u_int AddBitsConfig0;
 	u_int RemBitsConfig0;
 	u_int AddBitsConfig8;
@@ -14,14 +14,14 @@ u_int DECOMP_main()
 	u_int gameMode1;
 	u_int gameMode2;
 	u_int uVar12;
-	
+
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
-	
+
 	struct GamepadSystem* gGS;
 	gGS = sdata->gGamepads;
-	
-#ifndef REBUILD_PS1	
+
+#ifndef REBUILD_PS1
 	__main();
 #endif
 
@@ -48,14 +48,14 @@ u_int DECOMP_main()
 
 			// Happens on first frame that loading ends
 			case 1:
-			
+
 				DECOMP_ElimBG_Deactivate(gGT);
-				
+
 #ifndef REBUILD_PS1
 				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
 #endif
-				
+
 				// Disable End-Of-Race menu
 				gGT->gameMode1 &= ~END_OF_RACE;
 
@@ -64,28 +64,28 @@ u_int DECOMP_main()
 					if (DECOMP_RaceFlag_IsFullyOffScreen() != 0)
 						DECOMP_RaceFlag_SetFullyOnScreen();
 				}
-				
+
 				else
 				{
 					if (DECOMP_RaceFlag_IsFullyOnScreen() != 0)
 						DECOMP_RaceFlag_BeginTransition(2);
 				}
-				
+
 				DECOMP_DropRain_Reset(gGT);
 				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
 				DECOMP_GAMEPAD_GetNumConnected(gGS);
-						
+
 				sdata->boolSoundPaused = 0;
 				DECOMP_VehBirth_EngineAudio_AllPlayers();
-				
+
 				// 9 = intro cutscene
 				// 10 = traffic lights
 				// 11 = racing
 
 				// Arcade-Style track starts with intro cutscene
 				uVar12 = 9;
-				
+
 				if
 				(
 					// If Level ID is less than 18, it's one of the race tracks
@@ -109,11 +109,11 @@ u_int DECOMP_main()
 			case 2:
 				DECOMP_Audio_SetState_Safe(1);
 				DECOMP_MEMPACK_PopState();
-				
+
 				// ignore threads, because we PopState,
 				// so the threadpool will reset anyway
 				DECOMP_LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
-				
+
 				sdata->mainGameState = 1;
 				break;
 
@@ -126,30 +126,30 @@ u_int DECOMP_main()
 					if
 					(
 						(DECOMP_RaceFlag_IsFullyOnScreen() == 1) ||
-						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
+						(gGT->levelID == NAUGHTY_DOG_CRATE) ||
 						(sdata->pause_state != 0)
 					)
 					{
 						gGT->gameMode1 |= LOADING;
 					}
-					
+
 					iVar8 = sdata->Loading.stage;
 
 					// elapsed milliseconds per frame, locked 32 here
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
 					gGT->elapsedTimeMS = FPS_HALF(32);
-					
+
 					// if loading VLC
 					if (iVar8 == -6)
 					{
 						// if VLC is not loaded, quit
 						// we know when it's done from a load callback
 						if (sdata->bool_IsLoaded_VlcTable != 1) break;
-						
+
 						// if == 1, finish the loading
 						goto FinishLoading;
 					}
-					
+
 					// if restarting race
 					if (iVar8 == -5)
 					{
@@ -161,16 +161,16 @@ u_int DECOMP_main()
 
 							// no loading, and no interruption
 							sdata->Loading.stage = -1;
-							
+
 							// Turn off the "Loading..." flag
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
-						
+
 						// if not fully on-screen, do not BREAK,
 						// keep rendering the scene
 					}
-					
+
 					// if waiting for checkered flag to cover screen,
 					// right before loading the next requested level
 					else if (iVar8 == -4)
@@ -179,7 +179,7 @@ u_int DECOMP_main()
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
-						
+
 						if (DECOMP_RaceFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
@@ -196,22 +196,22 @@ u_int DECOMP_main()
 							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
-							
+
 							DECOMP_MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 						}
-						
+
 						else if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
 							DECOMP_RaceFlag_BeginTransition(1);
-						
-						// do not BREAK, 
+
+						// do not BREAK,
 						// keep rendering the scene
 					}
-					
+
 					// if something is being loaded
 					else
 					{
 						sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
-							
+
 						// If just finished loading stage 9
 						if (sdata->Loading.stage == -2)
 						{
@@ -222,7 +222,7 @@ u_int DECOMP_main()
 							)
 							{
 								DECOMP_MainLoadVLC();
-								
+
 								// start loading VLC (scroll up to iVar8 == -6)
 								sdata->Loading.stage = -6;
 								break;
@@ -234,16 +234,16 @@ FinishLoading:
 							// remove LOADING... flag from gGT
 							sdata->Loading.stage = -1;
 							sdata->mainGameState = 1;
-							gGT->gameMode1 &= ~LOADING;							
+							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
-						
+
 						// else, do not BREAK,
 						// keep rendering the scene
 						// which is the checkered flag
 					}
 				}
-				
+
 				// sync music, in case loading is too fast,
 				// https://www.youtube.com/watch?v=rzJcVdm4ny4
 				#ifndef REBUILD_PS1
@@ -260,7 +260,7 @@ FinishLoading:
 				}
 				#endif
 				#endif
-				
+
 // =========== Main Game Loop ======================
 
 				if
@@ -294,38 +294,38 @@ FinishLoading:
 				#ifdef FastBoot
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
-				
+
 				// disable maskgrab_init
 				*(int*)0x800671b0 = 0x3E00008;
 				*(int*)0x800671b4 = 0;
-				
+
 				if (
 					// first frame of spawn
 					(sdata->gGT->elapsedEventTime == 0) ||
-					
+
 					// L2 tap
 					(gGS->gamepad[0].buttonsTapped & BTN_L2)
 					)
 				{
 					gGT->hudFlags |= 1;
-					
-					gGT->drivers[0]->posCurr[0] = 0x2e3152;
-					gGT->drivers[0]->posCurr[1] = 0x5f96;
-					gGT->drivers[0]->posCurr[2] = 0xfff59bd1;
+
+					gGT->drivers[0]->posCurr.x = 0x2e3152;
+					gGT->drivers[0]->posCurr.y = 0x5f96;
+					gGT->drivers[0]->posCurr.z = 0xfff59bd1;
 					gGT->drivers[0]->angle = 0x5af;
-					
+
 					gGT->drivers[0]->heldItemID = 9;
-					
-					gGT->drivers[1]->posCurr[0] = 0x2f8d79;
-					gGT->drivers[1]->posCurr[1] = 0x5f70;
-					gGT->drivers[1]->posCurr[2] = 0xffedde6f;
+
+					gGT->drivers[1]->posCurr.x = 0x2f8d79;
+					gGT->drivers[1]->posCurr.y = 0x5f70;
+					gGT->drivers[1]->posCurr.z = 0xffedde6f;
 					gGT->drivers[1]->angle = 0x5af;
 				}
 				#endif
 
 				// Start new frame (ClearOTagR)
 				DECOMP_MainFrame_ResetDB(gGT);
-				
+
 				if
 				(
 					// If you're in Demo Mode
@@ -356,7 +356,7 @@ FinishLoading:
 						LAB_8003ce08:
 						DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
-					
+
 					// if time remains on the timer
 					else
 					{
@@ -375,7 +375,7 @@ FinishLoading:
 						// Draw text near top of screen
 						uVar12 = 0x23;
 					}
-					
+
 					// if this is multiplayer
 					else
 					{
@@ -386,12 +386,12 @@ FinishLoading:
 					// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
 					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
-				
+
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
 					DECOMP_MainFrame_GameLogic(gGT, gGS);
 				}
-				
+
 				// If you are in demo mode
 				if (gGT->boolDemoMode != '\0')
 				{
@@ -452,47 +452,47 @@ FinishLoading:
 						// is not zero, then loading screen breaks
 						// if we pause and quit
 						sdata->XA_State = 0;
-						
+
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
 							gGT->pushBuffer[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
 							gGT->pushBuffer[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
 							gGT->pushBuffer[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
-										  
+
 							gGT->pushBuffer[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
 							gGT->pushBuffer[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
 							gGT->pushBuffer[k].rot[2] = 0; // required
-							
+
 							// move backwards a little
 							gGT->pushBuffer[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->pushBuffer[k].rot[1])) >> 0xC;
 							gGT->pushBuffer[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->pushBuffer[k].rot[1])) >> 0xC;
-							
+
 						}
 					}
-					
+
 					else if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 					{
 						// temporary workaround, cause XA IRQ doesn't happen,
 						// must be zero for level music to work
 						sdata->XA_State = 0;
-	
+
 						int dirUD = 0;
 						int dirLR = 0;
 						int dirCT = 0;
-	
+
 						if ((held & BTN_UP) != 0) dirUD = -1;
 						if ((held & BTN_DOWN) != 0) dirUD = 1;
 						gGT->pushBuffer[0].pos[2] += (dirUD * FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->pushBuffer[0].rot[1])) >> 0xC;
 						gGT->pushBuffer[0].pos[0] += (dirUD * FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->pushBuffer[0].rot[1])) >> 0xC;
-	
+
 						if ((held & BTN_LEFT) != 0) dirLR = 1;
 						if ((held & BTN_RIGHT) != 0) dirLR = -1;
 						gGT->pushBuffer[0].rot[1] += dirLR * FPS_HALF(0x20);
-	
+
 						if ((held & BTN_CROSS) != 0) dirCT = -1;
 						if ((held & BTN_TRIANGLE) != 0) dirCT = 1;
 						gGT->pushBuffer[0].pos[1] += dirCT * FPS_HALF(0x20);
-						
+
 						if ((tap & BTN_R1) != 0)
 						{
 							if(gGT->drivers[0]->heldItemID == 0xF)
@@ -500,25 +500,25 @@ FinishLoading:
 								gGT->drivers[0]->heldItemID = 0;
 								gGT->drivers[0]->numHeldItems = 1;
 							}
-							
+
 							else
 							{
 								gGT->drivers[0]->heldItemID++;
 							}
 						}
-						
+
 						if ((tap & BTN_L1) != 0)
 						{
 							if(gGT->drivers[0]->heldItemID != 0xF)
 								gGT->drivers[0]->heldItemID--;
-							
+
 							if(gGT->drivers[0]->heldItemID < 0)
 								gGT->drivers[0]->heldItemID = 0;
 						}
 					}
-					
+
 					if ((held & BTN_START) != 0)
-					{	
+					{
 						if((gGT->gameMode1 & GAME_CUTSCENE) != 0)
 						{
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
@@ -549,10 +549,10 @@ FinishLoading:
 				break;
 
 			#if 0
-			// In theory, this is left over from the demos, 
+			// In theory, this is left over from the demos,
 			// which would "timeout" and restart after sitting idle
 			case 4:
-			
+
 				// erase all data past the
 				// last 3 bookmarks, if there
 				// that many exist
@@ -572,7 +572,7 @@ FinishLoading:
 
 				// Set vsync to 2 FPS
 				VSync(30);
-				
+
 				// reboot game
 				sdata->mainGameState = 0;
 			#endif
@@ -588,32 +588,32 @@ int GetSongTime()
 }
 #endif
 
-// by separating this, it can be 
+// by separating this, it can be
 // overwritten dynamically (oxide fix)
 void StateZero()
 {
 	u_short *clockEffect;
 	int vramSize;
-	
+
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
-	
+
 	struct GamepadSystem* gGS;
 	gGS = sdata->gGamepads;
-	
+
 	// already zero, part of BSS
 	#if 0
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
-	
+
 	// for modding
 	void ModsMain();
 	ModsMain();
-	
+
 	// Set Video Mode to NTSC
 	SetVideoMode(0);
 	ResetCallback();
-	
+
 	#ifndef USE_RAMEX
 	#define MEMPACK_SIZE 0x200000 // 2mb
 	#else
@@ -623,7 +623,7 @@ void StateZero()
 	DECOMP_MEMPACK_Init(MEMPACK_SIZE);
 	DECOMP_LOAD_InitCD();
 	DECOMP_RaceFlag_SetFullyOffScreen();
-	
+
 	ResetGraph(0);
 	SetGraphDebug(0);
 
@@ -632,57 +632,57 @@ void StateZero()
 #endif
 
 	SetDispMask(1);
-	
+
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
 	SetDefDrawEnv(&gGT->db[1].drawEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[0].dispEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[1].dispEnv, 0, 0, 0x200, 0xd8);
-	
+
 	gGT->db[0].dispEnv.screen.x = 0;
 	gGT->db[0].dispEnv.screen.y = 0xc;
 	gGT->db[0].dispEnv.screen.w = 0x100;
 	gGT->db[0].dispEnv.screen.h = 0xd8;
-	
+
 	gGT->db[1].dispEnv.screen.x = 0;
 	gGT->db[1].dispEnv.screen.y = 0xc;
 	gGT->db[1].dispEnv.screen.w = 0x100;
 	gGT->db[1].dispEnv.screen.h = 0xd8;
-	
+
 	gGT->db[0].drawEnv.isbg = 1;
 	gGT->db[0].drawEnv.r0 = 0;
 	gGT->db[0].drawEnv.g0 = 0;
 	gGT->db[0].drawEnv.b0 = 0;
-	
+
 	gGT->db[1].drawEnv.isbg = 1;
 	gGT->db[1].drawEnv.r0 = 0;
 	gGT->db[1].drawEnv.g0 = 0;
 	gGT->db[1].drawEnv.b0 = 0;
-	
+
 	// default number of lives in battle
 	// this is left over from prototypes, useless in retail
 	gGT->battleLifeLimit = 5;
-	
+
 	// 30 second counter?
 	gGT->constVal_9000 = 9000;
-	
+
 	// set lap count to 3
 	gGT->numLaps = 3;
-	
+
 	gGT->battleSetup.enabledWeapons |= 0x34de;
 	gGT->numPlyrCurrGame = 1;
 	gGT->numPlyrNextGame = 1;
 	*(u_int*)&gGT->battleSetup.teamOfEachPlayer = 0x3020100;
-	
+
 	// traffic light countdown timer, set to negative one second
 	gGT->trafficLightsTimer = 0xfffffc40;
-	
+
 	DECOMP_Timer_Init();
 
 	// set callback and save callback
 	EnterCriticalSection();
 	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
 	ExitCriticalSection();
-	
+
 	DECOMP_MEMCARD_InitCard();
 	VSync(0);
 	DECOMP_GAMEPAD_Init(gGS);
@@ -697,20 +697,20 @@ void StateZero()
 
 	// Get CD Position fo BIGFILE
 	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(BIGPATH);
-	
+
 	// Defrag to save heap space,
 	// required because MEMPACK_Init moves heap
 	#ifndef REBUILD_PC
 	extern char RB_NewEndFile[4];
 	void OVR_Region3();
-	
+
 	// Dont load full overlay file, cut off the end
 	struct BigEntry* firstEntry = BIG_GETENTRY(sdata->ptrBigfile1);
 	firstEntry[231].size = 28*0x800;
 	//firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
 	//printf("Size: %08x\n", firstEntry[231].size);
 	#endif
-	
+
 	#ifndef FastBoot
 	// English=1
 	// PAL SCES02105 calls it multiple times
@@ -718,39 +718,39 @@ void StateZero()
 	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
-	
+
 	gGT->levelID = NAUGHTY_DOG_CRATE;
-	
+
 	#ifdef USE_ONLINE
 	gGT->levelID = 0x26;
 	#endif
-	
+
 	#ifdef FastBoot
 	gGT->levelID = POLAR_PASS;
 	gGT->numPlyrCurrGame = 2;
 	gGT->numPlyrNextGame = 2;
 	#endif
-	
+
 	InitGeom();
 	SetGeomOffset(0x100, 0x78);	// width/2, height/2
 	SetGeomScreen(0x140);		// "distance" to screen, alters FOV
-	
+
 #ifndef REBUILD_PS1
 	RenderBucket_InitDepthGTE();
 	Vector_BakeMatrixTable();
 #endif
-	
+
 	gGT->swapchainIndex = 0;
 	gGT->backBuffer = &gGT->db[0];
-	
+
 	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->overlayIndex_LOD = 0xff;
 	gGT->overlayIndex_Threads = 0xff;
-	
+
 	PutDispEnv(&gGT->db[1].dispEnv);
 	PutDrawEnv(&gGT->db[1].drawEnv);
 	DrawSync(0);
-	
+
 	#ifndef FastBoot
 	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
@@ -758,18 +758,18 @@ void StateZero()
 	DECOMP_MainInit_VRAMDisplay();
 	#endif
 	#endif
-	
+
 	// \SOUNDS\KART.HWL;1
 	DECOMP_howl_InitGlobals(data.kartHwlPath);
-	
+
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
-	
+
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
 	DECOMP_Music_SetIntro();
 	DECOMP_CseqMusic_StopAll();
 	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
 	DECOMP_Music_Start(0);
-	
+
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 
@@ -782,9 +782,9 @@ void StateZero()
 #endif
 
 	#endif
-	
+
 	DECOMP_DecalGlobal_Clear(gGT);
-	
+
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
 	// In nopsx VRAM debug viewer:
@@ -792,12 +792,12 @@ void StateZero()
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
-	
+
 	sdata->mainGameState = 3;
-	
+
 	// start loading
 	sdata->Loading.stage = 0;
-	
+
 	clockEffect = &gGT->clockEffectEnabled;
 	gGT->gameMode1 |= LOADING;
 	gGT->clockEffectEnabled = *clockEffect & 0xfffe;

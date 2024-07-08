@@ -11,7 +11,7 @@ void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
   maskObj = bot->maskObj;
 
   // if AI is being mask grabbed
-  if (bot->ai_posBackup[1] < bot->posCurr[1])
+  if (bot->ai_posBackup[1] < bot->posCurr.y)
   {
     bot->posCurr[1] -= ((sdata->gGT->elapsedTimeMS << 9) >> 5);
 
@@ -19,9 +19,9 @@ void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
     if (maskObj)
     {
       // set mask position to driver position
-      maskObj->pos[0] = (short)(bot->posCurr[0] >> 8);
-      maskObj->pos[1] = (short)(bot->posCurr[1] >> 8);
-      maskObj->pos[2] = (short)(bot->posCurr[2] >> 8);
+      maskObj->pos[0] = (short)(bot->posCurr.x >> 8);
+      maskObj->pos[1] = (short)(bot->posCurr.y >> 8);
+      maskObj->pos[2] = (short)(bot->posCurr.z >> 8);
     }
 
     VehPhysForce_TranslateMatrix(botThread, bot);
@@ -52,4 +52,3 @@ void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
   }
   return;
 }
- 

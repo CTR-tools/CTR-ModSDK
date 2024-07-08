@@ -17,7 +17,7 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
 
     if (d->invisibleTimer != 0)
 		return 0;
-	
+
 	if ((dInst->flags & HIDE_MODEL) != 0)
 		return 0;
 
@@ -46,8 +46,8 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
 	}
 
     if (
-			((dInst->flags & SPLIT_LINE) != 0) && 
-			((param_2->vy - param_3->vy) + d->posCurr[1] < 256)
+			((dInst->flags & SPLIT_LINE) != 0) &&
+			((param_2->vy - param_3->vy) + d->posCurr.y < 256)
 		)
     {
 		// bubble texture
@@ -91,7 +91,7 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
             return p;
         }
     }
-	
+
     // if not engine revving
     else
     {
@@ -101,9 +101,9 @@ struct Particle* DECOMP_VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VE
             return p;
         }
     }
-	
-    p->flagsSetColor &= ~(0x60); 
+
+    p->flagsSetColor &= ~(0x60);
 	p->flagsSetColor |= 0x40;
-	
+
     return p;
 }

@@ -12,7 +12,7 @@ void DECOMP_VehPhysProc_FreezeVShift_Update(struct Thread *t, struct Driver *d)
         // stop kart
         d->speed = 0;
         d->speedApprox = 0;
-		
+
 		return;
     }
 
@@ -36,16 +36,16 @@ void DECOMP_VehPhysProc_FreezeVShift_ReverseOneFrame(struct Thread *t, struct Dr
 			d->xSpeed = 0;
 			d->ySpeed = 0;
 			d->zSpeed = 0;
-	
+
 			// d->speed and d->speedApprox
 			*(int*)&d->speed = 0;
-	
+
 			// set position to previous position
-			d->posCurr[0] = d->posPrev[0];
-			d->posCurr[1] = d->posPrev[1];
-			d->posCurr[2] = d->posPrev[2];
+			d->posCurr.x = d->posPrev.x;
+			d->posCurr.y = d->posPrev.y;
+			d->posCurr.z = d->posPrev.z;
         }
-		
+
 		return;
     }
 
