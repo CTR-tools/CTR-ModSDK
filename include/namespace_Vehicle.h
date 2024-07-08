@@ -1,3 +1,5 @@
+#include <ctr_math.h>
+
 enum Characters
 {
 	CRASH_BANDICOOT=0,
@@ -246,8 +248,8 @@ enum PhysType
 enum TurboType
 {
 	START_LINE_BOOST 					= 0,
-	FREEZE_RESERVES_ON_TURBO_PAD 	= 0x1,
-	POWER_SLIDE_HANG_TIME 			= 0x2,
+	FREEZE_RESERVES_ON_TURBO_PAD 		= 0x1,
+	POWER_SLIDE_HANG_TIME 				= 0x2,
 	TURBO_PAD 							= 0x4,
 	TURBO_ITEM							= 0x8,
 	SUPER_ENGINE 						= 0x10
@@ -271,6 +273,14 @@ enum EngineClass
 	MAX,
 
 	NUM_CLASSES
+};
+
+enum Actions
+{
+	ACTION_TOUCH_GROUND  =		 0x1,
+	ACTION_WARP 		 =    0x4000,
+	ACTION_BOT  		 =  0x100000,
+	ACTION_RACE_FINISHED = 0x2000000,
 };
 
 struct MetaPhys
@@ -319,12 +329,6 @@ struct Turbo
    // Cooldown for when fire is visible
    // Set to 96 (which makes fire invisible for 0.1 seconds, 96 / 1000 = 96ms = 0.1s) when obtaining turbo from certain sources, namely those from power-sliding (used to make fire pop with each power-slide)
    short fireVisibilityCooldown;
-};
-
-struct JitPoolHeader
-{
-	struct JitPool * next;
-	struct JitPool * prev;
 };
 
 // for Players, AIs and Ghosts
@@ -456,17 +460,17 @@ struct Driver
 	void* funcPtrs[0xD];
 
 	// 0x88
-	int velocityXYZ[3];
+	Vec3 velocity;
 
 	// 0x94
-	int vec3_originToCenter[3];
+	Vec3 originToCenter;
 
 	// 0xA0 - quadblock currently touched,
 	// it is zero while airborne
 	struct QuadBlock* currBlockTouching;
 
 	// 0xA4
-	short normalVecUP[3];
+	SVec3 normalVecUP;
 	short unkAA;
 
 	// 0xac
@@ -543,11 +547,11 @@ struct Driver
 	int quadBlockHeight;
 
 	// 0x2D4
-	int posCurr[3];
+	Vec3 posCurr;
 
 	// 0x2E0
 	// used for velocity in 231
-	int posPrev[3];
+	Vec3 posPrev;
 
 	// 0x2EC
 	// This is render rotation, not velocity direction,
@@ -611,7 +615,7 @@ struct Driver
 	// 0x360
 	// used in PhysLinear, reset in VehPhysForce_OnApplyForces, calculated in StartSearch,
 	// all three are funcPtrs in the driver struct, in that order of operation
-	short AxisAngle1_normalVec[3];
+	SVec3 AxisAngle1_normalVec;
 
 	// 0x366
 	// forced to jump while on turtles,
@@ -753,7 +757,7 @@ struct Driver
 
 	// 0x3CC
 	// from VehPhysForce_CollideDrivers
-	short accelXYZ[3];
+	SVec3 accel;
 
 	// 0x3D2
 	short unk_LerpToForwards;
@@ -976,7 +980,7 @@ struct Driver
 
 	// all related to VehPhysGeneral_LerpToForwards
     // only affected by steering without sliding
-	char unk457; // 0x22 kart model angle lerp rotation Limit max*
+	char angleMaxCounterSteer; // 0x22 kart model angle lerp rotation Limit max*
 	char unk458; // 0x23 kart model angle lerp rotation Limit min*
 	char unk459; // 0x24 kart model angle lerp rotation strength/ratio max*
 	char unk45a; // 0x25 kart model angle lerp rotation strength/ratio min*
@@ -1561,8 +1565,6 @@ struct Driver
 	char meterGrade[2]; // 0x644
 	short meterGradeTimer; // 0x646
 	int gradeColor; // 0x648
-	
-	struct JitPoolHeader jitPoolHeader;
 	#endif
 
 	// 0x638

@@ -28,7 +28,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   inst->scale[2] = 0xccc;
 
   // 6-second timer != 0, and ghost made by human
-  if ((sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0)) 
+  if ((sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0))
   {
     color = 0xFFFF8004;
     if (sdata->ghostOverflowTextTimer & 1) {
@@ -46,12 +46,12 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   gGT = sdata->gGT;
 
   if (
-		(sdata->boolGhostsDrawing == 0) || 
+		(sdata->boolGhostsDrawing == 0) ||
 		((gGT->gameMode1 & PAUSE_THREADS) != 0) ||
-		(d == 0) || 
-		(tape->ptrEnd == tape->ptrStart) || 
+		(d == 0) ||
+		(tape->ptrEnd == tape->ptrStart) ||
 		(d->ghostBoolInit == 0)
-	) 
+	)
   {
     inst->flags |= HIDE_MODEL;
     return;
@@ -74,16 +74,16 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   inst->flags = (inst->flags & 0xfff8ff7f) | GHOST_DRAW_TRANSPARENT;
 
   timeInRace = tape->timeElapsedInRace >= 0 ? tape->timeElapsedInRace : 0;
-  
+
   packet = &tape->packets[0];
 
   // flush and rewrite cached GhostPackets array
-  if (tape->timeInPacket32 <= timeInRace) 
-  {  
+  if (tape->timeInPacket32 <= timeInRace)
+  {
     opcodePos = 0;
     packetPtr = tape->ptrCurr;
     short tmpPos[3] = {0};
-	
+
 	char* packetEndChain = tape->ptrCurr;
 
     tape->packetID = -1;
@@ -102,11 +102,11 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         d->speedApprox = gh->speedApprox;
 
 		#ifdef REBUILD_PS1
-		
+
 		// kill thread, no AI yet
 		t->flags |= 0x800;
 		return;
-		
+
 		#else
 
         BOTS_Driver_Convert(d);
@@ -118,7 +118,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         // allow this thread to ignore all collisions
         t->flags |= 0x1000;
         return;
-		
+
 		#endif
       }
 
@@ -128,7 +128,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         switch (opcode) {
 
         case 0x80: // position data
-          for (int i = 0; i < 3; ++i) 
+          for (int i = 0; i < 3; ++i)
 		  {
             // Little Endian to Big Endian
             u_short rawValue =
@@ -149,8 +149,8 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
             // Get time (big endian) from position message
             int bigEndianTime = (packetPtr[7] << 8) | packetPtr[8];
             tape->ptrCurr = packetPtr;
-			
-			// casting required, or only half register is 
+
+			// casting required, or only half register is
 			// written to bigEndianTime, which breaks timeInPacket
             tape->timeInPacket32_backup += bigEndianTime;
             tape->timeInPacket32 += bigEndianTime;
@@ -161,13 +161,13 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 
           packet->bufferPacket = packetEndChain;
           packetPtr += 11;
-		  
+
 		  // the end of the chain represents the last byte
 		  // that can be checked in the 32 packets, can be
 		  // used to search for animation opcodes between
 		  // position packets
 		  packetEndChain = packetPtr;
-		
+
           packet++;
 
           break;
@@ -196,7 +196,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		  packet->bufferPacket = packetEndChain;
           packetPtr += 1;
 		  packetEndChain = packetPtr;
-		
+
           packet++;
           break;
         }
@@ -218,7 +218,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         packet->bufferPacket = packetEndChain;
         packetPtr += 5;
 		packetEndChain = packetPtr;
-		
+
         packet++;
       }
     }
@@ -293,9 +293,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   // converted to TEST in rebuildPS1
   ConvertRotToMatrix(&inst->matrix, local_rot);
 
-  d->posCurr[0] = inst->matrix.t[0] << 8;
-  d->posCurr[1] = inst->matrix.t[1] << 8;
-  d->posCurr[2] = inst->matrix.t[2] << 8;
+  d->posCurr.x = inst->matrix.t[0] << 8;
+  d->posCurr.y = inst->matrix.t[1] << 8;
+  d->posCurr.z = inst->matrix.t[2] << 8;
 
   d->rotCurr.x = local_rot[0];
   d->rotCurr.y = local_rot[1];
@@ -303,20 +303,20 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 
   unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
 
-  while (tape->packetID < packetIdx) 
-  {  
+  while (tape->packetID < packetIdx)
+  {
     if (tape->ptrEnd <= buffer)
       break;
 
     uint8_t opcode = buffer[0];
 
-    if (4 < (opcode + 0x80 & 0xFF)) 
+    if (4 < (opcode + 0x80 & 0xFF))
 	{
       buffer += 5; // Skip velocity data, assumed to be 5 bytes
 	  tape->packetID++;
-    } 
-	
-	else 
+    }
+
+	else
 	{
       switch (opcode) {
       case 0x80:       // Position and Rotation
@@ -341,11 +341,11 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		inst->animFrame = buffer[2];
 		if (inst->animFrame > 0x10)
 			inst->animFrame = 0x10;
-		
+
 		#ifdef USE_60FPS
 		inst->animFrame = FPS_DOUBLE(inst->animFrame);
 		#endif
-		
+
         buffer += 3;
         } break;
 
@@ -356,8 +356,8 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 				(DECOMP_RaceFlag_IsFullyOnScreen() == 0)
 			)
 		{
-          DECOMP_VehFire_Increment(d, 
-			(int)(buffer[1] << 8 | buffer[2]), // endian flip 
+          DECOMP_VehFire_Increment(d,
+			(int)(buffer[1] << 8 | buffer[2]), // endian flip
 			buffer[3],
             (int)(buffer[4] << 8 | buffer[5]) // endian flip
 		  );

@@ -48,7 +48,7 @@ typedef int8_t   s8;
 #ifndef REBUILD_PC
 #define force_inline static inline __attribute__((always_inline))
 #else
-#define force_inline static
+#define force_inline static inline
 #endif
 
 #define len(arr) (sizeof(arr) / sizeof(arr[0]))

@@ -15,14 +15,14 @@ void DECOMP_VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* dr
 	struct Thread* collideThread;
 	int distance;
 	short driverHitRadius;
-	
+
 	struct GameTracker* gGT = sdata->gGT;
-	
+
 	stepFlagSet = driver->stepFlagSet;
 
-	driver->velocityXYZ[0] -= driver->accelXYZ[0];
-	driver->velocityXYZ[1] -= driver->accelXYZ[1];
-	driver->velocityXYZ[2] -= driver->accelXYZ[2];
+	driver->velocity.x -= driver->accel.x;
+	driver->velocity.y -= driver->accel.y;
+	driver->velocity.z -= driver->accel.z;
 
 	if ((stepFlagSet & 0x4000) != 0)
 	{
@@ -64,14 +64,14 @@ LAB_8005ec50:
 
 	// add reserves and speed of turbo pad
 	DECOMP_VehFire_Increment(
-		driver, reservesIncrement, 
-		(TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), 
+		driver, reservesIncrement,
+		(TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD),
 		fireLevel);
 
 LAB_8005ec70:
-	
+
 	inst = thread->inst;
-	
+
 	if ((stepFlagSet & 0x8000) == 0)
 	{
 		// instance is not in water or mud
@@ -92,7 +92,7 @@ LAB_8005ec70:
 
 	// position X, Y and Z
 	for (char i = 0; i < 3; i++)
-		pos[i] = (u_short)((u_int)driver->posCurr[i] >> 8);
+		pos[i] = (u_short)((u_int)driver->posCurr.v[i] >> 8);
 
 	// if collision is not disabled for this thread
 	if ((thread->flags & 0x1000) == 0)
@@ -110,12 +110,12 @@ LAB_8005ec70:
 
 		// pointer to first robotcar thread
 		PROC_CollidePointWithBucket(gGT->threadBuckets[ROBOT].thread, &pos);
-		
+
 		// if there was a collision
 		if ((collideThread != 0) &&
 			(
 				driverHitRadius = thread->driver_HitRadius + collideThread->driver_HitRadius,
-				
+
 				// hitradius squared is bigger than max distance
 				distance < driverHitRadius * driverHitRadius
 			)
@@ -125,29 +125,29 @@ LAB_8005ec70:
 			VehPhysCrash_AnyTwoCars(thread, &pos, &driver->velocityXYZ[0]);
 		}
 	}
-	
+
 	// This is broken
 	#if 0
-	
+
 	// if touched quadblock
-	if ((driver->unkAA & 2) != 0) 
+	if ((driver->unkAA & 2) != 0)
 	{
 		// distance from driver to quadblock
 		// dont use "pos[x]", need full 3 bytes
 		iVar1 = ((u_int)driver->posCurr[0] >> 8) - driver->spsHitPos[0];
 		iVar2 = ((u_int)driver->posCurr[1] >> 8) - driver->spsHitPos[1];
 		iVar3 = ((u_int)driver->posCurr[2] >> 8) - driver->spsHitPos[2];
-		
+
 		int iVar4 = (((driver->quadBlockHeight >> 8) - driver->spsHitPos[1]) + 4);
-		
+
 		if
 		(
 			(
-			(driver->spsNormalVec[0] * iVar1) + 
+			(driver->spsNormalVec[0] * iVar1) +
 			(driver->spsNormalVec[1] * iVar4) +
 			(driver->spsNormalVec[2] * iVar3)
 			) < 0
-		) 
+		)
 		{
 			// calculate speed vector
 			driver->velocityXYZ[0] += iVar1 * 0x40;

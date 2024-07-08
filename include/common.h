@@ -58,6 +58,8 @@
 #endif
 
 #include <macros.h>
+#include <ctr_math.h>
+#include <ctr_gte.h>
 #include <prim.h>
 
 // =============================
@@ -109,7 +111,6 @@
 #include <ovr_231.h>
 #include <ovr_232.h>
 #include <ovr_233.h>
-#include <ctr_math.h>
 #include <regionsEXE.h>
 
 #ifndef REBUILD_PC

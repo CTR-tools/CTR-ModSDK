@@ -19,7 +19,7 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
 
   // use camera that spins around player
   cDC->flags |= 4;
-  
+
   // transition should take two seconds
   cDC->unk8C = 0;
   cDC->unk8E = 60;
@@ -27,9 +27,9 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
 
   // direction to face
   pb = cDC->pushBuffer;
-  dx = pb->pos[0] - (d->posCurr[0] >> 8);
-  dz = pb->pos[2] - (d->posCurr[2] >> 8);
+  dx = pb->pos[0] - (d->posCurr.x >> 8);
+  dz = pb->pos[2] - (d->posCurr.z >> 8);
   cDC->unk90 = ratan2(dx, dz);
-  
+
   return;
 }
