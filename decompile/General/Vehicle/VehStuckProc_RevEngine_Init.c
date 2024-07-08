@@ -17,7 +17,7 @@ void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d)
 
 #ifndef REBUILD_PS1
     // if this is a mask grab
-    if (d->quadBlockHeight + 0x1000 < d->posCurr[1])
+    if (d->quadBlockHeight + 0x1000 < d->posCurr.y)
     {
         // assume reason for revving is: mask grab
         d->KartStates.RevEngine.boolMaskGrab = true;

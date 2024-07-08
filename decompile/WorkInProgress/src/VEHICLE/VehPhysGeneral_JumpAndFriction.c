@@ -354,7 +354,7 @@ PROCESS_JUMP:
     ramp = -ramp;
   }
 
-  short* axisAngle = &d->AxisAngle1_normalVec[0];
+  short* axisAngle = &d->AxisAngle1_normalVec.x;
   if ((d->actionsFlagSet & 1) == 0)
   {
     axisAngle = &d->AxisAngle2_normalVec[0];
@@ -371,9 +371,9 @@ PROCESS_JUMP:
   // {
   //   ramp = -ramp;
   // }
-  
+
   ramp = (ramp < jump) ? (jump * jump) : (ramp * ramp);
-  
+
   // iVar2 = sqrt( "basically" ramp+jump*jump )
   // last byte is cleared cause only 3 bytes in driver->0x2D4
   // are rendered, and the last byte is sub-pixel percision

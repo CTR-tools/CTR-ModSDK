@@ -79,9 +79,9 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
       frame = NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[i]);
 
       // set the X, Y, and Z positions
-      d->posCurr[0] = (int)frame[i].pos[0] << 8;
-      d->posCurr[1] = (int)frame[i].pos[1] << 8;
-      d->posCurr[2] = (int)frame[i].pos[2] << 8;
+      d->posCurr.x = (int)frame[i].pos[0] << 8;
+      d->posCurr.y = (int)frame[i].pos[1] << 8;
+      d->posCurr.z = (int)frame[i].pos[2] << 8;
     }
 
     // (free or taken?)

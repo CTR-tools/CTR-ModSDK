@@ -19,9 +19,9 @@ void GTE_AudioLR_Driver(MATRIX *pushBuffer, struct Driver* d, VECTOR *returnVect
 {
     SVECTOR playerVect;
 
-    playerVect.vx = (short)(d->posCurr[0] >> 8) - pushBuffer->t[0];
-    playerVect.vy = (short)(d->posCurr[1] >> 8) - pushBuffer->t[1];
-    playerVect.vz = (short)(d->posCurr[2] >> 8) - pushBuffer->t[2];
+    playerVect.vx = (short)(d->posCurr.x >> 8) - pushBuffer->t[0];
+    playerVect.vy = (short)(d->posCurr.y >> 8) - pushBuffer->t[1];
+    playerVect.vz = (short)(d->posCurr.z >> 8) - pushBuffer->t[2];
     SetRotMatrix(pushBuffer);
     gte_ldv0(&playerVect);
     gte_rtv0();

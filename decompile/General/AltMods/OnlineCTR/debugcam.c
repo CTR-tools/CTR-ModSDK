@@ -75,7 +75,7 @@ void Freecam()
 	// At the end, set position of P1 to the position of camera,
 	// so that the view frustum updates depending on camera position,
 	// the driver wont teleport to this position cause we erased thread
-	gGT->drivers[0]->posCurr[0] = gGT->pushBuffer[0].pos[0] << 8;
-	gGT->drivers[0]->posCurr[1] = gGT->pushBuffer[0].pos[1] << 8;
-	gGT->drivers[0]->posCurr[2] = gGT->pushBuffer[0].pos[2] << 8;
+	gGT->drivers[0]->posCurr.x = gGT->pushBuffer[0].pos[0] << 8;
+	gGT->drivers[0]->posCurr.y = gGT->pushBuffer[0].pos[1] << 8;
+	gGT->drivers[0]->posCurr.z = gGT->pushBuffer[0].pos[2] << 8;
 }

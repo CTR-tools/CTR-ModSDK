@@ -506,7 +506,7 @@ void PhysLerpRot(struct Driver* driver, int iVar13)
 void PhysTerrainSlope(struct Driver* driver)
 {
 	#ifndef REBUILD_PS1
-	VehPhysForce_RotAxisAngle(&driver->matrixMovingDir, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
+	VehPhysForce_RotAxisAngle(&driver->matrixMovingDir, &driver->AxisAngle1_normalVec.x, (int)driver->angle);
 	gte_SetRotMatrix(&driver->matrixMovingDir);
 	#endif
 
