@@ -251,7 +251,7 @@ LAB_80035098:
 						if(dThread->funcThTick == 0)
 							for(iVar11 = 0; iVar11 < 13; iVar11++)
 							{
-								pcVar5 dOnline->funcPtrs[iVar11];
+								pcVar5 = dOnline->funcPtrs[iVar11];
 								
 								if(pcVar5 != 0)
 								{
@@ -292,7 +292,7 @@ LAB_80035098:
 						if(dThread->funcThTick == 0)
 							for(iVar11 = 0; iVar11 < 13; iVar11++)
 							{
-								pcVar5 dOnline->funcPtrs[iVar11];
+								pcVar5 = dOnline->funcPtrs[iVar11];
 								
 								if(pcVar5 != 0)
 								{
