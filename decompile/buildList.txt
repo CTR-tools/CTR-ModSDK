@@ -702,7 +702,7 @@ common, exe, LHMatrix_Parent, 0x0, General/LHMatrix_Parent.c
 
 // need more of VehPhysForce
 common, exe, VehPhysForce_ConvertSpeedToVec, 0x0, General/Vehicle/VehPhysForce_ConvertSpeedToVec.c
-common, exe, VehPhysForce_AccelTerrainSlope, 0x0, General/Vehicle/VehPhysForce_AccelTerrainSlope.c
+common, exe, VehPhysForce_CounterSteer, 0x0, General/Vehicle/VehPhysForce_CounterSteer.c
 common, exe, VehPhysForce_OnApplyForces, 0x0, General/Vehicle/VehPhysForce_OnApplyForces.c
 
 // need more of VehPhysGeneral

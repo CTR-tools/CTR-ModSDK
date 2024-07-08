@@ -510,7 +510,7 @@ void PhysTerrainSlope(struct Driver* driver)
 	gte_SetRotMatrix(&driver->matrixMovingDir);
 	#endif
 
-	DECOMP_VehPhysForce_AccelTerrainSlope(driver);
+	DECOMP_VehPhysForce_CounterSteer(driver);
 }
 
 void DECOMP_VehPhysProc_PowerSlide_Finalize(struct Thread* t, struct Driver* d)
