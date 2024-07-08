@@ -12,24 +12,24 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     d->kartState = KS_MASK_GRABBED;
 
     d->KartStates.MaskGrab.animFrame = 0;
-    
+
 	// 4 bytes in a row: C, D, E, F
 	*(int*)&d->KartStates.MaskGrab.boolParticlesSpawned = 0;
 	//d->KartStates.MaskGrab.boolParticlesSpawned = false;
     //d->KartStates.MaskGrab.boolStillFalling = false;
     //d->KartStates.MaskGrab.boolLiftingPlayer = false;
     //d->KartStates.MaskGrab.boolWhistle = false;
-	
+
     // Mask Object
     d->KartStates.MaskGrab.maskObj = VehPickupItem_MaskUseWeapon(d, 1);
-    	
+
     d->matrixArray = 0;
     d->matrixIndex = 0;
 
     d->turbo_MeterRoomLeft = 0;
     d->turbo_outsideTimer = 0;
     d->reserves = 0;
-    
+
     // 1.44s until spawned back over track
     d->NoInputTimer = 1440;
 
@@ -45,7 +45,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 	}
 
     // if stored quadblock height + 0x8000 < posCurr.y
-    if (d->quadBlockHeight + 0x8000 < d->posCurr[1])
+    if (d->quadBlockHeight + 0x8000 < d->posCurr.y)
     {
         // mask grab count (for end of race comments)
         d->numTimesMaskGrab++;
@@ -55,7 +55,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
             // if height is low
             // like splashing water on coco park happens on low height,
             // not high height when you're on the grass
-            (d->posCurr[1] < -0x8000) &&
+            (d->posCurr.y < -0x8000) &&
 
             // if mask should grab you when underwater
             ((gGT->level1->configFlags & 2) != 0))
@@ -80,7 +80,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
                 if (p == NULL) break;
 
                 // if particle exists
-                
+
                 p->unk18 = d->instSelf->unk50;
 
                 p->driverInst = d->instSelf;
@@ -88,7 +88,7 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
                 // driverID
                 p->unk19 = d->driverID;
             }
-			
+
 			#ifdef USE_60FPS
 			// for particles
 			sdata->UnusedPadding1 = 0;
@@ -111,14 +111,14 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     }
 
     // edits position
-    d->posCurr[0] = inst->matrix.t[0] << 8;
-    d->posCurr[1] = inst->matrix.t[1] << 8;
-    d->posCurr[2] = inst->matrix.t[2] << 8;
+    d->posCurr.x = inst->matrix.t[0] << 8;
+    d->posCurr.y = inst->matrix.t[1] << 8;
+    d->posCurr.z = inst->matrix.t[2] << 8;
 
     // set previous frame velocity to the same as current frame velocity
-    d->posCurr[0] = d->posPrev[0];
-    d->posCurr[1] = d->posPrev[1];
-    d->posCurr[2] = d->posPrev[2];
+    d->posCurr.x = d->posPrev.x;
+    d->posCurr.y = d->posPrev.y;
+    d->posCurr.z = d->posPrev.z;
 
     for (int i = 0; i < 13; i++)
         d->funcPtrs[i] = PlayerMaskGrabFuncTable[i];
@@ -131,9 +131,9 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
 
     mask->rot[2] |= 1;
 
-    mask->pos[0] = d->posCurr[0] >> 8;
-    mask->pos[1] = (d->posCurr[1] >> 8) + 0x140;
-    mask->pos[2] = d->posCurr[2] >> 8;
+    mask->pos[0] = d->posCurr.x >> 8;
+    mask->pos[1] = (d->posCurr.y >> 8) + 0x140;
+    mask->pos[2] = d->posCurr.z >> 8;
 }
 
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver *d);

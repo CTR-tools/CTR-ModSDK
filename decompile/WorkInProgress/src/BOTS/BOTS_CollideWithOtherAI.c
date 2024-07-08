@@ -45,17 +45,17 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver *robot_1, struct Driver *robot
   }
 
   // position of one driver
-  pos[0] = (short)(robot_1->posCurr[0] >> 8);
-  pos[1] = (short)(robot_1->posCurr[1] >> 8);
-  pos[2] = (short)(robot_1->posCurr[2] >> 8);
+  pos[0] = (short)(robot_1->posCurr.x >> 8);
+  pos[1] = (short)(robot_1->posCurr.y >> 8);
+  pos[2] = (short)(robot_1->posCurr.z >> 8);
 
   // two navFrame structs, and position pointer
   iVar1 = CAM_MapRange_PosPoints(uVar3, iVar4, &pos);
 
   // position of other driver
-  pos[0] = (short)(robot_2->posCurr[0] >> 8);
-  pos[1] = (short)(robot_2->posCurr[0] >> 8);
-  pos[2] = (short)(robot_2->posCurr[0] >> 8);
+  pos[0] = (short)(robot_2->posCurr.x >> 8);
+  pos[1] = (short)(robot_2->posCurr.y >> 8);
+  pos[2] = (short)(robot_2->posCurr.z >> 8);
 
   // two navFrame structs, and position pointer
   iVar4 = CAM_MapRange_PosPoints(uVar3, iVar4, &pos);

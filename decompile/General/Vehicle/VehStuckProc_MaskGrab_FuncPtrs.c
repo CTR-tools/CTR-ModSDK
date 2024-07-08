@@ -13,9 +13,9 @@ void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver *d)
             return;
 
         // position variables
-        p->axis[0].startVal += d->posCurr[0];
-        p->axis[1].startVal += d->posCurr[1];
-        p->axis[2].startVal += d->posCurr[2];
+        p->axis[0].startVal += d->posCurr.x;
+        p->axis[1].startVal += d->posCurr.y;
+        p->axis[2].startVal += d->posCurr.z;
     }
 }
 
@@ -116,11 +116,11 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         {
             // whistle sound has played
             d->KartStates.MaskGrab.boolWhistle = true;
-        
+
 			#ifdef USE_ONLINE
 			if(d->driverID == 0)
 			#endif
-		
+
 				// "falling" sound, like a whistle
 				OtherFX_Play(0x55, 1);
 		}
@@ -156,7 +156,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
 		#else
 			frame = maskGrabAnimFrame + 1;
 		#endif
-		
+
         if (frame > 7) frame = 7;
         d->KartStates.MaskGrab.animFrame = frame;
 
@@ -165,7 +165,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         {
             // Crashing
             d->matrixArray = 4;
-			
+
             d->matrixIndex = 12;
 
             // set animation
@@ -190,7 +190,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
                     // now they are spawned
                     d->KartStates.MaskGrab.boolParticlesSpawned = true;
                 }
-                
+
 				d->jumpSquishStretch += 0x2d0;
                 if (d->jumpSquishStretch > 8000)
                     d->jumpSquishStretch = 8000;
@@ -203,9 +203,9 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
             d->speedApprox = 0;
 
             // position backups
-            d->posCurr[0] = d->posPrev[0];
-            d->posCurr[1] = d->posPrev[1];
-            d->posCurr[2] = d->posPrev[2];
+            d->posCurr.x = d->posPrev.x;
+            d->posCurr.y = d->posPrev.y;
+            d->posCurr.z = d->posPrev.z;
         }
     }
 
@@ -241,21 +241,21 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         d->speed = 0;
 
         // increase driver height, both posCurr and posPrev
-        d->posCurr[1] += (gGT->elapsedTimeMS * 0x80);
-        d->posPrev[1] = d->posCurr[1];
+        d->posCurr.y += (gGT->elapsedTimeMS * 0x80);
+        d->posPrev.y = d->posCurr.y;
     }
 
     // maskPosX = driverPosX
-    mask->pos[0] = (short)(d->posCurr[0] >> 8);
+    mask->pos[0] = (short)(d->posCurr.x >> 8);
 
     // set mask posZ
-    mask->pos[2] = (short)(d->posCurr[2] >> 8);
+    mask->pos[2] = (short)(d->posCurr.z >> 8);
 
     // if mask posY < driver posY
-    if (mask->pos[1] < (short)(d->posCurr[1] >> 8))
+    if (mask->pos[1] < (short)(d->posCurr.y >> 8))
     {
         // mask posY = driver posY
-        mask->pos[1] = (short)(d->posCurr[1] >> 8);
+        mask->pos[1] = (short)(d->posCurr.y >> 8);
 
         d->KartStates.MaskGrab.boolLiftingPlayer = true;
     }

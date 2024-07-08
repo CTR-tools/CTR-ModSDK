@@ -96,8 +96,8 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 						if(tempD->kartState == KS_MASK_GRABBED) continue;
 						if(tempD->BattleHUD.teamID == d->BattleHUD.teamID) continue;
 
-						int distX = tempD->posCurr[0] - d->posCurr[0];
-						int distZ = tempD->posCurr[2] - d->posCurr[2];
+						int distX = tempD->posCurr.x - d->posCurr.x;
+						int distZ = tempD->posCurr.z - d->posCurr.z;
 						distX = distX >> 8;
 						distZ = distZ >> 8;
 

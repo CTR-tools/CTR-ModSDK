@@ -13,7 +13,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 {
     u_short uVar1;
     u_char uVar2;
-    
+
     void* scrubMeta;
     struct BSP *bspRoot;
     u_int scrubId;
@@ -70,7 +70,8 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
         // Calculate velocity in X, Y, and Z components, with driver->velocityXYZ
         int j;
         short quadPos[3];
-        short inputPos[3] int vel[3];
+        short inputPos[3];
+        int vel[3];
 
         SPS->boolDidTouchQuadblock = false;
         SPS->unk3C = 0;
@@ -82,17 +83,17 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
         for (j = 0; j < 3; j++)
         {
-            vel[j] = (d->velocityXYZ[j] * (gGT->elapsedTimeMS >> 5)) * multiplier >> 12;
+            vel[j] = (d->velocity.v[j] * (gGT->elapsedTimeMS >> 5)) * multiplier >> 12;
         }
 
         for (j = 0; j < 3; j++)
         {
             // kartCenter = vec3_originToCenter + driverPos (origin of model is bottom-center)
-            quadPos[j] = (short)d->vec3_originToCenter[j] + (d->posCurr[j] >> 8);
+            quadPos[j] = (short)d->originToCenter.v[j] + (d->posCurr.v[j] >> 8);
             SPS->Union.QuadBlockColl.pos[j] = quadPos[j];
 
             // kartCenter + velocity
-            inputPos[j] = (short)d->vec3_originToCenter[j] + (d->posCurr[j] + vel[j] >> 8);
+            inputPos[j] = (short)d->originToCenter.v[j] + (d->posCurr.v[j] + vel[j] >> 8);
             SPS->Input1.pos[j] = inputPos[j];
         }
 
@@ -172,7 +173,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
         {
             SPS->bbox.max[2] = (short)(inputPos[2] + hitRadius);
         }
-        
+
         SPS->Union.QuadBlockColl.hitPos[0] = inputPos[0];
         SPS->Union.QuadBlockColl.hitPos[1] = inputPos[1];
         SPS->Union.QuadBlockColl.hitPos[2] = inputPos[2];
@@ -201,7 +202,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
         {
             // increase position by velocity
             for (j = 0; j < 3; j++)
-                d->posCurr[j] += (vel[j] * *(short*)0x1f80018c >> 12);
+                d->posCurr.v[j] += (vel[j] * *(short*)0x1f80018c >> 12);
         }
 
         if (SPS->boolDidTouchHitbox == false)
@@ -234,7 +235,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             {
 				// NO SCRUB
                 scrubId = 6;
-				
+
                 // is not invisible
                 if ((uVar1 & 1) == 0)
                 {
@@ -265,11 +266,11 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
 
 				// normalVec[0,1]
                 *(u_int *)&d->normalVecUP = uVar8;
-                *(u_int *)&d->AxisAngle1_normalVec[0] = uVar8;
+                *(u_int *)&d->AxisAngle1_normalVec.x = uVar8;
 
 				// normalVec[2]
-                d->normalVecUP[2] = *(short *)0x1f80017c;
-                d->AxisAngle1_normalVec[2] = *(short *)0x1f80017c;
+                d->normalVecUP.z = *(short *)0x1f80017c;
+                d->AxisAngle1_normalVec.z = *(short *)0x1f80017c;
 
                 // driver is now on ground
                 d->unkAA |= 8;
@@ -282,10 +283,10 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             scrubMeta = VehAfterColl_GetSurface(scrubId);
 
             d->unkAA |= 2;
-            
+
 			*(u_int *)(&d->spsHitPos[0]) = *(u_int*)0x1f800170;
             *(short *)(&d->spsHitPos[2]) = *(short*)0x1f800174;
-			
+
             *(u_int *)(&d->spsNormalVec[0]) = *(u_int*)0x1f800178;
             *(short *)(&d->spsNormalVec[2]) = *(short *)0x1f80017c;
 

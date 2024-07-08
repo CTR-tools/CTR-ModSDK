@@ -22,7 +22,7 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
 
         // If mask grab has not lowered you close
         // enough to the track to let you go
-        if (d->quadBlockHeight + 0x4000 <= d->posCurr[1])
+        if (d->quadBlockHeight + 0x4000 <= d->posCurr.y)
         {
             // Dont continue with the function,
             // let your kart stay in a revving state
@@ -87,7 +87,7 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
     if (d->KartStates.RevEngine.boolMaskGrab == 0)
 		return;
 
-    d->posCurr[1] -= FPS_HALF(0x200);
+    d->posCurr.y -= FPS_HALF(0x200);
 
     // if maskObj exists
     if (d->KartStates.RevEngine.maskObj != 0)

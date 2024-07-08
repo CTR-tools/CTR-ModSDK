@@ -19,9 +19,9 @@ void DECOMP_BOTS_SetRotation(struct Driver* bot, short param_2)
 
   // ======== Get Driver Position =============
 
-  bot->estimatePos[0] = (short)(bot->posCurr[0] >> 8);
-  bot->estimatePos[1] = (short)(bot->posCurr[1] >> 8);
-  bot->estimatePos[2] = (short)(bot->posCurr[2] >> 8);
+  bot->estimatePos[0] = (short)(bot->posCurr.x >> 8);
+  bot->estimatePos[1] = (short)(bot->posCurr.y >> 8);
+  bot->estimatePos[2] = (short)(bot->posCurr.z >> 8);
 
   // ======== Compare to Nav Position =============
 

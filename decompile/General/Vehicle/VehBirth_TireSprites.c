@@ -6,19 +6,19 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
     struct Driver *d = t->object;
     struct IconGroup *tireAnim = gGT->iconGroup[0];
 	int driverID = d->driverID;
-	
+
     struct Icon** tire = ICONGROUP_GETICONS(tireAnim);
     d->wheelSprites = tire;
 
-    d->wheelSize = 0xccc;    
-    
+    d->wheelSize = 0xccc;
+
 	// compiler might reuse these registers in the IF,
-	// first set item to "none" and driverID, then 
+	// first set item to "none" and driverID, then
 	// check for Oxide in characterIDs
-	
+
 	d->heldItemID = 0xf;
     d->BattleHUD.teamID = driverID;
-	
+
     if (
 			// if character ID is oxide
 			(data.characterIDs[driverID] == 0xf) &&
@@ -35,7 +35,7 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
 	// with retail code, the variable must be set to 2
     d->unk47B = 2;
 
-    d->AxisAngle1_normalVec[1] = 0x1000;
+    d->AxisAngle1_normalVec.y = 0x1000;
     d->AxisAngle2_normalVec[1] = 0x1000;
     d->unk412 = 0x600;
     d->numFramesSpentSteering = 10000;
@@ -43,7 +43,7 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
 #ifndef REBUILD_PS1
     d->terrainMeta1 = VehAfterColl_GetTerrain(10);
 #endif
-	
+
     d->BattleHUD.numLives = gGT->battleLifeLimit;
 
     d->quip1 = 0xffff;

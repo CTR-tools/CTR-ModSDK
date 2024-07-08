@@ -1482,6 +1482,22 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 	if((gGT->hudFlags & 1) == 0) return;
 	if(gGT->numPlyrCurrGame < 2) return;
 
+	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
+	{
+		struct Driver* d = gGT->drivers[i];
+		
+		// if race is over for driver
+		if((d->actionsFlagSet & 0x2000000) != 0)
+		{
+			struct Instance* instFruitDisp =
+				d->instFruitDisp;
+
+			instFruitDisp->scale[0] = 0;
+			instFruitDisp->scale[1] = 0;
+			instFruitDisp->scale[2] = 0;
+		}
+	}
+
 #ifndef REBUILD_PS1
 	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
 #endif

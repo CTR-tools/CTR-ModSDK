@@ -13,7 +13,7 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     if (speedAbs < 0) speedAbs = -speedAbs;
 
 	// must have speed, or gas pedal, for vibration
-    
+
 	if(
 		(d->fireSpeed != 0) ||
 		(speedAbs > 0x200)
@@ -30,7 +30,7 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 
 	// must reach minimum speed for sparks
 	if (speedAbs <= 0x200) return;
-	
+
     // Create instance in particle pool
     struct Particle *p = Particle_Init(0, sdata->gGT->iconGroup[0], emSet);
 
@@ -48,37 +48,37 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	// short[3] array
 	*(int*)&TireLeftOutS32[0] = 0xa00de00;
 	*(int*)&TireRightOutS32[0] = 0xa002200;
-	
+
 	int valZ = -0x1400;
     if (d->speedApprox > 0)
 		valZ = 0x2800;
-	
+
 	// short[3] array
 	*(int*)&TireLeftOutS32[1] = valZ;
 	*(int*)&TireRightOutS32[1] = valZ;
-	
+
     gte_ldv0(&TireLeftOutS32[0]);
     gte_rtv0();
 	gte_stlvnl(&TireLeftOutS32[0]);
-	
+
     gte_ldv0(&TireRightOutS32[0]);
     gte_rtv0();
 	gte_stlvnl(&TireRightOutS32[0]);
-	
+
 	// this compresses TireLeft and TireRight from int to short,
 	// which then doubles in usage as a matrix (3x2)
 	for(int i = 0; i < 6; i++)
 		TireLeftOutS16[i] = (unsigned short)TireLeftOutS32[i];
 
 	#ifdef REBUILD_PC
-	
+
 		#define gte_SetLightMatrix3x2( r0 ) \
 			{	CTC2(*(uint*)((char*)(r0)), 8);\
 				CTC2(*(uint*)((char*)(r0)+4), 9);\
 				CTC2(*(uint*)((char*)(r0)+8), 10);}
-	
+
 	#else
-	
+
 		#define gte_SetLightMatrix3x2( r0 ) __asm__ volatile ( \
 			"lw		$t0, 0( %0 );"	\
 			"lw		$t1, 4( %0 );"	\
@@ -89,16 +89,16 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 			:						\
 			: "r"( r0 )				\
 			: "$t2" )
-	
+
 	#endif
 
 	gte_SetLightMatrix3x2(&matrix[0]);
 
 	// dist4 is actual distance
-	distIn4[0] = (d->posWallColl[0] * 0x100) - d->posCurr[0];
-	distIn4[1] = (d->posWallColl[1] * 0x100) - d->posCurr[1];
-	distIn4[2] = (d->posWallColl[2] * 0x100) - d->posCurr[2];
-	
+	distIn4[0] = (d->posWallColl[0] * 0x100) - d->posCurr.x;
+	distIn4[1] = (d->posWallColl[1] * 0x100) - d->posCurr.y;
+	distIn4[2] = (d->posWallColl[2] * 0x100) - d->posCurr.z;
+
     gte_ldv0(&distIn4[0]);
     gte_llv0();
     gte_stlvnl0(&distOut4[0]);
@@ -118,7 +118,7 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     gte_ldv0(&distIn4[0]);
     gte_rtv0();
     gte_stlvnl(&distOut4[0]);
-	
+
 	p->axis[0].velocity = (short)distOut4[0];
 	p->axis[1].velocity = (short)distOut4[1];
 	p->axis[2].velocity = (short)distOut4[2];

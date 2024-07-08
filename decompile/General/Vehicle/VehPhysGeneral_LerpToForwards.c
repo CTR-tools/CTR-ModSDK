@@ -42,7 +42,7 @@ int DECOMP_VehPhysGeneral_LerpToForwards(struct Driver *d, int param_2, int para
         }
         else
         {
-          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->unk457, param_4 -param_2, 0);
+          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->angleMaxCounterSteer, param_4 -param_2, 0);
           d->unk3CA = (short)param_4;
         }
       }
