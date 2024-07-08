@@ -156,7 +156,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->numDriversEnded = 0;
 
 			memset(&octr->boolLockedInCharacters[0], 0, sizeof(octr->boolLockedInCharacters));
-			memset(&octr->nameBuffer[0], 0, sizeof(octr->nameBuffer));
+			memset(&octr->nameBuffer[0], 0, sizeof(octr->nameBuffer)); //set all chars to '\0'
 			memset(&octr->raceStats[0], 0, sizeof(octr->raceStats));
 
 			// reply to server with your name
@@ -1065,7 +1065,7 @@ int main()
 	// ask for the users online identification
 	printf("Input: Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
-	name[NAME_LEN - 1] = 0; // truncate the name
+	name[NAME_LEN] = 0; // truncate the name (0 based)
 
 	// show a welcome message
 	system("cls");
