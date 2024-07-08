@@ -24,7 +24,7 @@ bool defMemInit();
 bool socketValid();
 //void readMemorySegment(unsigned int addr, size_t len, char* buf);
 //void writeMemorySegment(unsigned int addr, size_t len, char* buf/*, bool blocking = false*/);
-void recvThread();
+
 #if _WIN64 //windows
 SOCKET initSocket();
 void uninitSocket(SOCKET* socket);
@@ -34,19 +34,17 @@ void uninitSocket(SOCKET* socket);
 //declare functions initSocket() and uninitSocket() using the equivalent posix data type for SOCKET
 //Note: the remainder of this file likely shouldn't need to be modified for the sake of posix sockets.
 #endif
-typedef unsigned long long internalPineApiID;
 struct DSPINESendRecvPair
 {
 	DSPINESend sendData;
 	DSPINERecv recvData;
 	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
 };
-internalPineApiID pineSend(DSPINESend sendObj);
-void pineRecv();
-typedef unsigned long long pineApiID;
-void markPineDataForGC(pineApiID id);
+// this function needs to be called repeatedly, occasionally to clean up dead pine data.
 void GCDeadPineData();
-bool isPineDataPresent(pineApiID id);
+typedef unsigned long long pineApiID;
+//never call any of these 5 functions manually, only for use by ps1ptr.
+void markPineDataForGC(pineApiID id);
 void waitUntilPineDataPresent(pineApiID id);
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id);
 pineApiID send_readMemorySegment(unsigned int addr, size_t len);
@@ -94,7 +92,6 @@ public:
 	/// This is useful if you plan on completely overwriting this portion of memory, saving latency.
 	/// However, an object in this state will always commit it's entire buffer to ps1 memory every
 	/// time it is commited, so make sure *all* of the memory this ps1ptr represents is set as you intend.</param>
-	/// <param name="volatileAccess">If true, will automatically refresh() for you upon every call to get()</param>
 	ps1ptr(unsigned int addr, bool prefetch = true/*, bool volatileAccess = false*/) : address(addr), didPrefetch(prefetch)/*, volat(volatileAccess)*/
 	{
 		buf = new char[sizeof(T)];
@@ -113,7 +110,7 @@ public:
 	/// <summary>
 	/// This ctor is for if you want to make a ps1ptr that represents just a portion of an existing ps1ptr.
 	/// e.g., if you intend to have very high usage of a submember of some other ps1ptr like octr, this can lighten the
-	/// load on TCP/PINE. (See example in FrameStall in CL_main.cpp)
+	/// load on TCP/PINE. Currently needs more testing, but this could allow for higher performance.
 	/// </summary>
 	template<typename U>
 	ps1ptr(ps1ptr<U> parentPtr, size_t offset)
@@ -202,11 +199,8 @@ public:
 	}
 	ptrtype get()
 	{
-		//This allows for waitWrite() to not need to be called before get().
 		if (pState == writing)
 		{
-			//TODO: since writes cause canonical state immediately, this can be optimized to not wait, and instead just mark this as
-			//not needed. waitWrite is currently needed to clean up the old pine data (prevent mem leak).
 			//was waitWrite();
 			waitUntilPineDataPresent(outstandingAPIID);
 			pState = none; //no longer considered writing

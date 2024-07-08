@@ -14,6 +14,66 @@
 #include "DeferredMem.h"
 #include "Util.h"
 
+//=============================================================
+//================ NOTES TO FUTURE MAINTAINERS ================
+//=============================================================
+/*
+* Author: TheUbMunster
+* 
+* This comment was written for documenting the changes & ideology that PINE implementation
+* brings to the table since it replaced direct memory access.
+*
+* The new functionality to interact with memory on the PS1 duckstation emulator is encapsulated
+* in the ps1ptr template class. Upon creating one from a ps1mem (see pBuf global variable), you
+* have an object of type [ps1ptr type parameter] represented via your ps1ptr.
+*
+* Unlike regular memory access, where cache flushing, automatic reads & writes are all a given,
+* these concepts need to be handled entirely manually when dealing with ps1ptr
+*
+* The methods avaliable to users of ps1ptr are:
+*	- blockingRead() (calls startRead() and then calls waitRead() to perform a fully blocking read)
+*	- startRead() (begins the asynchronous process of reading the memory from the emulator that this ps1ptr represents)
+*	- waitRead() (finalizes the asynchronous process of reading the memory)
+*	- & three equivalent methods for writing
+*	- get() (provides access to a shared_ptr of type [ps1ptr type parameter], allowing manipulation of the object).
+*
+* To really drill the point home, say you access a ps1ptr via: `(*ptr.get()).member = 5;`,
+* all this does is sets the value 5 to the member 'member' in the ptr, it doesn't actually
+* update the ps1's memory until startWrite() or blockingWrite() is called.
+*
+* Although these concessions are unfortunate, they are necessary as (e.g., calling blockingWrite()
+* followed by calling blockingRead()) would *peform correct behavior*, and would not require ever
+* manually calling the read/write functions, it *would also* slow the program to an absolute crawl.
+*
+* Fortunately, due to the nature of how Online CTR works, there are some optimizations that
+* can be made due to the behavior, patterns, and guarantees of the programs involved (client & game)
+*
+* e.g., since the octr object is used so frequently, rather than its *many* consumers calling their
+* reads & writes on their own, octr is re-synchronized every tick in the while loop at the bottom of
+* the main() function, resulting in 0 chance of redundant calls (albeit at the slim chance that needed
+* synchronization gets missed out on, see StatePC_Launch_PickServer() as an example where octr needs
+* to be manually synchonized.
+*
+* Additionally, there are features built into ps1ptr that makes it rather efficient when it comes to
+* PINE TCP calls to reduce wasted/unecessary bandwidth. One example of this is being able to pass "false"
+* as the second parameter to ps1mem::at<>() to indicate that you'd like to create a ps1ptr that represents
+* a portion of ps1 memory, but *do not* prefetch that memory upon creation. This is useful if you intend on
+* unconditionally overwriting that memory (thus meaning that reading what was formerly there is unecessary,
+* so a blockingRead() at initialization is wasted time).
+*
+* Another example of optimization is the usage of the internal member "originalBuf" in the ps1ptr class, I
+* encourage you to read it's implementation to understand why it can reduce wasted bandwidth when writing large
+* data structures back to ps1 memory.
+*
+* Although the internal PINE API implementation that ps1ptr uses is multithreaded a bit, due to the fundamental
+* nature of TCP ordering and how the PINE API utilizes that for the sake of concurrent requests, ps1ptr's are
+* not thread safe, nor would there be any performance gain from going down that route (to my knowledge & understanding)
+*
+* To those who wish to implement linux support: I've put #if preprocessors in the "DeferredMem.cpp" file
+* in important places where "equivalent linux implementation for tcp" is required (I might have missed some
+* spots) along with comments detailing the goal of the code for those sections.
+*/
+
 ps1mem pBuf = ps1mem{};
 ps1ptr<OnlineCTR> octr = ps1ptr<OnlineCTR>{};
 
@@ -43,7 +103,7 @@ void sendToHostUnreliable(const void* data, size_t size) {
 	//TheUbMunster says: so I get that these can arrive out of order (or even not at all)
 	//is there a timestamp/counter in the packet so that if packets are sent a->b->c and recieved a->c->b
 	//that b won't overwrite c when recieved, because c is more recent than b (and therefore more accurate)?
-	//If this isn't inherint, maybe enet has the ability to do this built-in.
+	//If this isn't inherintly enabled, maybe enet has the ability to do this built-in.
 
 	ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_UNSEQUENCED);
 	enet_peer_send(serverPeer, 0, packet); // To do: have a look at the channels, maybe we want to use them better to categorize messages
@@ -578,8 +638,7 @@ void StatePC_Launch_PickServer()
 
 	// quit if disconnected, but not loaded
 	// back into the selection screen yet
-	/*int gGT_levelID =
-		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
+	/*int gGT_levelID = *(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
 	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
 
 	// must be in cutscene level to see country selector
@@ -587,8 +646,7 @@ void StatePC_Launch_PickServer()
 		return;
 
 	// quit if in loading screen (force-reconnect)
-	/*int sdata_Loading_stage =
-		*(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
+	/*int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
 	ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
 
 	if ((*sdata_Loading_stage.get()) != -1)
@@ -610,6 +668,10 @@ void StatePC_Launch_PickServer()
 	//instead of octr, maybe do a separate variable.
 	octr.get()->boolClientBusy = 1; //this probably needs to be atomic to avoid race conditions, but I don't know if that's possible
 	StaticServerID = octr.get()->serverCountry;
+	//we *have* to write right now because we're possibly about to collect user input (in the
+	//case they select a private server & need to enter ip address and port no., and stdin
+	//will block & lock up the while loop, which means that boolClientBusy won't be updated if
+	//we don't do this manually now
 	octr.blockingWrite();
 
 	switch (octr.get()->serverCountry)
@@ -811,6 +873,8 @@ void StatePC_Launch_PickServer()
 				// to go the country select
 				octr.get()->CurrState = 1;
 				octr.get()->boolClientBusy = 0;
+				//unlike the above call to blockingWrite() in this function for octr, I don't think this is
+				//necessary, but I'm doing it to be safe.
 				octr.blockingWrite();
 				return;
 			}
@@ -825,6 +889,8 @@ void StatePC_Launch_PickServer()
 	octr.get()->DriverID = -1;
 	octr.get()->CurrState = LAUNCH_PICK_ROOM;
 	octr.get()->boolClientBusy = 0;
+	//unlike the above call to blockingWrite() in this function for octr, I don't think this is
+	//necessary, but I'm doing it to be safe.
 	octr.blockingWrite();
 }
 
@@ -1234,21 +1300,6 @@ int main(int argc, char *argv[])
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	}
 
-	//this probably isn't necessary.
-	//auto socketStillValid = [&argv]()
-	//{
-	//	while (socketValid())
-	//	{
-	//		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-	//	}
-	//	exit_execv(19); //this probably usually wont be called, bc if the socket is bad
-	//					//the read/write functions that are *constantly* being called will
-	//					//happen first, but if it's on the meny screen, this might happen
-	//					//instead.
-	//};
-
-	//std::thread socketValidThread = std::thread{ socketStillValid };
-
 	pBuf = ps1mem(0);
 	octr = pBuf.at<OnlineCTR>(0x8000C000 & 0xffffff);
 
@@ -1266,6 +1317,9 @@ int main(int argc, char *argv[])
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
+
+		//This blocking read not only updates for this loop,
+		//but ClientState functions also rely on this blockingRead()
 		octr.blockingRead();
 		//technechally windowsClientSync just needs to *change* every frame.
 		//perhaps instead of reading, keep a local counter, increment that, and then
