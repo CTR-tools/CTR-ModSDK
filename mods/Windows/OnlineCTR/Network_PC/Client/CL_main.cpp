@@ -83,6 +83,10 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
+#ifdef __WINDOWS__
+void usleep(__int64 usec);
+#endif
+
 struct Gamepad
 {
 	short unk_0;
@@ -331,10 +335,16 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 		case SG_RACEDATA:
 		{
+			if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
+				break;
+
 			//int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];
 			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff, false);
 
 			sdata_Loading_stage.blockingRead();
+
+			if ((*sdata_Loading_stage.get()) != -1)
+				break;
 
 			SG_EverythingKart* r = reinterpret_cast<SG_EverythingKart*>(recvBuf);
 
@@ -343,9 +353,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
 
-			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff, false);
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff, false); //do not prefetch so we can fetch concurrently
 			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff, false);
+			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff, false); //do not prefetch so we can fetch concurrently
 
 			//begin concurrent fetch
 			gamepad.startRead();
@@ -354,14 +364,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			//block to finalize concurrent fetch
 			gamepad.waitRead();
 			psxPtr.waitRead();
-
-			if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
-				break;
-
-
-			if ((*sdata_Loading_stage.get()) != -1)
-				break;
-
 
 			int curr = r->buttonHold;
 
@@ -504,11 +506,11 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 void ProcessNewMessages()
 {
-#define AUTO_RETRY_SECONDS 10
-#define ESC_KEY 27 // ASCII value for ESC key
-
 	ENetEvent event;
 	char response = 0;
+
+	if (clientHost == 0)
+		return;
 
 	while (enet_host_service(clientHost, &event, 0) > 0)
 	{
@@ -655,7 +657,7 @@ void StatePC_Launch_PickServer()
 	if (serverPeer != 0)
 	{
 		//when it dc's it ends up here. Either this is causing the enet dc or the client is bugged to call this function again when it shouldn't
-		printf("non-null enet server peer during server connection (case 1), disconnecting from old server...");
+		printf("non-null enet server peer during server connection (case 1), disconnecting from old server...\n");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}
@@ -831,7 +833,7 @@ void StatePC_Launch_PickServer()
 
 	if (serverPeer != 0)
 	{
-		printf("non-null enet server peer during server connection (case 2), disconnecting from old server...");
+		printf("non-null enet server peer during server connection (case 2), disconnecting from old server...\n");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}
@@ -850,7 +852,7 @@ void StatePC_Launch_PickServer()
 
 	int retryCount = 0;
 	char connected = false;
-#define MAX_RETRIES 3
+	#define MAX_RETRIES 3
 
 	// retry loop to attempt a reconnection
 	while (retryCount < MAX_RETRIES && !connected)
@@ -903,14 +905,13 @@ int connAttempt = 0;
 int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
-	ProcessNewMessages();
-
 	countFrame++;
-	if (countFrame == 60)
+	if (countFrame == octr.get()->desiredFPS)
 	{
 		countFrame = 0;
 
-		// send junk data, to trigger server response
+		// send junk data, 
+		// this triggers server response
 		CG_MessageRoom mr;
 		mr.type = CG_JOINROOM;
 		mr.room = 0xFF;
@@ -942,13 +943,10 @@ void StatePC_Lobby_AssignRole()
 {
 	connAttempt = 0;
 	countFrame = 0;
-	ProcessNewMessages();
 }
 
 void StatePC_Lobby_HostTrackPick()
 {
-	ProcessNewMessages();
-
 	// boolLockedInLap gets set after
 	// boolLockedInLevel already sets
 	if (!(octr.get())->boolLockedInLap) return;
@@ -986,16 +984,12 @@ int prev_boolLockedIn = -1;
 
 void StatePC_Lobby_GuestTrackWait()
 {
-	ProcessNewMessages();
-
 	prev_characterID = -1;
 	prev_boolLockedIn = -1;
 }
 
 void StatePC_Lobby_CharacterPick()
 {
-	ProcessNewMessages();
-
 	CG_MessageCharacter mc = { 0 };
 	mc.type = CG_CHARACTER;
 
@@ -1025,8 +1019,6 @@ void StatePC_Lobby_CharacterPick()
 
 void StatePC_Lobby_WaitForLoading()
 {
-	ProcessNewMessages();
-
 	// if recv message to start loading,
 	// change state to StartLoading,
 	// this check happens in ProcessNewMessages
@@ -1037,8 +1029,6 @@ int boolAlreadySent_EndRace = 0;
 
 void StatePC_Lobby_StartLoading()
 {
-	ProcessNewMessages();
-
 	boolAlreadySent_StartRace = 0;
 	boolAlreadySent_EndRace = 0;
 }
@@ -1149,8 +1139,6 @@ void SendEverything()
 
 void StatePC_Game_WaitForRace()
 {
-	ProcessNewMessages();
-
 	//int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
 	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>((0x80096b20 + 0x0) & 0xffffff);
 
@@ -1177,13 +1165,11 @@ void StatePC_Game_WaitForRace()
 
 void StatePC_Game_StartRace()
 {
-	ProcessNewMessages();
 	SendEverything();
 
 	// not using this special event
 #if 0
-	/*int gGT_levelID =
-		*(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
+	/*int gGT_levelID = *(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
 	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
 
 	octr.refresh();
@@ -1204,8 +1190,6 @@ void StatePC_Game_StartRace()
 clock_t timeStart;
 void StatePC_Game_EndRace()
 {
-	ProcessNewMessages();
-
 	if (!boolAlreadySent_EndRace)
 	{
 		boolAlreadySent_EndRace = 1;
@@ -1286,7 +1270,7 @@ int main(int argc, char *argv[])
 	// ask for the users online identification
 	printf("Input: Enter Your Online Name: ");
 	scanf_s("%s", name, (int)sizeof(name));
-	name[11] = 0; // truncate the name
+	name[NAME_LEN] = 0; // truncate the name (0 based)
 
 	// show a welcome message
 	system("cls");
@@ -1331,13 +1315,31 @@ int main(int argc, char *argv[])
 			DisconSELECT();
 
 		StartAnimation();
+		
+		// Wait for PSX to have P1 data,
+		// which is set at octr->sleepControl
+		void FrameStall(); FrameStall();
 
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
-		octr.startWrite();
+		// wait a bit, to RECV other messages
+		// 1,000,000 = 1 second
+		// 33,333 = 1 frame
+		// 15000 = half frame,
+		// duckstation overclock will compensate
+		if(octr.get()->desiredFPS == 30)
+			usleep(15000); // half-frame 30fps
+		else
+			usleep(3000); // fifth-frame 60fps
+		
+		// now check for new RECV message
+		ProcessNewMessages();
+		
+		// allow PSX to resume
+		octr.get()->sleepControl = 0;
 
-		void FrameStall(); FrameStall();
+		octr.startWrite(); //only write the things that have changed.
 
 		GCDeadPineData(); //this is probably a decent place to do this.
 	}
@@ -1366,15 +1368,12 @@ void FrameStall()
 {
 	// wait for next frame
 	//TODO: make this a submember of octr
-	ps1ptr<int> OCTRreadyToSend = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, readyToSend));//octr.createSubmemberPtr<int>(offsetof(OnlineCTR, readyToSend));
-	while ((*OCTRreadyToSend.get()) == 0)
+	ps1ptr<int> OCTRsleepControl = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, sleepControl));
+	while ((*OCTRsleepControl.get()) == 0)
 	{
 		usleep(1);
-		OCTRreadyToSend.blockingRead();
+		OCTRsleepControl.blockingRead();
 	}
-
-	//(*OCTRreadyToSend.get()) = 0;
-	//OCTRreadyToSend.startWrite();
-	(*octr.get()).readyToSend = 0; //functionally the same as above, but doesn't race with octr.
+	(*octr.get()).sleepControl = (*OCTRsleepControl.get());
 }
 #pragma optimize("", on)
