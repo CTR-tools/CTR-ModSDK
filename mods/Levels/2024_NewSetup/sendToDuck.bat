@@ -1,0 +1,1 @@
+..\Automate\LevelUploader\x64\Debug\LevelUploader.exe %cd%\textures\data.lev
