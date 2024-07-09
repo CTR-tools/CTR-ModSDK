@@ -28,6 +28,6 @@ void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, int param_2, struct D
 
   desiredPos[1] = (short)(d->posCurr.y >> 8) + cDC->transitionTo.pos[1];
 
-  DECOMP_CAM_LookAtPosition(param_2, d->posCurr, desiredPos, desiredRot);
+  DECOMP_CAM_LookAtPosition(param_2, &d->posCurr.x, desiredPos, desiredRot);
   return;
 }
