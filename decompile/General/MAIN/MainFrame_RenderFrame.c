@@ -1479,9 +1479,7 @@ SkyboxGlow:
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
-	if((gGT->hudFlags & 1) == 0) return;
-	if(gGT->numPlyrCurrGame < 2) return;
-
+	// must also work for 1P, or Online breaks
 	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		struct Driver* d = gGT->drivers[i];
@@ -1497,6 +1495,9 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 			instFruitDisp->scale[2] = 0;
 		}
 	}
+
+	if((gGT->hudFlags & 1) == 0) return;
+	if(gGT->numPlyrCurrGame < 2) return;
 
 #ifndef REBUILD_PS1
 	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
