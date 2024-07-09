@@ -1323,15 +1323,19 @@ int main(int argc, char *argv[])
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
+		//Somehow this code, when uncommented, causes PINE (this version) somehow to cause
+		//duckstation to lag. idk if this is related to pine, but idk how a sleep in client.exe
+		//could possibly cause duckstation to lag.
+
 		// wait a bit, to RECV other messages
 		// 1,000,000 = 1 second
 		// 33,333 = 1 frame
 		// 15000 = half frame,
 		// duckstation overclock will compensate
-		if(octr.get()->desiredFPS == 30)
-			usleep(15000); // half-frame 30fps
-		else
-			usleep(3000); // fifth-frame 60fps
+		//if(octr.get()->desiredFPS == 30)
+		//	usleep(15000); // half-frame 30fps
+		//else
+		//	usleep(3000); // fifth-frame 60fps
 		
 		// now check for new RECV message
 		ProcessNewMessages();
