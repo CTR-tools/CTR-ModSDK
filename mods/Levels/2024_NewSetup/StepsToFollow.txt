@@ -1,0 +1,15 @@
+[to-do] generate source code pseudo-auto
+
+First build with ./build.bat,
+this generates .lev file
+
+Then run textures/start.bat,
+this patches .lev and generates .vrm
+
+Boot retail game in duckstation
+Go to Time Trial Crash Cove
+Pause
+Use "sendToDuck.bat"
+Restart Race (from pause)
+
+[to-do] need to load VRAM file

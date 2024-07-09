@@ -30,9 +30,6 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	short *scratchpad;
 	int iVar24;
 	int iVar25;
-	short local_28;
-	short local_26;
-	short local_24;
 
 	struct GameTracker* gGT = sdata->gGT;
 	scratchpad = (short *)0x1f800108;
@@ -96,10 +93,6 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 
 	// number of EOR cameras
 	sVar6 = *psVar19;
-
-	local_28 = (short)((u_int)d->posCurr.x >> 8);
-	local_26 = (short)((u_int)d->posCurr.y >> 8);
-	local_24 = (short)((u_int)d->posCurr.z >> 8);
 
 	// advance to first EOR
 	psVar20 = psVar19 + 1;
@@ -303,7 +296,7 @@ SkipNewCameraEOR:
 			if (sVar6 == 4)
 			{
 LAB_8001c11c:
-				DECOMP_CAM_LookAtPosition((int)scratchpad, d->posCurr, pb->pos, pb->rot);
+				DECOMP_CAM_LookAtPosition((int)scratchpad, &d->posCurr.x, &pb->pos[0], &pb->rot[0]);
 				psVar21 = scratchpad;
 LAB_8001c128:
 				scratchpad = psVar21;
@@ -324,14 +317,21 @@ LAB_8001c128:
 						{
 							cDC->unk8E = 0;
 						}
-						local_28 = (short)((u_int)d->posCurr.x >> 8);
-						local_26 = (short)((u_int)d->posCurr.y >> 8);
-						local_24 = (short)((u_int)d->posCurr.z >> 8);
-						iVar8 = CAM_MapRange_PosPoints((cDC->transitionTo).pos, (cDC->transitionTo).rot, &local_28);
+						
+						short stackMemPos[3];
+						
+						stackMemPos[0] = (short)((u_int)d->posCurr.x >> 8);
+						stackMemPos[1] = (short)((u_int)d->posCurr.y >> 8);
+						stackMemPos[2] = (short)((u_int)d->posCurr.z >> 8);
+						
+						iVar8 = CAM_MapRange_PosPoints((cDC->transitionTo).pos, (cDC->transitionTo).rot, &stackMemPos[0]);
+						
 						iVar17 = (int)*(short *)(&cDC->unk_b0[6]);
-						local_28 = *(short *)&cDC->unk_b0[0] - (cDC->transitionTo).rot[0];
-						local_26 = *(short *)&cDC->unk_b0[2] - (cDC->transitionTo).rot[1];
-						local_24 = *(short *)&cDC->unk_b0[4] - (cDC->transitionTo).rot[2];
+						
+						stackMemPos[0] = *(short *)&cDC->unk_b0[0] - (cDC->transitionTo).rot[0];
+						stackMemPos[1] = *(short *)&cDC->unk_b0[2] - (cDC->transitionTo).rot[1];
+						stackMemPos[2] = *(short *)&cDC->unk_b0[4] - (cDC->transitionTo).rot[2];
+						
 						iVar7 = iVar17;
 						if (iVar17 < 0)
 						{
@@ -339,11 +339,16 @@ LAB_8001c128:
 						}
 						if (iVar17 < 0)
 						{
-							local_28 = -local_28;
-							local_26 = -local_26;
-							local_24 = -local_24;
+							stackMemPos[0] = -stackMemPos[0];
+							stackMemPos[1] = -stackMemPos[1];
+							stackMemPos[2] = -stackMemPos[2];
 						}
-						iVar24 = SquareRoot0_stub((int)local_28 * (int)local_28 + (int)local_26 * (int)local_26 + (int)local_24 * (int)local_24);
+						
+						iVar24 = SquareRoot0_stub(
+							(int)stackMemPos[0] * (int)stackMemPos[0] + 
+							(int)stackMemPos[1] * (int)stackMemPos[1] + 
+							(int)stackMemPos[2] * (int)stackMemPos[2]);
+						
 						iVar18 = cDC->unk94 << 0xc;
 						iVar25 = iVar18 / iVar24;
 						/*
@@ -381,9 +386,9 @@ LAB_8001c128:
 						{
 							psVar21 = (short *)&cDC->unk_b0[0];
 						}
-						pb->pos[0] = *psVar21 + (short)(local_28 * iVar25 >> 0xc);
-						pb->pos[1] = psVar21[1] + (short)(local_26 * iVar25 >> 0xc);
-						pb->pos[2] = psVar21[2] + (short)(local_24 * iVar25 >> 0xc);
+						pb->pos[0] = psVar21[0] + (short)((stackMemPos[0] * iVar25) >> 0xc);
+						pb->pos[1] = psVar21[1] + (short)((stackMemPos[1] * iVar25) >> 0xc);
+						pb->pos[2] = psVar21[2] + (short)((stackMemPos[2] * iVar25) >> 0xc);
 						goto LAB_8001c11c;
 					}
 					if (sVar6 == 7)
@@ -495,7 +500,7 @@ LAB_8001c128:
 					goto LAB_8001c128;
 				}
 
-				DECOMP_CAM_LookAtPosition((int)0x1f800108, d->posCurr, pb->pos, pb->rot);
+				DECOMP_CAM_LookAtPosition((int)0x1f800108, &d->posCurr.x, &pb->pos[0], &pb->rot[0]);
 
 				iVar7 = SquareRoot0_stub((*(int *)0x1f800354) * (*(int *)0x1f800354) + (*(int *)0x1f80035c) * (*(int *)0x1f80035c));
 				iVar17 = (int)(cDC->transitionTo).pos[0];

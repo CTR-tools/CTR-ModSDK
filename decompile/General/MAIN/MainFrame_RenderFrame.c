@@ -318,9 +318,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 
 		// We just draw full wumpa geometry instead
-		#if 0
 		MultiplayerWumpaHUD(gGT);
-		#endif
 
 		#if 0
 		// Multiplayer Pixel LOD Part 3
@@ -1479,9 +1477,7 @@ SkyboxGlow:
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
-	if((gGT->hudFlags & 1) == 0) return;
-	if(gGT->numPlyrCurrGame < 2) return;
-
+	// must also work for 1P, or Online breaks
 	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		struct Driver* d = gGT->drivers[i];
@@ -1498,9 +1494,14 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 		}
 	}
 
-#ifndef REBUILD_PS1
+	if((gGT->hudFlags & 1) == 0) return;
+	if(gGT->numPlyrCurrGame < 2) return;
+
+	// we just draw 3D Wumpa instead of 2D,
+	// come back to this later for purists
+	#if 0
 	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
-#endif
+	#endif
 }
 
 void WindowBoxLines(struct GameTracker* gGT)

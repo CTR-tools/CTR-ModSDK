@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1017
+#define VERSION 1018
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
