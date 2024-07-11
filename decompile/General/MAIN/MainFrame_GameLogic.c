@@ -244,36 +244,7 @@ LAB_80035098:
 						
 						DECOMP_VehPickupItem_ShootOnCirclePress(dOnline);
 					
-						// This only works because we have NO collision
-						// and therefore NO bounce physics, update P1
-						// first, then update other drivers later
-						
-						if(dThread->funcThTick == 0)
-							for(iVar11 = 0; iVar11 < 13; iVar11++)
-							{
-								pcVar5 = dOnline->funcPtrs[iVar11];
-								
-								if(pcVar5 != 0)
-								{
-									RunVehicleThread(pcVar5, dThread, dOnline);
-									
-									#ifdef USE_60FPS
-										#ifndef REBUILD_PS1
-											// if this function just ran
-											if(pcVar5 == VehFrameProc_Driving)
-											{
-												// only if jumping animation,
-												// otherwise wheelie gets bugged
-												if(psVar9->instSelf->animIndex == 3)
-												{
-													psVar9->matrixIndex =
-													psVar9->matrixIndex >> 1;
-												}
-											}
-										#endif
-									#endif
-								}
-							}
+						RunVehicleSet13(dThread, dOnline);
 						
 						octr->sleepControl = 1;
 						octr->desiredFPS = FPS_DOUBLE(30);
@@ -290,32 +261,7 @@ LAB_80035098:
 						
 						struct Thread* dThread = dOnline->instSelf->thread;
 					
-						if(dThread->funcThTick == 0)
-							for(iVar11 = 0; iVar11 < 13; iVar11++)
-							{
-								pcVar5 = dOnline->funcPtrs[iVar11];
-								
-								if(pcVar5 != 0)
-								{
-									RunVehicleThread(pcVar5, dThread, dOnline);
-									
-									#ifdef USE_60FPS
-										#ifndef REBUILD_PS1
-											// if this function just ran
-											if(pcVar5 == VehFrameProc_Driving)
-											{
-												// only if jumping animation,
-												// otherwise wheelie gets bugged
-												if(psVar9->instSelf->animIndex == 3)
-												{
-													psVar9->matrixIndex =
-													psVar9->matrixIndex >> 1;
-												}
-											}
-										#endif
-									#endif
-								}
-							}
+						RunVehicleSet13(dThread, dOnline);
 					}
 				}
 				
