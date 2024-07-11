@@ -1298,6 +1298,9 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
+	int sleepcount = 5000;
+	int enableDeferredGPU = 1;
+
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
@@ -1309,6 +1312,15 @@ int main(int argc, char *argv[])
 		//perhaps instead of reading, keep a local counter, increment that, and then
 		//write it (without needing a blocking read first).
 		(*octr.get()).windowsClientSync++;
+
+		if (octr.get()->windowsClientSync == 0)
+		{
+			// On Niko's computer
+			// 30fps 1x resolution = 4500
+			// 30fps 9x resolution = 2500
+			// 60fps = 0
+			//printf("Debug: SleepCount=%d\n", sleepCount);
+		}
 
 		// should rename to room selection
 		if (octr.get()->CurrState >= LAUNCH_PICK_ROOM)
@@ -1323,19 +1335,38 @@ int main(int argc, char *argv[])
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
-		//Somehow this code, when uncommented, causes PINE (this version) somehow to cause
-		//duckstation to lag. idk if this is related to pine, but idk how a sleep in client.exe
-		//could possibly cause duckstation to lag.
+		//UPDATE: the former version of this code sort of unconditionally usleep'd for a static amount
+		//of time (depending on 30 or 60fps). It's been updated to be dynamic, in case of lag/poor pc
+		//perf, or if PINE overhead is particularly large. If at any point in the future duckstation
+		//isn't at a locked 30/60fps, this may be the culprit.
 
-		// wait a bit, to RECV other messages
-		// 1,000,000 = 1 second
-		// 33,333 = 1 frame
-		// 15000 = half frame,
-		// duckstation overclock will compensate
-		//if(octr.get()->desiredFPS == 30)
-		//	usleep(15000); // half-frame 30fps
-		//else
-		//	usleep(3000); // fifth-frame 60fps
+		// check for frame lag
+		if (octr.get()->gpuSubmitTooLate == 1)
+		{
+			octr.get()->gpuSubmitTooLate = 0;
+
+			// if 1-9 frame stalls
+			if (sleepCount >= 500)
+			{
+				// remove from sleep
+				sleepCount -= 500;
+			}
+
+			// if 10+ frame stalls
+			else
+			{
+				sleepCount = 0;
+				enableDeferredGPU = 0;
+			}
+		}
+
+		// PC writes to PSX,
+		// PSX is read-only
+		octr.get()->enableDeferredGPU = enableDeferredGPU;
+
+		// delay GPU between SEND and RECV
+		if (enableDeferredGPU == 1)
+			usleep(sleepCount);
 		
 		// now check for new RECV message
 		ProcessNewMessages();
