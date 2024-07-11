@@ -1298,7 +1298,7 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
-	int sleepcount = 5000;
+	int sleepCount = 5000;
 	int enableDeferredGPU = 1;
 
 	while (1)
