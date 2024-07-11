@@ -336,12 +336,14 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		{
 			DECOMP_DotLights(gGT);
 
+			#ifndef USE_ONLINE
 			if((gGT->renderFlags & 0x8000) != 0)
 			{
 				WindowBoxLines(gGT);
+				
 				WindowDivsionLines(gGT);
 			}
-
+			#endif
 		}
 
 #ifndef REBUILD_PS1
@@ -1504,6 +1506,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 	#endif
 }
 
+#ifndef USE_ONLINE
 void WindowBoxLines(struct GameTracker* gGT)
 {
 	int i;
@@ -1649,6 +1652,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
+#endif
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {
@@ -1680,6 +1684,10 @@ int ReadyToBreak(struct GameTracker* gGT)
 		gGT->vSync_between_drawSync > 6;
 }
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 void RenderVSYNC(struct GameTracker* gGT)
 {
 	// render checkered flag
@@ -1687,6 +1695,10 @@ void RenderVSYNC(struct GameTracker* gGT)
 	{
 		VSync(0);
 	}
+
+	#ifdef USE_ONLINE
+	int boolFirstFrame = 1;
+	#endif
 
 	while(1)
 	{
@@ -1699,9 +1711,22 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 		if(ReadyToFlip(gGT))
 		{
+
+#ifdef USE_ONLINE
+			if(boolFirstFrame)
+				octr->gpuSubmitTooLate = 1;
+#endif
+			
 			// quit, end of stall
 			return;
 		}
+		
+#ifdef USE_ONLINE
+		// gpu submission is not too late,
+		// we got to this while() loop before
+		// the flip was ready, so we're on-time
+		boolFirstFrame = 0;
+#endif
 
 #ifndef REBUILD_PC
 		if(ReadyToBreak(gGT))
