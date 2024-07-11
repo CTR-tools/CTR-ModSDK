@@ -339,7 +339,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			if((gGT->renderFlags & 0x8000) != 0)
 			{
 				WindowBoxLines(gGT);
+				
+				#ifndef USE_ONLINE
 				WindowDivsionLines(gGT);
+				#endif
 			}
 
 		}
@@ -1531,6 +1534,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 	}
 }
 
+#ifndef USE_ONLINE
 void WindowDivsionLines(struct GameTracker* gGT)
 {
 	POLY_F4* p;
@@ -1649,6 +1653,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
+#endif
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {
