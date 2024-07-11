@@ -275,11 +275,12 @@ LAB_80035098:
 								}
 							}
 						
-						octr->desiredFPS = FPS_DOUBLE(30);
 						octr->sleepControl = 1;
+						octr->desiredFPS = FPS_DOUBLE(30);
 						
 						// stall
-						FrameStall();
+						if(octr->enableDeferredGPU == 1)
+							FrameStall();
 					}
 					
 					for(int other = 1; other < 8; other++)

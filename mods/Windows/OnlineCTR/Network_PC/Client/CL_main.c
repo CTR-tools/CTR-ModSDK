@@ -1170,10 +1170,23 @@ int main()
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
+	// 5ms sleep by default
+	int sleepCount = 5000;
+	int enableDeferredGPU = 1;
+
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
 		octr->windowsClientSync++;
+
+		if (octr->windowsClientSync == 0)
+		{
+			// On Niko's computer
+			// 30fps 1x resolution = 4500
+			// 30fps 9x resolution = 2500
+			// 60fps = 0
+			//printf("Debug: SleepCount=%d\n", sleepCount);
+		}
 
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_PICK_ROOM)
@@ -1188,16 +1201,34 @@ int main()
 		// Send data
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
-		
-		// wait a bit, to RECV other messages
-		// 1,000,000 = 1 second
-		// 33,333 = 1 frame
-		// 15000 = half frame,
-		// duckstation overclock will compensate
-		if(octr->desiredFPS == 30)
-			usleep(15000); // half-frame 30fps
-		else
-			usleep(3000); // fifth-frame 60fps
+
+		// check for frame lag
+		if (octr->gpuSubmitTooLate == 1)
+		{
+			octr->gpuSubmitTooLate = 0;
+
+			// if 1-9 frame stalls
+			if (sleepCount >= 500)
+			{
+				// remove from sleep
+				sleepCount -= 500;
+			}
+
+			// if 10+ frame stalls
+			else
+			{
+				sleepCount = 0;
+				enableDeferredGPU = 0;
+			}
+		}
+
+		// PC writes to PSX,
+		// PSX is read-only
+		octr->enableDeferredGPU = enableDeferredGPU;
+
+		// delay GPU between SEND and RECV
+		if(enableDeferredGPU == 1)
+			usleep(sleepCount);
 		
 		// now check for new RECV message
 		ProcessNewMessages();

@@ -1680,6 +1680,10 @@ int ReadyToBreak(struct GameTracker* gGT)
 		gGT->vSync_between_drawSync > 6;
 }
 
+#ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
+
 void RenderVSYNC(struct GameTracker* gGT)
 {
 	// render checkered flag
@@ -1687,6 +1691,10 @@ void RenderVSYNC(struct GameTracker* gGT)
 	{
 		VSync(0);
 	}
+
+	#ifdef USE_ONLINE
+	int boolFirstFrame = 1;
+	#endif
 
 	while(1)
 	{
@@ -1699,9 +1707,22 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 		if(ReadyToFlip(gGT))
 		{
+
+#ifdef USE_ONLINE
+			if(boolFirstFrame)
+				octr->gpuSubmitTooLate = 1;
+#endif
+			
 			// quit, end of stall
 			return;
 		}
+		
+#ifdef USE_ONLINE
+		// gpu submission is not too late,
+		// we got to this while() loop before
+		// the flip was ready, so we're on-time
+		boolFirstFrame = 0;
+#endif
 
 #ifndef REBUILD_PC
 		if(ReadyToBreak(gGT))

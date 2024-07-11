@@ -140,9 +140,12 @@ struct OnlineCTR
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
 	
+	char desiredFPS;
+	
 	// control when PSX and PC send/recv
-	int sleepControl;
-	int desiredFPS;
+	char sleepControl;
+	char gpuSubmitTooLate;
+	char enableDeferredGPU;
 };
 
 #define MAX_LAPS 7
