@@ -1315,10 +1315,13 @@ int main(int argc, char *argv[])
 
 		if (octr.get()->windowsClientSync == 0)
 		{
-			// On Niko's computer
+			// On Niko's computer with MAPPED MEMORY
 			// 30fps 1x resolution = 4500
 			// 30fps 9x resolution = 2500
 			// 60fps = 0
+
+			// With the new PINE system, always zero,
+			// We can not defer the GPU until the PC port is done :(
 			//printf("Debug: SleepCount=%d\n", sleepCount);
 		}
 
