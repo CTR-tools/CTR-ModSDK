@@ -182,9 +182,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr.get()->NumDrivers = r->numClientsTotal;
 
 			// default, disable cheats
-			/**(int*)&pBuf[0x80096b28 & 0xffffff] &=
-				~(0x100000 | 0x80000 | 0x400 | 0x400000);*/
-			ps1ptr<int> cheats = pBuf.at<int>(0x80096b28 & 0xffffff);
+			ps1ptr<int> cheats = pBuf.at<int>(0x80096b28);
 			(*cheats.get()) &= ~(0x100000 | 0x80000 | 0x400 | 0x400000);
 			cheats.startWrite();
 
@@ -205,8 +203,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// Inf Masks
 			if (octr.get()->special == 2)
 			{
-				//*(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400;
-				ps1ptr<int> infMasks = pBuf.at<int>((0x80096b28) & 0xffffff);
+				ps1ptr<int> infMasks = pBuf.at<int>(0x80096b28);
 				(*infMasks.get()) = 0x400;
 				infMasks.commit();
 			}
@@ -214,8 +211,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// Inf Bombs
 			if (octr.get()->special == 3)
 			{
-				//*(int*)&pBuf[(0x80096b28) & 0xffffff] = 0x400000;
-				ps1ptr<int> infBombs = pBuf.at<int>((0x80096b28) & 0xffffff);
+				ps1ptr<int> infBombs = pBuf.at<int>(0x80096b28);
 				(*infBombs.get()) = 0x400000;
 				infBombs.commit();
 			}
@@ -264,7 +260,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (r->name[0] == 0)
 			{
 				// make this player hold SQUARE
-				ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
+				ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(0x80096804 + (slot * 0x50));
 				gamepad.get()->buttonsHeldCurrFrame = 0x20;
 				gamepad.get()->buttonsTapped = 0;
 				gamepad.get()->buttonsReleased = 0;
@@ -288,8 +284,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (r->lapID == 7) numLaps = 120;
 
 			// set sdata->gGT->numLaps
-			//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-			ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff, false); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<char> numLapsV = pBuf.at<char>(0x80096b20 + 0x1d33, false); //don't prefetch since we're unilaterally overwriting.
 			(*numLapsV.get()) = numLaps;
 			numLapsV.startWrite();
 
@@ -309,8 +304,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
 
-			//*(short*)&pBuf[(0x80086e84 + 2 * slot) & 0xffffff] = characterID;
-			ps1ptr<short> characterIDV = pBuf.at<short>((0x80086e84 + 2 * slot) & 0xffffff, false); //don't prefetch since we're unilaterally overwriting.
+			ps1ptr<short> characterIDV = pBuf.at<short>(0x80086e84 + (2 * slot), false); //don't prefetch since we're unilaterally overwriting.
 			(*characterIDV.get()) = characterID;
 			characterIDV.startWrite();
 
@@ -338,8 +332,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (octr.get()->CurrState < GAME_WAIT_FOR_RACE)
 				break;
 
-			//int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];
-			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff, false);
+			ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8, false);
 
 			sdata_Loading_stage.blockingRead();
 
@@ -353,9 +346,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID < octr.get()->DriverID) slot = clientID + 1;
 			if (clientID > octr.get()->DriverID) slot = clientID;
 
-			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff, false); //do not prefetch so we can fetch concurrently
-			//int psxPtr = *(int*)&pBuf[(0x8009900c + (slot * 4)) & 0xffffff];
-			ps1ptr<int> psxPtr = pBuf.at<int>((0x8009900c + (slot * 4)) & 0xffffff, false); //do not prefetch so we can fetch concurrently
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(0x80096804 + (slot * 0x50), false); //do not prefetch so we can fetch concurrently
+			ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c + (slot * 4), false); //do not prefetch so we can fetch concurrently
 
 			//begin concurrent fetch
 			gamepad.startRead();
@@ -413,15 +405,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// lossless compression, bottom byte is never used,
 			// cause psx renders with 3 bytes, and top byte
 			// is never used due to world scale (just pure luck)
-			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d4] = ((int)r->posX) * 256;
 			ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, false); //don't prefetch since we're unilaterally overwriting.
 			(*x.get()) = ((int)r->posX) * 256;
 
-			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2d8] = ((int)r->posY) * 256;
 			ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, false); //don't prefetch since we're unilaterally overwriting.
 			(*y.get()) = ((int)r->posY) * 256;
 
-			//*(int*)&OGpBuf[(*psxPtr.get()) + 0x2dc] = ((int)r->posZ) * 256;
 			ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, false); //don't prefetch since we're unilaterally overwriting.
 			(*z.get()) = ((int)r->posZ) * 256;
 
@@ -430,7 +419,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				(r->kartRot2 << 5);
 			angle &= 0xfff;
 
-			//*(short*)&OGpBuf[(*psxPtr.get()) + 0x39a] = (short)angle;
 			ps1ptr<short> angleV = pBuf.at<short>((*psxPtr.get()) + 0x39a, false); //don't prefetch since we're unilaterally overwriting.
 			(*angleV.get()) = (short)angle;
 
@@ -439,7 +427,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			y.startWrite();
 			z.startWrite();
 
-			//*(short*)&pBuf[psxPtr + 0x3E2] = 200;
 			ps1ptr<short> reserves = pBuf.at<short>((*psxPtr.get()) + 0x3E2, false); //don't prefetch since we're unilaterally overwriting.
 			// keep setting to 200,
 			// and if !boolReserves, let it fall to zero
@@ -449,7 +436,6 @@ void ProcessReceiveEvent(ENetPacket* packet)
 				reserves.startWrite();
 			}
 
-			//*(short*)&pBuf[psxPtr + 0x30] = r->wumpa;
 			ps1ptr<short> wumpa = pBuf.at<short>((*psxPtr.get()) + 0x30, false); //don't prefetch since we're unilaterally overwriting.
 			(*wumpa.get()) = r->wumpa;
 			wumpa.startWrite();
@@ -483,8 +469,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID > octr.get()->DriverID) slot = clientID;
 
 			// make this player hold SQUARE
-			//Gamepad* pad = ((Gamepad*)&pBuf[(0x80096804 + (slot * 0x50)) & 0xffffff]);
-			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>((0x80096804 + (slot * 0x50)) & 0xffffff);
+			ps1ptr<Gamepad> gamepad = pBuf.at<Gamepad>(0x80096804 + (slot * 0x50));
 			gamepad.get()->buttonsHeldCurrFrame = 0x20;
 			gamepad.get()->buttonsTapped = 0;
 			gamepad.get()->buttonsReleased = 0;
@@ -572,8 +557,7 @@ void StopAnimation()
 
 void DisconSELECT()
 {
-	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff);
+	ps1ptr<int> hold = pBuf.at<int>(0x80096804 + 0x10);
 
 	if (((*hold.get()) & 0x2000) != 0)
 	{
@@ -640,16 +624,14 @@ void StatePC_Launch_PickServer()
 
 	// quit if disconnected, but not loaded
 	// back into the selection screen yet
-	/*int gGT_levelID = *(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
-	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
+	ps1ptr<int> gGT_levelID = pBuf.at<int>(0x80096b20 + 0x1a10);
 
 	// must be in cutscene level to see country selector
 	if ((*gGT_levelID.get()) != 0x26)
 		return;
 
 	// quit if in loading screen (force-reconnect)
-	/*int sdata_Loading_stage = *(int*)&pBuf[0x8008d0f8 & 0xffffff];*/
-	ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8 & 0xffffff);
+	ps1ptr<int> sdata_Loading_stage = pBuf.at<int>(0x8008d0f8);
 
 	if ((*sdata_Loading_stage.get()) != -1)
 		return;
@@ -969,8 +951,7 @@ void StatePC_Lobby_HostTrackPick()
 	if (mt.lapID == 7) numLaps = 120;
 
 	// sdata->gGT->numLaps
-	//*(char*)&pBuf[(0x80096b20 + 0x1d33) & 0xffffff] = numLaps;
-	ps1ptr<char> numLapsV = pBuf.at<char>((0x80096b20 + 0x1d33) & 0xffffff);
+	ps1ptr<char> numLapsV = pBuf.at<char>(0x80096b20 + 0x1d33);
 	(*numLapsV.get()) = numLaps;
 	numLapsV.startWrite();
 
@@ -994,8 +975,7 @@ void StatePC_Lobby_CharacterPick()
 	mc.type = CG_CHARACTER;
 
 	// data.characterIDs[0]
-	//mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-	ps1ptr<char> characterID = pBuf.at<char>(0x80086e84 & 0xffffff);
+	ps1ptr<char> characterID = pBuf.at<char>(0x80086e84);
 	mc.characterID = (*characterID.get());
 
 	mc.boolLockedIn = octr.get()->boolLockedInCharacters[octr.get()->DriverID];
@@ -1039,8 +1019,7 @@ void SendEverything()
 	cg.type = CG_RACEDATA;
 
 	// === Position ===
-	//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-	ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c & 0xffffff);
+	ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c);
 	(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 	// lossless compression, bottom byte is never used,
@@ -1050,31 +1029,24 @@ void SendEverything()
 	// once custom tracks start to become a thing, if they ever use "world scale",
 	// this optimization should probably be applied on a track-by-track basis.
 
-	//cg.posX = (short)(*(int*)&pBuf[psxPtr + 0x2d4] / 256);
 	ps1ptr<int> x = pBuf.at<int>((*psxPtr.get()) + 0x2d4, false);
 
-	//cg.posY = (short)(*(int*)&pBuf[psxPtr + 0x2d8] / 256);
 	ps1ptr<int> y = pBuf.at<int>((*psxPtr.get()) + 0x2d8, false);
 
-	//cg.posZ = (short)(*(int*)&pBuf[psxPtr + 0x2dc] / 256);
 	ps1ptr<int> z = pBuf.at<int>((*psxPtr.get()) + 0x2dc, false);
 
 	// === Direction Faced ===
 	// driver->0x39a (direction facing)
-	//unsigned short angle = *(unsigned short*)&pBuf[psxPtr + 0x39a];
 	ps1ptr<unsigned short> angle = pBuf.at<unsigned short>((*psxPtr.get()) + 0x39a, false);
 
-	//char wumpa = *(unsigned char*)&pBuf[psxPtr + 0x30];
 	ps1ptr<char> wumpa = pBuf.at<char>((*psxPtr.get()) + 0x30, false);
 
 	// must be read as unsigned, even though game uses signed,
 	// has to do with infinite reserves when the number is negative
-	//unsigned short reserves = *(unsigned short*)&pBuf[psxPtr + 0x3E2];
 	ps1ptr<unsigned char> reserves = pBuf.at<unsigned char>((*psxPtr.get()) + 0x3e2, false);
 
 	// === Buttons ===
-	//int hold = *(int*)&pBuf[(0x80096804 + 0x10) & 0xffffff];
-	ps1ptr<int> hold = pBuf.at<int>((0x80096804 + 0x10) & 0xffffff, false);
+	ps1ptr<int> hold = pBuf.at<int>(0x80096804 + 0x10, false);
 
 	//begin concurrent fetch
 	x.startRead();
@@ -1139,8 +1111,7 @@ void SendEverything()
 
 void StatePC_Game_WaitForRace()
 {
-	//int gGT_gameMode1 = *(int*)&pBuf[(0x80096b20 + 0x0) & 0xffffff];
-	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>((0x80096b20 + 0x0) & 0xffffff);
+	ps1ptr<int> gGT_gameMode1 = pBuf.at<int>(0x80096b20 + 0x0);
 
 	if (
 		// only send once
@@ -1169,16 +1140,14 @@ void StatePC_Game_StartRace()
 
 	// not using this special event
 #if 0
-	/*int gGT_levelID = *(int*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];*/
-	ps1ptr<int> gGT_levelID = pBuf.at<int>((0x80096b20 + 0x1a10) & 0xffffff);
+	ps1ptr<int> gGT_levelID = pBuf.at<int>(0x80096b20 + 0x1a10);
 
 	octr.refresh();
 	// Friday demo mode camera
 	if (octr.get()->special == 3)
 		if ((*gGT_levelID.get()) < 18)
 		{
-			//*(short*)&pBuf[(0x80098028) & 0xffffff] = 0x20;
-			ps1ptr<short> val = pBuf.at<short>((0x80098028) & 0xffffff);
+			ps1ptr<short> val = pBuf.at<short>(0x80098028);
 			(*val.get()) = 0x20;
 			val.commit();
 		}
@@ -1194,8 +1163,7 @@ void StatePC_Game_EndRace()
 	{
 		boolAlreadySent_EndRace = 1;
 
-		//int psxPtr = *(int*)&pBuf[0x8009900c & 0xffffff];
-		ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c & 0xffffff);
+		ps1ptr<int> psxPtr = pBuf.at<int>(0x8009900c);
 		(*psxPtr.get()) &= 0xffffff; //in original code it was done to the variable, not the mem, so don't commit.
 
 		CG_MessageEndRace cg = { 0 };
@@ -1285,7 +1253,7 @@ int main(int argc, char *argv[])
 	}
 
 	pBuf = ps1mem(0);
-	octr = pBuf.at<OnlineCTR>(0x8000C000 & 0xffffff);
+	octr = pBuf.at<OnlineCTR>(0x8000C000);
 
 	// initialize enet
 	if (enet_initialize() != 0)

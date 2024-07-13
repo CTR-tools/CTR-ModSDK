@@ -92,7 +92,7 @@ public:
 	/// This is useful if you plan on completely overwriting this portion of memory, saving latency.
 	/// However, an object in this state will always commit it's entire buffer to ps1 memory every
 	/// time it is commited, so make sure *all* of the memory this ps1ptr represents is set as you intend.</param>
-	ps1ptr(unsigned int addr, bool prefetch = true/*, bool volatileAccess = false*/) : address(addr), didPrefetch(prefetch)/*, volat(volatileAccess)*/
+	ps1ptr(unsigned int addr, bool prefetch = true) : address(addr & 0xffffff), didPrefetch(prefetch)
 	{
 		buf = new char[sizeof(T)];
 		originalBuf = new char[sizeof(T)];
@@ -113,13 +113,11 @@ public:
 	/// load on TCP/PINE. Currently needs more testing, but this could allow for higher performance.
 	/// </summary>
 	template<typename U>
-	ps1ptr(ps1ptr<U> parentPtr, size_t offset)
+	ps1ptr(ps1ptr<U> parentPtr, size_t offset) : parentIfPresent(parentPtr.bufferedVal), address((parentPtr.address + offset) & 0xffffff)
 	{
 		buf = parentPtr.buf + offset;
 		originalBuf = parentPtr.originalBuf + offset;
-		parentIfPresent = parentPtr.bufferedVal; //this is only saved for the sake of strong reference counting.
 		bufferedVal = std::shared_ptr<T>((T*)&buf[0], [=](T* val) { /* do nothing, underlying mem is destroyed with parent */ });
-		address = parentPtr.address + offset;
 		didPrefetch = true; //functionally desirable in this case
 	}
 	//TODO: this needs work
@@ -233,9 +231,9 @@ public:
 	/// Creates a ps1ptr of the specified address, offset by the address of this ps1mem.
 	/// </summary>
 	template<typename T>
-	ps1ptr<T> at(unsigned int addr, bool prefetch = true/*, bool volatileAccess = false*/)
+	ps1ptr<T> at(unsigned int addr, bool prefetch = true)
 	{
-		return ps1ptr<T>(addr + address, prefetch/*, volatileAccess*/);
+		return ps1ptr<T>(addr + address, prefetch);
 	}
 };
 
