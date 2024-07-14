@@ -50,9 +50,9 @@ void UI::Render(int width, int height)
     else
     {
       g_dataManager.SaveData();
-      std::string clientCommand = "start /b " + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + " &";
+      std::string clientCommand = "start /b " + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + " " + m_username + " &";
       std::system(clientCommand.c_str());
-      const std::string duckCommand = "start /b " + m_duckPath + " " + s_patchedPath;
+      const std::string duckCommand = "start /b " + m_duckPath + " " + s_patchedPath + " &";
       std::system(duckCommand.c_str());
     }
   }
