@@ -19,7 +19,7 @@
 //=============================================================
 /*
 * Author: TheUbMunster
-* 
+*
 * This comment was written for documenting the changes & ideology that PINE implementation
 * brings to the table since it replaced direct memory access.
 *
@@ -892,7 +892,7 @@ void StatePC_Launch_PickRoom()
 	{
 		countFrame = 0;
 
-		// send junk data, 
+		// send junk data,
 		// this triggers server response
 		CG_MessageRoom mr;
 		mr.type = CG_JOINROOM;
@@ -1228,17 +1228,18 @@ int main(int argc, char *argv[])
 	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
 
-	PrintBanner(DONT_SHOW_NAME);
-
-	if (argc >= 3)
+	if (argc == 2)
 	{
-		printf("Program was reset due to: %s\n", argv[2]);
+		memcpy(name, argv[1], strlen(argv[1]));
 	}
-
-	// ask for the users online identification
-	printf("Input: Enter Your Online Name: ");
-	scanf_s("%s", name, (int)sizeof(name));
-	name[NAME_LEN] = 0; // truncate the name (0 based)
+	else
+	{
+		PrintBanner(DONT_SHOW_NAME);
+		// ask for the users online identification
+		printf("Input: Enter Your Online Name: ");
+		scanf_s("%s", name, (int)sizeof(name));
+		name[NAME_LEN] = 0; // truncate the name (0 based)
+	}
 
 	// show a welcome message
 	system("cls");
@@ -1298,7 +1299,7 @@ int main(int argc, char *argv[])
 			DisconSELECT();
 
 		StartAnimation();
-		
+
 		// Wait for PSX to have P1 data,
 		// which is set at octr->sleepControl
 		void FrameStall(); FrameStall();
@@ -1338,10 +1339,10 @@ int main(int argc, char *argv[])
 		// delay GPU between SEND and RECV
 		if (enableDeferredGPU == 1)
 			usleep(sleepCount);
-		
+
 		// now check for new RECV message
 		ProcessNewMessages();
-		
+
 		// allow PSX to resume
 		octr.get()->sleepControl = 0;
 
