@@ -10,3 +10,22 @@
 [submodule "externals/externals/enet"]
 	path = externals/enet
 	url = https://github.com/lsalzman/enet.git
+[submodule "externals/imgui"]
+	path = externals/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "externals/portable-file-dialogs"]
+	path = externals/portable-file-dialogs
+	url = https://github.com/samhocevar/portable-file-dialogs
+[submodule "externals/json"]
+	path = externals/json
+	url = https://github.com/nlohmann/json
+[submodule "externals/HTTPRequest"]
+	path = externals/HTTPRequest
+	url = https://github.com/elnormous/HTTPRequest
+[submodule "externals/cpp-httplib"]
+	path = externals/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib
+
+[submodule "externals/xdelta"]
+	path = externals/xdelta
+	url = https://github.com/jmacd/xdelta
