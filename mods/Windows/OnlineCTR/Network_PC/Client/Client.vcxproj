@@ -156,10 +156,15 @@
     <ClCompile Include="..\..\..\..\..\externals\enet\protocol.c" />
     <ClCompile Include="..\..\..\..\..\externals\enet\unix.c" />
     <ClCompile Include="..\..\..\..\..\externals\enet\win32.c" />
-    <ClCompile Include="CL_main.c" />
+    <ClCompile Include="CL_main.cpp" />
+    <ClCompile Include="DeferredMem.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\decompile\General\AltMods\OnlineCTR\global.h" />
+    <ClInclude Include="DeferredMem.h" />
+    <ClInclude Include="DSPINE.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

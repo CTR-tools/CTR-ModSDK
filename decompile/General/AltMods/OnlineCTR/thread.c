@@ -1,5 +1,6 @@
-#include <common.h>
-#include "global.h"
+//these make it not compile?
+//#include <common.h>
+//#include "global.h"
 
 void (*funcs[NUM_STATES]) () =
 {

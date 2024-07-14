@@ -22,8 +22,8 @@
 
 #endif
 
-#define true				            1
-#define false				            0
+//#define true				1
+//#define false				0
 
 #define DONT_SHOW_NAME		            0
 #define SHOW_NAME			            1
@@ -67,7 +67,7 @@ typedef struct raceStats
 	int bestLap;
 } raceStats;
 
-// This can be 0x400 bytes max:
+// This can be 0x400 (1024) bytes max:
 // 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
@@ -147,6 +147,8 @@ struct OnlineCTR
 	char gpuSubmitTooLate;
 	char enableDeferredGPU;
 };
+
+STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2
