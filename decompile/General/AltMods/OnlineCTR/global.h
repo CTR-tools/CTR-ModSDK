@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1018
+#define VERSION 1019
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -139,9 +139,9 @@ struct OnlineCTR
 
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
-	
+
 	char desiredFPS;
-	
+
 	// control when PSX and PC send/recv
 	char sleepControl;
 	char gpuSubmitTooLate;
