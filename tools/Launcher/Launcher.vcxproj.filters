@@ -22,6 +22,9 @@
     <Filter Include="ImGui\misc">
       <UniqueIdentifier>{622648ac-38c0-4c8a-b926-b1ac16c0ffc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xdelta3">
+      <UniqueIdentifier>{a5ac9002-c6a1-46a7-9148-b92c30d3ea73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,9 +72,9 @@
     <ClCompile Include="io.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="third_party\xdelta3\xdelta3.c">
+      <Filter>xdelta3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -95,5 +98,8 @@
     <ClInclude Include="io.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

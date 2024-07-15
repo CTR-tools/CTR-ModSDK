@@ -26,6 +26,3 @@
 	path = externals/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib
 
-[submodule "externals/xdelta"]
-	path = externals/xdelta
-	url = https://github.com/jmacd/xdelta

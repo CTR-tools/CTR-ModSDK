@@ -102,9 +102,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)..\..\externals\xdelta\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)third_party\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -112,6 +112,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;Ws2_32.lib;$(SolutionDir)third_party\OpenSSL\3.3.1\lib\libssl_static.lib;$(SolutionDir)third_party\OpenSSL\3.3.1\lib\libcrypto_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -120,9 +123,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)..\..\externals\xdelta\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)third_party\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
@@ -132,6 +135,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;Ws2_32.lib;$(SolutionDir)third_party\OpenSSL\3.3.1\lib\libssl_static.lib;$(SolutionDir)third_party\OpenSSL\3.3.1\lib\libcrypto_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -149,10 +155,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="patch.cpp" />
     <ClCompile Include="requests.cpp" />
+    <ClCompile Include="third_party\xdelta3\xdelta3.c" />
     <ClCompile Include="ui.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
@@ -164,9 +168,7 @@
     <ClInclude Include="ui.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\xdelta\xdelta3\xdelta3.vcxproj">
-      <Project>{8f9d37b5-b78e-4816-be61-aef679dbf3bc}</Project>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
