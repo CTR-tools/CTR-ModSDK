@@ -35,7 +35,7 @@ void UI::Render(int width, int height)
   if (m_username.size() > 9) { m_username = m_username.substr(0, 9); }
 
   bool updateReady = true;
-  updateReady &= SelectFile(m_gamePath, "Game Path", ".bin", {"Game Files", "*.bin"}, "Path to the NTSC-U version of CTR");
+  updateReady &= SelectFile(m_gamePath, "Game Path", ".bin", {"Game Files", "*.bin"}, "Path to the clean NTSC-U version of CTR");
   updateReady &= SelectFile(m_duckPath, "Duck Path ", ".exe", {"Executable Files", "*.exe"}, "Path to the duckstation executable");
   updateReady &= SelectFolder(m_iniPath, "Ini Path      ", "Duckstation gamesettings folder.\nUsually in Documents/DuckStation/gamesettings");
   ImGui::Text(("Version: " + m_version).c_str());
