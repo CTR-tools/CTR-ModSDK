@@ -44,7 +44,19 @@ static bool DecompressXDelta(const std::string& xdeltaPath, const std::string& i
   return true;
 }
 
-bool Patch::NewVersion(const std::string& path, const std::string& gamePath)
+bool Patch::NewVersion(const std::string& path, const std::string& gamePath, std::string& status)
 {
-  return DecompressFile(path + g_clientString, g_clientExecutable, ".exe") && DecompressXDelta(path + g_patchString, gamePath, ".bin");
+  status = "Decompressing " + g_clientExecutable + "...";
+  if (!DecompressFile(path + g_clientString, g_clientExecutable, ".exe"))
+  {
+    status = "Error decompressing " + g_clientExecutable;
+    return false;
+  }
+  status = "Applying xdelta patch...";
+  if (!DecompressXDelta(path + g_patchString, gamePath, ".bin"))
+  {
+    status = "Error applying xdelta patch";
+    return false;
+  }
+  return true;
 }

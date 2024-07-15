@@ -18,13 +18,20 @@ UI::UI()
   g_dataManager.BindData(&m_iniPath, DataType::STRING, "IniPath");
   g_dataManager.BindData(&m_username, DataType::STRING, "Username");
   g_dataManager.BindData(&m_updated, DataType::BOOL, "Updated");
+  m_routineRunning = true;
+  m_updateRoutine = std::async(std::launch::async, [&] {
+    std::string version;
+    Requests::CheckUpdates(version);
+    if (m_version != version)
+    {
+      m_updateAvailable = true;
+      m_status = "Update available! v" + version;
+    }
+  });
 }
 
 void UI::Render(int width, int height)
 {
-  static bool update = false;
-  if (update) { Update(); update = false; }
-
   ImGui::SetNextWindowPos(ImVec2(.0f, .0f), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(static_cast<float>(width), static_cast<float>(height)), ImGuiCond_Always);
   ImGui::Begin("Main", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
@@ -35,12 +42,12 @@ void UI::Render(int width, int height)
   if (m_username.size() > 9) { m_username = m_username.substr(0, 9); }
 
   bool updateReady = true;
-  updateReady &= SelectFile(m_gamePath, "Game Path", ".bin", {"Game Files", "*.bin"}, "Path to the clean NTSC-U version of CTR");
-  updateReady &= SelectFile(m_duckPath, "Duck Path ", ".exe", {"Executable Files", "*.exe"}, "Path to the duckstation executable");
+  updateReady &= SelectFile(m_gamePath, "Game Path", {".bin", ".img", ".iso"}, {"Game Files", "*.bin *.img *.iso"}, "Path to the clean NTSC-U version of CTR");
+  updateReady &= SelectFile(m_duckPath, "Duck Path ", {".exe"}, {"Executable Files", "*.exe"}, "Path to the duckstation executable");
   updateReady &= SelectFolder(m_iniPath, "Ini Path      ", "Duckstation gamesettings folder.\nUsually in Documents/DuckStation/gamesettings");
   ImGui::Text(("Version: " + m_version).c_str());
 
-  ImGui::BeginDisabled(!m_updated);
+  ImGui::BeginDisabled(m_routineRunning || !m_updated);
   if (ImGui::Button("Launch Game"))
   {
     std::string s_clientPath = GetClientPath(m_version);
@@ -58,9 +65,18 @@ void UI::Render(int width, int height)
   }
   ImGui::EndDisabled();
   ImGui::SameLine();
-  ImGui::BeginDisabled(!updateReady);
-  if (ImGui::Button("Update")) { update = true; m_status = "Updating..."; }
+  ImGui::BeginDisabled(m_routineRunning || !updateReady);
+  if (ImGui::Button("Update"))
+  {
+    m_routineRunning = true;
+    m_updateRoutine = std::async(std::launch::async, [&] { Update(); });
+  }
   ImGui::EndDisabled();
+
+  if (m_routineRunning && m_updateRoutine.wait_for(std::chrono::nanoseconds(1)) == std::future_status::ready)
+  {
+    m_routineRunning = false;
+  }
 
   if (!m_status.empty()) { ImGui::Text(m_status.c_str()); }
 
@@ -70,15 +86,15 @@ void UI::Render(int width, int height)
 void UI::Update()
 {
   std::string version;
-  if (Requests::CheckUpdates(version))
+  m_status = "Checking for new updates...";
+  if (m_updateAvailable || Requests::CheckUpdates(version))
   {
-    if (version != m_version)
+    if (m_updateAvailable || version != m_version)
     {
-      m_updated = false;
       std::string path = g_dataFolder + version + "/";
-      if (Requests::DownloadUpdates(path))
+      if (Requests::DownloadUpdates(path, m_status))
       {
-        if (Patch::NewVersion(path, m_gamePath))
+        if (Patch::NewVersion(path, m_gamePath, m_status))
         {
           std::string s_ini;
           if (m_iniPath.back() == '/' || m_iniPath.back() == '\\') { s_ini = m_iniPath + g_configString; }
@@ -89,18 +105,21 @@ void UI::Update()
           m_version = version;
           m_status = "Update completed.";
         }
-        else { m_status = "Error: could not decompress files"; }
       }
-      else { m_status = "Error: could not establish connection"; }
     }
     else { m_status = "Already on the latest patch"; }
   }
   else { m_status = "Error: could not establish connection"; }
 }
 
-bool UI::SelectFile(std::string& str, const std::string& label, const std::string& ext, const std::vector<std::string>& filters, const std::string& tip)
+bool UI::SelectFile(std::string& str, const std::string& label, const std::vector<std::string>& ext, const std::vector<std::string>& filters, const std::string& tip)
 {
-  bool validPath = std::filesystem::exists(str) && str.ends_with(ext);
+
+  bool validPath = false;
+  for (const std::string& s : ext)
+  {
+    if (str.ends_with(s) && std::filesystem::exists(str)) { validPath = true; break; }
+  }
   std::string icon = validPath ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE_XMARK;
   ImGui::InputText((label + " " + icon).c_str(), &str);
   if (!tip.empty()) { ImGui::SetItemTooltip(tip.c_str()); }
