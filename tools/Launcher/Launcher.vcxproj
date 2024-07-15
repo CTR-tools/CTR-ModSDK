@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SIZEOF_SIZE_T=8;SIZEOF_UNSIGNED_LONG_LONG=8;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)third_party\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -123,7 +123,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SIZEOF_SIZE_T=8;SIZEOF_UNSIGNED_LONG_LONG=8;XD3_MAIN=0;XD3_DEBUG=0;XD3_USE_LARGEFILE64=1;REGRESSION_TEST=0;SECONDARY_DJW=1;SECONDARY_FGK=1;SECONDARY_LZMA=0;XD3_WIN32=1;EXTERNAL_COMPRESSION=0;SHELL_TESTS=0;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\imgui\;$(ProjectDir)..\..\externals\json\include\;$(ProjectDir)..\..\externals\portable-file-dialogs\;$(ProjectDir)..\..\externals\cpp-httplib\;$(ProjectDir)third_party\OpenSSL\3.3.1\include\;$(ProjectDir)third_party\xdelta3\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
