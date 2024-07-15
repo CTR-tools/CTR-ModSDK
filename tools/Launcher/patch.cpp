@@ -23,6 +23,7 @@ static bool DecompressFile(const std::string& path, const std::string& filename,
 
   std::string newFilePath = path.substr(0, path.find(".")) + ext;
   IO::WriteBinaryFile(decompressedFile, newFilePath);
+  return true;
 }
 
 static bool DecompressXDelta(const std::string& xdeltaPath, const std::string& inputPath, const std::string& ext)
