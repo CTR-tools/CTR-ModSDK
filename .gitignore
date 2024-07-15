@@ -20,6 +20,8 @@ __pycache__/
 # Build artifacts
 build/
 debug/
+x64/
+Launcher/
 *.log
 offset.txt
 comport.txt
@@ -43,6 +45,9 @@ games/settings.json
 
 # Executables
 *.exe
+*.pdb
+*.lib
+*.dll
 
 # MyMods folder
 mods/MyMods/*

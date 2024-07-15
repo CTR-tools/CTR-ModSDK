@@ -34,7 +34,7 @@ static bool DecompressXDelta(const std::string& xdeltaPath, const std::string& i
   std::vector<char> patchedGame;
   patchedGame.resize(2 * game.size());
   usize_t patchedGameSize;
-  int result = xd3_decode_memory(reinterpret_cast<uint8_t*>(xdelta.data()), xdelta.size(), reinterpret_cast<uint8_t*>(game.data()), game.size(), reinterpret_cast<uint8_t*>(patchedGame.data()), &patchedGameSize, patchedGame.size(), 0);
+  int result = xd3_decode_memory(reinterpret_cast<uint8_t*>(xdelta.data()), xdelta.size(), reinterpret_cast<uint8_t*>(game.data()), game.size(), reinterpret_cast<uint8_t*>(patchedGame.data()), &patchedGameSize, patchedGame.size(), 1 << 11);
   if (result != 0) { return false; }
 
   std::string filename = xdeltaPath.substr(0, xdeltaPath.find(".")) + ext;
