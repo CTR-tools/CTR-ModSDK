@@ -38,9 +38,17 @@ jobs:
         run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.arm32.gcc'
       - name: Build Server Release Mingw2 GCC
         run: nix build -L --keep-going '.?submodules=1#online-server.release.mingw32.gcc' -o ${{ runner.temp }}/result/online-server.release.mingw32.gcc
+      - name: Build Client Release MingwW64 GCC
+        run: nix build -L --keep-going '.?submodules=1#online-client.release.mingwW64.gcc' -o ${{ runner.temp }}/result/online-client.release.mingwW64.gcc
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: online-server-windows
           path: |
             ${{ runner.temp }}/result/online-server.release.mingw32.gcc/bin
+      - name: Upload client artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: online-client-windows
+          path: |
+            ${{ runner.temp }}/result/online-client.release.mingwW64.gcc/bin

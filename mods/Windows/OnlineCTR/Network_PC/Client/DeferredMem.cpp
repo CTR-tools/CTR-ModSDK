@@ -1,5 +1,5 @@
 #ifdef _WIN64 //windows
-#include <WinSock2.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
 
@@ -20,6 +20,7 @@
 #include <condition_variable>
 #include <map>
 #include <vector>
+#include <cstdio>
 
 void recvThread();
 typedef unsigned long long internalPineApiID;
