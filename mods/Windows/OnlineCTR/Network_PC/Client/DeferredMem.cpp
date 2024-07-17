@@ -213,9 +213,7 @@ internalPineApiID pineSend(DSPINESend sendObj)
 	return pineSendsCount++;
 }
 
-std::mutex waitPineDataMutex;
 std::condition_variable waitPineDataCV;
-std::atomic<bool> recvRan = false;
 
 void pineRecv()
 { //on another thread
@@ -277,8 +275,6 @@ void pineRecv()
 	}
 	//end critical region
 	pineRecvsCount++;
-	std::unique_lock<std::mutex> ul { waitPineDataMutex };
-	recvRan = true;
 	waitPineDataCV.notify_all();
 }
 
@@ -325,13 +321,20 @@ void GCDeadPineData()
 	//end critical region
 }
 
+/// <summary>
+/// Checks if all the data correlated with a single pineApiID has been fully recieved.
+///
+/// !!!WARNING!!! Callers of this function must acquire the "pineObjsMutex" before calling.
+/// This function is internal, and should not be called outside the API.
+/// </summary>
 bool isPineDataPresent(pineApiID id)
 {
 	bool isAllPresent = true;
 	auto& dat = pineApiRequests.at(id).first;
 	//critical region (syncronize access pls)
 	{
-		std::lock_guard<std::mutex> um{ pineObjsMutex };
+		//CALLERS MUST ACQUIRE THIS MUTEX BEFORE CALLING!
+		//std::lock_guard<std::mutex> um{ pineObjsMutex };
 		for (size_t i = 0; i < dat.size(); i++)
 		{
 			isAllPresent &= pineObjs.at(dat[i]).second; //this bool is only true when it's been recvd
@@ -343,15 +346,8 @@ bool isPineDataPresent(pineApiID id)
 
 void waitUntilPineDataPresent(pineApiID id)
 {
-	std::unique_lock<std::mutex> ul{ waitPineDataMutex };
-	while (!isPineDataPresent(id))
-	{
-		while (!recvRan)
-		{
-			waitPineDataCV.wait(ul);
-		}
-		recvRan = false;
-	}
+	std::unique_lock<std::mutex> ul{ pineObjsMutex };
+	waitPineDataCV.wait(ul, [id] { return isPineDataPresent(id); });
 }
 
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
