@@ -1,8 +1,6 @@
 #include "ui.h"
 #include "dataManager.h"
 #include "IconsFontAwesome6.h"
-#include "requests.h"
-#include "patch.h"
 
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
@@ -17,17 +15,7 @@ UI::UI()
   g_dataManager.BindData(&m_version, DataType::STRING, "GameVersion");
   g_dataManager.BindData(&m_iniPath, DataType::STRING, "IniPath");
   g_dataManager.BindData(&m_username, DataType::STRING, "Username");
-  g_dataManager.BindData(&m_updated, DataType::BOOL, "Updated");
-  m_routineRunning = true;
-  m_updateRoutine = std::async(std::launch::async, [&] {
-    std::string version;
-    Requests::CheckUpdates(version);
-    if (m_version != version)
-    {
-      m_updateAvailable = true;
-      m_status = "Update available! v" + version;
-    }
-  });
+  m_updater.CheckForUpdates(m_status, m_version);
 }
 
 void UI::Render(int width, int height)
@@ -47,7 +35,7 @@ void UI::Render(int width, int height)
   updateReady &= SelectFolder(m_iniPath, "Ini Path      ", "Duckstation gamesettings folder.\nUsually in Documents/DuckStation/gamesettings");
   ImGui::Text(("Version: " + m_version).c_str());
 
-  ImGui::BeginDisabled(m_routineRunning || !m_updated);
+  ImGui::BeginDisabled(m_updater.IsBusy() || !m_updater.IsUpdated());
   if (ImGui::Button("Launch Game"))
   {
     std::string s_clientPath = GetClientPath(m_version);
@@ -65,51 +53,13 @@ void UI::Render(int width, int height)
   }
   ImGui::EndDisabled();
   ImGui::SameLine();
-  ImGui::BeginDisabled(m_routineRunning || !updateReady);
-  if (ImGui::Button("Update"))
-  {
-    m_routineRunning = true;
-    m_updateRoutine = std::async(std::launch::async, [&] { Update(); });
-  }
+  ImGui::BeginDisabled(m_updater.IsBusy() || !updateReady);
+  if (ImGui::Button("Update")) { m_updater.Update(m_status, m_version, m_gamePath, m_iniPath); }
   ImGui::EndDisabled();
-
-  if (m_routineRunning && m_updateRoutine.wait_for(std::chrono::nanoseconds(1)) == std::future_status::ready)
-  {
-    m_routineRunning = false;
-  }
 
   if (!m_status.empty()) { ImGui::Text(m_status.c_str()); }
 
   ImGui::End();
-}
-
-void UI::Update()
-{
-  std::string version;
-  m_status = "Checking for new updates...";
-  if (m_updateAvailable || Requests::CheckUpdates(version))
-  {
-    if (m_updateAvailable || version != m_version)
-    {
-      std::string path = g_dataFolder + version + "/";
-      if (Requests::DownloadUpdates(path, m_status))
-      {
-        if (Patch::NewVersion(path, m_gamePath, m_status))
-        {
-          std::string s_ini;
-          if (m_iniPath.back() == '/' || m_iniPath.back() == '\\') { s_ini = m_iniPath + g_configString; }
-          else { s_ini = m_iniPath + "/" + g_configString; }
-          if (std::filesystem::exists(s_ini)) { std::filesystem::remove(s_ini); }
-          std::filesystem::copy(path + g_configString, s_ini);
-          m_updated = true;
-          m_version = version;
-          m_status = "Update completed.";
-        }
-      }
-    }
-    else { m_status = "Already on the latest patch"; }
-  }
-  else { m_status = "Error: could not establish connection"; }
 }
 
 bool UI::SelectFile(std::string& str, const std::string& label, const std::vector<std::string>& ext, const std::vector<std::string>& filters, const std::string& tip)

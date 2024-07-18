@@ -157,6 +157,7 @@
     <ClCompile Include="requests.cpp" />
     <ClCompile Include="third_party\xdelta3\xdelta3.c" />
     <ClCompile Include="ui.cpp" />
+    <ClCompile Include="updater.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="patch.h" />
     <ClInclude Include="requests.h" />
     <ClInclude Include="ui.h" />
+    <ClInclude Include="updater.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

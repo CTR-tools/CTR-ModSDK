@@ -10,6 +10,7 @@ class App
 public:
 	void Init();
 	void Run();
+	void Main();
 	void Close();
 #ifdef _DEBUG
 	void RunImGuiExample();
