@@ -18,6 +18,7 @@ private:
 private:
 	std::future<void> m_updateRoutine;
 	std::function<void(void)> m_routine;
+	std::string m_versionAvailable;
 	bool m_routineRunning = false;
 	bool m_updateAvailable = false;
 	bool m_updated;

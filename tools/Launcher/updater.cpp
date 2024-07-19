@@ -29,7 +29,8 @@ bool Updater::CheckForUpdates(std::string& status, const std::string& currVersio
       if (currVersion != version)
       {
         m_updateAvailable = true;
-        status = "Update available! v" + version;
+        m_versionAvailable = version;
+        status = "Update available! v" + m_versionAvailable;
       }
     }
   );
@@ -45,7 +46,8 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
       {
         if (m_updateAvailable || version != currVersion)
         {
-          std::string path = g_dataFolder + version + "/";
+          m_versionAvailable = m_updateAvailable ? m_versionAvailable : version;
+          std::string path = g_dataFolder + m_versionAvailable + "/";
           if (Requests::DownloadUpdates(path, status) && Patch::NewVersion(path, gamePath, status))
           {
             std::string s_ini;
@@ -55,7 +57,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
             std::filesystem::copy(path + g_configString, s_ini);
             m_updated = true;
             m_updateAvailable = false;
-            currVersion = version;
+            currVersion = m_versionAvailable;
             status = "Update completed.";
           }
         }
