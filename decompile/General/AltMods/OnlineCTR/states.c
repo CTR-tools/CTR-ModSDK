@@ -126,13 +126,13 @@ void StatePS1_Lobby_AssignRole()
 	if(octr->DriverID == 0)
 	{
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
-		printf("statechange %d LOBBY_HOST_TRACK_PICK 3: ", octr->stateChangeCounter++);
+		printf("statechange %d LOBBY_HOST_TRACK_PICK 3: \n", octr->stateChangeCounter++);
 	}
 
 	else if (octr->DriverID > 0)
 	{
 		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
-		printf("statechange %d LOBBY_GUEST_TRACK_WAIT 4: ", octr->stateChangeCounter++);
+		printf("statechange %d LOBBY_GUEST_TRACK_WAIT 4: \n", octr->stateChangeCounter++);
 	}
 }
 
