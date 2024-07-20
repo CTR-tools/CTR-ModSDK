@@ -540,8 +540,8 @@ void ProcessNewMessages() {
 
 				// no players are left
 				int noneAlive = numAlive == 0;
-				//race is in session and (1 or less players OR non-race map) //shouldn't it be AND not OR?
-				int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) || (ri->levelPlayed > 18));
+				//race is in session and (1 or less players AND non-race map)
+				int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) && (ri->levelPlayed > 18));
 				// Kill lobby under either of these conditions
 				int killLobby = noneAlive || oneOrLessOrNonRaceMap;
 				if (killLobby)
