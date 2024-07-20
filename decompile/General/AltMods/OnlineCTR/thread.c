@@ -84,6 +84,32 @@ void ThreadFunc(struct Thread* t)
         octr->frames_unsynced = 0;
     }
 
+	//this debug info courtesy of ClaudioBo
+#ifdef PINE_DEBUG
+	static unsigned frameCounter = 0;
+	char frames_unsynced_str[12];
+	sprintf(frames_unsynced_str, "%d", octr->frames_unsynced);
+
+	if (octr->frames_unsynced >= 80) {
+		int color = frameCounter++ & FPS_DOUBLE(1) ? RED : WHITE;
+		char final_str[20];
+		sprintf(final_str, "WTF!!: %s/120", frames_unsynced_str);
+		DECOMP_DecalFont_DrawLine(final_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | color);
+	}
+	else if (octr->frames_unsynced >= 60) {
+		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | CORTEX_RED);
+	}
+	else if (octr->frames_unsynced >= 40) {
+		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | ROO_ORANGE);
+	}
+	else if (octr->frames_unsynced >= 20) {
+		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | PAPU_YELLOW);
+	}
+	else {
+		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | WHITE);
+	}
+#endif
+
 	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES
 	int boolCloseClient = (octr->frames_unsynced > DISCONNECT_AT_UNSYNCED_FRAMES);
 
