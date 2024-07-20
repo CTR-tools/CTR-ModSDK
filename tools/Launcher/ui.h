@@ -17,9 +17,8 @@ private:
 private:
 	Updater m_updater;
 	std::string m_version = "None";
+	std::string m_biosPath;
 	std::string m_gamePath;
-	std::string m_duckPath;
-	std::string m_iniPath;
 	std::string m_username;
 	std::string m_status;
 };

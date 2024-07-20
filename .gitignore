@@ -23,6 +23,7 @@ debug/
 x64/
 data/
 packages/
+externals/
 *.log
 offset.txt
 comport.txt
