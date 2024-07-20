@@ -137,12 +137,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (r->version != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
+				printf("statechange %d LAUNCH_ERROR 7: version mismatch", octr.get()->stateChangeCounter++);
 				return;
 			}
 
 			if (octr.get()->ver_psx != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
+				printf("statechange %d LAUNCH_ERROR 8: version mismatch", octr.get()->stateChangeCounter++);
 				return;
 			}
 
@@ -240,6 +242,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// choose to get host menu or guest menu
 			octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
+			printf("statechange %d LOBBY_ASSIGN_ROLE 9: new client", octr.get()->stateChangeCounter++);
 			break;
 		}
 
@@ -290,6 +293,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			octr.get()->levelID = r->trackID;
 			octr.get()->CurrState = LOBBY_CHARACTER_PICK;
+			printf("statechange %d LOBBY_CHARACTER_PICK 10: track was selected", octr.get()->stateChangeCounter++);
 			break;
 		}
 
@@ -318,12 +322,14 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// so screen updates with green names
 			octr.get()->CountPressX = 0;
 			octr.get()->CurrState = LOBBY_START_LOADING;
+			printf("statechange %d LOBBY_START_LOADING 11: game starting?", octr.get()->stateChangeCounter++);
 			break;
 		}
 
 		case SG_STARTRACE:
 		{
 			octr.get()->CurrState = GAME_START_RACE;
+			printf("statechange %d GAME_START_RACE 12: start race", octr.get()->stateChangeCounter++);
 			break;
 		}
 
@@ -513,6 +519,7 @@ void ProcessNewMessages()
 
 			// to go the lobby browser
 			octr.get()->CurrState = -1;
+			printf("statechange %d (-1) 13: enet disconnected", octr.get()->stateChangeCounter++);
 			break;
 
 		default:
@@ -570,6 +577,7 @@ void DisconSELECT()
 
 		// to go the lobby browser
 		octr.get()->CurrState = -1;
+		printf("statechange %d (-1) 14: pressed SELECT", octr.get()->stateChangeCounter++);
 		return;
 	}
 }
@@ -591,6 +599,7 @@ void StatePC_Launch_EnterPID()
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
 	octr.get()->CurrState = LAUNCH_PICK_SERVER;
+	printf("statechange %d LAUNCH_PICK_SERVER 15: ", octr.get()->stateChangeCounter++);
 }
 
 void printUntilPeriod(const char* str)
@@ -855,7 +864,8 @@ void StatePC_Launch_PickServer()
 			if (retryCount >= MAX_RETRIES)
 			{
 				// to go the country select
-				octr.get()->CurrState = 1;
+				octr.get()->CurrState = LAUNCH_PICK_SERVER;
+				printf("statechange %d LAUNCH_PICK_SERVER 16: failed to connect to server due to exceeding max retries", octr.get()->stateChangeCounter++);
 				octr.get()->boolClientBusy = 0;
 				//unlike the above call to blockingWrite() in this function for octr, I don't think this is
 				//necessary, but I'm doing it to be safe.
@@ -872,6 +882,7 @@ void StatePC_Launch_PickServer()
 
 	octr.get()->DriverID = -1;
 	octr.get()->CurrState = LAUNCH_PICK_ROOM;
+	printf("statechange %d LAUNCH_PICK_SERVER 17: failed to connect to server due to disconnect", octr.get()->stateChangeCounter++);
 	octr.get()->boolClientBusy = 0;
 	//unlike the above call to blockingWrite() in this function for octr, I don't think this is
 	//necessary, but I'm doing it to be safe.
@@ -958,6 +969,7 @@ void StatePC_Lobby_HostTrackPick()
 	sendToHostReliable(&mt, sizeof(CG_MessageTrack));
 
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
+	printf("statechange %d LOBBY_CHARACTER_PICK 18: track selected", octr.get()->stateChangeCounter++);
 }
 
 int prev_characterID = -1;
@@ -994,6 +1006,7 @@ void StatePC_Lobby_CharacterPick()
 	if (mc.boolLockedIn == 1)
 	{
 		octr.get()->CurrState = LOBBY_WAIT_FOR_LOADING;
+		printf("statechange %d LOBBY_WAIT_FOR_LOADING 19: waiting for game load", octr.get()->stateChangeCounter++);
 	}
 }
 

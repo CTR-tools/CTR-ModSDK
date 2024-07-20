@@ -146,6 +146,7 @@ struct OnlineCTR
 	char sleepControl;
 	char gpuSubmitTooLate;
 	char enableDeferredGPU;
+	int stateChangeCounter;
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");

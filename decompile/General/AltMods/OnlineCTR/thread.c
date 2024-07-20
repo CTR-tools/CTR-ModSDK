@@ -97,6 +97,7 @@ void ThreadFunc(struct Thread* t)
 			// if closed==1, go to 0 ("please open client")
 			// if closed==0, go to 1 (server select)
 			octr->CurrState = !boolCloseClient;
+			printf("statechange %d yesno open client/server select 5: ", octr->stateChangeCounter++);
 
 			octr->serverLockIn1 = 0;
 			octr->serverLockIn2 = 0;
@@ -109,6 +110,7 @@ void ThreadFunc(struct Thread* t)
 		// if closed==1, go to 0 ("please open client")
 		// if closed==0, go to 1 (server select)
 		octr->CurrState = !boolCloseClient;
+		printf("statechange %d yesno open client/server select 6: ", octr->stateChangeCounter++);
 
 		// stop music,
 		// stop "most FX", let menu FX ring
