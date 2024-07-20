@@ -272,10 +272,10 @@ void pineRecv()
 		auto& e = pineObjs.at(pineRecvsCount);
 		e.first.recvData = recvData;
 		e.second = true;
+		pineRecvsCount++;
+		waitPineDataCV.notify_all();
 	}
 	//end critical region
-	pineRecvsCount++;
-	waitPineDataCV.notify_all();
 }
 
 pineApiID pineApiRequestCount = 0;
@@ -349,7 +349,8 @@ void waitUntilPineDataPresent(pineApiID id)
 	std::unique_lock<std::mutex> ul{ pineObjsMutex };
 	//its possible that after we've acquired the mutex, the data arrives, but it arrives
 	//BEFORE the .wait call, (i.e., waitPineDataCV.notify_all() gets called before .wait()), leading to deadlock.
-	waitPineDataCV.wait(ul, [id] { return isPineDataPresent(id); });
+	if (!isPineDataPresent(id))
+		waitPineDataCV.wait(ul, [id] { return isPineDataPresent(id); });
 }
 
 std::vector<DSPINESendRecvPair> getPineDataSegment(pineApiID id)
