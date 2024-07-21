@@ -4,25 +4,32 @@
 #include <filesystem>
 
 const std::string g_dataFolder = "data/";
+const std::string g_duckFolder = g_dataFolder + "duckstation/";
+const std::string g_duckExecutable = g_duckFolder + "duckstation-qt-x64-ReleaseLTCG.exe";
 const std::string g_clientString = "client.zip";
 const std::string g_clientExecutable = "Client.exe";
 const std::string g_patchString = "ctr-u_Online30.xdelta";
 const std::string g_configString = "SCUS-94426.ini";
 
-std::string GetClientPath(const std::string& version)
+const std::string GetClientPath(const std::string& version)
 {
 	return g_dataFolder + version + "/" + g_clientExecutable;
 }
 
-std::string GetPatchedGamePath(const std::string& version)
+const std::string GetPatchedGamePath(const std::string& version)
 {
 	std::string s_patch = g_dataFolder + version + "/" + g_patchString;
 	return s_patch.substr(0, s_patch.find(".")) + ".bin";
 }
 
-std::string GetConfigPath(const std::string& version)
+const std::string GetIniPath_Version(const std::string& version)
 {
 	return g_dataFolder + version + "/" + g_configString;
+}
+
+const std::string GetIniPath_Duck()
+{
+	return g_duckFolder + "settings.ini";
 }
 
 DataManager g_dataManager;

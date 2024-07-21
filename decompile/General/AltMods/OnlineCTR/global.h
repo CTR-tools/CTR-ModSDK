@@ -142,10 +142,6 @@ struct OnlineCTR
 
 	char desiredFPS;
 
-	// control when PSX and PC send/recv
-	char sleepControl;
-	char gpuSubmitTooLate;
-	char enableDeferredGPU;
 #ifdef PINE_DEBUG
 	int stateChangeCounter;
 #endif

@@ -3,28 +3,6 @@
 #include "io.h"
 
 #include <xdelta3.h>
-#include <zip.h>
-
-static bool DecompressFile(const std::string& path, const std::string& filename, const std::string& ext)
-{
-  int err;
-  zip_t* zipArchive = zip_open(path.c_str(), 0, &err);
-  if (!zipArchive) { return false; }
-
-  zip_stat_t zipStat;
-  zip_stat_init(&zipStat);
-  zip_stat(zipArchive, filename.c_str(), 0, &zipStat);
-  std::vector<char> decompressedFile;
-  decompressedFile.resize(zipStat.size);
-  zip_file* file = zip_fopen(zipArchive, filename.c_str(), 0);
-  zip_fread(file, decompressedFile.data(), zipStat.size);
-  zip_fclose(file);
-  zip_close(zipArchive);
-
-  std::string newFilePath = path.substr(0, path.find(".")) + ext;
-  IO::WriteBinaryFile(decompressedFile, newFilePath);
-  return true;
-}
 
 static bool DecompressXDelta(const std::string& xdeltaPath, const std::string& inputPath, const std::string& ext)
 {
@@ -44,7 +22,19 @@ static bool DecompressXDelta(const std::string& xdeltaPath, const std::string& i
   return true;
 }
 
-bool Patch::NewVersion(const std::string& path, const std::string& gamePath)
+bool Patch::NewVersion(const std::string& path, const std::string& gamePath, std::string& status)
 {
-  return DecompressFile(path + g_clientString, g_clientExecutable, ".exe") && DecompressXDelta(path + g_patchString, gamePath, ".bin");
+  status = "Decompressing " + g_clientExecutable + "...";
+  if (!IO::DecompressFiles(path, g_clientString))
+  {
+    status = "Error decompressing " + g_clientExecutable;
+    return false;
+  }
+  status = "Applying xdelta patch...";
+  if (!DecompressXDelta(path + g_patchString, gamePath, ".bin"))
+  {
+    status = "Error applying xdelta patch";
+    return false;
+  }
+  return true;
 }
