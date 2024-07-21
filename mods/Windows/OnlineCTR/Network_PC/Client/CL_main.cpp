@@ -1281,18 +1281,7 @@ int main(int argc, char *argv[])
 		//perhaps instead of reading, keep a local counter, increment that, and then
 		//write it (without needing a blocking read first).
 		(*octr.get()).windowsClientSync++;
-
-		if (octr.get()->windowsClientSync == 0)
-		{
-			// On Niko's computer with MAPPED MEMORY
-			// 30fps 1x resolution = 4500
-			// 30fps 9x resolution = 2500
-			// 60fps = 0
-
-			// With the new PINE system, always zero,
-			// We can not defer the GPU until the PC port is done :(
-			//printf("Debug: SleepCount=%d\n", sleepCount);
-		}
+		octr.startWrite();
 
 		// should rename to room selection
 		if (octr.get()->CurrState >= LAUNCH_PICK_ROOM)
@@ -1300,55 +1289,18 @@ int main(int argc, char *argv[])
 
 		StartAnimation();
 
-		// Wait for PSX to have P1 data,
-		// which is set at octr->sleepControl
-		void FrameStall(); FrameStall();
-
 		if (octr.get()->CurrState >= 0)
 			ClientState[octr.get()->CurrState]();
 
-		//UPDATE: the former version of this code sort of unconditionally usleep'd for a static amount
-		//of time (depending on 30 or 60fps). It's been updated to be dynamic, in case of lag/poor pc
-		//perf, or if PINE overhead is particularly large. If at any point in the future duckstation
-		//isn't at a locked 30/60fps, this may be the culprit.
-
-		// check for frame lag
-		if (octr.get()->gpuSubmitTooLate == 1)
-		{
-			octr.get()->gpuSubmitTooLate = 0;
-
-			// if 1-9 frame stalls
-			if (sleepCount >= 500)
-			{
-				// remove from sleep
-				sleepCount -= 500;
-			}
-
-			// if 10+ frame stalls
-			else
-			{
-				sleepCount = 0;
-				enableDeferredGPU = 0;
-			}
-		}
-
-		// PC writes to PSX,
-		// PSX is read-only
-		octr.get()->enableDeferredGPU = enableDeferredGPU;
-
-		// delay GPU between SEND and RECV
-		if (enableDeferredGPU == 1)
-			usleep(sleepCount);
-
 		// now check for new RECV message
 		ProcessNewMessages();
-
-		// allow PSX to resume
-		octr.get()->sleepControl = 0;
-
 		octr.startWrite(); //only write the things that have changed.
 
 		GCDeadPineData(); //this is probably a decent place to do this.
+
+		// Wait for PSX to have P1 data,
+		// which is set at octr->sleepControl
+		void FrameStall(); FrameStall();
 	}
 
 	printf("\n");
@@ -1370,17 +1322,14 @@ void usleep(__int64 usec)
 }
 #endif
 
-#pragma optimize("", off)
+int gGT_timer = 0;
 void FrameStall()
 {
 	// wait for next frame
 	//TODO: make this a submember of octr
-	ps1ptr<int> OCTRsleepControl = pBuf.at<int>(octr.get_address() + offsetof(OnlineCTR, sleepControl));
-	while ((*OCTRsleepControl.get()) == 0)
+	ps1ptr<int> OCTRsleepControl = pBuf.at<int>(0x80096b20 + 0x1cf8);
+	while (gGT_timer == (*OCTRsleepControl.get()))
 	{
-		usleep(1);
 		OCTRsleepControl.blockingRead();
 	}
-	(*octr.get()).sleepControl = (*OCTRsleepControl.get());
 }
-#pragma optimize("", on)

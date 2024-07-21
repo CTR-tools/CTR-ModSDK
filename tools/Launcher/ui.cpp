@@ -2,7 +2,6 @@
 #include "dataManager.h"
 #include "IconsFontAwesome6.h"
 
-#include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 #include <portable-file-dialogs.h>
 #include <filesystem>
@@ -17,6 +16,14 @@ UI::UI()
   m_updater.CheckForUpdates(m_status, m_version);
 }
 
+static int FilterUsernameChar(ImGuiInputTextCallbackData* data)
+{
+  if (data->EventChar >= 'a' && data->EventChar <= 'z') { return 0; }
+  if (data->EventChar >= 'A' && data->EventChar <= 'Z') { return 0; }
+  if (data->EventChar >= '0' && data->EventChar <= '9') { return 0; }
+  return 1;
+}
+
 void UI::Render(int width, int height)
 {
   ImGui::SetNextWindowPos(ImVec2(.0f, .0f), ImGuiCond_Always);
@@ -24,12 +31,21 @@ void UI::Render(int width, int height)
   ImGui::Begin("Main", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
   std::string icon = m_username.empty() ? ICON_FA_CIRCLE_XMARK : ICON_FA_CIRCLE_CHECK;
-  ImGui::InputText(("Username  " + icon).c_str(), &m_username);
-  ImGui::SetItemTooltip("Special characters:\n* = Cross Button\n< = Left Arrow\n@ = Circle\n[ = Square\n^ = Triangle\n& = Space");
+  ImGui::InputText(("Username  " + icon).c_str(), &m_username, ImGuiInputTextFlags_CallbackCharFilter, FilterUsernameChar);
   if (m_username.size() > 9) { m_username = m_username.substr(0, 9); }
 
+  static bool readBios = true;
   bool updateReady = true;
   updateReady &= SelectFile(m_biosPath, "Bios Path   ", {".bin"}, {"PSX Bios File", "*.bin"}, "Path to a PS1 NTSC-U bios.");
+  if (updateReady)
+  {
+    if (readBios)
+    {
+      if (m_updater.IsValidBios(m_biosPath)) { readBios = false; }
+      else { updateReady = false; }
+    }
+  }
+  else { readBios = true; }
   updateReady &= SelectFile(m_gamePath, "Game Path", {".bin", ".img", ".iso"}, {"Game Files", "*.bin *.img *.iso"}, "Path to the clean NTSC-U version of CTR");
   ImGui::Text(("Version: " + m_version).c_str());
 
@@ -63,12 +79,24 @@ void UI::Render(int width, int height)
 bool UI::SelectFile(std::string& str, const std::string& label, const std::vector<std::string>& ext, const std::vector<std::string>& filters, const std::string& tip)
 {
 
-  bool validPath = false;
-  for (const std::string& s : ext)
+  std::string lowercaseStr;
+  for (char c : str)
   {
-    if (str.ends_with(s) && std::filesystem::exists(str)) { validPath = true; break; }
+    if (c <= 'Z' && c >= 'A') { c = c - ('Z' - 'z'); };
+    lowercaseStr += c;
   }
-  std::string icon = validPath ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE_XMARK;
+
+  auto checkValidPath = [&]
+    {
+      if (std::filesystem::exists(str))
+      {
+        for (const std::string& s : ext)
+        {
+          if (lowercaseStr.ends_with(s)) { return true; }
+        }
+      }
+    };
+  std::string icon = checkValidPath() ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE_XMARK;
   ImGui::InputText((label + " " + icon).c_str(), &str);
   if (!tip.empty()) { ImGui::SetItemTooltip(tip.c_str()); }
   ImGui::SameLine();
@@ -78,7 +106,7 @@ bool UI::SelectFile(std::string& str, const std::string& label, const std::vecto
     if (selection.empty()) { return false; }
     str = selection.front();
   }
-  return validPath;
+  return checkValidPath();
 }
 
 bool UI::SelectFolder(std::string& str, const std::string& label, const std::string& tip)

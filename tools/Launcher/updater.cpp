@@ -23,6 +23,13 @@ bool Updater::IsBusy()
 	return m_routineRunning;
 }
 
+bool Updater::IsValidBios(const std::string& path)
+{
+  std::vector<char> v;
+  IO::ReadBinaryFile(v, path);
+  return v.size() == static_cast<size_t>(0x100000);
+}
+
 bool Updater::CheckForUpdates(std::string& status, const std::string& currVersion)
 {
   return StartRoutine([&]
@@ -44,6 +51,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
   return StartRoutine([&]
     {
       std::string version;
+      bool copyIni = false;
       if (!m_hasDuckstation)
       {
         status = "Downloading Duckstation...";
@@ -77,6 +85,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
         std::ofstream portableFile(duckPortable.c_str());
         portableFile.close();
         m_hasDuckstation = true;
+        copyIni = true;
       }
       status = "Checking for new updates...";
       if (m_updateAvailable || Requests::CheckUpdates(version))
@@ -87,7 +96,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
           std::string path = g_dataFolder + m_versionAvailable + "/";
           if (Requests::DownloadUpdates(path, status) && Patch::NewVersion(path, gamePath, status))
           {
-            std::filesystem::copy_file(GetIniPath_Version(currVersion), GetIniPath_Duck());
+            if (copyIni) { std::filesystem::copy_file(GetIniPath_Version(m_versionAvailable), GetIniPath_Duck()); }
             m_updated = true;
             m_updateAvailable = false;
             currVersion = m_versionAvailable;

@@ -9,7 +9,7 @@ const std::string g_duckExecutable = g_duckFolder + "duckstation-qt-x64-ReleaseL
 const std::string g_clientString = "client.zip";
 const std::string g_clientExecutable = "Client.exe";
 const std::string g_patchString = "ctr-u_Online30.xdelta";
-const std::string g_configString = "settings.ini";
+const std::string g_configString = "SCUS-94426.ini";
 
 const std::string GetClientPath(const std::string& version)
 {
@@ -29,7 +29,7 @@ const std::string GetIniPath_Version(const std::string& version)
 
 const std::string GetIniPath_Duck()
 {
-	return g_duckFolder + g_configString;
+	return g_duckFolder + "settings.ini";
 }
 
 DataManager g_dataManager;
