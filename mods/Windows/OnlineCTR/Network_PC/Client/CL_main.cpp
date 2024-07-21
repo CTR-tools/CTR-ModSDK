@@ -137,12 +137,18 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (r->version != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
+#ifdef PINE_DEBUG
+				printf("statechange %d LAUNCH_ERROR 7: version mismatch\n", octr.get()->stateChangeCounter++);
+#endif
 				return;
 			}
 
 			if (octr.get()->ver_psx != VERSION)
 			{
 				octr.get()->CurrState = LAUNCH_ERROR;
+#ifdef PINE_DEBUG
+				printf("statechange %d LAUNCH_ERROR 8: version mismatch\n", octr.get()->stateChangeCounter++);
+#endif
 				return;
 			}
 
@@ -240,6 +246,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// choose to get host menu or guest menu
 			octr.get()->CurrState = LOBBY_ASSIGN_ROLE;
+#ifdef PINE_DEBUG
+			printf("statechange %d LOBBY_ASSIGN_ROLE 9: new client\n", octr.get()->stateChangeCounter++);
+#endif
 			break;
 		}
 
@@ -290,6 +299,9 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			octr.get()->levelID = r->trackID;
 			octr.get()->CurrState = LOBBY_CHARACTER_PICK;
+#ifdef PINE_DEBUG
+			printf("statechange %d LOBBY_CHARACTER_PICK 10: track was selected\n", octr.get()->stateChangeCounter++);
+#endif
 			break;
 		}
 
@@ -318,12 +330,18 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// so screen updates with green names
 			octr.get()->CountPressX = 0;
 			octr.get()->CurrState = LOBBY_START_LOADING;
+#ifdef PINE_DEBUG
+			printf("statechange %d LOBBY_START_LOADING 11: game starting?\n", octr.get()->stateChangeCounter++);
+#endif
 			break;
 		}
 
 		case SG_STARTRACE:
 		{
 			octr.get()->CurrState = GAME_START_RACE;
+#ifdef PINE_DEBUG
+			printf("statechange %d GAME_START_RACE 12: start race\n", octr.get()->stateChangeCounter++);
+#endif
 			break;
 		}
 
@@ -513,6 +531,9 @@ void ProcessNewMessages()
 
 			// to go the lobby browser
 			octr.get()->CurrState = -1;
+#ifdef PINE_DEBUG
+			printf("statechange %d (-1) 13: enet disconnected\n", octr.get()->stateChangeCounter++);
+#endif
 			break;
 
 		default:
@@ -570,6 +591,9 @@ void DisconSELECT()
 
 		// to go the lobby browser
 		octr.get()->CurrState = -1;
+#ifdef PINE_DEBUG
+		printf("statechange %d (-1) 14: pressed SELECT\n", octr.get()->stateChangeCounter++);
+#endif
 		return;
 	}
 }
@@ -591,6 +615,9 @@ void StatePC_Launch_EnterPID()
 	StopAnimation();
 	printf("Client: Waiting to connect to a server...  ");
 	octr.get()->CurrState = LAUNCH_PICK_SERVER;
+#ifdef PINE_DEBUG
+	printf("statechange %d LAUNCH_PICK_SERVER 15: \n", octr.get()->stateChangeCounter++);
+#endif
 }
 
 void printUntilPeriod(const char* str)
@@ -855,7 +882,10 @@ void StatePC_Launch_PickServer()
 			if (retryCount >= MAX_RETRIES)
 			{
 				// to go the country select
-				octr.get()->CurrState = 1;
+				octr.get()->CurrState = LAUNCH_PICK_SERVER;
+#ifdef PINE_DEBUG
+				printf("statechange %d LAUNCH_PICK_SERVER 16: failed to connect to server due to exceeding max retries\n", octr.get()->stateChangeCounter++);
+#endif
 				octr.get()->boolClientBusy = 0;
 				//unlike the above call to blockingWrite() in this function for octr, I don't think this is
 				//necessary, but I'm doing it to be safe.
@@ -872,6 +902,9 @@ void StatePC_Launch_PickServer()
 
 	octr.get()->DriverID = -1;
 	octr.get()->CurrState = LAUNCH_PICK_ROOM;
+#ifdef PINE_DEBUG
+	printf("statechange %d LAUNCH_PICK_SERVER 17: failed to connect to server due to disconnect\n", octr.get()->stateChangeCounter++);
+#endif
 	octr.get()->boolClientBusy = 0;
 	//unlike the above call to blockingWrite() in this function for octr, I don't think this is
 	//necessary, but I'm doing it to be safe.
@@ -958,6 +991,9 @@ void StatePC_Lobby_HostTrackPick()
 	sendToHostReliable(&mt, sizeof(CG_MessageTrack));
 
 	(octr.get())->CurrState = LOBBY_CHARACTER_PICK;
+#ifdef PINE_DEBUG
+	printf("statechange %d LOBBY_CHARACTER_PICK 18: track selected\n", octr.get()->stateChangeCounter++);
+#endif
 }
 
 int prev_characterID = -1;
@@ -994,6 +1030,9 @@ void StatePC_Lobby_CharacterPick()
 	if (mc.boolLockedIn == 1)
 	{
 		octr.get()->CurrState = LOBBY_WAIT_FOR_LOADING;
+#ifdef PINE_DEBUG
+		printf("statechange %d LOBBY_WAIT_FOR_LOADING 19: waiting for game load\n", octr.get()->stateChangeCounter++);
+#endif
 	}
 }
 

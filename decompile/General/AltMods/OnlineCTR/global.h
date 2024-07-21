@@ -141,6 +141,10 @@ struct OnlineCTR
 	char lastWindowsClientSync;
 
 	char desiredFPS;
+
+#ifdef PINE_DEBUG
+	int stateChangeCounter;
+#endif
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
