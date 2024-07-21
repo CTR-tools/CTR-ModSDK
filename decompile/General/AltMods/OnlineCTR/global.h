@@ -67,8 +67,9 @@ typedef struct raceStats
 	int bestLap;
 } raceStats;
 
-// This can be 0x400 (1024) bytes max:
-// 0x8000C000 at 0x8000C400
+//https://github.com/mateusfavarin/psx-modding-toolchain/blob/main/docs/4_notes.md#retail-bioskernel:~:text=0x1900-,0x8000C000,-0x8000DF00
+// This can be 0x1F00 (7936) bytes max:
+// currently @ 0x8000C000
 struct OnlineCTR
 {
 	// 0x0
@@ -145,9 +146,27 @@ struct OnlineCTR
 #ifdef PINE_DEBUG
 	int stateChangeCounter;
 #endif
+
+	// read:
+	// {address, length, data}[] 8 gamepads 256, psxptr * 8 (32)
+	//union
+	//{
+	//	struct {
+
+	//	} LOBBY_HOST_TRACK_PICK;
+	//} read;
+	
+	// write:
+	// {address, length, data}[] 7 gamepads 256-32
+	//union
+	//{
+	//	struct {
+
+	//	} LOBBY_HOST_TRACK_PICK;
+	//} write;
 };
 
-STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
+STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x1F00, "Size of OnlineCTR must be lte ~8kb");
 
 #define MAX_LAPS 7
 #define CPS_PER_LAP 2
