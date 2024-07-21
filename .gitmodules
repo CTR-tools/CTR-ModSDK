@@ -19,9 +19,6 @@
 [submodule "externals/json"]
 	path = externals/json
 	url = https://github.com/nlohmann/json
-[submodule "externals/HTTPRequest"]
-	path = externals/HTTPRequest
-	url = https://github.com/elnormous/HTTPRequest
 [submodule "externals/cpp-httplib"]
 	path = externals/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib

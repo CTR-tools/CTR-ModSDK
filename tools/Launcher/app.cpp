@@ -122,11 +122,7 @@ void App::Run()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
-
-    int width, height;
-    SDL_GetWindowSize(m_window, &width, &height);
-    ui.Render(width, height);
-
+    Main();
     ImGui::Render();
     glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
     glClearColor(clearColor.x * clearColor.w, clearColor.y * clearColor.w, clearColor.z * clearColor.w, clearColor.w);
@@ -134,6 +130,13 @@ void App::Run()
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_SwapWindow(m_window);
   }
+}
+
+void App::Main()
+{
+  int width, height;
+  SDL_GetWindowSize(m_window, &width, &height);
+  ui.Render(width, height);
 }
 
 void App::Close()

@@ -1,10 +1,7 @@
 #include "ui.h"
 #include "dataManager.h"
 #include "IconsFontAwesome6.h"
-#include "requests.h"
-#include "patch.h"
 
-#include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
 #include <portable-file-dialogs.h>
 #include <filesystem>
@@ -12,54 +9,66 @@
 
 UI::UI()
 {
+  g_dataManager.BindData(&m_biosPath, DataType::STRING, "BiosPath");
   g_dataManager.BindData(&m_gamePath, DataType::STRING, "GamePath");
-  g_dataManager.BindData(&m_duckPath, DataType::STRING, "DuckPath");
   g_dataManager.BindData(&m_version, DataType::STRING, "GameVersion");
-  g_dataManager.BindData(&m_iniPath, DataType::STRING, "IniPath");
   g_dataManager.BindData(&m_username, DataType::STRING, "Username");
-  g_dataManager.BindData(&m_updated, DataType::BOOL, "Updated");
+  m_updater.CheckForUpdates(m_status, m_version);
+}
+
+static int FilterUsernameChar(ImGuiInputTextCallbackData* data)
+{
+  if (data->EventChar >= 'a' && data->EventChar <= 'z') { return 0; }
+  if (data->EventChar >= 'A' && data->EventChar <= 'Z') { return 0; }
+  if (data->EventChar >= '0' && data->EventChar <= '9') { return 0; }
+  return 1;
 }
 
 void UI::Render(int width, int height)
 {
-  static bool update = false;
-  if (update) { Update(); update = false; }
-
   ImGui::SetNextWindowPos(ImVec2(.0f, .0f), ImGuiCond_Always);
   ImGui::SetNextWindowSize(ImVec2(static_cast<float>(width), static_cast<float>(height)), ImGuiCond_Always);
   ImGui::Begin("Main", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
   std::string icon = m_username.empty() ? ICON_FA_CIRCLE_XMARK : ICON_FA_CIRCLE_CHECK;
-  ImGui::InputText(("Username  " + icon).c_str(), &m_username);
-  ImGui::SetItemTooltip("Special characters:\n* = Cross Button\n< = Left Arrow\n@ = Circle\n[ = Square\n^ = Triangle\n& = Space");
+  ImGui::InputText(("Username  " + icon).c_str(), &m_username, ImGuiInputTextFlags_CallbackCharFilter, FilterUsernameChar);
   if (m_username.size() > 9) { m_username = m_username.substr(0, 9); }
 
+  static bool readBios = true;
   bool updateReady = true;
-  updateReady &= SelectFile(m_gamePath, "Game Path", ".bin", {"Game Files", "*.bin"}, "Path to the clean NTSC-U version of CTR");
-  updateReady &= SelectFile(m_duckPath, "Duck Path ", ".exe", {"Executable Files", "*.exe"}, "Path to the duckstation executable");
-  updateReady &= SelectFolder(m_iniPath, "Ini Path      ", "Duckstation gamesettings folder.\nUsually in Documents/DuckStation/gamesettings");
+  updateReady &= SelectFile(m_biosPath, "Bios Path   ", {".bin"}, {"PSX Bios File", "*.bin"}, "Path to a PS1 NTSC-U bios.");
+  if (updateReady)
+  {
+    if (readBios)
+    {
+      if (m_updater.IsValidBios(m_biosPath)) { readBios = false; }
+      else { updateReady = false; }
+    }
+  }
+  else { readBios = true; }
+  updateReady &= SelectFile(m_gamePath, "Game Path", {".bin", ".img", ".iso"}, {"Game Files", "*.bin *.img *.iso"}, "Path to the clean NTSC-U version of CTR");
   ImGui::Text(("Version: " + m_version).c_str());
 
-  ImGui::BeginDisabled(!m_updated);
+  ImGui::BeginDisabled(m_updater.IsBusy() || !m_updater.IsUpdated());
   if (ImGui::Button("Launch Game"))
   {
-    std::string s_clientPath = GetClientPath(m_version);
-    std::string s_patchedPath = GetPatchedGamePath(m_version);
+    const std::string s_clientPath = GetClientPath(m_version);
+    const std::string s_patchedPath = GetPatchedGamePath(m_version);
     if (!std::filesystem::exists(s_clientPath)) { m_status = "Error: could not find " + s_clientPath; }
     else if (!std::filesystem::exists(s_patchedPath)) { m_status = "Error: could not find " + s_patchedPath; }
     else
     {
       g_dataManager.SaveData();
-      std::string clientCommand = "start /b \"\" \"" + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + "\" " + m_username + " &";
+      const std::string clientCommand = "start /b \"\" \"" + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + "\" " + m_username + " &";
       std::system(clientCommand.c_str());
-      const std::string duckCommand = "start /b \"\" \"" + m_duckPath + "\" \"" + s_patchedPath + "\" &";
+      const std::string duckCommand = "start /b \"\" \"" + g_duckExecutable + "\" \"" + s_patchedPath + "\" &";
       std::system(duckCommand.c_str());
     }
   }
   ImGui::EndDisabled();
   ImGui::SameLine();
-  ImGui::BeginDisabled(!updateReady);
-  if (ImGui::Button("Update")) { update = true; m_status = "Updating..."; }
+  ImGui::BeginDisabled(m_updater.IsBusy() || !updateReady);
+  if (ImGui::Button("Update")) { m_updater.Update(m_status, m_version, m_gamePath, m_biosPath); }
   ImGui::EndDisabled();
 
   if (!m_status.empty()) { ImGui::Text(m_status.c_str()); }
@@ -67,41 +76,27 @@ void UI::Render(int width, int height)
   ImGui::End();
 }
 
-void UI::Update()
+bool UI::SelectFile(std::string& str, const std::string& label, const std::vector<std::string>& ext, const std::vector<std::string>& filters, const std::string& tip)
 {
-  std::string version;
-  if (Requests::CheckUpdates(version))
-  {
-    if (version != m_version)
-    {
-      m_updated = false;
-      std::string path = g_dataFolder + version + "/";
-      if (Requests::DownloadUpdates(path))
-      {
-        if (Patch::NewVersion(path, m_gamePath))
-        {
-          std::string s_ini;
-          if (m_iniPath.back() == '/' || m_iniPath.back() == '\\') { s_ini = m_iniPath + g_configString; }
-          else { s_ini = m_iniPath + "/" + g_configString; }
-          if (std::filesystem::exists(s_ini)) { std::filesystem::remove(s_ini); }
-          std::filesystem::copy(path + g_configString, s_ini);
-          m_updated = true;
-          m_version = version;
-          m_status = "Update completed.";
-        }
-        else { m_status = "Error: could not decompress files"; }
-      }
-      else { m_status = "Error: could not establish connection"; }
-    }
-    else { m_status = "Already on the latest patch"; }
-  }
-  else { m_status = "Error: could not establish connection"; }
-}
 
-bool UI::SelectFile(std::string& str, const std::string& label, const std::string& ext, const std::vector<std::string>& filters, const std::string& tip)
-{
-  bool validPath = std::filesystem::exists(str) && str.ends_with(ext);
-  std::string icon = validPath ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE_XMARK;
+  std::string lowercaseStr;
+  for (char c : str)
+  {
+    if (c <= 'Z' && c >= 'A') { c = c - ('Z' - 'z'); };
+    lowercaseStr += c;
+  }
+
+  auto checkValidPath = [&]
+    {
+      if (std::filesystem::exists(str))
+      {
+        for (const std::string& s : ext)
+        {
+          if (lowercaseStr.ends_with(s)) { return true; }
+        }
+      }
+    };
+  std::string icon = checkValidPath() ? ICON_FA_CIRCLE_CHECK : ICON_FA_CIRCLE_XMARK;
   ImGui::InputText((label + " " + icon).c_str(), &str);
   if (!tip.empty()) { ImGui::SetItemTooltip(tip.c_str()); }
   ImGui::SameLine();
@@ -111,7 +106,7 @@ bool UI::SelectFile(std::string& str, const std::string& label, const std::strin
     if (selection.empty()) { return false; }
     str = selection.front();
   }
-  return validPath;
+  return checkValidPath();
 }
 
 bool UI::SelectFolder(std::string& str, const std::string& label, const std::string& tip)
