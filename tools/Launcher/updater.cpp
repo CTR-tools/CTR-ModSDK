@@ -27,7 +27,7 @@ bool Updater::IsValidBios(const std::string& path)
 {
   std::vector<char> v;
   IO::ReadBinaryFile(v, path);
-  return v.size() == static_cast<size_t>(0x100000);
+  return v.size() == static_cast<size_t>(0x80000);
 }
 
 bool Updater::CheckForUpdates(std::string& status, const std::string& currVersion)
@@ -36,7 +36,7 @@ bool Updater::CheckForUpdates(std::string& status, const std::string& currVersio
     {
       std::string version;
       Requests::CheckUpdates(version);
-      if (currVersion != version)
+      if (currVersion != version || !std::filesystem::exists(GetPatchedGamePath(currVersion)))
       {
         m_updateAvailable = true;
         m_versionAvailable = version;
@@ -57,7 +57,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
         status = "Downloading Duckstation...";
         std::filesystem::create_directory(g_duckFolder);
         const std::string duckArchive = "duckstation.zip";
-        if (!Requests::DownloadFile("github.com", "/stenzek/duckstation/releases/download/latest/duckstation-windows-x64-release.zip", g_duckFolder + duckArchive))
+        if (!Requests::DownloadFile("github.com", "/stenzek/duckstation/releases/download/preview/duckstation-windows-x64-release.zip", g_duckFolder + duckArchive))
         {
           status = "Error: could not download Duckstation.";
           return false;
@@ -90,7 +90,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
       status = "Checking for new updates...";
       if (m_updateAvailable || Requests::CheckUpdates(version))
       {
-        if (m_updateAvailable || version != currVersion)
+        if (m_updateAvailable || version != currVersion || !std::filesystem::exists(GetPatchedGamePath(currVersion)))
         {
           m_versionAvailable = m_updateAvailable ? m_versionAvailable : version;
           std::string path = g_dataFolder + m_versionAvailable + "/";
