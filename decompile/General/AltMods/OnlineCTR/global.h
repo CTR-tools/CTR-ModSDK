@@ -151,9 +151,76 @@ struct OnlineCTR
 	// {address, length, data}[] 8 gamepads 256, psxptr * 8 (32)
 	//union
 	//{
-	//	struct {
+	//	//note: some of these rely on the needs of SendEverything()
+	//	//Here are the needs of SendEverything():
+	//	/*
+	//	* psxPtr @ 0x8009900c
+	//	* xyz @ *psxPtr + 0x2d4-8-c
+	//	* angle @ *psxPtr + 0x39a
+	//	* wumpa @ *psxPtr + 0x30
+	//	* reserves @ *psxPtr + 0x3e2
+	//	* hold @ 0x80096804 + 0x10
+	//	*/
 
+	//	//these notes relate to what I read from each of the
+	//	//StatePC functions.
+	//	struct
+	//	{ //octr only
+	//	} LAUNCH_ENTER_PID;
+	//	struct
+	//	{
+	//		//octr
+	//		//gGT_levelID @ 0x80096b20 + 0x1a10
+	//		//sdata_Loading_stage @ 0x8008d0f8
+	//	} LAUNCH_PICK_SERVER;
+	//	struct
+	//	{ //octr only
+	//	} LAUNCH_PICK_ROOM;
+	//	struct
+	//	{ //nothing
+	//	} LAUNCH_ERROR;
+	//	struct
+	//	{ //nothing
+	//	} LOBBY_ASSIGN_ROLE;
+	//	struct
+	//	{
+	//		//octr
+	//		//numLapsV @ 0x80096b20 + 0x1d33
 	//	} LOBBY_HOST_TRACK_PICK;
+	//	struct
+	//	{ //nothing
+	//	} LOBBY_GUEST_TRACK_WAIT;
+	//	struct
+	//	{
+	//		//octr
+	//		//characterID @ 0x80086e84
+	//	} LOBBY_CHARACTER_PICK;
+	//	struct
+	//	{ //nothing
+	//	} LOBBY_WAIT_FOR_LOADING;
+	//	struct
+	//	{ //nothing
+	//	} LOBBY_START_LOADING;
+	//	struct
+	//	{
+	//		//gGT_gameMode1 @ 0x80096b20 + 0x0
+	//		// & needs of SendEverything()
+	//	} GAME_WAIT_FOR_RACE;
+	//	struct
+	//	{
+	//		//needs of SendEverything()
+	//		//#if event is active
+	//			//gGT_levelID @ 0x80096b20 + 0x1a10
+	//			//octr
+	//			//@ 0x80098028
+	//	} GAME_START_RACE;
+	//	struct
+	//	{
+	//		//psxPtr @ 0x8009900c
+	//		//courseTime @ *psxPtr + DRIVER_COURSE_OFFSET
+	//		//bestLapTime @ *psxPtr + DRIVER_BESTLAP_OFFSET
+	//		//octr
+	//	} GAME_END_RACE;
 	//} read;
 	
 	// write:
