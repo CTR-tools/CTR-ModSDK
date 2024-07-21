@@ -21,7 +21,9 @@ __pycache__/
 build/
 debug/
 x64/
-Launcher/
+data/
+packages/
+externals/
 *.log
 offset.txt
 comport.txt

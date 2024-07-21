@@ -6,14 +6,17 @@
 #include <string>
 
 extern const std::string g_dataFolder;
+extern const std::string g_duckFolder;
+extern const std::string g_duckExecutable;
 extern const std::string g_clientString;
 extern const std::string g_clientExecutable;
 extern const std::string g_patchString;
 extern const std::string g_configString;
 
-std::string GetClientPath(const std::string& version);
-std::string GetPatchedGamePath(const std::string& version);
-std::string GetConfigPath(const std::string& version);
+const std::string GetClientPath(const std::string& version);
+const std::string GetPatchedGamePath(const std::string& version);
+const std::string GetIniPath_Version(const std::string& version);
+const std::string GetIniPath_Duck();
 
 using json = nlohmann::json;
 

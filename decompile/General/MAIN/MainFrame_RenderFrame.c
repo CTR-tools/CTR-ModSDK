@@ -340,7 +340,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			if((gGT->renderFlags & 0x8000) != 0)
 			{
 				WindowBoxLines(gGT);
-				
+
 				WindowDivsionLines(gGT);
 			}
 			#endif
@@ -1483,7 +1483,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		struct Driver* d = gGT->drivers[i];
-		
+
 		// if race is over for driver
 		if((d->actionsFlagSet & 0x2000000) != 0)
 		{
@@ -1711,16 +1711,10 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 		if(ReadyToFlip(gGT))
 		{
-
-#ifdef USE_ONLINE
-			if(boolFirstFrame)
-				octr->gpuSubmitTooLate = 1;
-#endif
-			
 			// quit, end of stall
 			return;
 		}
-		
+
 #ifdef USE_ONLINE
 		// gpu submission is not too late,
 		// we got to this while() loop before

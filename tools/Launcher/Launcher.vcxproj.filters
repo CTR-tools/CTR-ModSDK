@@ -75,6 +75,9 @@
     <ClCompile Include="third_party\xdelta3\xdelta3.c">
       <Filter>xdelta3</Filter>
     </ClCompile>
+    <ClCompile Include="updater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="updater.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
