@@ -185,6 +185,14 @@ internalPineApiID pineSendsCount = 0, pineRecvsCount = 0;
 /// </summary>
 std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineObjs{};
 
+std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineReadObjs{};
+std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineWriteObjs{};
+
+internalPineApiID pineSendRead();
+internalPineApiID pineSendWrite();
+internalPineApiID pineRecvRead();
+internalPineApiID pineRecvWrite();
+
 internalPineApiID pineSend(DSPINESend sendObj)
 { //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
 	//tcp send

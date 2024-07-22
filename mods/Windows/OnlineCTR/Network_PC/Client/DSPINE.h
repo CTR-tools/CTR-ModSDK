@@ -162,6 +162,8 @@ struct DSPINEWrite64Recv
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
 };
 
+//////////////////////////////////
+
 struct DSPINEWriteSendHeader
 {
 	unsigned int packetSize;

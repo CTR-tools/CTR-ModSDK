@@ -34,12 +34,52 @@ void uninitSocket(SOCKET* socket);
 //declare functions initSocket() and uninitSocket() using the equivalent posix data type for SOCKET
 //Note: the remainder of this file likely shouldn't need to be modified for the sake of posix sockets.
 #endif
+//struct DSPINESendRecvPair
+//{
+//	DSPINESend sendData;
+//	DSPINERecv recvData;
+//	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
+//};
+
+struct DSPINEReadSendRecvPair
+{
+	DSPINEReadSend sendData;
+	DSPINEReadRecvHeader recvData;
+	//smart ptr for data
+	DSPINEReadSendRecvPair(DSPINEReadSend s, DSPINEReadRecvHeader r) : sendData(s), recvData(r) {}
+};
+
+struct DSPINEWriteSendRecvPair
+{
+	DSPINEWriteSendHeader sendData;
+	DSPINEWriteRecv recvData;
+	DSPINEWriteSendRecvPair(DSPINEWriteSendHeader s, DSPINEWriteRecv r) : sendData(s), recvData(r) {}
+};
+
 struct DSPINESendRecvPair
 {
-	DSPINESend sendData;
-	DSPINERecv recvData;
-	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
+	enum mode
+	{
+		READ,
+		WRITE
+	};
+	union u
+	{
+		u() {}
+		DSPINEReadSendRecvPair read;
+		DSPINEWriteSendRecvPair write;
+	} pair;
+	mode mode;
+	DSPINESendRecvPair(DSPINEReadSendRecvPair readPair) : mode(READ)
+	{
+		pair.read = readPair;
+	}
+	DSPINESendRecvPair(DSPINEWriteSendRecvPair writePair) : mode(WRITE)
+	{
+		pair.write = writePair;
+	}
 };
+
 // this function needs to be called repeatedly, occasionally to clean up dead pine data.
 void GCDeadPineData();
 typedef unsigned long long pineApiID;
