@@ -63,6 +63,8 @@
 #define DSPINEMsgUUID 0xD           /**< Returns the game UUID. */
 #define DSPINEMsgGameVersion 0xE    /**< Returns the game verion. */
 #define DSPINEMsgStatus 0xF         /**< Returns the emulator status. */
+#define DSPINEMsgReadBytes = 0x20,    /**< Reads range of bytes from memory. */
+#define DSPINEMsgWriteBytes = 0x21,   /**< Writes range of bytes to memory. */
 #define DSPINEMsgUnimplemented 0xFF /**< Unimplemented IPC message. */
 
 // Only struct impl for Read64, Write8/16/32/64, no more were needed at time of writing.
@@ -158,6 +160,36 @@ struct DSPINEWrite64Recv
 {
 	unsigned int packetSize = sizeof(*this); //should be sizeof(DSPINEWrite64Recv) (5)
 	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
+};
+
+struct DSPINEWriteSendHeader
+{
+	unsigned int packetSize;
+	unsigned char DSPINEMsgIPC;
+	unsigned int address;
+	unsigned int length;
+	//followed up by [length] bytes
+};
+
+struct DSPINEWriteRecv
+{
+	unsigned int packetSize;
+	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
+};
+
+struct DSPINEReadSend
+{
+	unsigned int packetSize;
+	unsigned char DSPINEMsgIPC;
+	unsigned int address;
+	unsigned int length;
+};
+
+struct DSPINEReadRecvHeader
+{
+	unsigned int packetSize;
+	unsigned char DSPINEMsgReplyCode; //0x00 if success, 0xFF if failure
+	//followed up by [length] bytes
 };
 
 //unions for send/recv
