@@ -2175,7 +2175,7 @@ struct Data
 	// 80085D0C
 	// used in the same function as
 	// MetaDataSaveLoad, but usage is unknown
-	short unk_80085d0c_LoadSave[4];
+	short spinOffset_LoadSave[4];
 
 	// 80085d14
 	short lngIndex_LoadSave[4];

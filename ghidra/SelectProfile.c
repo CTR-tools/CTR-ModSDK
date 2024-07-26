@@ -397,7 +397,10 @@ void FUN_800485cc(uint param_1)
   psVar13 = &DAT_80085c64;
 
   uVar12 = 0;
+  
+  // = 0x8009A9A0
   piVar10 = (int *)DAT_8008d8f4[1];
+  
   pbVar9 = &DAT_80085c70;
   piVar11 = piVar10 + 2;
   do {
@@ -459,6 +462,7 @@ void FUN_800485cc(uint param_1)
           *(undefined2 *)(iVar5 + 0x1e) = uVar3;
           *(undefined2 *)(iVar5 + 0x1c) = uVar3;
 
+		  // rot (x,y,z)
           *(undefined2 *)((int)piVar11 + -2) = 0;
           *(undefined2 *)(piVar11 + -1) = 0;
           *(undefined2 *)piVar11 =

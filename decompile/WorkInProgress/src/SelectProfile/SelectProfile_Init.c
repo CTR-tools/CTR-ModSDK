@@ -89,9 +89,9 @@ void SelectProfile_Init(u_int flags)
             inst->scale[2] = scale;
             inst->scale[1] = scale;
             inst->scale[0] = scale;
-            load->inst->next = 0;
-            load->inst->prev = 0;
-            load->inst->name = sdata->unk_80085d0c_LoadSave[(n % 3) >> 1]; // ??
+            load->rot[0] = 0;
+            load->rot[1] = 0;
+            load->rot[2] = sdata->spinOffset_LoadSave[(n % 3) >> 1]; // ??
             
             // set rotation (5 direction vectors)
             *(int *)&inst->matrix.m[0][0] = 0x1000;

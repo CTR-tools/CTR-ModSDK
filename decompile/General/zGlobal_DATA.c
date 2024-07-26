@@ -4335,7 +4335,7 @@ struct Data data =
 		{0x63, 0x400, 0xF368, 0x99F, -0x2d8, 0xDC, 0xA6, 0x0},
 	},
 
-	.unk_80085d0c_LoadSave =
+	.spinOffset_LoadSave =
 	{0x155, 0xF55, 0, 0},
 
 	.lngIndex_LoadSave =
