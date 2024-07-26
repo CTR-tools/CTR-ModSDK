@@ -4104,6 +4104,7 @@ struct sData
 	
 	// ---
 	// 8008d904 - timerSaveComplete
+	// 8008d906 - oskSaveNameType
 	// --
 	
 	char data10_bbb[0x10];
