@@ -446,15 +446,15 @@ void FUN_800471c4(undefined2 param_1)
 void FUN_800471e8(void)
 
 {
-  // if data has not been wiped to "default state"
-  // before reading memcard, then wipe it now
+  // boolAdvProfilesChecked
   if (DAT_8008d968 == 0)
   {
-	// 8008d474 is ptr to memcard data
 	// GAMEPROG_InitFullMemcard
+	// 8008d474 is ptr to memcard data,
+	// reset and reload with new memcard
     FUN_80026c24(PTR_DAT_8008d474);
 
-	// dont do this a second time
+	// boolAdvProfilesChecked
     DAT_8008d968 = 1;
   }
 
@@ -773,7 +773,8 @@ LAB_800479bc:
 			
             DAT_8008d95c = 0;
             
-			// reset gameProg (again?)
+			// boolAdvProfilesChecked
+			// reload with new memory card
 			DAT_8008d968 = 0;
 			
 			// RefreshCard_SetScreenText(MC_SCREEN_LOADING)

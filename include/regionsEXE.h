@@ -4212,8 +4212,8 @@ struct sData
 	// 8008d964
 	int unk8008d964;
 
-	// 8008d968 boolWipeMemcard (why?)
-	int unk8008d968;
+	// 8008d968
+	int boolAdvProfilesChecked;
 
 	// 8008d96c
 	int advProfileIndex;
