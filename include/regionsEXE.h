@@ -4251,7 +4251,7 @@ struct sData
 	int demoModeIndex;
 
 	// 8008d984
-	int unkBool1111;
+	int boolError;
 
 	// 8008d988
 	// root counter
