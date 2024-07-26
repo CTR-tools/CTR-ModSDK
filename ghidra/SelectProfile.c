@@ -2046,14 +2046,24 @@ LAB_800499e4:
         }
       }
     }
-    else {
+    else 
+	{
       DAT_8008d900 = 0;
-      if (((DAT_8008d8fa == 0) ||
-          (((DAT_8008d964 == 0 || (DAT_8008d8fc != 0)) || (DAT_8008d8fe != 0)))) ||
-         (DAT_8008d904 == 0)) {
+      
+	  if (
+			
+			((DAT_8008d8fa == 0) ||
+			(((DAT_8008d964 == 0 || 
+			(DAT_8008d8fc != 0)) || 
+			(DAT_8008d8fe != 0)))) ||
+			(DAT_8008d904 == 0)
+		) 
+	  {
+		// mcScreenText
         iVar10 = (int)(short)uVar14 * 4;
         uVar19 = *(ushort *)(iVar10 + -0x7ff7a4fc); // 0x80085B04
-        if (((int)(short)uVar14 == 9) && (DAT_8008d8f8 == 0x40)) {
+        
+		if (((int)(short)uVar14 == 9) && (DAT_8008d8f8 == 0x40)) {
           uVar19 = 0xffff;
         }
         iVar23 = (uint)uVar19 << 0x10;
