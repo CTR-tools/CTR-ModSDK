@@ -1122,6 +1122,7 @@ void FUN_800490c4(int param_1)
 	  // clear gamepad input (for menus)
       FUN_80046404();
 
+	  // menuOverwriteGhost.rowSelected
 	  DAT_80085d76 = DAT_80085d4a;
     }
     goto LAB_800499e4;
