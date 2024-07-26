@@ -609,7 +609,7 @@ LAB_80047544:
     bVar1 = true;
     break;
 	
-  // MC_SCREEN_ERROR_READ
+  // MC_SCREEN_ERROR_TIMEOUT
   // MC_SCREEN_NULL
   // MC_SCREEN_ERROR_NODATA
   case 7:
@@ -1066,7 +1066,7 @@ LAB_80047984:
 	  // TIMEOUT (no card)
       FUN_800471e8();
 	  
-	  // MC_SCREEN_ERROR_READ
+	  // MC_SCREEN_ERROR_TIMEOUT
       local_1c = 7;
     }
   }

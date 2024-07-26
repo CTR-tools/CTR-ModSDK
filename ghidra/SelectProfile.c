@@ -1448,7 +1448,7 @@ LAB_80049624:
       if (
 			(DAT_8008d902 == 0) && 
 			
-			// MC_SCREEN_ERROR_READ
+			// MC_SCREEN_ERROR_TIMEOUT
 			(DAT_8008d47a == 7)
 		) 
 	  {
@@ -1508,7 +1508,7 @@ LAB_80049624:
 	// if you are handling adventure data
 	else 
 	{
-	  // MC_SCREEN_ERROR_READ
+	  // MC_SCREEN_ERROR_TIMEOUT
       if (DAT_8008d47a == 7) {
         DAT_8008d8fa = 1;
         DAT_8008d8fc = 1;
@@ -1612,7 +1612,7 @@ LAB_800499e4:
   
   if (
 		(
-			// MC_SCREEN_ERROR_READ
+			// MC_SCREEN_ERROR_TIMEOUT
 			(DAT_8008d47a == 7) && 
 			
 			(DAT_8008d8fc == 0)
@@ -1840,7 +1840,7 @@ LAB_800499e4:
         }
       }
 	  
-	  // MC_SCREEN_ERROR_READ
+	  // MC_SCREEN_ERROR_TIMEOUT
       if ((uVar14 == 7) && (DAT_8008d902 != 0)) {
         bVar1 = true;
       }
