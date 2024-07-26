@@ -1516,6 +1516,7 @@ LAB_80049624:
       }
 
 	  // 8008d474 is ptr to memcard data
+	  // memcard advProfile[rowSelected] HubLevYouSavedOn
       if (-1 < *(short *)(PTR_DAT_8008d474 + (int)*(short *)(param_1 + 0x1a) * 0x50 + 0x2e))
 	  {
 		// GAMEPROG_SyncGameAndCard
