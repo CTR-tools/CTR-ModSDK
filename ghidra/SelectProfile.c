@@ -805,7 +805,9 @@ void FUN_80048e2c(undefined4 param_1)
   // SelectProfile_Init
   FUN_800485cc((int)(short)DAT_80085b9c);
 
+  // menuFourAdvProfiles.rowSelected
   DAT_80085ba2 = DAT_8008d73c;
+  
   DAT_8008d8fa = 0;
   return;
 }
