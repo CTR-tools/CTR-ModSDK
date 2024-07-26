@@ -4101,6 +4101,11 @@ struct sData
 	// 8008dcac -- EurRetail
 	// 80090d20 -- JpnRetail
 	#if BUILD >= SepReview && BUILD <= EurRetail
+	
+	// ---
+	// 8008d904 - timerSaveComplete
+	// --
+	
 	char data10_bbb[0x10];
 	#elif BUILD == JpnRetail
 	char data14_bbb[0x14];

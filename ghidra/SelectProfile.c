@@ -788,6 +788,8 @@ void FUN_80048e2c(undefined4 param_1)
   DAT_8008d8fe = 0;
   DAT_8008d900 = 0;
   DAT_8008d902 = 0;
+  
+  // timerSaveComplete
   DAT_8008d904 = 0;
 
   // SelectProfile_UnMuteCursors
@@ -1727,6 +1729,8 @@ LAB_800499e4:
       DAT_8008d928 = 1;
       DAT_8008d8fa = 1;
     }
+	
+	// timerSaveComplete
     DAT_8008d904 = 0x3c;
   }
   
@@ -2078,6 +2082,8 @@ LAB_800499e4:
 			(((DAT_8008d964 == 0 || 
 			(DAT_8008d8fc != 0)) || 
 			(DAT_8008d8fe != 0)))) ||
+			
+			// timerSaveComplete
 			(DAT_8008d904 == 0)
 		) 
 	  {
@@ -2209,6 +2215,7 @@ LAB_800499e4:
     }
   }
   
+  // timerSaveComplete
   sVar22 = DAT_8008d904;
   
   if (
@@ -2239,6 +2246,7 @@ LAB_800499e4:
 						(DAT_8008d8fe != 0)
 					) ||
 					(
+						// timerSaveComplete
 						sVar22 = DAT_8008d904 + -1, 
 						DAT_8008d904 == 0
 					)
@@ -2285,6 +2293,8 @@ LAB_800499e4:
 		// Get from the Adventure Profile that you are loading
         *(int *)(PTR_DAT_8008d2ac + 0x1eb0) = (int)DAT_8008fbd2;
         DAT_80085b76 = 3;
+		
+		// timerSaveComplete
         sVar22 = DAT_8008d904;
       }
       else
@@ -2293,6 +2303,8 @@ LAB_800499e4:
         DAT_8008d924 = &DAT_80085b5c;
 
         DAT_80085b76 = 3;
+		
+		// timerSaveComplete
         sVar22 = DAT_8008d904;
       }
     }
@@ -2438,11 +2450,13 @@ LAB_800499e4:
 	  // change active Menu to QueueLoadTrack
       DAT_8008d924 = (undefined *)FUN_80043c04();
 
+	  // timerSaveComplete
 	  sVar22 = DAT_8008d904;
     }
   }
-                    // WARNING: Read-only address (ram,0x8008fbce) is written
-                    // WARNING: Read-only address (ram,0x8008fbd2) is written
+
+  // timerSaveComplete
   DAT_8008d904 = sVar22;
+  
   return;
 }
