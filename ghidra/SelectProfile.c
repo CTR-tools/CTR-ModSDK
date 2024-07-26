@@ -927,6 +927,7 @@ uint FUN_80048f0c(int param_1,short param_2,uint param_3)
 
         uVar5 = 1;
 
+		// MC_SCREEN_WARNING_UNFORMATTED
         if (DAT_8008d47a == 1)
 		{
 		  // back to the first row
@@ -1032,9 +1033,13 @@ void FUN_800490c4(int param_1)
 
   bVar2 = false;
   local_40 = 0;
+  
+  // MC_SCREEN_WARNING_NOCARD
   if (DAT_8008d47a == 0) {
     DAT_8008d900 = 0;
   }
+  
+  // NO CARD, UNFORMATTED, or FORMATTING
   if (DAT_8008d47a < 2) {
     DAT_8008d8fa = 0;
   }
@@ -1181,10 +1186,15 @@ LAB_800495a0:
 LAB_800495ac:
     iVar10 = iVar10 << 0x10;
   }
-  else {
-    if (DAT_8008d8f8 != 0x40) {
-      uVar14 = 0;
-      if (
+  else 
+  {
+    if (DAT_8008d8f8 != 0x40) 
+	{
+      
+	  uVar14 = 0;
+      
+	  if (
+			// NO CARD, UNFORMATTED, or FORMATTING
 			(DAT_8008d47a < 2) ||
 			(
 				(
@@ -1198,15 +1208,20 @@ LAB_800495ac:
 	  {
         uVar14 = 1;
       }
-      if (DAT_8008d47a < 2) {
+      
+	  // NO CARD, UNFORMATTED, or FORMATTING
+	  if (DAT_8008d47a < 2) {
         uVar14 = uVar14 | 2;
       }
+	  
       iVar10 = 4;
       iVar23 = (int)(short)uVar14;
       goto LAB_800495a0;
     }
-    if (DAT_8008d47a == 0) {
-
+	
+	// MC_SCREEN_WARNING_NOCARD
+    if (DAT_8008d47a == 0) 
+	{
 	  // If you press Cross or Circle
       if ((DAT_8009a990 & 0x50) != 0)
 	  {
@@ -1229,7 +1244,10 @@ LAB_800495ac:
       }
       goto LAB_800495ac;
     }
-    if (DAT_8008d47a == 1) {
+    
+	// MC_SCREEN_WARNING_UNFORMATTED
+	if (DAT_8008d47a == 1) 
+	{
       iVar10 = 0;
 
 	  // If you press Circle
@@ -1247,7 +1265,9 @@ LAB_800495ac:
         iVar10 = 0;
       }
     }
-    else {
+    
+	else 
+	{
       if (
 			(
 				(
@@ -1260,7 +1280,7 @@ LAB_800495ac:
 				(
 					iVar10 = 0,
 
-					// if you are not saving data
+					// if not MC_START_SAVE_MAIN
 					DAT_8008d978 != 1
 				)
 			) &&
@@ -1332,11 +1352,15 @@ LAB_800495b0:
     DAT_8008d8fc = 1;
     goto LAB_800499e4;
   }
-  if (DAT_8008d47a == 0) {
+  
+  // MC_SCREEN_WARNING_NOCARD
+  if (DAT_8008d47a == 0) 
+  {
     bVar1 = false;
 
-	// if you are saving data
-    if (DAT_8008d978 == 1) {
+	// MC_START_SAVE_MAIN
+    if (DAT_8008d978 == 1) 
+	{
       DAT_8008d8fa = DAT_8008d978;
       DAT_8008d8fe = DAT_8008d978;
       goto LAB_80049624;
@@ -1354,6 +1378,7 @@ LAB_800495b0:
 LAB_80049634:
     if (
 			(
+				// if not MC_SCREEN_WARNING_UNFORMATTED
 				(DAT_8008d47a != 1) &&
 
 				// if not enough room on memcard
@@ -1365,11 +1390,16 @@ LAB_80049634:
       bVar1 = false;
     }
   }
-  else {
+  
+  else 
+  {
 LAB_80049624:
     if (DAT_8008d8f8 != 0x30) goto LAB_80049634;
   }
+  
   if (!bVar1) goto LAB_800499e4;
+  
+  // MC_SCREEN_WARNING_UNFORMATTED
   if (DAT_8008d47a == 1) 
   {
 	// (MC_START_LOAD_MAIN)
@@ -1377,6 +1407,7 @@ LAB_80049624:
     
 	goto LAB_800499e4;
   }
+  
   if ((DAT_8008d95c == 0) && (DAT_8008d928 == 0)) goto LAB_800499e4;
 
   // if you are saving data
@@ -1396,8 +1427,15 @@ LAB_80049624:
     }
 
 	// if you are handling adventure data
-    else {
-      if ((DAT_8008d902 == 0) && (DAT_8008d47a == 7)) {
+    else 
+	{
+      if (
+			(DAT_8008d902 == 0) && 
+			
+			// MC_SCREEN_ERROR_READ
+			(DAT_8008d47a == 7)
+		) 
+	  {
         DAT_8008d902 = 1;
         goto LAB_800499e4;
       }
@@ -1447,7 +1485,9 @@ LAB_80049624:
     }
 
 	// if you are handling adventure data
-	else {
+	else 
+	{
+	  // MC_SCREEN_ERROR_READ
       if (DAT_8008d47a == 7) {
         DAT_8008d8fa = 1;
         DAT_8008d8fc = 1;
@@ -1545,8 +1585,20 @@ LAB_80049624:
 LAB_800499e0:
     DAT_8008d8fa = 1;
   }
+
 LAB_800499e4:
-  if (((DAT_8008d47a == 7) && (DAT_8008d8fc == 0)) && (DAT_8008d8fe == 0)) {
+  
+  if (
+		(
+			// MC_SCREEN_ERROR_READ
+			(DAT_8008d47a == 7) && 
+			
+			(DAT_8008d8fc == 0)
+		) && 
+		
+		(DAT_8008d8fe == 0)
+	) 
+  {
     DAT_8008d8fa = 0;
     DAT_8008d900 = 0;
   }
@@ -1670,12 +1722,26 @@ LAB_800499e4:
     }
     DAT_8008d904 = 0x3c;
   }
-  if (*(short *)(param_1 + 0x1e) == 1) {
+  
+  if (*(short *)(param_1 + 0x1e) == 1) 
+  {
     bVar1 = false;
-    if (((DAT_8008d8fa == 0) && (DAT_8008d95c != 0)) && ((DAT_8008d928 != 0 || (DAT_8008d47a == 8)))
-       ) {
+    if (
+			(
+				(DAT_8008d8fa == 0) && 
+				(DAT_8008d95c != 0)
+			) && 
+			(
+				(DAT_8008d928 != 0 || 
+				
+				// MC_SCREEN_NULL
+				(DAT_8008d47a == 8))
+			)
+       ) 
+	{
       bVar1 = true;
     }
+	
     if (
 		(
 			// If you are loading data
@@ -1684,7 +1750,21 @@ LAB_800499e4:
 			// if you are handling time trial ghosts
 			(DAT_8008d8f8 == 0x30)
 		) &&
-       (((DAT_8008d47a == 9 || (DAT_8008d47a == 0)) && ((uVar24 & 0xffff) != 0)))) {
+		(
+			(
+				// MC_SCREEN_ERROR_NODATA
+				(DAT_8008d47a == 9 || 
+				
+				// MC_SCREEN_WARNING_NOCARD
+				(DAT_8008d47a == 0)) 
+				&&
+				
+				// rowSelected?
+				((uVar24 & 0xffff) != 0)
+			)
+		)
+	   ) 
+	{
       bVar1 = true;
     }
     uVar14 = DAT_8008d47a;
@@ -1692,9 +1772,14 @@ LAB_800499e4:
 	// If you are saving data
     if (DAT_8008d978 == 1)
 	{
-      if ((uint)DAT_8008d47a - 8 < 2) {
+	  // MC_SCREEN_NULL or MC_SCREEN_ERROR_NODATA
+      if ((uint)DAT_8008d47a - 8 < 2) 
+	  {
         bVar1 = false;
-        if (bVar2) {
+		
+        if (bVar2) 
+		{
+		  // MC_SCREEN_SAVING
           uVar14 = 3;
         }
 
@@ -1706,8 +1791,11 @@ LAB_800499e4:
             bVar1 = true;
 
 			// if not enough room to save ghost
-			if (((int)DAT_8008d8ac < 0x3e00) && (local_48 == 0)) {
+			if (((int)DAT_8008d8ac < 0x3e00) && (local_48 == 0)) 
+			{
               bVar1 = false;
+			  
+			  // MC_SCREEN_ERROR_FULL
               uVar14 = 6;
             }
           }
@@ -1718,13 +1806,17 @@ LAB_800499e4:
             bVar1 = true;
 
 			// if not enough room to save profile
-			if ((DAT_8008d8ac < 0x1680) && (DAT_8008d928 == 0)) {
+			if ((DAT_8008d8ac < 0x1680) && (DAT_8008d928 == 0)) 
+			{
+			  // MC_SCREEN_ERROR_FULL
               uVar14 = 6;
               bVar1 = false;
             }
           }
         }
       }
+	  
+	  // MC_SCREEN_ERROR_READ
       if ((uVar14 == 7) && (DAT_8008d902 != 0)) {
         bVar1 = true;
       }
