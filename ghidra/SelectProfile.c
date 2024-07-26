@@ -1132,7 +1132,8 @@ void FUN_800490c4(int param_1)
 	  // if enough room remains on memory card to save ghost
       uVar24 = (uint)((int)DAT_8008d8ac < 0x3e00) ^ 1;
 
-	  // bool is enough room left
+	  // canChooseEmptySlot
+	  // is there room to save another
 	  local_40 = (short)uVar24;
 
 	  // DAT_8009aa5c = number of ghosts saved
@@ -1147,13 +1148,17 @@ void FUN_800490c4(int param_1)
 		// assume only 7 are saved
         uVar24 = 7;
 
-		// can't save another
+		// canChooseEmptySlot
+		// can not save another
         local_40 = 0;
       }
     }
 
 	// if you are loading
-    else {
+    else 
+	{
+	  // canChooseEmptySlot
+	  // can load empty ghost
       local_40 = 1;
 
 	  // number of ghsots saved, plus 1,
@@ -1892,11 +1897,16 @@ LAB_800499e4:
 		  // pointer to first profile
           puVar20 = &DAT_8009aa60;
 
+		  // numGhosts + canChooseEmptySlot
           local_38 = DAT_8009aa5c + local_40;
           iVar10 = 0;
-          if (0 < (int)((uint)local_38 << 0x10)) {
+		  
+		  // Loop through all menu options
+          if (0 < (int)((uint)local_38 << 0x10)) 
+		  {
             iVar23 = (int)(short)uVar24;
-            do {
+            do 
+			{
               if (uVar21 << 0x10 == (uint)local_48 << 0x10) {
                 puVar20 = (undefined *)0x0;
               }
@@ -1928,11 +1938,21 @@ LAB_800499e4:
               }
 
 			  // Draw Profile
-              FUN_80048a30(puVar20,iVar8,((int)sVar22 + 6 + (iVar9 - iVar12)) * 0x10000 >> 0x10,
-                           (uint)(sVar5 == *(short *)(param_1 + 0x1a)),(int)sVar5,uVar24,
+              FUN_80048a30(
+				puVar20,
+				iVar8,
+				((int)sVar22 + 6 + (iVar9 - iVar12)) * 0x10000 >> 0x10,
+				
+				// bool flashing highlight
+				(uint)(sVar5 == *(short *)(param_1 + 0x1a)),
+				
+				(int)sVar5,
+				uVar24,
 
-						   // If you are loading
-						   (uint)(DAT_8008d978 == 0),uVar18);
+				// If you are loading
+				(uint)(DAT_8008d978 == 0),
+				
+				uVar18);
 
 			  uVar21 = uVar21 + 1;
               if ((int)sVar5 == iVar23) break;
