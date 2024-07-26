@@ -4128,7 +4128,7 @@ struct sData
 	// 8008c870 -- JpnTrial
 	// 8008dccc -- EurRetail
 	// 80090d44 -- JpnRetail
-	int unk_saveGame_related;
+	int boolSaveCupProgress;
 
 	// 8008d91c
 	int advCharSelectIndex_prev;

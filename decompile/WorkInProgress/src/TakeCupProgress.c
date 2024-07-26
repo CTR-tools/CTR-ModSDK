@@ -29,7 +29,7 @@ void DECOMP_TakeCupProgress_MenuProc(struct RectMenu* menu)
         // choose "yes"
         if (row == 0)
         {
-            sdata->unk_saveGame_related = 1;
+            sdata->boolSaveCupProgress = 1;
 
             // Set Load/Save to "Slot Selected" mode
             SelectProfile_ToggleMode(0x41);

@@ -936,7 +936,9 @@ LAB_80035098:
             if (sVar2 == 0) {
               return;
             }
-            if (sVar2 == 1) {
+            if (sVar2 == 1) 
+			{
+			  // boolSaveCupProgress
               DAT_8008d918 = 0;
 
 			  // Set Load/Save to "Slot selected" mode

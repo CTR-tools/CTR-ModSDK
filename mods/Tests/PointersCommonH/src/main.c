@@ -57,7 +57,7 @@ struct x y[] =
 	TEST16(&sdata_static.lngStrings),
 	TEST16(&sdata_static.ptrLoadSaveObj),
 	TEST16(&sdata_static.ptrActiveMenu),
-	TEST16(&sdata_static.unk_saveGame_related),
+	TEST16(&sdata_static.boolSaveCupProgress),
 	TEST16(&sdata_static.trackSelBackup),
 	TEST16(&sdata_static.AnyPlayerTap),
 	TEST16(&sdata_static.AnyPlayerHold),

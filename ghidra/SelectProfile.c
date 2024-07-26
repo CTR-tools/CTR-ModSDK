@@ -1233,6 +1233,7 @@ LAB_800495ac:
 		// OtherFX_Play
         FUN_80028468(1,1);
 
+		// boolSaveCupProgress
         if (DAT_8008d918 == 0)
 		{
 		  // MainGameEnd_SoloRaceSaveHighScore
@@ -1297,6 +1298,7 @@ LAB_800495ac:
 			)
 		)
 	{
+		// boolSaveCupProgress
         if (DAT_8008d918 == 0)
 		{
 		  // MainGameEnd_SoloRaceSaveHighScore
@@ -2375,6 +2377,8 @@ LAB_800499e4:
 
 		  // SelectProfile_Destroy
           FUN_800488e0();
+		  
+		  // boolSaveCupProgress
           if (DAT_8008d918 == 0) {
             *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0xf6ffffff
             ;

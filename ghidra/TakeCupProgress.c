@@ -37,9 +37,15 @@ void FUN_8004b258(int param_1)
                    0xffff8000);
     }
   }
-  else {
+  else 
+  {
+	// rowSelected
     sVar1 = *(short *)(param_1 + 0x1a);
-    if (sVar1 == 0) {
+    
+	// pick YES
+	if (sVar1 == 0) 
+	{
+	  // boolSaveCupProgress
       DAT_8008d918 = 1;
 
 	  // Set Load/Save to "Slot Selected" mode
@@ -48,7 +54,9 @@ void FUN_8004b258(int param_1)
 	  // Change active Menu to Warning
       DAT_8008d924 = &DAT_80085be0;
     }
-    else {
+	
+    else 
+	{
       if (sVar1 < 1) {
         if (sVar1 != -1) {
           return;
@@ -59,6 +67,8 @@ void FUN_8004b258(int param_1)
           return;
         }
       }
+	  
+	  // pick NO
 
 	  // Make the menu disappear
       FUN_800469c8();

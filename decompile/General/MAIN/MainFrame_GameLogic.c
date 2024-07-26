@@ -527,7 +527,7 @@ LAB_80035098:
 				// if SAVE
 				if (sVar2 == 1)
 				{
-					*(u_short*)&sdata->unk_saveGame_related = 0;
+					sdata->boolSaveCupProgress = 0;
 
 					SelectProfile_ToggleMode(0x41);
 
