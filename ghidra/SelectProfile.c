@@ -1452,8 +1452,13 @@ LAB_80049624:
       }
 
 	  // 8008d474 is ptr to memcard data
-      if ((-1 < *(short *)(PTR_DAT_8008d474 + (int)*(short *)(param_1 + 0x1a) * 0x50 + 0x2e)) &&
-         ((int)*(short *)(param_1 + 0x1a) != (int)DAT_8008d96c)) {
+      if (
+			// memcard advProfile[rowSelected] HubLevYouSavedOn
+			(-1 < *(short *)(PTR_DAT_8008d474 + (int)*(short *)(param_1 + 0x1a) * 0x50 + 0x2e)) &&
+			
+			// rowSelected != advProfileIndex
+			((int)*(short *)(param_1 + 0x1a) != (int)DAT_8008d96c)
+		) {
         DAT_80085d4a = 1;
         DAT_80085d76 = 1;
         DAT_8008d900 = 1;
