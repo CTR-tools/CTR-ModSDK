@@ -78,7 +78,10 @@ void ThreadFunc(struct Thread* t)
 	}
 
     // count frames that the client didn't update the game
-    if(isIdle==1 && octr->CurrState > LAUNCH_ENTER_PID){
+	//last condition of this IF statement is for people who have super slow computers, so slow in fact,
+	//that all 16/32ms per frame is fully spent on the emulator, meaning, there's no room for PINE to run,
+	//causing desync. By checking if we're loading, we can "ignore" lag during level loading.
+    if((isIdle == 1 && octr->CurrState > LAUNCH_ENTER_PID) && (octr->CurrState != GAME_WAIT_FOR_RACE)) {
         octr->frames_unsynced++;
     } else {
         octr->frames_unsynced = 0;
