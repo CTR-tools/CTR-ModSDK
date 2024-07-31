@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <thread>
+#include <process.h>
 
 const char* exitReasons[] =
 {
