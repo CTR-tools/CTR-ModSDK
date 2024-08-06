@@ -45,7 +45,6 @@ struct DSPINEReadSendRecvPair
 {
 	DSPINEReadSend sendData;
 	DSPINEReadRecvHeader recvData;
-	//smart ptr for data
 	DSPINEReadSendRecvPair(DSPINEReadSend s, DSPINEReadRecvHeader r) : sendData(s), recvData(r) {}
 };
 
@@ -58,6 +57,7 @@ struct DSPINEWriteSendRecvPair
 
 struct DSPINESendRecvPair
 {
+
 	enum mode
 	{
 		READ,
@@ -70,13 +70,17 @@ struct DSPINESendRecvPair
 		DSPINEWriteSendRecvPair write;
 	} pair;
 	mode mode;
+	bool recvPresent = false;
+	std::unique_ptr<char, void(*)(char*)> datBuf;
 	DSPINESendRecvPair(DSPINEReadSendRecvPair readPair) : mode(READ)
-	{
+	{ // <--- fix this error.
 		pair.read = readPair;
+		datBuf = std::unique_ptr<char, void(*)(char*)>{ new char[readPair.sendData.length], [](char* a){ delete[] a; } };
 	}
 	DSPINESendRecvPair(DSPINEWriteSendRecvPair writePair) : mode(WRITE)
-	{
+	{ // <--- fix this error.
 		pair.write = writePair;
+		datBuf = std::unique_ptr<char, void(*)(char*)>{ new char[writePair.sendData.length], [](char* a) { delete[] a; } };
 	}
 };
 

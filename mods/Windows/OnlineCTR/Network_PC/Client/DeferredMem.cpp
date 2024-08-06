@@ -183,42 +183,87 @@ internalPineApiID pineSendsCount = 0, pineRecvsCount = 0;
 /// just the "send" portion of the DSPINESendRecvPair if the bool is false, and the value contains
 /// both portions of the DSPINESendRecvPair if the bool is true.
 /// </summary>
-std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineObjs{};
+std::map<internalPineApiID, DSPINESendRecvPair> pineObjs{};
 
-std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineReadObjs{};
-std::map<internalPineApiID, std::pair<DSPINESendRecvPair, bool>> pineWriteObjs{};
+//std::map<internalPineApiID, std::pair<DSPINEReadSendRecvPair, bool>> pineReadObjs{};
+//std::map<internalPineApiID, std::pair<DSPINEWriteSendRecvPair, bool>> pineWriteObjs{};
 
-internalPineApiID pineSendRead();
-internalPineApiID pineSendWrite();
 internalPineApiID pineRecvRead();
 internalPineApiID pineRecvWrite();
 
-internalPineApiID pineSend(DSPINESend sendObj)
+internalPineApiID pineSendRead(DSPINEReadSend sendRead)
 { //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
-	//tcp send
-	#if _WIN64 //windows
-	//critical region (syncronize access pls)
-	{
-		//need to add it first because the second we send (right after this) the recv thread might try
-		//to add it *before* we've even made the entry for it, which would be bad.
-		std::lock_guard<std::mutex> um{ pineObjsMutex };
-		pineObjs.insert(std::pair<internalPineApiID, std::pair<DSPINESendRecvPair, bool>>{ pineSendsCount, std::pair<DSPINESendRecvPair, bool>{ DSPINESendRecvPair{ sendObj, DSPINERecv{} }, false } });
-	}
-	//end critical region
-	int res = send(dspineSocket, (const char*)&sendObj, sendObj.shared_header.packetSize, 0);
-	if (res != sendObj.shared_header.packetSize)
-	{
-		printf("send() failed!\n");
-		if (res == SOCKET_ERROR)
-			exit_execv(6);
-		else
-			exit_execv(7); //partial send???
-	}
-	#else //assume posix
-	#error todo...
-	//posix non-blocking send
-	#endif
-	return pineSendsCount++;
+#if _WIN64 //windows
+//critical region (syncronize access pls)
+	 {
+			//need to add it first because the second we send (right after this) the recv thread might try
+			//to add it *before* we've even made the entry for it, which would be bad.
+			std::lock_guard<std::mutex> um{ pineObjsMutex };
+			pineObjs.insert(
+				 std::pair<internalPineApiID, DSPINESendRecvPair> { //internal pine request
+						pineSendsCount, //the id for the request
+						DSPINESendRecvPair{
+							 DSPINEReadSendRecvPair { //in this case, we're creating a read request
+									sendRead, //the read info
+									DSPINEReadRecvHeader{} //an empty recv header
+							 }
+						}
+				 });
+	 }
+	 //end critical region
+	 int res = send(dspineSocket, (const char*)&sendRead, sizeof(DSPINEReadSend), 0);
+	 if (res != sizeof(DSPINEReadSend))
+	 {
+			printf("send() failed!\n");
+			if (res == SOCKET_ERROR)
+				 exit_execv(6);
+			else
+				 exit_execv(7); //partial send???
+	 }
+   #else //assume posix
+   #error todo...
+   //posix non-blocking send
+   #endif
+	 return pineSendsCount++;
+}
+
+internalPineApiID pineSendWrite(DSPINEWriteSendHeader sendWrite, char* buf)
+{ //could be on another thread, but since tcp send is non-blocking it doesn't really matter.
+#if _WIN64 //windows
+//critical region (syncronize access pls)
+	 {
+			//need to add it first because the second we send (right after this) the recv thread might try
+			//to add it *before* we've even made the entry for it, which would be bad.
+			DSPINESendRecvPair srp = DSPINESendRecvPair{
+							 DSPINEWriteSendRecvPair { //in this case, we're creating a write request
+									sendWrite, //the write info
+									DSPINEWriteRecv{} //an empty recv header
+							 }
+						};
+			memcpy(srp.datBuf.get(), buf, srp.pair.write.sendData.length);
+			std::lock_guard<std::mutex> um{ pineObjsMutex };
+			pineObjs.insert(
+				 std::pair<internalPineApiID, DSPINESendRecvPair> { //internal pine request
+						pineSendsCount, //the id for the request
+						srp
+				 });
+	 }
+	 //end critical region
+	 int res = send(dspineSocket, (const char*)&sendWrite, sizeof(DSPINEReadSend), 0);
+	 if (res != sizeof(DSPINEReadSend))
+	 {
+			printf("send() failed!\n");
+			if (res == SOCKET_ERROR)
+				 exit_execv(6);
+			else
+				 exit_execv(7); //partial send???
+	 }
+   #else //assume posix
+   #error todo...
+   //posix non-blocking send
+   #endif
+	 return pineSendsCount++;
+
 }
 
 std::condition_variable waitPineDataCV;
