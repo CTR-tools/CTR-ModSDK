@@ -34,12 +34,56 @@ void uninitSocket(SOCKET* socket);
 //declare functions initSocket() and uninitSocket() using the equivalent posix data type for SOCKET
 //Note: the remainder of this file likely shouldn't need to be modified for the sake of posix sockets.
 #endif
+//struct DSPINESendRecvPair
+//{
+//	DSPINESend sendData;
+//	DSPINERecv recvData;
+//	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
+//};
+
+struct DSPINEReadSendRecvPair
+{
+	DSPINEReadSend sendData;
+	DSPINEReadRecvHeader recvData;
+	DSPINEReadSendRecvPair(DSPINEReadSend s, DSPINEReadRecvHeader r) : sendData(s), recvData(r) {}
+};
+
+struct DSPINEWriteSendRecvPair
+{
+	DSPINEWriteSendHeader sendData;
+	DSPINEWriteRecv recvData;
+	DSPINEWriteSendRecvPair(DSPINEWriteSendHeader s, DSPINEWriteRecv r) : sendData(s), recvData(r) {}
+};
+
 struct DSPINESendRecvPair
 {
-	DSPINESend sendData;
-	DSPINERecv recvData;
-	DSPINESendRecvPair(DSPINESend s, DSPINERecv r) : sendData(s), recvData(r) {}
+
+	enum mode
+	{
+		READ,
+		WRITE
+	};
+	union u
+	{
+		u() {}
+		DSPINEReadSendRecvPair read;
+		DSPINEWriteSendRecvPair write;
+	} pair;
+	mode mode;
+	bool recvPresent = false;
+	std::unique_ptr<char, void(*)(char*)> datBuf;
+	DSPINESendRecvPair(DSPINEReadSendRecvPair readPair) : mode(READ)
+	{ // <--- fix this error.
+		pair.read = readPair;
+		datBuf = std::unique_ptr<char, void(*)(char*)>{ new char[readPair.sendData.length], [](char* a){ delete[] a; } };
+	}
+	DSPINESendRecvPair(DSPINEWriteSendRecvPair writePair) : mode(WRITE)
+	{ // <--- fix this error.
+		pair.write = writePair;
+		datBuf = std::unique_ptr<char, void(*)(char*)>{ new char[writePair.sendData.length], [](char* a) { delete[] a; } };
+	}
 };
+
 // this function needs to be called repeatedly, occasionally to clean up dead pine data.
 void GCDeadPineData();
 typedef unsigned long long pineApiID;
