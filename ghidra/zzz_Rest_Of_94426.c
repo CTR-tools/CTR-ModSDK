@@ -7677,8 +7677,11 @@ LAB_80071480:
                 puVar12 = &LAB_8006cdec; // reference to FUN_8006cdec(void), called later in this function indirectly. underwater or in mud something and near clip??
               }
             }
-            *(BADSPACEBASE **)param_3 = register0x00000074;
+            
+			// overwrite RBI pointer from QueueDraw?
+			*(BADSPACEBASE **)param_3 = register0x00000074;
             *(undefined **)(param_3 + 4) = unaff_s8;
+			
             puVar29 = (undefined *)((uint)puVar29 | 0x40);
 
 			// function to render the instance

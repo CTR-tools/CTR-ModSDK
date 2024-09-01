@@ -463,10 +463,10 @@ struct InstDrawPerPlayer
 	struct ModelHeader* mh;
 
 	// 0xe4
-	int unkE4;
-	int unkE8;
-	int unkEC;
-	int unkF0;
+	int unkE4; // ptrOT + offset
+	int unkE8; // ptrOT + offset
+	int unkEC; // drawFunc1
+	int unkF0; // drawFunc2
 
 	// 0xec - render function
 	// 0xf0 - func (for what?)
