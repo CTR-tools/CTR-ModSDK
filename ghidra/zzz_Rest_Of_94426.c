@@ -6972,29 +6972,52 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
   *(undefined4 *)(in_at + 0x40) = unaff_retaddr;
 
   // $gp temporarily overwritten
-  if (((*(uint *)(in_at + 0x50) & $gp) != 0) &&
-     (psVar8 = *(short **)(in_at + 0x58), psVar6 != (short *)0x0)) {
+  if (
+		((*(uint *)(in_at + 0x50) & $gp) != 0) &&
+		(
+			// pb from last draw
+			psVar8 = *(short **)(in_at + 0x58), 
+			
+			// curr pb != 0
+			psVar6 != (short *)0x0
+		)
+	 ) 
+  {
+	// save pb for next draw
     *(short **)(in_at + 0x58) = psVar6;
-    if (psVar8 != psVar6) {
+    
+	// if pushBuffer is used for the first time,
+	// and is not reused from the previous Draw
+	if (psVar8 != psVar6) 
+	{
       FUN_8006c600();
 
-	  // copy pushBuffer position to instance
+	  // copy pushBuffer data to scratchpad
+	  
+	  // pb->pos
       sVar1 = psVar6[1];
       sVar2 = psVar6[2];
       *(int *)(in_at + 0x44) = (int)*psVar6;
       *(int *)(in_at + 0x48) = (int)sVar1;
       *(int *)(in_at + 0x4c) = (int)sVar2;
 
+	  // RECT Y
 	  sVar1 = psVar6[0x11];
+	  
+	  // pb->distanceToScreen_PREV
       uVar13 = *(undefined4 *)(psVar6 + 0xc);
-      uVar18 = *(undefined4 *)(psVar6 + 0x7a);
-      *(undefined2 *)(in_at + 0x3c) = (short)extraout_v1;
+      
+	  // pb->ptrOT
+	  uVar18 = *(undefined4 *)(psVar6 + 0x7a);
+      
+	  *(undefined2 *)(in_at + 0x3c) = (short)extraout_v1;
       *(short *)(in_at + 0x3e) = sVar1;
 	  
       gte_ldOFX(extraout_v1 << 0xf);
       gte_ldOFY((int)sVar1 << 0xf);
       gte_ldH(uVar13);
       
+	  // ptrOT
 	  *(undefined4 *)(in_at + 0x30) = uVar18;
     }
     puVar29 = &_gp_4;
