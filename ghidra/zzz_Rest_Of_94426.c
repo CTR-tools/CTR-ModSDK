@@ -7417,16 +7417,20 @@ code_r0x80070e84:
           }
         }
         
+		// Somehow? Check if instance should draw or skip
 		if (((-1 < (int)uVar15) && (-1 < iVar9)) &&
            ((-1 < iVar27 - extraout_v1_02 &&
             (((int)(uVar21 - *(ushort *)(in_at + 0x3c)) < 1 &&
-             ((int)(iVar19 - (uint)*(ushort *)(in_at + 0x3e)) < 1)))))) {
+             ((int)(iVar19 - (uint)*(ushort *)(in_at + 0x3e)) < 1)))))) 
+		{
           iVar3 = (iVar14 >> 5) + -2;
           iVar9 = (iVar27 >> 5) + 1;
           *(short *)(unaff_s8 + 0xdc) = (short)iVar3;
           *(short *)(unaff_s8 + 0xde) = (short)iVar9;
           puVar28 = *(uint **)(in_at + 0x34);
           puVar11 = puVar28 + (iVar9 - iVar3);
+		  
+		  // Somehow? Check if instance should draw or skip
           if (0 < *(int *)(in_at + 0x38) - (int)(puVar11 + 1)) {
             *(uint **)(in_at + 0x34) = puVar11 + 1;
             iVar14 = *(int *)(in_at + 0x8c) >> 6;
@@ -7470,10 +7474,12 @@ code_r0x80070e84:
 			  
               *puVar28 = 0;
             }
+			
             while (puVar17 != puVar11) {
               puVar17[1] = (uint)puVar17 & 0xffffff;
               puVar17 = puVar17 + 1;
             }
+			
             *(uint **)(unaff_s8 + 0xe4) = puVar28 + iVar3 * 0x3fffffff;
             *(uint **)(unaff_s8 + 0xe8) = puVar28 + iVar3 * 0x3fffffff;
 			
@@ -7498,8 +7504,15 @@ LAB_80071478:
             }
 			
             puVar11 = puVar28 + (iVar9 - iVar3);
-            if (*(int *)(in_at + 0x38) - (int)(puVar11 + 1) < 1) goto LAB_80071514;
-            *(uint **)(in_at + 0x34) = puVar11 + 1;
+			
+			// Somehow? Check if instance should draw or skip
+            if (*(int *)(in_at + 0x38) - (int)(puVar11 + 1) < 1)
+			{
+				// end function
+				goto LAB_80071514;
+			}
+            
+			*(uint **)(in_at + 0x34) = puVar11 + 1;
             iVar9 = *(int *)(in_at + 0xc0) + (*(int *)(in_at + 0x8c) >> 6);
             iVar14 = iVar9 * 4;
 			
@@ -7515,18 +7528,22 @@ LAB_80071478:
                 iVar14 = 0xffc;
               }
             }
+
             puVar17 = (uint *)(*(int *)(in_at + 0x30) + iVar14);
             uVar15 = *puVar17;
             *puVar17 = (uint)puVar11 & 0xffffff;
+			
             *puVar28 = uVar15;
             puVar17 = puVar28;
-            while (puVar17 != puVar11) {
+            
+			while (puVar17 != puVar11) {
               puVar17[1] = (uint)puVar17 & 0xffffff;
               puVar17 = puVar17 + 1;
             }
+			
             uVar15 = *(uint *)(in_at + 0x68);
 			
-			// no split-line and not relflective
+			// no split-line and not reflective
             if (((uint)puVar29 & 0x6000) == 0) goto LAB_80071478;
             
 			uVar21 = *(uint *)(in_at + 0x6c);
@@ -7616,6 +7633,8 @@ LAB_80071480:
             *(undefined4 *)(unaff_s8 + 0xd0) = uVar18;
           }
         }
+		
+		// end function
         goto LAB_80071514;
       }
 
