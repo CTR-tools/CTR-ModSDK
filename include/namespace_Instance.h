@@ -457,14 +457,14 @@ struct InstDrawPerPlayer
 	int lodIndex;
 
     // 0xdc
-    short unkDC[2];
+    short depthOffset[2];
 
 	// 0xe0 - pointer to LOD ModelHeader
 	struct ModelHeader* mh;
 
 	// 0xe4
-	int unkE4; // ptrOT + offset
-	int unkE8; // ptrOT + offset
+	int unkE4; // ptrOT + depthOffset
+	int unkE8; // ptrOT + depthOffset
 	int unkEC; // drawFunc1
 	int unkF0; // drawFunc2
 
