@@ -1139,7 +1139,10 @@ code_r0x8006a52c:
   in_t3 = *(uint *)(in_at + 0x10c);
   gte_rtpt_b();
   in_t9 = puVar21 + 1;
-  do {
+  
+  do 
+  {
+	// texIndex
     uVar11 = in_t3 & 0x1ff;
     iVar12 = uVar11 * 4;
     if (uVar11 != 0) {
@@ -1148,7 +1151,10 @@ code_r0x8006a52c:
     iVar7 = *(int *)(in_at + 0x1c);
     uVar11 = gte_stSXY2();
     iVar10 = gte_stFLAG();
-    if (-1 < iVar10 << 0xd) {
+	
+    if (-1 < iVar10 << 0xd) 
+	{
+	  // DRAW_CMD_FLAG_CULLING
       if ((int)(in_t3 << 3) < 0) 
 	  {
         gte_nclip_b();
@@ -2015,7 +2021,10 @@ code_r0x8006b030:
   *(undefined4 *)(in_at + 0xc4) = uVar17;
   *(short *)(in_at + 0xce) = *(short *)(in_at + 0x44) - (short)((uint)iVar14 >> 0x10);
   in_t9 = puVar21 + 1;
-  do {
+  
+  do 
+  {
+	// texIndex
     uVar11 = in_t3 & 0x1ff;
     iVar14 = uVar11 * 4;
     if (uVar11 != 0) {
@@ -2024,8 +2033,12 @@ code_r0x8006b030:
     iVar8 = *(int *)(in_at + 0x1c);
     uVar11 = gte_stSXY2();
     iVar10 = gte_stFLAG();
-    if (-1 < iVar10 << 0xd) {
-      if ((int)(in_t3 << 3) < 0) {
+	
+    if (-1 < iVar10 << 0xd) 
+	{
+	  // DRAW_CMD_FLAG_CULLING
+      if ((int)(in_t3 << 3) < 0) 
+	  {
         gte_nclip_b();
         uVar15 = gte_stMAC0();
         if ((uVar15 == 0) ||
@@ -2309,7 +2322,10 @@ void FUN_8006bbc0(void)
   gte_ldVXY1(iVar12 - (uVar22 & 0xffff0000) | uVar22 & 0xffff);
   gte_ldVXY2(iVar12 - (uVar24 & 0xffff0000) | uVar24 & 0xffff);
   gte_rtpt();
-  do {
+  
+  do 
+  {
+	// texIndex
     iVar12 = ((uint)puVar27 & 0x1ff) * 4;
     if (((uint)puVar27 & 0x1ff) != 0) {
       iVar12 = *(int *)((int)register0x00000074 + iVar12 + -4);
@@ -2320,8 +2336,12 @@ void FUN_8006bbc0(void)
     uVar22 = gte_stSXY2();
     iVar26 = gte_stFLAG();
     uVar17 = uVar9;
-    if (-1 < iVar26 << 0xd) {
-      if ((int)puVar27 << 3 < 0) {
+	
+    if (-1 < iVar26 << 0xd) 
+	{
+	  // DRAW_CMD_FLAG_CULLING
+      if ((int)puVar27 << 3 < 0) 
+	  {
          gte_nclip_b();
          uVar18 = gte_stMAC0();
          if ((uVar18 == 0) ||
@@ -2365,8 +2385,12 @@ LAB_8006bd64:
     iVar26 = gte_stFLAG();
     uVar9 = (int)puVar27 << 2;
     uVar22 = uVar21;
-    if (-1 < iVar26 << 0xd) {
-      if ((int)puVar27 << 3 < 0) {
+	
+    if (-1 < iVar26 << 0xd) 
+	{
+	  // DRAW_CMD_FLAG_CULLING
+      if ((int)puVar27 << 3 < 0) 
+	  {
          gte_nclip_b();
          uVar19 = gte_stMAC0();
          uVar9 = (int)*(short *)(in_at + 0x24) ^ uVar9;
@@ -2396,6 +2420,7 @@ LAB_8006be24:
       uVar9 = (int)puVar27 << 1;
       if (uVar17 != 0) break;
       uVar16 = (uint)puVar27 >> 7 & 0x1fc;
+	  
       if ((int)puVar27 << 0x1f < 0) {
          uVar16 = *(uint *)(uVar16 + in_at + 0x140);
       }
@@ -3420,7 +3445,10 @@ void FUN_8006c9c4(void)
   gte_ldVXY1(iVar14 - (uVar17 & 0xffff0000) | uVar17 & 0xffff);
   gte_ldVXY2(iVar14 - (uVar19 & 0xffff0000) | uVar19 & 0xffff);
   gte_rtpt();
-  do {
+  
+  do 
+  {
+	// texIndex
     uVar8 = in_t3 & 0x1ff;
     iVar14 = uVar8 * 4;
     if (uVar8 != 0) {
@@ -3435,8 +3463,12 @@ void FUN_8006c9c4(void)
     iVar14 = *(int *)(in_at + 0x1c);
     uVar8 = gte_stSXY2();
     iVar11 = gte_stFLAG();
-    if (-1 < iVar11 << 0xd) {
-      if ((int)(in_t3 << 3) < 0) {
+    
+	if (-1 < iVar11 << 0xd) 
+	{
+	  // DRAW_CMD_FLAG_CULLING
+      if ((int)(in_t3 << 3) < 0) 
+	  {
          gte_nclip_b();
          uVar19 = gte_stMAC0();
          if ((uVar19 == 0) ||
@@ -3446,7 +3478,8 @@ void FUN_8006c9c4(void)
       else {
          uVar17 = gte_stSXY0();
       }
-      uVar19 = gte_stSXY1();
+      
+	  uVar19 = gte_stSXY1();
       gte_avsz3_b();
       uVar8 = ~(uVar17 - iVar14 | uVar19 - iVar14 | uVar8 - iVar14) | uVar17 & uVar8 & uVar19;
       if ((-1 < (int)uVar8) && (gte_stMAC0(), -1 < (int)(uVar8 << 0x10))) {
