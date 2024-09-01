@@ -6773,6 +6773,7 @@ FUN_80070720(int param_1,int param_2,undefined4 param_3,undefined4 param_4,int p
 
   } while (0 < iVar3);
 
+  // otmem curr
   *(undefined4 *)(param_2 + 0xc) = *(undefined4 *)(iVar1 + 0x34);
 
   return param_3;
