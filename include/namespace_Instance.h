@@ -22,7 +22,7 @@ enum InstanceFlags
 	//
 	//
 	//
-	//
+	DRAW_SUCCESSFUL = 0x40,
 	HIDE_MODEL = 0x80,
 	TILEVIEW_EXISTS = 0x100,
 	PIXEL_LOD = 0x200,

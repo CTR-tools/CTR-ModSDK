@@ -7682,6 +7682,7 @@ LAB_80071480:
 			*(BADSPACEBASE **)param_3 = register0x00000074;
             *(undefined **)(param_3 + 4) = unaff_s8;
 			
+			// DRAW_SUCCESSFUL
             puVar29 = (undefined *)((uint)puVar29 | 0x40);
 
 			// function to render the instance
