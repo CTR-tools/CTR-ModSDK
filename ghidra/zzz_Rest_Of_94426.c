@@ -7462,9 +7462,12 @@ code_r0x80070e84:
                   iVar19 = 0xffc;
                 }
               }
-              *(uint **)(psVar6 + 0x7a) = puVar28;
+              
+			  // pushBuffer offset 0xF4, 0xF8, 0xFC
+			  *(uint **)(psVar6 + 0x7a) = puVar28;
               *(uint **)(psVar6 + 0x7c) = puVar11;
               *(int *)(psVar6 + 0x7e) = iVar19;
+			  
               *puVar28 = 0;
             }
             while (puVar17 != puVar11) {
@@ -7499,10 +7502,15 @@ LAB_80071478:
             *(uint **)(in_at + 0x34) = puVar11 + 1;
             iVar9 = *(int *)(in_at + 0xc0) + (*(int *)(in_at + 0x8c) >> 6);
             iVar14 = iVar9 * 4;
+			
+			// Depth can't be less than ot[0]
             if (iVar9 < 0) {
               iVar14 = 0;
             }
-            else {
+			
+            else 
+			{
+			  // Depth can't be more than ot[0x3ff]
               if (0 < iVar14 + -0xffc) {
                 iVar14 = 0xffc;
               }
