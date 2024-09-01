@@ -7014,6 +7014,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 	  // pb->ptrOT
 	  uVar18 = *(undefined4 *)(psVar6 + 0x7a);
       
+	  // viewport XY
 	  *(undefined2 *)(in_at + 0x3c) = (short)extraout_v1;
       *(short *)(in_at + 0x3e) = sVar1;
 	  
