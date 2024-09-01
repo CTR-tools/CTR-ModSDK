@@ -1371,7 +1371,8 @@ void FUN_8006a8e0(void)
     }
     
 // from ghidra:
-//	iVar9 = *(int *)(in_at + 0x34);
+// OTMem curr
+//	  iVar9 = *(int *)(in_at + 0x34);
 //    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
 //    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
 
@@ -6812,6 +6813,8 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
 
   iVar1 = 0x1f800000;
   DAT_1f800020 = &_gp_4;
+  
+  // OTMem curr
   DAT_1f800034 = *(undefined4 *)(param_2 + 0xc);
 
   // put numPlyrCurrGame on scratchpad
@@ -6874,6 +6877,7 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
 
   } while (0 < iVar2);
 
+  // OTMem curr
   *(undefined4 *)(param_2 + 0xc) = *(undefined4 *)(iVar1 + 0x34);
   return param_3;
 }
@@ -7457,6 +7461,8 @@ code_r0x80070e84:
           iVar9 = (iVar27 >> 5) + 1;
           *(short *)(unaff_s8 + 0xdc) = (short)iVar3;
           *(short *)(unaff_s8 + 0xde) = (short)iVar9;
+		  
+		  // OTMem curr
           puVar28 = *(uint **)(in_at + 0x34);
           puVar11 = puVar28 + (iVar9 - iVar3);
 		  
@@ -7519,19 +7525,28 @@ LAB_80071478:
 			  // RenderBucket_DrawFunc_Normal
               puVar5 = &FUN_8006a52c;
 
+			  // Skip reflection
               goto LAB_80071480;
             }
 			
 			// not reflective, just split-line
-            if (((uint)puVar29 & 0x4000) == 0) {
+            if (((uint)puVar29 & 0x4000) == 0) 
+			{
+			  // OTMem curr
               puVar28 = *(uint **)(in_at + 0x34);
+			  
+			  // if[...] skip reflection
               if ((*(uint *)(in_at + 0x68) | *(uint *)(in_at + 0x6c)) == 0) goto LAB_80071478;
             }
 			
 			// reflective
-            else {
+            else 
+			{
+			  // OTMem curr
               puVar28 = *(uint **)(in_at + 0x34);
             }
+			
+			// ======= Draw Reflection ==========
 			
             puVar11 = puVar28 + (iVar9 - iVar3);
 			
