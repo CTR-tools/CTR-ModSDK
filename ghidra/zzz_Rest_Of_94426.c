@@ -7591,6 +7591,7 @@ LAB_80071478:
               }
             }
 
+			// ptrOT + depth
             puVar17 = (uint *)(*(int *)(in_at + 0x30) + iVar14);
             uVar15 = *puVar17;
             *puVar17 = (uint)puVar11 & 0xffffff;
