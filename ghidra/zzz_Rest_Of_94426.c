@@ -6691,12 +6691,16 @@ FUN_80070720(int param_1,int param_2,undefined4 param_3,undefined4 param_4,int p
 
   iVar1 = 0x1f800000;
   DAT_1f800020 = &_gp_4;
+  
+  // OTMem curr
   DAT_1f800034 = *(undefined4 *)(param_2 + 0xc);
 
   // number of players
   DAT_1f80005c = param_5;
 
   _DAT_1f800090 = param_6;
+  
+  // OTMem end
   DAT_1f800038 = *(int *)(param_2 + 8) + -4;
 
   // increment to last player's CameraDC
