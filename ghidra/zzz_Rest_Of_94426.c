@@ -7467,9 +7467,16 @@ code_r0x80070e84:
           puVar11 = puVar28 + (iVar9 - iVar3);
 		  
 		  // Somehow? Check if instance should draw or skip
-          if (0 < *(int *)(in_at + 0x38) - (int)(puVar11 + 1)) {
+          if (0 < *(int *)(in_at + 0x38) - (int)(puVar11 + 1)) 
+		  {
+			// ===== Draw Base Model =====
+			// (not reflection or split yet)
+			  
+			// OTMem curr
             *(uint **)(in_at + 0x34) = puVar11 + 1;
-            iVar14 = *(int *)(in_at + 0x8c) >> 6;
+            
+			// depth
+			iVar14 = *(int *)(in_at + 0x8c) >> 6;
             puVar17 = puVar28;
 			
 			// not connected to PushBuffer
@@ -7491,13 +7498,20 @@ code_r0x80070e84:
             }
 			
 			// connected to PushBuffer
-            else {
+            else 
+			{
+			  // get depth
               iVar14 = *(int *)(in_at + 0xbc) + iVar14;
               iVar19 = iVar14 * 4;
-              if (iVar14 < 0) {
+              
+			  // Depth can't be less than ot[0]
+			  if (iVar14 < 0) {
                 iVar19 = 0;
               }
-              else {
+              
+			  else 
+			  {
+			    // Depth can't be more than ot[0x3ff]
                 if (0 < iVar19 + -0xffc) {
                   iVar19 = 0xffc;
                 }
@@ -7557,8 +7571,11 @@ LAB_80071478:
 				goto LAB_80071514;
 			}
             
+			// OTMem curr
 			*(uint **)(in_at + 0x34) = puVar11 + 1;
-            iVar9 = *(int *)(in_at + 0xc0) + (*(int *)(in_at + 0x8c) >> 6);
+            
+			// get depth
+			iVar9 = *(int *)(in_at + 0xc0) + (*(int *)(in_at + 0x8c) >> 6);
             iVar14 = iVar9 * 4;
 			
 			// Depth can't be less than ot[0]
