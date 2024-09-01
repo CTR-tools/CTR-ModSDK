@@ -7102,9 +7102,11 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
         *(undefined2 *)(in_at + 0x74) = (short)uVar21;
         *(undefined2 *)(in_at + 0x76) = (short)uVar23;
         *(uint *)(in_at + 0x78) = uVar25;
+		
         uVar21 = uVar21 & 0xffff;
         uVar23 = uVar23 & 0xffff;
         uVar25 = uVar25 & 0xffff;
+		
         FUN_8006c49c();
         *(int *)(in_at + 0xbc) = (int)param_19;
         *(int *)(in_at + 0xc0) = (int)param_20;
