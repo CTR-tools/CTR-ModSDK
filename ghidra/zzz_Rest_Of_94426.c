@@ -1110,8 +1110,11 @@ code_r0x8006a52c:
 		sVar3 = *(short *)(iVar12 + 0xde);
         *(short *)(in_at + 0x134) = (short)((int)*(short *)(iVar12 + 0xdc) << 2);
         *(short *)(in_at + 0x136) = (short)((int)sVar3 << 2);
-        uVar17 = *(undefined4 *)(iVar12 + 0xe4);
+        
+		// ptrDepth + offset
+		uVar17 = *(undefined4 *)(iVar12 + 0xe4);
         uVar18 = *(undefined4 *)(iVar12 + 0xe8);
+		
         pcVar8 = *(code **)(iVar12 + 0xec);
         *(undefined4 *)(in_at + 0x38) = uVar17;
         *(undefined4 *)(in_at + 0x3c) = uVar17;
@@ -6821,6 +6824,8 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
   DAT_1f80005c = param_5;
 
   _DAT_1f800090 = param_6;
+  
+  // OTMem end
   DAT_1f800038 = *(int *)(param_2 + 8) + -4;
   
   // InstDrawPerPlayer
