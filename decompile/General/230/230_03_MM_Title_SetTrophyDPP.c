@@ -25,10 +25,10 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
   // ASM optimization, put all LWs together
   e4 = idpp2->unkE4;
   e8 = idpp2->unkE8;
-  dc = *(int*)&idpp2->unkDC[0];
+  dc = *(int*)&idpp2->depthOffset[0];
   
   // ASM optimization, put all SWs together
   idpp1->unkE4 = e4;
   idpp1->unkE8 = e8;
-  *(int*)&idpp1->unkDC[0] = dc;
+  *(int*)&idpp1->depthOffset[0] = dc;
 }
