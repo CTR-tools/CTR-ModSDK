@@ -28,7 +28,6 @@
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_HIGH1P
-//#define PINE_DEBUG //enable this for logging of CurrState change on game and client.
 #endif
 
 #ifdef USE_60FPS

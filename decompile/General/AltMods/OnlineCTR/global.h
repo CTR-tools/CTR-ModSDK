@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1019
+#define VERSION 1020
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -68,7 +68,7 @@ typedef struct raceStats
 } raceStats;
 
 // This can be 0x400 (1024) bytes max:
-// 0x8000C000 at 0x8000C400
+// 0x8000C000 to 0x8000C400
 struct OnlineCTR
 {
 	// 0x0
@@ -141,10 +141,6 @@ struct OnlineCTR
 	char lastWindowsClientSync;
 
 	char desiredFPS;
-
-#ifdef PINE_DEBUG
-	int stateChangeCounter;
-#endif
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");

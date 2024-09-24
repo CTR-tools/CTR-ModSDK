@@ -170,9 +170,6 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 	if (gGT->levelID != 0x26)
 	{
 		octr->CurrState = GAME_WAIT_FOR_RACE;
-#ifdef PINE_DEBUG
-		printf("statechange %d GAME_WAIT_FOR_RACE 1: \n", octr->stateChangeCounter++);
-#endif
 	}
 }
 
@@ -195,9 +192,6 @@ void OnlineEndOfRace()
 		(octr->CurrState < GAME_START_RACE)) { return; }
 
 	octr->CurrState = GAME_END_RACE;
-#ifdef PINE_DEBUG
-	printf("statechange %d GAME_END_RACE 2: \n", octr->stateChangeCounter++);
-#endif
 
 	static unsigned frameCounter = 0;
 	EndOfRace_Camera();
