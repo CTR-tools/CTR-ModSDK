@@ -636,9 +636,13 @@ void StatePC_Launch_PickServer()
 		// BETA (New Jersey)
 		case 6:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "beta.projectsaphi.com");
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;
+			addr.port = 6000;
+
+			/*strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
+			enet_address_set_host(&addr, dns_string);
+			addr.port = 64001;*/
 
 			break;
 		}
@@ -838,7 +842,7 @@ void StatePC_Lobby_HostTrackPick()
 {
 	// boolLockedInLap gets set after
 	// boolLockedInLevel already sets
-	if (octr->boolLockedInLap) return;
+	if (!octr->boolLockedInLap) return;
 
 	StopAnimation();
 	printf("Client: Sending track to the server...  ");
@@ -1257,6 +1261,10 @@ int main(int argc, char *argv[])
 	atexit(enet_deinitialize);
 	printf("Client: Waiting for the OnlineCTR binary to load...  ");
 
+	//5ms sleep by default.
+	int sleepCount = 5000;
+	int enableDeferredGPU = 1;
+
 	while (1)
 	{
 		// To do: Check for PS1 system clock tick then run the client update
@@ -1266,21 +1274,62 @@ int main(int argc, char *argv[])
 		//write it (without needing a blocking read first).
 		octr->windowsClientSync++;
 
+		//if (octr->windowsClientSync == 0)
+		//{
+			// On Niko's computer
+			// 30fps 1x resolution = 4500
+			// 30fps 9x resolution = 2500
+			// 60fps = 0
+			//printf("Debug: SleepCount=%d\n", sleepCount);
+		//}
+
 		// should rename to room selection
 		if (octr->CurrState >= LAUNCH_PICK_ROOM)
 			DisconSELECT();
 
 		StartAnimation();
 
+		// Wait for PSX to have P1 data,
+		// which is set at octr->sleepControl
+		void FrameStall(); FrameStall();
+
+		//send data
 		if (octr->CurrState >= 0)
 			ClientState[octr->CurrState]();
+
+		// check for frame lag
+		if (octr->gpuSubmitTooLate == 1)
+		{
+			octr->gpuSubmitTooLate = 0;
+
+			// if 1-9 frame stalls
+			if (sleepCount >= 500)
+			{
+				// remove from sleep
+				sleepCount -= 500;
+			}
+
+			// if 10+ frame stalls
+			else
+			{
+				sleepCount = 0;
+				enableDeferredGPU = 0;
+			}
+		}
+
+		// PC writes to PSX,
+		// PSX is read-only
+		octr->enableDeferredGPU = enableDeferredGPU;
+
+		// delay GPU between SEND and RECV
+		if (enableDeferredGPU == 1)
+			usleep(sleepCount);
 
 		// now check for new RECV message
 		ProcessNewMessages();
 
-		// Wait for PSX to have P1 data,
-		// which is set at octr->sleepControl
-		void FrameStall(); FrameStall();
+		// allow PSX to resume
+		octr->sleepControl = 0;
 	}
 
 	printf("\n");
@@ -1306,10 +1355,14 @@ int gGT_timer = 0;
 void FrameStall()
 {
 	// wait for next frame
-	int* sc = (int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
-	while (gGT_timer == *sc)
+	//int* sc = (int*)&pBuf[(0x80096b20 + 0x1cf8) & 0xffffff];
+	//while (gGT_timer == *sc)
+	//{
+	//	usleep(1);
+	//}
+	//gGT_timer = *sc;
+	while (octr->sleepControl == 0)
 	{
 		usleep(1);
 	}
-	gGT_timer = *sc;
 }

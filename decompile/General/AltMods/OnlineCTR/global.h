@@ -2,7 +2,7 @@
 #define ONLINE_GLOBAL_H
 
 #define VERSION 1020
-//#define ONLINE_BETA_MODE
+#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
@@ -141,6 +141,11 @@ struct OnlineCTR
 	char lastWindowsClientSync;
 
 	char desiredFPS;
+
+	// control when PSX and PC send/recv
+	char sleepControl;
+	char gpuSubmitTooLate;
+	char enableDeferredGPU;
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");
