@@ -32,7 +32,7 @@ void ThreadFunc(struct Thread* t)
 	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
-	octr->boolPlanetLEV = gGT->levelID == 0x26;
+	octr->boolPlanetLEV = gGT->levelID == INTRO_RACE_TODAY; //was 0x26 (globe level)
 
 	if(octr->boolPlanetLEV)
 	{
