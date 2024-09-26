@@ -18,8 +18,8 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 	struct GameTracker* gGT = sdata->gGT;
 	int modelID;
 
-	#if 0 && defined(USE_ONLINE)
-	if(d->driverID == 0)
+	#if /*0 &&*/ defined(USE_ONLINE)
+	if(octr->serverRoom >= 8 && d->driverID == 0) //if in item lobby
 	{
 		octr->Shoot[0].boolJuiced = 0;
 		if(d->numWumpas >= 10) octr->Shoot[0].boolJuiced = 1;

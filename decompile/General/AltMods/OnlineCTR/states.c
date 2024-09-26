@@ -63,10 +63,10 @@ void ResetPsxGlobals()
 // should rename to EnterRoom
 void StatePS1_Launch_PickRoom()
 {
-	#if 0
-	DecalFont_DrawLine("Special Events in odd rooms: 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
-	DecalFont_DrawLine("Classic Games in even rooms: 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
-	#endif
+	//#if 0
+	DecalFont_DrawLine("Itemless games on first page",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	DecalFont_DrawLine("Items games on second page",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	//#endif
 
 	MenuWrites_ServerRoom();
 
@@ -343,7 +343,8 @@ void StatePS1_Game_WaitForRace()
 	}
 
 	gGT->trafficLightsTimer = 0xf40;
-	Ghostify();
+	if (octr->serverRoom < 8) //itemless only
+		Ghostify();
 
 	if((gGT->gameMode1 & START_OF_RACE) != 0)
 		return;
@@ -380,7 +381,9 @@ void StatePS1_Game_WaitForRace()
 void StatePS1_Game_StartRace()
 {
 	int i;
-	Ghostify();
+
+	if (octr->serverRoom < 8) //itemless only
+		Ghostify();
 
 	for(i = 1; i < 8; i++)
 	{

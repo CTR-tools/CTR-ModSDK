@@ -171,6 +171,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 
 			// reply to server with your name
 			memcpy(&octr->nameBuffer[0], &name, NAME_LEN);
+			octr->nameBuffer[0][NAME_LEN] = '\0';
 
 			CG_MessageName m = { 0 };
 			m.type = CG_NAME;
@@ -192,6 +193,8 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			if (clientID > octr->DriverID) slot = clientID;
 
 			octr->NumDrivers = r->numClientsTotal;
+
+			r->name[NAME_LEN] = '\0';
 
 			memcpy(&octr->nameBuffer[slot], &r->name[0], NAME_LEN);
 
@@ -1118,8 +1121,8 @@ int main(int argc, char *argv[])
 		// ask for the users online identification
 		printf("Input: Enter Your Online Name: ");
 		scanf_s("%s", name, (int)sizeof(name));
-		name[NAME_LEN] = 0; // truncate the name (0 based)
 	}
+	name[NAME_LEN] = 0; // truncate the name (0 based)
 
 	// show a welcome message
 	system("cls");

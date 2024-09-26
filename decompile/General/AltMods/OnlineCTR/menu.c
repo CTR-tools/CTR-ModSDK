@@ -141,17 +141,32 @@ void NewPage_ServerRoom()
 {
 	int i;
 
-	// override "LAPS" "3/5/7"
-	sdata->lngStrings[0x9a] = "ROOM 1 - x/8";
-	sdata->lngStrings[0x9b] = "ROOM 2 - x/8";
-	sdata->lngStrings[0x9c] = "ROOM 3 - x/8";
-	sdata->lngStrings[0x9d] = "ROOM 4 - x/8";
-	sdata->lngStrings[0x9e] = "ROOM 5 - x/8";
-	sdata->lngStrings[0x9f] = "ROOM 6 - x/8";
-	sdata->lngStrings[0xa0] = "ROOM 7 - x/8";
-	sdata->lngStrings[0xa1] = "ROOM 8 - x/8";
-
 	int pn = octr->PageNumber;
+
+	// override "LAPS" "3/5/7"
+	if (pn == 0)
+	{
+		sdata->lngStrings[0x9a] = "ROOM 1 - x/8";
+		sdata->lngStrings[0x9b] = "ROOM 2 - x/8";
+		sdata->lngStrings[0x9c] = "ROOM 3 - x/8";
+		sdata->lngStrings[0x9d] = "ROOM 4 - x/8";
+		sdata->lngStrings[0x9e] = "ROOM 5 - x/8";
+		sdata->lngStrings[0x9f] = "ROOM 6 - x/8";
+		sdata->lngStrings[0xa0] = "ROOM 7 - x/8";
+		sdata->lngStrings[0xa1] = "ROOM 8 - x/8";
+	}
+	else if (pn == 1)
+	{
+		sdata->lngStrings[0x9a] = "ITEM 9 - x/8";
+		sdata->lngStrings[0x9b] = "ITEM A - x/8";
+		sdata->lngStrings[0x9c] = "ITEM B - x/8";
+		sdata->lngStrings[0x9d] = "ITEM C - x/8";
+		sdata->lngStrings[0x9e] = "ITEM D - x/8";
+		sdata->lngStrings[0x9f] = "ITEM E - x/8";
+		sdata->lngStrings[0xa0] = "ITEM F - x/8";
+		sdata->lngStrings[0xa1] = "ITEM G - x/8";
+	}
+
 
 	for(i = 0; i < 8; i++)
 	{
