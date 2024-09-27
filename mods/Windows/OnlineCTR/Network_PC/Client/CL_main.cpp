@@ -125,7 +125,13 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			// default, disable cheats
 			//ps1ptr<int> cheats = pBuf.at<int>(0x80096b28);
 			int* cheats = (int*)&pBuf[0x80096b28 & 0xffffff];
-			*cheats &= ~(0x100000 | 0x80000 | 0x400 | 0x400000);
+			*cheats &= ~(0x100000 | 0x80000 | 0x400 | 0x400000 | 0x10000);
+
+			int rn = octr->serverRoom;
+			if (ROOM_IS_RETRO(rn))
+				*cheats |= 0x100000;
+			else
+				*cheats &= ~(0x100000);
 
 			// odd-numbered index == even-number room
 			// Index 1, 3, 5 -> Room 2, 4, 6

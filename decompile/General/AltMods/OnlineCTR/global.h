@@ -32,6 +32,28 @@
 #define IP_ADDRESS_SIZE		            16 // assuming IPv4 (which is "xxx.xxx.xxx.xxx" + '\0')
 #define PORT_SIZE			            6 // the port number as a string (0-65535 + '\0')
 
+//these let you adjust the number of rooms allocated to game types
+//"START" is the starting index [0-15]
+//"LENGTH" is the length of that game type.
+
+//itemless rooms are 0 1 2 3 4
+#define ROOM_ITEMLESSSTART 0
+#define ROOM_ITEMLESSLENGTH 5
+//item rooms are 5 6 7 8 9
+#define ROOM_ITEMSTART 5
+#define ROOM_ITEMLENGTH 5
+//retro rooms are 10 11 12
+#define ROOM_RETROSTART 10
+#define ROOM_RETROLENGTH 3
+//item + retro rooms are 13 14 15
+#define ROOM_ITEMRETROSTART 13
+#define ROOM_ITEMRETROLENGTH 3
+
+#define ROOM_IS_ITEMS(rn) ((rn >= ROOM_ITEMSTART && rn < (ROOM_ITEMSTART + ROOM_ITEMLENGTH)) || \
+(rn >= ROOM_ITEMRETROSTART && rn < (ROOM_ITEMRETROSTART + ROOM_ITEMRETROLENGTH)))
+#define ROOM_IS_RETRO(rn) ((rn >= ROOM_RETROSTART && rn < (ROOM_RETROSTART + ROOM_RETROLENGTH)) || \
+(rn >= ROOM_ITEMRETROSTART && rn < (ROOM_ITEMRETROSTART + ROOM_ITEMRETROLENGTH)))
+
  // 2 seconds to be very tolerant on client
 #ifdef USE_60FPS
 #define DISCONNECT_AT_UNSYNCED_FRAMES   120

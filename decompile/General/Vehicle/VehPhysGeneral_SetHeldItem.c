@@ -54,7 +54,8 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 			int mode = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
 			#if /*0 &&*/ defined(USE_ONLINE)
-			if (octr->serverRoom >= 8) //if in item lobby.
+			int rn = octr->serverRoom;
+			if (ROOM_IS_ITEMS(rn)) //if in item lobby.
 			{
 				mode = octr->NumDrivers;
 				if (octr->NumDrivers == 1) mode = 2; //why does this matter?
