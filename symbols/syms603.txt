@@ -90,10 +90,10 @@
 // unknown 8002869c
 // unknown 8002873c
 // unknown 800287dc -- DebugCamera_SetPathPoint
-// unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId1
-// unknown 80028854 -- DebugMenu_LoadGame_GivenLevelId2
-// unknown 80028a6c -- DebugMenu_LoadGame_GivenLevelId3
-// unknown 80028a98 -- DebugMenu_LoadGame_GivenLevelId4
+// unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId
+// unknown 80028854 -- DebugMenu_LoadGame_GivenDemoModeIndex
+// unknown 80028a6c -- DebugMenu_LoadGame_GivenIdk2
+// unknown 80028a98 -- DebugMenu_LoadGame_GivenNumPlyr
 // unknown 80028ab0
 // unknown 80028ac8
 // unknown 80028ae0
