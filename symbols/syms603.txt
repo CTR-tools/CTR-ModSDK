@@ -135,7 +135,7 @@
 // unknown 8002b714
 8002b74c Debug_DrawWireTriangle
 // unknown 8002b8f0
-// unknown 8002b9ac
+8002b9ac Debug_DrawWireCube2
 // unknown 8002be4c
 
 8002be7c CTR_Box_DrawClearBox
