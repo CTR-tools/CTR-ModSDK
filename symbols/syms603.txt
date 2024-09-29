@@ -92,7 +92,7 @@
 // unknown 800287dc -- DebugCamera_SetPathPoint
 // unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId
 // unknown 80028854 -- DebugMenu_LoadGame_GivenDemoModeIndex
-// unknown 80028a6c -- DebugMenu_LoadGame_GivenIdk2
+// unknown 80028a6c -- DebugMenu_LoadGame_GivenCharacterId
 // unknown 80028a98 -- DebugMenu_LoadGame_GivenNumPlyr
 // unknown 80028ab0
 // unknown 80028ac8
