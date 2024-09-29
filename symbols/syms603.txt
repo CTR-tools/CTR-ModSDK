@@ -87,8 +87,8 @@
 80027690 COLL_StartSearch_NearPlayer
 80027e64 COLL_Scrub
 
-8002869c DebugSetRes_640x480i
-// unknown 8002873c
+// unknown 8002869c
+8002873c DebugSetRes_640x480i
 // unknown 800287dc -- DebugCamera_SetPathPoint
 // unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId
 // unknown 80028854 -- DebugMenu_LoadGame_GivenDemoModeIndex
