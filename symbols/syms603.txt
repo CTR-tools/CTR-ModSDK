@@ -123,12 +123,12 @@
 // unknown 8002a204
 8002a304 Debug_PrimMem_ZoomOut
 // unknown 8002a960
-// unknown 8002ad28
+// unknown 8002ad28 // copy buffer to scratchpad
 
 8002ad5c CTR_Box_DrawWirePrims
 8002adf4 CTR_Box_DrawWireBox
-// unknown 8002afdc (uses GTE)
-// unknown 8002b14c
+8002afdc Debug_Draw3dLineF2
+8002b14c Debug_DrawWireCube
 // unknown 8002b46c (uses GTE)
 8002b5dc Debug_CountPrimDepths
 // unknown 8002b6d4
