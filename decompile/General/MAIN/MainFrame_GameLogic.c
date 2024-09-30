@@ -5,22 +5,6 @@ typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 #ifdef USE_ONLINE
 #include "../AltMods/OnlineCTR/global.h"
 void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver);
-
-#pragma optimize("", off)
-void FrameStall()
-{
-	// dont stall for this
-	if (octr->CurrState < LOBBY_HOST_TRACK_PICK)
-		return;
-
-	// wait for PC client to reset
-	while (octr->sleepControl == 1)
-	{
-		// required, or the register never updates
-		printf("");
-	}
-}
-#pragma optimize("", on)
 #endif
 
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -222,8 +206,49 @@ LAB_80035098:
 			{
 
 // online multiplayer
-#ifdef USE_ONLINE
-
+//#ifdef USE_ONLINE
+//				// the reason the "online"/"offline" versions are separate was to optimize things for online.
+//				// It's possible that the "online" version has become similar enough (in functionality) such
+//				// that it's basically the same as the "offline" version.
+//
+//				// synchronize track hazards
+//				if(
+//					(iVar4 == STATIC) ||
+//					(iVar4 == SPIDER)
+//				)
+//				{
+//					if(gGT->trafficLightsTimer > 3600)
+//						continue;
+//				}
+//
+//				if (iVar4 == 0)
+//				{
+//					struct Driver* dOnline = gGT->drivers[0];
+//					if(dOnline != 0)
+//					{
+//						struct Thread* dThread = dOnline->instSelf->thread;
+//
+//						DECOMP_VehPickupItem_ShootOnCirclePress(dOnline);
+//
+//						RunVehicleSet13(dThread, dOnline);
+//
+//						octr->desiredFPS = FPS_DOUBLE(30);
+//					}
+//
+//					for(int other = 1; other < 8; other++)
+//					{
+//						dOnline = gGT->drivers[other];
+//						if(dOnline == 0) continue;
+//
+//						struct Thread* dThread = dOnline->instSelf->thread;
+//
+//						RunVehicleSet13(dThread, dOnline);
+//					}
+//				}
+//
+// offline
+//#else
+				#if defined(USE_ONLINE)
 				// synchronize track hazards
 				if(
 					(iVar4 == STATIC) ||
@@ -233,39 +258,7 @@ LAB_80035098:
 					if(gGT->trafficLightsTimer > 3600)
 						continue;
 				}
-
-				if (iVar4 == 0)
-				{
-					struct Driver* dOnline = gGT->drivers[0];
-					if(dOnline != 0)
-					{
-						struct Thread* dThread = dOnline->instSelf->thread;
-
-						DECOMP_VehPickupItem_ShootOnCirclePress(dOnline);
-
-						RunVehicleSet13(dThread, dOnline);
-
-						octr->sleepControl = 1;
-						octr->desiredFPS = FPS_DOUBLE(30);
-
-						// stall
-						if (octr->enableDeferredGPU == 1)
-							FrameStall();
-					}
-
-					for(int other = 1; other < 8; other++)
-					{
-						dOnline = gGT->drivers[other];
-						if(dOnline == 0) continue;
-
-						struct Thread* dThread = dOnline->instSelf->thread;
-
-						RunVehicleSet13(dThread, dOnline);
-					}
-				}
-
-// offline
-#else
+				#endif
 				if (iVar4 == 0)
 				{
 
@@ -334,8 +327,12 @@ LAB_80035098:
 					#ifdef USE_HIGHMP
 					gGT->numPlyrCurrGame = backupPlyrCount;
 					#endif
+
+					#ifdef USE_ONLINE
+					octr->readyToSend = 1;
+					#endif
 				}
-#endif
+//#endif
 
 
 #ifndef REBUILD_PS1

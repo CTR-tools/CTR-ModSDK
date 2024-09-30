@@ -1711,11 +1711,6 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 		if(ReadyToFlip(gGT))
 		{
-#ifdef USE_ONLINE
-			if (boolFirstFrame)
-				octr->gpuSubmitTooLate = 1;
-#endif
-
 			// quit, end of stall
 			return;
 		}
