@@ -645,13 +645,9 @@ void StatePC_Launch_PickServer()
 		// BETA (New Jersey)
 		case 6:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "beta.projectsaphi.com");
+			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net"); 
 			enet_address_set_host(&addr, dns_string);
-			addr.port = 6000;
-
-			/*strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net");
-			enet_address_set_host(&addr, dns_string);
-			addr.port = 64001;*/
+			addr.port = 64001;
 
 			break;
 		}

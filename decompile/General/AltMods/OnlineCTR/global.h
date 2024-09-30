@@ -2,7 +2,7 @@
 #define ONLINE_GLOBAL_H
 
 #define VERSION 1020
-#define ONLINE_BETA_MODE
+//#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
 	#include <common.h>
