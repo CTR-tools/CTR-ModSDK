@@ -104,9 +104,10 @@
 // unknown 800291ac -- DebugMenu_TimeStamp_DrawNext
 // unknown 8002977c -- DebugMenu_TimeStamp_ExecCurr
 
-// These dont open timestamp graphs, they open the PauseAllThreads menu
-// unknown 800297a0 -- DebugMenu_TimeStamp_OpenMenu
-// unknown 800297b4 -- DebugMenu_TimeStamp_CloseMenu
+// These are hooked up to regular Start button
+// unknown 800297a0 -- PauseGame
+// unknown 800297b4 -- UnPauseGame
+
 // unknown 800297e8 -- DebugMenu_gGT_PauseAllThreads // controller logic for invisible menu
 // unknown 80029cc8
 
