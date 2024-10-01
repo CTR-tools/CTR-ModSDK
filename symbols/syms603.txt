@@ -557,3 +557,9 @@
 80046a3c VehPhysForce_ConvertSpeedToVec
 80046b4c VehPhysForce_OnGravity
 80047340 VehPhysForce_OnApplyForces
+8004748c VehPhysForce_CollideDrivers
+800476f8 VehPhysForce_TranslateMatrix
+8004813c VehPhysForce_RotAxisAngle
+800483ec VehPhysForce_AccelTerrainSlope
+8004852c VehPhysGeneral_PhysAngular
+80048ce4 VehPhysGeneral_LerpQuarterStrength
