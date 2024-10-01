@@ -11,6 +11,7 @@
     (_: { pkgs, system }: with pkgs; rec {
       packages =
         let
+          pkgsAarch64 = pkgsCross.aarch64-multiplatform;
           pkgsARM32 = pkgsCross.armv7l-hf-multiplatform;
           pkgs32 = if system == "x86_64-linux" then pkgsi686Linux else pkgsARM32;
 
@@ -26,13 +27,25 @@
           };
 
           mkOnline = withDebug: {
+            native = {
+              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+            };
             native32 = with pkgs32; {
+              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+            };
+            aarch64 = with pkgsAarch64; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
               clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
             };
             arm32 = with pkgsARM32; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
               clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; inherit withDebug; };
+            };
+            mingwW64 = with pkgsCross.mingwW64; {
+              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
             };
             mingw32 = with pkgsCross.mingw32; {
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
