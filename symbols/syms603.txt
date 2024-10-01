@@ -88,12 +88,14 @@
 80027e64 COLL_Scrub
 
 // unknown 8002869c
+
 8002873c DebugSetRes_640x480i
-// unknown 800287dc -- DebugCamera_SetPathPoint
-// unknown 80028814 -- DebugMenu_LoadGame_GivenLevelId
-// unknown 80028854 -- DebugMenu_LoadGame_GivenDemoModeIndex
-// unknown 80028a6c -- DebugMenu_LoadGame_GivenCharacterId
-// unknown 80028a98 -- DebugMenu_LoadGame_GivenNumPlyr
+800287dc DebugCamera_SetPathPoint
+80028814 DebugMenu_LoadGame_GivenLevelId
+80028854 DebugMenu_LoadGame_GivenDemoModeIndex
+80028a6c DebugMenu_LoadGame_GivenCharacterId
+80028a98 DebugMenu_LoadGame_GivenNumPlyr
+
 // unknown 80028ab0
 // unknown 80028ac8
 // unknown 80028ae0
@@ -101,19 +103,20 @@
 // unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
 // unknown 80028c10 -- called from Timer_Init
 // unknown 80028d30 -- DebugMenu_TimeStamp_DrawOutline
-// unknown 800291ac -- DebugMenu_TimeStamp_DrawNext
-// unknown 8002977c -- DebugMenu_TimeStamp_ExecCurr
+
+800291ac DebugMenu_Draw
+8002977c DebugMenu_ExecFuncPtr
 
 // Not the TimeStamp menu, but another debug menu,
 // This can be triggered by pressing Select, if you 
 // NOP the instruction at 8003E3CC that reboots game on Select
-// unknown 800297a0 -- DebugMenu_TimeStamp_OpenMenu
-// unknown 800297b4 -- DebugMenu_TimeStamp_CloseMenu
-// unknown 800297e8 -- DebugMenu_gGT_PauseAllThreads // controller logic for invisible menu
+800297a0 DebugMenu_Open
+800297b4 DebugMenu_Close
+800297e8 DebugMenu_Update
+80029cc8 DebugMenu_UpdateIfOpen
+80029d70 DebugMenu_DrawIfOpen
+80029dc0 DebugMenu_DrawMenuTwice
 
-// unknown 80029cc8
-// unknown 80029d70 -- DebugMenu_TimeStamp_DrawChart
-// unknown 80029dc0 -- DebugMenu_TimeStamp_DrawMain
 // unknown 80029e64
 // unknown 80029efc
 80029f48 Timer_GetTime_Total_Precise // cut in retail
