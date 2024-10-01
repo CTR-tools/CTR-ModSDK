@@ -99,6 +99,7 @@
 // unknown 80028ab0
 // unknown 80028ac8
 // unknown 80028ae0
+
 // unknown 80028b9c -- DebugMenu_TimeStamp_EndFrame
 // unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
 
@@ -120,7 +121,7 @@
 80029dc0 DebugMenu_DrawMenuTwice
 
 // unknown 80029e64
-// unknown 80029efc
+// unknown 80029efc -- DebugMenu_TimeStamp_RecordTime
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
