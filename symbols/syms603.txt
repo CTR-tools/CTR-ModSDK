@@ -681,3 +681,32 @@
 
 80051d7c RB_Snowball_ThTick
 80051f94 RB_Snowball_LInB
+
+8005206c RB_Armadillo_ThTick_TurnAround
+80052248 RB_Armadillo_ThTick_Rolling
+80052494 RB_Armadillo_ThCollide
+800524a8 RB_Armadillo_LInB
+
+8005261c RB_Seal_ThTick_TurnAround
+80052838 RB_Seal_ThTick_Move
+80052afc RB_Seal_ThCollide
+80052b10 RB_Seal_LInB
+
+80052d10 RB_Orca_ThTick
+80052f4c RB_Orca_ThCollide
+80052f60 RB_Orca_LInB
+
+80053174 RB_Minecart_ThTick
+800535e0 RB_Minecart_LInB
+
+80053880 RB_Turtle_ThTick
+80053964 RB_Turtle_LInC
+800539dc RB_Turtle_LInB
+
+80053ac4 RB_Spider_DrawWebs
+80053d10 RB_Spider_ThTick
+80053f90 RB_Spider_ThCollide
+80053fa4 RB_Spider_LInB
+
+80054114 RB_Baron_ThTick
+80054660 RB_Baron_LInB
