@@ -482,7 +482,10 @@
 // unknown 8003ed44
 8003eeb4 MATH_MatrixMul
 
+// no MEMCARD
+
 8003ef3c MEMPACK_Init
+8003efdc MEMPACK_AllocMem
 
 
 8004149c VehBirth_TeleportSelf
