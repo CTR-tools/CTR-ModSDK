@@ -563,3 +563,29 @@
 800483ec VehPhysForce_AccelTerrainSlope
 8004852c VehPhysGeneral_PhysAngular
 80048ce4 VehPhysGeneral_LerpQuarterStrength
+80048d14 VehPhysGeneral_LerpToForwards
+80048e2c VehPhysGeneral_JumpGetVelY
+80048ebc VehPhysGeneral_JumpAndFriction
+800496bc VehPhysGeneral_SetHeldItem
+80049bbc VehPhysGeneral_GetBaseSpeed
+
+// VehPhysJoystick
+// unknown 80049d28
+// unknown 80049d78
+// unknown 80049db4
+// unknown 80049e84
+
+80049ec0 VehPhysProc_Driving_PhysLinear
+8004abd4 VehPhysProc_Driving_Audio
+8004abf4 VehPhysProc_Driving_Update
+// unknown 8004ad14
+// unknown 8004ae58
+8004aec0 VehPhysProc_Driving_Init
+
+8004af74 VehPhysProc_FreezeVShift_Update
+8004b018 VehPhysProc_FreezeVShift_ReverseOneFrame
+8004b07c VehPhysProc_FreezeVShift_Init
+
+8004b134 VehPhysProc_PowerSlide_PhysAngular
+8004b81c VehPhysProc_PowerSlide_Finalize
+8004b834 VehPhysProc_PowerSlide_Update
