@@ -710,3 +710,19 @@
 
 80054114 RB_Baron_ThTick
 80054660 RB_Baron_LInB
+
+80054784 RB_Fireball_ThTick
+800549d0 RB_Fireball_ThCollide
+800549e4 RB_Fireball_LInB
+// unknown 80054ad8
+
+80054aec RB_Blade_ThTick
+80054b80 RB_Blade_LInB
+
+80054be4 RB_Player_KillPlayer
+80054da8 RB_Player_ModifyWumpa
+80054e4c RB_MinePool_Init
+80054ebc RB_MinePool_Remove
+80054f08 RB_MinePool_Add
+80054f9c RB_Hazard_HurtDriver
+80054fe0 RB_Hazard_CollideWithDrivers
