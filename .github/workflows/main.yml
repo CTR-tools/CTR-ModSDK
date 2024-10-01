@@ -22,16 +22,6 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Create result directory
         run: mkdir ${{ runner.temp }}/result
-      - name: Build Decomp Debug Linux32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.native32.gcc'
-      - name: Build Decomp Debug Linux32 Clang
-        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.native32.clang'
-      - name: Build Decomp Debug Mingw32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.gcc'
-      - name: Build Decomp Debug Mingw32 Clang
-        run: nix build -L --no-link --keep-going '.?submodules=1#decomp.debug.mingw32.clang'
-      - name: Build Retail Release Linux32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#retail.release.native32.gcc'
       - name: Build Server Release Linux32 GCC
         run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.native32.gcc'
       - name: Build Server Release ARM32 GCC
