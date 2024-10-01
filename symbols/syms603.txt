@@ -101,7 +101,9 @@
 // unknown 80028ae0
 // unknown 80028b9c -- DebugMenu_TimeStamp_EndFrame
 // unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
-// unknown 80028c10 -- called from Timer_Init
+
+80028c10 DebugMenu_InitMenuPositionSize
+
 // unknown 80028d30 -- DebugMenu_TimeStamp_DrawOutline
 
 800291ac DebugMenu_Draw
