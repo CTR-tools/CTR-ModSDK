@@ -465,9 +465,24 @@
 8003c984 MainGameStart_Initialize
 8003c9e0 MainInit_FinalizeInit
 8003d73c MainInit_StringToLevID
+8003d7a0 MainInit_VRAMClear
+8003d868 main
 
+8003e518 MATH_Sin
+8003e554 MATH_Cos
+8003e5a8 MATH_FastSqrt
+8003e5f4 MATH_FastSqrt2
+// unknown 8003e644
+// unknown 8003e730
+// unknown 8003e830
+// unknown 8003e984
+8003e9f0 MATH_VectorLength
+// unknown 8003ea40
+8003ec5c MATH_VectorNormalize
+// unknown 8003ed44
+8003eeb4 MATH_MatrixMul
 
-
+8003ef3c MEMPACK_Init
 
 
 8004149c VehBirth_TeleportSelf
