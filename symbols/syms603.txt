@@ -461,4 +461,13 @@
 8003b408 MainFrame_RenderFrame
 // unknown 8003c774 -- KART.ARG 
 
+8003c920 MainFreeze_IfPressStart
+8003c984 MainGameStart_Initialize
+8003c9e0 MainInit_FinalizeInit
+8003d73c MainInit_StringToLevID
+
+
+
+
+
 8004149c VehBirth_TeleportSelf
