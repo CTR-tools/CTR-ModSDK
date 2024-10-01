@@ -440,7 +440,25 @@
 // unknown 800394a0 LOAD_ReadFile1
 // unknown 80039620 LOAD_ReadFile2
 8003977c LOAD_FindFile
+800397e8 LOAD_HowlHeaderSectors
+8003989c LOAD_RunPtrMap
+800398e8 LOAD_OvrLOD
+80039914 LOAD_OvrLOD_ByName
 
+80039990 MainDB_PrimMem
+800399f4 MainDB_InstanceMem
+80039a4c MainDB_OTMem
+80039aa4 MainDrawCb_Vsync
+80039b4c MainFrame_TogglePauseAudio
 
+// EnterYourName screen
+// unknown 80039bb4
+// unknown 80039c00
+
+8003a140 MainFrame_GameLogic
+// unknown 8003ae5c -- probably title
+// unknown 8003af40 -- probably title
+8003b408 MainFrame_RenderFrame
+// unknown 8003c774 -- KART.ARG 
 
 8004149c VehBirth_TeleportSelf
