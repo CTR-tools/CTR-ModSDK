@@ -727,3 +727,9 @@
 80054f9c RB_Hazard_HurtDriver
 80054fe0 RB_Hazard_CollideWithDrivers
 80055108 RB_Hazard_CollideWithBucket
+
+
+
+
+// skip a bunch
+800629ac PushBuffer_FadeOneWindow
