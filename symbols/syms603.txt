@@ -120,8 +120,8 @@
 80029d70 DebugMenu_DrawIfOpen
 80029dc0 DebugMenu_DrawMenuTwice
 
-// unknown 80029e64
-// unknown 80029efc -- DebugMenu_TimeStamp_RecordTime
+// unknown 80029e64 -- DebugMenu_TimeStamp_RecordTime
+// unknown 80029efc -- DebugMenu_TimeStamp_GetElapsed
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
