@@ -22,11 +22,11 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Create result directory
         run: mkdir ${{ runner.temp }}/result
-      - name: Build Server Release Linux32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.native32.gcc'
-      - name: Build Server Release ARM32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.arm32.gcc'
-      - name: Build Server Release Mingw2 GCC
+      - name: Build Server Release Linux GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.native.gcc'
+      - name: Build Server Release Aarch64 GCC
+        run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.aarch64.gcc'
+      - name: Build Server Release Mingw32 GCC
         run: nix build -L --keep-going '.?submodules=1#online-server.release.mingw32.gcc' -o ${{ runner.temp }}/result/online-server.release.mingw32.gcc
       - name: Upload artifact
         uses: actions/upload-artifact@v4
