@@ -486,6 +486,74 @@
 
 8003ef3c MEMPACK_Init
 8003efdc MEMPACK_AllocMem
+8003f0e4 MEMPACK_ReallocMem
+8003f13c MEMPACK_PushState
+8003f1ac MEMPACK_PopState
 
+8003f218 MixRNG_Scramble
+8003f25c MixRNG_Particles
+8003f29c MixRNG_GetValue
 
+8003f2d0 Particle_FuncPtr_PotionShatter
+8003f314 Particle_FuncPtr_SpitTire
+8003f51c Particle_FuncPtr_ExhaustUnderwater
+8003f5ac Particle_OnDestroy
+// unknown 8003f5f8 (check dead?)
+8003f674 Particle_UpdateList
+8003fbec Particle_UpdateAllParticles
+8003fc44 Particle_BitwiseClampByte
+8003fc7c Particle_SetColors
+8003fd48 Particle_RenderList
+80040b00 Particle_Init
+
+// no Proc, no PushBuffer,
+// no RaceFlag, no RectMenu,
+// no RefreshCard, no SelectProfile,
+// no SubmitName, no Torch, no UI
+
+80041080 Vector_BakeMatrixTable
+
+80041434 VehAfterColl_GetSurface
+80041458 VehAfterColl_GetTerrain
 8004149c VehBirth_TeleportSelf
+8004199c VehBirth_TeleportAll
+80041a4c VehBirth_GetModelByName
+// unknown 80041ad4
+80041b9c VehBirth_SetConsts
+// unknown 80041d30
+// unknown 80041d8c
+80041e38 VehBirth_EngineAudio_AllPlayers
+80041e90 VehBirth_TireSprites
+80041f0c VehBirth_NonGhost
+800420c4 VehBirth_Player
+80042160 VehCalc_InterpBySpeed
+800421a8 VehCalc_MapToRange
+80042218 VehCalc_SteerAccel
+8004227c VehCalc_FastSqrt
+8004230c VehEmitter_Exhaust
+80042510 VehEmitter_Sparks_Ground
+80042724 VehEmitter_Terrain_Ground
+8004294c VehEmitter_Sparks_Wall
+80042b84 VehEmitter_DriverMain
+
+// no VehFire_Audio
+80043b04 VehFire_Increment
+80043f20 VehFrameInst_GetStartFrame
+80043f50 VehFrameInst_GetNumAnimFrames
+80043fd4 VehFrameProc_Driving
+8004449c VehFrameProc_Spinning
+80044588 VehFrameProc_LastSpin
+// unknown VehGroundShadow_Subset1
+80044644 VehGroundShadow_Main
+80044d74 VehGroundSkids_Subset1
+80044ecc VehGroundSkids_Subset2
+80044fa8 VehGroundSkids_Main
+8004563c VehLap_UpdateProgress
+80045928 VehPhysCrash_ConvertVecToSpeed
+80045b70 VehPhysCrash_BounceSelf
+80045cc0 VehPhysCrash_AI
+// no VehPhysCrash_Attack
+80045e08 VehPhysCrash_AnyTwoCars
+80046a3c VehPhysForce_ConvertSpeedToVec
+80046b4c VehPhysForce_OnGravity
+80047340 VehPhysForce_OnApplyForces
