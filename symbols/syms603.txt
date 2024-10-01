@@ -321,6 +321,72 @@
 
 80035370 SongPool_FindFreeChannel
 800353ac SongPool_CalculateTempo
+80035400 SongPool_ChangeTempo
+80035464 SongPool_Start
+// no AdvHub
+80035658 SongPool_StopCseq
+8003574c SongPool_StopAllCseq
+// unknown 800357d4
+// unknown 8003585c
+8003587c howl_Disable
+800358a0 howl_VolumeGet
+8003593c howl_VolumeSet
+80035978 howl_VolumeFadeTo
+// unknown 800359b4
+// unknown 800359c0
+800359cc Smart_EnterCriticalSection
+80035a04 Smart_ExitCriticalSection
+80035a3c Channel_SetVolume
+// no AntiSpam
+80035ab0 Channel_AllocSlot
+80035b78 Channel_SearchFX_EditAttr
+80035c98 Channel_SearchFX_Destroy
+80035d6c Channel_DestroyAll_LowLevel
+80035e50 Channel_ParseSongToChannels
+8003603c Channel_UpdateChannels
+// no Cutscene
+8003632c howl_PlayAudio_Update
+// unknown 80036428
+80036490 howl_InitChannelAttr_EngineFX
+80036554 howl_InitChannelAttr_OtherFX
+80036614 howl_PauseAudio
+80036744 howl_UnPauseChannel
+8003687c howl_UnPauseAudio
+800369a0 howl_StopAudio
+800369f4 Voiceline_PoolInit
+80036b2c Voiceline_ClearTimeStamp
 
+// unknown 80036b7c -- Bank_Load
+// unknown 80036bac -- LoadSeqPackData
+// unknown 80036bdc -- eraseHeader
+
+// no ntropy voice, no async bank load
+
+80036bfc Music_SetDefaults
+
+// unknown 80036c14
+// unknown 80036c80
+// unknown 80036cb8
+// unknown 80036ce8
+
+80036d24 GTE_AudioLR_Inst
+80036d94 GTE_AudioLR_Driver
+80036e20 GTE_GetSquaredLength
+80036e58 OtherFX_RecycleNew
+80036eec OtherFX_RecycleMute
+80036f28 OtherFX_DriverCrashing
+
+// no LevelAmbientSound
+
+80036f84 PlaySound3D
+800371c4 PlaySound3D_Flags
+8003749c EngineSound_Player
+80037848 EngineSound_VolumeAdjust
+80037884 EngineSound_AI
+80037b48 EngineSound_NearestAIs
+
+// no Garage
+
+80037e28 INSTANCE_Birth
 
 8004149c VehBirth_TeleportSelf
