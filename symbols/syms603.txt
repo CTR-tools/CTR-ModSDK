@@ -388,5 +388,56 @@
 // no Garage
 
 80037e28 INSTANCE_Birth
+80037f40 INSTANCE_Birth3D
+80037fb8 INSTANCE_Birth2D
+8003804c INSTANCE_BirthWithThread_noParent
+80038208 INSTANCE_BirthWithThread
+80038308 INSTANCE_BirthWithThread_Stack
+80038360 INSTANCE_Death
+
+8003838c INSTANCE_LevInitAll
+// no delayedLInB
+800385c0 INSTANCE_GetNumAnimFrames
+
+// no JitPool_Clear
+80038644 JitPool_Init
+800386ec JitPool_Add
+80038744 JitPool_Remove
+
+80038784 LevInstDef_UnPack
+80038880 LevInstDef_RePack
+
+8003897c LHMatrix_Parent
+
+80038a40 LibraryOfModels_Store
+80038a84 LibraryOfModels_Clear
+
+80038aa4 LinkedCollide_Radius
+80038b30 LinkedCollide_Hitbox_Desc
+80038b8c LinkedCollide_Hitbox
+// unknown 80038cb8
+
+80038d30 LIST_Clear
+80038d40 LIST_AddFront
+80038d84 LIST_AddBack
+// unknown 80038dc8
+// unknown 80038e3c
+80038ec4 LIST_DebugPrint
+80038f30 LIST_GetNextItem
+80038f3c LIST_GetPrevItem
+80038f48 LIST_GetFirstItem
+80038f54 LIST_GetLastItem
+80038f60 LIST_RemoveMember
+80038fe8 LIST_RemoveFront
+80039068 LIST_RemoveBack
+800390f8 LIST_Init
+
+80039164 LOAD_VramFileCallback
+// unknown 80039294 -- file debug strings
+80039340 LOAD_StringToUpper
+8003937c LOAD_ReadDirectory
+
+
+
 
 8004149c VehBirth_TeleportSelf
