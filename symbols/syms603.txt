@@ -654,3 +654,21 @@
 // unknown 80050444
 800504f8 RB_CrateFruit_ThCollide
 800508f8 RB_CrateFruit_LInC
+
+// no Crystal
+
+800509ac RB_Default_LInB
+
+// out of order compared to retail
+
+80050aa4 RB_FlameJet_Particles
+80050d10 RB_FlameJet_ThTick
+80050ed8 RB_FlameJet_LInB
+
+80051030 RB_Fruit_ThTick
+// unknown 8005106c
+80051154 RB_Fruit_ThCollide
+800512f4 RB_Fruit_LInB
+80051308 RB_Fruit_LInC
+
+800513d4 RB_Plant_ThTick_Eat
