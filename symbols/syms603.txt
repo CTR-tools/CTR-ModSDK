@@ -98,10 +98,10 @@
 
 // unknown 80028ab0
 // unknown 80028ac8
-// unknown 80028ae0
 
-// unknown 80028b9c -- DebugMenu_TimeStamp_EndFrame
-// unknown 80028bb8 -- DebugMenu_TimeStamp_MidFrame
+// unknown 80028ae0 -- DebugMenu_TimeStamp_RecordStart
+// unknown 80028b9c -- DebugMenu_TimeStamp_RecordEndLast
+// unknown 80028bb8 -- DebugMenu_TimeStamp_RecordEnd
 
 80028c10 DebugMenu_InitMenuPositionSize
 
