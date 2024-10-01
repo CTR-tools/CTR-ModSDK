@@ -436,7 +436,10 @@
 // unknown 80039294 -- file debug strings
 80039340 LOAD_StringToUpper
 8003937c LOAD_ReadDirectory
-
+80039464 LOAD_InitCD
+// unknown 800394a0 LOAD_ReadFile1
+// unknown 80039620 LOAD_ReadFile2
+8003977c LOAD_FindFile
 
 
 
