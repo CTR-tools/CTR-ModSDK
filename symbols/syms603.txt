@@ -733,3 +733,11 @@
 
 // skip a bunch
 800629ac PushBuffer_FadeOneWindow
+
+// unknown 8006b910
+// [Large zero'd block]
+// unknown 8006b658
+// [Large zero'd block]
+// unknown 8006b910 -- ScreenText
+// [Large zero'd block]
+// unknown 8006bfd8 (rendering)
