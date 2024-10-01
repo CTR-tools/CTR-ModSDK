@@ -589,3 +589,13 @@
 8004b134 VehPhysProc_PowerSlide_PhysAngular
 8004b81c VehPhysProc_PowerSlide_Finalize
 8004b834 VehPhysProc_PowerSlide_Update
+8004baf8 VehPhysProc_PowerSlide_Init
+
+8004bc04 VehPhysProc_SlamWall_PhysAngular
+8004bcb8 VehPhysProc_SlamWall_Update
+8004bcc0 VehPhysProc_SlamWall_PhysLinear
+8004bcec VehPhysProc_SlamWall_Animate
+8004bd8c VehPhysProc_SlamWall_Init
+
+8004beac VehPhysProc_SpinFirst_Update
+8004bf58 VehPhysProc_SpinFirst_PhysLinear
