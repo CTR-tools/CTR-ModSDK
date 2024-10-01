@@ -599,3 +599,58 @@
 
 8004beac VehPhysProc_SpinFirst_Update
 8004bf58 VehPhysProc_SpinFirst_PhysLinear
+8004bfc0 VehPhysProc_SpinFirst_PhysAngular
+8004c0bc VehPhysProc_SpinFirst_InitSetUpdate
+8004c0d0 VehPhysProc_SpinFirst_Init
+
+8004c1b4 VehPhysProc_SpinLast_Update
+8004c24c VehPhysProc_SpinLast_PhysLinear
+8004c284 VehPhysProc_SpinLast_PhysAngular
+8004c44c VehPhysProc_SpinLast_Init
+
+// unknown 8004c4e4
+8004c53c VehPhysProc_SpinStop_PhysLinear
+8004c568 VehPhysProc_SpinStop_PhysAngular
+8004c61c VehPhysProc_SpinStop_Animate
+8004c6fc VehPhysProc_SpinStop_Init
+
+8004c7b8 VehPickState_NewState
+8004c9ac VehPickupItem_MaskUseWeapon
+8004ccdc VehPickupItem_MissileGetTargetDriver
+// unknown VehPickupItem_PotionThrow
+8004d010 VehPickupItem_ShootNow
+8004e16c VehPickupItem_ShootOnCirclePress
+
+8004e200 VehStuckProc_MaskGrab_FindDestPos
+8004e734 VehStuckProc_MaskGrab_Particles
+8004e7d0 VehStuckProc_MaskGrab_Update
+8004e90c VehStuckProc_MaskGrab_PhysLinear
+8004e95c VehStuckProc_MaskGrab_Animate
+8004ec7c VehStuckProc_MaskGrab_Init
+
+8004ee6c VehStuckProc_PlantEaten_Update
+8004ef8c VehStuckProc_PlantEaten_PhysLinear
+8004efdc VehStuckProc_PlantEaten_Animate
+8004f1e8 VehStuckProc_PlantEaten_Init
+
+// no RIP
+
+8004f2f4 VehStuckProc_RevEngine_Update
+8004f400 VehStuckProc_RevEngine_PhysLinear
+8004f508 VehStuckProc_RevEngine_Animate
+8004f97c VehStuckProc_RevEngine_Init
+
+8004fac8 VehStuckProc_Tumble_Update
+8004fb54 VehStuckProc_Tumble_PhysLinear
+8004fbd4 VehStuckProc_Tumble_PhysAngular
+8004fcc8 VehStuckProc_Tumble_Animate
+8004fd28 VehStuckProc_Tumble_Init
+
+8004fe2c RB_CrateAny_ThTick_Explode
+// unknown 8004fea4 (explode thread init)
+8004fef8 RB_CrateAny_ThTick_Grow
+8004ffb8 RB_CrateWeapon_ThCollide
+80050390 RB_CrateWeapon_LInC
+// unknown 80050444
+800504f8 RB_CrateFruit_ThCollide
+800508f8 RB_CrateFruit_LInC
