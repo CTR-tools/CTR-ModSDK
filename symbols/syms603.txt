@@ -672,3 +672,12 @@
 80051308 RB_Fruit_LInC
 
 800513d4 RB_Plant_ThTick_Eat
+800516c4 RB_Plant_ThTick_Grab
+80051824 RB_Plant_ThTick_Transition_HungryToRest
+// unknown 80051884
+80051970 RB_Plant_ThTick_Hungry
+80051b5c RB_Plant_ThTick_Rest
+80051c58 RB_Plant_LInB
+
+80051d7c RB_Snowball_ThTick
+80051f94 RB_Snowball_LInB
