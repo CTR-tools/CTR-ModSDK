@@ -92,7 +92,7 @@
 8002873c DebugSetRes_640x480i
 800287dc DebugCamera_SetPathPoint
 80028814 DebugMenu_LoadGame_GivenLevelId
-80028854 DebugMenu_LoadGame_GivenPreconfigIndex
+80028854 DebugMenu_LoadGame_GivenIndexE3
 80028a6c DebugMenu_LoadGame_GivenCharacterId
 80028a98 DebugMenu_LoadGame_GivenNumPlyr
 
