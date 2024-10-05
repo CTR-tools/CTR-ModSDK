@@ -32,28 +32,30 @@ void ThreadFunc(struct Thread* t)
 	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
-	octr->boolPlanetLEV = gGT->levelID == INTRO_RACE_TODAY; //was 0x26 (globe level)
+	octr->boolPlanetLEV = gGT->levelID == 0x26; //was 0x26 (globe level)
 
 	if(octr->boolPlanetLEV)
 	{
-		*(int*)0x800ae54c = 0x3e00008;
-		*(int*)0x800ae550 = 0;
+		//this code seems to be causing the LOAD screen crash.
+		
+		//*(int*)0x800ae54c = 0x3e00008;
+		//*(int*)0x800ae550 = 0;
 
-        // freecam mode
-        gGT->cameraDC[0].cameraMode = 3;
+        //// freecam mode
+        //gGT->cameraDC[0].cameraMode = 3;
 
-        // disable all HUD flags
-        gGT->hudFlags = 0;
+        //// disable all HUD flags
+        //gGT->hudFlags = 0;
 
-		struct PushBuffer* pb = &gGT->pushBuffer[0];
+		//struct PushBuffer* pb = &gGT->pushBuffer[0];
 
-		pb->pos[0] = 0x3D;
-		pb->pos[1] = 0xF8;
-		pb->pos[2] = 0xF879;
+		//pb->pos[0] = 0x3D;
+		//pb->pos[1] = 0xF8;
+		//pb->pos[2] = 0xF879;
 
-		pb->rot[0] = 0x841;
-		pb->rot[1] = 0x77c;
-		pb->rot[2] = 0xff5;
+		//pb->rot[0] = 0x841;
+		//pb->rot[1] = 0x77c;
+		//pb->rot[2] = 0xff5;
 	}
 
 	// only disable for no$psx testing,
@@ -131,7 +133,7 @@ void ThreadFunc(struct Thread* t)
 	#endif
 
 	// gameplay
-	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
+	if (octr->CurrState >= GAME_WAIT_FOR_RACE && octr->CurrState < GAME_END_RACE)
 	{
 		void DrawOverheadNames();
 		DrawOverheadNames();

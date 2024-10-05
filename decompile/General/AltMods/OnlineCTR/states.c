@@ -425,7 +425,8 @@ void StatePS1_Game_StartRace()
 
 static void OnRaceEnd()
 {
-	struct Driver ** drivers = sdata->gGT->drivers;
+	struct Driver* before = sdata->gGT->cameraDC[0].driverToFollow;
+	struct Driver** drivers = sdata->gGT->drivers;
 	bool foundRacer = false;
 	for (int driverID = 1; driverID < MAX_NUM_PLAYERS; driverID++)
 	{
@@ -438,6 +439,8 @@ static void OnRaceEnd()
 			foundRacer = true;
 		}
 	}
+	//tbh I don't think this fixes the spectator name bug.
+	sdata->gGT->cameraDC[0].driverToFollow = before;
 }
 
 void StatePS1_Game_EndRace()
