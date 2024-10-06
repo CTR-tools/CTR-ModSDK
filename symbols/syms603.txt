@@ -734,13 +734,8 @@
 // skip a bunch
 800629ac PushBuffer_FadeOneWindow
 
-// unknown 8006b910
-// [Large zero'd block]
-// unknown 8006b658
-// [Large zero'd block]
-// unknown 8006b910 -- ScreenText
-// [Large zero'd block]
-// unknown 8006bfd8 (rendering)
+
+
 
 // at 80089c14 is table of SOP strings and SOP funcPtrs
 80062d34 SOP_NOP
@@ -819,3 +814,15 @@
 80064124 SOP_STORE8
 80064154 SOP_STORE16
 80064184 SOP_STORE32
+
+
+
+
+// unknown 8006b910
+// [Large zero'd block]
+// unknown 8006b658
+// [Large zero'd block]
+// unknown 8006b910 -- ScreenText
+// [Large zero'd block]
+// unknown 8006bfd8 (rendering)
+
