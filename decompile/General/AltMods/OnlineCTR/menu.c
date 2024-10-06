@@ -82,7 +82,7 @@ void NewPage_ServerCountry()
 {
 	int i;
 
-	menu.posX_curr = 0x198; // X position
+	menu.posX_curr = 0x188; // X position
 	menu.posY_curr = 0x84;  // Y position
 
 	// override "LAPS" "3/5/7",
@@ -141,27 +141,48 @@ void NewPage_ServerRoom()
 {
 	int i;
 
-	// override "LAPS" "3/5/7"
-	sdata->lngStrings[0x9a] = "ROOM 1 - x/8";
-	sdata->lngStrings[0x9b] = "ROOM 2 - x/8";
-	sdata->lngStrings[0x9c] = "ROOM 3 - x/8";
-	sdata->lngStrings[0x9d] = "ROOM 4 - x/8";
-	sdata->lngStrings[0x9e] = "ROOM 5 - x/8";
-	sdata->lngStrings[0x9f] = "ROOM 6 - x/8";
-	sdata->lngStrings[0xa0] = "ROOM 7 - x/8";
-	sdata->lngStrings[0xa1] = "ROOM 8 - x/8";
-
 	int pn = octr->PageNumber;
+
+	const char* itemless = "ITEMLESS";
+	const char* items    = "ITEMS   ";
+	const char* retro    = "RETRO   ";
+	const char* itmretro = "ITEM+RET";
+
+	sdata->lngStrings[0x9a] = "ROOM     1 - x/8";
+	sdata->lngStrings[0x9b] = "ROOM     2 - x/8";
+	sdata->lngStrings[0x9c] = "ROOM     3 - x/8";
+	sdata->lngStrings[0x9d] = "ROOM     4 - x/8";
+	sdata->lngStrings[0x9e] = "ROOM     5 - x/8";
+	sdata->lngStrings[0x9f] = "ROOM     6 - x/8";
+	sdata->lngStrings[0xa0] = "ROOM     7 - x/8";
+	sdata->lngStrings[0xa1] = "ROOM     8 - x/8";
+	for (i = 0; i < 8; i++)
+	{
+		int rn = i + (pn * 8);
+		const char* type;
+		if (rn >= ROOM_ITEMLESSSTART  && rn < (ROOM_ITEMLESSSTART + ROOM_ITEMLESSLENGTH))
+			type = itemless;
+		if (rn >= ROOM_ITEMSTART      && rn < (ROOM_ITEMSTART + ROOM_ITEMLENGTH))
+			type = items;
+		if (rn >= ROOM_RETROSTART     && rn < (ROOM_RETROSTART + ROOM_RETROLENGTH))
+			type = retro;
+		if (rn >= ROOM_ITEMRETROSTART && rn < (ROOM_ITEMRETROSTART + ROOM_ITEMRETROLENGTH))
+			type = itmretro;
+		for (int name = 0; name < 8; name++)
+		{
+			sdata->lngStrings[0x9a+i][name] = type[name]; //replace "ROOM" with the roomtype
+		}
+	}
 
 	for(i = 0; i < 8; i++)
 	{
 		menuRows[i].stringIndex = 0x809a+i;
-		sdata->lngStrings[0x9a+i][5] = GetRoomChar(8*pn + i+1);
-		sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]);
+		sdata->lngStrings[0x9a+i][9] = GetRoomChar(8*pn + i+1);
+		sdata->lngStrings[0x9a+i][13] = '0' + (octr->clientCount[8*pn+i]);
 
 		// handle locked rows
 		if(octr->clientCount[8*pn+i] > 8)
-			sdata->lngStrings[0x9a+i][9] = '0' + (octr->clientCount[8*pn+i]) - 8;
+			sdata->lngStrings[0x9a+i][13] = '0' + (octr->clientCount[8*pn+i]) - 8;
 	}
 
 	int numRooms = GetNumRoom();

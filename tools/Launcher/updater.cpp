@@ -46,7 +46,7 @@ bool Updater::CheckForUpdates(std::string& status, const std::string& currVersio
   );
 }
 
-bool Updater::Update(std::string& status, std::string& currVersion, const std::string& gamePath, const std::string& biosPath)
+bool Updater::Update(std::string& status, std::string& currVersion, const std::string& gamePath, const std::string& biosPath) //this function is literally called by the update BUTTON. Ensure that the user can update (i.e., replace their old version of duckstation via some method in the launcher) (e.g., purge duckstation, then update).
 {
   return StartRoutine([&]
     {
@@ -69,6 +69,7 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
           return false;
         }
         status = "Installing custom settings...";
+        //setup bios
         const std::string g_biosFolder = g_duckFolder + "bios/";
         std::filesystem::create_directory(g_biosFolder);
         std::string biosName;
@@ -80,7 +81,8 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
             break;
           }
         }
-        std::filesystem::copy_file(biosPath, g_biosFolder + biosName);
+        std::filesystem::copy_file(biosPath, g_biosFolder + biosName, std::filesystem::copy_options::overwrite_existing);
+        //setup portable.txt
         const std::string duckPortable = g_duckFolder + "portable.txt";
         std::ofstream portableFile(duckPortable.c_str());
         portableFile.close();
@@ -96,7 +98,13 @@ bool Updater::Update(std::string& status, std::string& currVersion, const std::s
           std::string path = g_dataFolder + m_versionAvailable + "/";
           if (Requests::DownloadUpdates(path, status) && Patch::NewVersion(path, gamePath, status))
           {
-            if (copyIni) { std::filesystem::copy_file(GetIniPath_Version(m_versionAvailable), GetIniPath_Duck()); }
+            if (copyIni)
+            {
+              const std::string iniDir = g_duckFolder + "gamesettings/";
+              std::filesystem::create_directory(iniDir);
+              const std::string iniFilename = iniDir + g_configString;
+              std::filesystem::copy_file(GetIniPath_Version(m_versionAvailable), iniFilename, std::filesystem::copy_options::overwrite_existing);
+            }
             m_updated = true;
             m_updateAvailable = false;
             currVersion = m_versionAvailable;

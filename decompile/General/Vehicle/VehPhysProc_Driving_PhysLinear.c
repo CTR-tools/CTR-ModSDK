@@ -1,4 +1,7 @@
 #include <common.h>
+#ifdef USE_RETROFUELED && USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
+#endif
 
 // budget: 4624
 // curr: 4380
@@ -658,7 +661,7 @@ CheckJumpButtons:
 			actionsFlagSetCopy |= 4;
 		}
 	}
-
+#if !defined(USE_RETROFUELED)
 	if
 	(
 		// If you are holding Square
@@ -671,6 +674,39 @@ CheckJumpButtons:
 		// Set Reserves to zero
 		driver->reserves = 0;
 	}
+#else
+	// Assume you're holding cross (X)
+	u_char assumeCross = 0x10;
+	// if you are holding square
+	if (square != 0)
+	{
+		#if defined(USE_ONLINE)
+		int rn = octr->serverRoom;
+		if (!ROOM_IS_RETRO(rn)) //if not retro mode
+			goto SKIP_RF;
+		#endif
+
+		// held DOWN or have landing boost
+		if ((ptrgamepad->buttonsHeldCurrFrame & BTN_DOWN) ||
+			(driver->jump_LandingBoost))
+			{
+				// if not holding cross (X)
+				if (cross == 0)
+				{
+					assumeCross = 0;
+				}
+				goto SKIP_RESERVE_RESET;
+			}
+	SKIP_RF:
+		// you're on a turbo pad
+		if (driver->stepFlagSet & 0x3)
+			goto SKIP_RESERVE_RESET;
+
+		// Set Reserves to zero
+		driver->reserves = 0;
+	}
+	SKIP_RESERVE_RESET:
+#endif
 
 	// assume normal gas pedal
 	stickRY = 0x80;
@@ -715,9 +751,13 @@ CheckJumpButtons:
 			square = 0;
 		}
 
+#if !defined(USE_RETROFUELED)
 		// Assume you're holding Cross, because
 		// you have Reserves and you aren't slowing down
 		cross = 0x10;
+#else
+		cross = assumeCross;
+#endif
 	}
 
 

@@ -167,12 +167,9 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		#endif
 	}
 
-	if (gGT->levelID != 0x26)
+	if (gGT->levelID != 0x26/*INTRO_RACE_TODAY*/) //was 0x26 (globe level)
 	{
 		octr->CurrState = GAME_WAIT_FOR_RACE;
-#ifdef PINE_DEBUG
-		printf("statechange %d GAME_WAIT_FOR_RACE 1: \n", octr->stateChangeCounter++);
-#endif
 	}
 }
 
@@ -188,16 +185,25 @@ bool HasRaceEnded()
 
 RECT windowText = {0x118, 0x40, 0xD8, 0};
 
+//extern int currCam; //from endOfRaceUI.c
+
 void OnlineEndOfRace()
 {
 	struct Driver * driver = sdata->gGT->drivers[0];
 	if (((driver->actionsFlagSet & 0x2000000) == 0) ||
 		(octr->CurrState < GAME_START_RACE)) { return; }
 
+	//this is a potential untested fix for the "spectator name bug"
+	//(i.e.), when first beginning to spectate, the name of the person you're
+	//spectating at the bottom of the screen can sometimes be incorrect until you
+	//change the camera for the first time.
+	//if (octr->CurrState != GAME_END_RACE) //this must be out first frame here.
+	//{
+	//	currCam = 0;
+	//	sdata->gGT->cameraDC[0].driverToFollow = sdata->gGT->drivers[currCam];
+	//}
+
 	octr->CurrState = GAME_END_RACE;
-#ifdef PINE_DEBUG
-	printf("statechange %d GAME_END_RACE 2: \n", octr->stateChangeCounter++);
-#endif
 
 	static unsigned frameCounter = 0;
 	EndOfRace_Camera();

@@ -449,7 +449,25 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			s->juiced = r->juiced;
 			s->flags = r->flags;
 
-			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon));
+			//this is a potential cheat mitigation:
+			//I have it commented out for now BC if we ever change the ROOM_... allocations, that also
+			//requires a server update (lame). Enable this if cheaters using items in non-item rooms becomes
+			//a problem.
+			
+			//int rn = 0;
+			//for (; rn < 16; rn++)
+			//	if (roomInfos + rn == ri)
+			//		break;
+			//if (
+			//		(rn >= ROOM_ITEMSTART && rn < ROOM_ITEMSTART + ROOM_ITEMLENGTH) ||
+			//		(rn >= ROOM_ITEMRETROSTART && rn < ROOM_ITEMRETROSTART + ROOM_ITEMRETROLENGTH)
+			//	) //if this room is in item mode.
+			//{
+			//	broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon));
+			//}
+
+			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon)); //comment this if using the above cheat mitigation
+
 			break;
 		}
 
