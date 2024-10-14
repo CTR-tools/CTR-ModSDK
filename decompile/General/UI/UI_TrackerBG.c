@@ -88,7 +88,6 @@ void DECOMP_UI_TrackerBG(
 
       p->x1 = leftX;
       p->y2 = topY;
-	  p->r0 = 0x0;
     }
 	
 	p->x2 = p->x0;
