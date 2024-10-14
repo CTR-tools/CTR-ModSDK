@@ -94,7 +94,10 @@ EndFunc:
 			
 			// make room for ghost recording and two tapes
 			if((gGT->gameMode1 & TIME_TRIAL) != 0)
-				newSize -= (0x3E00+(0x268*2))/2;
+			{
+				//newSize -= (0x3E00+(0x268*2))/2;
+				newSize -= 0x2200;
+			}
 				
 			// if remaining size is less than OG requirement,
 			// allocate way too much memory and crash the game

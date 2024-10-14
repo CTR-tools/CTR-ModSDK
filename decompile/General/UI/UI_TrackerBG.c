@@ -30,6 +30,9 @@ void DECOMP_UI_TrackerBG(
   bottomY = centerY + offsY;
   angleY >>= 0xc;
   topY = bottomY - angleY;
+  
+  int altX0 = (centerX + (offsX * 2)) - angleX;
+  int altY0 = (centerY + (offsY * 2)) - angleY;
 
   // loop 4 times
   for (quadIndex = 0; quadIndex < 4; quadIndex++)
@@ -40,7 +43,7 @@ void DECOMP_UI_TrackerBG(
     *(int*)&p->r0 = *(int*)&color;
     *(int*)&p->u0 = *(int*)&targetIcon->texLayout.u0;
     *(int*)&p->u1 = *(int*)&targetIcon->texLayout.u1;
-    *(int*)&p->u2 = *(int*)&targetIcon->texLayout.u2;
+    *(short*)&p->u2 = *(short*)&targetIcon->texLayout.u2;
     *(short*)&p->u3 = *(short*)&targetIcon->texLayout.u3;
 
 	setPolyFT4(p);
@@ -51,33 +54,41 @@ void DECOMP_UI_TrackerBG(
       p->code |= 2;
     }
 
+	// compiler optimization will remove this,
+	// if not using widescreen hacks
+	int len = 0;
+	
+	#ifdef USE_16BY9
+	// widescreen, need to scale X by 75%,
+	// so subtract 12% from left and 12% from right
+	len = (offsX * 125) / 1000;
+	#endif
+
 	// quadIndex(0)
-	p->x0 = centerX;
-	p->y0 = centerY;
+	p->x0 = centerX + len;
 	p->x1 = rightX;
+	p->y0 = centerY;
 	p->y2 = bottomY;
-
-	int altX0 = (centerX + (offsX * 2)) - angleX;
-	int altY0 = (centerY + (offsY * 2)) - angleY;
-
+	
     switch (quadIndex)
-    {
+    {	
     case 1:
-      p->x0 = altX0;
+      p->x0 = altX0 - len;
       p->x1 = leftX;
-      break;
+	  break;
 
     case 2:
       p->y0 = altY0;
       p->y2 = topY;
-      break;
+	  break;
 
     case 3:
-      p->x0 = altX0;
+      p->x0 = altX0 - len;
       p->y0 = altY0;
 
       p->x1 = leftX;
       p->y2 = topY;
+	  p->r0 = 0x0;
     }
 	
 	p->x2 = p->x0;

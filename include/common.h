@@ -3,8 +3,8 @@
 
 // toggle these in decompile
 
-//#define USE_60FPS		// 60 frames per second
-//#define USE_16BY9		// Widescreen
+#define USE_60FPS		// 60 frames per second
+#define USE_16BY9		// Widescreen
 //#define USE_NEW2P		// Requires 16BY9: Side-By-Side 2P
 //#define USE_OXIDE		// Unlock Oxide
 //#define USE_PENTA		// Penta Max Stats
@@ -16,7 +16,7 @@
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
 //#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
-#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
+//#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
 
 //#define USE_VR		// Virtual Reality
@@ -27,11 +27,11 @@
 #define USE_16BY9
 #define USE_RAMEX
 #define USE_BIGQUEUE
-#define USE_HIGH1P
 //#define PINE_DEBUG //enable this for logging of CurrState change on game and client.
 #endif
 
 #ifdef USE_60FPS
+#define USE_HIGH1P // patch LODs
 #define FPS_DOUBLE(x) ((x)*2)
 #define FPS_HALF(x) ((x)/2)
 #define FPS_LEFTSHIFT(x) ((x)-1)
@@ -47,7 +47,7 @@
 // param1 - normal
 // param2 - widescreen
 #ifdef USE_16BY9
-#define WIDE_34(x) ((((x)*750) + 500)/1000)
+#define WIDE_34(x) ((((x)*750))/1000)
 #define WIDE_PICK(x,y) (y)
 #else
 #define WIDE_34(x) (x)

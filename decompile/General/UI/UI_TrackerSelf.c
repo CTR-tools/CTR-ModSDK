@@ -212,6 +212,16 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
   // check distance
   if (warpballDist < 16000) 
   {
+	primMem = &gGT->backBuffer->primMem;
+	
+	// if curr < near-end
+	if ((primMem->curr+4) > primMem->endMin100)
+		return;
+	
+	// increment curr
+	p = primMem->curr;
+	primMem->curr = p + 4;
+
     sVar6 = sVar18 + (x >> 8);
     sVar5 = (short)((y * 7) >> 12);
 
@@ -222,18 +232,6 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       if (i == 0) {
         orientation = -1;
       }
-
-	  primMem = &gGT->backBuffer->primMem;
-      p = primMem->curr;
-
-      // if curr < near-end
-      if (p <= primMem->endMin100) {
-        // increment curr
-        primMem->curr = p + 1;
-      }
-
-      if (p == 0)
-        return;
 
       // if tracking object is warpball
       if (data.trackerType[driverid] == 1) {
@@ -255,13 +253,16 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       *(int * )&p->r1 = 0x30ffffff;
       *(int * )&p->r2 = rgb2;
 
-      sVar4 = orientation * sVar6;
-      p->x2 = screenPosX + sVar4;
-      p->y2 = screenPosY - 12;
-      p->x1 = screenPosX + orientation * sVar18;
-      p->y1 = screenPosY - 12;
+      sVar4 = orientation * WIDE_34(sVar6);
       p->x0 = screenPosX + sVar4;
+      p->x2 = screenPosX + sVar4;
+	  
+	  sVar4 = orientation * WIDE_34(sVar18);
+      p->x1 = screenPosX + sVar4;
+	  
       p->y0 = screenPosY - (sVar5 + 12);
+      p->y1 = screenPosY - 12;
+      p->y2 = screenPosY - 12;
 
       ot = gGT->pushBuffer[driverid].ptrOT;
 
@@ -269,17 +270,8 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       *ot = (u_int) p&0xffffff;
 
       // next Prim
-
-      p = primMem->curr;
-
-      // if curr < near-End
-      if (p <= primMem->endMin100) {
-        // increment curr
-        primMem->curr = p + 1;
-      }
-
-      if (p == NULL)
-        return;
+	  POLY_G3 * pLast = p;
+	  p++;
 
       // if tracking object is warpball
       if (data.trackerType[driverid] == 1) {
@@ -303,16 +295,16 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
       *(int * )&p->r1 = rgb1;
       *(int * )&p->r2 = rgb2;
 
-      sVar4 = orientation * sVar6;
-      p->x2 = screenPosX + sVar4;
+      *(int*)&p->x0 = *(int*)&pLast->x0;
+      *(int*)&p->x1 = *(int*)&pLast->x1;
+      p->x2 = pLast->x2;
+	  
       p->y2 = screenPosY + sVar5 - 12;
-      p->x1 = screenPosX + orientation * sVar18;
-      p->y1 = screenPosY - 12;
-      p->x0 = screenPosX + sVar4;
-      p->y0 = screenPosY - 12;
 
       *(int*)p = *ot | 0x6000000;
       *ot = (u_int) p&0xffffff;
+	  
+	  p++;
     }
   }
 
