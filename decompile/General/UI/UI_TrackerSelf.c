@@ -318,5 +318,5 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 
 	&gGT->backBuffer->primMem,
 	gGT->pushBuffer[driverid].ptrOT,
-	1, x, y, bgColor);
+	x, y, bgColor);
 }

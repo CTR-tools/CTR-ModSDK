@@ -3,7 +3,7 @@
 // byte budget 580/632
 void DECOMP_UI_TrackerBG(
 	struct Icon *targetIcon, short centerX, short centerY, 
-	struct PrimMem *primMem, u_long *ot, char texturePageIdx, 
+	struct PrimMem *primMem, u_long *ot,
 	short angleX, short angleY, int color)
 {
   short rightX;
@@ -48,11 +48,8 @@ void DECOMP_UI_TrackerBG(
 
 	setPolyFT4(p);
 
-    if (texturePageIdx != 0)
-    {
-      p->tpage = (p->tpage & 0xff9f) | ((texturePageIdx - 1) * 0x20);
-      p->code |= 2;
-    }
+    p->tpage = (p->tpage & 0xff9f);
+    p->code |= 2;
 
 	// compiler optimization will remove this,
 	// if not using widescreen hacks
