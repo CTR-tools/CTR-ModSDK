@@ -5531,6 +5531,11 @@ LAB_80053584:
         }
       }
 
+	  // === Naughty Dog Bug ===
+	  // This block will never execute in Life Limit,
+	  // even though original code has a block inside this IF
+	  // that checks for Life Limit
+
 	  // if you're in battle mode, while not paused
 	  // and you do not have a life limit
       if ((*(uint *)PTR_DAT_8008d2ac & 0x802f) == 0x20)
