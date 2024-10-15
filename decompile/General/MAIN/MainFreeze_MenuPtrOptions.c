@@ -240,7 +240,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	int volumeSliderWidth = 380 - (30 + volumeSliderTriangleLeftMargin);
 
-	struct OTMem* otMem = &gGT->backBuffer->otMem;
+	int* ot = &gGT->backBuffer->otMem.startPlusFour;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 
 	// draw volume sliders
@@ -284,7 +284,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		DECOMP_CTR_Box_DrawSolidBox(
 			&volumeSliderBar,
 			color,
-			otMem->startPlusFour);
+			ot);
 
 		RECT volumeSliderBarOutline =
 		{
@@ -298,12 +298,12 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		DECOMP_CTR_Box_DrawSolidBox(
 			&volumeSliderBarOutline,
 			color,
-			otMem->startPlusFour);
+			ot);
 
 		RECTMENU_DrawRwdTriangle(
 			volumeSliderTriangle,
 			data.Options_VolumeSlider_Colors,
-			otMem->startPlusFour,
+			ot,
 			primMem);
 
 		// "FX:" "MUSIC:" "VOICE:"
@@ -445,7 +445,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 	DECOMP_CTR_Box_DrawClearBox(
 		&cursor, &sdata->menuRowHighlight_Normal,
-		TRANS_50_DECAL, otMem->startPlusFour);
+		TRANS_50_DECAL, ot);
 
 	RECT titleSeparatorLine =
 	{
@@ -459,7 +459,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	DECOMP_RECTMENU_DrawOuterRect_Edge(
 		&titleSeparatorLine,
 		color,
-		0x20, otMem->startPlusFour);
+		0x20, ot);
 
 	RECT menuBG =
 	{
@@ -470,7 +470,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 	};
 
 	RECTMENU_DrawInnerRect(
-		&menuBG, 4, otMem->startPlusFour);
+		&menuBG, 4, ot);
 }
 
 void DECOMP_MainFreeze_MenuPtrOptions(struct RectMenu* menu)
