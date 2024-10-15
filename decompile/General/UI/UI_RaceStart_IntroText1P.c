@@ -212,15 +212,17 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 
       // Draw tiny rectangle near big black title bar (first)
       rect.y = gGT->pushBuffer[0].rect.y - (windowHeight + -0x1c);
-      Color color;
+      
+	  Color color;
       color.self = colors[0];
-      DECOMP_CTR_Box_DrawSolidBox(&rect, color,
-         gGT->backBuffer->otMem.startPlusFour);
+      
+	  int* ot = gGT->backBuffer->otMem.startPlusFour;
+	  
+	  DECOMP_CTR_Box_DrawSolidBox(&rect, color, ot);
 
       // Draw tiny rectangle near big black title bar (second)
 	  rect.y = gGT->pushBuffer[0].rect.y + gGT->pushBuffer[0].rect.h + windowHeight + -0x1e;
-      DECOMP_CTR_Box_DrawSolidBox(&rect, color,
-         gGT->backBuffer->otMem.startPlusFour);
+      DECOMP_CTR_Box_DrawSolidBox(&rect, color, ot);
 
 	  // 30-pixel height
       // clear RGB, keep alpha (which is zero anyway)
@@ -230,13 +232,11 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 
       // draw big black title bar (first)
 	  rect.y = gGT->pushBuffer[0].rect.y - windowHeight;
-      DECOMP_CTR_Box_DrawSolidBox(&rect, color,
-         gGT->backBuffer->otMem.startPlusFour);
+      DECOMP_CTR_Box_DrawSolidBox(&rect, color, ot);
 
       // draw big black title bar (second)
 	  rect.y = gGT->pushBuffer[0].rect.y + gGT->pushBuffer[0].rect.h + windowHeight + -0x1e;
-      DECOMP_CTR_Box_DrawSolidBox(&rect, color,
-         gGT->backBuffer->otMem.startPlusFour);
+      DECOMP_CTR_Box_DrawSolidBox(&rect, color, ot);
    }
    return;
 }

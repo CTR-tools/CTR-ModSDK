@@ -50,6 +50,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	struct CharacterSelectMeta* csm_Active;
 
 	struct GameTracker* gGT = sdata->gGT;
+	
+	int* ot = gGT->backBuffer->otMem.startPlusFour;
 
 	for (i = 0; i < 4; i++)
 	{
@@ -470,8 +472,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 		color = *(Color *) puVar12;
 		DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-			r, color, 0,
-			gGT->backBuffer->otMem.startPlusFour);
+			r, color, 0, ot);
 	}
 
 	DECOMP_MM_Characters_PreventOverlap();
@@ -588,7 +589,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			Color color = *(Color *) &colorRGBA;
 			// this draws the flashing blue square that appears when you highlight a character in the character select screen
-			DECOMP_CTR_Box_DrawSolidBox(r, color, gGT->backBuffer->otMem.startPlusFour);
+			DECOMP_CTR_Box_DrawSolidBox(r, color, ot);
 		}
 		if
 		(
@@ -661,7 +662,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			// Draw 2D Menu rectangle background
 			DECOMP_RECTMENU_DrawInnerRect(
-				r, 0, gGT->backBuffer->otMem.startPlusFour);
+				r, 0, ot);
 		}
 	}
 
@@ -688,7 +689,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			color = *(Color *) &colorRGBA;
 			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				r, color, 0, gGT->backBuffer->otMem.startPlusFour);
+				r, color, 0, ot);
 
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0)
@@ -712,14 +713,14 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					color = *(Color *) &colorRGBA;
 					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
 						&r58, color, 0,
-						gGT->backBuffer->otMem.startPlusFour);
+						ot);
 				}
 			}
 			psVar22 = psVar22 + 2;
 
 			// Draw 2D Menu rectangle background
 			DECOMP_RECTMENU_DrawInnerRect(
-				r, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
+				r, 9, &ot[3]);
 
 			// not screen-space anymore,
 			// this is viewport-space

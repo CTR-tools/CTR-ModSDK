@@ -439,7 +439,8 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 	Color color;
 	color.self = sdata->battleSetup_Color_UI_1;
-	DECOMP_RECTMENU_DrawOuterRect_Edge(&r, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
+	int* ot = gGT->backBuffer->otMem.startPlusFour;
+	DECOMP_RECTMENU_DrawOuterRect_Edge(&r, color, 0x20, ot);
 
 	r.x = 0x100 - half;
 	r.y = 10;
@@ -448,7 +449,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 	// Draw 2D Menu rectangle background
 	DECOMP_RECTMENU_DrawInnerRect(
-		&r, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
+		&r, 4, &ot[3]);
 
 	for(int i = 0; i < 0xe; i++)
 	{
