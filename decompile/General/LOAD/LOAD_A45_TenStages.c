@@ -588,10 +588,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			gGT->visMem1 = lev->visMem;
 
 			// if LEV is valid
-			if (gGT->level1 != 0)
+			if (lev != 0)
 			{
 				// Load Icons and IconGroups from LEV
-				DECOMP_DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
+				DECOMP_DecalGlobal_Store(gGT, lev->levTexLookup);
 			}
 
 			DECOMP_DebugFont_Init(gGT);
