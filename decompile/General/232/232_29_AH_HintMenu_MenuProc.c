@@ -123,8 +123,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-        color.self = sdata->menuRowHighlight_Normal;
-        DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+        DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 
 		box.y = 0x3c;
         box.x = -0xe;
@@ -322,8 +321,7 @@ LAB_800b38cc:
     box.y = (menu->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-    color.self = sdata->menuRowHighlight_Normal;
-    DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+    DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 
     box.y = 0x3c;
     box.h = 2;

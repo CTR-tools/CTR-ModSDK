@@ -10,10 +10,8 @@ void DECOMP_UI_VsWaitForPressX(void)
   int string;
   int local_78;
   short shortArr3P4P[2*4];
-  char acStack88[8];
   short local_50;
   short local_4e;
-  char *local_38;
   char *local_34;
 
   *(int*)&shortArr3P4P[0] = 0x350055;
@@ -27,18 +25,13 @@ void DECOMP_UI_VsWaitForPressX(void)
   char numPlyr = gGT->numPlyrCurrGame;
   short ready = 0;
   int tap;
-  u_int pressedX;
+  u_int* pressedX;
   u_int eor_flag;
-
-  // if a player exists
-  if (numPlyr)
-  {
-    local_34 = acStack88;
 
     for (i = 0; i < numPlyr; i++)
     {
       // flags, for which players have pressed X to continue
-      pressedX = sdata->Battle_EndOfRace.Flags_PressX[i];
+      pressedX = &sdata->Battle_EndOfRace.Flags_PressX[i];
 
       viewport = &gGT->pushBuffer[i].rect;
 
@@ -71,7 +64,7 @@ void DECOMP_UI_VsWaitForPressX(void)
             (gGT->timerEndOfRaceVS < 0x78))
         {
           // Flip the 2nd bit, change 0 to 2
-          pressedX = pressedX ^ 2;
+          *pressedX = *pressedX ^ 2;
         }
 
         // If you want to see YOU HIT (assumed by default)
@@ -101,12 +94,6 @@ void DECOMP_UI_VsWaitForPressX(void)
 
                              3, 0xffff8004);
 
-          // if numPlyrCurrGame is not zero
-          if (numPlyr)
-          {
-            // same as checking HIT YOU vs YOU HIT before
-            local_38 = pressedX;
-
             // If you have 3 screens, you need 9 prints
             // If you have 4 screens, you need 16 prints
 
@@ -135,7 +122,7 @@ void DECOMP_UI_VsWaitForPressX(void)
               iVar8 = (int)local_4e;
 
               // YOU HIT THEM
-              if ((*local_38 & 1) == 0)
+              if ((*pressedX & 1) == 0)
               {
                 numAttacked = currDriver->numTimesAttackingPlayer[0];
               }
@@ -146,7 +133,9 @@ void DECOMP_UI_VsWaitForPressX(void)
                 numAttacked = currDriver->numTimesAttackedByPlayer[0];
               }
 
-              sprintf(acStack88, "p%d:%2.02d",
+			  // only 8 bytes, use scratchpad
+			  
+              sprintf(0x1f800000, "p%d:%2.02d",
 
                       // basically, j + 1
                       // which is (1, 2, 3, 4)
@@ -160,7 +149,7 @@ void DECOMP_UI_VsWaitForPressX(void)
 
               local_78 = (sVar4 + 0x18U | 0x8000);
 
-              DecalFont_DrawLine(acStack88,
+              DecalFont_DrawLine(0x1f800000,
 
                                  // midpoint between Start X and Size X
                                  (viewport->x + shortArr[j*2+0]),
@@ -170,7 +159,6 @@ void DECOMP_UI_VsWaitForPressX(void)
 
                                  2);
             }
-          }
         }
       }
 
@@ -179,16 +167,15 @@ void DECOMP_UI_VsWaitForPressX(void)
       {
         // Stop drawing comment + battle stats
 
-        memset(local_34, 0, 4);
-
         // rectangle parameters, screen dimensions
         r.x = viewport->x;
         r.y = viewport->y;
         r.w = viewport->w;
         r.h = viewport->h;
 
-        Color color = *(Color *)local_34;
-        DECOMP_CTR_Box_DrawClearBox(&r, color, 0, gGT->backBuffer->otMem.startPlusFour);
+		// 4-byte RGBA = black
+		*(int*)0x1f800000 = 0;
+        DECOMP_CTR_Box_DrawClearBox(&r, 0x1f800000, 0, gGT->backBuffer->otMem.startPlusFour);
 
         // If player presses Square, to go back to view End-Of-Race comment,
         // or in Battle mode this includes "Hit You / You Hit" screen
@@ -202,7 +189,6 @@ void DECOMP_UI_VsWaitForPressX(void)
         ready++;
       }
     }
-  }
 
   // if number players ready to continue is equal to numPlyrCurrGame
   // Basically: If all players press X to continue

@@ -61,15 +61,12 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 			drawMode = ((type & 0x100) != 0) ? 2 : 0;
 			colorDataSpecial = ((type & 0x100) != 0) ? &sdata->DrawSolidBoxData[1] : &sdata->DrawSolidBoxData[2];
 
-			Color color;
-			color.self = *colorDataSpecial;
-			DECOMP_CTR_Box_DrawClearBox(&adjustedRect, color, drawMode, ot);
+			DECOMP_CTR_Box_DrawClearBox(&adjustedRect, colorDataSpecial, drawMode, ot);
 		}
 		else
 		{
-			Color color;
-			color.self = sdata->DrawSolidBoxData[0];
-			DECOMP_CTR_Box_DrawSolidBox(&adjustedRect, color, ot);
+			Color* color = &sdata->DrawSolidBoxData[0];
+			DECOMP_CTR_Box_DrawSolidBox(&adjustedRect, *color, ot);
 		}
 	}
 
@@ -84,8 +81,7 @@ void DECOMP_RECTMENU_DrawInnerRect(RECT *r, int type, void *ot)
 		adjustedRect.w = horizontalOffset;
 		adjustedRect.h = r->h;
 
-		Color color;
-		color.self = sdata->DrawSolidBoxData[0];
+		int* color = &sdata->DrawSolidBoxData[0];
 		DECOMP_CTR_Box_DrawClearBox(&adjustedRect, color, 0, ot); // Adjust and draw the box
 
 		adjustedRect.x = r->x + horizontalOffset;

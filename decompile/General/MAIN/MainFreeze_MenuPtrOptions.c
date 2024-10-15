@@ -443,10 +443,8 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		.h = data.Options_HighlightBar[menu->rowSelected].sizeY
 	};
 
-	Color color;
-	color.self = sdata->menuRowHighlight_Normal;
 	DECOMP_CTR_Box_DrawClearBox(
-		&cursor, color,
+		&cursor, &sdata->menuRowHighlight_Normal,
 		TRANS_50_DECAL, otMem->startPlusFour);
 
 	RECT titleSeparatorLine =
