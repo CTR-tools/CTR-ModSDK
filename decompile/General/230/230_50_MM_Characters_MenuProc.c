@@ -616,7 +616,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			DECOMP_DecalFont_DrawLine
 			(
 				sdata->lngStrings[data.MetaDataCharacters[csm_Active->characterID].name_LNG_long],
-				(int)((((struct TransitionMeta*)iVar8)->currX + D230.characterSelect_ptrWindowXY[j * 2] + (((int)((u_int)D230.characterSelect_sizeX << 0x10) >> 0x10) - ((int)((u_int)D230.characterSelect_sizeX << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
+				(int)((struct TransitionMeta*)iVar8)->currX + D230.characterSelect_ptrWindowXY[j * 2] + (int)((u_int)D230.characterSelect_sizeX >> 1),
 				(int)sVar6, fontType, (JUSTIFY_CENTER | ORANGE)
 			);
 		}
