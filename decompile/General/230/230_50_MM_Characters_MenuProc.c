@@ -117,6 +117,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		}
 	}
 
+	posX = D230.ptrTransitionMeta[15].currX;
+	posY = D230.ptrTransitionMeta[15].currY;
+
 	switch(D230.characterSelectIconLayout)
 	{
 		// 3P character selection
@@ -129,8 +132,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			DECOMP_DecalFont_DrawLine
 			(
 				sdata->lngStrings[96],
-				D230.ptrTransitionMeta[15].currX + 0x9c,
-				D230.ptrTransitionMeta[15].currY + 0x14,
+				posX + 0x9c,
+				posY + 0x14,
 				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_BIG;
@@ -138,8 +141,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[97];
 
-			posX = D230.ptrTransitionMeta[15].currX + 0x9c;
-			posY = D230.ptrTransitionMeta[15].currY + 0x26;
+			posX = posX + 0x9c;
+			posY = posY + 0x26;
 			break;
 
 		// 4P character selection
@@ -152,8 +155,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			DECOMP_DecalFont_DrawLine
 			(
 				sdata->lngStrings[96],
-				D230.ptrTransitionMeta[15].currX + 0xfc,
-				D230.ptrTransitionMeta[15].currY + 8,
+				posX + 0xfc,
+				posY + 8,
 				FONT_CREDITS, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_CREDITS;
@@ -161,8 +164,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[97];
 
-			posX = D230.ptrTransitionMeta[15].currX + 0xfc;
-			posY = D230.ptrTransitionMeta[15].currY + 0x18;
+			posX = posX + 0xfc;
+			posY = posY + 0x18;
 			break;
 
 		// If you are in 1P or 2P character selection,
@@ -174,8 +177,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// SELECT CHARACTER
 			characterSelectString = sdata->lngStrings[95];
 
-			posX = D230.ptrTransitionMeta[15].currX + 0xfc;
-			posY = D230.ptrTransitionMeta[15].currY + 10;
+			posX = posX + 0xfc;
+			posY = posY + 10;
 			break;
 
 		default:
@@ -183,7 +186,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	}
 
 	// Draw String
-	DECOMP_DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
+	DECOMP_DecalFont_DrawLine(
+		characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
 
 	dontDrawSelectCharacter:
 
@@ -661,9 +665,6 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		}
 	}
 
-	// if number of players is not zero
-	if (gGT->numPlyrNextGame != 0)
-	{
 		psVar22 = D230.characterSelect_ptrWindowXY;
 
 		for (i = 0; i < gGT->numPlyrNextGame; i++)
@@ -731,6 +732,5 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				&gGT->pushBuffer[i].ptrOT[0x3ff], &gGT->backBuffer->primMem
 			);
 		}
-	}
 	return;
 }
