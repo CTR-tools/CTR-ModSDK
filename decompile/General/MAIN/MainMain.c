@@ -120,6 +120,12 @@ u_int DECOMP_main()
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case 3:
+			#ifdef USE_LANG
+			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
+				LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
+				gGT->gameMode2 &= ~(LNG_CHANGE);
+			}
+			#endif
 				// if loading, or gameplay interrupted
 				if (sdata->Loading.stage != -1)
 				{
