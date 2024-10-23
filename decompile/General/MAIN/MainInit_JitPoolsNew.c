@@ -141,10 +141,10 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 
   int numDriver = uVar7 >> 9;
-  if ((gameMode & MAIN_MENU) != 0) numDriver = 4;
   if (gGT->numPlyrCurrGame == 2) numDriver = 6;
   if (gGT->numPlyrCurrGame > 2) numDriver = 4;
   if ((gameMode & TIME_TRIAL) != 0) numDriver = 3;
+  if ((gameMode & MAIN_MENU) != 0) numDriver = 4;
 
   #ifdef USE_ONLINE
   numDriver = 8;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color color, int transparency, u_long * ot)
+void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color* color, int transparency, u_long * ot)
 {
 	typedef struct TPage_PolyF4
 	{
@@ -16,8 +16,8 @@ void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color color, int transparency, u_long
 	p->p.tag.self = 0;
 
 	const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1, .semiTransparency = 1 } };
-	color.code = primCode;
-	p->p.colorCode = color;
+	color->code = primCode;
+	p->p.colorCode = *color;
 
 	s16 topX = r->x;
 	s16 topY = r->y;

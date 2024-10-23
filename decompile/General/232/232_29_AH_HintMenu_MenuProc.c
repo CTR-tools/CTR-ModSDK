@@ -123,8 +123,8 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-        color.self = sdata->menuRowHighlight_Normal;
-        DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+		int* ot = gGT->backBuffer->otMem.startPlusFour;
+        DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
 		box.y = 0x3c;
         box.x = -0xe;
@@ -132,7 +132,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.h = 2;
 
         color.self = sdata->battleSetup_Color_UI_1;
-        DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
+        DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, ot);
 
         box.y = 0x28;
         box.h = (short)iVar11 + 0x3b;
@@ -140,7 +140,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.w = 0x21c;
 
         DECOMP_RECTMENU_DrawInnerRect(
-			&box, 4, &gGT->backBuffer->otMem.startPlusFour[3]);
+			&box, 4, &ot[3]);
 
         return;
     }
@@ -322,8 +322,8 @@ LAB_800b38cc:
     box.y = (menu->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-    color.self = sdata->menuRowHighlight_Normal;
-    DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+	int* ot = gGT->backBuffer->otMem.startPlusFour;
+    DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
     box.y = 0x3c;
     box.h = 2;
@@ -331,7 +331,7 @@ LAB_800b38cc:
     box.w = 0x228;
 
     color.self = sdata->battleSetup_Color_UI_1;
-	DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, gGT->backBuffer->otMem.startPlusFour);
+	DECOMP_RECTMENU_DrawOuterRect_Edge(&box, color, 0x20, ot);
 
     box.y = 0x28;
     box.h = (short)iVar10 + 0x2b;
@@ -339,7 +339,7 @@ LAB_800b38cc:
     box.w = 0x228;
 
 	DECOMP_RECTMENU_DrawInnerRect(
-		&box, 4, gGT->backBuffer->otMem.startPlusFour);
+		&box, 4, ot);
 
     if (
         (bVar3) ||

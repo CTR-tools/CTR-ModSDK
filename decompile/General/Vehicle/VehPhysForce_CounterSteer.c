@@ -25,7 +25,5 @@ void DECOMP_VehPhysForce_CounterSteer(struct Driver * driver)
 		.y = 0,
 		.z = 0
 		};
-	SVec3 accel;
-	RotateVector(&accel, &vec);
-	driver->accel = accel;
+	RotateVector(&driver->accel, &vec);
 }

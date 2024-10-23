@@ -180,6 +180,8 @@ LAB_OVR_230__800b3c78:
     iVar7 = (FPS_DOUBLE(8) - D230.highScore_transitionFrames[1]) * D230.highScore_horizontalMove[0] * 0x40;
   }
   
+  int* ot = sdata->gGT->backBuffer->otMem.startPlusFour;
+  
   if (((iVar7 != -0x200) && (iVar7 != 0x200)) && ((iVar4 != -0xd8 && (iVar4 != 0xd8))))
   {
     DECOMP_MM_HighScore_Draw(D230.highScore_trackCurr,(int)D230.highScore_rowCurr,(int)(short)iVar7,(int)(short)iVar4);
@@ -190,7 +192,7 @@ LAB_OVR_230__800b3c78:
       local_20.h = 0x19;
       local_20.x = D230.transitionMeta_HighScores[0].currX + -0x14;
       local_20.y = D230.transitionMeta_HighScores[0].currY + (short)iVar4 + 9;
-      DECOMP_RECTMENU_DrawInnerRect(&local_20,0,(u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+      DECOMP_RECTMENU_DrawInnerRect(&local_20,0,ot);
     }
   }
   iVar5 = 0;
@@ -213,7 +215,7 @@ LAB_OVR_230__800b3c78:
   local_20.h = 0x19;
   local_20.x = D230.transitionMeta_HighScores[0].currX + -0x14;
   local_20.y = D230.transitionMeta_HighScores[0].currY + (short)iVar6 + 9;
-  DECOMP_RECTMENU_DrawInnerRect(&local_20,0,(u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+  DECOMP_RECTMENU_DrawInnerRect(&local_20,0,ot);
   
   return;
 }

@@ -9,6 +9,14 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 	
 	gGT = sdata->gGT;
 	
+	#if 1
+	// not in the OG game, but for some reason decomp
+	// needs it to prevent crashing on Nitro Court,
+	// something bugs in 4P Life Limit that makes stepFlagSet
+	// try to make the advHub flip, maybe from null AI data?
+	if((gGT->gameMode1 & ADVENTURE_ARENA) == 0) return;
+	#endif
+	
 	int stepFlagSet = gGT->drivers[0]->stepFlagSet;
 	int nextLevelID = (stepFlagSet & 0x30) >> 4;
 	int needSwapNow = (stepFlagSet & 0xc0) >> 6;

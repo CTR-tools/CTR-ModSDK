@@ -640,12 +640,10 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 			box.w = 0xab;
 			box.h = 0x1a;
 
-			Color color;
-			color.self = sdata->menuRowHighlight_Normal;
 			// Draw a rectangle to highlight your time on the "Best Times" list
-			DECOMP_CTR_Box_DrawClearBox(&box, color, TRANS_50_DECAL,
-								 // pointer to OT mem
-								 gGT->pushBuffer_UI.ptrOT);
+			DECOMP_CTR_Box_DrawClearBox(
+				&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+				gGT->pushBuffer_UI.ptrOT);
 		}
 		currRowY += 0x1a;
 	}
