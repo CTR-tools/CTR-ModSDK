@@ -14,7 +14,11 @@
 		#include <unistd.h> // for the 'usleep()' function
 	#endif
 
-	#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
+	#ifdef WINDOWS_INCLUDE
+		#define STATIC_ASSERT2 static_assert
+	#else
+		#define STATIC_ASSERT2(test_for_true, message) _Static_assert((test_for_true), message)
+	#endif
 
 #else // MSVC (Visual Studio)
 

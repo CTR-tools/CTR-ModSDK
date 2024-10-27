@@ -3,7 +3,7 @@
 #define DEF_MEM
 
 #ifdef _WIN64 //windows
-#include <WinSock2.h>
+#include <winsock2.h>
 #include <windows.h>
 #include <ws2tcpip.h>
 #else //assume posix
