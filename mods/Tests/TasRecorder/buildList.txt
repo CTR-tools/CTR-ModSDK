@@ -1,0 +1,11 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, src/GAMEPAD_ProcessAnyoneVars.c
+common, exe, GAMEPAD_ProcessTapRelease, 0x8, src/GAMEPAD_ProcessTapRelease.c
+common, exe, Timer_GetTime_Elapsed, 0x0, src/Timer_GetTime_Elapsed.c
+common, exe, LOAD_LangFile, 0x0, src/LOAD_A33_LangFile.c
+
+926, 225, 0x8009f6fc, 0x0, src/dataTAS.bin
