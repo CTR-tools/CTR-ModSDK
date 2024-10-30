@@ -1,5 +1,7 @@
 #include <common.h>
 
+#define PSYQ_FP_DIV(x, y) (((x) << PSYQ_FRACTIONAL_BITS) / (y))
+
 // only used by flamejet and PapuPyramidPlant for hitbox collision,
 // also used by missile, probably hitbox again
 MATRIX* DECOMP_MATH_HitboxMatrix(MATRIX* output, MATRIX* input)
@@ -40,37 +42,39 @@ MATRIX* DECOMP_MATH_HitboxMatrix(MATRIX* output, MATRIX* input)
   return;
 }
 
-void DECOMP_MATH_VectorLength(VECTOR* input)
+void DECOMP_MATH_VectorLength(SVec3* input)
 {
-  unsigned int uVar1;
+  unsigned int length;
 
-  gte_ldR11R12(input->vx);
-  gte_ldR13R21(input->vy);
-  gte_ldVXY0(input->vx);
-  gte_ldVZ0(input->vy);
+  gte_ldR11R12(input->x);
+  gte_ldR13R21(input->y);
+  gte_ldVXY0(input->x);
+  gte_ldVZ0(input->y);
   gte_mvmva(0,0,0,3,0);
-  uVar1 = gte_stMAC1();
-  SquareRoot0(uVar1);
+  gte_stlvnl0(&length);
+  SquareRoot0(length);
 
   return;
 }
 
-int DECOMP_MATH_VectorNormalize(VECTOR* input)
+int DECOMP_MATH_VectorNormalize(SVec3* input)
 {
   int length;
 
-  length = MATH_VectorLength();
+  length = MATH_VectorLength(input);
 
   if (length != 0) {
+    #if 0
     if (length == 0) {
       trap(0x1c00);
     }
     if ((length == -1) && (input->vx | input->vy | input->vz) == 0x8000) {
       trap(0x1800);
     }
-    input->vx = (short)((input->vx << 0xc) / length);
-    input->vy = (short)((input->vy << 0xc) / length);
-    input->vz = (short)((input->vz << 0xc) / length);
+    #endif
+    input->x = (short)(FP_Div(input->x, length));
+    input->y = (short)(FP_Div(input->y, length));
+    input->z = (short)(FP_Div(input->z, length));
   }
   return length;
 }

@@ -41,7 +41,7 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
     d->numFramesSpentSteering = 10000;
 
 #ifndef REBUILD_PS1
-    d->terrainMeta1 = VehAfterColl_GetTerrain(10);
+    d->terrainMeta1 = VehAfterColl_GetTerrain(TERRAIN_NONE);
 #endif
 
     d->BattleHUD.numLives = gGT->battleLifeLimit;

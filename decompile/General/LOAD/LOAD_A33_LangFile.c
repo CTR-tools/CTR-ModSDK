@@ -19,7 +19,7 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 	char **strArray;
 
 #if BUILD == EurRetail
-	// This is (probably) to turn the screen black for a bit until lng is loaded.
+	// This is to turn the screen black for a bit (optional)
 	DECOMP_CTR_ErrorScreen(0, 0, 0);
 	VSync(0);
 #endif
@@ -51,6 +51,7 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 			(unsigned int)lngFile;
 	}
 #if BUILD == EurRetail
+	// set voicelines to new lang
 	DECOMP_CDSYS_SetXAToLang(lang);
 #endif
 }
