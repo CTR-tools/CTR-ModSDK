@@ -1,30 +1,31 @@
 #include <common.h>
 
 // get percentage [0 to 0x1000] of Driver between pos1 and pos2
-int DECOMP_CAM_MapRange_PosPoints(short *pos1, short *pos2, short *currPos)
+int DECOMP_CAM_MapRange_PosPoints(SVec3 *pos1, SVec3 *pos2, SVec3 *currPos)
 {
     int percent;
-    int vectorDistMax;
-    int vectorDistCurr;
+    SVec3 vec1;
+    SVec3 vec2;
     short distY;
 
     // vector distance between position1 and position2.
-    vectorDistMax = CONCAT22(pos1[1] - pos2[1], pos1[0] - pos2[0]);
+    vec1.x = pos1->x - pos2->x;
+    vec1.y = pos1->y - pos2->y;
+    vec1.z = pos1->z - pos2->z;
 
-    distY = pos1[2] - pos2[2];
-
-    MATH_VectorNormalize(&vectorDistMax);
-
+    MATH_VectorNormalize(&vec1);
+    
     // vector distance between position1 and currentPosition.
-    vectorDistCurr = CONCAT22(currPos[1] - pos1[1], currPos[0] - pos1[0]);
+    vec2.x = pos1->x - currPos->x;
+    vec2.y = pos1->y - currPos->y;
+    vec2.z = pos1->z - currPos->z;
 
-    gte_ldR11R12(vectorDistMax);
-    gte_ldR13R21((int)distY);
-    gte_ldVXY0(vectorDistCurr);
-    gte_ldVZ0((int)(short)(currPos[2] - pos1[2]));
+    // replace R11R12 and R13R21
+	gte_ldsvrtrow0(&vec1);
+    gte_ldv0(&vec2);
     gte_mvmva(0, 0, 0, 3, 0);
-    percent = gte_stMAC1();
+    gte_stlvnl0(&percent);
 
     // Shift by 12 bits to get the percentage between 0 and 0x1000.
-    return percent >> 0xc;
+    return FP_INT(percent);
 }
