@@ -1,0 +1,18 @@
+Recording a TAS:
+Open the modded ROM in DuckStation
+Play any 1P mode (multiplayer comes later)
+Do NOT close DuckStation before saving
+Open TasRecorder.exe at end of session
+Press 1 to Save
+The file NewTAS.bin will be saved
+Wait for completion message
+Rename to anything you want
+
+Replaying a TAS:
+Open the modded  ROM in DuckStation
+Pause the emulator when you see SCEA page
+Open TasRecorder.exe
+Press 2 to Load
+Type NewTAS.bin or whatever name
+Wait for completion message
+Resume the emulator
