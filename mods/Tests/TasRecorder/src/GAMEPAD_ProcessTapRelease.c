@@ -41,8 +41,15 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 			// value pressed
 			hold = buttonArr[currIndex];
 		
-			// record
-			pad->buttonsHeldCurrFrame = buttonArr[currIndex];
+			// replay
+			pad->buttonsHeldCurrFrame = hold;
+			
+			// In this order: Up, Down, Left, Right
+			if ((hold & 1) != 0) pad->stickLY = 0;
+			if ((hold & 2) != 0) pad->stickLY = 0xFF;
+			if ((hold & 4) != 0) pad->stickLX = 0;
+			if ((hold & 8) != 0) pad->stickLX = 0xFF;
+
 		}
 		
 		// draw

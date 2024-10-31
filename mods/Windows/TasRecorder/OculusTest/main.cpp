@@ -30,7 +30,7 @@ int main()
 
 	int pid;
 	printf("Enter DuckStation PID: ");
-	scanf("%d\n", &pid);
+	scanf("%d", &pid);
 
 	char duckName[100];
 	sprintf_s(duckName, 100, "duckstation_%d", pid);
@@ -43,16 +43,24 @@ int main()
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
+	if (pBuf == 0)
+	{
+		printf("Failed to open\n");
+		system("pause");
+		exit(0);
+	}
+
 	system("cls");
 	printf("1 - Save\n");
 	printf("2 - Load\n");
 	printf("Enter: ");
 
-	scanf("%d\n", &pid);
+	scanf("%d", &pid);
 
 	// SAVE mode
 	if (pid == 1)
 	{
+		system("cls");
 		printf("Saving...\n");
 
 		int sizeInt = *(int*)&pBuf[0xfff0];
@@ -66,9 +74,10 @@ int main()
 	else
 	{
 		system("cls");
+		printf("Enter File Name: ");
 
 		char name[100];
-		scanf("%s\n", &name[0]);
+		scanf("%s", &name[0]);
 
 		FILE* fp;
 

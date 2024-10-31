@@ -1,3 +1,11 @@
+Before Record/Replay
+Open DuckStation
+Go to Settings
+Go to Advanced
+Enable "Export Shared Memory"
+Close Settings
+Close DuckStation
+
 Recording a TAS:
 Open the modded ROM in DuckStation
 Play any 1P mode (multiplayer comes later)
