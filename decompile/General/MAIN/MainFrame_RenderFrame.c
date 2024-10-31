@@ -45,7 +45,7 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 u_int MM_Video_CheckIfFinished(int param_1);
 
-#ifdef USE_60FPS || USE_HIGH1P
+#ifdef USE_HIGH1P
 void PatchModel_60fps(struct Model* m)
 {
 	struct ModelHeader* h;
@@ -108,10 +108,7 @@ void PatchModel_60fps(struct Model* m)
 	}
 	#endif
 
-	#ifndef USE_60FPS
-	return;
-	#endif
-
+	#ifdef USE_60FPS
 	// loop through headers
 	for(i = 0; i < m->numHeaders; i++)
 	{
@@ -143,6 +140,7 @@ void PatchModel_60fps(struct Model* m)
 			a[j]->numFrames | 0x8000;
 		}
 	}
+	#endif
 }
 void ScanInstances_60FPS(struct GameTracker* gGT)
 {
@@ -202,7 +200,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 {
 	struct Level* lev = gGT->level1;
 
-	#ifdef USE_60FPS || USE_HIGH1P
+	#ifdef USE_HIGH1P
 	if ((gGT->renderFlags & 0x20) != 0)
 		ScanInstances_60FPS(gGT);
 	#endif

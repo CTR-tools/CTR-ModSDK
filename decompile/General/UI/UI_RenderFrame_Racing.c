@@ -421,6 +421,11 @@ void DECOMP_UI_RenderFrame_Racing()
 				}
 			}
 
+			// === Naughty Dog Bug ===
+			// This block will never execute in Life Limit,
+			// even though original code has a block inside this IF
+			// that checks for Life Limit
+
 			// if you're in battle mode, while not paused
 			// and you do not have a life limit
 			if ((gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_ALL)) == BATTLE_MODE)
@@ -438,62 +443,22 @@ void DECOMP_UI_RenderFrame_Racing()
 					wumpaModel_Pos[0] = hudStructPtr[0xD].x + 0x20;
 					wumpaModel_Pos[1] = hudStructPtr[0xD].y;
 
-					// if you do not have life limit (battle)
-					if ((gameMode1 & LIFE_LIMIT) == 0)
-					{
-						// This is only with point limit,
-						// points can add or subtract
+					partTimeVariable1 = playerStruct->BattleHUD.scoreDelta;
 
-						// Get what should be added to your score
-						partTimeVariable1 = playerStruct->BattleHUD.scoreDelta;
-
-						// Can't add 0, so it's +1 or -1
-
-						// if you are losing points
-						if (partTimeVariable1 < 0)
-						{
-							// print a minus sign with your change in score
-
-							// -%d
-							fmt = &sdata->s_subtractInt[0];
-
-							// Make a negative number positive
-							partTimeVariable1 = -partTimeVariable1;
-
-						}
-
-						else
-						{
-							// print a plus sign with your change in score
-
-							// +%ld
-							fmt = &sdata->s_additionLongInt[0];
-						}
-					}
-
-					// if you do have life limit (battle)
-					else
-					{
-						// Life can only go down, not up
-
-						// Get your change in score
-						partTimeVariable1 = playerStruct->BattleHUD.scoreDelta;
-
-						// Print a minus sign in front of the number of lives you lose
-
-						// -%ld
-						fmt = &sdata->s_subtractLongInt[0];
-					}
-
-					// make the string that flies from the center of your screen to the corner
-					sprintf((char *)&LetterCTR_Pos[0], fmt, partTimeVariable1);
+					string[0] = '+';
+					if(partTimeVariable1 < 0)
+						string[0] = '-';
+					
+					string[1] = '0' + partTimeVariable1;
+					string[2] = 0;
 
 					DECOMP_UI_Lerp2D_HUD
 					(
-						&wumpaModel_Pos[0], (int)playerStruct->BattleHUD.startX,
+						&wumpaModel_Pos[0], 
+						(int)playerStruct->BattleHUD.startX,
 						(int)playerStruct->BattleHUD.startY,
-						(int)(((u_int)hudStructPtr[0xD].x + 0x20) * 0x10000) >> 0x10,
-						(int)(((u_int)hudStructPtr[0xD].y + 8) * 0x10000) >> 0x10,
+						(int)(hudStructPtr[0xD].x + 0x20),
+						(int)(hudStructPtr[0xD].y + 8),
 						playerStruct->BattleHUD.cooldown,
 						FPS_DOUBLE(5)
 					);
@@ -502,7 +467,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					playerStruct->BattleHUD.cooldown--;
 
 					// print the string that shows the change in your score
-					DECOMP_DecalFont_DrawLine((char *)&LetterCTR_Pos[0], (int)wumpaModel_Pos[0], (int)wumpaModel_Pos[1], FONT_SMALL, RED);
+					DECOMP_DecalFont_DrawLine((char *)&string[0], (int)wumpaModel_Pos[0], (int)wumpaModel_Pos[1], FONT_SMALL, RED);
 				}
 			}
 

@@ -711,6 +711,8 @@ LAB_800b25f0:
         }
     }
 
+	int* ot = gGT->backBuffer->otMem.startPlusFour;
+
     for (i = 0; i < 4; i++)
     {
         uVar4 = local_60b[i];
@@ -745,7 +747,7 @@ LAB_800b25f0:
         color.self = *data.ptrColor[PLAYER_BLUE+i];
         DECOMP_CTR_Box_DrawSolidBox(
 			&local_48, color,
-			gGT->backBuffer->otMem.startPlusFour);
+			ot);
     }
 
     if (sdata->battleSetupRowHighlighted == 2)
@@ -755,8 +757,7 @@ LAB_800b25f0:
         local_50.x = tmbattle[4].currX + 0x9c + WIDE_PICK(0,25);
         local_50.y = tmbattle[4].currY + sVar20 + 3;
 
-        color_.self = sdata->menuRowHighlight_Normal;
-        DECOMP_CTR_Box_DrawClearBox(&local_50, color_, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+        DECOMP_CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
     }
 
     local_40.w = WIDE_34(0x140);
@@ -766,7 +767,7 @@ LAB_800b25f0:
 
     // Draw 2D Menu rectangle background
     DECOMP_RECTMENU_DrawInnerRect(
-		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+		&local_40, 0, ot);
 
     // "WEAPONS:"
     DECOMP_DecalFont_DrawLine(
@@ -908,8 +909,7 @@ LAB_800b25f0:
         local_60.h = 0x20;
         local_60.y = local_40.y + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        color_.self = sdata->menuRowHighlight_Normal;
-        DECOMP_CTR_Box_DrawClearBox(&local_60, color_, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+        DECOMP_CTR_Box_DrawClearBox(&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
     }
 
     local_58.x = local_40.x + 3;
@@ -917,11 +917,10 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    color_.self = D230.color3;
-    DECOMP_CTR_Box_DrawClearBox(&local_58, color_, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+    DECOMP_CTR_Box_DrawClearBox(&local_58, &D230.color3, TRANS_50_DECAL, ot);
 
     DECOMP_RECTMENU_DrawInnerRect(
-		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+		&local_40, 0, ot);
 
     // save all five battle settings
     // these are selected rows from all battle options

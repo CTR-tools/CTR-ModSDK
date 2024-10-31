@@ -182,16 +182,13 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 			FONT_SMALL,
 			(JUSTIFY_CENTER | PERIWINKLE));
 
-		struct DB *backBuffer = 
-			sdata->gGT->backBuffer;
+		int* ot = sdata->gGT->backBuffer->otMem.startPlusFour;
 
 		DECOMP_RECTMENU_DrawInnerRect(
-			&windowSel[CUP_SELECT], 1, 
-			backBuffer->otMem.startPlusFour);
+			&windowSel[CUP_SELECT], 1, ot);
 
 		DECOMP_RECTMENU_DrawInnerRect(
-			&windowText, 1, 
-			backBuffer->otMem.startPlusFour);
+			&windowText, 1, ot);
 	}
 }
 

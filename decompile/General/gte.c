@@ -5,9 +5,11 @@ void RotateVector(SVec3 * out, const SVec3 * in)
     #ifndef REBUILD_PC
     gte_ldv0(in);
     gte_rtv0();
-    gte_stlvnl0(&out->x);
-    gte_stlvnl1(&out->y);
-    gte_stlvnl2(&out->z);
+    gte_stlvnl(0x1f800000);
+	
+	out->x = *(short*)0x1f800000;
+	out->y = *(short*)0x1f800004;
+	out->z = *(short*)0x1f800008;
     #endif
 }
 

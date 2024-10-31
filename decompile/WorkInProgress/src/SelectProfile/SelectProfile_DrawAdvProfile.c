@@ -2,7 +2,6 @@
 
 void DECOMP_SelectProfile_DrawAdvProfile(struct AdvProgress *adv, int posX, int posY, u_int isHighlighted, short slotIndex, u_short menuFlag)
 {
-    u_int highlightColor;
     u_short emptySlotColor;
     u_short nameColor;
     u_short percentColor;
@@ -76,14 +75,13 @@ void DECOMP_SelectProfile_DrawAdvProfile(struct AdvProgress *adv, int posX, int 
     // if this profile is currently highlighted
     if (isHighlighted != 0)
     {
-        highlightColor = isGreenLoadMenu ? sdata->menuRowHighlight_Green : sdata->menuRowHighlight_Normal;
-
         highlight.x = posX + 6;
         highlight.y = posY + 4;
         highlight.w = 208;
         highlight.h = 53;
-        Color color;
-        color.self = highlightColor;
+
+        int* color = isGreenLoadMenu ? &sdata->menuRowHighlight_Green : &sdata->menuRowHighlight_Normal;
+		
         DECOMP_CTR_Box_DrawClearBox(&highlight, color, 1, gGT->backBuffer->otMem.startPlusFour[0xC]);
     }
 

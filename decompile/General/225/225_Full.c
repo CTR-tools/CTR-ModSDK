@@ -43,8 +43,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   int iVar11;
   u_int uVar13;
   int iVar14;
-  char acStack160[24];
-  short asStack128[4];
   u_short uStack112;
   short sStack104;
   u_short uStack96;
@@ -61,7 +59,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   uStack88 = 1;
   sStack80 = 0;
 
-  memset(asStack128, 0, 8);
+  short asStack128[4];
+  *(int*)&asStack128[0] = 0;
+  *(int*)&asStack128[2] = 0;
 
   sStack72 = 0;
   gGT = sdata->gGT;
@@ -263,12 +263,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           iVar2 = iVar10 + 1;
 
           // string for each player rank and count from standings (0x1e80)
-          sprintf(acStack160, "%d%s-%2.02ld", iVar2,
-                  sdata->lngStrings[((short *)0x800a0200)[iVar10]],
+          sprintf(0x1f800000, "%d%s-%2.02ld", iVar2,
+                  sdata->lngStrings[0x19+iVar10],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar11] * 3 + iVar10]));
 
           // Draw string
-          DecalFont_DrawLine(acStack160, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
+          DecalFont_DrawLine(0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
         }
       }
 
@@ -291,10 +291,10 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack44 = iStack44 + FPS_DOUBLE(5);
 
 	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
-      sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((short *)0x800a0200)[sVar1]]);
+      sprintf(0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
 
       // Draw String
-      DecalFont_DrawLine(acStack160, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
+      DecalFont_DrawLine(0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
     }
   }
 

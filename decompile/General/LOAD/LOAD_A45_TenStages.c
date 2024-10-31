@@ -234,7 +234,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				#ifndef REBUILD_PC
 					
 					int backup = sdata->mempack[0].firstFreeByte;
-					sdata->mempack[0].firstFreeByte = (int)sdata->mempack[0].lastFreeByte - 0xA000;
+					
+					sdata->mempack[0].firstFreeByte = 
+						(int)sdata->mempack[0].lastFreeByte
+						- 0xA000 // primMem needed
+						- (0x2200*2); // ghost HighMem
+					
 					DECOMP_MainInit_PrimMem(gGT, 0xA000);
 					sdata->mempack[0].firstFreeByte = backup;
 				
@@ -315,6 +320,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}	
 		case 3:
 		{
+			#ifdef USE_ONLINE
+			// Load Region3 for planet
+			if(gGT->levelID == 0x26)
+				ovrRegion3 = 3;
+			else
+			#endif
+			
 			// main menu + scrapbook, 230
 			if (
 					(levelID != ADVENTURE_CHARACTER_SELECT) &&
@@ -576,10 +588,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			gGT->visMem1 = lev->visMem;
 
 			// if LEV is valid
-			if (gGT->level1 != 0)
+			if (lev != 0)
 			{
 				// Load Icons and IconGroups from LEV
-				DECOMP_DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
+				DECOMP_DecalGlobal_Store(gGT, lev->levTexLookup);
 			}
 
 			DECOMP_DebugFont_Init(gGT);

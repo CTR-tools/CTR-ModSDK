@@ -531,9 +531,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 			q.w = r.w - 12;
 			q.h = r.h - 8;
 
-			Color color;
-			color.self = sdata->menuRowHighlight_Normal;
-			DECOMP_CTR_Box_DrawClearBox(&q, color, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+			DECOMP_CTR_Box_DrawClearBox(&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 		}
 		uVar15 = (u_int)numTracks;
 
