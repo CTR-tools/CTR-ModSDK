@@ -67,7 +67,7 @@ void UI::Render(int width, int height)
       std::system(duckCommand.c_str());
       {
         using namespace std;
-        std::this_thread::sleep_for(9000ms); //it takes about this long for it to boot to the main menu.
+        std::this_thread::sleep_for(7000ms); //it takes about this long for it to boot to the main menu.
       }
       //if you try to start the client immediately, it may attempt to access shmem immediately (and fail)
       const std::string clientCommand = "start /b \"\" \"" + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + "\" " + m_username + " &";

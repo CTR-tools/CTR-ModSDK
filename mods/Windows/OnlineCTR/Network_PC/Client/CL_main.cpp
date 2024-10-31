@@ -75,11 +75,12 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->ver_pc = VERSION;
 			octr->ver_server = r->version;
 
-			if (r->version != VERSION)
-			{
-				octr->CurrState = LAUNCH_ERROR;
-				return;
-			}
+			if (!(r->version == 1019 && VERSION == 1020)) //special case, v1019 servers are fully compatible with v1020 clients.
+				if (r->version != VERSION)
+				{
+					octr->CurrState = LAUNCH_ERROR;
+					return;
+				}
 
 			if (octr->ver_psx != VERSION)
 			{
