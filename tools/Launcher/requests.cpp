@@ -5,7 +5,7 @@
 #include <httplib.h>
 #include <fstream>
 
-#define FILEHOST_DOMAIN "www.tangleboom.com" //"www.online-ctr.com"
+#define FILEHOST_DOMAIN "www.online-ctr.com"
 
 bool Requests::DownloadFile(const std::string& domain, const std::string& sitePath, const std::string& filePath)
 {
