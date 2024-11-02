@@ -16,7 +16,7 @@
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
 //#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
-//#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
+#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
 
 //#define USE_VR		// Virtual Reality
@@ -27,7 +27,10 @@
 #define USE_16BY9
 #define USE_RAMEX
 #define USE_BIGQUEUE
-//#define PINE_DEBUG //enable this for logging of CurrState change on game and client.
+#define USE_HIGH1P
+
+//note: if you disable this, you'll need to fix anything related to the `ROOM_...` defines in global.h
+#define USE_RETROFUELED //enabled only in certain rooms.
 #endif
 
 #ifdef USE_60FPS

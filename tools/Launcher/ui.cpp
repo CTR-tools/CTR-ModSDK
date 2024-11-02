@@ -6,6 +6,9 @@
 #include <portable-file-dialogs.h>
 #include <filesystem>
 #include <cstdlib>
+#include <chrono>
+#include <thread>
+#include <iostream>
 
 UI::UI()
 {
@@ -58,11 +61,18 @@ void UI::Render(int width, int height)
     else if (!std::filesystem::exists(s_patchedPath)) { m_status = "Error: could not find " + s_patchedPath; }
     else
     {
+      m_status = "Launching game...";
       g_dataManager.SaveData();
-      const std::string clientCommand = "start /b \"\" \"" + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + "\" " + m_username + " &";
-      std::system(clientCommand.c_str());
       const std::string duckCommand = "start /b \"\" \"" + g_duckExecutable + "\" \"" + s_patchedPath + "\" &";
       std::system(duckCommand.c_str());
+      {
+        using namespace std;
+        std::this_thread::sleep_for(7000ms); //it takes about this long for it to boot to the main menu.
+      }
+      //if you try to start the client immediately, it may attempt to access shmem immediately (and fail)
+      const std::string clientCommand = "start /b \"\" \"" + std::filesystem::current_path().string() + "/" + GetClientPath(m_version) + "\" " + m_username + " &";
+      std::system(clientCommand.c_str());
+      m_status = "Game launched...";
     }
   }
   ImGui::EndDisabled();
