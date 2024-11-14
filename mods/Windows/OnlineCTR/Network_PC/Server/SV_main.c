@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <enet/enet.h>
+#include "malloc.h"
 
 #define WINDOWS_INCLUDE
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
@@ -47,6 +48,12 @@ typedef struct
     int endTime;
 
 } RoomInfo;
+
+struct LoosePeerList;
+struct LoosePeerList {
+	ENetPeer* peer;
+	struct LoosePeerList* next;
+};
 
 ENetHost* server;
 
@@ -166,6 +173,8 @@ void SendRoomData(ENetPeer* peer)
 	sendToPeerReliable(peer, &mr, sizeof(struct SG_MessageRooms));
 }
 
+struct LoosePeerList* lplHead = NULL;
+
 void ProcessConnectEvent(ENetPeer* peer)
 {
 	if (!peer) {
@@ -174,6 +183,24 @@ void ProcessConnectEvent(ENetPeer* peer)
 
 	// Debug only, also prints client name from CG_MessageName
 	// printf("Connection from: %u:%u.\n", peer->address.host, peer->address.port);
+
+	if (lplHead == NULL)
+	{
+		printf("ProcessConnectEvent: new peer added as head\n");
+		lplHead = malloc(sizeof(struct LoosePeerList));
+		lplHead->next = NULL;
+		lplHead->peer = peer;
+	}
+	else
+	{
+		printf("ProcessConnectEvent: new peer added at end of ll\n");
+		struct LoosePeerList* c = lplHead;
+		while (c->next != NULL)
+			c = c->next;
+		c->next = malloc(sizeof(struct LoosePeerList));
+		c->next->next = NULL;
+		c->next->peer = peer;
+	}
 
 	SendRoomData(peer);
 
@@ -315,6 +342,42 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			ri->peerInfos[id].peer = peer;
 
+			printf("ProcessReceiveEvent: peer chose room, removing from ll\n");
+			//remove this peer (we're joining a room) from the ll
+			struct LoosePeerList* c = lplHead, *prev = NULL;
+			while (c != NULL)
+			{
+				if (c->peer == peer)
+				{
+					if (prev == NULL)
+						lplHead = c->next;
+					else
+						prev->next = c->next;
+					//i++
+					struct LoosePeerList* toFree = c;
+					prev = c;
+					c = c->next;
+					free(toFree);
+				}
+				else
+				{
+					//i++
+					prev = c;
+					c = c->next;
+				}
+			}
+
+			//send an update to everyone else.
+			int count = 0;
+			c = lplHead;
+			while (c != NULL)
+			{
+				count++;
+				SendRoomData(c->peer);
+				c = c->next;
+			}
+			printf("ProcessReceiveEvent: peer chose room, notifying everyone in the ll: %d\n", count);
+
 			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
 
@@ -454,19 +517,14 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			//requires a server update (lame). Enable this if cheaters using items in non-item rooms becomes
 			//a problem.
 			
-			//int rn = 0;
-			//for (; rn < 16; rn++)
-			//	if (roomInfos + rn == ri)
-			//		break;
-			//if (
-			//		(rn >= ROOM_ITEMSTART && rn < ROOM_ITEMSTART + ROOM_ITEMLENGTH) ||
-			//		(rn >= ROOM_ITEMRETROSTART && rn < ROOM_ITEMRETROSTART + ROOM_ITEMRETROLENGTH)
-			//	) //if this room is in item mode.
-			//{
-			//	broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon));
-			//}
+			int rn = 0;
+			for (; rn < 16; rn++)
+				if (roomInfos + rn == ri)
+					break;
+			if (ROOM_IS_ITEMS(rn))
+				broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon));
 
-			broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon)); //comment this if using the above cheat mitigation
+			//broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageWeapon)); //comment this if using the above cheat mitigation
 
 			break;
 		}
@@ -526,6 +584,31 @@ void ProcessNewMessages() {
 
 			case ENET_EVENT_TYPE_DISCONNECT:
 			{
+				printf("ProcessNewMessages: peer disconnected, removing from ll\n");
+				//remove this peer from the ll since it's disconnecting.
+				struct LoosePeerList* c = lplHead, *prev = NULL;
+				while (c != NULL)
+				{
+					if (c->peer == event.peer)
+					{
+						if (prev == NULL)
+							lplHead = c->next;
+						else
+							prev->next = c->next;
+						//i++
+						struct LoosePeerList* toFree = c;
+						prev = c;
+						c = c->next;
+						free(toFree);
+					}
+					else
+					{
+						//i++
+						prev = c;
+						c = c->next;
+					}
+				}
+
 				//identify which client ID this came from
 				int peerID = -1;
 				int numAlive = 0;
@@ -611,6 +694,16 @@ void ProcessNewMessages() {
 					broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
 				}
 
+				//send an update to everyone else.
+				int count = 0;
+				c = lplHead;
+				while (c != NULL)
+				{
+					count++;
+					SendRoomData(c->peer);
+					c = c->next;
+				}
+				printf("ProcessNewMessages: peer left room, notifying everyone in the ll: %d\n", count);
 				break;
 			}
 		}
