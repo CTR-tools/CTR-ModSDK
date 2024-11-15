@@ -263,12 +263,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           iVar2 = iVar10 + 1;
 
           // string for each player rank and count from standings (0x1e80)
-          sprintf(0x1f800000, "%d%s-%2.02ld", iVar2,
+          sprintf((char*)0x1f800000, "%d%s-%2.02ld", iVar2,
                   sdata->lngStrings[0x19+iVar10],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar11] * 3 + iVar10]));
 
           // Draw string
-          DecalFont_DrawLine(0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
+          DecalFont_DrawLine((char*)0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
         }
       }
 
@@ -291,14 +291,17 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack44 = iStack44 + FPS_DOUBLE(5);
 
 	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
-      sprintf(0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
+      sprintf((char*)0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
 
       // Draw String
-      DecalFont_DrawLine(0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
+      DecalFont_DrawLine((char*)0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
     }
   }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
   for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
+#pragma GCC diagnostic pop
   {
     // get pointer to instance of Big Number in HUD
     bigNum = gGT->drivers[uVar13]->instBigNum;

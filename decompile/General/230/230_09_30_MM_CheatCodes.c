@@ -1,5 +1,7 @@
 #include <common.h>
 
+void DECOMP_MainKillGame_LaunchSpyro2();
+
 // all buttons fit in one byte
 // except triangle, which overrides
 

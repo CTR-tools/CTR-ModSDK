@@ -21,6 +21,7 @@ int DECOMP_UI_ConvertY_2(int y, int const_0x200);
 void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
 void RECTMENU_ClearInput();
 void RECTMENU_Show(struct RectMenu*);
+void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType);
 
 void DECOMP_CC_EndEvent_DrawMenu()
 {

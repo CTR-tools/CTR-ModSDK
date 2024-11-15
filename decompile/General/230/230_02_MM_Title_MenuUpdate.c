@@ -1,5 +1,7 @@
 #include <common.h>
 
+void DECOMP_GAMEPROG_NewProfile_InsideAdv(struct AdvProgress* adv);
+
 void DECOMP_MM_Title_MenuUpdate(void)
 {
   struct GameTracker *gGT = sdata->gGT;
@@ -125,7 +127,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   case 0:
   
     DECOMP_MM_Title_KillThread();
-    DECOMP_GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
+    DECOMP_GAMEPROG_NewProfile_InsideAdv((struct AdvProgress*)&sdata->advProgress.rewards[0]);
 	
     sdata->advProfileIndex = 0xffff;
 

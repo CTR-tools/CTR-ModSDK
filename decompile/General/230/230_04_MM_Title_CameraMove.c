@@ -1,5 +1,7 @@
 #include <common.h>
 
+int DECOMP_RaceFlag_MoveModels(int frameIndex, int numFrames);
+
 void DECOMP_MM_Title_CameraMove(struct Title* title, int frameIndex)
 {
   int result;
