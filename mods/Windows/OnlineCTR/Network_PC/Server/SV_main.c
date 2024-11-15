@@ -619,7 +619,7 @@ void ProcessNewMessages() {
 	}
 }
 
-void ServerState_FirstBoot(int argc, char** argv)
+int ServerState_FirstBoot(int argc, char** argv)
 {
 	printf(__DATE__);
 	printf("\n");
