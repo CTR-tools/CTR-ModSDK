@@ -1,5 +1,11 @@
 #include <common.h>
 
+void StClearRing();
+int CdDiskReady(int);
+void StSetMask(int, int, int);
+void CdDataCallback(int);
+void DecDCTReset(int);
+
 void DECOMP_MM_Video_StopStream(void)
 {
     int iVar1;

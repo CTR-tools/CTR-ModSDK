@@ -1,5 +1,8 @@
 #include <common.h>
 
+void StCdInterrupt(); //80078d34
+void DecDCTout(u_long*, int); //80079940 guessed the signature
+
 void DECOMP_MM_Video_DecDCToutCallbackFunc(void)
 {
 	// part of PSYQ BSS

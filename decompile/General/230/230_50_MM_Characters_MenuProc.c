@@ -32,7 +32,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	u_char colorRGBA[4];
 
-	RECT* r = 0x1f800000;
+	RECT* r = (RECT*)0x1f800000;
 	RECT r58;
 
 	short local_50;
@@ -51,7 +51,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	struct GameTracker* gGT = sdata->gGT;
 	
-	int* ot = gGT->backBuffer->otMem.startPlusFour;
+	int* ot = (int*)gGT->backBuffer->otMem.startPlusFour;
 
 	for (i = 0; i < 4; i++)
 	{
@@ -141,7 +141,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_BIG;
 
 			// CHARACTER
-			characterSelectString = sdata->lngStrings[97];
+			characterSelectString = (u_int)sdata->lngStrings[97];
 
 			posX = posX + 0x9c;
 			posY = posY + 0x26;
@@ -164,7 +164,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_CREDITS;
 
 			// CHARACTER
-			characterSelectString = sdata->lngStrings[97];
+			characterSelectString = (u_int)sdata->lngStrings[97];
 
 			posX = posX + 0xfc;
 			posY = posY + 0x18;
@@ -177,7 +177,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_BIG;
 
 			// SELECT CHARACTER
-			characterSelectString = sdata->lngStrings[95];
+			characterSelectString = (u_int)sdata->lngStrings[95];
 
 			posX = posX + 0xfc;
 			posY = posY + 10;
@@ -189,7 +189,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	// Draw String
 	DECOMP_DecalFont_DrawLine(
-		characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
+		(char*)characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
 
 	dontDrawSelectCharacter:
 
@@ -203,7 +203,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 		DECOMP_MM_Characters_AnimateColors(auStack120, i, (int)(short)(sdata->characterSelectFlags & characterSelectFlags5bit));
 
-		puVar26 = &D230.csm_Active[globalIconPerPlayerCopy];
+		puVar26 = (u_short*)&D230.csm_Active[globalIconPerPlayerCopy];
 
 		if
 		(
@@ -462,7 +462,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		}
 		else
 		{
-			puVar12 = &D230.characterSelect_Outline;
+			puVar12 = (u_char*)&D230.characterSelect_Outline;
 		}
 
 		r->x = ((struct TransitionMeta*)iVar24)->currX + *puVar26;
@@ -472,7 +472,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 		color = *(Color *) puVar12;
 		DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-			r, color, 0, ot);
+			r, color, 0, (u_long*)ot);
 	}
 
 	DECOMP_MM_Characters_PreventOverlap();
@@ -517,7 +517,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				}
 			}
 
-			iVar8 = &D230.ptrTransitionMeta[i];
+			iVar8 = (int)&D230.ptrTransitionMeta[i];
 
 			#ifdef USE_OXIDE
 			if (i == NITROS_OXIDE)
@@ -562,7 +562,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		{
 			DECOMP_MM_Characters_AnimateColors
 			(
-				&colorRGBA, j,
+				(unsigned char*)&colorRGBA, j,
 
 				// flags of which characters are selected
 				(int)(short)(sdata->characterSelectFlags & (u_short)(1 << j))
@@ -572,7 +572,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
 			colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 
-			iVar8 = &D230.ptrTransitionMeta[playerIcon];
+			iVar8 = (int)&D230.ptrTransitionMeta[playerIcon];
 
 			#ifdef USE_OXIDE
 			if (playerIcon == NITROS_OXIDE)
@@ -587,9 +587,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			r->w = 0x2e;
 			r->h = 0x1d;
 
-			Color color = *(Color *) &colorRGBA;
+			Color color = *(Color *)&colorRGBA;
 			// this draws the flashing blue square that appears when you highlight a character in the character select screen
-			DECOMP_CTR_Box_DrawSolidBox(r, color, ot);
+			DECOMP_CTR_Box_DrawSolidBox(r, color, (u_long*)ot);
 		}
 		if
 		(
@@ -606,7 +606,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// if number of players is 3 or 4
 			if (numPlyrNextGame >= 3) fontType = FONT_SMALL;
 
-			iVar8 = &D230.ptrTransitionMeta[j+0x10];
+			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[j + 0x10];
 			sVar10 = ((struct TransitionMeta*)iVar8)->currY + D230.characterSelect_ptrWindowXY[j*2+1];
 			sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
 
@@ -645,7 +645,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			((sdata->gameProgress.unlocks[iVar8 >> 5] >> (iVar8 & 0x1fU) & 1) != 0)
 		)
 		{
-			iVar8 = &D230.ptrTransitionMeta[i];
+			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[i];
 
 			#ifdef USE_OXIDE
 			if (i == NITROS_OXIDE)
@@ -671,7 +671,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		for (i = 0; i < gGT->numPlyrNextGame; i++)
 		{
 			j = i;
-			iVar8 = &D230.ptrTransitionMeta[j];
+			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[j];
 
 			// store window width and height in one 4-byte variable
 			r->x = *(short *)(iVar8 + 0xa6) + *psVar22;
@@ -681,7 +681,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			DECOMP_MM_Characters_AnimateColors
 			(
-				&colorRGBA, j,
+				(unsigned char*)&colorRGBA, j,
 
 				// flags of which characters are selected
 				((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1
@@ -689,7 +689,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			color = *(Color *) &colorRGBA;
 			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				r, color, 0, ot);
+				r, color, 0, (u_long*)ot);
 
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0)
@@ -713,7 +713,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					color = *(Color *) &colorRGBA;
 					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
 						&r58, color, 0,
-						ot);
+						(u_long*)ot);
 				}
 			}
 			psVar22 = psVar22 + 2;

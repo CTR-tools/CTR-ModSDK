@@ -1,5 +1,7 @@
 #include <common.h>
 
+void DECOMP_RB_Teeth_OpenDoor(struct Instance* teethInst);
+
 // Required to make door open
 // when driver hits potion, or 
 // potion shatters due to full MinePool

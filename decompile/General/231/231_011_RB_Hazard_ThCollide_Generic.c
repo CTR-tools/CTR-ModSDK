@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifndef REBUILD_PS1
+void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst);
+#endif
+
 int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 {
 	struct Instance* inst;

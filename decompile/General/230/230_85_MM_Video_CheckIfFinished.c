@@ -1,5 +1,8 @@
 #include <common.h>
 
+int CdDiskReady(int);
+void DecDCTReset(int);
+
 u_int DECOMP_MM_Video_CheckIfFinished(int param_1)
 {
     char bVar1;

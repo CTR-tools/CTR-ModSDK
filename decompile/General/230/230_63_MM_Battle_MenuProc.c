@@ -711,7 +711,7 @@ LAB_800b25f0:
         }
     }
 
-	int* ot = gGT->backBuffer->otMem.startPlusFour;
+	int* ot = (int*)gGT->backBuffer->otMem.startPlusFour;
 
     for (i = 0; i < 4; i++)
     {
@@ -747,7 +747,7 @@ LAB_800b25f0:
         color.self = *data.ptrColor[PLAYER_BLUE+i];
         DECOMP_CTR_Box_DrawSolidBox(
 			&local_48, color,
-			ot);
+			(u_long*)ot);
     }
 
     if (sdata->battleSetupRowHighlighted == 2)
@@ -757,7 +757,7 @@ LAB_800b25f0:
         local_50.x = tmbattle[4].currX + 0x9c + WIDE_PICK(0,25);
         local_50.y = tmbattle[4].currY + sVar20 + 3;
 
-        DECOMP_CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
+        DECOMP_CTR_Box_DrawClearBox(&local_50, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long*)ot);
     }
 
     local_40.w = WIDE_34(0x140);
@@ -863,13 +863,13 @@ LAB_800b25f0:
         iVar8 = (int)(short)i;
         j = (iVar8 / 6);
 
-        color = &D230.color1;
+        color = (u_int)&D230.color1;
         uVar17 = 4;
 
         // Check if this weapon is not enabled
         if ((gGT->battleSetup.enabledWeapons & D230.battleWeaponsEnabled[iVar8*2]) == 0)
         {
-            color = &D230.color2;
+            color = (u_int)&D230.color2;
             uVar17 = 0x15;
         }
 
@@ -893,8 +893,8 @@ LAB_800b25f0:
 			gGT->ptrIcons[D230.battleWeaponsEnabled[iVar8*2+1]],
             iVar13, j,
             &gGT->backBuffer->primMem,
-            gGT->pushBuffer_UI.ptrOT,
-            1, 0x1000, 1, color);
+            (u_int*)gGT->pushBuffer_UI.ptrOT,
+            1, 0x1000, 1, (u_int*)color);
     }
 
     if ((unsigned int)sdata->battleSetupRowHighlighted - 3 < 2)
@@ -909,7 +909,7 @@ LAB_800b25f0:
         local_60.h = 0x20;
         local_60.y = local_40.y + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        DECOMP_CTR_Box_DrawClearBox(&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
+        DECOMP_CTR_Box_DrawClearBox(&local_60, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long*)ot);
     }
 
     local_58.x = local_40.x + 3;
@@ -917,10 +917,10 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    DECOMP_CTR_Box_DrawClearBox(&local_58, &D230.color3, TRANS_50_DECAL, ot);
+    DECOMP_CTR_Box_DrawClearBox(&local_58, (Color*)&D230.color3, TRANS_50_DECAL, (u_long*)ot);
 
     DECOMP_RECTMENU_DrawInnerRect(
-		&local_40, 0, ot);
+		&local_40, 0, (u_long*)ot);
 
     // save all five battle settings
     // these are selected rows from all battle options

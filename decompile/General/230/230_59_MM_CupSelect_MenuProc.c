@@ -203,7 +203,7 @@ void DECOMP_MM_CupSelect_MenuProc(struct RectMenu* menu)
             cupBox.w = 174;
             cupBox.h = 74;
 
-            DECOMP_CTR_Box_DrawClearBox(&cupBox, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+            DECOMP_CTR_Box_DrawClearBox(&cupBox, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
         }
 
 		// background box

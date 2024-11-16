@@ -1,6 +1,7 @@
 #include <common.h>
 
 void RB_GenericMine_ThTick(struct Thread*);
+void RB_MakeInstanceReflective(struct ScratchpadStruct*, struct Instance*);
 
 void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 {
@@ -56,7 +57,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 
 	SPS->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-	COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, SPS, 0);
+	COLL_SearchTree_FindQuadblock_Touching((u_int*)&posBottom, (u_int*)&posTop, (u_int*)SPS, 0); //the method signature goes posTop, posBottom? is this a bug?
 
 	RB_MakeInstanceReflective(SPS, inst);
 

@@ -1,5 +1,7 @@
 #include <common.h>
 
+int RefreshCard_BoolGhostForLEV(u_short trackID);
+
 void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 {
 	char bVar1;
@@ -531,7 +533,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 			q.w = r.w - 12;
 			q.h = r.h - 8;
 
-			DECOMP_CTR_Box_DrawClearBox(&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+			DECOMP_CTR_Box_DrawClearBox(&q, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 		}
 		uVar15 = (u_int)numTracks;
 

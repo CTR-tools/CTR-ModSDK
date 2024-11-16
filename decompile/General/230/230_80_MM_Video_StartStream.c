@@ -1,5 +1,9 @@
 #include <common.h>
 
+void StSetStream(int, int, int, int, int); //guessed about these signatures
+void StSetRing(u_long*, int);
+void StClearRing();
+
 void DECOMP_MM_Video_StartStream(int param_1, int numFrames)
 {
     V230.field3_0xc = 0;

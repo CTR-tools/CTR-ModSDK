@@ -1,5 +1,9 @@
 #include <common.h>
 
+void DecDCTReset(int);
+u_long DecDCTvlcSize2(u_long);
+void DecDCToutCallback(void*);
+
 void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int param_5)
 {
     char isRGB24;
@@ -34,10 +38,10 @@ void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size
     V230.flags = flags;
 
     V230.out_Buf[0] = MEMPACK_AllocMem(V230.field32_0x58 << 3);//, OVR_230.s_SliceBuf);
-    V230.out_Buf[1] = (int)V230.out_Buf[0] + V230.field32_0x58 * 4;
+    V230.out_Buf[1] = (u_long*)(((int)V230.out_Buf[0]) + V230.field32_0x58 * 4);
 
     V230.in_Buf[0] = MEMPACK_AllocMem(V230.field25_0x48 << 3);//, OVR_230.s_VlcBuf);
-    V230.in_Buf[1] = (int)V230.in_Buf[0] + V230.field25_0x48 * 4;
+    V230.in_Buf[1] = (u_long*)(((int)V230.in_Buf[0]) + V230.field25_0x48 * 4);
 
     V230.out_Buf[2] = MEMPACK_AllocMem(V230.RING_SIZE << 0xb);//, OVR_230.s_RingBuf);
 
