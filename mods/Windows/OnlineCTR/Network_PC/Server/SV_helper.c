@@ -44,3 +44,75 @@ int GetWeekDay()
 
 	return buffer[0] - '0';
 }
+
+#include "malloc.h"
+
+typedef ENetPeer;
+struct LoosePeerList;
+struct LoosePeerList {
+	ENetPeer* peer;
+	struct LoosePeerList* next;
+};
+
+struct LoosePeerList* lplHead = NULL;
+
+void AddPeerLPL(ENetPeer* peer)
+{
+	if (lplHead == NULL)
+	{
+		lplHead = malloc(sizeof(struct LoosePeerList));
+		lplHead->next = NULL;
+		lplHead->peer = peer;
+	}
+	else
+	{
+		struct LoosePeerList* c = lplHead;
+		while (c->next != NULL)
+			c = c->next;
+		c->next = malloc(sizeof(struct LoosePeerList));
+		c->next->next = NULL;
+		c->next->peer = peer;
+	}
+}
+
+int RemovePeerLPL(ENetPeer* peer)
+{
+	int didFree = 0;
+	struct LoosePeerList* c = lplHead, * prev = NULL;
+	while (c != NULL)
+	{
+		if (c->peer == peer)
+		{
+			if (prev == NULL)
+				lplHead = c->next;
+			else
+				prev->next = c->next;
+			//i++
+			struct LoosePeerList* toFree = c;
+			prev = c;
+			c = c->next;
+			free(toFree);
+			didFree = 1;
+		}
+		else
+		{
+			//i++
+			prev = c;
+			c = c->next;
+		}
+	}
+	return didFree;
+}
+
+int ForeachPeerLPL(void (*lambda)(ENetPeer*))
+{
+	int count = 0;
+	struct LoosePeerList* c = lplHead;
+	while (c != NULL)
+	{
+		count++;
+		(*lambda)(c->peer);
+		c = c->next;
+	}
+	return count;
+}

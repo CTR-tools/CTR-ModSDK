@@ -22,6 +22,13 @@
 #define CLOCKS_PER_SEC_FIX ((clock_t)100000) // Original value (1000000), I removed one zero
 #endif
 
+//SV_helper.c forward decls
+void PrintTime();
+//int GetWeekDay(); //not used currently
+void AddPeerLPL(ENetPeer* peer);
+int RemovePeerLPL(ENetPeer* peer);
+int ForeachPeerLPL(void (*lambda)(ENetPeer*));
+
 typedef struct {
 	ENetPeer* peer;
 
@@ -49,17 +56,9 @@ typedef struct
 
 } RoomInfo;
 
-struct LoosePeerList;
-struct LoosePeerList {
-	ENetPeer* peer;
-	struct LoosePeerList* next;
-};
-
 ENetHost* server;
 
 RoomInfo roomInfos[16] = { NULL };
-
-void PrintTime();
 
 void PrintPrefix(const int roomId)
 {
@@ -173,43 +172,6 @@ void SendRoomData(ENetPeer* peer)
 	sendToPeerReliable(peer, &mr, sizeof(struct SG_MessageRooms));
 }
 
-struct LoosePeerList* lplHead = NULL;
-
-void ProcessConnectEvent(ENetPeer* peer)
-{
-	if (!peer) {
-		return;
-	}
-
-	// Debug only, also prints client name from CG_MessageName
-	// printf("Connection from: %u:%u.\n", peer->address.host, peer->address.port);
-
-	if (lplHead == NULL)
-	{
-		printf("ProcessConnectEvent: new peer added as head\n");
-		lplHead = malloc(sizeof(struct LoosePeerList));
-		lplHead->next = NULL;
-		lplHead->peer = peer;
-	}
-	else
-	{
-		printf("ProcessConnectEvent: new peer added at end of ll\n");
-		struct LoosePeerList* c = lplHead;
-		while (c->next != NULL)
-			c = c->next;
-		c->next = malloc(sizeof(struct LoosePeerList));
-		c->next->next = NULL;
-		c->next->peer = peer;
-	}
-
-	SendRoomData(peer);
-
-	// Set the timeout settings for the host
-	// now 800 for 1.5s timeout, should detect closed clients
-	enet_peer_timeout(peer, 1000000, 1000000, 2000);
-
-}
-
 void GetDriverFromRace(ENetPeer* peer, RoomInfo** ri, int* peerID)
 {
 	for (int r = 0; r < 16; r++)
@@ -223,6 +185,121 @@ void GetDriverFromRace(ENetPeer* peer, RoomInfo** ri, int* peerID)
 		if (*peerID != -1)
 			break;
 	}
+}
+
+void ProcessConnectEvent(ENetPeer* peer)
+{
+	if (!peer) {
+		return;
+	}
+
+	// Debug only, also prints client name from CG_MessageName
+	// printf("Connection from: %u:%u.\n", peer->address.host, peer->address.port);
+
+	AddPeerLPL(peer);
+
+	SendRoomData(peer);
+
+	// Set the timeout settings for the host
+	// now 800 for 1.5s timeout, should detect closed clients
+	enet_peer_timeout(peer, 1000000, 1000000, 2000);
+
+}
+
+void ProcessDisconnectEvent(ENetPeer* peer)
+{
+	//identify which client ID this came from
+	int peerID = -1;
+	int numAlive = 0;
+
+	RoomInfo* ri = &roomInfos[0];
+
+	//identify which client ID this came from
+	GetDriverFromRace(peer, &ri, &peerID);
+
+	// driver is not in a room, just quit
+	if (peerID == -1)
+	{
+		enet_peer_disconnect_now(peer, 0);
+		//printf("Disconnection from Room Selection\n");
+		return;
+	}
+
+	for (int i = 0; i < MAX_CLIENTS; i++)
+		if (ri->peerInfos[i].peer != 0)
+			numAlive++;
+
+	// subtract one, cause one of the peers was still
+	// alive in the for-loop that is about to be nullified
+	numAlive -= 1;
+
+	int didRemove = RemovePeerLPL(peer);
+	PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+	if (!didRemove)
+		printf("Player %s (%d) disconnected from room, and yet LPL did not contain them, how did they avoid being added to LPL?\n",
+			&ri->peerInfos[peerID].name[0],
+			peerID);
+	else
+		printf("Player %s (%d) disconnected from room\n",
+			&ri->peerInfos[peerID].name[0],
+			peerID);
+
+	// no players are left
+	int noneAlive = numAlive == 0;
+	//race is in session and (1 or less players AND non-race map)
+	int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) && (ri->levelPlayed > 18));
+	// Kill lobby under either of these conditions
+	int killLobby = noneAlive || oneOrLessOrNonRaceMap;
+	if (killLobby)
+	{
+		PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
+		if (noneAlive)
+			printf("Room has been killed as no players are left\n");
+		else if (oneOrLessOrNonRaceMap)
+			printf("Room has been killed as 1 or less players or non-race map\n");
+		else
+			printf("Room has been killed\n");
+
+		for (int i = 0; i < MAX_CLIENTS; i++)
+		{
+			if (ri->peerInfos[i].peer == 0)
+				continue;
+
+			enet_peer_disconnect_now(ri->peerInfos[i].peer, 0);
+		}
+
+		memset(ri, 0, sizeof(RoomInfo));
+	}
+	// Only disconnect one player as long as
+	// more racers remain on Arcade track,
+	// or if disconnected from Battle/Adv during the race
+	else
+	{
+		enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
+		ri->peerInfos[peerID].peer = NULL;
+
+		// if this client ended race, dont tell
+		// anyone that the client disconnected
+		if (ri->peerInfos[peerID].boolEndSelf != 0)
+			return;
+
+		// dont block gameplay for everyone else
+		ri->peerInfos[peerID].boolLoadSelf = 1;
+		ri->peerInfos[peerID].boolRaceSelf = 1;
+
+		struct SG_MessageName sgBuffer;
+		struct SG_MessageName* s = &sgBuffer;
+
+		// send NULL name to all OTHER clients
+		s->type = SG_NAME;
+		s->clientID = peerID;
+		s->numClientsTotal = ri->clientCount;
+		memset(&s->name[0], 0, sizeof(s->name));
+
+		broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
+	}
+
+	ForeachPeerLPL(SendRoomData); //someone left a room, notify everyone else.
 }
 
 void WelcomeNewClient(RoomInfo* ri, int id)
@@ -342,41 +419,7 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			ri->peerInfos[id].peer = peer;
 
-			printf("ProcessReceiveEvent: peer chose room, removing from ll\n");
-			//remove this peer (we're joining a room) from the ll
-			struct LoosePeerList* c = lplHead, *prev = NULL;
-			while (c != NULL)
-			{
-				if (c->peer == peer)
-				{
-					if (prev == NULL)
-						lplHead = c->next;
-					else
-						prev->next = c->next;
-					//i++
-					struct LoosePeerList* toFree = c;
-					prev = c;
-					c = c->next;
-					free(toFree);
-				}
-				else
-				{
-					//i++
-					prev = c;
-					c = c->next;
-				}
-			}
-
-			//send an update to everyone else.
-			int count = 0;
-			c = lplHead;
-			while (c != NULL)
-			{
-				count++;
-				SendRoomData(c->peer);
-				c = c->next;
-			}
-			printf("ProcessReceiveEvent: peer chose room, notifying everyone in the ll: %d\n", count);
+			ForeachPeerLPL(SendRoomData); //someone chose a room, notify everyone else.
 
 			// 5 seconds
 			enet_peer_timeout(peer, 1000000, 1000000, 5000);
@@ -583,129 +626,8 @@ void ProcessNewMessages() {
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
-			{
-				printf("ProcessNewMessages: peer disconnected, removing from ll\n");
-				//remove this peer from the ll since it's disconnecting.
-				struct LoosePeerList* c = lplHead, *prev = NULL;
-				while (c != NULL)
-				{
-					if (c->peer == event.peer)
-					{
-						if (prev == NULL)
-							lplHead = c->next;
-						else
-							prev->next = c->next;
-						//i++
-						struct LoosePeerList* toFree = c;
-						prev = c;
-						c = c->next;
-						free(toFree);
-					}
-					else
-					{
-						//i++
-						prev = c;
-						c = c->next;
-					}
-				}
-
-				//identify which client ID this came from
-				int peerID = -1;
-				int numAlive = 0;
-
-				RoomInfo* ri = &roomInfos[0];
-
-				//identify which client ID this came from
-				GetDriverFromRace(event.peer, &ri, &peerID);
-
-				// driver is not in a room, just quit
-				if (peerID == -1)
-				{
-					enet_peer_disconnect_now(event.peer, 0);
-					//printf("Disconnection from Room Selection\n");
-					return;
-				}
-
-				for (int i = 0; i < MAX_CLIENTS; i++)
-					if (ri->peerInfos[i].peer != 0)
-						numAlive++;
-
-				// subtract one, cause one of the peers was still
-				// alive in the for-loop that is about to be nullified
-				numAlive -= 1;
-
-				PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-				printf("Player %s (%d) disconnected from room\n",
-					&ri->peerInfos[peerID].name[0],
-					peerID);
-
-				// no players are left
-				int noneAlive = numAlive == 0;
-				//race is in session and (1 or less players AND non-race map)
-				int oneOrLessOrNonRaceMap = (ri->boolRaceAll == 1) && ((numAlive <= 1) && (ri->levelPlayed > 18));
-				// Kill lobby under either of these conditions
-				int killLobby = noneAlive || oneOrLessOrNonRaceMap;
-				if (killLobby)
-				{
-					PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-					if (noneAlive)
-						printf("Room has been killed as no players are left\n");
-					else if (oneOrLessOrNonRaceMap)
-						printf("Room has been killed as 1 or less players or non-race map\n");
-					else
-						printf("Room has been killed\n");
-
-					for (int i = 0; i < MAX_CLIENTS; i++)
-					{
-						if (ri->peerInfos[i].peer == 0)
-							continue;
-
-						enet_peer_disconnect_now(ri->peerInfos[i].peer, 0);
-					}
-
-					memset(ri, 0, sizeof(RoomInfo));
-				}
-				// Only disconnect one player as long as
-				// more racers remain on Arcade track,
-				// or if disconnected from Battle/Adv during the race
-				else
-				{
-					enet_peer_disconnect_now(ri->peerInfos[peerID].peer, 0);
-					ri->peerInfos[peerID].peer = NULL;
-
-					// if this client ended race, dont tell
-					// anyone that the client disconnected
-					if (ri->peerInfos[peerID].boolEndSelf != 0)
-						return;
-
-					// dont block gameplay for everyone else
-					ri->peerInfos[peerID].boolLoadSelf = 1;
-					ri->peerInfos[peerID].boolRaceSelf = 1;
-
-					struct SG_MessageName sgBuffer;
-					struct SG_MessageName* s = &sgBuffer;
-
-					// send NULL name to all OTHER clients
-					s->type = SG_NAME;
-					s->clientID = peerID;
-					s->numClientsTotal = ri->clientCount;
-					memset(&s->name[0], 0, sizeof(s->name));
-
-					broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
-				}
-
-				//send an update to everyone else.
-				int count = 0;
-				c = lplHead;
-				while (c != NULL)
-				{
-					count++;
-					SendRoomData(c->peer);
-					c = c->next;
-				}
-				printf("ProcessNewMessages: peer left room, notifying everyone in the ll: %d\n", count);
+				ProcessDisconnectEvent(event.peer);
 				break;
-			}
 		}
 
 		enet_packet_destroy(event.packet);
