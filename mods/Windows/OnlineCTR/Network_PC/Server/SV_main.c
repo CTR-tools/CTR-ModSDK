@@ -297,6 +297,20 @@ void ProcessDisconnectEvent(ENetPeer* peer)
 		memset(&s->name[0], 0, sizeof(s->name));
 
 		broadcastToPeersReliable(ri, s, sizeof(struct SG_MessageName));
+
+		if (peerID == 0)
+		{
+			//TODO
+			//printf("Host (player 0) just disconnected, promoting player %d to host.", 69);
+			//I think we can just call WelcomeNewClient???
+			//also need to manually change state from LOBBY_GUEST_TRACK_WAIT to LOBBY_HOST_TRACK_PICK in client (acutally no this is automatic I think)
+			//find a player to replace them. We need to update the data when we move the slot:
+			//ri->peerInfos[].peer
+			//memset(&ri->peerInfos[id], 0, sizeof(PeerInfo));??
+			//if chosen client was the last in the list, then decrement count.
+			//if (id == ri->clientCount)
+		    //    ri->clientCount--;
+		}
 	}
 
 	ForeachPeerLPL(SendRoomData); //someone left a room, notify everyone else.
@@ -439,9 +453,12 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			// save new name
 			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], NAME_LEN);
 
-			PrintPrefix((((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1);
-			printf("Player %d is identified now as %s [%08x]\n",
+			int roomId = (((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1;
+
+			PrintPrefix(roomId);
+			printf("Player %d joined room %d and is now identified as %s [%08x]\n",
 				peerID,
+				roomId,
 				r->name,
 				peer->address.host);
 
@@ -491,6 +508,9 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 					(2*s->lapID)+1);
 
 			broadcastToPeersReliable(ri, s, sizeof(struct CG_MessageTrack));
+
+			ForeachPeerLPL(SendRoomData);
+
 			break;
 		}
 
@@ -806,6 +826,8 @@ void ServerState_Tick()
 				ri->boolRaceAll = 0;
 				ri->boolEndAll = 0;
                 ri->endTime = 0;
+
+				ForeachPeerLPL(SendRoomData); //race over, re-notify all clients
 			}
 		}
 	}
