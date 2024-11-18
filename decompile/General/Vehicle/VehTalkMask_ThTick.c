@@ -1,5 +1,9 @@
 #include <common.h>
 
+u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);
+int EngineSound_VolumeAdjust(int desired, int current, int amount);
+int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
+
 void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 {
 	struct GameTracker* gGT = sdata->gGT;
@@ -105,14 +109,14 @@ SkipLerp:
   // 0x00: mouth close
   // 0x0C: mouth open
 
-  int lastFrame = 
+  u_int lastFrame = 
 	DECOMP_VehFrameInst_GetNumAnimFrames(mhInst,0) - 1;
 
   if (mhInst->animFrame < 0)
 	mhInst->animFrame = 0;
 
-  else if (lastFrame < mhInst->animFrame)
-      mhInst->animFrame = lastFrame;
+  else if (lastFrame < (u_int)mhInst->animFrame)
+      mhInst->animFrame = (short)lastFrame;
 
   if (sdata->talkMask_boolDead != 0)
   {

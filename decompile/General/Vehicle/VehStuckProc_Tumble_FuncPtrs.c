@@ -1,5 +1,7 @@
 #include <common.h>
 
+int DECOMP_VehCalc_InterpBySpeed(int val, int speed, int desired);
+
 // budget: 0x208 (520)
 // curr:
 
@@ -65,7 +67,7 @@ void DECOMP_VehStuckProc_Tumble_PhysAngular(struct Thread *thread, struct Driver
 		DECOMP_VehCalc_InterpBySpeed((int)(driver->rotCurr).w, (elapsedTimeMS << 5) >> 5, 0);
 
 	#ifndef REBUILD_PS1
-	VehPhysForce_RotAxisAngle(&driver->matrixMovingDir, &driver->AxisAngle1_normalVec, driver->angle);
+	VehPhysForce_RotAxisAngle(&driver->matrixMovingDir, (short*)&driver->AxisAngle1_normalVec, driver->angle);
 	#endif
 
 	return;

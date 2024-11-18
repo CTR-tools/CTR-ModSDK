@@ -1,5 +1,11 @@
 #include <common.h>
 
+int DECOMP_VehCalc_InterpBySpeed(int val, int speed, int desired);
+int DECOMP_VehCalc_MapToRange(
+	int val,
+	int oldMin, int oldMax,
+	int newMin, int newMax);
+
 void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
 {
     int revFireLevel;

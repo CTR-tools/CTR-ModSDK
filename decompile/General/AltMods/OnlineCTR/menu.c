@@ -159,7 +159,7 @@ void NewPage_ServerRoom()
 	for (i = 0; i < 8; i++)
 	{
 		int rn = i + (pn * 8);
-		const char* type;
+		const char* type = "\0";
 		if (rn >= ROOM_ITEMLESSSTART  && rn < (ROOM_ITEMLESSSTART + ROOM_ITEMLESSLENGTH))
 			type = itemless;
 		if (rn >= ROOM_ITEMSTART      && rn < (ROOM_ITEMSTART + ROOM_ITEMLENGTH))
