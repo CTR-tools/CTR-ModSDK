@@ -7,14 +7,6 @@ extern struct RectMenu menu224;
 extern struct MenuRow rowsWithSave[6];
 extern struct MenuRow rowsNoSave[5];
 
-void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFlags);
-void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver);
-void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY);
-int DECOMP_DecalFont_GetLineWidth(char* str, short fontType);
-void RECTMENU_DrawPolyGT4(
-	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot,
-	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-
 void DECOMP_TT_EndEvent_DrawMenu(void)
 {
     int framesSinceRaceEnded;

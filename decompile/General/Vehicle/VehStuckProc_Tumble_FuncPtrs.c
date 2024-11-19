@@ -1,7 +1,5 @@
 #include <common.h>
 
-int DECOMP_VehCalc_InterpBySpeed(int val, int speed, int desired);
-
 // budget: 0x208 (520)
 // curr:
 

@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_RaceFlag_SetDrawOrder(int drawOrder);
-
 void DECOMP_MM_Scrapbook_Init(void)
 {
     D230.scrapbookState = 0;

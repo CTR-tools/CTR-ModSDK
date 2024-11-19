@@ -1,9 +1,5 @@
 #include <common.h>
 
-u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);
-int EngineSound_VolumeAdjust(int desired, int current, int amount);
-int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
-
 void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 {
 	struct GameTracker* gGT = sdata->gGT;

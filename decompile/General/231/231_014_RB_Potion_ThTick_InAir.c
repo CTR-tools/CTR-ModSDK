@@ -1,8 +1,5 @@
 #include <common.h>
 
-void RB_GenericMine_ThTick(struct Thread*);
-void RB_MakeInstanceReflective(struct ScratchpadStruct*, struct Instance*);
-
 void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 {
 	struct GameTracker* gGT;

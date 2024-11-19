@@ -51,7 +51,7 @@ void DECOMP_VehStuckProc_PlantEaten_Init(struct Thread *t, struct Driver *d)
 
     for (i = 0; i < 3; i++)
     {
-        OtherFX_Stop1(d->driverAudioPtrs[i]);
+        OtherFX_Stop1((int)d->driverAudioPtrs[i]);
         d->driverAudioPtrs[i] = NULL;
     }
 

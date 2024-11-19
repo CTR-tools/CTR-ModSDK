@@ -15,13 +15,6 @@ const short hub[8] =
 
 extern struct MenuRow rows221[3];
 extern struct RectMenu menu221;
-	
-int DECOMP_UI_ConvertX_2(int x, int const_0x200);
-int DECOMP_UI_ConvertY_2(int y, int const_0x200);
-void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
-void RECTMENU_ClearInput();
-void RECTMENU_Show(struct RectMenu*);
-void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType);
 
 void DECOMP_CC_EndEvent_DrawMenu()
 {

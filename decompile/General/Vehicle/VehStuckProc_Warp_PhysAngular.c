@@ -1,7 +1,5 @@
 #include <common.h>
 
-void FLARE_Init(short*);
-
 // animate rotation and scale in warppad
 void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 {

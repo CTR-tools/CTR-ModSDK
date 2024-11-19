@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DecDCTReset(int);
-u_long DecDCTvlcSize2(u_long);
-void DecDCToutCallback(void*);
-
 void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size, int param_5)
 {
     char isRGB24;

@@ -1,10 +1,5 @@
 #include <common.h>
 
-void StClearRing();
-void DecDCTin(u_long*, int);
-void DecDCTout(u_long*, int);
-int CdDiskReady(int);
-
 u_int DECOMP_MM_Video_DecodeFrame(short offsetX, short offsetY)
 
 {

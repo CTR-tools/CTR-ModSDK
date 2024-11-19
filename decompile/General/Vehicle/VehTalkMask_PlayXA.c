@@ -1,8 +1,5 @@
 #include <common.h>
 
-struct INSTANCE;
-int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
-
 void DECOMP_VehTalkMask_PlayXA(struct INSTANCE* i, int id)
 {
 	struct Driver* d = sdata->gGT->drivers[0];

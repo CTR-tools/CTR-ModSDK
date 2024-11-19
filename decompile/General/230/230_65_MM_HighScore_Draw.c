@@ -1,8 +1,5 @@
 #include <common.h>
 
-int DECOMP_DecalFont_GetLineWidth(char* str, short fontType);
-void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot);
-
 void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int posY)
 {
     char i;

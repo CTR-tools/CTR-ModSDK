@@ -15,7 +15,7 @@ void DECOMP_VehStuckProc_PlantEaten_Update(struct Thread *t, struct Driver *d)
 	// === respawn driver ===
 
     // respawn driver at last valid quadblock
-    VehStuckProc_MaskGrab_FindDestPos(d, d->lastValid);
+    VehStuckProc_MaskGrab_FindDestPos((struct Thread*)d, (struct Driver*)d->lastValid);
     VehBirth_TeleportSelf(d, 0, 0x80);
 
     // enable collision, make visible
@@ -90,7 +90,7 @@ void DECOMP_VehStuckProc_PlantEaten_Animate(struct Thread *t, struct Driver *d)
 		alStack32[0] = 0;
 		alStack32[1] = 0;
 		
-        RotTrans(&plantVector, &camVec, alStack32);
+        RotTrans(&plantVector, &camVec, (long*)alStack32);
 
 		#ifdef USE_ONLINE
 		if(d->driverID != 0)

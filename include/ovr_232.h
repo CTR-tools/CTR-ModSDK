@@ -244,22 +244,6 @@ struct OverlayDATA_232
 	// 800b4f7c (1 arrow)
 	hubItems_hub5[4];
 
-	// 800b4ed4
-	// 2 arrows, boss, save/load, null(0xFFFF)
-	//struct HubItem hubItems_hub1[5];
-	
-	// 800b4efc
-	//struct HubItem hubItems_hub2[5];
-	
-	// 800b4f24
-	//struct HubItem hubItems_hub3[5];
-	
-	// 800b4f4c (3 arrows)
-	//struct HubItem hubItems_hub4[6];
-	
-	// 800b4f7c (1 arrow)
-	//struct HubItem hubItems_hub5[4];
-
 	// 800b4f9c -- array of pointers:
 	//		800b4ed4 800b4efc 800b4f24
 	//		800b4f4c 800b4f7c

@@ -13,9 +13,6 @@ int ScrapBookPlayMovie_DecodeFrame()
 }
 #endif
 
-int DECOMP_RaceFlag_IsFullyOnScreen();
-int DECOMP_RaceFlag_IsFullyOffScreen();
-
 void DECOMP_MM_Scrapbook_PlayMovie(struct RectMenu* menu)
 {
     short lev;

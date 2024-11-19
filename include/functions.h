@@ -1194,3 +1194,48 @@ void DrawLevelOvr4P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspL
 
 u_int MM_Video_CheckIfFinished(int param_1);
 void AH_Pause_Update();
+
+//=====================================================================================================================
+//this section is forward decls to fix warnings by TheUbMunster.
+//any commented out entries were hoisted from files, then commented because they're already present in this file.
+//these decls should probably be moved into the upper portion of this file & sorted at some point.
+//=====================================================================================================================
+
+//void RECTMENU_ClearInput();
+//void RECTMENU_Show(struct RectMenu*);
+void RECTMENU_DrawPolyGT4(
+	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot,
+	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+int ratan2(int x, int y);
+void RotTrans(SVECTOR*, VECTOR*, long*);
+void SetRotMatrix(MATRIX*);
+void SetTransMatrix(MATRIX*);
+void VehBirth_TeleportSelf(struct Driver* d, u_char spawnFlag, int spawnPosY); //this is present (but commented out) further up the file. Idk why.
+int RefreshCard_BoolGhostForLEV(u_short trackID); //this is present (but commented out) further up the file. Idk why.
+void StCdInterrupt(); //80078d34
+void DecDCTout(u_long*, int); //80079940 guessed the signature
+void DecDCTin(u_long*, int);
+void StSetStream(int, int, int, int, int); //guessed about a lot of these signatures (TheUbMunster)
+void StSetRing(u_long*, int);
+void StClearRing();
+int CdDiskReady(int);
+void StSetMask(int, int, int);
+void CdDataCallback(int);
+void DecDCTReset(int);
+u_long DecDCTvlcSize2(u_long);
+void DecDCToutCallback(void*);
+#ifndef REBUILD_PS1 //this forward decl hoisted from 231_006_RB_Hazard_HurtDriver.c
+void VehPickState_NewState(struct Driver* victim, int damageType, struct Driver* attacker, int reason); //this is present (but commented out) further up the file. Idk why.
+#endif
+#ifndef REBUILD_PS1 //this forward decl hoisted from 231_011_RB_Hazard_ThCollide_Generic.c
+void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst);
+#endif
+void RB_GenericMine_ThTick(struct Thread*);
+void RB_MakeInstanceReflective(struct ScratchpadStruct*, struct Instance*);
+//void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
+//void VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* driver);
+//void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
+void VehPhysForce_TranslateMatrix(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
+void VehEmitter_DriverMain(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
+void FLARE_Init(short*); //this is present (but commented out) further up the file. Idk why.
+int EngineSound_VolumeAdjust(int desired, int current, int amount); //this is present (but commented out) further up the file. Idk why.

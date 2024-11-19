@@ -727,3 +727,40 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState);
 void DECOMP_CS_Garage_MenuProc(void);
 void DECOMP_CS_Garage_Init(void);
 struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void);
+
+//=====================================================================================================================
+//this section is forward decls to fix warnings by TheUbMunster.
+//any commented out entries were hoisted from files, then commented because they're already present in this file.
+//these decls should probably be moved into the upper portion of this file & sorted at some point.
+//=====================================================================================================================
+
+//int DECOMP_UI_ConvertX_2(int x, int const_0x200);
+//int DECOMP_UI_ConvertY_2(int y, int const_0x200);
+//void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
+void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType);
+void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2);
+void DECOMP_UI_DrawPosSuffix(short posX, short posY, struct Driver* d, short flags);
+void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver);
+int DECOMP_DecalFont_GetLineWidth(char* str, short fontType);
+void DECOMP_RR_EndEvent_UnlockAward();
+void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY);
+int DECOMP_LOAD_IsOpen_RacingOrBattle();
+void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFlags);
+void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY);
+void DECOMP_GAMEPROG_NewProfile_InsideAdv(struct AdvProgress* adv);
+int DECOMP_RaceFlag_MoveModels(int frameIndex, int numFrames);
+void DECOMP_MainKillGame_LaunchSpyro2();
+void DECOMP_DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
+void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot);
+void DECOMP_RaceFlag_SetDrawOrder(int drawOrder);
+int DECOMP_RaceFlag_IsFullyOnScreen();
+int DECOMP_RaceFlag_IsFullyOffScreen();
+void DECOMP_RB_Teeth_OpenDoor(struct Instance* teethInst);
+int DECOMP_VehCalc_InterpBySpeed(int val, int speed, int desired);
+int DECOMP_VehCalc_MapToRange(
+	int val,
+	int oldMin, int oldMax,
+	int newMin, int newMax);
+//void DECOMP_VehStuckProc_Tumble_Animate(struct Thread* thread, struct Driver* driver);
+int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
+u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);

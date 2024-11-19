@@ -1,7 +1,5 @@
 #include <common.h>
 
-int RefreshCard_BoolGhostForLEV(u_short trackID);
-
 void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 {
 	char bVar1;

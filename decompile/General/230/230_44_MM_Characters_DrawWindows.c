@@ -1,7 +1,5 @@
 #include <common.h>
 
-int DECOMP_RaceFlag_MoveModels(int frameIndex, int numFrames);
-
 void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
 {
   struct GameTracker* gGT;

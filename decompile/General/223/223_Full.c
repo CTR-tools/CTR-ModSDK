@@ -7,13 +7,6 @@
 // this goes to footer
 static int str_number = 0x20; // " \0"
 
-void DECOMP_RR_EndEvent_UnlockAward();
-void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY);
-void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver);
-void RECTMENU_DrawPolyGT4(
-	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot,
-	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-
 // required to start on 8009f71c until we rewrite MainGameEnd_Initialize
 void JunkPadding223()
 {

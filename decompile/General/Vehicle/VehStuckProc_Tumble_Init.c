@@ -1,13 +1,5 @@
 #include <common.h>
 
-void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
-void VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* driver);
-void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
-void VehPhysForce_TranslateMatrix(struct Thread* thread, struct Driver* driver);
-void DECOMP_VehStuckProc_Tumble_Animate(struct Thread* thread, struct Driver* driver);
-void VehEmitter_DriverMain(struct Thread* thread, struct Driver* driver);
-int DECOMP_LOAD_IsOpen_RacingOrBattle();
-
 void* PlayerBlastedFuncTable[0xD] =
 {
 	(void *)0x0,

@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_GAMEPROG_NewProfile_InsideAdv(struct AdvProgress* adv);
-
 void DECOMP_MM_Title_MenuUpdate(void)
 {
   struct GameTracker *gGT = sdata->gGT;

@@ -1,9 +1,5 @@
 #include <common.h>
 
-#ifndef REBUILD_PS1
-void VehPickState_NewState(struct Driver* victim, int damageType, struct Driver* attacker, int reason);
-#endif
-
 void RB_Hazard_HurtDriver(
 	struct Driver* driverVictim, 
 	int damageType,
