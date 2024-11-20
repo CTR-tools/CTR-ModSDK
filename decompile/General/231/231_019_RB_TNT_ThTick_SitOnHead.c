@@ -141,7 +141,7 @@ LAB_800ad5f8:
   {
 	// Blow up
 	
-    RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
+	DECOMP_RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
     
 	// icon damage timer, draw icon as red
 	mw->driverTarget->damageColorTimer = 0x1e;

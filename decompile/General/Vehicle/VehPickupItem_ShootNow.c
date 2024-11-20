@@ -580,7 +580,7 @@ RunMineCOLL:
 				if(victim == d) continue;
 
 				// if spin out driver
-				if(RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0) //why is this in an if? RB_Hazard_HurtDriver returns void????
+				if(DECOMP_RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
 				{
 					victim->clockReceive = hurtVal;
 				}

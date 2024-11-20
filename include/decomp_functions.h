@@ -765,3 +765,4 @@ int DECOMP_VehCalc_MapToRange(
 int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
 u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);
 int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);
+int DECOMP_RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);

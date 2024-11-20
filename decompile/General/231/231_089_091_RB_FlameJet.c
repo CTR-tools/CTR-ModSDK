@@ -367,7 +367,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 		
 		// get driver from instance
 		hitDriver = (struct Driver*)hitInst->thread->object;
-		RB_Hazard_HurtDriver(hitDriver, 4, 0, 0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver, 4, 0, 0);
 	}
 	
 	// on 45th frame (1.5s)

@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Hazard_HurtDriver(
+int DECOMP_RB_Hazard_HurtDriver(
 	struct Driver* driverVictim, 
 	int damageType,
 	struct Driver* driverAttacker,

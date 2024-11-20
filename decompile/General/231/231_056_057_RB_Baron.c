@@ -139,7 +139,7 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		// attempt to harm driver (squish)
-		RB_Hazard_HurtDriver(hitDriver,3,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,3,0,0);
 	}
 #endif
 }

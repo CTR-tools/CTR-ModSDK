@@ -30,7 +30,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
 			instParent->thread->object;
 		
       // blasted anyone?
-      RB_Hazard_HurtDriver(victim, 2, attacker, 2);
+	  DECOMP_RB_Hazard_HurtDriver(victim, 2, attacker, 2);
     }
     else
     {
@@ -49,7 +49,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
 			driverParent;
 
       // blasted anyone?
-      RB_Hazard_HurtDriver(victim, 2, attacker, reason);
+	  DECOMP_RB_Hazard_HurtDriver(victim, 2, attacker, reason);
 
       if (attacker->longestShot < tw->timeAlive)
 		attacker->longestShot = tw->timeAlive;
