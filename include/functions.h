@@ -1230,7 +1230,7 @@ void DecDCTReset(int);
 u_long DecDCTvlcSize2(u_long);
 void DecDCToutCallback(void*);
 #ifndef REBUILD_PS1 //this forward decl hoisted from 231_006_RB_Hazard_HurtDriver.c
-void VehPickState_NewState(struct Driver* victim, int damageType, struct Driver* attacker, int reason); //this is present (but commented out) further up the file. Idk why.
+int VehPickState_NewState(struct Driver* victim, int damageType, struct Driver* attacker, int reason); //this is present (but commented out) further up the file. Idk why, also, return value was void when should have been int
 #endif
 #ifndef REBUILD_PS1 //this forward decl hoisted from 231_011_RB_Hazard_ThCollide_Generic.c
 void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst);
@@ -1251,4 +1251,4 @@ void RB_Warpball_Start(struct TrackerWeapon* tw);
 void RB_Warpball_SetTargetDriver(struct TrackerWeapon* tw);
 struct Driver* RB_Warpball_GetDriverTarget(struct TrackerWeapon* tw, struct Instance* inst);
 void RB_Warpball_SeekDriver(struct TrackerWeapon* tw, unsigned int param_2, struct Driver* d);
-void RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason); //I think this function is supposed to be void
+int RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
