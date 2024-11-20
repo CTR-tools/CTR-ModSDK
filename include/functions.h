@@ -1042,7 +1042,12 @@ void VehPhysProc_SpinStop_Init(struct Thread* t, struct Driver* d);
 // Weapon (?)
 
 //VehPickupItem_MaskBoolGoodGuy()
-void * VehPickupItem_MaskUseWeapon(int param_1,int param_2);
+
+
+//void* VehPickupItem_MaskUseWeapon(int param_1,int param_2); //old signature
+struct MaskHeadWeapon* VehPickupItem_MaskUseWeapon(struct Driver* driver, int boolPlaySound); //yoinked DECOMP_ signature
+
+
 //VehPickupItem_MissileGetTargetDriver()
 //VehPickupItem_PotionThrow()
 //VehPickupItem_ShootNow()
@@ -1239,3 +1244,11 @@ void VehPhysForce_TranslateMatrix(struct Thread* thread, struct Driver* driver);
 void VehEmitter_DriverMain(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
 void FLARE_Init(short*); //this is present (but commented out) further up the file. Idk why.
 int EngineSound_VolumeAdjust(int desired, int current, int amount); //this is present (but commented out) further up the file. Idk why.
+void RB_ShieldDark_ThTick_Grow(struct Thread* t);
+void RB_Warpball_ThTick(struct Thread* t);
+struct CheckpointNode* RB_Warpball_NewPathNode(struct CheckpointNode* ptrNodeCurr, struct Driver* victim);
+void RB_Warpball_Start(struct TrackerWeapon* tw);
+void RB_Warpball_SetTargetDriver(struct TrackerWeapon* tw);
+struct Driver* RB_Warpball_GetDriverTarget(struct TrackerWeapon* tw, struct Instance* inst);
+void RB_Warpball_SeekDriver(struct TrackerWeapon* tw, unsigned int param_2, struct Driver* d);
+void RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason); //I think this function is supposed to be void

@@ -764,3 +764,4 @@ int DECOMP_VehCalc_MapToRange(
 //void DECOMP_VehStuckProc_Tumble_Animate(struct Thread* thread, struct Driver* driver);
 int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
 u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);
+int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);

@@ -1,5 +1,7 @@
 #include <common.h>
 
+//I think this function should return void?
+
 int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 {
 	struct Instance* inst;
