@@ -29,7 +29,7 @@ int DECOMP_VehPhysGeneral_LerpToForwards(struct Driver *d, int param_2, int para
       {
         uVar2 = d->unk458;
       }
-      iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(uVar2, param_2 - param_4, 0);
+      iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(uVar2, param_2 - param_4);
       iVar3 = -iVar3;
     }
     else
@@ -38,11 +38,11 @@ int DECOMP_VehPhysGeneral_LerpToForwards(struct Driver *d, int param_2, int para
       {
         if (param_2 < 0)
         {
-          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->unk459, param_4 -param_2, 0);
+          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->unk459, param_4 -param_2);
         }
         else
         {
-          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->angleMaxCounterSteer, param_4 -param_2, 0);
+          iVar3 = DECOMP_VehPhysGeneral_LerpQuarterStrength(d->angleMaxCounterSteer, param_4 -param_2);
           d->unk3CA = (short)param_4;
         }
       }

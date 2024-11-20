@@ -216,8 +216,6 @@ struct Thread* RB_CrateAny_GrowInit(struct Instance* crateInst)
 	return crateThread;
 }
 
-void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
-
 int DECOMP_RB_CrateWeapon_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,

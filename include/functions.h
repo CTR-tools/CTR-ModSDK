@@ -1252,3 +1252,14 @@ void RB_Warpball_SetTargetDriver(struct TrackerWeapon* tw);
 struct Driver* RB_Warpball_GetDriverTarget(struct TrackerWeapon* tw, struct Instance* inst);
 void RB_Warpball_SeekDriver(struct TrackerWeapon* tw, unsigned int param_2, struct Driver* d);
 int RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
+struct Driver* VehPickupItem_MissileGetTargetDriver(struct Driver*); //this is present (but commented out) further up the file. Idk why.
+u_int VehPickupItem_PotionThrow(struct MineWeapon* potion, struct Instance* inst, u_int flags); //this is present (but commented out) further up the file. Idk why.
+unsigned short RB_Hazard_CollLevInst(struct ScratchpadStruct*, struct Thread*);
+void RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, struct MineWeapon* mw);
+void RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_2);
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
+void EngineSound_Player(struct Driver* driver);
+void VehPhysForce_OnGravity(struct Driver* driver, Vec3* velocity);
+int RngDeadCoed(u_int*);
+struct Model* VehBirth_GetModelByName(char* searchName);
+struct Terrain* VehAfterColl_GetTerrain(u_char terrainType);

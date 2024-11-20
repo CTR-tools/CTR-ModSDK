@@ -13,7 +13,7 @@ void DECOMP_VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
 
     animIndex = inst->animIndex;
 
-    numFrames = VehFrameInst_GetNumAnimFrames(inst, animIndex);
+    numFrames = VehFrameInst_GetNumAnimFrames((struct Driver*)inst, animIndex);
 
     // if there are no frames
     if (numFrames <= 0)
@@ -37,7 +37,7 @@ void DECOMP_VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
         if (inst->animFrame == startFrame)
         {
             // get number of frames in animation
-            numFrames = VehFrameInst_GetNumAnimFrames(inst, 0);
+            numFrames = VehFrameInst_GetNumAnimFrames((struct Driver*)inst, 0);
 
             if (numFrames <= 0)
                 // quit

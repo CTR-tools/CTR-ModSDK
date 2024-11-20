@@ -63,8 +63,6 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
-
 int DECOMP_RB_CtrLetter_LInC(
 	struct Instance* letterInst,
 	struct Thread* driverTh,

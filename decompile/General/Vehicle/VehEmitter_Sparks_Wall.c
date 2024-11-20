@@ -37,13 +37,13 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     if (p == NULL)
         return;
 
-	short* matrix = 0x1f800000;
-	int* TireLeftOutS32 = &matrix[0];
-	int* TireRightOutS32 = &matrix[6];
+	short* matrix = (short*)0x1f800000;
+	int* TireLeftOutS32 = (int*)&matrix[0];
+	int* TireRightOutS32 = (int*)&matrix[6];
 	short* TireLeftOutS16 = &matrix[0];
 	short* TireRightOutS16 = &matrix[3];
 	short* distIn4 = &matrix[6];
-	int* distOut4 = &matrix[6];
+	int* distOut4 = (int*)&matrix[6];
 
 	// short[3] array
 	*(int*)&TireLeftOutS32[0] = 0xa00de00;

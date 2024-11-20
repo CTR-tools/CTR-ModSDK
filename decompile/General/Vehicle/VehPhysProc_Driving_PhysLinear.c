@@ -1,5 +1,5 @@
 #include <common.h>
-#ifdef USE_RETROFUELED && USE_ONLINE
+#if defined(USE_ONLINE)
 #include "../AltMods/OnlineCTR/global.h"
 #endif
 

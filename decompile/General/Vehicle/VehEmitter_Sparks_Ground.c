@@ -32,7 +32,7 @@ void DECOMP_VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *e
         if (p == NULL)
             continue;
 
-        u_int rng = RngDeadCoed(&gGT->deadcoed_struct.unk1) & 0x7ff;
+        u_int rng = (u_int)(RngDeadCoed(&gGT->deadcoed_struct.unk1) & 0x7ff);
 
         if ((rng & 1) != 0)
         {

@@ -145,12 +145,12 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			weaponInst->matrix.t[2] = dInst->matrix.t[2];
 
 			#ifndef REBUILD_PS1
-			VehPhysForce_RotAxisAngle(&weaponInst->matrix, &d->AxisAngle1_normalVec, d->rotCurr.y);
+			VehPhysForce_RotAxisAngle(&weaponInst->matrix, (short*)&d->AxisAngle1_normalVec, d->rotCurr.y);
 			#endif
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyTracker;
-			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Missile;
+			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Missile;
 
 			tw = weaponTh->object;
 			tw->flags = 0;
@@ -173,7 +173,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 
 				// Original Code
 				short rot[3];
-				CTR_MatrixToRot(&rot[0], &weaponInst->matrix, 0x11);
+				CTR_MatrixToRot((SVECTOR*)&rot[0], &weaponInst->matrix, 0x11);
 
 				// not a typo, required like this
 				tw->dir[0] = rot[1];
@@ -300,7 +300,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Generic;
 
 			PlaySound3D(0x52, weaponInst);
 
@@ -348,7 +348,7 @@ RunMineCOLL:
 
 			sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-			COLL_SearchTree_FindQuadblock_Touching(pos1, pos2, sps, 0x40);
+			COLL_SearchTree_FindQuadblock_Touching((u_int*)pos1, (u_int*)pos2, (u_int*)sps, 0x40);
 
 			if(sps->boolDidTouchHitbox != 0)
 			{
@@ -439,7 +439,7 @@ RunMineCOLL:
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Generic;
 
 			PlaySound3D(0x52, weaponInst);
 

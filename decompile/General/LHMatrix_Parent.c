@@ -11,8 +11,8 @@ void LHMatrix_Parent(struct Instance* pDst, struct Instance* pSrc, SVECTOR* tran
   memcpy(&pDst->matrix, &pSrc->matrix, sizeof(pSrc->matrix));
 
   //load dst matrix and transform vector to GTE
-  SetRotMatrix(&pDst->matrix.m);
-  SetTransMatrix(&pDst->matrix.m);
+  SetRotMatrix(&pDst->matrix);
+  SetTransMatrix(&pDst->matrix);
   gte_ldv0(transVec);
 
   //rotate on GTE
