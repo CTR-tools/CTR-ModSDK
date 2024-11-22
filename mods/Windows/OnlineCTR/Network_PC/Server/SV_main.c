@@ -28,6 +28,8 @@ void PrintTime();
 void AddPeerLPL(ENetPeer* peer);
 int RemovePeerLPL(ENetPeer* peer);
 int ForeachPeerLPL(void (*lambda)(ENetPeer*));
+void AddIPBanL(unsigned int IP);
+int AnyMatchIPBanL(unsigned int IP);
 
 typedef struct {
 	ENetPeer* peer;
@@ -642,7 +644,23 @@ void ProcessNewMessages() {
 				break;
 
 			case ENET_EVENT_TYPE_CONNECT:
-				ProcessConnectEvent(event.peer);
+			{
+				unsigned int ip = event.peer->address.host;
+				if (AnyMatchIPBanL(ip)) //if this IP is banned
+				{
+					union
+					{
+						unsigned int ip;
+						unsigned char bytes[4];
+					} ipBytes;
+					ipBytes.ip = ip;
+					PrintPrefix(-1);
+					printf("Banned player @ IP [%d.%d.%d.%d] attempted to connect, rejected\n", ipBytes.bytes[0], ipBytes.bytes[1], ipBytes.bytes[2], ipBytes.bytes[3]);
+					enet_peer_disconnect_now(event.peer, 0);
+				}
+				else
+					ProcessConnectEvent(event.peer);
+			}
 				break;
 
 			case ENET_EVENT_TYPE_DISCONNECT:
@@ -668,16 +686,10 @@ void ServerState_FirstBoot(int argc, char** argv)
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
 #endif
 
-	//initialize enet
-	if (enet_initialize() != 0)
-	{
-		printf(stderr, "Failed to initialize ENet!\n");
-		return 1;
-	}
-	atexit(enet_deinitialize);
-
 	int port;
 	int boolIsPortArgument = 0;
+	char* banlistPath = "";
+	int boolIsBanlistArgument = 0;
 
 	// port argument reading
 	for (int i = 1; i < argc; i++)
@@ -689,7 +701,7 @@ void ServerState_FirstBoot(int argc, char** argv)
 			if (i + 1 < argc)
 			{
 				port = atoi(argv[i + 1]);
-				i++; // next is the port number
+				i++; // next is the port number, so ignore it
 			}
 			else
 			{
@@ -697,7 +709,64 @@ void ServerState_FirstBoot(int argc, char** argv)
 				return 1;
 			}
 		}
+		else if (strcmp(argv[i], "--banlist") == 0 || strcmp(argv[i], "-b") == 0)
+		{
+			boolIsBanlistArgument = 1;
+			if (i + 1 < argc)
+			{
+				banlistPath = argv[i + 1];
+				i++; // next is banlist path, so ignore it
+			}
+			else
+			{
+				fprintf(stderr, "Error: --banlist or -b requires a value!\n");
+				return 1;
+			}
+		}
 	}
+
+	//read banlist file
+	if (boolIsBanlistArgument)
+	{
+		FILE* fBanlistPtr = fopen(banlistPath, "r");
+		if (fBanlistPtr != NULL)
+		{
+			char lineBuf[100];
+			unsigned int lineNum = 1 /*1 based*/, banEntries = 0;
+			while (fgets(lineBuf, 100, fBanlistPtr))
+			{
+				union
+				{
+					unsigned int ip;
+					unsigned char bytes[4];
+				} ipBytes;
+				int ip[4] = { 0 };
+				if (lineBuf[0] == '\n' && lineBuf[1] == '\0') //empty line
+					;
+				else if (EOF == sscanf(lineBuf, "%d.%d.%d.%d", &ip[0], &ip[1], &ip[2], &ip[3]))
+					printf("Failiure to parse ipv4 address on line %d in banlist.txt.\n", lineNum);
+				else
+				{
+					for (int i = 0; i < 4; i++)
+						ipBytes.bytes[i] = (unsigned char)ip[i];
+					AddIPBanL(ipBytes.ip);
+					banEntries++;
+				}
+				lineNum++;
+			}
+			printf("Banlist initialized with %d entries.\n", banEntries);
+		}
+		else
+			printf("Unable to open banlist.txt\n");
+	}
+
+	//initialize enet
+	if (enet_initialize() != 0)
+	{
+		printf(stderr, "Failed to initialize ENet!\n");
+		return 1;
+	}
+	atexit(enet_deinitialize);
 
 	if (!boolIsPortArgument)
 	{

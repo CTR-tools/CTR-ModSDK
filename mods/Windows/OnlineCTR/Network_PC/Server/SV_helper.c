@@ -116,3 +116,42 @@ int ForeachPeerLPL(void (*lambda)(ENetPeer*))
 	}
 	return count;
 }
+
+struct IPBanL;
+struct IPBanL {
+	unsigned int ip;
+	struct IPBanL* next;
+};
+
+struct IPBanL* ipBanLHead = NULL;
+
+void AddIPBanL(unsigned int IP)
+{
+	if (ipBanLHead == NULL)
+	{
+		ipBanLHead = malloc(sizeof(struct IPBanL));
+		ipBanLHead->next = NULL;
+		ipBanLHead->ip = IP;
+	}
+	else
+	{
+		struct IPBanL* c = ipBanLHead;
+		while (c->next != NULL)
+			c = c->next;
+		c->next = malloc(sizeof(struct IPBanL));
+		c->next->next = NULL;
+		c->next->ip = IP;
+	}
+}
+
+int AnyMatchIPBanL(unsigned int IP)
+{
+	int match = 0;
+	struct IPBanL* c = ipBanLHead;
+	while (c != NULL)
+	{
+		match |= c->ip == IP;
+		c = c->next;
+	}
+	return match;
+}
