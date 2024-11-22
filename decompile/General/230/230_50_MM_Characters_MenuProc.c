@@ -17,11 +17,11 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	u_int characterSelectType;
 	u_int fontType;
 	u_int iconColor;
-	u_int globalIconPerPlayerCopy3;
+	short globalIconPerPlayerCopy3;
 	int nextDriverCopy;
-	int globalIconPerPlayerCopy4;
-	u_short globalIconPerPlayerCopy;
-	u_int globalIconPerPlayerCopy2;
+	short globalIconPerPlayerCopy4;
+	short globalIconPerPlayerCopy;
+	short globalIconPerPlayerCopy2;
 	u_short* globalIconPerPlayerPtr2;
 	int iVar24;
 	u_int k;
@@ -344,9 +344,9 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 						}
 						bVar2 = false;
 
-						for (k = 0; k < gGT->numPlyrNextGame; k++)
+						for (k = 0; k < (u_int)gGT->numPlyrNextGame; k++)
 						{
-							if((k != j) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[k]))
+							if(((int)k != j) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[k]))
 							{
 								bVar2 = true;
 								break;
@@ -436,7 +436,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		globalIconPerPlayerPtr[i] = globalIconPerPlayerCopy;
 
 		// transition of each icon
-		iVar24 = &D230.ptrTransitionMeta[globalIconPerPlayerCopy];
+		iVar24 = (int)&D230.ptrTransitionMeta[globalIconPerPlayerCopy];
 
 		#ifdef USE_OXIDE
 		if (globalIconPerPlayerCopy == NITROS_OXIDE)
@@ -453,7 +453,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// "1", "2", "3", "4", above the character icon
 			DECOMP_DecalFont_DrawLine
 			(
-				D230.PlayerNumberStrings[i],
+				(char*)D230.PlayerNumberStrings[i],
 				((struct TransitionMeta*)iVar24)->currX + (u_int)*puVar26 + -6,
 				((struct TransitionMeta*)iVar24)->currY + (u_int)puVar26[1] + -3,
 				FONT_BIG, WHITE
@@ -606,7 +606,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// if number of players is 3 or 4
 			if (numPlyrNextGame >= 3) fontType = FONT_SMALL;
 
-			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[j + 0x10];
+			iVar8 = (int)&D230.ptrTransitionMeta[j + 0x10];
 			sVar10 = ((struct TransitionMeta*)iVar8)->currY + D230.characterSelect_ptrWindowXY[j*2+1];
 			sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
 
@@ -645,7 +645,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			((sdata->gameProgress.unlocks[iVar8 >> 5] >> (iVar8 & 0x1fU) & 1) != 0)
 		)
 		{
-			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[i];
+			iVar8 = (int)&D230.ptrTransitionMeta[i];
 
 			#ifdef USE_OXIDE
 			if (i == NITROS_OXIDE)
@@ -671,7 +671,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		for (i = 0; i < gGT->numPlyrNextGame; i++)
 		{
 			j = i;
-			iVar8 = (struct TransitionMeta*)&D230.ptrTransitionMeta[j];
+			iVar8 = (int)&D230.ptrTransitionMeta[j];
 
 			// store window width and height in one 4-byte variable
 			r->x = *(short *)(iVar8 + 0xa6) + *psVar22;

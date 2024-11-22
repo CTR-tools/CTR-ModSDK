@@ -9,13 +9,10 @@ int RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox)
 	struct Instance* teethInst;
 
 	instDef = bspHitbox->data.hitbox.instDef;
-	if(instDef == 0) return;
-	
-	teethInst = instDef->ptrInstance;
-	if(teethInst == 0) return;
-	
-	// STATIC_TEETH
-	if(instDef->modelID != 0x70) return;
+	if (instDef != NULL)
+		if (teethInst = instDef->ptrInstance, teethInst != NULL)
+			if (instDef->modelID == 0x70) //STATIC_TEETH
+				instDef = DECOMP_RB_Teeth_OpenDoor(teethInst);
 
-	DECOMP_RB_Teeth_OpenDoor(teethInst);
+	return (int)instDef;
 }

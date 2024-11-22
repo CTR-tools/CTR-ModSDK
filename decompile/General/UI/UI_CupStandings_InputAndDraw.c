@@ -93,7 +93,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
   if (sdata->framesSinceRaceEnded <= 0xf0)
   {
-    uVar9 = 0xffffff6a;
+    uVar9 = ((short)0xffffff6a);
     uVar14 = 0x100;
     local_90 = 0x1e;
     iVar12 = (int) local_38;

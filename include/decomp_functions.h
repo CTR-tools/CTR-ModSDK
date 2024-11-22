@@ -755,7 +755,7 @@ void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct P
 void DECOMP_RaceFlag_SetDrawOrder(int drawOrder);
 int DECOMP_RaceFlag_IsFullyOnScreen();
 int DECOMP_RaceFlag_IsFullyOffScreen();
-void DECOMP_RB_Teeth_OpenDoor(struct Instance* teethInst);
+struct InstDef* DECOMP_RB_Teeth_OpenDoor(struct Instance* teethInst);
 int DECOMP_VehCalc_InterpBySpeed(int val, int speed, int desired);
 int DECOMP_VehCalc_MapToRange(
 	int val,

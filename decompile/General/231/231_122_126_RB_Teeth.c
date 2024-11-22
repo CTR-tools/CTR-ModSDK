@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_RB_Teeth_OpenDoor();
-
 void DECOMP_RB_Teeth_LInB(struct Instance* inst)
 {	
   inst->unk50 += 2;
@@ -287,42 +285,27 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
     return 2;
 }
 
-void DECOMP_RB_Teeth_OpenDoor(struct Instance* inst)
+struct InstDef* DECOMP_RB_Teeth_OpenDoor(struct Instance* inst)
 {
-  struct Thread* teethTh = inst->thread;
-  
-  // if there is no thread,
-  // just in case it wasn't initialized
-  if (teethTh == NULL) 
-  {
-	
-	// 0x8 = size
-	// 0 = no relation to param4
-	// 0x300 flag = SmallStackPool
-	// 0x3 = "static" thread bucket
-    teethTh = PROC_BirthWithObject(0x80303,DECOMP_RB_Teeth_ThTick,0,0);
-	
-    inst->thread = teethTh;
-	
-    if (teethTh == NULL) 
-	{
-      return;
-    }
-	
-    teethTh->inst = inst;
-	
-    ((struct Teeth*)teethTh->object)->timeOpen = 0;
-  }
-  
-  // play sound,
-  // teeth opening
-  PlaySound3D(0x75,inst);
-  
-  // door is open
-  ((struct Teeth*)teethTh->object)->direction = 1;
-  
-  // enable access through a door (disable collision)
-  sdata->doorAccessFlags |= 1;
-  
-  return;
+	struct Thread* teethTh = inst->thread;
+	if (teethTh == NULL) {
+		// 0x8 = size
+		// 0 = no relation to param4
+		// 0x300 flag = SmallStackPool
+		// 0x3 = "static" thread bucket
+		u_int creationFlags = 0x80000 | 0x300 | 0x3;
+
+		//ghidra output says third arg to PROC_BirthWithObject is s_teeth_OVR_231__800b9de8, idk the equivalent.
+		teethTh = PROC_BirthWithObject(creationFlags, DECOMP_RB_Teeth_ThTick, NULL, NULL);
+		inst->thread = teethTh;
+		if (teethTh == NULL)
+			return NULL;
+		teethTh->inst = inst;
+		*(int*)((int)teethTh->object + 4) = 0; //idk what this line does
+	}
+	PlaySound3D(0x75, inst); // play sound, teeth opening
+	((struct Teeth*)teethTh->object)->direction = 1; // door is open
+	sdata->doorAccessFlags |= 1; // enable access through a door (disable collision)
+	//return (struct Instance*)&DAT_80090000;
+	return (struct InstDef*)0x80090000; //todo: make this a reference to named memory
 }

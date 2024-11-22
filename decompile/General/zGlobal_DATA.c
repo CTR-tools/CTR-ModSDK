@@ -9911,3 +9911,5 @@ struct Data data =
 
 	// .confetti = {}
 };
+
+#undef AS

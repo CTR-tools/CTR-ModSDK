@@ -653,3 +653,26 @@ struct Turtle
 
 	// 0xC bytes large
 };
+
+//where is this located? need to specify in gcc-syms926.txt
+struct OverlayRDATA_231
+{
+
+};
+
+struct OverlayDATA_231
+{
+	//written by TheUbMunster, this may be wrong/have mistakes!
+
+	//0x800b2eb4
+	struct WeaponSlot231 minePoolItem[40];
+
+	//0x800b2e9c
+	struct LinkedList minePoolTaken;
+
+	//0x800b2ea8
+	struct LinkedList minePoolFree;
+};
+
+extern struct OverlayRDATA_231 R231;
+extern struct OverlayDATA_231 D231;

@@ -543,7 +543,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 		{
 			iVar10++;
 
-			if (uVar15 <= iVar10)
+			if ((int)uVar15 <= iVar10)
 			{
 				iVar10 = 0;
 			}

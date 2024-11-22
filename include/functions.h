@@ -1263,3 +1263,5 @@ void VehPhysForce_OnGravity(struct Driver* driver, Vec3* velocity);
 int RngDeadCoed(u_int*);
 struct Model* VehBirth_GetModelByName(char* searchName);
 struct Terrain* VehAfterColl_GetTerrain(u_char terrainType);
+void UI_CupStandings_UpdateCupRanks();
+void UI_CupStandings_FinalizeCupRanks();
