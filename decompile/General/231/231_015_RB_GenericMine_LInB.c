@@ -1,7 +1,5 @@
 #include <common.h>
 
-void RB_GenericMine_ThTick(struct Thread *);
-
 void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 {
     struct Thread* t;

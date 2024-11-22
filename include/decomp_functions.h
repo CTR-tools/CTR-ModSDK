@@ -782,3 +782,5 @@ void DECOMP_GAMEPAD_ShockForce1(struct Driver* d, int frame, int val);
 u_int* DECOMP_RaceFlag_GetOT();
 void DECOMP_RaceFlag_DrawLoadingString();
 int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType);
+void DECOMP_RB_Burst_Init(struct Instance* weaponInst);
+void DECOMP_GAMEPAD_ShockFreq(struct Driver* d, int frame, int val);

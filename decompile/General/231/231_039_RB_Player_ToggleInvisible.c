@@ -23,7 +23,7 @@ void DECOMP_RB_Player_ToggleInvisible(void)
         if (i != d->driverID)
         {
 		  struct InstDrawPerPlayer* idpp =
-			INST_GETIDPP(d->instSelf);
+			(struct InstDrawPerPlayer*)INST_GETIDPP(d->instSelf);
 			
           // make driver instance invisible on this screen
           idpp[i].instFlags &= 0xffffffbf;

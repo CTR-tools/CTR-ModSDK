@@ -1077,6 +1077,7 @@ OVR_233 = 0x800ab9f0;
 R230 = 0x800ab9f0;
 D230 = 0x800b44e4;
 V230 = 0x800b67ac;
+D231 = 0x800b2eb4;
 R232 = 0x800aba3c;
 D232 = 0x800b4ddc;
 X2_EndOfFile = 0x800ab9f0;

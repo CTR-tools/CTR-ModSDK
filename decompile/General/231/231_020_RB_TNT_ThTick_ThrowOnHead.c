@@ -32,7 +32,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	// 0x800b2ac4
 	// BSS before Baron_ThTick,
 	// determines height of TNT for each player
-	array = 0x800b2ac4;
+	array = (short*)0x800b2ac4; //TODO: access named memory instead (D231?)
     
 	distHead = array[data.characterIDs[mw->driverTarget->driverID]];
 	
@@ -62,7 +62,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   }
   
   // CopyMatrix
-  LHMatrix_Parent(inst,mw->driverTarget->instSelf,&mw->deltaPos[0]);
+  LHMatrix_Parent(inst,mw->driverTarget->instSelf,(SVECTOR*)&mw->deltaPos[0]);
   
   // rotation
   rot[0] = 0;
@@ -70,9 +70,9 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   rot[2] = 0;
   
    // convert 3 rotation shorts into rotation matrix
-  ConvertRotToMatrix(auStack48,&rot[0]);
+  ConvertRotToMatrix((MATRIX*)auStack48,&rot[0]);
   
-  MatrixRotate(&inst->matrix,&inst->matrix,auStack48);
+  MatrixRotate(&inst->matrix,&inst->matrix,(MATRIX*)auStack48);
   
   // reduce time remaining until TNT lands on head
   mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);

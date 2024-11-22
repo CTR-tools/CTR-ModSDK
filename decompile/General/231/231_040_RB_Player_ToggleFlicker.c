@@ -21,7 +21,7 @@ void DECOMP_RB_Player_ToggleFlicker(void)
 		)
     {
 	  struct InstDrawPerPlayer* idpp =
-		INST_GETIDPP(d->instSelf);
+		(struct InstDrawPerPlayer*)INST_GETIDPP(d->instSelf);
 		
       // on all screens
       for (i = 0; i < gGT->numPlyrCurrGame; i++)

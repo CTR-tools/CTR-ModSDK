@@ -118,6 +118,7 @@ common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst
 common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
 // Burst_DrawAll
 
+common, 231, D231, 0x0, General/231/D231.c
 
 // Cant add 055 to block yet, so 55_72 is actually +16 and not +17 on the counter
 common, 231, RB_GetThread_ClosestTracker, 0x0, General/231/231_055_RB_GetThread_ClosestTracker.c

@@ -1265,3 +1265,15 @@ struct Model* VehBirth_GetModelByName(char* searchName);
 struct Terrain* VehAfterColl_GetTerrain(u_char terrainType);
 void UI_CupStandings_UpdateCupRanks();
 void UI_CupStandings_FinalizeCupRanks();
+void ThTick_SetAndExec(struct Thread*, void (*callbackMaybe)(struct Thread*)); //guessed about the signature
+void RB_Default_LInB(struct Instance*);
+u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+void RB_RainCloud_Init(struct Driver* d);
+void RB_Explosion_InitPotion(struct Instance* inst);
+void RB_Blowup_Init(struct Instance* weaponInst);
+void RB_TNT_ThTick_ThrowOffHead();
+void RB_Explosion_InitGeneric(struct Instance* inst);
+void MatrixRotate(MATRIX*, MATRIX*, MATRIX*);
+void RB_Warpball_Death(struct Thread* t);
+void RB_Potion_OnShatter_TeethSearch(struct Instance*);
+short rand(); //guessed about the signature. Also, where is the location of this function????

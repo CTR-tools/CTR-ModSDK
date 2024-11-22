@@ -156,7 +156,7 @@ struct RainLocal
 	short pos[4];
 	
 	// 0x24
-	struct instance* cloudInst;
+	struct Instance* cloudInst;
 	
 	// 0x28 -- size
 };

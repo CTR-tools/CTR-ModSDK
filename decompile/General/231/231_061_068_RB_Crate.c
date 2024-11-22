@@ -53,7 +53,7 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 			)->driverParent;
 			
 		// if this is an AI, quit
-		if((driver->actionsFlagSet & 0x100000) != 0) return 1;
+		if((driver->actionsFlagSet & 0x100000) != 0) return (struct Driver*)1; //wtf? return type is Driver*
 		
 		return driver;
 	}
@@ -66,7 +66,7 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 		return driver;
 	}
 	
-	return 1;
+	return (struct Driver*)1; //wtf? return type is Driver*
 }
 
 void DECOMP_RB_CrateAny_ThTick_Explode(struct Thread* t) 
@@ -240,7 +240,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		if(crateThread == 0) return 0;
 		
 		driver = RB_CrateAny_GetDriver(collidingTh, sps);
-		if(driver == 1) return 1;
+		if((int)driver == 1) return 1;
 		
 		// if driver already has a weapon, quit
 		if(

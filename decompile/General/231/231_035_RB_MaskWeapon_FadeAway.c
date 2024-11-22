@@ -16,7 +16,7 @@ void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t)
   driverInst = t->parentThread->inst;
   maskBeamInst = mask->maskBeamInst;
   
-  struct MaskHeadScratch* mhs = 0x1f800108;
+  struct MaskHeadScratch* mhs = (struct MaskHeadScratch*)0x1f800108;
 
   // Set up First pass (maskInst)
 
@@ -34,7 +34,7 @@ void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t)
   // Second time is BeamInst
   for(int i = 0; i < 2; i++)
   {
-	LHMatrix_Parent(instCurr, driverInst, &mhs->posOffset[0]);
+	LHMatrix_Parent(instCurr, driverInst, (SVECTOR*)&mhs->posOffset[0]);
 	
 	instCurr->scale[0] += FPS_HALF(-0x100);
 	instCurr->scale[1] += FPS_HALF(-0x100);

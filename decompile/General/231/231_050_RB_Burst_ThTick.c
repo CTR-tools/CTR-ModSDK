@@ -15,7 +15,7 @@ void DECOMP_RB_Burst_ThTick(struct Thread *t)
   for (int i = 0; i < 3; i++, burst++)
   {
     // get instance pointer
-    inst = *burst;
+    inst = (struct Instance*)*burst;
 	
     if (inst == NULL)
 		continue;
@@ -32,7 +32,7 @@ void DECOMP_RB_Burst_ThTick(struct Thread *t)
     else
     {
       INSTANCE_Death(inst);
-      *burst = NULL;
+      *(int**)burst = NULL;
     }
   }
 

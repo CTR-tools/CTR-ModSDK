@@ -15,7 +15,7 @@ void DECOMP_RB_Blowup_ThTick(struct Thread *t)
   for (int i = 0; i < 2; i++, blowup++)
   {
     // get instance pointer
-    inst = *blowup;
+    inst = (struct Instance*)*blowup;
 	
     if (inst == NULL)
 		continue;
@@ -32,7 +32,7 @@ void DECOMP_RB_Blowup_ThTick(struct Thread *t)
     else
     {
       INSTANCE_Death(inst);
-      *blowup = NULL;
+      *(int**)blowup = NULL;
     }
   }
 

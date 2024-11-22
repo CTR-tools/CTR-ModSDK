@@ -36,13 +36,13 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	  // cooldown of 0.24s
       mw->cooldown = 0xf0;
 	  
-      func = RB_Potion_ThTick_InAir;
+      func = (int*)RB_Potion_ThTick_InAir;
     }
 	
 	// TNT
     else
 	{
-      func = RB_TNT_ThTick_ThrowOffHead;
+      func = (int*)RB_TNT_ThTick_ThrowOffHead;
 	  
 	  // set scale (x, y, z)
       inst->scale[0] = 0x800;
@@ -63,7 +63,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   if(mw->cooldown < 0)
 		mw->cooldown = 0;
   
-  numFrames = INSTANCE_GetNumAnimFrames(inst,0);
+  numFrames = (int)INSTANCE_GetNumAnimFrames(inst,0);
   
   // if animation is not over
   if (inst->animFrame < numFrames-1) 

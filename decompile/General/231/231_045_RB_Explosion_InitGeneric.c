@@ -5,7 +5,7 @@ void RB_Explosion_ThTick();
 void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst)
 {
   struct Instance* explosion;
-  unsigned short color;
+  unsigned int color;
   
   // create thread for explosion
   explosion = INSTANCE_BirthWithThread(

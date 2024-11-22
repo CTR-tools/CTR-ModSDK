@@ -63,9 +63,9 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
     }
   }
 
-  struct InstDrawPerPlayer* idpp = INST_GETIDPP(shieldInst);
-  struct InstDrawPerPlayer* colorIdpp = INST_GETIDPP(colorInst);
-  struct InstDrawPerPlayer* highlightIdpp = INST_GETIDPP(highlightInst);
+  struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(shieldInst);
+  struct InstDrawPerPlayer* colorIdpp = (struct InstDrawPerPlayer*)INST_GETIDPP(colorInst);
+  struct InstDrawPerPlayer* highlightIdpp = (struct InstDrawPerPlayer*)INST_GETIDPP(highlightInst);
 
   // If the driver that used this weapon is visible
   if (player->invisibleTimer == 0)
@@ -101,9 +101,9 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   // Copy matrix
   // To: shield instance, highlight instance, etc
   // From: thread (shield) -> parentthread (player) -> object (driver) -> instance
-  LHMatrix_Parent(shieldInst, 	driverInst, &pos[0]);
-  LHMatrix_Parent(colorInst, 	driverInst, &pos[0]);
-  LHMatrix_Parent(highlightInst,driverInst, &pos[0]);
+  LHMatrix_Parent(shieldInst, 	driverInst, (SVECTOR*)&pos[0]);
+  LHMatrix_Parent(colorInst, 	driverInst, (SVECTOR*)&pos[0]);
+  LHMatrix_Parent(highlightInst,driverInst, (SVECTOR*)&pos[0]);
 
   // set rotation variables
   *(int *)&shieldInst->matrix.m[0][0] = 0x1000;
