@@ -784,3 +784,12 @@ void DECOMP_RaceFlag_DrawLoadingString();
 int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType);
 void DECOMP_RB_Burst_Init(struct Instance* weaponInst);
 void DECOMP_GAMEPAD_ShockFreq(struct Driver* d, int frame, int val);
+int DECOMP_RaceFlag_IsTransitioning();
+void DECOMP_LOAD_Robots1P(int characterID);
+void DECOMP_CTR_Box_DrawWirePrims(Point p1, Point p2, Color color, void* ot);
+void DECOMP_UI_Map_DrawRawIcon(
+	int ptrMap, int* param_2,
+	int iconID, int colorID, int unused,
+	short scale);
+int DECOMP_RaceFlag_GetCanDraw();
+void DECOMP_UI_Map_DrawDrivers(int ptrMap, struct Thread* bucket, short* param_3);

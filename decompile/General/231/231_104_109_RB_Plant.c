@@ -16,11 +16,15 @@ enum PlantAnim
 
 struct HitboxDesc plantBoxDesc =
 {
-	0, 0, 0,
-	{
+	.inst = (struct Instance*)0,
+	.thread = (struct Thread*)0,
+	.bucket = (struct Thread*)0,
+	.bbox = {
 		.min = {0xFFC0, 0xFFC0, 0},
 		.max = {0x40, 0x80, 0x1E0}
-	}
+	},
+	.threadHit = (struct Thread*)0,
+	.funcThCollide = (void*)0
 };
 
 extern struct ParticleEmitter emSet_PlantTires[8];
@@ -486,7 +490,7 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	if(ptrSpawnType1->count > 0)
 	{
 		// puts plants on separate cycles
-		void** pointers = ST1_GETPOINTERS(ptrSpawnType1);
+		void** pointers = (void**)ST1_GETPOINTERS(ptrSpawnType1);
 		metaArray = (short*)pointers[ST1_SPAWN];
 		
 		plantID = inst->name[6] - '0';

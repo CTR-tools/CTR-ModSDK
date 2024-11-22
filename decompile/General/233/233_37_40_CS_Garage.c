@@ -313,7 +313,7 @@ void DECOMP_CS_Garage_MenuProc(void)
                 POLY_G4* p = primMem->curr;
 
                 // quit if prim mem runs out
-                if (p+2 >= primMem->end)
+                if ((u_int)(p + 2) >= (u_int)primMem->end)
 					return;
 
 				primMem->curr = p + 1;
@@ -685,7 +685,7 @@ LAB_800b821c:
     int getPath;
 	short pos[3];
 	short rot[3];
-    DECOMP_CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
+    DECOMP_CAM_Path_Move((int)sVar4, (short*)&pos[0], (short*)&rot[0], (short*)&getPath);
 
 	#ifdef USE_60FPS
 

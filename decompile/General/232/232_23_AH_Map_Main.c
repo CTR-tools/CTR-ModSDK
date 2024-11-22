@@ -54,8 +54,8 @@ void DECOMP_AH_Map_Main(void)
   
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
-	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-    hubPtrs = pointers[ST1_MAP];
+	void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+    hubPtrs = (int)pointers[ST1_MAP];
   }
   
   // if game is not paused
@@ -74,7 +74,7 @@ void DECOMP_AH_Map_Main(void)
 	
     DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
 
-    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread,&local_1e[0]);
+    DECOMP_AH_Map_Warppads((short*)hubPtrs,gGT->threadBuckets[5].thread,(short*)&local_1e[0]);
 	
     DECOMP_AH_Map_HubItems(hubPtrs,&local_1e[0]);
 	

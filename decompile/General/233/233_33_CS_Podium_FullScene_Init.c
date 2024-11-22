@@ -92,7 +92,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	
 	// position and rotation of podium scene
 	// Y coordinate (podiumPos[1]) has added height
-	posRot = gGT->level1->ptrSpawnType2_PosRot[1].posCoords;
+	posRot = (struct PosRot*)gGT->level1->ptrSpawnType2_PosRot[1].posCoords;
 	InitData.podiumPos[0] = posRot->pos[0];
 	InitData.podiumPos[1] = posRot->pos[1] + 0x80;
 	InitData.podiumPos[2] = posRot->pos[2];
@@ -101,7 +101,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	InitData.rot[2] =  posRot->rot[2];
 
 	// convert 3 rotation shorts into rotation matrix
-	ConvertRotToMatrix(&InitData.local_30, &InitData.rot[0]);
+	ConvertRotToMatrix((MATRIX*)&InitData.local_30, &InitData.rot[0]);
 	// Move position of trophy girl
 	gte_SetLightMatrix(&InitData.local_30);
 	
@@ -153,7 +153,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
 	// 0xf = camera thread bucket
-	victoryCamThread = (struct Thread *)PROC_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, 0, 0);
+	victoryCamThread = (struct Thread *)PROC_BirthWithObject(0x4030f, (void*)CS_Podium_Camera_ThTick, NULL, NULL);
 	
 	// if it allocated correctly
 	if (victoryCamThread != 0) 

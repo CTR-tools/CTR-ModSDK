@@ -306,14 +306,14 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }
 
-			  piVar16 = &door->keyRot[0];
+			  piVar16 = (int*)&door->keyRot[0];
 
 #ifndef REBUILD_PS1
 			  // desiredPos is actually specLightDir in this case, variable re-use
-              Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos[0]);
+              Vector_SpecLightSpin3D(keyInst, (short*)piVar16, &desiredPos[0]);
 
               // convert 3 rotation shorts into rotation matrix
-              ConvertRotToMatrix(&keyInst->matrix, piVar16);
+              ConvertRotToMatrix(&keyInst->matrix, (short*)piVar16);
 #endif
             }
             door->keyInst[i] = keyInst;

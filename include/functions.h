@@ -1277,3 +1277,8 @@ void MatrixRotate(MATRIX*, MATRIX*, MATRIX*);
 void RB_Warpball_Death(struct Thread* t);
 void RB_Potion_OnShatter_TeethSearch(struct Instance*);
 short rand(); //guessed about the signature. Also, where is the location of this function????
+void Vector_SpecLightSpin3D(struct Instance*, short*, short*);
+void Vector_SpecLightNoSpin3D(struct Instance*, short*, short*);
+void CS_Podium_Prize_Spin(struct Instance* inst, short* prize);
+int howl_VolumeGet(int type);
+void SelectProfile_GetTrackID();

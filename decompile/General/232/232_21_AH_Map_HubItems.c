@@ -38,7 +38,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
     {
       sVar8 = -1;
       sVar8 = -1;
-      sVar7 = 0xffffffff;
+      sVar7 = (short)0xffffffff; //???
       sVar7 = -1;
       sVar7 = -1;
 	  
