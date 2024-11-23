@@ -187,13 +187,28 @@ void NewPage_ServerRoom()
 
 	int numRooms = GetNumRoom();
 
+	int buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
+
 	for(i = 0; i < 8; i++)
 	{
 		// unlock row if...
-		if(8*pn+i < numRooms)
-			if(octr->clientCount[8*pn+i] <= 7)
+		if (8 * pn + i < numRooms)
+		{
+			if (octr->clientCount[8 * pn + i] <= 7)
+			{
 				menuRows[i].stringIndex &= 0x7FFF;
+			}
+			else if ((buttons & BTN_CROSS) && (menu.rowSelected == i))
+			{
+				int rn = i + (pn * 8);
+				if (octr->autoRetryJoinRoomIndex == rn)
+					octr->autoRetryJoinRoomIndex = -1;
+				else
+					octr->autoRetryJoinRoomIndex = rn;
+			}
+		}
 	}
+
 }
 
 void MenuWrites_ServerRoom()

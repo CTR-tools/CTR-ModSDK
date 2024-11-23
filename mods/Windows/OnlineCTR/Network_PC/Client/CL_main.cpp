@@ -496,6 +496,7 @@ void DisconSELECT()
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 
+		octr->autoRetryJoinRoomIndex = -1;
 		// to go the lobby browser
 		octr->CurrState = -1;
 		return;
@@ -834,6 +835,7 @@ void StatePC_Launch_PickRoom()
 	CG_MessageRoom mr;
 	mr.type = CG_JOINROOM;
 	mr.room = octr->serverRoom;
+	octr->autoRetryJoinRoomIndex = -1;
 
 	sendToHostReliable(&mr, sizeof(CG_MessageRoom));
 }
@@ -1255,6 +1257,7 @@ int main(int argc, char *argv[])
 	}
 
 	octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
+	octr->autoRetryJoinRoomIndex = -1;
 
 	// initialize enet
 	if (enet_initialize() != 0)

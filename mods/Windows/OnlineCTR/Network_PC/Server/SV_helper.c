@@ -84,15 +84,27 @@ int RemovePeerLPL(ENetPeer* peer)
 		if (c->peer == peer)
 		{
 			if (prev == NULL)
+			{
+				struct LoosePeerList* toFree = c;
+
 				lplHead = c->next;
+				c = c->next;
+
+				free(toFree);
+				didFree |= 1;
+
+			}
 			else
+			{
+
+				struct LoosePeerList* toFree = c;
+
 				prev->next = c->next;
-			//i++
-			struct LoosePeerList* toFree = c;
-			prev = c;
-			c = c->next;
-			free(toFree);
-			didFree = 1;
+				c = c->next;
+
+				free(toFree);
+				didFree |= 1;
+			}
 		}
 		else
 		{
