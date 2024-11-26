@@ -448,7 +448,7 @@
 #include "../decompile/General/Vehicle/VehFrameInst_GetNumAnimFrames.c"
 
 #include "../decompile/General/Vehicle/VehPhysForce_ConvertSpeedToVec.c"
-#include "../decompile/General/Vehicle/VehPhysForce_AccelTerrainSlope.c"
+//#include "../decompile/General/Vehicle/VehPhysForce_AccelTerrainSlope.c"
 #include "../decompile/General/Vehicle/VehPhysForce_OnApplyForces.c"
 
 #include "../decompile/General/Vehicle/VehPhysGeneral_PhysAngular.c"

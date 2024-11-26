@@ -215,7 +215,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	primMem = &gGT->backBuffer->primMem;
 	
 	// if curr < near-end
-	if ((primMem->curr+4) > primMem->endMin100)
+	if (((unsigned int)primMem->curr+4) > primMem->endMin100)
 		return;
 	
 	// increment curr

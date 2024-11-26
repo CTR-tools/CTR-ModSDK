@@ -60,7 +60,11 @@
 
 #include <macros.h>
 #include <ctr_math.h>
+
+#ifndef REBUILD_PC
 #include <ctr_gte.h>
+#endif
+
 #include <prim.h>
 
 // =============================

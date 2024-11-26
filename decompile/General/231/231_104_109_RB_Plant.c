@@ -660,5 +660,5 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	},
 	
 	// null terminator
-	[7] = {}
+	[7] = {0}
 };

@@ -180,7 +180,7 @@ struct ParticleEmitter emSet_Fireball[10] =
 	},
 	
 	// null terminator
-	[9] = {}
+	[9] = {0}
 };
 
 void DECOMP_RB_Fireball_ThTick(struct Thread* t)
