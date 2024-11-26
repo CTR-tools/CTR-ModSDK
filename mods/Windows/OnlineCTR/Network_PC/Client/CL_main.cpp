@@ -806,7 +806,7 @@ int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
 	countFrame++;
-	if (countFrame == octr->desiredFPS)
+	if (countFrame == 30 * 5) //just in case server's tracking & updating is flawed
 	{
 		countFrame = 0;
 
