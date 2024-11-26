@@ -1,6 +1,7 @@
 #include <common.h>
 
 #ifdef USE_ONLINE
+#include "../AltMods/OnlineCTR/global.h"
 void FixReservesIncrement(struct Driver * driver, int reserves);
 #endif
 
@@ -262,6 +263,10 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			#endif
 		);
 
+#if defined(USE_RETROFUELED) && defined(USE_ONLINE)
+	int rn = octr->serverRoom;
+	int doRetroFueled = ROOM_IS_RETRO(rn);
+#endif
 	if
 	(
 		// any gain in boost,
@@ -284,6 +289,9 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			// You are not on a super turbo pad
 			(int)driver->const_SacredFireSpeed < (int)driver->fireSpeedCap &&
 			((driver->stepFlagSet & 2) == 0)
+			#if defined(USE_RETROFUELED) && defined(USE_ONLINE)
+			&& !doRetroFueled //is not retrofueled mode
+			#endif
 		)
 	)
 
@@ -347,11 +355,12 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		}
 	}
 
-	#ifdef USE_ONLINE
-	if(driver->driverID != 0)
+	#if defined(USE_ONLINE)
+	if(driver->driverID != 0) //if not ourself
 		return;
 	#endif
 
+	//#if !defined (USE_ONLINE) //uncomment this if you need bytebudget.
 	// if modelIndex == "player" of any kind
 	if (driver->instSelf->thread->modelIndex == 0x18)
 	{
@@ -361,4 +370,5 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		// gamepad vibration
 		DECOMP_GAMEPAD_ShockForce1(driver, 8, 0x7f);
 	}
+	//#endif
 }

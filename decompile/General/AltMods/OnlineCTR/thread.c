@@ -32,28 +32,30 @@ void ThreadFunc(struct Thread* t)
 	int isIdle = 0;
 
 	struct GameTracker* gGT = sdata->gGT;
-	octr->boolPlanetLEV = gGT->levelID == 0x26;
+	octr->boolPlanetLEV = gGT->levelID == 0x26; //was 0x26 (globe level)
 
 	if(octr->boolPlanetLEV)
 	{
-		*(int*)0x800ae54c = 0x3e00008;
-		*(int*)0x800ae550 = 0;
+		//this code seems to be causing the LOAD screen crash.
+		
+		//*(int*)0x800ae54c = 0x3e00008;
+		//*(int*)0x800ae550 = 0;
 
-        // freecam mode
-        gGT->cameraDC[0].cameraMode = 3;
+        //// freecam mode
+        //gGT->cameraDC[0].cameraMode = 3;
 
-        // disable all HUD flags
-        gGT->hudFlags = 0;
+        //// disable all HUD flags
+        //gGT->hudFlags = 0;
 
-		struct PushBuffer* pb = &gGT->pushBuffer[0];
+		//struct PushBuffer* pb = &gGT->pushBuffer[0];
 
-		pb->pos[0] = 0x3D;
-		pb->pos[1] = 0xF8;
-		pb->pos[2] = 0xF879;
+		//pb->pos[0] = 0x3D;
+		//pb->pos[1] = 0xF8;
+		//pb->pos[2] = 0xF879;
 
-		pb->rot[0] = 0x841;
-		pb->rot[1] = 0x77c;
-		pb->rot[2] = 0xff5;
+		//pb->rot[0] = 0x841;
+		//pb->rot[1] = 0x77c;
+		//pb->rot[2] = 0xff5;
 	}
 
 	// only disable for no$psx testing,
@@ -84,34 +86,8 @@ void ThreadFunc(struct Thread* t)
         octr->frames_unsynced = 0;
     }
 
-	//this debug info courtesy of ClaudioBo
-#ifdef PINE_DEBUG
-	static unsigned frameCounter = 0;
-	char frames_unsynced_str[12];
-	sprintf(frames_unsynced_str, "%d", octr->frames_unsynced);
-
-	if (octr->frames_unsynced >= 80) {
-		int color = frameCounter++ & FPS_DOUBLE(1) ? RED : WHITE;
-		char final_str[20];
-		sprintf(final_str, "WTF!!: %s/120", frames_unsynced_str);
-		DECOMP_DecalFont_DrawLine(final_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | color);
-	}
-	else if (octr->frames_unsynced >= 60) {
-		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | CORTEX_RED);
-	}
-	else if (octr->frames_unsynced >= 40) {
-		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | ROO_ORANGE);
-	}
-	else if (octr->frames_unsynced >= 20) {
-		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | PAPU_YELLOW);
-	}
-	else {
-		DECOMP_DecalFont_DrawLine(frames_unsynced_str, 0x100, 200, FONT_BIG, JUSTIFY_CENTER | WHITE);
-	}
-#endif
-
-	// close if client didn't update the game in 2 seconds
-	int boolCloseClient = (octr->frames_unsynced > FPS_DOUBLE(60));
+	// close if client didn't update the game in DISCONNECT_AT_UNSYNCED_FRAMES
+	int boolCloseClient = (octr->frames_unsynced > DISCONNECT_AT_UNSYNCED_FRAMES);
 
 	// if client closed, or server disconnected
 	if(boolCloseClient || (octr->CurrState < 0))
@@ -123,9 +99,6 @@ void ThreadFunc(struct Thread* t)
 			// if closed==1, go to 0 ("please open client")
 			// if closed==0, go to 1 (server select)
 			octr->CurrState = !boolCloseClient;
-#ifdef PINE_DEBUG
-			printf("statechange %d yesno open client/server select 5: \n", octr->stateChangeCounter++);
-#endif
 
 			octr->serverLockIn1 = 0;
 			octr->serverLockIn2 = 0;
@@ -138,9 +111,6 @@ void ThreadFunc(struct Thread* t)
 		// if closed==1, go to 0 ("please open client")
 		// if closed==0, go to 1 (server select)
 		octr->CurrState = !boolCloseClient;
-#ifdef PINE_DEBUG
-		printf("statechange %d yesno open client/server select 6: \n", octr->stateChangeCounter++);
-#endif
 
 		// stop music,
 		// stop "most FX", let menu FX ring
@@ -163,7 +133,7 @@ void ThreadFunc(struct Thread* t)
 	#endif
 
 	// gameplay
-	if (octr->CurrState >= GAME_WAIT_FOR_RACE)
+	if (octr->CurrState >= GAME_WAIT_FOR_RACE && octr->CurrState < GAME_END_RACE)
 	{
 		void DrawOverheadNames();
 		DrawOverheadNames();

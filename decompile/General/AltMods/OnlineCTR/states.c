@@ -64,8 +64,8 @@ void ResetPsxGlobals()
 void StatePS1_Launch_PickRoom()
 {
 	#if 0
-	DecalFont_DrawLine("Special Events in odd rooms: 1,3,5...",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
-	DecalFont_DrawLine("Classic Games in even rooms: 2,4,6...",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	DecalFont_DrawLine("Itemless games on first page",0x100,0x14,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+	DecalFont_DrawLine("Items games on second page",0x100,0x1c,FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
 	#endif
 
 	MenuWrites_ServerRoom();
@@ -126,17 +126,11 @@ void StatePS1_Lobby_AssignRole()
 	if(octr->DriverID == 0)
 	{
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
-#ifdef PINE_DEBUG
-		printf("statechange %d LOBBY_HOST_TRACK_PICK 3: \n", octr->stateChangeCounter++);
-#endif
 	}
 
 	else if (octr->DriverID > 0)
 	{
 		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
-#ifdef PINE_DEBUG
-		printf("statechange %d LOBBY_GUEST_TRACK_WAIT 4: \n", octr->stateChangeCounter++);
-#endif
 	}
 }
 
@@ -349,7 +343,9 @@ void StatePS1_Game_WaitForRace()
 	}
 
 	gGT->trafficLightsTimer = 0xf40;
-	Ghostify();
+	int rn = octr->serverRoom;
+	if (!ROOM_IS_ITEMS(rn)) //itemless only
+		Ghostify();
 
 	if((gGT->gameMode1 & START_OF_RACE) != 0)
 		return;
@@ -386,7 +382,10 @@ void StatePS1_Game_WaitForRace()
 void StatePS1_Game_StartRace()
 {
 	int i;
-	Ghostify();
+
+	int rn = octr->serverRoom;
+	if (!ROOM_IS_ITEMS(rn)) //itemless only
+		Ghostify();
 
 	for(i = 1; i < 8; i++)
 	{
@@ -426,7 +425,8 @@ void StatePS1_Game_StartRace()
 
 static void OnRaceEnd()
 {
-	struct Driver ** drivers = sdata->gGT->drivers;
+	struct Driver* before = sdata->gGT->cameraDC[0].driverToFollow;
+	struct Driver** drivers = sdata->gGT->drivers;
 	bool foundRacer = false;
 	for (int driverID = 1; driverID < MAX_NUM_PLAYERS; driverID++)
 	{
@@ -439,6 +439,8 @@ static void OnRaceEnd()
 			foundRacer = true;
 		}
 	}
+	//tbh I don't think this fixes the spectator name bug.
+	sdata->gGT->cameraDC[0].driverToFollow = before;
 }
 
 void StatePS1_Game_EndRace()
