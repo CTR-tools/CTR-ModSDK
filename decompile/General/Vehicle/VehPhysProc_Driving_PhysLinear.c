@@ -519,7 +519,10 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 			// Detonate the bomb
 			bomb = (struct TrackerWeapon*)driver->instBombThrow->thread->object;
 			bomb->flags |= 2;
-			driver->instBombThrow = 0;
+			driver->instBombThrow = NULL;
+			#if defined(USE_ONLINE)
+			if (ROOM_IS_ITEMS(rn) && driver->driverID == 0) octr->Shoot[0].boolNow = 1;
+			#endif
 			goto CheckJumpButtons;
 		}
 
@@ -529,7 +532,10 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 			// Shoot the bubble
 			shield = (struct Shield*)driver->instBubbleHold->thread->object;
 			shield->flags |= 2;
-			driver->instBubbleHold = 0;
+			driver->instBubbleHold = NULL;
+			#if defined(USE_ONLINE)
+			if (ROOM_IS_ITEMS(rn) && driver->driverID == 0) octr->Shoot[0].boolNow = 1;
+			#endif
 			goto CheckJumpButtons;
 		}
 

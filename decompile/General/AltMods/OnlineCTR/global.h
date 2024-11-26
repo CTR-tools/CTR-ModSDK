@@ -162,8 +162,6 @@ struct OnlineCTR
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
 
-	//char desiredFPS;
-
 	// when to start the client.exe loop
 	int readyToSend;
 

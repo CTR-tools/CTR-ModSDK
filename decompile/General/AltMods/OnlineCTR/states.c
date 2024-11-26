@@ -419,31 +419,47 @@ void StatePS1_Game_StartRace()
 			octr->Shoot[i].boolNow = 0;
 
 			struct Driver* d = sdata->gGT->drivers[i];
-
-			if(octr->Shoot[i].boolJuiced)
-				d->numWumpas = 10;
-
-			d->heldItemID = octr->Shoot[i].Weapon;
-
-			// copy/paste from ShootOnCirclePress
-			int weapon;
-			weapon = d->heldItemID;
-
-			// Missiles and Bombs share code,
-			// Change Bomb1x, Bomb3x, Missile3x, to Missile1x
-			if(
-				(weapon == 1) ||
-				(weapon == 10) ||
-				(weapon == 11)
-			)
+			if (d->instBombThrow != 0)
 			{
-				weapon = 2;
+				// Detonate the bomb
+				struct TrackerWeapon* bomb = (struct TrackerWeapon*)d->instBombThrow->thread->object;
+				bomb->flags |= 2;
+				d->instBombThrow = NULL;
 			}
+			else if (d->instBubbleHold != 0)
+			{
+				// Shoot the shield
+				struct Shield* shield = (struct Shield*)d->instBubbleHold->thread->object;
+				shield->flags |= 2;
+				d->instBubbleHold = NULL;
+			}
+			else
+			{
+				if (octr->Shoot[i].boolJuiced)
+					d->numWumpas = 10;
 
-			DECOMP_VehPickupItem_ShootNow(
-				d,
-				weapon,
-				octr->Shoot[i].flags);
+				d->heldItemID = octr->Shoot[i].Weapon;
+
+				// copy/paste from ShootOnCirclePress
+				int weapon;
+				weapon = d->heldItemID;
+
+				// Missiles and Bombs share code,
+				// Change Bomb1x, Bomb3x, Missile3x, to Missile1x
+				if (
+					(weapon == 1) ||
+					(weapon == 10) ||
+					(weapon == 11)
+					)
+				{
+					weapon = 2;
+				}
+
+				DECOMP_VehPickupItem_ShootNow(
+					d,
+					weapon,
+					octr->Shoot[i].flags);
+			}
 		}
 	}
 }
