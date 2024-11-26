@@ -32,7 +32,13 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	u_char colorRGBA[4];
 
+	#ifdef REBUILD_PC
+	RECT r1;
+	RECT* r = &r1;
+	#else
 	RECT* r = 0x1f800000;
+	#endif
+	
 	RECT r58;
 
 	short local_50;
