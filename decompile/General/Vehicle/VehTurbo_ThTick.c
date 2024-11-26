@@ -33,8 +33,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 			(instance->alphaScale == 0)
 		) &&
 	
-		// instance -> thread -> modelID == DYNAMIC_GHOST
-		(instanceDriver->thread->modelIndex != 0x4b)
+		(instanceDriver->thread->modelIndex != DYNAMIC_GHOST)
 	)
 	{
 		// cut driverInst transparency in half
@@ -45,26 +44,26 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	if ((instanceDriver->flags & 0x2000) == 0)
 	{
 		// instance flags
-		instance->flags &= 0xffffdfff;
-		turbo->inst->flags &= 0xffffdfff;
+		instance->flags &= ~(SPLIT_LINE);
+		turbo->inst->flags &= ~(SPLIT_LINE);
 	}
 	
 	// if instance is split by water
 	else
 	{
 		// turbos are now split by water, set vertical split height
-		instance->flags |= 0x2000;
+		instance->flags |= SPLIT_LINE;
 		instance->vertSplit = instanceDriver->vertSplit;
-		turbo->inst->flags |= 0x2000;
+		turbo->inst->flags |= SPLIT_LINE;
 		turbo->inst->vertSplit = instanceDriver->vertSplit;
 	}
 	
 	// if driver instance is not reflective
-	if ((instanceDriver->flags & 0x4000) == 0)
+	if ((instanceDriver->flags & REFLECTIVE) == 0)
 	{
 		// remove reflection from turbo instances
-		instance->flags &= 0xffffbfff;
-		turbo->inst->flags &= 0xffffbfff;
+		instance->flags &= ~(REFLECTIVE);
+		turbo->inst->flags &= ~(REFLECTIVE);
 	}
 	
 	// if driver instance is reflective
@@ -72,9 +71,9 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	{
 		// make turbo instances reflective
 		// copy reflection height axis to instance
-		instance->flags |= 0x4000;
+		instance->flags |= REFLECTIVE;
 		instance->vertSplit = instanceDriver->vertSplit;
-		turbo->inst->flags |= 0x4000;
+		turbo->inst->flags |= REFLECTIVE;
 		turbo->inst->vertSplit = instanceDriver->vertSplit;
 	}
 	
@@ -143,8 +142,8 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	if (turbo->fireVisibilityCooldown == 0)
 	{
 		// make fire visible now that there's no cooldown
-		instance->flags = instance->flags & 0xffffff7f;
-		turbo->inst->flags = turbo->inst->flags & 0xffffff7f;
+		instance->flags &= ~(HIDE_MODEL);
+		turbo->inst->flags &= ~(HIDE_MODEL);
 	}
 	
 	if (instance->alphaScale < 2500)
@@ -154,10 +153,10 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	}
 	
 	// set new model pointer, one of seven
-	instance->model = gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
+	instance->model = gGT->modelPtr[turbo->fireAnimIndex + STATIC_TURBO_EFFECT];
 	
 	// set new model pointer, one of seven
-	turbo->inst->model = gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
+	turbo->inst->model = gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + STATIC_TURBO_EFFECT];
 	
 	#ifdef USE_60FPS
 	if(gGT->timer & 1)
@@ -173,7 +172,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	}
 	
 	// instance -> thread -> modelIndex == "player" of any kind
-	if (instanceDriver->thread->modelIndex == 0x18)
+	if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 	{
 		iVar7 = 0x100 - (u_int)(instance->alphaScale >> 4);
 	
@@ -228,7 +227,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	if
 	(
 		// if this is a ghost
-		(instanceDriver->thread->modelIndex == 0x4b) ||
+		(instanceDriver->thread->modelIndex == DYNAMIC_GHOST) ||
 	
 		(
 			(kartState != KS_MASK_GRABBED)
@@ -242,12 +241,12 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	)
 	{
 		// if reserves are nearing zero
-		if ((driver->reserves < 0x10) || (turbo->fireDisappearCountdown == '\0'))
+		if ((driver->reserves < 0x10) || (turbo->fireDisappearCountdown == 0))
 		{
 			// if fully transparent, skip lines
 			if (0xfff < instance->alphaScale) goto LAB_80069b50;
 	
-			if (turbo->fireDisappearCountdown == '\0')
+			if (turbo->fireDisappearCountdown == 0)
 			{
 				// increase transparency
 				instance->alphaScale += 0x100;
@@ -276,7 +275,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 		LAB_80069b50:
 	
 		// instance -> thread -> modelIndex == "player" of any kind
-		if (instanceDriver->thread->modelIndex == 0x18)
+		if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			// volume, distortion, left/right
 			uVar8 = 0x8080;

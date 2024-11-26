@@ -16,38 +16,43 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
   itemID = d->heldItemID;
 
   // If you do have "no weapon icon"
-  if (itemID == 0xf) return;
+  if (itemID == ITEM_NONE) return;
 
   // If you are not shuffling through weapon roulette
-  if (itemID != 0x10)
+  if (itemID != ITEM_ROULLETE)
   {
     iconID = itemID + 5;
 
-	// character ID
-	currChar = data.characterIDs[d->driverID];
-
-	if (
-			// If your weapon is a mask
-			(itemID == 7) &&
-			
-			// Not Crash, Coco, Polar, Pura
-			(currChar != 0) &&
-			(currChar != 3) &&
-			(currChar != 6) &&
-			(currChar != 7)
-		)
+	// If your weapon is a mask
+	if (itemID == ITEM_MASK)
 	{
-	  // This is a bad guy, change icon to Uka
-      iconID = 0x32;
-    }
+#ifndef PENTA_MASK_FIX
+		currChar = data.characterIDs[d->driverID];
+		
+		// Not Crash, Coco, Polar, Pura
+		if (
+		(currChar != CRASH_BANDICOOT) &&
+		(currChar != COCO_BANDICOOT) &&
+		(currChar != POLAR) &&
+		(currChar != PURA)
+		)
+#else
+	// Use good guy function to include Penta too
+		if (DECOMP_VehPickupItem_MaskBoolGoodGuy(d) == 0)
+#endif
+		{
+		// This is a bad guy, change icon to Uka
+		iconID = 0x32;
+		}
+	}
 
     if (
 		(d->numWumpas >= 10) &&
 
 		// TNT, Potion, Shield
 		(
-			((unsigned int)(itemID - 3) < 2) || 
-			(itemID == 6)
+			((unsigned int)(itemID - ITEM_TNT) < 2) || 
+			(itemID == ITEM_SHIELD)
 		)
 	   )
 	{
@@ -71,7 +76,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	  sdata->s_spacebar[0] = d->numHeldItems + '0';
 		
 	  // Draw the number near the weapon icon to show how many
-      DECOMP_DecalFont_DrawLine(sdata->s_spacebar,(int)posX,(int)posY,2,4);
+      DECOMP_DecalFont_DrawLine(sdata->s_spacebar,posX,posY,2,4);
     }
   }
   
@@ -91,31 +96,31 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		// If you're not in Battle Mode
 		if ((gGT->gameMode1 & BATTLE_MODE) == 0) 
 		{
-			itemID = itemID % 0xc;
+			itemID = itemID % ITEM_INVISIBILITY;
 			
 			// replace spring with turbo
-			if (itemID == 5) goto LAB_800508ec;
+			if (itemID == ITEM_SPRING) goto REPLACE_SPRING;
 		}
 		
 		// if Battle Mode
 		else 
 		{
-			itemID = itemID % 0xe;
+			itemID = itemID % 14;
 			
 			// replace spring
-			if (itemID == 5) {
-		LAB_800508ec:
-				itemID = 0;
+			if (itemID == ITEM_SPRING) {
+		REPLACE_SPRING:
+				itemID = ITEM_TURBO;
 			}
 			
 			// replace clock
-			else if (itemID == 8) {
-				itemID = 1;
+			else if (itemID == ITEM_CLOCK) {
+				itemID = ITEM_1X_BOMB;
 			}
 			
 			// replace warpball
-			else if (itemID == 9) {
-				itemID = 3;
+			else if (itemID == ITEM_WARPBALL) {
+				itemID = ITEM_TNT;
 			}
 		}
 		
@@ -139,7 +144,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	if (d->PickupTimeboxHUD.cooldown != 0)
 	{
 		DECOMP_UI_Lerp2D_HUD(&posXY[0],d->PickupTimeboxHUD.startX,d->PickupTimeboxHUD.startY,
-				(int)posX,(int)posY,d->PickupTimeboxHUD.cooldown,FPS_DOUBLE(5));
+				posX,posY,d->PickupTimeboxHUD.cooldown,FPS_DOUBLE(5));
 	
 		// subtract one from timer
 		d->PickupTimeboxHUD.cooldown--;
@@ -155,7 +160,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		// pointer to icon, from array of icon pointers
 		gGT->ptrIcons[iconID],
 	
-		(int)posX,(int)posY,
+		posX,posY,
 	
 		// PrimMem
 		&gGT->backBuffer->primMem,
@@ -163,7 +168,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		// OTMem
 		gGT->pushBuffer_UI.ptrOT,
 	
-		TRANS_50_DECAL,(int)scale,1);
+		TRANS_50_DECAL,scale,1);
 		
   return;
 }

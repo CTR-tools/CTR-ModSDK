@@ -61,7 +61,7 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	
 	d->botPath = i;
 	d->botNavFrame = sdata->NavPath_ptrNavFrameArray[i];
-	d->actionsFlagSet |= 0x100000;
+	d->actionsFlagSet |= ACTION_BOT;
 	LIST_AddFront(&sdata->unk_NavRelated[i], (struct Item*)(&d->unk598));
 	
 	gGT->numBotsNextGame++;

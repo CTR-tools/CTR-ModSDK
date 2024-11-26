@@ -14,13 +14,13 @@ void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* driver)
   #endif
 
   // If race timer is not supposed to stop for this racer
-  if ((driver->actionsFlagSet & 0x40000) == 0)
+  if ((driver->actionsFlagSet & ACTION_STOP_CLOCK) == 0)
   {
 	// time elapsed in race
     timeElapsed = driver->timeElapsedInRace;
 
     // Stop time for this racer
-    driver->actionsFlagSet |= 0x40000;
+    driver->actionsFlagSet |= ACTION_STOP_CLOCK;
 
 	if (timeElapsed != 0) 
 	{

@@ -109,7 +109,7 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
     d->rotCurr.y = d->unk3D4[0] + d->angle + sVar2;
 
     // driver is warping
-    d->actionsFlagSet |= 0x4000;
+    d->actionsFlagSet |= ACTION_WARP;
 
 	d->KartStates.Warp.timer = timer;
 }

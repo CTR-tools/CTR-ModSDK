@@ -113,7 +113,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         BOTS_ThTick_Drive(t);
 
         // 26th bit -> (on) := racer finished race
-        d->actionsFlagSet |= 0x2000000;
+        d->actionsFlagSet |= ACTION_RACE_FINISHED;
 
         // allow this thread to ignore all collisions
         t->flags |= 0x1000;

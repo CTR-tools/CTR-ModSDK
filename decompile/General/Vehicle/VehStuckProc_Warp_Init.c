@@ -50,7 +50,7 @@ void DECOMP_VehStuckProc_Warp_Init(struct Thread *th, struct Driver *d)
     d->speedApprox = 0;
 
     // driver is warping
-    d->actionsFlagSet |= 0x4000;
+    d->actionsFlagSet |= ACTION_WARP;
 
     for (i = 0; i < 13; i++)
     {

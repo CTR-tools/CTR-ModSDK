@@ -8912,150 +8912,127 @@ struct Data data =
 	.RNG_itemSetRace1 =
 	{
 #ifdef USE_ONLINE
-		// 8/20 potion
-		// 8/20 tnt
-		// 2/20 bomb
-		// 1/20 turbo
-		// 1/20 shield
-		4, 4, 4, 4, 4, 4, 4, 4,
-		3, 3, 3, 3, 3, 3, 3, 3,
-		1, 1,
-		0,
-		6,
+		ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, // 8/20 potion
+		ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, // 8/20 tnt
+		ITEM_1X_BOMB, ITEM_1X_BOMB, // 2/20 bomb
+		ITEM_TURBO, // 1/20 turbo
+		ITEM_SHIELD, // 1/20 shield
 #else
-		// 8/20 potion
-		// 8/20 tnt
-		// 2/20 bomb
-		// 1/20 turbo
-		// 1/20 shield
-		4, 4, 4, 4, 4, 4, 4, 4,
-		3, 3, 3, 3, 3, 3, 3, 3,
-		1, 1,
-		0,
-		6,
+		ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, // 8/20 potion
+		ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, // 8/20 tnt
+		ITEM_1X_BOMB, ITEM_1X_BOMB, // 2/20 bomb
+		ITEM_TURBO, // 1/20 turbo
+		ITEM_SHIELD, // 1/20 shield
 #endif
 	},
 
 	.RNG_itemSetRace2 =
 	{
 #ifdef USE_ONLINE
-		// 11/52 potion
-		// 9/52 tnt
-		// 5/52 bomb
-		// 4/52 bomb x3
-		// 7/52 turbo
-		// 2/52 shield
-		// 3/52 missile
-		// 2/52 missile x3
-		// 1/52 warpball
-		// 7/52 mask
-		// 1/52 n tropy clock
-
-		4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-		3, 3, 3, 3, 3, 3, 3, 3, 3,
-		1, 1, 1, 1, 1,
-		10, 10, 10, 10,
-		0, 0, 0, 0, 0, 0, 0,
-		6, 6,
-		2, 2, 2,
-		11, 11,
-		9,
-		7, 7, 7, 7, 7, 7, 7,
-		8,
+		ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, // 11/52 potion
+		ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, // 9/52 TNT
+		ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, // 5/52
+		ITEM_3X_BOMB, ITEM_3X_BOMB, ITEM_3X_BOMB, ITEM_3X_BOMB, // 4/52 bomb x3
+		ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, // 7/52 turbo
+		ITEM_SHIELD, ITEM_SHIELD, // 2/52 shield
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, // 3/52 missile
+		ITEM_3X_MISSILE, ITEM_3X_MISSILE, // 2/52 missile x3
+		ITEM_WARPBALL, // 1/52 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, // 7/52 mask
+		ITEM_CLOCK, // 1/52 clock
 #else
-		// 10/52 potion
-		// 8/52 tnt
-		// 5/52 bomb
-		// 3/52 bomb x3
-		// 5/52 turbo
-		// 3/52 shield
-		// 3/52 missile
-		// 2/52 missile x3
-		// 5/52 warpball
-		// 7/52 mask
-		// 1/52 n tropy clock
-
-		4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-		3, 3, 3, 3, 3, 3, 3, 3,
-		1, 1, 1, 1, 1,
-		10, 10, 10,
-		0, 0, 0, 0, 0,
-		6, 6, 6,
-		2, 2, 2,
-		11, 11,
-		9, 9, 9, 9, 9,
-		7, 7, 7, 7, 7, 7, 7,
-		8,
+		ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, ITEM_BEAKER, // 10/52 potion
+		ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, ITEM_TNT, // 8/52 tnt
+		ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, // 5/52 bomb
+		ITEM_3X_BOMB, ITEM_3X_BOMB, ITEM_3X_BOMB, // 3/52 bomb x3
+		ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, ITEM_TURBO, // 5/52 turbo
+		ITEM_SHIELD, ITEM_SHIELD, ITEM_SHIELD, // 3/52 shield
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, // 3/52 missile
+		ITEM_3X_MISSILE, ITEM_3X_MISSILE, // 2/52 missile x3
+		ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, // 5/52 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, // 7/52 mask
+		ITEM_CLOCK, // 1/52 n tropy clock
 #endif
 	},
 
 	.RNG_itemSetRace3 =
 	{
 #ifdef USE_ONLINE
-		// 1/20 potion
-		// 1/20 tnt
-		// 1/20 bomb x1
-		// 3/20 bomb x3
-		// 2/20 turbo
-		// 1/20 shield
-		// 3/20 missile x1
-		// 1/20 missile x3
-		// 1/20 warpball
-		// 5/20 mask
-		// 1/20 clock
-
-		4, 3, 1, 10, 10, 10, 0, 0, 6, 2, 2, 2, 11, 9, 7, 7, 7, 7, 7, 8,
+		ITEM_BEAKER, 												// 1/20 potion
+		ITEM_TNT, 													// 1/20 tnt
+		ITEM_1X_BOMB, 												// 1/20 bomb x1
+		ITEM_3X_BOMB, ITEM_3X_BOMB, ITEM_3X_BOMB, 					// 3/20 bomb x3
+		ITEM_TURBO, ITEM_TURBO, 									// 2/20 turbo
+		ITEM_SHIELD, 												// 1/20 shield
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, 			// 3/20 missile x1
+		ITEM_3X_MISSILE, 											// 1/20 missile x3
+		ITEM_WARPBALL, 												// 1/20 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, 		// 5/20 mask
+		ITEM_CLOCK,													// 1/20 clock
 #else
-		// 1/20 potion
-		// 1/20 tnt
-		// 1/20 bomb x1
-		// 2/20 bomb x3
-		// 2/20 turbo
-		// 1/20 shield
-		// 2/20 missile x1
-		// 1/20 missile x3
-		// 3/20 warpball
-		// 5/20 mask
-		// 1/20 clock
-
-		4, 3, 1, 10, 10, 0, 0, 6, 2, 2, 11, 9, 9, 9, 7, 7, 7, 7, 7, 8,
+		ITEM_BEAKER, 												// 1/20 potion
+		ITEM_TNT, 													// 1/20 tnt
+		ITEM_1X_BOMB, 												// 1/20 bomb x1
+		ITEM_3X_BOMB, ITEM_3X_BOMB, 								// 2/20 bomb x3
+		ITEM_TURBO, ITEM_TURBO, 									// 2/20 turbo
+		ITEM_SHIELD, 												// 1/20 shield
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, 							// 2/20 missile x1
+		ITEM_3X_MISSILE, 											// 1/20 missile x3
+		ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, 				// 3/20 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, 		// 5/20 mask
+		ITEM_CLOCK, 												// 1/20 clock
 #endif
 	},
 
 	.RNG_itemSetRace4 =
 	{
 #ifdef USE_ONLINE
-		// 2/20 turbo
-		// 1/20 shield
-		// 2/20 missile x1
-		// 3/20 missile x3
-		// 1/20 bomb x3
-		// 2/20 warpball
-		// 8/20 mask
-		// 1/20 clock
-
-		0, 0, 6, 2, 2, 11, 11, 11, 10, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+		ITEM_TURBO, ITEM_TURBO, 																// 2/20 turbo
+		ITEM_SHIELD, 																			// 1/20 shield
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, 														// 2/20 missile x1
+		ITEM_3X_MISSILE, ITEM_3X_MISSILE, ITEM_3X_MISSILE,										// 3/20 missile x3
+		ITEM_3X_BOMB, 																			// 1/20 bomb x3
+		ITEM_WARPBALL, ITEM_WARPBALL, 															// 2/20 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK,	// 8/20 mask 
+		ITEM_CLOCK,																				// 1/20 clock
 #else
-		// 2/20 turbo (one zero at the start, and one at the end)
-		// 1/20 shield
-		// 1/20 missile x1
-		// 1/20 missile x3
-		// 5/20 warpball
-		// 8/20 mask
-		// 2/20 clock
-
-		0, 6, 2, 11, 9, 9, 9, 9, 9, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 0,
+		ITEM_TURBO, 											// 2/20 turbo (one at the start, and one at the end)
+		ITEM_SHIELD, 																			// 1/20 shield
+		ITEM_1X_MISSILE, 																		// 1/20 missile x1
+		ITEM_3X_MISSILE, 																		// 1/20 missile x3
+		ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, 				// 5/20 warpball
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, // 8/20 mask
+		ITEM_CLOCK, ITEM_CLOCK, 																// 2/20 clock
+		ITEM_TURBO,
 #endif
-	},
+		},
 
 	.RNG_itemSetBossrace =
 	{
-		4, 3, 1, 10, 10, 0, 0, 6, 2, 11, 9, 9, 9, 7, 7, 7, 7, 7, 8, 8,
+		ITEM_BEAKER, 
+		ITEM_TNT, 
+		ITEM_1X_BOMB, 
+		ITEM_3X_BOMB, ITEM_3X_BOMB, 
+		ITEM_TURBO, ITEM_TURBO, 
+		ITEM_SHIELD, 
+		ITEM_1X_MISSILE, 
+		ITEM_3X_MISSILE,
+		ITEM_WARPBALL, ITEM_WARPBALL, ITEM_WARPBALL, 
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, ITEM_MASK, 
+		ITEM_CLOCK, ITEM_CLOCK,
 	},
 
 	.RNG_itemSetBattleDefault =
 	{
-		4, 3, 1, 1, 1, 10, 10, 6, 6, 2, 2, 2, 2, 2, 7, 7, 7, 13, 13, 12,
+		ITEM_BEAKER, 
+		ITEM_TNT, 
+		ITEM_1X_BOMB, ITEM_1X_BOMB, ITEM_1X_BOMB, 
+		ITEM_3X_BOMB, ITEM_3X_BOMB, 
+		ITEM_SHIELD, ITEM_SHIELD, 
+		ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, ITEM_1X_MISSILE, 
+		ITEM_MASK, ITEM_MASK, ITEM_MASK, 
+		ITEM_SUPER_ENGINE, ITEM_SUPER_ENGINE,
+		ITEM_INVISIBILITY,
 	},
 
 	// 0xB

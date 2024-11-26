@@ -311,7 +311,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 	if (type & 8)
 	{
 		//turn on 14th bit of Actions Flag set (means racer is driving against a wall)
-		driver->actionsFlagSet |= 0x200;
+		driver->actionsFlagSet |= ACTION_TOUCH_WALL;
 	}
 
 	// super engine

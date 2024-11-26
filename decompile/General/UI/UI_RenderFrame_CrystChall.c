@@ -77,7 +77,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
       player->funcPtrs[0] = DECOMP_VehPhysProc_FreezeEndEvent_Init;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
-      player->actionsFlagSet |= 0x2000000;
+      player->actionsFlagSet |= ACTION_RACE_FINISHED;
 
 #ifndef REBUILD_PS1
       MainGameEnd_Initialize();

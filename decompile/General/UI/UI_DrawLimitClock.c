@@ -34,7 +34,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 				d = gGT->drivers[i];
 
 				//end the race for every racer
-				d->actionsFlagSet |= 0x2000000;
+				d->actionsFlagSet |= ACTION_RACE_FINISHED;
 			};
 
 #ifndef REBUILD_PC

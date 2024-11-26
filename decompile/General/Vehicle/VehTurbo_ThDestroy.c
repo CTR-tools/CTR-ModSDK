@@ -6,7 +6,7 @@ void DECOMP_VehTurbo_ThDestroy(struct Thread* t)
 	turboObj = t->object;
 	
 	struct Driver* d = turboObj->driver;
-	d->actionsFlagSet &= 0xfffffdff;
+	d->actionsFlagSet &= ~(ACTION_TOUCH_WALL);
 	
 	DECOMP_INSTANCE_Death(t->inst);
 	DECOMP_INSTANCE_Death(turboObj->inst);

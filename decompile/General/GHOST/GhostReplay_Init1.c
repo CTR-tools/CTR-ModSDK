@@ -182,7 +182,7 @@ void DECOMP_GhostReplay_Init1(void)
 		ghostDriver->ghostBoolStarted = 0;
 		ghostDriver->ghostTape = tape;
 		ghostDriver->instSelf = inst;
-		ghostDriver->actionsFlagSet |= 0x100000; // AI driver
+		ghostDriver->actionsFlagSet |= ACTION_BOT; // AI driver
 
 		// Ptr Model "Wake"
 		wake = gGT->modelPtr[0x43];

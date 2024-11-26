@@ -1,7 +1,6 @@
 #include <common.h>
 
 int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver * d)
-
 {
   short charID;
 
@@ -13,16 +12,12 @@ int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver * d)
 
   // if your character is...
   switch (charID) {
-  // Crash
-  case 0:
-  // Coco
-  case 3:
-  // Pura
-  case 6:
-  // Polar
-  case 7:
-  // Penta
-  case 13:
+
+  case CRASH_BANDICOOT:
+  case COCO_BANDICOOT:
+  case PURA:
+  case POLAR:
+  case PENTA_PENGUIN:
   // you're a good guy, use Aku
     goodGuy = true;
     break;
