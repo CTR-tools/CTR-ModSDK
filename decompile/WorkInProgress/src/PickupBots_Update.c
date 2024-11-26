@@ -4,37 +4,35 @@ void DECOMP_PickupBots_Update(void)
 {
 	// handles which weapons bosses use
 	char i;
-	u_char backupWumpa;
 	u_char weaponID;
 	u_char enemyID;
 	u_char playerID;
+	u_char throwFlag;
 	char numPlyrCurrGame;
+	int distX;
+	int distZ;
 	u_short uVar3;
 	int iVar4;
-	uint uVar5;
-	int iVar6;
-	int iVar7;
+	u_int uVar5;
+	int rand;
 	char bVar8;
-	u_char uVar9;
-	u_int voiceID;
+	u_char rngWeapon;
+	u_int voicelineID;
 	short sVar11;
-	struct Driver *thisDriver;
+	struct Driver *player;
 	struct Driver *botDriver;
-	struct GameTracker* gGT = sdata->gGT;
+	struct GameTracker *gGT = sdata->gGT;
 
-	// pointer to boss meta
-	struct MetaDataBOSS* bossMeta = sdata->ptrBossMeta;
-
-	// If number of AIs is zero,			or		time on clock is less than 4b00
-	if ((gGT->numBotsNextGame == 0) || (gGT->elapsedEventTime < 0x4b00))
+	// If number of AIs is zero,			or		time on clock is less than ~20sec
+	if ((gGT->numBotsNextGame == 0) || (gGT->elapsedEventTime < FPS_DOUBLE(19200)))
 	{
 		if (-1 < gGT->gameMode1)
 		{
 			return;
 		}
 
-		// quit if event started less than 4800ms ago (4.8s)
-		if (gGT->elapsedEventTime < 0x12c0)
+		// quit if event started less than ~5sec ago
+		if (gGT->elapsedEventTime < FPS_DOUBLE(4800))
 		{
 			return;
 		}
@@ -52,13 +50,13 @@ void DECOMP_PickupBots_Update(void)
 		for (i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			// get the player structure of each human player
-			thisDriver = gGT.drivers[i];
+			player = gGT->drivers[i];
 
 			// if racer is not in first place
-			if (thisDriver->driverRank != 0)
+			if (player->driverRank != 0)
 			{
 				// driver in front of the player
-				botDriver = gGT->driversInRaceOrder[thisDriver->driverRank - 1];
+				botDriver = gGT->driversInRaceOrder[player->driverRank - 1];
 
 				if (
 					(
@@ -79,64 +77,53 @@ void DECOMP_PickupBots_Update(void)
 							botDriver->weaponCooldown == 0 &&
 
 							// If you dont have a tnt on your head
-							(botDriver->instTntRecv == 0)
-						) &&
-						
+							(botDriver->instTntRecv == 0)) &&
+
 						((
 							// if there is no clock weapon in effect
 							botDriver->clockReceive == 0 &&
 							(
-								// driver1x - driver2x
-								iVar6 = *(int *)(thisDriver->instSelf->matrix.t[0]) -
-										*(int *)(botDriver->instSelf->matrix.t[0]),
-
-								// driver1z - driver2z
-								iVar7 = *(int *)(thisDriver->instSelf->matrix.t[2]) -
-										*(int *)(botDriver->instSelf->matrix.t[2]),
+								distX = (player->instSelf->matrix.t[0] - botDriver->instSelf->matrix.t[0]),
+								distZ = (player->instSelf->matrix.t[2] - botDriver->instSelf->matrix.t[2]),
 
 								// check if distance between drivers is small
-								(iVar6 * iVar6 + iVar7 * iVar7) - 0x90001U < 0x13affff
-							)
-						))
-					 ))
-					)
+								(distX * distX + distZ * distZ) - 0x90001U < 0x13affff))))))
 				{
 					// Get random number
-					iVar6 = MixRNG_Scramble();
+					rand = MixRNG_Scramble();
 
 					// Get remainder when divided by 200
-					iVar6 = iVar6 % 200;
+					rand = rand % 200;
 
 					// If RNG is 0, (1/200 chance)
-					if (iVar6 == 0)
+					if (rand == 0)
 					{
-						if (
-							(*(char *)(botDriver->matrix.t[0]) != 0) &&
+						if ((botDriver->lapIndex != 0) &&
 
 							(
 								// Get random number
-								iVar6 = MixRNG_Scramble(),
+								rand = MixRNG_Scramble(),
 
 								// 50% chance this will happen
-								iVar6 % 100 < 0x32))
+								rand % 100 < 50))
 						{
 							// Set number of wumpa to 10
 							botDriver->numWumpas = 10;
 						}
 
 						// if time on the clock is an even number
-						if ((gGT->elapsedEventTime & 1) == 0)
+						if ((gGT->elapsedEventTime & FPS_DOUBLE(1)) == 0)
 						{
 							// Set weapon to potion
 							botDriver->heldItemID = 4;
 
 							// If this is human and not AI
-							if ((thisDriver->actionsFlagSet & 0x100000) == 0)
+							if ((player->actionsFlagSet & 0x100000) == 0)
 							{
 								// Make driver talk
-								Voiceline_RequestPlay(0xf, 
-								data.characterIDs[botDriver->driverID],
-								data.characterIDs[thisDriver->driverID]);
+								Voiceline_RequestPlay(0xf,
+													  data.characterIDs[botDriver->driverID],
+													  data.characterIDs[player->driverID]);
 							}
 
 							// potion
@@ -150,11 +137,10 @@ void DECOMP_PickupBots_Update(void)
 							botDriver->heldItemID = 3;
 
 							// If this is human and not AI
-							if ((thisDriver->actionsFlagSet & 0x100000) == 0)
+							if ((player->actionsFlagSet & 0x100000) == 0)
 							{
 								// Make driver talk
-								Voiceline_RequestPlay(0xf, (int)(short)data.characterIDs[botDriver->driverID],
-													  (int)(short)data.characterIDs[thisDriver->driverID]);
+								Voiceline_RequestPlay(0xf, data.characterIDs[botDriver->driverID], data.characterIDs[player->driverID]);
 							}
 
 							// tnt/nitro
@@ -170,32 +156,28 @@ void DECOMP_PickupBots_Update(void)
 					LAB_800412a4:
 
 						// Get random number
-						uVar3 = MixRNG_Scramble();
+						rand = MixRNG_Scramble();
 
 						// weapon cooldown
-						botDriver->weaponCooldown = (uVar3 & 0xff) + 0xf0;
+						botDriver->weaponCooldown = (rand & 0xff) + 0xf0;
 					}
 					else
 					{
 						// If RNG is 1, (1/200 chance)
-						if (iVar6 == 1)
+						if (rand == 1)
 						{
 							// Set weapon to bomb
-							botDriver->heldItemID = (char)iVar6;
+							botDriver->heldItemID = (char)rand;
 
 							// If this is human and not AI
-							if ((thisDriver->actionsFlagSet & 0x100000) == 0)
+							if ((player->actionsFlagSet & 0x100000) == 0)
 							{
-								// Player / AI structure + 0x4a shows driver index (0-7)
-
-								// Get character ID of two player/AI structures: iVar4 and iVar14
-
 								enemyID = data.characterIDs[botDriver->driverID];
-								playerID = data.characterIDs[thisDriver->driverID];
-								voiceID = 10;
+								playerID = data.characterIDs[player->driverID];
+								voicelineID = 10;
 							LAB_8004128c:
 								// Make driver talk
-								Voiceline_RequestPlay(voiceID, enemyID, playerID);
+								Voiceline_RequestPlay(voicelineID, enemyID, playerID);
 							}
 						LAB_80041298:
 							VehPickupItem_ShootNow(botDriver, 2, 0);
@@ -203,22 +185,17 @@ void DECOMP_PickupBots_Update(void)
 						}
 
 						// If RNG is 2, (1/200 chance)
-						if (iVar6 == 2)
+						if (rand == 2)
 						{
 							// Set weapon to 2
-							botDriver->heldItemID = (char)iVar6;
+							botDriver->heldItemID = (char)rand;
 
 							// if this is human and not AI
-							if ((thisDriver->actionsFlagSet & 0x100000) == 0)
+							if ((player->actionsFlagSet & 0x100000) == 0)
 							{
-
-								// Player / AI structure + 0x4a shows driver index (0-7)
-
-								// Get character ID of two player/AI structures: iVar4 and iVar14
-
 								enemyID = data.characterIDs[botDriver->driverID];
-								playerID = data.characterIDs[thisDriver->driverID];
-								voiceID = 11;
+								playerID = data.characterIDs[player->driverID];
+								voicelineID = 11;
 								goto LAB_8004128c;
 							}
 							goto LAB_80041298;
@@ -231,10 +208,10 @@ void DECOMP_PickupBots_Update(void)
 			}
 
 			// If racer is in the top 3 places of the race (1st, 2nd, 3rd)
-			if (thisDriver->driverRank < 3)
+			if (player->driverRank < 3)
 			{
 				// driver in the position behind player
-				botDriver = gGT->driversInRaceOrder[thisDriver->driverRank + 1];
+				botDriver = gGT->driversInRaceOrder[player->driverRank + 1];
 				if (
 					(
 						(
@@ -260,60 +237,57 @@ void DECOMP_PickupBots_Update(void)
 								((
 									// this driver's lap count less than number of laps in race,
 									// (this is false if you finish race)
-									thisDriver->lapIndex < gGT->numLaps ||
+									player->lapIndex < gGT->numLaps ||
 
 									// distToFinish more than 16000
-									(16000 < thisDriver->distanceToFinish_curr))))))) &&
+									(16000U < player->distanceToFinish_curr))))))) &&
 						(
-							// driver1x - driver2x
-							iVar6 = thisDriver->instSelf->matrix.t[0] - botDriver->instSelf->matrix.t[0],
-
-							// driver1z - driver2z
-							iVar7 = thisDriver->instSelf->matrix.t[2] - botDriver->instSelf->matrix.t[2],
+							distX = player->instSelf->matrix.t[0] - botDriver->instSelf->matrix.t[0],
+							distZ = player->instSelf->matrix.t[2] - botDriver->instSelf->matrix.t[2],
 
 							// check if distance between drivers is small
-							(iVar6 * iVar6 + iVar7 * iVar7) - 0x90001U < 0x13affff)))
+							(distX * distX + distZ * distZ) - 0x90001U < 0x13affff)))
 				{
 					// Get random number
-					iVar6 = MixRNG_Scramble();
+					rand = MixRNG_Scramble();
 
 					if (
 						(
 							// 2 in 800 chance (1 in 400)
-							(iVar6 % 800 < 2) &&
+							(rand % 800 < 2) &&
 							(
 								// override weapon to missile
-								uVar9 = 2,
+								rngWeapon = 2,
 
 								// if driver's lap is not last lap
-								botDriver->matrix.t[0] != gGT->numLaps - 1U)) ||
+								botDriver->lapIndex != gGT->numLaps - 1U)) ||
 						(
 							// override weapon to bomb
-							uVar9 = 1,
+							rngWeapon = 1,
 
 							// 4 in 800 chance (1 in 200)
-							iVar6 % 800 < 4))
+							rand % 800 < 4))
 					{
 						// set weapon
-						botDriver->heldItemID = uVar9;
+						botDriver->heldItemID = rngWeapon;
 
 						// If this is an AI and not human
-						if ((thisDriver->actionsFlagSet & 0x100000) == 0)
+						if ((player->actionsFlagSet & 0x100000) == 0)
 						{
 							// Make driver talk
 							Voiceline_RequestPlay(0xb,
-							data.characterIDs[botDriver->driverID],
-							data.characterIDs[thisDriver->driverID]);
+												  data.characterIDs[botDriver->driverID],
+												  data.characterIDs[player->driverID]);
 						}
 
 						//  (Arcade/Adv) Missile
 						VehPickupItem_ShootNow(botDriver, 2, 0);
 
 						// Get random number
-						uVar3 = MixRNG_Scramble();
+						rand = MixRNG_Scramble();
 
 						// cooldown before next weapon
-						botDriver->weaponCooldown = (uVar3 & 0xff) + 0xf0;
+						botDriver->weaponCooldown = (rand & 0xff) + 0xf0;
 					}
 
 					// You have no weapon
@@ -333,7 +307,11 @@ void DECOMP_PickupBots_Update(void)
 	botDriver = gGT->drivers[1];
 
 	// pointer to player structure (P1)
-	thisDriver = gGT.drivers[0];
+	player = gGT->drivers[0];
+
+	// pointer to boss meta
+	struct MetaDataBOSS* bossMeta = *(int *)0x8008d8e8;
+	struct MetaDataBOSS* nextMeta = (int)bossMeta + 8;
 
 	if (
 		(
@@ -343,19 +321,22 @@ void DECOMP_PickupBots_Update(void)
 			((botDriver->actionsFlagSet & 0x2000000) != 0)) ||
 		((
 			// if boss has tnt on their head
-			botDriver->instTntRecv != 0 ||
+			botDriver->instTntRecv != NULL ||
 			((
 				// victim of clock weapon
 				botDriver->clockReceive != 0 ||
 
 				// if boss has not reached high speed
-				(*(int *)(botDriver + 0x5d4) < 0x1f41))))))
+				(*(int *)((int)botDriver + 0x5d4) < 0x1f41))))))
 	{
+		// some kind of RNG with 0xdeadc0ed
+		rand = RngDeadCoed(&bss);
+
 		// new cooldown
-		sdata->bossCooldown =
+		*(short *)0x8008d8e4 =
 
 			// random [0 to 16] +
-			(RngDeadCoed(&bss) & 0x10) +
+			(rand & 16) +
 
 			// min cooldown for boss
 			bossMeta->weaponCooldown + 12 +
@@ -367,33 +348,35 @@ void DECOMP_PickupBots_Update(void)
 	}
 
 	// if this is the last weapon set (next is nullptr)
-	if (((struct MetaDataBOSS*)(int)bossMeta + sizeof(struct MetaDataBOSS))->throwFlag == NULL)
+	if (nextMeta->throwFlag == 0)
 	{
 		if (
-			// track progress of NEXT set
-			// percentage of track length
-			(gGT.level1.ptr_restart_points[((struct MetaDataBOSS*)(int)bossMeta + sizeof(struct MetaDataBOSS))->trackCheckpoint].distToFinish << 3))
+			// track progress of THIS set
+			(gGT->level1->ptr_restart_points[bossMeta->trackCheckpoint].distToFinish << 3) <
+
+			// distToFinish
+			botDriver->distanceToFinish_curr)
 		{
-			uVar3 = 0xffff;
+			throwFlag = 0xff;
 			if (
 				(
-					((bossMeta)[2] == 0x66) ||
-					((bossMeta)[2] == 100)) &&
+					(bossMeta->weaponType == 0x66) ||
+					(bossMeta->weaponType == 0x64)) &&
 				(sdata->unk_8008d42C == 5))
 			{
-				uVar3 = (bossMeta)[1];
+				throwFlag = (u_short)bossMeta->throwFlag;
 			}
 			bossMeta = data.bossWeaponMetaPtr[0];
 
 			// if levelID is not oxide station
-			if (gGT->levelID != 0xd)
+			if (gGT->levelID != OXIDE_STATION)
 			{
 				// set boss weapon meta to the one type it can be on this hub
 				bossMeta = data.bossWeaponMetaPtr[data.metaDataLEV[gGT->levelID].hubID];
 			}
-			if (uVar3 != 0xffff)
+			if (throwFlag != 0xff)
 			{
-				bossMeta->throwFlag = (char)uVar3;
+				bossMeta->throwFlag = throwFlag;
 			}
 		}
 	}
@@ -405,91 +388,86 @@ void DECOMP_PickupBots_Update(void)
 		if (botDriver->distanceToFinish_curr <
 
 			// track progress of NEXT set
-			// percentage of track length
-			(gGT.level1.ptr_restart_points[((struct MetaDataBOSS*)(int)bossMeta + 8)->trackCheckpoint].distToFinish) << 3)
+			(gGT->level1->ptr_restart_points[nextMeta->trackCheckpoint].distToFinish << 3))
 		{
-			bVar8 = 0xff;
+			throwFlag = 0xff;
 			if (
-				(
-					((bossMeta)[2] == 0x66) ||
-					(iVar4 = -0x10000, (bossMeta)[2] == 100)) &&
+				(	
+					(bossMeta->weaponType == 0x66) ||
+					(bossMeta->weaponType == 0x64)) &&
 
-				(iVar4 = -0x10000, sdata->unk_8008d42C == 5))
+				(sdata->unk_8008d42C == 5))
 			{
-				bVar8 = (bossMeta)[1];
-				iVar4 = (uint)bVar8 << 0x10;
+				throwFlag = bossMeta->throwFlag;
 			}
 
 			// next set
-			bossMeta = ((struct MetaDataBOSS*)(int)bossMeta + 8);
+			bossMeta = nextMeta;
 
-			if (iVar4 >> 0x10 != -1)
+			if (throwFlag != 0xff)
 			{
-				(bossMeta)[9] = bVar8;
+				nextMeta->throwFlag = throwFlag;
 			}
 		}
 	}
 
 	// set new boss meta
-	(bossMeta)[0] = bossMeta;
+	*(int*)0x8008d8e8 = bossMeta;
 
-	if (bossMeta[3] == 0)
+	if (bossMeta->unk1 == 0)
 	{
 		// run this once per second
-		if (sdata->unk_8008d428 == 0x1e)
+		if (sdata->unk_8008d428 == 30)
 		{
 			if ((botDriver->botFlags & 0x80) == 0)
 			{
-				if (*(short*)0x8008d42a == 0)
+				if (sdata->unk_8008d42a == 0)
 				{
 					sVar11 = botDriver->botPath;
 					if (sVar11 == 2)
 						goto LAB_80040ba0;
 					if (sVar11 == 1)
 					{
-						*(char *)(botDriver + 0x627) = 0;
+						*(u_char *)(botDriver + 0x627) = 0;
 						sdata->unk_8008d428 = 0;
-						*(short*)0x8008d42a = sVar11;
+						sdata->unk_8008d42a = sVar11;
 						botDriver->botFlags |= 0x40;
 					}
 				}
 				else
 				{
-					if (botDriver->botPath == NULL)
+					if (botDriver->botPath == 0)
 					{
 					LAB_80040ba0:
-						uVar5 = botDriver->botFlags;
-						*(char *)(botDriver + 0x627) = 1;
+						*(u_char *)((int)botDriver + 0x627) = 1;
 					}
 					else
 					{
 						if (botDriver->botPath != 1)
 							goto LAB_80040bf8;
-						uVar5 = botDriver->botFlags;
-						*(char *)(botDriver + 0x627) = 2;
-						*(short*)0x8008d42a = 0;
+						*(u_char *)((int)botDriver + 0x627) = 2;
+						sdata->unk_8008d42a = 0;
 					}
 					sdata->unk_8008d428 = 0;
-					botDriver->botFlags = uVar5 | 0x40;
+					botDriver->botFlags |= 0x40;
 				}
 			}
 		}
-
 		// count up
 		else
 		{
 			if ((botDriver->botFlags & 0x40) == 0)
 			{
-				sdata->unk_8008d428 += 1;
+				sdata->unk_8008d428++;
 			}
 		}
 	}
 LAB_80040bf8:
 
 	// cooldown, cant shoot weapons till finished
-	if (0 < sdata->bossCooldown)
+	if (0 < *(short *)0x8008d8e4)
 	{
-		sdata->bossCooldown -= 1;
+		*(short *)0x8008d8e4 = *(short *)0x8008d8e4 - 1;
 		return;
 	}
 
@@ -497,43 +475,43 @@ LAB_80040bf8:
 	uVar3 = RngDeadCoed(&bss);
 
 	// new cooldown
-	sdata->bossCooldown =
+	*(short *)0x8008d8e4 =
 
 		// random [0 to 16] +
-		(uVar3 & 0x10) +
+		(uVar3 & 16) +
 
 		// min cooldown for boss
-		bossMeta->weaponCooldown
+		bossMeta->weaponCooldown + 12 +
 
 		// number of times you lost the event
-		sdata->advProgress.timesLostBossRace[gGT->bossID]];
+		sdata->advProgress.timesLostBossRace[gGT->bossID];
 
-	u_char weaponType = bossMeta->weaponType;
-	weaponID = weaponType;
-	if (weaponType == 0x64)
+	bVar8 = bossMeta->weaponType;
+	uVar5 = (u_int)bVar8;
+	if (bVar8 == 0x64)
 	{
 		// weapon (tnt)
-		weaponID = 3;
+		uVar5 = 3;
 	}
 	else
 	{
-		if (weaponType == 0x65)
+		if (bVar8 == 0x65)
 		{
 			// weapon (bomb)
-			weaponID = 1;
+			uVar5 = 1;
 		}
 		else
 		{
-			if (weaponType == 0x66)
+			if (bVar8 == 0x66)
 			{
 				// weapon (potion)
-				weaponID = 4;
+				uVar5 = 4;
 			}
 			else
 			{
-				if (weaponType == 0xf)
+				if (bVar8 == 0xf)
 				{
-					weaponID = 0xffffffff;
+					uVar5 = 0xffffffff;
 				}
 			}
 		}
@@ -550,53 +528,54 @@ LAB_80040bf8:
 		sVar11 = sdata->unk_8008d42C + 1;
 		if (sdata->unk_8008d42C < 5)
 			goto LAB_80040da0;
-		weaponType = bossMeta->weaponType;
-		if (weaponType == 0x64)
+		bVar8 = bossMeta->weaponType;
+
+		if (bVar8 == 0x64)
 		{
 			// weapon (tnt)
-			weaponID = 3;
+			uVar5 = 3;
 
 			if (bossMeta->throwFlag != 3)
 			{
 				bossMeta->throwFlag = 3;
 				sdata->unk_8008d42C = 5;
-				bossMeta->juiceFlag = uVar3 | 1;
+				bossMeta->juiceFlag|= 1;
 				sVar11 = sdata->unk_8008d42C;
 				goto LAB_80040da0;
 			}
 		}
 		else
 		{
-			if (weaponType == 0x65)
+			if (bVar8 == 0x65)
 			{
 				// weapon (bomb)
-				weaponID = 1;
+				uVar5 = 1;
 
 				// swap each frame between juiced and not juiced
 
 				// not juiced, then juiced up
 				if ((uVar3 & 1) == 0)
 				{
-					bossMeta->juiceFlag = uVar3 | 1;
+					bossMeta->juiceFlag |= 1;
 					sdata->unk_8008d42C = 5;
 
 					// weapon (tnt)
-					weaponID = 3;
+					uVar5 = 3;
 
 					sVar11 = sdata->unk_8008d42C;
 					goto LAB_80040da0;
 				}
 
 				// already juiced, unjuice
-				bossMeta->juiceFlag = uVar3 & ~1;
+				bossMeta->juiceFlag &= ~1;
 				goto LAB_80040d9c;
 			}
 			sVar11 = sdata->unk_8008d42C;
-			if (weaponType != 0x66)
+			if (bVar8 != 0x66)
 				goto LAB_80040da0;
 
 			// weapon (potion)
-			weaponID = 4;
+			uVar5 = 4;
 
 			if (bossMeta->throwFlag != 3)
 			{
@@ -615,19 +594,18 @@ LAB_80040bf8:
 		sdata->unk_8008d42C = 0;
 
 		// dont use 10 wumpa
-		bossMeta->juiceFlag &= 0xfffe;
+		bossMeta->juiceFlag &= ~1;
 
 		sVar11 = sdata->unk_8008d42C;
 	}
+
 LAB_80040da0:
-
 	sdata->unk_8008d42C = sVar11;
-	u_char throwFlag = bossMeta->throwFlag;
-	u_short weaponFlags = (throwFlag == 2);
-	uVar9 = 0;
-
-	// if weapon ID is valid
-	if (-1 < (int)(weaponID << 0x10))
+	bVar8 = bossMeta->throwFlag;
+	uVar3 = (u_short)(bVar8 == 2);
+	u_char uVar9 = 0;
+	u_char backupWumpa;
+	if (-1 < (int)(uVar5 << 0x10))
 	{
 		// backup numWumpa
 		backupWumpa = botDriver->numWumpas;
@@ -642,68 +620,72 @@ LAB_80040da0:
 		botDriver->numWumpas = uVar9;
 
 		// weaponID
-		botDriver->heldItemID = weaponID;
+		botDriver->heldItemID = (char)uVar5;
 
-		if ((weaponID - 3 & 0xffff) < 2)
+		if ((uVar5 - 3 & 0xffff) < 2)
 		{
 			// Player / AI structure + 0x4a shows driver index (0-7)
 
 			// get the character ID of P1 and P2 (or boss)
 			enemyID = data.characterIDs[botDriver->driverID];
-			playerID = data.characterIDs[thisDriver->driverID];
+			playerID = data.characterIDs[player->driverID];
 
-			voiceID = 15;
+			voicelineID = 15;
 		}
 		else
 		{
 			// Player / AI structure + 0x4a shows driver index (0-7)
 
-			voiceID = 10;
+			voicelineID = 10;
 
 			// get the character ID of P1 and P2 (or boss)
 			enemyID = data.characterIDs[botDriver->driverID];
-			playerID = data.characterIDs[thisDriver->driverID];
+			playerID = data.characterIDs[player->driverID];
 
-			// shoot backwards
-			weaponFlags = (u_short)(throwFlag == 2) | 2;
+			uVar3 = (u_short)(bVar8 == 2) | 2;
 		}
 
 		// Make driver talk
-		Voiceline_RequestPlay(voiceID, enemyID, playerID);
+		Voiceline_RequestPlay(voicelineID, enemyID, playerID);
 
 		// If weapon is bomb
-		if (bossDrivers->heldItemID == 1)
+		if (botDriver->heldItemID == 1)
 		{
 			// Pinstripe or Oxide
 
 			// VehPickupItem_ShootNow (boss)
-			VehPickupItem_ShootNow(botDriver, 2, weaponFlags);
+			VehPickupItem_ShootNow(botDriver, 2, uVar3);
 		}
 
 		else
 		{
+			sVar11 = (short)uVar5;
 			if (
+
 				(
 					// Papu or Oxide
+
 					// If your weapon is potion
 					(botDriver->heldItemID == 4) &&
 
-					(weaponFlags == 1)) &&
+					(uVar3 == 1)) &&
 
 				// If you are on oxide station
-				(gGT->levelID == 0xd))
+				(gGT->levelID == OXIDE_STATION))
 			{
 				// VehPickupItem_ShootNow (boss)
 				// Fire two potions (see oxide boss challenge)
-				VehPickupItem_ShootNow(botDriver, weaponID, 1);
-				VehPickupItem_ShootNow(botDriver, weaponID, 1);
+				VehPickupItem_ShootNow(botDriver, sVar11, 1);
+				VehPickupItem_ShootNow(botDriver, sVar11, 1);
 			}
 			else
 			{
 				// VehPickupItem_ShootNow (boss)
-				VehPickupItem_ShootNow(botDriver, weaponID, weaponFlags);
+				VehPickupItem_ShootNow(botDriver, sVar11, uVar3);
 
-				if (// Roo, Joe, Oxide
+				if (
+					// Roo, Joe, Oxide
+
 					(
 						// If your weapon is TNT or Nitro
 						(botDriver->heldItemID == 3) &&
@@ -723,6 +705,4 @@ LAB_80040da0:
 		// Set number of wumpa fruit
 		botDriver->numWumpas = backupWumpa;
 	}
-	return;
 }
- 
