@@ -1282,3 +1282,5 @@ void Vector_SpecLightNoSpin3D(struct Instance*, short*, short*);
 void CS_Podium_Prize_Spin(struct Instance* inst, short* prize);
 int howl_VolumeGet(int type);
 void SelectProfile_GetTrackID();
+void SelectProfile_PrintInteger(int integer, short posX, short posY, short fmt, u_short flags);
+void Vector_SpecLightSpin2D(struct Instance*, short*, short*); //guessed about the signature

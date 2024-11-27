@@ -117,7 +117,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
                 
 				DECOMP_AH_Map_LoadSave_Full(
 					local_40, local_3c, 
-					&D232.loadSave_pos[0], &D232.loadSave_col[0], 
+					&D232.loadSave_pos[0], (char*)&D232.loadSave_col[0],
 					0x800, (int)psVar9[1]
 				);
 				
@@ -220,7 +220,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 
         DECOMP_AH_Map_HubArrow(
 			local_38, local_34, 
-			&D232.hubArrow_pos[0], &D232.hubArrow_col1[iVar5], 
+			&D232.hubArrow_pos[0], (char*)&D232.hubArrow_col1[iVar5],
 			0x800, (int)psVar9[1]);
       }
 	  
@@ -270,7 +270,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         }
 		
 		// draw star icon for boss
-        DECOMP_UI_Map_DrawRawIcon(hubPtrs, &pos3D[0], 0x37, uVar6, 0, 0x1000);
+        DECOMP_UI_Map_DrawRawIcon((int)hubPtrs, &pos3D[0], 0x37, uVar6, 0, 0x1000);
       }
       psVar10 = psVar10 + 4;
       psVar9 = psVar9 + 4;

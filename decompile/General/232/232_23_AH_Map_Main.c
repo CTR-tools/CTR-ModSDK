@@ -76,7 +76,7 @@ void DECOMP_AH_Map_Main(void)
 
     DECOMP_AH_Map_Warppads((short*)hubPtrs,gGT->threadBuckets[5].thread,(short*)&local_1e[0]);
 	
-    DECOMP_AH_Map_HubItems(hubPtrs,&local_1e[0]);
+    DECOMP_AH_Map_HubItems((void*)hubPtrs,&local_1e[0]);
 	
     DECOMP_UI_Map_DrawMap(
         gGT->ptrIcons[3],

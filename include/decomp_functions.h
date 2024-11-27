@@ -793,3 +793,10 @@ void DECOMP_UI_Map_DrawRawIcon(
 	short scale);
 int DECOMP_RaceFlag_GetCanDraw();
 void DECOMP_UI_Map_DrawDrivers(int ptrMap, struct Thread* bucket, short* param_3);
+int DECOMP_VehTalkMask_boolNoXA();
+void DECOMP_VehTalkMask_End();
+struct Instance* DECOMP_VehTalkMask_Init();
+void DECOMP_VehTalkMask_PlayXA(struct INSTANCE* i, int id);
+struct RectMenu* DECOMP_MainFreeze_GetMenuPtr();
+void DECOMP_LOAD_TalkingMask(int packID, int maskID);
+int DECOMP_LOAD_GetAdvPackIndex();

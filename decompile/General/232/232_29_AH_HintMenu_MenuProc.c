@@ -123,8 +123,8 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-		int* ot = gGT->backBuffer->otMem.startPlusFour;
-        DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
+		u_long* ot = gGT->backBuffer->otMem.startPlusFour;
+        DECOMP_CTR_Box_DrawClearBox(&box, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
 		box.y = 0x3c;
         box.x = -0xe;
@@ -209,7 +209,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
                         inst->flags |= 0x400;
 
 						struct InstDrawPerPlayer* idpp =
-							INST_GETIDPP(inst);
+							(struct InstDrawPerPlayer*)INST_GETIDPP(inst);
 
 						idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 						for(int j = 1; j < gGT->numPlyrCurrGame; j++)
@@ -322,8 +322,8 @@ LAB_800b38cc:
     box.y = (menu->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-	int* ot = gGT->backBuffer->otMem.startPlusFour;
-    DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
+	u_long* ot = gGT->backBuffer->otMem.startPlusFour;
+    DECOMP_CTR_Box_DrawClearBox(&box, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
     box.y = 0x3c;
     box.h = 2;
