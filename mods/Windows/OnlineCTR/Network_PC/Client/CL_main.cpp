@@ -568,7 +568,7 @@ void StatePC_Launch_PickServer()
 	if (serverPeer != 0)
 	{
 		//when it dc's it ends up here. Either this is causing the enet dc or the client is bugged to call this function again when it shouldn't
-		printf("NON-`null` enet server peer during server connection (case 1), disconnecting from old server...\n");
+		printf("Disconnecting from old server...\n");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}

@@ -513,6 +513,9 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		(driver->instTntRecv == 0)
 	)
 	{
+		#if defined(USE_ONLINE)
+		int rn = octr->serverRoom;
+		#endif
 		// If there is a Bomb Pointer
 		if (driver->instBombThrow != 0)
 		{
