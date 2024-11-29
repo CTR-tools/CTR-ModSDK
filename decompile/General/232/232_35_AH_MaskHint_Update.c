@@ -44,7 +44,7 @@ void DECOMP_AH_MaskHint_Update()
 				
 				// Get pos and rot, then set them as desired
 				CAM_FollowDriver_AngleAxis(cdc,d,0x1f800108,pos,rot);
-				CAM_SetDesiredPosRot(cdc,pos,rot);
+				CAM_SetDesiredPosRot((int)cdc, (u_short*)pos, (u_short*)rot);
 				
 				#else
 					
@@ -81,7 +81,7 @@ void DECOMP_AH_MaskHint_Update()
 			struct Instance* dInst = d->instSelf;
 			
 			#ifndef REBUILD_PS1
-			CTR_MatrixToRot(rot, &dInst->matrix, 0x11);
+			CTR_MatrixToRot((SVECTOR*)rot, &dInst->matrix, 0x11);
 			#else
 			// Lucky enough, N Sanity Beach's first
 			// mask hint, actually is 0,0,0
@@ -165,7 +165,7 @@ void DECOMP_AH_MaskHint_Update()
 						(0x18, &D232.emSet_maskLeave[0], 0x1000);
 					
 					DECOMP_VehTalkMask_PlayXA(
-						sdata->modelMaskHints3D, 
+						(struct INSTANCE*)sdata->modelMaskHints3D, 
 						D232.maskHintID);
 					
 					if (

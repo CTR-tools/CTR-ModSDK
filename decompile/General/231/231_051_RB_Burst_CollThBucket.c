@@ -9,6 +9,11 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
   struct Thread* weaponTh;
 
   gGT = sdata->gGT;
+
+  //the variable "tw" needs to be initialized here, I *believe* this is the associated ghidra code:
+  // BSP_Meta -> weaponthread -> object
+  //iVar7 = *(int*)(*(int*)(param_1 + 0x18) + 0x30);
+  tw = (struct TrackerWeapon*)(*(int*)(*(int*)(((int)sps) + 0x18) + 0x30));
   
   weaponTh = sps->Union.ThBuckColl.thread;
   void* weaponObj = weaponTh->object;

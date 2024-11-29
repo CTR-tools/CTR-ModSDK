@@ -800,3 +800,7 @@ void DECOMP_VehTalkMask_PlayXA(struct INSTANCE* i, int id);
 struct RectMenu* DECOMP_MainFreeze_GetMenuPtr();
 void DECOMP_LOAD_TalkingMask(int packID, int maskID);
 int DECOMP_LOAD_GetAdvPackIndex();
+void DECOMP_CAM_ProcessTransition(short* currPos, short* currRot, short* startPos, short* startRot, short* endPos, short* endRot, int frame);
+void DECOMP_CAM_LookAtPosition(int scratchpad, int* positions, short* desiredPos, short* desiredRot);
+void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, int param_2, struct Driver* d, short* desiredPos, short* desiredRot);
+int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame);

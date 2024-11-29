@@ -183,7 +183,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // when compiling with OG game's RDATA
   // then expand PrimMem in 60fps,
   // add 148 bytes cause of MATH_Sin relocated
-  gGT->ptrRenderBucketInstance = (int)148 + (int)&rdata.s_STATIC_GNORMALZ[0];
+  gGT->ptrRenderBucketInstance = (void*)((int)148 + (int)&rdata.s_STATIC_GNORMALZ[0]);
 #endif
 
 

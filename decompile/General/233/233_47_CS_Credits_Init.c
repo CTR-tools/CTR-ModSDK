@@ -26,7 +26,7 @@ void CS_Credits_Init()
 	advProg = &sdata->advProgress;
 	creditsObj = &creditsBSS->creditsObj;
 	
-	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+	void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 	CLH = pointers[ST1_CREDITS];
 	
 	creditsBSS->DancerThread = 0;
@@ -92,7 +92,7 @@ void CS_Credits_Init()
 		
 		inst->flags |= 0x400;
 		
-		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
+		struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
 		idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 		
 		#if 0
@@ -106,13 +106,13 @@ void CS_Credits_Init()
 	
 	creditsBSS->numStrings = creditsDst->numStrings;
 	
-	char** ptrStrings = CREDITSHEADER_GETSTRINGS(creditsDst);
+	char** ptrStrings = (char**)CREDITSHEADER_GETSTRINGS(creditsDst);
 	creditsBSS->ptrStrings = ptrStrings;
 	
 	for(i = 0; i < creditsBSS->numStrings; i++)
 	{
 		ptrStrings[i] =
-		((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
+		(char*)((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
 	}
 	
 	creditsObj->credits_posY = 340;
@@ -120,4 +120,4 @@ void CS_Credits_Init()
 }
 
 // temporary workaround
-struct Ovr233_Credits_BSS* creditsBSS = 0x800b9488;
+struct Ovr233_Credits_BSS* creditsBSS = (struct Ovr233_Credits_BSS*)0x800b9488;

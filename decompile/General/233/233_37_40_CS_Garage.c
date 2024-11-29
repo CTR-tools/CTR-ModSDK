@@ -78,6 +78,7 @@ int OXIDE_GarageGetNext(int curr, int dir)
 
 void DECOMP_CS_Garage_MenuProc(void)
 {
+	//usage of this function implies that it returns void and takes a single `struct RectMenu*` as a parameter
     char bVar1;
     short sVar3;
     short sVar4;

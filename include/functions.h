@@ -1284,3 +1284,15 @@ int howl_VolumeGet(int type);
 void SelectProfile_GetTrackID();
 void SelectProfile_PrintInteger(int integer, short posX, short posY, short fmt, u_short flags);
 void Vector_SpecLightSpin2D(struct Instance*, short*, short*); //guessed about the signature
+void* MEMPACK_AllocHighMem(int allocSize);
+char* CS_Credits_GetNextString(char*);
+void CS_Credits_DestroyCreditGhost();
+void CdSetDebug(int);
+void Voiceline_PoolClear();
+void SpuSetIRQ(int);
+void SpuReadDecodedData(short*, int);
+void SpuSetIRQCallback(int);
+void SpuSetTransferCallback(int);
+void MainInit_RainBuffer(struct GameTracker*);
+void CS_Podium_FullScene_Init();
+void CS_LevCamera_OnInit();

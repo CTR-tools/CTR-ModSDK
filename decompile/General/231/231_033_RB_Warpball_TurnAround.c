@@ -38,6 +38,7 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
 	tw->turnAround++;
 
 	//TODO: sVar3 is uninitialized at this point, I think something is definitely wrong with the decomp of this function.
+	//I think sVar3 might be tw->turnAround
 
 	if (
 			// if count too high

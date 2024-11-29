@@ -2618,22 +2618,22 @@ struct Data data =
 
 	.voiceSetPtr =
 	{
-		&data.voiceData[0].voiceSet,
-		&data.voiceData[1].voiceSet,
-		&data.voiceData[2].voiceSet,
-		&data.voiceData[3].voiceSet,
-		&data.voiceData[4].voiceSet,
-		&data.voiceData[5].voiceSet,
-		&data.voiceData[6].voiceSet,
-		&data.voiceData[7].voiceSet,
-		&data.voiceData[8].voiceSet,
-		&data.voiceData[9].voiceSet,
-		&data.voiceData[10].voiceSet,
-		&data.voiceData[11].voiceSet,
-		&data.voiceData[12].voiceSet,
-		&data.voiceData[13].voiceSet,
-		&data.voiceData[14].voiceSet,
-		&data.voiceData[15].voiceSet
+		(int)&data.voiceData[0].voiceSet[0],
+		(int)&data.voiceData[1].voiceSet[0],
+		(int)&data.voiceData[2].voiceSet[0],
+		(int)&data.voiceData[3].voiceSet[0],
+		(int)&data.voiceData[4].voiceSet[0],
+		(int)&data.voiceData[5].voiceSet[0],
+		(int)&data.voiceData[6].voiceSet[0],
+		(int)&data.voiceData[7].voiceSet[0],
+		(int)&data.voiceData[8].voiceSet[0],
+		(int)&data.voiceData[9].voiceSet[0],
+		(int)&data.voiceData[10].voiceSet[0],
+		(int)&data.voiceData[11].voiceSet[0],
+		(int)&data.voiceData[12].voiceSet[0],
+		(int)&data.voiceData[13].voiceSet[0],
+		(int)&data.voiceData[14].voiceSet[0],
+		(int)&data.voiceData[15].voiceSet[0]
 	},
 
 	.voiceID =
@@ -3599,7 +3599,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x88A3,
 		.rows = 0,
-		.funcPtr = 0x80038b5c,
+		.funcPtr = (void (*)(struct RectMenu*))0x80038b5c,
 		.drawStyle = 4,
 
 		// the rest initializes as zeros
@@ -4178,11 +4178,11 @@ struct Data data =
 
 	.bossWeaponMetaPtr =
 	{
-		&data.BossWeaponOxide,
-		&data.BossWeaponRoo,
-		&data.BossWeaponPapu,
-		&data.BossWeaponJoe,
-		&data.BossWeaponPinstripe,
+		&data.BossWeaponOxide[0],
+		&data.BossWeaponRoo[0],
+		&data.BossWeaponPapu[0],
+		&data.BossWeaponJoe[0],
+		&data.BossWeaponPinstripe[0],
 	},
 
 	.s_BASCUS_94426_SLOTS = "BASCUS-94426-SLOTS",
@@ -4223,7 +4223,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xC81,
 		.rows = &data.rowsSaveGame[0],
-		.funcPtr = 0x8004B258,
+		.funcPtr = (void (*)(struct RectMenu*))0x8004B258,
 		.drawStyle = 4,
 	},
 
@@ -4296,7 +4296,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xC81,
 		.rows = &data.rowsGreenLoadSave[0],
-		.funcPtr = 0x80048960,
+		.funcPtr = (void (*)(struct RectMenu*))0x80048960,
 		.drawStyle = 0x10, // GREEN
 	},
 
@@ -4304,21 +4304,21 @@ struct Data data =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuGhostSelection =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuWarning2 =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuSubmitName =
@@ -4332,7 +4332,7 @@ struct Data data =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x20,
-		.funcPtr = 0x80047da8,
+		.funcPtr = (void (*)(struct RectMenu*))0x80047da8,
 	},
 
 	.MetaDataLoadSave =
@@ -4706,10 +4706,10 @@ struct Data data =
 
 	.hudStructPtr =
 	{
-		&data.hud_1P_P1,
-		&data.hud_2P_P1,
-		&data.hud_4P_P1,
-		&data.hud_4P_P1,
+		&data.hud_1P_P1[0],
+		&data.hud_2P_P1[0],
+		&data.hud_4P_P1[0],
+		&data.hud_4P_P1[0],
 	},
 
 	.trackerAnim1 =
@@ -4768,7 +4768,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x803,
 		.rows = &data.rowsRetryExit[0],
-		.funcPtr = 0x80055c90,
+		.funcPtr = (void (*)(struct RectMenu*))0x80055c90,
 		.drawStyle = 4,
 	},
 
@@ -9088,7 +9088,7 @@ struct Data data =
 				{
 						.particle_funcPtr = 0x00000000,
 						.particle_colorFlags = 0x0000,
-						.particle_lifespan = 0xffffffff,
+						.particle_lifespan = AS(0xffffffff),
 						.particle_Type = 1,
 				}
 		},
