@@ -4441,7 +4441,7 @@ struct sData
 	int unused400[100];
 
 	// 8008e6b8 (half of a CdlFILE struct)
-	int cdlFile_CdReady[4];
+	CdlLOC cdlFile_CdReady[4];
 
 	// 8008e6c8 array of 3 ints
 	int XA_MaxSampleValArr[3];

@@ -20,7 +20,7 @@ int DECOMP_CseqMusic_Start(int songID, int p2, int p3, int p4, int p5)
 		if((song->flags & 1) == 0)
 		{
 			// start song in this pool
-			DECOMP_SongPool_Start(song, songID, p2, p5, p3, p4);
+			DECOMP_SongPool_Start(song, songID, p2, p5, (struct SongSet*)p3, p4);
 			
 			DECOMP_Smart_ExitCriticalSection();
 			return 1;

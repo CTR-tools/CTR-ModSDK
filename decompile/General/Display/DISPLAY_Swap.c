@@ -20,6 +20,6 @@ void DECOMP_DISPLAY_Swap(void)
   PutDispEnv(&db->dispEnv);
   
   // frontBuffer
-  PutDrawEnv(db);
+  PutDrawEnv(&db->drawEnv);
   return;
 }

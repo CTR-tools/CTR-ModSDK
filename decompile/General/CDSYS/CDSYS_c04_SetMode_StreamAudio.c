@@ -29,7 +29,9 @@ void DECOMP_CDSYS_SetMode_StreamAudio()
 
 	sdata->discMode = DM_AUDIO;	
 	sdata->XA_State = 0;
-	
+
+	//typedef void (*CdlCB)(CdlIntrResult, uint8_t *);
+
 	CdSyncCallback(DECOMP_CDSYS_XaCallbackCdSync);
 	CdReadyCallback(DECOMP_CDSYS_XaCallbackCdReady);
 }

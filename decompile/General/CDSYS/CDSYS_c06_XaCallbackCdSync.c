@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CDSYS_XaCallbackCdSync(char result)
+void DECOMP_CDSYS_XaCallbackCdSync(CdlIntrResult result, u_char* unk) //+unk to adhere to *CdlCB
 {
 	unsigned char com;
 	

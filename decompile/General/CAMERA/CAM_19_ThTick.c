@@ -296,7 +296,7 @@ SkipNewCameraEOR:
 			if (sVar6 == 4)
 			{
 LAB_8001c11c:
-				DECOMP_CAM_LookAtPosition((int)scratchpad, &d->posCurr.x, &pb->pos[0], &pb->rot[0]);
+				DECOMP_CAM_LookAtPosition((int)scratchpad, (int*)&d->posCurr.x, &pb->pos[0], &pb->rot[0]);
 				psVar21 = scratchpad;
 LAB_8001c128:
 				scratchpad = psVar21;
@@ -306,7 +306,7 @@ LAB_8001c128:
 				psVar21 = scratchpad;
 				if (sVar6 == 10)
 				{
-					DECOMP_CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, pb->pos, (u_int)pb->rot);
+					DECOMP_CAM_FollowDriver_Spin360(cDC, (int)0x1f800108, d, (short*)pb->pos, (short*)pb->rot);
 					goto LAB_8001c128;
 				}
 				if (sVar6 != 0xb)

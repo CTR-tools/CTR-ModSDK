@@ -52,7 +52,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 				// if multitap plugged in
 				if(ptrControllerPacket->controllerData == (PAD_ID_MULTITAP << 4))
 				{
-					ptrControllerPacket = &ptrControllerPacket->controllers[Port];
+					ptrControllerPacket = (struct MultitapPacket*)&ptrControllerPacket->controllers[Port];
 				}
 				
 				if(ptrControllerPacket->isControllerConnected == 0)
@@ -60,7 +60,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 					bitwiseConnected |= 1 << (Slot*4 + Port);
 					
 					
-					padCurr->ptrControllerPacket = ptrControllerPacket;
+					padCurr->ptrControllerPacket = (struct ControllerPacket*)ptrControllerPacket;
 					padCurr->gamepadID = Slot*0x10 + Port;
 				}
 			}

@@ -34,7 +34,7 @@ void DECOMP_GhostReplay_Init1(void)
 	// In the future, this can move to GhostTape_Start, when byte budget allows
 	
 	gh = DECOMP_MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
-	recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
+	recordBuffer = (char*)GHOSTHEADER_GETRECORDBUFFER(gh);
 	sdata->GhostRecording.ptrGhost = gh;
 	sdata->GhostRecording.ptrStartOffset = &recordBuffer[0];
 	sdata->GhostRecording.ptrEndOffset = &recordBuffer[0x3DD4];
@@ -92,7 +92,7 @@ void DECOMP_GhostReplay_Init1(void)
 			// if N Tropy Opened
 			else
 			{
-				void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+				void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 				
 				// If you have not beaten N Tropy
 				if ((timeTrialFlags & 2) == 0)
@@ -111,7 +111,7 @@ void DECOMP_GhostReplay_Init1(void)
 		}
 		
 		sdata->boolGhostsDrawing = 1;
-		recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
+		recordBuffer = (char*)GHOSTHEADER_GETRECORDBUFFER(gh);
 
 		// Signals GhostReplay_ThTick to return
 		// early, and not try to "play" the ghost
@@ -146,12 +146,12 @@ void DECOMP_GhostReplay_Init1(void)
 		
 // set in MainInit_Drivers for PC port
 #ifndef REBUILD_PS1
-		uVar3 = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+		uVar3 = (u_int)VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
 #else
 		uVar3 = 0;
 #endif
 
-		inst = DECOMP_INSTANCE_Birth3D(uVar3, 0, 0);
+		inst = DECOMP_INSTANCE_Birth3D((struct Model*)uVar3, NULL, NULL);
 		inst->unk51 = 0xc;
 		inst->flags = 7;
 

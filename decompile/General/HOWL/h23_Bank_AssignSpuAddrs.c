@@ -16,8 +16,8 @@ int DECOMP_Bank_AssignSpuAddrs()
 	{
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
-					sdata->ptrSampleBlock2, // destination in RAM for banks
+					(CdlFILE*)&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
+					(void*)sdata->ptrSampleBlock2, // destination in RAM for banks
 					sdata->bankSectorOffset,// bank offset on disc, from CdLoc
 					1	// one sector
 				);
@@ -41,7 +41,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{
-			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			short* spuIndexArr = (short*)SBHEADER_GETARR(sdata->ptrSampleBlock1);
 			sdata->audioAllocSize += sdata->howl_spuAddrs[spuIndexArr[i]].spuSize;
 		}
 		
@@ -75,8 +75,8 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					&sdata->KartHWL_CdLoc,  				// CdLoc of HOWL
-					(int)sdata->ptrSampleBlock2 + 0x800,	// destination
+					(CdlFILE*)&sdata->KartHWL_CdLoc,  				// CdLoc of HOWL
+					(void*)((int)sdata->ptrSampleBlock2 + 0x800),	// destination
 					sdata->bankSectorOffset+1,				// offset of howl
 					sdata->numAudioSectors					// number of sectors
 				);
@@ -103,7 +103,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{	
-			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			short* spuIndexArr = (short*)SBHEADER_GETARR(sdata->ptrSampleBlock1);
 			sae = &sdata->howl_spuAddrs[spuIndexArr[i]];
 				
 			if(sae->spuAddr == 0)
@@ -136,7 +136,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 			// start transfer
 			SpuSetTransferStartAddr(spuAddrStart);
 			
-			SpuWrite((int)sdata->ptrSampleBlock2 + 0x800, sdata->audioAllocSize);
+			SpuWrite((uint32_t*)((int)sdata->ptrSampleBlock2 + 0x800), (size_t)sdata->audioAllocSize);
 		}
 		
 		sdata->bankLoadStage++;

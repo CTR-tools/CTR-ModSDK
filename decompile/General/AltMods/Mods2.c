@@ -19,7 +19,7 @@ void Online_CollidePointWithBucket(struct Thread* th, short* vec3_pos)
 		return;
 	while (th != 0)
 	{
-		DECOMP_PROC_CollidePointWithSelf(th, vec3_pos);
+		DECOMP_PROC_CollidePointWithSelf(th, (struct Need_New_Name*)vec3_pos);
 		// next
 		th = th->siblingThread;
 	}

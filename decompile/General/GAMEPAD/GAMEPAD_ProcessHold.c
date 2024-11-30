@@ -70,7 +70,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 			// to Buttons enum, to support different
 			// types of controllers
 			for (
-					btnMapPtr = &data.gamepadMapBtn[0].input; 
+					btnMapPtr = &data.gamepadMapBtn[0].input[0]; 
 					*(int*)&btnMapPtr[0] != 0;
 					btnMapPtr += 8
 				)

@@ -16,7 +16,7 @@ void DECOMP_AH_Map_Main(void)
   local_20 = 0;
   advDriver = gGT->drivers[0];
   ptrHudData = data.hudStructPtr[0];
-  
+  hubPtrs = 0;
   iVar1 = DECOMP_RaceFlag_GetCanDraw();
   if (iVar1 == 0) 
   {

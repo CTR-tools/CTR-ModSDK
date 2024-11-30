@@ -94,7 +94,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     while (opcodePos < 2) {
 
       // reached end of tape
-      if (tape->ptrEnd <= packetPtr) {
+      if (tape->ptrEnd <= (void*)packetPtr) {
         gh = tape->gh;
 
         d->ySpeed = gh->ySpeed;
@@ -305,7 +305,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 
   while (tape->packetID < packetIdx)
   {
-    if (tape->ptrEnd <= buffer)
+    if (tape->ptrEnd <= (void*)buffer)
       break;
 
     uint8_t opcode = buffer[0];

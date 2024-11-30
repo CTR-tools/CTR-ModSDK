@@ -18,7 +18,7 @@ char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags)
   
   // check out of bounds
   soundID = soundID & 0xffff;
-  if (soundID >= sdata->ptrHowlHeader->numEngineFX) return 0;
+  if ((int)soundID >= sdata->ptrHowlHeader->numEngineFX) return 0;
 
   // check sound is loaded
   ptrEngineFX = &sdata->howl_metaEngineFX[soundID];

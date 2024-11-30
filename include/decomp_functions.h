@@ -10,8 +10,8 @@ u_int DECOMP_CDSYS_GetFilePosInt(char* fileString, int* filePos);
 void DECOMP_CDSYS_SetMode_StreamData();
 void DECOMP_CDSYS_SetMode_StreamAudio();
 void DECOMP_CDSYS_SetXAToLang(int lang);
-void DECOMP_CDSYS_XaCallbackCdSync(char result);
-void DECOMP_CDSYS_XaCallbackCdReady(char result);
+void DECOMP_CDSYS_XaCallbackCdSync(CdlIntrResult result, u_char* unk); //+unk to adhere to *CdlCB
+void DECOMP_CDSYS_XaCallbackCdReady(CdlIntrResult result, u_char* unk); //+unk to adhere to *CdlCB
 void DECOMP_CDSYS_SpuCallbackIRQ();
 void DECOMP_CDSYS_SpuCallbackTransfer();
 void DECOMP_CDSYS_SpuEnableIRQ();
@@ -656,7 +656,7 @@ void DECOMP_RB_Snowball_LInB(struct Instance* inst);
 void DECOMP_RB_Spider_LInB(struct Instance* inst);
 
 void DECOMP_RB_Turtle_ThTick(struct Thread* t);
-int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh);
+int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh, struct ScratchpadStruct* sps);
 void DECOMP_RB_Turtle_LInB(struct Instance* inst);
 
 // 232
@@ -805,3 +805,8 @@ void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, int param_2, struct D
 int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame);
 void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str);
 void DECOMP_CAM_StartOfRace(struct CameraDC* cDC);
+int DECOMP_DecalFont_DrawMultiLineStrlen(char* str, short len, short posX, short posY, short maxPixLen, short fontType, short flags);
+void DECOMP_GAMEPROG_ResetHighScores(struct GameProgress* gameProg);
+void DECOMP_GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg);
+int DECOMP_LOAD_FindFile(char* filename, CdlFILE* cdlFile);
+int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);

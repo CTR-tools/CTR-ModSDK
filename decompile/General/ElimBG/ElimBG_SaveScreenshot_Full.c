@@ -22,24 +22,24 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   int start2 = (int)gGT->db[1].primMem.end;
   start1 -= 0xc800;
   start2 -= 0xc800;
-  gGT->db[0].primMem.end = start1;
-  gGT->db[1].primMem.end = start2;
+  gGT->db[0].primMem.end = (void*)start1;
+  gGT->db[1].primMem.end = (void*)start2;
 
   // 0x800 byte hole
-  sdata->PausePtrsVRAM[4] = start1;
-  sdata->PausePtrsVRAM[5] = start2;
+  sdata->PausePtrsVRAM[4] = (char*)start1;
+  sdata->PausePtrsVRAM[5] = (char*)start2;
   
   // 0x4000 byte hole
-  sdata->PausePtrsVRAM[2] = start1 + 0x800;
-  sdata->PausePtrsVRAM[3] = start2 + 0x800;
+  sdata->PausePtrsVRAM[2] = (char*)(start1 + 0x800);
+  sdata->PausePtrsVRAM[3] = (char*)(start2 + 0x800);
   
   // 0x8000 byte hole
-  sdata->PausePtrsVRAM[0] = start1 + 0x4800;
-  sdata->PausePtrsVRAM[1] = start2 + 0x4800;
+  sdata->PausePtrsVRAM[0] = (char*)(start1 + 0x4800);
+  sdata->PausePtrsVRAM[1] = (char*)(start2 + 0x4800);
 
   // copy texture vram into PrimMem
-  StoreImage(&local_48[0],sdata->PausePtrsVRAM[0]);
-  StoreImage(&local_40[0],sdata->PausePtrsVRAM[1]);
+  StoreImage((RECT*)&local_48[0],(uint32_t*)sdata->PausePtrsVRAM[0]);
+  StoreImage((RECT*)&local_40[0],(uint32_t*)sdata->PausePtrsVRAM[1]);
 
   // === copy screen into texture vram ===
 
@@ -55,7 +55,7 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   rDst.h = STRIP_H;
   
   // start the first Store
-  StoreImage(&rSrc,sdata->PausePtrsVRAM[2]);
+  StoreImage(&rSrc,(uint32_t*)sdata->PausePtrsVRAM[2]);
   
   for(rDst.y = 0; rDst.y < (0xd8-STRIP_H); rDst.y += STRIP_H)
   {
@@ -66,14 +66,14 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 	
 	// start next Store, while processing previous store
     rSrc.y += STRIP_H;
-    StoreImage(&rSrc,sdata->PausePtrsVRAM[2+iVar4]);
+    StoreImage((RECT*)&rSrc, (uint32_t*)sdata->PausePtrsVRAM[2 + iVar4]);
 
     DECOMP_ElimBG_SaveScreenshot_Chunk(
-		sdata->PausePtrsVRAM[4+(1-iVar4)],
-		sdata->PausePtrsVRAM[2+(1-iVar4)],
+		(u_short*)sdata->PausePtrsVRAM[4+(1-iVar4)],
+		(u_short*)sdata->PausePtrsVRAM[2+(1-iVar4)],
 		0x1000);
 
-    LoadImage(&rDst,sdata->PausePtrsVRAM[4+(1-iVar4)]);
+    LoadImage(&rDst,(uint32_t*)sdata->PausePtrsVRAM[4+(1-iVar4)]);
   }
 
   // wait for last Store
@@ -83,15 +83,15 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   rDst.w = 0x80;
   rDst.h = STRIP_H;
   DECOMP_ElimBG_SaveScreenshot_Chunk(
-		sdata->PausePtrsVRAM[4+(iVar4)],
-		sdata->PausePtrsVRAM[2+(iVar4)],
-	0x1000);
+		(u_short*)sdata->PausePtrsVRAM[4+(iVar4)],
+		(u_short*)sdata->PausePtrsVRAM[2+(iVar4)],
+		0x1000);
 
-  LoadImage(&rDst,sdata->PausePtrsVRAM[4+(iVar4)]);
+  LoadImage(&rDst,(uint32_t*)sdata->PausePtrsVRAM[4+(iVar4)]);
 
   rDst.x = 0x200;
   rDst.y = 0xff;
   rDst.w = 0x10;
   rDst.h = 1;
-  LoadImage(&rDst,&data.pauseScreenStrip[0]);
+  LoadImage(&rDst,(uint32_t*)&data.pauseScreenStrip[0]);
 }

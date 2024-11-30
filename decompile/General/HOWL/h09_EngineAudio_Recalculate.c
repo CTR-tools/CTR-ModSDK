@@ -17,7 +17,7 @@ short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
 	return 0;
 
   soundID = soundID & 0xffff;
-  if (sdata->ptrHowlHeader->numEngineFX <= soundID)
+  if (sdata->ptrHowlHeader->numEngineFX <= (int)soundID)
 	return 0;
 
   gGT = sdata->gGT;
