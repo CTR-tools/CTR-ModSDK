@@ -63,11 +63,19 @@ LAB_800adc08:;
 	  )
   {
     if (
+			/* ghidra snippet for this if statement's conditions.
+			
+			(*(int *)(*piVar9 + 0x2cc) < 0) && 			
+			// instance -> model -> objectID == missile
+			(*(short *)(*(int *)(iVar10 + 0x18) + 0x10) == 0x29)
+
+			*/
+
 			// Naughty Dog Bug? That's so unlikely?
 			// Literally a ONE-frame window
 
 			// dropped mine previous frame
-			(driverTarget->actionsFlagSetPrevFrame < 0) &&
+			(*((int*)(&driverTarget->actionsFlagSetPrevFrame)) < 0) && //match ghidra behavior
 
 			(modelID == DYNAMIC_ROCKET)
 		)

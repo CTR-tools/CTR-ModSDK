@@ -291,8 +291,10 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   bombInst->matrix.t[2] = shieldInst->matrix.t[2];
 
   // set scale (x, y, z) and transparency
-  for (i = 0; i < 4; i++)
-    bombInst->scale[i] = 0x400;
+  bombInst->scale[0] = 0x400;
+  bombInst->scale[1] = 0x400;
+  bombInst->scale[2] = 0x400;
+  bombInst->alphaScale = 0x400;
 
   // get object from thread
   tw = bombTh->object;

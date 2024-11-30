@@ -612,8 +612,8 @@ struct Instance* DECOMP_RB_Hazard_CollideWithBucket(
 	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
 );
 
-int DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread);
-int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);
+void DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread);
+void DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);
 
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
 
@@ -764,7 +764,6 @@ int DECOMP_VehCalc_MapToRange(
 //void DECOMP_VehStuckProc_Tumble_Animate(struct Thread* thread, struct Driver* driver);
 int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver* d);
 u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance* inst, int animIndex);
-int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread);
 int DECOMP_RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
 void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags);
 int DECOMP_VehPickState_NewState(struct Driver* victimDriver, int damageType, struct Driver* attackDriver, int reason);
@@ -804,3 +803,5 @@ void DECOMP_CAM_ProcessTransition(short* currPos, short* currRot, short* startPo
 void DECOMP_CAM_LookAtPosition(int scratchpad, int* positions, short* desiredPos, short* desiredRot);
 void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, int param_2, struct Driver* d, short* desiredPos, short* desiredRot);
 int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame);
+void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str);
+void DECOMP_CAM_StartOfRace(struct CameraDC* cDC);

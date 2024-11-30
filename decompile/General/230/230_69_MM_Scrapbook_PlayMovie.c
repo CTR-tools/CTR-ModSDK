@@ -19,7 +19,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct RectMenu* menu)
     int cdPos;
 	int getButtonPress=0;
 	DRAWENV* ptrDrawEnv;
-    const CdlFILE cdlFile;
+    CdlFILE cdlFile;
     struct GameTracker *gGT = sdata->gGT;
 	int isOn = DECOMP_RaceFlag_IsFullyOnScreen();
 

@@ -2,7 +2,7 @@
 
 //I think this function should return void?
 
-int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
+void DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 {
 	struct Instance* inst;
 	struct MineWeapon* mw;
@@ -59,7 +59,7 @@ int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 			// if not TNT
 			if(modelID != 0x27)
 			{
-				return 1;
+				return;
 			}
 			
 			// at this point, must be TNT
@@ -69,7 +69,7 @@ int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 			{
 				// quit, explosion handled
 				// by TNT thread
-				return 1;
+				return;
 			}
 			
 			// if no driver hit TNT,
@@ -96,5 +96,5 @@ int DECOMP_RB_Hazard_ThCollide_Generic(struct Thread* thread)
 	
 	// kill thread
 	thread->flags |= 0x800;
-	return 1;
+	return;
 }

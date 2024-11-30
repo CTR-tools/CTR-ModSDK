@@ -6,7 +6,6 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
   struct Instance* inst;
   unsigned short flags;
   struct GameTracker* gGT = sdata->gGT;
-  short sVar3;
   short rot;
   
   tw = t->object;
@@ -37,12 +36,9 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
 	// increment counter
 	tw->turnAround++;
 
-	//TODO: sVar3 is uninitialized at this point, I think something is definitely wrong with the decomp of this function.
-	//I think sVar3 might be tw->turnAround
-
 	if (
 			// if count too high
-			(0x78 < sVar3) || 
+			(0x78 < tw->turnAround) ||
 			
 			// pointer to driver being chased,
 			// is null, so warpball is chasing nobody

@@ -1,6 +1,6 @@
 #include <common.h>
 
-int DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread)
+void DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread)
 {
 	struct TrackerWeapon* tw;
 	struct Driver* driver;
@@ -36,5 +36,5 @@ int DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread)
 		}
 	}
 	
-	return 1;
+	return;
 }

@@ -150,7 +150,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyTracker;
-			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Missile;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Missile;
 
 			tw = weaponTh->object;
 			tw->flags = 0;
@@ -300,7 +300,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 
 			PlaySound3D(0x52, weaponInst);
 
@@ -439,7 +439,7 @@ RunMineCOLL:
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
-			weaponTh->funcThCollide = (void(*)(struct Thread*))DECOMP_RB_Hazard_ThCollide_Generic;
+			weaponTh->funcThCollide = DECOMP_RB_Hazard_ThCollide_Generic;
 
 			PlaySound3D(0x52, weaponInst);
 

@@ -1,9 +1,5 @@
 #include <common.h>
 
-void RB_TNT_ThTick_ThrowOnHead();
-void RB_TNT_ThTick_ThrowOffHead();
-void RB_Potion_ThTick_InAir();
-
 void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 { 
   struct GameTracker* gGT;
@@ -16,7 +12,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   struct MineWeapon* tnt;
   unsigned int model;
   int numFrames;
-  int *func;
+  void(*func)(struct Thread*);
   int param;
   int boolPotion;
   
@@ -36,13 +32,13 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	  // cooldown of 0.24s
       mw->cooldown = 0xf0;
 	  
-      func = (int*)RB_Potion_ThTick_InAir;
+      func = RB_Potion_ThTick_InAir;
     }
 	
 	// TNT
     else
 	{
-      func = (int*)RB_TNT_ThTick_ThrowOffHead;
+      func = RB_TNT_ThTick_ThrowOffHead;
 	  
 	  // set scale (x, y, z)
       inst->scale[0] = 0x800;
@@ -51,7 +47,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     }
 	
 	// this also quits the function
-    ThTick_SetAndExec(t,func);
+    ThTick_SetAndExec(t, func);
 	return;
   }
   
@@ -270,7 +266,7 @@ LAB_800ad174:
         mw->deltaPos[2] = 0;
         mw->stopFallAtY = 0x3fff;
 		
-        ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOnHead);
+        ThTick_SetAndExec(t, RB_TNT_ThTick_ThrowOnHead);
 		return;
       }
 	  

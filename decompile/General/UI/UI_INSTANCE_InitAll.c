@@ -35,9 +35,10 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 		  return;
 	  #endif
 
-      DECOMP_UI_INSTANCE_BirthWithThread(0x61,	DECOMP_UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
-      DECOMP_UI_INSTANCE_BirthWithThread(99,	DECOMP_UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
-      DECOMP_UI_INSTANCE_BirthWithThread(0x62,	DECOMP_UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
+	  //is ignoring the return value of these calls intentional?
+      DECOMP_UI_INSTANCE_BirthWithThread(0x61,	(int)DECOMP_UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(99,	(int)DECOMP_UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(0x62,	(int)DECOMP_UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
 
 	  #ifndef REBUILD_PS1
       GAMEPROG_AdvPercent(&sdata->advProgress);
@@ -68,8 +69,8 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       }
 
 	  // The rest of this block only happens in Relic Mode
-      sdata->ptrRelic = 	DECOMP_UI_INSTANCE_BirthWithThread(0x61,DECOMP_UI_ThTick_Reward, 0xe,1,0,/*sdata->s_relic1*/0);
-      sdata->ptrTimebox1 = 	DECOMP_UI_INSTANCE_BirthWithThread(0x5c,DECOMP_UI_ThTick_CountPickup, 0x13,1,0,/*sdata->s_timebox1*/0);
+      sdata->ptrRelic = 	(struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x61,(int)DECOMP_UI_ThTick_Reward, 0xe,1,0,/*sdata->s_relic1*/0);
+      sdata->ptrTimebox1 = 	(struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x5c,(int)DECOMP_UI_ThTick_CountPickup, 0x13,1,0,/*sdata->s_timebox1*/0);
 
 	  // if instance
       if (sdata->ptrRelic != 0)
@@ -113,10 +114,10 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     }
 
 	// used for multiplayer wumpa
-    sdata->ptrPushBufferUI = NULL;
+    sdata->ptrPushBufferUI = (int)NULL;
 	if (1 < gGT->numPlyrCurrGame)
 	{
-      sdata->ptrPushBufferUI = &sdata->pushBuffer_DecalMP;
+      sdata->ptrPushBufferUI = (int)&sdata->pushBuffer_DecalMP;
     }
 
 // skipping pixelLOD
@@ -147,7 +148,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// Replace PushBufferUI with regular PushBuffer,
 	// workaround for decompile, and it just looks better
     sdata->ptrFruitDisp =
-		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
+		DECOMP_UI_INSTANCE_BirthWithThread(0x37,(int)DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&
@@ -185,13 +186,13 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   // If you're in Crystal Challenge
   else
   {
-    sdata->ptrMenuCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
-	sdata->ptrHudCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+    sdata->ptrMenuCrystal = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+	sdata->ptrHudCrystal = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
 	sdata->ptrHudCrystal->flags |= 0x80;
   }
 
   // Make a token
-  sdata->ptrToken = DECOMP_UI_INSTANCE_BirthWithThread(0x7d,DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
+  sdata->ptrToken = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x7d,(int)DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
 
   // make copy of Token pointer
   token = sdata->ptrToken;
