@@ -77,7 +77,7 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 		{
 			// Save the function pointer address
 			sdata->ReadFileAsyncCallbackFuncPtr = callback;
-			pcVar4 = (CdlCB)&DECOMP_LOAD_ReadFileASyncCallback;
+			pcVar4 = DECOMP_LOAD_ReadFileASyncCallback;
 		}
 
 		// Save this function as a callback,

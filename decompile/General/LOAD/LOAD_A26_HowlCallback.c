@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_HowlCallback(char result)
+void DECOMP_LOAD_HowlCallback(CdlIntrResult result, uint8_t* unk)
 {
   // disable callback
   CdReadCallback(0);

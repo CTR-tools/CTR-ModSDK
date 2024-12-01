@@ -961,6 +961,7 @@ LAB_800346b0:
 				// signify end of load
 				return -2;
 			}
+			__attribute__((fallthrough));
 		}
 		default:
 			return loadingStage;

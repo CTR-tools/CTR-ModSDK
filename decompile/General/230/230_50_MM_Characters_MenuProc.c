@@ -36,7 +36,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	RECT r1;
 	RECT* r = &r1;
 	#else
-	RECT* r = 0x1f800000;
+	RECT* r = (RECT*)0x1f800000;
 	#endif
 	RECT r58;
 

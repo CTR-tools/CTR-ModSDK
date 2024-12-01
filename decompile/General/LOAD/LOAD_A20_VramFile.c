@@ -18,7 +18,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		lqs.subfileIndex = subfileIndex;
 		lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, size, 0);
 		lqs.size = *size;
-		lqs.callback.funcPtr = 0;
+		lqs.callback.funcPtr = NULL;
 		
 		DECOMP_LOAD_VramFileCallback(&lqs);
 		
@@ -36,7 +36,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		// return value, let it use whatever sits on 
 		// the register. Return value is never used 
 		// because callback.funcptr is zero
-		return;
+		return NULL; //was just `return;`
 	}
 	
 	if(callbackOrFlags == -2)

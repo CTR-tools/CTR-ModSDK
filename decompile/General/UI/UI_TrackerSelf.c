@@ -40,7 +40,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	  )
   {
     // clear type of object tracking the player
-    data.trackerType[driverid] = (short)NULL;
+    data.trackerType[driverid] = (short)(int)NULL;
     return;
   }
 
@@ -215,7 +215,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	primMem = &gGT->backBuffer->primMem;
 	
 	// if curr < near-end
-	if (((unsigned int)primMem->curr+4) > primMem->endMin100)
+	if (((unsigned int)primMem->curr+4) > (unsigned int)primMem->endMin100)
 		return;
 	
 	// increment curr

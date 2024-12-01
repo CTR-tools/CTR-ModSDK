@@ -21,7 +21,7 @@ void DECOMP_UI_Map_DrawAdvPlayer(int ptrMap,int *matrix,int unused1,int unused2,
 
   DECOMP_AH_Map_HubArrow(posX,posY,
 	&data.playerIconAdvMap.unk_playerAdvMap[0],
-	arrowColor,(int)param_6, (int)param_5);
+	(char*)arrowColor,(int)param_6, (int)param_5);
 	
   return;
 }

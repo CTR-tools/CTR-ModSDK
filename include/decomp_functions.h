@@ -274,7 +274,7 @@ void DECOMP_LOAD_Callback_Podiums();
 void DECOMP_LOAD_Callback_LEV();
 void DECOMP_LOAD_Callback_LEV_Adv();
 void DECOMP_LOAD_VramFileCallback();
-void DECOMP_LOAD_ReadFileASyncCallback(char result);
+void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk);
 void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void* destination, int *size, void * callback);
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
 void* DECOMP_LOAD_ReadDirectory(char* filename);
@@ -282,7 +282,7 @@ void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int*
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
 void DECOMP_LOAD_LevelFile(int levelID);
 
-void DECOMP_LOAD_HowlCallback(char result);
+void DECOMP_LOAD_HowlCallback(CdlIntrResult result, uint8_t* unk);
 int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
 int DECOMP_LOAD_HowlSectorChainEnd();
 
@@ -835,3 +835,6 @@ void DECOMP_RECTMENU_DrawFullRect(struct RectMenu* menu, RECT* inner);
 void DECOMP_UI_Map_DrawAdvPlayer(int ptrMap, int* matrix, int unused1, int unused2, short param_5, short param_6);
 void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
 void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY);
+void DECOMP_UI_RenderFrame_CrystChall();
+void DECOMP_UI_Map_DrawGhosts(int ptrMap, struct Thread* bucket);
+void DECOMP_UI_Map_DrawTracking(int ptrMap, struct Thread* bucket);
