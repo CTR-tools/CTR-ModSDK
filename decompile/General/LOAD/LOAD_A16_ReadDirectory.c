@@ -14,12 +14,12 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 	CdControl(CdlSetloc, &cdlFile, buf);
 	
 	// read bigfile header
-	if(CdRead(8, bh, 0x80) == 0) return 0;
+	if(CdRead(8, (uint32_t*)bh, 0x80) == 0) return 0;
 	
 	// wait for read to finish
 	if(CdReadSync(0,0) != 0) return 0;
 
-	bh->cdpos = CdPosToInt(&cdlFile);
+	bh->cdpos = CdPosToInt(&cdlFile.pos);
 	
 	// undo allocation of 0x4000, only use "needed" size
 	DECOMP_MEMPACK_ReallocMem(

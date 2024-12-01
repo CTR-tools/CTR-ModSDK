@@ -177,8 +177,8 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 	}
 
 	for(
-			struct Instance* inst = instPool->taken.first;
-			inst != 0;
+			struct Instance* inst = (struct Instance*)instPool->taken.first;
+			inst != NULL;
 			inst = inst->next
 		)
 	{
@@ -186,7 +186,7 @@ void ScanInstances_60FPS(struct GameTracker* gGT)
 	}
 
 	if(gGT->level1 != 0)
-	for(int i = 0; i < gGT->level1->numInstances; i++)
+	for(unsigned int i = 0; i < gGT->level1->numInstances; i++)
 	{
 		struct Instance* inst = gGT->level1->ptrInstDefs[i].ptrInstance;
 
@@ -424,7 +424,7 @@ void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 
 	// if main menu is open, assume 230 loaded,
 	// quit if menu is at highest level (no ptrNext to draw)
-	if(sdata->ptrActiveMenu == 0x800B4540)
+	if(sdata->ptrActiveMenu == (struct RectMenu*)0x800B4540)
 		if((*(int*)0x800b4548 & 0x10) == 0) return;
 
 	// position of error
@@ -543,9 +543,9 @@ void DrawFinalLap(struct GameTracker* gGT)
 DrawFinalLapString:
 
 		DECOMP_UI_Lerp2D_Linear(
-			&resultPos,
-			startX, posY,
-			endX, posY,
+			&resultPos[0],
+			(short)startX, (short)posY,
+			(short)endX, (short)posY,
 			textTimer, FPS_DOUBLE(10));
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
@@ -907,18 +907,18 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
-		&gGT->backBuffer->otMem,
+		(u_long*)&gGT->backBuffer->otMem,
 		gGT->ptrRenderBucketInstance,
-		sdata->LOD[lod],
-		numPlyrCurrGame,
+		(char*)sdata->LOD[lod],
+		(char)numPlyrCurrGame,
 		gGT->gameMode1 & PAUSE_ALL);
 
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
-		&gGT->backBuffer->otMem,
-		RBI,
-		sdata->LOD[lod],
-		numPlyrCurrGame,
+		(u_long*)&gGT->backBuffer->otMem,
+		(void*)RBI,
+		(char*)sdata->LOD[lod],
+		(char)numPlyrCurrGame,
 		gGT->gameMode1 & PAUSE_ALL);
 
 	// Aug prototype
@@ -1315,15 +1315,15 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			ptr_mesh_info->bspRoot,
 			level1->visMem->visLeafList[0],
 			pushBuffer,
-			&gGT->LevRenderLists[0],
+			(u_int)&gGT->LevRenderLists[0],
 			level1->visMem->bspList[0],
-			numPlyrCurrGame);
+			(char)numPlyrCurrGame);
 
 		// 226-229
 		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
 			pushBuffer,
-			ptr_mesh_info,
+			(struct BSP*)ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
@@ -1366,16 +1366,16 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				ptr_mesh_info->bspRoot,
 				level1->visMem->visLeafList[i],
 				&gGT->pushBuffer[i],
-				&gGT->LevRenderLists[i],
+				(u_int) & gGT->LevRenderLists[i],
 				level1->visMem->bspList[i],
-				numPlyrCurrGame);
+				(char)numPlyrCurrGame);
 		}
 
 		// 226-229
 		DrawLevelOvr2P(
 			&gGT->LevRenderLists[0],
 			&gGT->pushBuffer[0],
-			ptr_mesh_info,
+			(struct BSP*)ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
 			gGT->visMem1->visFaceList[1],
@@ -1422,7 +1422,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			ptr_mesh_info->bspRoot,
 			level1->visMem->visLeafList[i],
 			&gGT->pushBuffer[i],
-			&gGT->LevRenderLists[i],
+			(u_int)&gGT->LevRenderLists[i],
 			level1->visMem->bspList[i]);
 	}
 
@@ -1432,7 +1432,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		DrawLevelOvr3P(
 			&gGT->LevRenderLists[0],
 			&gGT->pushBuffer[0],
-			ptr_mesh_info,
+			(struct BSP*)ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
 			gGT->visMem1->visFaceList[1],
@@ -1446,7 +1446,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		DrawLevelOvr4P(
 			&gGT->LevRenderLists[0],
 			&gGT->pushBuffer[0],
-			ptr_mesh_info,
+			(struct BSP*)ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
 			gGT->visMem1->visFaceList[1],
@@ -1462,7 +1462,7 @@ SkyboxGlow:
 	{
 		pushBuffer = &gGT->pushBuffer[i];
 		CAM_SkyboxGlow(
-			&level1->glowGradient[0],
+			(short*)&level1->glowGradient[0],
 			pushBuffer,
 			&gGT->backBuffer->primMem,
 			&pushBuffer->ptrOT[0x3ff]);

@@ -23,7 +23,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 
   // get model pointer
   model = gGT->modelPtr[param_1];
-  if(model == 0) return;
+  if(model == 0) return (int)NULL;
 
   hudStruct = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
 
@@ -44,7 +44,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
     // 0 = no relation to param4
     // 0x300 = SmallStackPool
     // 0x10 = hud thread bucket
-    hudThread = DECOMP_PROC_BirthWithObject(0x380310,param_2,param_6,0);
+    hudThread = DECOMP_PROC_BirthWithObject(0x380310,(void*)param_2,(char*)param_6,NULL);
   
     // Get the object attached to the thread
     ui3D = hudThread->object;
@@ -160,8 +160,8 @@ lightDir_spec0x30000:
 	// for decalMP and fruitDisp
     else
 	{
-	  struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
-      idpp[0].pushBuffer = param_5;
+	  struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+      idpp[0].pushBuffer = (struct PushBuffer*)param_5;
 
 	  // record that pushBuffer is present
 	  inst->flags |= 0x100;
@@ -214,5 +214,5 @@ lightDir_spec0x30000:
 	#endif
   }
 
-  return inst;
+  return (int)inst;
 }

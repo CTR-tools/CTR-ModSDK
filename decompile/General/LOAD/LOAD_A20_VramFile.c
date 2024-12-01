@@ -43,7 +43,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	{
 		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, size, &DECOMP_LOAD_VramFileCallback);
 		
-		*ptrDestination = ptrDest;
+		*ptrDestination = (int)ptrDest;
 		data.currSlot.ptrDestination = ptrDest;
 		
 		return ptrDest;

@@ -11,6 +11,6 @@ void DECOMP_Particle_OnDestroy(struct Particle* p)
     pp = pp->next;
 	
 	// free list of Oscillator Pool
-    LIST_AddFront(&sdata->gGT->JitPools.oscillator.free, pp);
+    LIST_AddFront(&sdata->gGT->JitPools.oscillator.free, (struct Item*)pp);
   }
 }

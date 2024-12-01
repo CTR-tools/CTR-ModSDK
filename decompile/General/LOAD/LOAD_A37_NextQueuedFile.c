@@ -48,22 +48,22 @@ void DECOMP_LOAD_NextQueuedFile()
 		{
 			curr->ptrDestination =
 				DECOMP_LOAD_DramFile(
-					curr->ptrBigfileCdPos,
-					curr->subfileIndex,
-					curr->ptrDestination,
-					&curr->size,
-					curr->callback.funcPtr);
+					(void*)curr->ptrBigfileCdPos,
+					(int)curr->subfileIndex,
+					(int*)curr->ptrDestination,
+					(int*)&curr->size,
+					(int)curr->callback.funcPtr);
 		}
 		
 		else if(curr->type == LT_VRAM)
 		{
 			curr->ptrDestination =
 				DECOMP_LOAD_VramFile(
-					curr->ptrBigfileCdPos,
-					curr->subfileIndex,
-					curr->ptrDestination,
-					&curr->size,
-					curr->callback.funcPtr);
+					(void*)curr->ptrBigfileCdPos,
+					(int)curr->subfileIndex,
+					(int*)curr->ptrDestination,
+					(int*)&curr->size,
+					(int)curr->callback.funcPtr);
 		}
 		
 		sdata->queueLength--;

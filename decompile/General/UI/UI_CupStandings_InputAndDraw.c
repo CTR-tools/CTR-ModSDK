@@ -283,7 +283,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 		framesPassed, 0x14);
 
       // %d
-      sprintf(text, &sdata->s_int, i + 1);
+      sprintf(text, (char*)&sdata->s_int, i + 1);
 
       DecalFont_DrawLine(
 		text,

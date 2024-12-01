@@ -40,7 +40,7 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
 	  )
   {
     // clear type of object tracking the player
-    data.trackerType[driverid] = NULL;
+    data.trackerType[driverid] = (short)NULL;
     return;
   }
 

@@ -9,7 +9,7 @@ u_int* DECOMP_RaceFlag_GetOT(void)
 	u_int* otDrawFirst_FarthestDepth;
 	u_int* otDrawLast_ClosestDepth;
 	
-	otDrawFirst_FarthestDepth = &gGT->pushBuffer[0].ptrOT[0x3FF];
+	otDrawFirst_FarthestDepth = (u_int*)&gGT->pushBuffer[0].ptrOT[0x3FF];
 	otDrawLast_ClosestDepth = gGT->otSwapchainDB[gGT->swapchainIndex];
 
     if (sdata->unk_CheckFlag2 == 0)

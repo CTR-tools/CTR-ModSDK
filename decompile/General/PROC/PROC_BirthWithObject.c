@@ -49,7 +49,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	myPool = &allPools[index];
 	
 	// if can't fit in pool
-	if ((flags >> 0x10) > (myPool->itemSize-8))
+	if ((unsigned int)(flags >> 0x10) > (myPool->itemSize-8))
 	{
 		// Sep3
 		// printf("stack size (%ld) too small for statics (%ld) \'%s\'\n",
@@ -77,7 +77,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	// === initialize thread ===
 
 	// thread and object
-	th = DECOMP_LIST_RemoveFront(&allPools[0].free);
+	th = (struct Thread*)DECOMP_LIST_RemoveFront(&allPools[0].free);
 	object = DECOMP_LIST_RemoveFront(&myPool->free);
 
 	th->inst = 0;
@@ -88,7 +88,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	th->name = name;
 	th->flags = flags;
 	th->funcThTick = funcThTick;
-	th->object = (unsigned int)(((unsigned int)object) + 8);
+	th->object = (void*)(((unsigned int)object) + 8);
 
 	// if no relative
 	if(relativeTh == 0)

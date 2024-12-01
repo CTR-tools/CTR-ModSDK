@@ -49,13 +49,13 @@ const Color DrawSpeedBG_Colors[7] =
 void DECOMP_UI_DrawSpeedBG(void)
 {
   #ifdef USE_ONLINE
-  Point * vertexes = &speedometerData;
-  Point * vertexesExtLine = &speedometerData;
+  Point* vertexes = (Point*)&speedometerData;
+  Point* vertexesExtLine = (Point*)&speedometerData;
   int pointCount = len(speedometerData);
   const short xOffset = 453;
   #else
-  Point * vertexes = &data.speedometerBG_vertData[0];
-  Point * vertexesExtLine = &data.speedometerBG_vertData[1];
+  Point* vertexes = (Point*)&data.speedometerBG_vertData[0];
+  Point* vertexesExtLine = (Point*)&data.speedometerBG_vertData[1];
   int pointCount = sizeof(data.speedometerBG_vertData) / (sizeof(Point) * 2);
   const short xOffset = 480;
   #endif

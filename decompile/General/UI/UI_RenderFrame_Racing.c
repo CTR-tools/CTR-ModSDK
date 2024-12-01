@@ -116,7 +116,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 		levPtrMap = pointers[ST1_MAP];
 	}
 
@@ -804,7 +804,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				primMemCurr = backBuffer->primMem.curr;
 				TurboCounterBar = 0;
 
-				if (primMemCurr <= backBuffer->primMem.endMin100)
+				if ((int)primMemCurr <= (int)backBuffer->primMem.endMin100)
 				{
 					backBuffer->primMem.curr = primMemCurr + 9;
 					TurboCounterBar = (POLY_G4 *)primMemCurr;
@@ -870,14 +870,14 @@ void DECOMP_UI_RenderFrame_Racing()
 		{
 			local_30[0] = 0;
 
-			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
-			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
+			DECOMP_UI_Map_DrawDrivers	((int)levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
+			DECOMP_UI_Map_DrawDrivers	((int)levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
 
 			#ifndef USE_ONLINE
 			DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
 			#endif
 
-			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
+			DECOMP_UI_Map_DrawTracking	((int)levPtrMap, gGT->threadBuckets[TRACKING].thread);
 
 			mapPosX = 500;
 			#ifdef USE_ONLINE

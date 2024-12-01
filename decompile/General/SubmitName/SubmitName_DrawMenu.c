@@ -114,7 +114,7 @@ short DECOMP_SubmitName_DrawMenu(u_short string)
 
 			// LETTER button draw
 			DECOMP_DecalFont_DrawLine(
-				&keyboardString,
+				(char*)&keyboardString,
 
 				//j*22 + 116,
 				j * WIDE_PICK(22, 17) + WIDE_PICK(116, 148),

@@ -29,5 +29,5 @@ void DECOMP_LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID)
 	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_DRAM, iVar2, 0, DECOMP_LOAD_Callback_LEV);
 	
 	iVar2 = DECOMP_LOAD_GetBigfileIndex(levID, 1, LVI_PTR);
-	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_RAW, iVar2, sdata->PatchMem_Ptr, DECOMP_LOAD_HubCallback);
+	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_RAW, iVar2, (void*)sdata->PatchMem_Ptr, (void*)DECOMP_LOAD_HubCallback);
 }

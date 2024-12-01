@@ -209,7 +209,7 @@ SPINOUT:
 	{
 		#ifdef USE_ONLINE
 		if(attackDriver->driverID != 0)
-			return;
+			return 0; //0 = "quit"?
 		#endif
 		
 		struct PushBuffer* pb = 

@@ -32,14 +32,14 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 
 	lngFile =
 		DECOMP_LOAD_ReadFile(
-			bigfilePtr, 1, BI_LANGUAGEFILE + lang, 
-			sdata->lngFile, &size, 0);
+			(struct BigHeader*)bigfilePtr, 1, BI_LANGUAGEFILE + lang, 
+			(void*)sdata->lngFile, &size, NULL);
 
 	// This is not ReadFileAsync, this is ReadFile,
 	// so the program halts until completion of read
 
 	numStrings = lngFile->numStrings;
-	strArray = (unsigned int)lngFile + lngFile->offsetToPtrArr;
+	strArray = (char**)((unsigned int)lngFile + lngFile->offsetToPtrArr);
 
 	sdata->numLngStrings = numStrings;
 	sdata->lngStrings = strArray;
@@ -47,8 +47,8 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 	for (i = 0; i < numStrings; i++)
 	{
 		strArray[i] =
-			(unsigned int)strArray[i] +
-			(unsigned int)lngFile;
+			(char*)((unsigned int)strArray[i] +
+			(unsigned int)lngFile);
 	}
 #if BUILD == EurRetail
 	// set voicelines to new lang

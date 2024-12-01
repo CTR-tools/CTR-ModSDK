@@ -14,7 +14,7 @@ void DECOMP_UI_Map_DrawRawIcon(
   posX = param_2[0];
   posY = param_2[2];
 
-  DECOMP_UI_Map_GetIconPos(ptrMap,&posX,&posY);
+  DECOMP_UI_Map_GetIconPos((short*)ptrMap,&posX,&posY);
   #ifdef USE_ONLINE
   posY -= 50;
   #endif

@@ -34,7 +34,7 @@ void DECOMP_MainInit_VRAMDisplay()
 			
 			move.tag |= 0xffffff;
 			
-			DrawOTag(&move);
+			DrawOTag((uint32_t*)&move);
 			DrawSync(0);
 		}
 	}

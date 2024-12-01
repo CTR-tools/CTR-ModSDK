@@ -376,7 +376,7 @@ LAB_80035098:
 		}
 		if (gGT->threadBuckets[BURST].thread != 0)
 		{
-			RB_Burst_DrawAll(gGT);
+			RB_Burst_DrawAll((int)gGT);
 		}
 #endif
 	}

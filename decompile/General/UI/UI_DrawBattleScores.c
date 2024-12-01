@@ -28,7 +28,7 @@ void DECOMP_UI_DrawBattleScores(int posX, int posY, struct Driver * d)
   }
   
   // add value to string
-  sprintf(string, &sdata->s_longInt, value);
+  sprintf(string, (char*)&sdata->s_longInt, value);
 
   DECOMP_DecalFont_DrawLine(
 	string, (short)(posX + 37), (short)(posY + 4), FONT_SMALL, 

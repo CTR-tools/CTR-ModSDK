@@ -34,8 +34,8 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-		iVar9 = pointers[ST1_MAP];
+		void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		iVar9 = (int)pointers[ST1_MAP];
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap
@@ -111,7 +111,7 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 		// Otherwise we'd never get the map
 		// and icons to scale together
 		
-		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+		void** pointers = (void**)ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 		void* levPtrMap = pointers[ST1_MAP];
 		
 		int midX = 0;

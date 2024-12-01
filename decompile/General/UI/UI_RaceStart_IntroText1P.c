@@ -67,14 +67,14 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
                   goto LAB_80055930;
                }
                iVar2 = gGT -> bossID;
-               txtArray = & data.lng_challenge;
+               txtArray = &data.lng_challenge[0];
             }
 
             // If you are in Arcade or VS cup
             else {
                // Get Cup ID
                iVar2 = gGT -> cup.cupID;
-               txtArray = & data.arcadeVsCupStringIndex;
+               txtArray = &data.arcadeVsCupStringIndex[0];
             }
          }
 
@@ -82,7 +82,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          else {
             // Get Cup ID
             iVar2 = gGT -> cup.cupID;
-            txtArray = & data.advCupStringIndex;
+            txtArray = &data.advCupStringIndex[0];
          }
 
          // Get the name of the cup
@@ -216,7 +216,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 	  Color color;
       color.self = colors[0];
       
-	  int* ot = gGT->backBuffer->otMem.startPlusFour;
+	  u_long* ot = gGT->backBuffer->otMem.startPlusFour;
 	  
 	  DECOMP_CTR_Box_DrawSolidBox(&rect, color, ot);
 

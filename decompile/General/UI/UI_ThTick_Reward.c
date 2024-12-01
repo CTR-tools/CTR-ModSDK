@@ -23,17 +23,17 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   obj->rot[1] += FPS_HALF(0x40);
 
 #ifndef REBUILD_PS1
-  Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
+  Vector_SpecLightSpin2D(inst,(short*)obj->rot,(short*)obj->lightDir);
 #endif
 
   // pointer to matrix
   mat = &inst->matrix;
 
   // converted to TEST in rebuildPS1
-  ConvertRotToMatrix(mat,obj);
+  ConvertRotToMatrix(mat,(short*)obj->rot);
 
 #ifndef REBUILD_PS1
-  MatrixRotate(mat,&obj->m.m[0][0],mat);
+  MatrixRotate(mat,&obj->m,mat);
 #endif
   
   if (

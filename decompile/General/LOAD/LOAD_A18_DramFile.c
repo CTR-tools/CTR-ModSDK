@@ -29,7 +29,7 @@ void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	{
 		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, 0, size, DECOMP_LOAD_DramFileCallback);
 		
-		*ptrDestination = ptrDest;
+		*ptrDestination = (int)ptrDest;
 		data.currSlot.ptrDestination = ptrDest;
 		
 		return ptrDest;

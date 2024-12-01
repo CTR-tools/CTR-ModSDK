@@ -52,7 +52,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	
 	// Original game allocated 0x800 to stack,
 	// but now Stack is relocated to kernel memory
-	ptrMempack->start = (u_int)OVR_Region3 + Aligned231;
+	ptrMempack->start = (void*)((u_int)OVR_Region3 + Aligned231);
 	ptrMempack->endOfAllocator = (void *)(ramSize + 0x80000000);
 	ptrMempack->lastFreeByte = (void *)(ramSize + 0x80000000);
 #endif

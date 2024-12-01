@@ -711,7 +711,7 @@ void StateZero()
 	void OVR_Region3();
 
 	// Dont load full overlay file, cut off the end
-	struct BigEntry* firstEntry = BIG_GETENTRY(sdata->ptrBigfile1);
+	struct BigEntry* firstEntry = (struct BigEntry*)BIG_GETENTRY(sdata->ptrBigfile1);
 	firstEntry[231].size = 28*0x800;
 	//firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
 	//printf("Size: %08x\n", firstEntry[231].size);
@@ -720,7 +720,7 @@ void StateZero()
 	#ifndef FastBoot
 	// English=1
 	// PAL SCES02105 calls it multiple times
-	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
+	DECOMP_LOAD_LangFile((int)sdata->ptrBigfile1, 1);
 	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif

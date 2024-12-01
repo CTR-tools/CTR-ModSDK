@@ -54,13 +54,13 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket)
   LAB_8004c7d4:
 
   obj->rot[1] = rotSpd;
-  mat = &inst->matrix.m[0][0];
+  mat = &inst->matrix;
 
   // converted to TEST in rebuildPS1
-  ConvertRotToMatrix(mat,obj);
+  ConvertRotToMatrix(mat,(short*)obj->rot);
 
 #ifndef REBUILD_PS1  
-  MatrixRotate(mat, &obj->m.m[0][0], mat);
+  MatrixRotate(mat, &obj->m, mat);
 #endif
 
   // if hud is enabled, and this is not demo mode

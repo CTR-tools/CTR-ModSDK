@@ -31,9 +31,9 @@ void DECOMP_MainInit_VRAMClear()
 	commands.d = 0;
 	commands.e = 0x3ff;
 	commands.f = 0x1ff;
-	DrawOTag(&commands);
+	DrawOTag((uint32_t*)&commands);
 	
 	commands.d = 0x1ff;
 	commands.f = 1;
-	DrawOTag(&commands);
+	DrawOTag((uint32_t*)&commands);
 }

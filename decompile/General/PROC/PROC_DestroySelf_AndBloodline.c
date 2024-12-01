@@ -17,7 +17,7 @@ void DECOMP_PROC_DestroySelf(struct Thread* t)
 	DECOMP_PROC_DestroyObject(t->object, t->flags);
 	
 	// recycle thread
-	DECOMP_LIST_AddFront(&sdata->gGT->JitPools.thread.free, t);
+	DECOMP_LIST_AddFront(&sdata->gGT->JitPools.thread.free, (struct Item*)t);
 }
 
 // must be here, too large for original slot

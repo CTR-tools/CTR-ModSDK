@@ -26,7 +26,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	struct Model* m;
 
 	// pointer to LEV
-	iVar9 = sdata->ptrLEV_DuringLoading;
+	iVar9 = (int)sdata->ptrLEV_DuringLoading;
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
@@ -233,15 +233,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// impact any intended loading screens
 				#ifndef REBUILD_PC
 					
-					int backup = sdata->mempack[0].firstFreeByte;
+					int backup = (int)sdata->mempack[0].firstFreeByte;
 					
 					sdata->mempack[0].firstFreeByte = 
-						(int)sdata->mempack[0].lastFreeByte
+						(void*)((int)sdata->mempack[0].lastFreeByte
 						- 0xA000 // primMem needed
-						- (0x2200*2); // ghost HighMem
+						- (0x2200*2)); // ghost HighMem
 					
 					DECOMP_MainInit_PrimMem(gGT, 0xA000);
-					sdata->mempack[0].firstFreeByte = backup;
+					sdata->mempack[0].firstFreeByte = (void*)backup;
 				
 				// use low-end addressing for PC port
 				#else
@@ -402,12 +402,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			data.driverModel_lowLOD[0] = 0;
 			data.driverModel_lowLOD[1] = 0;
 			data.driverModel_lowLOD[2] = 0;
-			DECOMP_LOAD_DriverMPK(bigfile, sdata->levelLOD, &DECOMP_LOAD_Callback_DriverModels);
+			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, (unsigned int)&DECOMP_LOAD_Callback_DriverModels);
 			break;
 		}
 		case 5:
 		{
-			sdata->PLYROBJECTLIST = (unsigned int)sdata->ptrMPK + 4;
+			sdata->PLYROBJECTLIST = (int**)((unsigned int)sdata->ptrMPK + 4);
 			if (sdata->ptrMPK == 0) sdata->PLYROBJECTLIST = 0;
 						
 			// clear and reset
@@ -423,7 +423,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				gGT->mpkIcons = *(int*)sdata->ptrMPK;
 				
 				if(gGT->mpkIcons != 0)
-					DECOMP_DecalGlobal_Store(gGT, gGT->mpkIcons);
+					DECOMP_DecalGlobal_Store(gGT, (struct LevTexLookup*)gGT->mpkIcons);
 			}
 			
 			// if level is not AdvGarage or Naughty Dog Box Scene
@@ -493,18 +493,18 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 #endif
 
 				// Allocate room for LEV swapping
-				iVar5 = DECOMP_MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"
-				sdata->ptrHubAlloc = iVar5;
+				iVar5 = (int)DECOMP_MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"
+				sdata->ptrHubAlloc = (void*)iVar5;
 
 				// Change active allocation system to #2
 				// pack = [hubAlloc, hubAlloc+size1]
 				DECOMP_MEMPACK_SwapPacks(1);
-				DECOMP_MEMPACK_NewPack_StartEnd(iVar5, iVar9);
+				DECOMP_MEMPACK_NewPack_StartEnd((void*)iVar5, iVar9);
 
 				// Change active allocation system to #3
 				// pack = [hubAlloc+size1, hubAlloc+size1+size2]
 				DECOMP_MEMPACK_SwapPacks(2);
-				DECOMP_MEMPACK_NewPack_StartEnd(iVar5 + iVar9, iVar12);
+				DECOMP_MEMPACK_NewPack_StartEnd((void*)(iVar5 + iVar9), iVar12);
 
 				// Intro cutscene with oxide spaceship and all racers
 				if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
@@ -541,7 +541,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// by 0x800 for 0xc000, and use AllocMem,
 				// HighMem is now reserved for PrimMem
 				sdata->PatchMem_Size = 0xc000;
-				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocMem(sdata->PatchMem_Size); //, "Patch Table Memory");
+				sdata->PatchMem_Ptr = (int)DECOMP_MEMPACK_AllocMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 				#else
 				// original game code
 				sdata->PatchMem_Size = DECOMP_MEMPACK_GetFreeBytes();
@@ -557,11 +557,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 			// add VRAM to loading queue
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_VRAM);
-			DECOMP_LOAD_AppendQueue(bigfile, LT_VRAM, uVar16, 0, 0);
+			DECOMP_LOAD_AppendQueue((int)bigfile, LT_VRAM, (int)uVar16, NULL, NULL);
 
 			// add LEV to loading queue
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_LEV);
-			DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &DECOMP_LOAD_Callback_LEV);
+			DECOMP_LOAD_AppendQueue((int)bigfile, LT_DRAM, (int)uVar16, NULL, &DECOMP_LOAD_Callback_LEV);
 
 			// if level ID is AdvHub or Credits
 			if (
@@ -572,7 +572,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				// add PTR file to loading queue
 				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);
-				DECOMP_LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_LEV_Adv);
+				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, (int)uVar6, (void*)sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_LEV_Adv);
 			}			
 			break;
 		}
@@ -608,23 +608,23 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// search algorithm depends on
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_circle);
+				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_circle);
 				gGT->stars.unk[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_clod);
+				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_clod);
 				gGT->ptrClod = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_dustpuff);
+				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_dustpuff);
 				gGT->ptrDustpuff = uVar16;
 
 				// search for icon by string "Smoke Ring"
-				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_smokering);
+				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_smokering);
 				gGT->ptrSmoking = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_sparkle);
+				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_sparkle);
 				gGT->ptrSparkle = uVar16;
 #endif
 			}
@@ -632,25 +632,25 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if linked list of icons exists
 			if (gGT->mpkIcons != 0)
 			{
-				piVar15 = *(u_int *)((u_int)gGT->mpkIcons + 4);
+				piVar15 = (int*)(*(u_int*)((u_int)gGT->mpkIcons + 4));
 				
 #ifndef REBUILD_PS1
 				// search for icon by string
 				//what even are these first arguments? --Super
-				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightredoff);
-				gGT->trafficLightIcon[0] = uVar16;
+				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightredoff);
+				gGT->trafficLightIcon[0] = (struct Icon*)uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightredon);
-				gGT->trafficLightIcon[1] = uVar16;
+				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightredon);
+				gGT->trafficLightIcon[1] = (struct Icon*)uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenoff);
-				gGT->trafficLightIcon[2] = uVar16;
+				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenoff);
+				gGT->trafficLightIcon[2] = (struct Icon*)uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenon);
-				gGT->trafficLightIcon[3] = uVar16;
+				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenon);
+				gGT->trafficLightIcon[3] = (struct Icon*)uVar16;
 #else
 				for(
 						struct Icon* firstIcon = piVar15; 
@@ -732,9 +732,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// VRAM for podium and all related models
 				DECOMP_LOAD_AppendQueue(
-					bigfile, LT_VRAM, 
+					(int)bigfile, LT_VRAM, 
 					BI_PODIUMVRMS + iVar9, 
-					0, 0);
+					NULL, NULL);
 
 				// podium first place
 				podiumModel = gGT->podium_modelIndex_First;
@@ -749,9 +749,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			 	)
 				{
 					DECOMP_LOAD_AppendQueue(
-						bigfile, LT_DRAM, 
+						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELWIN + iVar9 + (podiumModel - 0x7e) * 2, 
-						&data.podiumModel_firstPlace, 0xfffffffe);
+						(void*)&data.podiumModel_firstPlace, (void*)0xfffffffe);
 				}
 
 				// podium second place exists
@@ -760,9 +760,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				if (podiumModel != 0)
 				{
 					DECOMP_LOAD_AppendQueue(
-						bigfile, LT_DRAM, 
+						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						&data.podiumModel_secondPlace, 0xfffffffe);
+						(void*)&data.podiumModel_secondPlace, (void*)0xfffffffe);
 				}
 			
 				// podium third place exists
@@ -771,9 +771,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				if (podiumModel != 0)
 				{
 					DECOMP_LOAD_AppendQueue(
-						bigfile, LT_DRAM, 
+						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						&data.podiumModel_thirdPlace, 0xfffffffe);
+						(void*)&data.podiumModel_thirdPlace, (void*)0xfffffffe);
 				}
 				
 				// TAWNA
@@ -781,25 +781,25 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// add TAWNA to loading queue
 				DECOMP_LOAD_AppendQueue(
-					bigfile, LT_DRAM, 
+					(int)bigfile, LT_DRAM, 
 					BI_DANCETAWNAGIRL + iVar9 + (podiumModel - 0x8f) * 2, 
-					&data.podiumModel_tawna, 0xfffffffe);
+					(void*)&data.podiumModel_tawna, (void*)0xfffffffe);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
 					DECOMP_LOAD_AppendQueue(
-						bigfile, LT_DRAM, 
+						(int)bigfile, LT_DRAM, 
 						BI_DINGOFIRE + iVar9, 
-						&data.podiumModel_dingoFire, 0xfffffffe);
+						(void*)&data.podiumModel_dingoFire, (void*)0xfffffffe);
 				}
 
 				// add Podium
 				DECOMP_LOAD_AppendQueue(
-					bigfile, LT_DRAM, 
+					(int)bigfile, LT_DRAM, 
 					BI_PODIUM + iVar9, 
-					0, &DECOMP_LOAD_Callback_Podiums);
+					NULL, &DECOMP_LOAD_Callback_Podiums);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
@@ -836,7 +836,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 							iVar12 = *piVar15;
 						}
 
-						m = iVar12;
+						m = (struct Model*)iVar12;
 						if (m->id != -1)
 						{
 							gGT->modelPtr[m->id] = m;

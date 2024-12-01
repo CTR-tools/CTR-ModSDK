@@ -100,7 +100,7 @@ void DECOMP_UI_BattleDrawHeadArrows(struct Driver *player)
 		&gGT->backBuffer->primMem;
 
     p = primMem->curr;
-    if (p > primMem->endMin100)
+    if ((int)p > (int)primMem->endMin100)
 	  return;
 	
     primMem->curr = p+1;

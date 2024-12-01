@@ -23,7 +23,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	gGT->backBuffer = &gGT->db[gGT->swapchainIndex];
 	gGT->frameTimer_MainFrame_ResetDB++;
 	
-	otSwapchainDB = gGT->otSwapchainDB[gGT->swapchainIndex];
+	otSwapchainDB = (int)gGT->otSwapchainDB[gGT->swapchainIndex];
 	
 	db = gGT->backBuffer;
 	*(u_char*)&db->unk_primMemRelated = 0;
@@ -38,28 +38,28 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
 #endif
 	
-	ClearOTagR(otSwapchainDB, gGT->numPlyrCurrGame << 10 | 6);
+	ClearOTagR((uint32_t*)otSwapchainDB, gGT->numPlyrCurrGame << 10 | 6);
 	
 	for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 	{
 		iVar2 = (u_int)(u_char)gGT->numPlyrCurrGame - iVar4;
 			
 		gGT->pushBuffer[iVar4].ptrOT = 
-			(int)otSwapchainDB + 
+			(u_long*)((int)otSwapchainDB + 
 			(gGT->numPlyrCurrGame - iVar4 - 1) * 0x1000 
-			+ 0x18;
+			+ 0x18);
 	}
 	
 	for(iVar4; iVar4 < 4; iVar4++)
 	{
 		// but why?
 		gGT->pushBuffer[iVar4].ptrOT = 
-			(int)otSwapchainDB + 
+			(u_long*)((int)otSwapchainDB + 
 			3 * 0x1000 
-			+ 0x18;
+			+ 0x18);
 	}
 	
-	puVar3 = (int)otSwapchainDB + 4;
+	puVar3 = (u_long*)((int)otSwapchainDB + 4);
 	gGT->pushBuffer_UI.ptrOT = puVar3;
 	db->otMem.startPlusFour = puVar3;
 	return;
