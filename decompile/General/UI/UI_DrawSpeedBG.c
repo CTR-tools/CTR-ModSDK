@@ -32,9 +32,16 @@ const Point speedometerData[]=
   { .x = WIDE_34(65), .y = 16 },   { .x = WIDE_34(54), .y = 13 },
 };
 #else
+
+#ifdef REBUILD_PC
+#define SPEEDO_GREEN 0xb500
+#define SPEEDO_YELLOW 0xffd1
+#define SPEEDO_RED 0xdb
+#else
 #define SPEEDO_GREEN MakeColor(0, 0xb5, 0)
 #define SPEEDO_YELLOW MakeColor(0xff, 0xd1, 0)
 #define SPEEDO_RED MakeColor(0xdb, 0, 0)
+#endif
 
 const Color DrawSpeedBG_Colors[7] =
 {

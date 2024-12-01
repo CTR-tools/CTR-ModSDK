@@ -46,8 +46,8 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread * thread, struct Driver * d
 		// temporary replacement to
 		// COLL (which does velocity) and
 		// VehPhysForce_TranslateMatrix (which does matrix)
-		d->posCurr.v[i] += d->velocity.v[i];
-		d->instSelf->matrix.t[i] = d->posCurr.v[i] >> 8;
+		driver->posCurr.v[i] += driver->velocity.v[i];
+		driver->instSelf->matrix.t[i] = driver->posCurr.v[i] >> 8;
 		#endif
 	}
 }

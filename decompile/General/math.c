@@ -1,6 +1,8 @@
 #include <ctr_math.h>
 
+#ifndef REBUILD_PC
 int abs(int value) { return value < 0 ? -value : value; }
+#endif
 
 int max(int a, int b) { return (a > b) ? a : b; }
 
