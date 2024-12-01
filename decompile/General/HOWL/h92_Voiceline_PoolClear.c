@@ -10,10 +10,10 @@ void DECOMP_Voiceline_PoolClear(void)
 
     DECOMP_LIST_Clear(&sdata->Voiceline1);
 
-    DECOMP_LIST_Clear(&sdata->Voiceline2.first);
+    DECOMP_LIST_Clear((struct LinkedList*)&sdata->Voiceline2.first);
 
     // put them all on free list
-    DECOMP_LIST_Init(&sdata->Voiceline1, &sdata->voicelinePool[0].next, 0x10, 8);
+    DECOMP_LIST_Init(&sdata->Voiceline1, (struct Item*)&sdata->voicelinePool[0].next, 0x10, 8);
 
     DECOMP_Voiceline_ClearTimeStamp();
 }

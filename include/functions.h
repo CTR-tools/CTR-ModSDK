@@ -339,7 +339,7 @@ void CseqMusic_StopAll();
 	// Channel
 
 	void Channel_SetVolume(struct ChannelAttr* attr, int volume, int LR);
-	struct ChannelStats* Channel_FindSound(int soundID);
+	int Channel_FindSound(int soundID);
 	struct ChannelStats* Channel_AllocSlot_AntiSpam(short soundID, char boolUseAntiSpam, int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_AllocSlot(int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_SearchFX_EditAttr(int type, int soundID, int updateFlags, struct ChannelAttr* attr);
@@ -1312,3 +1312,8 @@ void SpuSetReverbModeDepth(short, short);
 void SpuSetReverb(short);
 void SpuSetReverbModeParam(SpuReverbAttr*);
 void SpuSetCommonCDMix(int);
+void SpuSetVoiceADSRAttr(int, int, int, int, int, int, int, int, int);
+int SpuSetReverbVoice(int, int);
+void Voiceline_Update();
+void Level_AmbientSound();
+void OtherFX_RecycleNew(void*, int, int);

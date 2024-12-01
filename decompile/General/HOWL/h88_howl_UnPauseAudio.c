@@ -16,17 +16,17 @@ void DECOMP_howl_UnPauseAudio()
 
 	DECOMP_Smart_EnterCriticalSection();
 	for(
-			i = 0, curr = sdata->channelFree.first;
+			i = 0, curr = (struct ChannelStats*)sdata->channelFree.first;
 			i < sdata->numBackup_ChannelStats;
-			i++, curr = backupNext
+			i++, curr = (struct ChannelStats*)backupNext
 		)
 	{
 		backupID = curr->channelID;
-		backupNext = curr->next;
+		backupNext = (int)curr->next;
 		
 		// psx's kernel memcpy does NOT work inside "critical" sections
-		int* src = pausedStats++;
-		int* dest = curr;
+		int* src = (int*)pausedStats++;
+		int* dest = (int*)curr;
 		
 		// skip first two, which are pointers
 		dest[2] = src[2];
@@ -36,8 +36,8 @@ void DECOMP_howl_UnPauseAudio()
 		dest[6] = src[6];
 		dest[7] = src[7];
 		
-		DECOMP_LIST_RemoveMember(&sdata->channelFree, curr);
-		DECOMP_LIST_AddBack(&sdata->channelTaken, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelFree, (struct Item*)curr);
+		DECOMP_LIST_AddBack(&sdata->channelTaken, (struct Item*)curr);
 	
 		curr->channelID = backupID;
 		DECOMP_howl_UnPauseChannel(curr);

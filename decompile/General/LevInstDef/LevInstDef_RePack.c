@@ -23,11 +23,11 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 			// loop through all instance pointers visible on quadblock
 			for(
 					visInstSrc = qbCurr->pvs->visInstSrc; 
-					visInstSrc[0] != 0; 
+					visInstSrc[0] != NULL; 
 					visInstSrc++
 				)
 			{
-				visInstSrc[0] = visInstSrc[0]->instDef;
+				visInstSrc[0] = (struct Instance*)visInstSrc[0]->instDef;
 			}
 		}
 	}
@@ -38,8 +38,8 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 	{
 		// loop through all instDef pointers in the LEV
 		for(
-				visInstSrc = level1->ptrInstDefPtrArray; 
-				visInstSrc[0] != 0; 
+				visInstSrc = (struct Instance**)level1->ptrInstDefPtrArray; 
+				visInstSrc[0] != NULL; 
 				visInstSrc++
 			)
 		{
@@ -54,10 +54,10 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 			// erase instance in pool
 			DECOMP_LIST_AddFront(
 				&sdata->gGT->JitPools.instance.free, 
-				visInstSrc[0]);
+				(struct Item*)visInstSrc[0]);
 			
 			// go back to instDef
-			visInstSrc[0] = visInstSrc[0]->instDef;
+			visInstSrc[0] = (struct Instance*)visInstSrc[0]->instDef;
 		}
 	}
 	

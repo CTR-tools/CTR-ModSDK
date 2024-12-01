@@ -1,17 +1,17 @@
 #include <common.h>
 
-struct ChannelStats* DECOMP_Channel_FindSound(int soundID)
+int DECOMP_Channel_FindSound(int soundID)
 {
 	int backupNext;
 	struct ChannelStats* curr;
 		
 	for(
-		curr = sdata->channelTaken.first;
-		curr != 0;
-		curr = backupNext
+		curr = (struct ChannelStats*)sdata->channelTaken.first;
+		curr != NULL;
+		curr = (struct ChannelStats*)backupNext
 	)
 	{
-		backupNext = curr->next;
+		backupNext = (int)curr->next;
 		
 		if(
 			// type == OtherFX

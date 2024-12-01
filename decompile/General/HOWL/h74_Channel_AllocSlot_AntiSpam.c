@@ -21,12 +21,12 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	if(boolUseAntiSpam == 1)
 	{	
 		for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
-			curr = backupNext
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
+			curr = (struct ChannelStats*)backupNext
 		)
 		{
-			backupNext = curr->next;
+			backupNext = (int)curr->next;
 			
 			if(
 				// type == OtherFX
@@ -63,6 +63,6 @@ void Channel_DestroySelf(struct ChannelStats* stats)
 	stats->flags &= ~(1);
 	
 	// recycle
-	DECOMP_LIST_RemoveMember(&sdata->channelTaken, stats);
-	DECOMP_LIST_AddBack(&sdata->channelFree, stats);
+	DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)stats);
+	DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)stats);
 }	

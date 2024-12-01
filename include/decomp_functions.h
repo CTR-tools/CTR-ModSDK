@@ -167,7 +167,7 @@ void DECOMP_Smart_ExitCriticalSection(void);
 void DECOMP_Channel_SetVolume(
 	struct ChannelAttr* attr,
 	int volume, int LR);
-struct ChannelStats* DECOMP_Channel_FindSound(int soundID);
+int DECOMP_Channel_FindSound(int soundID);
 struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	short soundID,
 	char boolUseAntiSpam,
@@ -810,3 +810,4 @@ void DECOMP_GAMEPROG_ResetHighScores(struct GameProgress* gameProg);
 void DECOMP_GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg);
 int DECOMP_LOAD_FindFile(char* filename, CdlFILE* cdlFile);
 int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
+void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID);

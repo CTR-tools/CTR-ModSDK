@@ -70,13 +70,13 @@ void DECOMP_Channel_UpdateChannels()
 		// start address needs to change
 		if((updateFlags & 4) != 0)
 		{
-			int startAddr = new->spuStartAddr;
+			void* startAddr = new->spuStartAddr;
 			
 			if(startAddr != cur->spuStartAddr)
 			{
 				cur->spuStartAddr = startAddr;
 				
-				SpuSetVoiceStartAddr(vNum, startAddr);
+				SpuSetVoiceStartAddr(vNum, (int)startAddr);
 			}
 		}
 		

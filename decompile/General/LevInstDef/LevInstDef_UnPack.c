@@ -21,12 +21,12 @@ void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info)
 		{
 			// loop through all instance pointers visible on quadblock
 			for(
-					visInstSrc = qbCurr->pvs->visInstSrc; 
-					visInstSrc[0] != 0; 
+					visInstSrc = (struct InstDef**)qbCurr->pvs->visInstSrc; 
+					visInstSrc[0] != NULL; 
 					visInstSrc++
 				)
 			{
-				visInstSrc[0] = visInstSrc[0]->ptrInstance;
+				visInstSrc[0] = (struct InstDef*)visInstSrc[0]->ptrInstance;
 			}
 		}
 	}
@@ -42,7 +42,7 @@ void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info)
 				visInstSrc++
 			)
 		{
-			visInstSrc[0] = visInstSrc[0]->ptrInstance;
+			visInstSrc[0] = (struct InstDef*)visInstSrc[0]->ptrInstance;
 		}
 	}
 }

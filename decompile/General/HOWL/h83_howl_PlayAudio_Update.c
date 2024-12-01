@@ -22,12 +22,12 @@ void DECOMP_howl_PlayAudio_Update()
 		}
 		
 		for(
-				curr = sdata->channelTaken.first;
-				curr != 0;
-				curr = backupNext
+				curr = (struct ChannelStats*)sdata->channelTaken.first;
+				curr != NULL;
+				curr = (struct ChannelStats*)backupNext
 			)
 		{
-			backupNext = curr->next;
+			backupNext = (int)curr->next;
 		
 			// if sound is stacatto (has no timer)
 			statFlags = curr->flags;
@@ -42,8 +42,8 @@ void DECOMP_howl_PlayAudio_Update()
 					
 			curr->flags = statFlags & ~(1);
 					
-			DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
-			DECOMP_LIST_AddBack(&sdata->channelFree, curr);
+			DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)curr);
+			DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)curr);
 		}
 		
 		DECOMP_Channel_ParseSongToChannels();

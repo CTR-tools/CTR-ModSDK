@@ -22,7 +22,7 @@ u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animInd
                 if (pHeader->ptrAnimations != NULL)
 
                     // validate anim index param
-                    if (animIndex < pHeader->numAnimations)
+                    if (animIndex < (int)pHeader->numAnimations)
 
                         // get proper animation ptr and validate
                         if (pAnim = *(pHeader->ptrAnimations + animIndex), pAnim != NULL)

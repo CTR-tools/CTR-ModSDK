@@ -40,7 +40,7 @@ void DECOMP_INSTANCE_Birth(
 	inst->thread = th;
 	inst->bitCompressed_NormalVector_AndDriverIndex = 0;
 	
-	struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
+	struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{

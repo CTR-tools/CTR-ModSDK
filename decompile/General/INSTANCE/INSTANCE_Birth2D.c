@@ -14,7 +14,7 @@ struct Instance* DECOMP_INSTANCE_Birth2D(
 	inst->flags |= 0x400;
 	
 	struct InstDrawPerPlayer* idpp =
-		INST_GETIDPP(inst);
+		(struct InstDrawPerPlayer*)INST_GETIDPP(inst);
 	
 #ifndef REBUILD_PS1
 	idpp[0].pushBuffer = &gGT->pushBuffer_UI;

@@ -10,12 +10,12 @@ void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
 	struct ChannelStats* curr;
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
-			curr = backupNext
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
+			curr = (struct ChannelStats*)backupNext
 		)
 	{
-		backupNext = curr->next;
+		backupNext = (int)curr->next;
 		
 		if(
 			// destroy if not music
