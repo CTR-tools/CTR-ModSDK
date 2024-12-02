@@ -188,7 +188,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		if(sdata->ptrGhostTape[1] != 0)
 		{
 			// N Tropy to Oxide	
-			void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 			if(sdata->ptrGhostTape[1]->gh == pointers[ST1_NOXIDE])
 				i++;
 		}

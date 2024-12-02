@@ -80,7 +80,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		inst->matrix.t[2] = levInstDef->pos[2];
 	
 		inst->thread = NULL;
-		struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
 	
 		// loop through InstDrawPerPlayer
 		for (char j = 0; j < gGT->numPlyrCurrGame; j++)

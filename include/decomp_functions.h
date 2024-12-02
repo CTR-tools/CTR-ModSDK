@@ -133,11 +133,11 @@ void DECOMP_howl_SetSong(int songID);
 int DECOMP_howl_LoadSong(void);
 void DECOMP_howl_ErasePtrCseqHeader(void);
 char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen);
-void DECOMP_cseq_opcode00_empty(void);
+void DECOMP_cseq_opcode00_empty(struct SongSeq* seq);
 void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq);
-void DECOMP_cseq_opcode02_empty(void);
+void DECOMP_cseq_opcode02_empty(struct SongSeq* seq);
 void DECOMP_cseq_opcode03(struct SongSeq* seq);
-void DECOMP_cseq_opcode04_empty(void);
+void DECOMP_cseq_opcode04_empty(struct SongSeq* seq);
 void DECOMP_howl_InitChannelAttr_Music(
 	struct SongSeq* seq, struct ChannelAttr* attr, int index, int channelVol);
 void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq);
@@ -850,3 +850,6 @@ void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_Veh_NullThread(struct Thread* t);
+
+//TODO:
+//DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot

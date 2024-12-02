@@ -14,7 +14,7 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
   if (frameIndex < 0) return 0;
   if (frameIndex >= numPos) return 0;
   
-  void** ptrs = (void**)ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+  void** ptrs = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
   ptrCam = ptrs[ST1_CAMERA_PATH];
   
   pathNumNode = 0;

@@ -639,7 +639,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 
 			// Draw a rectangle to highlight your time on the "Best Times" list
 			DECOMP_CTR_Box_DrawClearBox(
-				&box, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+				&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 				gGT->pushBuffer_UI.ptrOT);
 		}
 		currRowY += 0x1a;

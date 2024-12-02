@@ -94,7 +94,7 @@ struct BigHeader
 	//struct BigEntry entry[0];
 };
 #define BIG_GETENTRY(x) \
-	((unsigned int)x + sizeof(struct BigHeader))
+	(struct BigEntry*)((unsigned int)x + sizeof(struct BigHeader))
 
 struct DramPointerMap
 {

@@ -125,8 +125,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
   
 	iVar6 = iVar14;
 
-	struct InstDrawPerPlayer* idpp =
-		(struct InstDrawPerPlayer*)INST_GETIDPP(iVar10);
+	struct InstDrawPerPlayer* idpp = INST_GETIDPP(iVar10);
   
     // clear pushBuffer in every InstDrawPerPlayer
     idpp[0].pushBuffer = 0;

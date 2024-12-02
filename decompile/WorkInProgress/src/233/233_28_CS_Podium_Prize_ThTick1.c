@@ -60,8 +60,7 @@ void DECOMP_CS_Podium_Prize_ThTick1(struct Thread *th)
         inst->matrix.t[1] = 0;
         inst->matrix.t[2] = prize[10];
 
-		struct InstDrawPerPlayer* idpp =
-			INST_GETIDPP(inst);
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
 
         idpp[0].pushBuffer = &sdata->gGT->pushBuffer_UI;
 

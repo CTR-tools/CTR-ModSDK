@@ -431,7 +431,7 @@ void DECOMP_RB_FlameJet_LInB(struct Instance* inst)
 	fjObj->audioPtr = 0;
 	
 	// put on separate cycles
-	void** pointers = (void**)ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+	void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 	metaArray = (short*)pointers[ST1_SPAWN];
 	t->cooldownFrameCount = FPS_DOUBLE(metaArray[inst->name[9] - '0']);
 }

@@ -119,16 +119,16 @@ void CS_Podium_Prize_Init(int prizeModel, char* prizeName, short *posOnScreen)
 
         // previous levID, + 0x3a (0x3a is first bit of platinum relic)
         u_int bitIndex = gGT->prevLEV + 0x3a;
-        u_int * rewards = &sdata->advProgress.rewards[0];
+		unsigned int rewardsSet[6] = sdata->advProgress.rewards;
 
         // if you have not earned a platinum relic on this track
-        if (CHECK_ADV_BIT(rewards,bitIndex) == 0)
+        if (CHECK_ADV_BIT(rewardsSet,bitIndex) == 0)
         {
             // previous levID, + 0x28 (0x2a is the first bit of gold relic)
             bitIndex = gGT->prevLEV + 0x28;
 
             // if you have not earned a gold relic on this track
-            if (CHECK_ADV_BIT(rewards,bitIndex) == 0)
+            if (CHECK_ADV_BIT(rewardsSet,bitIndex) == 0)
             {
                 // sapphire color
                 relicColor = 0x20a5ff0;

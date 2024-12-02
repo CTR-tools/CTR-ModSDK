@@ -88,7 +88,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	psVar21 = 0;
 	if (psVar14->count < 3) goto SkipNewCameraEOR;
 
-	void** ptrs = (void**)ST1_GETPOINTERS(psVar14);
+	void** ptrs = ST1_GETPOINTERS(psVar14);
 	psVar19 = ptrs[ST1_CAMERA_EOR];
 
 	// number of EOR cameras

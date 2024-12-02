@@ -4179,10 +4179,10 @@ struct sData
 	int boolMemcardDataValid;
 
 	// 8008d948
-	int menuRowHighlight_Green;
+	Color menuRowHighlight_Green;
 
 	// 8008d94c
-	int menuRowHighlight_Normal;
+	Color menuRowHighlight_Normal;
 
 	// somewhere
 	// after data8_zzzz

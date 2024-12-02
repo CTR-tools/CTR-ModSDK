@@ -40,8 +40,7 @@ void DECOMP_AH_Pause_Update()
 			// specular light (0x20000)
 			inst->flags |= 0x20480;
 			
-			struct InstDrawPerPlayer *idpp = 
-				(struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+			struct InstDrawPerPlayer *idpp = INST_GETIDPP(inst);
 				
 			idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 			for(int j = 1; j < gGT->numPlyrCurrGame; j++)

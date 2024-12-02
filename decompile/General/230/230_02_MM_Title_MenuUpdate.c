@@ -125,7 +125,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   case 0:
   
     DECOMP_MM_Title_KillThread();
-    DECOMP_GAMEPROG_NewProfile_InsideAdv((struct AdvProgress*)&sdata->advProgress.rewards[0]);
+    DECOMP_GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress);
 	
     sdata->advProfileIndex = 0xffff;
 

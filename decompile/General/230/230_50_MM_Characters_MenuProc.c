@@ -36,7 +36,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	RECT r1;
 	RECT* r = &r1;
 	#else
-	RECT* r = (RECT*)0x1f800000;
+	RECT* r = (RECT*)0x1f800000; //todo: replace 0x1f800000 with reference to scratchpad
 	#endif
 	RECT r58;
 
@@ -47,7 +47,6 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	int j;
 	int posX;
 	int posY;
-	u_int characterSelectString;
 	short playerIcon;
 	int direction;
 
@@ -56,7 +55,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 	struct GameTracker* gGT = sdata->gGT;
 	
-	int* ot = (int*)gGT->backBuffer->otMem.startPlusFour;
+	u_long* ot = gGT->backBuffer->otMem.startPlusFour;
 
 	for (i = 0; i < 4; i++)
 	{
@@ -127,6 +126,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	posX = D230.ptrTransitionMeta[15].currX;
 	posY = D230.ptrTransitionMeta[15].currY;
 
+	char* characterSelectString;
 	switch(D230.characterSelectIconLayout)
 	{
 		// 3P character selection
@@ -146,7 +146,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_BIG;
 
 			// CHARACTER
-			characterSelectString = (u_int)sdata->lngStrings[97];
+			characterSelectString = sdata->lngStrings[97];
 
 			posX = posX + 0x9c;
 			posY = posY + 0x26;
@@ -169,7 +169,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_CREDITS;
 
 			// CHARACTER
-			characterSelectString = (u_int)sdata->lngStrings[97];
+			characterSelectString = sdata->lngStrings[97];
 
 			posX = posX + 0xfc;
 			posY = posY + 0x18;
@@ -182,7 +182,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			characterSelectType = FONT_BIG;
 
 			// SELECT CHARACTER
-			characterSelectString = (u_int)sdata->lngStrings[95];
+			characterSelectString = sdata->lngStrings[95];
 
 			posX = posX + 0xfc;
 			posY = posY + 10;
@@ -193,8 +193,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	}
 
 	// Draw String
-	DECOMP_DecalFont_DrawLine(
-		(char*)characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
+	DECOMP_DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
 
 	dontDrawSelectCharacter:
 
@@ -458,7 +457,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			// "1", "2", "3", "4", above the character icon
 			DECOMP_DecalFont_DrawLine
 			(
-				(char*)D230.PlayerNumberStrings[i],
+				D230.PlayerNumberStrings[i],
 				((struct TransitionMeta*)iVar24)->currX + (u_int)*puVar26 + -6,
 				((struct TransitionMeta*)iVar24)->currY + (u_int)puVar26[1] + -3,
 				FONT_BIG, WHITE
@@ -476,8 +475,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		r->h = 0x21;
 
 		color = *(Color *) puVar12;
-		DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-			r, color, 0, (u_long*)ot);
+		DECOMP_RECTMENU_DrawOuterRect_HighLevel(r, color, 0, ot);
 	}
 
 	DECOMP_MM_Characters_PreventOverlap();
@@ -594,7 +592,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 			Color color = *(Color *)&colorRGBA;
 			// this draws the flashing blue square that appears when you highlight a character in the character select screen
-			DECOMP_CTR_Box_DrawSolidBox(r, color, (u_long*)ot);
+			DECOMP_CTR_Box_DrawSolidBox(r, color, ot);
 		}
 		if
 		(
@@ -666,8 +664,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			r->h = 0x21;
 
 			// Draw 2D Menu rectangle background
-			DECOMP_RECTMENU_DrawInnerRect(
-				r, 0, ot);
+			DECOMP_RECTMENU_DrawInnerRect(r, 0, ot);
 		}
 	}
 
@@ -693,8 +690,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			);
 
 			color = *(Color *) &colorRGBA;
-			DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-				r, color, 0, (u_long*)ot);
+			DECOMP_RECTMENU_DrawOuterRect_HighLevel(r, color, 0, ot);
 
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0)
@@ -716,16 +712,13 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 
 					color = *(Color *) &colorRGBA;
-					DECOMP_RECTMENU_DrawOuterRect_HighLevel(
-						&r58, color, 0,
-						(u_long*)ot);
+					DECOMP_RECTMENU_DrawOuterRect_HighLevel(&r58, color, 0, ot);
 				}
 			}
 			psVar22 = psVar22 + 2;
 
 			// Draw 2D Menu rectangle background
-			DECOMP_RECTMENU_DrawInnerRect(
-				r, 9, &ot[3]);
+			DECOMP_RECTMENU_DrawInnerRect(r, 9, &ot[3]);
 
 			// not screen-space anymore,
 			// this is viewport-space

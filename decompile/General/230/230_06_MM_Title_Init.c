@@ -31,7 +31,7 @@ void DECOMP_MM_Title_Init(void)
 
     gGT->pushBuffer[0].distanceToScreen_CURR = 450;
 
-    void **pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+    void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 
     // pointer to Intro Cam, to view Crash holding Trophy in main menu
     D230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
@@ -78,7 +78,7 @@ void DECOMP_MM_Title_Init(void)
       inst->flags |= HIDE_MODEL;
 
 
-      struct InstDrawPerPlayer *idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+      struct InstDrawPerPlayer *idpp = INST_GETIDPP(inst);
       for (m = 1; m < gGT->numPlyrCurrGame; m++)
       {
         idpp[m].pushBuffer = 0;

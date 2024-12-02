@@ -604,8 +604,8 @@ void MenuHighlight()
 	trig = (trig << 6) >> 0xc;
 
 	// sine curve of green, plus base color
-	sdata->menuRowHighlight_Normal = ((trig + 0x40) * 0x100) | 0x80;
-	sdata->menuRowHighlight_Green = ((trig + 0xA0) * 0x100) | 0x400040;
+	sdata->menuRowHighlight_Normal.self = ((trig + 0x40) * 0x100) | 0x80;
+	sdata->menuRowHighlight_Green.self = ((trig + 0xA0) * 0x100) | 0x400040;
 }
 
 #ifndef REBUILD_PS1

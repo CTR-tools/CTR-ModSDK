@@ -180,7 +180,7 @@ LAB_OVR_230__800b3c78:
     iVar7 = (FPS_DOUBLE(8) - D230.highScore_transitionFrames[1]) * D230.highScore_horizontalMove[0] * 0x40;
   }
   
-  int* ot = (int*)sdata->gGT->backBuffer->otMem.startPlusFour;
+  u_long* ot = sdata->gGT->backBuffer->otMem.startPlusFour;
   
   if (((iVar7 != -0x200) && (iVar7 != 0x200)) && ((iVar4 != -0xd8 && (iVar4 != 0xd8))))
   {
@@ -215,7 +215,7 @@ LAB_OVR_230__800b3c78:
   local_20.h = 0x19;
   local_20.x = D230.transitionMeta_HighScores[0].currX + -0x14;
   local_20.y = D230.transitionMeta_HighScores[0].currY + (short)iVar6 + 9;
-  DECOMP_RECTMENU_DrawInnerRect(&local_20,0,ot);
+  DECOMP_RECTMENU_DrawInnerRect(&local_20, 0, ot);
   
   return;
 }

@@ -572,5 +572,5 @@ struct Instance
 };
 
 #define INST_GETIDPP(x) \
-	((unsigned int)x + sizeof(struct Instance))
+	(struct InstDrawPerPlayer*)((unsigned int)x + sizeof(struct Instance))
 	

@@ -116,7 +116,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 		levPtrMap = pointers[ST1_MAP];
 	}
 

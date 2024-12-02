@@ -21,7 +21,7 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 
 	uVar5 = 0;
 
-	struct BigEntry* entry = (struct BigEntry*)BIG_GETENTRY(bigfile);
+	struct BigEntry* entry = BIG_GETENTRY(bigfile);
 
 	// get size of file from bigfile header
 	*size = entry[subfileIndex].size;

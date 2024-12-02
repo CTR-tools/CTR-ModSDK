@@ -1,11 +1,9 @@
 #include <common.h>
 
-#define ushort u_short
-
 void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
 {
     char numPlyr;
-    ushort uVar4;
+    u_short uVar4;
     short sVar6;
     int i, j;
     int iVar8;
@@ -19,7 +17,7 @@ void DECOMP_MM_Battle_MenuProc(struct RectMenu* unused)
     short *puVar18;
     short sVar20;
     RECT local_60;
-    ushort local_60b[4];
+    u_short local_60b[4];
     RECT local_58;
     short local_58b[4];
     RECT local_50;
@@ -711,7 +709,7 @@ LAB_800b25f0:
         }
     }
 
-	int* ot = (int*)gGT->backBuffer->otMem.startPlusFour;
+	u_long* ot = gGT->backBuffer->otMem.startPlusFour;
 
     for (i = 0; i < 4; i++)
     {
@@ -745,9 +743,7 @@ LAB_800b25f0:
 
         Color color;
         color.self = *data.ptrColor[PLAYER_BLUE+i];
-        DECOMP_CTR_Box_DrawSolidBox(
-			&local_48, color,
-			(u_long*)ot);
+        DECOMP_CTR_Box_DrawSolidBox(&local_48, color, ot);
     }
 
     if (sdata->battleSetupRowHighlighted == 2)
@@ -757,7 +753,7 @@ LAB_800b25f0:
         local_50.x = tmbattle[4].currX + 0x9c + WIDE_PICK(0,25);
         local_50.y = tmbattle[4].currY + sVar20 + 3;
 
-        DECOMP_CTR_Box_DrawClearBox(&local_50, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long*)ot);
+        DECOMP_CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long*)ot);
     }
 
     local_40.w = WIDE_34(0x140);
@@ -909,7 +905,7 @@ LAB_800b25f0:
         local_60.h = 0x20;
         local_60.y = local_40.y + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        DECOMP_CTR_Box_DrawClearBox(&local_60, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long*)ot);
+        DECOMP_CTR_Box_DrawClearBox(&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
     }
 
     local_58.x = local_40.x + 3;
@@ -917,10 +913,9 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    DECOMP_CTR_Box_DrawClearBox(&local_58, (Color*)&D230.color3, TRANS_50_DECAL, (u_long*)ot);
+    DECOMP_CTR_Box_DrawClearBox(&local_58, (Color*)&D230.color3, TRANS_50_DECAL, ot);
 
-    DECOMP_RECTMENU_DrawInnerRect(
-		&local_40, 0, (u_long*)ot);
+    DECOMP_RECTMENU_DrawInnerRect(&local_40, 0, ot);
 
     // save all five battle settings
     // these are selected rows from all battle options

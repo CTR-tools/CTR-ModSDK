@@ -17,7 +17,7 @@ int DECOMP_CAM_Path_GetNumPoints(void)
   ptrSpawnType1 = level1->ptrSpawnType1;
   if (ptrSpawnType1->count < 3) return 0;
   
-  void** ptrs = (void**)ST1_GETPOINTERS(ptrSpawnType1);
+  void** ptrs = ST1_GETPOINTERS(ptrSpawnType1);
   introCam = ptrs[ST1_CAMERA_PATH];
   if(introCam == NULL) return 0;
 

@@ -97,7 +97,7 @@ u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, i
 
 void CTR_Box_DrawWirePrims(u_short x, u_short y, u_short u, u_short v, u_char r, u_char g, u_char b, u_long* otMem, struct PrimMem* primMem);
 void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
-void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawClearBox(RECT* r, Color* rgb, int transparency, u_long* otMem, struct PrimMem* primMem); //either this function shouldn't have a 5th parameter, or the DECOMP_ version of it is missing that 5th parameter.
 void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void CTR_CycleTex_Model(struct AnimTex* pAnimTexArray, int timer);
@@ -1333,3 +1333,5 @@ void SetDrawEnv(void*, DRAWENV*);
 int PushBuffer_SetFrustumPlane(char*, int, int, int);
 u_int VehCalc_FastSqrt(u_int, u_int);
 void Veh_NullThread(struct Thread* t);
+void SelectProfile_DrawAdvProfile(struct AdvProgress* adv, int posX, int posY, u_int isHighlighted, short slotIndex, u_short menuFlag);
+void SelectProfile_Init(u_short flags);

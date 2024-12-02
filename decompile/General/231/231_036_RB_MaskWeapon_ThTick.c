@@ -28,8 +28,8 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     d = maskTh->parentThread->object;
     driverInst = maskTh->parentThread->inst;
 	
-	struct InstDrawPerPlayer* maskIdpp = (struct InstDrawPerPlayer*)INST_GETIDPP(maskInst);
-	struct InstDrawPerPlayer* beamIdpp = (struct InstDrawPerPlayer*)INST_GETIDPP(maskBeamInst);
+	struct InstDrawPerPlayer* maskIdpp = INST_GETIDPP(maskInst);
+	struct InstDrawPerPlayer* beamIdpp = INST_GETIDPP(maskBeamInst);
 
     if (d->invisibleTimer == 0)
     {

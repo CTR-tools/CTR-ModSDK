@@ -92,7 +92,7 @@ void DECOMP_GhostReplay_Init1(void)
 			// if N Tropy Opened
 			else
 			{
-				void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+				void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 				
 				// If you have not beaten N Tropy
 				if ((timeTrialFlags & 2) == 0)

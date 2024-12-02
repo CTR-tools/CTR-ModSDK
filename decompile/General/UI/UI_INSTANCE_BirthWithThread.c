@@ -160,7 +160,7 @@ lightDir_spec0x30000:
 	// for decalMP and fruitDisp
     else
 	{
-	  struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+	  struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
       idpp[0].pushBuffer = (struct PushBuffer*)param_5;
 
 	  // record that pushBuffer is present

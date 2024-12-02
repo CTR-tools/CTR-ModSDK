@@ -1,6 +1,6 @@
 #include <common.h>
 
-void SelectProfile_Init(u_int flags)
+void SelectProfile_Init(u_short flags)
 {
   char n, p;
   short scale;

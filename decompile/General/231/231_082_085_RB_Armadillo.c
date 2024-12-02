@@ -158,7 +158,7 @@ void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
 	t->inst = inst;
 	
 	// puts armadillos on separate cycles
-	void** pointers = (void**)ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+	void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 	metaArray = (short*)pointers[ST1_SPAWN];
 	t->cooldownFrameCount = FPS_DOUBLE(metaArray[inst->name[0xA] - '0']);
 	

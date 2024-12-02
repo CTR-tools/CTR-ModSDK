@@ -54,7 +54,7 @@ void DECOMP_AH_Map_Main(void)
   
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
-	void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
     hubPtrs = (int)pointers[ST1_MAP];
   }
   

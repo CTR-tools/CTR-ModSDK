@@ -26,7 +26,7 @@ void CS_Credits_Init()
 	advProg = &sdata->advProgress;
 	creditsObj = &creditsBSS->creditsObj;
 	
-	void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 	CLH = pointers[ST1_CREDITS];
 	
 	creditsBSS->DancerThread = 0;
@@ -92,7 +92,7 @@ void CS_Credits_Init()
 		
 		inst->flags |= 0x400;
 		
-		struct InstDrawPerPlayer* idpp = (struct InstDrawPerPlayer*)INST_GETIDPP(inst);
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
 		idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 		
 		#if 0

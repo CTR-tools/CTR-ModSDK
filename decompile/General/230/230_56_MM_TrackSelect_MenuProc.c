@@ -340,7 +340,6 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 
 	DECOMP_MM_TrackSelect_Video_State(uVar14);
 
-	uVar15 = (u_int)numTracks;
 	gGT->currLEV = selectMenu[menu->rowSelected].levID;
 	iVar9 = (int)menu->rowSelected + -1;
 
@@ -351,7 +350,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 			iVar10 = iVar9;
 			if (iVar9 < 0)
 			{
-				iVar10 = uVar15 - 1;
+				iVar10 = numTracks - 1;
 			}
 
 			uVar8 = DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
@@ -531,9 +530,8 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 			q.w = r.w - 12;
 			q.h = r.h - 8;
 
-			DECOMP_CTR_Box_DrawClearBox(&q, (Color*)&sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
+			DECOMP_CTR_Box_DrawClearBox(&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour);
 		}
-		uVar15 = (u_int)numTracks;
 
 		// Draw 2D Menu rectangle background
 		DECOMP_RECTMENU_DrawInnerRect(
@@ -543,7 +541,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 		{
 			iVar10++;
 
-			if ((int)uVar15 <= iVar10)
+			if (numTracks <= iVar10)
 			{
 				iVar10 = 0;
 			}

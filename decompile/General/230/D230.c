@@ -609,10 +609,10 @@ struct OverlayDATA_230 D230 =
 
 	.PlayerNumberStrings = 
 	{
-		(int*)&R230.s_1[0],
-		(int*)&R230.s_2[0],
-		(int*)&R230.s_3[0],
-		(int*)&R230.s_4[0]
+		&R230.s_1[0],
+		&R230.s_2[0],
+		&R230.s_3[0],
+		&R230.s_4[0]
 	},
 
 	.getNextDriver1 = {2, 2, 1, 1},

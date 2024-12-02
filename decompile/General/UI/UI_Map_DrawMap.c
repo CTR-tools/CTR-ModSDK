@@ -34,7 +34,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		void** pointers = (void**)ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 		iVar9 = (int)pointers[ST1_MAP];
 	}
 
@@ -111,7 +111,7 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 		// Otherwise we'd never get the map
 		// and icons to scale together
 		
-		void** pointers = (void**)ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 		void* levPtrMap = pointers[ST1_MAP];
 		
 		int midX = 0;

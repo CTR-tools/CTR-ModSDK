@@ -36,7 +36,7 @@ void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 	}
 }
 
-void DECOMP_cseq_opcode02_empty()
+void DECOMP_cseq_opcode02_empty(struct SongSeq* seq)
 {
 	// left empty by ND
 }
