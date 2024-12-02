@@ -285,7 +285,7 @@ void TEST_226(
 				if (num == 4)
 				{
 					// must remove flags that are stored in pointer
-					unsigned int ptr = block->ptr_texture_mid[k];
+					unsigned int ptr = (unsigned int)block->ptr_texture_mid[k];
 					tl = ptr;
 
 					if (ptr & 1)

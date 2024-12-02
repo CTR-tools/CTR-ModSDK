@@ -80,7 +80,7 @@ void DECOMP_LOAD_NextQueuedFile()
 #endif
 
 #ifdef REBUILD_PC
-		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete);
+		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
 #else
 		// Use callback if present
 		if(curr->callback.funcPtr != 0)

@@ -507,6 +507,11 @@
 #include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuPtr.c"
 #include "../decompile/General/230/230_Block3.c"
 
+#ifdef REBUILD_PC
+//#include "../decompile/General/231/R231.c" //doesn't exist yet
+#include "../decompile/General/231/D231.c"
+#endif
+
 // 231
 #include "../decompile/General/231/231_002_RB_ModifyWumpa.c"
 #include "../decompile/General/231/231_003_RB_MinePool_Init.c"

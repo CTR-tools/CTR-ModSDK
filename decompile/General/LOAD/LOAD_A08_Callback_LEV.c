@@ -1,5 +1,5 @@
 #include <common.h>
-void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot * lqs)
+void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs)
 {
     // flags
     if ((lqs->flags & 2) == 0) 

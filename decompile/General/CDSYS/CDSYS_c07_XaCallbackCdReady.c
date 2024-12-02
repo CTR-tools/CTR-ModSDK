@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CDSYS_XaCallbackCdReady(CdlIntrResult result, u_char* unk) //+unk to adhere to *CdlCB
+void DECOMP_CDSYS_XaCallbackCdReady(CdlIntrResult result, uint8_t* unk) //+unk to adhere to *CdlCB
 {
 	if(result == CdlDataReady)
 	{

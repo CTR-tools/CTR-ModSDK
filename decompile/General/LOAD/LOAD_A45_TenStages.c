@@ -653,7 +653,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				gGT->trafficLightIcon[3] = (struct Icon*)uVar16;
 #else
 				for(
-						struct Icon* firstIcon = piVar15; 
+						struct Icon* firstIcon = (struct Icon*)piVar15; 
 						*(int*)&firstIcon->name[0];
 						firstIcon++
 					)

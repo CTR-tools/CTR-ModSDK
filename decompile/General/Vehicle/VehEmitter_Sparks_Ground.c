@@ -50,6 +50,6 @@ void DECOMP_VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *e
     }
 }
 
-extern short sparkGround_inX[4] = {0x1800, 0, 0, 0};
-extern short sparkGround_inZ[4] = {0, 0, -0x1800, 0};
-extern short sparkGround_inZ2[4] = {0, 0, -0x200, 0};
+short sparkGround_inX[4] = {0x1800, 0, 0, 0};
+short sparkGround_inZ[4] = {0, 0, -0x1800, 0};
+short sparkGround_inZ2[4] = {0, 0, -0x200, 0};

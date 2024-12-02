@@ -158,7 +158,7 @@ void DrawOneInst(struct Instance* curr)
 		int vertexIndex = 0;
 		//current strip length
 		int stripLength = 0;
-		CompVertex* ptrVerts = vertData;
+		CompVertex* ptrVerts = (CompVertex*)vertData;
 		u_int* pCmd = mh->ptrCommandList;
 
 		//a "shifting window", here we update the vertices and read triangle once it's ready
@@ -532,8 +532,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	}
 
 	for (
-		struct Instance* curr = gGT->JitPools.instance.taken.first;
-		curr != 0;
+		struct Instance* curr = (struct Instance*)gGT->JitPools.instance.taken.first;
+		curr != NULL;
 		curr = curr->next
 		)
 	{

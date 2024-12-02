@@ -40,7 +40,7 @@ struct RectMenu* DECOMP_MainFreeze_GetMenuPtr(void)
     return (* menuPtrToPtr);
 }
 
-extern int mainFreezeFlags[5] =
+int mainFreezeFlags[5] =
 {
 	BATTLE_MODE,
 	ADVENTURE_ARENA,
@@ -49,7 +49,7 @@ extern int mainFreezeFlags[5] =
 	0 // null terminator
 };
 
-extern struct RectMenu* mainFreezeMenuArr[5] =
+struct RectMenu* mainFreezeMenuArr[5] =
 {
 	&data.menuBattle,
 	&data.menuAdvHub,

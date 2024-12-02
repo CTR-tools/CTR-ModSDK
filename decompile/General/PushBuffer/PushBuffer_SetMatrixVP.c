@@ -30,7 +30,7 @@ void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb)
 
   #ifdef REBUILD_PC
   // Windows x86_64, use global scratchpad
-  MATRIX* matrixDST = &scratchpad[0x3d4];
+  MATRIX* matrixDST = (MATRIX*)&scratchpad[0x3d4];
   #else
 	#ifdef USE_VR
 	// in DuckStation, use address usable by injection

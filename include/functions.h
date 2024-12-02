@@ -992,7 +992,6 @@ void VehPhysForce_RotAxisAngle(MATRIX* m, short* normVec, short angle);
 void VehPhysForce_AccelTerrainSlope(struct Driver* d);
 
 // "VehPtr"
-void Veh_NullThread();
 void VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* driver);
 //VehPhysGeneral_LerpQuarterStrength()
 int VehPhysGeneral_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
@@ -1333,3 +1332,4 @@ void MainGameEnd_Initialize();
 void SetDrawEnv(void*, DRAWENV*);
 int PushBuffer_SetFrustumPlane(char*, int, int, int);
 u_int VehCalc_FastSqrt(u_int, u_int);
+void Veh_NullThread(struct Thread* t);

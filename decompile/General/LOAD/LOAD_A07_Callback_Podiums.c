@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot * lqs)
+void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot* lqs)
 {
   sdata->load_inProgress = 0;
   data.podiumModel_podiumStands = (int)lqs->ptrDestination;

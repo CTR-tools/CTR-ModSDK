@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs)
+void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs)
 {		
 	char* patchPtr;
 	char* patchStart;
