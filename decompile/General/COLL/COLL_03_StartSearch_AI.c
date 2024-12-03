@@ -34,5 +34,5 @@ void DECOMP_COLL_StartSearch_AI(short *posCurr, short *posPrev, struct Scratchpa
     *(u_int *)&sps->unk4C[0x78] = 0; // 0xC4 arraySize
     *(u_int *)&sps->dataOutput[0] = 0;
 
-    COLL_SearchTree_FindX(sps->ptr_mesh_info->bspRoot, &sps->bbox, (u_int*)COLL_PerBspLeaf_CheckInstances, (u_int)sps);
+    COLL_SearchTree_FindX(sps->ptr_mesh_info->bspRoot, &sps->bbox, COLL_PerBspLeaf_CheckInstances, &sps->Input1.pos[0]);
 }

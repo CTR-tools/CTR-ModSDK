@@ -430,7 +430,7 @@ struct SampleBlockHeader
 	//short spuIndexArr[0];
 };
 #define SBHEADER_GETARR(x) \
-	((unsigned int)x + sizeof(struct SampleBlockHeader))
+	(short*)((unsigned int)x + sizeof(struct SampleBlockHeader))
 
 struct SpuAddrEntry
 {

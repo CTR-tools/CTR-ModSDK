@@ -68,7 +68,7 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 			if(DECOMP_Music_GetHighestSongPlayIndex() == 1)
 				val = 2;
 			
-			DECOMP_CseqMusic_Start(val,0,0,0,1);
+			DECOMP_CseqMusic_Start(val,0,NULL,0,1);
 		}
 	}
 	

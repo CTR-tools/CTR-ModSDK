@@ -18,7 +18,7 @@ void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 		sdata->NavPath_ptrHeader[index] = nh;
 		
 		sdata->NavPath_ptrNavFrameArray[index] = 
-			(struct NavFrame*)NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[index]);
+			NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[index]);
 
 		// if data is outdated
 		if(sdata->NavPath_ptrHeader[index]->magicNumber != -0x1303)
@@ -35,7 +35,7 @@ void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 		sdata->NavPath_ptrHeader[index] = &sdata->blank_NavHeader;
 		
 		sdata->NavPath_ptrNavFrameArray[index] = 
-			(struct NavFrame*)NAVHEADER_GETFRAME(&sdata->blank_NavHeader);
+			NAVHEADER_GETFRAME(&sdata->blank_NavHeader);
 
 		// dont bother setting numNavPoints in header to zero,
 		// it's already zero

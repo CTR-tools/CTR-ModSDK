@@ -4,8 +4,7 @@ void DECOMP_howl_UnPauseAudio()
 {
 	int i;
 	int backupID;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	struct ChannelStats* pausedStats;
 	
 	// if no paused audio, skip
@@ -18,11 +17,11 @@ void DECOMP_howl_UnPauseAudio()
 	for(
 			i = 0, curr = (struct ChannelStats*)sdata->channelFree.first;
 			i < sdata->numBackup_ChannelStats;
-			i++, curr = (struct ChannelStats*)backupNext
+			i++, curr = backupNext
 		)
 	{
 		backupID = curr->channelID;
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		// psx's kernel memcpy does NOT work inside "critical" sections
 		int* src = (int*)pausedStats++;

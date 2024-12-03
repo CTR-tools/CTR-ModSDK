@@ -51,7 +51,7 @@ struct XNF
 	//int XaCdPos[0];
 };
 #define XNF_GETXACDPOS(x) \
-	((unsigned int)x + sizeof(struct XNF))
+	(int*)((unsigned int)x + sizeof(struct XNF))
 
 struct XaSize
 {

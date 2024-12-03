@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, int callback)
+void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*callback)(struct LoadQueueSlot*))
 {
 	int i;
 	char* robotSet;
@@ -58,5 +58,5 @@ void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, int callback)
 	
 	//add to load queue from range 324=packs\2P_arcade\*.mpk
 	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_DRAM, 
-		BI_2PARCADEPACK + i, NULL, (void*)callback);
+		BI_2PARCADEPACK + i, NULL, callback);
 }

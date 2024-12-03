@@ -402,7 +402,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			data.driverModel_lowLOD[0] = 0;
 			data.driverModel_lowLOD[1] = 0;
 			data.driverModel_lowLOD[2] = 0;
-			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, (unsigned int)&DECOMP_LOAD_Callback_DriverModels);
+			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, &DECOMP_LOAD_Callback_DriverModels);
 			break;
 		}
 		case 5:
@@ -751,7 +751,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_LOAD_AppendQueue(
 						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELWIN + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_firstPlace, (void*)0xfffffffe);
+						(void*)&data.podiumModel_firstPlace, (void(*)(struct LoadQueueSlot*))0xfffffffe);
 				}
 
 				// podium second place exists
@@ -762,7 +762,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_LOAD_AppendQueue(
 						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_secondPlace, (void*)0xfffffffe);
+						(void*)&data.podiumModel_secondPlace, (void(*)(struct LoadQueueSlot*))0xfffffffe);
 				}
 			
 				// podium third place exists
@@ -773,7 +773,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_LOAD_AppendQueue(
 						(int)bigfile, LT_DRAM, 
 						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_thirdPlace, (void*)0xfffffffe);
+						(void*)&data.podiumModel_thirdPlace, (void(*)(struct LoadQueueSlot*))0xfffffffe);
 				}
 				
 				// TAWNA
@@ -783,7 +783,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_LOAD_AppendQueue(
 					(int)bigfile, LT_DRAM, 
 					BI_DANCETAWNAGIRL + iVar9 + (podiumModel - 0x8f) * 2, 
-					(void*)&data.podiumModel_tawna, (void*)0xfffffffe);
+					(void*)&data.podiumModel_tawna, (void(*)(struct LoadQueueSlot*))0xfffffffe);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
@@ -792,7 +792,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_LOAD_AppendQueue(
 						(int)bigfile, LT_DRAM, 
 						BI_DINGOFIRE + iVar9, 
-						(void*)&data.podiumModel_dingoFire, (void*)0xfffffffe);
+						(void*)&data.podiumModel_dingoFire, (void(*)(struct LoadQueueSlot*))0xfffffffe);
 				}
 
 				// add Podium

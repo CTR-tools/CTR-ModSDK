@@ -70,7 +70,7 @@ struct NavHeader
 	//struct NavFrame frame[0];
 };
 #define NAVHEADER_GETFRAME(x) \
-	((unsigned int)x + sizeof(struct NavHeader))
+	(struct NavFrame*)((unsigned int)x + sizeof(struct NavHeader))
 
 _Static_assert(sizeof(struct NavFrame) == 0x14);
 _Static_assert(sizeof(struct NavHeader) == 0x4c);

@@ -7,17 +7,16 @@ void Channel_DestroySelf(struct ChannelStats* stats);
 //	32-bit soundID_count, which destroys specific instance of sound
 void DECOMP_Channel_SearchFX_Destroy(
 	int type, int soundID, int flags)
-{	
-	int backupNext;
-	struct ChannelStats* curr;
+{
+	struct ChannelStats* curr, *backupNext;
 		
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		if(
 			// matching type

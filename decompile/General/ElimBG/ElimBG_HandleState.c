@@ -12,21 +12,22 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
   char cVar8;
   u_int uVar9;
   int iVar10;
-  u_int local_30[2];
-  u_int local_28[2];
+  RECT rect1;
+  RECT rect2;
 
   // if this is last frame of pause
   if (sdata->pause_state == 3)
   {
 	// rdataPauseData
-	local_30[0] = 0x200;
-	local_30[1] = 0x1000040;
-	local_28[0] = 0x240;
-	local_28[1] = 0x1000040;
-	
+	//TODO: modify this code to just properly assign to the rect's members instead of this jank.
+	((u_int*)&rect1)[0] = 0x200;
+	((u_int*)&rect1)[1] = 0x1000040;
+	((u_int*)&rect2)[0] = 0x240;
+	((u_int*)&rect2)[1] = 0x1000040;
+
 	// load from RAM, back to VRAM
-	LoadImage((RECT*)&local_30, (uint32_t*)sdata->PausePtrsVRAM[0]);
-	LoadImage((RECT*)&local_28, (uint32_t*)sdata->PausePtrsVRAM[1]);
+	LoadImage(&rect1, (uint32_t*)sdata->PausePtrsVRAM[0]);
+	LoadImage(&rect2, (uint32_t*)sdata->PausePtrsVRAM[1]);
 	
 	DrawSync(0);
 	

@@ -1655,7 +1655,7 @@ struct Data
 	// 80082910 -- JpnTrial
 	// 80083ce8 -- EurRetail
 	// 80086ca4 -- JpnRetail
-	int driverModel_lowLOD[3];
+	int driverModel_lowLOD[3]; //maybe should be `struct Model**[3]`
 
 	// 80083a1c
 	int podiumModel_firstPlace;
@@ -1673,7 +1673,7 @@ struct Data
 	int podiumModel_unk2;
 
 	// 80083a38
-	int podiumModel_podiumStands;
+	int podiumModel_podiumStands; //maybe should be a ptr of some sort instead of `int`
 
 	// 80083a3c
 	struct LoadQueueSlot currSlot;
@@ -1688,7 +1688,7 @@ struct Data
 	// 231 = 80031a08
 	// 232 = 80031a20
 	// 233 = 80031a38
-	void* overlayCallbackFuncs[4];
+	void* overlayCallbackFuncs[4]; //probably `(void(*)(struct LoadQueueSlot*))[4]`
 
 	// 80081CFC -- SepReview
 	// 80083A80 -- UsaRetail
@@ -2667,7 +2667,7 @@ struct sData
 	// 8008d018
 	// 6 four-byte pointers for pause/unpause,
 	// all relative to gGT->DB[0,1].primMem.end
-	char* PausePtrsVRAM[6];
+	char* PausePtrsVRAM[6]; //should maybe be `uint32_t*[]` instead of `char*[]`
 
 	// 8008d030
 	u_int pause_backup_renderFlags;
@@ -3624,7 +3624,7 @@ struct sData
 	int XA_MaxSampleVal;
 
 	// 8008d718
-	int* ptrArray_XaCdPos;
+	int* ptrArray_XaCdPos; //maybe should be `struct XaSize*`?
 
 	// 8008bb60 sep3
 	// 8008d71c usaRetail
@@ -3782,7 +3782,7 @@ struct sData
 	struct SampleDrums* ptrCseqShortSamples;
 
 	// 8008d7c8
-	char* ptrCseqSongData;
+	char* ptrCseqSongData; //should maybe be `struct CseqSongHeader*` instead of `char*`
 
 	// 8008d7cc
 	int boolStereoEnabled;
@@ -3876,7 +3876,7 @@ struct sData
 
 	// 8008bc54 sep3 -- FUN_8002d6c0
 	// 8008d818 usaRetail -- FUN_8002dc4c
-	int audioDefaults[9];
+	int audioDefaults[9]; //maybe should be `char*[]` instead of `int[]`
 
 	// 8008d818
 	// array of 8 (ai engine?)
@@ -3935,7 +3935,7 @@ struct sData
 
 	// 8008d870
 	// ptr to array of model pointers (real ND name)
-	int** PLYROBJECTLIST;
+	int** PLYROBJECTLIST; //maybe should be `struct Model**`
 
 	// 8008d874
 	// activated in FUN_80035e20,
@@ -4623,6 +4623,7 @@ struct sData
 
 	// 80095E80
 	int KartHWL_fileSize;
+	//instead of the two above variables (80095e7c and 80095e80), it's almost certainly a `CdlFILE` instead of a `CdlLOC` & `int`
 
 	// 80095E84
 	char KartHWL_filename[0x10];

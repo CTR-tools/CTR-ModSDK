@@ -3,8 +3,7 @@
 // change volume
 void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	unsigned char* currNote = seq->currNote;
 	int soundID = seq->soundID;
 	int songIndex = seq->songPoolIndex;
@@ -18,10 +17,10 @@ void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		// type != MUSIC
 		if(curr->type != 2) continue;

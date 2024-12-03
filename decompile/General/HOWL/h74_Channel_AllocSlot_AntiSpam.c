@@ -8,9 +8,8 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	int flags,
 	struct ChannelAttr* attr)
 {
-	int backupNext;
 	struct ChannelAttr* newAttr;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	
 	// with AntiSpam, a new sound started within
 	// 10 frames of another, will replace the older
@@ -23,10 +22,10 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 		for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 		{
-			backupNext = (int)curr->next;
+			backupNext = curr->next;
 			
 			if(
 				// type == OtherFX

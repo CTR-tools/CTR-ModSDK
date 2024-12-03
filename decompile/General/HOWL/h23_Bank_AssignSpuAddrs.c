@@ -41,7 +41,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{
-			short* spuIndexArr = (short*)SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
 			sdata->audioAllocSize += sdata->howl_spuAddrs[spuIndexArr[i]].spuSize;
 		}
 		
@@ -103,7 +103,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{	
-			short* spuIndexArr = (short*)SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
 			sae = &sdata->howl_spuAddrs[spuIndexArr[i]];
 				
 			if(sae->spuAddr == 0)

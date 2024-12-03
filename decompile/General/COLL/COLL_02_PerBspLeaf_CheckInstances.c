@@ -11,7 +11,7 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
     
     // check every instance hitbox until
     // end of list (null flag) is found
-    for (/**/; bspArray->flag != (u_short)(int)NULL; bspArray++)
+    for (/**/; bspArray->flag != 0; bspArray++)
     {
 		bbox = &bspArray->box;
 		
@@ -59,7 +59,7 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
 		  )
         {
             // check with collision for this instance
-            COLL_Instance((short*)sps, bspArray);
+            COLL_Instance(sps, bspArray);
         }
 
 		NextBSP:

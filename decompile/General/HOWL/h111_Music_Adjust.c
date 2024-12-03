@@ -30,7 +30,7 @@ void DECOMP_Music_Adjust(u_int songID, int newTempo, struct SongSet *set, u_int 
     if (sdata->cseqHighestIndex != songID)
     {
         //  (loopAtEnd)
-        DECOMP_CseqMusic_Start(songID, newTempo, (int)set, songSetActiveBits, 1);
+        DECOMP_CseqMusic_Start(songID, newTempo, set, songSetActiveBits, 1);
 
         sdata->cseqBoolPlay = true;
 

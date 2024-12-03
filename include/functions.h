@@ -70,12 +70,12 @@ void CDSYS_XAPauseAtEnd();
 // COLL
 
 u_char* COLL_LevModelMeta(u_int index);
-u_int COLL_Instance(short* param_1, struct BSP* node);
+u_int COLL_Instance(struct ScratchpadStruct* param_1, struct BSP* node);
 void COLL_PerBspLeaf_CheckInstances(struct BSP* node, struct ScratchpadStruct *sps);
 void COLL_StartSearch_AI(short* posCurr, short* posPrev, short* param_3);
 void COLL_StartSearch_Player(struct Thread* t, struct Driver* d);
-void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, 3rd param might be ``, also may have 6 params not 4???
-void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, u_int* callback, u_int param_4);
+void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
+void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, void (*callback)(struct BSP*, struct ScratchpadStruct*), short* param_4); //4th param might be `struct ScratchpadStruct*`
 u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001ef1c();
 void FUN_8001ef50(int param_1, short* param_2, short* param_3, short* param_4);
@@ -1315,7 +1315,7 @@ void SpuSetVoiceADSRAttr(int, int, int, int, int, int, int, int, int);
 int SpuSetReverbVoice(int, int);
 void Voiceline_Update();
 void Level_AmbientSound();
-void OtherFX_RecycleNew(void*, int, int);
+void OtherFX_RecycleNew(void*, int, int); //2nd param might be `char`
 void LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID);
 void PickupBots_Init();
 void SetDrawMove(DR_MOVE*, RECT*, int x, int y);

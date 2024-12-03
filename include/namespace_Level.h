@@ -144,7 +144,7 @@ struct AnimTex
 };
 
 #define ANIMTEX_GETARRAY(x) \
-	((unsigned int)x + sizeof(struct AnimTex))
+	(struct IconGroup4**)((unsigned int)x + sizeof(struct AnimTex))
 
 struct PVS
 {

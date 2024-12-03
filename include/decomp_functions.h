@@ -1,4 +1,4 @@
-#if defined(REBUILD_PC) && !defined (REBUILD_PS1)
+#if defined(REBUILD_PC)/* && !defined (REBUILD_PS1)*/
 typedef enum _CdlIntrResult {
 	_CdlNoIntr = 0,
 	_CdlDataReady = 1,
@@ -104,7 +104,7 @@ char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags);
 short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx);
 void DECOMP_EngineAudio_Stop(u_int soundID);
 void DECOMP_SetReverbMode(u_short newReverbMode);
-int DECOMP_CseqMusic_Start(int songID, int p2, int p3, int p4, int p5);
+int DECOMP_CseqMusic_Start(int songID, int p2, struct SongSet* p3, int p4, int p5);
 void DECOMP_CseqMusic_Pause(void);
 void DECOMP_CseqMusic_Resume(void);
 void DECOMP_CseqMusic_ChangeVolume(int songID, int p2, int p3);
@@ -275,7 +275,7 @@ struct Item* DECOMP_LIST_RemoveBack(struct LinkedList* L);
 struct Item* DECOMP_LIST_RemoveFront(struct LinkedList* L);
 struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I);
 
-void DECOMP_LOAD_Callback_Overlay_Generic(void);
+void DECOMP_LOAD_Callback_Overlay_Generic(struct LoadQueueSlot*);
 void DECOMP_LOAD_Callback_Overlay_230(void);
 void DECOMP_LOAD_Callback_Overlay_231(void);
 void DECOMP_LOAD_Callback_Overlay_232(void);
@@ -289,13 +289,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 void DECOMP_LOAD_LevelFile(int levelID);
 
 void DECOMP_LOAD_HowlCallback(CdlIntrResult result, uint8_t* unk);
-int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
+int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector); //2nd param might be `struct SampleBlockHeader*`
 int DECOMP_LOAD_HowlSectorChainEnd(void);
 
 void DECOMP_LOAD_InitCD(void);
-void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs);
+void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs); //1st param might be `struct Level*`, 2nd param might be `char*`
 void DECOMP_LOAD_LangFile(int bigfilePtr, int lang);
-void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback);
+void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
 void DECOMP_LOAD_NextQueuedFile(void);
 
 void DECOMP_MainDB_OTMem(struct OTMem* otMem, u_int size);
@@ -730,7 +730,7 @@ void DECOMP_AH_MaskHint_Update(void);
 
 // 233
 void DECOMP_CS_Garage_ZoomOut(char zoomState);
-void DECOMP_CS_Garage_MenuProc(void);
+void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1);
 void DECOMP_CS_Garage_Init(void);
 struct RectMenu* DECOMP_CS_Garage_GetMenuPtr(void);
 
@@ -816,7 +816,7 @@ void DECOMP_GAMEPROG_ResetHighScores(struct GameProgress* gameProg);
 void DECOMP_GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg);
 int DECOMP_LOAD_FindFile(char* filename, CdlFILE* cdlFile);
 int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
-void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID);
+void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID); //third param should maybe be `u_int`
 void DECOMP_LibraryOfModels_Store(struct GameTracker* gGT, unsigned int numModels, struct Model** ptrModelArray);
 void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs);
 int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType);
@@ -826,7 +826,7 @@ void DECOMP_LOAD_OvrEndRace(unsigned int param_1);
 void DECOMP_LOAD_OvrLOD(unsigned int param_1);
 void DECOMP_LOAD_OvrThreads(unsigned int param_1);
 void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
-void DECOMP_LOAD_DriverMPK(unsigned int param_1, int levelLOD, unsigned int param_3);
+void DECOMP_LOAD_DriverMPK(unsigned int param_1, int levelLOD, void (*param_3)(struct LoadQueueSlot*));
 void DECOMP_LibraryOfModels_Clear(struct GameTracker* gGT);
 void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL);
 void DECOMP_DebugFont_Init(struct GameTracker* gGT);
@@ -850,7 +850,14 @@ void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_Veh_NullThread(struct Thread* t);
+void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*)(struct LoadQueueSlot*));
 
 //TODO:
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot
 //DECOMP_CTR_Box_DrawWirePrims change void* ot to u_long* ot
+//DECOMP_LOAD_AppendQueue callback param should be void (*)(struct LoadQueueSlot*)
+
+///////DECOMP_LOAD_HubCallback
+///////DECOMP_LOAD_Callback_Overlay_Generic
+///////DECOMP_LOAD_Callback_MaskHints3D
+//DECOMP_MainLoadVLC_Callback

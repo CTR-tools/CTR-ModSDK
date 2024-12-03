@@ -35,7 +35,7 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 	sdata->ptrArray_firstXaIndex = &xnf->firstXaIndex[0];
 	sdata->ptrArray_numSongs = &xnf->numSongs[0];
 	sdata->ptrArray_firstSongIndex = &xnf->firstSongIndex[0];
-	sdata->ptrArray_XaCdPos = (int*)XNF_GETXACDPOS(xnf);
+	sdata->ptrArray_XaCdPos = XNF_GETXACDPOS(xnf);
 	sdata->ptrArray_XaSize = (struct XaSize*)&sdata->ptrArray_XaCdPos[xnf->numXAs_total];
 	
 	for(int categoryID = 0; categoryID < sdata->xa_numTypes; categoryID++)

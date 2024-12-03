@@ -7,15 +7,12 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 	u_char bVar1;
 	u_int uVar2;
 	int iVar3;
-	CdlCB pcVar4;
 	int uVar5;
 	void *buf;
 	CdlLOC aCStack56[2];
 	u_char auStack48[8];
 
 	bVar1 = true;
-
-	pcVar4 = (CdlCB)0x0;
 
 	DECOMP_CDSYS_SetMode_StreamData();
 
@@ -63,7 +60,7 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 #ifdef REBUILD_PC
 		uVar5 = 1;
 #endif
-
+		CdlCB cdreadCB = (CdlCB)0x0;
 		// If no callback function pointer is given
 		if (callback == 0)
 		{
@@ -77,12 +74,12 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 		{
 			// Save the function pointer address
 			sdata->ReadFileAsyncCallbackFuncPtr = callback;
-			pcVar4 = DECOMP_LOAD_ReadFileASyncCallback;
+			cdreadCB = DECOMP_LOAD_ReadFileASyncCallback;
 		}
 
 		// Save this function as a callback,
 		// which does not execute the function pointer
-		CdReadCallback(pcVar4);
+		CdReadCallback(cdreadCB);
 
 		uVar2 = CdRead(*size + 0x7ffU >> 0xb,buf,0x80);
 		uVar5 = uVar5 & uVar2;

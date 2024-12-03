@@ -7,7 +7,6 @@ void DECOMP_GhostReplay_Init1(void)
 	char i;
 	u_short uVar1;
 	int iVar2;
-	u_int uVar3;
 	struct Thread *t;
 	struct Instance *inst;
 	struct Instance *wakeInst;
@@ -34,7 +33,7 @@ void DECOMP_GhostReplay_Init1(void)
 	// In the future, this can move to GhostTape_Start, when byte budget allows
 	
 	gh = DECOMP_MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
-	recordBuffer = (char*)GHOSTHEADER_GETRECORDBUFFER(gh);
+	recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 	sdata->GhostRecording.ptrGhost = gh;
 	sdata->GhostRecording.ptrStartOffset = &recordBuffer[0];
 	sdata->GhostRecording.ptrEndOffset = &recordBuffer[0x3DD4];
@@ -111,7 +110,7 @@ void DECOMP_GhostReplay_Init1(void)
 		}
 		
 		sdata->boolGhostsDrawing = 1;
-		recordBuffer = (char*)GHOSTHEADER_GETRECORDBUFFER(gh);
+		recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 
 		// Signals GhostReplay_ThTick to return
 		// early, and not try to "play" the ghost
@@ -146,12 +145,12 @@ void DECOMP_GhostReplay_Init1(void)
 		
 // set in MainInit_Drivers for PC port
 #ifndef REBUILD_PS1
-		uVar3 = (u_int)VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+		struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
 #else
-		uVar3 = 0;
+		struct Model* model = NULL;
 #endif
 
-		inst = DECOMP_INSTANCE_Birth3D((struct Model*)uVar3, NULL, NULL);
+		inst = DECOMP_INSTANCE_Birth3D(model, NULL, NULL);
 		inst->unk51 = 0xc;
 		inst->flags = 7;
 

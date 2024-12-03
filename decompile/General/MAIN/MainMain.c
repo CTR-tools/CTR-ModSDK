@@ -773,7 +773,7 @@ void StateZero()
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
 	DECOMP_Music_SetIntro();
 	DECOMP_CseqMusic_StopAll();
-	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
+	DECOMP_CseqMusic_Start(0, 0, NULL, 0, 0);
 	DECOMP_Music_Start(0);
 
 	// "Start your engines, for Sony Computer..."

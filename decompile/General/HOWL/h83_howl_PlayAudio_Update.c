@@ -3,8 +3,7 @@
 void DECOMP_howl_PlayAudio_Update()
 {
 	int* ptrFlag;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	u_char statFlags;
 	
 	if(sdata->boolAudioEnabled != 0)
@@ -24,10 +23,10 @@ void DECOMP_howl_PlayAudio_Update()
 		for(
 				curr = (struct ChannelStats*)sdata->channelTaken.first;
 				curr != NULL;
-				curr = (struct ChannelStats*)backupNext
+				curr = backupNext
 			)
 		{
-			backupNext = (int)curr->next;
+			backupNext = curr->next;
 		
 			// if sound is stacatto (has no timer)
 			statFlags = curr->flags;

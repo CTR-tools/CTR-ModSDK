@@ -5,17 +5,16 @@ void Channel_DestroySelf(struct ChannelStats* stats);
 // param_1 0: keep menu fx, 1: destroy all fx
 // param_2 0: destroy music, 1: keep music
 void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
-{	
-	int backupNext;
-	struct ChannelStats* curr;
+{
+	struct ChannelStats* curr, *backupNext;
 	
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		if(
 			// destroy if not music

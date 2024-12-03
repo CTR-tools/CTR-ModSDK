@@ -3,8 +3,7 @@
 void DECOMP_howl_PauseAudio()
 {
 	int* ptrFlag;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	struct ChannelStats* pausedStats;
 	
 	DECOMP_CDSYS_XAPauseRequest();
@@ -21,10 +20,10 @@ void DECOMP_howl_PauseAudio()
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		ptrFlag = &sdata->ChannelUpdateFlags[curr->channelID];
 		*ptrFlag |= 1;

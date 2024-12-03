@@ -2,16 +2,15 @@
 
 void DECOMP_UpdateChannelVol_OtherFX_All()
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{	
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 	
 		// type != OtherFX, skip
 		if(curr->type != 1) continue;

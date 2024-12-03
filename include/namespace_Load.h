@@ -118,7 +118,7 @@ struct VramHeader
 };
 
 #define VRAMHEADER_GETPIXLES(x) \
-	((unsigned int)x + sizeof(struct VramHeader))
+	(uint32_t*)((unsigned int)x + sizeof(struct VramHeader))
 
 enum LevVramIndex
 {

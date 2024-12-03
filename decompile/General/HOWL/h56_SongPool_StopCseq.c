@@ -2,17 +2,16 @@
 
 void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	u_int* flagPtr;
 	
 	for(
 			curr = (struct ChannelStats*)sdata->channelTaken.first;
 			curr != NULL;
-			curr = (struct ChannelStats*)backupNext
+			curr = backupNext
 		)
 	{
-		backupNext = (int)curr->next;
+		backupNext = curr->next;
 		
 		// type != MUSIC
 		if(curr->type != 2) continue;
