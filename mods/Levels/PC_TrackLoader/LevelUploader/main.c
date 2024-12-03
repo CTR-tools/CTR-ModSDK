@@ -36,12 +36,48 @@ struct DramPointerMap
 #define DRAM_GETOFFSETS(x) \
 	((char*)x + sizeof(struct DramPointerMap))
 
+void wait()
+{
+	while (*(int*)&pBuf[(0x8000c000) & 0xffffff] != 3)
+	{
+		// do nothing
+	}
+}
+
 void UploadToDuck(char** argv)
 {
-	FILE* f = fopen("dataLEV.bin", "rb");
+	FILE* f;
+	int size;
+
+	// tell emu to pause, cause LEV is overwritten by VRM
+	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 1;
+
+	// wait 0.1s for emu to actually stop
+	Sleep(100);
+
+	f = fopen("data.vrm", "rb");
 
 	fseek(f, 0, SEEK_END);
-	int size = ftell(f);
+	size = ftell(f);
+	rewind(f);
+
+	// read to 4mb on PS1
+	fread(&pBuf[0x200000], size, 1, f);
+
+	fclose(f);
+
+	// tell PS1 to load VRAM
+	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 2;
+
+	// wait for VRAM to finish uploading
+	wait();
+
+	// ============================================
+
+	f = fopen("data.lev", "rb");
+
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
 	rewind(f);
 
 	// read to 2mb on PS1
@@ -63,21 +99,11 @@ void UploadToDuck(char** argv)
 	// set level file pointer
 	*(int*)&pBuf[(0x80096b20 + 0x160) & 0xffffff] = 0x80200004;
 
+	// tell PS1 to start level
+	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 4;
+
 	// ============================================
 	
-	f = fopen("dataVRAM.bin", "rb");
-
-	fseek(f, 0, SEEK_END);
-	size = ftell(f);
-	rewind(f);
-	
-	// read to 4mb on PS1
-	fread(&pBuf[0x400000], size, 1, f);
-
-	fclose(f);
-	
-	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 1;
-
 	printf("Here\n");
 	system("pause");
 	exit(0);

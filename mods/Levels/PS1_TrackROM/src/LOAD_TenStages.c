@@ -235,6 +235,27 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			
 			MainInit_PrimMem(gGT);
 			MainInit_OTMem(gGT);
+			
+			for(int i = 0; i < 2; i++)
+			{
+				struct PrimMem* primMem = &gGT->db[i].primMem;
+
+				void* pvVar1 = 0x80600000 + i*0x100000;
+				
+				// 1MB, take away some padding
+				int size = 0x100000 - 0x1000;
+				
+				primMem->size = size;
+				primMem->unk2 = (int)pvVar1;
+				primMem->curr = pvVar1;
+				primMem->start = pvVar1;
+				
+				// skip alignment by & 0xfffffffc,
+				// all possible size inputs are already aligned
+				pvVar1 = (void*)((int)pvVar1 + size);
+				primMem->end = pvVar1;
+				primMem->endMin100 = (void*)((int)pvVar1 - 0x100);
+			}
 
 			// if cutscene, adventure arena, or credits
 			if
@@ -418,6 +439,10 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				if (*piVar15 != 0) *piVar15 += 4;
 			};
 
+			// for a test rom, dont do this,
+			// just load it somewhere in 8mb
+			#if 0
+
 			// If the world you're in is made of multiple LEV files
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
@@ -481,6 +506,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// make all futuere allocations in subpacks
 				MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}
+			
+			#endif
 
 			// game is now loading
 			sdata->load_inProgress = 1;
@@ -616,6 +643,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 			iVar9 = 7;
 
+			#if 0
 			// podium reward
 			if (gGT->podiumRewardID != 0)
 			{
@@ -685,6 +713,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
 			}
+			#endif
 			
 			break;
 		case 8:

@@ -179,19 +179,31 @@ void RunUpdateHook()
 	// this gets triggered by the injector
 	if(*(int*)0x8000c000 == 1)
 	{
-		*(int*)0x8000c000 = 0;
+		while(!ReadyToContinue(2)) {}
 		
 		void FakeVramCallback();
 		FakeVramCallback();
-		
+
+		// finished uploading
+		*(int*)0x8000c000 = 3;
+		while(!ReadyToContinue(4)) {}
+	
 		gGT->visMem1 = gGT->level1->visMem;
 		gGT->visMem2 = gGT->visMem1;
+		
+		*(int*)0x8000c000 = 0;
 	}
+}
+
+__attribute__((optimize("O0")))
+int ReadyToContinue(int x)
+{
+	return *(int*)0x8000c000 == x;
 }
 
 void FakeVramCallback()
 {
-	int* vramBuf = 0x80400000;
+	int* vramBuf = 0x80200000;
 	struct VramHeader* vh = vramBuf;
 	
 	// if multiple TIMs are packed together
