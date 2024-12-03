@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -36,8 +38,7 @@ struct DramPointerMap
 
 void UploadToDuck(char** argv)
 {
-	printf("%s\n", argv[1]);
-	FILE* f = fopen(argv[1], "rb");
+	FILE* f = fopen("dataLEV.bin", "rb");
 
 	fseek(f, 0, SEEK_END);
 	int size = ftell(f);
@@ -61,6 +62,21 @@ void UploadToDuck(char** argv)
 
 	// set level file pointer
 	*(int*)&pBuf[(0x80096b20 + 0x160) & 0xffffff] = 0x80200004;
+
+	// ============================================
+	
+	f = fopen("dataVRAM.bin", "rb");
+
+	fseek(f, 0, SEEK_END);
+	size = ftell(f);
+	rewind(f);
+	
+	// read to 4mb on PS1
+	fread(&pBuf[0x400000], size, 1, f);
+
+	fclose(f);
+	
+	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 1;
 
 	printf("Here\n");
 	system("pause");

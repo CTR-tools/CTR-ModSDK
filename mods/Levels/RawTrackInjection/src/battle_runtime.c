@@ -166,14 +166,54 @@ void RunUpdateHook()
 	// disable end-of-race high score saving,
 	// but &1 is needed for the ghosts to work
 	gGT->unknownFlags_1d44 = 1;
-	
+
+	#if 0
 	d = gGT->drivers[0];
 	
-	#if 0
 	// get AI Nav data
 	printf("{.pos = {%d,%d,%d},.rot={%d,%d,%d,%d}},\n",
 		d->posCurr[0]/256, d->posCurr[1]/256, d->posCurr[2]/256,
 		d->rotCurr.x/16, d->rotCurr.y/16, d->rotCurr.z/16, d->rotCurr.w/16);
 	#endif
+
+	// this gets triggered by the injector
+	if(*(int*)0x8000c000 == 1)
+	{
+		*(int*)0x8000c000 = 0;
+		
+		void FakeVramCallback();
+		FakeVramCallback();
+		
+		gGT->visMem1 = gGT->level1->visMem;
+		gGT->visMem2 = gGT->visMem1;
+	}
 }
 
+void FakeVramCallback()
+{
+	int* vramBuf = 0x80400000;
+	struct VramHeader* vh = vramBuf;
+	
+	// if multiple TIMs are packed together
+	if(vramBuf[0] == 0x20)
+	{
+		int size = vramBuf[1];
+		vh = &vramBuf[2];
+		
+		while(size != 0)
+		{	
+			LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
+			
+			vramBuf = (int*)vh;
+			vramBuf = &vramBuf[size>>2];
+			size = vramBuf[0];
+			vh = &vramBuf[1];
+		}
+	}
+	
+	// if just one TIM
+	else
+	{
+		LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
+	}
+}
