@@ -163,10 +163,8 @@ void DECOMP_AH_MaskHint_Update()
 					
 					DECOMP_AH_MaskHint_SpawnParticles
 						(0x18, &D232.emSet_maskLeave[0], 0x1000);
-					
-					DECOMP_VehTalkMask_PlayXA(
-						(struct INSTANCE*)sdata->modelMaskHints3D, 
-						D232.maskHintID);
+
+					DECOMP_VehTalkMask_PlayXA((struct Instance*)sdata->modelMaskHints3D, D232.maskHintID);
 					
 					if (
 						((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&

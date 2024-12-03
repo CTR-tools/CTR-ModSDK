@@ -190,7 +190,7 @@ LAB_800add14:
       tw->dir[1] = tw->rotY;
 
 	   // convert 3 rotation shorts into rotation matrix
-      ConvertRotToMatrix(&inst->matrix,(short*)&tw->dir);
+      ConvertRotToMatrix(&inst->matrix, &tw->dir[0]);
     }
   }
 
@@ -278,7 +278,7 @@ LAB_800add14:
 
   sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-  COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, (u_int*)sps, 0);
+  COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
 
   RB_MakeInstanceReflective(sps,inst);
 
@@ -309,7 +309,7 @@ LAB_800add14:
       posA[1] = inst->matrix.t[1] - 0x900;
       posA[2] = inst->matrix.t[2];
 
-      COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, (u_int*)sps, 0);
+      COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
 
 	  // if still nothing, then explode
       if (sps->boolDidTouchQuadblock == 0)

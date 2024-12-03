@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_VehTalkMask_PlayXA(struct INSTANCE* i, int id)
+void DECOMP_VehTalkMask_PlayXA(struct Instance* i, int id)
 {
 	struct Driver* d = sdata->gGT->drivers[0];
 	

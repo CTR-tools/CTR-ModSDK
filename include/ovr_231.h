@@ -249,7 +249,7 @@ struct MineWeapon
 
 	// 0x1C
 	// relative to driver
-	short deltaPos[3];
+	short deltaPos[3]; //Maybe SVECTOR but without padding?
 
 	// 0x22
 	// how many more jumps until

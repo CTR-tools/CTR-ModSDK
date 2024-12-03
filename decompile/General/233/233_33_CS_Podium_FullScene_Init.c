@@ -24,7 +24,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 		// rotation (for both)
 		// X Y Z and ?
 		short rot[4];
-		
+
 		// matrix
 		u_int local_30;
 		u_int local_2c;

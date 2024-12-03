@@ -476,7 +476,7 @@ struct SpawnType1
 struct SpawnType2
 {
 	int numCoords;
-	short* posCoords;
+	short* posCoords; //maybe should be `struct PosRot*` instead of `short*`
 };
 
 // per-quadblock checkpoint node

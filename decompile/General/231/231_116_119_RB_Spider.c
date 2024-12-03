@@ -1,7 +1,5 @@
 #include <common.h>
 
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
-
 #ifndef REBUILD_PS1
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 {
@@ -69,7 +67,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 
 	p = primMem->curr;	
 	p = p + (numSpiders * numPlyr);
-    if ((u_int)p >= (u_int)primMem->endMin100)
+    if ((u_int)p >= (u_int)primMem->endMin100) //these casts may need to be (int) instead of (u_int)
 		return;
 
     // loop through all players

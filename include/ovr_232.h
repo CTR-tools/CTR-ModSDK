@@ -259,13 +259,13 @@ struct OverlayDATA_232
 	short loadSave_pos[2*4];
 	
 	// 800b4fdc
-	int loadSave_col[4];
+	int loadSave_col[4]; //maybe should be `char*` instead of `int`
 	
 	// 800b4fec
 	short hubArrow_pos[2*3];
 	
 	// 800B4FF8
-	int hubArrow_col1[3];
+	int hubArrow_col1[3]; //maybe should be `char*` instead of `int`
 	
 	// 800b5004
 	int hubArrow_col2[3];
@@ -376,10 +376,10 @@ struct OverlayDATA_232
 	short lookAtPos[4];
 	
 	// 800b5530
-	int colorQuad[4];
+	int colorQuad[4]; //maybe should be `char*` instead of `int`
 	
 	// 800b5540
-	int colorTri[3];
+	int colorTri[3]; //maybe should be `char*` instead of `int`
 	
 	// 800b554c
 	short pausePageDir;

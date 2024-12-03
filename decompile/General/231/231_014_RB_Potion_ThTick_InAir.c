@@ -5,7 +5,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	struct GameTracker* gGT;
 	struct Instance* inst;
 	struct MineWeapon* mw;
-	
+
 	short posBottom[3];
 	short posTop[3];
 	
@@ -54,7 +54,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 
 	SPS->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-	COLL_SearchTree_FindQuadblock_Touching((u_int*)&posBottom, (u_int*)&posTop, (u_int*)SPS, 0); //the method signature goes posTop, posBottom? is this a bug?
+	COLL_SearchTree_FindQuadblock_Touching((u_int*)&posBottom, (u_int*)&posTop, SPS, 0); //the method signature goes posTop, posBottom? is this a bug?
 
 	RB_MakeInstanceReflective(SPS, inst);
 
@@ -115,7 +115,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		posBottom[1] = inst->matrix.t[1] - 0x900;
 		posBottom[2] = inst->matrix.t[2];
 
-		COLL_SearchTree_FindQuadblock_Touching((u_int*)&posBottom, (u_int*)&posTop, (u_int*)SPS, 0);
+		COLL_SearchTree_FindQuadblock_Touching((u_int*)&posBottom, (u_int*)&posTop, SPS, 0);
 
 		// quadblock exists far below potion, dont destroy
 		if (SPS->boolDidTouchQuadblock != 0) return;

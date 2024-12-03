@@ -792,7 +792,7 @@ void DECOMP_GAMEPAD_ShockFreq(struct Driver* d, int frame, int val);
 int DECOMP_RaceFlag_IsTransitioning(void);
 void DECOMP_LOAD_Robots1P(int characterID);
 void DECOMP_CTR_Box_DrawWirePrims(Point p1, Point p2, Color color, void* ot);
-void DECOMP_UI_Map_DrawRawIcon(
+void DECOMP_UI_Map_DrawRawIcon( //1st param is probably a ptr type of some sort (maybe short*)?, could maybe do `void*` for now
 	int ptrMap, int* param_2,
 	int iconID, int colorID, int unused,
 	short scale);
@@ -801,7 +801,7 @@ void DECOMP_UI_Map_DrawDrivers(int ptrMap, struct Thread* bucket, short* param_3
 int DECOMP_VehTalkMask_boolNoXA(void);
 void DECOMP_VehTalkMask_End(void);
 struct Instance* DECOMP_VehTalkMask_Init(void);
-void DECOMP_VehTalkMask_PlayXA(struct INSTANCE* i, int id);
+void DECOMP_VehTalkMask_PlayXA(struct Instance* i, int id);
 struct RectMenu* DECOMP_MainFreeze_GetMenuPtr(void);
 void DECOMP_LOAD_TalkingMask(int packID, int maskID);
 int DECOMP_LOAD_GetAdvPackIndex(void);
@@ -853,3 +853,4 @@ void DECOMP_Veh_NullThread(struct Thread* t);
 
 //TODO:
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot
+//DECOMP_CTR_Box_DrawWirePrims change void* ot to u_long* ot

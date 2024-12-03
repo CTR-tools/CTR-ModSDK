@@ -35,7 +35,7 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     cloudInst->unk51 = d->instSelf->unk51;
     
 	// add rain to pool
-	rlocal = (struct RainLocal*)DECOMP_JitPool_Add((struct JitPool*)&sdata->gGT->JitPools.rain);
+	rlocal = (struct RainLocal*)DECOMP_JitPool_Add(&sdata->gGT->JitPools.rain);
     
 	// no idea what struct is this yet 
 	if (rlocal != NULL) 

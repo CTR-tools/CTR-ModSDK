@@ -53,7 +53,9 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 			)->driverParent;
 			
 		// if this is an AI, quit
-		if((driver->actionsFlagSet & 0x100000) != 0) return (struct Driver*)1; //wtf? return type is Driver*
+
+		//it's odd that it casts "1" as struct Driver*, but callers of this function *do* check the return value == 1, so it must be intentional.
+		if((driver->actionsFlagSet & 0x100000) != 0) return (struct Driver*)1;
 		
 		return driver;
 	}
@@ -65,8 +67,9 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 		
 		return driver;
 	}
-	
-	return (struct Driver*)1; //wtf? return type is Driver*, why is it returning 1, wouldn't NULL make more sense?
+
+	//it's odd that it casts "1" as struct Driver*, but callers of this function *do* check the return value == 1, so it must be intentional.
+	return (struct Driver*)1;
 }
 
 void DECOMP_RB_CrateAny_ThTick_Explode(struct Thread* t) 
@@ -284,11 +287,11 @@ int DECOMP_RB_CrateWeapon_LInC(
 		
 		#ifdef USE_ONLINE
 		if(driver->driverID != 0)
-			return 1; //guessing return 1 means """cancel"""
+			return 0; //guessing return 0 means """cancel"""
 		
 		// do nothing at end of race
 		if((driver->actionsFlagSet & 0x2000000) != 0)
-			return 1;
+			return 0;
 		#endif
 		
 		// == give driver weapon ==

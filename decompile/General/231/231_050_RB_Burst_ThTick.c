@@ -32,7 +32,7 @@ void DECOMP_RB_Burst_ThTick(struct Thread *t)
     else
     {
       INSTANCE_Death(inst);
-      *(int**)burst = NULL;
+      *burst = (int)NULL;
     }
   }
 

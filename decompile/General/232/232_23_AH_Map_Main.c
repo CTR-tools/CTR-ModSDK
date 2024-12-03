@@ -6,7 +6,7 @@ void DECOMP_AH_Map_Main(void)
   struct Driver* advDriver;
   struct UiElement2D* ptrHudData;
   int iVar1;
-  int hubPtrs;
+  int hubPtrs; //int*?
   short local_20;
   short local_1e[3];
   
@@ -55,7 +55,7 @@ void DECOMP_AH_Map_Main(void)
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
 	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-    hubPtrs = (int)pointers[ST1_MAP];
+    hubPtrs = (int)pointers[ST1_MAP]; //cast as int*?
   }
   
   // if game is not paused
@@ -74,7 +74,7 @@ void DECOMP_AH_Map_Main(void)
 	
     DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
 
-    DECOMP_AH_Map_Warppads((short*)hubPtrs,gGT->threadBuckets[5].thread,(short*)&local_1e[0]);
+    DECOMP_AH_Map_Warppads((short*)hubPtrs,gGT->threadBuckets[5].thread,(short*)&local_1e[0]); //local_1e index 1 and 2 are never assigned to, so garbage data?
 	
     DECOMP_AH_Map_HubItems((void*)hubPtrs,&local_1e[0]);
 	

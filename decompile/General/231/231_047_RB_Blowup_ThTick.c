@@ -32,7 +32,7 @@ void DECOMP_RB_Blowup_ThTick(struct Thread *t)
     else
     {
       INSTANCE_Death(inst);
-      *(int**)blowup = NULL;
+      *blowup = (int)NULL;
     }
   }
 

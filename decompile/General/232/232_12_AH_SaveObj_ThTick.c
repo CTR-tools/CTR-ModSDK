@@ -92,7 +92,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
 
                 // Set CameraDC's desired position and rotation,
                 // then begin the transition by setting flag
-                DECOMP_CAM_SetDesiredPosRot((struct CameraDC*)gGT->cameraDC, (short*)&desiredPos, (short*)&desiredRot);
+                DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], (short*)&desiredPos, (short*)&desiredRot);
 
 #ifndef REBUILD_PS1
                 GAMEPAD_JogCon2(driver, 0, 0);

@@ -448,7 +448,7 @@ struct InstDrawPerPlayer
 	struct TextureLayout** ptrTexLayout;
 	
 	// 0xd0
-	unsigned int ptrColorLayout;
+	unsigned int ptrColorLayout; //maybe should be `unsigned int*`
 	
 	// 0xd4
 	int ptrDeltaArray;
@@ -525,7 +525,7 @@ struct Instance
 	char unk53;
 
 	// 0x54
-	short animFrame;
+	short animFrame; //this might be a `u_short` instead of `short`
 
 	// 0x56
 	// mud, water, ice

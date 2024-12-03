@@ -14,6 +14,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
   // BSP_Meta -> weaponthread -> object
   //iVar7 = *(int*)(*(int*)(param_1 + 0x18) + 0x30);
   tw = (struct TrackerWeapon*)(*(int*)(*(int*)(((int)sps) + 0x18) + 0x30));
+  //tw = (struct TrackerWeapon*)(*((int*)sps->Union.ThBuckColl.thread->object)); //this *might* be equivalent to the above line.
   
   weaponTh = sps->Union.ThBuckColl.thread;
   void* weaponObj = weaponTh->object;

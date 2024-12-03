@@ -16,7 +16,7 @@ void BOTS_ThTick_RevEngine (struct Thread * thread, u_int param_2, u_char * para
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
 void BOTS_ThTick_Drive(struct Thread* thread);
-u_int BOTS_ChangeState(struct Driver* d1, int param_2, struct Driver* d2, int param_4);
+u_int BOTS_ChangeState(struct Driver* d1, int param_2, struct Driver* d2, int param_4); //either this needs to return int, or VehPickState_NewState needs to return u_int, if I were to guess, this one needs to return int.
 void BOTS_CollideWithOtherAI(int param_1, int param_2);
 void BOTS_GotoStartingLine(struct Driver* driver);
 struct Driver* BOTS_Driver_Init(int driverID);
@@ -74,7 +74,7 @@ u_int COLL_Instance(short* param_1, struct BSP* node);
 void COLL_PerBspLeaf_CheckInstances(struct BSP* node, struct ScratchpadStruct *sps);
 void COLL_StartSearch_AI(short* posCurr, short* posPrev, short* param_3);
 void COLL_StartSearch_Player(struct Thread* t, struct Driver* d);
-void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, u_int* param_3, int param_4);
+void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, 3rd param might be ``, also may have 6 params not 4???
 void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, u_int* callback, u_int param_4);
 u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001ef1c();
@@ -729,7 +729,7 @@ void PROC_DestroySelf(struct Thread* t);
 void PROC_DestroyBloodline(struct Thread* t);
 void PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
 void PROC_CheckAllForDead();
-struct Thread* PROC_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative);
+struct Thread* PROC_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative); //2nd param function ptr, maybe (void (*)(int))?
 void PROC_CollidePointWithSelf(struct Thread* th, void* buf);
 void PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
 struct Thread* PROC_SearchForModel(struct Thread* th, int modelID);
@@ -1335,3 +1335,4 @@ u_int VehCalc_FastSqrt(u_int, u_int);
 void Veh_NullThread(struct Thread* t);
 void SelectProfile_DrawAdvProfile(struct AdvProgress* adv, int posX, int posY, u_int isHighlighted, short slotIndex, u_short menuFlag);
 void SelectProfile_Init(u_short flags);
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);

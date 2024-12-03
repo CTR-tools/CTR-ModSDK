@@ -1587,6 +1587,3 @@ _Static_assert(sizeof(struct MetaPhys) == 0x1C);
 #if BUILD == UsaRetail && !defined(USE_ONLINE)
 _Static_assert(sizeof(struct Driver) == 0x638);
 #endif
-
-//this section is forward decls to fix warnings by TheUbMunster.
-struct INSTANCE; //this hoisted from VehTalkMask_PlayXA.c, idk where it's defined.
