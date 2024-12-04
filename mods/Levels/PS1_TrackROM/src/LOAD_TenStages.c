@@ -236,6 +236,9 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			MainInit_PrimMem(gGT);
 			MainInit_OTMem(gGT);
 			
+			// disable only for no$psx,
+			// cause it wont support 2mb+ Prim/OT
+			#if 1
 			for(int i = 0; i < 2; i++)
 			{
 				struct PrimMem* primMem = &gGT->db[i].primMem;
@@ -256,6 +259,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				primMem->end = pvVar1;
 				primMem->endMin100 = (void*)((int)pvVar1 - 0x100);
 			}
+			#endif
 
 			// if cutscene, adventure arena, or credits
 			if
@@ -518,7 +522,13 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				LOAD_AppendQueue(bigfile, LT_VRAM, 222, 0, 0);
 			
 				// adds LEV to loading queue
-				LOAD_AppendQueue(bigfile, LT_DRAM, 221, 0, &LOAD_Callback_LEV);
+				LOAD_AppendQueue(bigfile, LT_DRAM, 221, 
+				
+				// no$psx wont work with 8mb? could've sworn it did
+				//0,
+				0x80200000, 
+				
+				&LOAD_Callback_LEV);
 			}
 			
 			else
