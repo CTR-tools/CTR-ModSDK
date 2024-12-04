@@ -1166,7 +1166,7 @@ void* BreakDraw();
 // (currently unorganized)
 
 void RB_Bubbles_RoosTubes();
-void RB_Burst_DrawAll(int param_1);
+void RB_Burst_DrawAll(struct GameTracker* gGT);
 void UI_CupStandings_InputAndDraw();
 void VB_EndEvent_DrawMenu();
 void RR_EndEvent_DrawMenu();

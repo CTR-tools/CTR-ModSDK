@@ -27,7 +27,7 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 					visInstSrc++
 				)
 			{
-				visInstSrc[0] = (struct Instance*)visInstSrc[0]->instDef;
+				visInstSrc[0] = (struct Instance*)visInstSrc[0]->instDef; //maybe `visInstSrc[0]->instDef->ptrInstance`?
 			}
 		}
 	}

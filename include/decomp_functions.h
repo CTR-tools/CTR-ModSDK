@@ -855,9 +855,3 @@ void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*)(struct LoadQu
 //TODO:
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot
 //DECOMP_CTR_Box_DrawWirePrims change void* ot to u_long* ot
-//DECOMP_LOAD_AppendQueue callback param should be void (*)(struct LoadQueueSlot*)
-
-///////DECOMP_LOAD_HubCallback
-///////DECOMP_LOAD_Callback_Overlay_Generic
-///////DECOMP_LOAD_Callback_MaskHints3D
-//DECOMP_MainLoadVLC_Callback

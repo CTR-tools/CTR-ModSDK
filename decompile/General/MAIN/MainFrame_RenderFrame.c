@@ -424,7 +424,7 @@ void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 
 	// if main menu is open, assume 230 loaded,
 	// quit if menu is at highest level (no ptrNext to draw)
-	if(sdata->ptrActiveMenu == (struct RectMenu*)0x800B4540)
+	if(sdata->ptrActiveMenu == (struct RectMenu*)0x800B4540) //maybe a member of D230.c?
 		if((*(int*)0x800b4548 & 0x10) == 0) return;
 
 	// position of error

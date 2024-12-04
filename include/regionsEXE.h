@@ -2748,7 +2748,7 @@ struct sData
 	// 8008bfe0 - JpnTrial
 	// 8008d41c - EurRetail
 	// 80090490 - JpnRetail
-	int ptrMPK;
+	int ptrMPK; //maybe is `void*` instead of `int`
 
 	// 8008d08c
 	// ptrLEV, stored here during loading,
