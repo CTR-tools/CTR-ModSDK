@@ -22,7 +22,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
     u_int *ot;
     int depth;
     u_int *puVar8;
-    u_int *scratchpad;
+    short *scratchpad;
     int iVar11;
     int numSpiders;
     int iVar13;
@@ -35,7 +35,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
     // quit if there are no spiders
     if (t == NULL) return;
 	
-    scratchpad = (u_int*)0x1f800000;
+    scratchpad = (short*)0x1f800000;
 
     // all threads
     for (numSpiders = 0; t != NULL; numSpiders++)
@@ -80,7 +80,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
         gte_SetRotMatrix(m);
         gte_SetTransMatrix(m);
 		
-		scratchpad = (u_int*)0x1f800000;
+		scratchpad = (short*)0x1f800000;
 		
 		// 0x10 * numSpiders
 		short* output = (short*)0x1F800050;
@@ -388,5 +388,5 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   rot[0] = 0;
   rot[1] = 0x200;
   rot[2] = 0;
-  ConvertRotToMatrix(&shadowInst->matrix, (short*)&rot);
+  ConvertRotToMatrix(&shadowInst->matrix, &rot[0]);
 }
