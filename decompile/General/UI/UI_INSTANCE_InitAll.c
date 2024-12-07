@@ -69,8 +69,8 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       }
 
 	  // The rest of this block only happens in Relic Mode
-      sdata->ptrRelic = 	(struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x61,(int)DECOMP_UI_ThTick_Reward, 0xe,1,0,/*sdata->s_relic1*/0);
-      sdata->ptrTimebox1 = 	(struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x5c,(int)DECOMP_UI_ThTick_CountPickup, 0x13,1,0,/*sdata->s_timebox1*/0);
+      sdata->ptrRelic = 	DECOMP_UI_INSTANCE_BirthWithThread(0x61,(int)DECOMP_UI_ThTick_Reward, 0xe,1,0,/*sdata->s_relic1*/0);
+      sdata->ptrTimebox1 = 	DECOMP_UI_INSTANCE_BirthWithThread(0x5c,(int)DECOMP_UI_ThTick_CountPickup, 0x13,1,0,/*sdata->s_timebox1*/0);
 
 	  // if instance
       if (sdata->ptrRelic != 0)
@@ -168,9 +168,9 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     }
 
 	#ifndef USE_ONLINE
-    sdata->ptrHudC = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x93,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
-    sdata->ptrHudT = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x94,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
-    sdata->ptrHudR = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x95,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudr*/0);
+    sdata->ptrHudC = DECOMP_UI_INSTANCE_BirthWithThread(0x93,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
+    sdata->ptrHudT = DECOMP_UI_INSTANCE_BirthWithThread(0x94,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
+    sdata->ptrHudR = DECOMP_UI_INSTANCE_BirthWithThread(0x95,(int)DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudr*/0);
 	#endif
 
 #ifdef REBUILD_PC
@@ -186,13 +186,13 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   // If you're in Crystal Challenge
   else
   {
-    sdata->ptrMenuCrystal = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
-	sdata->ptrHudCrystal = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+    sdata->ptrMenuCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+	sdata->ptrHudCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,(int)DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
 	sdata->ptrHudCrystal->flags |= 0x80;
   }
 
   // Make a token
-  sdata->ptrToken = (struct Instance*)DECOMP_UI_INSTANCE_BirthWithThread(0x7d,(int)DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
+  sdata->ptrToken = DECOMP_UI_INSTANCE_BirthWithThread(0x7d,(int)DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
 
   // make copy of Token pointer
   token = sdata->ptrToken;

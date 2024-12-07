@@ -422,7 +422,7 @@ int DECOMP_UI_ConvertX_2(int oldPosX,int newPosX);
 int DECOMP_UI_ConvertY_2(int oldPosY,int newPosY);
 
 void DECOMP_UI_INSTANCE_InitAll(void);
-int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6);
+struct Instance* DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6);
 
 void DECOMP_UI_DrawBattleScores(int posX, int posY, struct Driver * d);
 void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* d);

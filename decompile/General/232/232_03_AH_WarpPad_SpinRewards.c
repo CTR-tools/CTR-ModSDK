@@ -22,6 +22,7 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	// but that was replaced with pointers to globals,
 	// because the arrays didnt actually change per warppad
 
+	//this was re-rewritten because the original rewrite had incorrect behavior
 	if (modelID != 0x62) //if not trophy (no specLight on trophy)
 	{
 		if (modelID == 0x5f) //gem

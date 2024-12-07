@@ -1,6 +1,6 @@
 #include <common.h>
 
-int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
+struct Instance* DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {
   short modelID;
@@ -23,7 +23,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 
   // get model pointer
   model = gGT->modelPtr[param_1];
-  if(model == 0) return (int)NULL;
+  if(model == 0) return NULL;
 
   hudStruct = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
 
@@ -214,5 +214,5 @@ lightDir_spec0x30000:
 	#endif
   }
 
-  return (int)inst;
+  return inst;
 }
