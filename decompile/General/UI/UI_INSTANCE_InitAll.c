@@ -148,7 +148,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// Replace PushBufferUI with regular PushBuffer,
 	// workaround for decompile, and it just looks better
     sdata->ptrFruitDisp =
-		DECOMP_UI_INSTANCE_BirthWithThread(0x37,(int)DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
+		(int) DECOMP_UI_INSTANCE_BirthWithThread(0x37,(int)DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&

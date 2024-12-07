@@ -3302,7 +3302,7 @@ struct sData
 	int ptrPushBufferUI;
 
 	// 8008d4b8
-	int ptrFruitDisp;
+	int ptrFruitDisp; //should maybe be `struct Instance*` instead of `int`?
 
 	// 8008d4bc
 	int menuReadyToPass;
