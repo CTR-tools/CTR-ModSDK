@@ -65,7 +65,7 @@ void CS_Credits_Init()
 	// 0x300 = SmallStackPool
 	// 0xd = "other" thread bucket
 	creditsBSS->CreditThread =
-		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, 0, 0);
+		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, NULL, NULL);
 		
 	memset(creditsObj, 0, sizeof(struct CreditsObj));
 	creditsObj->countdown = FPS_DOUBLE(360);

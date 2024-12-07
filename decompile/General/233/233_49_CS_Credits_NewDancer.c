@@ -40,4 +40,6 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	
 	creditsObj->epilogue_nextString = 
 		CS_Credits_GetNextString(creditsObj->epilogue_topString);
+
+	creditsObj->epiloguePosX = 0x200;
 }

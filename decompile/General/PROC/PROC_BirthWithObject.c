@@ -39,14 +39,16 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	// 0x200 - medStackPool		(0x1948) [3]
 	// 0x300 - smallStackPool	(0x1920) [2]
 	
-	// index is now 1,2,3
+	// index is now 1,2,3 <-> large/medium/small
 	index = (flags>>8)&3;
 	
-	// index is now 4,3,2
+	// index is now 4=large,3=medium,2=small
 	index = 5 - index;
 	
 	// small, med, large
 	myPool = &allPools[index];
+
+	//TheUbMunster: Note: OG code says the following if statement compares against 0x670/0x88/0x48 for large/medium/small pools, rather than (myPool->itemSize - 8)
 	
 	// if can't fit in pool
 	if ((unsigned int)(flags >> 0x10) > (myPool->itemSize-8))
