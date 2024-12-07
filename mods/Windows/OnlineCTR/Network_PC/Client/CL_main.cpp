@@ -75,7 +75,7 @@ void ProcessReceiveEvent(ENetPacket* packet)
 			octr->ver_pc = VERSION;
 			octr->ver_server = r->version;
 
-			if (!(r->version == 1019 && VERSION == 1020)) //special case, v1019 servers are fully compatible with v1020 clients.
+			if (!(r->version == 1019 && VERSION == 1020) && !(r->version == 1019 && VERSION == 1021) && !(r->version == 1020 && VERSION == 1021)) //special case, certain servers are compatible with certain other client versions.
 				if (r->version != VERSION)
 				{
 					octr->CurrState = LAUNCH_ERROR;
@@ -496,6 +496,7 @@ void DisconSELECT()
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 
+		octr->autoRetryJoinRoomIndex = -1;
 		// to go the lobby browser
 		octr->CurrState = -1;
 		return;
@@ -567,7 +568,7 @@ void StatePC_Launch_PickServer()
 	if (serverPeer != 0)
 	{
 		//when it dc's it ends up here. Either this is causing the enet dc or the client is bugged to call this function again when it shouldn't
-		printf("NON-`null` enet server peer during server connection (case 1), disconnecting from old server...\n");
+		printf("Disconnecting from old server...\n");
 		enet_peer_disconnect_now(serverPeer, 0);
 		serverPeer = 0;
 	}
@@ -805,7 +806,7 @@ int countFrame = 0;
 void StatePC_Launch_PickRoom()
 {
 	countFrame++;
-	if (countFrame == octr->desiredFPS)
+	if (countFrame == 30 * 5) //just in case server's tracking & updating is flawed
 	{
 		countFrame = 0;
 
@@ -834,6 +835,7 @@ void StatePC_Launch_PickRoom()
 	CG_MessageRoom mr;
 	mr.type = CG_JOINROOM;
 	mr.room = octr->serverRoom;
+	octr->autoRetryJoinRoomIndex = -1;
 
 	sendToHostReliable(&mr, sizeof(CG_MessageRoom));
 }
@@ -1255,6 +1257,7 @@ int main(int argc, char *argv[])
 	}
 
 	octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
+	octr->autoRetryJoinRoomIndex = -1;
 
 	// initialize enet
 	if (enet_initialize() != 0)

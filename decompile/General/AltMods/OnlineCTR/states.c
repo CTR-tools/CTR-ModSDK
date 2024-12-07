@@ -15,6 +15,7 @@ bool initString = true;
 
 void StatePS1_Launch_PickServer()
 {
+	octr->autoRetryJoinRoomIndex = -1;
 	if (initString)
 	{
 		strcpy(sdata->lngStrings[0x4e], "OnlineCTR");
@@ -97,6 +98,30 @@ void StatePS1_Launch_PickRoom()
 		text,
 		menu.posX_curr,0xb8,
 		FONT_SMALL,JUSTIFY_CENTER|PAPU_YELLOW);
+
+	if (octr->autoRetryJoinRoomIndex != -1)
+	{
+		char* wtj = "Waiting to join ->";
+		int lineInd = octr->autoRetryJoinRoomIndex % 8;
+		int pageNum = octr->autoRetryJoinRoomIndex / 8;
+		if (pageNum == octr->PageNumber)
+			DecalFont_DrawLine(wtj, 0xE0, 0x6b + (lineInd * 8), FONT_SMALL, JUSTIFY_CENTER | TINY_GREEN);
+		if (octr->clientCount[octr->autoRetryJoinRoomIndex] <= 7)
+		{
+			octr->serverRoom = octr->autoRetryJoinRoomIndex;
+			octr->serverLockIn2 = 1;
+			octr->autoRetryJoinRoomIndex = -1;
+			//0 = cursor move noise
+			//1 = cursor select noise
+			//2 = triangle noise
+			//3 = Ding!
+			//4 = different ding!
+			//5 = womp
+			//6 = slammed into wall sfx
+			//...
+			DECOMP_OtherFX_Play(3, 1); //play SFX to notify user
+		}
+	}
 }
 
 void StatePS1_Launch_Error()
@@ -394,31 +419,47 @@ void StatePS1_Game_StartRace()
 			octr->Shoot[i].boolNow = 0;
 
 			struct Driver* d = sdata->gGT->drivers[i];
-
-			if(octr->Shoot[i].boolJuiced)
-				d->numWumpas = 10;
-
-			d->heldItemID = octr->Shoot[i].Weapon;
-
-			// copy/paste from ShootOnCirclePress
-			int weapon;
-			weapon = d->heldItemID;
-
-			// Missiles and Bombs share code,
-			// Change Bomb1x, Bomb3x, Missile3x, to Missile1x
-			if(
-				(weapon == 1) ||
-				(weapon == 10) ||
-				(weapon == 11)
-			)
+			if (d->instBombThrow != 0)
 			{
-				weapon = 2;
+				// Detonate the bomb
+				struct TrackerWeapon* bomb = (struct TrackerWeapon*)d->instBombThrow->thread->object;
+				bomb->flags |= 2;
+				d->instBombThrow = NULL;
 			}
+			else if (d->instBubbleHold != 0)
+			{
+				// Shoot the shield
+				struct Shield* shield = (struct Shield*)d->instBubbleHold->thread->object;
+				shield->flags |= 2;
+				d->instBubbleHold = NULL;
+			}
+			else
+			{
+				if (octr->Shoot[i].boolJuiced)
+					d->numWumpas = 10;
 
-			DECOMP_VehPickupItem_ShootNow(
-				d,
-				weapon,
-				octr->Shoot[i].flags);
+				d->heldItemID = octr->Shoot[i].Weapon;
+
+				// copy/paste from ShootOnCirclePress
+				int weapon;
+				weapon = d->heldItemID;
+
+				// Missiles and Bombs share code,
+				// Change Bomb1x, Bomb3x, Missile3x, to Missile1x
+				if (
+					(weapon == 1) ||
+					(weapon == 10) ||
+					(weapon == 11)
+					)
+				{
+					weapon = 2;
+				}
+
+				DECOMP_VehPickupItem_ShootNow(
+					d,
+					weapon,
+					octr->Shoot[i].flags);
+			}
 		}
 	}
 }
