@@ -1,7 +1,7 @@
 #ifndef ONLINE_GLOBAL_H
 #define ONLINE_GLOBAL_H
 
-#define VERSION 1020
+#define VERSION 1021
 //#define ONLINE_BETA_MODE
 
 #ifndef WINDOWS_INCLUDE
@@ -162,10 +162,10 @@ struct OnlineCTR
     // Last windowsClientSync counter
 	char lastWindowsClientSync;
 
-	char desiredFPS;
-
 	// when to start the client.exe loop
 	int readyToSend;
+
+	int autoRetryJoinRoomIndex;
 };
 
 STATIC_ASSERT2(sizeof(struct OnlineCTR) <= 0x400, "Size of OnlineCTR must be lte 1kb");

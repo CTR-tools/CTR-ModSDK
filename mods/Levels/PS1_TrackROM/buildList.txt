@@ -1,0 +1,26 @@
+
+// loads bigfile 221 as lev
+common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
+
+// sets lev to bigfile 221
+926, 221, 0x8009f6fc, 0x0, src/customtrack.lev
+926, 222, 0x8009f6fc, 0x0, src/customtrack.vrm
+
+// disable LevInstDef_UnPack
+common, exe, LevInstDef_UnPack, 0x0, src/return1.c
+
+// disable map
+common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
+
+// disable LevInstQueue
+// required? or just needed cause I messed up? crashes in relocate attempts
+common, exe, RenderBucket_QueueLevInstances, 0x0, src/disableQueueLevInst.c
+
+// Battle weapons
+common, exe, BOTS_SetRotation, -0x8, src/battle_hookUpdate.s
+common, exe, MainInit_StringToLevID, -0x8, src/battle_hookInit.s
+common, exe, rdata_free, 0x0, src/battle_runtime.c
+
+// 230
+common, 230, MM_Characters_MenuProc, 0x0, src/230_50_MM_Characters_MenuProc.c
+common, 230, MM_MenuProc_Main, 0x0, src/230_31_MM_MenuProc_Main.c
