@@ -19,7 +19,7 @@ void DECOMP_PROC_StartSearch_Self(struct ScratchpadStruct* param)
   COLL_SearchTree_FindX(
 	gGT->level1->ptr_mesh_info->bspRoot,
 	param->funcCallback,
-	PROC_PerBspLeaf_CheckInstances);
+	PROC_PerBspLeaf_CheckInstances, /*??? param here*/);
   
   return;
 }

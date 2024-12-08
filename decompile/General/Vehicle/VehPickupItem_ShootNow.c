@@ -1,9 +1,5 @@
 #include <common.h>
 
-void RB_GenericMine_ThTick(struct Thread* t);
-void RB_ShieldDark_ThTick_Grow(struct Thread* t);
-void RB_Warpball_ThTick(struct Thread* t);
-
 #ifdef USE_ONLINE
 #include "../AltMods/OnlineCTR/global.h"
 #endif
@@ -149,7 +145,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			weaponInst->matrix.t[2] = dInst->matrix.t[2];
 
 			#ifndef REBUILD_PS1
-			VehPhysForce_RotAxisAngle(&weaponInst->matrix, &d->AxisAngle1_normalVec, d->rotCurr.y);
+			VehPhysForce_RotAxisAngle(&weaponInst->matrix, (short*)&d->AxisAngle1_normalVec, d->rotCurr.y);
 			#endif
 
 			weaponTh = weaponInst->thread;
@@ -177,7 +173,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 
 				// Original Code
 				short rot[3];
-				CTR_MatrixToRot(&rot[0], &weaponInst->matrix, 0x11);
+				CTR_MatrixToRot((SVECTOR*)&rot[0], &weaponInst->matrix, 0x11);
 
 				// not a typo, required like this
 				tw->dir[0] = rot[1];
@@ -341,7 +337,7 @@ RunMineCOLL:
 			pos2[1] = weaponInst->matrix.t[1] + 64;
 			pos2[2] = weaponInst->matrix.t[2];
 
-			struct ScratchpadStruct *sps = 0x1f800108;
+			struct ScratchpadStruct *sps = (struct ScratchpadStruct*)0x1f800108;
 
 			sps->Union.QuadBlockColl.qbFlagsWanted = 0x1000;
 			sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
@@ -352,7 +348,7 @@ RunMineCOLL:
 
 			sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-			COLL_SearchTree_FindQuadblock_Touching(pos1, pos2, sps, 0x40);
+			COLL_SearchTree_FindQuadblock_Touching((u_int*)pos1, (u_int*)pos2, sps, 0x40);
 
 			if(sps->boolDidTouchHitbox != 0)
 			{
@@ -379,12 +375,12 @@ RunMineCOLL:
 				}
 
 				sps->Union.QuadBlockColl.searchFlags = 0;
-				COLL_SearchTree_FindQuadblock_Touching(pos1, pos2, sps, 0);
+				COLL_SearchTree_FindQuadblock_Touching((u_int*)pos1, (u_int*)pos2, sps, 0);
 			}
 
 			RB_MakeInstanceReflective(sps, weaponInst);
 
-			short* rotPtr = 0x1f800178;
+			short* rotPtr = (short*)0x1f800178;
 
 			if(sps->boolDidTouchQuadblock == 0)
 			{
@@ -584,7 +580,7 @@ RunMineCOLL:
 				if(victim == d) continue;
 
 				// if spin out driver
-				if(RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
+				if(DECOMP_RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
 				{
 					victim->clockReceive = hurtVal;
 				}

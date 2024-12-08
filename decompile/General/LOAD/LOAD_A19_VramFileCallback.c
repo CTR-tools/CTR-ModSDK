@@ -6,13 +6,13 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 
 	if(vramBuf != 0)
 	{
-		struct VramHeader* vh = vramBuf;
+		struct VramHeader* vh = (struct VramHeader*)vramBuf;
 		
 		// if multiple TIMs are packed together
 		if(vramBuf[0] == 0x20)
 		{
 			int size = vramBuf[1];
-			vh = &vramBuf[2];
+			vh = (struct VramHeader*)&vramBuf[2];
 			
 			while(size != 0)
 			{	
@@ -21,7 +21,7 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 				vramBuf = (int*)vh;
 				vramBuf = &vramBuf[size>>2];
 				size = vramBuf[0];
-				vh = &vramBuf[1];
+				vh = (struct VramHeader*)&vramBuf[1];
 			}
 		}
 		

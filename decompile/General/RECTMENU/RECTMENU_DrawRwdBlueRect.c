@@ -11,7 +11,7 @@ void DECOMP_RECTMENU_DrawRwdBlueRect(RECT *rect, char* metas, u_long *ot, struct
 
     for (int i = 0; metas[i*4 + 3] != 0x64; i++)
     {
-        char* meta = (int*)&metas[i * 4];
+        char* meta = &metas[i * 4];
         gradient[0] = *(int*)&meta[0];
         gradient[1] = *(int*)&meta[4];
         colors[0] = gradient[0];

@@ -53,7 +53,7 @@ void DECOMP_Garage_LerpFX(void) {
 
     if (targetLR == garageSounds->LR && targetVolume == garageSounds->volume &&
         garageSounds->gsp_curr == GSP_GONE) {
-      OtherFX_RecycleMute(audioPtrRef);
+      OtherFX_RecycleMute((int*)audioPtrRef);
     }
   }
 }

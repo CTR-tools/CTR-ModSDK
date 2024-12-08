@@ -8,7 +8,7 @@ u_int DECOMP_VehFrameInst_GetNumAnimFrames(struct Instance *inst, int animIndex)
 
     struct ModelHeader* mh = inst->model->headers;
 
-    if (animIndex >= mh->numAnimations) return 0; 
+    if ((unsigned int)animIndex >= mh->numAnimations) return 0; 
 	if (mh->ptrAnimations == NULL) return 0;
 
 	struct ModelAnim* anim = mh->ptrAnimations[animIndex];

@@ -10,7 +10,7 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread * thread, struct Driver * d
     use orientation matrix, and half-radius {0, 25, 0},
 	to find the "true" center of the 3D model */
     const SVec3 radius = { .x = 0, .y = 25, .z = 0 };
-    MulMatrixVec(&driver->originToCenter, &driver->matrixFacingDir, &radius);
+    MulMatrixVec(&driver->originToCenter, (Matrix*)&driver->matrixFacingDir, &radius);
 
     DECOMP_VehPhysForce_ConvertSpeedToVec(driver);
 
@@ -25,7 +25,7 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread * thread, struct Driver * d
     }
 
 	#ifndef REBUILD_PC
-    VehPhysForce_OnGravity(driver, &driver->velocity.x);
+    VehPhysForce_OnGravity(driver, &driver->velocity);
 	#endif
 
     const SVec3 up = { .x = FP(0), .y = FP(1), .z = FP(0) };

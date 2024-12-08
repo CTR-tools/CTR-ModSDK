@@ -17,8 +17,8 @@ void start()
 	{
 		// clear BSS region
 		for(
-				i = 0x8008d668; 
-				i < 0x8009f6f8; 
+				i = (int*)0x8008d668; 
+				(unsigned int)i < 0x8009f6f8; //no, I did not mean to dereference i. the < operator with pointers is said to be "unspecified" in C (but not "UB"?)
 				i += 4
 			)
 		{
@@ -33,8 +33,8 @@ void start()
 		
 		// clear $sp region
 		for(
-				i = 0x807ff800; 
-				i < 0x807fff00; 
+				i = (int*)0x807ff800; 
+				(unsigned int)i < 0x807fff00; //no, I did not mean to dereference i. the < operator with pointers is said to be "unspecified" in C (but not "UB"?)
 				i += 4
 			)
 		{

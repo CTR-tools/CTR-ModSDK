@@ -29,5 +29,5 @@ void DECOMP_howl_InitChannelAttr_OtherFX(
 	attr->sr = 0x1fc2;
 	
 	attr->spuStartAddr = 
-		sdata->howl_spuAddrs[otherFX->spuIndex].spuAddr << 3;
+		(void*)(sdata->howl_spuAddrs[otherFX->spuIndex].spuAddr << 3);
 }

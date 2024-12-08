@@ -18,7 +18,7 @@ void DECOMP_Voiceline_PoolInit(void)
   DECOMP_LIST_Clear(&sdata->channelFree);
   DECOMP_LIST_Clear(&sdata->channelTaken);
 
-  DECOMP_LIST_Init(&sdata->channelFree, &sdata->channelStatsPrev[0], 0x20, 0x18);
+  DECOMP_LIST_Init(&sdata->channelFree, (struct Item*)&sdata->channelStatsPrev[0], 0x20, 0x18);
 
   SpuSetReverbVoice(0, 0xffffff);
 
@@ -38,7 +38,7 @@ void DECOMP_Voiceline_PoolInit(void)
 
     struct ChannelAttr *curr = &sdata->channelAttrCur[index];
 
-    curr->spuStartAddr = -1;
+    curr->spuStartAddr = (void*)-1;
 
     curr->ad = 0x80ff;
     curr->sr = 0x1fc2;

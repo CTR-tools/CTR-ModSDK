@@ -6,10 +6,10 @@ void DECOMP_PushBuffer_SetDrawEnv_Normal(
 {
 	DRAWENV newDrawEnv;
 	
-	int* dst = &newDrawEnv;
-	int* src = &backBuffer->drawEnv;
+	int* dst = (int*)&newDrawEnv;
+	int* src = (int*)&backBuffer->drawEnv;
 	
-	for(int i = 0; i < sizeof(DRAWENV)/4; i++)
+	for(unsigned int i = 0; i < sizeof(DRAWENV) / 4; i++)
 		dst[i] = src[i];
 	
 	// always?
@@ -35,7 +35,7 @@ void DECOMP_PushBuffer_SetDrawEnv_Normal(
 	void* p = backBuffer->primMem.curr;
 	if(p <= backBuffer->primMem.endMin100)
 	{
-		backBuffer->primMem.curr = (unsigned int)backBuffer->primMem.curr + 0x40;
+		backBuffer->primMem.curr = (void*)((unsigned int)backBuffer->primMem.curr + 0x40);
 		
 		SetDrawEnv(p, &newDrawEnv);
 

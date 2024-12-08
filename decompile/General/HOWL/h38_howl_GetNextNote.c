@@ -22,7 +22,7 @@ char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen)
 	return currNote+1;
 }
 
-void DECOMP_cseq_opcode00_empty()
+void DECOMP_cseq_opcode00_empty(struct SongSeq* seq)
 {
 	// left empty by ND
 }

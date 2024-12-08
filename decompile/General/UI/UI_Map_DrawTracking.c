@@ -22,7 +22,7 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
 	
 	// draw warpball
 	DECOMP_UI_Map_DrawRawIcon(
-		ptrMap,&inst->matrix.t[0],
+		ptrMap,(int*)&inst->matrix.t[0],
 		0x20,0,0,0x1000);
 	
 	// driver target
@@ -39,7 +39,7 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
       uVar1 = 3;
       
     DECOMP_UI_Map_DrawRawIcon(
-	  ptrMap,&d->instSelf->matrix.t[0],
+	  ptrMap,(int*)&d->instSelf->matrix.t[0],
 	  0x21,uVar1,0,0x1000);
   }
   return;

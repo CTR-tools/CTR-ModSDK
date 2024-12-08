@@ -18,33 +18,35 @@ void DECOMP_AH_WarpPad_SpinRewards(
 		
 	modelID = prizeInst->model->id;
 	
-	// no specLight on trophy
-	if(modelID == 0x62) 
-		goto SpinReward;
-	
 	// OG code had pointers to warppadObj->specLightXXX
 	// but that was replaced with pointers to globals,
 	// because the arrays didnt actually change per warppad
-	
-	// gem
-	else if(modelID == 0x5f) 
-		specLight = &D232.specLightGem[0];
-	
-	// relic
-	else if(modelID == 0x61) 
-		specLight = &D232.specLightRelic[0];
-	
-	// token
-	else if(modelID == 0x7d) 
-		specLight = &D232.specLightToken[0];
-	
+
+	//this was re-rewritten because the original rewrite had incorrect behavior
+	if (modelID != 0x62) //if not trophy (no specLight on trophy)
+	{
+		if (modelID == 0x5f) //gem
+			specLight = &D232.specLightGem[0];
+		else
+		{
+			if (modelID == 0x61) //relic
+				specLight = &D232.specLightRelic[0];
+			else
+			{
+				if (modelID == 0x7d) //token
+					specLight = &D232.specLightToken[0];
+				else
+					goto SpinReward;
+			}
+		}
 #ifndef REBUILD_PS1
-	Vector_SpecLightSpin3D(
-		prizeInst, 
-		&warppadObj->spinRot_Prize[0], 
-		specLight);
+		Vector_SpecLightSpin3D(
+			prizeInst,
+			&warppadObj->spinRot_Prize[0],
+			specLight);
 #endif
-	
+	}
+
 SpinReward:
 
 	// initialized as 0x555*index, but not const

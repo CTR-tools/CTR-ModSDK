@@ -9,14 +9,14 @@ struct ChannelStats* DECOMP_Channel_AllocSlot(
 	struct ChannelStats* stats;
 	
 	// get free slot
-	stats = sdata->channelFree.first;
+	stats = (struct ChannelStats*)sdata->channelFree.first;
 	
 	// quit if no free slots
-	if(stats == 0) return 0;
+	if(stats == NULL) return NULL;
 	
 	// allocate
-	DECOMP_LIST_RemoveMember(&sdata->channelFree, stats);
-	DECOMP_LIST_AddBack(&sdata->channelTaken, stats);
+	DECOMP_LIST_RemoveMember(&sdata->channelFree, (struct Item*)stats);
+	DECOMP_LIST_AddBack(&sdata->channelTaken, (struct Item*)stats);
 	
 	// start playing
 	sdata->ChannelUpdateFlags[stats->channelID] |= (flags | 2);

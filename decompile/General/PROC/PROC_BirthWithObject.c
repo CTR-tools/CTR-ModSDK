@@ -39,17 +39,19 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	// 0x200 - medStackPool		(0x1948) [3]
 	// 0x300 - smallStackPool	(0x1920) [2]
 	
-	// index is now 1,2,3
+	// index is now 1,2,3 <-> large/medium/small
 	index = (flags>>8)&3;
 	
-	// index is now 4,3,2
+	// index is now 4=large,3=medium,2=small
 	index = 5 - index;
 	
 	// small, med, large
 	myPool = &allPools[index];
+
+	//TheUbMunster: Note: OG code says the following if statement compares against 0x670/0x88/0x48 for large/medium/small pools, rather than (myPool->itemSize - 8)
 	
 	// if can't fit in pool
-	if ((flags >> 0x10) > (myPool->itemSize-8))
+	if ((unsigned int)(flags >> 0x10) > (myPool->itemSize-8))
 	{
 		// Sep3
 		// printf("stack size (%ld) too small for statics (%ld) \'%s\'\n",
@@ -77,7 +79,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	// === initialize thread ===
 
 	// thread and object
-	th = DECOMP_LIST_RemoveFront(&allPools[0].free);
+	th = (struct Thread*)DECOMP_LIST_RemoveFront(&allPools[0].free);
 	object = DECOMP_LIST_RemoveFront(&myPool->free);
 
 	th->inst = 0;
@@ -88,7 +90,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 	th->name = name;
 	th->flags = flags;
 	th->funcThTick = funcThTick;
-	th->object = (unsigned int)(((unsigned int)object) + 8);
+	th->object = (void*)(((unsigned int)object) + 8);
 
 	// if no relative
 	if(relativeTh == 0)

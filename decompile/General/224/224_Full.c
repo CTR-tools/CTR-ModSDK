@@ -7,8 +7,6 @@ extern struct RectMenu menu224;
 extern struct MenuRow rowsWithSave[6];
 extern struct MenuRow rowsNoSave[5];
 
-void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFlags);
-
 void DECOMP_TT_EndEvent_DrawMenu(void)
 {
     int framesSinceRaceEnded;
@@ -412,7 +410,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 		str_number = (char)i + '1';
 
 		// Draw String for Rank ('1', '2', '3', '4', '5')
-		DecalFont_DrawLine(&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
+		DecalFont_DrawLine((char*)&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
 
 		u_int iconColor = 0x808080;
 

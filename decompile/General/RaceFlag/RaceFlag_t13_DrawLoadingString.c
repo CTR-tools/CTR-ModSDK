@@ -20,7 +20,7 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     pbVar7 = sdata->lngStrings[0x231];
 
     // pointer to OT mem
-    uVar11 = gGT->pushBuffer_UI.ptrOT;
+    uVar11 = (u_int*)gGT->pushBuffer_UI.ptrOT;
 
     // pointer to OT mem
     gGT->pushBuffer_UI.ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
@@ -130,7 +130,7 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     }
 
     // pointer to OT mem
-    gGT->pushBuffer_UI.ptrOT = uVar11;
+    gGT->pushBuffer_UI.ptrOT = (u_long*)uVar11;
 
     if (iVar3 < 0x50)
     {
