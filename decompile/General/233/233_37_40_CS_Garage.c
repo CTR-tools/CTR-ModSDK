@@ -2,7 +2,7 @@
 
 extern struct OVR233_Garage gGarage;
 
-void DECOMP_CS_Garage_ZoomOut(char zoomState)
+void DECOMP_CS_Garage_ZoomOut(char zoomState) //param may be short not char
 {
     // if just entered garage
     if (zoomState == 0)
