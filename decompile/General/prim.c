@@ -8,7 +8,7 @@ void GetPrimitiveMem(void ** ppPrim, size_t primSize)
 		*ppPrim = backBuffer->primMem.curr;
 		
 		backBuffer->primMem.curr = 
-		(size_t)backBuffer->primMem.curr + primSize;
+		(void*)((size_t)backBuffer->primMem.curr + primSize);
 		
 		((Tag *)*ppPrim)->size = (primSize - sizeof(Tag)) / sizeof(u32);
 	}

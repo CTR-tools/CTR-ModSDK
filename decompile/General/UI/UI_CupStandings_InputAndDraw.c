@@ -93,7 +93,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
   if (sdata->framesSinceRaceEnded <= 0xf0)
   {
-    uVar9 = 0xffffff6a;
+    uVar9 = ((short)0xffffff6a);
     uVar14 = 0x100;
     local_90 = 0x1e;
     iVar12 = (int) local_38;
@@ -283,7 +283,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 		framesPassed, 0x14);
 
       // %d
-      sprintf(text, &sdata->s_int, i + 1);
+      sprintf(text, (char*)&sdata->s_int, i + 1);
 
       DecalFont_DrawLine(
 		text,
@@ -537,7 +537,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID)
 		  {
             int bitIndex = 0x6a + i;
-			int* rewardsSet = &sdata->advProgress.rewards[0];
+			unsigned int* rewardsSet = sdata->advProgress.rewards;
 
             if (CHECK_ADV_BIT(rewardsSet, bitIndex) == 0)
 			{
@@ -545,8 +545,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
 			  // unlock Roo, Papu, Joe, Pinstripe, FCrash
 			  bitIndex = 7 + i;
-			  rewardsSet = &sdata->gameProgress.unlocks[0];
-			  UNLOCK_ADV_BIT(rewardsSet, bitIndex);
+			  UNLOCK_ADV_BIT(sdata->gameProgress.unlocks, bitIndex);
 
               // Set podium reward model to Gem
               gGT->podiumRewardID = 0x5f;

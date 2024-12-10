@@ -118,6 +118,7 @@ common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst
 common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
 // Burst_DrawAll
 
+common, 231, D231, 0x0, General/231/D231.c
 
 // Cant add 055 to block yet, so 55_72 is actually +16 and not +17 on the counter
 common, 231, RB_GetThread_ClosestTracker, 0x0, General/231/231_055_RB_GetThread_ClosestTracker.c
@@ -136,19 +137,19 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 // AH_Sign_LInB
 
 // 233
-//ommon, 233, CS_Instance_GetNumAnimFrames, 0x0, General/233/233_10_CS_Instance_GetNumAnimFrames.c
-//ommon, 233, CS_Instance_SafeCheckAnimFrame, 0x0, General/233/233_11_CS_Instance_SafeCheckAnimFrame.c
-//ommon, 233, CS_Instance_BoolPlaySound, 0x0, General/233/233_12_CS_Instance_BoolPlaySound.c
-//ommon, 233, CS_DestroyPodium_StartDriving, 0x0, General/233/233_13_CS_DestroyPodium_StartDriving.c
+//common, 233, CS_Instance_GetNumAnimFrames, 0x0, General/233/233_10_CS_Instance_GetNumAnimFrames.c
+//common, 233, CS_Instance_SafeCheckAnimFrame, 0x0, General/233/233_11_CS_Instance_SafeCheckAnimFrame.c
+//common, 233, CS_Instance_BoolPlaySound, 0x0, General/233/233_12_CS_Instance_BoolPlaySound.c
+//common, 233, CS_DestroyPodium_StartDriving, 0x0, General/233/233_13_CS_DestroyPodium_StartDriving.c
 // Skip CS_Thread (14-18)
 // Skip Boss (19-22)
 // Skip Podium (23-25)
-//ommon, 233, CS_Podium_Prize_ThTick3, 0x0, General/233/233_26_CS_Podium_Prize_ThTick3.c
+//common, 233, CS_Podium_Prize_ThTick3, 0x0, General/233/233_26_CS_Podium_Prize_ThTick3.c
 common, 233, CS_Podium_Prize_ThTick2, 0x0, General/233/233_27_CS_Podium_Prize_ThTick2.c
-//ommon, 233, CS_Podium_Prize_ThTick1, 0x0, General/233/233_28_CS_Podium_Prize_ThTick1.c
-//ommon, 233, CS_Podium_Prize_ThDestroy, 0x0, General/233/233_29_CS_Podium_Prize_ThDestroy.c
-//ommon, 233, CS_Podium_Stand_ThTick, 0x0, General/233/233_31_CS_Podium_Stand_ThTick.c
-//ommon, 233, CS_Podium_Stand_Init, 0x0, General/233/233_32_CS_Podium_Stand_Init.c
+//common, 233, CS_Podium_Prize_ThTick1, 0x0, General/233/233_28_CS_Podium_Prize_ThTick1.c
+//common, 233, CS_Podium_Prize_ThDestroy, 0x0, General/233/233_29_CS_Podium_Prize_ThDestroy.c
+//common, 233, CS_Podium_Stand_ThTick, 0x0, General/233/233_31_CS_Podium_Stand_ThTick.c
+//common, 233, CS_Podium_Stand_Init, 0x0, General/233/233_32_CS_Podium_Stand_Init.c
 common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullScene_Init.c
 // skip BoxScene (34-36)
 common, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_40_CS_Garage.c
@@ -164,11 +165,23 @@ common, exe, data, 0x0, General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
 
 // BOTS
-common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS/BOTS_SetGlobalNavData.c
-common, exe, BOTS_InitNavPath, 0x0, General/BOTS/BOTS_InitNavPath.c
-common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLostEvent.c
-// skip a few
-// BOTS_Driver_Init was started, not finished
+common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_000_SetGlobalNavData.c
+common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_001_InitNavPath.c
+//common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
+common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_003_Adv_NumTimesLostEvent.c
+//common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_004_Adv_AdjustDifficulty.c //BOTS_Adv_AdjustDifficulty 80012598
+//common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_005_UpdateGlobals.c //BOTS_UpdateGlobals 80013374
+//common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_006_SetRotation.c //BOTS_SetRotation 80013444
+//common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_007_LevInstColl.c //BOTS_LevInstColl 800135d8
+//common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_008_ThTick_EngineRevving.c //BOTS_ThTick_EngineRevving 8001372c
+//common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_009_MaskGrab.c //BOTS_MaskGrab 80013838
+//common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_010_Killplane.c //BOTS_Killplane 80013a70
+//common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_011_ThTick_Drive.c //BOTS_ThTick_Drive 80013c18
+//common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_012_ChangeState.c //BOTS_ChangeState 80016b00
+//common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_013_CollideWithOtherAI.c //BOTS_CollideWithOtherAI 80016ec8
+//common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_014_GotoStartingLine.c //BOTS_GotoStartingLine 8001702c
+//common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_015_Driver_Init.c //BOTS_Driver_Init 8001702c //a comment in this file explicitly stated that this is not finished
+//common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_016_Driver_Convert.c //BOTS_Driver_Convert 80017318
 
 // CAM
 common, exe, CAM_ClearScreen, 0x0, General/CAMERA/CAM_01_ClearScreen.c

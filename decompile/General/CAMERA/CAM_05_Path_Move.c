@@ -24,7 +24,7 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
   pathID = ptrCam[1];
   move = ptrCam + 2;
   
-  while (pathNumNode <= frameIndex)
+  while (pathNumNode <= (u_int)frameIndex) //return 0 if lt 0 above
   {
     do
     {

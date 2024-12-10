@@ -48,6 +48,7 @@ void DECOMP_SubmitName_MenuProc(struct RectMenu* menu)
     else
     {
       // make backup of name entered
+      //todo: probably replace this with a memcpy/macro, bc this is kinda janky
       *(int*)&sdata->advProgress.name[0x0] = *(int*)&gGT->prevNameEntered[0x0];
       *(int*)&sdata->advProgress.name[0x4] = *(int*)&gGT->prevNameEntered[0x4];
       *(int*)&sdata->advProgress.name[0x8] = *(int*)&gGT->prevNameEntered[0x8];

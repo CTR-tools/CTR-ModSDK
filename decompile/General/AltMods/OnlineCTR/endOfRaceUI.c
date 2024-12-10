@@ -21,7 +21,7 @@ static void SetNextCamera(bool increase)
 
 void EndOfRace_Camera()
 {
-    const char s_switchCam[] = "Press R1 or L1 to change the camera";
+    char s_switchCam[] = "Press R1 or L1 to change the camera";
 	DECOMP_DecalFont_DrawLine(s_switchCam, 0x100, 5, FONT_SMALL, JUSTIFY_CENTER | ORANGE);
 
 	DECOMP_DecalFont_DrawLine(octr->nameBuffer[currCam], 252, 195, FONT_BIG, JUSTIFY_CENTER | PAPU_YELLOW);
@@ -104,6 +104,6 @@ void EndOfRace_Icons()
         }
         else if (playersFinished > playersPerRow) { rectHeightMultiplier = 2; }
     }
-    const RECT bgRect = {.x = 0, .y = yStart - rectSpace, .w = 512, .h = rectSpace * 2 + iconHeight * rectHeightMultiplier - 3};
+    RECT bgRect = {.x = 0, .y = yStart - rectSpace, .w = 512, .h = rectSpace * 2 + iconHeight * rectHeightMultiplier - 3};
     DECOMP_RECTMENU_DrawInnerRect(&bgRect, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 }

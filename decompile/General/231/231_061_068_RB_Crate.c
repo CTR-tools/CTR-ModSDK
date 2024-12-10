@@ -53,7 +53,9 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 			)->driverParent;
 			
 		// if this is an AI, quit
-		if((driver->actionsFlagSet & 0x100000) != 0) return 1;
+
+		//it's odd that it casts "1" as struct Driver*, but callers of this function *do* check the return value == 1, so it must be intentional.
+		if((driver->actionsFlagSet & 0x100000) != 0) return (struct Driver*)1;
 		
 		return driver;
 	}
@@ -65,8 +67,9 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 		
 		return driver;
 	}
-	
-	return 1;
+
+	//it's odd that it casts "1" as struct Driver*, but callers of this function *do* check the return value == 1, so it must be intentional.
+	return (struct Driver*)1;
 }
 
 void DECOMP_RB_CrateAny_ThTick_Explode(struct Thread* t) 
@@ -216,8 +219,6 @@ struct Thread* RB_CrateAny_GrowInit(struct Instance* crateInst)
 	return crateThread;
 }
 
-void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
-
 int DECOMP_RB_CrateWeapon_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,
@@ -242,7 +243,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		if(crateThread == 0) return 0;
 		
 		driver = RB_CrateAny_GetDriver(collidingTh, sps);
-		if(driver == 1) return 1;
+		if((int)driver == 1) return 1;
 		
 		// if driver already has a weapon, quit
 		if(
@@ -286,11 +287,11 @@ int DECOMP_RB_CrateWeapon_LInC(
 		
 		#ifdef USE_ONLINE
 		if(driver->driverID != 0)
-			return;
+			return 0; //guessing return 0 means """cancel"""
 		
 		// do nothing at end of race
 		if((driver->actionsFlagSet & 0x2000000) != 0)
-			return;
+			return 0;
 		#endif
 		
 		// == give driver weapon ==
@@ -380,14 +381,14 @@ int DECOMP_RB_CrateFruit_LInC(
 	
 	// if no regrow thread exists,
 	// first frame of hitting a "full" crate
-	if(crateThread == 0)
+	if(crateThread == NULL)
 	{	
 		RB_CrateAny_ExplodeInit(crateInst, 0xf2953a0);
 		crateThread = RB_CrateAny_GrowInit(crateInst);
 		if(crateThread == 0) return 0;
 		
 		driver = RB_CrateAny_GetDriver(collidingTh, sps);
-		if(driver == 1) return 1;
+		if((int)driver == 1) return 1; //apparently `driver == 1` is intentional, take a look at the RB_CrateAny_GetDriver source. literally wtf is this.
 		
 		random = DECOMP_MixRNG_Scramble();
 		newWumpa = random;
@@ -400,7 +401,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		if(driver->driverID != 0)
 		{
 			DECOMP_RB_Player_ModifyWumpa(driver, newWumpa);
-			return;
+			return 0; //thread not born????
 		}
 		#endif
 		
@@ -447,6 +448,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	return 0;
 }
 
+//return's changed to return 0 as per https://discord.com/channels/527135227546435584/637616020177289236/1312155337545093130
 int DECOMP_RB_CrateTime_LInC(
 	struct Instance* crateInst,
 	struct Thread* driverTh,
@@ -460,7 +462,7 @@ int DECOMP_RB_CrateTime_LInC(
 	struct GameTracker* gGT;
 	
 	// if box is broken, quit
-	if(crateInst->scale[0] == 0) return;
+	if(crateInst->scale[0] == 0) return 0;
 	
 	// == first frame of break ==
 	
@@ -471,12 +473,12 @@ int DECOMP_RB_CrateTime_LInC(
 	modelID = crateInst->model->id;
 	
 	#ifdef USE_ONLINE
-	if(driver->driverID != 0) return;
+	if(driver->driverID != 0) return 0;
 	#endif
 	
 	// if driver turned into AI during end-of-race menu
 	if ((driver->actionsFlagSet & 0x100000) != 0)
-		return;
+		return 0;
 	
 	driver->numTimeCrates++;
 	

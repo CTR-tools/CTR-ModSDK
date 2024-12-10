@@ -184,6 +184,6 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
     videoBox.y = D230.transitionMeta_HighScores[9].currY + offsetY + 0x5a;
 
     DECOMP_MM_TrackSelect_Video_Draw(
-		&videoBox, &D230.arcadeTracks, trackIndex, 
+		&videoBox, &D230.arcadeTracks[0], trackIndex,
 		(D230.highScore_transitionState == EXITING_MENU), 0);
 }

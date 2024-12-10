@@ -6,8 +6,8 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 	u_int* flagPtr;
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = curr->next
 		)
 	{

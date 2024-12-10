@@ -8,7 +8,7 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 	struct GameTracker* gGT = sdata->gGT;
   
 	// if new Threads overlay needs to load
-    if (gGT->overlayIndex_Threads != param_1)
+    if ((unsigned int)gGT->overlayIndex_Threads != param_1)
     {
 #ifndef REBUILD_PC
         sdata->load_inProgress = 1;
@@ -21,7 +21,7 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 
 		// Threads overlay 230-233
         DECOMP_LOAD_AppendQueue(
-			sdata->ptrBigfileCdPos_2,LT_RAW,
+			(int)sdata->ptrBigfileCdPos_2,LT_RAW,
 			(param_1+0xe6),&OVR_Region3,
 			data.overlayCallbackFuncs[param_1]
 		);

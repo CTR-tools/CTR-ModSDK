@@ -15,6 +15,6 @@ void DECOMP_MainLoadVLC(void)
 
   // This table is passed as parameter to DecDCTvlc2
   DECOMP_LOAD_AppendQueue(
-	bh, LT_RAW, BI_VLCTABLE, sdata->ptrVlcTable, 
+	(int)bh, LT_RAW, BI_VLCTABLE, sdata->ptrVlcTable, 
 	DECOMP_MainLoadVLC_Callback);
 }

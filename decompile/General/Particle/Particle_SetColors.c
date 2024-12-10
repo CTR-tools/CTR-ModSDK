@@ -20,17 +20,17 @@ u_int DECOMP_Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Partic
     // todo: explain the reason for this
 
     //process red
-    color = DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
+    color = (u_int)DECOMP_Particle_BitwiseClampByte(&p->axis[7].startVal);
 
     // process green
     if (flagColors & COLOR_FLAG_G)
-      color |= DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal) << 8;
+      color |= (u_int)DECOMP_Particle_BitwiseClampByte(&p->axis[8].startVal) << 8;
     else
       color |= color << 8;
 
     //process blue
     if (flagColors & COLOR_FLAG_B)
-      color |= DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal) << 16;
+      color |= (u_int)DECOMP_Particle_BitwiseClampByte(&p->axis[9].startVal) << 16;
     else
       color |= (color & 0xff) << 16;
   }

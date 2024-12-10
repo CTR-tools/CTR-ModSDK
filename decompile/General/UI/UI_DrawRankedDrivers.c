@@ -428,7 +428,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	vec1[0] = cn1->pos[0] - cn2->pos[0];
 	  	vec1[1] = cn1->pos[1] - cn2->pos[1];
 	  	vec1[2] = cn1->pos[2] - cn2->pos[2];
-	  	MATH_VectorNormalize(&vec1[0]);
+	  	MATH_VectorNormalize((VECTOR*)&vec1[0]);
 
 	  	short vec2[4];
 	  	vec2[0] = pos[0] - cn1->pos[0];

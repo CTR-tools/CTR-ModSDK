@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback)
+void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*))
 {
 	struct LoadQueueSlot* lqs;
 	
@@ -10,7 +10,7 @@ void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destina
 	#endif
 
 	lqs = &sdata->queueSlots[sdata->queueLength];
-	lqs->ptrBigfileCdPos = bigfile;
+	lqs->ptrBigfileCdPos = (struct BigHeader*)bigfile;
 	lqs->flags = 0;
 	lqs->type = type;
 	lqs->subfileIndex = fileIndex;

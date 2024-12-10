@@ -26,7 +26,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   // ====== First Instance =========
   
-  burst[1] = currInst;
+  burst[1] = (int)currInst;
   currInst->unk50 += -2;
   
   // set rotation to identity matrix
@@ -44,7 +44,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   currInst = INSTANCE_Birth3D(gGT->modelPtr[0x2b],0,t);
   
-  burst[2] = currInst;
+  burst[2] = (int)currInst;
   currInst->unk50 += -2;
   
   // instance flags
@@ -67,7 +67,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   currInst = INSTANCE_Birth3D(gGT->modelPtr[0x44],0,t);
   
-  burst[0] = currInst;
+  burst[0] = (int)currInst;
   currInst->unk50 += -2;
   
   // instance flags
@@ -82,7 +82,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   for(int i = 0; /*i < 3*/; i++)
   {
-	currInst = burst[i];
+	currInst = (struct Instance*)burst[i];
 
 	currInst->matrix.t[0] = weaponInst->matrix.t[0];
 	currInst->matrix.t[1] = weaponInst->matrix.t[1] + -0x30;
@@ -123,7 +123,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   // ========= Collisions ===========
   
-  struct ScratchpadStruct* sps = 0x1f800108;
+  struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
 
   // put weapon position on scratchpad
   sps->Input1.pos[0] = weaponInst->matrix.t[0];

@@ -37,7 +37,7 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	
 	CdRead(numSector, ptrDestination, 0x80);
 	CdReadSync(0, 0);
-	DECOMP_LOAD_HowlCallback(CdlComplete);
+	DECOMP_LOAD_HowlCallback(CdlComplete, NULL);
 	
 	#endif
 	return 1;

@@ -3,6 +3,7 @@
 struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I)
 {
   // probably waste of time, but leave it for now
+  // TheUbMunster: looking at the ghidra decomp, it seems like this line is necessary bc L->count should not be decrimented if L->first == NULL
   if(L->first == 0) return 0;
 
   // can't remove this check, or it'll crash
