@@ -165,11 +165,23 @@ common, exe, data, 0x0, General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
 
 // BOTS
-common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS/BOTS_SetGlobalNavData.c
-common, exe, BOTS_InitNavPath, 0x0, General/BOTS/BOTS_InitNavPath.c
-common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLostEvent.c
-// skip a few
-// BOTS_Driver_Init was started, not finished
+common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_000_SetGlobalNavData.c
+common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_001_InitNavPath.c
+//common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
+common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_003_Adv_NumTimesLostEvent.c
+//common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_004_Adv_AdjustDifficulty.c //BOTS_Adv_AdjustDifficulty 80012598
+//common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_005_UpdateGlobals.c //BOTS_UpdateGlobals 80013374
+//common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_006_SetRotation.c //BOTS_SetRotation 80013444
+//common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_007_LevInstColl.c //BOTS_LevInstColl 800135d8
+//common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_008_ThTick_EngineRevving.c //BOTS_ThTick_EngineRevving 8001372c
+//common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_009_MaskGrab.c //BOTS_MaskGrab 80013838
+//common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_010_Killplane.c //BOTS_Killplane 80013a70
+//common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_011_ThTick_Drive.c //BOTS_ThTick_Drive 80013c18
+//common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_012_ChangeState.c //BOTS_ChangeState 80016b00
+//common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_013_CollideWithOtherAI.c //BOTS_CollideWithOtherAI 80016ec8
+//common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_014_GotoStartingLine.c //BOTS_GotoStartingLine 8001702c
+//common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_015_Driver_Init.c //BOTS_Driver_Init 8001702c //a comment in this file explicitly stated that this is not finished
+//common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_016_Driver_Convert.c //BOTS_Driver_Convert 80017318
 
 // CAM
 common, exe, CAM_ClearScreen, 0x0, General/CAMERA/CAM_01_ClearScreen.c

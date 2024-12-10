@@ -2,6 +2,8 @@
 
 // Budget: 336/436 bytes
 
+// according to buildList.txt, this function isn't done being decomped/cleaned up yet?
+
 struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 {
 	int pathIndex;
