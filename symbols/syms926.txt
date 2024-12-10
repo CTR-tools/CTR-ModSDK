@@ -104,9 +104,9 @@
 80021c94 CTR_ErrorScreen
 
 // CTR_Frustum_UpdateVisMem
-// unknown 80021da0
-// unknown 80021e1c
-// unknown 80021ea8
+80021da0 CTR_unknownMaybeThunk1
+80021e1c CTR_unknownMaybeThunk2
+80021ea8 CTR_unknownMaybeThunk3
 
 80021edc CTR_MatrixToRot
 80022234 CTR_ScrambleGhostString
