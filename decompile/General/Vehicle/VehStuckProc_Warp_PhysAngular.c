@@ -34,7 +34,7 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
 #endif
 
         // add dust puff
-        VehStuckProc_Warp_AddDustPuff2(d, &d->KartStates.Warp.timer);
+        VehStuckProc_Warp_AddDustPuff2((struct Thread*)d, (struct Driver*)&d->KartStates.Warp.timer);
     }
 
     timer = d->KartStates.Warp.timer;
@@ -83,7 +83,7 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
                 pos[1] = (short)(d->KartStates.Warp.quadHeight >> 8) + 0x40;
                 pos[2] = (short)(d->posCurr.z >> 8);
 
-                FLARE_Init(&pos);
+                FLARE_Init((short*)&pos);
             }
 
             // make invisible

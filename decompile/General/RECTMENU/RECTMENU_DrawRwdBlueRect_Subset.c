@@ -4,7 +4,7 @@ void DECOMP_RECTMENU_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, 
 {
   POLY_G4 *p = (POLY_G4 *)primMem->curr;
 
-  if (p <= primMem->endMin100)
+  if ((u_int)p <= (u_int)primMem->endMin100)
   {
     primMem->curr = p + 1;
 

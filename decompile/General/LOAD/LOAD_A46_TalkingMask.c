@@ -16,12 +16,12 @@ void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 	int offset = maskID*4 + (packID-1)*2;
 	
 	DECOMP_LOAD_AppendQueue(
-		sdata->ptrBigfileCdPos_2, LT_VRAM, 
+		(int)sdata->ptrBigfileCdPos_2, LT_VRAM, 
 		BI_UKAHEAD+offset, 
-		0, 0);
+		NULL, NULL);
 	
 	DECOMP_LOAD_AppendQueue(
-		sdata->ptrBigfileCdPos_2, LT_DRAM, 
+		(int)sdata->ptrBigfileCdPos_2, LT_DRAM, 
 		BI_UKAHEAD+offset+1, 
-		0, DECOMP_LOAD_Callback_MaskHints3D);
+		NULL, DECOMP_LOAD_Callback_MaskHints3D);
 }

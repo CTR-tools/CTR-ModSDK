@@ -52,7 +52,7 @@ void DECOMP_UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 		if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		{
 			// Draw dot for Player on 2D Adv Map
-			DECOMP_UI_Map_DrawAdvPlayer(ptrMap,&bucket->inst->matrix.t[0],0x32,kartColor,
+			DECOMP_UI_Map_DrawAdvPlayer(ptrMap,(int*)&bucket->inst->matrix.t[0], 0x32, kartColor,
 						(d->rotCurr.y + 0x800U) | 0x1000,0x800);
 		
 			continue;
@@ -63,7 +63,7 @@ void DECOMP_UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	}
 	
 	DECOMP_UI_Map_DrawRawIcon(
-		ptrMap, &bucket->inst->matrix.t[0],
+		ptrMap, (int*)&bucket->inst->matrix.t[0],
 		iconID, (short)kartColor, 0, 0x1000);
   }
   return;

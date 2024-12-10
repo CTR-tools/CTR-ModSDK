@@ -77,7 +77,7 @@ SKIP_LOADING_TEXT:
 	scratchpad = &scratchpadBuf[0];
 	memset(&scratchpadBuf[0], 0, 0x1000 * 4);
 #else
-	scratchpad = (long *)0x1f800000;
+	scratchpad = (u_int*)0x1f800000;
 #endif
 	toggle = 1;
 	data.checkerFlagVariables[4] += data.checkerFlagVariables[3] * gGT->elapsedTimeMS;

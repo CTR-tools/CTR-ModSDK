@@ -8,7 +8,7 @@ void DECOMP_RECTMENU_DrawSelf(struct RectMenu* menu, int posX, short posY, short
     char *titleString;
     short offsetX;
     short sVar4;
-    u_int *rgb;
+    Color *rgb;
     u_short uVar5;
     struct MenuRow *row;
     short sVar6;

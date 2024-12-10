@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_ReadFileASyncCallback(char result)
+void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 {
 	CdReadCallback(0);
 	

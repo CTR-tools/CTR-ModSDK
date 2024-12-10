@@ -3,8 +3,7 @@
 void DECOMP_howl_PauseAudio()
 {
 	int* ptrFlag;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	struct ChannelStats* pausedStats;
 	
 	DECOMP_CDSYS_XAPauseRequest();
@@ -19,8 +18,8 @@ void DECOMP_howl_PauseAudio()
 	
 	DECOMP_Smart_EnterCriticalSection();
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{
@@ -31,8 +30,8 @@ void DECOMP_howl_PauseAudio()
 		*ptrFlag &= ~(2);
 		
 		// psx's kernel memcpy does NOT work inside "critical" sections
-		int* dest = pausedStats++;
-		int* src = curr;
+		int* dest = (int*)pausedStats++;
+		int* src = (int*)curr;
 		
 		// skip first two, which are pointers
 		dest[2] = src[2];
@@ -42,8 +41,8 @@ void DECOMP_howl_PauseAudio()
 		dest[6] = src[6];
 		dest[7] = src[7];
 		
-		DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
-		DECOMP_LIST_AddBack(&sdata->channelFree, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)curr);
+		DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)curr);
 	
 		sdata->numBackup_ChannelStats++;
 	}

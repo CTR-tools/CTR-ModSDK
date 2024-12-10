@@ -8,7 +8,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
     struct GameTracker *gGT = sdata->gGT;
     struct Bank thisBank;
     int level = gGT->levelID;
-	char* arr = &sdata->audioDefaults[7];
+	char* arr = (char*)&sdata->audioDefaults[7];
 
     // loading state of song (one byte)
     switch (arr[1])

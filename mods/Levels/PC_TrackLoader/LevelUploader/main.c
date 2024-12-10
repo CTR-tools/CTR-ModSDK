@@ -61,8 +61,10 @@ void UploadToDuck(char** argv)
 	size = ftell(f);
 	rewind(f);
 
-	// read to 4mb on PS1
-	fread(&pBuf[0x200000], size, 1, f);
+	#define LEVEL_LOAD_ADDR 0x00200000 //2mb
+
+	// read to LEVEL_LOAD_ADDR_mb on PS1
+	fread(&pBuf[LEVEL_LOAD_ADDR], size, 1, f);
 
 	fclose(f);
 
@@ -80,24 +82,26 @@ void UploadToDuck(char** argv)
 	size = ftell(f);
 	rewind(f);
 
-	// read to 2mb on PS1
-	fread(&pBuf[0x200000], size, 1, f);
+	// read to LEVEL_LOAD_ADDR_mb on PS1
+	fread(&pBuf[LEVEL_LOAD_ADDR], size, 1, f);
 
 	fclose(f);
 
-	char* fileBuf = &pBuf[0x200000];
+	char* fileBuf = &pBuf[LEVEL_LOAD_ADDR];
 	int ptrMapOffset = *(int*)&fileBuf[0];
 	char* realFileBuf = &fileBuf[4];
+
+	int valIdk = LEVEL_LOAD_ADDR | 0x80000000 | 0x00000004; //level file pointer?
 
 	struct DramPointerMap* dpm = &realFileBuf[ptrMapOffset];
 	DECOMP_LOAD_RunPtrMap(
 		realFileBuf,
 		(int*)DRAM_GETOFFSETS(dpm),
 		dpm->numBytes >> 2,
-		0x80200004);
+		valIdk);
 
 	// set level file pointer
-	*(int*)&pBuf[(0x80096b20 + 0x160) & 0xffffff] = 0x80200004;
+	*(int*)&pBuf[(0x80096b20 + 0x160) & 0xffffff] = valIdk;
 
 	// tell PS1 to start level
 	*(int*)&pBuf[(0x8000c000) & 0xffffff] = 4;

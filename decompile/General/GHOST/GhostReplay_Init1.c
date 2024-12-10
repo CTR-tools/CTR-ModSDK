@@ -7,7 +7,6 @@ void DECOMP_GhostReplay_Init1(void)
 	char i;
 	u_short uVar1;
 	int iVar2;
-	u_int uVar3;
 	struct Thread *t;
 	struct Instance *inst;
 	struct Instance *wakeInst;
@@ -146,12 +145,12 @@ void DECOMP_GhostReplay_Init1(void)
 		
 // set in MainInit_Drivers for PC port
 #ifndef REBUILD_PS1
-		uVar3 = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+		struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
 #else
-		uVar3 = 0;
+		struct Model* model = NULL;
 #endif
 
-		inst = DECOMP_INSTANCE_Birth3D(uVar3, 0, 0);
+		inst = DECOMP_INSTANCE_Birth3D(model, NULL, NULL);
 		inst->unk51 = 0xc;
 		inst->flags = 7;
 

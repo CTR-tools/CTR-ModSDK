@@ -8,7 +8,7 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 	if(sdata->boolUseDisc == 0) return;
 	if(sdata->bool_XnfLoaded == 0) return;
 	if(categoryID >= CDSYS_XA_NUM_TYPES) return;
-	if(xaID > DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
+	if((u_int)xaID > DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
 	
 	#if 0
 	// If game is loading, play error sound
@@ -36,7 +36,7 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 	buf1[0] = 1;
 	buf1[1] = xas->XaIndex;
 	CdControl(CdlSetfilter, &buf1[0], 0);
-	CdIntToPos(sum, &buf2[0]);
+	CdIntToPos(sum, (CdlLOC*)&buf2[0]);
 	
 	sdata->XA_StartPos = sum;
 	sdata->XA_EndPos = sum+xas->XaBytes;

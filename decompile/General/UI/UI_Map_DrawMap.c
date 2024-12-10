@@ -35,7 +35,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
 		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-		iVar9 = pointers[ST1_MAP];
+		iVar9 = (int)pointers[ST1_MAP];
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap

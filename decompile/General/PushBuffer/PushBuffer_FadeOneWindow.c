@@ -20,7 +20,7 @@ void DECOMP_PushBuffer_FadeOneWindow(struct PushBuffer* pb)
   // some amount of fading
   if (currValue != 0x1000)
   {
-    p = (POLY_F4 *)backBuffer->primMem.curr;
+    p = (multiCmdPacket*)backBuffer->primMem.curr;
 
     setlen(p, 7);
     p->f4.tag = 0;

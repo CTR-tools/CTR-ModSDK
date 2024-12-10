@@ -13,12 +13,12 @@ struct Instance* DECOMP_INSTANCE_BirthWithThread(
 	
 	m = gGT->modelPtr[modelID];
 	
-	if(m == 0)
+	if(m == NULL)
 	{
 		// June 1999
 		// printf("INSTANCE_BirthWithThread: object type %d not found!\n",param_1);
 		
-		return 0;
+		return NULL;
 	}
 	
 	// talkingMask is unaligned

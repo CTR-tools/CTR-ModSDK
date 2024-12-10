@@ -345,9 +345,9 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				0, 0);
 			#endif
 
-			int strX = 'X';
+			int strX = 'X'; //"X\0\0" + nullterm
 			DECOMP_DecalFont_DrawLine(
-				&strX,
+				(char*)&strX,
 				instPosX + 0x24,
 				instPosY + 0x3e,
 				FONT_SMALL, 0);
@@ -401,9 +401,9 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				0, 0);
 			#endif
 
-			int strX = 'X';
+			int strX = 'X'; //"X\0\0" + nullterm
 			DECOMP_DecalFont_DrawLine(
-				&strX,
+				(char*)&strX,
 				instPosX + 10,
 				0x4e,
 				FONT_SMALL, 0);
@@ -414,10 +414,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 		// be careful, might overflow in languages
 		// other than english, where "TOTAL" is longer
-		sprintf(&count[0], "%s %d", sdata->lngStrings[0xc4], bitIndex);
+		sprintf((char*)&count[0], "%s %d", sdata->lngStrings[0xc4], bitIndex);
 
 		DECOMP_DecalFont_DrawLine(
-			count,
+			(char*)count,
 			posX + 0x100, 0x6e,
 			FONT_BIG,
 			0xffff8000);
@@ -439,7 +439,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 	Color color;
 	color.self = sdata->battleSetup_Color_UI_1;
-	int* ot = gGT->backBuffer->otMem.startPlusFour;
+	u_long* ot = gGT->backBuffer->otMem.startPlusFour;
 	DECOMP_RECTMENU_DrawOuterRect_Edge(&r, color, 0x20, ot);
 
 	r.x = 0x100 - half;
@@ -479,7 +479,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		else
 		{
 			unsigned char* ptrColor =
-				&D232.advPauseInst[index].color;
+				(unsigned char*)&D232.advPauseInst[index].color;
 
 			inst->alphaScale = 0;
 			inst->colorRGBA =

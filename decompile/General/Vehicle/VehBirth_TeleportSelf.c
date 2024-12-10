@@ -31,10 +31,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     struct Level* level1 = gGT->level1;
 
 #ifndef REBUILD_PS1
-    struct ScratchpadStruct* sps = 0x1f800108;
+    struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
 #else
     char scratchpad[0x1000];
-    struct ScratchpadStruct* sps = &scratchpad[0];
+    struct ScratchpadStruct* sps = (struct ScratchpadStruct*)&scratchpad[0];
 #endif
 
     // cheat flags
@@ -532,8 +532,7 @@ LAB_80058568:
     {
         DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
-        void Veh_NullThread();
-        d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
+        d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : DECOMP_Veh_NullThread;
 
         // set OnInit function
         d->funcPtrs[0] =

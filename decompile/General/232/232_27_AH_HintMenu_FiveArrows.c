@@ -20,6 +20,6 @@ void DECOMP_AH_HintMenu_FiveArrows(int param_1,short rotation)
         
 		&D232.fiveArrow_pos[0],
 		
-        ptrColor,0x800,(int)rotation);
+        (char*)ptrColor,0x800,(int)rotation);
   }
 }

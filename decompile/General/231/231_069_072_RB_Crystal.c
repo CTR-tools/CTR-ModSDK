@@ -69,8 +69,6 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
-
 int DECOMP_RB_Crystal_LInC(
 	struct Instance* LevInst,
 	struct Thread* driverTh,

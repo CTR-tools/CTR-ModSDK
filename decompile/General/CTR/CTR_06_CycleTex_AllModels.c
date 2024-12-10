@@ -9,7 +9,7 @@ void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModel
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
-    for(int i = 0; i < numModels; i++)
+    for(int i = 0; i < *((int*)&numModels); i++)
 	{
 		pModel = pModelArray[i];
 		if(pModel == 0) return;

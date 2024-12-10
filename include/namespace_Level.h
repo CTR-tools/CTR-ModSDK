@@ -144,7 +144,7 @@ struct AnimTex
 };
 
 #define ANIMTEX_GETARRAY(x) \
-	((unsigned int)x + sizeof(struct AnimTex))
+	(struct IconGroup4**)((unsigned int)x + sizeof(struct AnimTex))
 
 struct PVS
 {
@@ -471,12 +471,12 @@ struct SpawnType1
 	//void* pointers[0];
 };
 #define ST1_GETPOINTERS(x) \
-	((unsigned int)x + sizeof(struct SpawnType1))
+	(void**)((unsigned int)x + sizeof(struct SpawnType1))
 
 struct SpawnType2
 {
 	int numCoords;
-	short* posCoords;
+	short* posCoords; //maybe should be `struct PosRot*` instead of `short*`
 };
 
 // per-quadblock checkpoint node

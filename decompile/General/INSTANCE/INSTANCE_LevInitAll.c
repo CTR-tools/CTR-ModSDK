@@ -72,7 +72,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		inst->bitCompressed_NormalVector_AndDriverIndex = 0;
 
 		// converted to TEST in rebuildPS1
-		ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
+		ConvertRotToMatrix(&inst->matrix, &levInstDef->rot[0]);
 	
 		// instance posX and posY
 		inst->matrix.t[0] = levInstDef->pos[0];

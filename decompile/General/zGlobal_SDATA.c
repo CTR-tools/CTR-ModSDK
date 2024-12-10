@@ -14,8 +14,8 @@ struct sData sdata_static =
 	.langBufferSize = 0x3F04,
 	
 #if NO_BSS
-	.arcade_difficultyParams = 0x8008da48,
-	.cup_difficultyParams = 0x8008da64,
+	.arcade_difficultyParams = (short*)0x8008da48,
+	.cup_difficultyParams = (short*)0x8008da64,
 #else
 	.arcade_difficultyParams = &sdata_static.arcadeDiff[0],
 	.cup_difficultyParams = &sdata_static.cupDiff[0],
@@ -245,8 +245,8 @@ struct sData sdata_static =
 	#endif
 	
 #if NO_BSS
-	.gGT = 0x80096b20,
-	.gGamepads = 0x80096804,
+	.gGT = (struct GameTracker*)0x80096b20,
+	.gGamepads = (struct GamepadSystem*)0x80096804,
 #else
 	.gGT = &sdata_static.gameTracker,
 	.gGamepads = &sdata_static.gamepadSystem,
@@ -322,7 +322,7 @@ struct sData sdata_static =
 	.s_AnyFile = "*",
 	
 #if NO_BSS
-	.PtrMempack = 0x800990E4,
+	.PtrMempack = (struct Mempack*)0x800990E4,
 #else
 	.PtrMempack = &sdata_static.mempack[0],
 #endif
@@ -359,7 +359,7 @@ struct sData sdata_static =
 	
 #if NO_BSS
 	.ptrToMemcardBuffer1 = 0x800992e4,
-	.ptrToMemcardBuffer2 = 0x800992e4,
+	.ptrToMemcardBuffer2 = (void*)0x800992e4,
 #elif __GNUC__
 	.ptrToMemcardBuffer1 = &memcardBytes[0],
 	.ptrToMemcardBuffer2 = &memcardBytes[0],

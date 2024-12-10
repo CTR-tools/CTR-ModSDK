@@ -7,9 +7,6 @@
 // this goes to footer
 static int str_number = 0x20; // " \0"
 
-void DECOMP_RR_EndEvent_UnlockAward();
-void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY);
-
 // required to start on 8009f71c until we rewrite MainGameEnd_Initialize
 void JunkPadding223()
 {
@@ -606,7 +603,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 		str_number = (char)i + '1';
 
 		// Draw String for Rank ('1', '2', '3', '4', '5')
-		DecalFont_DrawLine(&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
+		DecalFont_DrawLine((char*)&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
 
 		u_int iconColor = 0x808080;
 

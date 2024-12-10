@@ -77,9 +77,9 @@ short bubbleScaleArr3[] =
 // causing Nitro Court Crystal Challenge bug.
 // Here, only allocate 40, save some RAM
 #include <common.h>
-struct WeaponSlot231 minePoolItem[40];
-struct LinkedList minePoolTaken;
-struct LinkedList minePoolFree;
+//struct WeaponSlot231 minePoolItem[40]; //moved to d231
+//struct LinkedList minePoolTaken;
+//struct LinkedList minePoolFree;
 
 #include "231_056_057_RB_Baron.c"
 #include "231_058_059_RB_Blade.c"

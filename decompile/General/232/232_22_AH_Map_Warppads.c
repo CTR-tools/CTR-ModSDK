@@ -76,7 +76,7 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
 	}
 	
 	DECOMP_UI_Map_DrawRawIcon(
-		ptrMap, &warppadInst->matrix.t[0],
+		(int)ptrMap, (int*)&warppadInst->matrix.t[0],
 		0x31, color, 0, 0x1000);
 	
 	// if locked
