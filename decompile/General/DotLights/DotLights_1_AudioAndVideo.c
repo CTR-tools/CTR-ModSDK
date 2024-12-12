@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DotLights(struct GameTracker* gGT)
+void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
 {
   int iVar1;
   int d1;

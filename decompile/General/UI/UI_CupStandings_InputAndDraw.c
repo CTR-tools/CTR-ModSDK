@@ -636,9 +636,11 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
   }
 }
 
+#if defined (USE_DEFRAG)
 #include "../AltMods/Mods8.c"
 
 void __attribute__ ((section (".end"))) Mods8_EndOfFile()
 {
 	// leave empty
 }
+#endif

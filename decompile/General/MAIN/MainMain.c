@@ -612,9 +612,11 @@ void StateZero()
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
 
-	// for modding
+    #if defined (USE_DEFRAG)
+	// for modding (code caves)
 	void ModsMain();
 	ModsMain();
+    #endif
 
 	// Set Video Mode to NTSC
 	SetVideoMode(0);

@@ -35,9 +35,11 @@
 #include "LOAD_A33_LangFile.c"
 #include "LOAD_A34_GetBigfileIndex.c"
 
+#if defined (USE_DEFRAG)
 #include "../AltMods/Mods4.c"
 
 void __attribute__ ((section (".end"))) Mods4_EndOfFile()
 {
 	// leave empty
 }
+#endif

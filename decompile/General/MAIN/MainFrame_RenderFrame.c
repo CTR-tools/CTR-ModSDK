@@ -332,7 +332,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			(sdata->Loading.stage != -4)
 		)
 		{
-			DECOMP_DotLights(gGT);
+			DECOMP_DotLights_AudioAndVideo(gGT);
 
 			#ifndef USE_ONLINE
 			if((gGT->renderFlags & 0x8000) != 0)
@@ -1788,9 +1788,11 @@ void RenderSubmit(struct GameTracker* gGT)
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }
 
+#if defined (USE_DEFRAG)
 #include "../AltMods/Mods7.c"
 
 void __attribute__ ((section (".end"))) Mods7_EndOfFile()
 {
 	// leave empty
 }
+#endif

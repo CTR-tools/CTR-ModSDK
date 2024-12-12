@@ -42,9 +42,3 @@ void DECOMP_DropRain_MakeSound(struct GameTracker *gGT)
   }
   return;
 }
-
-void DECOMP_DropRain_Reset(struct GameTracker *gGT) 
-{
-  gGT->rainSoundID = 0;
-  return;
-}

@@ -2,6 +2,7 @@
 
 void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 {
+	//this is missing a bunch of stuff vs ghidra
     unsigned char bVar1;
     u_char bVar2;
     short uVar3;

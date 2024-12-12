@@ -56,7 +56,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 
 void DECOMP_DISPLAY_Swap(void);
 
-void DECOMP_DotLights(struct GameTracker* gGT);
+void DECOMP_DotLights_Video(struct GameTracker* gGT);
 
 void DECOMP_DropRain_MakeSound(struct GameTracker *gGT);
 void DECOMP_DropRain_Reset(struct GameTracker *gGT);
@@ -851,6 +851,12 @@ void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_Veh_NullThread(struct Thread* t);
 void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*)(struct LoadQueueSlot*));
+void DECOMP_ElimBG_SaveScreenshot_Chunk(u_short* param_1, u_short* param_2, int param_3);
+void DECOMP_ElimBG_ToggleInstance(struct Instance* inst, char boolGameIsPaused);
+void DECOMP_ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPaused);
+void DECOMP_INSTANCE_LevDelayedLInBs(struct Instance* instDefs, u_int numInstances);
+void DECOMP_CAM_ThTick(struct Thread* t);
+void DECOMP_FLARE_Init(short* pos);
 
 //TODO:
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot

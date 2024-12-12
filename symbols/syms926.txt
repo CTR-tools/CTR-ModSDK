@@ -383,10 +383,10 @@
 800309a4 INSTANCE_BirthWithThread // real ND name
 80030a50 INSTANCE_BirthWithThread_Stack
 80030aa8 INSTANCE_Death
-
 80030ad4 INSTANCE_LevInitAll
-80030ed4 INSTANCE_LevDelayedLInBs
+80030ed4 INSTANCE_LevDelayedLInBs //not impl yet?
 80030f58 INSTANCE_GetNumAnimFrames
+
 
 80030fdc JitPool_Clear
 8003105c JitPool_Init

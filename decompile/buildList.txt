@@ -30,7 +30,7 @@
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
+common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
 common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
 
@@ -155,16 +155,23 @@ common, 233, CS_Podium_FullScene_Init, 0x0,                          General/233
 common, 233, CS_Garage_ZoomOut, 0x0,                                 General/233/233_37_40_CS_Garage.c
 926, 233, 0x800b8598, 0x0,                                           General/233/233_zGlobal_gGarage.c
 // skip credits (41-46)
-common, 233, CS_Credits_Init, 0x0,                                   General/233/233_47_CS_Credits_Init.c
-common, 233, CS_Credits_IsTextValid, 0x0,                            General/233/233_48_CS_Credits_IsTextValid.c
-common, 233, CS_Credits_NewDancer, 0x0,                              General/233/233_49_CS_Credits_NewDancer.c
-common, 233, CS_Credits_End, 0x0,                                    General/233/233_51_CS_Credits_End.c
+//common, 233, CS_Credits_Init, 0x0,                                   General/233/233_47_CS_Credits_Init.c
+//common, 233, CS_Credits_IsTextValid, 0x0,                            General/233/233_48_CS_Credits_IsTextValid.c
+//common, 233, CS_Credits_NewDancer, 0x0,                              General/233/233_49_CS_Credits_NewDancer.c
+//common, 233, CS_Credits_End, 0x0,                                    General/233/233_51_CS_Credits_End.c
 
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
 
+// ====================================================================================================================
 // BOTS
+// ====================================================================================================================
+//unless/until a "../AltMods/ModsX.c" entry is impl for BOTS, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_Defrag.c
+
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
 common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_000_SetGlobalNavData.c
 common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_001_InitNavPath.c
 //common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
@@ -183,21 +190,25 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_003_Adv
 //common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_015_Driver_Init.c //BOTS_Driver_Init 8001702c //a comment in this file explicitly stated that this is not finished
 //common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_016_Driver_Convert.c //BOTS_Driver_Convert 80017318
 
+// ====================================================================================================================
 // CAM
-common, exe, CAM_ClearScreen, 0x0, General/CAMERA/CAM_01_ClearScreen.c
-common, exe, CAM_Init, 0x0, General/CAMERA/CAM_02_Init.c
-common, exe, CAM_Path_GetNumPoints, 0x0, General/CAMERA/CAM_04_Path_GetNumPoints.c
-common, exe, CAM_Path_Move, 0x0, General/CAMERA/CAM_05_Path_Move.c
-common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_06_StartOfRace.c
-common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_07_EndOfRace_Battle.c
-common, exe, CAM_EndOfRace, 0x0, General/CAMERA/CAM_08_EndOfRace.c
-common, exe, CAM_ProcessTransition, 0x0, General/CAMERA/CAM_10_ProcessTransition.c
-common, exe, CAM_LookAtPosition, 0x0, General/CAMERA/CAM_14_LookAtPosition.c
-common, exe, CAM_FollowDriver_Spin360, 0x0, General/CAMERA/CAM_15_FollowDriver_Spin360.c
-common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_16_SetDesiredPosRot.c
-common, exe, CAM_ThTick, 0x0, General/CAMERA/CAM_19_ThTick.c
+// ====================================================================================================================
+common, exe, CAM_ClearScreen, 0x0,                     General/CAMERA/CAM_01_ClearScreen.c
+common, exe, CAM_Init, 0x0,                            General/CAMERA/CAM_02_Init.c
+common, exe, CAM_Path_GetNumPoints, 0x0,               General/CAMERA/CAM_04_Path_GetNumPoints.c
+common, exe, CAM_Path_Move, 0x0,                       General/CAMERA/CAM_05_Path_Move.c
+common, exe, CAM_StartOfRace, 0x0,                     General/CAMERA/CAM_06_StartOfRace.c
+common, exe, CAM_EndOfRace_Battle, 0x0,                General/CAMERA/CAM_07_EndOfRace_Battle.c
+common, exe, CAM_EndOfRace, 0x0,                       General/CAMERA/CAM_08_EndOfRace.c
+common, exe, CAM_ProcessTransition, 0x0,               General/CAMERA/CAM_10_ProcessTransition.c
+common, exe, CAM_LookAtPosition, 0x0,                  General/CAMERA/CAM_14_LookAtPosition.c
+common, exe, CAM_FollowDriver_Spin360, 0x0,            General/CAMERA/CAM_15_FollowDriver_Spin360.c
+common, exe, CAM_SetDesiredPosRot, 0x0,                General/CAMERA/CAM_16_SetDesiredPosRot.c
+common, exe, CAM_ThTick, 0x0,                          General/CAMERA/CAM_19_ThTick.c
 
+// ====================================================================================================================
 // CDSYS
+// ====================================================================================================================
 common, exe, CDSYS_Init, 0x0,                          General/CDSYS/CDSYS_01_Init.c
 common, exe, CDSYS_GetFilePosInt, 0x0,                 General/CDSYS/CDSYS_02_GetFilePosInt.c
 common, exe, CDSYS_SetMode_StreamData, 0x0,            General/CDSYS/CDSYS_03_SetMode_StreamData.c
@@ -218,11 +229,12 @@ common, exe, CDSYS_XAPauseRequest, 0x0,                General/CDSYS/CDSYS_17_XA
 common, exe, CDSYS_XAPauseForce, 0x0,                  General/CDSYS/CDSYS_18_XAPauseForce.c
 common, exe, CDSYS_XAPauseAtEnd, 0x0,                  General/CDSYS/CDSYS_19_XAPauseAtEnd.c
 
+// ====================================================================================================================
 // COLL
-common, exe, COLL_LevModelMeta, 0x0,                   General/COLL/COLL_00_LevModelMeta.c
-common, exe, COLL_PerBspLeaf_CheckInstances, 0x0,      General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
-common, exe, COLL_StartSearch_AI, 0x0,                 General/COLL/COLL_03_StartSearch_AI.c
-
+// ====================================================================================================================
+common, exe, COLL_LevModelMeta, 0x0,                                     General/COLL/COLL_00_LevModelMeta.c
+common, exe, COLL_PerBspLeaf_CheckInstances, 0x0,                        General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
+common, exe, COLL_StartSearch_AI, 0x0,                                   General/COLL/COLL_03_StartSearch_AI.c
 // over budget, but assumed working
 //common, exe, COLL_PerQuadblock_CheckTriangles_Touching, 0x0,             General/COLL/COLL_11_PerQuadblock_CheckTriangles_Touching.c
 //common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0,              General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c
@@ -231,8 +243,9 @@ common, exe, COLL_StartSearch_AI, 0x0,                 General/COLL/COLL_03_Star
 //common, exe, COLL_PerQuadblock_CheckTriangles_NearPlayer, 0x0,           General/COLL/COLL_18_PerQuadblock_CheckTriangles_NearPlayer.c
 //common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0,            General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c
 
-
+// ====================================================================================================================
 // CTR
+// ====================================================================================================================
 common, exe, CTR_Box_DrawWirePrims, 0x0,               General/CTR/CTR_00_Box_DrawWirePrims.c
 common, exe, CTR_Box_DrawWireBox, 0x0,                 General/CTR/CTR_01_Box_DrawWireBox.c
 common, exe, CTR_Box_DrawClearBox, 0x0,                General/CTR/CTR_02_Box_DrawClearBox.c
@@ -242,12 +255,16 @@ common, exe, CTR_CycleTex_Model, 0x0,                  General/CTR/CTR_05_CycleT
 common, exe, CTR_CycleTex_AllModels, 0x0,              General/CTR/CTR_06_CycleTex_AllModels.c
 common, exe, CTR_ErrorScreen, 0x0,                     General/CTR/CTR_11_ErrorScreen.c
 common, exe, CTR_MatrixToRot, 0x0,                     General/CTR/CTR_16_MatrixToRot.c
-													  
-// DebugFont										  
+
+// ====================================================================================================================
+// DebugFont
+// ====================================================================================================================
 common, exe, DebugFont_Init, 0x0,                      General/DebugFont/DebugFont_0_Init.c
 common, exe, DebugFont_DrawNumbers, 0x0,               General/DebugFont/DebugFont_1_DrawNumbers.c
-													  
-// DecalFont										  
+
+// ====================================================================================================================
+// DecalFont
+// ====================================================================================================================
 common, exe, DecalFont_GetLineWidthStrlen, 0x0,        General/DecalFont/DecalFont_0_GetLineWidthStrlen.c
 common, exe, DecalFont_GetLineWidth, 0x0,              General/DecalFont/DecalFont_1_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0,            General/DecalFont/DecalFont_2_DrawLineStrlen.c
@@ -256,58 +273,129 @@ common, exe, DecalFont_DrawLineOT, 0x0,                General/DecalFont/DecalFo
 common, exe, DecalFont_DrawMultiLineStrlen, 0x0,       General/DecalFont/DecalFont_5_DrawMultiLineStrlen.c
 common, exe, DecalFont_DrawMultiLine, 0x0,             General/DecalFont/DecalFont_6_DrawMultiLine.c
 
+// ====================================================================================================================
 // DecalGlobal
-common, exe, DecalGlobal_Clear, 0x0, General/DecalGlobal/DecalGlobal_Clear.c
-common, exe, DecalGlobal_Store, 0x0, General/DecalGlobal/DecalGlobal_Store.c
+// ====================================================================================================================
+common, exe, DecalGlobal_Clear, 0x0,                   General/DecalGlobal/DecalGlobal_1_Clear.c
+common, exe, DecalGlobal_Store, 0x0,                   General/DecalGlobal/DecalGlobal_2_Store.c
 
+// ====================================================================================================================
 // DecalHUD
-common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
-common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
-common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
-common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
+// ====================================================================================================================
+common, exe, DecalHUD_DrawPolyFT4, 0x0,                General/DecalHUD/DecalHUD_0_DrawPolyFT4.c
+common, exe, DecalHUD_DrawWeapon, 0x0,                 General/DecalHUD/DecalHUD_1_DrawWeapon.c
+common, exe, DecalHUD_DrawPolyGT4, 0x0,                General/DecalHUD/DecalHUD_2_DrawPolyGT4.c
+common, exe, DecalHUD_Arrow2D, 0x0,                    General/DecalHUD/DecalHUD_3_Arrow2D.c
 
+// ====================================================================================================================
 // Display
-common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
+// ====================================================================================================================
+common, exe, DISPLAY_Swap, 0x0,                        General/Display/DISPLAY_2_Swap.c
 
-// DotLights (done)
-common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
+// ====================================================================================================================
+// DotLights (done except video only?)
+// ====================================================================================================================
+//this seems to be clobbering (overbudget by quite a bit, need to investigate, disabled for now)
+//common, exe, DotLights_Video, 0x0,                     General/DotLights/DotLights_0_Video.c
+//common, exe, DotLights_AudioAndVideo, 0x0,             General/DotLights/DotLights_1_AudioAndVideo.c
+common, exe, DotLights_Video, 0x0,             General/DotLights/DotLights_1_AudioAndVideo.c
 
-// DropRain (done)
-common, exe, DropRain_MakeSound, 0x0, General/DropRain/DropRain.c
+// ====================================================================================================================
+// DropRain (done?)
+// ====================================================================================================================
+//unless/until a "../AltMods/ModsX.c" entry is impl for DropRain, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
+//use this for defrag (enable USE_DEFRAG in common.h)
+common, exe, DropRain_MakeSound, 0x0,                  General/DropRain/DropRain_Defrag.c
 
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+//common, exe, DropRain_MakeSound, 0x0,                  General/DropRain/DropRain_0_MakeSound.c
+//common, exe, DropRain_Reset, 0x0,                      General/DropRain/DropRain_1_Reset.c
+
+// ====================================================================================================================
 // ElimBG
-common, exe, ElimBG_SaveScreenshot_Chunk, 0x0, General/ElimBG/ElimBG_AAA_BigBlock1.c
+// ====================================================================================================================
+//use this for defrag + Mods6.c (enable USE_DEFRAG in common.h)
+//common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,       General/ElimBG/ElimBG_Defrag.c
 
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,         General/ElimBG/ElimBG_0_SaveScreenshot_Chunk.c
+common, exe, ElimBG_SaveScreenshot_Full, 0x0,          General/ElimBG/ElimBG_1_SaveScreenshot_Full.c
+common, exe, ElimBG_Activate, 0x0,                     General/ElimBG/ElimBG_2_Activate.c
+common, exe, ElimBG_ToggleInstance, 0x0,               General/ElimBG/ElimBG_3_ToggleInstance.c
+common, exe, ElimBG_ToggleAllInstances, 0x0,           General/ElimBG/ElimBG_4_ToggleAllInstances.c
+common, exe, ElimBG_HandleState, 0x0,                  General/ElimBG/ElimBG_5_HandleState.c
+common, exe, ElimBG_Deactivate, 0x0,                   General/ElimBG/ElimBG_6_Deactivate.c
+
+// ====================================================================================================================
+// FLARE
+// ====================================================================================================================
+//common, exe, FLARE_ThTick, 0x0,                        General/FLARE/FLARE_0_ThTick.c
+//common, exe, FLARE_Init, 0x0,                          General/FLARE/FLARE_1_Init.c //UNTESTED
+
+// ====================================================================================================================
 // GAMEPAD
-common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_AAA_Block1.c
+// ====================================================================================================================
+//use this for defrag + Mods2.c (enable USE_DEFRAG in common.h)
+//common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_Defrag.c
 
-common, exe, GAMEPAD_JogCon1, 0x0, General/GAMEPAD/GAMEPAD_JogCon1.c
-common, exe, GAMEPAD_JogCon2, 0x0, General/GAMEPAD/GAMEPAD_JogCon2.c
-common, exe, GAMEPAD_ShockFreq, 0x0, General/GAMEPAD/GAMEPAD_ShockFreq.c
-common, exe, GAMEPAD_ShockForce1, 0x0, General/GAMEPAD/GAMEPAD_ShockForce1.c
-common, exe, GAMEPAD_ShockForce2, 0x0, General/GAMEPAD/GAMEPAD_ShockForce2.c
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_00_Init.c
+common, exe, GAMEPAD_SetMainMode, 0x0,                   General/GAMEPAD/GAMEPAD_01_SetMainMode.c
+common, exe, GAMEPAD_ProcessState, 0x0,                  General/GAMEPAD/GAMEPAD_02_ProcessState.c
+common, exe, GAMEPAD_PollVsync, 0x0,                     General/GAMEPAD/GAMEPAD_03_PollVsync.c
+common, exe, GAMEPAD_GetNumConnected, 0x0,               General/GAMEPAD/GAMEPAD_04_GetNumConnected.c
+common, exe, GAMEPAD_ProcessHold, 0x0,                   General/GAMEPAD/GAMEPAD_05_ProcessHold.c
+common, exe, GAMEPAD_ProcessSticks, 0x0,                 General/GAMEPAD/GAMEPAD_06_ProcessSticks.c
+common, exe, GAMEPAD_ProcessTapRelease, 0x0,             General/GAMEPAD/GAMEPAD_07_ProcessTapRelease.c
+common, exe, GAMEPAD_ProcessMotors, 0x0,                 General/GAMEPAD/GAMEPAD_08_ProcessMotors.c
+common, exe, GAMEPAD_ProcessAnyoneVars, 0x0,             General/GAMEPAD/GAMEPAD_09_ProcessAnyoneVars.c
+common, exe, GAMEPAD_JogCon1, 0x0,                       General/GAMEPAD/GAMEPAD_10_JogCon1.c
+common, exe, GAMEPAD_JogCon2, 0x0,                       General/GAMEPAD/GAMEPAD_11_JogCon2.c
+common, exe, GAMEPAD_ShockFreq, 0x0,                     General/GAMEPAD/GAMEPAD_12_ShockFreq.c
+common, exe, GAMEPAD_ShockForce1, 0x0,                   General/GAMEPAD/GAMEPAD_13_ShockForce1.c
+common, exe, GAMEPAD_ShockForce2, 0x0,                   General/GAMEPAD/GAMEPAD_14_ShockForce2.c
 
+// ====================================================================================================================
 // GAMEPROG (done)
-common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG/GAMEPROG_AdvPercent.c
-common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG/GAMEPROG_ResetHighScores.c
-common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG/GAMEPROG_CheckGhostsBeaten.c
-common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0, General/GAMEPROG/GAMEPROG_NewProfile_OutsideAdv.c
-common, exe, GAMEPROG_InitFullMemcard, 0x0, General/GAMEPROG/GAMEPROG_InitFullMemcard.c
-common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0, General/GAMEPROG/GAMEPROG_NewProfile_InsideAdv.c
-common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG/GAMEPROG_SaveCupProgress.c
-common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG/GAMEPROG_SyncGameAndCard.c
-common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c
-common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
+// ====================================================================================================================
+//unless/until a "../AltMods/ModsX.c" entry is impl for GAMEPROG, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, GAMEPROG_AdvPercent, 0x0,                   General/GAMEPROG/GAMEPROG_Defrag.c
 
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, GAMEPROG_AdvPercent, 0x0,                   General/GAMEPROG/GAMEPROG_00_AdvPercent.c
+common, exe, GAMEPROG_ResetHighScores, 0x0,              General/GAMEPROG/GAMEPROG_01_ResetHighScores.c
+common, exe, GAMEPROG_CheckGhostsBeaten, 0x0,            General/GAMEPROG/GAMEPROG_02_CheckGhostsBeaten.c
+common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0,        General/GAMEPROG/GAMEPROG_03_NewProfile_OutsideAdv.c
+common, exe, GAMEPROG_InitFullMemcard, 0x0,              General/GAMEPROG/GAMEPROG_04_InitFullMemcard.c
+common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0,         General/GAMEPROG/GAMEPROG_05_NewProfile_InsideAdv.c
+common, exe, GAMEPROG_SaveCupProgress, 0x0,              General/GAMEPROG/GAMEPROG_06_SaveCupProgress.c
+common, exe, GAMEPROG_SyncGameAndCard, 0x0,              General/GAMEPROG/GAMEPROG_07_SyncGameAndCard.c
+common, exe, GAMEPROG_NewGame_OnBoot, 0x0,               General/GAMEPROG/GAMEPROG_08_NewGame_OnBoot.c
+common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0,         General/GAMEPROG/GAMEPROG_09_GetPtrHighScoreTrack.c
+
+// ====================================================================================================================
 // GHOST
-common, exe, GhostReplay_ThTick, 0x0, General/GHOST/GhostReplay_ThTick.c
-common, exe, GhostReplay_Init1, 0x0, General/GHOST/GhostReplay_Init1.c
-common, exe, GhostReplay_Init2, 0x0, General/GHOST/GhostReplay_Init2.c
-common, exe, GhostTape_Start, 0x0, General/GHOST/GhostTape_Start.c
-common, exe, GhostTape_End, 0x0, General/GHOST/GhostTape_End.c
-common, exe, GhostTape_WriteMoves, 0x0, General/GHOST/GhostTape_WriteMoves.c
-common, exe, GhostTape_WriteBoosts, 0x0, General/GHOST/GhostTape_WriteBoosts.c
-common, exe, GhostTape_Destroy, 0x0, General/GHOST/GhostTape_Destroy.c
+// ====================================================================================================================
+//unless/until a "../AltMods/ModsX.c" entry is impl for GhostReplay, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, GhostReplay_ThTick, 0x0,                    General/GHOST/GhostReplay_Defrag.c
+
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, GhostReplay_ThTick, 0x0,                    General/GHOST/GhostReplay_00_ThTick.c
+common, exe, GhostReplay_Init1, 0x0,                     General/GHOST/GhostReplay_01_Init1.c
+common, exe, GhostReplay_Init2, 0x0,                     General/GHOST/GhostReplay_02_Init2.c
+
+//unless/until a "../AltMods/ModsX.c" entry is impl for GhostTape, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, GhostTape_Start, 0x0,                       General/GHOST/GhostTape_Defrag.c
+
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, GhostTape_Start, 0x0,                       General/GHOST/GhostTape_00_Start.c
+common, exe, GhostTape_End, 0x0,                         General/GHOST/GhostTape_01_End.c
+common, exe, GhostTape_WriteMoves, 0x0,                  General/GHOST/GhostTape_02_WriteMoves.c
+common, exe, GhostTape_WriteBoosts, 0x0,                 General/GHOST/GhostTape_03_WriteBoosts.c
+common, exe, GhostTape_Destroy, 0x0,                     General/GHOST/GhostTape_04_Destroy.c
 
 // HOWL
 common, exe, CountSounds, 0x0, General/HOWL/h01_CountSounds.c
@@ -414,31 +502,52 @@ common, exe, Garage_LerpFX, 0x0, General/HOWL/h141_Garage_LerpFX.c
 common, exe, Garage_MoveLR, 0x0, General/HOWL/h142_Garage_MoveLR.c
 common, exe, Garage_Leave, 0x0, General/HOWL/h143_Garage_Leave.c
 
+// ====================================================================================================================
 // INSTANCE
-common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
-common, exe, INSTANCE_Birth3D, 0x0, General/INSTANCE/INSTANCE_Birth3D.c
-common, exe, INSTANCE_Birth2D, 0x0, General/INSTANCE/INSTANCE_Birth2D.c
-common, exe, INSTANCE_BirthWithThread, 0x0, General/INSTANCE/INSTANCE_BirthWithThread.c
-common, exe, INSTANCE_BirthWithThread_Stack, 0x0, General/INSTANCE/INSTANCE_BirthWithThread_Stack.c
-common, exe, INSTANCE_Death, 0x0, General/INSTANCE/INSTANCE_Death.c
-common, exe, INSTANCE_GetNumAnimFrames, 0x0, General/INSTANCE/INSTANCE_GetNumAnimFrames.c
-common, exe, INSTANCE_LevInitAll, 0x0, General/INSTANCE/INSTANCE_LevInitAll.c
+// ====================================================================================================================
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, INSTANCE_Birth, 0x0,                        General/INSTANCE/INSTANCE_Defrag.c
 
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, INSTANCE_Birth, 0x0,                        General/INSTANCE/INSTANCE_00_Birth.c
+common, exe, INSTANCE_Birth3D, 0x0,                      General/INSTANCE/INSTANCE_01_Birth3D.c
+common, exe, INSTANCE_Birth2D, 0x0,                      General/INSTANCE/INSTANCE_02_Birth2D.c
+common, exe, INSTANCE_BirthWithThread, 0x0,              General/INSTANCE/INSTANCE_03_BirthWithThread.c
+common, exe, INSTANCE_BirthWithThread_Stack, 0x0,        General/INSTANCE/INSTANCE_04_BirthWithThread_Stack.c
+common, exe, INSTANCE_Death, 0x0,                        General/INSTANCE/INSTANCE_05_Death.c
+common, exe, INSTANCE_LevInitAll, 0x0,                   General/INSTANCE/INSTANCE_06_LevInitAll.c
+//common, exe, INSTANCE_LevDelayedLInBs, 0x0,              General/INSTANCE/INSTANCE_07_LevDelayedLInBs.c //UNTESTED
+common, exe, INSTANCE_GetNumAnimFrames, 0x0,             General/INSTANCE/INSTANCE_08_GetNumAnimFrames.c
+
+// ====================================================================================================================
 // JitPool
-common, exe, JitPool_Clear, 0x0, General/JitPool/JitPool_Clear.c
-common, exe, JitPool_Init, 0x0, General/JitPool/JitPool_Init.c
-common, exe, JitPool_Add, 0x0, General/JitPool/JitPool_Add.c
-common, exe, JitPool_Remove, 0x0, General/JitPool/JitPool_Remove.c
+// ====================================================================================================================
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, JitPool_Clear, 0x0,                         General/JitPool/JitPool_Defrag.c
 
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, JitPool_Clear, 0x0,                         General/JitPool/JitPool_0_Clear.c
+common, exe, JitPool_Init, 0x0,                          General/JitPool/JitPool_1_Init.c
+common, exe, JitPool_Add, 0x0,                           General/JitPool/JitPool_2_Add.c
+common, exe, JitPool_Remove, 0x0,                        General/JitPool/JitPool_3_Remove.c
+
+// ====================================================================================================================
 // LevInstDef
-common, exe, LevInstDef_UnPack, 0x0, General/LevInstDef/LevInstDef_UnPack.c
-common, exe, LevInstDef_RePack, 0x0, General/LevInstDef/LevInstDef_RePack.c
+// ====================================================================================================================
+//use this for defrag (enable USE_DEFRAG in common.h)
+//common, exe, LevInstDef_UnPack, 0x0,                     General/LevInstDef/LevInstDef_Defrag.c
+
+//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
+common, exe, LevInstDef_UnPack, 0x0,                     General/LevInstDef/LevInstDef_0_UnPack.c
+common, exe, LevInstDef_RePack, 0x0,                     General/LevInstDef/LevInstDef_1_RePack.c
 
 // LibraryOfModels
 // LibraryOfModels_Store relocated to RDATA
 common, exe, LibraryOfModels_Clear, 0x0, General/LibraryOfModels/LibraryOfModels_Clear.c
 
+// ====================================================================================================================
 // LIST
+// ====================================================================================================================
 common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c
 common, exe, LIST_AddFront, 0x0, General/LIST/LIST_AddFront.c
 common, exe, LIST_AddBack, 0x0, General/LIST/LIST_AddBack.c
@@ -514,9 +623,12 @@ common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.
 common, exe, MainStats_ClearBattleVS, 0x0, General/MAIN/MainStats_ClearBattleVS.c
 common, exe, MainStats_RestartRaceCountLoss, 0x0, General/MAIN/MainStats_RestartRaceCountLoss.c
 
+// ====================================================================================================================
 // MATH
+// ====================================================================================================================
 // MATH_Sin relocated to RDATA
-common, exe, MATH_Cos, 0x0, General/MATH/MATH_Cos.c
+//common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin.c
+common, exe, MATH_Cos, 0x0, General/MATH/MATH_1_Cos.c
 
 // MEMCARD
 common, exe, MEMCARD_SetIcon, 0x0, General/MEMCARD/MEMCARD_SetIcon.c

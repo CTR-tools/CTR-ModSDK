@@ -84,8 +84,8 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 
 	rot = mask->rot[1];
 
-    mhs->posOffset[0] = (((MATH_Sin(rot) << 6) >> 0xc) * mask->scale) >> 0xc;
-    mhs->posOffset[2] = (((MATH_Cos(rot) << 6) >> 0xc) * mask->scale) >> 0xc;	
+    mhs->posOffset[0] = (((DECOMP_MATH_Sin(rot) << 6) >> 0xc) * mask->scale) >> 0xc;
+    mhs->posOffset[2] = (((DECOMP_MATH_Cos(rot) << 6) >> 0xc) * mask->scale) >> 0xc;	
     
 	mhs->posOffset[1] = 
 		((short *)0x800b2cc4)[

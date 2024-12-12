@@ -147,7 +147,7 @@ def budget(name, size, symbolData, verbose = False):
                   if gap == size:
                      print(f"{bcolors.WARNING}Item \"{name}\" is *exactly* on budget.")
                   else:
-                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes.")
+                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes, successor is {next[0]}.")
          elif verbose:
             print(f"{bcolors.WARNING}Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_NAME\", but didn't find a viable candidate, cannot calculate bytebudget.")
       elif nsindexrange != None: #Range of things starting at a single named file
@@ -237,6 +237,8 @@ def main():
    print("\t* OVR_Full.c's are assumed to be linked to the same address as the first function in that overlay")
    print("\t* if gcc-/syms926.txt is inaccurate (duplicate entries, incorrect addresses, name collisions etc.), this tool will be inaccurate")
    print("\t* if there are more symbols in the original binary subsequent to another symbol, but not in gcc-/syms.926.txt (clobbered without telling you)")
+   print("\t* if it's overbudget when fragmented, it may or may not be overbudget defragged (See ElimBG_Defrag.c + assoc for example)")
+   print("\t* if the name of a symbol (filename) does not match the link location (function name/address)")
 
    #gcc-syms
    gccsyms_filename = argv[1]
@@ -288,7 +290,7 @@ def main():
          budget(objectname, file_size, symbolData, verbose)
       else:
          objectname = objectfullname[:len(objectfullname) - len(".bin")] # not a c.bin
-         print(objectname + " is not a cbin")
+         print(f"{bcolors.WARNING}{objectname} is not a cbin")
          #budget(objectname, file_size, symbolData, verbose)
    print("\nPress any key to exit.")
    input()
