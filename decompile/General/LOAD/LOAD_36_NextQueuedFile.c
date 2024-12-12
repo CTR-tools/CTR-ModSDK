@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_LOAD_CDRequestCallback();
-
 void DECOMP_LOAD_NextQueuedFile()
 {
 	if(

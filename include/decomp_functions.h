@@ -262,7 +262,7 @@ void DECOMP_JitPool_Remove(struct JitPool* AP, struct Item* item);
 void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info);
 void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub);
 
-struct Instance* DECOMP_LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc);
+struct Instance* DECOMP_LinkedCollide_Hitbox(struct HitboxDesc* objBoxDesc);
 
 // LIST
 void DECOMP_LIST_AddBack(struct LinkedList* L, struct Item* I);
@@ -857,6 +857,11 @@ void DECOMP_ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPau
 void DECOMP_INSTANCE_LevDelayedLInBs(struct Instance* instDefs, u_int numInstances);
 void DECOMP_CAM_ThTick(struct Thread* t);
 void DECOMP_FLARE_Init(short* pos);
+void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT);
+void DECOMP_LOAD_HubCallback(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_CDRequestCallback(struct LoadQueueSlot* lqs);
+//void LHMatrix_Parent(struct Instance* inst, struct Instance* driverInst, SVECTOR* param_3);
 
 //TODO:
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot

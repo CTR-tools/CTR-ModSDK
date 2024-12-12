@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DECOMP_LOAD_Callback_LEV();
-void DECOMP_LOAD_HubCallback();
-
 void DECOMP_LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID)
 {
 	int iVar2;

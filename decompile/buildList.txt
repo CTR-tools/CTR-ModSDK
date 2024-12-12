@@ -30,9 +30,7 @@
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
-common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
-common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
+common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c, rdata.bin
 
 // OVR1
 common, 221, OVR_Region1, 0x0, General/221/221_Full.c
@@ -397,7 +395,9 @@ common, exe, GhostTape_WriteMoves, 0x0,                  General/GHOST/GhostTape
 common, exe, GhostTape_WriteBoosts, 0x0,                 General/GHOST/GhostTape_03_WriteBoosts.c
 common, exe, GhostTape_Destroy, 0x0,                     General/GHOST/GhostTape_04_Destroy.c
 
+// ====================================================================================================================
 // HOWL
+// ====================================================================================================================
 common, exe, CountSounds, 0x0, General/HOWL/h01_CountSounds.c
 common, exe, OtherFX_Play, 0x0, General/HOWL/h02_OtherFX_Play.c
 common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/h03_OtherFX_Play_Echo.c
@@ -541,49 +541,96 @@ common, exe, JitPool_Remove, 0x0,                        General/JitPool/JitPool
 common, exe, LevInstDef_UnPack, 0x0,                     General/LevInstDef/LevInstDef_0_UnPack.c
 common, exe, LevInstDef_RePack, 0x0,                     General/LevInstDef/LevInstDef_1_RePack.c
 
+// ====================================================================================================================
+// LHMatrix
+// ====================================================================================================================
+common, exe, LHMatrix_Parent, 0x0,                       General/LHMatrix/LHMatrix_0_Parent.c
+
+// ====================================================================================================================
 // LibraryOfModels
+// ====================================================================================================================
 // LibraryOfModels_Store relocated to RDATA
-common, exe, LibraryOfModels_Clear, 0x0, General/LibraryOfModels/LibraryOfModels_Clear.c
+//common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store.c
+common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
+common, exe, LibraryOfModels_Clear, 0x0,                 General/LibraryOfModels/LibraryOfModels_1_Clear.c
+
+// ====================================================================================================================
+// LinkedCollide
+// ====================================================================================================================
+common, exe, LinkedCollide_Radius, 0x0,                  General/LinkedCollide/LinkedCollide_0_Radius.c
+common, exe, LinkedCollide_Hitbox, 0x0,                  General/LinkedCollide/LinkedCollide_2_Hitbox.c
 
 // ====================================================================================================================
 // LIST
 // ====================================================================================================================
-common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c
-common, exe, LIST_AddFront, 0x0, General/LIST/LIST_AddFront.c
-common, exe, LIST_AddBack, 0x0, General/LIST/LIST_AddBack.c
-common, exe, LIST_GetNextItem, 0x0, General/LIST/LIST_GetNextItem.c
-common, exe, LIST_GetFirstItem, 0x0, General/LIST/LIST_GetFirstItem.c
-common, exe, LIST_RemoveMember, 0x0, General/LIST/LIST_RemoveMember.c
-common, exe, LIST_RemoveFront, 0x0, General/LIST/LIST_RemoveFront.c
-common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
-common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
+common, exe, LIST_Clear, 0x0,                            General/LIST/LIST_0_Clear.c
+common, exe, LIST_AddFront, 0x0,                         General/LIST/LIST_1_AddFront.c
+common, exe, LIST_AddBack, 0x0,                          General/LIST/LIST_2_AddBack.c
+common, exe, LIST_GetNextItem, 0x0,                      General/LIST/LIST_3_GetNextItem.c
+common, exe, LIST_GetFirstItem, 0x0,                     General/LIST/LIST_4_GetFirstItem.c
+common, exe, LIST_RemoveMember, 0x0,                     General/LIST/LIST_5_RemoveMember.c
+common, exe, LIST_RemoveFront, 0x0,                      General/LIST/LIST_6_RemoveFront.c
+common, exe, LIST_RemoveBack, 0x0,                       General/LIST/LIST_7_RemoveBack.c
+common, exe, LIST_Init, 0x0,                             General/LIST/LIST_8_Init.c
 
-// LinkedCollide
-common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide/LinkedCollide_Radius.c
-common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide/LinkedCollide_Hitbox_Desc.c
-
+// ====================================================================================================================
 // LOAD
+// ====================================================================================================================
+// 00 to 33
+//common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00-33_Callback_Overlay_Generic.c
 
-// A01 to A34
-common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A00_BIGBLOCK.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_Callback_Overlay_Generic.c
+common, exe, LOAD_Callback_Overlay_230, 0x0,             General/LOAD/LOAD_01_Callback_Overlay_230.c
+common, exe, LOAD_Callback_Overlay_231, 0x0,             General/LOAD/LOAD_02_Callback_Overlay_231.c
+common, exe, LOAD_Callback_Overlay_232, 0x0,             General/LOAD/LOAD_03_Callback_Overlay_232.c
+common, exe, LOAD_Callback_Overlay_233, 0x0,             General/LOAD/LOAD_04_Callback_Overlay_233.c
+common, exe, LOAD_Callback_MaskHints3D, 0x0,             General/LOAD/LOAD_05_Callback_MaskHints3D.c
+common, exe, LOAD_Callback_Podiums, 0x0,                 General/LOAD/LOAD_06_Callback_Podiums.c
+common, exe, LOAD_Callback_LEV, 0x0,                     General/LOAD/LOAD_07_Callback_LEV.c
+common, exe, LOAD_Callback_LEV_Adv, 0x0,                 General/LOAD/LOAD_08_Callback_LEV_Adv.c
+common, exe, LOAD_Callback_DriverModels, 0x0,            General/LOAD/LOAD_09_Callback_DriverModels.c
+common, exe, LOAD_HubCallback, 0x0,                      General/LOAD/LOAD_10_HubCallback.c
+common, exe, LOAD_GlobalModelPtrs_MPK, 0x0,              General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c
+common, exe, LOAD_HubSwapPtrs, 0x0,                      General/LOAD/LOAD_12_HubSwapPtrs.c
+common, exe, LOAD_StringToUpper, 0x0,                    General/LOAD/LOAD_13_StringToUpper.c
+common, exe, LOAD_InitCD, 0x0,                           General/LOAD/LOAD_14_InitCD.c
+common, exe, LOAD_ReadDirectory, 0x0,                    General/LOAD/LOAD_15_ReadDirectory.c
+common, exe, LOAD_DramFileCallback, 0x0,                 General/LOAD/LOAD_16_DramFileCallback.c
+common, exe, LOAD_DramFile, 0x0,                         General/LOAD/LOAD_17_DramFile.c
+common, exe, LOAD_VramFileCallback, 0x0,                 General/LOAD/LOAD_18_VramFileCallback.c
+common, exe, LOAD_VramFile, 0x0,                         General/LOAD/LOAD_19_VramFile.c
+common, exe, LOAD_ReadFileASyncCallback, 0x0,            General/LOAD/LOAD_20_ReadFileASyncCallback.c
+common, exe, LOAD_ReadFile, 0x0,                         General/LOAD/LOAD_21_ReadFile.c
+common, exe, LOAD_ReadFile_NoCallback, 0x0,              General/LOAD/LOAD_22_ReadFile_NoCallback.c
+common, exe, LOAD_FindFile, 0x0,                         General/LOAD/LOAD_23_FindFile.c
+common, exe, LOAD_HowlHeaderSectors, 0x0,                General/LOAD/LOAD_24_HowlHeaderSectors.c
+common, exe, LOAD_HowlCallback, 0x0,                     General/LOAD/LOAD_25_HowlCallback.c
+common, exe, LOAD_HowlSectorChainStart, 0x0,             General/LOAD/LOAD_26_HowlSectorChainStart.c
+common, exe, LOAD_HowlSectorChainEnd, 0x0,               General/LOAD/LOAD_27_HowlSectorChainEnd.c
+common, exe, LOAD_RunPtrMap, 0x0,                        General/LOAD/LOAD_28_RunPtrMap.c
+common, exe, LOAD_Robots2P, 0x0,                         General/LOAD/LOAD_29_Robots2P.c
+common, exe, LOAD_Robots1P, 0x0,                         General/LOAD/LOAD_30_Robots1P.c
+common, exe, LOAD_DriverMPK, 0x0,                        General/LOAD/LOAD_31_DriverMPK.c
+common, exe, LOAD_LangFile, 0x0,                         General/LOAD/LOAD_32_LangFile.c
+common, exe, LOAD_GetBigfileIndex, 0x0,                  General/LOAD/LOAD_33_GetBigfileIndex.c
 
-common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_A35_AppendQueue.c
-common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_A36_CDRequestCallback.c
-common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_A37_NextQueuedFile.c
-common, exe, LOAD_Hub_ReadFile, 0x0, General/LOAD/LOAD_A38_Hub_ReadFile.c
-common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_A39_Hub_SwapNow.c
-common, exe, LOAD_Hub_Main, 0x0, General/LOAD/LOAD_A40_Hub_Main.c
-common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_A41_OvrLOD.c
-common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_A42_OvrEndRace.c
-common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_A43_OvrThreads.c
-common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_A44_GetAdvPackIndex.c
-common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_A45_TenStages.c
-common, exe, LOAD_TalkingMask, 0x0, General/LOAD/LOAD_A46_TalkingMask.c
-common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_A47_LevelFile.c
-common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c
-common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_A49_IsOpen_MainMenu.c
-common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_A50_IsOpen_AdvHub.c
-common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_A51_IsOpen_Podiums.c
+common, exe, LOAD_AppendQueue, 0x0,                      General/LOAD/LOAD_34_AppendQueue.c
+common, exe, LOAD_CDRequestCallback, 0x0,                General/LOAD/LOAD_35_CDRequestCallback.c
+common, exe, LOAD_NextQueuedFile, 0x0,                   General/LOAD/LOAD_36_NextQueuedFile.c
+common, exe, LOAD_Hub_ReadFile, 0x0,                     General/LOAD/LOAD_37_Hub_ReadFile.c
+common, exe, LOAD_Hub_SwapNow, 0x0,                      General/LOAD/LOAD_38_Hub_SwapNow.c
+common, exe, LOAD_Hub_Main, 0x0,                         General/LOAD/LOAD_39_Hub_Main.c
+common, exe, LOAD_OvrLOD, 0x0,                           General/LOAD/LOAD_40_OvrLOD.c
+common, exe, LOAD_OvrEndRace, 0x0,                       General/LOAD/LOAD_41_OvrEndRace.c
+common, exe, LOAD_OvrThreads, 0x0,                       General/LOAD/LOAD_42_OvrThreads.c
+common, exe, LOAD_GetAdvPackIndex, 0x0,                  General/LOAD/LOAD_43_GetAdvPackIndex.c
+common, exe, LOAD_TenStages, 0x0,                        General/LOAD/LOAD_44_TenStages.c
+common, exe, LOAD_TalkingMask, 0x0,                      General/LOAD/LOAD_45_TalkingMask.c
+common, exe, LOAD_LevelFile, 0x0,                        General/LOAD/LOAD_46_LevelFile.c
+common, exe, LOAD_IsOpen_RacingOrBattle, 0x0,            General/LOAD/LOAD_47_IsOpen_RacingOrBattle.c
+common, exe, LOAD_IsOpen_MainMenu, 0x0,                  General/LOAD/LOAD_48_IsOpen_MainMenu.c
+common, exe, LOAD_IsOpen_AdvHub, 0x0,                    General/LOAD/LOAD_49_IsOpen_AdvHub.c
+common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_IsOpen_Podiums.c
 
 // MAIN
 common, exe, MainDB_GetClipSize, 0x0, General/MAIN/MainDB_GetClipSize.c
@@ -628,6 +675,7 @@ common, exe, MainStats_RestartRaceCountLoss, 0x0, General/MAIN/MainStats_Restart
 // ====================================================================================================================
 // MATH_Sin relocated to RDATA
 //common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin.c
+common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin_hook.s
 common, exe, MATH_Cos, 0x0, General/MATH/MATH_1_Cos.c
 
 // MEMCARD
@@ -820,9 +868,6 @@ common, exe, VehFrameProc_LastSpin, 0x0, General/Vehicle/VehFrameProc_LastSpin.c
 // need VehGround
 common, exe, VehGroundShadow_Subset1, 0x0, General/Vehicle/VehGroundShadow_Subset1.c
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
-
-// move somewhere else?
-common, exe, LHMatrix_Parent, 0x0, General/LHMatrix_Parent.c
 
 // need VehLap
 // need VehPhysCrash

@@ -49,13 +49,14 @@ def budget(name, size, symbolData, verbose = False):
    # OVRNUMBER_"Full"             "Full" is literal
    ovrfull = re.fullmatch("([0-9]+?)_Full", name) # group 1 is OVRNUMBER
    # OVRNUMBER_INDEX_NAME
-   ovrindex = re.fullmatch("([0-9]+?)_([0-9]+?)_(.+?)", name) # group 1 is OVRNUMBER, group 2 is INDEX, group 3 is NAME
+   ovrindex = re.fullmatch("([0-9]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is OVRNUMBER, group 2 is INDEX, group 3 is NAME
    # OVRNUMBER_INDEX-RANGE_NAME
-   ovrindexrange = re.fullmatch("([0-9]+?)_([0-9]+?)-([0-9]+?)_(.+?)", name) # group 1 is OVRNUMBER, group 2 is STARTINDEX, group 3 is ENDINDEX, group 4 is NAME
+   ovrindexrange = re.fullmatch("([0-9]+?)_([0-9]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is OVRNUMBER, group 2 is STARTINDEX, group 3 is ENDINDEX, group 4 is NAME
    # NAMESPACE_INDEX_NAME
-   nsindex = re.fullmatch("([A-Za-z].+?)_([0-9]+?)_(.+?)", name) # group 1 is NAMESPACE, group 2 is INDEX, group 3 is NAME
+   nsindex = re.fullmatch("([A-Za-z]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is NAMESPACE, group 2 is INDEX, group 3 is NAME
    # NAMESPACE_INDEX-RANGE_NAME
-   nsindexrange = re.fullmatch("([A-Za-z].+?)_([0-9]+?)-([0-9]+?)_(.+?)", name) # group 1 is NAMESPACE, group 2 is STARTINDEX, group 3 is ENDINDEX, group 4 is NAME
+   # LOAD_00_33_Callback_Overlay_Generic
+   nsindexrange = re.fullmatch("([A-Za-z]+?)_([0-9]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is NAMESPACE, group 2 is STARTINDEX, group 3 is ENDINDEX, group 4 is NAME
    # otherwise, just compare names straightforwardly
    mcount = len([x for x in [ovrfull, ovrindex, ovrindexrange, nsindex, nsindexrange] if x != None])
    if (mcount > 1):
@@ -97,10 +98,10 @@ def budget(name, size, symbolData, verbose = False):
                print(f"{bcolors.WARNING}WARNING: Item \"{name}\" was interpreted as \"OVRNUMBER_Full\" and is the last known symbol in its region, cannot automatically compare to successor. (size = {size}). Compare it's size manually to ((location_of_last_function + size_of_last_function) - location_of_first_function) to determine bytebudget adherance.")
             else:
                ourself = sortedOvr[candidates[0]]
-               next = sortedOvr[candidates[0] + 1]
-               gap = next[1][0] - ourself[1][0]
+               inext = sortedOvr[candidates[0] + 1]
+               gap = inext[1][0] - ourself[1][0]
                if gap < size:
-                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget (size = {size}) and clobbers {next[0]} by {size - gap}.")
+                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget (size = {size}) and clobbers {inext[0]} by {size - gap}.")
                elif verbose:
                   if gap == size:
                      print(f"{bcolors.WARNING}Item \"{name}\" is *exactly* on budget.")
@@ -139,23 +140,44 @@ def budget(name, size, symbolData, verbose = False):
                print(f"{bcolors.WARNING}WARNING: Item \"{name}\" is the last known symbol in its region, cannot compare to successor.")
             else:
                ourself = sortedOvr[candidates[0]]
-               next = sortedOvr[candidates[0] + 1]
-               gap = next[1][0] - ourself[1][0]
+               inext = sortedOvr[candidates[0] + 1]
+               gap = inext[1][0] - ourself[1][0]
                if gap < size:
-                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget and clobbers {next[0]} by {size - gap}.")
+                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget and clobbers {inext[0]} by {size - gap}.")
                elif verbose:
                   if gap == size:
                      print(f"{bcolors.WARNING}Item \"{name}\" is *exactly* on budget.")
                   else:
-                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes, successor is {next[0]}.")
+                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes, successor is {inext[0]}.")
          elif verbose:
             print(f"{bcolors.WARNING}Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_NAME\", but didn't find a viable candidate, cannot calculate bytebudget.")
       elif nsindexrange != None: #Range of things starting at a single named file
-         #print("Item \"" + objectfullname + "\" was interpreted as \"NAMESPACE_INDEX-RANGE_NAME\", but didn't find a viable candidate, unable to associate and cannot calculate bytebudget.")
          ns = nsindexrange.group(1)
          ind = nsindexrange.group(2)
          eind = nsindexrange.group(3)
          n = nsindexrange.group(4)
+         irange = (int(eind) - int(ind)) + 1
+         lookupName = ns + "_" + n
+         ovrSymbolData = filterByOverlay(symbolData, None)
+         if lookupName in ovrSymbolData:
+            sortedOvr = list(ovrSymbolData.items())
+            sortedOvr.sort(key=lambda x: x[1])
+            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
+            if candidates[0] == len(sortedOvr) - 1: #candidate is the last one in the list
+               print(f"{bcolors.WARNING}WARNING: Item \"{name}\" is the last known symbol in its region, cannot compare to successor.")
+            else:
+               ourself = sortedOvr[candidates[0]]
+               lastPlusOne = sortedOvr[candidates[0] + irange]
+               gap = lastPlusOne[1][0] - ourself[1][0]
+               if gap < size:
+                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget and clobbers {lastPlusOne[0]} by {size - gap}.")
+               elif verbose:
+                  if gap == size:
+                     print(f"{bcolors.WARNING}Item \"{name}\" is *exactly* on budget.")
+                  else:
+                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes, successor is {lastPlusOne[0]}.")
+         elif verbose:
+            print(f"{bcolors.WARNING}Item \"{name}\" was interpreted as \"NAMESPACE_INDEX-RANGE_NAME\", but didn't find a viable candidate, unable to associate and cannot calculate bytebudget.")
       else:
           print(f"{bcolors.FAIL}This message should be impossible to appear. Tell TheUbMunster if this happens.")
 
@@ -290,7 +312,7 @@ def main():
          budget(objectname, file_size, symbolData, verbose)
       else:
          objectname = objectfullname[:len(objectfullname) - len(".bin")] # not a c.bin
-         print(f"{bcolors.WARNING}{objectname} is not a cbin")
+         print(f"{bcolors.WARNING}Item \"{objectname}\" is not a cbin, cannot byteBudget")
          #budget(objectname, file_size, symbolData, verbose)
    print("\nPress any key to exit.")
    input()

@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_LOAD_Callback_MaskHints3D();
-
 void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 {
 	sdata->load_inProgress = 1;
