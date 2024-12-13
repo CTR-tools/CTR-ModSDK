@@ -329,7 +329,8 @@ void DECOMP_MainInit_VRAMDisplay(void);
 void DECOMP_MainRaceTrack_StartLoad(short levelID);
 void DECOMP_MainRaceTrack_RequestLoad(short levelID);
 
-int DECOMP_MATH_Sin(u_int angle);
+//int DECOMP_MATH_Sin(u_int angle);
+#define DECOMP_MATH_Sin(angle) MATH_Sin(angle)
 int DECOMP_MATH_Cos(u_int angle);
 
 void DECOMP_MEMCARD_InitCard(void);
@@ -382,7 +383,7 @@ void DECOMP_PROC_DestroyInstance(struct Thread* t);
 void DECOMP_PROC_DestroyObject(void* object, int threadFlags);
 void DECOMP_PROC_DestroySelf(struct Thread* t);
 void DECOMP_PROC_DestroyTracker(struct Thread* t);
-struct Thread* DECOMP_PROC_SearchForModel(struct Thread* th, int modelID);
+struct Thread* DECOMP_PROC_SearchForModel(struct Thread* th, short modelID);
 
 void DECOMP_PushBuffer_Init(struct PushBuffer* pb, int id, int total);
 void DECOMP_PushBuffer_SetPsyqGeom(struct PushBuffer* pb);
@@ -861,6 +862,7 @@ void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT);
 void DECOMP_LOAD_HubCallback(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_CDRequestCallback(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_StringToUpper(char* path);
 //void LHMatrix_Parent(struct Instance* inst, struct Instance* driverInst, SVECTOR* param_3);
 
 //TODO:

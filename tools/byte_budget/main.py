@@ -3,6 +3,27 @@ import os
 import re
 import glob
 
+#yellow: exactly matches bytebudget
+#green: between 90%-100% bytebudget
+#yellow green: less than 90% bytebudget (silent clobbering)
+#red: above bytebudget
+#magenta: unable to interpret
+#light blue: exactly matches bytebudget (for large block)
+#royal blue: 90%-100% bytebudget (for large block)
+#inbetween blue: less than 80% bytebudget (silent clobbering)
+#orange: important to note
+#bold & underlined: headings
+
+#nonverbose
+#print overbudget items, list of clobbered
+
+#verbose print everything:
+#  * previous neighbor (symbol)
+#  * ourself (symbol, size)
+#  * clobber amount, list of subsequent clobbered symbols, info of (batches of) symbols of clobbered symbols in overlay
+#  * next neighbor (symbol)
+#  * disclaimers about this item (e.g., if this is a "OVR_Full" item, then note that any ND functions that aren't decomped will obviously not point to the relocated symbols in this overlay)
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -113,18 +134,54 @@ def budget(name, size, symbolData, verbose = False):
          ovrnum = ovrindex.group(1)
          ind = ovrindex.group(2)
          n = ovrindex.group(3)
-         #name = ovrindex.group(3)
-         #if name in singular_byte_budget:
-         #    if (file_size > singular_byte_budget[name]):
-         #        print("Function: " + name + " in " + objectname + " over budget by " + str(file_size - singular_byte_budget[name]) + " bytes.")
-         #else:
-         #    print("Item \"" + objectfullname + "\" was interpreted as \"OVRNUMBER_INDEX_NAME\", but didn't find a viable candidate, unable to associate and cannot calculate bytebudget.")
+         lookupName = n
+         ovrSymbolData = filterByOverlay(symbolData, ovrnum) #main exe
+         if lookupName in ovrSymbolData:
+            sortedOvr = list(ovrSymbolData.items())
+            sortedOvr.sort(key=lambda x: x[1])
+            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
+            #TODO: loop over candidates[0]+1/+2/+3... and list *all* the clobbered symbols
+            if candidates[0] == len(sortedOvr) - 1: #candidate is the last one in the list
+               print(f"{bcolors.WARNING}WARNING: Item \"{name}\" is the last known symbol in its region, cannot compare to successor.")
+            else:
+               ourself = sortedOvr[candidates[0]]
+               inext = sortedOvr[candidates[0] + 1]
+               gap = inext[1][0] - ourself[1][0]
+               if gap < size:
+                  print(f"{bcolors.FAIL}WARNING: Item \"{name}\" is overbudget and clobbers {inext[0]} by {size - gap}.")
+               elif verbose:
+                  if gap == size:
+                     print(f"{bcolors.WARNING}Item \"{name}\" is *exactly* on budget.")
+                  else:
+                     print(f"{bcolors.OKGREEN}Item \"{name}\" is underbudget by {gap - size} bytes, successor is {inext[0]}.")
+         elif verbose:
+            print(f"{bcolors.WARNING}Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX_NAME\", but didn't find a viable candidate, cannot calculate bytebudget.")
       elif ovrindexrange != None: #Index range into an OVR
-         #print("Item \"" + objectfullname + "\" was interpreted as \"OVRNUMBER_INDEX-RANGE_NAME\", but didn't find a viable candidate, unable to associate and cannot calculate bytebudget.")
          ovrnum = ovrindexrange.group(1)
          ind = ovrindexrange.group(2)
          eind = ovrindexrange.group(3)
          n = ovrindexrange.group(4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         print(f"{bcolors.OKBLUE}Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX-RANGE_NAME\", TODO!")
+         #print(f"{bcolors.WARNING}Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX-RANGE_NAME\", but didn't find a viable candidate, cannot calculate bytebudget.")
       elif nsindex != None: #Single named file
          ns = nsindex.group(1)
          ind = nsindex.group(2)
@@ -261,6 +318,7 @@ def main():
    print("\t* if there are more symbols in the original binary subsequent to another symbol, but not in gcc-/syms.926.txt (clobbered without telling you)")
    print("\t* if it's overbudget when fragmented, it may or may not be overbudget defragged (See ElimBG_Defrag.c + assoc for example)")
    print("\t* if the name of a symbol (filename) does not match the link location (function name/address)")
+   print("\t* if a group of symbols is in the same \"memory context\" (i.e., overlay) but aren't in the same namespace (i.e., don't share the same prefix), they won't be compared")
 
    #gcc-syms
    gccsyms_filename = argv[1]
@@ -296,7 +354,10 @@ def main():
    #   exit(-1)
 
    symbolData = dict() #(name, (address, isUsed))
-   
+
+   #todo: fix the necessary files to remove all name conflicts
+   #todo: have the boolean variable in symbolData init to false, then have it set to true when encountered by budget()
+   #then enumerate over all symbols that were not interacted with by budget and print a list of every symbol not being linked to
    for gsym in gccSyms:
       symbolData[gsym[1]] = (gsym[0], True)
    for sym in syms:

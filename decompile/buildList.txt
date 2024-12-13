@@ -30,7 +30,8 @@
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c, rdata.bin
+//common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c General/PROC/PROC_10_SearchForModel.c, rdata.bin
+//common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c, rdata.bin
 
 // OVR1
 common, 221, OVR_Region1, 0x0, General/221/221_Full.c
@@ -551,7 +552,7 @@ common, exe, LHMatrix_Parent, 0x0,                       General/LHMatrix/LHMatr
 // ====================================================================================================================
 // LibraryOfModels_Store relocated to RDATA
 //common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store.c
-common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
+//common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
 common, exe, LibraryOfModels_Clear, 0x0,                 General/LibraryOfModels/LibraryOfModels_1_Clear.c
 
 // ====================================================================================================================
@@ -577,7 +578,7 @@ common, exe, LIST_Init, 0x0,                             General/LIST/LIST_8_Ini
 // LOAD
 // ====================================================================================================================
 // 00 to 33
-//common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00-33_Callback_Overlay_Generic.c
+//common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33_Callback_Overlay_Generic.c
 
 common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_Callback_Overlay_Generic.c
 common, exe, LOAD_Callback_Overlay_230, 0x0,             General/LOAD/LOAD_01_Callback_Overlay_230.c
@@ -632,18 +633,20 @@ common, exe, LOAD_IsOpen_MainMenu, 0x0,                  General/LOAD/LOAD_48_Is
 common, exe, LOAD_IsOpen_AdvHub, 0x0,                    General/LOAD/LOAD_49_IsOpen_AdvHub.c
 common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_IsOpen_Podiums.c
 
+// ====================================================================================================================
 // MAIN
-common, exe, MainDB_GetClipSize, 0x0, General/MAIN/MainDB_GetClipSize.c
-common, exe, MainDB_PrimMem, 0x0, General/MAIN/MainDB_PrimMem.c
-common, exe, MainDB_OTMem, 0x0, General/MAIN/MainDB_OTMem.c
-common, exe, MainDrawCb_DrawSync, 0x0, General/MAIN/MainDrawCb_DrawSync.c
-common, exe, MainDrawCb_Vsync, 0x0, General/MAIN/MainDrawCb_Vsync.c
+// ====================================================================================================================
+common, exe, MainDB_GetClipSize, 0x0,                    General/MAIN/MainDB_00_GetClipSize.c
+common, exe, MainDB_PrimMem, 0x0,                        General/MAIN/MainDB_01_PrimMem.c
+common, exe, MainDB_OTMem, 0x0,                          General/MAIN/MainDB_02_OTMem.c
+common, exe, MainDrawCb_DrawSync, 0x0,                   General/MAIN/MainDrawCb_00_DrawSync.c
+common, exe, MainDrawCb_Vsync, 0x0,                      General/MAIN/MainDrawCb_01_Vsync.c
 
-common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
-common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
-common, exe, MainFrame_GameLogic, 0x0, General/MAIN/MainFrame_GameLogic.c
-common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
-common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
+common, exe, MainFrame_TogglePauseAudio, 0x0,            General/MAIN/MainFrame_00_TogglePauseAudio.c
+common, exe, MainFrame_ResetDB, 0x0,                     General/MAIN/MainFrame_01_ResetDB.c
+common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_02_GameLogic.c
+common, exe, MainFrame_RequestMaskHint, 0x0,             General/MAIN/MainFrame_07_RequestMaskHint.c
+common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c
 
 // config npc105
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
@@ -675,51 +678,54 @@ common, exe, MainStats_RestartRaceCountLoss, 0x0, General/MAIN/MainStats_Restart
 // ====================================================================================================================
 // MATH_Sin relocated to RDATA
 //common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin.c
-common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin_hook.s
+//common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin_hook.s
 common, exe, MATH_Cos, 0x0, General/MATH/MATH_1_Cos.c
 
+// ====================================================================================================================
 // MEMCARD
-common, exe, MEMCARD_SetIcon, 0x0, General/MEMCARD/MEMCARD_SetIcon.c
-common, exe, MEMCARD_CRC16, 0x0, General/MEMCARD/MEMCARD_CRC16.c
-common, exe, MEMCARD_ChecksumSave, 0x0, General/MEMCARD/MEMCARD_ChecksumSave.c
-common, exe, MEMCARD_ChecksumLoad, 0x0, General/MEMCARD/MEMCARD_ChecksumLoad.c
-common, exe, MEMCARD_StringInit, 0x0, General/MEMCARD/MEMCARD_StringInit.c
-common, exe, MEMCARD_StringSet, 0x0, General/MEMCARD/MEMCARD_StringSet.c
-common, exe, MEMCARD_InitCard, 0x0, General/MEMCARD/MEMCARD_InitCard.c
-common, exe, MEMCARD_CloseCard, 0x0, General/MEMCARD/MEMCARD_CloseCard.c
-common, exe, MEMCARD_GetNextSwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextSwEvent.c
-common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent.c
-common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c
-common, exe, MEMCARD_SkipEvents, 0x0, General/MEMCARD/MEMCARD_SkipEvents.c
-common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
-common, exe, MEMCARD_CloseFile, 0x0, General/MEMCARD/MEMCARD_CloseFile.c
-common, exe, MEMCARD_ReadFile, 0x0, General/MEMCARD/MEMCARD_ReadFile.c
-common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
-common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
+// ====================================================================================================================
+common, exe, MEMCARD_SetIcon, 0x0,                       General/MEMCARD/MEMCARD_00_SetIcon.c
+common, exe, MEMCARD_CRC16, 0x0,                         General/MEMCARD/MEMCARD_01_CRC16.c
+common, exe, MEMCARD_ChecksumSave, 0x0,                  General/MEMCARD/MEMCARD_02_ChecksumSave.c
+common, exe, MEMCARD_ChecksumLoad, 0x0,                  General/MEMCARD/MEMCARD_03_ChecksumLoad.c
+common, exe, MEMCARD_StringInit, 0x0,                    General/MEMCARD/MEMCARD_04_StringInit.c
+common, exe, MEMCARD_StringSet, 0x0,                     General/MEMCARD/MEMCARD_05_StringSet.c
+common, exe, MEMCARD_InitCard, 0x0,                      General/MEMCARD/MEMCARD_06_InitCard.c
+common, exe, MEMCARD_CloseCard, 0x0,                     General/MEMCARD/MEMCARD_07_CloseCard.c
+common, exe, MEMCARD_GetNextSwEvent, 0x0,                General/MEMCARD/MEMCARD_08_GetNextSwEvent.c
+common, exe, MEMCARD_GetNextHwEvent, 0x0,                General/MEMCARD/MEMCARD_09_GetNextHwEvent.c
+common, exe, MEMCARD_WaitForHwEvent, 0x0,                General/MEMCARD/MEMCARD_10_WaitForHwEvent.c
+common, exe, MEMCARD_SkipEvents, 0x0,                    General/MEMCARD/MEMCARD_11_SkipEvents.c
+common, exe, MEMCARD_NewTask, 0x0,                       General/MEMCARD/MEMCARD_12_NewTask.c
+common, exe, MEMCARD_CloseFile, 0x0,                     General/MEMCARD/MEMCARD_13_CloseFile.c
+common, exe, MEMCARD_ReadFile, 0x0,                      General/MEMCARD/MEMCARD_14_ReadFile.c
+common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD_15_WriteFile.c
+common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
 // unknown 8003ddac
 // GetInfo
 // Load
 // Save
-common, exe, MEMCARD_Format, 0x0, General/MEMCARD/MEMCARD_Format.c
-common, exe, MEMCARD_IsFile, 0x0, General/MEMCARD/MEMCARD_IsFile.c
+common, exe, MEMCARD_Format, 0x0,                        General/MEMCARD/MEMCARD_21_Format.c
+common, exe, MEMCARD_IsFile, 0x0,                        General/MEMCARD/MEMCARD_22_IsFile.c
 // FindFirstGhost (bugged)
 // FindNextGhost (bugged)
-common, exe, MEMCARD_EraseFile, 0x0, General/MEMCARD/MEMCARD_EraseFile.c
+common, exe, MEMCARD_EraseFile, 0x0,                     General/MEMCARD/MEMCARD_25_EraseFile.c
 
-
+// ====================================================================================================================
 // MEMPACK (done)
-common, exe, MEMPACK_Init, 0x0, General/MEMPACK/MEMPACK_Init.c
-common, exe, MEMPACK_SwapPacks, 0x0, General/MEMPACK/MEMPACK_SwapPacks.c
-common, exe, MEMPACK_NewPack_StartEnd, 0x0, General/MEMPACK/MEMPACK_NewPack_StartEnd.c
-common, exe, MEMPACK_GetFreeBytes, 0x0, General/MEMPACK/MEMPACK_GetFreeBytes.c
-common, exe, MEMPACK_AllocMem, 0x0, General/MEMPACK/MEMPACK_AllocMem.c
-common, exe, MEMPACK_AllocHighMem, 0x0, General/MEMPACK/MEMPACK_AllocHighMem.c
-common, exe, MEMPACK_ClearHighMem, 0x0, General/MEMPACK/MEMPACK_ClearHighMem.c
-common, exe, MEMPACK_ReallocMem, 0x0, General/MEMPACK/MEMPACK_ReallocMem.c
-common, exe, MEMPACK_PushState, 0x0, General/MEMPACK/MEMPACK_PushState.c
-common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK/MEMPACK_ClearLowMem.c
-common, exe, MEMPACK_PopState, 0x0, General/MEMPACK/MEMPACK_PopState.c
-common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
+// ====================================================================================================================
+common, exe, MEMPACK_Init, 0x0,                          General/MEMPACK/MEMPACK_00_Init.c
+common, exe, MEMPACK_SwapPacks, 0x0,                     General/MEMPACK/MEMPACK_01_SwapPacks.c
+common, exe, MEMPACK_NewPack_StartEnd, 0x0,              General/MEMPACK/MEMPACK_02_NewPack_StartEnd.c
+common, exe, MEMPACK_GetFreeBytes, 0x0,                  General/MEMPACK/MEMPACK_03_GetFreeBytes.c
+common, exe, MEMPACK_AllocMem, 0x0,                      General/MEMPACK/MEMPACK_04_AllocMem.c
+common, exe, MEMPACK_AllocHighMem, 0x0,                  General/MEMPACK/MEMPACK_05_AllocHighMem.c
+common, exe, MEMPACK_ClearHighMem, 0x0,                  General/MEMPACK/MEMPACK_06_ClearHighMem.c
+common, exe, MEMPACK_ReallocMem, 0x0,                    General/MEMPACK/MEMPACK_07_ReallocMem.c
+common, exe, MEMPACK_PushState, 0x0,                     General/MEMPACK/MEMPACK_08_PushState.c
+common, exe, MEMPACK_ClearLowMem, 0x0,                   General/MEMPACK/MEMPACK_09_ClearLowMem.c
+common, exe, MEMPACK_PopState, 0x0,                      General/MEMPACK/MEMPACK_10_PopState.c
+common, exe, MEMPACK_PopToState, 0x0,                    General/MEMPACK/MEMPACK_11_PopToState.c
 
 // MixRNG
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
@@ -740,77 +746,97 @@ common, exe, PlayLevel_UpdateLapStats, 0x0, General/PlayLevel_UpdateLapStats.c
 
 common, exe, Podium_InitModels, 0x0, General/Podium/Podium_InitModels.c
 
+// ====================================================================================================================
 // THREAD (need 3 more)
-common, exe, PROC_DestroyTracker, 0x0, General/PROC/PROC_DestroyTracker.c
-common, exe, PROC_DestroyInstance, 0x0, General/PROC/PROC_DestroyInstance.c
-common, exe, PROC_DestroyObject, 0x0, General/PROC/PROC_DestroyObject.c
-common, exe, PROC_DestroySelf, 0x0, General/PROC/PROC_DestroySelf_AndBloodline.c
-common, exe, PROC_CheckBloodlineForDead, 0x0, General/PROC/PROC_CheckBloodlineForDead.c
-common, exe, PROC_CheckAllForDead, 0x0, General/PROC/PROC_CheckAllForDead.c
-common, exe, PROC_BirthWithObject, 0x0, General/PROC/PROC_BirthWithObject.c
-common, exe, PROC_CollidePointWithSelf, 0x0, General/PROC/PROC_CollidePointWithSelf.c
-common, exe, PROC_CollidePointWithBucket, 0x0, General/PROC/PROC_CollidePointWithBucket.c
-common, exe, PROC_SearchForModel, 0x0, General/PROC/PROC_SearchForModel.c
+// ====================================================================================================================
+common, exe, PROC_DestroyTracker, 0x0,                   General/PROC/PROC_00_DestroyTracker.c
+common, exe, PROC_DestroyInstance, 0x0,                  General/PROC/PROC_01_DestroyInstance.c
+common, exe, PROC_DestroyObject, 0x0,                    General/PROC/PROC_02_DestroyObject.c
+common, exe, PROC_DestroySelf, 0x0,                      General/PROC/PROC_03_DestroySelf.c
+common, exe, PROC_DestroyBloodline, 0x0,                 General/PROC/PROC_04_DestroyBloodline.c
+common, exe, PROC_CheckBloodlineForDead, 0x0,            General/PROC/PROC_05_CheckBloodlineForDead.c
+common, exe, PROC_CheckAllForDead, 0x0,                  General/PROC/PROC_06_CheckAllForDead.c
+common, exe, PROC_BirthWithObject, 0x0,                  General/PROC/PROC_07_BirthWithObject.c
+common, exe, PROC_CollidePointWithSelf, 0x0,             General/PROC/PROC_08_CollidePointWithSelf.c
+common, exe, PROC_CollidePointWithBucket, 0x0,           General/PROC/PROC_09_CollidePointWithBucket.c
+// PROC_SearchForModel relocated to RDATA
+//common, exe, PROC_SearchForModel, 0x0,                   General/PROC/PROC_10_SearchForModel.c
+//hook commented out bc the function in RDATA is messed up???
+//common, exe, PROC_SearchForModel, 0x0,                   General/PROC/PROC_10_SearchForModel_hook.s
 
+// ====================================================================================================================
 // PushBuffer
-common, exe, PushBuffer_Init, 0x0, General/PushBuffer/PushBuffer_Init.c
-common, exe, PushBuffer_SetPsyqGeom, 0x0, General/PushBuffer/PushBuffer_SetPsyqGeom.c
-common, exe, PushBuffer_SetDrawEnv_Normal, 0x0, General/PushBuffer/PushBuffer_SetDrawEnv_Normal.c
-common, exe, PushBuffer_SetMatrixVP, 0x0, General/PushBuffer/PushBuffer_SetMatrixVP.c
-common, exe, PushBuffer_UpdateFrustum, 0x0, General/PushBuffer/PushBuffer_UpdateFrustum.c
-common, exe, PushBuffer_FadeOneWindow, 0x0, General/PushBuffer/PushBuffer_FadeOneWindow.c
-common, exe, PushBuffer_FadeAllWindows, 0x0, General/PushBuffer/PushBuffer_FadeAllWindows.c
+// ====================================================================================================================
+common, exe, PushBuffer_Init, 0x0,                       General/PushBuffer/PushBuffer_00_Init.c
+common, exe, PushBuffer_SetPsyqGeom, 0x0,                General/PushBuffer/PushBuffer_01_SetPsyqGeom.c
 
+common, exe, PushBuffer_SetDrawEnv_Normal, 0x0,          General/PushBuffer/PushBuffer_03_SetDrawEnv_Normal.c
+common, exe, PushBuffer_SetMatrixVP, 0x0,                General/PushBuffer/PushBuffer_04_SetMatrixVP.c
+
+common, exe, PushBuffer_UpdateFrustum, 0x0,              General/PushBuffer/PushBuffer_06_UpdateFrustum.c
+common, exe, PushBuffer_FadeOneWindow, 0x0,              General/PushBuffer/PushBuffer_07_FadeOneWindow.c
+common, exe, PushBuffer_FadeAllWindows, 0x0,             General/PushBuffer/PushBuffer_08_FadeAllWindows.c
+
+// ====================================================================================================================
 // QueueLoadTrack
-common, exe, QueueLoadTrack_MenuProc, 0x0, General/QueueLoadTrack/QueueLoadTrack_MenuProc.c
-common, exe, QueueLoadTrack_GetMenuPtr, 0x0, General/QueueLoadTrack/QueueLoadTrack_GetMenuPtr.c
+// ====================================================================================================================
+common, exe, QueueLoadTrack_MenuProc, 0x0,               General/QueueLoadTrack/QueueLoadTrack_0_MenuProc.c
+common, exe, QueueLoadTrack_GetMenuPtr, 0x0,             General/QueueLoadTrack/QueueLoadTrack_1_GetMenuPtr.c
 
+// ====================================================================================================================
 // RaceFlag
-common, exe, RaceFlag_MoveModels, 0x0, General/RaceFlag/RaceFlag_t01_MoveModels.c
-common, exe, RaceFlag_IsFullyOnScreen, 0x0, General/RaceFlag/RaceFlag_t02_IsFullyOnScreen.c
-common, exe, RaceFlag_IsFullyOffScreen, 0x0, General/RaceFlag/RaceFlag_t03_IsFullyOffScreen.c
-common, exe, RaceFlag_IsTransitioning, 0x0, General/RaceFlag/RaceFlag_t04_IsTransitioning.c
-common, exe, RaceFlag_SetDrawOrder, 0x0, General/RaceFlag/RaceFlag_t05_SetDrawOrder.c
-common, exe, RaceFlag_BeginTransition, 0x0, General/RaceFlag/RaceFlag_t06_BeginTransition.c
-common, exe, RaceFlag_SetFullyOnScreen, 0x0, General/RaceFlag/RaceFlag_t07_SetFullyOnScreen.c
-common, exe, RaceFlag_SetFullyOffScreen, 0x0, General/RaceFlag/RaceFlag_t08_SetFullyOffScreen.c
-common, exe, RaceFlag_SetCanDraw, 0x0, General/RaceFlag/RaceFlag_t09_SetCanDraw.c
-common, exe, RaceFlag_GetCanDraw, 0x0, General/RaceFlag/RaceFlag_t10_GetCanDraw.c
-common, exe, RaceFlag_GetOT, 0x0, General/RaceFlag/RaceFlag_t11_GetOT.c
-common, exe, RaceFlag_ResetTextAnim, 0x0, General/RaceFlag/RaceFlag_t12_ResetTextAnim.c
-common, exe, RaceFlag_DrawLoadingString, 0x0, General/RaceFlag/RaceFlag_t13_DrawLoadingString.c
-common, exe, RaceFlag_DrawSelf, 0x0, General/RaceFlag/RaceFlag_t14_DrawSelf.c
+// ====================================================================================================================
+common, exe, RaceFlag_MoveModels, 0x0,                   General/RaceFlag/RaceFlag_00_MoveModels.c
+common, exe, RaceFlag_IsFullyOnScreen, 0x0,              General/RaceFlag/RaceFlag_01_IsFullyOnScreen.c
+common, exe, RaceFlag_IsFullyOffScreen, 0x0,             General/RaceFlag/RaceFlag_02_IsFullyOffScreen.c
+common, exe, RaceFlag_IsTransitioning, 0x0,              General/RaceFlag/RaceFlag_03_IsTransitioning.c
+common, exe, RaceFlag_SetDrawOrder, 0x0,                 General/RaceFlag/RaceFlag_04_SetDrawOrder.c
+common, exe, RaceFlag_BeginTransition, 0x0,              General/RaceFlag/RaceFlag_05_BeginTransition.c
+common, exe, RaceFlag_SetFullyOnScreen, 0x0,             General/RaceFlag/RaceFlag_06_SetFullyOnScreen.c
+common, exe, RaceFlag_SetFullyOffScreen, 0x0,            General/RaceFlag/RaceFlag_07_SetFullyOffScreen.c
+common, exe, RaceFlag_SetCanDraw, 0x0,                   General/RaceFlag/RaceFlag_08_SetCanDraw.c
+common, exe, RaceFlag_GetCanDraw, 0x0,                   General/RaceFlag/RaceFlag_09_GetCanDraw.c
+common, exe, RaceFlag_GetOT, 0x0,                        General/RaceFlag/RaceFlag_10_GetOT.c
+common, exe, RaceFlag_ResetTextAnim, 0x0,                General/RaceFlag/RaceFlag_11_ResetTextAnim.c
+common, exe, RaceFlag_DrawLoadingString, 0x0,            General/RaceFlag/RaceFlag_12_DrawLoadingString.c
+common, exe, RaceFlag_DrawSelf, 0x0,                     General/RaceFlag/RaceFlag_13_DrawSelf.c
 
+// ====================================================================================================================
 // RECTMENU
-common, exe, RECTMENU_DrawPolyGT4, 0x0, General/RECTMENU/RECTMENU_DrawPolyGT4.c
-common, exe, RECTMENU_DrawOuterRect_Edge, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_Edge.c
-common, exe, RECTMENU_DrawTime, 0x0, General/RECTMENU/RECTMENU_DrawTime.c
-common, exe, RECTMENU_DrawRwdBlueRect_Subset, 0x0, General/RECTMENU/RECTMENU_DrawRwdBlueRect_Subset.c
-common, exe, RECTMENU_DrawRwdBlueRect, 0x0, General/RECTMENU/RECTMENU_DrawRwdBlueRect.c
-common, exe, RECTMENU_DrawRwdTriangle, 0x0, General/RECTMENU/RECTMENU_DrawRwdTriangle.c
-common, exe, RECTMENU_DrawOuterRect_LowLevel, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_LowLevel.c
-common, exe, RECTMENU_DrawOuterRect_HighLevel, 0x0, General/RECTMENU/RECTMENU_DrawOuterRect_HighLevel.c
-common, exe, RECTMENU_DrawQuip, 0x0, General/RECTMENU/RECTMENU_DrawQuip.c
-common, exe, RECTMENU_DrawInnerRect, 0x0, General/RECTMENU/RECTMENU_DrawInnerRect.c
-common, exe, RECTMENU_DrawFullRect, 0x0, General/RECTMENU/RECTMENU_DrawFullRect.c
-common, exe, RECTMENU_GetHeight, 0x0, General/RECTMENU/RECTMENU_GetHeight.c
-common, exe, RECTMENU_GetWidth, 0x0, General/RECTMENU/RECTMENU_GetWidth.c
-common, exe, RECTMENU_DrawSelf, 0x0, General/RECTMENU/RECTMENU_DrawSelf.c
-common, exe, RECTMENU_ClearInput, 0x0, General/RECTMENU/RECTMENU_ClearInput.c
-common, exe, RECTMENU_CollectInput, 0x0, General/RECTMENU/RECTMENU_CollectInput.c
-common, exe, RECTMENU_ProcessInput, 0x0, General/RECTMENU/RECTMENU_ProcessInput.c
-common, exe, RECTMENU_ProcessState, 0x0, General/RECTMENU/RECTMENU_ProcessState.c
-common, exe, RECTMENU_Show, 0x0, General/RECTMENU/RECTMENU_Show.c
-common, exe, RECTMENU_Hide, 0x0, General/RECTMENU/RECTMENU_Hide.c
-common, exe, RECTMENU_BoolHidden, 0x0, General/RECTMENU/RECTMENU_BoolHidden.c
+// ====================================================================================================================
+common, exe, RECTMENU_DrawPolyGT4, 0x0,                  General/RECTMENU/RECTMENU_00_DrawPolyGT4.c
+common, exe, RECTMENU_DrawOuterRect_Edge, 0x0,           General/RECTMENU/RECTMENU_01_DrawOuterRect_Edge.c
+common, exe, RECTMENU_DrawTime, 0x0,                     General/RECTMENU/RECTMENU_02_DrawTime.c
+common, exe, RECTMENU_DrawRwdBlueRect_Subset, 0x0,       General/RECTMENU/RECTMENU_03_DrawRwdBlueRect_Subset.c
+common, exe, RECTMENU_DrawRwdBlueRect, 0x0,              General/RECTMENU/RECTMENU_04_DrawRwdBlueRect.c
+common, exe, RECTMENU_DrawRwdTriangle, 0x0,              General/RECTMENU/RECTMENU_05_DrawRwdTriangle.c
+common, exe, RECTMENU_DrawOuterRect_LowLevel, 0x0,       General/RECTMENU/RECTMENU_06_DrawOuterRect_LowLevel.c
+common, exe, RECTMENU_DrawOuterRect_HighLevel, 0x0,      General/RECTMENU/RECTMENU_07_DrawOuterRect_HighLevel.c
+common, exe, RECTMENU_DrawQuip, 0x0,                     General/RECTMENU/RECTMENU_08_DrawQuip.c
+common, exe, RECTMENU_DrawInnerRect, 0x0,                General/RECTMENU/RECTMENU_09_DrawInnerRect.c
+common, exe, RECTMENU_DrawFullRect, 0x0,                 General/RECTMENU/RECTMENU_10_DrawFullRect.c
+common, exe, RECTMENU_GetHeight, 0x0,                    General/RECTMENU/RECTMENU_11_GetHeight.c
+common, exe, RECTMENU_GetWidth, 0x0,                     General/RECTMENU/RECTMENU_12_GetWidth.c
+common, exe, RECTMENU_DrawSelf, 0x0,                     General/RECTMENU/RECTMENU_13_DrawSelf.c
+common, exe, RECTMENU_ClearInput, 0x0,                   General/RECTMENU/RECTMENU_14_ClearInput.c
+common, exe, RECTMENU_CollectInput, 0x0,                 General/RECTMENU/RECTMENU_15_CollectInput.c
+common, exe, RECTMENU_ProcessInput, 0x0,                 General/RECTMENU/RECTMENU_16_ProcessInput.c
+common, exe, RECTMENU_ProcessState, 0x0,                 General/RECTMENU/RECTMENU_17_ProcessState.c
+common, exe, RECTMENU_Show, 0x0,                         General/RECTMENU/RECTMENU_18_Show.c
+common, exe, RECTMENU_Hide, 0x0,                         General/RECTMENU/RECTMENU_19_Hide.c
+common, exe, RECTMENU_BoolHidden, 0x0,                   General/RECTMENU/RECTMENU_20_BoolHidden.c
 
+// ====================================================================================================================
 // SubmitName
-common, exe, SubmitName_RestoreName, 0x0, General/SubmitName/SubmitName_RestoreName.c
-common, exe, SubmitName_DrawMenu, 0x0, General/SubmitName/SubmitName_DrawMenu.c
-common, exe, SubmitName_MenuProc, 0x0, General/SubmitName/SubmitName_MenuProc.c
+// ====================================================================================================================
+common, exe, SubmitName_RestoreName, 0x0,                General/SubmitName/SubmitName_0_RestoreName.c
+common, exe, SubmitName_DrawMenu, 0x0,                   General/SubmitName/SubmitName_1_DrawMenu.c
+common, exe, SubmitName_MenuProc, 0x0,                   General/SubmitName/SubmitName_2_MenuProc.c
 
+// ====================================================================================================================
 // TakeCupProgress
-common, exe, TakeCupProgress_Activate, 0x0, General/TakeCupProgress/TakeCupProgress_Activate.c
+// ====================================================================================================================
+common, exe, TakeCupProgress_Activate, 0x0,              General/TakeCupProgress/TakeCupProgress_0_Activate.c
 
 // Timer
 common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c

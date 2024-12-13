@@ -19,17 +19,3 @@ void DECOMP_PROC_DestroySelf(struct Thread* t)
 	// recycle thread
 	DECOMP_LIST_AddFront(&sdata->gGT->JitPools.thread.free, (struct Item*)t);
 }
-
-// must be here, too large for original slot
-void DECOMP_PROC_DestroyBloodline(struct Thread* t)
-{	
-	while(t != 0)
-	{
-		// recursively find all children
-		if(t->childThread != 0)
-			DECOMP_PROC_DestroyBloodline(t->childThread);
-		
-		DECOMP_PROC_DestroySelf(t);
-		t = t->siblingThread;
-	}
-}
