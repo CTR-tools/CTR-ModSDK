@@ -123,7 +123,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-		int* ot = gGT->backBuffer->otMem.startPlusFour;
+		u_long* ot = gGT->backBuffer->otMem.startPlusFour;
         DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
 		box.y = 0x3c;
@@ -198,9 +198,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
 
                         D232.maskCooldown = FPS_DOUBLE(30);
 
-                        DECOMP_VehTalkMask_PlayXA(
-							sdata->instMaskHints3D,
-							(lngIndex + -0x17b)/2);
+                        DECOMP_VehTalkMask_PlayXA(sdata->instMaskHints3D, (lngIndex + -0x17b)/2);
 
                         DECOMP_AH_HintMenu_MaskPosRot();
 
@@ -208,8 +206,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
                         inst = sdata->instMaskHints3D;
                         inst->flags |= 0x400;
 
-						struct InstDrawPerPlayer* idpp =
-							INST_GETIDPP(inst);
+						struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
 
 						idpp[0].pushBuffer = &gGT->pushBuffer_UI;
 						for(int j = 1; j < gGT->numPlyrCurrGame; j++)
@@ -322,7 +319,7 @@ LAB_800b38cc:
     box.y = (menu->rowSelected - D232.hintMenu_scrollIndex) * 0x10 + 0x4f;
     box.h = 0x11;
 
-	int* ot = gGT->backBuffer->otMem.startPlusFour;
+	u_long* ot = gGT->backBuffer->otMem.startPlusFour;
     DECOMP_CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, ot);
 
     box.y = 0x3c;

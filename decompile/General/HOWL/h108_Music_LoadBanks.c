@@ -6,7 +6,7 @@ void DECOMP_Music_LoadBanks(void)
     struct Bank thisBank;
     struct GameTracker *gGT = sdata->gGT;
     int level = gGT->levelID;
-	char* arr = &sdata->audioDefaults[7];
+	char* arr = (char*)&sdata->audioDefaults[7];
 
     DECOMP_Audio_SetReverbMode(
         // Level ID

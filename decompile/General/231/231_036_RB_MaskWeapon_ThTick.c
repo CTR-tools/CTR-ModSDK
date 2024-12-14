@@ -78,14 +78,14 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     maskInst->unk50 = driverInst->unk50;
     maskInst->unk51 = driverInst->unk51;
 	
-	struct MaskHeadScratch* mhs = 0x1f800108;
+	struct MaskHeadScratch* mhs = (struct MaskHeadScratch*)0x1f800108;
 	
 	// Set up the First pass (MaskInst)
 
 	rot = mask->rot[1];
 
-    mhs->posOffset[0] = (((MATH_Sin(rot) << 6) >> 0xc) * mask->scale) >> 0xc;
-    mhs->posOffset[2] = (((MATH_Cos(rot) << 6) >> 0xc) * mask->scale) >> 0xc;	
+    mhs->posOffset[0] = (((DECOMP_MATH_Sin(rot) << 6) >> 0xc) * mask->scale) >> 0xc;
+    mhs->posOffset[2] = (((DECOMP_MATH_Cos(rot) << 6) >> 0xc) * mask->scale) >> 0xc;	
     
 	mhs->posOffset[1] = 
 		((short *)0x800b2cc4)[
@@ -104,7 +104,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 	{
 		if ((mask->rot[2] & 1) == 0)
 		{
-			LHMatrix_Parent(instCurr, driverInst, &mhs->posOffset[0]);
+			LHMatrix_Parent(instCurr, driverInst, (SVECTOR*)&mhs->posOffset[0]);
 			ConvertRotToMatrix(&mhs->m, &mhs->rot[0]);
 			MatrixRotate(&instCurr->matrix, &instCurr->matrix, &mhs->m);
 		}

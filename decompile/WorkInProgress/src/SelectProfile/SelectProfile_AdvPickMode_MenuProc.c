@@ -6,8 +6,8 @@ void DECOMP_SelectProfile_AdvPickMode_MenuProc(struct RectMenu* menu)
     // if you see current profile, and load/save/delete/exit rows
     if (menu->unk1e != 0)
     {
-        SelectProfile_Init((int)menu->drawStyle);
-        SelectProfile_DrawAdvProfile(&sdata->advProgress.rewards[0], 0x92, 0x32, 0, 0, 0x10);
+        SelectProfile_Init(menu->drawStyle);
+        SelectProfile_DrawAdvProfile(&sdata->advProgress, 0x92, 0x32, 0, 0, 0x10);
         return;
     }
 

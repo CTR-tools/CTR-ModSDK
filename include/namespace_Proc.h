@@ -96,6 +96,7 @@ struct Thread
 	// 0x24
 	void (*funcThDestroy)(struct Thread* self);
 
+	//TheUbMunster: I've noticed various usage around the codebase might indicate that funcThCollide returns int and not void.
 	// 0x28
 	void (*funcThCollide)(struct Thread* self);
 

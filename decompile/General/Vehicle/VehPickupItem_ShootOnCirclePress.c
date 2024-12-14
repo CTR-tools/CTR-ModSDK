@@ -7,7 +7,7 @@ void DECOMP_VehPickupItem_ShootOnCirclePress(struct Driver *d)
     if (d->ChangeState_param2 != 0)
     {
 		#ifndef REBUILD_PS1
-        DECOMP_VehPickState_NewState(d, d->ChangeState_param2, d->ChangeState_param3, d->ChangeState_param4);
+        DECOMP_VehPickState_NewState(d, d->ChangeState_param2, (struct Driver*)d->ChangeState_param3, d->ChangeState_param4);
 		#endif
 	}
 
@@ -31,5 +31,5 @@ void DECOMP_VehPickupItem_ShootOnCirclePress(struct Driver *d)
 		weapon = 2;
 	}
     
-    DECOMP_VehPickupItem_ShootNow(d, weapon, 0);
+    DECOMP_VehPickupItem_ShootNow(d, (int)weapon, 0);
 }

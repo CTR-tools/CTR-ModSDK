@@ -1,13 +1,12 @@
 #include <common.h>
 
-struct ChannelStats* DECOMP_Channel_FindSound(int soundID)
+int DECOMP_Channel_FindSound(int soundID)
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 		
 	for(
-		curr = sdata->channelTaken.first;
-		curr != 0;
+		curr = (struct ChannelStats*)sdata->channelTaken.first;
+		curr != NULL;
 		curr = backupNext
 	)
 	{

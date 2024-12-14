@@ -1,6 +1,7 @@
 #ifdef USE_ONLINE
 #include "OnlineCTR/names3d.c"
 
+void UpdateCheckpointTracker(int driverID);
 typedef void (*VehicleFuncPtr)(struct Thread* thread, struct Driver* driver);
 
 void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver* driver)
@@ -32,9 +33,9 @@ void RunVehicleSet13(struct Thread* dThread, struct Driver* dOnline)
 		
 	for(int iVar11 = 0; iVar11 < 13; iVar11++)
 	{
-		int pcVar5 = dOnline->funcPtrs[iVar11];
+		VehicleFuncPtr pcVar5 = dOnline->funcPtrs[iVar11];
 		
-		if(pcVar5 == 0)
+		if(pcVar5 == NULL)
 			continue;
 		
 		RunVehicleThread(pcVar5, dThread, dOnline);

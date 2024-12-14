@@ -72,11 +72,11 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 // original ps1 with fragmented memory,
 // but also only if NOT using RAMEX, because
 // with RAMEX, we dont need to save 0x1b00 bytes
-#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_DEFRAG)
   // saves 0x1B00 bytes
   void RelocMemory_DefragUI_Mods1();
-  int backup = sdata->mempack[0].firstFreeByte;
-  sdata->mempack[0].firstFreeByte = (int)RelocMemory_DefragUI_Mods1;
+  int backup = (int)sdata->mempack[0].firstFreeByte;
+  sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1;
 #endif
 
   // normally maxed at 96
@@ -90,8 +90,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 // 8000F000 - 8000F820 to MediumStackPool
 // 8000F820 - 8000FFF0 to $sp stack memory
-#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
-  sdata->mempack[0].firstFreeByte = 0x8000F000;
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_DEFRAG)
+  sdata->mempack[0].firstFreeByte = (void*)0x8000F000;
 #endif
 
 
@@ -109,8 +109,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	/*"MediumStackPool"*/0);
 
 // original ps1 with fragmented memory
-#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
-  sdata->mempack[0].firstFreeByte = backup;
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_DEFRAG)
+  sdata->mempack[0].firstFreeByte = (void*)backup;
 #endif
 
 
@@ -183,7 +183,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // when compiling with OG game's RDATA
   // then expand PrimMem in 60fps,
   // add 148 bytes cause of MATH_Sin relocated
-  gGT->ptrRenderBucketInstance = (int)148 + (int)&rdata.s_STATIC_GNORMALZ[0];
+  gGT->ptrRenderBucketInstance = (void*)((int)148 + (int)&rdata.s_STATIC_GNORMALZ[0]);
 #endif
 
 

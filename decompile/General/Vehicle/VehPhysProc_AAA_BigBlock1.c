@@ -13,9 +13,11 @@
 #include "VehPhysProc_SpinStop_FuncPtrs.c"
 #include "VehPhysProc_SpinStop_Init.c"
 
+#if defined (USE_DEFRAG)
 #include "../AltMods/Mods5.c"
 
 void __attribute__ ((section (".end"))) Mods5_EndOfFile()
 {
 	// leave empty
 }
+#endif

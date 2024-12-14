@@ -3,16 +3,15 @@
 void DECOMP_cseq_opcode0a(struct SongSeq* seq)
 {
 	int pitch;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	int soundID = seq->soundID;
 	
 	unsigned char* currNote = seq->currNote;
 	seq->distort = currNote[1];
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{

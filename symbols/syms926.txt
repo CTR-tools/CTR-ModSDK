@@ -104,9 +104,9 @@
 80021c94 CTR_ErrorScreen
 
 // CTR_Frustum_UpdateVisMem
-// unknown 80021da0
-// unknown 80021e1c
-// unknown 80021ea8
+80021da0 CTR_unknownMaybeThunk1
+80021e1c CTR_unknownMaybeThunk2
+80021ea8 CTR_unknownMaybeThunk3
 
 80021edc CTR_MatrixToRot
 80022234 CTR_ScrambleGhostString
@@ -383,10 +383,10 @@
 800309a4 INSTANCE_BirthWithThread // real ND name
 80030a50 INSTANCE_BirthWithThread_Stack
 80030aa8 INSTANCE_Death
-
 80030ad4 INSTANCE_LevInitAll
-80030ed4 INSTANCE_LevDelayedLInBs
+80030ed4 INSTANCE_LevDelayedLInBs //not impl yet?
 80030f58 INSTANCE_GetNumAnimFrames
+
 
 80030fdc JitPool_Clear
 8003105c JitPool_Init

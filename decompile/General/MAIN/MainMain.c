@@ -543,7 +543,7 @@ FinishLoading:
 				DECOMP_MainFrame_RenderFrame(gGT, gGS);
 #ifdef REBUILD_PC
 				PsyX_EndScene();
-				int NikoCalcFPS();
+				void NikoCalcFPS();
 				NikoCalcFPS();
 #endif
 
@@ -612,9 +612,11 @@ void StateZero()
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
 
-	// for modding
+    #if defined (USE_DEFRAG)
+	// for modding (code caves)
 	void ModsMain();
 	ModsMain();
+    #endif
 
 	// Set Video Mode to NTSC
 	SetVideoMode(0);
@@ -720,7 +722,7 @@ void StateZero()
 	#ifndef FastBoot
 	// English=1
 	// PAL SCES02105 calls it multiple times
-	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
+	DECOMP_LOAD_LangFile((int)sdata->ptrBigfile1, 1);
 	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
@@ -773,7 +775,7 @@ void StateZero()
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
 	DECOMP_Music_SetIntro();
 	DECOMP_CseqMusic_StopAll();
-	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
+	DECOMP_CseqMusic_Start(0, 0, NULL, 0, 0);
 	DECOMP_Music_Start(0);
 
 	// "Start your engines, for Sony Computer..."

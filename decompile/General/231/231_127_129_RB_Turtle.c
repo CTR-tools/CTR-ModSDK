@@ -142,7 +142,7 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 	}
 }
 
-int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh)
+int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh, struct ScratchpadStruct* sps) //unused 3rd param?
 {
 	int speed;
 	int jumpType;

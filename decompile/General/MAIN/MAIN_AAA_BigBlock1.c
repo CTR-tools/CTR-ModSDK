@@ -14,5 +14,7 @@
 #include "MainLoadVLC.c"
 #include "MainMain.c"
 
+#if defined (USE_DEFRAG)
 // for modding
 #include "../AltMods/ModsMain.c"
+#endif

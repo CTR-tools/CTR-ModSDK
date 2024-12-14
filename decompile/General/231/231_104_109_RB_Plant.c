@@ -16,11 +16,15 @@ enum PlantAnim
 
 struct HitboxDesc plantBoxDesc =
 {
-	0, 0, 0,
-	{
+	.inst = (struct Instance*)0,
+	.thread = (struct Thread*)0,
+	.bucket = (struct Thread*)0,
+	.bbox = {
 		.min = {0xFFC0, 0xFFC0, 0},
 		.max = {0x40, 0x80, 0x1E0}
-	}
+	},
+	.threadHit = (struct Thread*)0,
+	.funcThCollide = (void*)0
 };
 
 extern struct ParticleEmitter emSet_PlantTires[8];
@@ -220,7 +224,7 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 			plantInst->animFrame = plantInst->animFrame+1;
 			
 			plantBoxDesc.bucket = gGT->threadBuckets[MINE].thread;
-			hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+			hitInst = DECOMP_LinkedCollide_Hitbox(&plantBoxDesc);
 			
 			if(hitInst != 0)
 			{
@@ -328,7 +332,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 	plantBoxDesc.thread = t;
 	
 	plantBoxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
-	hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+	hitInst = DECOMP_LinkedCollide_Hitbox(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{
@@ -340,7 +344,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 			0;
 		#else
 			// attempt to harm driver (eat)
-			RB_Hazard_HurtDriver(hitDriver,5,0,0);
+			DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
 		#endif
 		
 		if(didHit != 0)
@@ -369,7 +373,7 @@ EatDriver:
 	if((gGT->gameMode1 & ADVENTURE_BOSS) != 0) return;
 	
 	plantBoxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
-	hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&plantBoxDesc);
+	hitInst = DECOMP_LinkedCollide_Hitbox(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{		
@@ -377,7 +381,7 @@ EatDriver:
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		#ifndef REBUILD_PS1
-		RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
 		#endif
 		
 		plantObj->boolEatingPlayer = 0;
