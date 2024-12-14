@@ -543,7 +543,7 @@ FinishLoading:
 				DECOMP_MainFrame_RenderFrame(gGT, gGS);
 #ifdef REBUILD_PC
 				PsyX_EndScene();
-				int NikoCalcFPS();
+				void NikoCalcFPS();
 				NikoCalcFPS();
 #endif
 
