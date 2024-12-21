@@ -18,6 +18,10 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK()
 	
 	if(sdata->PLYROBJECTLIST != 0)
 	{
+#ifdef REBUILD_PC
+		DECOMP_LibraryOfModels_Store(gGT, -1, (struct Model**)sdata->PLYROBJECTLIST);
+#else
 		LibraryOfModels_Store(gGT, -1, (struct Model**)sdata->PLYROBJECTLIST);
+#endif
 	}
 }

@@ -135,7 +135,9 @@ common, 232, D232, 0x0, General/232/D232.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 // AH_Sign_LInB
 
+// ====================================================================================================================
 // 233
+// ====================================================================================================================
 //common, 233, CS_Instance_GetNumAnimFrames, 0x0,                      General/233/233_10_CS_Instance_GetNumAnimFrames.c
 //common, 233, CS_Instance_SafeCheckAnimFrame, 0x0,                    General/233/233_11_CS_Instance_SafeCheckAnimFrame.c
 //common, 233, CS_Instance_BoolPlaySound, 0x0,                         General/233/233_12_CS_Instance_BoolPlaySound.c
@@ -159,7 +161,9 @@ common, 233, CS_Credits_IsTextValid, 0x0,                            General/233
 common, 233, CS_Credits_NewDancer, 0x0,                              General/233/233_49_CS_Credits_NewDancer.c
 common, 233, CS_Credits_End, 0x0,                                    General/233/233_51_CS_Credits_End.c
 
+// ====================================================================================================================
 // exe globals
+// ====================================================================================================================
 common, exe, data, 0x0, General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
 
@@ -641,37 +645,52 @@ common, exe, MainDB_PrimMem, 0x0,                        General/MAIN/MainDB_01_
 common, exe, MainDB_OTMem, 0x0,                          General/MAIN/MainDB_02_OTMem.c
 common, exe, MainDrawCb_DrawSync, 0x0,                   General/MAIN/MainDrawCb_00_DrawSync.c
 common, exe, MainDrawCb_Vsync, 0x0,                      General/MAIN/MainDrawCb_01_Vsync.c
-
 common, exe, MainFrame_TogglePauseAudio, 0x0,            General/MAIN/MainFrame_00_TogglePauseAudio.c
 common, exe, MainFrame_ResetDB, 0x0,                     General/MAIN/MainFrame_01_ResetDB.c
 common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_02_GameLogic.c
+//common, exe, MainFrame, 0x0,                             General/MAIN/MainFrame_03_idk.c //TODO
+//common, exe, MainFrame_VisMemFullFrame, 0x0,             General/MAIN/MainFrame_04_VisMemFullFrame.c //TODO
+//common, exe, MainFrame_InitVideoSTR, 0x0,                General/MAIN/MainFrame_05_InitVideoSTR.c //TODO
+//common, exe, MainFrame_HaveAllPads, 0x0,                 General/MAIN/MainFrame_06_HaveAllPads.c //TODO
 common, exe, MainFrame_RequestMaskHint, 0x0,             General/MAIN/MainFrame_07_RequestMaskHint.c
 common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c
-
-// config npc105
-common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
-
-// configSetupEntry
-//ommon, exe, MainFreeze_MenuPtrOptions, 0x0, General/MAIN/MainFreeze_MenuPtrOptions.c
-
-common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
-common, exe, MainFreeze_SafeAdvDestroy, 0x0, General/MAIN/MainFreeze_SafeAdvDestroy.c
-common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
-common, exe, MainFreeze_GetMenuPtr, 0x0, General/MAIN/MainFreeze_GetMenuPtr.c
-common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
-
-common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
-
-common, exe, MainInit_VisMem, 0x0, General/MAIN/MainInit_VisMem.c
-// MainInit_RainBuffer
+//common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_00_idk.c //TODO
+common, exe, MainFreeze_ConfigDrawArrows, 0x0,           General/MAIN/MainFreeze_01_ConfigDrawArrows.c
+//common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_02_idk.c //TODO
+//common, exe, MainFreeze_MenuPtrOptions, 0x0,             General/MAIN/MainFreeze_03_MenuPtrOptions.c
+common, exe, MainFreeze_MenuPtrQuit, 0x0,                General/MAIN/MainFreeze_04_MenuPtrQuit.c
+common, exe, MainFreeze_SafeAdvDestroy, 0x0,             General/MAIN/MainFreeze_05_SafeAdvDestroy.c
+common, exe, MainFreeze_MenuPtrDefault, 0x0,             General/MAIN/MainFreeze_06_MenuPtrDefault.c
+common, exe, MainFreeze_GetMenuPtr, 0x0,                 General/MAIN/MainFreeze_07_GetMenuPtr.c
+common, exe, MainFreeze_IfPressStart, 0x0,               General/MAIN/MainFreeze_08_IfPressStart.c
+//common, exe, MainGameEnd_SoloRaceGetReward, 0x0,         General/MAIN/MainGameEnd_00_SoloRaceGetReward.c //TODO
+//common, exe, MainGameEnd_SoloRaceSaveHighScore, 0x0,     General/MAIN/MainGameEnd_01_SoloRaceSaveHighScore.c //TODO
+//common, exe, MainGameEnd_Initialize, 0x0,                General/MAIN/MainGameEnd_02_Initialize.c //TODO
+common, exe, MainGameStart_Initialize, 0x0,              General/MAIN/MainGameStart_00_Initialize.c
+common, exe, MainInit_VisMem, 0x0,                       General/MAIN/MainInit_00_VisMem.c
+//common, exe, MainInit_RainBuffer, 0x0,                   General/MAIN/MainInit_01_RainBuffer.c //TODO
 
 // everything between MainInit_RainBuffer and MainRaceTrack_RequestLoad
-common, exe, MainInit_PrimMem, 0x0, General/MAIN/MAIN_AAA_BigBlock1.c
+//common, exe, MainInit_PrimMem, 0x0, General/MAIN/MAIN_AAA_BigBlock1.c
 
-common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
-common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c
-common, exe, MainStats_ClearBattleVS, 0x0, General/MAIN/MainStats_ClearBattleVS.c
-common, exe, MainStats_RestartRaceCountLoss, 0x0, General/MAIN/MainStats_RestartRaceCountLoss.c
+common, exe, MainInit_PrimMem, 0x0,                      General/MAIN/MainInit_02_PrimMem.c
+common, exe, MainInit_JitPoolsReset, 0x0,                General/MAIN/MainInit_03_JitPoolsReset.c
+common, exe, MainInit_OTMem, 0x0,                        General/MAIN/MainInit_04_OTMem.c
+common, exe, MainInit_JitPoolsNew, 0x0,                  General/MAIN/MainInit_05_JitPoolsNew.c
+common, exe, MainInit_Drivers, 0x0,                      General/MAIN/MainInit_06_Drivers.c
+common, exe, MainInit_FinalizeInit, 0x0,                 General/MAIN/MainInit_07_FinalizeInit.c
+//common, exe, MainInit_, 0x0,                             General/MAIN/MainInit_08_.c //TODO
+common, exe, MainInit_VRAMClear, 0x0,                    General/MAIN/MainInit_09_VRAMClear.c
+common, exe, MainInit_VRAMDisplay, 0x0,                  General/MAIN/MainInit_10_VRAMDisplay.c
+common, exe, MainKillGame_StopCTR, 0x0,                  General/MAIN/MainKillGame_00_StopCTR.c
+common, exe, MainKillGame_LaunchSpyro2, 0x0,             General/MAIN/MainKillGame_01_LaunchSpyro2.c
+common, exe, MainLoadVLC_Callback, 0x0,                  General/MAIN/MainLoadVLC_00_Callback.c
+common, exe, MainLoadVLC, 0x0,                           General/MAIN/MainLoadVLC.c
+common, exe, main, 0x0,                                  General/MAIN/MainMain.c
+common, exe, MainRaceTrack_StartLoad, 0x0,               General/MAIN/MainRaceTrack_00_StartLoad.c
+common, exe, MainRaceTrack_RequestLoad, 0x0,             General/MAIN/MainRaceTrack_01_RequestLoad.c
+common, exe, MainStats_ClearBattleVS, 0x0,               General/MAIN/MainStats_00_ClearBattleVS.c
+common, exe, MainStats_RestartRaceCountLoss, 0x0,        General/MAIN/MainStats_01_RestartRaceCountLoss.c
 
 // ====================================================================================================================
 // MATH

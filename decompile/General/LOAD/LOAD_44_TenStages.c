@@ -322,7 +322,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		{
 			#ifdef USE_ONLINE
 			// Load Region3 for planet
-			if(gGT->levelID == 0x26)
+			if(gGT->levelID == INTRO_OXIDE)
 				ovrRegion3 = 3;
 			else
 			#endif
@@ -566,8 +566,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if level ID is AdvHub or Credits
 			if (
 					// 25-38 or 44-63
-					((u_int)(gGT->levelID-0x19) < 0xe) ||
-					((u_int)(gGT->levelID-0x2c) < 0x14)
+					((u_int)(gGT->levelID - GEM_STONE_VALLEY) < 0xe) ||
+					((u_int)(gGT->levelID - CREDITS_CRASH) < 0x14)
 				)
 			{
 				// add PTR file to loading queue
@@ -599,8 +599,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if level is not nullptr
 			if (lev != 0)
 			{
+#ifdef REBUILD_PC
+				// store array of model pointers in GameTracker
+				DECOMP_LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
+#else
 				// store array of model pointers in GameTracker
 				LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
+#endif
 
 #ifndef REBUILD_PS1
 				// == must use RDATA strings ==

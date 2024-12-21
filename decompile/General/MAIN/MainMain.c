@@ -89,13 +89,13 @@ u_int DECOMP_main()
 				if
 				(
 					// If Level ID is less than 18, it's one of the race tracks
-					(gGT->levelID < 18) ||
+					(gGT->levelID < NITRO_COURT) ||
 					(
 						// Battle-Style track starts with traffic lights
 						uVar12 = 10,
 						// Level ID >= 18 and < 23
 						// Battle tracks
-						gGT->levelID - 18 < 7
+						gGT->levelID - NITRO_COURT < 7
 					)
 				)
 				{
@@ -416,7 +416,7 @@ FinishLoading:
 #ifdef REBUILD_PS1
 
 				gGT->hudFlags &= 0xfe;
-				if(gGT->levelID < 0x1C)
+				if(gGT->levelID < GLACIER_PARK)
 					gGT->hudFlags |= 1;
 
 				if (
@@ -728,9 +728,10 @@ void StateZero()
 	#endif
 
 	gGT->levelID = NAUGHTY_DOG_CRATE;
+	//gGT->levelID = OXIDE_TRUE_ENDING;
 
 	#ifdef USE_ONLINE
-	gGT->levelID = 0x26;
+	gGT->levelID = INTRO_OXIDE;
 	#endif
 
 	#ifdef FastBoot

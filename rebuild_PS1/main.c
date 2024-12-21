@@ -350,16 +350,16 @@
 #include "../decompile/General/MAIN/MainFrame_07_RequestMaskHint.c"
 #include "../decompile/General/MAIN/MainFrame_08_RenderFrame.c"
 
-#include "../decompile/General/MAIN/MainFreeze_GetMenuPtr.c"
-#include "../decompile/General/MAIN/MainFreeze_IfPressStart.c"
-#include "../decompile/General/MAIN/MainFreeze_MenuPtrDefault.c"
-#include "../decompile/General/MAIN/MainFreeze_MenuPtrQuit.c"
-#include "../decompile/General/MAIN/MainFreeze_SafeAdvDestroy.c"
+#include "../decompile/General/MAIN/MainFreeze_04_MenuPtrQuit.c"
+#include "../decompile/General/MAIN/MainFreeze_05_SafeAdvDestroy.c"
+#include "../decompile/General/MAIN/MainFreeze_06_MenuPtrDefault.c"
+#include "../decompile/General/MAIN/MainFreeze_07_GetMenuPtr.c"
+#include "../decompile/General/MAIN/MainFreeze_08_IfPressStart.c"
 
-#include "../decompile/General/MAIN/MainGameStart_Initialize.c"
+#include "../decompile/General/MAIN/MainGameStart_00_Initialize.c"
 
-#include "../decompile/General/MAIN/MainRaceTrack_StartLoad.c"
-#include "../decompile/General/MAIN/MainRaceTrack_RequestLoad.c"
+#include "../decompile/General/MAIN/MainRaceTrack_00_StartLoad.c"
+#include "../decompile/General/MAIN/MainRaceTrack_01_RequestLoad.c"
 
 #include "../decompile/General/MATH/MATH_0_Sin.c"
 #include "../decompile/General/MATH/MATH_1_Cos.c"

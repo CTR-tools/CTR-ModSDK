@@ -53,7 +53,7 @@ void DECOMP_SongPool_Start(
 	song->vol_New = vol;
 	
 	// Naughty Dog Box
-	if(sdata->gGT->levelID == 0x29)
+	if(sdata->gGT->levelID == NAUGHTY_DOG_CRATE)
 	{
 		song->vol_Curr = 0xbe;
 		song->vol_New = 0xbe;
