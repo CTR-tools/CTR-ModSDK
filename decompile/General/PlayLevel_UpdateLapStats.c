@@ -369,7 +369,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						// AND
 
 						// new lowest distance (max progress)
-						(currDriver->distanceToFinish_curr < minDistance)
+						(currDriver->distanceToFinish_curr < (unsigned int)minDistance)
 					)
 				)
 			{

@@ -41,7 +41,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   short sVar9;
   int iVar10;
   int iVar11;
-  u_int uVar13;
   int iVar14;
   u_short uStack112;
   short sStack104;
@@ -76,6 +75,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   // lng index for BATTLE
   iVar10 = 0x50;
 
+  short yCoord;
   // if you are not in battle mode
   if ((gGT->gameMode1 & 0x20) == 0)
   {
@@ -85,7 +85,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     // number of battle teams
     uStack96 = numPlyr;
 
-    uVar13 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + VsPosY_TITLE];
+	yCoord = VsPosY_Config[VsPosY_NUM*VsConfigIndex + VsPosY_TITLE];
   }
   // if you are in battle mode
   else
@@ -100,7 +100,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       asStack128[gGT->drivers[iVar11]->BattleHUD.teamID]++;
     }
 
-    uVar13 = 0xd8 - ((gGT->battleSetup.numTeams + -1) * 10 + numPlyr * 0x1a + 0x28) >> 1;
+	yCoord = 0xd8 - ((gGT->battleSetup.numTeams + -1) * 10 + numPlyr * 0x1a + 0x28) >> 1;
   }
 
   // Disable drawing lines between multiplayer screens
@@ -123,11 +123,11 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   // fly-in interpolation
   DECOMP_UI_Lerp2D_Linear(
 	&pos[0],
-	0x296, uVar13,
-	uVar7, uVar13,
+	0x296, yCoord,
+	uVar7, yCoord,
 	iVar11, FPS_DOUBLE(5));
 
-  iVar14 = uVar13 + 0x28;
+  iVar14 = yCoord + 0x28;
 
   // "Versus" or "Battle"
   DecalFont_DrawLine(
@@ -263,12 +263,13 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           iVar2 = iVar10 + 1;
 
           // string for each player rank and count from standings (0x1e80)
-          sprintf(0x1f800000, "%d%s-%2.02ld", iVar2,
+          sprintf((char*)0x1f800000, "%d%s-%2.02ld", iVar2, //todo: replace 0x1f800000 with reference to scratchpad
                   sdata->lngStrings[0x19+iVar10],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar11] * 3 + iVar10]));
 
           // Draw string
-          DecalFont_DrawLine(0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
+		  //todo: replace 0x1f800000 with reference to scratchpad
+          DecalFont_DrawLine((char*)0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
         }
       }
 
@@ -291,18 +292,20 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack44 = iStack44 + FPS_DOUBLE(5);
 
 	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
-      sprintf(0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
+	  //todo: replace 0x1f800000 with reference to scratchpad
+      sprintf((char*)0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
 
       // Draw String
-      DecalFont_DrawLine(0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
+	  //todo: replace 0x1f800000 with reference to scratchpad
+      DecalFont_DrawLine((char*)0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
     }
   }
 
-  for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
+  for (unsigned char plCount = 0; plCount < (unsigned char)numPlyr; plCount++)
   {
     // get pointer to instance of Big Number in HUD
-    bigNum = gGT->drivers[uVar13]->instBigNum;
-    view = &gGT->pushBuffer[uVar13];
+    bigNum = gGT->drivers[plCount]->instBigNum;
+    view = &gGT->pushBuffer[plCount];
 
     // if the pointer is valid
     if (bigNum != NULL)
@@ -319,7 +322,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       // if this is not battle mode, get first place racer, else get battle winner
       uVar3 = ((gGT->gameMode1 & 0x20) == 0) ? gGT->driversInRaceOrder[0]->driverID : gGT->winnerIndex[0];
 
-      if (uVar3 != uVar13)
+      if (uVar3 != plCount)
         goto LAB_8009ff4c;
 
 	  // === PushBuffer is the winner ===

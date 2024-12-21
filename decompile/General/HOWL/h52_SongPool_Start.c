@@ -15,7 +15,7 @@ void DECOMP_SongPool_Start(
 	song->flags = 1;
 	song->id = songID;
 	
-	csh = &sdata->ptrCseqSongData[
+	csh = (struct CseqSongHeader*)&sdata->ptrCseqSongData[
 				sdata->ptrCseqSongStartOffset[songID]
 			];
 		
@@ -53,7 +53,7 @@ void DECOMP_SongPool_Start(
 	song->vol_New = vol;
 	
 	// Naughty Dog Box
-	if(sdata->gGT->levelID == 0x29)
+	if(sdata->gGT->levelID == NAUGHTY_DOG_CRATE)
 	{
 		song->vol_Curr = 0xbe;
 		song->vol_New = 0xbe;
@@ -62,11 +62,11 @@ void DECOMP_SongPool_Start(
 	song->vol_StepRate = 1;
 	song->numSequences = 0;
 	
-	short* seqOffsetArr = SONGHEADER_GETSEQOFFARR(csh);
+	short* seqOffsetArr = (short*)SONGHEADER_GETSEQOFFARR(csh);
 	
 	// first note header comes after end of CseqSongHeader
 	// and the full array of seqOffsets within the header
-	cnhFirst = &seqOffsetArr[csh->numSeqs];
+	cnhFirst = (char*)&seqOffsetArr[csh->numSeqs];
 	
 	// align up by 4
 	if(((int)cnhFirst & 2) != 0) cnhFirst += 2;
@@ -74,7 +74,7 @@ void DECOMP_SongPool_Start(
 	
 	for(i = 0; i < csh->numSeqs; i++)
 	{
-		cnhCurr = &cnhFirst[seqOffsetArr[i]];
+		cnhCurr = (struct SongNoteHeader*)&cnhFirst[seqOffsetArr[i]];
 		
 		seqCurr = DECOMP_SongPool_FindFreeChannel();
 		if(seqCurr == NULL) continue;
@@ -125,7 +125,7 @@ void DECOMP_SongPool_Start(
 		seqCurr->NoteLength = 0;
 		seqCurr->NoteTimeElapsed = 0;
 		
-		seqCurr->firstNote = NOTEHEADER_GETNOTES(cnhCurr);
+		seqCurr->firstNote = (char*)NOTEHEADER_GETNOTES(cnhCurr);
 		
 		seqCurr->currNote = 
 			DECOMP_howl_GetNextNote(seqCurr->firstNote, &seqCurr->NoteLength);

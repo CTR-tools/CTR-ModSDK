@@ -45,9 +45,11 @@
 #include "h63_UpdateChannelVol_Music_All.c"
 #include "h64_UpdateChannelVol_OtherFX_All.c"
 
+#if defined (USE_DEFRAG)
 #include "../AltMods/Mods3.c"
 
 void __attribute__ ((section (".end"))) Mods3_EndOfFile()
 {
 	// leave empty
 }
+#endif

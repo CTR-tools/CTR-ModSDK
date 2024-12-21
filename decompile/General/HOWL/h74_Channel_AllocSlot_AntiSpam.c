@@ -8,9 +8,8 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	int flags,
 	struct ChannelAttr* attr)
 {
-	int backupNext;
 	struct ChannelAttr* newAttr;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	
 	// with AntiSpam, a new sound started within
 	// 10 frames of another, will replace the older
@@ -21,8 +20,8 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	if(boolUseAntiSpam == 1)
 	{	
 		for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 		{
@@ -63,6 +62,6 @@ void Channel_DestroySelf(struct ChannelStats* stats)
 	stats->flags &= ~(1);
 	
 	// recycle
-	DECOMP_LIST_RemoveMember(&sdata->channelTaken, stats);
-	DECOMP_LIST_AddBack(&sdata->channelFree, stats);
+	DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)stats);
+	DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)stats);
 }	

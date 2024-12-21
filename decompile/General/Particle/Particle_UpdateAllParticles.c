@@ -13,11 +13,11 @@ void DECOMP_Particle_UpdateAllParticles(void)
 #endif
   
   // world-space particles (exhaust on cars)
-  ptrToList = &gGT->particleList_ordinary;
+  ptrToList = (int*)&gGT->particleList_ordinary;
   Particle_UpdateList(ptrToList, *ptrToList);
   
   // Draw "heat" particles that warp the screen
   // (above fire in tiger temple flamejet and player missiles)
-  ptrToList = &gGT->particleList_heatWarp;
+  ptrToList = (int*)&gGT->particleList_heatWarp;
   Particle_UpdateList(ptrToList, *ptrToList);
 }

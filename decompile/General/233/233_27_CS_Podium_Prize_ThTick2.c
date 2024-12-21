@@ -8,7 +8,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
 
     // get object from thread
 	// should replace with struct Prize in 233
-    int prize = th->object;
+    void* prize = th->object;
 
     // get instance from thread
     struct Instance *inst = th->inst;
@@ -42,7 +42,7 @@ void CS_Podium_Prize_ThTick2(struct Thread *th)
             }
         }
 
-        *(short *)(prize + 0x2a) = frameIndex;
+        *(short*)((u_int)prize + 0x2a) = frameIndex;
 
         // scaleY and scaleZ
         inst->scale[0] = currScale;

@@ -20,7 +20,7 @@ void DECOMP_VehStuckProc_Warp_Init(struct Thread *th, struct Driver *d)
     //  (three sounds)
     for (i = 0; i < 3; i++)
     {
-        OtherFX_Stop1(d->driverAudioPtrs[i]);
+        OtherFX_Stop1((int)d->driverAudioPtrs[i]);
         d->driverAudioPtrs[i] = NULL;
     }
 

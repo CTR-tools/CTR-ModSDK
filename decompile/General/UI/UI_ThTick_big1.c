@@ -23,7 +23,7 @@ void DECOMP_UI_ThTick_big1(struct Thread * bucket)
   
 #ifndef REBUILD_PS1
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
-  MatrixRotate(&inst->matrix,&obj->m.m[0][0],&inst->matrix);
+  MatrixRotate(&inst->matrix,&obj->m,&inst->matrix);
 #endif
   
   // if hud is enabled, and this is not demo mode

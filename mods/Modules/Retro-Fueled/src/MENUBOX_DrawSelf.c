@@ -8,7 +8,7 @@ void RECTMENU_DrawSelf(struct RectMenu* menu, int posX, int posY, int menuWidth)
     char *titleString;
     short offsetX;
     short sVar4;
-    u_int *rgb;
+    Color *rgb;
     u_short uVar5;
     struct MenuRow *row;
     short sVar6;

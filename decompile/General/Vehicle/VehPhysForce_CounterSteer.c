@@ -17,7 +17,7 @@ void DECOMP_VehPhysForce_CounterSteer(struct Driver * driver)
 	int angleLimit = driver->angleMaxCounterSteer;
 	int angle = driver->turnAngleCurr - driver->turnAnglePrev;
 	angle = clamp(angle, -angleLimit, angleLimit);
-	int sin = MATH_Sin(angle);
+	int sin = DECOMP_MATH_Sin(angle);
 
 	const int counterSteerStrength = FP8(-8);
 	SVec3 vec = {

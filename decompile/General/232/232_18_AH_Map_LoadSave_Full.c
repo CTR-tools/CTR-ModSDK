@@ -54,6 +54,6 @@ void DECOMP_AH_Map_LoadSave_Full(
 			gGT->pushBuffer_UI.ptrOT,
 			&gGT->backBuffer->primMem);
 		
-		vertCol = &D232.colorQuad[0];
+		vertCol = (char*)&D232.colorQuad[0];
 	}
 }

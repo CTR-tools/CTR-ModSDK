@@ -11,7 +11,7 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
     
     // check every instance hitbox until
     // end of list (null flag) is found
-    for (/**/; bspArray->flag != NULL; bspArray++)
+    for (/**/; bspArray->flag != 0; bspArray++)
     {
 		bbox = &bspArray->box;
 		
@@ -20,7 +20,7 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
         for (;arraySize >= 0; arraySize--)
         {
             // look for member in 1F800190 array
-            if (bspArray == *(int*)&sps->unk4C[0x3c + arraySize*4])
+            if ((int)bspArray == *(int*)&sps->unk4C[0x3c + arraySize*4])
                 goto NextBSP;
         }
 

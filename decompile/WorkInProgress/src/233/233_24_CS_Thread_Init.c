@@ -244,7 +244,7 @@ LAB_800af5ec:
         inst->matrix.t[2] = getCopReg(2, 0xd800) + param_3[2];
 
         // if level is not naughty dog box scene
-        if (gGT->levelID != 0x29)
+        if (gGT->levelID != NAUGHTY_DOG_CRATE)
         {
             inst->scale[0] = 0x2800;
             inst->scale[1] = 0x2800;
@@ -252,7 +252,7 @@ LAB_800af5ec:
         }
 
         // if adventure hub
-        if (gGT->levelID - 0x19U < 5)
+        if (gGT->levelID - GEM_STONE_VALLEY < 5)
         {
             inst->unk50 -= 4;
             inst->unk51 -= 4;

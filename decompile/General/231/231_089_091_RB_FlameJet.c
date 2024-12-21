@@ -2,11 +2,15 @@
 
 struct HitboxDesc fjBoxDesc =
 {
-	0, 0, 0,
-	{
+	.inst = (struct Instance*)0,
+	.thread = (struct Thread*)0,
+	.bucket = (struct Thread*)0,
+	.bbox = {
 		.min = {0xFFC0, 0xFFC0, 0},
 		.max = {0x40, 0x80, 0x140}
-	}
+	},
+	.threadHit = (struct Thread*)0,
+	.funcThCollide = (void*)0
 };
 
 short fjLightDir[4] = { 0x8B8, 0xD6A, 0, 0 };
@@ -253,8 +257,8 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle1->axis[1].velocity = 0;
 		particle1->axis[2].velocity = (short)fjObj->dirZ;
 		
-		result = RngDeadCoed(&gGT->deadcoed_struct);
-		result = MATH_Sin(gGT->timer * 0x100 + (result>>0x18) & 0xfff);
+		result = RngDeadCoed((u_int*)&gGT->deadcoed_struct);
+		result = DECOMP_MATH_Sin(gGT->timer * 0x100 + (result>>0x18) & 0xfff);
 		particle1->axis[1].accel = result >> 4;
 		
 		particle1->unk1A = 0x1e00;
@@ -271,7 +275,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	if(gGT->numPlyrCurrGame > 1) return;
 	
 	particle2 = 
-		Particle_Init(0, gGT->ptrSparkle, &emSet_fjHeat[0]);
+		Particle_Init(0, (struct IconGroup*)gGT->ptrSparkle, &emSet_fjHeat[0]);
 			
 	// heat particle
 	if(particle2 != 0)
@@ -318,7 +322,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	// in first 45 frames (1.5s)
 	if(fjObj->cycleTimer < FPS_DOUBLE(0x2d))
 	{
-		PlaySound3D_Flags(&fjObj->audioPtr, 0x68, fjInst);
+		PlaySound3D_Flags((u_int*)fjObj->audioPtr, 0x68, fjInst);
 		
 		// [unused variable?]
 		fjObj->unk += 0x100;
@@ -331,19 +335,19 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 		fjBoxDesc.thread = t;
 	
 		fjBoxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
-		hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&fjBoxDesc);
+		hitInst = DECOMP_LinkedCollide_Hitbox(&fjBoxDesc);
 	
 		// no PLAYER
 		if(hitInst == 0)
 		{
 			fjBoxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
-			hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&fjBoxDesc);
+			hitInst = DECOMP_LinkedCollide_Hitbox(&fjBoxDesc);
 			
 			// no ROBOT
 			if(hitInst == 0)
 			{
 				fjBoxDesc.bucket = gGT->threadBuckets[MINE].thread;
-				hitInst = DECOMP_LinkedCollide_Hitbox_Desc(&fjBoxDesc);
+				hitInst = DECOMP_LinkedCollide_Hitbox(&fjBoxDesc);
 				
 				// hit MINE
 				if(hitInst != 0)
@@ -367,14 +371,14 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 		
 		// get driver from instance
 		hitDriver = (struct Driver*)hitInst->thread->object;
-		RB_Hazard_HurtDriver(hitDriver, 4, 0, 0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver, 4, 0, 0);
 	}
 	
 	// on 45th frame (1.5s)
 	else if(fjObj->cycleTimer == FPS_DOUBLE(0x2d))
 	{
 		if(fjObj->audioPtr != 0)
-			OtherFX_RecycleMute(&fjObj->audioPtr);
+			OtherFX_RecycleMute((int*)fjObj->audioPtr);
 	}
 	
 	// repeat cycle every 105 (3.5s)

@@ -28,7 +28,7 @@ void DECOMP_OtherFX_RecycleNew(
 		local = 0;
     }
 
-    if (newSoundID != -1)
+    if (newSoundID != (u_int)-1)
     {
         // if this is a new sound
         if (local == 0)

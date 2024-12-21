@@ -5,7 +5,7 @@ void DECOMP_EngineAudio_Stop(u_int soundID)
   if (sdata->boolAudioEnabled == 0) return;
 	
   soundID = soundID & 0xffff;
-  if (sdata->ptrHowlHeader->numEngineFX <= soundID) return;
+  if (sdata->ptrHowlHeader->numEngineFX <= (int)soundID) return;
   
   // 0 - engineFX
   DECOMP_Smart_EnterCriticalSection();

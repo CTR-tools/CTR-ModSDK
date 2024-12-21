@@ -88,7 +88,7 @@ int frameGap = 2000;
 int frameCount = 0;
 int oldTicks = 0;
 
-int NikoCalcFPS()
+void NikoCalcFPS()
 {
 	if (frameCount++ != frameGap) return;
 	

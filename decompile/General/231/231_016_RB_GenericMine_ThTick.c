@@ -1,9 +1,5 @@
 #include <common.h>
 
-void RB_TNT_ThTick_ThrowOnHead();
-void RB_TNT_ThTick_ThrowOffHead();
-void RB_Potion_ThTick_InAir();
-
 void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 { 
   struct GameTracker* gGT;
@@ -16,7 +12,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   struct MineWeapon* tnt;
   unsigned int model;
   int numFrames;
-  int *func;
+  void(*func)(struct Thread*);
   int param;
   int boolPotion;
   
@@ -51,7 +47,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     }
 	
 	// this also quits the function
-    ThTick_SetAndExec(t,func);
+    ThTick_SetAndExec(t, func);
 	return;
   }
   
@@ -63,7 +59,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   if(mw->cooldown < 0)
 		mw->cooldown = 0;
   
-  numFrames = INSTANCE_GetNumAnimFrames(inst,0);
+  numFrames = (int)INSTANCE_GetNumAnimFrames(inst,0);
   
   // if animation is not over
   if (inst->animFrame < numFrames-1) 
@@ -140,7 +136,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     }
 
     // spin driver
-    coll = RB_Hazard_HurtDriver(d,1,mw->instParent->thread->object,param);
+    coll = (struct Instance*)DECOMP_RB_Hazard_HurtDriver(d,1,mw->instParent->thread->object,param);
     
 	// if collision, and if this was a red potion
 	if ((coll != 0) && (mw->extraFlags & 1) != 0)
@@ -189,7 +185,7 @@ LAB_800ad174:
     if (d->instTntRecv!= NULL) 
 	{
 	  // blasted driver
-      RB_Hazard_HurtDriver(d,2,0,2);
+      DECOMP_RB_Hazard_HurtDriver(d,2,0,2);
 	  
 	  // icon damage timer, draw icon as red
       d->damageColorTimer = 0x1e;
@@ -214,7 +210,7 @@ LAB_800ad174:
 	// if driver has squished timer
     if (d->squishTimer != 0) 
 	{
-      RB_Hazard_HurtDriver(d,2,0,2);
+	  DECOMP_RB_Hazard_HurtDriver(d,2,0,2);
       
 	  param = 0x1e;
       goto LAB_800ace88;
@@ -223,7 +219,7 @@ LAB_800ad174:
 	// if model is Nitro
     if (model == 6) 
 	{
-      RB_Hazard_HurtDriver(d,2,mw->instParent->thread->object,2);
+      DECOMP_RB_Hazard_HurtDriver(d,2,mw->instParent->thread->object,2);
       
 	  // Why does icon turn red in gameplay?
 	  
@@ -237,7 +233,7 @@ LAB_800ad174:
     if (model == 0x27) 
 	{
 	  // RB_Hazard_HurtDriver (keep driving?)
-      crate = RB_Hazard_HurtDriver(d,0,mw->instParent->thread->object,2);
+      crate = (struct Crate*)DECOMP_RB_Hazard_HurtDriver(d,0,mw->instParent->thread->object,2);
       
 	  if (crate == 0) goto LAB_800ad174;
 	  
@@ -270,7 +266,7 @@ LAB_800ad174:
         mw->deltaPos[2] = 0;
         mw->stopFallAtY = 0x3fff;
 		
-        ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOnHead);
+        ThTick_SetAndExec(t, RB_TNT_ThTick_ThrowOnHead);
 		return;
       }
 	  

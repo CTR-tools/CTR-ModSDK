@@ -27,7 +27,7 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
   int worldRangeX;
   int worldRangeY;
 
-  struct Map* map = &m[0];
+  struct Map* map = (struct Map*)m;
 
   #if 0
   // trap() functions were removed from original,
