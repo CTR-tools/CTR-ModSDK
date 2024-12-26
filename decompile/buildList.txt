@@ -177,7 +177,7 @@ common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
 //use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
 common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_000_SetGlobalNavData.c
 common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_001_InitNavPath.c
-//common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
+common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
 common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_003_Adv_NumTimesLostEvent.c
 //common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_004_Adv_AdjustDifficulty.c //BOTS_Adv_AdjustDifficulty 80012598
 //common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_005_UpdateGlobals.c //BOTS_UpdateGlobals 80013374

@@ -1337,3 +1337,4 @@ void SelectProfile_DrawAdvProfile(struct AdvProgress* adv, int posX, int posY, u
 void SelectProfile_Init(u_short flags);
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
+void EngineSound_NearestAIs(void);
