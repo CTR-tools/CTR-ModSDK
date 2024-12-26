@@ -155,11 +155,11 @@ def filterByOverlay(symbolData, overlay = None):
    filteredSymbolData = dict()
    for name in symbolData.keys():
       m = re.fullmatch("([A-Za-z0-9]{2})_.*", name)
-      if m == None:
-         if overlay == None:
-            filteredSymbolData[name] = symbolData[name] #include in result
-      elif m.group(1) in ovr_aliases:
+      if m != None and m.group(1) in ovr_aliases:
          if ovr_aliases[m.group(1)] == overlay:
+            filteredSymbolData[name] = symbolData[name] #include in result
+      elif m == None:
+         if overlay == None:
             filteredSymbolData[name] = symbolData[name] #include in result
    return filteredSymbolData
 

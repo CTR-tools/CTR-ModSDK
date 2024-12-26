@@ -857,23 +857,81 @@ common, exe, SubmitName_MenuProc, 0x0,                   General/SubmitName/Subm
 // ====================================================================================================================
 common, exe, TakeCupProgress_Activate, 0x0,              General/TakeCupProgress/TakeCupProgress_0_Activate.c
 
+// ====================================================================================================================
 // Timer
-common, exe, Timer_Init, 0x0, General/Timer/Timer_Init.c
-common, exe, Timer_Destroy, 0x0, General/Timer/Timer_Destroy.c
+// ====================================================================================================================
+common, exe, Timer_Init, 0x0,                            General/Timer/Timer_0_Init.c
+common, exe, Timer_Destroy, 0x0,                         General/Timer/Timer_1_Destroy.c
+//common, exe, Timer_GetTime_Total, 0x0,                 General/Timer/Timer_2_GetTime_Total.c //TODO
+//common, exe, Timer_GetTime_Elapsed, 0x0,               General/Timer/Timer_3_GetTime_Elapsed.c //TODO
 
+// ====================================================================================================================
 // UI
+// ====================================================================================================================
 // everything from UI_SaveLapTime to UI_RenderFrame_CrystChall
 // skip Wumpa2p3p4p (never called in rewrite), UI_VsXXX comes next
-common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock1.c
+common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBlock1.c //why is this linked to UI_ThTick_CountPickup and not UI_SaveLapTime?
+
+//common, exe, UI_SaveLapTime, 0x0,                        General/UI/UI_00_SaveLapTime.c
+//common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_01_ThTick_CountPickup.c
+//common, exe, UI_ThTick_Reward, 0x0,                      General/UI/UI_02_ThTick_Reward.c
+//common, exe, UI_ThTick_CtrLetters, 0x0,                  General/UI/UI_03_ThTick_CtrLetters.c
+//common, exe, UI_ThTick_big1, 0x0,                        General/UI/UI_04_ThTick_big1.c
+//common, exe, UI_ConvertX_2, 0x0,                         General/UI/UI_05_ConvertX_2.c
+//common, exe, UI_ConvertY_2, 0x0,                         General/UI/UI_06_ConvertY_2.c
+//common, exe, UI_INSTANCE_BirthWithThread, 0x0,           General/UI/UI_07_INSTANCE_BirthWithThread.c
+//common, exe, UI_INSTANCE_InitAll, 0x0,                   General/UI/UI_08_INSTANCE_InitAll.c
+//common, exe, UI_Map_DrawMap, 0x0,                        General/UI/UI_09_Map_DrawMap.c
+//common, exe, UI_Map_GetIconPos, 0x0,                     General/UI/UI_10_Map_GetIconPos.c
+//common, exe, UI_Map_DrawAdvPlayer, 0x0,                  General/UI/UI_11_Map_DrawAdvPlayer.c
+//common, exe, UI_Map_DrawRawIcon, 0x0,                    General/UI/UI_12_Map_DrawRawIcon.c
+//common, exe, UI_Map_DrawDrivers, 0x0,                    General/UI/UI_13_Map_DrawDrivers.c
+//common, exe, UI_Map_DrawGhosts, 0x0,                     General/UI/UI_14_Map_DrawGhosts.c
+//common, exe, UI_Map_DrawTracking, 0x0,                   General/UI/UI_15_Map_DrawTracking.c
+//common, exe, UI_WeaponBG_AnimateShine, 0x0,              General/UI/UI_16_WeaponBG_AnimateShine.c
+//common, exe, UI_WeaponBG_DrawShine, 0x0,                 General/UI/UI_17_WeaponBG_DrawShine.c
+//common, exe, UI_TrackerBG, 0x0,                          General/UI/UI_18_TrackerBG.c
+//common, exe, UI_DrawDriverIcon, 0x0,                     General/UI/UI_19_DrawDriverIcon.c
+//common, exe, UI_Lerp2D_Angular, 0x0,                     General/UI/UI_20_Lerp2D_Angular.c
+//common, exe, UI_Lerp2D_HUD, 0x0,                         General/UI/UI_21_Lerp2D_HUD.c
+//common, exe, UI_Lerp2D_Linear, 0x0,                      General/UI/UI_22_Lerp2D_Linear.c
+//common, exe, UI_DrawRaceClock, 0x0,                      General/UI/UI_23_DrawRaceClock.c
+//common, exe, UI_DrawLimitClock, 0x0,                     General/UI/UI_24_DrawLimitClock.c
+//common, exe, UI_BattleDrawHeadArrows, 0x0,               General/UI/UI_25_BattleDrawHeadArrows.c
+//common, exe, UI_TrackerSelf, 0x0,                        General/UI/UI_26_TrackerSelf.c
+//common, exe, UI_DrawPosSuffix, 0x0,                      General/UI/UI_27_DrawPosSuffix.c
+//common, exe, UI_DrawLapCount, 0x0,                       General/UI/UI_28_DrawLapCount.c
+//common, exe, UI_DrawBattleScores, 0x0,                   General/UI/UI_29_DrawBattleScores.c
+//common, exe, UI_Weapon_DrawSelf, 0x0,                    General/UI/UI_30_Weapon_DrawSelf.c
+//common, exe, UI_Weapon_DrawBG, 0x0,                      General/UI/UI_31_Weapon_DrawBG.c
+//common, exe, UI_DrawNumWumpa, 0x0,                       General/UI/UI_32_DrawNumWumpa.c
+//common, exe, UI_DrawNumTimebox, 0x0,                     General/UI/UI_33_DrawNumTimebox.c
+//common, exe, UI_DrawNumRelic, 0x0,                       General/UI/UI_34_DrawNumRelic.c
+//common, exe, UI_DrawNumKey, 0x0,                         General/UI/UI_35_DrawNumKey.c
+//common, exe, UI_DrawNumTrophy, 0x0,                      General/UI/UI_36_DrawNumTrophy.c
+//common, exe, UI_DrawNumCrystal, 0x0,                     General/UI/UI_37_DrawNumCrystal.c
+//common, exe, UI_DrawSpeedNeedle, 0x0,                    General/UI/UI_38_DrawSpeedNeedle.c
+//common, exe, UI_DrawSpeedBG, 0x0,                        General/UI/UI_39_DrawSpeedBG.c
+//common, exe, UI_JumpMeter_Update, 0x0,                   General/UI/UI_40_JumpMeter_Update.c
+//common, exe, UI_JumpMeter_Draw, 0x0,                     General/UI/UI_41_JumpMeter_Draw.c
+//common, exe, UI_DrawSlideMeter, 0x0,                     General/UI/UI_42_DrawSlideMeter.c
+//common, exe, UI_DrawRankedDrivers, 0x0,                  General/UI/UI_43_DrawRankedDrivers.c
+//common, exe, UI_RenderFrame_Racing, 0x0,                 General/UI/UI_44_RenderFrame_Racing.c
+//common, exe, UI_RenderFrame_AdvHub, 0x0,                 General/UI/UI_45_RenderFrame_AdvHub.c
+//common, exe, UI_RenderFrame_CrystChall, 0x0,             General/UI/UI_46_RenderFrame_CrystChall.c
 
 // UI_VsQuip (5x functions here)
 
-common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
-common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
-common, exe, UI_RaceEnd_MenuProc, 0x0, General/UI/UI_RaceEnd_MenuProc.c
-// UI_CupStandings_FinalizeCupRanks
-// UI_CupStandings_UpdateRanks
-common, exe, UI_CupStandings_InputAndDraw, 0x0, General/UI/UI_CupStandings_InputAndDraw.c
+common, exe, UI_RaceEnd_GetDriverClock, 0x0,             General/UI/UI_53_RaceEnd_GetDriverClock.c
+common, exe, UI_RaceStart_IntroText1P, 0x0,              General/UI/UI_54_RaceStart_IntroText1P.c
+common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEnd_MenuProc.c
+//common, exe, UI_CupStandings_FinalizeCupRanks, 0x0,      General/UI/UI_56_CupStandings_FinalizeCupRanks.c //TODO
+//common, exe, UI_CupStandings_UpdateCupRanks, 0x0,        General/UI/UI_57_CupStandings_UpdateCupRanks.c //TODO
+common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupStandings_InputAndDraw.c
+
+
+
+
 
 common, exe, VehAfterColl_GetSurface, 0x0, General/Vehicle/VehAfterColl_GetSurface.c
 common, exe, VehAfterColl_GetTerrain, 0x0, General/Vehicle/VehAfterColl_GetTerrain.c
