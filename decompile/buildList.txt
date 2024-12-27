@@ -919,9 +919,12 @@ common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBl
 //common, exe, UI_RenderFrame_Racing, 0x0,                 General/UI/UI_44_RenderFrame_Racing.c
 //common, exe, UI_RenderFrame_AdvHub, 0x0,                 General/UI/UI_45_RenderFrame_AdvHub.c
 //common, exe, UI_RenderFrame_CrystChall, 0x0,             General/UI/UI_46_RenderFrame_CrystChall.c
-
-// UI_VsQuip (5x functions here)
-
+//common, exe, UI_RenderFrame_Wumpa3D_2P3P4P, 0x0,         General/UI/UI_47_RenderFrame_Wumpa3D_2P3P4P.c //TODO (not called in the rewrite?)
+//common, exe, UI_VsQuipReadDriver, 0x0,                   General/UI/UI_48_VsQuipReadDriver.c //TODO
+//common, exe, UI_VsQuipAssign, 0x0,                       General/UI/UI_49_VsQuipAssign.c //TODO
+//common, exe, UI_VsQuipAssignAll, 0x0,                    General/UI/UI_50_VsQuipAssignAll.c //TODO
+//common, exe, UI_VsQuipDrawAll, 0x0,                      General/UI/UI_51_VsQuipDrawAll.c //TODO
+//common, exe, UI_VsWaitForPressX, 0x0,                    General/UI/UI_52_VsWaitForPressX.c //TODO
 common, exe, UI_RaceEnd_GetDriverClock, 0x0,             General/UI/UI_53_RaceEnd_GetDriverClock.c
 common, exe, UI_RaceStart_IntroText1P, 0x0,              General/UI/UI_54_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEnd_MenuProc.c
@@ -988,46 +991,85 @@ common, exe, VehPhysGeneral_SetHeldItem, 0x0,            General/Vehicle/VehPhys
 common, exe, VehPhysJoystick_ReturnToRest, 0x0,          General/Vehicle/VehPhysJoystick_0_ReturnToRest.c
 common, exe, VehPhysJoystick_GetStrength, 0x0,           General/Vehicle/VehPhysJoystick_1_GetStrength.c
 common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0,   General/Vehicle/VehPhysJoystick_2_GetStrengthAbsolute.c
-common, exe, VehPhysProc_Driving_PhysLinear, 0x0,        General/Vehicle/VehPhysProc_0_Driving_PhysLinear.c
-common, exe, VehPhysProc_Driving_Audio, 0x0,             General/Vehicle/VehPhysProc_1_Driving_Audio.c
-common, exe, VehPhysProc_Driving_Update, 0x0,            General/Vehicle/VehPhysProc_2_Driving_Update.c
-common, exe, VehPhysProc_Driving_Init, 0x0,              General/Vehicle/VehPhysProc_3_Driving_Init.c
-common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_4_FreezeEndEvent_PhysLinear.c
-common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0,       General/Vehicle/VehPhysProc_5_FreezeEndEvent_Init.c
+common, exe, VehPhysProc_Driving_PhysLinear, 0x0,        General/Vehicle/VehPhysProc_00_Driving_PhysLinear.c
+common, exe, VehPhysProc_Driving_Audio, 0x0,             General/Vehicle/VehPhysProc_01_Driving_Audio.c
+common, exe, VehPhysProc_Driving_Update, 0x0,            General/Vehicle/VehPhysProc_02_Driving_Update.c
+common, exe, VehPhysProc_Driving_Init, 0x0,              General/Vehicle/VehPhysProc_03_Driving_Init.c
+common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_04_FreezeEndEvent_PhysLinear.c
+common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0,       General/Vehicle/VehPhysProc_05_FreezeEndEvent_Init.c
 
 // everything between VehPhysProc_FreezeEndEvent_Init and VehPickState_NewState
 common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_AAA_BigBlock1.c
 
-common, exe, VehPickState_NewState, 0x0, General/Vehicle/VehPickState_NewState.c
+//common, exe, VehPhysProc_FreezeVShift_Update, 0x0,             General/Vehicle/VehPhysProc_06_FreezeVShift_Update.c
+//common, exe, VehPhysProc_FreezeVShift_ReverseOneFrame, 0x0,    General/Vehicle/VehPhysProc_07_FreezeVShift_ReverseOneFrame.c
+//common, exe, VehPhysProc_FreezeVShift_Init, 0x0,               General/Vehicle/VehPhysProc_08_FreezeVShift_Init.c
+//common, exe, VehPhysProc_PowerSlide_PhysAngular, 0x0,          General/Vehicle/VehPhysProc_09_PowerSlide_PhysAngular.c
+//common, exe, VehPhysProc_PowerSlide_Finalize, 0x0,             General/Vehicle/VehPhysProc_10_PowerSlide_Finalize.c
+//common, exe, VehPhysProc_PowerSlide_Update, 0x0,               General/Vehicle/VehPhysProc_11_PowerSlide_Update.c
+//common, exe, VehPhysProc_PowerSlide_PhysLinear, 0x0,           General/Vehicle/VehPhysProc_12_PowerSlide_PhysLinear.c
+//common, exe, VehPhysProc_PowerSlide_InitSetUpdate, 0x0,        General/Vehicle/VehPhysProc_13_PowerSlide_InitSetUpdate.c
+//common, exe, VehPhysProc_PowerSlide_Init, 0x0,                 General/Vehicle/VehPhysProc_14_PowerSlide_Init.c
+//common, exe, VehPhysProc_SlamWall_PhysAngular, 0x0,            General/Vehicle/VehPhysProc_15_SlamWall_PhysAngular.c
+//common, exe, VehPhysProc_SlamWall_Update, 0x0,                 General/Vehicle/VehPhysProc_16_SlamWall_Update.c
+//common, exe, VehPhysProc_SlamWall_PhysLinear, 0x0,             General/Vehicle/VehPhysProc_17_SlamWall_PhysLinear.c
+//common, exe, VehPhysProc_SlamWall_Animate, 0x0,                General/Vehicle/VehPhysProc_18_SlamWall_Animate.c
+//common, exe, VehPhysProc_SlamWall_Init, 0x0,                   General/Vehicle/VehPhysProc_19_SlamWall_Init.c
+//common, exe, VehPhysProc_SpinFirst_Update, 0x0,                General/Vehicle/VehPhysProc_20_SpinFirst_Update.c
+//common, exe, VehPhysProc_SpinFirst_PhysLinear, 0x0,            General/Vehicle/VehPhysProc_21_SpinFirst_PhysLinear.c
+//common, exe, VehPhysProc_SpinFirst_PhysAngular, 0x0,           General/Vehicle/VehPhysProc_22_SpinFirst_PhysAngular.c
+//common, exe, VehPhysProc_SpinFirst_InitSetUpdate, 0x0,         General/Vehicle/VehPhysProc_23_SpinFirst_InitSetUpdate.c
+//common, exe, VehPhysProc_SpinFirst_Init, 0x0,                  General/Vehicle/VehPhysProc_24_SpinFirst_Init.c
+//common, exe, VehPhysProc_SpinLast_Update, 0x0,                 General/Vehicle/VehPhysProc_25_SpinLast_Update.c
+//common, exe, VehPhysProc_SpinLast_PhysLinear, 0x0,             General/Vehicle/VehPhysProc_26_SpinLast_PhysLinear.c
+//common, exe, VehPhysProc_SpinLast_PhysAngular, 0x0,            General/Vehicle/VehPhysProc_27_SpinLast_PhysAngular.c
+//common, exe, VehPhysProc_SpinLast_Init, 0x0,                   General/Vehicle/VehPhysProc_28_SpinLast_Init.c
+//common, exe, VehPhysProc_SpinStop_Update, 0x0,                 General/Vehicle/VehPhysProc_29_SpinStop_Update.c //TODO (not needed?)
+//common, exe, VehPhysProc_SpinStop_PhysLinear, 0x0,             General/Vehicle/VehPhysProc_30_SpinStop_PhysLinear.c //TODO (not needed?)
+//common, exe, VehPhysProc_SpinStop_PhysAngular, 0x0,            General/Vehicle/VehPhysProc_31_SpinStop_PhysAngular.c //TODO (not needed?)
+//common, exe, VehPhysProc_SpinStop_Animate, 0x0,                General/Vehicle/VehPhysProc_32_SpinStop_Animate.c
+//common, exe, VehPhysProc_SpinStop_Init, 0x0,                   General/Vehicle/VehPhysProc_33_SpinStop_Init.c
 
-common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0, General/Vehicle/VehPickupItem_MaskBoolGoodGuy.c
-common, exe, VehPickupItem_MaskUseWeapon, 0x0, General/Vehicle/VehPickupItem_MaskUseWeapon.c
-common, exe, VehPickupItem_ShootNow, 0x0, General/Vehicle/VehPickupItem_ShootNow.c
-common, exe, VehPickupItem_ShootOnCirclePress, 0x0, General/Vehicle/VehPickupItem_ShootOnCirclePress.c
-
-// VehStuckProc_MaskGrab_FindDestPos still needed
-common, exe, VehStuckProc_MaskGrab_Particles, 0x0, General/Vehicle/VehStuckProc_MaskGrab_FuncPtrs.c
-common, exe, VehStuckProc_MaskGrab_Init, 0x0, General/Vehicle/VehStuckProc_MaskGrab_Init.c
-common, exe, VehStuckProc_PlantEaten_Update, 0x0, General/Vehicle/VehStuckProc_PlantEaten_FuncPtrs.c
-common, exe, VehStuckProc_PlantEaten_Init, 0x0, General/Vehicle/VehStuckProc_PlantEaten_Init.c
-common, exe, VehStuckProc_RIP_Init, 0x0, General/Vehicle/VehStuckProc_RIP_Init.c
-common, exe, VehStuckProc_RevEngine_Update, 0x0, General/Vehicle/VehStuckProc_RevEngine_FuncPtrs.c
-common, exe, VehStuckProc_RevEngine_Init, 0x0, General/Vehicle/VehStuckProc_RevEngine_Init.c
-common, exe, VehStuckProc_Tumble_Update, 0x0, General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c
-common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_Init.c
-common, exe, VehStuckProc_Warp_AddDustPuff1, 0x0, General/Vehicle/VehStuckProc_Warp_AddDustPuff1.c
-common, exe, VehStuckProc_Warp_PhysAngular, 0x0, General/Vehicle/VehStuckProc_Warp_PhysAngular.c
-common, exe, VehStuckProc_Warp_Init, 0x0, General/Vehicle/VehStuckProc_Warp_Init.c
-
-common, exe, VehTalkMask_ThTick, 0x0, General/Vehicle/VehTalkMask_ThTick.c
-common, exe, VehTalkMask_Init, 0x0, General/Vehicle/VehTalkMask_Init.c
-common, exe, VehTalkMask_PlayXA, 0x0, General/Vehicle/VehTalkMask_PlayXA.c
-common, exe, VehTalkMask_boolNoXA, 0x0, General/Vehicle/VehTalkMask_boolNoXA.c
-common, exe, VehTalkMask_End, 0x0, General/Vehicle/VehTalkMask_End.c
-
-// need VehTurbo_ProcessBucket (in wip)
-common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
-common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
+common, exe, VehPickState_NewState, 0x0,                       General/Vehicle/VehPickState_0_NewState.c
+common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0,               General/Vehicle/VehPickupItem_0_MaskBoolGoodGuy.c
+common, exe, VehPickupItem_MaskUseWeapon, 0x0,                 General/Vehicle/VehPickupItem_1_MaskUseWeapon.c
+//common, exe, VehPickupItem_MissileGetTargetDriver, 0x0,        General/Vehicle/VehPickupItem_2_MissileGetTargetDriver.c //TODO
+//common, exe, VehPickupItem_PotionThrow, 0x0,                   General/Vehicle/VehPickupItem_3_PotionThrow.c //TODO
+common, exe, VehPickupItem_ShootNow, 0x0,                      General/Vehicle/VehPickupItem_4_ShootNow.c
+common, exe, VehPickupItem_ShootOnCirclePress, 0x0,            General/Vehicle/VehPickupItem_5_ShootOnCirclePress.c
+//common, exe, VehStuckProc_MaskGrab_FindDestPos, 0x0            General/Vehicle/VehStuckProc_00_MaskGrab_FindDestPos.c //TODO
+common, exe, VehStuckProc_MaskGrab_Particles, 0x0,             General/Vehicle/VehStuckProc_01_MaskGrab_Particles.c
+common, exe, VehStuckProc_MaskGrab_Update, 0x0,                General/Vehicle/VehStuckProc_02_MaskGrab_Update.c
+common, exe, VehStuckProc_MaskGrab_PhysLinear, 0x0,            General/Vehicle/VehStuckProc_03_MaskGrab_PhysLinear.c
+common, exe, VehStuckProc_MaskGrab_Animate, 0x0,               General/Vehicle/VehStuckProc_04_MaskGrab_Animate.c
+common, exe, VehStuckProc_MaskGrab_Init, 0x0,                  General/Vehicle/VehStuckProc_05_MaskGrab_Init.c
+common, exe, VehStuckProc_PlantEaten_Update, 0x0,              General/Vehicle/VehStuckProc_06_PlantEaten_Update.c
+common, exe, VehStuckProc_PlantEaten_PhysLinear, 0x0,          General/Vehicle/VehStuckProc_07_PlantEaten_PhysLinear.c
+common, exe, VehStuckProc_PlantEaten_Animate, 0x0,             General/Vehicle/VehStuckProc_08_PlantEaten_Animate.c
+common, exe, VehStuckProc_PlantEaten_Init, 0x0,                General/Vehicle/VehStuckProc_09_PlantEaten_Init.c
+common, exe, VehStuckProc_RIP_Init, 0x0,                       General/Vehicle/VehStuckProc_10_RIP_Init.c
+common, exe, VehStuckProc_RevEngine_Update, 0x0,               General/Vehicle/VehStuckProc_11_RevEngine_Update.c
+common, exe, VehStuckProc_RevEngine_PhysLinear, 0x0,           General/Vehicle/VehStuckProc_12_RevEngine_PhysLinear.c
+common, exe, VehStuckProc_RevEngine_Animate, 0x0,         	   General/Vehicle/VehStuckProc_13_RevEngine_Animate.c
+common, exe, VehStuckProc_RevEngine_Init, 0x0,         		   General/Vehicle/VehStuckProc_14_RevEngine_Init.c
+common, exe, VehStuckProc_Tumble_Update, 0x0,                  General/Vehicle/VehStuckProc_15_Tumble_Update.c
+common, exe, VehStuckProc_Tumble_PhysLinear, 0x0,  			   General/Vehicle/VehStuckProc_16_Tumble_PhysLinear.c
+common, exe, VehStuckProc_Tumble_PhysAngular, 0x0,  		   General/Vehicle/VehStuckProc_17_Tumble_PhysAngular.c
+common, exe, VehStuckProc_Tumble_Animate, 0x0,  			   General/Vehicle/VehStuckProc_18_Tumble_Animate.c
+common, exe, VehStuckProc_Tumble_Init, 0x0,  				   General/Vehicle/VehStuckProc_19_Tumble_Init.c
+//common, exe, VehStuckProc_Warp_MoveDustPuff, 0x0,              General/Vehicle/VehStuckProc_20_Warp_MoveDustPuff.c //TODO
+common, exe, VehStuckProc_Warp_AddDustPuff1, 0x0,              General/Vehicle/VehStuckProc_21_Warp_AddDustPuff1.c
+//common, exe, VehStuckProc_Warp_AddDustPuff2, 0x0,              General/Vehicle/VehStuckProc_22_Warp_AddDustPuff2.c //TODO
+common, exe, VehStuckProc_Warp_PhysAngular, 0x0,               General/Vehicle/VehStuckProc_23_Warp_PhysAngular.c
+common, exe, VehStuckProc_Warp_Init, 0x0,                      General/Vehicle/VehStuckProc_24_Warp_Init.c
+common, exe, VehTalkMask_ThTick, 0x0,                          General/Vehicle/VehTalkMask_0_ThTick.c
+common, exe, VehTalkMask_Init, 0x0,                            General/Vehicle/VehTalkMask_1_Init.c
+common, exe, VehTalkMask_PlayXA, 0x0,                          General/Vehicle/VehTalkMask_2_PlayXA.c
+common, exe, VehTalkMask_boolNoXA, 0x0,                        General/Vehicle/VehTalkMask_3_boolNoXA.c
+common, exe, VehTalkMask_End, 0x0,                             General/Vehicle/VehTalkMask_4_End.c
+//common, exe, VehTurbo_ProcessBucket, 0x0,                      General/Vehicle/VehTurbo_0_ProcessBucket.c //TODO
+common, exe, VehTurbo_ThDestroy, 0x0,                          General/Vehicle/VehTurbo_1_ThDestroy.c
+common, exe, VehTurbo_ThTick, 0x0,                             General/Vehicle/VehTurbo_2_ThTick.c
 
 
 

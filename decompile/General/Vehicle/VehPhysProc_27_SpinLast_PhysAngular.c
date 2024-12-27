@@ -1,34 +1,6 @@
 #include <common.h>
 
-// budget 0x228 (552 bytes)
-
 void DECOMP_VehPhysProc_SlamWall_PhysAngular(struct Thread* t, struct Driver* d);
-
-void DECOMP_VehPhysProc_SpinLast_Update(struct Thread* t, struct Driver* d)
-{
-	int driftAngle = d->turnAngleCurr;
-	
-	// if almost facing forward
-	if(
-		(driftAngle < 16) &&
-		(driftAngle > -16)
-		)
-	{
-		// stop spin
-		DECOMP_VehPhysProc_SpinStop_Init(t, d);
-	}
-}
-
-void DECOMP_VehPhysProc_SpinLast_PhysLinear(struct Thread* t, struct Driver* d)
-{
-	DECOMP_VehPhysProc_Driving_PhysLinear(t,d);
-	
-	// baseSpeed and fireSpeed
-	// set both "shorts" in one "int"
-	*(int*)&d->baseSpeed = 0;
-	
-	d->actionsFlagSet |= 0x4008;
-}
 
 void DECOMP_VehPhysProc_SpinLast_PhysAngular(struct Thread* t, struct Driver* d)
 {

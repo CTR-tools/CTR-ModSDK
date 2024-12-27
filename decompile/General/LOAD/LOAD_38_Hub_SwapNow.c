@@ -70,7 +70,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 #else
 		LibraryOfModels_Store(
 			gGT, level1->numModels, 
-			(int*)level1->ptrModelsPtrArray);
+			level1->ptrModelsPtrArray);
 #endif
 			
 		INSTANCE_LevInitAll(

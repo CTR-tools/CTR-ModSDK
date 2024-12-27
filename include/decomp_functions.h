@@ -869,10 +869,6 @@ void DECOMP_LOAD_StringToUpper(char* path);
 //DECOMP_RECTMENU_DrawInnerRect change void* ot to u_long* ot
 //DECOMP_CTR_Box_DrawWirePrims change void* ot to u_long* ot
 
-//In regards to the credits bug, these are the possibly broken functions:
-//CS_Credits_NewDancer //I don't think it's this one
-//CS_Credits_GetNextString //leaf method
-//CS_Credits_DestroyCreditGhost //not this one I think
-//MainRaceTrack_RequestLoad //almost certainly not this one
-//if none of the above, it's probably because byteBudget/clobbering
-//byteBudget.bat has an oversight/bug where it doesn't necessarily find all the messed up budget
+void DECOMP_MainLoadVLC(void);
+void DECOMP_MainKillGame_StopCTR(void);
+void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver* d);
