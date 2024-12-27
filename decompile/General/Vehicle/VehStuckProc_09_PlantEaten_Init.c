@@ -66,7 +66,7 @@ void DECOMP_VehStuckProc_PlantEaten_Animate(struct Thread *t, struct Driver *d);
 void *PlayerEatenFuncTable[13] =
 {
     NULL,
-    DECOMP_VehStuckProc_PlantEaten_Update,
+	VehStuckProc_PlantEaten_Update,//DECOMP_VehStuckProc_PlantEaten_Update,
     DECOMP_VehStuckProc_PlantEaten_PhysLinear,
     DECOMP_VehPhysProc_Driving_Audio,
     NULL,

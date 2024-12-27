@@ -673,7 +673,7 @@
 800469f0 RefreshCard_BoolGhostForLEV
 
 // only called from 800472d0
-// unknown 80046a74
+80046a74 RefreshCard_Unknown1 // unknown 80046a74
 80046a90 RefreshCard_GetResult
 80046b1c RefreshCard_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
 
@@ -690,13 +690,13 @@
 
 // all these are only called from 800472d0
 800471c4 RefreshCard_SetScreenText
-// unknown 800471e8
+800471e8 RefreshCard_Unknown2
 80047224 RefreshCard_GetNumGhostsTotal
 80047230 RefreshCard_GameProgressAndOptions
 
 // called only from RefreshCard_Entry
-// unknown 800472d0 -- related to memcard
-// unknown 80047a58 -- related to memcard
+800472d0 RefreshCard_Unknown3
+80047a58 RefreshCard_Unknown4
 80047d64 RefreshCard_Entry
 
 

@@ -4,7 +4,11 @@ void* PlayerBlastedFuncTable[0xD] =
 {
 	(void *)0x0,
 	DECOMP_VehStuckProc_Tumble_Update,
+#ifdef REBUILD_PC
 	DECOMP_VehStuckProc_Tumble_PhysLinear,
+#else
+	VehStuckProc_Tumble_PhysLinear,
+#endif
 	DECOMP_VehPhysProc_Driving_Audio,
 	DECOMP_VehStuckProc_Tumble_PhysAngular,
 	DECOMP_VehPhysForce_OnApplyForces,

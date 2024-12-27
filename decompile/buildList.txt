@@ -168,86 +168,107 @@ common, exe, data, 0x0,                                  General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0,                          General/zGlobal_SDATA.c
 
 // ====================================================================================================================
-// BOTS
+// BOTS (stubbed for this file + files created)
 // ====================================================================================================================
 //unless/until a "../AltMods/ModsX.c" entry is impl for BOTS, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
 //use this for defrag (enable USE_DEFRAG in common.h)
 //common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_Defrag.c
 
 //use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
-common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_000_SetGlobalNavData.c
-common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_001_InitNavPath.c
-common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_002_EmptyFunc.c //BOTS_EmptyFunc 80012560
-common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_003_Adv_NumTimesLostEvent.c
-//common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_004_Adv_AdjustDifficulty.c //BOTS_Adv_AdjustDifficulty 80012598
-//common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_005_UpdateGlobals.c //BOTS_UpdateGlobals 80013374
-//common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_006_SetRotation.c //BOTS_SetRotation 80013444
-//common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_007_LevInstColl.c //BOTS_LevInstColl 800135d8
-//common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_008_ThTick_EngineRevving.c //BOTS_ThTick_EngineRevving 8001372c
-//common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_009_MaskGrab.c //BOTS_MaskGrab 80013838
-//common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_010_Killplane.c //BOTS_Killplane 80013a70
-//common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_011_ThTick_Drive.c //BOTS_ThTick_Drive 80013c18
-//common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_012_ChangeState.c //BOTS_ChangeState 80016b00
-//common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_013_CollideWithOtherAI.c //BOTS_CollideWithOtherAI 80016ec8
-//common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_014_GotoStartingLine.c //BOTS_GotoStartingLine 8001702c
-//common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_015_Driver_Init.c //BOTS_Driver_Init 8001702c //a comment in this file explicitly stated that this is not finished
-//common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_016_Driver_Convert.c //BOTS_Driver_Convert 80017318
+common, exe, BOTS_SetGlobalNavData, 0x0,               General/BOTS/BOTS_00_SetGlobalNavData.c
+common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_01_InitNavPath.c
+common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_02_EmptyFunc.c
+common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_03_Adv_NumTimesLostEvent.c
+//common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_04_Adv_AdjustDifficulty.c //TODO
+//common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c //TODO
+//common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_06_SetRotation.c //TODO
+//common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c //TODO
+//common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_08_ThTick_EngineRevving.c //TODO
+//common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c //TODO
+//common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //TODO
+//common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_11_ThTick_Drive.c //TODO
+//common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_12_ChangeState.c //TODO
+//common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_13_CollideWithOtherAI.c //TODO
+//common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_14_GotoStartingLine.c //TODO
+//common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_15_Driver_Init.c //TODO //a comment in this file explicitly stated that this is not finished
+//common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_16_Driver_Convert.c //TODO
 
 // ====================================================================================================================
-// CAM
+// CAM (stubbed for this file)
 // ====================================================================================================================
+//common, exe, CAM_SkyboxGlow, 0x0,                      General/CAMERA/CAM_00_SkyboxGlow.c //TODO
 common, exe, CAM_ClearScreen, 0x0,                     General/CAMERA/CAM_01_ClearScreen.c
 common, exe, CAM_Init, 0x0,                            General/CAMERA/CAM_02_Init.c
+//common, exe, CAM_FindClosestQuadblock, 0x0,            General/CAMERA/CAM_03_FindClosestQuadblock.c //TODO
 common, exe, CAM_Path_GetNumPoints, 0x0,               General/CAMERA/CAM_04_Path_GetNumPoints.c
 common, exe, CAM_Path_Move, 0x0,                       General/CAMERA/CAM_05_Path_Move.c
 common, exe, CAM_StartOfRace, 0x0,                     General/CAMERA/CAM_06_StartOfRace.c
 common, exe, CAM_EndOfRace_Battle, 0x0,                General/CAMERA/CAM_07_EndOfRace_Battle.c
 common, exe, CAM_EndOfRace, 0x0,                       General/CAMERA/CAM_08_EndOfRace.c
+//common, exe, CAM_StartLine_FlyIn_FixY, 0x0,            General/CAMERA/CAM_09_StartLine_FlyIn_FixY.c //TODO
 common, exe, CAM_ProcessTransition, 0x0,               General/CAMERA/CAM_10_ProcessTransition.c
+//common, exe, CAM_FollowDriver_AngleAxis, 0x0,          General/CAMERA/CAM_11_FollowDriver_AngleAxis.c //TODO
+//common, exe, CAM_StartLine_FlyIn, 0x0,                 General/CAMERA/CAM_12_StartLine_FlyIn.c //TODO
+//common, exe, CAM_FollowDriver_TrackPath, 0x0,          General/CAMERA/CAM_13_FollowDriver_TrackPath.c //TODO
 common, exe, CAM_LookAtPosition, 0x0,                  General/CAMERA/CAM_14_LookAtPosition.c
 common, exe, CAM_FollowDriver_Spin360, 0x0,            General/CAMERA/CAM_15_FollowDriver_Spin360.c
 common, exe, CAM_SetDesiredPosRot, 0x0,                General/CAMERA/CAM_16_SetDesiredPosRot.c
+//common, exe, CAM_FollowDriver_Normal, 0x0,             General/CAMERA/CAM_17_FollowDriver_Normal.c //TODO
+//common, exe, CAM_MapRange_PosPoints, 0x0,              General/CAMERA/CAM_18_MapRange_PosPoints.c //TODO
 common, exe, CAM_ThTick, 0x0,                          General/CAMERA/CAM_19_ThTick.c
 
 // ====================================================================================================================
-// CDSYS
+// CDSYS (complete?)
 // ====================================================================================================================
-common, exe, CDSYS_Init, 0x0,                          General/CDSYS/CDSYS_01_Init.c
-common, exe, CDSYS_GetFilePosInt, 0x0,                 General/CDSYS/CDSYS_02_GetFilePosInt.c
-common, exe, CDSYS_SetMode_StreamData, 0x0,            General/CDSYS/CDSYS_03_SetMode_StreamData.c
-common, exe, CDSYS_SetMode_StreamAudio, 0x0,           General/CDSYS/CDSYS_04_SetMode_StreamAudio.c
-common, exe, CDSYS_SetXAToLang, 0x0,                   General/CDSYS/CDSYS_05_SetXAToLang.c
-common, exe, CDSYS_XaCallbackCdSync, 0x0,              General/CDSYS/CDSYS_06_XaCallbackCdSync.c
-common, exe, CDSYS_XaCallbackCdReady, 0x0,             General/CDSYS/CDSYS_07_XaCallbackCdReady.c
-common, exe, CDSYS_SpuCallbackIRQ, 0x0,                General/CDSYS/CDSYS_08_SpuCallbackIRQ.c
-common, exe, CDSYS_SpuCallbackTransfer, 0x0,           General/CDSYS/CDSYS_09_SpuCallbackTransfer.c
-common, exe, CDSYS_SpuEnableIRQ, 0x0,                  General/CDSYS/CDSYS_10_SpuEnableIRQ.c
-common, exe, CDSYS_SpuDisableIRQ, 0x0,                 General/CDSYS/CDSYS_11_SpuDisableIRQ.c
-common, exe, CDSYS_SpuGetMaxSample, 0x0,               General/CDSYS/CDSYS_12_SpuGetMaxSample.c
-common, exe, CDSYS_XAGetNumTracks, 0x0,                General/CDSYS/CDSYS_13_XAGetNumTracks.c
-common, exe, CDSYS_XASeek, 0x0,                        General/CDSYS/CDSYS_14_XASeek.c
-common, exe, CDSYS_XAGetTrackLength, 0x0,              General/CDSYS/CDSYS_15_XAGetTrackLength.c
-common, exe, CDSYS_XAPlay, 0x0,                        General/CDSYS/CDSYS_16_XAPlay.c
-common, exe, CDSYS_XAPauseRequest, 0x0,                General/CDSYS/CDSYS_17_XAPauseRequest.c
-common, exe, CDSYS_XAPauseForce, 0x0,                  General/CDSYS/CDSYS_18_XAPauseForce.c
-common, exe, CDSYS_XAPauseAtEnd, 0x0,                  General/CDSYS/CDSYS_19_XAPauseAtEnd.c
+common, exe, CDSYS_Init, 0x0,                          General/CDSYS/CDSYS_00_Init.c
+common, exe, CDSYS_GetFilePosInt, 0x0,                 General/CDSYS/CDSYS_01_GetFilePosInt.c
+common, exe, CDSYS_SetMode_StreamData, 0x0,            General/CDSYS/CDSYS_02_SetMode_StreamData.c
+common, exe, CDSYS_SetMode_StreamAudio, 0x0,           General/CDSYS/CDSYS_03_SetMode_StreamAudio.c
+common, exe, CDSYS_SetXAToLang, 0x0,                   General/CDSYS/CDSYS_04_SetXAToLang.c
+common, exe, CDSYS_XaCallbackCdSync, 0x0,              General/CDSYS/CDSYS_05_XaCallbackCdSync.c
+common, exe, CDSYS_XaCallbackCdReady, 0x0,             General/CDSYS/CDSYS_06_XaCallbackCdReady.c
+common, exe, CDSYS_SpuCallbackIRQ, 0x0,                General/CDSYS/CDSYS_07_SpuCallbackIRQ.c
+common, exe, CDSYS_SpuCallbackTransfer, 0x0,           General/CDSYS/CDSYS_08_SpuCallbackTransfer.c
+common, exe, CDSYS_SpuEnableIRQ, 0x0,                  General/CDSYS/CDSYS_09_SpuEnableIRQ.c
+common, exe, CDSYS_SpuDisableIRQ, 0x0,                 General/CDSYS/CDSYS_10_SpuDisableIRQ.c
+common, exe, CDSYS_SpuGetMaxSample, 0x0,               General/CDSYS/CDSYS_11_SpuGetMaxSample.c
+common, exe, CDSYS_XAGetNumTracks, 0x0,                General/CDSYS/CDSYS_12_XAGetNumTracks.c
+common, exe, CDSYS_XASeek, 0x0,                        General/CDSYS/CDSYS_13_XASeek.c
+common, exe, CDSYS_XAGetTrackLength, 0x0,              General/CDSYS/CDSYS_14_XAGetTrackLength.c
+common, exe, CDSYS_XAPlay, 0x0,                        General/CDSYS/CDSYS_15_XAPlay.c
+common, exe, CDSYS_XAPauseRequest, 0x0,                General/CDSYS/CDSYS_16_XAPauseRequest.c
+common, exe, CDSYS_XAPauseForce, 0x0,                  General/CDSYS/CDSYS_17_XAPauseForce.c
+common, exe, CDSYS_XAPauseAtEnd, 0x0,                  General/CDSYS/CDSYS_18_XAPauseAtEnd.c
 
 // ====================================================================================================================
-// COLL
+// COLL (stubbed for this file)
 // ====================================================================================================================
 common, exe, COLL_LevModelMeta, 0x0,                                     General/COLL/COLL_00_LevModelMeta.c
+//common, exe, COLL_Instance, 0x0,                                         General/COLL/COLL_01_Instance.c //TODO
 common, exe, COLL_PerBspLeaf_CheckInstances, 0x0,                        General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
 common, exe, COLL_StartSearch_AI, 0x0,                                   General/COLL/COLL_03_StartSearch_AI.c
-// over budget, but assumed working
-//common, exe, COLL_PerQuadblock_CheckTriangles_Touching, 0x0,             General/COLL/COLL_11_PerQuadblock_CheckTriangles_Touching.c
-//common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0,              General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c
-//common, exe, COLL_TestQuadblock_TwoTris, 0x0,                            General/COLL/COLL_13_TestQuadblock_TwoTris.c
-//common, exe, COLL_TestQuadblock_EightTris, 0x0,                          General/COLL/COLL_14_TestQuadblock_EightTris.c
-//common, exe, COLL_PerQuadblock_CheckTriangles_NearPlayer, 0x0,           General/COLL/COLL_18_PerQuadblock_CheckTriangles_NearPlayer.c
-//common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0,            General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c
+//common, exe, COLL_StartSearch_Player, 0x0,                               General/COLL/COLL_04_StartSearch_Player.c //TODO
+//common, exe, COLL_SearchTree_FindQuadblock_Touching, 0x0,                General/COLL/COLL_05_SearchTree_FindQuadblock_Touching.c //TODO
+//common, exe, COLL_SearchTree_FindX, 0x0,                                 General/COLL/COLL_06_SearchTree_FindX.c //TODO
+//common, exe, COLL_TestTriangle_FindClosest_Subfunction2, 0x0,            General/COLL/COLL_07_TestTriangle_FindClosest_Subfunction2.c //TODO
+//common, exe, COLL_TestTriangle_Unused, 0x0,                              General/COLL/COLL_08_TestTriangle_Unused.c //TODO
+//common, exe, COLL_TestTriangle_FindAny, 0x0,                             General/COLL/COLL_09_TestTriangle_FindAny.c //TODO
+//common, exe, COLL_TestTriangle_GetNormalVector, 0x0,                     General/COLL/COLL_10_TestTriangle_GetNormalVector.c //TODO
+//common, exe, COLL_PerQuadblock_CheckTriangles_Touching, 0x0,             General/COLL/COLL_11_PerQuadblock_CheckTriangles_Touching.c //over budget, but assumed working
+//common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0,              General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c //over budget, but assumed working
+//common, exe, COLL_TestQuadblock_TwoTris, 0x0,                            General/COLL/COLL_13_TestQuadblock_TwoTris.c //over budget, but assumed working
+//common, exe, COLL_TestQuadblock_EightTris, 0x0,                          General/COLL/COLL_14_TestQuadblock_EightTris.c //over budget, but assumed working
+//common, exe, COLL_ResetScratchpadCache, 0x0,					           General/COLL/COLL_15_ResetScratchpadCache.c //TODO
+//common, exe, COLL_TestTriangle_FindClosest_Subfunction1, 0x0,            General/COLL/COLL_16_TestTriangle_FindClosest_Subfunction1.c //TODO
+//common, exe, COLL_TestTriangle_FindClosest, 0x0,			               General/COLL/COLL_17_TestTriangle_FindClosest.c //TODO
+//common, exe, COLL_PerQuadblock_CheckTriangles_NearPlayer, 0x0,           General/COLL/COLL_18_PerQuadblock_CheckTriangles_NearPlayer.c //over budget, but assumed working
+//common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0,            General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c //over budget, but assumed working
+//common, exe, COLL_TestTriangle_WithClosest, 0x0,                         General/COLL/COLL_20_TestTriangle_WithClosest.c //TODO
+//common, exe, COLL_StartSearch_NearPlayer, 0x0,                           General/COLL/COLL_21_StartSearch_NearPlayer.c //TODO
+//common, exe, COLL_Scrub, 0x0,					                           General/COLL/COLL_22_Scrub.c //TODO
 
 // ====================================================================================================================
-// CTR
+// CTR (stubbed for this file)
 // ====================================================================================================================
 common, exe, CTR_Box_DrawWirePrims, 0x0,               General/CTR/CTR_00_Box_DrawWirePrims.c
 common, exe, CTR_Box_DrawWireBox, 0x0,                 General/CTR/CTR_01_Box_DrawWireBox.c
@@ -256,17 +277,27 @@ common, exe, CTR_Box_DrawSolidBox, 0x0,                General/CTR/CTR_03_Box_Dr
 common, exe, CTR_CycleTex_LEV, 0x0,                    General/CTR/CTR_04_CycleTex_LEV.c
 common, exe, CTR_CycleTex_Model, 0x0,                  General/CTR/CTR_05_CycleTex_Model.c
 common, exe, CTR_CycleTex_AllModels, 0x0,              General/CTR/CTR_06_CycleTex_AllModels.c
+//common, exe, CTR_CycleTex_2p3p4pWumpaHUD, 0x0,	     General/CTR/CTR_07_CycleTex_2p3p4pWumpaHUD.c //TODO
+//common, exe, CTR_ClearRenderLists_1P2P, 0x0,		     General/CTR/CTR_08_ClearRenderLists_1P2P.c //TODO
+//common, exe, CTR_ClearRenderLists_3P4P, 0x0,		     General/CTR/CTR_09_ClearRenderLists_3P4P.c //TODO
+//common, exe, CTR_EmptyFunc_MainFrame_ResetDB, 0x0,     General/CTR/CTR_10_EmptyFunc_MainFrame_ResetDB.c //TODO
 common, exe, CTR_ErrorScreen, 0x0,                     General/CTR/CTR_11_ErrorScreen.c
-common, exe, CTR_MatrixToRot, 0x0,                     General/CTR/CTR_16_MatrixToRot.c
+//common, exe, CTR_unknownMaybeThunk1, 0x0,              General/CTR/CTR_12_unknownMaybeThunk1.c //TODO
+//#13 strange goto function
+//common, exe, CTR_unknownMaybeThunk2, 0x0,              General/CTR/CTR_14_unknownMaybeThunk2.c //TODO
+//#15 strange goto function
+//common, exe, CTR_unknownMaybeThunk3, 0x0,              General/CTR/CTR_16_unknownMaybeThunk3.c //TODO
+common, exe, CTR_MatrixToRot, 0x0,                     General/CTR/CTR_17_MatrixToRot.c
+//common, exe, CTR_ScrambleGhostString, 0x0,             General/CTR/CTR_18_ScrambleGhostString.c //TODO
 
 // ====================================================================================================================
-// DebugFont
+// DebugFont (complete?)
 // ====================================================================================================================
 common, exe, DebugFont_Init, 0x0,                      General/DebugFont/DebugFont_0_Init.c
 common, exe, DebugFont_DrawNumbers, 0x0,               General/DebugFont/DebugFont_1_DrawNumbers.c
 
 // ====================================================================================================================
-// DecalFont
+// DecalFont (complete?)
 // ====================================================================================================================
 common, exe, DecalFont_GetLineWidthStrlen, 0x0,        General/DecalFont/DecalFont_0_GetLineWidthStrlen.c
 common, exe, DecalFont_GetLineWidth, 0x0,              General/DecalFont/DecalFont_1_GetLineWidth.c
@@ -277,13 +308,16 @@ common, exe, DecalFont_DrawMultiLineStrlen, 0x0,       General/DecalFont/DecalFo
 common, exe, DecalFont_DrawMultiLine, 0x0,             General/DecalFont/DecalFont_6_DrawMultiLine.c
 
 // ====================================================================================================================
-// DecalGlobal
+// DecalGlobal (stubbed for this file)
 // ====================================================================================================================
+//common, exe, DecalGlobal_EmptyFunc_MainFrame_ResetDB   General/DecalGlobal/DecalGlobal_0_EmptyFunc_MainFrame_ResetDB.c //TODO
 common, exe, DecalGlobal_Clear, 0x0,                   General/DecalGlobal/DecalGlobal_1_Clear.c
 common, exe, DecalGlobal_Store, 0x0,                   General/DecalGlobal/DecalGlobal_2_Store.c
+//common, exe, DecalGlobal_FindInLEV, 0x0,               General/DecalGlobal/DecalGlobal_3_FindInLEV.c //TODO
+//common, exe, DecalGlobal_FindInMPK, 0x0,               General/DecalGlobal/DecalGlobal_4_FindInMPK.c //TODO
 
 // ====================================================================================================================
-// DecalHUD
+// DecalHUD (stubbed for this file)
 // ====================================================================================================================
 common, exe, DecalHUD_DrawPolyFT4, 0x0,                General/DecalHUD/DecalHUD_0_DrawPolyFT4.c
 common, exe, DecalHUD_DrawWeapon, 0x0,                 General/DecalHUD/DecalHUD_1_DrawWeapon.c
@@ -291,8 +325,17 @@ common, exe, DecalHUD_DrawPolyGT4, 0x0,                General/DecalHUD/DecalHUD
 common, exe, DecalHUD_Arrow2D, 0x0,                    General/DecalHUD/DecalHUD_3_Arrow2D.c
 
 // ====================================================================================================================
-// Display
+// DecalMP (stubbed for this file)
 // ====================================================================================================================
+//common, exe, DecalMP_01, 0x0,                          General/DecalMP/DecalMP_01.c //TODO
+//common, exe, DecalMP_02, 0x0,                          General/DecalMP/DecalMP_02.c //TODO
+//common, exe, DecalMP_03, 0x0,                          General/DecalMP/DecalMP_03.c //TODO
+
+// ====================================================================================================================
+// Display (stubbed for this file)
+// ====================================================================================================================
+//common, exe, DISPLAY_Blur_SubFunc, 0x0,                General/Display/DISPLAY_0_Blur_SubFunc.c //TODO
+//common, exe, DISPLAY_Blur_Main, 0x0,                   General/Display/DISPLAY_1_Blur_Main.c //TODO
 common, exe, DISPLAY_Swap, 0x0,                        General/Display/DISPLAY_2_Swap.c
 
 // ====================================================================================================================
@@ -315,7 +358,7 @@ common, exe, DropRain_MakeSound, 0x0,                  General/DropRain/DropRain
 //common, exe, DropRain_Reset, 0x0,                      General/DropRain/DropRain_1_Reset.c
 
 // ====================================================================================================================
-// ElimBG
+// ElimBG (stubbed for this file)
 // ====================================================================================================================
 //use this for defrag + Mods6.c (enable USE_DEFRAG in common.h)
 //common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,       General/ElimBG/ElimBG_Defrag.c
@@ -330,13 +373,13 @@ common, exe, ElimBG_HandleState, 0x0,                  General/ElimBG/ElimBG_5_H
 common, exe, ElimBG_Deactivate, 0x0,                   General/ElimBG/ElimBG_6_Deactivate.c
 
 // ====================================================================================================================
-// FLARE
+// FLARE (stubbed for this file)
 // ====================================================================================================================
-//common, exe, FLARE_ThTick, 0x0,                        General/FLARE/FLARE_0_ThTick.c
+//common, exe, FLARE_ThTick, 0x0,                        General/FLARE/FLARE_0_ThTick.c //TODO
 //common, exe, FLARE_Init, 0x0,                          General/FLARE/FLARE_1_Init.c //UNTESTED
 
 // ====================================================================================================================
-// GAMEPAD
+// GAMEPAD (complete?)
 // ====================================================================================================================
 //use this for defrag + Mods2.c (enable USE_DEFRAG in common.h)
 //common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_Defrag.c
@@ -378,7 +421,7 @@ common, exe, GAMEPROG_NewGame_OnBoot, 0x0,               General/GAMEPROG/GAMEPR
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0,         General/GAMEPROG/GAMEPROG_09_GetPtrHighScoreTrack.c
 
 // ====================================================================================================================
-// GHOST
+// GHOST (complete?)
 // ====================================================================================================================
 //unless/until a "../AltMods/ModsX.c" entry is impl for GhostReplay, then the "(enable/disable USE_DEFRAG in common.h)" is N/A
 //use this for defrag (enable USE_DEFRAG in common.h)
@@ -403,81 +446,81 @@ common, exe, GhostTape_Destroy, 0x0,                     General/GHOST/GhostTape
 // ====================================================================================================================
 // HOWL
 // ====================================================================================================================
-common, exe, CountSounds, 0x0, General/HOWL/h01_CountSounds.c
-common, exe, OtherFX_Play, 0x0, General/HOWL/h02_OtherFX_Play.c
-common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/h03_OtherFX_Play_Echo.c
-common, exe, OtherFX_Play_LowLevel, 0x0, General/HOWL/h04_OtherFX_Play_LowLevel.c
-common, exe, OtherFX_Modify, 0x0, General/HOWL/h05_OtherFX_Modify.c
-common, exe, OtherFX_Stop1, 0x0, General/HOWL/h06_OtherFX_Stop1.c
-common, exe, OtherFX_Stop2, 0x0, General/HOWL/h07_OtherFX_Stop2.c
-common, exe, EngineAudio_InitOnce, 0x0, General/HOWL/h08_EngineAudio_InitOnce.c
-common, exe, EngineAudio_Recalculate, 0x0, General/HOWL/h09_EngineAudio_Recalculate.c
-common, exe, EngineAudio_Stop, 0x0, General/HOWL/h10_EngineAudio_Stop.c
-common, exe, SetReverbMode, 0x0, General/HOWL/h11_SetReverbMode.c
-common, exe, CseqMusic_Start, 0x0, General/HOWL/h12_CseqMusic_Start.c
-common, exe, CseqMusic_Pause, 0x0, General/HOWL/h13_CseqMusic_Pause.c
-common, exe, CseqMusic_Resume, 0x0, General/HOWL/h14_CseqMusic_Resume.c
-common, exe, CseqMusic_ChangeVolume, 0x0, General/HOWL/h15_CseqMusic_ChangeVolume.c
-common, exe, CseqMusic_Restart, 0x0, General/HOWL/h16_CseqMusic_Restart.c
-common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/h17_CseqMusic_ChangeTempo.c
-common, exe, CseqMusic_AdvHubSwap, 0x0, General/HOWL/h18_CseqMusic_AdvHubSwap.c
-common, exe, CseqMusic_Stop, 0x0, General/HOWL/h19_CseqMusic_Stop.c
-common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
+common, exe, CountSounds, 0x0,                           General/HOWL/h01_CountSounds.c
+common, exe, OtherFX_Play, 0x0,                          General/HOWL/h02_OtherFX_Play.c
+common, exe, OtherFX_Play_Echo, 0x0,                     General/HOWL/h03_OtherFX_Play_Echo.c
+common, exe, OtherFX_Play_LowLevel, 0x0,                 General/HOWL/h04_OtherFX_Play_LowLevel.c
+common, exe, OtherFX_Modify, 0x0,                        General/HOWL/h05_OtherFX_Modify.c
+common, exe, OtherFX_Stop1, 0x0,                         General/HOWL/h06_OtherFX_Stop1.c
+common, exe, OtherFX_Stop2, 0x0,                         General/HOWL/h07_OtherFX_Stop2.c
+common, exe, EngineAudio_InitOnce, 0x0,                  General/HOWL/h08_EngineAudio_InitOnce.c
+common, exe, EngineAudio_Recalculate, 0x0,               General/HOWL/h09_EngineAudio_Recalculate.c
+common, exe, EngineAudio_Stop, 0x0,                      General/HOWL/h10_EngineAudio_Stop.c
+common, exe, SetReverbMode, 0x0,                         General/HOWL/h11_SetReverbMode.c
+common, exe, CseqMusic_Start, 0x0,                       General/HOWL/h12_CseqMusic_Start.c
+common, exe, CseqMusic_Pause, 0x0,                       General/HOWL/h13_CseqMusic_Pause.c
+common, exe, CseqMusic_Resume, 0x0,                      General/HOWL/h14_CseqMusic_Resume.c
+common, exe, CseqMusic_ChangeVolume, 0x0,                General/HOWL/h15_CseqMusic_ChangeVolume.c
+common, exe, CseqMusic_Restart, 0x0,                     General/HOWL/h16_CseqMusic_Restart.c
+common, exe, CseqMusic_ChangeTempo, 0x0,                 General/HOWL/h17_CseqMusic_ChangeTempo.c
+common, exe, CseqMusic_AdvHubSwap, 0x0,                  General/HOWL/h18_CseqMusic_AdvHubSwap.c
+common, exe, CseqMusic_Stop, 0x0,                        General/HOWL/h19_CseqMusic_Stop.c
+common, exe, CseqMusic_StopAll, 0x0,                     General/HOWL/h20_CseqMusic_StopAll.c
 
 // h21 all the way to h64
-common, exe, Bank_ResetAllocator, 0x0, General/HOWL/h00_AAA_Block1.c
+common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h00_AAA_Block1.c
 
-common, exe, howl_VolumeGet, 0x0, General/HOWL/h65_howl_VolumeGet.c
-common, exe, howl_VolumeSet, 0x0, General/HOWL/h66_howl_VolumeSet.c
-common, exe, howl_ModeGet, 0x0, General/HOWL/h67_howl_ModeGet.c
-common, exe, howl_ModeSet, 0x0, General/HOWL/h68_howl_ModeSet.c
-common, exe, OptionsMenu_TestSound, 0x0, General/HOWL/h69_OptionsMenu_TestSound.c
-common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/h70_Smart_EnterCriticalSection.c
-common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/h71_Smart_ExitCriticalSection.c
-common, exe, Channel_SetVolume, 0x0, General/HOWL/h72_Channel_SetVolume.c
-common, exe, Channel_FindSound, 0x0, General/HOWL/h73_Channel_FindSound.c
-common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/h74_Channel_AllocSlot_AntiSpam.c
-common, exe, Channel_AllocSlot, 0x0, General/HOWL/h75_Channel_AllocSlot.c
-common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/h76_Channel_SearchFX_EditAttr.c
-common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/h77_Channel_SearchFX_Destroy.c
-common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/h78_Channel_DestroyAll_LowLevel.c
-common, exe, Channel_ParseSongToChannels, 0x0, General/HOWL/h79_Channel_ParseSongToChannels.c
-common, exe, Channel_UpdateChannels, 0x0, General/HOWL/h80_Channel_UpdateChannels.c
-common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/h81_Cutscene_VolumeBackup.c
-common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/h82_Cutscene_VolumeRestore.c
-common, exe, howl_PlayAudio_Update, 0x0, General/HOWL/h83_howl_PlayAudio_Update.c
-common, exe, howl_InitChannelAttr_EngineFX, 0x0, General/HOWL/h84_howl_InitChannelAttr_EngineFX.c
-common, exe, howl_InitChannelAttr_OtherFX, 0x0, General/HOWL/h85_howl_InitChannelAttr_OtherFX.c
-common, exe, howl_PauseAudio, 0x0, General/HOWL/h86_howl_PauseAudio.c
-common, exe, howl_UnPauseChannel, 0x0, General/HOWL/h87_howl_UnPauseChannel.c
-common, exe, howl_UnPauseAudio, 0x0, General/HOWL/h88_howl_UnPauseAudio.c
-common, exe, howl_StopAudio, 0x0, General/HOWL/h89_howl_StopAudio.c
-common, exe, Voiceline_PoolInit, 0x0, General/HOWL/h90_Voiceline_PoolInit.c
-common, exe, Voiceline_ClearTimeStamp, 0x0, General/HOWL/h91_Voiceline_ClearTimeStamp.c
-common, exe, Voiceline_PoolClear, 0x0, General/HOWL/h92_Voiceline_PoolClear.c
-common, exe, Voiceline_StopAll, 0x0, General/HOWL/h93_Voiceline_StopAll.c
-common, exe, Voiceline_ToggleEnable, 0x0, General/HOWL/h94_Voiceline_ToggleEnable.c
+common, exe, howl_VolumeGet, 0x0,                        General/HOWL/h65_howl_VolumeGet.c
+common, exe, howl_VolumeSet, 0x0,                        General/HOWL/h66_howl_VolumeSet.c
+common, exe, howl_ModeGet, 0x0,                          General/HOWL/h67_howl_ModeGet.c
+common, exe, howl_ModeSet, 0x0,                          General/HOWL/h68_howl_ModeSet.c
+common, exe, OptionsMenu_TestSound, 0x0,                 General/HOWL/h69_OptionsMenu_TestSound.c
+common, exe, Smart_EnterCriticalSection, 0x0,            General/HOWL/h70_Smart_EnterCriticalSection.c
+common, exe, Smart_ExitCriticalSection, 0x0,             General/HOWL/h71_Smart_ExitCriticalSection.c
+common, exe, Channel_SetVolume, 0x0,                     General/HOWL/h72_Channel_SetVolume.c
+common, exe, Channel_FindSound, 0x0,                     General/HOWL/h73_Channel_FindSound.c
+common, exe, Channel_AllocSlot_AntiSpam, 0x0,            General/HOWL/h74_Channel_AllocSlot_AntiSpam.c
+common, exe, Channel_AllocSlot, 0x0,                     General/HOWL/h75_Channel_AllocSlot.c
+common, exe, Channel_SearchFX_EditAttr, 0x0,             General/HOWL/h76_Channel_SearchFX_EditAttr.c
+common, exe, Channel_SearchFX_Destroy, 0x0,              General/HOWL/h77_Channel_SearchFX_Destroy.c
+common, exe, Channel_DestroyAll_LowLevel, 0x0,           General/HOWL/h78_Channel_DestroyAll_LowLevel.c
+common, exe, Channel_ParseSongToChannels, 0x0,           General/HOWL/h79_Channel_ParseSongToChannels.c
+common, exe, Channel_UpdateChannels, 0x0,                General/HOWL/h80_Channel_UpdateChannels.c
+common, exe, Cutscene_VolumeBackup, 0x0,                 General/HOWL/h81_Cutscene_VolumeBackup.c
+common, exe, Cutscene_VolumeRestore, 0x0,                General/HOWL/h82_Cutscene_VolumeRestore.c
+common, exe, howl_PlayAudio_Update, 0x0,                 General/HOWL/h83_howl_PlayAudio_Update.c
+common, exe, howl_InitChannelAttr_EngineFX, 0x0,         General/HOWL/h84_howl_InitChannelAttr_EngineFX.c
+common, exe, howl_InitChannelAttr_OtherFX, 0x0,          General/HOWL/h85_howl_InitChannelAttr_OtherFX.c
+common, exe, howl_PauseAudio, 0x0,                       General/HOWL/h86_howl_PauseAudio.c
+common, exe, howl_UnPauseChannel, 0x0,                   General/HOWL/h87_howl_UnPauseChannel.c
+common, exe, howl_UnPauseAudio, 0x0,                     General/HOWL/h88_howl_UnPauseAudio.c
+common, exe, howl_StopAudio, 0x0,                        General/HOWL/h89_howl_StopAudio.c
+common, exe, Voiceline_PoolInit, 0x0,                    General/HOWL/h90_Voiceline_PoolInit.c
+common, exe, Voiceline_ClearTimeStamp, 0x0,              General/HOWL/h91_Voiceline_ClearTimeStamp.c
+common, exe, Voiceline_PoolClear, 0x0,                   General/HOWL/h92_Voiceline_PoolClear.c
+common, exe, Voiceline_StopAll, 0x0,                     General/HOWL/h93_Voiceline_StopAll.c
+common, exe, Voiceline_ToggleEnable, 0x0,                General/HOWL/h94_Voiceline_ToggleEnable.c
 // skip h95, h96, h97 (requires CDSYS fix from void to int), h98 (empty)
-common, exe, Voiceline_SetDefaults, 0x0, General/HOWL/h99_Voiceline_SetDefaults.c
-common, exe, Audio_SetState, 0x0, General/HOWL/h100_Audio_SetState.c
-common, exe, Audio_SetState_Safe, 0x0, General/HOWL/h101_Audio_SetState_Safe.c
-common, exe, Audio_AdvHub_SwapSong, 0x0, General/HOWL/h102_Audio_AdvHub_SwapSong.c
-common, exe, Audio_SetMaskSong, 0x0, General/HOWL/h103_Audio_SetMaskSong.c
-common, exe, Audio_Update1, 0x0, General/HOWL/h104_Audio_Update1.c
-common, exe, Audio_SetDefaults, 0x0, General/HOWL/h105_Audio_SetDefaults.c
-common, exe, Audio_SetReverbMode, 0x0, General/HOWL/h106_Audio_SetReverbMode.c
-common, exe, Music_SetIntro, 0x0, General/HOWL/h107_Music_SetIntro.c
-common, exe, Music_LoadBanks, 0x0, General/HOWL/h108_Music_LoadBanks.c
-common, exe, Music_AsyncParseBanks, 0x0, General/HOWL/h109_Music_AsyncParseBanks.c
-common, exe, Music_SetDefaults, 0x0, General/HOWL/h110_Music_SetDefaults.c
-common, exe, Music_Adjust, 0x0, General/HOWL/h111_Music_Adjust.c
-common, exe, Music_LowerVolume, 0x0, General/HOWL/h112_Music_LowerVolume.c
-common, exe, Music_RaiseVolume, 0x0, General/HOWL/h113_Music_RaiseVolume.c
-common, exe, Music_Restart, 0x0, General/HOWL/h114_Music_Restart.c
-common, exe, Music_Stop, 0x0, General/HOWL/h115_Music_Stop.c
-common, exe, Music_Start, 0x0, General/HOWL/h116_Music_Start.c
-common, exe, Music_End, 0x0, General/HOWL/h117_Music_End.c
-common, exe, Music_GetHighestSongPlayIndex, 0x0, General/HOWL/h118_Music_GetHighestSongPlayIndex.c
+common, exe, Voiceline_SetDefaults, 0x0,                 General/HOWL/h99_Voiceline_SetDefaults.c
+common, exe, Audio_SetState, 0x0,                        General/HOWL/h100_Audio_SetState.c
+common, exe, Audio_SetState_Safe, 0x0,                   General/HOWL/h101_Audio_SetState_Safe.c
+common, exe, Audio_AdvHub_SwapSong, 0x0,                 General/HOWL/h102_Audio_AdvHub_SwapSong.c
+common, exe, Audio_SetMaskSong, 0x0,                     General/HOWL/h103_Audio_SetMaskSong.c
+common, exe, Audio_Update1, 0x0,                         General/HOWL/h104_Audio_Update1.c
+common, exe, Audio_SetDefaults, 0x0,                     General/HOWL/h105_Audio_SetDefaults.c
+common, exe, Audio_SetReverbMode, 0x0,                   General/HOWL/h106_Audio_SetReverbMode.c
+common, exe, Music_SetIntro, 0x0,                        General/HOWL/h107_Music_SetIntro.c
+common, exe, Music_LoadBanks, 0x0,                       General/HOWL/h108_Music_LoadBanks.c
+common, exe, Music_AsyncParseBanks, 0x0,                 General/HOWL/h109_Music_AsyncParseBanks.c
+common, exe, Music_SetDefaults, 0x0,                     General/HOWL/h110_Music_SetDefaults.c
+common, exe, Music_Adjust, 0x0,                          General/HOWL/h111_Music_Adjust.c
+common, exe, Music_LowerVolume, 0x0,                     General/HOWL/h112_Music_LowerVolume.c
+common, exe, Music_RaiseVolume, 0x0,                     General/HOWL/h113_Music_RaiseVolume.c
+common, exe, Music_Restart, 0x0,                         General/HOWL/h114_Music_Restart.c
+common, exe, Music_Stop, 0x0,                            General/HOWL/h115_Music_Stop.c
+common, exe, Music_Start, 0x0,                           General/HOWL/h116_Music_Start.c
+common, exe, Music_End, 0x0,                             General/HOWL/h117_Music_End.c
+common, exe, Music_GetHighestSongPlayIndex, 0x0,         General/HOWL/h118_Music_GetHighestSongPlayIndex.c
 
 // GTE_AudioLR_Inst
 // GTE_AudioLR_Driver
@@ -500,15 +543,15 @@ common, exe, OtherFX_RecycleNew, 0x0, General/HOWL/h122_OtherFX_RecycleNew.c
 // EngineSound_NearestAIs
 
 // HOWL_Garage
-common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c
-common, exe, Garage_Enter, 0x0, General/HOWL/h139_Garage_Enter.c
-common, exe, Garage_PlayFX, 0x0, General/HOWL/h140_Garage_PlayFX.c
-common, exe, Garage_LerpFX, 0x0, General/HOWL/h141_Garage_LerpFX.c
-common, exe, Garage_MoveLR, 0x0, General/HOWL/h142_Garage_MoveLR.c
-common, exe, Garage_Leave, 0x0, General/HOWL/h143_Garage_Leave.c
+common, exe, Garage_Init, 0x0,                           General/HOWL/h138_Garage_Init.c
+common, exe, Garage_Enter, 0x0,                          General/HOWL/h139_Garage_Enter.c
+common, exe, Garage_PlayFX, 0x0,                         General/HOWL/h140_Garage_PlayFX.c
+common, exe, Garage_LerpFX, 0x0,                         General/HOWL/h141_Garage_LerpFX.c
+common, exe, Garage_MoveLR, 0x0,                         General/HOWL/h142_Garage_MoveLR.c
+common, exe, Garage_Leave, 0x0,                          General/HOWL/h143_Garage_Leave.c
 
 // ====================================================================================================================
-// INSTANCE
+// INSTANCE (completeish?)
 // ====================================================================================================================
 //use this for defrag (enable USE_DEFRAG in common.h)
 //common, exe, INSTANCE_Birth, 0x0,                        General/INSTANCE/INSTANCE_Defrag.c
@@ -525,7 +568,7 @@ common, exe, INSTANCE_LevInitAll, 0x0,                   General/INSTANCE/INSTAN
 common, exe, INSTANCE_GetNumAnimFrames, 0x0,             General/INSTANCE/INSTANCE_08_GetNumAnimFrames.c
 
 // ====================================================================================================================
-// JitPool
+// JitPool (complete?)
 // ====================================================================================================================
 //use this for defrag (enable USE_DEFRAG in common.h)
 //common, exe, JitPool_Clear, 0x0,                         General/JitPool/JitPool_Defrag.c
@@ -537,7 +580,7 @@ common, exe, JitPool_Add, 0x0,                           General/JitPool/JitPool
 common, exe, JitPool_Remove, 0x0,                        General/JitPool/JitPool_3_Remove.c
 
 // ====================================================================================================================
-// LevInstDef
+// LevInstDef (complete?)
 // ====================================================================================================================
 //use this for defrag (enable USE_DEFRAG in common.h)
 //common, exe, LevInstDef_UnPack, 0x0,                     General/LevInstDef/LevInstDef_Defrag.c
@@ -547,26 +590,27 @@ common, exe, LevInstDef_UnPack, 0x0,                     General/LevInstDef/LevI
 common, exe, LevInstDef_RePack, 0x0,                     General/LevInstDef/LevInstDef_1_RePack.c
 
 // ====================================================================================================================
-// LHMatrix
+// LHMatrix (complete?)
 // ====================================================================================================================
 common, exe, LHMatrix_Parent, 0x0,                       General/LHMatrix/LHMatrix_0_Parent.c
 
 // ====================================================================================================================
-// LibraryOfModels
+// LibraryOfModels (complete?)
 // ====================================================================================================================
 // LibraryOfModels_Store relocated to RDATA
-//common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store.c
+//common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store.c //overbudget, using ND for now
 //common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
 common, exe, LibraryOfModels_Clear, 0x0,                 General/LibraryOfModels/LibraryOfModels_1_Clear.c
 
 // ====================================================================================================================
-// LinkedCollide
+// LinkedCollide (stubbed for this file)
 // ====================================================================================================================
 common, exe, LinkedCollide_Radius, 0x0,                  General/LinkedCollide/LinkedCollide_0_Radius.c
+//common, exe, LinkedCollide_Hitbox_Desc, 0x0,             General/LinkedCollide/LinkedCollide_1_HitboxDesc.c //TODO
 common, exe, LinkedCollide_Hitbox, 0x0,                  General/LinkedCollide/LinkedCollide_2_Hitbox.c
 
 // ====================================================================================================================
-// LIST
+// LIST (complete?)
 // ====================================================================================================================
 common, exe, LIST_Clear, 0x0,                            General/LIST/LIST_0_Clear.c
 common, exe, LIST_AddFront, 0x0,                         General/LIST/LIST_1_AddFront.c
@@ -579,7 +623,7 @@ common, exe, LIST_RemoveBack, 0x0,                       General/LIST/LIST_7_Rem
 common, exe, LIST_Init, 0x0,                             General/LIST/LIST_8_Init.c
 
 // ====================================================================================================================
-// LOAD
+// LOAD (complete?)
 // ====================================================================================================================
 // 00 to 33
 //common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33_Callback_Overlay_Generic.c
@@ -638,7 +682,7 @@ common, exe, LOAD_IsOpen_AdvHub, 0x0,                    General/LOAD/LOAD_49_Is
 common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_IsOpen_Podiums.c
 
 // ====================================================================================================================
-// MAIN
+// MAIN (stubbed for this file)
 // ====================================================================================================================
 common, exe, MainDB_GetClipSize, 0x0,                    General/MAIN/MainDB_00_GetClipSize.c
 common, exe, MainDB_PrimMem, 0x0,                        General/MAIN/MainDB_01_PrimMem.c
@@ -693,15 +737,20 @@ common, exe, MainStats_ClearBattleVS, 0x0,               General/MAIN/MainStats_
 common, exe, MainStats_RestartRaceCountLoss, 0x0,        General/MAIN/MainStats_01_RestartRaceCountLoss.c
 
 // ====================================================================================================================
-// MATH
+// MATH (stubbed for this file)
 // ====================================================================================================================
 // MATH_Sin relocated to RDATA
-//common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin.c
-//common, exe, MATH_Sin, 0x0, General/MATH/MATH_0_Sin_hook.s
-common, exe, MATH_Cos, 0x0, General/MATH/MATH_1_Cos.c
+//common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin.c
+//common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin_hook.s
+common, exe, MATH_Cos, 0x0,                            General/MATH/MATH_1_Cos.c
+//common, exe, MATH_FastSqrt, 0x0,                       General/MATH/MATH_2_FastSqrt.c //TODO
+//common, exe, MATH_HitboxMatrix, 0x0,					 General/MATH/MATH_3_HitboxMatrix.c //TODO
+//common, exe, MATH_VectorLength, 0x0,					 General/MATH/MATH_4_VectorLength.c //TODO
+//common, exe, MATH_VectorNormalize, 0x0,				 General/MATH/MATH_5_VectorNormalize.c //TODO
+//common, exe, MATH_MatrixMul, 0x0,						 General/MATH/MATH_6_MatrixMul.c //TODO
 
 // ====================================================================================================================
-// MEMCARD
+// MEMCARD (stubbed for this file)
 // ====================================================================================================================
 common, exe, MEMCARD_SetIcon, 0x0,                       General/MEMCARD/MEMCARD_00_SetIcon.c
 common, exe, MEMCARD_CRC16, 0x0,                         General/MEMCARD/MEMCARD_01_CRC16.c
@@ -721,13 +770,13 @@ common, exe, MEMCARD_ReadFile, 0x0,                      General/MEMCARD/MEMCARD
 common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD_15_WriteFile.c
 common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
 // unknown 8003ddac
-// GetInfo
-// Load
-// Save
+//common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c //TODO
+//common, exe, MEMCARD_Load, 0x0,						   General/MEMCARD/MEMCARD_19_Load.c //TODO
+//common, exe, MEMCARD_Save, 0x0,						   General/MEMCARD/MEMCARD_20_Save.c //TODO
 common, exe, MEMCARD_Format, 0x0,                        General/MEMCARD/MEMCARD_21_Format.c
 common, exe, MEMCARD_IsFile, 0x0,                        General/MEMCARD/MEMCARD_22_IsFile.c
-// FindFirstGhost (bugged)
-// FindNextGhost (bugged)
+//common, exe, MEMCARD_FindFirstGhost, 0x0,                General/MEMCARD/MEMCARD_23_FindFirstGhost.c //bugged
+//common, exe, MEMCARD_FindNextGhost, 0x0,                 General/MEMCARD/MEMCARD_24_FindNextGhost.c //bugged
 common, exe, MEMCARD_EraseFile, 0x0,                     General/MEMCARD/MEMCARD_25_EraseFile.c
 
 // ====================================================================================================================
@@ -746,27 +795,45 @@ common, exe, MEMPACK_ClearLowMem, 0x0,                   General/MEMPACK/MEMPACK
 common, exe, MEMPACK_PopState, 0x0,                      General/MEMPACK/MEMPACK_10_PopState.c
 common, exe, MEMPACK_PopToState, 0x0,                    General/MEMPACK/MEMPACK_11_PopToState.c
 
-// MixRNG
-common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
-
-// Particle
-common, exe, Particle_FuncPtr_PotionShatter, 0x0, General/Particle/Particle_FuncPtr_PotionShatter.c
-common, exe, Particle_FuncPtr_SpitTire, 0x0, General/Particle/Particle_FuncPtr_SpitTire.c
-common, exe, Particle_FuncPtr_ExhaustUnderwater, 0x0, General/Particle/Particle_FuncPtr_ExhaustUnderwater.c
-common, exe, Particle_OnDestroy, 0x0, General/Particle/Particle_OnDestroy.c
-// UpdateList
-common, exe, Particle_UpdateAllParticles, 0x0, General/Particle/Particle_UpdateAllParticles.c
-common, exe, Particle_BitwiseClampByte, 0x0, General/Particle/Particle_BitwiseClampByte.c
-common, exe, Particle_SetColors, 0x0, General/Particle/Particle_SetColors.c
-// RenderList
-// Init
-
-common, exe, PlayLevel_UpdateLapStats, 0x0, General/PlayLevel_UpdateLapStats.c
-
-common, exe, Podium_InitModels, 0x0, General/Podium/Podium_InitModels.c
+// ====================================================================================================================
+// MixRNG (done?)
+// ====================================================================================================================
+common, exe, MixRNG_Scramble, 0x0,                       General/MixRNG/MixRNG_0_Scramble.c
+common, exe, MixRNG_Particles, 0x0,                      General/MixRNG/MixRNG_1_Particles.c
+common, exe, MixRNG_GetValue, 0x0,                       General/MixRNG/MixRNG_2_GetValue.c
 
 // ====================================================================================================================
-// THREAD (need 3 more)
+// Particle
+// ====================================================================================================================
+common, exe, Particle_FuncPtr_PotionShatter, 0x0,        General/Particle/Particle_0_FuncPtr_PotionShatter.c
+common, exe, Particle_FuncPtr_SpitTire, 0x0,             General/Particle/Particle_1_FuncPtr_SpitTire.c
+common, exe, Particle_FuncPtr_ExhaustUnderwater, 0x0,    General/Particle/Particle_2_FuncPtr_ExhaustUnderwater.c
+common, exe, Particle_OnDestroy, 0x0,                    General/Particle/Particle_3_OnDestroy.c
+//common, exe, Particle_UpdateList, 0x0,                   General/Particle/Particle_4_UpdateList.c //TODO
+common, exe, Particle_UpdateAllParticles, 0x0,           General/Particle/Particle_5_UpdateAllParticles.c
+common, exe, Particle_BitwiseClampByte, 0x0,             General/Particle/Particle_6_BitwiseClampByte.c
+common, exe, Particle_SetColors, 0x0,                    General/Particle/Particle_7_SetColors.c
+//common, exe, Particle_RenderList, 0x0,                   General/Particle/Particle_8_RenderList.c //TODO
+//common, exe, Particle_Init, 0x0,           			   General/Particle/Particle_9_Init.c //TODO
+
+// ====================================================================================================================
+// PickupBots
+// ====================================================================================================================
+//common, exe, PickupBots_Init, 0x0,                       General/PickupBots/PickupBots_0_Init.c
+//common, exe, PickupBots_Update, 0x0,                     General/PickupBots/PickupBots_1_Update.c //TODO
+
+// ====================================================================================================================
+// PlayLevel (done)
+// ====================================================================================================================
+common, exe, PlayLevel_UpdateLapStats, 0x0,                General/PlayLevel/PlayLevel_0_UpdateLapStats.c
+
+// ====================================================================================================================
+// Podium (done)
+// ====================================================================================================================
+common, exe, Podium_InitModels, 0x0,                       General/Podium/Podium_0_InitModels.c
+
+// ====================================================================================================================
+// THREAD (stubbed for this file)
 // ====================================================================================================================
 common, exe, PROC_DestroyTracker, 0x0,                   General/PROC/PROC_00_DestroyTracker.c
 common, exe, PROC_DestroyInstance, 0x0,                  General/PROC/PROC_01_DestroyInstance.c
@@ -782,28 +849,37 @@ common, exe, PROC_CollidePointWithBucket, 0x0,           General/PROC/PROC_09_Co
 //common, exe, PROC_SearchForModel, 0x0,                   General/PROC/PROC_10_SearchForModel.c
 //hook commented out bc the function in RDATA is messed up???
 //common, exe, PROC_SearchForModel, 0x0,                   General/PROC/PROC_10_SearchForModel_hook.s
+//common, exe, PROC_PerBspLeaf_CheckInstances, 0x0,        General/PROC/PROC_11_PerBspLeaf_CheckInstances.c //TODO
+//common, exe, PROC_StartSearch_Self, 0x0,				   General/PROC/PROC_12_StartSearch_Self.c //TODO
+//common, exe, PROC_CollideHitboxWithBucket, 0x0,		   General/PROC/PROC_13_CollideHitboxWithBucket.c //TODO
 
 // ====================================================================================================================
-// PushBuffer
+// PushBuffer (stubbed for this file)
 // ====================================================================================================================
 common, exe, PushBuffer_Init, 0x0,                       General/PushBuffer/PushBuffer_00_Init.c
 common, exe, PushBuffer_SetPsyqGeom, 0x0,                General/PushBuffer/PushBuffer_01_SetPsyqGeom.c
-
+//common, exe, PushBuffer_SetDrawEnv_DecalMP, 0x0          General/PushBuffer/PushBuffer_02_SetDrawEnv_DecalMP.c //TODO
 common, exe, PushBuffer_SetDrawEnv_Normal, 0x0,          General/PushBuffer/PushBuffer_03_SetDrawEnv_Normal.c
 common, exe, PushBuffer_SetMatrixVP, 0x0,                General/PushBuffer/PushBuffer_04_SetMatrixVP.c
-
+//common, exe, PushBuffer_SetFrustumPlane, 0x0             General/PushBuffer/PushBuffer_05_SetFrustumPlane.c //TODO
 common, exe, PushBuffer_UpdateFrustum, 0x0,              General/PushBuffer/PushBuffer_06_UpdateFrustum.c
 common, exe, PushBuffer_FadeOneWindow, 0x0,              General/PushBuffer/PushBuffer_07_FadeOneWindow.c
 common, exe, PushBuffer_FadeAllWindows, 0x0,             General/PushBuffer/PushBuffer_08_FadeAllWindows.c
 
 // ====================================================================================================================
-// QueueLoadTrack
+// QueueLoadTrack (complete?)
 // ====================================================================================================================
 common, exe, QueueLoadTrack_MenuProc, 0x0,               General/QueueLoadTrack/QueueLoadTrack_0_MenuProc.c
 common, exe, QueueLoadTrack_GetMenuPtr, 0x0,             General/QueueLoadTrack/QueueLoadTrack_1_GetMenuPtr.c
 
 // ====================================================================================================================
-// RaceFlag
+// RaceConfig (stubbed for this file)
+// ====================================================================================================================
+//common, exe, RaceConfig_LoadGameOptions, 0x0,            General/RaceConfig/RaceConfig_0_LoadGameOptions.c //TODO
+//common, exe, RaceConfig_SaveGameOptions, 0x0,            General/RaceConfig/RaceConfig_1_SaveGameOptions.c //TODO
+
+// ====================================================================================================================
+// RaceFlag (complete?)
 // ====================================================================================================================
 common, exe, RaceFlag_MoveModels, 0x0,                   General/RaceFlag/RaceFlag_00_MoveModels.c
 common, exe, RaceFlag_IsFullyOnScreen, 0x0,              General/RaceFlag/RaceFlag_01_IsFullyOnScreen.c
@@ -821,7 +897,7 @@ common, exe, RaceFlag_DrawLoadingString, 0x0,            General/RaceFlag/RaceFl
 common, exe, RaceFlag_DrawSelf, 0x0,                     General/RaceFlag/RaceFlag_13_DrawSelf.c
 
 // ====================================================================================================================
-// RECTMENU
+// RECTMENU (complete?)
 // ====================================================================================================================
 common, exe, RECTMENU_DrawPolyGT4, 0x0,                  General/RECTMENU/RECTMENU_00_DrawPolyGT4.c
 common, exe, RECTMENU_DrawOuterRect_Edge, 0x0,           General/RECTMENU/RECTMENU_01_DrawOuterRect_Edge.c
@@ -846,30 +922,86 @@ common, exe, RECTMENU_Hide, 0x0,                         General/RECTMENU/RECTME
 common, exe, RECTMENU_BoolHidden, 0x0,                   General/RECTMENU/RECTMENU_20_BoolHidden.c
 
 // ====================================================================================================================
-// SubmitName
+// RefreshCard (stubbed for this file)
+// ====================================================================================================================
+//common, exe, RefreshCard_BoolGhostForLEV, 0x0,           General/RefreshCard/RefreshCard_00_BoolGhostForLEV.c //TODO
+//common, exe, RefreshCard_Unknown1, 0x0,				     General/RefreshCard/RefreshCard_01_Unknown1.c //commented because overbudget
+//common, exe, RefreshCard_GetResult, 0x0,				   General/RefreshCard/RefreshCard_02_GetResult.c //TODO
+//common, exe, RefreshCard_NextMemcardAction, 0x0,		   General/RefreshCard/RefreshCard_03_NextMemcardAction.c //TODO
+//common, exe, RefreshCard_GhostEncodeByte, 0x0,		   General/RefreshCard/RefreshCard_04_GhostEncodeByte.c //TODO
+//common, exe, RefreshCard_GhostDecodeByte, 0x0,		   General/RefreshCard/RefreshCard_05_GhostDecodeByte.c //TODO
+//common, exe, RefreshCard_GhostEncodeProfile, 0x0,		   General/RefreshCard/RefreshCard_06_GhostEncodeProfile.c //TODO
+//common, exe, RefreshCard_GhostDecodeProfile, 0x0,		   General/RefreshCard/RefreshCard_07_GhostDecodeProfile.c //TODO
+//common, exe, RefreshCard_StartMemcardAction, 0x0,		   General/RefreshCard/RefreshCard_08_StartMemcardAction.c //TODO
+common, exe, RefreshCard_StopMemcardAction, 0x0,	     General/RefreshCard/RefreshCard_09_StopMemcardAction.c
+//common, exe, RefreshCard_SetScreenText, 0x0,			   General/RefreshCard/RefreshCard_10_SetScreenText.c //TODO
+//common, exe, RefreshCard_Unknown2, 0x0,				   General/RefreshCard/RefreshCard_11_Unknown2.c //TODO
+//common, exe, RefreshCard_GetNumGhostsTotal, 0x0,		   General/RefreshCard/RefreshCard_12_GetNumGhostsTotal.c //TODO
+//common, exe, RefreshCard_GameProgressAndOptions, 0x0,	   General/RefreshCard/RefreshCard_13_GameProgressAndOptions.c //TODO
+//common, exe, RefreshCard_Unknown3, 0x0,				   General/RefreshCard/RefreshCard_14_Unknown3.c //TODO
+//common, exe, RefreshCard_Unknown4, 0x0,				   General/RefreshCard/RefreshCard_15_Unknown4.c //TODO
+//common, exe, RefreshCard_Entry, 0x0,					   General/RefreshCard/RefreshCard_16_Entry.c //TODO
+
+// ====================================================================================================================
+// SelectProfile (stubbed for this file)
+// ====================================================================================================================
+//common, exe, SelectProfile_QueueLoadHub_MenuProc, 0x0,   General/SelectProfile/SelectProfile_00_QueueLoadHub_MenuProc.c //TODO
+//common, exe, SelectProfile_ThTick, 0x0,				   General/SelectProfile/SelectProfile_01_ThTick.c //TODO
+//common, exe, SelectProfile_PrintInteger, 0x0,			   General/SelectProfile/SelectProfile_02_PrintInteger.c //TODO
+//common, exe, SelectProfile_UI_ConvertX, 0x0,			   General/SelectProfile/SelectProfile_03_UI_ConvertX.c //TODO
+common, exe, SelectProfile_UI_ConvertY, 0x0,			 General/SelectProfile/SelectProfile_04_UI_ConvertY.c
+//common, exe, SelectProfile_DrawAdvProfile, 0x0,		   General/SelectProfile/SelectProfile_05_DrawAdvProfile.c //TODO
+//common, exe, SelectProfile_GetTrackID, 0x0,			   General/SelectProfile/SelectProfile_06_GetTrackID.c //TODO
+//common, exe, SelectProfile_Init, 0x0,					   General/SelectProfile/SelectProfile_07_Init.c //TODO
+//common, exe, SelectProfile_Destroy, 0x0,				   General/SelectProfile/SelectProfile_08_Destroy.c //TODO
+//common, exe, SelectProfile_AdvPickMode_MenuProc, 0x0,	   General/SelectProfile/SelectProfile_09_AdvPickMode_MenuProc.c //TODO
+//common, exe, SelectProfile_DrawGhostProfile, 0x0,		   General/SelectProfile/SelectProfile_10_DrawGhostProfile.c //TODO
+//common, exe, SelectProfile_MuteCursors, 0x0,			   General/SelectProfile/SelectProfile_11_MuteCursors.c //TODO
+//common, exe, SelectProfile_UnMuteCursors, 0x0,		   General/SelectProfile/SelectProfile_12_UnMuteCursors.c //TODO
+//common, exe, SelectProfile_ToggleMode, 0x0,			   General/SelectProfile/SelectProfile_13_ToggleMode.c //TODO
+//common, exe, SelectProfile_InitAndDestroy, 0x0,		   General/SelectProfile/SelectProfile_14_InitAndDestroy.c //TODO
+//common, exe, SelectProfile_InputLogic, 0x0,			   General/SelectProfile/SelectProfile_15_InputLogic.c //TODO
+//common, exe, SelectProfile_AllProfiles_MenuProc, 0x0,	   General/SelectProfile/SelectProfile_16_AllProfiles_MenuProc.c //TODO
+
+// ====================================================================================================================
+// SubmitName (complete?)
 // ====================================================================================================================
 common, exe, SubmitName_RestoreName, 0x0,                General/SubmitName/SubmitName_0_RestoreName.c
 common, exe, SubmitName_DrawMenu, 0x0,                   General/SubmitName/SubmitName_1_DrawMenu.c
 common, exe, SubmitName_MenuProc, 0x0,                   General/SubmitName/SubmitName_2_MenuProc.c
 
 // ====================================================================================================================
-// TakeCupProgress
+// TakeCupProgress (stubbed for this file)
 // ====================================================================================================================
 common, exe, TakeCupProgress_Activate, 0x0,              General/TakeCupProgress/TakeCupProgress_0_Activate.c
+//common, exe, TakeCupProgress_MenuProc, 0x0,              General/TakeCupProgress/TakeCupProgress_1_MenuProc.c //TODO
 
 // ====================================================================================================================
-// Timer
+// Timer (stubbed for this file)
 // ====================================================================================================================
 common, exe, Timer_Init, 0x0,                            General/Timer/Timer_0_Init.c
 common, exe, Timer_Destroy, 0x0,                         General/Timer/Timer_1_Destroy.c
-//common, exe, Timer_GetTime_Total, 0x0,                 General/Timer/Timer_2_GetTime_Total.c //TODO
-//common, exe, Timer_GetTime_Elapsed, 0x0,               General/Timer/Timer_3_GetTime_Elapsed.c //TODO
+//common, exe, Timer_GetTime_Total, 0x0,                   General/Timer/Timer_2_GetTime_Total.c //TODO
+//common, exe, Timer_GetTime_Elapsed, 0x0,                 General/Timer/Timer_3_GetTime_Elapsed.c //TODO
 
 // ====================================================================================================================
-// UI
+// Torch (stubbed for this file)
+// ====================================================================================================================
+//common, exe, Torch_Main, 0x0,                            General/Torch/Torch_0_Main.c //TODO
+//common, exe, Torch_Subset1, 0x0,                         General/Torch/Torch_1_Subset1.c //TODO
+//common, exe, Torch_Subset2, 0x0,                         General/Torch/Torch_2_Subset2.c //TODO
+//common, exe, Torch_Subset3, 0x0,                         General/Torch/Torch_3_Subset3.c //TODO
+//common, exe, Torch_Subset4, 0x0,                         General/Torch/Torch_4_Subset4.c //TODO
+//common, exe, Torch_Subset5, 0x0,                         General/Torch/Torch_5_Subset5.c //TODO
+//common, exe, Torch_Subset6, 0x0,                         General/Torch/Torch_6_Subset6.c //TODO
+//common, exe, Torch_Subset7, 0x0,                         General/Torch/Torch_7_Subset7.c //TODO
+//common, exe, Torch_Subset8, 0x0,                         General/Torch/Torch_8_Subset8.c //TODO
+//common, exe, Torch_Subset9, 0x0,                         General/Torch/Torch_9_Subset9.c //TODO
+
+// ====================================================================================================================
+// UI (stubbed for this file)
 // ====================================================================================================================
 // everything from UI_SaveLapTime to UI_RenderFrame_CrystChall
-// skip Wumpa2p3p4p (never called in rewrite), UI_VsXXX comes next
 common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBlock1.c //why is this linked to UI_ThTick_CountPickup and not UI_SaveLapTime?
 
 //common, exe, UI_SaveLapTime, 0x0,                        General/UI/UI_00_SaveLapTime.c
@@ -931,6 +1063,14 @@ common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEn
 //common, exe, UI_CupStandings_FinalizeCupRanks, 0x0,      General/UI/UI_56_CupStandings_FinalizeCupRanks.c //TODO
 //common, exe, UI_CupStandings_UpdateCupRanks, 0x0,        General/UI/UI_57_CupStandings_UpdateCupRanks.c //TODO
 common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupStandings_InputAndDraw.c
+
+// ====================================================================================================================
+// Vector
+// ====================================================================================================================
+//common, exe, Vector_SpecLightSpin2D, 0x0,                Vector_0_SpecLightSpin2D.c //TODO
+//common, exe, Vector_SpecLightSpin3D, 0x0, 			   Vector_1_SpecLightSpin3D.c //TODO
+//common, exe, Vector_SpecLightNoSpin3D, 0x0, 			   Vector_2_SpecLightNoSpin3D.c //TODO
+//common, exe, Vector_BakeMatrixTable, 0x0, 			   Vector_3_BakeMatrixTable.c //TODO
 
 // ====================================================================================================================
 // Veh
@@ -1043,7 +1183,7 @@ common, exe, VehStuckProc_MaskGrab_Update, 0x0,                General/Vehicle/V
 common, exe, VehStuckProc_MaskGrab_PhysLinear, 0x0,            General/Vehicle/VehStuckProc_03_MaskGrab_PhysLinear.c
 common, exe, VehStuckProc_MaskGrab_Animate, 0x0,               General/Vehicle/VehStuckProc_04_MaskGrab_Animate.c
 common, exe, VehStuckProc_MaskGrab_Init, 0x0,                  General/Vehicle/VehStuckProc_05_MaskGrab_Init.c
-common, exe, VehStuckProc_PlantEaten_Update, 0x0,              General/Vehicle/VehStuckProc_06_PlantEaten_Update.c
+//common, exe, VehStuckProc_PlantEaten_Update, 0x0,              General/Vehicle/VehStuckProc_06_PlantEaten_Update.c //commented because overbudget
 common, exe, VehStuckProc_PlantEaten_PhysLinear, 0x0,          General/Vehicle/VehStuckProc_07_PlantEaten_PhysLinear.c
 common, exe, VehStuckProc_PlantEaten_Animate, 0x0,             General/Vehicle/VehStuckProc_08_PlantEaten_Animate.c
 common, exe, VehStuckProc_PlantEaten_Init, 0x0,                General/Vehicle/VehStuckProc_09_PlantEaten_Init.c
@@ -1053,7 +1193,7 @@ common, exe, VehStuckProc_RevEngine_PhysLinear, 0x0,           General/Vehicle/V
 common, exe, VehStuckProc_RevEngine_Animate, 0x0,         	   General/Vehicle/VehStuckProc_13_RevEngine_Animate.c
 common, exe, VehStuckProc_RevEngine_Init, 0x0,         		   General/Vehicle/VehStuckProc_14_RevEngine_Init.c
 common, exe, VehStuckProc_Tumble_Update, 0x0,                  General/Vehicle/VehStuckProc_15_Tumble_Update.c
-common, exe, VehStuckProc_Tumble_PhysLinear, 0x0,  			   General/Vehicle/VehStuckProc_16_Tumble_PhysLinear.c
+//common, exe, VehStuckProc_Tumble_PhysLinear, 0x0,  			 General/Vehicle/VehStuckProc_16_Tumble_PhysLinear.c //commented because overbudget
 common, exe, VehStuckProc_Tumble_PhysAngular, 0x0,  		   General/Vehicle/VehStuckProc_17_Tumble_PhysAngular.c
 common, exe, VehStuckProc_Tumble_Animate, 0x0,  			   General/Vehicle/VehStuckProc_18_Tumble_Animate.c
 common, exe, VehStuckProc_Tumble_Init, 0x0,  				   General/Vehicle/VehStuckProc_19_Tumble_Init.c
