@@ -1,87 +1,11 @@
 #include <common.h>
 
-#ifdef USE_BOOSTBAR
-void uibb_entryHook()
-{
-	data.hud_2P_P1[8].y -= 6;
-	data.hud_2P_P2[8].y -= 6;
-	data.hud_4P_P1[8].y -= 6;
-	data.hud_4P_P2[8].y -= 6;
-	data.hud_4P_P3[8].y -= 6;
-	data.hud_4P_P4[8].y -= 6;
-
-	// lapcount that draws above bootbar
-	data.hud_2P_P1[1].y -= 6;
-	data.hud_2P_P2[1].y -= 6;
-	data.hud_4P_P1[1].y -= 6;
-	data.hud_4P_P2[1].y -= 6;
-	data.hud_4P_P3[1].y -= 6;
-	data.hud_4P_P4[1].y -= 6;
-}
-#endif
-
 #ifndef REBUILD_PC
 
 #define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
 #ifdef USE_60FPS
-
-void NewCallback231()
-{
-	// start banner
-	{
-		// 800b57c0 and 800b57d0
-		*(unsigned int*)0x800b57c0 = 0x240B0001; // (t3) 0001
-		*(unsigned int*)0x800b57d0 = 0xA08b0018; // a0 offset 0x18, write t3
-
-		// set thread->cooldown to 1 frame,
-		// run thread at 30fps, in 60fps gameplay
-	}
-
-	DECOMP_LOAD_Callback_Overlay_231();
-}
-
-void NewCallback233()
-{
-	// 233 patches here...
-
-	// set in Podium_Prize_ThTick1
-	*(short*)0x800afdb4 = 0xf*2;
-
-	// prize spin podium
-	*(unsigned short*)0x800af7e4 = 50; // 100/2 (not hex)
-
-	DECOMP_LOAD_Callback_Overlay_233();
-}
-
-struct Particle* NewParticleInit(struct LinkedList* param_1)
-{
-	// NOTE: Need to add workaround for RB_Explosion_InitPotion,
-	// VehEmitter_DriverMain, when those functions are rewritten,
-	// can't do VehEmitter_Sparks_Ground due to byte budget
-
-	// Workaround, use unused variable to force particles on "any"
-	// frame. This is required for effects that spawn 10x particles
-	// on the same frame (MaskGrab, AkuHints, SpitTire, VehEmitter)
-	if(sdata->UnusedPadding1 == 0)
-	{
-		// do 2 instead of 1,
-		// that way timer & 1 works with SetLeft and SetRight,
-		// see VehEmitter_DriverMain and call to VehEmitter_Terrain_Ground
-		if(sdata->gGT->timer & 2) return 0;
-	}
-
-	struct Particle* p =
-		(struct Particle*)LIST_RemoveFront(param_1);
-
-	// remove patching for 60fps
-	p->axis[0x9].startVal = 0;
-	p->axis[0xA].startVal = 0;
-
-	return p;
-}
-
 
 int BoolCheckExhaust(struct Driver* d)
 {
@@ -237,4 +161,125 @@ void ui60_entryHook()
 #endif
 
 // ifndef REBULD_PC
+#endif
+
+#ifdef USE_BOOSTBAR
+void DrawBoostBar(short posX, short posY, struct Driver* driver)
+{
+#ifdef USE_ONLINE
+	const int numberBarDivisions = 5;
+	const Color barEmptyColor = MakeColor(0x80, 0x80, 0x80);
+#endif
+
+	struct GameTracker* gGT = sdata->gGT;
+	short fullHeight = 3;
+#ifdef USE_ONLINE
+	short fullWidth = WIDE_34(96);
+	int reserves = driver->reserves + driver->uncappedReserves;
+	int numFullBarsFilled = reserves / SECONDS(5);
+	int numBarsFilled = reserves / SECONDS(1);
+	int reserveLength = reserves % SECONDS(5);
+	int meterLength = (fullWidth * reserveLength) / SECONDS(5);
+	posX += 35;
+#else
+	short fullWidth = WIDE_34(49);
+	short meterLength = ((driver->reserves * 0xE) / 0x960);
+	if ((meterLength > fullWidth) || (driver->reserves < 0)) { meterLength = fullWidth; }
+#endif
+
+	RECT box;
+	short topX = posX - fullWidth;
+	short topY = posY - fullHeight;
+	box.x = topX;
+	box.y = topY;
+	box.w = fullWidth;
+	box.h = fullHeight;
+
+	struct DB* backDB = gGT->backBuffer;
+
+	DECOMP_CTR_Box_DrawWireBox(&box, MakeColor(0, 0, 0), gGT->pushBuffer_UI.ptrOT);
+
+#ifdef USE_ONLINE
+	int spacing = fullWidth / numberBarDivisions;
+	int remainder = fullWidth % numberBarDivisions;
+	for (int i = 0; i < numberBarDivisions - 1; i++)
+	{
+		LineF2* p;
+		GetPrimMem(p);
+		if (p == nullptr) { return; }
+
+		const PrimCode primCode = { .line = {.renderCode = RenderCode_Line } };
+		const Color colorCode = MakeColorCode(0, 0, 0, primCode);
+		p->colorCode = colorCode;
+		s16 xPos = posX - (spacing * (i + 1));
+		if (remainder > 0) { xPos--; remainder--; }
+		p->v[0].pos.x = xPos;
+		p->v[0].pos.y = topY;
+		p->v[1].pos.x = xPos;
+		p->v[1].pos.y = topY + fullHeight;
+		AddPrimitive(p, gGT->pushBuffer_UI.ptrOT);
+	}
+#endif
+
+	const PrimCode primCode = { .poly = {.quad = 1, .renderCode = RenderCode_Polygon } };
+
+#ifdef USE_ONLINE
+	char s_barsCompleted[15];
+	sprintf(s_barsCompleted, "%d", numFullBarsFilled);
+	DECOMP_DecalFont_DrawLine(s_barsCompleted, topX - 2, topY - 3, FONT_SMALL, PENTA_WHITE | JUSTIFY_RIGHT);
+
+	ColorCode colorCode;
+	ColorCode bgBarColor = barEmptyColor;
+	Color HsvToRgb(int h, int s, int v);
+	if (numFullBarsFilled > 0) { bgBarColor = HsvToRgb(5 * numberBarDivisions * (numFullBarsFilled - 1), (int)(255 * 0.5), (int)(255 * 0.5)); }
+	colorCode = HsvToRgb(5 * numBarsFilled, (int)(255 * 0.9), (int)(255 * 1.0));
+	colorCode.code = primCode;
+	bgBarColor.code = primCode;
+#else
+	/* === BoostBar ===
+		red: 0-2s
+		yellow: 2s-4s
+		green: 4s-full
+		blue: full-saffi
+		purple: saffi */
+	ColorCode colorCode = MakeColorCode(0xFF, 0, 0, primCode); // red
+	if (driver->reserves < 0) {
+		colorCode = MakeColorCode(0xFF, 0x0, 0xFF, primCode); // purple
+	}
+	else if (meterLength == fullWidth) {
+		colorCode = MakeColorCode(0, 0, 0xFF, primCode); // blue
+	}
+	else if (driver->reserves >= SECONDS(4)) {
+		colorCode = MakeColorCode(0, 0xFF, 0, primCode); // green
+	}
+	else if (driver->reserves >= SECONDS(2)) {
+		colorCode = MakeColorCode(0xFF, 0xFF, 0, primCode); // yellow
+	}
+#endif
+
+	for (int i = 0; i < 2; i++)
+	{
+		PolyF4* p;
+		GetPrimMem(p);
+		if (p == nullptr) { return; }
+
+		p->colorCode = colorCode;
+		p->v[0].pos.x = posX - meterLength;
+		p->v[0].pos.y = topY;
+		p->v[1].pos.x = posX;
+		p->v[1].pos.y = topY;
+		p->v[2].pos.x = posX - meterLength;
+		p->v[2].pos.y = posY;
+		p->v[3].pos.x = posX;
+		p->v[3].pos.y = posY;
+		AddPrimitive(p, gGT->pushBuffer_UI.ptrOT);
+
+#ifdef USE_ONLINE
+		colorCode = bgBarColor;
+#else
+		colorCode = MakeColorCode(0x80, 0x80, 0x80, primCode); // Gray color for Prim #2
+#endif
+		meterLength = fullWidth;
+	}
+}
 #endif

@@ -40,7 +40,9 @@ common, 223, OVR_Region1, 0x0, General/223/223_Full.c
 common, 224, OVR_Region1, 0x0, General/224/224_Full.c
 common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 
+// ====================================================================================================================
 // 230 (incomplete)
+// ====================================================================================================================
 common, 230, R230, 0x0, General/230/R230.c
 common, 230, D230, 0x0, General/230/D230.c
 common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_Block1.c
@@ -53,8 +55,8 @@ common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 
 // KickCD works fine on console, breaks duckstation track loop at end of video
 common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
-//ommon, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
-//ommon, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
+//common, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
+//common, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
 common, 230, MM_Video_StartStream, 0x0, General/230/230_80_MM_Video_StartStream.c
 common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
 common, 230, MM_Video_AllocMem, 0x0, General/230/230_82_MM_Video_AllocMem.c
@@ -62,7 +64,9 @@ common, 230, MM_Video_ClearMem, 0x0, General/230/230_83_MM_Video_ClearMem.c
 common, 230, MM_Video_DecodeFrame, 0x0, General/230/230_84_MM_Video_DecodeFrame.c
 common, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfFinished.c
 
+// ====================================================================================================================
 // 231 (incomplete)
+// ====================================================================================================================
 // skip first two
 
 // everything from RB_Player_ModifyWumpa to RB_MinePool_Add
@@ -129,11 +133,50 @@ common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_074_077_RB_CtrLetter.c
 // skip Banner
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_82_129.c
 
+// ====================================================================================================================
 // 232 (incomplete)
+// ====================================================================================================================
 common, 232, R232, 0x0, General/232/R232.c
 common, 232, D232, 0x0, General/232/D232.c
-common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
-// AH_Sign_LInB
+common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232/232_Defrag.c
+
+//common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,			               General/232/232_00_AH_WarpPad_GetSpawnPosRot.c
+//common, 232, AH_WarpPad_AllWarppadNum, 0x0,			               General/232/232_01_AH_WarpPad_AllWarppadNum.c
+//common, 232, AH_WarpPad_MenuProc, 0x0,				               General/232/232_02_AH_WarpPad_MenuProc.c
+//common, 232, AH_WarpPad_SpinRewards, 0x0,				               General/232/232_03_AH_WarpPad_SpinRewards.c
+//common, 232, AH_WarpPad_ThTick, 0x0,					               General/232/232_04_AH_WarpPad_ThTick.c
+//common, 232, AH_WarpPad_ThDestroy, 0x0,				               General/232/232_05_AH_WarpPad_ThDestroy.c
+//common, 232, AH_WarpPad_LInB, 0x0,					               General/232/232_06_AH_WarpPad_LInB.c
+//common, 232, AH_Garage_ThDestroy, 0x0,				               General/232/232_07_AH_Garage_ThDestroy.c
+//common, 232, AH_Garage_Open, 0x0,						               General/232/232_08_AH_Garage_Open.c
+//common, 232, AH_Garage_ThTick, 0x0,					               General/232/232_09_AH_Garage_ThTick.c
+//common, 232, AH_Garage_LInB, 0x0,						               General/232/232_10_AH_Garage_LInB.c
+//common, 232, AH_SaveObj_ThDestroy, 0x0,				               General/232/232_11_AH_SaveObj_ThDestroy.c
+//common, 232, AH_SaveObj_ThTick, 0x0,					               General/232/232_12_AH_SaveObj_ThTick.c
+//common, 232, AH_SaveObj_LInB, 0x0,					               General/232/232_13_AH_SaveObj_LInB.c
+//common, 232, AH_Door_ThDestroy, 0x0,					               General/232/232_14_AH_Door_ThDestroy.c
+//common, 232, AH_Door_ThTick, 0x0,						               General/232/232_15_AH_Door_ThTick.c
+//common, 232, AH_Door_LInB, 0x0,						               General/232/232_16_AH_Door_LInB.c
+//common, 232, AH_Map_LoadSave_Prim, 0x0,				               General/232/232_17_AH_Map_LoadSave_Prim.c
+//common, 232, AH_Map_LoadSave_Full, 0x0,				               General/232/232_18_AH_Map_LoadSave_Full.c
+//common, 232, AH_Map_HubArrow, 0x0,					               General/232/232_19_AH_Map_HubArrow.c
+//common, 232, AH_Map_HubArrowOutter, 0x0,				               General/232/232_20_AH_Map_HubArrowOutter.c
+//common, 232, AH_Map_HubItems, 0x0,					               General/232/232_21_AH_Map_HubItems.c
+//common, 232, AH_Map_Warppads, 0x0,					               General/232/232_22_AH_Map_Warppads.c
+//common, 232, AH_Map_Main, 0x0,						               General/232/232_23_AH_Map_Main.c
+//common, 232, AH_Pause_Destroy, 0x0,					               General/232/232_24_AH_Pause_Destroy.c
+//common, 232, AH_Pause_Draw, 0x0,						               General/232/232_25_AH_Pause_Draw.c
+//common, 232, AH_Pause_Update, 0x0,					               General/232/232_26_AH_Pause_Update.c
+//common, 232, AH_HintMenu_FiveArrows, 0x0,				               General/232/232_27_AH_HintMenu_FiveArrows.c
+//common, 232, AH_HintMenu_MaskPosRot, 0x0,				               General/232/232_28_AH_HintMenu_MaskPosRot.c
+//common, 232, AH_HintMenu_MenuProc, 0x0,				               General/232/232_29_AH_HintMenu_MenuProc.c
+//common, 232, AH_MaskHint_Start, 0x0,					               General/232/232_30_AH_MaskHint_Start.c
+//common, 232, AH_MaskHint_boolCanSpawn, 0x0,			               General/232/232_31_AH_MaskHint_boolCanSpawn.c
+//common, 232, AH_MaskHint_SetAnim, 0x0,				               General/232/232_32_AH_MaskHint_SetAnim.c
+//common, 232, AH_MaskHint_SpawnParticles, 0x0,			               General/232/232_33_AH_MaskHint_SpawnParticles.c
+//common, 232, AH_MaskHint_LerpVol, 0x0,				               General/232/232_34_AH_MaskHint_LerpVol.c
+//common, 232, AH_MaskHint_Update, 0x0,                                General/232/232_35_AH_MaskHint_Update.c
+//common, 232, AH_Sign_LInB, 0x0,                                      General/232/232_36_AH_Sign_LInB.c //TODO
 
 // ====================================================================================================================
 // 233
@@ -360,17 +403,26 @@ common, exe, DropRain_MakeSound, 0x0,                  General/DropRain/DropRain
 // ====================================================================================================================
 // ElimBG (stubbed for this file)
 // ====================================================================================================================
-//use this for defrag + Mods6.c (enable USE_DEFRAG in common.h)
-//common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,       General/ElimBG/ElimBG_Defrag.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the ElimBG_Defrag line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods6.c (required for /AltMods):
+//     * uncomment the ElimBG_Defrag line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
 
-//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
-common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,         General/ElimBG/ElimBG_0_SaveScreenshot_Chunk.c
-common, exe, ElimBG_SaveScreenshot_Full, 0x0,          General/ElimBG/ElimBG_1_SaveScreenshot_Full.c
-common, exe, ElimBG_Activate, 0x0,                     General/ElimBG/ElimBG_2_Activate.c
-common, exe, ElimBG_ToggleInstance, 0x0,               General/ElimBG/ElimBG_3_ToggleInstance.c
-common, exe, ElimBG_ToggleAllInstances, 0x0,           General/ElimBG/ElimBG_4_ToggleAllInstances.c
-common, exe, ElimBG_HandleState, 0x0,                  General/ElimBG/ElimBG_5_HandleState.c
-common, exe, ElimBG_Deactivate, 0x0,                   General/ElimBG/ElimBG_6_Deactivate.c
+common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,       General/ElimBG/ElimBG_Defrag.c
+
+//ElimBG_Defrag starts here ---v
+//common, exe, ElimBG_SaveScreenshot_Chunk, 0x0,         General/ElimBG/ElimBG_0_SaveScreenshot_Chunk.c
+//common, exe, ElimBG_SaveScreenshot_Full, 0x0,          General/ElimBG/ElimBG_1_SaveScreenshot_Full.c
+//common, exe, ElimBG_Activate, 0x0,                     General/ElimBG/ElimBG_2_Activate.c
+//common, exe, ElimBG_ToggleInstance, 0x0,               General/ElimBG/ElimBG_3_ToggleInstance.c
+//common, exe, ElimBG_ToggleAllInstances, 0x0,           General/ElimBG/ElimBG_4_ToggleAllInstances.c
+//common, exe, ElimBG_HandleState, 0x0,                  General/ElimBG/ElimBG_5_HandleState.c
+//common, exe, ElimBG_Deactivate, 0x0,                   General/ElimBG/ElimBG_6_Deactivate.c
+//ElimBG_Defrag ends here ---^
 
 // ====================================================================================================================
 // FLARE (stubbed for this file)
@@ -381,25 +433,34 @@ common, exe, ElimBG_Deactivate, 0x0,                   General/ElimBG/ElimBG_6_D
 // ====================================================================================================================
 // GAMEPAD (complete?)
 // ====================================================================================================================
-//use this for defrag + Mods2.c (enable USE_DEFRAG in common.h)
-//common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_Defrag.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the GAMEPAD_Defrag line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods2.c (required for /AltMods):
+//     * uncomment the GAMEPAD_Defrag line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
 
-//use this section for byteBudget.bat (disable USE_DEFRAG in common.h)
-common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_00_Init.c
-common, exe, GAMEPAD_SetMainMode, 0x0,                   General/GAMEPAD/GAMEPAD_01_SetMainMode.c
-common, exe, GAMEPAD_ProcessState, 0x0,                  General/GAMEPAD/GAMEPAD_02_ProcessState.c
-common, exe, GAMEPAD_PollVsync, 0x0,                     General/GAMEPAD/GAMEPAD_03_PollVsync.c
-common, exe, GAMEPAD_GetNumConnected, 0x0,               General/GAMEPAD/GAMEPAD_04_GetNumConnected.c
-common, exe, GAMEPAD_ProcessHold, 0x0,                   General/GAMEPAD/GAMEPAD_05_ProcessHold.c
-common, exe, GAMEPAD_ProcessSticks, 0x0,                 General/GAMEPAD/GAMEPAD_06_ProcessSticks.c
-common, exe, GAMEPAD_ProcessTapRelease, 0x0,             General/GAMEPAD/GAMEPAD_07_ProcessTapRelease.c
-common, exe, GAMEPAD_ProcessMotors, 0x0,                 General/GAMEPAD/GAMEPAD_08_ProcessMotors.c
-common, exe, GAMEPAD_ProcessAnyoneVars, 0x0,             General/GAMEPAD/GAMEPAD_09_ProcessAnyoneVars.c
-common, exe, GAMEPAD_JogCon1, 0x0,                       General/GAMEPAD/GAMEPAD_10_JogCon1.c
-common, exe, GAMEPAD_JogCon2, 0x0,                       General/GAMEPAD/GAMEPAD_11_JogCon2.c
-common, exe, GAMEPAD_ShockFreq, 0x0,                     General/GAMEPAD/GAMEPAD_12_ShockFreq.c
-common, exe, GAMEPAD_ShockForce1, 0x0,                   General/GAMEPAD/GAMEPAD_13_ShockForce1.c
-common, exe, GAMEPAD_ShockForce2, 0x0,                   General/GAMEPAD/GAMEPAD_14_ShockForce2.c
+common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_Defrag.c
+
+//GAMEPAD_Defrag starts here ---v
+//common, exe, GAMEPAD_Init, 0x0,                          General/GAMEPAD/GAMEPAD_00_Init.c
+//common, exe, GAMEPAD_SetMainMode, 0x0,                   General/GAMEPAD/GAMEPAD_01_SetMainMode.c
+//common, exe, GAMEPAD_ProcessState, 0x0,                  General/GAMEPAD/GAMEPAD_02_ProcessState.c
+//common, exe, GAMEPAD_PollVsync, 0x0,                     General/GAMEPAD/GAMEPAD_03_PollVsync.c
+//common, exe, GAMEPAD_GetNumConnected, 0x0,               General/GAMEPAD/GAMEPAD_04_GetNumConnected.c
+//common, exe, GAMEPAD_ProcessHold, 0x0,                   General/GAMEPAD/GAMEPAD_05_ProcessHold.c
+//common, exe, GAMEPAD_ProcessSticks, 0x0,                 General/GAMEPAD/GAMEPAD_06_ProcessSticks.c
+//common, exe, GAMEPAD_ProcessTapRelease, 0x0,             General/GAMEPAD/GAMEPAD_07_ProcessTapRelease.c
+//common, exe, GAMEPAD_ProcessMotors, 0x0,                 General/GAMEPAD/GAMEPAD_08_ProcessMotors.c
+//common, exe, GAMEPAD_ProcessAnyoneVars, 0x0,             General/GAMEPAD/GAMEPAD_09_ProcessAnyoneVars.c
+//common, exe, GAMEPAD_JogCon1, 0x0,                       General/GAMEPAD/GAMEPAD_10_JogCon1.c
+//common, exe, GAMEPAD_JogCon2, 0x0,                       General/GAMEPAD/GAMEPAD_11_JogCon2.c
+//common, exe, GAMEPAD_ShockFreq, 0x0,                     General/GAMEPAD/GAMEPAD_12_ShockFreq.c
+//common, exe, GAMEPAD_ShockForce1, 0x0,                   General/GAMEPAD/GAMEPAD_13_ShockForce1.c
+//common, exe, GAMEPAD_ShockForce2, 0x0,                   General/GAMEPAD/GAMEPAD_14_ShockForce2.c
+//GAMEPAD_Defrag ends here ---^
 
 // ====================================================================================================================
 // GAMEPROG (done)
@@ -467,8 +528,63 @@ common, exe, CseqMusic_AdvHubSwap, 0x0,                  General/HOWL/h18_CseqMu
 common, exe, CseqMusic_Stop, 0x0,                        General/HOWL/h19_CseqMusic_Stop.c
 common, exe, CseqMusic_StopAll, 0x0,                     General/HOWL/h20_CseqMusic_StopAll.c
 
-// h21 all the way to h64
-common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h00_AAA_Block1.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the h00_AAA_Block1 line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods3.c (required for /AltMods):
+//     * uncomment the h00_AAA_Block1 line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
+
+common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h00_AAA_Block1.c // h21 all the way to h64
+
+//h00_AAA_Block1 starts here ---v
+//common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h21_Bank_ResetAllocator.c
+//common, exe, Bank_Alloc, 0x0,                            General/HOWL/h22_Bank_Alloc.c
+//common, exe, Bank_AssignSpuAddrs, 0x0,                   General/HOWL/h23_Bank_AssignSpuAddrs.c
+//common, exe, Bank_Destroy, 0x0,                          General/HOWL/h24_Bank_Destroy.c
+//common, exe, Bank_ClearInRange, 0x0,                     General/HOWL/h25_Bank_ClearInRange.c
+//common, exe, Bank_Load, 0x0,                             General/HOWL/h26_Bank_Load.c
+//common, exe, Bank_DestroyLast, 0x0,                      General/HOWL/h27_Bank_DestroyLast.c
+//common, exe, Bank_DestroyUntilIndex, 0x0,                General/HOWL/h28_Bank_DestroyUntilIndex.c
+//common, exe, Bank_DestroyAll, 0x0,                       General/HOWL/h29_Bank_DestroyAll.c
+//common, exe, howl_InstrumentPitch, 0x0,                  General/HOWL/h30_howl_InstrumentPitch.c
+//common, exe, howl_InitGlobals, 0x0,                      General/HOWL/h31_howl_InitGlobals.c
+//common, exe, howl_ParseHeader, 0x0,                      General/HOWL/h32_howl_ParseHeader.c
+//common, exe, howl_ParseCseqHeader, 0x0,                  General/HOWL/h33_howl_ParseCseqHeader.c
+//common, exe, howl_LoadHeader, 0x0,                       General/HOWL/h34_howl_LoadHeader.c
+//common, exe, howl_SetSong, 0x0,                          General/HOWL/h35_howl_SetSong.c
+//common, exe, howl_LoadSong, 0x0,                         General/HOWL/h36_howl_LoadSong.c
+//common, exe, howl_ErasePtrCseqHeader, 0x0,               General/HOWL/h37_howl_ErasePtrCseqHeader.c
+//common, exe, howl_GetNextNote, 0x0,                      General/HOWL/h38_howl_GetNextNote.c
+//common, exe, cseq_opcode01_noteoff, 0x0,                 General/HOWL/h39_cseq_opcode01_noteoff.c
+//common, exe, cseq_opcode03, 0x0,                         General/HOWL/h40_cseq_opcode03.c
+//common, exe, howl_InitChannelAttr_Music, 0x0,            General/HOWL/h41_howl_InitChannelAttr_Music.c
+//common, exe, cseq_opcode_from06and07, 0x0,               General/HOWL/h42_cseq_opcode_from06and07.c
+//common, exe, cseq_opcode05_noteon, 0x0,                  General/HOWL/h43_cseq_opcode05_noteon.c
+//common, exe, cseq_opcode06, 0x0,                         General/HOWL/h44_cseq_opcode06.c
+//common, exe, cseq_opcode07, 0x0,                         General/HOWL/h45_cseq_opcode07.c
+//common, exe, cseq_opcode08, 0x0,                         General/HOWL/h46_cseq_opcode08.c
+//common, exe, cseq_opcode09, 0x0,                         General/HOWL/h47_cseq_opcode09.c
+//common, exe, cseq_opcode0a, 0x0,                         General/HOWL/h48_cseq_opcode0a.c
+//common, exe, SongPool_FindFreeChannel, 0x0,              General/HOWL/h49_SongPool_FindFreeChannel.c
+//common, exe, SongPool_CalculateTempo, 0x0,               General/HOWL/h50_SongPool_CalculateTempo.c
+//common, exe, SongPool_ChangeTempo, 0x0,                  General/HOWL/h51_SongPool_ChangeTempo.c
+//common, exe, SongPool_Start, 0x0,                        General/HOWL/h52_SongPool_Start.c
+//common, exe, SongPool_Volume, 0x0,                       General/HOWL/h53_SongPool_Volume.c
+//common, exe, SongPool_AdvHub1, 0x0,                      General/HOWL/h54_SongPool_AdvHub1.c
+//common, exe, SongPool_AdvHub2, 0x0,                      General/HOWL/h55_SongPool_AdvHub2.c
+//common, exe, SongPool_StopCseq, 0x0,                     General/HOWL/h56_SongPool_StopCseq.c
+//common, exe, SongPool_StopAllCseq, 0x0,                  General/HOWL/h57_SongPool_StopAllCseq.c
+//common, exe, howl_Disable, 0x0,                          General/HOWL/h58_howl_Disable.c
+//common, exe, UpdateChannelVol_EngineFX, 0x0,             General/HOWL/h59_UpdateChannelVol_EngineFX.c
+//common, exe, UpdateChannelVol_OtherFX, 0x0,              General/HOWL/h60_UpdateChannelVol_OtherFX.c
+//common, exe, UpdateChannelVol_Music, 0x0,                General/HOWL/h61_UpdateChannelVol_Music.c
+//common, exe, UpdateChannelVol_EngineFX_All, 0x0,         General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
+//common, exe, UpdateChannelVol_Music_All, 0x0,            General/HOWL/h63_UpdateChannelVol_Music_All.c
+//common, exe, UpdateChannelVol_OtherFX_All, 0x0,          General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
+//h00_AAA_Block1 ends here ---^
 
 common, exe, howl_VolumeGet, 0x0,                        General/HOWL/h65_howl_VolumeGet.c
 common, exe, howl_VolumeSet, 0x0,                        General/HOWL/h66_howl_VolumeSet.c
@@ -625,43 +741,53 @@ common, exe, LIST_Init, 0x0,                             General/LIST/LIST_8_Ini
 // ====================================================================================================================
 // LOAD (complete?)
 // ====================================================================================================================
-// 00 to 33
-//common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33_Callback_Overlay_Generic.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the LOAD_00_33_Callback_Overlay_Generic line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods4.c (required for /AltMods):
+//     * uncomment the LOAD_00_33_Callback_Overlay_Generic line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
 
-common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_Callback_Overlay_Generic.c
-common, exe, LOAD_Callback_Overlay_230, 0x0,             General/LOAD/LOAD_01_Callback_Overlay_230.c
-common, exe, LOAD_Callback_Overlay_231, 0x0,             General/LOAD/LOAD_02_Callback_Overlay_231.c
-common, exe, LOAD_Callback_Overlay_232, 0x0,             General/LOAD/LOAD_03_Callback_Overlay_232.c
-common, exe, LOAD_Callback_Overlay_233, 0x0,             General/LOAD/LOAD_04_Callback_Overlay_233.c
-common, exe, LOAD_Callback_MaskHints3D, 0x0,             General/LOAD/LOAD_05_Callback_MaskHints3D.c
-common, exe, LOAD_Callback_Podiums, 0x0,                 General/LOAD/LOAD_06_Callback_Podiums.c
-common, exe, LOAD_Callback_LEV, 0x0,                     General/LOAD/LOAD_07_Callback_LEV.c
-common, exe, LOAD_Callback_LEV_Adv, 0x0,                 General/LOAD/LOAD_08_Callback_LEV_Adv.c
-common, exe, LOAD_Callback_DriverModels, 0x0,            General/LOAD/LOAD_09_Callback_DriverModels.c
-common, exe, LOAD_HubCallback, 0x0,                      General/LOAD/LOAD_10_HubCallback.c
-common, exe, LOAD_GlobalModelPtrs_MPK, 0x0,              General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c
-common, exe, LOAD_HubSwapPtrs, 0x0,                      General/LOAD/LOAD_12_HubSwapPtrs.c
-common, exe, LOAD_StringToUpper, 0x0,                    General/LOAD/LOAD_13_StringToUpper.c
-common, exe, LOAD_InitCD, 0x0,                           General/LOAD/LOAD_14_InitCD.c
-common, exe, LOAD_ReadDirectory, 0x0,                    General/LOAD/LOAD_15_ReadDirectory.c
-common, exe, LOAD_DramFileCallback, 0x0,                 General/LOAD/LOAD_16_DramFileCallback.c
-common, exe, LOAD_DramFile, 0x0,                         General/LOAD/LOAD_17_DramFile.c
-common, exe, LOAD_VramFileCallback, 0x0,                 General/LOAD/LOAD_18_VramFileCallback.c
-common, exe, LOAD_VramFile, 0x0,                         General/LOAD/LOAD_19_VramFile.c
-common, exe, LOAD_ReadFileASyncCallback, 0x0,            General/LOAD/LOAD_20_ReadFileASyncCallback.c
-common, exe, LOAD_ReadFile, 0x0,                         General/LOAD/LOAD_21_ReadFile.c
-common, exe, LOAD_ReadFile_NoCallback, 0x0,              General/LOAD/LOAD_22_ReadFile_NoCallback.c
-common, exe, LOAD_FindFile, 0x0,                         General/LOAD/LOAD_23_FindFile.c
-common, exe, LOAD_HowlHeaderSectors, 0x0,                General/LOAD/LOAD_24_HowlHeaderSectors.c
-common, exe, LOAD_HowlCallback, 0x0,                     General/LOAD/LOAD_25_HowlCallback.c
-common, exe, LOAD_HowlSectorChainStart, 0x0,             General/LOAD/LOAD_26_HowlSectorChainStart.c
-common, exe, LOAD_HowlSectorChainEnd, 0x0,               General/LOAD/LOAD_27_HowlSectorChainEnd.c
-common, exe, LOAD_RunPtrMap, 0x0,                        General/LOAD/LOAD_28_RunPtrMap.c
-common, exe, LOAD_Robots2P, 0x0,                         General/LOAD/LOAD_29_Robots2P.c
-common, exe, LOAD_Robots1P, 0x0,                         General/LOAD/LOAD_30_Robots1P.c
-common, exe, LOAD_DriverMPK, 0x0,                        General/LOAD/LOAD_31_DriverMPK.c
-common, exe, LOAD_LangFile, 0x0,                         General/LOAD/LOAD_32_LangFile.c
-common, exe, LOAD_GetBigfileIndex, 0x0,                  General/LOAD/LOAD_33_GetBigfileIndex.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33_Callback_Overlay_Generic.c // 00 to 33
+
+//LOAD_00_33_Callback_Overlay_Generic starts here ---v
+//common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_Callback_Overlay_Generic.c
+//common, exe, LOAD_Callback_Overlay_230, 0x0,             General/LOAD/LOAD_01_Callback_Overlay_230.c
+//common, exe, LOAD_Callback_Overlay_231, 0x0,             General/LOAD/LOAD_02_Callback_Overlay_231.c
+//common, exe, LOAD_Callback_Overlay_232, 0x0,             General/LOAD/LOAD_03_Callback_Overlay_232.c
+//common, exe, LOAD_Callback_Overlay_233, 0x0,             General/LOAD/LOAD_04_Callback_Overlay_233.c
+//common, exe, LOAD_Callback_MaskHints3D, 0x0,             General/LOAD/LOAD_05_Callback_MaskHints3D.c
+//common, exe, LOAD_Callback_Podiums, 0x0,                 General/LOAD/LOAD_06_Callback_Podiums.c
+//common, exe, LOAD_Callback_LEV, 0x0,                     General/LOAD/LOAD_07_Callback_LEV.c
+//common, exe, LOAD_Callback_LEV_Adv, 0x0,                 General/LOAD/LOAD_08_Callback_LEV_Adv.c
+//common, exe, LOAD_Callback_DriverModels, 0x0,            General/LOAD/LOAD_09_Callback_DriverModels.c
+//common, exe, LOAD_HubCallback, 0x0,                      General/LOAD/LOAD_10_HubCallback.c
+//common, exe, LOAD_GlobalModelPtrs_MPK, 0x0,              General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c
+//common, exe, LOAD_HubSwapPtrs, 0x0,                      General/LOAD/LOAD_12_HubSwapPtrs.c
+//common, exe, LOAD_StringToUpper, 0x0,                    General/LOAD/LOAD_13_StringToUpper.c
+//common, exe, LOAD_InitCD, 0x0,                           General/LOAD/LOAD_14_InitCD.c
+//common, exe, LOAD_ReadDirectory, 0x0,                    General/LOAD/LOAD_15_ReadDirectory.c
+//common, exe, LOAD_DramFileCallback, 0x0,                 General/LOAD/LOAD_16_DramFileCallback.c
+//common, exe, LOAD_DramFile, 0x0,                         General/LOAD/LOAD_17_DramFile.c
+//common, exe, LOAD_VramFileCallback, 0x0,                 General/LOAD/LOAD_18_VramFileCallback.c
+//common, exe, LOAD_VramFile, 0x0,                         General/LOAD/LOAD_19_VramFile.c
+//common, exe, LOAD_ReadFileASyncCallback, 0x0,            General/LOAD/LOAD_20_ReadFileASyncCallback.c
+//common, exe, LOAD_ReadFile, 0x0,                         General/LOAD/LOAD_21_ReadFile.c
+//common, exe, LOAD_ReadFile_NoCallback, 0x0,              General/LOAD/LOAD_22_ReadFile_NoCallback.c
+//common, exe, LOAD_FindFile, 0x0,                         General/LOAD/LOAD_23_FindFile.c
+//common, exe, LOAD_HowlHeaderSectors, 0x0,                General/LOAD/LOAD_24_HowlHeaderSectors.c
+//common, exe, LOAD_HowlCallback, 0x0,                     General/LOAD/LOAD_25_HowlCallback.c
+//common, exe, LOAD_HowlSectorChainStart, 0x0,             General/LOAD/LOAD_26_HowlSectorChainStart.c
+//common, exe, LOAD_HowlSectorChainEnd, 0x0,               General/LOAD/LOAD_27_HowlSectorChainEnd.c
+//common, exe, LOAD_RunPtrMap, 0x0,                        General/LOAD/LOAD_28_RunPtrMap.c
+//common, exe, LOAD_Robots2P, 0x0,                         General/LOAD/LOAD_29_Robots2P.c
+//common, exe, LOAD_Robots1P, 0x0,                         General/LOAD/LOAD_30_Robots1P.c
+//common, exe, LOAD_DriverMPK, 0x0,                        General/LOAD/LOAD_31_DriverMPK.c
+//common, exe, LOAD_LangFile, 0x0,                         General/LOAD/LOAD_32_LangFile.c
+//common, exe, LOAD_GetBigfileIndex, 0x0,                  General/LOAD/LOAD_33_GetBigfileIndex.c
+//LOAD_00_33_Callback_Overlay_Generic ends here ---^
 
 common, exe, LOAD_AppendQueue, 0x0,                      General/LOAD/LOAD_34_AppendQueue.c
 common, exe, LOAD_CDRequestCallback, 0x0,                General/LOAD/LOAD_35_CDRequestCallback.c
@@ -697,7 +823,7 @@ common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_
 //common, exe, MainFrame_InitVideoSTR, 0x0,                General/MAIN/MainFrame_05_InitVideoSTR.c //TODO
 //common, exe, MainFrame_HaveAllPads, 0x0,                 General/MAIN/MainFrame_06_HaveAllPads.c //TODO
 common, exe, MainFrame_RequestMaskHint, 0x0,             General/MAIN/MainFrame_07_RequestMaskHint.c
-common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c
+common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c //Mods7 lives in this file
 //common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_00_idk.c //TODO
 common, exe, MainFreeze_ConfigDrawArrows, 0x0,           General/MAIN/MainFreeze_01_ConfigDrawArrows.c
 //common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_02_idk.c //TODO
@@ -714,23 +840,33 @@ common, exe, MainGameStart_Initialize, 0x0,              General/MAIN/MainGameSt
 common, exe, MainInit_VisMem, 0x0,                       General/MAIN/MainInit_00_VisMem.c
 //common, exe, MainInit_RainBuffer, 0x0,                   General/MAIN/MainInit_01_RainBuffer.c //TODO
 
-// everything between MainInit_RainBuffer and MainRaceTrack_RequestLoad
-//common, exe, MainInit_PrimMem, 0x0, General/MAIN/MAIN_AAA_BigBlock1.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the MAIN_AAA_BigBlock1 line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & ModsMain.c (required for /AltMods):
+//     * uncomment the MAIN_AAA_BigBlock1 line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
+common, exe, MainInit_PrimMem, 0x0,                      General/MAIN/MAIN_AAA_BigBlock1.c
 
-common, exe, MainInit_PrimMem, 0x0,                      General/MAIN/MainInit_02_PrimMem.c
-common, exe, MainInit_JitPoolsReset, 0x0,                General/MAIN/MainInit_03_JitPoolsReset.c
-common, exe, MainInit_OTMem, 0x0,                        General/MAIN/MainInit_04_OTMem.c
-common, exe, MainInit_JitPoolsNew, 0x0,                  General/MAIN/MainInit_05_JitPoolsNew.c
-common, exe, MainInit_Drivers, 0x0,                      General/MAIN/MainInit_06_Drivers.c
-common, exe, MainInit_FinalizeInit, 0x0,                 General/MAIN/MainInit_07_FinalizeInit.c
-//common, exe, MainInit_, 0x0,                             General/MAIN/MainInit_08_.c //TODO
-common, exe, MainInit_VRAMClear, 0x0,                    General/MAIN/MainInit_09_VRAMClear.c
-common, exe, MainInit_VRAMDisplay, 0x0,                  General/MAIN/MainInit_10_VRAMDisplay.c
-common, exe, MainKillGame_StopCTR, 0x0,                  General/MAIN/MainKillGame_00_StopCTR.c
-common, exe, MainKillGame_LaunchSpyro2, 0x0,             General/MAIN/MainKillGame_01_LaunchSpyro2.c
-common, exe, MainLoadVLC_Callback, 0x0,                  General/MAIN/MainLoadVLC_00_Callback.c
-common, exe, MainLoadVLC, 0x0,                           General/MAIN/MainLoadVLC.c
-common, exe, main, 0x0,                                  General/MAIN/MainMain.c
+//MAIN_AAA_BigBlock1 starts here ---v
+//common, exe, MainInit_PrimMem, 0x0,                      General/MAIN/MainInit_02_PrimMem.c
+//common, exe, MainInit_JitPoolsReset, 0x0,                General/MAIN/MainInit_03_JitPoolsReset.c
+//common, exe, MainInit_OTMem, 0x0,                        General/MAIN/MainInit_04_OTMem.c
+//common, exe, MainInit_JitPoolsNew, 0x0,                  General/MAIN/MainInit_05_JitPoolsNew.c
+//common, exe, MainInit_Drivers, 0x0,                      General/MAIN/MainInit_06_Drivers.c
+//common, exe, MainInit_FinalizeInit, 0x0,                 General/MAIN/MainInit_07_FinalizeInit.c
+////common, exe, MainInit_, 0x0,                             General/MAIN/MainInit_08_.c //TODO
+//common, exe, MainInit_VRAMClear, 0x0,                    General/MAIN/MainInit_09_VRAMClear.c
+//common, exe, MainInit_VRAMDisplay, 0x0,                  General/MAIN/MainInit_10_VRAMDisplay.c
+//common, exe, MainKillGame_StopCTR, 0x0,                  General/MAIN/MainKillGame_00_StopCTR.c
+//common, exe, MainKillGame_LaunchSpyro2, 0x0,             General/MAIN/MainKillGame_01_LaunchSpyro2.c
+//common, exe, MainLoadVLC_Callback, 0x0,                  General/MAIN/MainLoadVLC_00_Callback.c
+//common, exe, MainLoadVLC, 0x0,                           General/MAIN/MainLoadVLC.c
+//common, exe, main, 0x0,                                  General/MAIN/MainMain.c
+//MAIN_AAA_BigBlock1 ends here ---^
+
 common, exe, MainRaceTrack_StartLoad, 0x0,               General/MAIN/MainRaceTrack_00_StartLoad.c
 common, exe, MainRaceTrack_RequestLoad, 0x0,             General/MAIN/MainRaceTrack_01_RequestLoad.c
 common, exe, MainStats_ClearBattleVS, 0x0,               General/MAIN/MainStats_00_ClearBattleVS.c
@@ -1001,9 +1137,18 @@ common, exe, Timer_Destroy, 0x0,                         General/Timer/Timer_1_D
 // ====================================================================================================================
 // UI (stubbed for this file)
 // ====================================================================================================================
-// everything from UI_SaveLapTime to UI_RenderFrame_CrystChall
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the UI_AAA_BigBlock1 line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods1.c (required for /AltMods):
+//     * uncomment the UI_AAA_BigBlock1 line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
+
 common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBlock1.c //why is this linked to UI_ThTick_CountPickup and not UI_SaveLapTime?
 
+//UI_AAA_BigBlock1 starts here ---v
 //common, exe, UI_SaveLapTime, 0x0,                        General/UI/UI_00_SaveLapTime.c
 //common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_01_ThTick_CountPickup.c
 //common, exe, UI_ThTick_Reward, 0x0,                      General/UI/UI_02_ThTick_Reward.c
@@ -1051,6 +1196,8 @@ common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBl
 //common, exe, UI_RenderFrame_Racing, 0x0,                 General/UI/UI_44_RenderFrame_Racing.c
 //common, exe, UI_RenderFrame_AdvHub, 0x0,                 General/UI/UI_45_RenderFrame_AdvHub.c
 //common, exe, UI_RenderFrame_CrystChall, 0x0,             General/UI/UI_46_RenderFrame_CrystChall.c
+//UI_AAA_BigBlock1 ends here ---^
+
 //common, exe, UI_RenderFrame_Wumpa3D_2P3P4P, 0x0,         General/UI/UI_47_RenderFrame_Wumpa3D_2P3P4P.c //TODO (not called in the rewrite?)
 //common, exe, UI_VsQuipReadDriver, 0x0,                   General/UI/UI_48_VsQuipReadDriver.c //TODO
 //common, exe, UI_VsQuipAssign, 0x0,                       General/UI/UI_49_VsQuipAssign.c //TODO
@@ -1062,7 +1209,7 @@ common, exe, UI_RaceStart_IntroText1P, 0x0,              General/UI/UI_54_RaceSt
 common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEnd_MenuProc.c
 //common, exe, UI_CupStandings_FinalizeCupRanks, 0x0,      General/UI/UI_56_CupStandings_FinalizeCupRanks.c //TODO
 //common, exe, UI_CupStandings_UpdateCupRanks, 0x0,        General/UI/UI_57_CupStandings_UpdateCupRanks.c //TODO
-common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupStandings_InputAndDraw.c
+common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupStandings_InputAndDraw.c //Mods8 lives in this file
 
 // ====================================================================================================================
 // Vector
@@ -1138,9 +1285,18 @@ common, exe, VehPhysProc_Driving_Init, 0x0,              General/Vehicle/VehPhys
 common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_04_FreezeEndEvent_PhysLinear.c
 common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0,       General/Vehicle/VehPhysProc_05_FreezeEndEvent_Init.c
 
-// everything between VehPhysProc_FreezeEndEvent_Init and VehPickState_NewState
-common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_AAA_BigBlock1.c
+// for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
+//     * comment the VehPhysProc_AAA_BigBlock1 line below
+//     * uncomment the block of individual files below
+//     * disable USE_DEFRAG in common.h
+// for defrag & Mods5.c (required for /AltMods):
+//     * uncomment the VehPhysProc_AAA_BigBlock1 line below
+//     * comment the block of individual files below
+//     * enable USE_DEFRAG in common.h
 
+common, exe, VehPhysProc_FreezeVShift_Update, 0x0,             General/Vehicle/VehPhysProc_AAA_BigBlock1.c
+
+//VehPhysProc_AAA_BigBlock1 starts here ---v
 //common, exe, VehPhysProc_FreezeVShift_Update, 0x0,             General/Vehicle/VehPhysProc_06_FreezeVShift_Update.c
 //common, exe, VehPhysProc_FreezeVShift_ReverseOneFrame, 0x0,    General/Vehicle/VehPhysProc_07_FreezeVShift_ReverseOneFrame.c
 //common, exe, VehPhysProc_FreezeVShift_Init, 0x0,               General/Vehicle/VehPhysProc_08_FreezeVShift_Init.c
@@ -1169,6 +1325,7 @@ common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_A
 //common, exe, VehPhysProc_SpinStop_PhysAngular, 0x0,            General/Vehicle/VehPhysProc_31_SpinStop_PhysAngular.c //TODO (not needed?)
 //common, exe, VehPhysProc_SpinStop_Animate, 0x0,                General/Vehicle/VehPhysProc_32_SpinStop_Animate.c
 //common, exe, VehPhysProc_SpinStop_Init, 0x0,                   General/Vehicle/VehPhysProc_33_SpinStop_Init.c
+//VehPhysProc_AAA_BigBlock1 ends here ---^
 
 common, exe, VehPickState_NewState, 0x0,                       General/Vehicle/VehPickState_0_NewState.c
 common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0,               General/Vehicle/VehPickupItem_0_MaskBoolGoodGuy.c
