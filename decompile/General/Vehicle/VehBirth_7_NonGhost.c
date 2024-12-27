@@ -80,13 +80,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	if((gGT->gameMode1 & 0x20002000) != 0)
 	{
 		// dont update, make invisible
-		t->funcThTick = DECOMP_Veh_NullThread;
+		t->funcThTick = DECOMP_VehBirth_NullThread;
 		inst->flags |= 0x80;
 	}
-}
-
-void DECOMP_Veh_NullThread(struct Thread* t)
-{
-	// leave this empty
-	return;
 }

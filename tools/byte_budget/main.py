@@ -158,7 +158,7 @@ def filterByOverlay(symbolData, overlay = None):
       if m != None and m.group(1) in ovr_aliases:
          if ovr_aliases[m.group(1)] == overlay:
             filteredSymbolData[name] = symbolData[name] #include in result
-      elif m == None:
+      else:
          if overlay == None:
             filteredSymbolData[name] = symbolData[name] #include in result
    return filteredSymbolData

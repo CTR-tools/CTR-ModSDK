@@ -164,8 +164,8 @@ common, 233, CS_Credits_End, 0x0,                                    General/233
 // ====================================================================================================================
 // exe globals
 // ====================================================================================================================
-common, exe, data, 0x0, General/zGlobal_DATA.c
-common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
+common, exe, data, 0x0,                                  General/zGlobal_DATA.c
+common, exe, sdata_static, 0x0,                          General/zGlobal_SDATA.c
 
 // ====================================================================================================================
 // BOTS
@@ -929,78 +929,71 @@ common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEn
 //common, exe, UI_CupStandings_UpdateCupRanks, 0x0,        General/UI/UI_57_CupStandings_UpdateCupRanks.c //TODO
 common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupStandings_InputAndDraw.c
 
-
-
-
-
-common, exe, VehAfterColl_GetSurface, 0x0, General/Vehicle/VehAfterColl_GetSurface.c
-common, exe, VehAfterColl_GetTerrain, 0x0, General/Vehicle/VehAfterColl_GetTerrain.c
-
-//ommon, exe, VehBirth_TeleportSelf, 0x0, General/Vehicle/VehBirth_TeleportSelf.c
-common, exe, VehBirth_TeleportAll, 0x0, General/Vehicle/VehBirth_TeleportAll.c
-common, exe, VehBirth_GetModelByName, 0x0, General/Vehicle/VehBirth_GetModelByName.c
-common, exe, VehBirth_SetConsts, 0x0, General/Vehicle/VehBirth_SetConsts.c
-common, exe, VehBirth_EngineAudio_AllPlayers, 0x0, General/Vehicle/VehBirth_EngineAudio_AllPlayers.c
-common, exe, VehBirth_TireSprites, 0x0, General/Vehicle/VehBirth_TireSprites.c
-common, exe, VehBirth_NonGhost, 0x0, General/Vehicle/VehBirth_NonGhost.c
-common, exe, VehBirth_Player, 0x0, General/Vehicle/VehBirth_Player.c
-
-common, exe, VehCalc_InterpBySpeed, 0x0, General/Vehicle/VehCalc_InterpBySpeed.c
-common, exe, VehCalc_MapToRange, 0x0, General/Vehicle/VehCalc_MapToRange.c
-common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
-// need VehCalc_FastSqrt
-
-common, exe, VehEmitter_Exhaust, 0x0, General/Vehicle/VehEmitter_Exhaust.c
-common, exe, VehEmitter_Sparks_Ground, 0x0, General/Vehicle/VehEmitter_Sparks_Ground.c
-common, exe, VehEmitter_Terrain_Ground, 0x0, General/Vehicle/VehEmitter_Terrain_Ground.c
-common, exe, VehEmitter_Sparks_Wall, 0x0, General/Vehicle/VehEmitter_Sparks_Wall.c
-// need VehEmitter_DriverMain
-
-common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
-common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
-
-common, exe, VehFrameInst_GetStartFrame, 0x0, General/Vehicle/VehFrameInst_GetStartFrame.c
-common, exe, VehFrameInst_GetNumAnimFrames, 0x0, General/Vehicle/VehFrameInst_GetNumAnimFrames.c
-
+// ====================================================================================================================
+// Veh
+// ====================================================================================================================
+common, exe, VehAfterColl_GetSurface, 0x0,               General/Vehicle/VehAfterColl_0_GetSurface.c
+common, exe, VehAfterColl_GetTerrain, 0x0,               General/Vehicle/VehAfterColl_1_GetTerrain.c
+//common, exe, VehBirth_TeleportSelf, 0x0,                 General/Vehicle/VehBirth_0_TeleportSelf.c
+common, exe, VehBirth_TeleportAll, 0x0,                  General/Vehicle/VehBirth_1_TeleportAll.c
+common, exe, VehBirth_GetModelByName, 0x0,               General/Vehicle/VehBirth_2_GetModelByName.c
+common, exe, VehBirth_SetConsts, 0x0,                    General/Vehicle/VehBirth_3_SetConsts.c
+common, exe, VehBirth_EngineAudio_AllPlayers, 0x0,       General/Vehicle/VehBirth_4_EngineAudio_AllPlayers.c
+common, exe, VehBirth_NullThread, 0x0,                   General/Vehicle/VehBirth_5_NullThread.c
+common, exe, VehBirth_TireSprites, 0x0,                  General/Vehicle/VehBirth_6_TireSprites.c
+common, exe, VehBirth_NonGhost, 0x0,                     General/Vehicle/VehBirth_7_NonGhost.c
+common, exe, VehBirth_Player, 0x0,                       General/Vehicle/VehBirth_8_Player.c
+common, exe, VehCalc_InterpBySpeed, 0x0,                 General/Vehicle/VehCalc_0_InterpBySpeed.c
+common, exe, VehCalc_MapToRange, 0x0,                    General/Vehicle/VehCalc_1_MapToRange.c
+common, exe, VehCalc_SteerAccel, 0x0,                    General/Vehicle/VehCalc_2_SteerAccel.c
+//common, exe, VehCalc_FastSqrt, 0x0,                      General/Vehicle/VehCalc_3_FastSqrt.c //TODO
+common, exe, VehEmitter_Exhaust, 0x0,                    General/Vehicle/VehEmitter_0_Exhaust.c
+common, exe, VehEmitter_Sparks_Ground, 0x0,              General/Vehicle/VehEmitter_1_Sparks_Ground.c
+common, exe, VehEmitter_Terrain_Ground, 0x0,             General/Vehicle/VehEmitter_2_Terrain_Ground.c
+common, exe, VehEmitter_Sparks_Wall, 0x0,                General/Vehicle/VehEmitter_3_Sparks_Wall.c
+//common, exe, VehEmitter_DriverMain, 0x0,                 General/Vehicle/VehEmitter_4_DriverMain.c //TODO
+common, exe, VehFire_Audio, 0x0,                         General/Vehicle/VehFire_0_Audio.c
+common, exe, VehFire_Increment, 0x0,                     General/Vehicle/VehFire_1_Increment.c
+common, exe, VehFrameInst_GetStartFrame, 0x0,            General/Vehicle/VehFrameInst_0_GetStartFrame.c
+common, exe, VehFrameInst_GetNumAnimFrames, 0x0,         General/Vehicle/VehFrameInst_1_GetNumAnimFrames.c
 // breaks animation during u-turn (DOWN+SQUARE+TURN)
-//ommon, exe, VehFrameProc_Driving, 0x0, General/Vehicle/VehFrameProc_Driving.c
-
-common, exe, VehFrameProc_Spinning, 0x0, General/Vehicle/VehFrameProc_Spinning.c
-common, exe, VehFrameProc_LastSpin, 0x0, General/Vehicle/VehFrameProc_LastSpin.c
-
-// need VehGround
-common, exe, VehGroundShadow_Subset1, 0x0, General/Vehicle/VehGroundShadow_Subset1.c
-common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
-
-// need VehLap
-// need VehPhysCrash
-
-// need more of VehPhysForce
-common, exe, VehPhysForce_ConvertSpeedToVec, 0x0, General/Vehicle/VehPhysForce_ConvertSpeedToVec.c
-common, exe, VehPhysForce_CounterSteer, 0x0, General/Vehicle/VehPhysForce_CounterSteer.c
-common, exe, VehPhysForce_OnApplyForces, 0x0, General/Vehicle/VehPhysForce_OnApplyForces.c
-
-// need more of VehPhysGeneral
-
-common, exe, VehPhysGeneral_PhysAngular, 0x0, General/Vehicle/VehPhysGeneral_PhysAngular.c
-common, exe, VehPhysGeneral_LerpQuarterStrength, 0x0, General/Vehicle/VehPhysGeneral_LerpQuarterStrength.c
-common, exe, VehPhysGeneral_LerpToForwards, 0x0, General/Vehicle/VehPhysGeneral_LerpToForwards.c
-common, exe, VehPhysGeneral_JumpGetVelY, 0x0, General/Vehicle/VehPhysGeneral_JumpGetVelY.c
-// JumpAndFriction
-common, exe, VehPhysGeneral_SetHeldItem, 0x0, General/Vehicle/VehPhysGeneral_SetHeldItem.c
-//ommon, exe, VehPhysGeneral_GetBaseSpeed, 0x0, General/Vehicle/VehPhysGeneral_GetBaseSpeed.c
-
-common, exe, VehPhysJoystick_ReturnToRest, 0x0, General/Vehicle/VehPhysJoystick_ReturnToRest.c
-common, exe, VehPhysJoystick_GetStrength, 0x0, General/Vehicle/VehPhysJoystick_GetStrength.c
-common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0, General/Vehicle/VehPhysJoystick_GetStrengthAbsolute.c
-
-common, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
-common, exe, VehPhysProc_Driving_Audio, 0x0, General/Vehicle/VehPhysProc_Driving_Audio.c
-common, exe, VehPhysProc_Driving_Update, 0x0, General/Vehicle/VehPhysProc_Driving_Update.c
-common, exe, VehPhysProc_Driving_Init, 0x0, General/Vehicle/VehPhysProc_Driving_Init.c
-
-common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_FreezeEndEvent_PhysLinear.c
-common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0, General/Vehicle/VehPhysProc_FreezeEndEvent_Init.c
+//common, exe, VehFrameProc_Driving, 0x0,                General/Vehicle/VehFrameProc_2_Driving.c
+common, exe, VehFrameProc_Spinning, 0x0,                 General/Vehicle/VehFrameProc_3_Spinning.c
+common, exe, VehFrameProc_LastSpin, 0x0,                 General/Vehicle/VehFrameProc_4_LastSpin.c
+common, exe, VehGroundShadow_Subset1, 0x0,               General/Vehicle/VehGroundShadow_0_Subset1.c
+//common, exe, VehGroundShadow_Main, 0x0,                  General/Vehicle/VehGroundShadow_1_Main.c //TODO
+//common, exe, VehGroundSkids_Subset1, 0x0,                General/Vehicle/VehGroundSkids_0_Subset1.c //TODO
+common, exe, VehGroundSkids_Subset2, 0x0,                General/Vehicle/VehGroundSkids_1_Subset2.c
+//common, exe, VehGroundSkids_Main, 0x0,                   General/Vehicle/VehGroundSkids_2_Main.c //TODO
+//common, exe, VehLap_UpdateProgress, 0x0,                 General/Vehicle/VehLap_0_UpdateProgress.c //TODO
+//common, exe, VehPhysCrash_ConvertVecToSpeed, 0x0,        General/Vehicle/VehPhysCrash_0_ConvertVecToSpeed.c //TODO
+//common, exe, VehPhysCrash_BounceSelf, 0x0,               General/Vehicle/VehPhysCrash_1_BounceSelf.c //TODO
+//common, exe, VehPhysCrash_AI, 0x0,                       General/Vehicle/VehPhysCrash_2_AI.c //TODO
+//common, exe, VehPhysCrash_Attack, 0x0,                   General/Vehicle/VehPhysCrash_3_Attack.c //TODO
+//common, exe, VehPhysCrash_AnyTwoCars, 0x0,               General/Vehicle/VehPhysCrash_4_AnyTwoCars.c //TODO
+common, exe, VehPhysForce_ConvertSpeedToVec, 0x0,        General/Vehicle/VehPhysForce_0_ConvertSpeedToVec.c
+//common, exe, VehPhysForce_OnGravity, 0x0,                General/Vehicle/VehPhysForce_1_OnGravity.c
+common, exe, VehPhysForce_OnApplyForces, 0x0,            General/Vehicle/VehPhysForce_2_OnApplyForces.c
+//common, exe, VehPhysForce_CollideDrivers, 0x0,           General/Vehicle/VehPhysForce_3_CollideDrivers.c //TODO
+//common, exe, VehPhysForce_TranslateMatrix, 0x0,          General/Vehicle/VehPhysForce_4_TranslateMatrix.c //TODO
+//common, exe, VehPhysForce_RotAxisAngle, 0x0,             General/Vehicle/VehPhysForce_5_RotAxisAngle.c //TODO
+common, exe, VehPhysForce_CounterSteer, 0x0,             General/Vehicle/VehPhysForce_6_CounterSteer.c
+common, exe, VehPhysGeneral_PhysAngular, 0x0,            General/Vehicle/VehPhysGeneral_0_PhysAngular.c
+common, exe, VehPhysGeneral_LerpQuarterStrength, 0x0,    General/Vehicle/VehPhysGeneral_1_LerpQuarterStrength.c
+common, exe, VehPhysGeneral_LerpToForwards, 0x0,         General/Vehicle/VehPhysGeneral_2_LerpToForwards.c
+common, exe, VehPhysGeneral_JumpGetVelY, 0x0,            General/Vehicle/VehPhysGeneral_3_JumpGetVelY.c
+//common, exe, VehPhysGeneral_JumpAndFriction, 0x0,        General/Vehicle/VehPhysGeneral_4_JumpAndFriction.c //TODO
+common, exe, VehPhysGeneral_SetHeldItem, 0x0,            General/Vehicle/VehPhysGeneral_5_SetHeldItem.c
+//common, exe, VehPhysGeneral_GetBaseSpeed, 0x0,           General/Vehicle/VehPhysGeneral_6_GetBaseSpeed.c
+common, exe, VehPhysJoystick_ReturnToRest, 0x0,          General/Vehicle/VehPhysJoystick_0_ReturnToRest.c
+common, exe, VehPhysJoystick_GetStrength, 0x0,           General/Vehicle/VehPhysJoystick_1_GetStrength.c
+common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0,   General/Vehicle/VehPhysJoystick_2_GetStrengthAbsolute.c
+common, exe, VehPhysProc_Driving_PhysLinear, 0x0,        General/Vehicle/VehPhysProc_0_Driving_PhysLinear.c
+common, exe, VehPhysProc_Driving_Audio, 0x0,             General/Vehicle/VehPhysProc_1_Driving_Audio.c
+common, exe, VehPhysProc_Driving_Update, 0x0,            General/Vehicle/VehPhysProc_2_Driving_Update.c
+common, exe, VehPhysProc_Driving_Init, 0x0,              General/Vehicle/VehPhysProc_3_Driving_Init.c
+common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_4_FreezeEndEvent_PhysLinear.c
+common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0,       General/Vehicle/VehPhysProc_5_FreezeEndEvent_Init.c
 
 // everything between VehPhysProc_FreezeEndEvent_Init and VehPickState_NewState
 common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_AAA_BigBlock1.c
@@ -1035,6 +1028,10 @@ common, exe, VehTalkMask_End, 0x0, General/Vehicle/VehTalkMask_End.c
 // need VehTurbo_ProcessBucket (in wip)
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
 common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
+
+
+
+
 
 // Japan
 1006, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c

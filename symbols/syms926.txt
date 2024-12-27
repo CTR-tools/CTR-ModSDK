@@ -840,6 +840,7 @@
 80058948 VehBirth_GetModelByName
 80058a60 VehBirth_SetConsts
 80058ba4 VehBirth_EngineAudio_AllPlayers
+80058c44 VehBirth_NullThread
 80058c4c VehBirth_TireSprites
 80058d2c VehBirth_NonGhost
 80058ec0 VehBirth_Player
@@ -886,7 +887,7 @@
 8005ebac VehPhysForce_CollideDrivers
 8005ee34 VehPhysForce_TranslateMatrix
 8005f89c VehPhysForce_RotAxisAngle
-8005fb4c VehPhysForce_AccelTerrainSlope
+8005fb4c VehPhysForce_CounterSteer
 
 8005fc8c VehPhysGeneral_PhysAngular
 80060458 VehPhysGeneral_LerpQuarterStrength

@@ -850,7 +850,7 @@ void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
-void DECOMP_Veh_NullThread(struct Thread* t);
+void DECOMP_VehBirth_NullThread(struct Thread* t);
 void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*)(struct LoadQueueSlot*));
 void DECOMP_ElimBG_SaveScreenshot_Chunk(u_short* param_1, u_short* param_2, int param_3);
 void DECOMP_ElimBG_ToggleInstance(struct Instance* inst, char boolGameIsPaused);

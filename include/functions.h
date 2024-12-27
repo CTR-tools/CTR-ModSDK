@@ -1332,7 +1332,7 @@ void MainGameEnd_Initialize();
 void SetDrawEnv(void*, DRAWENV*);
 int PushBuffer_SetFrustumPlane(char*, int, int, int);
 u_int VehCalc_FastSqrt(u_int, u_int);
-void Veh_NullThread(struct Thread* t);
+void VehBirth_NullThread(struct Thread* t);
 void SelectProfile_DrawAdvProfile(struct AdvProgress* adv, int posX, int posY, u_int isHighlighted, short slotIndex, u_short menuFlag);
 void SelectProfile_Init(u_short flags);
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);

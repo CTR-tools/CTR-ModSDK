@@ -1044,7 +1044,7 @@ void FUN_80058ba4(void)
   return;
 }
 
-// Veh_NullThread
+// VehBirth_NullThread
 void FUN_80058c44()
 {
 	return;
@@ -6971,7 +6971,7 @@ void FUN_8005f89c(undefined2 *param_1,short *param_2,uint param_3)
 }
 
 
-// VehPhysForce_AccelTerrainSlope
+// VehPhysForce_AccelTerrainSlope aka VehPhysForce_CounterSteer
 // param1 - driver object
 // called from:
 //		VehPhysGeneral_PhysAngular

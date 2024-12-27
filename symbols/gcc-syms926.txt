@@ -669,6 +669,7 @@ VehBirth_TeleportAll = 0x80058898;
 VehBirth_GetModelByName = 0x80058948;
 VehBirth_SetConsts = 0x80058a60;
 VehBirth_EngineAudio_AllPlayers = 0x80058ba4;
+VehBirth_NullThread = 0x80058c44;
 VehBirth_TireSprites = 0x80058c4c;
 VehBirth_NonGhost = 0x80058d2c;
 VehBirth_Player = 0x80058ec0;
