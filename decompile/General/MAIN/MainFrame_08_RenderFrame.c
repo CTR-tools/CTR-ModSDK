@@ -416,7 +416,7 @@ void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	if((gGT->gameMode1 & GAME_CUTSCENE) != 0) return;
 
 #ifndef REBUILD_PS1
-	if(MainFrame_HaveAllPads(gGT->numPlyrNextGame) == 1) return;
+	if(DECOMP_MainFrame_HaveAllPads(gGT->numPlyrNextGame) == 1) return;
 #else
 	// assume all connected on PC
 	return;

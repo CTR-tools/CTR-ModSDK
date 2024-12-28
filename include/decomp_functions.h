@@ -872,3 +872,4 @@ void DECOMP_LOAD_StringToUpper(char* path);
 void DECOMP_MainLoadVLC(void);
 void DECOMP_MainKillGame_StopCTR(void);
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver* d);
+int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame);

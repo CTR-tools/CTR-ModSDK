@@ -821,7 +821,7 @@ common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_
 //common, exe, MainFrame, 0x0,                             General/MAIN/MainFrame_03_idk.c //TODO
 //common, exe, MainFrame_VisMemFullFrame, 0x0,             General/MAIN/MainFrame_04_VisMemFullFrame.c //TODO
 //common, exe, MainFrame_InitVideoSTR, 0x0,                General/MAIN/MainFrame_05_InitVideoSTR.c //TODO
-//common, exe, MainFrame_HaveAllPads, 0x0,                 General/MAIN/MainFrame_06_HaveAllPads.c //TODO
+common, exe, MainFrame_HaveAllPads, 0x0,                 General/MAIN/MainFrame_06_HaveAllPads.c //may need further testing
 common, exe, MainFrame_RequestMaskHint, 0x0,             General/MAIN/MainFrame_07_RequestMaskHint.c
 common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c //Mods7 lives in this file
 //common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_00_idk.c //TODO
