@@ -935,8 +935,8 @@ common, exe, MEMPACK_PopToState, 0x0,                    General/MEMPACK/MEMPACK
 // MixRNG (done?)
 // ====================================================================================================================
 common, exe, MixRNG_Scramble, 0x0,                       General/MixRNG/MixRNG_0_Scramble.c
-common, exe, MixRNG_Particles, 0x0,                      General/MixRNG/MixRNG_1_Particles.c
-common, exe, MixRNG_GetValue, 0x0,                       General/MixRNG/MixRNG_2_GetValue.c
+//common, exe, MixRNG_Particles, 0x0,                      General/MixRNG/MixRNG_1_Particles.c
+//common, exe, MixRNG_GetValue, 0x0,                       General/MixRNG/MixRNG_2_GetValue.c
 
 // ====================================================================================================================
 // Particle
