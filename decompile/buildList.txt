@@ -142,6 +142,8 @@ common, 231, RB_Baron_ThTick, 0x0,                                     General/2
 //common, 231, RB_Blade_ThTick, 0x0,									 General/231/231_058_RB_Blade_ThTick.c
 //common, 231, RB_Blade_LInB, 0x0,										 General/231/231_059_RB_Blade_LInB.c
 //common, 231, RB_Bubbles_RoosTubes, 0x0,								 General/231/231_060_RB_Bubbles_RoosTubes.c
+
+//this block is grouped in 231_061_068_RB_Crate.c, but it's structured differently and doesn't have the same functions.
 //common, 231, RB_CrateAny_ThTick_Explode, 0x0,							 General/231/231_061_RB_CrateAny_ThTick_Explode.c
 //common, 231, RB_CrateAny_ThTick_Grow, 0x0,							 General/231/231_062_RB_CrateAny_ThTick_Grow.c
 //common, 231, RB_CrateWeapon_ThCollide, 0x0,							 General/231/231_063_RB_CrateWeapon_ThCollide.c
@@ -150,6 +152,8 @@ common, 231, RB_Baron_ThTick, 0x0,                                     General/2
 //common, 231, RB_CrateFruit_LInC, 0x0,									 General/231/231_066_RB_CrateFruit_LInC.c
 //common, 231, RB_CrateTime_ThCollide, 0x0,								 General/231/231_067_RB_CrateTime_ThCollide.c
 //common, 231, RB_CrateTime_LInC, 0x0,									 General/231/231_068_RB_CrateTime_LInC.c
+
+//this block is grouped in 231_069_072_RB_Crystal.c, but it's missing ThCollide (decompile reworked).
 //common, 231, RB_Crystal_ThCollide, 0x0,								 General/231/231_069_RB_Crystal_ThCollide.c
 //common, 231, RB_Crystal_ThTick, 0x0,									 General/231/231_070_RB_Crystal_ThTick.c
 //common, 231, RB_Crystal_LInC, 0x0,									 General/231/231_071_RB_Crystal_LInC.c
