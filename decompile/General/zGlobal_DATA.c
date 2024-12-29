@@ -3,13 +3,15 @@
 // this is only for LevInstances,
 // NonLev-related entries are empty
 
+//Signatures of LInC changed to return int instead of void as per this conversation: https://discord.com/channels/527135227546435584/637616020177289236/1312155337545093130
+
 void DECOMP_RB_Default_LInB();
 void DECOMP_RB_Fruit_LInB();
-void DECOMP_RB_Fruit_LInC();
+int DECOMP_RB_Fruit_LInC();
 void RB_GenericMine_LInB();
-void DECOMP_RB_CrateFruit_LInC();
-void DECOMP_RB_CrateWeapon_LInC();
-void DECOMP_RB_CrateTime_LInC();
+int DECOMP_RB_CrateFruit_LInC();
+int DECOMP_RB_CrateWeapon_LInC();
+int DECOMP_RB_CrateTime_LInC();
 void DECOMP_RB_FlameJet_LInB();
 //void DECOMP_RB_Plant_LInB();		-- DONE
 //void DECOMP_RB_Minecart_LInB();	-- DONE
@@ -25,11 +27,11 @@ void RB_Orca_LInB();
 //void DECOMP_RB_Fireball_LInB();	-- DONE
 void RB_Banner_LInB();
 void DECOMP_RB_CtrLetter_LInB();
-void DECOMP_RB_CtrLetter_LInC();
+int DECOMP_RB_CtrLetter_LInC();
 void DECOMP_RB_Crystal_LInB();
-void DECOMP_RB_Crystal_LInC();
+int DECOMP_RB_Crystal_LInC();
 void DECOMP_RB_Teeth_LInB();
-void DECOMP_RB_Teeth_LInC();
+int DECOMP_RB_Teeth_LInC();
 
 void AH_Sign_LInB();
 //void DECOMP_AH_Door_LInB();		-- DONE
@@ -43,11 +45,11 @@ void CS_LevThread_LInB();
 #ifdef REBUILD_PC
 void DECOMP_RB_Default_LInB() {}
 void DECOMP_RB_Fruit_LInB() {}
-void DECOMP_RB_Fruit_LInC() {}
+int DECOMP_RB_Fruit_LInC() {}
 void RB_GenericMine_LInB() {}
-void DECOMP_RB_CrateFruit_LInC() {}
-void DECOMP_RB_CrateWeapon_LInC() {}
-void DECOMP_RB_CrateTime_LInC() {}
+int DECOMP_RB_CrateFruit_LInC() {}
+int DECOMP_RB_CrateWeapon_LInC() {}
+int DECOMP_RB_CrateTime_LInC() {}
 void DECOMP_RB_FlameJet_LInB() {}
 //void DECOMP_RB_Plant_LInB() {}	-- DONE
 //void DECOMP_RB_Minecart_LInB() {}	-- DONE
@@ -63,11 +65,11 @@ void RB_Orca_LInB() {}
 //void DECOMP_RB_Fireball_LInB() {}	-- DONE
 void RB_Banner_LInB() {}
 void DECOMP_RB_CtrLetter_LInB() {}
-void DECOMP_RB_CtrLetter_LInC() {}
+int DECOMP_RB_CtrLetter_LInC() {}
 void DECOMP_RB_Crystal_LInB() {}
-void DECOMP_RB_Crystal_LInC() {}
+int DECOMP_RB_Crystal_LInC() {}
 void DECOMP_RB_Teeth_LInB() {}
-void DECOMP_RB_Teeth_LInC() {}
+int DECOMP_RB_Teeth_LInC() {}
 
 void AH_Sign_LInB() {}
 //void DECOMP_AH_Door_LInB() {}		-- DONE
@@ -88,6 +90,25 @@ void CS_LevThread_LInB() {}
 #define SET_MDM(x,y,z) {.name = x, .LInB = y, .LInC = z}
 #endif
 
+//usage of this macro is mainly because I'm too lazy to go through this file and manually recalculate all the values where short is expected instead of uint.
+//this is purely to reduce warnings in the compiler output. (i.e., the compiler was doing this implicitly). (literally 800 lines of warnings at time-of-writing).
+#define AS(x) ((short)x)
+
+// Using visual studio, here are some regexes for finding and replacing candidates for "any hex value with 4 leading F's, and then wrapping it in 'AS(value)'"
+// FIND:            (?<!AS\()(?i:0x(?=ffff)[0-9abcdef]+)
+// REPLACE:         AS($1)
+
+//the procedure that I would use to convert (by hand, unfortunately) would be to take the last 4 digits of any 0xffffXXXX number,
+//take it into windows' calculator (programmer mode), do 0 minus that number, then you should get a number like 0xffff_ffff_ffff_YYYY
+//the resulting "correct number" to replace your original number would be "-0xYYYY"
+
+//e.g., if input is "0xfffffbb4", then in windows' calculator "0 - 0xfbb4" = "0xffff_ffff_ffff_044c", then replace the original number with "-0x044c"
+
+//short-to-int downcasting is "implementation specified" (i.e., *not* undefined, *not* defined by the spec). It turns out that GCC handles this the way we like (I think??),
+//but we *should* manually fix this eventually.
+
+//also see https://discord.com/channels/527135227546435584/637616020177289236/1307309914691076167
+
 struct Data data =
 {
 	.ArcadeDifficulty =
@@ -96,198 +117,198 @@ struct Data data =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0d48,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0d48,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[1] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0c80,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0c80,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[2] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,0xfffffc18,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,AS(0xfffffc18),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1194,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1194,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[3] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffda8,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffda8),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,0xfffffe0c,0xffffe890,0xfffffce0,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffffce0),AS(0xfffffc18),
 				},
 		},
 		[4] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x5700,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x5700,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffffc00,0xfffffe00,0xffffff00,0x0600,0x0b00,0x18f4,0x22e8,0x2f00,0x0e74,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffffc00),AS(0xfffffe00),AS(0xffffff00),0x0600,0x0b00,0x18f4,0x22e8,0x2f00,0x0e74,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[5] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,0xfffffc18,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,AS(0xfffffc18),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffffb00,0xfffffc00,0xfffffd00,0x0600,0x0780,0x1700,0x1fc8,0x2f00,0x09c4,0x03e8,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffffb00),AS(0xfffffc00),AS(0xfffffd00),0x0600,0x0780,0x1700,0x1fc8,0x2f00,0x09c4,0x03e8,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[6] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0700,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0700,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffd00,0xfffffe00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0dac,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffffa00),AS(0xfffffd00),AS(0xfffffe00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0dac,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[7] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0d48,0x03e8,0xfffffda8,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0d48,0x03e8,AS(0xfffffda8),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[8] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x041a,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x041a,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0e10,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0e10,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[9] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[10] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x04b0,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[11] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[12] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0dac,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0dac,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[13] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[14] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x5700,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x5700,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffd00,0xfffffe00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffffa00),AS(0xfffffd00),AS(0xfffffe00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0fa0,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[15] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x1004,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[16] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffffb00,0xfffffc00,0xfffffd00,0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0f3c,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffffb00),AS(0xfffffc00),AS(0xfffffd00),0x0780,0x0f00,0x18f4,0x22e8,0x2f00,0x0f3c,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 		[17] =
 		{
 				.params1 =
 				{
-						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,0xfffffbb4,0x0000,0xfffff060,0xfffffa24,0xfffffe70,
+						0x0280,0x0300,0x0f00,0x1700,0x1f00,0x2700,0x2f00,0x3f00,0x044c,AS(0xfffffbb4),0x0000,AS(0xfffff060),AS(0xfffffa24),AS(0xfffffe70),
 				},
 				.params2 =
 				{
-						0xfffff800,0xfffffc00,0xfffffd00,0x0680,0x0f00,0x18f4,0x22e8,0x2f00,0x0e74,0x04b0,0xfffffe0c,0xffffe890,0xfffff830,0xfffffc18,
+						AS(0xfffff800),AS(0xfffffc00),AS(0xfffffd00),0x0680,0x0f00,0x18f4,0x22e8,0x2f00,0x0e74,0x04b0,AS(0xfffffe0c),AS(0xffffe890),AS(0xfffff830),AS(0xfffffc18),
 				},
 		},
 	},
@@ -298,66 +319,66 @@ struct Data data =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0dac,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0dac,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 		[1] =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0dac,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0dac,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 		[2] =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0dac,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0dac,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 		[3] =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0ed8,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0ed8,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 		[4] =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0ed8,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0ed8,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 		[5] =
 		{
 				.params1 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x0ed8,0xfffffbb4,0xfffff254,0xfffffc18,0xfffffed4,0x0320,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x0ed8,AS(0xfffffbb4),AS(0xfffff254),AS(0xfffffc18),AS(0xfffffed4),0x0320,
 				},
 				.params2 =
 				{
-						0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0xfffffa00,0x1194,0xfffffbb4,0xfffff830,0xfffffc18,0xfffffe0c,0xffffff9c,
+						AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),AS(0xfffffa00),0x1194,AS(0xfffffbb4),AS(0xfffff830),AS(0xfffffc18),AS(0xfffffe0c),AS(0xffffff9c),
 				},
 		},
 	},
@@ -578,700 +599,700 @@ struct Data data =
 		#if 1
 
 		// 0x00 - NO_FUNC
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x01 - ANIMATE_IF_HIT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x02 - PU_WUMPA_FRUIT
 		// OG game births a thread, calls ThCollide, then dies,
 		// DECOMP shouldn't birth in LInC, just trigger HUD,
 		// Use Crystal_LInC, optimized for Crystal and Fruit
-		SET_MDM(0,DECOMP_RB_Fruit_LInB,DECOMP_RB_Crystal_LInC),
+		SET_MDM(NULL,DECOMP_RB_Fruit_LInB,DECOMP_RB_Crystal_LInC),
 
 		// 0x03 - PU_SMALL_BOMB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x04 - PU_LARGE_BOMB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x05 - PU_MISSILE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x06 - PU_EXPLOSIVE_CRATE (nitro)
 		// used for Crystal Challenge TNT/Nitro, no BSP collision,
 		// LInB births thread that checks for collision every frame,
 		// DECOMP should birth unthreaded instances, and add hitboxes
-		SET_MDM(0,RB_GenericMine_LInB,0),
+		SET_MDM(NULL,RB_GenericMine_LInB,NULL),
 
 		// 0x07 - PU_FRUIT_CRATE
-		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateFruit_LInC),
+		SET_MDM(NULL,DECOMP_RB_Default_LInB,DECOMP_RB_CrateFruit_LInC),
 
 		// 0x08 - PU_RANDOM_CRATE (Weapon Box)
-		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateWeapon_LInC),
+		SET_MDM(NULL,DECOMP_RB_Default_LInB,DECOMP_RB_CrateWeapon_LInC),
 
 		// 0x09 - PU_TIME_CRATE_1 (unused duplicate of 0x5C)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0A - PU_TIME_CRATE_2 (unused duplicate of 0x64)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0B - PU_TIME_CRATE_3 (unused duplicate of 0x65)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0C - PU_POISON
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0D - PU_SHIELD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0E - PU_INVINCIBILITY
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x0F - PU_SPRING
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x10 - PU_CLOCK
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x11 - PU_TURBO
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x12 - FLAME_JET (tiger temple)
-		SET_MDM(0,DECOMP_RB_FlameJet_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_FlameJet_LInB,NULL),
 
 		// 0x13 - PIRANHA_PLANT (papu pyramid)
-		SET_MDM(0,DECOMP_RB_Plant_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Plant_LInB,NULL),
 
 		// 0x14 - GATE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x15 - START_LINE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x16 - SPRING
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x17 - TURBO
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x18 - DYNAMIC_PLAYER (player driver)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x19 - DYNAMIC_SMALL_BOMB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1a - DYNAMIC_LARGE_BOMB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1b - DYNAMIC_MISSILE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1c - DYNAMIC_EXPLOSIVE_CRATE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1d - DYNAMIC_POISON
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1e - DYNAMIC_INVICIBILITY
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x1f - DYNAMIC_SPLINE_FOLLOWER
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x20 - DYNAMIC_SNOWBALL (demo blizzard bluff)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x21 - DYNAMIC_MINE_CART
-		SET_MDM(0,DECOMP_RB_Minecart_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Minecart_LInB,NULL),
 
 		// 0x22 - TEMP_SNOWBALL (blizzard bluff boulder)
-		SET_MDM(0,DECOMP_RB_Snowball_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Snowball_LInB,NULL),
 
 		// 0x23 - FINISH_LINE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x24 - ARMADILLO (armadillo)
-		SET_MDM(0,DECOMP_RB_Armadillo_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Armadillo_LInB,NULL),
 
 		// 0x25 - BLADE
-		SET_MDM(0,DECOMP_RB_Blade_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Blade_LInB,NULL),
 
 		// 0x26 - STATIC_CRATE_EXPLOSION
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x27 - STATIC_CRATE_TNT
 		// used for Crystal Challenge TNT/Nitro, no BSP collision,
 		// LInB births thread that checks for collision every frame,
 		// DECOMP should birth unthreaded instances, and add hitboxes
-		SET_MDM(0,RB_GenericMine_LInB,0),
+		SET_MDM(NULL,RB_GenericMine_LInB,NULL),
 
 		// 0x28 - STATIC_CRATE_NITRO (unused duplicate of 0x6)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x29 - DYNAMIC_ROCKET "bombtracker"
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2a - DYNAMIC_BIGROCKET
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2b - STATIC_WARPEDBURST "explosion2"
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2c - STATIC_TURBO_EFFECT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2d - STATIC_TURBO_EFFECT1
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2e - STATIC_TURBO_EFFECT2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x2f - STATIC_TURBO_EFFECT3
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x30 - STATIC_TURBO_EFFECT4
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x31 - STATIC_TURBO_EFFECT5
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x32 - STATIC_TURBO_EFFECT6
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x33 - STATIC_TURBO_EFFECT7
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x34 - STATIC_TURBO_EFFECT_DARK
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x35 - STATIC_SHOCKWAVE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x36 - DYNAMIC_WARPBALL
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x37 - STATIC_FRUITDISP (HUD)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x38 - STATIC_BIG1 "Empty" used for Oxide Podium
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x39 - STATIC_AKUAKU
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3a - STATIC_UKAUKA
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3b - DYNAMIC_BOMB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3c - STATIC_BEAKER
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3d - STATIC_BEAKERBREAK
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3e - STATIC_AKUBEAM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x3f - DYNAMIC_ROBOT_CAR (AI driver)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x40 - STATIC_UKABEAM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x41 - STATIC_SHIELD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x42 - STATIC_CLOUD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x43 - STATIC_WAKE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x44 - STATIC_SHOCKWAVE_RED
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x45 - STATIC_SHOCKWAVE_GREEN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x46 - STATIC_BEAKER_RED
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x47 - STATIC_BEAKER_GREEN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x48 - STATIC_BEAKERBREAK_RED
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x49 - STATIC_BEAKERBREAK_GREEN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x4a - LENSFLARE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x4b - DYNAMIC_GHOST (ghost driver)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x4c - DYNAMIC_SEAL (polar pass)
-		SET_MDM(0,DECOMP_RB_Seal_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Seal_LInB,NULL),
 
 		// 0x4d - DYNAMIC_ORCA (unused, polar pass)
-		SET_MDM(0,0 /*RB_Orca_LInB*/,0),
+		SET_MDM(NULL,NULL /*RB_Orca_LInB*/,NULL),
 
 		// 0x4e - DYNAMIC_BARREL (sewer speedway)
-		SET_MDM(0,DECOMP_RB_Snowball_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Snowball_LInB,NULL),
 
 		// 0x4f - DYNAMIC_VONLABASS (unused, hot air skyway)
-		SET_MDM(0,DECOMP_RB_Baron_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Baron_LInB,NULL),
 
 		// 0x50 - DYNAMIC_SKUNK (unused, unknown track)
-		SET_MDM(0,0 /*RB_Minecart_LInB*/,0),
+		SET_MDM(NULL,NULL /*RB_Minecart_LInB*/,NULL),
 
 		// 0x51 - DYNAMIC_TURTLE (mystery caves)
-		SET_MDM(0,DECOMP_RB_Turtle_LInB,DECOMP_RB_Turtle_LInC),
+		SET_MDM(NULL,DECOMP_RB_Turtle_LInB,DECOMP_RB_Turtle_LInC),
 
 		// 0x52 - DYNAMIC_SPIDER (cortex castle)
-		SET_MDM(0,DECOMP_RB_Spider_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Spider_LInB,NULL),
 
 		// 0x53 - DYNAMIC_SPIDERSHADOW
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x54 - DYNAMIC_FIREBALL (mystery caves fireball)
 		// DECOMP version removed LInC, it does nothing
-		SET_MDM(0,DECOMP_RB_Fireball_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Fireball_LInB,NULL),
 
 		// 0x55 - DYNAMIC_DRUM (n gin labs barrel)
-		SET_MDM(0,DECOMP_RB_Baron_LInB,0),
+		SET_MDM(NULL,DECOMP_RB_Baron_LInB,NULL),
 
 		// 0x56 - DYNAMIC_SHIELD (blue shield)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x57 - STATIC_PIPE1
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x58 - STATIC_PIPE2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x59 - STATIC_VENT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x5a - DYNAMIC_SHIELD_DARK
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x5b - STATIC_CASTLE_SIGN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x5c - STATIC_TIME_CRATE_01
-		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(NULL,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 
 		// 0x5d - DYNAMIC_HIGHLIGHT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x5e - DYNAMIC_SHIELD_GREEN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x5f - STATIC_GEM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x60 - STATIC_CRYSTAL
 		// LInC should not birth a thread, nor call ThCollide,
 		// LInC should only kill LInB's thread and trigger HUD
-		SET_MDM(0,DECOMP_RB_Crystal_LInB,DECOMP_RB_Crystal_LInC),
+		SET_MDM(NULL,DECOMP_RB_Crystal_LInB,DECOMP_RB_Crystal_LInC),
 
 		// 0x61 - STATIC_RELIC
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x62 - STATIC_TROPHY
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x63 - STATIC_KEY
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x64 - STATIC_TIME_CRATE_02
-		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(NULL,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 
 		// 0x65 - STATIC_TIME_CRATE_03
-		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(NULL,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 
 		// 0x66 - STATIC_INTRO_TROPHY
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x67 - STATIC_INTRO_CRASH
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x68 - STATIC_RINGTOP
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x69 - STATIC_RINGBOTTOM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x6a - STATIC_CTR
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x6b - STATIC_BANNER
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x6C - STATIC_WARPPAD
-		SET_MDM(0,DECOMP_AH_WarpPad_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_WarpPad_LInB,NULL),
 
 		// 0x6D - STATIC_BIG0
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x6e - STATIC_BIG9
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x6f - STATIC_BIGX
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x70 - STATIC_TEETH
-		SET_MDM(0,DECOMP_RB_Teeth_LInB,DECOMP_RB_Teeth_LInC),
+		SET_MDM(NULL,DECOMP_RB_Teeth_LInB,DECOMP_RB_Teeth_LInC),
 
 		// 0x71 - STATIC_STARTTEXT
-		SET_MDM(0,0/*RB_StartText_LInB*/,0),
+		SET_MDM(NULL,NULL/*RB_StartText_LInB*/,NULL),
 
 		// 0x72 - STATIC_SAVEOBJ
-		SET_MDM(0,DECOMP_AH_SaveObj_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_SaveObj_LInB,NULL),
 
 		// 0x73 - STATIC_PINGARAGE
-		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Garage_LInB,NULL),
 
 		// 0x74 - STATIC_PAPUGARAGE
-		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Garage_LInB,NULL),
 
 		// 0x75 - STATIC_ROOGARAGE
-		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Garage_LInB,NULL),
 
 		// 0x76 - STATIC_JOEGARAGE
-		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Garage_LInB,NULL),
 
 		// 0x77 - STATIC_OXIDEGARAGE
-		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Garage_LInB,NULL),
 
 		// 0x78 - STATIC_SCAN (load/save screen)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x79 - STATIC_SUBTRACT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x7a - STATIC_DOOR
-		SET_MDM(0,DECOMP_AH_Door_LInB,0),
+		SET_MDM(NULL,DECOMP_AH_Door_LInB,NULL),
 
 		// 0x7b - STATIC_BEAM (warppad vortex)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x7c - STATIC_BOTTOMRING (warppad spiral dots)
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x7d - STATIC_TOKEN
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x7e - STATIC_CRASHDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x7f - STATIC_CORTEXDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x80 - STATIC_TINYDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x81 - STATIC_COCODANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x82 - STATIC_NGINDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x83 - STATIC_DINGODANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x84 - STATIC_POLARDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x85 - STATIC_PURADANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x86 - STATIC_PINSTRIPEDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x87 - STATIC_PAPUDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x88 - STATIC_ROODANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x89 - STATIC_JOEDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8a - STATIC_NTROPYDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8b - STATIC_PENDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8c - STATIC_FAKEDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8d - STATIC_OXIDEDANCE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8e - STATIC_GARAGETOP
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x8f - STATIC_TAWNA1
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x90 - STATIC_TAWNA2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x91 - STATIC_TAWNA3
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x92 - STATIC_TAWNA4
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0x93 - STATIC_C
 		// LInC should not birth a thread, nor call ThCollide,
 		// LInC should only kill LInB's thread and trigger HUD
-		SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
+		SET_MDM(NULL,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 
 		// 0x94 - STATIC_T
 		// LInC should not birth a thread, nor call ThCollide,
 		// LInC should only kill LInB's thread and trigger HUD
-		SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
+		SET_MDM(NULL,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 
 		// 0x95 - STATIC_R
 		// LInC should not birth a thread, nor call ThCollide,
 		// LInC should only kill LInB's thread and trigger HUD
-		SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
+		SET_MDM(NULL,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 
 		// 0x96 - STATIC_CRASHINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x97 - STATIC_COCOINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x98 - STATIC_CORTEXINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x99 - STATIC_TINYINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9A - STATIC_POLARINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9B - STATIC_DINGOINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9C - STATIC_OXIDEINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9D - STATIC_SIMPLEKARTINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9E - STATIC_TINYKARTINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0x9F - STATIC_DINGOKARTINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA0 - STATIC_SIMPLEOBJINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA1 - STATIC_PPOINTTHINGINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA2 - STATIC_PRTHINGINTRO
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA3 - STATIC_OXIDELILSHIP
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA4 - STATIC_INTROOXIDECAM
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xA5 - STATIC_INTROOXIDEBODY
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xa6 - STATIC_STARTBANNERWAVE
-		SET_MDM(0,RB_Banner_LInB,0),
+		SET_MDM(NULL,RB_Banner_LInB,NULL),
 
 		// 0xa7 - STATIC_DOOR2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xa8 - STATIC_PODIUM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xa9 - STATIC_PINHEAD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xaa - STATIC_PAPUHEAD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xab - STATIC_ROOHEAD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xac - STATIC_JOEHEAD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xad - STATIC_OXIDEHEAD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xae - STATIC_AKUMOUTH
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xaf - STATIC_DINGOFIRE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb0 - STATIC_TOMBSTONE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb1 - STATIC_AKUBIG
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb2 - STATIC_UKABIG
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb3 - STATIC_UKAMOUTH
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb4 - STATIC_UNUSED03
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb5 - STATIC_DOOR3
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb6 - NDI_BOX_BOX_01
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb7 - NDI_BOX_BOX_02
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb8 - NDI_BOX_BOX_02_BOTTOM
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xb9 - NDI_BOX_BOX_02_FRONT
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xba - NDI_BOX_BOX_02A
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xbb - NDI_BOX_BOX_03
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xbc - NDI_BOX_CODE
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xbd - NDI_BOX_GLOW
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xbe - NDI_BOX_LID
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xbf - NDI_BOX_LID2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc0 - NDI_BOX_PARTICLES_01
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc1 - NDI_KART0
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc2 - NDI_KART1
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc3 - NDI_KART2
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc4 - NDI_KART3
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc5 - NDI_KART4
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc6 - NDI_KART5
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc7 - NDI_KART6
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc8 - NDI_KART7
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xc9 - NDI_BOX_LIDB
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xca - NDI_BOX_LIDC
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xcb - NDI_BOX_LIDD
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xcc - STATIC_INTRO_FLASH
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xcd - STATIC_INTRODOORS
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xce - STATIC_CRASHSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xcf - STATIC_CORTEXSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd0 - STATIC_TINYSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd1 - STATIC_COCOSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd2 - STATIC_NGINSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd3 - STATIC_DINGOSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd4 - STATIC_POLARSELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd5 - STATIC_PURASELECT
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd6 - STATIC_ENDDOORS
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd7 - STATIC_ENDFLASH
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd8 - STATIC_ENDINGOXIDE
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xd9 - STATIC_ENDIGNOXIDE_02 (mispelled in-game)
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xda - STATIC_ENDOXIDEBIGSHIP
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xdb - STATIC_ENDOXIDELILSHIP
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xdc - STATIC_OXIDECAMEND
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xdd - STATIC_OXIDECAMEND02
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xde - STATIC_JLOGO_FLAG
-		SET_MDM(0,0,0),
+		SET_MDM(NULL,NULL,NULL),
 
 		// 0xdf - STATIC_OXIDESPEAKER
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xe0 - STATIC_INTROSPARKS
-		SET_MDM(0,CS_LevThread_LInB,0),
+		SET_MDM(NULL,CS_LevThread_LInB,NULL),
 
 		// 0xe1 - STATIC_GNORMALZ
-		SET_MDM(0,AH_Sign_LInB,0),
+		SET_MDM(NULL,AH_Sign_LInB,NULL),
 
 		#endif
 	},
@@ -2599,22 +2620,22 @@ struct Data data =
 
 	.voiceSetPtr =
 	{
-		&data.voiceData[0].voiceSet,
-		&data.voiceData[1].voiceSet,
-		&data.voiceData[2].voiceSet,
-		&data.voiceData[3].voiceSet,
-		&data.voiceData[4].voiceSet,
-		&data.voiceData[5].voiceSet,
-		&data.voiceData[6].voiceSet,
-		&data.voiceData[7].voiceSet,
-		&data.voiceData[8].voiceSet,
-		&data.voiceData[9].voiceSet,
-		&data.voiceData[10].voiceSet,
-		&data.voiceData[11].voiceSet,
-		&data.voiceData[12].voiceSet,
-		&data.voiceData[13].voiceSet,
-		&data.voiceData[14].voiceSet,
-		&data.voiceData[15].voiceSet
+		(int)&data.voiceData[0].voiceSet[0],
+		(int)&data.voiceData[1].voiceSet[0],
+		(int)&data.voiceData[2].voiceSet[0],
+		(int)&data.voiceData[3].voiceSet[0],
+		(int)&data.voiceData[4].voiceSet[0],
+		(int)&data.voiceData[5].voiceSet[0],
+		(int)&data.voiceData[6].voiceSet[0],
+		(int)&data.voiceData[7].voiceSet[0],
+		(int)&data.voiceData[8].voiceSet[0],
+		(int)&data.voiceData[9].voiceSet[0],
+		(int)&data.voiceData[10].voiceSet[0],
+		(int)&data.voiceData[11].voiceSet[0],
+		(int)&data.voiceData[12].voiceSet[0],
+		(int)&data.voiceData[13].voiceSet[0],
+		(int)&data.voiceData[14].voiceSet[0],
+		(int)&data.voiceData[15].voiceSet[0]
 	},
 
 	.voiceID =
@@ -3580,7 +3601,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x88A3,
 		.rows = 0,
-		.funcPtr = 0x80038b5c,
+		.funcPtr = (void (*)(struct RectMenu*))0x80038b5c,
 		.drawStyle = 4,
 
 		// the rest initializes as zeros
@@ -4159,11 +4180,11 @@ struct Data data =
 
 	.bossWeaponMetaPtr =
 	{
-		&data.BossWeaponOxide,
-		&data.BossWeaponRoo,
-		&data.BossWeaponPapu,
-		&data.BossWeaponJoe,
-		&data.BossWeaponPinstripe,
+		&data.BossWeaponOxide[0],
+		&data.BossWeaponRoo[0],
+		&data.BossWeaponPapu[0],
+		&data.BossWeaponJoe[0],
+		&data.BossWeaponPinstripe[0],
 	},
 
 	.s_BASCUS_94426_SLOTS = "BASCUS-94426-SLOTS",
@@ -4204,7 +4225,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xC81,
 		.rows = &data.rowsSaveGame[0],
-		.funcPtr = 0x8004B258,
+		.funcPtr = (void (*)(struct RectMenu*))0x8004B258,
 		.drawStyle = 4,
 	},
 
@@ -4277,7 +4298,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xC81,
 		.rows = &data.rowsGreenLoadSave[0],
-		.funcPtr = 0x80048960,
+		.funcPtr = (void (*)(struct RectMenu*))0x80048960,
 		.drawStyle = 0x10, // GREEN
 	},
 
@@ -4285,21 +4306,21 @@ struct Data data =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuGhostSelection =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuWarning2 =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x2820,
-		.funcPtr = 0x800490c4,
+		.funcPtr = (void (*)(struct RectMenu*))0x800490c4,
 	},
 
 	.menuSubmitName =
@@ -4313,7 +4334,7 @@ struct Data data =
 	{
 		.stringIndexTitle = -1,
 		.state = 0x20,
-		.funcPtr = 0x80047da8,
+		.funcPtr = (void (*)(struct RectMenu*))0x80047da8,
 	},
 
 	.MetaDataLoadSave =
@@ -4687,10 +4708,10 @@ struct Data data =
 
 	.hudStructPtr =
 	{
-		&data.hud_1P_P1,
-		&data.hud_2P_P1,
-		&data.hud_4P_P1,
-		&data.hud_4P_P1,
+		&data.hud_1P_P1[0],
+		&data.hud_2P_P1[0],
+		&data.hud_4P_P1[0],
+		&data.hud_4P_P1[0],
 	},
 
 	.trackerAnim1 =
@@ -4749,7 +4770,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x803,
 		.rows = &data.rowsRetryExit[0],
-		.funcPtr = 0x80055c90,
+		.funcPtr = (void (*)(struct RectMenu*))0x80055c90,
 		.drawStyle = 4,
 	},
 
@@ -9069,7 +9090,7 @@ struct Data data =
 				{
 						.particle_funcPtr = 0x00000000,
 						.particle_colorFlags = 0x0000,
-						.particle_lifespan = 0xffffffff,
+						.particle_lifespan = AS(0xffffffff),
 						.particle_Type = 1,
 				}
 		},
@@ -9892,3 +9913,5 @@ struct Data data =
 
 	// .confetti = {}
 };
+
+#undef AS

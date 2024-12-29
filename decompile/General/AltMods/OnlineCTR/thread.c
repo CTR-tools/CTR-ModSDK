@@ -167,7 +167,7 @@ void ThreadFunc(struct Thread* t)
 			{
 				// clear width, then get width
 				int width = 0;
-				DECOMP_RECTMENU_GetWidth(m, &width, 1);
+				DECOMP_RECTMENU_GetWidth(m, (short*)&width, 1);
 
 				// draw
 				DECOMP_RECTMENU_DrawSelf(m, 0, 0, (int)width);

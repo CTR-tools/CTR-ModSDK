@@ -248,7 +248,7 @@ void Online_OtherFX_RecycleNew(
 		local = 0;
     }
 
-    if (newSoundID != -1)
+    if (newSoundID != ((u_int)-1))
     {
         // if this is a new sound
         if (local == 0)
@@ -260,7 +260,7 @@ void Online_OtherFX_RecycleNew(
         // modification of old sound
         else
         {
-            OtherFX_Modify(local, modifyFlags);
+            OtherFX_Modify((u_int)local, modifyFlags);
         }
     }
 }

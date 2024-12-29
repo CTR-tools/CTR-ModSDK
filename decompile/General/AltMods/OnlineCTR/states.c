@@ -46,8 +46,8 @@ void ResetPsxGlobals()
 
 	// 8mb RAM expansion, for emulators that support it.
 	// Needed for 3 or more players on Adv Hub
-	sdata->mempack[0].lastFreeByte = 0x807ff800;
-	sdata->mempack[0].endOfAllocator = 0x807ff800;
+	sdata->mempack[0].lastFreeByte = (void*)0x807ff800;
+	sdata->mempack[0].endOfAllocator = (void*)0x807ff800;
 
 	sdata->ptrActiveMenu = 0;
 

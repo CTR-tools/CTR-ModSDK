@@ -125,8 +125,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
   
 	iVar6 = iVar14;
 
-	struct InstDrawPerPlayer* idpp =
-		INST_GETIDPP(iVar10);
+	struct InstDrawPerPlayer* idpp = INST_GETIDPP(iVar10);
   
     // clear pushBuffer in every InstDrawPerPlayer
     idpp[0].pushBuffer = 0;
@@ -215,7 +214,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
     rot[2] = D230.csm_instRot[2];
 
 	// converted to TEST in rebuildPS1
-    ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
+    ConvertRotToMatrix(&iVar10->matrix, &rot[0]);
   }
   return;
 }

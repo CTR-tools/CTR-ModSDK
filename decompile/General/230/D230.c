@@ -49,7 +49,7 @@ struct OverlayDATA_230 D230 =
 		.posY_curr = 0x6c,
 		
 		.state = 0x403,
-		.rows = &D230.rowsMainMenuBasic,
+		.rows = &D230.rowsMainMenuBasic[0],
 		.funcPtr = DECOMP_MM_MenuProc_Main,
 		
 		.unk1e = 1,
@@ -67,7 +67,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = 0x53,
 		
 		.state = 9,
-		.rows = &D230.rowsPlayers1P2P,
+		.rows = &D230.rowsPlayers1P2P[0],
 		.funcPtr = DECOMP_MM_MenuProc_1p2p,	
 	},
 	
@@ -84,7 +84,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = 0x53,
 		
 		.state = 9,
-		.rows = &D230.rowsPlayers2P3P4P,
+		.rows = &D230.rowsPlayers2P3P4P[0],
 		.funcPtr = DECOMP_MM_MenuProc_2p3p4p,	
 	},
 	
@@ -101,7 +101,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = 0x159,
 		
 		.state = 1,
-		.rows = &D230.rowsDifficulty,
+		.rows = &D230.rowsDifficulty[0],
 		.funcPtr = DECOMP_MM_MenuProc_Difficulty,	
 	},
 	
@@ -117,7 +117,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = 0x15D,
 		
 		.state = 1,
-		.rows = &D230.rowsRaceType,
+		.rows = &D230.rowsRaceType[0],
 		.funcPtr = DECOMP_MM_MenuProc_SingleCup,	
 	},
 	
@@ -133,7 +133,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 		
 		.state = 9,
-		.rows = &D230.rowsAdventure,
+		.rows = &D230.rowsAdventure[0],
 		.funcPtr = DECOMP_MM_MenuProc_NewLoad,	
 	},
 
@@ -192,7 +192,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 		
 		.state = 0x2408,
-		.rows = &D230.rowsCupSelect,
+		.rows = &D230.rowsCupSelect[0],
 		.funcPtr = DECOMP_MM_CupSelect_MenuProc,	
 	},
 	
@@ -500,12 +500,12 @@ struct OverlayDATA_230 D230 =
 	
 	.ptrCsmArr = 
 	{
-		&D230.csm_1P2P,
-		&D230.csm_1P2P,
-		&D230.csm_3P,
-		&D230.csm_4P,
-		&D230.csm_1P2P_limited,
-		&D230.csm_1P2P_limited
+		&D230.csm_1P2P[0],
+		&D230.csm_1P2P[0],
+		&D230.csm_3P[0],
+		&D230.csm_4P[0],
+		&D230.csm_1P2P_limited[0],
+		&D230.csm_1P2P_limited[0]
 	},
 
 	.characterMenuID = 
@@ -593,10 +593,10 @@ struct OverlayDATA_230 D230 =
 
 	.ptr_transitionMeta_csm = 
 	{
-		&D230.transitionMeta_csm_1P2P,
-		&D230.transitionMeta_csm_1P2P,
-		&D230.transitionMeta_csm_3P,
-		&D230.transitionMeta_csm_4P
+		&D230.transitionMeta_csm_1P2P[0],
+		&D230.transitionMeta_csm_1P2P[0],
+		&D230.transitionMeta_csm_3P[0],
+		&D230.transitionMeta_csm_4P[0]
 	},
 
 	.csm_instPos = {0, 0x28, 0xFA, 0},
@@ -609,10 +609,10 @@ struct OverlayDATA_230 D230 =
 
 	.PlayerNumberStrings = 
 	{
-		&R230.s_1,
-		&R230.s_2,
-		&R230.s_3,
-		&R230.s_4
+		&R230.s_1[0],
+		&R230.s_2[0],
+		&R230.s_3[0],
+		&R230.s_4[0]
 	},
 
 	.getNextDriver1 = {2, 2, 1, 1},
@@ -722,7 +722,7 @@ struct OverlayDATA_230 D230 =
 		.posY_curr = 0x7c,
 
 		.state = 0x81,
-		.rows = &D230.rowsLapSel,
+		.rows = &D230.rowsLapSel[0],
 	},
 
 	.videoCol = 0x808080,
@@ -788,7 +788,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleType,
+		.rows = &D230.rowsBattleType[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -805,7 +805,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleLengthLifeTime,
+		.rows = &D230.rowsBattleLengthLifeTime[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -822,7 +822,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleLengthTimeTime,
+		.rows = &D230.rowsBattleLengthTimeTime[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -839,7 +839,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleLengthPoints,
+		.rows = &D230.rowsBattleLengthPoints[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -856,7 +856,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleLengthLifeLife,
+		.rows = &D230.rowsBattleLengthLifeLife[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -871,7 +871,7 @@ struct OverlayDATA_230 D230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = &D230.rowsBattleStartGame,
+		.rows = &D230.rowsBattleStartGame[0],
 		.funcPtr = DECOMP_MM_Battle_CloseSubMenu
 	},
 
@@ -945,7 +945,7 @@ struct OverlayDATA_230 D230 =
 		.posY_curr = 0xAF,
 
 		.state = 0x81,
-		.rows = &D230.rowsHighScore
+		.rows = &D230.rowsHighScore[0]
 	},
 
 	.highScore_trackDesired = 0,

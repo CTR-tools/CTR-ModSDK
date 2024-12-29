@@ -38,10 +38,7 @@ int DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags)
 		// if can not play with duplicates (at all)
 		(boolAntiSpam == 2) &&
 		(
-			channel = DECOMP_Channel_FindSound(id),
-			
-			// if sound is already playing
-			channel != 0
+			DECOMP_Channel_FindSound(id) != 0 // if sound is already playing
 		)
     )
   {

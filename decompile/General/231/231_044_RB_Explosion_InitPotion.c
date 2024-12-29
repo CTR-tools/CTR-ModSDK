@@ -42,7 +42,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   for (int i = 0; i < 5; i++)
   {  
 	// Create instance in particle pool
-    p = Particle_Init(0,sdata->gGT->iconGroup[1],0x800b2d58);
+    p = Particle_Init(0,sdata->gGT->iconGroup[1], (struct ParticleEmitter*)0x800b2d58);
 	
     if (p == NULL)
 		continue;

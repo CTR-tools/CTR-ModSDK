@@ -2,12 +2,11 @@
 
 void DECOMP_UpdateChannelVol_Music_All()
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{

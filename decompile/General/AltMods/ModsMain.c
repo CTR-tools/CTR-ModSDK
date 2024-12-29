@@ -1,11 +1,8 @@
 #include <common.h>
 
 void FLARE_ThTick();
-void VehPickState_NewState();
 void UI_VsQuipReadDriver();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
-void howl_VolumeGet();
-void Vector_SpecLightSpin2D();
 void StateZero(); // MainMain.c
 
 void Mods1_EndOfFile();

@@ -16,7 +16,7 @@ void BOTS_ThTick_RevEngine (struct Thread * thread, u_int param_2, u_char * para
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
 void BOTS_ThTick_Drive(struct Thread* thread);
-u_int BOTS_ChangeState(struct Driver* d1, int param_2, struct Driver* d2, int param_4);
+u_int BOTS_ChangeState(struct Driver* d1, int param_2, struct Driver* d2, int param_4); //either this needs to return int, or VehPickState_NewState needs to return u_int, if I were to guess, this one needs to return int.
 void BOTS_CollideWithOtherAI(int param_1, int param_2);
 void BOTS_GotoStartingLine(struct Driver* driver);
 struct Driver* BOTS_Driver_Init(int driverID);
@@ -70,12 +70,12 @@ void CDSYS_XAPauseAtEnd();
 // COLL
 
 u_char* COLL_LevModelMeta(u_int index);
-u_int COLL_Instance(short* param_1, struct BSP* node);
+u_int COLL_Instance(struct ScratchpadStruct* param_1, struct BSP* node);
 void COLL_PerBspLeaf_CheckInstances(struct BSP* node, struct ScratchpadStruct *sps);
 void COLL_StartSearch_AI(short* posCurr, short* posPrev, short* param_3);
 void COLL_StartSearch_Player(struct Thread* t, struct Driver* d);
-void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, u_int* param_3, int param_4);
-void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, u_int* callback, u_int param_4);
+void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
+void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, void (*callback)(struct BSP*, struct ScratchpadStruct*), short* param_4); //4th param might be `struct ScratchpadStruct*`
 u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001ef1c();
 void FUN_8001ef50(int param_1, short* param_2, short* param_3, short* param_4);
@@ -97,7 +97,7 @@ u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, i
 
 void CTR_Box_DrawWirePrims(u_short x, u_short y, u_short u, u_short v, u_char r, u_char g, u_char b, u_long* otMem, struct PrimMem* primMem);
 void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
-void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawClearBox(RECT* r, Color* rgb, int transparency, u_long* otMem, struct PrimMem* primMem); //either this function shouldn't have a 5th parameter, or the DECOMP_ version of it is missing that 5th parameter.
 void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void CTR_CycleTex_Model(struct AnimTex* pAnimTexArray, int timer);
@@ -339,7 +339,7 @@ void CseqMusic_StopAll();
 	// Channel
 
 	void Channel_SetVolume(struct ChannelAttr* attr, int volume, int LR);
-	struct ChannelStats* Channel_FindSound(int soundID);
+	int Channel_FindSound(int soundID);
 	struct ChannelStats* Channel_AllocSlot_AntiSpam(short soundID, char boolUseAntiSpam, int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_AllocSlot(int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_SearchFX_EditAttr(int type, int soundID, int updateFlags, struct ChannelAttr* attr);
@@ -474,7 +474,7 @@ void LHMatrix_Parent(struct Instance* inst, struct Instance* driverInst, SVECTOR
 
 // LibraryOfModels
 
-void LibraryOfModels_Store(struct GameTracker* gGT, int param_2, int* param_3);
+void LibraryOfModels_Store(struct GameTracker* gGT, int param_2, struct Model** param_3);
 void LibraryOfModels_Clear(struct GameTracker* gGT);
 
 // LinkedCollide
@@ -729,7 +729,7 @@ void PROC_DestroySelf(struct Thread* t);
 void PROC_DestroyBloodline(struct Thread* t);
 void PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
 void PROC_CheckAllForDead();
-struct Thread* PROC_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative);
+struct Thread* PROC_BirthWithObject(u_int creationFlags, void* behaviorFuncPtr, char* debugName, struct Thread* threadRelative); //2nd param function ptr, maybe (void (*)(int))?
 void PROC_CollidePointWithSelf(struct Thread* th, void* buf);
 void PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
 struct Thread* PROC_SearchForModel(struct Thread* th, int modelID);
@@ -992,7 +992,6 @@ void VehPhysForce_RotAxisAngle(MATRIX* m, short* normVec, short angle);
 void VehPhysForce_AccelTerrainSlope(struct Driver* d);
 
 // "VehPtr"
-void Veh_NullThread();
 void VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* driver);
 //VehPhysGeneral_LerpQuarterStrength()
 int VehPhysGeneral_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
@@ -1042,7 +1041,12 @@ void VehPhysProc_SpinStop_Init(struct Thread* t, struct Driver* d);
 // Weapon (?)
 
 //VehPickupItem_MaskBoolGoodGuy()
-void * VehPickupItem_MaskUseWeapon(int param_1,int param_2);
+
+
+//void* VehPickupItem_MaskUseWeapon(int param_1,int param_2); //old signature
+struct MaskHeadWeapon* VehPickupItem_MaskUseWeapon(struct Driver* driver, int boolPlaySound); //yoinked DECOMP_ signature
+
+
 //VehPickupItem_MissileGetTargetDriver()
 //VehPickupItem_PotionThrow()
 //VehPickupItem_ShootNow()
@@ -1162,7 +1166,7 @@ void* BreakDraw();
 // (currently unorganized)
 
 void RB_Bubbles_RoosTubes();
-void RB_Burst_DrawAll(int param_1);
+void RB_Burst_DrawAll(struct GameTracker* gGT);
 void UI_CupStandings_InputAndDraw();
 void VB_EndEvent_DrawMenu();
 void RR_EndEvent_DrawMenu();
@@ -1194,3 +1198,144 @@ void DrawLevelOvr4P(void* LevRenderList, struct PushBuffer* pb, struct BSP* bspL
 
 u_int MM_Video_CheckIfFinished(int param_1);
 void AH_Pause_Update();
+
+//=====================================================================================================================
+//this section is forward decls to fix warnings by TheUbMunster.
+//any commented out entries were hoisted from files, then commented because they're already present in this file.
+//these decls should probably be moved into the upper portion of this file & sorted at some point.
+//=====================================================================================================================
+
+//void RECTMENU_ClearInput();
+//void RECTMENU_Show(struct RectMenu*);
+void RECTMENU_DrawPolyGT4(
+	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot,
+	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+int ratan2(int x, int y);
+void RotTrans(SVECTOR*, VECTOR*, long*);
+void SetRotMatrix(MATRIX*);
+void SetTransMatrix(MATRIX*);
+void VehBirth_TeleportSelf(struct Driver* d, u_char spawnFlag, int spawnPosY); //this is present (but commented out) further up the file. Idk why.
+int RefreshCard_BoolGhostForLEV(u_short trackID); //this is present (but commented out) further up the file. Idk why.
+void StCdInterrupt(); //80078d34
+void DecDCTout(u_long*, int); //80079940 guessed the signature
+void DecDCTin(u_long*, int);
+void StSetStream(int, int, int, int, int); //guessed about a lot of these signatures (TheUbMunster)
+void StSetRing(u_long*, int);
+void StClearRing();
+int CdDiskReady(int);
+void StSetMask(int, int, int);
+void CdDataCallback(int);
+void DecDCTReset(int);
+u_long DecDCTvlcSize2(u_long);
+void DecDCToutCallback(void*);
+#ifndef REBUILD_PS1 //this forward decl hoisted from 231_006_RB_Hazard_HurtDriver.c
+int VehPickState_NewState(struct Driver* victim, int damageType, struct Driver* attacker, int reason); //this is present (but commented out) further up the file. Idk why, also, return value was void when should have been int
+#endif
+#ifndef REBUILD_PS1 //this forward decl hoisted from 231_011_RB_Hazard_ThCollide_Generic.c
+void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst);
+#endif
+void RB_GenericMine_ThTick(struct Thread*);
+void RB_MakeInstanceReflective(struct ScratchpadStruct*, struct Instance*);
+//void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
+//void VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* driver);
+//void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
+void VehPhysForce_TranslateMatrix(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
+void VehEmitter_DriverMain(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
+void FLARE_Init(short*); //this is present (but commented out) further up the file. Idk why.
+int EngineSound_VolumeAdjust(int desired, int current, int amount); //this is present (but commented out) further up the file. Idk why.
+void RB_ShieldDark_ThTick_Grow(struct Thread* t);
+void RB_Warpball_ThTick(struct Thread* t);
+struct CheckpointNode* RB_Warpball_NewPathNode(struct CheckpointNode* ptrNodeCurr, struct Driver* victim);
+void RB_Warpball_Start(struct TrackerWeapon* tw);
+void RB_Warpball_SetTargetDriver(struct TrackerWeapon* tw);
+struct Driver* RB_Warpball_GetDriverTarget(struct TrackerWeapon* tw, struct Instance* inst);
+void RB_Warpball_SeekDriver(struct TrackerWeapon* tw, unsigned int param_2, struct Driver* d);
+int RB_Hazard_HurtDriver(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
+struct Driver* VehPickupItem_MissileGetTargetDriver(struct Driver*); //this is present (but commented out) further up the file. Idk why.
+u_int VehPickupItem_PotionThrow(struct MineWeapon* potion, struct Instance* inst, u_int flags); //this is present (but commented out) further up the file. Idk why.
+unsigned short RB_Hazard_CollLevInst(struct ScratchpadStruct*, struct Thread*);
+void RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, struct MineWeapon* mw);
+void RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_2);
+void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, short* output);
+void EngineSound_Player(struct Driver* driver);
+void VehPhysForce_OnGravity(struct Driver* driver, Vec3* velocity);
+int RngDeadCoed(u_int*);
+struct Model* VehBirth_GetModelByName(char* searchName);
+struct Terrain* VehAfterColl_GetTerrain(u_char terrainType);
+void UI_CupStandings_UpdateCupRanks();
+void UI_CupStandings_FinalizeCupRanks();
+void ThTick_SetAndExec(struct Thread*, void (*callbackMaybe)(struct Thread*)); //guessed about the signature
+void RB_Default_LInB(struct Instance*);
+u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+void RB_RainCloud_Init(struct Driver* d);
+void RB_Explosion_InitPotion(struct Instance* inst);
+void RB_Blowup_Init(struct Instance* weaponInst);
+void RB_TNT_ThTick_ThrowOffHead();
+void RB_Explosion_InitGeneric(struct Instance* inst);
+void MatrixRotate(MATRIX*, MATRIX*, MATRIX*);
+void RB_Warpball_Death(struct Thread* t);
+void RB_Potion_OnShatter_TeethSearch(struct Instance*);
+short rand(); //guessed about the signature. Also, where is the location of this function????
+void Vector_SpecLightSpin3D(struct Instance*, short*, short*);
+void Vector_SpecLightNoSpin3D(struct Instance*, short*, short*);
+void CS_Podium_Prize_Spin(struct Instance* inst, short* prize);
+int howl_VolumeGet(int type);
+void SelectProfile_GetTrackID();
+void SelectProfile_PrintInteger(int integer, short posX, short posY, short fmt, u_short flags);
+void Vector_SpecLightSpin2D(struct Instance*, short*, short*); //guessed about the signature
+void* MEMPACK_AllocHighMem(int allocSize);
+char* CS_Credits_GetNextString(char*);
+void CS_Credits_DestroyCreditGhost();
+void CdSetDebug(int);
+void Voiceline_PoolClear();
+void SpuSetIRQ(int);
+void SpuReadDecodedData(short*, int);
+void SpuSetIRQCallback(void(*)(void));
+void SpuSetTransferCallback(void(*)(void));
+void MainInit_RainBuffer(struct GameTracker*);
+void CS_Podium_FullScene_Init();
+void CS_LevCamera_OnInit();
+void howl_StopAudio(int boolErasePauseBackup, int boolEraseMusic, int boolDestroyAllFX);
+u_int OtherFX_Modify(u_int soundId, u_int flags);
+void RB_TNT_ThTick_ThrowOnHead(struct Thread*);
+void RB_TNT_ThTick_ThrowOffHead(struct Thread*);
+void RB_Potion_ThTick_InAir(struct Thread*);
+void PadInitMtap(struct MultitapPacket*, struct MultitapPacket*);
+void PadStartCom();
+int PadSetMainMode(int, int, int);
+int PadInfoAct(short, int, int);
+int PadSetAct(short, char*, unsigned int);
+int PadSetActAlign(short, char*);
+int PadGetState(u_int);
+void SpuSetReverbModeDepth(short, short);
+void SpuSetReverb(short);
+void SpuSetReverbModeParam(SpuReverbAttr*);
+void SpuSetCommonCDMix(int);
+void SpuSetVoiceADSRAttr(int, int, int, int, int, int, int, int, int);
+int SpuSetReverbVoice(int, int);
+void Voiceline_Update();
+void Level_AmbientSound();
+void OtherFX_RecycleNew(void*, int, int); //2nd param might be `char`
+void LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID);
+void PickupBots_Init();
+void SetDrawMove(DR_MOVE*, RECT*, int x, int y);
+void PadStopCom();
+void __main();
+void SetGraphDebug(int);
+void SetGeomOffset(int, int);
+void SetGeomScreen(int);
+void RenderBucket_InitDepthGTE();
+int format(char*);
+void Particle_UpdateList(int*, int);
+void VehLap_UpdateProgress(struct Driver*);
+void MainGameEnd_Initialize();
+void SetDrawEnv(void*, DRAWENV*);
+int PushBuffer_SetFrustumPlane(char*, int, int, int);
+u_int VehCalc_FastSqrt(u_int, u_int);
+void VehBirth_NullThread(struct Thread* t);
+void SelectProfile_DrawAdvProfile(struct AdvProgress* adv, int posX, int posY, u_int isHighlighted, short slotIndex, u_short menuFlag);
+void SelectProfile_Init(u_short flags);
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
+void DotLights_AudioAndVideo(struct GameTracker* gGT);
+void EngineSound_NearestAIs(void);
+void VehStuckProc_Tumble_PhysLinear(struct Thread* t, struct Driver* d);

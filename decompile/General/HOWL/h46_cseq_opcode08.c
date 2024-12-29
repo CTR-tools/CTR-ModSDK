@@ -2,14 +2,13 @@
 
 void DECOMP_cseq_opcode08(struct SongSeq* seq)
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	unsigned char* currNote = seq->currNote;
 	int soundID = seq->soundID;
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{

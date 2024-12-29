@@ -14,7 +14,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags)
 	if (sdata->boolAudioEnabled == 0) return 0;
 
 	// quit if out of bounds
-    if ((sdata->ptrHowlHeader->numOtherFX) <= (soundId & 0xffff))
+    if ((sdata->ptrHowlHeader->numOtherFX) <= (int)(soundId & 0xffff))
         return 0;
 
     // metaOtherFX

@@ -115,7 +115,7 @@ struct RectMenu
 	// text color, box color, etc
 	// one-byte variable with
 	// two-byte alignment
-	short drawStyle;
+	u_short drawStyle;
 
 	// 0x16
 	// position for previous frame

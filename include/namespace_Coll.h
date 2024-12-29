@@ -129,7 +129,7 @@ struct ScratchpadStruct
 	
 	// 0x4c
 	// 1f800154
-	char unk4C[0xA4];
+	char unk4C[0xA4]; //unk4C + 0x24 seems to be a rotation of some sort, possibly related to potions. See 231_014.c
 	
 	// 0x64
 	// ptrQuadblock

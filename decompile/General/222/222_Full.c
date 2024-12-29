@@ -3,8 +3,6 @@
 static int str_number = 0x20; // " \0"
 extern struct RectMenu menu222;
 
-void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2);
-
 void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
@@ -315,7 +313,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			// print a single character, a number 1-8,
 			DecalFont_DrawLine(
-				&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
+				(char*)&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
 
 			// Draw the driver's character icon
 			DECOMP_UI_DrawDriverIcon(

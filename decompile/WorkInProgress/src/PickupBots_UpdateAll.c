@@ -386,7 +386,7 @@ void DECOMP_PickupBots_Update(void)
 			bossMeta = data.bossWeaponMetaPtr[0];
 
 			// if levelID is not oxide station
-			if (gGT->levelID != 0xd)
+			if (gGT->levelID != OXIDE_STATION)
 			{
 				// set boss weapon meta to the one type it can be on this hub
 				bossMeta = data.bossWeaponMetaPtr[data.metaDataLEV[gGT->levelID].hubID];
@@ -691,7 +691,7 @@ LAB_80040da0:
 					(weaponFlags == 1)) &&
 
 				// If you are on oxide station
-				(gGT->levelID == 0xd))
+				(gGT->levelID == OXIDE_STATION))
 			{
 				// VehPickupItem_ShootNow (boss)
 				// Fire two potions (see oxide boss challenge)

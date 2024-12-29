@@ -7,7 +7,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 	int numSector;
 	int ret;
 	
-	if (DECOMP_LOAD_FindFile(filename, &sdata->KartHWL_CdLoc) == 0) return;
+	if (DECOMP_LOAD_FindFile(filename, (CdlFILE*)&sdata->KartHWL_CdLoc) == 0) return;
 	
 	DECOMP_MEMPACK_PushState();
 	
@@ -18,7 +18,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 	{
 		// read sector #1 of HOWL, just for header
 		ret = DECOMP_LOAD_HowlHeaderSectors(
-					&sdata->KartHWL_CdLoc, alloc, 0, 1);
+					(CdlFILE*)&sdata->KartHWL_CdLoc, alloc, 0, 1);
 	
 		if(
 			// confirm first sector loaded properly
@@ -46,7 +46,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 					// like CTR-U which needs 3 sectors
 					(
 						ret = DECOMP_LOAD_HowlHeaderSectors(
-							&sdata->KartHWL_CdLoc, (int)alloc+0x800, 1, numSector-1),
+							(CdlFILE*)&sdata->KartHWL_CdLoc, (void*)((int)alloc + 0x800), 1, numSector - 1),
 							
 						ret != 0
 					)

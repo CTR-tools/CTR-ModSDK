@@ -3,8 +3,7 @@
 void DECOMP_howl_PlayAudio_Update()
 {
 	int* ptrFlag;
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	u_char statFlags;
 	
 	if(sdata->boolAudioEnabled != 0)
@@ -22,8 +21,8 @@ void DECOMP_howl_PlayAudio_Update()
 		}
 		
 		for(
-				curr = sdata->channelTaken.first;
-				curr != 0;
+				curr = (struct ChannelStats*)sdata->channelTaken.first;
+				curr != NULL;
 				curr = backupNext
 			)
 		{
@@ -42,8 +41,8 @@ void DECOMP_howl_PlayAudio_Update()
 					
 			curr->flags = statFlags & ~(1);
 					
-			DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
-			DECOMP_LIST_AddBack(&sdata->channelFree, curr);
+			DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)curr);
+			DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)curr);
 		}
 		
 		DECOMP_Channel_ParseSongToChannels();

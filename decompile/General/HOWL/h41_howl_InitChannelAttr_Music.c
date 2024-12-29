@@ -21,7 +21,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 	
 		pitch = DECOMP_howl_InstrumentPitch(longSample->basePitch, index, seq->distort);
 		
-		attr->spuStartAddr = sdata->howl_spuAddrs[longSample->spuIndex].spuAddr << 3;
+		attr->spuStartAddr = (void*)(sdata->howl_spuAddrs[longSample->spuIndex].spuAddr << 3);
 		
 		// audio ADSR
 		attr->ad = longSample->ad;
@@ -46,7 +46,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 			pitch = shortSample->pitch * data.distortConst_OtherFX[seq->distort] >> 0x10;
 		}
 		
-		attr->spuStartAddr = sdata->howl_spuAddrs[shortSample->spuIndex].spuAddr << 3;
+		attr->spuStartAddr = (void*)(sdata->howl_spuAddrs[shortSample->spuIndex].spuAddr << 3);
 		
 		// audio ADSR
 		attr->ad = 0x80ff;

@@ -102,4 +102,4 @@ struct GhostHeader
 };
 
 #define GHOSTHEADER_GETRECORDBUFFER(x) \
-	((unsigned int)x + sizeof(struct GhostHeader))
+	(char*)((unsigned int)x + sizeof(struct GhostHeader))

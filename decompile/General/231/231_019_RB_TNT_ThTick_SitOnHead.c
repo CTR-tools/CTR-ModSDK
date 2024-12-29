@@ -1,7 +1,5 @@
 #include <common.h>
 
-void RB_TNT_ThTick_ThrowOffHead();
-
 void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t)
 {
   struct Instance* inst;
@@ -20,7 +18,7 @@ void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t)
   // To: TNT instance
   // From: obj->driverWhoHitMe->instance
   // Delta: TNT -> 0x1c (position relative to driver)
-  LHMatrix_Parent(inst,mw->driverTarget->instSelf,&mw->deltaPos[0]);
+  LHMatrix_Parent(inst, mw->driverTarget->instSelf, (SVECTOR*)&mw->deltaPos[0]);
   
   // Get Kart State
   state = mw->driverTarget->kartState;
@@ -141,7 +139,7 @@ LAB_800ad5f8:
   {
 	// Blow up
 	
-    RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
+	DECOMP_RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
     
 	// icon damage timer, draw icon as red
 	mw->driverTarget->damageColorTimer = 0x1e;

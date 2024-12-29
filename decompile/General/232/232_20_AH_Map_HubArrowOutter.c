@@ -84,7 +84,7 @@ void DECOMP_AH_Map_HubArrowOutter(
 				DECOMP_CTR_Box_DrawWirePrims(
 					(Point){iVar9, iVar6}, (Point){sin, cos},
 					MakeColor(var14, var15, 0xff),
-					gGT->pushBuffer_UI.ptrOT);
+					(void*)gGT->pushBuffer_UI.ptrOT);
 			}
 
 			bVar1 = 0;

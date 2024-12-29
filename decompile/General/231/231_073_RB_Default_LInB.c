@@ -4,7 +4,7 @@ void DECOMP_RB_Default_LInB(struct Instance* inst)
 {
 	// low ram budget, can't use a regular pointer
 	register char* scratch asm("$at");
-	scratch = 0x1f800000;
+	scratch = (char*)0x1f800000;
 	
 	int var;
 	
@@ -13,7 +13,7 @@ void DECOMP_RB_Default_LInB(struct Instance* inst)
 	
 	*(int*)&scratch[0x13C] = 0x3000;
 	*(int*)&scratch[0x140] = 0;
-	*(int*)&scratch[0x144] = sdata->gGT->level1->ptr_mesh_info;
+	*(int*)&scratch[0x144] = (int)sdata->gGT->level1->ptr_mesh_info;
 	
 	// Make a hitbox
 	var = inst->matrix.t[0];
@@ -27,7 +27,7 @@ void DECOMP_RB_Default_LInB(struct Instance* inst)
 	*(short*)&scratch[0x112] = var + 0x80;
 	
 	COLL_SearchTree_FindQuadblock_Touching(
-		&scratch[0x108], &scratch[0x110], &scratch[0x118], 0);
+		(u_int*)&scratch[0x108], (u_int*)&scratch[0x110], (struct ScratchpadStruct*)&scratch[0x118], 0); //this scratchpadstruct is +0x118 from 0x1f800000, that may be a problem? all other function calls I've seen just pass 0x1f800000
 		
-	RB_MakeInstanceReflective(&scratch[0x118], inst);
+	RB_MakeInstanceReflective((struct ScratchpadStruct*)&scratch[0x118], inst);
 }

@@ -37,7 +37,7 @@ void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
   {
     DECOMP_JitPool_Remove(
 		&sdata->gGT->JitPools.rain,
-		rainLocal
+		(struct Item*)rainLocal
 	);
 	
 	// This thread is now dead

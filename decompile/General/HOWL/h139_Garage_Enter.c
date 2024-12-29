@@ -32,14 +32,14 @@ void DECOMP_Garage_Enter(char charId)
       charRight = 0;
     }
     
-    soundIDs = &sdata->garageSoundIDs;
+    soundIDs = &sdata->garageSoundIDs[0];
     
 
 	// loop through all characters in garage
 	for (i = 0; i < 8; i++)
 	{
       garageSounds = &sdata->garageSoundPool[i];
-	  audioPtr = &garageSounds->audioPtr;
+	  audioPtr = (int*)&garageSounds->audioPtr;
 	  
       garageSounds->gsp_prev = GSP_GONE;
       garageSounds->volume = 0;
@@ -53,7 +53,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->LR = 0x80;
 
 		if (soundIDs[i] != 0) {
-		  OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x8080);
+		  OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x8080);
 		  continue;
 		}
 	  }
@@ -67,7 +67,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->LR = 0x3c;
 
 		if (soundIDs[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x803c);
+          OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x803c);
           continue;
         }
       }
@@ -81,7 +81,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->LR = 0xc3;
 	  
 	  	if (soundIDs[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x80c3);
+          OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x80c3);
           continue;
         }
       }

@@ -63,11 +63,19 @@ LAB_800adc08:;
 	  )
   {
     if (
+			/* ghidra snippet for this if statement's conditions.
+			
+			(*(int *)(*piVar9 + 0x2cc) < 0) && 			
+			// instance -> model -> objectID == missile
+			(*(short *)(*(int *)(iVar10 + 0x18) + 0x10) == 0x29)
+
+			*/
+
 			// Naughty Dog Bug? That's so unlikely?
 			// Literally a ONE-frame window
 
 			// dropped mine previous frame
-			(driverTarget->actionsFlagSetPrevFrame < 0) &&
+			(*((int*)(&driverTarget->actionsFlagSetPrevFrame)) < 0) && //match ghidra behavior
 
 			(modelID == DYNAMIC_ROCKET)
 		)
@@ -182,7 +190,7 @@ LAB_800add14:
       tw->dir[1] = tw->rotY;
 
 	   // convert 3 rotation shorts into rotation matrix
-      ConvertRotToMatrix(&inst->matrix,&tw->dir);
+      ConvertRotToMatrix(&inst->matrix, &tw->dir[0]);
     }
   }
 
@@ -214,7 +222,7 @@ LAB_800add14:
   {
 	// Make Instane in Particle Pool
 	struct Particle* p;
-	p = Particle_Init(0,gGT->iconGroup[0],0x800b2ae4);
+	p = Particle_Init(0,gGT->iconGroup[0],(struct ParticleEmitter*)0x800b2ae4);
 
 	if(p!=0)
 	{
@@ -246,7 +254,7 @@ LAB_800add14:
     }
 
 	 // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(&inst->matrix,&tw->dir);
+    ConvertRotToMatrix(&inst->matrix,(short*)&tw->dir);
   }
 
   posA[0] = inst->matrix.t[0];
@@ -258,7 +266,7 @@ LAB_800add14:
   posB[2] = inst->matrix.t[2];
 
 #ifndef REBUILD_PC
-  struct ScratchpadStruct* sps = 0x1f800108;
+  struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
 
   sps->Union.QuadBlockColl.searchFlags = 0x41;
   sps->Union.QuadBlockColl.qbFlagsWanted = 0x1040;
@@ -270,7 +278,7 @@ LAB_800add14:
 
   sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-  COLL_SearchTree_FindQuadblock_Touching(&posA,&posB,sps,0);
+  COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
 
   RB_MakeInstanceReflective(sps,inst);
 
@@ -301,7 +309,7 @@ LAB_800add14:
       posA[1] = inst->matrix.t[1] - 0x900;
       posA[2] = inst->matrix.t[2];
 
-      COLL_SearchTree_FindQuadblock_Touching(&posA,&posB,sps,0);
+      COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
 
 	  // if still nothing, then explode
       if (sps->boolDidTouchQuadblock == 0)
@@ -336,7 +344,7 @@ LAB_800add14:
 	  {
         VehPhysForce_RotAxisAngle(
 			&inst->matrix,
-			&sps->unk4C[0x24], // normalVec
+			(short*)&sps->unk4C[0x24], // normalVec
 			tw->rotY);
       }
 

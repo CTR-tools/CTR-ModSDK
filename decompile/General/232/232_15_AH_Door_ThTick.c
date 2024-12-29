@@ -30,7 +30,6 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   struct Driver* driver = gGT->drivers[0];
   struct Instance* driverInst;
   struct CameraDC* cDC = gGT->cameraDC;
-  int *piVar16;
 
   doorID = door->doorID;
 
@@ -306,14 +305,14 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }
 
-			  piVar16 = &door->keyRot[0];
-
 #ifndef REBUILD_PS1
+			  short* kr = &door->keyRot[0];
+
 			  // desiredPos is actually specLightDir in this case, variable re-use
-              Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos[0]);
+              Vector_SpecLightSpin3D(keyInst, kr, &desiredPos[0]);
 
               // convert 3 rotation shorts into rotation matrix
-              ConvertRotToMatrix(&keyInst->matrix, piVar16);
+              ConvertRotToMatrix(&keyInst->matrix, kr);
 #endif
             }
             door->keyInst[i] = keyInst;

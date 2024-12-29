@@ -159,7 +159,7 @@ void NewPage_ServerRoom()
 	for (i = 0; i < 8; i++)
 	{
 		int rn = i + (pn * 8);
-		const char* type;
+		const char* type = "\0";
 		if (rn >= ROOM_ITEMLESSSTART  && rn < (ROOM_ITEMLESSSTART + ROOM_ITEMLESSLENGTH))
 			type = itemless;
 		if (rn >= ROOM_ITEMSTART      && rn < (ROOM_ITEMSTART + ROOM_ITEMLENGTH))
@@ -307,7 +307,7 @@ void NewPage_Characters()
 void MenuWrites_Characters()
 {
 	pageMax = 1;
-	OnPressX_SetPtr = &data.characterIDs[0];
+	OnPressX_SetPtr = (char*)&data.characterIDs[0];
 	OnPressX_SetLock = &octr->boolLockedInCharacters[octr->DriverID];
 }
 
@@ -330,14 +330,14 @@ void UpdateMenu()
 
 	if (pageMax == 0) { return; }
 
-	int string =
+	int string = //#/#\0  where '#' represents a single digit number
 		(('1' + octr->PageNumber) << 0) |
 		('/' << 8) |
 		(('1' + pageMax) << 16);
 
-	DECOMP_MainFreeze_ConfigDrawArrows(menu.posX_curr, 0x48, &string);
+	DECOMP_MainFreeze_ConfigDrawArrows(menu.posX_curr, 0x48, (char*)&string);
 
-	DecalFont_DrawLine(&string,menu.posX_curr,0x48,FONT_BIG,JUSTIFY_CENTER|WHITE);
+	DecalFont_DrawLine((char*)&string, menu.posX_curr, 0x48, FONT_BIG, JUSTIFY_CENTER | WHITE);
 }
 
 void RECTMENU_OnPressX(struct RectMenu* b)

@@ -65,7 +65,7 @@ void CS_Credits_Init()
 	// 0x300 = SmallStackPool
 	// 0xd = "other" thread bucket
 	creditsBSS->CreditThread =
-		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, 0, 0);
+		PROC_BirthWithObject(0x30d, CS_Credits_ThTick, NULL, NULL);
 		
 	memset(creditsObj, 0, sizeof(struct CreditsObj));
 	creditsObj->countdown = FPS_DOUBLE(360);
@@ -106,13 +106,13 @@ void CS_Credits_Init()
 	
 	creditsBSS->numStrings = creditsDst->numStrings;
 	
-	char** ptrStrings = CREDITSHEADER_GETSTRINGS(creditsDst);
+	char** ptrStrings = (char**)CREDITSHEADER_GETSTRINGS(creditsDst);
 	creditsBSS->ptrStrings = ptrStrings;
 	
 	for(i = 0; i < creditsBSS->numStrings; i++)
 	{
 		ptrStrings[i] =
-		((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
+		(char*)((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
 	}
 	
 	creditsObj->credits_posY = 340;
@@ -120,4 +120,4 @@ void CS_Credits_Init()
 }
 
 // temporary workaround
-struct Ovr233_Credits_BSS* creditsBSS = 0x800b9488;
+struct Ovr233_Credits_BSS* creditsBSS = (struct Ovr233_Credits_BSS*)0x800b9488;

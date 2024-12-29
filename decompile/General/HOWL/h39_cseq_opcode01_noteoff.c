@@ -2,15 +2,14 @@
 
 void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 {
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 	unsigned char* currNote = seq->currNote;
 	int soundID = seq->soundID;
 	u_int* flagPtr;
 	
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{
@@ -31,12 +30,12 @@ void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 		*flagPtr &= ~(2);
 		
 		// recycle: remove from taken, put on free
-		DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
-		DECOMP_LIST_AddBack(&sdata->channelFree, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelTaken, (struct Item*)curr);
+		DECOMP_LIST_AddBack(&sdata->channelFree, (struct Item*)curr);
 	}
 }
 
-void DECOMP_cseq_opcode02_empty()
+void DECOMP_cseq_opcode02_empty(struct SongSeq* seq)
 {
 	// left empty by ND
 }

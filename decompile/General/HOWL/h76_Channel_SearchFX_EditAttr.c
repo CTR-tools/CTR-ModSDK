@@ -6,12 +6,11 @@ struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 {
 	struct ChannelAttr* editAttr;
 	
-	int backupNext;
-	struct ChannelStats* curr;
+	struct ChannelStats* curr, *backupNext;
 		
 	for(
-			curr = sdata->channelTaken.first;
-			curr != 0;
+			curr = (struct ChannelStats*)sdata->channelTaken.first;
+			curr != NULL;
 			curr = backupNext
 		)
 	{

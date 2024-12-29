@@ -31,7 +31,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		kartStatePrev = hitDriver->kartState;
 		
 		// attempt to harm driver (spin out)
-		boolHurt = RB_Hazard_HurtDriver(hitDriver,damage,0,0);
+		boolHurt = DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,0);
 		
 		// if failed, due to mask grab or mask weapon
 		if (boolHurt == 0) return;
@@ -62,7 +62,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		// attempt to harm driver (spin out)
-		RB_Hazard_HurtDriver(hitDriver,damage,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,0);
 		
 		// dont check other buckets
 		return;

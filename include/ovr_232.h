@@ -231,23 +231,18 @@ struct OverlayDATA_232
 		short iconType;
 		
 		// 0x8 -- size
-	};
-
+	}
 	// 800b4ed4
 	// 2 arrows, boss, save/load, null(0xFFFF)
-	struct HubItem hubItems_hub1[5];
-	
+	hubItems_hub1[5],
 	// 800b4efc
-	struct HubItem hubItems_hub2[5];
-	
+	hubItems_hub2[5],
 	// 800b4f24
-	struct HubItem hubItems_hub3[5];
-	
+	hubItems_hub3[5],
 	// 800b4f4c (3 arrows)
-	struct HubItem hubItems_hub4[6];
-	
+	hubItems_hub4[6],
 	// 800b4f7c (1 arrow)
-	struct HubItem hubItems_hub5[4];
+	hubItems_hub5[4];
 
 	// 800b4f9c -- array of pointers:
 	//		800b4ed4 800b4efc 800b4f24
@@ -264,13 +259,13 @@ struct OverlayDATA_232
 	short loadSave_pos[2*4];
 	
 	// 800b4fdc
-	int loadSave_col[4];
+	int loadSave_col[4]; //maybe should be `char*` instead of `int`
 	
 	// 800b4fec
 	short hubArrow_pos[2*3];
 	
 	// 800B4FF8
-	int hubArrow_col1[3];
+	int hubArrow_col1[3]; //maybe should be `char*` instead of `int`
 	
 	// 800b5004
 	int hubArrow_col2[3];
@@ -381,10 +376,10 @@ struct OverlayDATA_232
 	short lookAtPos[4];
 	
 	// 800b5530
-	int colorQuad[4];
+	int colorQuad[4]; //maybe should be `char*` instead of `int`
 	
 	// 800b5540
-	int colorTri[3];
+	int colorTri[3]; //maybe should be `char*` instead of `int`
 	
 	// 800b554c
 	short pausePageDir;
@@ -419,7 +414,10 @@ struct OverlayDATA_232
 	
 	// 800b5574
 	int maskWarppadBoolInterrupt;
-	
+
+	// 800b5578
+    struct PauseObject* ptrPauseObject;
+
 	struct PauseObject
 	{
 		// 0x0
@@ -428,27 +426,21 @@ struct OverlayDATA_232
 			// 0x0
 			short indexAdvPauseInst;
 			short unlockFlag;
-			
+
 			// 0x4
 			short rot[4];
-			
+
 			// 0xC
 			struct Instance* inst;
-		
+
 			// 0x10 -- size
 		} PauseMember[0xe];
-		
+
 		// 0xE0
 		struct Thread* t;
-		
+
 		// 0xe4 -- size
-	};
-	
-	// 800b5578
-	struct PauseObject* ptrPauseObject;
-	
-	// 800b557c
-	struct PauseObject pauseObject;
+	} pauseObject; // 800b557c
 	
 	// 800B5660
 	int hintMenu_boolViewHint;

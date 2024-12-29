@@ -1,7 +1,5 @@
 #include <common.h>
 
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
-
 #ifndef REBUILD_PS1
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 {
@@ -37,7 +35,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
     // quit if there are no spiders
     if (t == NULL) return;
 	
-    scratchpad = (u_int *)0x1f800000;
+    scratchpad = (short*)0x1f800000;
 
     // all threads
     for (numSpiders = 0; t != NULL; numSpiders++)
@@ -69,7 +67,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 
 	p = primMem->curr;	
 	p = p + (numSpiders * numPlyr);
-    if (p >= primMem->endMin100)
+    if ((u_int)p >= (u_int)primMem->endMin100) //these casts may need to be (int) instead of (u_int)
 		return;
 
     // loop through all players
@@ -82,10 +80,10 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
         gte_SetRotMatrix(m);
         gte_SetTransMatrix(m);
 		
-		scratchpad = 0x1f800000;
+		scratchpad = (short*)0x1f800000;
 		
 		// 0x10 * numSpiders
-		short* output = 0x1F800050;
+		short* output = (short*)0x1F800050;
 
         // loop through spiders
         for(j = 0; j < numSpiders; j++)
@@ -153,7 +151,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
                     depth = 0x3ff;
 
                 // pushBuffer 0xf4, ptrOT
-                ot = &pb->ptrOT[depth];
+                ot = (u_int*)&pb->ptrOT[depth];
 
                 // prim header, OT and prim len
                 *(int *)p = *ot | 0x5000000;
@@ -390,5 +388,5 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   rot[0] = 0;
   rot[1] = 0x200;
   rot[2] = 0;
-  ConvertRotToMatrix(&shadowInst->matrix,&rot);
+  ConvertRotToMatrix(&shadowInst->matrix, &rot[0]);
 }

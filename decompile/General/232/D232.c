@@ -155,11 +155,11 @@ struct OverlayDATA_232 D232 =
 	
 	.hubItemsXY_ptrArray =
 	{
-		&D232.hubItems_hub1[0],
-		&D232.hubItems_hub2[0],
-		&D232.hubItems_hub3[0],
-		&D232.hubItems_hub4[0],
-		&D232.hubItems_hub5[0],
+		&D232.hubItems_hub1[0].posX,
+		&D232.hubItems_hub2[0].posX,
+		&D232.hubItems_hub3[0].posX,
+		&D232.hubItems_hub4[0].posX,
+		&D232.hubItems_hub5[0].posX,
 	},
 	
 	.hubArrowXY_Inner =

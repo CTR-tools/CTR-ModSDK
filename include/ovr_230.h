@@ -553,7 +553,7 @@ struct OverlayDATA_230
 	// 800b5374 - UsaRetail
 	// 800b5b50 - EurRetail
 	// points to s_1, s_2, s_3, s_4
-	int *PlayerNumberStrings[4];
+	char* PlayerNumberStrings[4];
 
 	// 800b5384
 	char getNextDriver1[4];
@@ -562,15 +562,15 @@ struct OverlayDATA_230
 	char getNextDriver2[4];
 
 	// 800b538c -- UsaRetail
-	u_int characterSelect_Outline;
+	u_int characterSelect_Outline; //should be `Color` instead of `u_int`?
 
 	// 800b5390 - UsaRetail
 	// 800b5b6c - EurRetail
-	u_int characterSelect_NeutralColor;
+	u_int characterSelect_NeutralColor; //should be `Color` instead of `u_int`?
 
 	// 800b5394 - UsaRetail
 	// 800b5b70 - EurRetail
-	u_int characterSelect_ChosenColor;
+	u_int characterSelect_ChosenColor; //should be `Color` instead of `u_int`?
 
 	// 800b5398 - UsaRetail
 	// 800b5b74 - EurRetail

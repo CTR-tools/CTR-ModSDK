@@ -87,12 +87,12 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                 desiredRot[1] = gGT->level1->ptrSpawnType2_PosRot->posCoords[4] + D232.saveObjCameraOffset[1];
                 desiredRot[2] = gGT->level1->ptrSpawnType2_PosRot->posCoords[5] + D232.saveObjCameraOffset[2];
 
-                // Veh_NullThread is an empty function that does nothing
-                driver->instSelf->thread->funcThTick = Veh_NullThread;
+                // VehBirth_NullThread is an empty function that does nothing
+                driver->instSelf->thread->funcThTick = DECOMP_VehBirth_NullThread;
 
                 // Set CameraDC's desired position and rotation,
                 // then begin the transition by setting flag
-                DECOMP_CAM_SetDesiredPosRot(gGT->cameraDC, &desiredPos, &desiredRot);
+                DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], (short*)&desiredPos, (short*)&desiredRot);
 
 #ifndef REBUILD_PS1
                 GAMEPAD_JogCon2(driver, 0, 0);

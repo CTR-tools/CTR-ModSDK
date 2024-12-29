@@ -16,8 +16,8 @@ void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t)
   rot[0] = 0;
   rot[1] = 0;
   rot[2] = 0;
-  LHMatrix_Parent(instDark, driverOwner->instSelf,&rot[0]);
-  LHMatrix_Parent(instColor,driverOwner->instSelf,&rot[0]);
+  LHMatrix_Parent(instDark, driverOwner->instSelf,(SVECTOR*)&rot[0]);
+  LHMatrix_Parent(instColor,driverOwner->instSelf,(SVECTOR*)&rot[0]);
   
   // set rotation
   *(int*)&instDark->matrix.m[0][0] = 0x1000;
@@ -37,7 +37,7 @@ void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t)
   
   if (animFrame < 0xb) 
   {
-	short* animSeq = 0x800b2d14;
+	short* animSeq = (short*)0x800b2d14;
 	  
 	// set scale
     instDark->scale[0] = animSeq[animFrame*2+0];

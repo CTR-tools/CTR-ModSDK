@@ -89,13 +89,13 @@ u_int DECOMP_main()
 				if
 				(
 					// If Level ID is less than 18, it's one of the race tracks
-					(gGT->levelID < 18) ||
+					(gGT->levelID < NITRO_COURT) ||
 					(
 						// Battle-Style track starts with traffic lights
 						uVar12 = 10,
 						// Level ID >= 18 and < 23
 						// Battle tracks
-						gGT->levelID - 18 < 7
+						gGT->levelID - NITRO_COURT < 7
 					)
 				)
 				{
@@ -416,7 +416,7 @@ FinishLoading:
 #ifdef REBUILD_PS1
 
 				gGT->hudFlags &= 0xfe;
-				if(gGT->levelID < 0x1C)
+				if(gGT->levelID < GLACIER_PARK)
 					gGT->hudFlags |= 1;
 
 				if (
@@ -543,7 +543,7 @@ FinishLoading:
 				DECOMP_MainFrame_RenderFrame(gGT, gGS);
 #ifdef REBUILD_PC
 				PsyX_EndScene();
-				int NikoCalcFPS();
+				void NikoCalcFPS();
 				NikoCalcFPS();
 #endif
 
@@ -612,9 +612,11 @@ void StateZero()
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
 
-	// for modding
+    #if defined (USE_DEFRAG)
+	// for modding (code caves)
 	void ModsMain();
 	ModsMain();
+    #endif
 
 	// Set Video Mode to NTSC
 	SetVideoMode(0);
@@ -720,15 +722,16 @@ void StateZero()
 	#ifndef FastBoot
 	// English=1
 	// PAL SCES02105 calls it multiple times
-	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
+	DECOMP_LOAD_LangFile((int)sdata->ptrBigfile1, 1);
 	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
 
 	gGT->levelID = NAUGHTY_DOG_CRATE;
+	//gGT->levelID = OXIDE_TRUE_ENDING;
 
 	#ifdef USE_ONLINE
-	gGT->levelID = 0x26;
+	gGT->levelID = INTRO_OXIDE;
 	#endif
 
 	#ifdef FastBoot
@@ -773,7 +776,7 @@ void StateZero()
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
 	DECOMP_Music_SetIntro();
 	DECOMP_CseqMusic_StopAll();
-	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
+	DECOMP_CseqMusic_Start(0, 0, NULL, 0, 0);
 	DECOMP_Music_Start(0);
 
 	// "Start your engines, for Sony Computer..."

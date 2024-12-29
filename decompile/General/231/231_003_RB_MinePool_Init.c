@@ -1,18 +1,14 @@
 #include <common.h>
 
-extern struct WeaponSlot231 minePoolItem[40];
-extern struct LinkedList minePoolTaken;
-extern struct LinkedList minePoolFree;
-
 void DECOMP_RB_MinePool_Init(void)
 {
 	int i;
 	int numMines;
 	unsigned int addr;
 	int gameMode;
-	
-	DECOMP_LIST_Clear(&minePoolTaken);
-	DECOMP_LIST_Clear(&minePoolFree);
+
+	DECOMP_LIST_Clear(&D231.minePoolTaken);
+	DECOMP_LIST_Clear(&D231.minePoolFree);
 	
 	gameMode = sdata->gGT->gameMode1;
 	
@@ -36,7 +32,6 @@ void DECOMP_RB_MinePool_Init(void)
 	// add all mines
 	for(i = 0; i < numMines; i++)
 	{
-		DECOMP_LIST_AddFront(
-			&minePoolFree, (struct Item*)&minePoolItem[i]);
+		DECOMP_LIST_AddFront(&D231.minePoolFree, (struct Item*)&D231.minePoolItem[i]);
 	}
 }

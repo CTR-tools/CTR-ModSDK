@@ -18,7 +18,7 @@ void AssignMeterGrade(struct Driver * driver, int meterLeft)
 	driver->meterGrade[1] = '\0';
 
 	char grades[] = "FDCBA";
-	for (int i = 0; i < len(gradeTreshold); i++)
+	for (u_int i = 0; i < len(gradeTreshold); i++)
 	{
 		if (meterLeft > SECONDS(1) - FP_INT(gradeTreshold[i]))
 		{

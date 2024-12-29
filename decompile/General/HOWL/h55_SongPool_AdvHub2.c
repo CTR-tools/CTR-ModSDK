@@ -5,7 +5,7 @@ void DECOMP_SongPool_AdvHub2(struct Song* song, struct SongSet* songSet, int son
 	int i;
 	int vol;
 	struct CseqSongHeader* csh = 
-		&sdata->ptrCseqSongData[sdata->ptrCseqSongStartOffset[song->id]];
+		(struct CseqSongHeader*)&sdata->ptrCseqSongData[sdata->ptrCseqSongStartOffset[song->id]];
 		
 	// advHub
 	if(songSet != 0)

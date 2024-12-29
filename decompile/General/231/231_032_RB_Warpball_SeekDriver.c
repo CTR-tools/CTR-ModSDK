@@ -17,7 +17,7 @@ void DECOMP_RB_Warpball_SeekDriver(struct TrackerWeapon* tw,unsigned int param_2
 		&first[param_2];
     
 	while (
-			(d->distanceToFinish_curr <= (cn->distToFinish << 3)) &&
+			(d->distanceToFinish_curr <= (unsigned int)(cn->distToFinish << 3)) &&
            
 			// node is not first node
 			(cn != first)

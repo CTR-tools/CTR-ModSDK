@@ -150,7 +150,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	// if no EOR found, or EOR is already in-use
 	if ((psVar21 == 0) || (psVar21 == cDC->currEOR)) goto SkipNewCameraEOR;
 
-	cDC->currEOR = (int)psVar21;
+	cDC->currEOR = (void*)psVar21;
 
 	sVar6 = *psVar21;
 	psVar19 = psVar21 + 1;
@@ -296,7 +296,7 @@ SkipNewCameraEOR:
 			if (sVar6 == 4)
 			{
 LAB_8001c11c:
-				DECOMP_CAM_LookAtPosition((int)scratchpad, &d->posCurr.x, &pb->pos[0], &pb->rot[0]);
+				DECOMP_CAM_LookAtPosition((int)scratchpad, (int*)&d->posCurr.x, &pb->pos[0], &pb->rot[0]);
 				psVar21 = scratchpad;
 LAB_8001c128:
 				scratchpad = psVar21;
@@ -306,7 +306,7 @@ LAB_8001c128:
 				psVar21 = scratchpad;
 				if (sVar6 == 10)
 				{
-					DECOMP_CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, pb->pos, (u_int)pb->rot);
+					DECOMP_CAM_FollowDriver_Spin360(cDC, (int)0x1f800108, d, (short*)pb->pos, (short*)pb->rot);
 					goto LAB_8001c128;
 				}
 				if (sVar6 != 0xb)
@@ -434,7 +434,7 @@ LAB_8001c128:
 								{
 									cDC->flags = cDC->flags | 9;
 								}
-								CAM_FollowDriver_Normal(cDC, d, pb->pos, 0x1f800108, ptrZoomData);
+								CAM_FollowDriver_Normal(cDC, d, pb->pos, 0x1f800108, (short*)ptrZoomData);
 							}
 							cDC->driver5B0_prevFrame = d->botFlags;
 							goto LAB_8001c150;
@@ -500,7 +500,7 @@ LAB_8001c128:
 					goto LAB_8001c128;
 				}
 
-				DECOMP_CAM_LookAtPosition((int)0x1f800108, &d->posCurr.x, &pb->pos[0], &pb->rot[0]);
+				DECOMP_CAM_LookAtPosition((int)0x1f800108, (int*)&d->posCurr.x, &pb->pos[0], &pb->rot[0]);
 
 				iVar7 = SquareRoot0_stub((*(int *)0x1f800354) * (*(int *)0x1f800354) + (*(int *)0x1f80035c) * (*(int *)0x1f80035c));
 				iVar17 = (int)(cDC->transitionTo).pos[0];
@@ -539,7 +539,7 @@ LAB_8001c128:
 		}
 	}
 
-	CAM_FollowDriver_Normal(cDC, d, &pb->pos[0], 0x1f800108, ptrZoomData);
+	CAM_FollowDriver_Normal(cDC, d, &pb->pos[0], 0x1f800108, (short*)ptrZoomData);
 
 LAB_8001c150:
 	cDC->cameraModePrev = cDC->cameraMode;

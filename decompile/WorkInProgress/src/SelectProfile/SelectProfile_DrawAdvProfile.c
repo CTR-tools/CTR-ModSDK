@@ -80,7 +80,7 @@ void DECOMP_SelectProfile_DrawAdvProfile(struct AdvProgress *adv, int posX, int 
         highlight.w = 208;
         highlight.h = 53;
 
-        int* color = isGreenLoadMenu ? &sdata->menuRowHighlight_Green : &sdata->menuRowHighlight_Normal;
+        Color* color = isGreenLoadMenu ? &sdata->menuRowHighlight_Green : &sdata->menuRowHighlight_Normal;
 		
         DECOMP_CTR_Box_DrawClearBox(&highlight, color, 1, gGT->backBuffer->otMem.startPlusFour[0xC]);
     }
