@@ -163,6 +163,253 @@ def filterByOverlay(symbolData, overlay = None):
             filteredSymbolData[name] = symbolData[name] #include in result
    return filteredSymbolData
 
+def budgetFullOvr(name, size, symbolData, verbose, ovrnum, blockname):
+   translateStart = {
+      "221_Full": "OVR_Region1",
+      "222_Full": "OVR_Region1",
+      "223_Full": "OVR_Region1",
+      "224_Full": "OVR_Region1",
+      "225_Full": "OVR_Region1",
+   }
+   translateEnd = {
+      "221_Full": "CC_EndOfFile",
+      "222_Full": "AA_EndOfFile",
+      "223_Full": "RR_EndOfFile",
+      "224_Full": "TT_EndOfFile",
+      "225_Full": "VB_EndOfFile",
+   }
+
+   sn = SymbolName(None, None, None, blockname, ovrnum)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, 0, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_Full\""
+
+   lookupName = sn.ovrNum + "_" + sn.name
+
+   ovrSymbolData = dict()
+   if lookupName in translateStart:
+      end = translateEnd[lookupName]
+      if end in symbolData:
+         ovrSymbolData[end] = symbolData[end]
+      lookupName = translateStart[lookupName]
+      ovrSymbolData[lookupName] = symbolData[lookupName]
+   else:
+      ovrSymbolData = filterByOverlay(symbolData, ovrnum)
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      if (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         lastPlusOnei = candidates[0] + 1
+         if (lastPlusOnei < len(sortedOvr)):
+            sLastPlusOne = sortedOvr[lastPlusOnei]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = sLastPlusOne[0]
+            gap = sLastPlusOne[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget.\n\tCompare it's size manually to ((location_of_last_function + size_of_last_function) - location_of_first_function) to determine bytebudget adherance."
+
+def budgetIndexOvr(name, size, symbolData, verbose, ovrnum, ind, n):
+   sn = SymbolName(None, ind, None, n, ovrnum)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, 1, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX_NAME\""
+
+   lookupName = sn.name
+
+   ovrSymbolData = filterByOverlay(symbolData, ovrnum)
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      elif (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         nexti = candidates[0] + 1
+         if (nexti < len(sortedOvr)):
+            snext = sortedOvr[nexti]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = snext[0]
+            gap = snext[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+         else:
+            processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" is the last known symbol in its region, cannot compare to successor."
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+
+def budgetRangeOvr(name, size, symbolData, verbose, ovrnum, ind, eind, n):
+   irange = (int(eind) - int(ind)) + 1
+
+   sn = SymbolName(None, ind, eind, n, ovrnum)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, irange, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX_RANGE_NAME\""
+
+   lookupName = sn.name
+
+   ovrSymbolData = filterByOverlay(symbolData, ovrnum)
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      elif (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         lastPlusOnei = candidates[0] + irange
+         if (lastPlusOnei < len(sortedOvr)):
+            sLastPlusOne = sortedOvr[lastPlusOnei]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = sLastPlusOne[0]
+            gap = sLastPlusOne[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+         else:
+            processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" spans a range larger than its known region, cannot compare to successors."
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+
+def budgetSingleNamed(name, size, symbolData, verbose, ns, ind, n):
+   sn = SymbolName(ns, ind, None, n, None)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, 1, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_NAME\""
+
+   lookupName = sn.namespace + "_" + sn.name
+
+   ovrSymbolData = filterByOverlay(symbolData, None) # None = main exe
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      elif (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         nexti = candidates[0] + 1
+         if (nexti < len(sortedOvr)):
+            snext = sortedOvr[nexti]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = snext[0]
+            gap = snext[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+         else:
+            processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" is the last known symbol in its region, cannot compare to successor."
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+
+def budgetRangeNamed(name, size, symbolData, verbose, ns, ind, eind, n):
+   irange = (int(eind) - int(ind)) + 1
+
+   sn = SymbolName(ns, ind, eind, n, None)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, irange, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_RANGE_NAME\""
+
+   lookupName = sn.namespace + "_" + sn.name
+
+   ovrSymbolData = filterByOverlay(symbolData, None)
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      elif (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         lastPlusOnei = candidates[0] + irange
+         if (lastPlusOnei < len(sortedOvr)):
+            sLastPlusOne = sortedOvr[lastPlusOnei]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = sLastPlusOne[0]
+            gap = sLastPlusOne[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+         else:
+            processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" spans a range larger than its known region, cannot compare to successors."
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+
+def budgetLN(name, size, symbolData, verbose, letters, number, n):
+   sn = SymbolName(None, number, None, n, None)
+   processedSymbols[sn] = SymbolInfo(sn, None, None, 1, size, None)
+
+   processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"letters+number_NAME\""
+
+   lookupName = sn.name
+
+   ovrSymbolData = filterByOverlay(symbolData, None) # None = main exe
+   if lookupName in ovrSymbolData:
+      sortedOvr = list(ovrSymbolData.items())
+      sortedOvr.sort(key=lambda x: x[1])
+      candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
+      if (len(candidates) == 0):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
+      elif (len(candidates) > 1):
+         processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
+      else:
+         previ = candidates[0] - 1
+         if (previ > 0):
+            sprev = sortedOvr[previ]
+            processedSymbols[sn].previousName = sprev[0]
+         nexti = candidates[0] + 1
+         if (nexti < len(sortedOvr)):
+            snext = sortedOvr[nexti]
+            sourself = sortedOvr[candidates[0]]
+            processedSymbols[sn].nextName = snext[0]
+            gap = snext[1][0] - sourself[1][0]
+            processedSymbols[sn].ourselfCaveSizeBytes = gap
+            if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
+               processedSymbols[sn].verboseOnly = False
+         else:
+            processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" is the last known symbol in its region, cannot compare to successor."
+   elif verbose:
+      processedSymbols[sn].verboseOnly = False
+      processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+
 def budget(name, size, symbolData, verbose = False):
    # OVRNUMBER_"Block"SUFFIX      "Block" is literal TODOTODOTODOTODOTODOTODOTODOTODOTODOTODO
 
@@ -178,8 +425,14 @@ def budget(name, size, symbolData, verbose = False):
    nsindex = re.fullmatch("([A-Za-z]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is NAMESPACE, group 2 is INDEX, group 3 is NAME
    # NAMESPACE_INDEX_RANGE_NAME
    nsindexrange = re.fullmatch("([A-Za-z]+?)_([0-9]+?)_([0-9]+?)_([A-Za-z].+?)", name) # group 1 is NAMESPACE, group 2 is STARTINDEX, group 3 is ENDINDEX, group 4 is NAME
-   # otherwise, just compare names straightforwardly
-   mcount = len([x for x in [ovrfull, ovrindex, ovrindexrange, nsindex, nsindexrange] if x != None])
+   # letters+number_NAME
+   lnindex = re.fullmatch("([A-Za-z]*)([0-9]+)_([A-Za-z].+?)", name) # group 1 is letters, group 2 is numbers, group 3 is NAME
+   # otherwise, just compare names straightforwardly (todo)
+
+   if (ovrfull != None and lnindex != None):
+      lnindex = None #ovrfull (e.g., 232_Defrag.c can get confused for lnindex)
+
+   mcount = len([x for x in [ovrfull, ovrindex, ovrindexrange, nsindex, nsindexrange, lnindex] if x != None])
    if (mcount > 1):
       print(f"{ccolor.MAGENTA}Item \"{name}\" adheres to [multiple] naming conventions, unable to associate and cannot calculate bytebudget")
    elif (mcount == 0):
@@ -189,230 +442,39 @@ def budget(name, size, symbolData, verbose = False):
       if ovrfull != None: #Full OVR
          ovrnum = ovrfull.group(1)
          blockname = ovrfull.group(2)
-         translateStart = {
-            "221_Full": "OVR_Region1",
-            "222_Full": "OVR_Region1",
-            "223_Full": "OVR_Region1",
-            "224_Full": "OVR_Region1",
-            "225_Full": "OVR_Region1",
-         }
-         translateEnd = {
-            "221_Full": "CC_EndOfFile",
-            "222_Full": "AA_EndOfFile",
-            "223_Full": "RR_EndOfFile",
-            "224_Full": "TT_EndOfFile",
-            "225_Full": "VB_EndOfFile",
-         }
-
-         sn = SymbolName(None, None, None, blockname, ovrnum)
-         processedSymbols[sn] = SymbolInfo(sn, None, None, 0, size, None)
-
-         processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_Full\""
-
-         lookupName = sn.ovrNum + "_" + sn.name
-
-         ovrSymbolData = dict()
-         if lookupName in translateStart:
-            end = translateEnd[lookupName]
-            if end in symbolData:
-               ovrSymbolData[end] = symbolData[end]
-            lookupName = translateStart[lookupName]
-            ovrSymbolData[lookupName] = symbolData[lookupName]
-         else:
-            ovrSymbolData = filterByOverlay(symbolData, ovrnum)
-         if lookupName in ovrSymbolData:
-            sortedOvr = list(ovrSymbolData.items())
-            sortedOvr.sort(key=lambda x: x[1])
-            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
-            if (len(candidates) == 0):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
-            if (len(candidates) > 1):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
-            else:
-               previ = candidates[0] - 1
-               if (previ > 0):
-                  sprev = sortedOvr[previ]
-                  processedSymbols[sn].previousName = sprev[0]
-               lastPlusOnei = candidates[0] + 1
-               if (lastPlusOnei < len(sortedOvr)):
-                  sLastPlusOne = sortedOvr[lastPlusOnei]
-                  sourself = sortedOvr[candidates[0]]
-                  processedSymbols[sn].nextName = sLastPlusOne[0]
-                  gap = sLastPlusOne[1][0] - sourself[1][0]
-                  processedSymbols[sn].ourselfCaveSizeBytes = gap
-                  if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
-                     processedSymbols[sn].verboseOnly = False
-         elif verbose:
-            processedSymbols[sn].verboseOnly = False
-            processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget.\n\tCompare it's size manually to ((location_of_last_function + size_of_last_function) - location_of_first_function) to determine bytebudget adherance."
+         budgetFullOvr(name, size, symbolData, verbose, ovrnum, blockname)
       # ===============================================================================================================
       elif ovrindex != None: #Index into an OVR
          ovrnum = ovrindex.group(1)
          ind = ovrindex.group(2)
          n = ovrindex.group(3)
-
-         sn = SymbolName(None, ind, None, n, ovrnum)
-         processedSymbols[sn] = SymbolInfo(sn, None, None, 1, size, None)
-
-         processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX_NAME\""
-
-         lookupName = sn.name
-
-         ovrSymbolData = filterByOverlay(symbolData, ovrnum)
-         if lookupName in ovrSymbolData:
-            sortedOvr = list(ovrSymbolData.items())
-            sortedOvr.sort(key=lambda x: x[1])
-            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
-            if (len(candidates) == 0):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
-            elif (len(candidates) > 1):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
-            else:
-               previ = candidates[0] - 1
-               if (previ > 0):
-                  sprev = sortedOvr[previ]
-                  processedSymbols[sn].previousName = sprev[0]
-               nexti = candidates[0] + 1
-               if (nexti < len(sortedOvr)):
-                  snext = sortedOvr[nexti]
-                  sourself = sortedOvr[candidates[0]]
-                  processedSymbols[sn].nextName = snext[0]
-                  gap = snext[1][0] - sourself[1][0]
-                  processedSymbols[sn].ourselfCaveSizeBytes = gap
-                  if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
-                     processedSymbols[sn].verboseOnly = False
-               else:
-                  processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" is the last known symbol in its region, cannot compare to successor."
-         elif verbose:
-            processedSymbols[sn].verboseOnly = False
-            processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+         budgetIndexOvr(name, size, symbolData, verbose, ovrnum, ind, n)
       # ===============================================================================================================
       elif ovrindexrange != None: #Index range into an OVR
          ovrnum = ovrindexrange.group(1)
          ind = ovrindexrange.group(2)
          eind = ovrindexrange.group(3)
          n = ovrindexrange.group(4)
-         irange = (int(eind) - int(ind)) + 1
-
-         sn = SymbolName(None, ind, eind, n, ovrnum)
-         processedSymbols[sn] = SymbolInfo(sn, None, None, irange, size, None)
-
-         processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"OVRNUMBER_INDEX_RANGE_NAME\""
-
-         lookupName = sn.name
-
-         ovrSymbolData = filterByOverlay(symbolData, ovrnum)
-         if lookupName in ovrSymbolData:
-            sortedOvr = list(ovrSymbolData.items())
-            sortedOvr.sort(key=lambda x: x[1])
-            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
-            if (len(candidates) == 0):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
-            elif (len(candidates) > 1):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
-            else:
-               previ = candidates[0] - 1
-               if (previ > 0):
-                  sprev = sortedOvr[previ]
-                  processedSymbols[sn].previousName = sprev[0]
-               lastPlusOnei = candidates[0] + irange
-               if (lastPlusOnei < len(sortedOvr)):
-                  sLastPlusOne = sortedOvr[lastPlusOnei]
-                  sourself = sortedOvr[candidates[0]]
-                  processedSymbols[sn].nextName = sLastPlusOne[0]
-                  gap = sLastPlusOne[1][0] - sourself[1][0]
-                  processedSymbols[sn].ourselfCaveSizeBytes = gap
-                  if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
-                     processedSymbols[sn].verboseOnly = False
-               else:
-                  processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" spans a range larger than its known region, cannot compare to successors."
-         elif verbose:
-            processedSymbols[sn].verboseOnly = False
-            processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+         budgetRangeOvr(name, size, symbolData, verbose, ovrnum, ind, eind, n)
       # ===============================================================================================================
       elif nsindex != None: #Single named file
          ns = nsindex.group(1)
          ind = nsindex.group(2)
          n = nsindex.group(3)
-
-         sn = SymbolName(ns, ind, None, n, None)
-         processedSymbols[sn] = SymbolInfo(sn, None, None, 1, size, None)
-
-         processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_NAME\""
-
-         lookupName = sn.namespace + "_" + sn.name
-
-         ovrSymbolData = filterByOverlay(symbolData, None) # None = main exe
-         if lookupName in ovrSymbolData:
-            sortedOvr = list(ovrSymbolData.items())
-            sortedOvr.sort(key=lambda x: x[1])
-            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName]
-            if (len(candidates) == 0):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
-            elif (len(candidates) > 1):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
-            else:
-               previ = candidates[0] - 1
-               if (previ > 0):
-                  sprev = sortedOvr[previ]
-                  processedSymbols[sn].previousName = sprev[0]
-               nexti = candidates[0] + 1
-               if (nexti < len(sortedOvr)):
-                  snext = sortedOvr[nexti]
-                  sourself = sortedOvr[candidates[0]]
-                  processedSymbols[sn].nextName = snext[0]
-                  gap = snext[1][0] - sourself[1][0]
-                  processedSymbols[sn].ourselfCaveSizeBytes = gap
-                  if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
-                     processedSymbols[sn].verboseOnly = False
-               else:
-                  processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" is the last known symbol in its region, cannot compare to successor."
-         elif verbose:
-            processedSymbols[sn].verboseOnly = False
-            processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+         budgetSingleNamed(name, size, symbolData, verbose, ns, ind, n)         
       # ===============================================================================================================
       elif nsindexrange != None: #Range of things starting at a single named file
          ns = nsindexrange.group(1)
          ind = nsindexrange.group(2)
          eind = nsindexrange.group(3)
          n = nsindexrange.group(4)
-         irange = (int(eind) - int(ind)) + 1
-
-         sn = SymbolName(ns, ind, eind, n, None)
-         processedSymbols[sn] = SymbolInfo(sn, None, None, irange, size, None)
-
-         processedSymbols[sn].notes += f"Item \"{name}\" was interpreted as \"NAMESPACE_INDEX_RANGE_NAME\""
-
-         lookupName = sn.namespace + "_" + sn.name
-
-         ovrSymbolData = filterByOverlay(symbolData, None)
-         if lookupName in ovrSymbolData:
-            sortedOvr = list(ovrSymbolData.items())
-            sortedOvr.sort(key=lambda x: x[1])
-            candidates = [i for i in range(len(sortedOvr)) if sortedOvr[i][0] == lookupName] #assume 1 candidate for now
-            if (len(candidates) == 0):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had no valid lookup candidate."
-            elif (len(candidates) > 1):
-               processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" had a name collision during lookup."
-            else:
-               previ = candidates[0] - 1
-               if (previ > 0):
-                  sprev = sortedOvr[previ]
-                  processedSymbols[sn].previousName = sprev[0]
-               lastPlusOnei = candidates[0] + irange
-               if (lastPlusOnei < len(sortedOvr)):
-                  sLastPlusOne = sortedOvr[lastPlusOnei]
-                  sourself = sortedOvr[candidates[0]]
-                  processedSymbols[sn].nextName = sLastPlusOne[0]
-                  gap = sLastPlusOne[1][0] - sourself[1][0]
-                  processedSymbols[sn].ourselfCaveSizeBytes = gap
-                  if (processedSymbols[sn].ourselfCaveSizeBytes < processedSymbols[sn].ourselfActualSizeBytes):
-                     processedSymbols[sn].verboseOnly = False
-               else:
-                  processedSymbols[sn].notes += f"\n{ccolor.ORANGE}[WARNING]: Item \"{lookupName}\" spans a range larger than its known region, cannot compare to successors."
-         elif verbose:
-            processedSymbols[sn].verboseOnly = False
-            processedSymbols[sn].notes += f" {ccolor.ORANGE}[WARNING]: but didn't find a viable candidate, cannot calculate bytebudget."
+         budgetRangeNamed(name, size, symbolData, verbose, ns, ind, eind, n)
+      # ===============================================================================================================
+      elif lnindex != None: #mainly for HOWL
+         letters = lnindex.group(1)
+         number = lnindex.group(2)
+         n = lnindex.group(3)
+         budgetLN(name, size, symbolData, verbose, letters, number, n)
       # ===============================================================================================================
       else:
           print(f"{ccolor.RED}This message should be impossible to appear. Tell TheUbMunster if this happens.")

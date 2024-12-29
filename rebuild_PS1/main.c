@@ -584,13 +584,13 @@
 #endif
 
 // 230
-#include "../decompile/General/230/230_Block1.c"
+#include "../decompile/General/230/230_00_38_MM_Battle_DrawIcon_Character.c"
 #include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuPtr.c"
-#include "../decompile/General/230/230_Block2.c"
+#include "../decompile/General/230/230_40_54_MM_Characters_AnimateColors.c"
 #include "../decompile/General/230/230_55_MM_TrackSelect_Init.c"
 #include "../decompile/General/230/230_56_MM_TrackSelect_MenuProc.c"
 #include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuPtr.c"
-#include "../decompile/General/230/230_Block3.c"
+#include "../decompile/General/230/230_58_76_MM_CupSelect_Init.c"
 
 #ifdef REBUILD_PC
 //#include "../decompile/General/231/R231.c" //doesn't exist yet
@@ -598,7 +598,7 @@
 #endif
 
 // 231
-#include "../decompile/General/231/231_002_RB_ModifyWumpa.c"
+#include "../decompile/General/231/231_002_RB_Player_ModifyWumpa.c"
 #include "../decompile/General/231/231_003_RB_MinePool_Init.c"
 #include "../decompile/General/231/231_004_RB_MinePool_Remove.c"
 #include "../decompile/General/231/231_005_RB_MinePool_Add.c"
@@ -615,7 +615,7 @@
 
 // Can not defrag 055 into GROUP_55_72 until globals are rewritten
 #include "../decompile/General/231/231_055_RB_GetThread_ClosestTracker.c"
-#include "../decompile/General/231/231_GROUP_55_72.c"
+#include "../decompile/General/231/231_056_072_RB_Baron_ThTick.c"
 
 #include "../decompile/General/231/231_082_085_RB_Armadillo.c"
 #include "../decompile/General/231/231_086_088_RB_Fireball.c"
@@ -633,7 +633,7 @@
 #include "../decompile/General/232/D232.c"
 #endif
 
-#include "../decompile/General/232/232_Block1.c"
+#include "../decompile/General/232/232_Defrag.c"
 
 #include "../decompile/General/233/233_37_40_CS_Garage.c"
 #include "../decompile/General/233/233_zGlobal_gGarage.c"

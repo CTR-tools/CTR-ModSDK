@@ -81,8 +81,10 @@ short bubbleScaleArr3[] =
 //struct LinkedList minePoolTaken;
 //struct LinkedList minePoolFree;
 
-#include "231_056_057_RB_Baron.c"
-#include "231_058_059_RB_Blade.c"
+#include "231_056_RB_Baron_ThTick.c"
+#include "231_057_RB_Baron_LInB.c"
+#include "231_058_RB_Blade_ThTick.c"
+#include "231_059_RB_Blade_LInB.c"
 
 #ifndef REBUILD_PC
 #include "231_060_RB_Bubbles_RoosTubes.c"

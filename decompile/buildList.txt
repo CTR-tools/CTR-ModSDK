@@ -33,6 +33,10 @@
 //common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c General/PROC/PROC_10_SearchForModel.c, rdata.bin
 //common, exe, rdata_free, 0x0, General/MATH/MATH_0_Sin.c General/LibraryOfModels/LibraryOfModels_0_Store.c, rdata.bin
 
+//NOTE: some of the "TODO" functions indicated in this file may not be necessary. During the decomp process it's been discovered that some
+//functions are redundant, not called, or unecessary for other reasons. Ensure that the function you decompile is actually necessary before
+//putting in the work.
+
 // OVR1
 common, 221, OVR_Region1, 0x0, General/221/221_Full.c
 common, 222, OVR_Region1, 0x0, General/222/222_Full.c
@@ -45,136 +49,174 @@ common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 // ====================================================================================================================
 common, 230, R230, 0x0, General/230/R230.c
 common, 230, D230, 0x0, General/230/D230.c
-common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_Block1.c
-common, 230, MM_AdvNewLoad_GetMenuPtr, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuPtr.c
-common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_Block2.c
-common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
-common, 230, MM_TrackSelect_MenuProc, 0x0, General/230/230_56_MM_TrackSelect_MenuProc.c
-common, 230, MM_TrackSelect_GetMenuPtr, 0x0, General/230/230_57_MM_TrackSelect_GetMenuPtr.c
-common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
+common, 230, MM_Battle_DrawIcon_Character, 0x0,                        General/230/230_00_38_MM_Battle_DrawIcon_Character.c
+common, 230, MM_AdvNewLoad_GetMenuPtr, 0x0,                            General/230/230_39_MM_AdvNewLoad_GetMenuPtr.c
+common, 230, MM_Characters_AnimateColors, 0x0,                         General/230/230_40_54_MM_Characters_AnimateColors.c
+common, 230, MM_TrackSelect_Init, 0x0,                                 General/230/230_55_MM_TrackSelect_Init.c
+common, 230, MM_TrackSelect_MenuProc, 0x0,                             General/230/230_56_MM_TrackSelect_MenuProc.c
+common, 230, MM_TrackSelect_GetMenuPtr, 0x0,                           General/230/230_57_MM_TrackSelect_GetMenuPtr.c
+common, 230, MM_CupSelect_Init, 0x0,                                   General/230/230_58_76_MM_CupSelect_Init.c
 
 // KickCD works fine on console, breaks duckstation track loop at end of video
-common, 230, MM_Video_DecDCToutCallbackFunc, 0x0, General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
-//common, 230, MM_Video_KickCD, 0x0, General/230/230_78_MM_Video_KickCD.c
-//common, 230, MM_Video_VLC_Decode, 0x0, General/230/230_79_MM_Video_VLC_Decode.c
-common, 230, MM_Video_StartStream, 0x0, General/230/230_80_MM_Video_StartStream.c
-common, 230, MM_Video_StopStream, 0x0, General/230/230_81_MM_Video_StopStream.c
-common, 230, MM_Video_AllocMem, 0x0, General/230/230_82_MM_Video_AllocMem.c
-common, 230, MM_Video_ClearMem, 0x0, General/230/230_83_MM_Video_ClearMem.c
-common, 230, MM_Video_DecodeFrame, 0x0, General/230/230_84_MM_Video_DecodeFrame.c
-common, 230, MM_Video_CheckIfFinished, 0x0, General/230/230_85_MM_Video_CheckIfFinished.c
+common, 230, MM_Video_DecDCToutCallbackFunc, 0x0,                      General/230/230_77_MM_Video_DecDCToutCallbackFunc.c
+//common, 230, MM_Video_KickCD, 0x0,                                     General/230/230_78_MM_Video_KickCD.c
+//common, 230, MM_Video_VLC_Decode, 0x0,                                 General/230/230_79_MM_Video_VLC_Decode.c
+common, 230, MM_Video_StartStream, 0x0,                                General/230/230_80_MM_Video_StartStream.c
+common, 230, MM_Video_StopStream, 0x0,                                 General/230/230_81_MM_Video_StopStream.c
+common, 230, MM_Video_AllocMem, 0x0,                                   General/230/230_82_MM_Video_AllocMem.c
+common, 230, MM_Video_ClearMem, 0x0,                                   General/230/230_83_MM_Video_ClearMem.c
+common, 230, MM_Video_DecodeFrame, 0x0,                                General/230/230_84_MM_Video_DecodeFrame.c
+common, 230, MM_Video_CheckIfFinished, 0x0,                            General/230/230_85_MM_Video_CheckIfFinished.c
 
 // ====================================================================================================================
 // 231 (incomplete)
 // ====================================================================================================================
-// skip first two
+//common, 231, RB_MakeInstanceReflective, 0x0,                           General/231/231_000_RB_MakeInstanceReflective.c //TODO
+//common, 231, RB_Player_KillPlayer, 0x0,                                General/231/231_001_RB_Player_KillPlayer.c //TODO
 
 // everything from RB_Player_ModifyWumpa to RB_MinePool_Add
-common, 231, RB_Player_ModifyWumpa, 0x0, General/231/231_GROUP_02_05.c
+common, 231, RB_Player_ModifyWumpa, 0x0,                               General/231/231_002_005_RB_Player_ModifyWumpa.c
 
-common, 231, RB_Hazard_HurtDriver, 0x0, General/231/231_006_RB_Hazard_HurtDriver.c
-common, 231, RB_Hazard_CollideWithDrivers, 0x0, General/231/231_007_RB_Hazard_CollideWithDrivers.c
-common, 231, RB_Hazard_CollideWithBucket, 0x0, General/231/231_008_RB_Hazard_CollideWithBucket.c
-common, 231, RB_Hazard_ThCollide_Generic_Alt, 0x0, General/231/231_009_RB_Hazard_ThCollide_Generic_Alt.c
-common, 231, RB_Hazard_ThCollide_Missile, 0x0, General/231/231_010_RB_Hazard_ThCollide_Missile.c
-common, 231, RB_Hazard_ThCollide_Generic, 0x0, General/231/231_011_RB_Hazard_ThCollide_Generic.c
-common, 231, RB_Potion_OnShatter_TeethCallback, 0x0, General/231/231_012_RB_Potion_OnShatter_TeethCallback.c
-common, 231, RB_Potion_OnShatter_TeethSearch, 0x0, General/231/231_013_RB_Potion_OnShatter_TeethSearch.c
-common, 231, RB_Potion_ThTick_InAir, 0x0, General/231/231_014_RB_Potion_ThTick_InAir.c
-common, 231, RB_GenericMine_LInB, 0x0, General/231/231_015_RB_GenericMine_LInB.c
-common, 231, RB_GenericMine_ThTick, 0x0, General/231/231_016_RB_GenericMine_ThTick.c
-common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_ThDestroy.c
-common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
-common, 231, RB_TNT_ThTick_SitOnHead, 0x0, General/231/231_019_RB_TNT_ThTick_SitOnHead.c
-common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
-common, 231, RB_Explosion_ThTick, 0x0, General/231/231_021_RB_Explosion_ThTick.c
-common, 231, RB_Hazard_CollLevInst, 0x0, General/231/231_022_RB_Hazard_CollLevInst.c
-common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
-common, 231, RB_MovingExplosive_ThTick, 0x0, General/231/231_024_RB_MovingExplosive_ThTick.c
-common, 231, RB_MovingExplosive_Explode, 0x0, General/231/231_025_RB_MovingExplosive_Explode.c
-common, 231, RB_Warpball_FadeAway, 0x0, General/231/231_026_RB_Warpball_FadeAway.c
-common, 231, RB_Warpball_Death, 0x0, General/231/231_027_RB_Warpball_Death.c
-// RB_Warpball_NewPathNode
-common, 231, RB_Warpball_Start, 0x0, General/231/231_029_RB_Warpball_Start.c
-// RB_Warpball_SetTargetDriver
-common, 231, RB_Warpball_SeekDriver, 0x0, General/231/231_032_RB_Warpball_SeekDriver.c
-common, 231, RB_Warpball_TurnAround, 0x0, General/231/231_033_RB_Warpball_TurnAround.c
-// RB_Warpball_ThTick
-common, 231, RB_MaskWeapon_FadeAway, 0x0, General/231/231_035_RB_MaskWeapon_FadeAway.c
-common, 231, RB_MaskWeapon_ThTick, 0x0, General/231/231_036_RB_MaskWeapon_ThTick.c
-common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
-common, 231, RB_ShieldDark_ThTick_Grow, 0x0, General/231/231_038_RB_ShieldDark_ThTick_Grow.c
-common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
-common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
-common, 231, RB_RainCloud_FadeAway, 0x0, General/231/231_041_RB_RainCloud_FadeAway.c
-common, 231, RB_RainCloud_ThTick, 0x0, General/231/231_042_RB_RainCloud_ThTick.c
-common, 231, RB_RainCloud_Init, 0x0, General/231/231_043_RB_RainCloud_Init.c
-common, 231, RB_Explosion_InitPotion, 0x0, General/231/231_044_RB_Explosion_InitPotion.c
-common, 231, RB_Explosion_InitGeneric, 0x0, General/231/231_045_RB_Explosion_InitGeneric.c
-// Blowup_ProcessBucket
-common, 231, RB_Blowup_ThTick, 0x0, General/231/231_047_RB_Blowup_ThTick.c
-//common, 231, RB_Blowup_Init, 0x0, General/231/231_048_RB_Blowup_Init.c
-// Burst_ProcessBucket
-common, 231, RB_Burst_ThTick, 0x0, General/231/231_050_RB_Burst_ThTick.c
-common, 231, RB_Burst_CollThBucket, 0x0, General/231/231_051_RB_Burst_CollThBucket.c
-common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_052_RB_Burst_CollLevInst.c
-common, 231, RB_Burst_Init, 0x0, General/231/231_053_RB_Burst_Init.c
-// Burst_DrawAll
+//common, 231, RB_Player_ModifyWumpa, 0x0,                               General/231/231_002_RB_Player_ModifyWumpa.c
+//common, 231, RB_MinePool_Init, 0x0,                                    General/231/231_003_RB_MinePool_Init.c
+//common, 231, RB_MinePool_Remove, 0x0,                                  General/231/231_004_RB_MinePool_Remove.c
+//common, 231, RB_MinePool_Add, 0x0,                                     General/231/231_005_RB_MinePool_Add.c
 
-common, 231, D231, 0x0, General/231/D231.c
+common, 231, RB_Hazard_HurtDriver, 0x0,                                General/231/231_006_RB_Hazard_HurtDriver.c
+common, 231, RB_Hazard_CollideWithDrivers, 0x0,                        General/231/231_007_RB_Hazard_CollideWithDrivers.c
+common, 231, RB_Hazard_CollideWithBucket, 0x0,                         General/231/231_008_RB_Hazard_CollideWithBucket.c
+common, 231, RB_Hazard_ThCollide_Generic_Alt, 0x0,                     General/231/231_009_RB_Hazard_ThCollide_Generic_Alt.c
+common, 231, RB_Hazard_ThCollide_Missile, 0x0,                         General/231/231_010_RB_Hazard_ThCollide_Missile.c
+common, 231, RB_Hazard_ThCollide_Generic, 0x0,                         General/231/231_011_RB_Hazard_ThCollide_Generic.c
+common, 231, RB_Potion_OnShatter_TeethCallback, 0x0,                   General/231/231_012_RB_Potion_OnShatter_TeethCallback.c
+common, 231, RB_Potion_OnShatter_TeethSearch, 0x0,                     General/231/231_013_RB_Potion_OnShatter_TeethSearch.c
+common, 231, RB_Potion_ThTick_InAir, 0x0,                              General/231/231_014_RB_Potion_ThTick_InAir.c
+common, 231, RB_GenericMine_LInB, 0x0,                                 General/231/231_015_RB_GenericMine_LInB.c
+common, 231, RB_GenericMine_ThTick, 0x0,                               General/231/231_016_RB_GenericMine_ThTick.c
+common, 231, RB_GenericMine_ThDestroy, 0x0,                            General/231/231_017_RB_GenericMine_ThDestroy.c
+common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0,                          General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
+common, 231, RB_TNT_ThTick_SitOnHead, 0x0,                             General/231/231_019_RB_TNT_ThTick_SitOnHead.c
+common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0,                           General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
+common, 231, RB_Explosion_ThTick, 0x0,                                 General/231/231_021_RB_Explosion_ThTick.c
+common, 231, RB_Hazard_CollLevInst, 0x0,                               General/231/231_022_RB_Hazard_CollLevInst.c
+common, 231, RB_Hazard_InterpolateValue, 0x0,                          General/231/231_023_RB_Hazard_InterpolateValue.c
+common, 231, RB_MovingExplosive_ThTick, 0x0,                           General/231/231_024_RB_MovingExplosive_ThTick.c
+common, 231, RB_MovingExplosive_Explode, 0x0,                          General/231/231_025_RB_MovingExplosive_Explode.c
+common, 231, RB_Warpball_FadeAway, 0x0,                                General/231/231_026_RB_Warpball_FadeAway.c
+common, 231, RB_Warpball_Death, 0x0,                                   General/231/231_027_RB_Warpball_Death.c
+//common, 231, RB_Warpball_NewPathNode, 0x0,                             General/231/231_028_RB_Warpball_NewPathNode.c //TODO
+common, 231, RB_Warpball_Start, 0x0,                                   General/231/231_029_RB_Warpball_Start.c
+//common, 231, RB_Warpball_GetDriverTarget, 0x0,                         General/231/231_030_RB_Warpball_GetDriverTarget.c //TODO
+//common, 231, RB_Warpball_SetTargetDriver, 0x0,                         General/231/231_031_RB_Warpball_SetTargetDriver.c //TODO
+common, 231, RB_Warpball_SeekDriver, 0x0,                              General/231/231_032_RB_Warpball_SeekDriver.c
+common, 231, RB_Warpball_TurnAround, 0x0,                              General/231/231_033_RB_Warpball_TurnAround.c
+//common, 231, RB_Warpball_ThTick, 0x0,                                  General/231/231_034_RB_Warpball_ThTick.c //TODO
+common, 231, RB_MaskWeapon_FadeAway, 0x0,                              General/231/231_035_RB_MaskWeapon_FadeAway.c
+common, 231, RB_MaskWeapon_ThTick, 0x0,                                General/231/231_036_RB_MaskWeapon_ThTick.c
+common, 231, RB_ShieldDark_ThTick_Pop, 0x0,                            General/231/231_037_RB_ShieldDark_ThTick_Pop.c
+common, 231, RB_ShieldDark_ThTick_Grow, 0x0,                           General/231/231_038_RB_ShieldDark_ThTick_Grow.c
+common, 231, RB_Player_ToggleInvisible, 0x0,                           General/231/231_039_RB_Player_ToggleInvisible.c
+common, 231, RB_Player_ToggleFlicker, 0x0,                             General/231/231_040_RB_Player_ToggleFlicker.c
+common, 231, RB_RainCloud_FadeAway, 0x0,                               General/231/231_041_RB_RainCloud_FadeAway.c
+common, 231, RB_RainCloud_ThTick, 0x0,                                 General/231/231_042_RB_RainCloud_ThTick.c
+common, 231, RB_RainCloud_Init, 0x0,                                   General/231/231_043_RB_RainCloud_Init.c
+common, 231, RB_Explosion_InitPotion, 0x0,                             General/231/231_044_RB_Explosion_InitPotion.c
+common, 231, RB_Explosion_InitGeneric, 0x0,                            General/231/231_045_RB_Explosion_InitGeneric.c
+//common, 231, RB_Blowup_ProcessBucket, 0x0,                             General/231/231_046_RB_Blowup_ProcessBucket.c //TODO
+common, 231, RB_Blowup_ThTick, 0x0,                                    General/231/231_047_RB_Blowup_ThTick.c
+//common, 231, RB_Blowup_Init, 0x0,                                      General/231/231_048_RB_Blowup_Init.c
+//common, 231, RB_Burst_ProcessBucket, 0x0,                              General/231/231_049_RB_Burst_ProcessBucket.c //TODO
+common, 231, RB_Burst_ThTick, 0x0,                                     General/231/231_050_RB_Burst_ThTick.c
+common, 231, RB_Burst_CollThBucket, 0x0,                               General/231/231_051_RB_Burst_CollThBucket.c
+common, 231, RB_Burst_CollLevInst, 0x0,                                General/231/231_052_RB_Burst_CollLevInst.c
+common, 231, RB_Burst_Init, 0x0,                                       General/231/231_053_RB_Burst_Init.c
+//common, 231, RB_Burst_DrawAll, 0x0,                                    General/231/231_054_RB_Burst_DrawAll.c //TODO
+common, 231, D231, 0x0,                                                General/231/D231.c
+common, 231, RB_GetThread_ClosestTracker, 0x0,                         General/231/231_055_RB_GetThread_ClosestTracker.c
 
-// Cant add 055 to block yet, so 55_72 is actually +16 and not +17 on the counter
-common, 231, RB_GetThread_ClosestTracker, 0x0, General/231/231_055_RB_GetThread_ClosestTracker.c
-common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_55_72.c
+// everything from RB_Baron_ThTick to RB_Crystal_LInB
+common, 231, RB_Baron_ThTick, 0x0,                                     General/231/231_056_072_RB_Baron_ThTick.c
 
+//common, 231, RB_Baron_ThTick, 0x0,                                     General/231/231_056_RB_Baron_ThTick.c
+//common, 231, RB_Baron_LInB, 0x0,										 General/231/231_057_RB_Baron_LInB.c
+//common, 231, RB_Blade_ThTick, 0x0,									 General/231/231_058_RB_Blade_ThTick.c
+//common, 231, RB_Blade_LInB, 0x0,										 General/231/231_059_RB_Blade_LInB.c
+//common, 231, RB_Bubbles_RoosTubes, 0x0,								 General/231/231_060_RB_Bubbles_RoosTubes.c
+//common, 231, RB_CrateAny_ThTick_Explode, 0x0,							 General/231/231_061_RB_CrateAny_ThTick_Explode.c
+//common, 231, RB_CrateAny_ThTick_Grow, 0x0,							 General/231/231_062_RB_CrateAny_ThTick_Grow.c
+//common, 231, RB_CrateWeapon_ThCollide, 0x0,							 General/231/231_063_RB_CrateWeapon_ThCollide.c
+//common, 231, RB_CrateWeapon_LInC, 0x0,								 General/231/231_064_RB_CrateWeapon_LInC.c
+//common, 231, RB_CrateFruit_ThCollide, 0x0,							 General/231/231_065_RB_CrateFruit_ThCollide.c
+//common, 231, RB_CrateFruit_LInC, 0x0,									 General/231/231_066_RB_CrateFruit_LInC.c
+//common, 231, RB_CrateTime_ThCollide, 0x0,								 General/231/231_067_RB_CrateTime_ThCollide.c
+//common, 231, RB_CrateTime_LInC, 0x0,									 General/231/231_068_RB_CrateTime_LInC.c
+//common, 231, RB_Crystal_ThCollide, 0x0,								 General/231/231_069_RB_Crystal_ThCollide.c
+//common, 231, RB_Crystal_ThTick, 0x0,									 General/231/231_070_RB_Crystal_ThTick.c
+//common, 231, RB_Crystal_LInC, 0x0,									 General/231/231_071_RB_Crystal_LInC.c
+//common, 231, RB_Crystal_LInB, 0x0,									 General/231/231_072_RB_Crystal_LInB.c
 
-common, 231, RB_Default_LInB, 0x0, General/231/231_073_RB_Default_LInB.c
-common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_074_077_RB_CtrLetter.c
-// skip Banner
-common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_82_129.c
+common, 231, RB_Default_LInB, 0x0,                                     General/231/231_073_RB_Default_LInB.c
+
+// everything from RB_CtrLetter_ThCollide to RB_CtrLetter_LInB
+common, 231, RB_CtrLetter_ThCollide, 0x0,                              General/231/231_074_077_RB_CtrLetter_ThCollide.c
+
+//common, 231, RB_CtrLetter_ThCollide, 0x0,                              General/231/231_074_RB_CtrLetter_ThCollide.c //TODO (maybe not necessary for decomp)
+//common, 231, RB_CtrLetter_LInC, 0x0,                                   General/231/231_075_RB_CtrLetter_LInC.c
+//common, 231, RB_CtrLetter_ThTick, 0x0,                                 General/231/231_076_RB_CtrLetter_ThTick.c
+//common, 231, RB_CtrLetter_LInB, 0x0,                                   General/231/231_077_RB_CtrLetter_LInB.c
+
+//common, 231, RB_Banner_Animate_Init, 0x0,                              General/231/231_078_RB_Banner_Animate_Init.c //TODO
+//common, 231, RB_Banner_Animate_Play, 0x0,                              General/231/231_079_RB_Banner_Animate_Play.c //TODO
+//common, 231, RB_Banner_ThTick, 0x0,	                                 General/231/231_080_RB_Banner_ThTick.c //TODO
+//common, 231, RB_Banner_LInB, 0x0,		                                 General/231/231_081_RB_Banner_LInB.c //TODO
+
+// everything from RB_Armadillo_ThTick_TurnAround to RB_Turtle_LInB
+common, 231, RB_Armadillo_ThTick_TurnAround, 0x0,                      General/231/231_082_129_RB_Armadillo_ThTick_TurnAround.c
+
+//TODO: breakout files comprising 082_129 into individual files, have them commented below so that you can test bytebudget
 
 // ====================================================================================================================
 // 232 (incomplete)
 // ====================================================================================================================
 common, 232, R232, 0x0, General/232/R232.c
 common, 232, D232, 0x0, General/232/D232.c
-common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232/232_Defrag.c
+common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232/232_Full.c
 
-//common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,			               General/232/232_00_AH_WarpPad_GetSpawnPosRot.c
-//common, 232, AH_WarpPad_AllWarppadNum, 0x0,			               General/232/232_01_AH_WarpPad_AllWarppadNum.c
-//common, 232, AH_WarpPad_MenuProc, 0x0,				               General/232/232_02_AH_WarpPad_MenuProc.c
-//common, 232, AH_WarpPad_SpinRewards, 0x0,				               General/232/232_03_AH_WarpPad_SpinRewards.c
-//common, 232, AH_WarpPad_ThTick, 0x0,					               General/232/232_04_AH_WarpPad_ThTick.c
-//common, 232, AH_WarpPad_ThDestroy, 0x0,				               General/232/232_05_AH_WarpPad_ThDestroy.c
-//common, 232, AH_WarpPad_LInB, 0x0,					               General/232/232_06_AH_WarpPad_LInB.c
-//common, 232, AH_Garage_ThDestroy, 0x0,				               General/232/232_07_AH_Garage_ThDestroy.c
-//common, 232, AH_Garage_Open, 0x0,						               General/232/232_08_AH_Garage_Open.c
-//common, 232, AH_Garage_ThTick, 0x0,					               General/232/232_09_AH_Garage_ThTick.c
-//common, 232, AH_Garage_LInB, 0x0,						               General/232/232_10_AH_Garage_LInB.c
-//common, 232, AH_SaveObj_ThDestroy, 0x0,				               General/232/232_11_AH_SaveObj_ThDestroy.c
-//common, 232, AH_SaveObj_ThTick, 0x0,					               General/232/232_12_AH_SaveObj_ThTick.c
-//common, 232, AH_SaveObj_LInB, 0x0,					               General/232/232_13_AH_SaveObj_LInB.c
-//common, 232, AH_Door_ThDestroy, 0x0,					               General/232/232_14_AH_Door_ThDestroy.c
-//common, 232, AH_Door_ThTick, 0x0,						               General/232/232_15_AH_Door_ThTick.c
-//common, 232, AH_Door_LInB, 0x0,						               General/232/232_16_AH_Door_LInB.c
-//common, 232, AH_Map_LoadSave_Prim, 0x0,				               General/232/232_17_AH_Map_LoadSave_Prim.c
-//common, 232, AH_Map_LoadSave_Full, 0x0,				               General/232/232_18_AH_Map_LoadSave_Full.c
-//common, 232, AH_Map_HubArrow, 0x0,					               General/232/232_19_AH_Map_HubArrow.c
-//common, 232, AH_Map_HubArrowOutter, 0x0,				               General/232/232_20_AH_Map_HubArrowOutter.c
-//common, 232, AH_Map_HubItems, 0x0,					               General/232/232_21_AH_Map_HubItems.c
-//common, 232, AH_Map_Warppads, 0x0,					               General/232/232_22_AH_Map_Warppads.c
-//common, 232, AH_Map_Main, 0x0,						               General/232/232_23_AH_Map_Main.c
-//common, 232, AH_Pause_Destroy, 0x0,					               General/232/232_24_AH_Pause_Destroy.c
-//common, 232, AH_Pause_Draw, 0x0,						               General/232/232_25_AH_Pause_Draw.c
-//common, 232, AH_Pause_Update, 0x0,					               General/232/232_26_AH_Pause_Update.c
-//common, 232, AH_HintMenu_FiveArrows, 0x0,				               General/232/232_27_AH_HintMenu_FiveArrows.c
-//common, 232, AH_HintMenu_MaskPosRot, 0x0,				               General/232/232_28_AH_HintMenu_MaskPosRot.c
-//common, 232, AH_HintMenu_MenuProc, 0x0,				               General/232/232_29_AH_HintMenu_MenuProc.c
-//common, 232, AH_MaskHint_Start, 0x0,					               General/232/232_30_AH_MaskHint_Start.c
-//common, 232, AH_MaskHint_boolCanSpawn, 0x0,			               General/232/232_31_AH_MaskHint_boolCanSpawn.c
-//common, 232, AH_MaskHint_SetAnim, 0x0,				               General/232/232_32_AH_MaskHint_SetAnim.c
-//common, 232, AH_MaskHint_SpawnParticles, 0x0,			               General/232/232_33_AH_MaskHint_SpawnParticles.c
-//common, 232, AH_MaskHint_LerpVol, 0x0,				               General/232/232_34_AH_MaskHint_LerpVol.c
+//common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232/232_00_AH_WarpPad_GetSpawnPosRot.c
+//common, 232, AH_WarpPad_AllWarppadNum, 0x0,                          General/232/232_01_AH_WarpPad_AllWarppadNum.c
+//common, 232, AH_WarpPad_MenuProc, 0x0,                               General/232/232_02_AH_WarpPad_MenuProc.c
+//common, 232, AH_WarpPad_SpinRewards, 0x0,                            General/232/232_03_AH_WarpPad_SpinRewards.c
+//common, 232, AH_WarpPad_ThTick, 0x0,                                 General/232/232_04_AH_WarpPad_ThTick.c
+//common, 232, AH_WarpPad_ThDestroy, 0x0,                              General/232/232_05_AH_WarpPad_ThDestroy.c
+//common, 232, AH_WarpPad_LInB, 0x0,                                   General/232/232_06_AH_WarpPad_LInB.c
+//common, 232, AH_Garage_ThDestroy, 0x0,                               General/232/232_07_AH_Garage_ThDestroy.c
+//common, 232, AH_Garage_Open, 0x0,                                    General/232/232_08_AH_Garage_Open.c
+//common, 232, AH_Garage_ThTick, 0x0,                                  General/232/232_09_AH_Garage_ThTick.c
+//common, 232, AH_Garage_LInB, 0x0,                                    General/232/232_10_AH_Garage_LInB.c
+//common, 232, AH_SaveObj_ThDestroy, 0x0,                              General/232/232_11_AH_SaveObj_ThDestroy.c
+//common, 232, AH_SaveObj_ThTick, 0x0,                                 General/232/232_12_AH_SaveObj_ThTick.c
+//common, 232, AH_SaveObj_LInB, 0x0,                                   General/232/232_13_AH_SaveObj_LInB.c
+//common, 232, AH_Door_ThDestroy, 0x0,                                 General/232/232_14_AH_Door_ThDestroy.c
+//common, 232, AH_Door_ThTick, 0x0,                                    General/232/232_15_AH_Door_ThTick.c
+//common, 232, AH_Door_LInB, 0x0,                                      General/232/232_16_AH_Door_LInB.c
+//common, 232, AH_Map_LoadSave_Prim, 0x0,                              General/232/232_17_AH_Map_LoadSave_Prim.c
+//common, 232, AH_Map_LoadSave_Full, 0x0,                              General/232/232_18_AH_Map_LoadSave_Full.c
+//common, 232, AH_Map_HubArrow, 0x0,                                   General/232/232_19_AH_Map_HubArrow.c
+//common, 232, AH_Map_HubArrowOutter, 0x0,                             General/232/232_20_AH_Map_HubArrowOutter.c
+//common, 232, AH_Map_HubItems, 0x0,                                   General/232/232_21_AH_Map_HubItems.c
+//common, 232, AH_Map_Warppads, 0x0,                                   General/232/232_22_AH_Map_Warppads.c
+//common, 232, AH_Map_Main, 0x0,                                       General/232/232_23_AH_Map_Main.c
+//common, 232, AH_Pause_Destroy, 0x0,                                  General/232/232_24_AH_Pause_Destroy.c
+//common, 232, AH_Pause_Draw, 0x0,                                     General/232/232_25_AH_Pause_Draw.c
+//common, 232, AH_Pause_Update, 0x0,                                   General/232/232_26_AH_Pause_Update.c
+//common, 232, AH_HintMenu_FiveArrows, 0x0,                            General/232/232_27_AH_HintMenu_FiveArrows.c
+//common, 232, AH_HintMenu_MaskPosRot, 0x0,                            General/232/232_28_AH_HintMenu_MaskPosRot.c
+//common, 232, AH_HintMenu_MenuProc, 0x0,                              General/232/232_29_AH_HintMenu_MenuProc.c
+//common, 232, AH_MaskHint_Start, 0x0,                                 General/232/232_30_AH_MaskHint_Start.c
+//common, 232, AH_MaskHint_boolCanSpawn, 0x0,                          General/232/232_31_AH_MaskHint_boolCanSpawn.c
+//common, 232, AH_MaskHint_SetAnim, 0x0,                               General/232/232_32_AH_MaskHint_SetAnim.c
+//common, 232, AH_MaskHint_SpawnParticles, 0x0,                        General/232/232_33_AH_MaskHint_SpawnParticles.c
+//common, 232, AH_MaskHint_LerpVol, 0x0,                               General/232/232_34_AH_MaskHint_LerpVol.c
 //common, 232, AH_MaskHint_Update, 0x0,                                General/232/232_35_AH_MaskHint_Update.c
 //common, 232, AH_Sign_LInB, 0x0,                                      General/232/232_36_AH_Sign_LInB.c //TODO
 
@@ -301,14 +343,14 @@ common, exe, COLL_StartSearch_AI, 0x0,                                   General
 //common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0,              General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c //over budget, but assumed working
 //common, exe, COLL_TestQuadblock_TwoTris, 0x0,                            General/COLL/COLL_13_TestQuadblock_TwoTris.c //over budget, but assumed working
 //common, exe, COLL_TestQuadblock_EightTris, 0x0,                          General/COLL/COLL_14_TestQuadblock_EightTris.c //over budget, but assumed working
-//common, exe, COLL_ResetScratchpadCache, 0x0,					           General/COLL/COLL_15_ResetScratchpadCache.c //TODO
+//common, exe, COLL_ResetScratchpadCache, 0x0,                          General/COLL/COLL_15_ResetScratchpadCache.c //TODO
 //common, exe, COLL_TestTriangle_FindClosest_Subfunction1, 0x0,            General/COLL/COLL_16_TestTriangle_FindClosest_Subfunction1.c //TODO
-//common, exe, COLL_TestTriangle_FindClosest, 0x0,			               General/COLL/COLL_17_TestTriangle_FindClosest.c //TODO
+//common, exe, COLL_TestTriangle_FindClosest, 0x0,                        General/COLL/COLL_17_TestTriangle_FindClosest.c //TODO
 //common, exe, COLL_PerQuadblock_CheckTriangles_NearPlayer, 0x0,           General/COLL/COLL_18_PerQuadblock_CheckTriangles_NearPlayer.c //over budget, but assumed working
 //common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0,            General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c //over budget, but assumed working
 //common, exe, COLL_TestTriangle_WithClosest, 0x0,                         General/COLL/COLL_20_TestTriangle_WithClosest.c //TODO
 //common, exe, COLL_StartSearch_NearPlayer, 0x0,                           General/COLL/COLL_21_StartSearch_NearPlayer.c //TODO
-//common, exe, COLL_Scrub, 0x0,					                           General/COLL/COLL_22_Scrub.c //TODO
+//common, exe, COLL_Scrub, 0x0,                                          General/COLL/COLL_22_Scrub.c //TODO
 
 // ====================================================================================================================
 // CTR (stubbed for this file)
@@ -320,9 +362,9 @@ common, exe, CTR_Box_DrawSolidBox, 0x0,                General/CTR/CTR_03_Box_Dr
 common, exe, CTR_CycleTex_LEV, 0x0,                    General/CTR/CTR_04_CycleTex_LEV.c
 common, exe, CTR_CycleTex_Model, 0x0,                  General/CTR/CTR_05_CycleTex_Model.c
 common, exe, CTR_CycleTex_AllModels, 0x0,              General/CTR/CTR_06_CycleTex_AllModels.c
-//common, exe, CTR_CycleTex_2p3p4pWumpaHUD, 0x0,	     General/CTR/CTR_07_CycleTex_2p3p4pWumpaHUD.c //TODO
-//common, exe, CTR_ClearRenderLists_1P2P, 0x0,		     General/CTR/CTR_08_ClearRenderLists_1P2P.c //TODO
-//common, exe, CTR_ClearRenderLists_3P4P, 0x0,		     General/CTR/CTR_09_ClearRenderLists_3P4P.c //TODO
+//common, exe, CTR_CycleTex_2p3p4pWumpaHUD, 0x0,         General/CTR/CTR_07_CycleTex_2p3p4pWumpaHUD.c //TODO
+//common, exe, CTR_ClearRenderLists_1P2P, 0x0,           General/CTR/CTR_08_ClearRenderLists_1P2P.c //TODO
+//common, exe, CTR_ClearRenderLists_3P4P, 0x0,           General/CTR/CTR_09_ClearRenderLists_3P4P.c //TODO
 //common, exe, CTR_EmptyFunc_MainFrame_ResetDB, 0x0,     General/CTR/CTR_10_EmptyFunc_MainFrame_ResetDB.c //TODO
 common, exe, CTR_ErrorScreen, 0x0,                     General/CTR/CTR_11_ErrorScreen.c
 //common, exe, CTR_unknownMaybeThunk1, 0x0,              General/CTR/CTR_12_unknownMaybeThunk1.c //TODO
@@ -516,7 +558,7 @@ common, exe, OtherFX_Stop1, 0x0,                         General/HOWL/h06_OtherF
 common, exe, OtherFX_Stop2, 0x0,                         General/HOWL/h07_OtherFX_Stop2.c
 common, exe, EngineAudio_InitOnce, 0x0,                  General/HOWL/h08_EngineAudio_InitOnce.c
 common, exe, EngineAudio_Recalculate, 0x0,               General/HOWL/h09_EngineAudio_Recalculate.c
-common, exe, EngineAudio_Stop, 0x0,                      General/HOWL/h10_EngineAudio_Stop.c
+//common, exe, EngineAudio_Stop, 0x0,                      General/HOWL/h10_EngineAudio_Stop.c //currently overbudget
 common, exe, SetReverbMode, 0x0,                         General/HOWL/h11_SetReverbMode.c
 common, exe, CseqMusic_Start, 0x0,                       General/HOWL/h12_CseqMusic_Start.c
 common, exe, CseqMusic_Pause, 0x0,                       General/HOWL/h13_CseqMusic_Pause.c
@@ -529,17 +571,17 @@ common, exe, CseqMusic_Stop, 0x0,                        General/HOWL/h19_CseqMu
 common, exe, CseqMusic_StopAll, 0x0,                     General/HOWL/h20_CseqMusic_StopAll.c
 
 // for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
-//     * comment the h00_AAA_Block1 line below
+//     * comment the h21_64_Bank_ResetAllocator line below
 //     * uncomment the block of individual files below
 //     * disable USE_DEFRAG in common.h
 // for defrag & Mods3.c (required for /AltMods):
-//     * uncomment the h00_AAA_Block1 line below
+//     * uncomment the h21_64_Bank_ResetAllocator line below
 //     * comment the block of individual files below
 //     * enable USE_DEFRAG in common.h
 
-common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h00_AAA_Block1.c // h21 all the way to h64
+common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h21_64_Bank_ResetAllocator.c // h21 all the way to h64
 
-//h00_AAA_Block1 starts here ---v
+//h21_64_Bank_ResetAllocator starts here ---v
 //common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h21_Bank_ResetAllocator.c
 //common, exe, Bank_Alloc, 0x0,                            General/HOWL/h22_Bank_Alloc.c
 //common, exe, Bank_AssignSpuAddrs, 0x0,                   General/HOWL/h23_Bank_AssignSpuAddrs.c
@@ -584,7 +626,7 @@ common, exe, Bank_ResetAllocator, 0x0,                   General/HOWL/h00_AAA_Bl
 //common, exe, UpdateChannelVol_EngineFX_All, 0x0,         General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
 //common, exe, UpdateChannelVol_Music_All, 0x0,            General/HOWL/h63_UpdateChannelVol_Music_All.c
 //common, exe, UpdateChannelVol_OtherFX_All, 0x0,          General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
-//h00_AAA_Block1 ends here ---^
+//h21_64_Bank_ResetAllocator ends here ---^
 
 common, exe, howl_VolumeGet, 0x0,                        General/HOWL/h65_howl_VolumeGet.c
 common, exe, howl_VolumeSet, 0x0,                        General/HOWL/h66_howl_VolumeSet.c
@@ -880,10 +922,10 @@ common, exe, MainStats_RestartRaceCountLoss, 0x0,        General/MAIN/MainStats_
 //common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin_hook.s
 common, exe, MATH_Cos, 0x0,                            General/MATH/MATH_1_Cos.c
 //common, exe, MATH_FastSqrt, 0x0,                       General/MATH/MATH_2_FastSqrt.c //TODO
-//common, exe, MATH_HitboxMatrix, 0x0,					 General/MATH/MATH_3_HitboxMatrix.c //TODO
-//common, exe, MATH_VectorLength, 0x0,					 General/MATH/MATH_4_VectorLength.c //TODO
-//common, exe, MATH_VectorNormalize, 0x0,				 General/MATH/MATH_5_VectorNormalize.c //TODO
-//common, exe, MATH_MatrixMul, 0x0,						 General/MATH/MATH_6_MatrixMul.c //TODO
+//common, exe, MATH_HitboxMatrix, 0x0,                General/MATH/MATH_3_HitboxMatrix.c //TODO
+//common, exe, MATH_VectorLength, 0x0,                General/MATH/MATH_4_VectorLength.c //TODO
+//common, exe, MATH_VectorNormalize, 0x0,             General/MATH/MATH_5_VectorNormalize.c //TODO
+//common, exe, MATH_MatrixMul, 0x0,                   General/MATH/MATH_6_MatrixMul.c //TODO
 
 // ====================================================================================================================
 // MEMCARD (stubbed for this file)
@@ -907,8 +949,8 @@ common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD
 common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
 // unknown 8003ddac
 //common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c //TODO
-//common, exe, MEMCARD_Load, 0x0,						   General/MEMCARD/MEMCARD_19_Load.c //TODO
-//common, exe, MEMCARD_Save, 0x0,						   General/MEMCARD/MEMCARD_20_Save.c //TODO
+//common, exe, MEMCARD_Load, 0x0,                          General/MEMCARD/MEMCARD_19_Load.c //TODO
+//common, exe, MEMCARD_Save, 0x0,                          General/MEMCARD/MEMCARD_20_Save.c //TODO
 common, exe, MEMCARD_Format, 0x0,                        General/MEMCARD/MEMCARD_21_Format.c
 common, exe, MEMCARD_IsFile, 0x0,                        General/MEMCARD/MEMCARD_22_IsFile.c
 //common, exe, MEMCARD_FindFirstGhost, 0x0,                General/MEMCARD/MEMCARD_23_FindFirstGhost.c //bugged
@@ -950,7 +992,7 @@ common, exe, Particle_UpdateAllParticles, 0x0,           General/Particle/Partic
 common, exe, Particle_BitwiseClampByte, 0x0,             General/Particle/Particle_6_BitwiseClampByte.c
 common, exe, Particle_SetColors, 0x0,                    General/Particle/Particle_7_SetColors.c
 //common, exe, Particle_RenderList, 0x0,                   General/Particle/Particle_8_RenderList.c //TODO
-//common, exe, Particle_Init, 0x0,           			   General/Particle/Particle_9_Init.c //TODO
+//common, exe, Particle_Init, 0x0,                         General/Particle/Particle_9_Init.c //TODO
 
 // ====================================================================================================================
 // PickupBots
@@ -986,8 +1028,8 @@ common, exe, PROC_CollidePointWithBucket, 0x0,           General/PROC/PROC_09_Co
 //hook commented out bc the function in RDATA is messed up???
 //common, exe, PROC_SearchForModel, 0x0,                   General/PROC/PROC_10_SearchForModel_hook.s
 //common, exe, PROC_PerBspLeaf_CheckInstances, 0x0,        General/PROC/PROC_11_PerBspLeaf_CheckInstances.c //TODO
-//common, exe, PROC_StartSearch_Self, 0x0,				   General/PROC/PROC_12_StartSearch_Self.c //TODO
-//common, exe, PROC_CollideHitboxWithBucket, 0x0,		   General/PROC/PROC_13_CollideHitboxWithBucket.c //TODO
+//common, exe, PROC_StartSearch_Self, 0x0,                 General/PROC/PROC_12_StartSearch_Self.c //TODO
+//common, exe, PROC_CollideHitboxWithBucket, 0x0,          General/PROC/PROC_13_CollideHitboxWithBucket.c //TODO
 
 // ====================================================================================================================
 // PushBuffer (stubbed for this file)
@@ -1061,43 +1103,43 @@ common, exe, RECTMENU_BoolHidden, 0x0,                   General/RECTMENU/RECTME
 // RefreshCard (stubbed for this file)
 // ====================================================================================================================
 //common, exe, RefreshCard_BoolGhostForLEV, 0x0,           General/RefreshCard/RefreshCard_00_BoolGhostForLEV.c //TODO
-//common, exe, RefreshCard_Unknown1, 0x0,				     General/RefreshCard/RefreshCard_01_Unknown1.c //commented because overbudget
-//common, exe, RefreshCard_GetResult, 0x0,				   General/RefreshCard/RefreshCard_02_GetResult.c //TODO
-//common, exe, RefreshCard_NextMemcardAction, 0x0,		   General/RefreshCard/RefreshCard_03_NextMemcardAction.c //TODO
-//common, exe, RefreshCard_GhostEncodeByte, 0x0,		   General/RefreshCard/RefreshCard_04_GhostEncodeByte.c //TODO
-//common, exe, RefreshCard_GhostDecodeByte, 0x0,		   General/RefreshCard/RefreshCard_05_GhostDecodeByte.c //TODO
-//common, exe, RefreshCard_GhostEncodeProfile, 0x0,		   General/RefreshCard/RefreshCard_06_GhostEncodeProfile.c //TODO
-//common, exe, RefreshCard_GhostDecodeProfile, 0x0,		   General/RefreshCard/RefreshCard_07_GhostDecodeProfile.c //TODO
-//common, exe, RefreshCard_StartMemcardAction, 0x0,		   General/RefreshCard/RefreshCard_08_StartMemcardAction.c //TODO
-common, exe, RefreshCard_StopMemcardAction, 0x0,	     General/RefreshCard/RefreshCard_09_StopMemcardAction.c
-//common, exe, RefreshCard_SetScreenText, 0x0,			   General/RefreshCard/RefreshCard_10_SetScreenText.c //TODO
-//common, exe, RefreshCard_Unknown2, 0x0,				   General/RefreshCard/RefreshCard_11_Unknown2.c //TODO
-//common, exe, RefreshCard_GetNumGhostsTotal, 0x0,		   General/RefreshCard/RefreshCard_12_GetNumGhostsTotal.c //TODO
-//common, exe, RefreshCard_GameProgressAndOptions, 0x0,	   General/RefreshCard/RefreshCard_13_GameProgressAndOptions.c //TODO
-//common, exe, RefreshCard_Unknown3, 0x0,				   General/RefreshCard/RefreshCard_14_Unknown3.c //TODO
-//common, exe, RefreshCard_Unknown4, 0x0,				   General/RefreshCard/RefreshCard_15_Unknown4.c //TODO
-//common, exe, RefreshCard_Entry, 0x0,					   General/RefreshCard/RefreshCard_16_Entry.c //TODO
+//common, exe, RefreshCard_Unknown1, 0x0,                  General/RefreshCard/RefreshCard_01_Unknown1.c //commented because overbudget
+//common, exe, RefreshCard_GetResult, 0x0,                 General/RefreshCard/RefreshCard_02_GetResult.c //TODO
+//common, exe, RefreshCard_NextMemcardAction, 0x0,         General/RefreshCard/RefreshCard_03_NextMemcardAction.c //TODO
+//common, exe, RefreshCard_GhostEncodeByte, 0x0,           General/RefreshCard/RefreshCard_04_GhostEncodeByte.c //TODO
+//common, exe, RefreshCard_GhostDecodeByte, 0x0,           General/RefreshCard/RefreshCard_05_GhostDecodeByte.c //TODO
+//common, exe, RefreshCard_GhostEncodeProfile, 0x0,        General/RefreshCard/RefreshCard_06_GhostEncodeProfile.c //TODO
+//common, exe, RefreshCard_GhostDecodeProfile, 0x0,        General/RefreshCard/RefreshCard_07_GhostDecodeProfile.c //TODO
+//common, exe, RefreshCard_StartMemcardAction, 0x0,        General/RefreshCard/RefreshCard_08_StartMemcardAction.c //TODO
+common, exe, RefreshCard_StopMemcardAction, 0x0,         General/RefreshCard/RefreshCard_09_StopMemcardAction.c
+//common, exe, RefreshCard_SetScreenText, 0x0,             General/RefreshCard/RefreshCard_10_SetScreenText.c //TODO
+//common, exe, RefreshCard_Unknown2, 0x0,                  General/RefreshCard/RefreshCard_11_Unknown2.c //TODO
+//common, exe, RefreshCard_GetNumGhostsTotal, 0x0,         General/RefreshCard/RefreshCard_12_GetNumGhostsTotal.c //TODO
+//common, exe, RefreshCard_GameProgressAndOptions, 0x0,    General/RefreshCard/RefreshCard_13_GameProgressAndOptions.c //TODO
+//common, exe, RefreshCard_Unknown3, 0x0,                  General/RefreshCard/RefreshCard_14_Unknown3.c //TODO
+//common, exe, RefreshCard_Unknown4, 0x0,                  General/RefreshCard/RefreshCard_15_Unknown4.c //TODO
+//common, exe, RefreshCard_Entry, 0x0,                     General/RefreshCard/RefreshCard_16_Entry.c //TODO
 
 // ====================================================================================================================
 // SelectProfile (stubbed for this file)
 // ====================================================================================================================
 //common, exe, SelectProfile_QueueLoadHub_MenuProc, 0x0,   General/SelectProfile/SelectProfile_00_QueueLoadHub_MenuProc.c //TODO
-//common, exe, SelectProfile_ThTick, 0x0,				   General/SelectProfile/SelectProfile_01_ThTick.c //TODO
-//common, exe, SelectProfile_PrintInteger, 0x0,			   General/SelectProfile/SelectProfile_02_PrintInteger.c //TODO
-//common, exe, SelectProfile_UI_ConvertX, 0x0,			   General/SelectProfile/SelectProfile_03_UI_ConvertX.c //TODO
-common, exe, SelectProfile_UI_ConvertY, 0x0,			 General/SelectProfile/SelectProfile_04_UI_ConvertY.c
-//common, exe, SelectProfile_DrawAdvProfile, 0x0,		   General/SelectProfile/SelectProfile_05_DrawAdvProfile.c //TODO
-//common, exe, SelectProfile_GetTrackID, 0x0,			   General/SelectProfile/SelectProfile_06_GetTrackID.c //TODO
-//common, exe, SelectProfile_Init, 0x0,					   General/SelectProfile/SelectProfile_07_Init.c //TODO
-//common, exe, SelectProfile_Destroy, 0x0,				   General/SelectProfile/SelectProfile_08_Destroy.c //TODO
-//common, exe, SelectProfile_AdvPickMode_MenuProc, 0x0,	   General/SelectProfile/SelectProfile_09_AdvPickMode_MenuProc.c //TODO
-//common, exe, SelectProfile_DrawGhostProfile, 0x0,		   General/SelectProfile/SelectProfile_10_DrawGhostProfile.c //TODO
-//common, exe, SelectProfile_MuteCursors, 0x0,			   General/SelectProfile/SelectProfile_11_MuteCursors.c //TODO
-//common, exe, SelectProfile_UnMuteCursors, 0x0,		   General/SelectProfile/SelectProfile_12_UnMuteCursors.c //TODO
-//common, exe, SelectProfile_ToggleMode, 0x0,			   General/SelectProfile/SelectProfile_13_ToggleMode.c //TODO
-//common, exe, SelectProfile_InitAndDestroy, 0x0,		   General/SelectProfile/SelectProfile_14_InitAndDestroy.c //TODO
-//common, exe, SelectProfile_InputLogic, 0x0,			   General/SelectProfile/SelectProfile_15_InputLogic.c //TODO
-//common, exe, SelectProfile_AllProfiles_MenuProc, 0x0,	   General/SelectProfile/SelectProfile_16_AllProfiles_MenuProc.c //TODO
+//common, exe, SelectProfile_ThTick, 0x0,                  General/SelectProfile/SelectProfile_01_ThTick.c //TODO
+//common, exe, SelectProfile_PrintInteger, 0x0,            General/SelectProfile/SelectProfile_02_PrintInteger.c //TODO
+//common, exe, SelectProfile_UI_ConvertX, 0x0,             General/SelectProfile/SelectProfile_03_UI_ConvertX.c //TODO
+common, exe, SelectProfile_UI_ConvertY, 0x0,             General/SelectProfile/SelectProfile_04_UI_ConvertY.c
+//common, exe, SelectProfile_DrawAdvProfile, 0x0,          General/SelectProfile/SelectProfile_05_DrawAdvProfile.c //TODO
+//common, exe, SelectProfile_GetTrackID, 0x0,              General/SelectProfile/SelectProfile_06_GetTrackID.c //TODO
+//common, exe, SelectProfile_Init, 0x0,                    General/SelectProfile/SelectProfile_07_Init.c //TODO
+//common, exe, SelectProfile_Destroy, 0x0,                 General/SelectProfile/SelectProfile_08_Destroy.c //TODO
+//common, exe, SelectProfile_AdvPickMode_MenuProc, 0x0,    General/SelectProfile/SelectProfile_09_AdvPickMode_MenuProc.c //TODO
+//common, exe, SelectProfile_DrawGhostProfile, 0x0,        General/SelectProfile/SelectProfile_10_DrawGhostProfile.c //TODO
+//common, exe, SelectProfile_MuteCursors, 0x0,             General/SelectProfile/SelectProfile_11_MuteCursors.c //TODO
+//common, exe, SelectProfile_UnMuteCursors, 0x0,           General/SelectProfile/SelectProfile_12_UnMuteCursors.c //TODO
+//common, exe, SelectProfile_ToggleMode, 0x0,              General/SelectProfile/SelectProfile_13_ToggleMode.c //TODO
+//common, exe, SelectProfile_InitAndDestroy, 0x0,          General/SelectProfile/SelectProfile_14_InitAndDestroy.c //TODO
+//common, exe, SelectProfile_InputLogic, 0x0,              General/SelectProfile/SelectProfile_15_InputLogic.c //TODO
+//common, exe, SelectProfile_AllProfiles_MenuProc, 0x0,    General/SelectProfile/SelectProfile_16_AllProfiles_MenuProc.c //TODO
 
 // ====================================================================================================================
 // SubmitName (complete?)
@@ -1215,9 +1257,9 @@ common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupSta
 // Vector
 // ====================================================================================================================
 //common, exe, Vector_SpecLightSpin2D, 0x0,                Vector_0_SpecLightSpin2D.c //TODO
-//common, exe, Vector_SpecLightSpin3D, 0x0, 			   Vector_1_SpecLightSpin3D.c //TODO
-//common, exe, Vector_SpecLightNoSpin3D, 0x0, 			   Vector_2_SpecLightNoSpin3D.c //TODO
-//common, exe, Vector_BakeMatrixTable, 0x0, 			   Vector_3_BakeMatrixTable.c //TODO
+//common, exe, Vector_SpecLightSpin3D, 0x0,                Vector_1_SpecLightSpin3D.c //TODO
+//common, exe, Vector_SpecLightNoSpin3D, 0x0,              Vector_2_SpecLightNoSpin3D.c //TODO
+//common, exe, Vector_BakeMatrixTable, 0x0,                Vector_3_BakeMatrixTable.c //TODO
 
 // ====================================================================================================================
 // Veh
@@ -1347,13 +1389,13 @@ common, exe, VehStuckProc_PlantEaten_Init, 0x0,                General/Vehicle/V
 common, exe, VehStuckProc_RIP_Init, 0x0,                       General/Vehicle/VehStuckProc_10_RIP_Init.c
 common, exe, VehStuckProc_RevEngine_Update, 0x0,               General/Vehicle/VehStuckProc_11_RevEngine_Update.c
 common, exe, VehStuckProc_RevEngine_PhysLinear, 0x0,           General/Vehicle/VehStuckProc_12_RevEngine_PhysLinear.c
-common, exe, VehStuckProc_RevEngine_Animate, 0x0,         	   General/Vehicle/VehStuckProc_13_RevEngine_Animate.c
-common, exe, VehStuckProc_RevEngine_Init, 0x0,         		   General/Vehicle/VehStuckProc_14_RevEngine_Init.c
+common, exe, VehStuckProc_RevEngine_Animate, 0x0,              General/Vehicle/VehStuckProc_13_RevEngine_Animate.c
+common, exe, VehStuckProc_RevEngine_Init, 0x0,                 General/Vehicle/VehStuckProc_14_RevEngine_Init.c
 common, exe, VehStuckProc_Tumble_Update, 0x0,                  General/Vehicle/VehStuckProc_15_Tumble_Update.c
-//common, exe, VehStuckProc_Tumble_PhysLinear, 0x0,  			 General/Vehicle/VehStuckProc_16_Tumble_PhysLinear.c //commented because overbudget
-common, exe, VehStuckProc_Tumble_PhysAngular, 0x0,  		   General/Vehicle/VehStuckProc_17_Tumble_PhysAngular.c
-common, exe, VehStuckProc_Tumble_Animate, 0x0,  			   General/Vehicle/VehStuckProc_18_Tumble_Animate.c
-common, exe, VehStuckProc_Tumble_Init, 0x0,  				   General/Vehicle/VehStuckProc_19_Tumble_Init.c
+//common, exe, VehStuckProc_Tumble_PhysLinear, 0x0,              General/Vehicle/VehStuckProc_16_Tumble_PhysLinear.c //commented because overbudget
+common, exe, VehStuckProc_Tumble_PhysAngular, 0x0,             General/Vehicle/VehStuckProc_17_Tumble_PhysAngular.c
+common, exe, VehStuckProc_Tumble_Animate, 0x0,                 General/Vehicle/VehStuckProc_18_Tumble_Animate.c
+common, exe, VehStuckProc_Tumble_Init, 0x0,                    General/Vehicle/VehStuckProc_19_Tumble_Init.c
 //common, exe, VehStuckProc_Warp_MoveDustPuff, 0x0,              General/Vehicle/VehStuckProc_20_Warp_MoveDustPuff.c //TODO
 common, exe, VehStuckProc_Warp_AddDustPuff1, 0x0,              General/Vehicle/VehStuckProc_21_Warp_AddDustPuff1.c
 //common, exe, VehStuckProc_Warp_AddDustPuff2, 0x0,              General/Vehicle/VehStuckProc_22_Warp_AddDustPuff2.c //TODO
