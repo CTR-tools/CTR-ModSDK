@@ -170,6 +170,10 @@ def budgetFullOvr(name, size, symbolData, verbose, ovrnum, blockname):
       "223_Full": "OVR_Region1",
       "224_Full": "OVR_Region1",
       "225_Full": "OVR_Region1",
+      "230_Full": "OVR_Region3",
+      "231_Full": "OVR_Region3",
+      "232_Full": "OVR_Region3",
+      "233_Full": "OVR_Region3",
    }
    translateEnd = {
       "221_Full": "CC_EndOfFile",
@@ -177,6 +181,10 @@ def budgetFullOvr(name, size, symbolData, verbose, ovrnum, blockname):
       "223_Full": "RR_EndOfFile",
       "224_Full": "TT_EndOfFile",
       "225_Full": "VB_EndOfFile",
+      "230_Full": "MM_EndOfFile",
+      "231_Full": "RB_EndOfFile",
+      "232_Full": "AH_EndOfFile",
+      "233_Full": "CS_EndOfFile",
    }
 
    sn = SymbolName(None, None, None, blockname, ovrnum)
