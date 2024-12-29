@@ -633,7 +633,7 @@
 #include "../decompile/General/232/D232.c"
 #endif
 
-#include "../decompile/General/232/232_Defrag.c"
+#include "../decompile/General/232/232_Full.c"
 
 #include "../decompile/General/233/233_37_40_CS_Garage.c"
 #include "../decompile/General/233/233_zGlobal_gGarage.c"
