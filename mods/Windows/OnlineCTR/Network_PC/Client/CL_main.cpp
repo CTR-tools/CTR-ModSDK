@@ -1159,55 +1159,67 @@ int main(int argc, char *argv[])
 	//int enableDeferredGPU = 1;
 
 	int numDuckInstances = 0;
-	const char* duckTemplate = "duckstation";
 	int duckPID = -1;
+	const char* duckTemplate = "duckstation";
 
-	// copy from
-	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
-	DWORD aProcesses[1024], cbNeeded, cProcesses;
-	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
-	cProcesses = cbNeeded / sizeof(DWORD);
-
-	for (int i = 0; i < cProcesses; i++)
+	while (numDuckInstances == 0 && duckAttempts < 20)
 	{
-		DWORD processID = aProcesses[i];
+	  // copy from
+	  // https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
+	  DWORD aProcesses[1024], cbNeeded, cProcesses;
+	  EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
+	  cProcesses = cbNeeded / sizeof(DWORD);
+	  
+	  for (int i = 0; i < cProcesses; i++)
+	  {
+	  	DWORD processID = aProcesses[i];
+	  
+	  	if (processID != 0)
+	  	{
+	  		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
+	  
+	  		if (NULL != hProcess)
+	  		{
+	  			HMODULE hMod;
+	  			DWORD cbNeeded;
+	  
+	  			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
+	  			{
+	  				char szProcessName[MAX_PATH];
+	  				GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
+	  
+	  				char* procName = (char*)&szProcessName[0];
+	  
+	  				if (
+	  					(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
+	  					(*(int*)&procName[4] == *(int*)&duckTemplate[4])
+	  					)
+	  				{
+	  					numDuckInstances++;
+	  					duckPID = processID;
+	  				}
+	  			}
+	  		}
+	  	}
+	  }
+	  
+	  if (numDuckInstances == 0)
+	  {
+	  	printf("DuckStation is not running! waiting 5 seconds...\n\n");
 
-		if (processID != 0)
-		{
-			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
-
-			if (NULL != hProcess)
-			{
-				HMODULE hMod;
-				DWORD cbNeeded;
-
-				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
-				{
-					char szProcessName[MAX_PATH];
-					GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
-
-					char* procName = (char*)&szProcessName[0];
-
-					if (
-						(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
-						(*(int*)&procName[4] == *(int*)&duckTemplate[4])
-						)
-					{
-						numDuckInstances++;
-						duckPID = processID;
-					}
-				}
-			}
-		}
+			duckAttempts++;
+	  	numDuckInstances = 0;
+	  	duckPID = -1;
+	  }
+	  else printf("Client: DuckStation detected\n");
 	}
 
-	if (numDuckInstances == 0)
+	if (duckAttempts == 20)
 	{
-		printf("Error: DuckStation is not running!\n\n");
+		printf("Error: couldn't find duckstation after 20 attempts, quitting...\n\n");
 		system("pause");
-		exit(0);
+		exit(-1);
 	}
-	else printf("Client: DuckStation detected\n");
 
 	char pidStr[16];
 
