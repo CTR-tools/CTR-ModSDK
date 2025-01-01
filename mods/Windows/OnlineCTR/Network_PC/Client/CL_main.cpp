@@ -1161,6 +1161,7 @@ int main(int argc, char *argv[])
 	int numDuckInstances = 0;
 	int duckPID = -1;
 	const char* duckTemplate = "duckstation";
+	int duckAttempts = 0;
 
 	while (numDuckInstances == 0 && duckAttempts < 20)
 	{
