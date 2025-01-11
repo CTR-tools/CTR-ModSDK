@@ -3,6 +3,7 @@
 
 // toggle these in decompile
 
+#if !defined(CMDLINE_OPTIONS)
 //#define USE_60FPS		// 60 frames per second
 //#define USE_16BY9		// Widescreen
 //#define USE_NEW2P		// Requires 16BY9: Side-By-Side 2P
@@ -21,6 +22,7 @@
 //#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
 
 //#define USE_VR		// Virtual Reality
+#endif
 
 #ifdef USE_ONLINE
 //#define USE_60FPS
