@@ -420,25 +420,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			if(gGT->levelID == CUSTOM_LEVEL_ID)
 			{
-				int* vramBuf = 0x80200000;
 				sdata->load_inProgress = 0;
-				struct VramHeader* vh = (struct VramHeader*) vramBuf;
-				if(vramBuf[0] == 0x20)
+				if (*g_triggerHotReload == HOT_RELOAD_EXEC)
 				{
-					int size = vramBuf[1];
-					vh = &vramBuf[2];
-
-					while(size != 0)
-					{
-						LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
-
-						vramBuf = (int*)vh;
-						vramBuf = &vramBuf[size>>2];
-						size = vramBuf[0];
-						vh = &vramBuf[1];
-					}
+					int* pMap = (int*)(CUSTOM_LEV_ADDR + *CUSTOM_MAP_PTR_ADDR);
+					LOAD_RunPtrMap(CUSTOM_LEV_ADDR, pMap + 1, *pMap >> 2);
+					*g_triggerHotReload = HOT_RELOAD_DONE;
 				}
-				else { LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh)); }
+				HotReloadVRAM();
 			}
 			else
 			{
@@ -471,7 +460,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		}
 		case 7:
 			// get level pointer
-			lev = (gGT->levelID == CUSTOM_LEVEL_ID) ? (struct Level*) 0x80300004 : sdata->ptrLEV_DuringLoading;
+			lev = (gGT->levelID == CUSTOM_LEVEL_ID) ? (struct Level*) CUSTOM_LEV_ADDR : sdata->ptrLEV_DuringLoading;
 
 			// Set LEV pointer
 			gGT->level1 = lev;

@@ -1,4 +1,5 @@
 #include <common.h>
+#include "utils.h"
 
 void StateZero();
 
@@ -27,6 +28,7 @@ u_int CTR_Main()
 	{
 		LOAD_NextQueuedFile();
 		CDSYS_XAPauseAtEnd();
+		HotReload();
 
 		switch(sdata->mainGameState)
 		{

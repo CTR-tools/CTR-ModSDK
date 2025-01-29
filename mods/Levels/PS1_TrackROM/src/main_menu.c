@@ -1,4 +1,5 @@
 #include <common.h>
+#include "utils.h"
 
 void MM_MenuProc_Main(struct RectMenu* mainMenu)
 {
