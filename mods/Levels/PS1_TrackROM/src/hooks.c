@@ -197,6 +197,7 @@ void HotReload()
 	{
 		*g_triggerHotReload = HOT_RELOAD_READY;
 		while (*g_triggerHotReload != HOT_RELOAD_EXEC) {};
+		return;
 	}
 
 	if (*g_triggerHotReload != HOT_RELOAD_START || gGT->gameMode1 & LOADING) { return; }
