@@ -26,3 +26,6 @@ common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 common, exe, LOAD_TenStages, 0x0, src/load_lev.c
 common, exe, main, 0x0, src/ctr_main.c
 common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
+common, exe, MEMCARD_Save, 0x0, src/memcard_save_hook.c
+common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
+common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c

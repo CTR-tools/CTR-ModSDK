@@ -51,12 +51,6 @@ void RunInitHook()
 {
 	struct GameTracker* gGT = sdata->gGT;
 
-	// for Console only, disable ghosts
-	#if 0
-	*(int*)0x80027838 = 0x3E00008;
-	*(int*)0x8002783C = 0;
-	#endif
-
 	// set arcade/TT menu to use adv cup rows
 	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE;
 
@@ -108,7 +102,7 @@ struct MenuRow NewRowsMM[2] =
 	}
 };
 
-struct MenuRow NewRowsEND[3] =
+struct MenuRow NewRowsEND[] =
 {
 	[0] =
 	{
@@ -123,12 +117,21 @@ struct MenuRow NewRowsEND[3] =
 	{
 		.stringIndex = 3, // quit
 		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
+		.rowOnPressDown = 2,
 		.rowOnPressLeft = 1,
 		.rowOnPressRight = 1,
 	},
 
 	[2] =
+	{
+		.stringIndex = 9,
+		.rowOnPressUp = 1,
+		.rowOnPressDown = 2,
+		.rowOnPressLeft = 2,
+		.rowOnPressRight = 2,
+	},
+
+	[3] =
 	{
 		.stringIndex = 0xFFFF,
 	}
@@ -151,14 +154,6 @@ void RunUpdateHook()
 	}
 
 	if (gGT->levelID != CUSTOM_LEVEL_ID) return;
-
-	// TT_EndEvent_DrawHighScore - JR RA
-	*(int*)0x8009f8c0 = 0x3E00008;
-	*(int*)0x8009f8c4 = 0;
-
-	// disable end-of-race high score saving,
-	// but &1 is needed for the ghosts to work
-	gGT->unknownFlags_1d44 = 1;
 }
 
 void HotReloadVRAM()

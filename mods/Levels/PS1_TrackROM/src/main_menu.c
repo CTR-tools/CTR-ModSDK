@@ -29,6 +29,7 @@ void MM_MenuProc_Main(struct RectMenu* mainMenu)
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~CHEAT_ALL;
     sdata_static.gameProgress.unlocks[0] |= UNLOCK_CHARACTERS;
+    data.metaDataLEV[CUSTOM_LEVEL_ID].timeTrial = 0x7FFFFFFF;
 
     // Leave main menu hierarchy
     D230.MM_State = 2;
