@@ -14,16 +14,17 @@ enum HotReloadSteps
     HOT_RELOAD_EXEC = 4,
 };
 
-static volatile int* g_triggerHotReload = (volatile int*) 0x8000C000;
-static volatile int* g_triggerVRMReload = (volatile int*) 0x8000C004;
-static volatile int* g_ghostReady = (volatile int*) 0x8000C008;
-static const struct Model** g_charModelPtrs = (struct Model**) 0x8000C010;
+#define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000
+#define TRIGGER_VRM_RELOAD (volatile int*) 0x8000C004
+#define GHOST_READY (volatile int*) 0x8000C008
+#define CHAR_MODEL_PTRS (struct Model**) 0x8000C010
 
-static const char* CUSTOM_VRAM_ADDR = (char*) 0x80200000;
-static int* const GHOST_SIZE_ADDR = (int*) 0x80280000;
-static const char* GHOST_ADDR = (char*) 0x80280004;
-static const int* CUSTOM_MAP_PTR_ADDR = (int *) 0x80300000;
-static const char* CUSTOM_LEV_ADDR = (char*) 0x80300004;
+#define CUSTOM_VRAM_ADDR (char*) 0x80200000
+#define GHOST_SIZE_ADDR (int*) 0x80280000
+#define DRIVER_ADDR (char*) 0x80290000
+#define GHOST_ADDR (char*) 0x80280004
+#define CUSTOM_MAP_PTR_ADDR (int*) 0x80300000
+#define CUSTOM_LEV_ADDR (char*) 0x80300004
 
 void HotReload();
 void HotReloadVRAM();

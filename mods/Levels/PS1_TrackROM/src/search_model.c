@@ -7,7 +7,7 @@ struct Model* SearchModel(char *searchName)
 
     int i = 0;
     int j = 0;
-    struct Model** models[] = { g_charModelPtrs, (struct Model**)sdata->PLYROBJECTLIST, (struct Model**)NULL };
+    struct Model** models[] = { CHAR_MODEL_PTRS, (struct Model**)sdata->PLYROBJECTLIST, (struct Model**)NULL };
     while (true)
     {
         while (models[j][i] == NULL)

@@ -5,6 +5,7 @@ uint8_t MEMCARD_Save_Hook(int slotIdx, char *name, char *param_3, char *ptrData,
 {
     *GHOST_SIZE_ADDR = fileSize;
     memcpy(GHOST_ADDR, ptrData, fileSize);
+    volatile int * g_ghostReady = GHOST_READY;
     *g_ghostReady = 1;
     return 0;
 }

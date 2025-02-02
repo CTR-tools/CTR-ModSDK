@@ -58,10 +58,13 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 	levelID = gGT->levelID;
 
+	volatile int* g_triggerHotReload = TRIGGER_HOT_RELOAD;
 	if (*g_triggerHotReload == HOT_RELOAD_EXEC)
 	{
-		int* pMap = (int*)(CUSTOM_LEV_ADDR + *CUSTOM_MAP_PTR_ADDR);
-		LOAD_RunPtrMap(CUSTOM_LEV_ADDR, pMap + 1, *pMap >> 2);
+		const char* pCustomLevel = CUSTOM_LEV_ADDR;
+		const int* pCustomMap = CUSTOM_MAP_PTR_ADDR;
+		int* pMap = (int*)(pCustomLevel + *pCustomMap);
+		LOAD_RunPtrMap(pCustomLevel, pMap + 1, *pMap >> 2);
 		*g_triggerHotReload = HOT_RELOAD_DONE;
 	}
 
@@ -355,9 +358,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			sdata->ptrMPK = 0;
 			sdata->load_inProgress = 1;
-			void **pointers = ST1_GETPOINTERS(((struct Level*) CUSTOM_LEV_ADDR)->ptrSpawnType1);
-			data.characterIDs[2] = ((struct GhostHeader*) pointers[ST1_NTROPY])->characterID;
-			data.characterIDs[3] = ((struct GhostHeader*) pointers[ST1_NOXIDE])->characterID;
+
+			if (levelID == CUSTOM_LEVEL_ID)
+			{
+				const char* pCustomLevel = CUSTOM_LEV_ADDR;
+				void **pointers = ST1_GETPOINTERS(((struct Level*) pCustomLevel)->ptrSpawnType1);
+				if (pointers[ST1_NTROPY]) { data.characterIDs[2] = ((struct GhostHeader*) pointers[ST1_NTROPY])->characterID; }
+				if (pointers[ST1_NOXIDE]) { data.characterIDs[3] = ((struct GhostHeader*) pointers[ST1_NOXIDE])->characterID; }
+			}
 			LOAD_DriverMPK(bigfile, sdata->levelLOD, &LOAD_Callback_DriverModels);
 			break;
 		}
@@ -412,6 +420,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// == banks are done parsing ===
 
 			// loop through models
+			struct Model** g_charModelPtrs = CHAR_MODEL_PTRS;
 			piVar15 = &g_charModelPtrs[0];
 			for (iVar9 = 0; iVar9 < 3; iVar9++, piVar15++)
 			{

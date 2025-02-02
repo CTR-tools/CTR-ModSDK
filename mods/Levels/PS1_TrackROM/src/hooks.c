@@ -59,15 +59,6 @@ void RunInitHook()
 	// in a loop, so this breaks the loop
 	*(int*)0x800150c0 = 0;
 
-	// this should happen in main menu,
-	// but we skip the ghost selection
-	if(sdata->ptrGhostTapePlaying == 0)
-	{
-		SelectProfile_ToggleMode(0x30);
-		sdata->boolReplayHumanGhost = 0;
-		sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
-	}
-
 	// wont clear itself?
 	sdata->ptrLoadSaveObj = 0;
 
@@ -78,6 +69,18 @@ void RunInitHook()
 		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 222, 0x80200000, 0);
 		// adds LEV to loading queue
 		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, 0x80300000, 0);
+
+		char* currDriver = 0x80290000;
+		for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
+		{
+			int fileSize;
+			LOAD_ReadFile(sdata->ptrBigfile1, LT_DRAM, BI_RACERMODELHI + i, currDriver, &fileSize, 0);
+			int* pMap = (int*) (currDriver + 4 + (*(int*)currDriver));
+			LOAD_RunPtrMap(currDriver + 4, pMap + 1, *pMap >> 2);
+			struct Model** g_charModelPtrs = CHAR_MODEL_PTRS;
+			g_charModelPtrs[i] = (struct Model*) currDriver;
+			currDriver += fileSize;
+		}
 	}
 
 	if(gGT->levelID != CUSTOM_LEVEL_ID) return;
@@ -180,6 +183,7 @@ void HotReloadVRAM()
 
 void HotReload()
 {
+	volatile int* g_triggerVRMReload = TRIGGER_VRM_RELOAD;
 	if (*g_triggerVRMReload)
 	{
 		HotReloadVRAM();
@@ -188,6 +192,7 @@ void HotReload()
 	}
 
 	struct GameTracker* gGT = sdata->gGT;
+	volatile int* g_triggerHotReload = TRIGGER_HOT_RELOAD;
 	if (*g_triggerHotReload == HOT_RELOAD_LOAD && (gGT->gameMode1 & LOADING || gGT->levelID == MAIN_MENU_LEVEL))
 	{
 		*g_triggerHotReload = HOT_RELOAD_READY;

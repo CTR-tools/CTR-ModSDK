@@ -31,6 +31,13 @@ void MM_MenuProc_Main(struct RectMenu* mainMenu)
     sdata_static.gameProgress.unlocks[0] |= UNLOCK_CHARACTERS;
     data.metaDataLEV[CUSTOM_LEVEL_ID].timeTrial = 0x7FFFFFFF;
 
+    if(sdata->ptrGhostTapePlaying == 0)
+    {
+      SelectProfile_ToggleMode(0x30);
+      sdata->boolReplayHumanGhost = 0;
+      sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
+    }
+
     // Leave main menu hierarchy
     D230.MM_State = 2;
 
