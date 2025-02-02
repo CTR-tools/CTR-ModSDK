@@ -78,7 +78,7 @@ void RunInitHook()
 			int* pMap = (int*) (currDriver + 4 + (*(int*)currDriver));
 			LOAD_RunPtrMap(currDriver + 4, pMap + 1, *pMap >> 2);
 			struct Model** g_charModelPtrs = CHAR_MODEL_PTRS;
-			g_charModelPtrs[i] = (struct Model*) currDriver;
+			g_charModelPtrs[i] = (struct Model*) (currDriver + 4);
 			currDriver += fileSize;
 		}
 	}
