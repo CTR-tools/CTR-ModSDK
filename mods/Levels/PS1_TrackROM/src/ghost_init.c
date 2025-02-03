@@ -91,6 +91,7 @@ void GhostReplay_Init(void)
 				// If you have not beaten N Tropy
 				if ((timeTrialFlags & 2) == 0)
 				{
+                    if (pointers[ST1_NTROPY] == NULL) { return; }
 					gh = pointers[ST1_NTROPY];
 					charID = 2;
 				}
@@ -98,6 +99,7 @@ void GhostReplay_Init(void)
 				// If you have beaten N Tropy
 				else
 				{
+                    if (pointers[ST1_NOXIDE] == NULL) { return; }
 					gh = pointers[ST1_NOXIDE];
 					charID = 3;
 				}
