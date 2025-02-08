@@ -1666,6 +1666,7 @@ LAB_800ad334:
 	
     goto LAB_800adcc0;
 	
+  // MAKE INVISIBLE
   case 0x1a:
     if (param_1 != 0) 
 	{
@@ -1674,6 +1675,7 @@ LAB_800ad334:
     }
     break;
 	
+  // MAKE VISIBLE
   case 0x1b:
     if (param_1 != 0) 
 	{
@@ -1682,6 +1684,7 @@ LAB_800ad334:
     }
     break;
 	
+  // Instance OT sorting offset
   case 0x1c:
     if (param_1 != 0) {
       *(char *)(param_1 + 0x50) = *(char *)(param_1 + 0x50) + *(char *)(psVar14 + 6);
@@ -1689,12 +1692,14 @@ LAB_800ad334:
     }
     break;
 	
+  // INSTANCE SET FLAG
   case 0x1d:
     if (param_1 != 0) {
       *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | *(uint *)(psVar14 + 6);
     }
     break;
 	
+  // INSTANCE REMOVE FLAG
   case 0x1e:
     if (param_1 != 0) {
       *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) & ~*(uint *)(psVar14 + 6);
