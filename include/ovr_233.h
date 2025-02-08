@@ -173,7 +173,10 @@ struct BossCutsceneData
 	int vrmFile;
 	int headFile;
 	int bodyFile;
-	int unusedThirdPart; // KART?
+	
+	// maybe kart was supposed to be separated?
+	// maybe they joined models together, left it in?
+	int kartFile_UNUSED;
 
 	// 0x10
 	int opcode;

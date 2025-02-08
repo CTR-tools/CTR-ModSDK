@@ -93,12 +93,12 @@ void CS_Camera_ThTick_Boss(struct Thread *t)
 	initData.podiumPos[0] = bcd->bossPos[0];
 	initData.podiumPos[1] = bcd->bossPos[1];
 	initData.podiumPos[2] = bcd->bossPos[2];
-	initData.characterPos[0] = 0;
-	initData.characterPos[1] = 0;
-	initData.characterPos[2] = 0;
 	initData.rot[0] = bcd->bossRot[0];
 	initData.rot[1] = bcd->bossRot[1];
 	initData.rot[2] = bcd->bossRot[2];
+	initData.characterPos[0] = 0;
+	initData.characterPos[1] = 0;
+	initData.characterPos[2] = 0;
 
 	// TODO: should be 3 (kart)
     for (i = 0; i < 2; i++)
