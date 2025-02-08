@@ -1,16 +1,15 @@
 #include <common.h>
 
-void CS_Camera_ThTick_Boss(struct Thread *t)
+void CS_Camera_ThTick_Boss(struct Thread* t)
 {
   char i;
 
   int cutsceneID;
-  int *piVar4;
   short levID;
 
-  struct Instance *inst;
-  struct CutsceneObj *cs;
-  struct GameTracker *gGT;
+  struct Instance* inst;
+  struct CutsceneObj* cs;
+  struct GameTracker* gGT;
 
   gGT = sdata->gGT;
   levID = gGT->levelID;
@@ -54,7 +53,7 @@ void CS_Camera_ThTick_Boss(struct Thread *t)
 		break;
     
     // kill all podium "other" threads
-    struct Thread* t = gGT->threadBuckets[OTHER].thread;
+    t = gGT->threadBuckets[OTHER].thread;
     while (t != 0)
     {
       t->flags |= 0x800;
@@ -100,11 +99,14 @@ void CS_Camera_ThTick_Boss(struct Thread *t)
 	initData.characterPos[1] = 0;
 	initData.characterPos[2] = 0;
 
-	// TODO: should be 3 (kart)
-    for (i = 0; i < 2; i++)
+	// MUST go backwards,
+	// Body first, sibling = 0
+	// Head next, sibling = body
+	t = 0;
+    for (i = 1; i >= 0; i--)
     {
-      struct Thread* t =
-		CS_Thread_Init(mArr[i]->id, mArr[i], &initData, 0, 0);
+      t =
+		CS_Thread_Init(mArr[i]->id, mArr[i], &initData, 0, t);
 
       inst = t->inst;
       cs = t->object;
