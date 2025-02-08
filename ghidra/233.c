@@ -1093,8 +1093,11 @@ LAB_800ace7c:
         FUN_8003cfc0(uVar11);
 		
         DAT_800b7760 = 1;
+		
+	    // remove VEH_FREEZE_PODIUM
         *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
-        *(undefined4 *)(param_2 + 0x4c) = local_68;
+        
+		*(undefined4 *)(param_2 + 0x4c) = local_68;
         *(undefined4 *)(param_2 + 0x50) = local_64;
         *(undefined4 *)(param_2 + 0x54) = local_60;
         *(undefined4 *)(param_2 + 0x58) = local_5c;
@@ -1713,6 +1716,7 @@ LAB_800ad334:
 	// hold 233 overlay, dont load 232 yet
 	PTR_DAT_8008d2ac[0x2579] = 3;
 	
+	  // remove VEH_FREEZE_PODIUM
     *(uint *)(puVar4 + 8) = *(uint *)(puVar4 + 8) & 0xfffffffb;
 	
 	// CS_ScriptCmd_OpcodeNext
@@ -1756,18 +1760,24 @@ LAB_800ad444:
     DAT_1f800110 = 0;
     DAT_1f800112 = 0;
     DAT_1f800114 = 0;
+	
     PTR_DAT_8008d2ac[0x2575] = *(undefined *)(psVar14 + 6);
     PTR_DAT_8008d2ac[0x2576] = 0;
     PTR_DAT_8008d2ac[0x2577] = 0;
     iVar10 = *(int *)(psVar14 + 6);
+	
+	// STATIC_OXIDEDANCE
     if (iVar10 == 0x8d) {
       PTR_DAT_8008d2ac[0x2575] = 0;
       PTR_DAT_8008d2ac[0x2576] = 0x8d;
       iVar10 = *(int *)(psVar14 + 6);
     }
+	
+	// STATIC_CRASHDANCE
     if (iVar10 == 0x7e) {
       DAT_1f800118._2_2_ = DAT_1f800118._2_2_ + 0x800;
     }
+	
     DAT_1f800118._0_2_ = (short)DAT_1f800118 + DAT_800b7480;
     DAT_1f800118._2_2_ = DAT_1f800118._2_2_ + DAT_800b7482;
     DAT_1f80011c._0_2_ = (short)DAT_1f80011c + DAT_800b7484;
@@ -2920,6 +2930,7 @@ void FUN_800aedf8(int param_1)
 	  // podium reward
 	  *(undefined2 *)(puVar3 + 0x2572) = 0;
       
+	  // remove VEH_FREEZE_PODIUM
 	  *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) & 0xfffffffb;
 	  
 	  // RaceFlag_SetDrawOrder
@@ -3060,6 +3071,8 @@ void FUN_800aedf8(int param_1)
     // podium reward
 	*(undefined2 *)(puVar3 + 0x2572) = 0;
     *(uint *)puVar3 = *(uint *)puVar3 & 0xffefffff;
+	
+	  // remove VEH_FREEZE_PODIUM
     *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) & 0xfffffffb;
     
 	// load LEV for beat oxide any%
@@ -3646,6 +3659,7 @@ LAB_800afa68:
   // begin the async 232 load
   PTR_DAT_8008d2ac[0x2579] = 2;
   
+  // remove VEH_FREEZE_PODIUM
   *(uint *)(puVar1 + 8) = *(uint *)(puVar1 + 8) & 0xfffffffb;
   
   // Play "Unlock" Sound
@@ -3835,8 +3849,11 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
     if (DAT_800b7774 < 1) {
       DAT_800b7774 = 1;
     }
+	
+	// remove VEH_FREEZE_PODIUM
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
-    return;
+    
+	return;
   }
   
   // set scale (x, y, z)
@@ -5168,6 +5185,7 @@ void FUN_800b8558(void)
   // go to 3D character selection
   DAT_8008d908 = &DAT_800b8598;
   
+  // remove VEH_FREEZE_PODIUM
   DAT_800b85a0 = DAT_800b85a0 & 0xfffffffb;
   
   // CS_Garage_ZoomOut (0 = just entered garage)
