@@ -1341,7 +1341,7 @@ LAB_800ad8ec:
         DAT_1f80011c._0_2_ = 0;
       }
 	  
-	  // make a thread for "spawn"
+	  // CS_Thread_Init for "spawn"
       FUN_800af328
                 (*(undefined4 *)(psVar14 + 6),s_spawn_800ab9f4,&DAT_1f800108,0,
                  *(undefined4 *)(param_1 + 0x6c));
@@ -1865,7 +1865,7 @@ LAB_800ad444:
     DAT_1f800118._2_2_ = DAT_1f800118._2_2_ + DAT_800b7482;
     DAT_1f80011c._0_2_ = (short)DAT_1f80011c + DAT_800b7484;
     
-	// make a thread for "dancer"
+	// CS_Thread_Init for "dancer"
 	uVar11 = FUN_800af328
                        (*(undefined4 *)(psVar14 + 6),s_g_dancer_800ab9fc,&DAT_1f800108,0,0);
     
@@ -2789,7 +2789,7 @@ void FUN_800ae9a8(int param_1)
 		// Create Thread for Head + Body
         if ((*piVar4 != 0) &&
            (
-				// make a thread, return instance
+				// CS_Thread_Init, return instance
 				iVar6 = FUN_800af328((int)*(short *)(*piVar4 + 0x10),*piVar4,&local_60,0,iVar6),
 				
 				// check for valid instance
@@ -4337,7 +4337,7 @@ void FUN_800b0300(void)
     local_46 = 0xffab;
     local_44 = 0;
 	
-	// create thread for "third"
+	// CS_Thread_Init for "third"
     FUN_800af328((uint)(byte)puVar2[0x2577],s_third_800abca4,&local_50,0x600,0);
   }
   
@@ -4347,7 +4347,7 @@ void FUN_800b0300(void)
     local_46 = 0xffd6;
     local_44 = 0;
 	
-	// create thread for "second"
+	// CS_Thread_Init for "second"
     FUN_800af328
               ((uint)(byte)PTR_DAT_8008d2ac[0x2576],s_second_800abcac,&local_50,0x200,0);
   }
@@ -4356,14 +4356,14 @@ void FUN_800b0300(void)
   local_46 = 0;
   local_44 = 0;
   
-  // create thread for "first"
+  // CS_Thread_Init for "first"
   FUN_800af328((uint)(byte)PTR_DAT_8008d2ac[0x2575],s_first_800abcb4,&local_50,0,0);
   
   local_48 = 0x1a8;
   local_46 = 0xff80;
   local_44 = 0x140;
   
-  // create thread for "tawna"
+  // CS_Thread_Init for "tawna"
   FUN_800af328
             ((uint)(byte)PTR_DAT_8008d2ac[0x2578],s_tawna_800abcbc,&local_50,0xfffffd56,0);
   
@@ -4567,7 +4567,7 @@ void FUN_800b087c(void)
   undefined2 local_36;
   undefined2 local_34;
   
-  // create thread for "introcam"
+  // CS_Thread_Init for "introcam"
   FUN_800af328(0,s_introcam_800abd24,0,0,0);
   
   // if not going to credits
@@ -4588,7 +4588,7 @@ void FUN_800b087c(void)
       local_3e = 0;
       local_3c = 0;
 	  
-	  // Create 19 threads for the Naughty Dog Box Scene
+	  // CS_Thread_Init 19x for the Naughty Dog Box Scene
       FUN_800af328(0xb6,s_BOX_01_800abd30,&local_48,0,0);
       FUN_800af328(0xb7,s_BOX_02_800abd38,&local_48,0,0);
       FUN_800af328(0xb8,s_BOX_02_BOTTOM_800abd40,&local_48,0,0);
@@ -4617,9 +4617,7 @@ void FUN_800b087c(void)
 	  // 800abd84 = "LID2"
 	  FUN_800af328(0xbf,&DAT_800abd9c,&local_48,0,0);
       
-	  // There are 5 cars that appear in the cutscene,
-	  // but the pointers and strings suggest there 
-	  // could have been 8
+	  // CS_Thread_Init for 5 karts (strings say couldve been 8)
 	  FUN_800af328(0xc1,s_KART0_800abda4,&local_48,0,0);
       FUN_800af328(0xc2,s_KART1_800abdac,&local_48,0,0);
       FUN_800af328(0xc3,s_KART2_800abdb4,&local_48,0,0);
