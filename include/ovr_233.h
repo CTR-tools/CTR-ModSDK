@@ -174,9 +174,9 @@ struct BossCutsceneData
 	int headFile;
 	int bodyFile;
 	
-	// maybe kart was supposed to be separated?
-	// maybe they joined models together, left it in?
-	int kartFile_UNUSED;
+	// Unused, cause it does model->id
+	// to get the model index anyway
+	int modelIndex_unused;
 
 	// 0x10
 	int opcode;
