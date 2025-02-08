@@ -1,73 +1,36 @@
 #include <common.h>
 
+extern unsigned char BoxSceneArr[20];
+
 // for oxide intro and ND box
 void CS_Cutscene_Start(void)
 {
-  MATRIX matrice;
+  // stack allocation
+  CsThreadInitData initData;
+  
   struct GameTracker *gGT = sdata->gGT;
 
-  // create thread for "introcam"
+  // no instance, no initData required
   CS_Thread_Init(0, &OVR_233.s_introcam, 0, 0, 0);
 
-  // if not going to credits
-  if ((gGT->gameMode2 & CREDITS) == 0)
+  // If this is the Naughty Dog Box Scene
+  if (gGT->levelID == NAUGHTY_DOG_CRATE)
   {
-    // If this is the Naughty Dog Box Scene
-    if (gGT->levelID == NAUGHTY_DOG_CRATE)
-    {
-      CS_Instance_InitMatrix();
-      matrice.m[0][0] = 0;
-      matrice.m[0][1] = 0;
-      matrice.m[0][2] = 0;
-      matrice.m[1][0] = 0;
-      matrice.m[1][1] = 0;
-      matrice.m[1][2] = 0;
-      matrice.m[2][0] = 0;
-      matrice.m[2][1] = 0;
-      matrice.m[2][2] = 0;
-
-      // Create 19 threads for the Naughty Dog Box Scene
-      CS_Thread_Init(0xb6, &OVR_233.s_box1, &matrice, 0, 0);
-      CS_Thread_Init(0xb7, &OVR_233.s_box2, &matrice, 0, 0);
-      CS_Thread_Init(0xb8, &OVR_233.s_box2_bottom, &matrice, 0, 0);
-      CS_Thread_Init(0xb9, &OVR_233.s_box2_front, &matrice, 0, 0);
-      CS_Thread_Init(0xba, &OVR_233.s_box2_A, &matrice, 0, 0);
-      CS_Thread_Init(0xbb, &OVR_233.s_box3, &matrice, 0, 0);
-
-      // 800abd70 = "CODE"
-      CS_Thread_Init(0xbc, &OVR_233.s_code, &matrice, 0, 0);
-
-      // 800abd78 = "GLOW"
-      CS_Thread_Init(0xbd, &OVR_233.s_glow, &matrice, 0, 0);
-
-      // 800abd80 = "LID"
-      CS_Thread_Init(0xbe, &OVR_233.s_lid, &matrice, 0, 0);
-
-      // 800abd84 = "LIDB"
-      CS_Thread_Init(0xc9, &OVR_233.s_lidb, &matrice, 0, 0);
-
-      // 800abd84 = "LIDC"
-      CS_Thread_Init(0xca, &OVR_233.s_lidc, &matrice, 0, 0);
-
-      // 800abd84 = "LIDD"
-      CS_Thread_Init(0xcb, &OVR_233.s_lidd, &matrice, 0, 0);
-
-      // 800abd84 = "LID2"
-      CS_Thread_Init(0xbf, &OVR_233.s_lid2, &matrice, 0, 0);
-
-      // There are 5 cars that appear in the cutscene,
-      // but the pointers and strings suggest there
-      // could have been 8
-      CS_Thread_Init(193, &OVR_233.s_kart0, &matrice, 0, 0);
-      CS_Thread_Init(194, &OVR_233.s_kart1, &matrice, 0, 0);
-      CS_Thread_Init(195, &OVR_233.s_kart2, &matrice, 0, 0);
-      CS_Thread_Init(196, &OVR_233.s_kart3, &matrice, 0, 0);
-      CS_Thread_Init(199, &OVR_233.s_kart6, &matrice, 0, 0);
-      CS_Thread_Init(200, &OVR_233.s_kart7, &matrice, 0, 0);
-    }
+	// nullify
+	int* ptrIntArr = &initData;
+	for(int i = 0; i < sizeof(struct CsThreadInitData)/4; i++)
+		ptrIntArr[i] = 0;
+	  
+    CS_Instance_InitMatrix();
+  
+	for(int i = 0; i < 19; i++)
+	{
+		CS_Thread_Init(BoxSceneArr[i], 0, &initData, 0, 0);
+	}
   }
+  
   // if going to credits
-  else
+  if ((gGT->gameMode2 & CREDITS) != 0)
   {
     OVR_233.isCutsceneOver = 0;
 
@@ -76,3 +39,33 @@ void CS_Cutscene_Start(void)
     CS_Instance_InitMatrix();
   }
 }
+
+// Should be 19 large
+unsigned char BoxSceneArr[20] =
+{
+	0xb6, // BOX1
+	0xb7, // BOX2
+	0xb8, // BOX2_BOTTOM
+	0xb9, // BOX2_FRONT
+	0xba, // BOX2_A
+	0xbb, // BOX3
+	0xbc, // CODE
+	0xbd, // GLOW
+	0xbe, // LID
+	0xc9, // LIDB
+	0xca, // LIDC
+	0xcb, // LIDD
+	0xbf, // LID2
+	
+	193, // KART0
+	194, // KART1
+	195, // KART2
+	196, // KART3
+	
+	// --- cut by ND
+	
+	199, // KART6
+	200, // KART7
+	
+	-1, // NULL
+};

@@ -10,28 +10,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	struct Instance *driverInstSelf;
 	struct Thread *victoryCamThread;
 	u_int podiumMusic;
-	
-	struct
-	{
-		// podium position
-		// X Y Z and ?
-		short podiumPos[4];
-		
-		// character position
-		// X Y Z and ?
-		short characterPos[4];
-		
-		// rotation (for both)
-		// X Y Z and ?
-		short rot[4];
-
-		// matrix
-		u_int local_30;
-		u_int local_2c;
-		u_int local_28;
-		u_int local_24;
-		u_int local_20;
-	} InitData;
+	struct CsThreadInitData InitData;
 	
 	struct PosRot
 	{
