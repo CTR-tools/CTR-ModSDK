@@ -1312,12 +1312,17 @@ LAB_800ad8ec:
       FUN_800ac320
                 (param_1,(int)psVar14[1],*(undefined4 *)(psVar14 + 4),&DAT_1f800108,&DAT_1f800118,0)
       ;
-      DAT_1f800108 = DAT_1f800108 + *(short *)(param_1 + 0x44);
+      
+	  // position
+	  DAT_1f800108 = DAT_1f800108 + *(short *)(param_1 + 0x44);
       DAT_1f80010a = DAT_1f80010a + *(short *)(param_1 + 0x48);
-      DAT_1f800110 = 0;
+      DAT_1f80010c = DAT_1f80010c + *(short *)(param_1 + 0x4c);
+      
+	  // rotation
+	  DAT_1f800110 = 0;
       DAT_1f800112 = 0;
       DAT_1f800114 = 0;
-      DAT_1f80010c = DAT_1f80010c + *(short *)(param_1 + 0x4c);
+	  
       if (*(int *)(psVar14 + 6) == 0xc0) {
         DAT_1f800118._0_2_ = 0;
         DAT_1f800118._2_2_ = 0;
