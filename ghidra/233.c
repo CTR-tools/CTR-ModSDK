@@ -1092,6 +1092,7 @@ LAB_800ace7c:
 		// load LEV
         FUN_8003cfc0(uVar11);
 		
+		// end cutscene
         DAT_800b7760 = 1;
 		
 	    // remove VEH_FREEZE_PODIUM
@@ -1747,6 +1748,8 @@ LAB_800ad334:
     break;
 	
   case 0x20:
+	
+	// end cutscene
     DAT_800b7760 = 1;
 	
 	// CS_DestroyPodium_StartDriving
@@ -3021,7 +3024,9 @@ void FUN_800aedf8(int param_1)
       puVar3 = PTR_DAT_8008d2ac;
 	  
 	  // if you do not go to boss cutscene
-      if (iVar5 == 0) {
+      if (iVar5 == 0) 
+	  {
+		// end cutscene
         DAT_800b7760 = 1;
 		
 		// This thread is now dead
@@ -3823,7 +3828,9 @@ void FUN_800afcc4(int param_1)
   // Cosine(angle)
   iVar4 = FUN_8003d1c0((int)psVar5[5]);
   
+  // isCutsceneNotOver
   bVar1 = DAT_800b7760 == 0;
+  
   *(int *)(iVar6 + 0x4c) = (int)psVar5[2] + (psVar5[0x11] * iVar4 >> 0xc);
   
   if (bVar1) 
@@ -4168,7 +4175,9 @@ void FUN_800b0300(void)
   DAT_800b776c = howl_VolumeGet(2);
   DAT_800b776c = DAT_800b776c & 0xff;
   
+  // cutscene not finished
   DAT_800b7760 = 0;
+  
   DAT_800b7774 = 0;
   DAT_800b7770 = 0;
   
@@ -4335,6 +4344,7 @@ void FUN_800b06ac(int param_1)
   undefined *puVar6;
   int *piVar7;
   
+  // cutscene not finished
   DAT_800b7760 = 0;
   
   // If this Instance's thread does not exist
@@ -4520,6 +4530,7 @@ void FUN_800b087c(void)
   // if going to credits
   else 
   {
+    // cutscene not finished
     DAT_800b7760 = 0;
     
 	// CS_Credits_Init
