@@ -1705,11 +1705,11 @@
 800ae2b8 CS_Thread_AnimateScale
 800ae318 CS_Thread_InterpolateFramesMS
 800ae54c CS_Thread_ThTick
-800ae81c CS_Boss_Init_Callback
-800ae834 CS_Boss_Init
-800ae9a8 CS_Boss_ThTick
-800aed48 CS_Boss_BoolShouldStart
-800aedf8 CS_Podium_Camera_ThTick
+800ae81c CS_LoadBossCallback
+800ae834 CS_LoadBoss
+800ae9a8 CS_Camera_ThTick_Boss
+800aed48 CS_Camera_BoolGotoBoss
+800aedf8 CS_Camera_ThTick_Podium
 800af328 CS_Thread_Init
 800af7c0 CS_Podium_Prize_Spin
 800af994 CS_Podium_Prize_ThTick3
@@ -1720,8 +1720,8 @@
 800b021c CS_Podium_Stand_ThTick
 800b0248 CS_Podium_Stand_Init
 800b0300 CS_Podium_FullScene_Init
-800b06ac CS_LevThread_LInB
-800b087c CS_LevCamera_OnInit
+800b06ac CS_Thread_LInB
+800b087c CS_Cutscene_Start
 800b0b38 CS_BoxScene_InstanceSplitLines
 800b7784 CS_Garage_ZoomOut
 800b7834 CS_Garage_MenuProc

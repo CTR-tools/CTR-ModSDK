@@ -1530,10 +1530,10 @@
 800b1954 CS_Thread_InterpolateFramesMS
 800b1b88 CS_Thread_ThTick
 // small func here?
-800b1e80 CS_Boss_Init
-800b1ff8 CS_Boss_ThTick
-800b2398 CS_Boss_BoolShouldStart
-800b2448 CS_Podium_Camera_ThTick
+800b1e80 CS_LoadBoss
+800b1ff8 CS_Camera_ThTick_Boss
+800b2398 CS_Camera_BoolGotoBoss
+800b2448 CS_Camera_ThTick_Podium
 800b2978 CS_Thread_Init
 800b2e10 CS_Podium_Prize_Spin
 800b2fe4 CS_Podium_Prize_ThTick3
@@ -1543,8 +1543,8 @@
 800b34e0 CS_Podium_Prize_Init
 800b3898 CS_Podium_Stand_Init
 800b3950 CS_Podium_FullScene_Init
-800b3d0c CS_LevThread_LInB
-800b3edc CS_LevCamera_OnInit
+800b3d0c CS_Thread_LInB
+800b3edc CS_Cutscene_Start
 800b4198 CS_BoxScene_InstanceSplitLines
 800bad40 CS_Garage_ZoomOut
 800bade8 CS_Garage_MenuProc

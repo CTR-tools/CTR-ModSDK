@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_char DECOMP_CS_Boss_BoolShouldStart(void)
+u_char DECOMP_CS_Camera_BoolGotoBoss(void)
 {
     struct GameTracker* gGT = sdata->gGT;
 

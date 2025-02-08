@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CS_Podium_Camera_ThTick(struct Thread *th)
+void CS_Camera_ThTick_Podium(struct Thread *th)
 {
   short rewardId;
   u_short uVar4;
@@ -171,7 +171,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
     {
       u_char hintID;
       // if you do not go to boss cutscene
-      if (CS_Boss_BoolShouldStart() == 0)
+      if (CS_Camera_BoolGotoBoss() == 0)
       {
         OVR_233.isCutsceneOver = 1;
 
@@ -229,7 +229,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
       // or else the function would return by now
 
       // Change ThTick function,
-      th->funcThTick = CS_Boss_ThTick;
+      th->funcThTick = CS_Camera_ThTick_Boss;
 
       // If you are not at the podium for winning a relic
       if (gGT->podiumRewardID != STATIC_RELIC)

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CS_Boss_ThTick(struct Thread *t)
+void CS_Camera_ThTick_Boss(struct Thread *t)
 {
   char i;
 
@@ -80,7 +80,7 @@ void CS_Boss_ThTick(struct Thread *t)
       // if all podium threads are dead
       if (gGT->threadBuckets[OTHER] == 0)
       {
-        CS_Boss_Init(cutsceneID + 0x800B7488);
+        CS_LoadBoss(cutsceneID + 0x800B7488);
         OVR_233.cutsceneState = 3;
       }
     }

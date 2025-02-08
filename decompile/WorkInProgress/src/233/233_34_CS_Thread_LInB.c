@@ -2,7 +2,7 @@
 
 void CS_Thread_ThTick(struct Thread*);
 
-void CS_LevThread_LInB(struct Instance* inst)
+void CS_Thread_LInB(struct Instance* inst)
 {
   struct Thread* t;
   short modelID;

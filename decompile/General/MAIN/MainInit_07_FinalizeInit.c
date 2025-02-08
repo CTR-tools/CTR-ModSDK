@@ -385,7 +385,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         // disable all HUD flags
         gGT->hudFlags = 0;
 
-        CS_LevCamera_OnInit();
+        CS_Cutscene_Start();
     }
 
     PickupBots_Init();

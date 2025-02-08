@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CS_Boss_Init(int* boss_cutscene)
+void DECOMP_CS_LoadBoss(int* boss_cutscene)
 {
     unsigned int *ptrDestination;
     int index;
@@ -36,5 +36,5 @@ void DECOMP_CS_Boss_Init(int* boss_cutscene)
     }
 
 	// CTR Model File (head)
-    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, boss_cutscene[1] - 1 + index, 0, CS_Boss_Init_Callback);
+    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, boss_cutscene[1] - 1 + index, 0, CS_LoadBossCallback);
 }

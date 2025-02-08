@@ -133,7 +133,7 @@ extern struct
 
 	char fill_strings2[0x3c];
 
-	// CS_LevThread_LInB
+	// CS_Thread_LInB
 	char s_introguy[12];
 	char s_introcam[12];
 

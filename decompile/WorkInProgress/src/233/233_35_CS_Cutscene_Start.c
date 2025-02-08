@@ -1,7 +1,7 @@
 #include <common.h>
 
 // for oxide intro and ND box
-void CS_LevCamera_OnInit(void)
+void CS_Cutscene_Start(void)
 {
   MATRIX matrice;
   struct GameTracker *gGT = sdata->gGT;

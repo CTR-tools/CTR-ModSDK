@@ -1294,7 +1294,7 @@ void SpuSetIRQCallback(void(*)(void));
 void SpuSetTransferCallback(void(*)(void));
 void MainInit_RainBuffer(struct GameTracker*);
 void CS_Podium_FullScene_Init();
-void CS_LevCamera_OnInit();
+void CS_Cutscene_Start();
 void howl_StopAudio(int boolErasePauseBackup, int boolEraseMusic, int boolDestroyAllFX);
 u_int OtherFX_Modify(u_int soundId, u_int flags);
 void RB_TNT_ThTick_ThrowOnHead(struct Thread*);

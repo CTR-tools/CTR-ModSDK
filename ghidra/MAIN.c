@@ -8358,7 +8358,7 @@ void FUN_8003b934(uint *param_1)
   // If you are in a cutscene
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20000000) != 0)
   {
-	// CS_LevCamera_OnInit
+	// CS_Cutscene_Start
     FUN_800b087c();
   }
 

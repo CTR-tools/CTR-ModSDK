@@ -2549,7 +2549,7 @@ LAB_800ae744:
 }
 
 
-// CS_Boss_Init
+// CS_LoadBoss
 void FUN_800ae834(int *param_1)
 
 {
@@ -2618,7 +2618,7 @@ void FUN_800ae834(int *param_1)
 }
 
 
-// CS_Boss_ThTick
+// CS_Camera_ThTick_Boss
 void FUN_800ae9a8(int param_1)
 
 {
@@ -2720,7 +2720,7 @@ void FUN_800ae9a8(int param_1)
 	  // if all podium threads are dead
       if (*(int *)(PTR_DAT_8008d2ac + 0x1c30) == 0) 
 	  {
-		// CS_Boss_Init
+		// CS_LoadBoss
         FUN_800ae834(iVar2 + -0x7ff48b78); // 800B7488
 		
 		// go to state 3
@@ -2876,7 +2876,7 @@ void FUN_800ae9a8(int param_1)
 }
 
 
-// CS_Boss_BoolShouldStart
+// CS_Camera_BoolGotoBoss
 undefined4 FUN_800aed48(void)
 
 {
@@ -2925,7 +2925,7 @@ undefined4 FUN_800aed48(void)
 }
 
 
-// CS_Podium_Camera_ThTick
+// CS_Camera_ThTick_Podium
 void FUN_800aedf8(int param_1)
 
 {
@@ -3106,7 +3106,7 @@ void FUN_800aedf8(int param_1)
 	// If this is not a "beaten oxide" podium
 	if (sVar2 != 0x38) 
 	{
-	  // CS_Boss_BoolShouldStart
+	  // CS_Camera_BoolGotoBoss
       iVar5 = FUN_800aed48();
 	  
       puVar3 = PTR_DAT_8008d2ac;
@@ -3193,7 +3193,7 @@ void FUN_800aedf8(int param_1)
 	  // At this point, there must be a boss cutscene,
 	  // or else the function would return by now
 	  
-	  // Change ThTick function, CS_Boss_ThTick
+	  // Change ThTick function, CS_Camera_ThTick_Boss
       *(undefined4 *)(param_1 + 0x2c) = 0x800ae9a8;
 	  
 	  // If you are not at the podium for winning a relic
@@ -3731,7 +3731,7 @@ void FUN_800af994(int param_1)
   
   // Give hints at the end of each race
   
-  // CS_Boss_BoolShouldStart
+  // CS_Camera_BoolGotoBoss
   iVar5 = FUN_800aed48();
   
   // if you do not go to boss cutscene
@@ -4425,7 +4425,7 @@ void FUN_800b0300(void)
 }
 
 
-// CS_LevThread_LInB
+// CS_Thread_LInB
 // for all cutscene threads
 void FUN_800b06ac(int param_1)
 
@@ -4552,7 +4552,7 @@ void FUN_800b06ac(int param_1)
 }
 
 
-// CS_LevCamera_OnInit
+// CS_Cutscene_Start
 // for oxide intro and ND box
 void FUN_800b087c(void)
 
