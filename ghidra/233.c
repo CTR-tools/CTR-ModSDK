@@ -2657,12 +2657,15 @@ void FUN_800ae9a8(int param_1)
       iVar6 = iVar6 + 1;
       iVar2 = iVar6 * 2;
     }
+	
+	// hub*4*2*4 + hub*2*5
     iVar2 = iVar2 * 4 + iVar6 * 5;
   }
   
   // If cutscene came from script opcode
   else 
   {
+	// 13 INTs large
     iVar2 = DAT_800b0b88 * 0xd;
   }
   
