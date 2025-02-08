@@ -12,8 +12,9 @@ void DECOMP_CS_Boss_Init(int* boss_cutscene)
 	// CTR Model file (body)
     ptrDestination = 0x800b777c;
 	
+	// erase HEAD + BODY
 	ptrDestination[0] = 0;
-	ptrDestination[1] = 0;
+	ptrDestination[-1] = 0;
 
     sdata->gGT->levID_in_each_mempack[index] = -1;
 
