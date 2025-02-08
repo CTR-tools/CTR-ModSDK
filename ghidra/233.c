@@ -1814,10 +1814,14 @@ LAB_800ad9f4:
       }
     }
     break;
+  
   case 0x27:
+	
+	// gGT->msInThisLEV
     if (*(uint *)(puVar3 + 0x1d00) >> 5 < *(uint *)(psVar14 + 6))
-    goto switchD_800acf30_caseD_14;
+		goto switchD_800acf30_caseD_14;
     break;
+	
   case 0x28:
     
 	// CS_Instance_SafeCheckAnimFrame

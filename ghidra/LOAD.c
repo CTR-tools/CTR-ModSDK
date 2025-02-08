@@ -1948,7 +1948,10 @@ void FUN_80033108(void)
   // uadblock under driver
   *(undefined4 *)(*(int *)(puVar1 + 0x24ec) + 0x350) = 0;
 
+  // gGT->framesInThisLEV
   *(undefined4 *)(puVar1 + 0x1cfc) = 0;
+  
+  // gGT->msInThisLEV
   *(undefined4 *)(puVar1 + 0x1d00) = 0;
   return;
 }
