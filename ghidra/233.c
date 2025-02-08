@@ -1123,6 +1123,7 @@ switchD_800acf30_caseD_14:
     *(undefined2 *)(param_2 + 0x14) = (undefined2)local_38;
     iVar10 = (int)psVar14[8];
     iVar12 = iVar12 >> 5;
+	
     if (iVar10 != (int)psVar14[9]) {
       iVar13 = *(int *)(psVar14 + 4);
       if (*(int *)(psVar14 + 6) != iVar13) {
