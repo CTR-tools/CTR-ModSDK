@@ -1577,6 +1577,14 @@ LAB_800ad334:
 		// Credits
         if (iVar10 == 0x2c) goto LAB_800ad2fc;
       }
+	  
+	  // Not:
+	  //	Oxide Intro, 
+	  //	Gemstone Valley
+	  //	Main Menu
+	  //	Credits
+	  
+	  // loading next swap-level
       DAT_800b0b80 = 1;
 	  
 	  // LOAD_Hub_ReadFile
@@ -1585,9 +1593,17 @@ LAB_800ad334:
     break;
 	
   case 0x11:
-    if (((DAT_800b0b80 == 0) || (DAT_8008d0a0 == '\0')) || (DAT_8008d0a2 != 0))
-    goto switchD_800acf30_caseD_14;
-    break;
+    if (
+		// not loading next swap-level
+		(DAT_800b0b80 == 0) || 
+		
+		(DAT_8008d0a0 == 0) || 
+		(DAT_8008d0a2 != 0)
+	   )
+	{
+		goto switchD_800acf30_caseD_14;
+    }
+	break;
 	
   case 0x12:
     
@@ -1632,8 +1648,10 @@ LAB_800ad334:
 	// other star-related data
     *(undefined2 *)(puVar3 + 0x1b0e) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x17e);
     *(undefined2 *)(puVar3 + 0x1b10) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x180);
-    DAT_800b0b80 = 0;
     *(undefined2 *)(puVar3 + 0x1b12) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x182);
+	
+	// not loading swap-level
+    DAT_800b0b80 = 0;
 	
 	// CS_ScriptCmd_OpcodeNext
     FUN_800ac1c0(param_2);
