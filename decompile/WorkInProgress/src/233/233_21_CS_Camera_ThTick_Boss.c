@@ -18,76 +18,66 @@ void CS_Camera_ThTick_Boss(struct Thread *t)
   levID = gGT->levelID;
 
   // first determine which cutscene will play
-  if (OVR_233.unknown3 < 0)
+  if (OVR_233.bossCutsceneIndex < 0)
   {
     // Intro Boss Cutscene
-
-    // subtract 25 from lev ID to get adv hub index (0-5)
-    otherThread = (levID - 25) * 2;
-    cutsceneID = (levID - 25) * 4;
+    cutsceneID = (levID - 0x19) * 2;
 
     // If you are at podium after winning a Key
     if (gGT->podiumRewardID == 99)
     {
-      // Outro Boss Cutscene
-      otherThread++;
-      cutsceneID = otherThread * 2;
+	  // Outro cutscene
+      cutsceneID++;
     }
-
-    cutsceneID = cutsceneID * 4 + otherThread * 5;
   }
   else
   {
-    cutsceneID = OVR_233.unknown3 * 0xd;
+    cutsceneID = OVR_233.bossCutsceneIndex;
   }
-
-  // array index
-  cutsceneID = cutsceneID * 4;
 
   switch (OVR_233.cutsceneState)
   {
-  // first state of boss cutscene
+	  
+  // Start Fade-to-black
   case 0:
   case 1:
-
-    OVR_233.cutsceneState = 2;
-
-    // set desired screen brightness to black
     gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0;
-
-    // set brightness to subtract each frame
     gGT->pushBuffer_UI.fade_step = -0x400;
-
+    OVR_233.cutsceneState = 2;
     break;
+	
+  // Wait for fade-to-black
+  // Start loading process
   case 2:
 
-    // if pushBuffer_UI is fully faded to black
-    if (gGT->pushBuffer_UI.fadeFromBlack_currentValue == 0)
+    // wait for fade
+    if (gGT->pushBuffer_UI.fadeFromBlack_currentValue != 0)
+		break;
+    
+    // kill all podium "other" threads
+    otherThread = gGT->threadBuckets[OTHER].thread;
+    while (otherThread != 0)
     {
-      // podium "other" threads
-      otherThread = gGT->threadBuckets[OTHER].thread;
-
-      // kill this thread and all siblings
-      while (otherThread != 0)
-      {
-        // This thread is now dead
-        otherThread->flags |= 0x800;
-
-        // thread = thread->sibling
-        otherThread = otherThread->siblingThread;
-      }
-
-      // if all podium threads are dead
-      if (gGT->threadBuckets[OTHER] == 0)
-      {
-        CS_LoadBoss(cutsceneID + 0x800B7488);
-        OVR_233.cutsceneState = 3;
-      }
+      otherThread->flags |= 0x800;
+      otherThread = otherThread->siblingThread;
     }
 
+    // wait one frame, for the thread recycler to finish
+    if (gGT->threadBuckets[OTHER] != 0)
+		break;
+    
+    CS_LoadBoss(&OVR_233.bossCS[cutsceneID]);
+    OVR_233.cutsceneState = 3;
     break;
 
+  // Wait for loading callback,
+  // start thread for head+body
+  // start fade-to-normal
   case 3:
+
+	// wait till loading is done
+	if(OVR_233.ptrModelBossHead == 0)
+		break;
 
     if (*(int*)0x800b7778 != 0)
     {

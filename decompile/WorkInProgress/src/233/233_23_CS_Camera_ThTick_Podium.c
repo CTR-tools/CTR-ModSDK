@@ -234,19 +234,19 @@ void CS_Camera_ThTick_Podium(struct Thread *th)
       // If you are not at the podium for winning a relic
       if (gGT->podiumRewardID != STATIC_RELIC)
       {
-        OVR_233.unknown3 = -1;
+        OVR_233.bossCutsceneIndex = -1;
         return;
       }
 
       // less than 18 relics
       if (gGT->currAdvProfile.numRelics < 18)
       {
-        OVR_233.unknown3 = -1;
+        OVR_233.bossCutsceneIndex = -1;
         return;
       }
 
       // Assuming the last relic was just won...
-      OVR_233.unknown3 = gGT->levelID - 0x10;
+      OVR_233.bossCutsceneIndex = gGT->levelID - 0x10;
       return;
     }
 

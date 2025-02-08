@@ -245,9 +245,14 @@ extern struct
 	u_short VertSplitLine;
 	u_short VertSplit_unknown;
 	
-	int unknown1;
-	int unknown2;
-	int unknown3;
+	// 800b0b80
+	int boolLoadNextSwap;
+	
+	// 800b0b84
+	int boolStartToSkip;
+	
+	// 800b0b88
+	int bossCutsceneIndex;
 
 	// 800b0b8c
 	int CutsceneManipulatesAudio;
