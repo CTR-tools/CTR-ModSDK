@@ -2645,7 +2645,11 @@ void FUN_800ae9a8(int param_1)
   if (DAT_800b0b88 < 0) 
   {
 	// Intro Boss Cutscene
-	  
+	
+	// each boss is 13 INTs large
+	// levelID=0 -> 0
+	// levelID=1 -> 26
+	
 	// subtract 25 from lev ID to get adv hub index (0-5)
     iVar6 = (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2;
     iVar2 = (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 4;
@@ -2658,7 +2662,6 @@ void FUN_800ae9a8(int param_1)
       iVar2 = iVar6 * 2;
     }
 	
-	// hub*4*2*4 + hub*2*5
     iVar2 = iVar2 * 4 + iVar6 * 5;
   }
   
