@@ -2892,6 +2892,8 @@ undefined4 FUN_800aed48(void)
 				// if number of relics is less than 18
 				(*(int *)(PTR_DAT_8008d2ac + 0x1e34) < 0x12)
 			) || 
+			
+			// if BeatOxide2
 			((DAT_8008fbb0 & 0x100000) != 0)
 		) &&
 	
