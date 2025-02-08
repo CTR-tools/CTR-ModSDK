@@ -744,7 +744,10 @@ void FUN_800ac714(void)
   // CameraDC, it must be zero to follow you
   *(undefined2 *)(PTR_DAT_8008d2ac + 0x1532) = 0;
   
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(puVar2 + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar2 + 0x274) = 0x100;
   return;
 }
@@ -1012,6 +1015,7 @@ LAB_800acb0c:
         *(undefined4 *)(puVar3 + 0x180) = 0x140;
       }
 	  
+	  // gGT->pushBuffer[0].distToScreen_CURR
       *(undefined4 *)(puVar3 + 0x274) = *(undefined4 *)(puVar3 + 0x180);
     }
     puVar4 = PTR_DAT_8008d2ac;
@@ -5279,8 +5283,10 @@ LAB_800b821c:
   }
   iVar7 = DAT_800b85d0 + iVar7 / DAT_800b85cc;
   
-  // what? Why is this pushBuffer[1]
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(int *)(puVar2 + 0x274) = iVar7;
+  
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(int *)(puVar2 + 0x180) = iVar7;
   return;
 }

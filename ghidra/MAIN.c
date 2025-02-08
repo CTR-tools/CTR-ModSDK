@@ -7799,8 +7799,11 @@ void FUN_8003b934(uint *param_1)
 
   // loop counter
   iVar8 = 0;
-
+  
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar2 + 0x274) = 0x100;
 
   // erase all threadBucket structs
