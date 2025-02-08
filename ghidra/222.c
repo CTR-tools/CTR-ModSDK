@@ -34,7 +34,7 @@ void FUN_8009f704(void)
   // pointer to P1
   iVar16 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
   
-									// numPlyrCurrGame - 1
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar13 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
   
   // if race ended less than 30 second ago,
@@ -785,7 +785,8 @@ void FUN_800a06f8(ushort param_1,short param_2)
   short local_2e;
   
   puVar5 = PTR_DAT_8008d2ac;
-											// numPlyrCurrGame - 1
+  
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar7 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
   
   // default size of box with 3 laps

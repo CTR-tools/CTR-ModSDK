@@ -5391,11 +5391,20 @@ void FUN_800b1c90(void)
   DAT_8008d000 = DAT_8008d000 & 0xfffffff7;
   
   local_20 = 0;
+  
+  // gGT->drivers
   uVar4 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec);
+  
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar2 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
+  
   iVar3 = 0;
+  
+  // RaceFlag_GetCanDraw
   iVar1 = FUN_80044094();
-  if (iVar1 == 0) {
+  if (iVar1 == 0) 
+  {
+	// RaceFlag_SetCanDraw
     FUN_80044088(1);
   }
   

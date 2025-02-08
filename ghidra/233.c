@@ -1004,7 +1004,7 @@ LAB_800acb0c:
 		  // if less than 6 seconds passed, Start button does nothing
           if (*(uint *)(puVar3 + 0x1d00) >> 5 < 0xb5) goto LAB_800acef4;
           
-		  // enable checkered flag
+		  // RaceFlag_SetCanDraw
 		  FUN_80044088(1);
           
 		  // RaceFlag_IsTransitioning
@@ -1029,7 +1029,7 @@ LAB_800acb0c:
 		// if level ID is not Naughty Dog Box
         else 
 		{
-		  // enable checkered flag
+		  // RaceFlag_SetCanDraw
           FUN_80044088(1);
 		  
 		  // RaceFlag_IsTransitioning
@@ -1457,7 +1457,7 @@ LAB_800ad8ec:
 	// oxide intro
 	if (iVar10 == 0x1e) 
 	{
-	  // disable checkered flag
+	  // RaceFlag_SetCanDraw
       FUN_80044088(0);
 	  
 LAB_800ad2fc:
@@ -1557,7 +1557,7 @@ LAB_800ad334:
     iVar10 = FUN_80043f28();
     if (iVar10 == 1) 
 	{
-	  // enable checkered flag
+	  // RaceFlag_SetCanDraw
       FUN_80044088(1);
 	  
 	  // checkered flag, begin transition on-screen
@@ -3779,6 +3779,8 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
   sVar1 = param_3[2];
   psVar11[10] = -0x200;
   psVar11[2] = sVar1 + (short)uVar10;
+  
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar2 = PTR_DAT_8008625c;
   switch(param_1) 
   {
