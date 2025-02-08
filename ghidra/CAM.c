@@ -1015,7 +1015,7 @@ undefined4 FUN_80018ba0(int param_1,ushort *param_2,ushort *param_3,ushort *para
   // frame index
   sVar4 = (short)param_1;
 
-  // get number of position on track
+  // CAM_Path_GetNumPoints
   sVar1 = FUN_80018b18();
 
   if (sVar4 < 0)

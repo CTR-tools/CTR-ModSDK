@@ -920,9 +920,15 @@ LAB_800acb0c:
   
   psVar14 = *(short **)(param_2 + 0x10);
   local_3c = (int)psVar14[1];
-  if (param_1 == 0) {
+  
+  if (param_1 == 0) 
+  {
+	// CAM_Path_GetNumPoints
     sVar5 = FUN_80018b18();
-    if ((int)sVar5 != 0) {
+	
+    if ((int)sVar5 != 0) 
+	{
+	  // gGT->msInThisLEV
       iVar10 = (*(int *)(puVar3 + 0x1d00) << 0xb) >> 0x10;
       if (iVar10 < (int)sVar5 + -1) {
         
@@ -2933,10 +2939,15 @@ void FUN_800aedf8(int param_1)
 	
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xffffcfff;
   }
-  if ((DAT_800b7774 == 0) || (DAT_8008d908 != 0)) {
+  
+  if ((DAT_800b7774 == 0) || (DAT_8008d908 != 0)) 
+  {
+	// CAM_Path_GetNumPoints
     iVar5 = FUN_80018b18();
     iVar8 = (iVar5 << 0x15) >> 0x10;
-    if (iVar8 != 0) {
+	
+    if (iVar8 != 0) 
+	{
       _uVar4 = (uint)*puVar10 + (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x1d04);
       uVar4 = (ushort)_uVar4;
       iVar9 = _uVar4 * 0x10000 >> 0x10;
