@@ -2756,10 +2756,12 @@ void FUN_800ae9a8(int param_1)
 	  // change active mempack
       FUN_8003e80c((int)*(short *)(PTR_DAT_8008d2ac + 0x254a));
 	  
+	  // Boss Head+Body Position
       local_60 = *(undefined2 *)(iVar2 + -0x7ff48b54); // 0x800B74AC
       local_5e = *(undefined2 *)(iVar2 + -0x7ff48b52); // 0x800B74AE
       local_5c = *(undefined2 *)(iVar2 + -0x7ff48b50); // 0x800B74B0
       
+	  // Boss Head+Body Rotation
 	  local_50 = *(undefined2 *)(iVar2 + -0x7ff48b4c); // 0x800B74B4
       local_4e = *(undefined2 *)(iVar2 + -0x7ff48b4a); // 0x800B74B6
       local_4c = *(undefined2 *)(iVar2 + -0x7ff48b48); // 0x800B74B8
