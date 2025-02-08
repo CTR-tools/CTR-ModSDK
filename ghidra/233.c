@@ -973,7 +973,7 @@ LAB_800acb0c:
 		// Oxide Intro, oxide flies down to earth
 		if ((local_40[0] & 4) != 0) 
 		{
-		  // Small FOV (zoom in)
+		  // Narrow FOV (zoom in)
           *(undefined4 *)(puVar3 + 0x180) = 0x278;
         }
         
@@ -998,7 +998,10 @@ LAB_800acb0c:
       }
 	  
 	  // if level ID is Naughty Dog Box
-      if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x29) {
+      if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x29) 
+	  {
+		// Narrow FOV (zoom in)
+		// gGT->pushBuffer[0].distanceToScreen_PREV
         *(undefined4 *)(puVar3 + 0x180) = 0x140;
       }
 	  
