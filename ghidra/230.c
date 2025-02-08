@@ -6839,7 +6839,7 @@ void FUN_800b3fe4(void)
   // set scrapbook state
   DAT_800b59d8 = 0;
   
-  // change checkered flag
+  // RaceFlag_SetDrawOrder
   FUN_80043f8c(1);
   
   // clear gamepad input (for menus)
@@ -7006,15 +7006,15 @@ LAB_800b4224:
     DAT_800b59d8 = 4;
     break;
 	
-	// send player back to adv hub,
-	// or back to main menu
+  // send player back to adv hub,
+  // or back to main menu
   case 4:
   
 	// RaceFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
-	  // change checkered flag back
+	  // RaceFlag_SetDrawOrder
       FUN_80043f8c(0);
 	  
 	  // If you're not in Adventure Mode

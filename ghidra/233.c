@@ -1082,6 +1082,7 @@ LAB_800acb0c:
 		// CDSYS_XAPauseRequest
         FUN_8001cf98();
 		
+		// RaceFlag_SetDrawOrder
         FUN_80043f8c(0);
         
 		// main menu
@@ -1267,6 +1268,7 @@ LAB_800ad8ec:
     }
     goto LAB_800adcc0;
 	
+  // ???
   case 1:
     local_34 = 1;
 	
@@ -1275,6 +1277,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // ???
   case 2:
     if (param_1 != 0) 
 	{
@@ -1290,6 +1293,7 @@ LAB_800ad8ec:
 	// kill cutscene thread
 	return 1;
 	
+  // ???
   case 3:
     if (param_1 != 0) 
 	{
@@ -1316,6 +1320,7 @@ LAB_800ad8ec:
     }
     break;
 	
+  // ???
   case 4:
 	// random number
     iVar10 = FUN_8003ea28();
@@ -1332,6 +1337,8 @@ LAB_800ad8ec:
     }
     local_34 = 1;
     goto LAB_800adcc0;
+	
+  // PLAY SOUND
   case 5:
   
 	// if you're at the adventure character select screen
@@ -1359,42 +1366,68 @@ LAB_800ad8ec:
       }
     }
     break;
-	
+
+  // STOP SOUND
   case 6:
 	// OtherFX_Stop2
     FUN_80028844((uint)(ushort)psVar14[6]);
     break;
 	
+  // START MUSIC
   case 7:
 	// CseqMusic_Start
     FUN_80028c78((uint)(ushort)psVar14[6],0,0,0,*(undefined4 *)(psVar14 + 4));
     break;
 	
+  // RESTART MUSIC
   case 8:
 	// CseqMusic_Restart
     FUN_80028f34((uint)(ushort)psVar14[6],1);
     break;
 	
+  // FORCE LOD
   case 9:
+  
+    // if Instance
     if (param_1 != 0) {
-      iVar10 = (int)*(short *)(*(int *)(param_1 + 0x18) + 0x12);
-      if ((iVar10 != 0) && (iVar13 = *(int *)(*(int *)(param_1 + 0x18) + 0x14), iVar13 != 0)) {
-        iVar15 = *(int *)(psVar14 + 6);
+      
+	  // Inst -> model -> numHeaders,
+	  iVar10 = (int)*(short *)(*(int *)(param_1 + 0x18) + 0x12);
+	  
+      if (
+			(iVar10 != 0) && 
+			
+			// Inst -> model -> modelHeader,
+			(iVar13 = *(int *)(*(int *)(param_1 + 0x18) + 0x14), iVar13 != 0)
+		 ) 
+	  {
+        // LOD index from opcode
+		iVar15 = *(int *)(psVar14 + 6);
+		
         iVar8 = iVar15;
         if (iVar10 <= iVar15) {
           iVar15 = iVar10 + -1;
           iVar8 = iVar15;
         }
-        while (iVar15 != 0) {
+		
+		// Disable drawing LODs
+        while (iVar15 != 0) 
+		{
+		  // erase maxDistanceLOD
           *(undefined2 *)(iVar13 + 0x14) = 0;
+		  
+		  // next LOD
           iVar15 = iVar15 + -1;
           iVar13 = iVar13 + 0x40;
         }
+		
+		// headers[x].maxDistanceLOD
         *(undefined2 *)(iVar13 + 0x14) = 20000;
       }
     }
     break;
 	
+  // ???
   case 10:
     if (*(int *)(psVar14 + 6) == -1) {
       uVar6 = *(ushort *)(param_2 + 0x16) | 1;
@@ -1406,6 +1439,7 @@ LAB_800ad8ec:
     *(ushort *)(param_2 + 0x16) = uVar6;
     break;
 	
+  // ???
   case 0xb:
     *(short *)(param_2 + 0x2c) = psVar14[4];
     *(short *)(param_2 + 0x2a) = psVar14[6];
@@ -1415,6 +1449,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // FADE WHITE TO NORMAL
   case 0xc:
   
 	// pushBuffer fade values
@@ -1427,10 +1462,12 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // ???
   case 0xd:
     uVar6 = *(ushort *)(param_2 + 0x16) | psVar14[6];
     goto LAB_800ad444;
 	
+  // ???
   case 0xe:
     *(ushort *)(param_2 + 0x16) = *(ushort *)(param_2 + 0x16) & ~psVar14[6];
 	
@@ -1439,6 +1476,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // SWAP LEVEL
   case 0xf:
   
 	// need to swap LEV files
@@ -1467,8 +1505,10 @@ LAB_800ad8ec:
 	
     goto switchD_800acf30_caseD_14;
 	
+  // LOAD LEVEL
   case 0x10:
     
+	// get level from opcode
 	iVar10 = *(int *)(psVar14 + 6);
     
 	// set level ID
@@ -1481,18 +1521,24 @@ LAB_800ad8ec:
       FUN_80044088(0);
 	  
 LAB_800ad2fc:
+
+	  // remove VEH_FREEZE_PODIUM
       *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
       
 	  // load LEV
 	  FUN_8003cfc0((int)(short)iVar10);
     }
     else {
-      if (iVar10 < 0x1f) {
+      if (iVar10 < 0x1f) 
+	  {
+		// gemstone valley
         if (iVar10 == 0x19) 
 		{
 		  // gemstone valley
           uVar11 = 0x19;
 LAB_800ad334:
+
+		  // remove VEH_FREEZE_PODIUM
           *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
           
 		  // load LEV
@@ -1501,12 +1547,18 @@ LAB_800ad334:
 		  break;
         }
       }
-      else {
-        if (iVar10 == 0x27) {
+      else 
+	  {
+		// main menu
+        if (iVar10 == 0x27) 
+		{
+		  // RaceFlag_SetDrawOrder
           FUN_80043f8c(0);
           uVar11 = 0x27;
           goto LAB_800ad334;
         }
+		
+		// Credits
         if (iVar10 == 0x2c) goto LAB_800ad2fc;
       }
       DAT_800b0b80 = 1;
@@ -1832,9 +1884,12 @@ LAB_800ad9f4:
     FUN_800ac1c0(param_2);
 	
     goto LAB_800adcc0;
+  
   case 0x2f:
+    // pushBuffer_UI fade is NOT black
     if (0 < *(short *)(PTR_DAT_8008d2ac + 0x139a)) goto switchD_800acf30_caseD_14;
     break;
+  
   case 0x30:
 	// cutscene manipulated audio
     DAT_800b0b8c = 1;
@@ -2850,6 +2905,8 @@ void FUN_800aedf8(int param_1)
 	  *(undefined2 *)(puVar3 + 0x2572) = 0;
       
 	  *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) & 0xfffffffb;
+	  
+	  // RaceFlag_SetDrawOrder
       FUN_80043f8c(0);
 	  
 	  // go to main menu

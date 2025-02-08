@@ -2935,13 +2935,20 @@ LAB_800aede8:
   
   puVar2 = PTR_DAT_8008d2ac;
   local_28 = (int)*(short *)(*(int *)(iVar10 + 0x2c) + 0x34) + (iVar4 * -0x280 >> 0xc);
+  
+  // driverPos - garagePos
   iVar10 = *(int *)(iVar11 + 0x44) - local_30;
   iVar4 = *(int *)(iVar11 + 0x48) - local_2c;
   iVar11 = *(int *)(iVar11 + 0x4c) - local_28;
-  if (iVar10 * iVar10 + iVar4 * iVar4 + iVar11 * iVar11 < 0x40000) {
+  
+  if (iVar10 * iVar10 + iVar4 * iVar4 + iVar11 * iVar11 < 0x40000) 
+  {
+	// pushBuffer FadeToBlack
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x139c) = 0;
     *(undefined2 *)(puVar2 + 0x139e) = 0xfd56;
   }
+  
+  // pushBuffer_UI fade is fully black
   if (*(short *)(PTR_DAT_8008d2ac + 0x139a) == 0) 
   {
 	// when loading is done, remove flag for In Adventure Arena
@@ -2981,7 +2988,8 @@ LAB_800aede8:
     
 	// RaceFlag_SetDrawOrder
 	FUN_80043f8c(1);
-													// Level ID - 0x19: Adventure Hub (0-4)
+	
+	// MainRaceTrack_RequestLoad (array[gGT->levelID-0x19])
     FUN_8003cfc0((int)*(short *)((int)&local_60 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2)
                 );
   }

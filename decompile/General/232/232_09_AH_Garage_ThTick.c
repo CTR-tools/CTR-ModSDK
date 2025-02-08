@@ -242,27 +242,27 @@ LAB_800aede8:
 
     pos[2] = (int)inst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
 
+	// DriverPos - DoorPos
     dist[0] = drv_inst->matrix.t[0] - pos[0];
     dist[1] = drv_inst->matrix.t[1] - pos[1];
     dist[2] = drv_inst->matrix.t[2] - pos[2];
 
+	// If small distance (inside garage)
     if (dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2] < 0x40000)
     {
+		// Fade To Black
         gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0;
-        gGT->pushBuffer_UI.fade_step = 0xfd56;
+        gGT->pushBuffer_UI.fade_step = -0x2AA;
     }
+	
+	// If fade complete, start loading level
     if (gGT->pushBuffer_UI.fadeFromBlack_currentValue == 0)
     {
-        // when loading is done, remove flag for In Adventure Arena
         sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_ARENA;
-
-        // when loading is done, add flag for Boss Mode
         sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_BOSS;
 
         if (
             (levelID == GEM_STONE_VALLEY) &&
-
-            // If you have all 18 relics
             (gGT->currAdvProfile.numRelics == 18))
         {
             // set string index (0-5) to "N Oxide's Final Challenge"
