@@ -96,7 +96,7 @@ void CS_Boss_ThTick(struct Thread *t)
       {
         if (*piVar4 != 0)
         {
-          if (otherThread != 0)
+          if (i != 0)
           {
             *piVar4 = *piVar4 + 4;
           }

@@ -2717,19 +2717,33 @@ void FUN_800ae9a8(int param_1)
     }
     break;
   case 3:
-    iVar6 = 0;
-    if (DAT_800b7778 != 0) {
+    
+	iVar6 = 0;
+    
+	// if CTR Model File (head)
+	if (DAT_800b7778 != 0) 
+	{
+	  // loop through 2 models (head + body)
       piVar4 = &DAT_800b7778;
       do {
-        if (*piVar4 != 0) {
+        
+		// if model exists
+		if (*piVar4 != 0) 
+		{
+		  // increment ONLY body by 4,
+		  // head was incremented in callback
           if (iVar6 != 0) {
             *piVar4 = *piVar4 + 4;
           }
+		  
+		  // store in gGT->modelPtrs
           *(int *)(puVar1 + (int)*(short *)(*piVar4 + 0x10) * 4 + 0x2160) = *piVar4;
         }
-        iVar6 = iVar6 + 1;
+        
+		iVar6 = iVar6 + 1;
         piVar4 = piVar4 + 1;
       } while (iVar6 < 2);
+	  
       iVar6 = 0;
 	  
 	  // change active mempack
@@ -2743,6 +2757,7 @@ void FUN_800ae9a8(int param_1)
       local_4e = *(undefined2 *)(iVar2 + -0x7ff48b4a); // 0x800B74B6
       local_4c = *(undefined2 *)(iVar2 + -0x7ff48b48); // 0x800B74B8
 	  
+	  // Loop through 2 models (head + body)
       iVar7 = 1;
       piVar4 = &DAT_800b777c;
       local_58 = 0;
@@ -2752,6 +2767,8 @@ void FUN_800ae9a8(int param_1)
         if (0 < iVar7) {
           iVar6 = 0;
         }
+		
+		// Create Thread for Head + Body
         if ((*piVar4 != 0) &&
            (
 				// make a thread, return instance
@@ -2767,6 +2784,7 @@ void FUN_800ae9a8(int param_1)
 		  // get object from thread
           iVar5 = *(int *)(iVar6 + 0x30);
 		  
+		  // If head, start animation opcode
           if (iVar7 == 0) 
 		  {
 			// CS_ScriptCmd_OpcodeAt
@@ -2774,6 +2792,8 @@ void FUN_800ae9a8(int param_1)
 			
             *(undefined2 *)(iVar5 + 0x14) = 0;
           }
+		  
+		  // if body, set scale
           else 
 		  {
 			// Set scale (x, y, z)
