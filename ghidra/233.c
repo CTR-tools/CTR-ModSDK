@@ -4210,7 +4210,7 @@ void FUN_800b0300(void)
   // Draw Confetti
   *(uint *)(puVar2 + 0x256c) = *(uint *)(puVar2 + 0x256c) | 4;
   
-  // gGT + 8 |= 4
+  // gGT->gameMode2 |= VEH_FREEZE_PODIUM
   *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) | 4;
   
   // position and rotation of podium scene
