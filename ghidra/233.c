@@ -2717,10 +2717,12 @@ void FUN_800ae9a8(int param_1)
       local_60 = *(undefined2 *)(iVar2 + -0x7ff48b54); // 0x800B74AC
       local_5e = *(undefined2 *)(iVar2 + -0x7ff48b52); // 0x800B74AE
       local_5c = *(undefined2 *)(iVar2 + -0x7ff48b50); // 0x800B74B0
-      local_50 = *(undefined2 *)(iVar2 + -0x7ff48b4c); // 0x800B74B4
-      iVar7 = 1;
+      
+	  local_50 = *(undefined2 *)(iVar2 + -0x7ff48b4c); // 0x800B74B4
       local_4e = *(undefined2 *)(iVar2 + -0x7ff48b4a); // 0x800B74B6
       local_4c = *(undefined2 *)(iVar2 + -0x7ff48b48); // 0x800B74B8
+	  
+      iVar7 = 1;
       piVar4 = &DAT_800b777c;
       local_58 = 0;
       local_56 = 0;
