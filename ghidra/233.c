@@ -4429,15 +4429,23 @@ void FUN_800b06ac(int param_1)
     piVar7[0x12] = 0;
     *(undefined2 *)(piVar7 + 0xb) = 0x1000;
     *(undefined *)(piVar7 + 0x11) = 0xff;
+	
+	// gGT
     puVar6 = PTR_DAT_8008d2ac;
-    *(short *)(piVar7 + 5) =
+    
+	*(short *)(piVar7 + 5) =
          sVar3 + (short)((int)((iVar4 >> 2 & 0xfffU) * (((int)sVar1 - (int)sVar2) + 1)) >> 0xc);
-    iVar4 = *(int *)(puVar6 + 0x2114);
-    *(undefined2 *)(piVar7 + 1) = 0;
+    
+	// gGT->iconGroup
+	iVar4 = *(int *)(puVar6 + 0x2114);
+    
+	*(undefined2 *)(piVar7 + 1) = 0;
     *(undefined2 *)((int)piVar7 + 6) = 0;
     piVar7[2] = 0x2e808080;
     *(undefined2 *)(piVar7 + 3) = 0;
     *(undefined2 *)((int)piVar7 + 0xe) = 0;
+	
+	// array of icons
     *piVar7 = iVar4 + 0x14;
   }
   
