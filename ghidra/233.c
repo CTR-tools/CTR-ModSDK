@@ -2816,10 +2816,12 @@ void FUN_800ae9a8(int param_1)
         piVar4 = piVar4 + -1;
       } while (-1 < iVar7);
 	  
-	  // set camera position and rotation for cutscene
+	  // Camera Position 800B749C
       *(undefined2 *)(puVar1 + 0x168) = *(undefined2 *)(iVar2 + -0x7ff48b64);
       *(undefined2 *)(puVar1 + 0x16a) = *(undefined2 *)(iVar2 + -0x7ff48b62);
       *(undefined2 *)(puVar1 + 0x16c) = *(undefined2 *)(iVar2 + -0x7ff48b60);
+	  
+	  // Camera Rotation 800B74A4
       *(undefined2 *)(puVar1 + 0x16e) = *(undefined2 *)(iVar2 + -0x7ff48b5c) + 0x800;
       *(undefined2 *)(puVar1 + 0x170) = *(undefined2 *)(iVar2 + -0x7ff48b5a);
       *(undefined2 *)(puVar1 + 0x172) = *(undefined2 *)(iVar2 + -0x7ff48b58);
