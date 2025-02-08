@@ -1597,7 +1597,8 @@ LAB_800ad334:
 	
   case 0x14:
     goto switchD_800acf30_caseD_14;
-	
+
+  // SET STARS
   case 0x15:
     
 	// number of players
@@ -1726,16 +1727,29 @@ LAB_800ad334:
 	
   case 0x21:
     DAT_800b0b88 = *(int *)(psVar14 + 6);
-    if ((DAT_800b0b88 == 0) && (0x11 < *(int *)(PTR_DAT_8008d2ac + 0x1e34))) {
+	
+    if (
+		(DAT_800b0b88 == 0) && 
+		
+		// all 18 relics
+		(0x11 < *(int *)(PTR_DAT_8008d2ac + 0x1e34))
+	  ) 
+	{
       DAT_800b0b88 = 9;
     }
     DAT_800b7774 = 1;
     break;
 	
+  // SET FOV
   case 0x22:
     uVar11 = *(undefined4 *)(psVar14 + 6);
-    *(undefined4 *)(puVar3 + 0x180) = uVar11;
+    
+	// gGT->pushBuffer[0].distToScreen_PREV
+	*(undefined4 *)(puVar3 + 0x180) = uVar11;
+	
+	// gGT->pushBuffer[0].distToScreen_CURR
     *(undefined4 *)(puVar3 + 0x274) = uVar11;
+	
     uVar6 = *(ushort *)(param_2 + 0x16) | 0x20;
 LAB_800ad444:
     *(ushort *)(param_2 + 0x16) = uVar6;

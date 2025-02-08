@@ -357,6 +357,8 @@ void FUN_8009f718(void)
 			) 
 		{
           *(short *)(puVar4 + 0x188) = *(short *)(puVar4 + 0x188) + -0xc;
+		  
+		  // gGT->pushBuffer[0].distToScreen_CURR
           *(undefined4 *)(puVar4 + 0x274) = 0x80;
         }
 		
