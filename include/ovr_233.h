@@ -173,7 +173,7 @@ struct BossCutsceneData
 	int vrmFile;
 	int headFile;
 	int bodyFile;
-	int padding;
+	int unusedThirdPart; // KART?
 
 	// 0x10
 	int opcode;

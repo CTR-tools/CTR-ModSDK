@@ -234,14 +234,17 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232
 //common, 233, CS_DestroyPodium_StartDriving, 0x0,                     General/233/233_13_CS_DestroyPodium_StartDriving.c
 // Skip CS_Thread (14-18)
 // Skip Boss (19-22)
+
+common, 233, CS_Camera_ThTick_Boss, 0x0,							General/233/233_21_CS_Camera_ThTick_Boss.c
+
 // Skip Podium (23-25)
 //common, 233, CS_Podium_Prize_ThTick3, 0x0,                           General/233/233_26_CS_Podium_Prize_ThTick3.c
-common, 233, CS_Podium_Prize_ThTick2, 0x0,                           General/233/233_27_CS_Podium_Prize_ThTick2.c
+common, 233, CS_Podium_Prize_ThTick2, 0x0,                          General/233/233_27_CS_Podium_Prize_ThTick2.c
 //common, 233, CS_Podium_Prize_ThTick1, 0x0,                           General/233/233_28_CS_Podium_Prize_ThTick1.c
 //common, 233, CS_Podium_Prize_ThDestroy, 0x0,                         General/233/233_29_CS_Podium_Prize_ThDestroy.c
 //common, 233, CS_Podium_Stand_ThTick, 0x0,                            General/233/233_31_CS_Podium_Stand_ThTick.c
 //common, 233, CS_Podium_Stand_Init, 0x0,                              General/233/233_32_CS_Podium_Stand_Init.c
-common, 233, CS_Podium_FullScene_Init, 0x0,                          General/233/233_33_CS_Podium_FullScene_Init.c
+common, 233, CS_Podium_FullScene_Init, 0x0,                         General/233/233_33_CS_Podium_FullScene_Init.c
 // skip CS_34 CS_Thread_LInB
 common, 233, CS_Cutscene_Start, 0x0,								General/233/233_35_CS_Cutscene_Start.c
 common, 233, CS_BoxScene_InstanceSplitLines, 0x0,					General/233/233_36_CS_BoxScene_InstanceSplitLines.c
