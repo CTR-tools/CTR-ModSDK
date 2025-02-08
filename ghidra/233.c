@@ -948,25 +948,42 @@ LAB_800acb0c:
 		FUN_80018ba0((int)(short)(sVar5 + -1),puVar3 + 0x168,puVar3 + 0x16e,local_40);
       }
       
-	  // disable screen blur
+	  // gGT->clockEffectEnabled
 	  uVar6 = *(ushort *)(puVar3 + 0x2570);
       *(ushort *)(puVar3 + 0x2570) = uVar6 & 0xfffe;
 	  
       if ((local_40[0] & 1) != 0) {
         *(ushort *)(puVar3 + 0x2570) = uVar6 & 0xfffe | 1;
       }
-      if ((*(ushort *)(param_2 + 0x16) & 0x20) == 0) {
+      if ((*(ushort *)(param_2 + 0x16) & 0x20) == 0) 
+	  {
+		// This variable is gGT->0x168+0x18
+		// gGT->pushBuffer[0].distanceToScreen_PREV
+		  
+		// Default FOV
         *(undefined4 *)(puVar3 + 0x180) = 0x100;
-        if ((local_40[0] & 2) != 0) {
+		
+		// Oxide Intro, Transition between Polar/Dingo
+        if ((local_40[0] & 2) != 0) 
+		{
+		  // Wide FOV (zoom out)
           *(undefined4 *)(puVar3 + 0x180) = 0x50;
         }
-        if ((local_40[0] & 4) != 0) {
+        
+		// Oxide Intro, oxide flies down to earth
+		if ((local_40[0] & 4) != 0) 
+		{
+		  // Small FOV (zoom in)
           *(undefined4 *)(puVar3 + 0x180) = 0x278;
         }
-        if ((local_40[0] & 0x20) != 0) {
+        
+		if ((local_40[0] & 0x20) != 0) 
+		{
           *(undefined4 *)(puVar3 + 0x180) = 0x1eb;
         }
-        if ((local_40[0] & 0x40) != 0) {
+        
+		if ((local_40[0] & 0x40) != 0) 
+		{
           *(undefined4 *)(puVar3 + 0x180) = 0x14d;
         }
       }
