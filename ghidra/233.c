@@ -1842,22 +1842,30 @@ LAB_800ad9f4:
 	
   case 0x2c:
     sVar5 = psVar14[1];
-    if (sVar5 == 1) {
+    if (sVar5 == 1) 
+	{
+	  // gGT->gameMode2 |= flags
       *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) | *(uint *)(psVar14 + 6);
     }
     else {
       if (sVar5 < 2) {
-        if (sVar5 == 0) {
+        if (sVar5 == 0) 
+		{
+		  // gGT->gameMode1 |= flags
           *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac | *(uint *)(psVar14 + 6);
         }
       }
       else {
-        if (sVar5 == 2) {
+        if (sVar5 == 2) 
+		{
+		  // gGT->renderFlags |= flags
           *(uint *)(PTR_DAT_8008d2ac + 0x256c) =
                *(uint *)(PTR_DAT_8008d2ac + 0x256c) | *(uint *)(psVar14 + 6);
         }
         else {
-          if (sVar5 == 3) {
+          if (sVar5 == 3) 
+		  {
+			// gGT->renderFlags &= ~(flags)
             *(uint *)(PTR_DAT_8008d2ac + 0x256c) =
                  *(uint *)(PTR_DAT_8008d2ac + 0x256c) & ~*(uint *)(psVar14 + 6);
           }
@@ -1865,6 +1873,7 @@ LAB_800ad9f4:
       }
     }
     break;
+	
   case 0x2d:
     *(short *)(param_2 + 0x2e) = psVar14[1];
     *(short *)(param_2 + 0x30) = psVar14[2];
@@ -1876,7 +1885,10 @@ LAB_800ad9f4:
     FUN_800ac1c0(param_2);
 	
     goto LAB_800adcc0;
+  
   case 0x2e:
+	
+	// pushBuffer_UI fade to black
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x139c) = 0;
     *(undefined2 *)(puVar4 + 0x139e) = 0xfd56;
 	
