@@ -1,5 +1,6 @@
-// 497+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 872 rewritten so far
-// 497 for every 'common' and ','
+// 498 = 972-474, "comm... - //comm..."
+// 498+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 873 rewritten so far
+// 498 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -241,7 +242,9 @@ common, 233, CS_Podium_Prize_ThTick2, 0x0,                           General/233
 //common, 233, CS_Podium_Stand_ThTick, 0x0,                            General/233/233_31_CS_Podium_Stand_ThTick.c
 //common, 233, CS_Podium_Stand_Init, 0x0,                              General/233/233_32_CS_Podium_Stand_Init.c
 common, 233, CS_Podium_FullScene_Init, 0x0,                          General/233/233_33_CS_Podium_FullScene_Init.c
-// skip BoxScene (34-36)
+// skip CS_34 CS_Thread_LInB
+common, 233, CS_Cutscene_Start, 0x0,								General/233/233_35_CS_Cutscene_Start.c
+common, 233, CS_BoxScene_InstanceSplitLines, 0x0,					General/233/233_36_CS_BoxScene_InstanceSplitLines.c
 common, 233, CS_Garage_ZoomOut, 0x0,                                 General/233/233_37_40_CS_Garage.c
 926, 233, 0x800b8598, 0x0,                                           General/233/233_zGlobal_gGarage.c
 // skip credits (41-46)

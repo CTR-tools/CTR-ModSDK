@@ -3,15 +3,16 @@
 extern unsigned char BoxSceneArr[20];
 
 // for oxide intro and ND box
-void CS_Cutscene_Start(void)
+void DECOMP_CS_Cutscene_Start(void)
 {
   // stack allocation
-  CsThreadInitData initData;
+  struct CsThreadInitData initData;
   
   struct GameTracker *gGT = sdata->gGT;
 
-  // no instance, no initData required
-  CS_Thread_Init(0, &OVR_233.s_introcam, 0, 0, 0);
+  // no instance, no initData required,
+  // this automatically starts the "introcam" thread
+  CS_Thread_Init(0, 0, 0, 0, 0);
 
   // If this is the Naughty Dog Box Scene
   if (gGT->levelID == NAUGHTY_DOG_CRATE)
