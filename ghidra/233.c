@@ -2673,7 +2673,7 @@ void FUN_800ae9a8(int param_1)
   
   switch(DAT_800b7774) 
   {
-	// first state of boss cutscene
+	// Start Fade-to-black
   case 0:
   case 1:
   
@@ -2687,6 +2687,9 @@ void FUN_800ae9a8(int param_1)
     *(undefined2 *)(puVar1 + 0x139e) = 0xfc00;
 	
     break;
+	
+  // Wait for fade-to-black
+  // Start loading process
   case 2:
   
 	// if pushBuffer_UI is fully faded to black
@@ -2716,6 +2719,10 @@ void FUN_800ae9a8(int param_1)
       }
     }
     break;
+	
+  // Wait for loading callback,
+  // start thread for head+body
+  // start fade-to-normal
   case 3:
     
 	iVar6 = 0;
@@ -2827,6 +2834,8 @@ void FUN_800ae9a8(int param_1)
       *(undefined2 *)(puVar1 + 0x139e) = 0x400;
     }
     break;
+	
+  // wait for fade-to-normal
   case 4:
   
 	// if screen is at max brightness
@@ -2836,6 +2845,8 @@ void FUN_800ae9a8(int param_1)
       DAT_800b7774 = 5;
     }
     break;
+	
+  // kill thread at end of cutscene
   case 5:
   
 	// if cutscene is over
