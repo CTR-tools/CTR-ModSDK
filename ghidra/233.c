@@ -1828,6 +1828,7 @@ LAB_800ad444:
     uVar7 = FUN_800b92a0();
     goto joined_r0x800ad160;
 	
+  // CREDITS NEW DANCER
   case 0x24:
     DAT_1f800108 = 0;
     DAT_1f80010a = 0;
@@ -1871,6 +1872,7 @@ LAB_800ad444:
 	FUN_800b92cc(uVar11,(int)psVar14[6]);
     break;
 	
+  // CREDITS NEW GHOST
   case 0x25:
 	
 	// CS_Credits_NewCreditGhosts
@@ -1882,6 +1884,7 @@ joined_r0x800ad160:
     if (uVar7 == 0) goto switchD_800acf30_caseD_14;
     break;
 	
+  // ADV GARAGE
   case 0x26:
     if (psVar14[3] == 0) {
       if ((*(int *)(psVar14 + 4) != (int)*(short *)(&DAT_800b85d8 + (int)DAT_8008d914 * 2))
@@ -1918,6 +1921,7 @@ LAB_800ad9f4:
 	iVar12 = iVar12 << 5;
     goto switchD_800acf30_caseD_14;
   
+  // CREDITS END
   case 0x29:
   
     // CS_Credits_End
@@ -1932,6 +1936,7 @@ LAB_800ad9f4:
 	// kill cutscene thread
     return 1;
 	
+  // SET GAME MODES
   case 0x2c:
     sVar5 = psVar14[1];
     if (sVar5 == 1) 
@@ -1978,6 +1983,7 @@ LAB_800ad9f4:
 	
     goto LAB_800adcc0;
   
+  // FADE NORMAL TO BLACK
   case 0x2e:
 	
 	// pushBuffer_UI fade to black
@@ -1994,6 +2000,7 @@ LAB_800ad9f4:
     if (0 < *(short *)(PTR_DAT_8008d2ac + 0x139a)) goto switchD_800acf30_caseD_14;
     break;
   
+  // SET VOLUME MODES
   case 0x30:
 	// cutscene manipulated audio
     DAT_800b0b8c = 1;
