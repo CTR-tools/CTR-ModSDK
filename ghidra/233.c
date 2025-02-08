@@ -1611,6 +1611,7 @@ LAB_800ad334:
     }
 	break;
 	
+  // SET XA
   case 0x12:
     
 	// CDSYS_XAPlay
@@ -1664,6 +1665,7 @@ LAB_800ad334:
 	
     goto LAB_800adcc0;
 	
+  // FLAG TRANSITION ON
   case 0x16:
   
 	// RaceFlag_IsFullyOffScreen
@@ -1684,6 +1686,7 @@ LAB_800ad334:
     uVar7 = FUN_80043f1c();
     goto joined_r0x800ad160;
 	
+  // FLAG TRANSITION OFF
   case 0x18:
   
     // RaceFlag_IsFullyOnScreen
@@ -1747,6 +1750,7 @@ LAB_800ad334:
     *(undefined2 *)(param_2 + 4) = 0x1333;
     break;
 	
+  // END PODIUM CUTSCENE
   case 0x20:
 	
 	// end cutscene
@@ -1756,12 +1760,14 @@ LAB_800ad334:
     FUN_800ac714();
 	
     puVar4 = PTR_DAT_8008d2ac;
+	
+	// undecided boss cutscene
     DAT_800b0b88 = -1;
     
 	// hold 233 overlay, dont load 232 yet
 	PTR_DAT_8008d2ac[0x2579] = 3;
 	
-	  // remove VEH_FREEZE_PODIUM
+	// remove VEH_FREEZE_PODIUM
     *(uint *)(puVar4 + 8) = *(uint *)(puVar4 + 8) & 0xfffffffb;
 	
 	// CS_ScriptCmd_OpcodeNext
@@ -1769,18 +1775,25 @@ LAB_800ad334:
 	
     goto LAB_800adcc0;
 	
+  // PICK BOSS CUTSCENE
   case 0x21:
+  
+    // boss cutscene from opcode
     DAT_800b0b88 = *(int *)(psVar14 + 6);
 	
     if (
+		// if oxide intro (collected all trophies)
 		(DAT_800b0b88 == 0) && 
 		
 		// all 18 relics
 		(0x11 < *(int *)(PTR_DAT_8008d2ac + 0x1e34))
 	  ) 
 	{
+	  // oxide intro (all relics) on gemstone valley
       DAT_800b0b88 = 9;
     }
+	
+	// go to boss cutscene
     DAT_800b7774 = 1;
     break;
 	
@@ -2607,7 +2620,7 @@ void FUN_800ae9a8(int param_1)
   
   puVar1 = PTR_DAT_8008d2ac;
   
-  // first determine which cutscene will play
+  // If cutscene is undecided
   if (DAT_800b0b88 < 0) 
   {
 	// Intro Boss Cutscene
@@ -2625,7 +2638,10 @@ void FUN_800ae9a8(int param_1)
     }
     iVar2 = iVar2 * 4 + iVar6 * 5;
   }
-  else {
+  
+  // If cutscene came from script opcode
+  else 
+  {
     iVar2 = DAT_800b0b88 * 0xd;
   }
   
@@ -3026,7 +3042,7 @@ void FUN_800aedf8(int param_1)
 	  // if you do not go to boss cutscene
       if (iVar5 == 0) 
 	  {
-		// end cutscene
+		// end cutscene (podium?)
         DAT_800b7760 = 1;
 		
 		// This thread is now dead
@@ -3109,18 +3125,24 @@ void FUN_800aedf8(int param_1)
       *(undefined4 *)(param_1 + 0x2c) = 0x800ae9a8;
 	  
 	  // If you are not at the podium for winning a relic
-      if (*(short *)(puVar3 + 0x2572) != 0x61) {
+      if (*(short *)(puVar3 + 0x2572) != 0x61) 
+	  {
+		// undecided
         DAT_800b0b88 = 0xffffffff;
         return;
       }
       
 	  // less than 18 relics
-	  if (*(int *)(puVar3 + 0x1e34) < 0x12) {
+	  if (*(int *)(puVar3 + 0x1e34) < 0x12) 
+	  {
+		// undecided
         DAT_800b0b88 = 0xffffffff;
         return;
       }
 	  
-	  // Assuming the last relic was just won...
+	  // Assuming the last relic was just won,
+	  // Start cutscene of "this one is for keeps!" 
+	  // on the advhub that the driver is loaded into
       DAT_800b0b88 = *(int *)(puVar3 + 0x1a10) + -0x10;
       return;
     }
