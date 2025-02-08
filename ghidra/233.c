@@ -1592,12 +1592,17 @@ LAB_800ad334:
     }
     break;
 	
+  // ???
+  // what? loading 'something' that isnt a swap-level?
   case 0x11:
     if (
 		// not loading next swap-level
 		(DAT_800b0b80 == 0) || 
 		
+		// queueReady (queue in use)
 		(DAT_8008d0a0 == 0) || 
+		
+		// queueLength (queue in use)
 		(DAT_8008d0a2 != 0)
 	   )
 	{
