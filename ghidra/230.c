@@ -886,6 +886,7 @@ void FUN_800ac94c(void)
 	// CameraDC, it must be zero to follow you
     *(undefined2 *)(puVar1 + 0x1532) = 0;
 	
+	// gGT->pushBuffer[0].distToScreen_CURR
     *(undefined4 *)(puVar1 + 0x274) = 0x100;
   }
   return;
@@ -7132,8 +7133,10 @@ void FUN_800b4364(void)
   
   DAT_800b4548 = DAT_800b4548 & 0xfffffbfb | 0x20;
   
-  // distance to screen (perspective)
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(puVar1 + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar1 + 0x274) = 0x100;
   
   *(uint *)puVar1 = *(uint *)puVar1 & 0xfffdffff;
