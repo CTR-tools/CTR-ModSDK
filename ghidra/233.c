@@ -2658,6 +2658,9 @@ void FUN_800ae9a8(int param_1)
     if (*(short *)(PTR_DAT_8008d2ac + 0x2572) == 99) 
 	{
 	  // Outro Boss Cutscene
+	  
+	  // increase by 1*5 + 2*4
+	  // increase by 13 INTs
       iVar6 = iVar6 + 1;
       iVar2 = iVar6 * 2;
     }
