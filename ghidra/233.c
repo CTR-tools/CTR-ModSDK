@@ -1155,17 +1155,24 @@ switchD_800acf30_caseD_14:
       local_3c._0_1_ = 0;
       iVar12 = 0;
     }
-    if (param_1 != 0) {
+    if (param_1 != 0) 
+	{
+	  // instance animation
       *(undefined2 *)(param_1 + 0x54) = (short)iVar12;
       *(undefined *)(param_1 + 0x52) = (undefined)local_3c;
     }
-    if (*(int **)(param_2 + 0x48) != (int *)0x0) {
+    if (*(int **)(param_2 + 0x48) != (int *)0x0) 
+	{
       psVar14 = (short *)(**(int **)(param_2 + 0x48) + iVar12 * 0x20);
-      *(undefined4 *)(param_1 + 0x30) = *(undefined4 *)(psVar14 + 4);
+      
+	  // instance matrix
+	  *(undefined4 *)(param_1 + 0x30) = *(undefined4 *)(psVar14 + 4);
       *(undefined4 *)(param_1 + 0x34) = *(undefined4 *)(psVar14 + 6);
       *(undefined4 *)(param_1 + 0x38) = *(undefined4 *)(psVar14 + 8);
       *(undefined4 *)(param_1 + 0x3c) = *(undefined4 *)(psVar14 + 10);
       *(undefined4 *)(param_1 + 0x40) = *(undefined4 *)(psVar14 + 0xc);
+	  
+	  // instance position
       *(int *)(param_1 + 0x44) = (int)*psVar14;
       *(int *)(param_1 + 0x48) = (int)psVar14[1];
       *(int *)(param_1 + 0x4c) = (int)psVar14[2];
