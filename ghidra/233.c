@@ -930,8 +930,9 @@ LAB_800acb0c:
 	{
 	  // gGT->msInThisLEV
       iVar10 = (*(int *)(puVar3 + 0x1d00) << 0xb) >> 0x10;
-      if (iVar10 < (int)sVar5 + -1) {
-        
+      
+	  if (iVar10 < (int)sVar5 + -1) 
+	  {  
 		// CAM_Path_Move
 		FUN_80018ba0(iVar10,&local_48,&local_50,local_40);
         
