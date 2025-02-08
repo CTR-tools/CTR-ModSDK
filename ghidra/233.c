@@ -2589,6 +2589,7 @@ void FUN_800ae834(int *param_1)
   
   if (*param_1 != 0) 
   {
+	// CTR vram file (body and head)
 	// add to load queue, '3' means vram
     FUN_80032d30(DAT_8008d09c,3,*param_1 + -1 + iVar5,0,0);
   }
@@ -2600,6 +2601,7 @@ void FUN_800ae834(int *param_1)
     iVar3 = iVar2;
     if (*piVar4 != 0) 
 	{
+	  // CTR Model File (body)
 	  // add to load queue, '2' means dram
       FUN_80032d30(DAT_8008d09c,2,*piVar4 + -1 + iVar5,puVar1,0xfffffffe);
     }
@@ -2608,6 +2610,7 @@ void FUN_800ae834(int *param_1)
     piVar4 = piVar4 + -1;
   } while (0 < iVar2);
   
+  // CTR Model File (head)
   // add to load queue, '2' means dram
   FUN_80032d30(DAT_8008d09c,2,param_1[iVar3] + -1 + iVar5,0,&LAB_800ae81c);
   
