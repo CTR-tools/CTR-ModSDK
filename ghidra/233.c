@@ -1560,7 +1560,7 @@ LAB_800ad334:
 	  // RaceFlag_SetCanDraw
       FUN_80044088(1);
 	  
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
     break;
@@ -1577,7 +1577,7 @@ LAB_800ad334:
     iVar10 = FUN_80043f1c();
     if (iVar10 == 1) 
 	{
-	  // checkered flag, begin transition off-screen
+	  // RaceFlag_BeginTransition(GoOffscreen)
       FUN_80043fb0(2);
     }
     break;
@@ -3780,8 +3780,9 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
   psVar11[10] = -0x200;
   psVar11[2] = sVar1 + (short)uVar10;
   
-  // hudStructPtr[numPlyrCurrGame - 1]
+  // hudStructPtr
   puVar2 = PTR_DAT_8008625c;
+  
   switch(param_1) 
   {
   // if reward is [empty], used for Oxide Podium

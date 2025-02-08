@@ -7903,7 +7903,7 @@ void FUN_80055c90(int param_1)
 
             if (iVar4 == 1)
 			{
-			  // RaceFlag_BeginTransition
+			  // RaceFlag_BeginTransition(GoOnscreen)
               FUN_80043fb0(1);
             }
 
@@ -8332,7 +8332,7 @@ void FUN_800562fc(void)
 		)
 	)
   {
-	// RaceFlag_BeginTransition
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 

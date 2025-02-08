@@ -6868,7 +6868,7 @@ void FUN_800b4014(int param_1)
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
-	  // checkered flag, begin transition off-screen
+	  // RaceFlag_BeginTransition(GoOffscreen)
       FUN_80043fb0(2);
     }
     
@@ -6997,7 +6997,7 @@ void FUN_800b4014(int param_1)
 	iVar1 = FUN_80043f28();
     if (iVar1 == 1) 
 	{
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
 LAB_800b4224:

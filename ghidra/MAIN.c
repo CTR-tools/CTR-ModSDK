@@ -5647,12 +5647,12 @@ void FUN_80039a44(int param_1)
   
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
-    i
+    
 	// RaceFlag_IsFullyOffScreen
 	Var3 = FUN_80043f28();
     if (iVar3 == 1)
 	{
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
 
@@ -8973,7 +8973,7 @@ LAB_8003ca68:
 		// if it is
         else
 		{
-		  // checkered flag, begin transition off-screen
+		  // RaceFlag_BeginTransition(GoOffscreen)
           FUN_80043fb0(2);
         }
       }
@@ -9234,7 +9234,7 @@ LAB_8003ca68:
             iVar8 = FUN_80043f28();
             if (iVar8 == 1)
 			{
-			  // checkered flag, begin transition on-screen
+			  // RaceFlag_BeginTransition(GoOnscreen)
               FUN_80043fb0(1);
             }
           }
@@ -9474,7 +9474,7 @@ void FUN_8003cfc0(short param_1)
 
   if (iVar1 == 1)
   {
-	// checkered flag, begin transition on-screen
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 

@@ -3321,7 +3321,7 @@ LAB_800346b0:
         iVar9 = FUN_80043f28();
         if (iVar9 == 1)
 		{
-		  // checkered flag, begin transition on-screen
+		  // RaceFlag_BeginTransition(GoOnscreen)
           FUN_80043fb0(1);
         }
       }
@@ -3416,7 +3416,7 @@ void FUN_80034874(undefined4 param_1)
   iVar4 = FUN_80043f28();
   if (iVar4 == 1)
   {
-	// checkered flag, begin transition on-screen
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 
