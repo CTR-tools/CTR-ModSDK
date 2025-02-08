@@ -2769,17 +2769,15 @@ void FUN_800ae9a8(int param_1)
       } while (-1 < iVar7);
 	  
 	  // set camera position and rotation for cutscene
-      *(undefined2 *)(PTR_DAT_8008d2ac + 0x168) = *(undefined2 *)(iVar2 + -0x7ff48b64);
+      *(undefined2 *)(puVar1 + 0x168) = *(undefined2 *)(iVar2 + -0x7ff48b64);
       *(undefined2 *)(puVar1 + 0x16a) = *(undefined2 *)(iVar2 + -0x7ff48b62);
       *(undefined2 *)(puVar1 + 0x16c) = *(undefined2 *)(iVar2 + -0x7ff48b60);
-      *(short *)(puVar1 + 0x16e) = *(short *)(iVar2 + -0x7ff48b5c) + 0x800;
+      *(undefined2 *)(puVar1 + 0x16e) = *(undefined2 *)(iVar2 + -0x7ff48b5c) + 0x800;
       *(undefined2 *)(puVar1 + 0x170) = *(undefined2 *)(iVar2 + -0x7ff48b5a);
+      *(undefined2 *)(puVar1 + 0x172) = *(undefined2 *)(iVar2 + -0x7ff48b58);
       
 	  // stage 4
 	  DAT_800b7774 = 4;
-	  
-	  // last camera variable
-      *(undefined2 *)(puVar1 + 0x172) = *(undefined2 *)(iVar2 + -0x7ff48b58);
       
 	  // set desired brightness to normal brightness
 	  *(undefined2 *)(puVar1 + 0x139c) = 0x1000;
