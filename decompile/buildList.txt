@@ -1392,7 +1392,7 @@ common, exe, VehStuckProc_MaskGrab_Update, 0x0,                General/Vehicle/V
 common, exe, VehStuckProc_MaskGrab_PhysLinear, 0x0,            General/Vehicle/VehStuckProc_03_MaskGrab_PhysLinear.c
 common, exe, VehStuckProc_MaskGrab_Animate, 0x0,               General/Vehicle/VehStuckProc_04_MaskGrab_Animate.c
 common, exe, VehStuckProc_MaskGrab_Init, 0x0,                  General/Vehicle/VehStuckProc_05_MaskGrab_Init.c
-//common, exe, VehStuckProc_PlantEaten_Update, 0x0,              General/Vehicle/VehStuckProc_06_PlantEaten_Update.c //commented because overbudget
+common, exe, VehStuckProc_PlantEaten_Update, 0x0,              General/Vehicle/VehStuckProc_06_PlantEaten_Update.c
 common, exe, VehStuckProc_PlantEaten_PhysLinear, 0x0,          General/Vehicle/VehStuckProc_07_PlantEaten_PhysLinear.c
 common, exe, VehStuckProc_PlantEaten_Animate, 0x0,             General/Vehicle/VehStuckProc_08_PlantEaten_Animate.c
 common, exe, VehStuckProc_PlantEaten_Init, 0x0,                General/Vehicle/VehStuckProc_09_PlantEaten_Init.c
