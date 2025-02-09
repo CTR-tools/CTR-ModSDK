@@ -108,6 +108,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
                 // Hub ID
                 check = &data.advHubTrackIDs[(levId - 0x1a) * 4];
+				
                 // check 4 track trophies
                 for (char i = 0; i < 4; i++)
                 {
@@ -120,12 +121,18 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
                     }
                 }
 
-                // if you have all 4 trophies on a hub but you also already unlocked the boss key
+				// How could the key possibly be unlocked,
+				// if the reward just won, was a trophy?
+				#if 0
+				
+				// Check for Key
                 if (boolSpawnAtBossDoor && (CHECK_ADV_BIT(sdata->advProgress.rewards, levId + 0x44) != 0))
                 {
                     // dont spawn outside boss garage
                     boolSpawnAtBossDoor = false;
                 }
+				
+				#endif
             }
         }
 		
