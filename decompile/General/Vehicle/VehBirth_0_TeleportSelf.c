@@ -236,6 +236,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
                     else
                     {
                         // spawn on the podium in the adv hub
+						posRot = gGT->level1->ptrSpawnType2_PosRot[1].posCoords;
                         posBottom[0] = posRot->pos[0];
                         posBottom[1] = posRot->pos[1] + 0x80;
                         posBottom[2] = posRot->pos[2];

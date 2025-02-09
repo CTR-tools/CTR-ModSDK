@@ -141,7 +141,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
         if (gGT->gameMode1 < 0)
         {
           // when loading is done, add flag to spawn near boss door
-          sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
+          sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 
           // when loading is done, remove flags for
           // boss race, relic race, and crystal challenge

@@ -431,7 +431,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	if (gGT->gameMode1 < 0)
 	{
 		// when loading is done, add flag for "spawn near boss door"
-		sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
+		sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 
 		// when loading is done, remove flag for Boss Mode
 		sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;

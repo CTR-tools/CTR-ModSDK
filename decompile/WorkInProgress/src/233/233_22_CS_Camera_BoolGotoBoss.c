@@ -18,12 +18,10 @@ u_char DECOMP_CS_Camera_BoolGotoBoss(void)
 	if (gGT->podiumRewardID == 99)
 		return 1;
 
-	// if podiumRewardID is reset to 0 after first frame of boss cutscene,
-	// check if camera has moved to the correct position yet
     struct Instance* inst = gGT->drivers[0]->instSelf;
     short *posCoords = gGT->level1->ptrSpawnType2_PosRot[1].posCoords;
 
-    // TRUE if not at these coordinates
+    // TRUE if TeleportSelf did NOT spawn on podium (goto boss door)
     return 
 		(inst->matrix.t[0] != posCoords[0]) && 
 		(inst->matrix.t[2] != posCoords[2]);

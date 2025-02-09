@@ -2901,6 +2901,7 @@ undefined4 FUN_800aed48(void)
 		(*(short *)(PTR_DAT_8008d2ac + 0x2572) != 99)
 	) 
   {
+	// gGT->level1->ptrSpawnType2_PosRot[1].posCoords
     psVar2 = *(short **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144) + 0xc);
     
 	uVar1 = 1;
