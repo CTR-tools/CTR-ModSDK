@@ -1,6 +1,6 @@
-// 498 = 972-474, "comm... - //comm..."
-// 498+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 873 rewritten so far
-// 498 for every 'common' and ','
+// 504 = 978-474, "comm... - //comm..."
+// 504+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 879 rewritten so far
+// 504 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -233,10 +233,10 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0,                         General/232
 //common, 233, CS_Instance_BoolPlaySound, 0x0,                         General/233/233_12_CS_Instance_BoolPlaySound.c
 //common, 233, CS_DestroyPodium_StartDriving, 0x0,                     General/233/233_13_CS_DestroyPodium_StartDriving.c
 // Skip CS_Thread (14-18)
-// Skip Boss (19-22)
-
+common, 233, CS_LoadBossCallback, 0x0,								General/233/233_19_CS_LoadBossCallback.c
+common, 233, CS_LoadBoss, 0x0,										General/233/233_20_CS_LoadBoss.c
 common, 233, CS_Camera_ThTick_Boss, 0x0,							General/233/233_21_CS_Camera_ThTick_Boss.c
-
+common, 233, CS_Camera_BoolGotoBoss, 0x0,							General/233/233_22_CS_Camera_BoolGotoBoss.c
 // Skip Podium (23-25)
 //common, 233, CS_Podium_Prize_ThTick3, 0x0,                           General/233/233_26_CS_Podium_Prize_ThTick3.c
 common, 233, CS_Podium_Prize_ThTick2, 0x0,                          General/233/233_27_CS_Podium_Prize_ThTick2.c
@@ -1276,7 +1276,7 @@ common, exe, UI_CupStandings_InputAndDraw, 0x0,          General/UI/UI_58_CupSta
 // ====================================================================================================================
 common, exe, VehAfterColl_GetSurface, 0x0,               General/Vehicle/VehAfterColl_0_GetSurface.c
 common, exe, VehAfterColl_GetTerrain, 0x0,               General/Vehicle/VehAfterColl_1_GetTerrain.c
-common, exe, VehBirth_TeleportSelf, 0x0,                 General/Vehicle/VehBirth_0_TeleportSelf.c
+//common, exe, VehBirth_TeleportSelf, 0x0,                 General/Vehicle/VehBirth_0_TeleportSelf.c
 common, exe, VehBirth_TeleportAll, 0x0,                  General/Vehicle/VehBirth_1_TeleportAll.c
 common, exe, VehBirth_GetModelByName, 0x0,               General/Vehicle/VehBirth_2_GetModelByName.c
 common, exe, VehBirth_SetConsts, 0x0,                    General/Vehicle/VehBirth_3_SetConsts.c
