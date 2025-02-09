@@ -1,6 +1,6 @@
-// 505 = 978-473, "comm... - //comm..."
-// 505+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 879 rewritten so far
-// 505 for every 'common' and ','
+// 506 = 978-472, "comm... - //comm..."
+// 506+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 881 rewritten so far
+// 506 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -1133,7 +1133,7 @@ common, exe, RefreshCard_StopMemcardAction, 0x0,         General/RefreshCard/Ref
 // ====================================================================================================================
 // SelectProfile (stubbed for this file)
 // ====================================================================================================================
-//common, exe, SelectProfile_QueueLoadHub_MenuProc, 0x0,   General/SelectProfile/SelectProfile_00_QueueLoadHub_MenuProc.c //TODO
+common, exe, SelectProfile_QueueLoadHub_MenuProc, 0x0,   General/SelectProfile/SelectProfile_00_QueueLoadHub_MenuProc.c //TODO
 //common, exe, SelectProfile_ThTick, 0x0,                  General/SelectProfile/SelectProfile_01_ThTick.c //TODO
 //common, exe, SelectProfile_PrintInteger, 0x0,            General/SelectProfile/SelectProfile_02_PrintInteger.c //TODO
 //common, exe, SelectProfile_UI_ConvertX, 0x0,             General/SelectProfile/SelectProfile_03_UI_ConvertX.c //TODO
