@@ -2,21 +2,12 @@
 
 void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY)
 {
-    char i;
     char boolSpawnAtBossDoor;
-    char numPlyr;
-    char weaponId;
     char numInstances;
-    short levId;
-    short prevLev;
-    short rotY;
-    short rotZ;
     short *warppadRot=0;
-    short *check;
     short posTop[3];
     short posBottom[3];
     short warppadPos[3];
-    int angle;
     u_int gameMode2;
 
     struct PosRot
@@ -25,10 +16,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         short rot[3];
     };
 
-    struct InstDef *levInstDef;
-    struct PosRot *posRot=0;
     struct GameTracker *gGT = sdata->gGT;
     struct Level* level1 = gGT->level1;
+	struct Instance* dInst = d->instSelf;
 
 #ifndef REBUILD_PS1
     struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
@@ -41,148 +31,135 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     gameMode2 = gGT->gameMode2;
 	gGT->gameMode2 &= ~(SPAWN_AT_BOSS | 2);
 
-    numPlyr = gGT->numPlyrCurrGame;
-
-    levId = gGT->levelID;
-    prevLev = gGT->prevLEV;
-
-    boolSpawnAtBossDoor = false;
-
-    // by default, dont spawn by a hub door
-    levInstDef = NULL;
-
+#if 0
     // Check LEV data for nullptr
     if (level1 == NULL || level1->ptr_mesh_info == NULL)
     {
         return;
     }
+#endif
 
     // ground and wall quadblock flags
     sps->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
 
     sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
-    // collision triangles, 2 (low-LOD) & 8 (hi-LOD)
-    sps->Union.QuadBlockColl.searchFlags = (numPlyr > 3) ? 2 : 0;
+    
+	// collision triangles, 2 (low-LOD) & 8 (hi-LOD)
+    sps->Union.QuadBlockColl.searchFlags = 
+		(gGT->numPlyrCurrGame > 3) ? 2 : 0;
 
     sps->ptr_mesh_info = level1->ptr_mesh_info;
 
-    gGT->gameMode1 &= ~(POINT_LIMIT);
+	gGT->gameMode2 &= ~(VEH_FREEZE_DOOR);
+
+    struct PosRot* posRot;
+	short* rotArr;
+	short rotDeltaY;
 
     // if you are mask grabbed
     if ((spawnFlag & 1) == 0)
     {
-        // Ordinary player position
-        posBottom[0] = (short)(d->posCurr.x >> 8);
-        posBottom[1] = (short)(d->posCurr.y >> 8) + 0x80;
-        posBottom[2] = (short)(d->posCurr.z >> 8);
+		posBottom[0] = (d->posCurr.x >> 8);
+		posBottom[1] = (d->posCurr.y >> 8);
+		posBottom[2] = (d->posCurr.z >> 8);
+		
+		posRot = posBottom;
+		rotArr = &d->rotCurr.x;
+		rotDeltaY = 0;
+    }
+
+	// spawn in front of hub door, beach-to-gemstone
+	else if (
+		// If you are at podium after winning a Key
+		(gGT->podiumRewardID == 99) &&
+	
+		// If you have one boss key
+		(gGT->currAdvProfile.numKeys == 1))
+	{
+        gGT->gameMode2 |= VEH_FREEZE_DOOR;
+		
+		#if 0
+        // do trigonometry to take hub door
+        angle = levInstDef->rot[1];
+
+        // posX =
+        // instDef posX + (where door starts)
+        // doorLengthX + (to get to midpoint between two doors)
+        // perpendicularX (to spawn away from door)
+        posBottom[0] = levInstDef->pos[0] + (short)(DECOMP_MATH_Cos(angle) >> 1) + (short)(DECOMP_MATH_Cos(angle + 0x400) >> 3);
+
+        // posY = instDef posY + random height offset,
+		// subtract 0x80 cause of reduction in repetitive code
+        posBottom[1] = levInstDef->pos[1] + 0x17a -0x80;
+
+        // posZ =
+        // instDef posZ + (where door starts)
+        // doorLengthZ + (to get to midpoint between two doors)
+        // perpendicularZ (to spawn away from door)
+        posBottom[2] = levInstDef->pos[2] + (short)(DECOMP_MATH_Sin(angle) >> 1) + (short)(DECOMP_MATH_Sin(angle + 0x400) >> 3);
+		#endif
+		
+		posBottom[0] = 0xC676;
+		posBottom[1] = 0x17a-0x80;
+		posBottom[2] = 0xFC79;
+
+		// Rigged to Door#5
+		posRot = posBottom;
+		rotArr = &level1->ptrInstDefs[10].rot[0];
+		rotDeltaY = 0x800;
     }
 
     // if you are spawning into the world for the first time,
     // could be startline, or adv hub spawn in several places
     else
     {
-        // spawn in front of hub door, beach-to-gemstone
-        if (
-            // If you are at podium after winning a Key
-            (gGT->podiumRewardID == 99) &&
-
-            // If you have one boss key
-            (gGT->currAdvProfile.numKeys == 1))
-		{
-            // lev instDefs
-            levInstDef = level1->ptrInstDefs;
-			
-			// Door #5
-			levInstDef = &levInstDef[10];
-        }
-
-        // If you not at hub-door after beating Roo
-        else
+		boolSpawnAtBossDoor = false;
+	
+        // if you are at podium for winning a trophy
+        if (gGT->podiumRewardID == 0x62)
         {
-            // if you are at podium for winning a trophy
-            if (gGT->podiumRewardID == 0x62)
+            // By default, you have all 4 trophies on a hub,
+            // but we are about to determine if that's true
+            boolSpawnAtBossDoor = true;
+
+            // Hub ID
+            short* check = &data.advHubTrackIDs[(gGT->levelID - 0x1a) * 4];
+			
+            // check 4 track trophies
+            for (int i = 0; i < 4; i++)
             {
-                // By default, you have all 4 trophies on a hub,
-                // but we are about to determine if that's true
-                boolSpawnAtBossDoor = true;
-
-                // Hub ID
-                check = &data.advHubTrackIDs[(levId - 0x1a) * 4];
-				
-                // check 4 track trophies
-                for (char i = 0; i < 4; i++)
+                // if you haven't unlocked any trophy in this hub
+                if (CHECK_ADV_BIT(sdata->advProgress.rewards, check[i] + 6) == 0)
                 {
-                    // if you haven't unlocked any trophy in this hub
-                    if (CHECK_ADV_BIT(sdata->advProgress.rewards, check[i] + 6) == 0)
-                    {
-                        // record that not all 4 trophies are collected on this hub
-                        boolSpawnAtBossDoor = false;
-                        break;
-                    }
-                }
-
-				// How could the key possibly be unlocked,
-				// if the reward just won, was a trophy?
-				#if 0
-				
-				// Check for Key
-                if (boolSpawnAtBossDoor && (CHECK_ADV_BIT(sdata->advProgress.rewards, levId + 0x44) != 0))
-                {
-                    // dont spawn outside boss garage
+                    // record that not all 4 trophies are collected on this hub
                     boolSpawnAtBossDoor = false;
+                    break;
                 }
-				
-				#endif
             }
+
+			// How could the key possibly be unlocked,
+			// if the reward just won, was a trophy?
+			#if 0
+			
+			// Check for Key
+            if (boolSpawnAtBossDoor && (CHECK_ADV_BIT(sdata->advProgress.rewards, levId + 0x44) != 0))
+            {
+                // dont spawn outside boss garage
+                boolSpawnAtBossDoor = false;
+            }
+			
+			#endif
         }
-		
-		short* rotArr;
-		short rotDeltaY;
-		
+			
         // if you just exited boss race
         if ((gameMode2 & SPAWN_AT_BOSS) != 0)
         {
             // spawn outside boss door
             boolSpawnAtBossDoor = true;
         }
-
-        // if after-Roo spawn at hub door
-        if (levInstDef != NULL)
-        {
-            gGT->gameMode2 |= VEH_FREEZE_DOOR;
-
-			#if 0
-            // do trigonometry to take hub door
-            angle = levInstDef->rot[1];
-
-            // posX =
-            // instDef posX + (where door starts)
-            // doorLengthX + (to get to midpoint between two doors)
-            // perpendicularX (to spawn away from door)
-            posBottom[0] = levInstDef->pos[0] + (short)(DECOMP_MATH_Cos(angle) >> 1) + (short)(DECOMP_MATH_Cos(angle + 0x400) >> 3);
-
-            // posY = instDef posY + random height offset,
-			// subtract 0x80 cause of reduction in repetitive code
-            posBottom[1] = levInstDef->pos[1] + 0x17a -0x80;
-
-            // posZ =
-            // instDef posZ + (where door starts)
-            // doorLengthZ + (to get to midpoint between two doors)
-            // perpendicularZ (to spawn away from door)
-            posBottom[2] = levInstDef->pos[2] + (short)(DECOMP_MATH_Sin(angle) >> 1) + (short)(DECOMP_MATH_Sin(angle + 0x400) >> 3);
-			#endif
-			
-			posBottom[0] = 0xC676;
-			posBottom[1] = 0x17a-0x80;
-			posBottom[2] = 0xFC79;
-		
-			posRot = posBottom;
-			rotArr = &levInstDef->rot[0];
-			rotDeltaY = 0x800;
-		}
 		
 		// if you want to spawn outside boss door
-        else if (boolSpawnAtBossDoor)
+        if (boolSpawnAtBossDoor)
         {
             // position outside boss door
             posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
@@ -198,7 +175,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
                 if (gGT->prevLEV == HOT_AIR_SKYWAY)
 				{
 					// if spawn by pinstripe, dont face wall
-					if(levId == CITADEL_CITY)
+					if(gGT->levelID == CITADEL_CITY)
 						rotDeltaY = 0x800;
 					
 					// else if spawn by oxide,
@@ -226,7 +203,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         else if (
 				// adventure hub, no podium reward
 				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(prevLev <= LAB_BASEMENT)
+				(gGT->prevLEV <= LAB_BASEMENT)
 			)
         {
             // get position where driver should spawn on map,
@@ -266,18 +243,19 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			rotDeltaY = 0x400;
 		}
 		
-        posBottom[0] = posRot->pos[0];
-        posBottom[1] = posRot->pos[1] + 0x80;
-        posBottom[2] = posRot->pos[2];
-		
-		d->rotCurr.x = rotArr[0];
-		d->rotCurr.y = (rotArr[1] + rotDeltaY) & 0xfff;
-		d->rotCurr.z = rotArr[2];
     }
 
-    posTop[0] = posBottom[0];
-    posTop[1] = posBottom[1] - 0x100;
-    posTop[2] = posBottom[2];
+    posBottom[0] = posRot->pos[0];
+    posBottom[1] = posRot->pos[1] + 0x80;
+    posBottom[2] = posRot->pos[2];
+	
+    posTop[0] = posRot->pos[0];
+    posTop[1] = posRot->pos[1] - 0x80;
+    posTop[2] = posRot->pos[2];
+	
+	d->rotCurr.x = rotArr[0];
+	d->rotCurr.y = (rotArr[1] + rotDeltaY) & 0xfff;
+	d->rotCurr.z = rotArr[2];
 
 	#ifdef REBUILD_PC
 
@@ -296,11 +274,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->posCurr.y = (posRot->pos[1]-0x40) << 8;
     d->posCurr.z = posRot->pos[2] << 8;
 
-	d->instSelf->matrix.t[0] = posRot->pos[0];
-	d->instSelf->matrix.t[1] = (posRot->pos[1]-0x40);
-	d->instSelf->matrix.t[2] = posRot->pos[2];
+	dInst->matrix.t[0] = posRot->pos[0];
+	dInst->matrix.t[1] = (posRot->pos[1]-0x40);
+	dInst->matrix.t[2] = posRot->pos[2];
 
-    ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
+    ConvertRotToMatrix(&dInst->matrix.m, &d->rotCurr.x);
 
 	#else
 
@@ -330,7 +308,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->AxisAngle1_normalVec.z = d->AxisAngle3_normalVec[2];
     d->AxisAngle2_normalVec[2] = d->AxisAngle3_normalVec[2];
 
-    for (i = 0; i < 1; i++) // maybe this is done two times, because it was a do-while?
+    //for (int i = 0; i < 1; i++) // maybe this is done two times, because it was a do-while?
     {
         // set normal vector to spawn
         d->AxisAngle4_normalVec[0] = d->AxisAngle2_normalVec[0];
@@ -375,10 +353,6 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->distanceDrivenBackwards = 0;
     d->clockReceive = 0;
     d->revEngineState = 0;
-    d->lapIndex = 0;
-    d->numWumpas = 0;
-    d->lapTime = 0;
-    d->distanceToFinish_curr = 0;
 	
     d->angle = d->rotCurr.y;
     d->rotPrev.x = d->rotCurr.x;
@@ -401,10 +375,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	#endif
 
     // set animation to zero
-    d->instSelf->animIndex = 0;
+    dInst->animIndex = 0;
 
     // halfway
-    d->instSelf->animFrame = FPS_DOUBLE(10);
+    dInst->animFrame = FPS_DOUBLE(10);
 
 	#if 0 // 10 =
 		VehFrameInst_GetStartFrame(
@@ -412,16 +386,16 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			0, // midpoint
 
 			VehFrameInst_GetNumAnimFrames(
-				d->instSelf, 	// driver instance
+				dInst, 	// driver instance
 				0				// anim #0, steer
 			)
 		);
 	#endif
 
     // Set Scale (x, y, z)
-    d->instSelf->scale[0] = 0xCCC;
-    d->instSelf->scale[1] = 0xCCC;
-    d->instSelf->scale[2] = 0xCCC;
+    dInst->scale[0] = 0xCCC;
+    dInst->scale[1] = 0xCCC;
+    dInst->scale[2] = 0xCCC;
 
     // turn off 7th and 20th bits of Actions Flag set (means ? (7) and racer is not in the air (20))
     d->actionsFlagSet &= ~(0x80040);
@@ -429,11 +403,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     if ((spawnFlag & 2) == 0)
         return;
 
-    if (d->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
+    if (dInst->thread->modelIndex == DYNAMIC_PLAYER)
     {
         DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
-        d->instSelf->thread->funcThTick = 
+        dInst->thread->funcThTick = 
 			((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) 
 				? NULL 
 				: DECOMP_VehBirth_NullThread;
@@ -445,6 +419,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 				: DECOMP_VehPhysProc_Driving_Init;
 	}
 
+    d->lapIndex = 0;
+    d->numWumpas = 0;
+    d->lapTime = 0;
+    d->distanceToFinish_curr = 0;
+
     d->BattleHUD.numLives = gGT->battleSetup.lifeLimit;
 
     // turn off 21th and 26th flags of Actions Flag set
@@ -453,9 +432,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
     d->numHeldItems = 0;
     d->PickupLetterHUD.numCollected = 0;
-	// 1660 bytes
 
-	weaponId = 0xf; // no item
+	char weaponId = 0xf; // no item
     if ((gameMode2 & CHEAT_MASK) != 0) weaponId = 7;
 	if ((gameMode2 & CHEAT_TURBO) != 0) weaponId = 0;
 	if ((gameMode2 & CHEAT_BOMBS) != 0) weaponId = 1;
@@ -469,11 +447,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         ((gameMode2 & CHEAT_INVISIBLE) != 0) &&
 
         // only make players invisible, not AIs
-        (d->driverID < numPlyr))
+        (d->driverID < gGT->numPlyrCurrGame))
     {
-        d->instSelf->flags &= ~(DRAW_TRANSPARENT); // originally (DRAW_TRANSPARENT (0x10000) | GHOST_DRAW_TRANSPARENT (0x6000))
+        dInst->flags &= ~(DRAW_TRANSPARENT); // originally (DRAW_TRANSPARENT (0x10000) | GHOST_DRAW_TRANSPARENT (0x6000))
 
-        d->instSelf->flags |= GHOST_DRAW_TRANSPARENT;
+        dInst->flags |= GHOST_DRAW_TRANSPARENT;
 
         d->invisibleTimer = 0x2d00;
     }
