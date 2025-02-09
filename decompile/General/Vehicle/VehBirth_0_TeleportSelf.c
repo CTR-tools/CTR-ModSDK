@@ -100,7 +100,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		#endif
 		
 		posBottom[0] = 0xC676;
-		posBottom[1] = 0x7A+0x80;
+		posBottom[1] = 0x17a-0x80;
 		posBottom[2] = 0xFC79;
 
 		// Rigged to Door#5
@@ -249,9 +249,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     posBottom[1] = posRot->pos[1] + 0x80;
     posBottom[2] = posRot->pos[2];
 	
-    posTop[0] = posRot->pos[0];
-    posTop[1] = posRot->pos[1] - 0x80;
-    posTop[2] = posRot->pos[2];
+    posTop[0] = posBottom[0];
+    posTop[1] = posBottom[1] - 0x100;
+    posTop[2] = posBottom[2];
 	
 	d->rotCurr.x = rotArr[0];
 	d->rotCurr.y = (rotArr[1] + rotDeltaY) & 0xfff;
