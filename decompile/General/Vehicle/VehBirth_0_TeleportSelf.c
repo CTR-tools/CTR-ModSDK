@@ -140,7 +140,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		short rotDeltaY;
 		
         // if you just exited boss race
-        if ((gameMode2 & 1) != 0)
+        if ((gameMode2 & SPAWN_AT_BOSS) != 0)
         {
             // spawn outside boss door
             boolSpawnAtBossDoor = true;
