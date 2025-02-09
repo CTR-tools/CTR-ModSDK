@@ -100,7 +100,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		#endif
 		
 		posBottom[0] = 0xC676;
-		posBottom[1] = 0x17a-0x80;
+		posBottom[1] = 0x7A+0x80;
 		posBottom[2] = 0xFC79;
 
 		// Rigged to Door#5
