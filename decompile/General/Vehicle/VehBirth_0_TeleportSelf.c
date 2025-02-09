@@ -129,6 +129,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             }
         }
 		
+		short* rotArr;
+		short rotDeltaY;
+		
         // if you just exited boss race
         if ((gameMode2 & 1) != 0)
         {
@@ -141,10 +144,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         {
             gameMode2 |= VEH_FREEZE_DOOR;
 
+			#if 0
             // do trigonometry to take hub door
             angle = levInstDef->rot[1];
 
-			#if 0
             // posX =
             // instDef posX + (where door starts)
             // doorLengthX + (to get to midpoint between two doors)
@@ -167,8 +170,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			posBottom[2] = 0xFC79;
 		
 			posRot = posBottom;
-			
-			d->rotCurr.y = levInstDef->rot[1] + 0x800U & 0xfff;
+			rotArr = &levInstDef->rot[0];
+			rotDeltaY = 0x800;
 		}
 		
 		// if you want to spawn outside boss door
@@ -178,8 +181,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
 			
 			// spawn facing boss door
-			int angle = (posRot->rot[1] + 0x400);
-			d->rotCurr.y = angle & 0xfff;
+			rotArr = &posRot->rot[0];
+			rotDeltaY = 0x400;
 			
 			// if just beat boss
 			if ((gameMode2 & 1) != 0)
@@ -189,7 +192,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 				{
 					// if spawn by pinstripe, dont face wall
 					if(levId == CITADEL_CITY)
-						d->rotCurr.y = angle + 0x400;
+						rotDeltaY = 0x800;
 					
 					// else if spawn by oxide,
 					// do nothing, rotation already faces the door
@@ -199,23 +202,45 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 				else
 				{
 					// spawn facing AWAY from door
-					d->rotCurr.y = (angle+0x800) & 0xfff;
+					rotDeltaY = 0xC00;
 				}
 			}
         }
-        
-		// Conditions for 8-position startup
-        else if (
-			((gGT->gameMode1 & ADVENTURE_ARENA) == 0) ||
-			(prevLev == MAIN_MENU_LEVEL) ||
-			(prevLev == ADVENTURE_CHARACTER_SELECT) ||
-            (prevLev == -1) ||
-			(prevLev == SCRAPBOOK) ||
-			((unsigned int)(prevLev - 0x2c) < 0x14) // credits
-		)
+		
+        // if you have a podium reward
+        else if (gGT->podiumRewardID != 0)
         {
+            // spawn on the podium in the adv hub
+			posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[0];
+			rotArr = &posRot->rot[0];
+			rotDeltaY = 0;
+        }
+		
+        else if (
+				// adventure hub, no podium reward
+				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
+				(prevLev <= LAB_BASEMENT)
+			)
+        {
+            // get position where driver should spawn on map,
+            // outside warppad they previously entered
+            warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
+			
+			posRot = warppadPos;
+			rotArr = warppadRot;
+			rotDeltaY = 0x400;
+        }
+		
+		// normal track,
+		// or advHub return from:
+		//		main menu
+		//		adv garage
+		//		scrapbook
+		//		credits
+		else
+		{
 			// DEBUG TEST
-			#if 1
+			#if 0
 			gGT->numLaps = 1;
 			if(d->driverID != 0)
 			#endif
@@ -230,39 +255,17 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
             // get coords where driver based on driver order (0-7)
             posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
-			
-			d->rotCurr.x = posRot->rot[0];
-			d->rotCurr.y = (posRot->rot[1] + 0x400) & 0xfff;
-			d->rotCurr.z = posRot->rot[2];
-
-        }
-		
-        // if you have a podium reward
-        else if (gGT->podiumRewardID != 0)
-        {
-            // spawn on the podium in the adv hub
-			posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[0];
-			
-			d->rotCurr.y = (posRot->rot[1]) & 0xfff;
-        }
-		
-        // if no podium reward
-        else 
-        {
-            // get position where driver should spawn on map,
-            // outside warppad they previously entered
-            warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
-			
-			d->rotCurr.x = warppadRot[0];
-			d->rotCurr.y = (warppadRot[1] + 0x400) & 0xfff;
-			d->rotCurr.z = warppadRot[2];
-			
-			posRot = warppadPos;
-        }
+			rotArr = &posRot->rot[0];
+			rotDeltaY = 0x400;
+		}
 		
         posBottom[0] = posRot->pos[0];
         posBottom[1] = posRot->pos[1] + 0x80;
         posBottom[2] = posRot->pos[2];
+		
+		d->rotCurr.x = rotArr[0];
+		d->rotCurr.y = (rotArr[1] + rotDeltaY) & 0xfff;
+		d->rotCurr.z = rotArr[2];
     }
 
     posTop[0] = posBottom[0];
@@ -344,27 +347,51 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
 	#endif
 
-LAB_80058568:
-
     d->speed = 0;
     d->speedApprox = 0;
     d->jumpHeightCurr = 0;
     d->jumpHeightPrev = 0;
     d->unk_offset3B2 = 0;
+    d->matrixArray = 0;
+    d->matrixIndex = 0;
+    d->jump_LandingBoost = 0;
+    d->jumpMeter = 0;
+    d->jumpMeterTimer = 0;
+    d->turnAngleCurr = 0;
+    d->unk_LerpToForwards = 0;
+    d->turnAnglePrev = 0;
+    d->rotCurr.w = 0;
+    d->rotPrev.w = 0;
+    d->ChangeState_param2 = 0;
+    d->jumpSquishStretch = 0;
+    d->underDriver = 0;
+    d->distanceDrivenBackwards = 0;
+    d->clockReceive = 0;
+    d->revEngineState = 0;
+    d->lapIndex = 0;
+    d->numWumpas = 0;
+    d->lapTime = 0;
+    d->distanceToFinish_curr = 0;
+	
     d->angle = d->rotCurr.y;
     d->rotPrev.x = d->rotCurr.x;
     d->rotPrev.y = d->rotCurr.y;
     d->rotPrev.z = d->rotCurr.z;
 
+	// REMOVED, cause I'm certain the driver
+	// spawns close enough to the door to trigger
+	// cutscene, without this hack, OG code used it
+	#if 0
     if (
         (levInstDef != NULL) &&
 
         // if spawning into world (not mask grab)
         ((spawnFlag & 1) != 0))
     {
-        // spawn with speed (what? when does that ever happen?)
+		// drive forward to trigger cutscene
         d->speed = 0xa00;
     }
+	#endif
 
     // set animation to zero
     d->instSelf->animIndex = 0;
@@ -389,23 +416,6 @@ LAB_80058568:
     d->instSelf->scale[1] = 0xCCC;
     d->instSelf->scale[2] = 0xCCC;
 
-    d->matrixArray = 0;
-    d->matrixIndex = 0;
-    d->jump_LandingBoost = 0;
-    d->jumpMeter = 0;
-    d->jumpMeterTimer = 0;
-    d->turnAngleCurr = 0;
-    d->unk_LerpToForwards = 0;
-    d->turnAnglePrev = 0;
-    d->rotCurr.w = 0;
-    d->rotPrev.w = 0;
-    d->ChangeState_param2 = 0;
-    d->jumpSquishStretch = 0;
-    d->underDriver = 0;
-    d->distanceDrivenBackwards = 0;
-    d->clockReceive = 0;
-    d->revEngineState = 0;
-
     // turn off 7th and 20th bits of Actions Flag set (means ? (7) and racer is not in the air (20))
     d->actionsFlagSet &= ~(0x80040);
 
@@ -416,7 +426,10 @@ LAB_80058568:
     {
         DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
-        d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : DECOMP_VehBirth_NullThread;
+        d->instSelf->thread->funcThTick = 
+			((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) 
+				? NULL 
+				: DECOMP_VehBirth_NullThread;
 
         // set OnInit function
         d->funcPtrs[0] =
@@ -425,66 +438,30 @@ LAB_80058568:
 				: DECOMP_VehPhysProc_Driving_Init;
 	}
 
-    d->lapIndex = 0;
-
-    d->numWumpas = 0;
-
-    d->lapTime = 0;
-
-    // no lap progress
-    d->distanceToFinish_curr = 0;
+    d->BattleHUD.numLives = gGT->battleSetup.lifeLimit;
 
     // turn off 21th and 26th flags of Actions Flag set
     //(means racer is not an AI and racer hasn't finished the race)
     d->actionsFlagSet &= ~(0x2100000);
 
-    // If unlimited wumpa cheat is enabledy
-    d->numWumpas = ((gameMode2 & CHEAT_WUMPA) == 0) ? 0 : 99;
-
-    // set Held item to none
-    d->heldItemID = 0xf;
-
     d->numHeldItems = 0;
-
-    // collected zero C-T-R letters
     d->PickupLetterHUD.numCollected = 0;
+	// 1660 bytes
 
-    // set weaponID to mask
-    weaponId = 7;
-
-    // if unlimited masks is disabled
-    if ((gameMode2 & CHEAT_MASK) == 0)
-    {
-        // if unlimited turbos is disabled
-        if ((gameMode2 & CHEAT_TURBO) == 0)
-        {
-            // if infinite bombs is disabled
-            if ((gameMode2 & CHEAT_BOMBS) == 0)
-                goto SKIP_WEAPON;
-
-            // set weaponID to bomb
-                weaponId = 1;
-        }
-        // set weaponID to turbo
-        weaponId = 0;
-    }
-
-    // set weaponID
+	weaponId = 0xf; // no item
+    if ((gameMode2 & CHEAT_MASK) != 0) weaponId = 7;
+	if ((gameMode2 & CHEAT_TURBO) != 0) weaponId = 0;
+	if ((gameMode2 & CHEAT_BOMBS) != 0) weaponId = 1;
+	if ((gameMode2 & CHEAT_WUMPA) != 0) d->numWumpas = 99;
+	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = 0x2d00;
     d->heldItemID = weaponId;
 
-SKIP_WEAPON:
-
-    // set driver's life limit to the global life limit
-    d->BattleHUD.numLives = gGT->battleSetup.lifeLimit;
 
     if (
         // If Permanent Invisibility Cheat is Enabled
         ((gameMode2 & CHEAT_INVISIBLE) != 0) &&
 
-        // Player / AI structure + 0x4a shows driver index (0-7)
-
-        // driver ID must be less than numPlyrCurrGame,
-        // which makes the cheat apply to players and not AIs
+        // only make players invisible, not AIs
         (d->driverID < numPlyr))
     {
         d->instSelf->flags &= ~(DRAW_TRANSPARENT); // originally (DRAW_TRANSPARENT (0x10000) | GHOST_DRAW_TRANSPARENT (0x6000))
@@ -492,11 +469,5 @@ SKIP_WEAPON:
         d->instSelf->flags |= GHOST_DRAW_TRANSPARENT;
 
         d->invisibleTimer = 0x2d00;
-    }
-
-    // If Super Engine Cheat
-    if ((gameMode2 & CHEAT_ENGINE) != 0)
-    {
-        d->superEngineTimer = 0x2d00;
     }
 }
