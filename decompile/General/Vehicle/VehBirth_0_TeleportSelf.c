@@ -142,7 +142,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         // if after-Roo spawn at hub door
         if (levInstDef != NULL)
         {
-            gameMode2 |= VEH_FREEZE_DOOR;
+            gGT->gameMode2 |= VEH_FREEZE_DOOR;
 
 			#if 0
             // do trigonometry to take hub door
