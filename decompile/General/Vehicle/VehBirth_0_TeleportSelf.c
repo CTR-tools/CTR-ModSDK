@@ -113,6 +113,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     // could be startline, or adv hub spawn in several places
     else
     {
+		#if 0
 		boolSpawnAtBossDoor = false;
 	
         // if you are at podium for winning a trophy
@@ -124,6 +125,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
             // Hub ID
             short* check = &data.advHubTrackIDs[(gGT->levelID - 0x1a) * 4];
+			
 			
             // check 4 track trophies
             for (int i = 0; i < 4; i++)
@@ -157,9 +159,23 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
             // spawn outside boss door
             boolSpawnAtBossDoor = true;
         }
+		#endif
 		
 		// if you want to spawn outside boss door
-        if (boolSpawnAtBossDoor)
+        if (
+				// After leaving a boss race
+				(
+					// Set in 222 EndRace function
+					((gameMode2 & SPAWN_AT_BOSS) != 0)
+				) ||
+				
+				// Before starting a boss cutscene
+				(
+					// Just won the last trophy on the hub
+					(gGT->podiumRewardID == 0x62) &&
+					((gGT->currAdvProfile.numTrophies & 3) == 0)
+				)
+		)
         {
             // position outside boss door
             posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
