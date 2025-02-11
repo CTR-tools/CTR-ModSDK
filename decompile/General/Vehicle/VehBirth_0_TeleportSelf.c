@@ -68,37 +68,16 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		rotDeltaY = 0;
     }
 
+	// If just obtained Roo boss key
 	// spawn in front of hub door, beach-to-gemstone
 	else if (
-		// If you are at podium after winning a Key
 		(gGT->podiumRewardID == 99) &&
-	
-		// If you have one boss key
 		(gGT->currAdvProfile.numKeys == 1))
 	{
         gGT->gameMode2 |= VEH_FREEZE_DOOR;
 		
-		#if 0
-        // do trigonometry to take hub door
-        angle = levInstDef->rot[1];
-
-        // posX =
-        // instDef posX + (where door starts)
-        // doorLengthX + (to get to midpoint between two doors)
-        // perpendicularX (to spawn away from door)
-        posBottom[0] = levInstDef->pos[0] + (short)(DECOMP_MATH_Cos(angle) >> 1) + (short)(DECOMP_MATH_Cos(angle + 0x400) >> 3);
-
-        // posY = instDef posY + random height offset,
-		// subtract 0x80 cause of reduction in repetitive code
-        posBottom[1] = levInstDef->pos[1] + 0x17a -0x80;
-
-        // posZ =
-        // instDef posZ + (where door starts)
-        // doorLengthZ + (to get to midpoint between two doors)
-        // perpendicularZ (to spawn away from door)
-        posBottom[2] = levInstDef->pos[2] + (short)(DECOMP_MATH_Sin(angle) >> 1) + (short)(DECOMP_MATH_Sin(angle + 0x400) >> 3);
-		#endif
-		
+		// Stripped out OG code to do trigonometry
+		// on the door, just rig the results
 		posBottom[0] = 0xC676;
 		posBottom[1] = 0x17a-0x80;
 		posBottom[2] = 0xFC79;
@@ -109,168 +88,114 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		rotDeltaY = 0x800;
     }
 
-    // if you are spawning into the world for the first time,
-    // could be startline, or adv hub spawn in several places
-    else
+	// if you want to spawn outside boss door
+    else if (
+			// After leaving a boss race
+			(
+				// Set in 222 EndRace function
+				((gameMode2 & SPAWN_AT_BOSS) != 0)
+			) ||
+			
+			// Before starting a boss cutscene
+			(
+				// Just won the last trophy on the hub
+				(gGT->podiumRewardID == 0x62) &&
+				((gGT->currAdvProfile.numTrophies & 3) == 0)
+			)
+	)
     {
-		#if 0
-		boolSpawnAtBossDoor = false;
+        // position outside boss door
+        posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
+		
+		// spawn facing boss door
+		rotArr = &posRot->rot[0];
+		rotDeltaY = 0x400;
+		
+		// if just beat boss
+		if ((gameMode2 & SPAWN_AT_BOSS) != 0)
+		{
+            // just finished pinstripe boss,
+            if (gGT->prevLEV == HOT_AIR_SKYWAY)
+			{
+				// if spawn by pinstripe, dont face wall
+				if(gGT->levelID == CITADEL_CITY)
+					rotDeltaY = 0x800;
+				
+				// else if spawn by oxide,
+				// do nothing, rotation already faces the door
+			}
+			
+			// if just beat ANY other boss
+			else
+			{
+				// spawn facing AWAY from door
+				rotDeltaY = 0xC00;
+			}
+		}
+    }
 	
-        // if you are at podium for winning a trophy
-        if (gGT->podiumRewardID == 0x62)
-        {
-            // By default, you have all 4 trophies on a hub,
-            // but we are about to determine if that's true
-            boolSpawnAtBossDoor = true;
-
-            // Hub ID
-            short* check = &data.advHubTrackIDs[(gGT->levelID - 0x1a) * 4];
+	// adventure hub + podium reward
+    else if (
+			// must check adventure arena, cause winning 
+			// a sapphire relic and hitting RETRY will 
+			// set podiumRewardID=RELIC, then spawn in the void
+			((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
+			(gGT->podiumRewardID != 0)
+		)
+    {
+        // spawn on the podium in the adv hub
+		posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[0];
+		rotArr = &posRot->rot[0];
+		rotDeltaY = 0;
+    }
+	
+	// adventure hub + exit portal
+    else if (
 			
-			
-            // check 4 track trophies
-            for (int i = 0; i < 4; i++)
-            {
-                // if you haven't unlocked any trophy in this hub
-                if (CHECK_ADV_BIT(sdata->advProgress.rewards, check[i] + 6) == 0)
-                {
-                    // record that not all 4 trophies are collected on this hub
-                    boolSpawnAtBossDoor = false;
-                    break;
-                }
-            }
-
-			// How could the key possibly be unlocked,
-			// if the reward just won, was a trophy?
-			#if 0
-			
-			// Check for Key
-            if (boolSpawnAtBossDoor && (CHECK_ADV_BIT(sdata->advProgress.rewards, levId + 0x44) != 0))
-            {
-                // dont spawn outside boss garage
-                boolSpawnAtBossDoor = false;
-            }
-			
-			#endif
-        }
-			
-        // if you just exited boss race
-        if ((gameMode2 & SPAWN_AT_BOSS) != 0)
-        {
-            // spawn outside boss door
-            boolSpawnAtBossDoor = true;
-        }
+			((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
+			(
+				(gGT->prevLEV >= 100) || // Gem Cups
+				(gGT->prevLEV <= LAB_BASEMENT) // Other Portals
+				
+			)
+		)
+    {
+        // get position where driver should spawn on map,
+        // outside warppad they previously entered
+        warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
+		
+		posRot = warppadPos;
+		rotArr = warppadRot;
+		rotDeltaY = 0x400;
+    }
+	
+	// normal track,
+	// or advHub return from:
+	//		main menu
+	//		adv garage
+	//		scrapbook
+	//		credits
+	else
+	{
+		// DEBUG TEST
+		#if 0
+		gGT->numLaps = 1;
+		if(d->driverID != 0)
 		#endif
 		
-		// if you want to spawn outside boss door
-        if (
-				// After leaving a boss race
-				(
-					// Set in 222 EndRace function
-					((gameMode2 & SPAWN_AT_BOSS) != 0)
-				) ||
-				
-				// Before starting a boss cutscene
-				(
-					// Just won the last trophy on the hub
-					(gGT->podiumRewardID == 0x62) &&
-					((gGT->currAdvProfile.numTrophies & 3) == 0)
-				)
-		)
-        {
-            // position outside boss door
-            posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
-			
-			// spawn facing boss door
-			rotArr = &posRot->rot[0];
-			rotDeltaY = 0x400;
-			
-			// if just beat boss
-			if ((gameMode2 & 1) != 0)
-			{
-                // just finished pinstripe boss,
-                if (gGT->prevLEV == HOT_AIR_SKYWAY)
-				{
-					// if spawn by pinstripe, dont face wall
-					if(gGT->levelID == CITADEL_CITY)
-						rotDeltaY = 0x800;
-					
-					// else if spawn by oxide,
-					// do nothing, rotation already faces the door
-				}
-				
-				// if just beat ANY other boss
-				else
-				{
-					// spawn facing AWAY from door
-					rotDeltaY = 0xC00;
-				}
-			}
-        }
-		
-		// adventure hub + podium reward
-        else if (
-				// must check adventure arena, cause winning 
-				// a sapphire relic and hitting RETRY will 
-				// set podiumRewardID=RELIC, then spawn in the void
-				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(gGT->podiumRewardID != 0)
-			)
-        {
-            // spawn on the podium in the adv hub
-			posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[0];
-			rotArr = &posRot->rot[0];
-			rotDeltaY = 0;
-        }
-		
-		// adventure hub + exit portal
-        else if (
-				
-				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(
-					(gGT->prevLEV >= 100) || // Gem Cups
-					(gGT->prevLEV <= LAB_BASEMENT) // Other Portals
-					
-				)
-			)
-        {
-            // get position where driver should spawn on map,
-            // outside warppad they previously entered
-            warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
-			
-			posRot = warppadPos;
-			rotArr = warppadRot;
-			rotDeltaY = 0x400;
-        }
-		
-		// normal track,
-		// or advHub return from:
-		//		main menu
-		//		adv garage
-		//		scrapbook
-		//		credits
-		else
-		{
-			// DEBUG TEST
-			#if 0
-			gGT->numLaps = 1;
-			if(d->driverID != 0)
-			#endif
-			
-            // racer crossed the start line backwards,
-            // so lap doesn't count when race starts
-            d->actionsFlagSet |= 0x1000000;
+        // racer crossed the start line backwards,
+        // so lap doesn't count when race starts
+        d->actionsFlagSet |= 0x1000000;
 
-			#ifndef REBUILD_PS1
-            d->distanceToFinish_checkpoint = level1->ptr_restart_points[0].distToFinish << 3;
-			#endif
+		#ifndef REBUILD_PS1
+        d->distanceToFinish_checkpoint = level1->ptr_restart_points[0].distToFinish << 3;
+		#endif
 
-            // get coords where driver based on driver order (0-7)
-            posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
-			rotArr = &posRot->rot[0];
-			rotDeltaY = 0x400;
-		}
-		
-    }
+        // get coords where driver based on driver order (0-7)
+        posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
+		rotArr = &posRot->rot[0];
+		rotDeltaY = 0x400;
+	}
 
     posBottom[0] = posRot->pos[0];
     posBottom[1] = posRot->pos[1] + 0x80;
@@ -385,21 +310,6 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->rotPrev.x = d->rotCurr.x;
     d->rotPrev.y = d->rotCurr.y;
     d->rotPrev.z = d->rotCurr.z;
-
-	// REMOVED, cause I'm certain the driver
-	// spawns close enough to the door to trigger
-	// cutscene, without this hack, OG code used it
-	#if 0
-    if (
-        (levInstDef != NULL) &&
-
-        // if spawning into world (not mask grab)
-        ((spawnFlag & 1) != 0))
-    {
-		// drive forward to trigger cutscene
-        d->speed = 0xa00;
-    }
-	#endif
 
     // set animation to zero
     dInst->animIndex = 0;
