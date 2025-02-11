@@ -207,8 +207,14 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			}
         }
 		
-        // if you have a podium reward
-        else if (gGT->podiumRewardID != 0)
+		// adventure hub + podium reward
+        else if (
+				// must check adventure arena, cause winning 
+				// a sapphire relic and hitting RETRY will 
+				// set podiumRewardID=RELIC, then spawn in the void
+				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
+				(gGT->podiumRewardID != 0)
+			)
         {
             // spawn on the podium in the adv hub
 			posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[0];
@@ -216,10 +222,15 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			rotDeltaY = 0;
         }
 		
+		// adventure hub + exit portal
         else if (
-				// adventure hub, no podium reward
+				
 				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(gGT->prevLEV <= LAB_BASEMENT)
+				(
+					(gGT->prevLEV >= 100) || // Gem Cups
+					(gGT->prevLEV <= LAB_BASEMENT) // Other Portals
+					
+				)
 			)
         {
             // get position where driver should spawn on map,
