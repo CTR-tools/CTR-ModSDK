@@ -32,6 +32,36 @@ void DECOMP_TT_EndEvent_DrawMenu(void)
         sdata->gameProgress.unlocks[0] |= 0x20; // Unlock N Tropy
     }
 
+// Untested by Niko, coming back this weekend,
+// need to rewrite a lot of 221-225, with framesSinceRaceEnded
+// only incrementing once every 2 frames, to remove LOTS  of FPS hacks
+#if 0
+	// Conditions to increment frame
+    if (
+			// First 900 frames (30 seconds)
+			(framesSinceRaceEnded < FPS_DOUBLE(900)) ||
+			
+			(
+				// if HIDE high score, is disabled
+				((unknownFlags_1d44 & 0x8000000) == 0) &&
+				
+				(
+					// Transition the high scores on-screen
+					(framesSinceRaceEnded < FPS_DOUBLE(1001)) ||
+					
+					(
+						// Wait until press X, then transition off-screen
+						((sdata->menuReadyToPass & 0x10) != 0) &&
+						(framesSinceRaceEnded < FPS_DOUBLE(1018))
+					)
+				)
+			)
+		)
+    {
+        framesSinceRaceEnded++;
+    }
+#endif
+
     // copy the frame counter variable
     framesSinceRaceEnded = sdata->framesSinceRaceEnded;
 
