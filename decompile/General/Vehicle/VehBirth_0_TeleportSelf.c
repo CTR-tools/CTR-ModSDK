@@ -2,13 +2,9 @@
 
 void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY)
 {
-    char boolSpawnAtBossDoor;
-    char numInstances;
-    short *warppadRot=0;
     short posTop[3];
     short posBottom[3];
     short warppadPos[3];
-    u_int gameMode2;
 
     struct PosRot
     {
@@ -28,7 +24,6 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 #endif
 
     // cheat flags
-    gameMode2 = gGT->gameMode2;
 	gGT->gameMode2 &= ~(SPAWN_AT_BOSS | 2);
 
 #if 0
@@ -38,17 +33,6 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         return;
     }
 #endif
-
-    // ground and wall quadblock flags
-    sps->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
-
-    sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
-    
-	// collision triangles, 2 (low-LOD) & 8 (hi-LOD)
-    sps->Union.QuadBlockColl.searchFlags = 
-		(gGT->numPlyrCurrGame > 3) ? 2 : 0;
-
-    sps->ptr_mesh_info = level1->ptr_mesh_info;
 
 	gGT->gameMode2 &= ~(VEH_FREEZE_DOOR);
 
@@ -93,7 +77,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			// After leaving a boss race
 			(
 				// Set in 222 EndRace function
-				((gameMode2 & SPAWN_AT_BOSS) != 0)
+				((gGT->gameMode2 & SPAWN_AT_BOSS) != 0)
 			) ||
 			
 			// Before starting a boss cutscene
@@ -112,7 +96,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		rotDeltaY = 0x400;
 		
 		// if just beat boss
-		if ((gameMode2 & SPAWN_AT_BOSS) != 0)
+		if ((gGT->gameMode2 & SPAWN_AT_BOSS) != 0)
 		{
             // just finished pinstripe boss,
             if (gGT->prevLEV == HOT_AIR_SKYWAY)
@@ -162,7 +146,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     {
         // get position where driver should spawn on map,
         // outside warppad they previously entered
-        warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
+        short* warppadRot = 
+			DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
 		
 		posRot = warppadPos;
 		rotArr = warppadRot;
@@ -233,6 +218,14 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     ConvertRotToMatrix(&dInst->matrix.m, &d->rotCurr.x);
 
 	#else
+
+    // search for ground and wall flags,
+	// exclude no flags (take 'any' ground/wall)
+	// collision triangles, 2 (low-LOD), 8 (hi-LOD)
+    sps->Union.QuadBlockColl.qbFlagsWanted = 0x3000;
+    sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
+    sps->Union.QuadBlockColl.searchFlags = (gGT->numPlyrCurrGame > 3) ? 2 : 0;
+    sps->ptr_mesh_info = level1->ptr_mesh_info;
 
     COLL_SearchTree_FindQuadblock_Touching(&posTop[0], &posBottom[0], sps, 0);
 
@@ -370,7 +363,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->numHeldItems = 0;
     d->PickupLetterHUD.numCollected = 0;
 
-	char weaponId = 0xf; // no item
+	// no item
+	char weaponId = 0xf;
+    u_int gameMode2 = gGT->gameMode2;
     if ((gameMode2 & CHEAT_MASK) != 0) weaponId = 7;
 	if ((gameMode2 & CHEAT_TURBO) != 0) weaponId = 0;
 	if ((gameMode2 & CHEAT_BOMBS) != 0) weaponId = 1;
