@@ -52,6 +52,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		rotDeltaY = 0;
     }
 
+	// always spawn using the
+	// 8-place starting line
+	#ifndef USE_ONLINE
+	
 	// If just obtained Roo boss key
 	// spawn in front of hub door, beach-to-gemstone
 	else if (
@@ -153,6 +157,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		rotArr = warppadRot;
 		rotDeltaY = 0x400;
     }
+	
+	#endif // USE_ONLINE
 	
 	// normal track,
 	// or advHub return from:

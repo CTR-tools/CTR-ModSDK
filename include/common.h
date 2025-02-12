@@ -29,6 +29,7 @@
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_HIGH1P
+#define USE_DEFRAG
 
 //note: if you disable this, you'll need to fix anything related to the `ROOM_...` defines in global.h
 #define USE_RETROFUELED //enabled only in certain rooms.

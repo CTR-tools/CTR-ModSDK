@@ -33,11 +33,5 @@ void DECOMP_VehBirth_TeleportAll(struct GameTracker *gGT, u_int spawnFlags)
 		
 		#endif
     }
-	
-	#ifdef USE_60FPS
-	// needed cause VehBirth_TeleportSelf
-	// has not been rewritten yet for decomp
-	d->instSelf->animFrame = FPS_DOUBLE(10);
-	#endif
   }
 }
