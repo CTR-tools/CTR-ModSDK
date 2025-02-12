@@ -840,7 +840,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 						#endif
 
 						// allow instances again
-						gGT->gameMode2 &= ~(DISABLE_LEV_INSTANCE);
+						gGT->gameMode2 &= ~(NO_LEV_INSTANCE);
 
 						// fade transition
 						gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0x1000;
