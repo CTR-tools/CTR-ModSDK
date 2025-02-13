@@ -877,8 +877,7 @@ LAB_80035098:
                (PTR_DAT_8008d2ac[0x2541] != -1)
 			  )
 			{
-			  // This pauses the game somehow
-
+			  // But why? ND typo?
               *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)PTR_DAT_8008d2ac & 0x3e0020 | 1;
 
 			  // MainFreeze_IfPressStart
@@ -6417,8 +6416,9 @@ void FUN_8003a3fc(void)
     uVar9 = *(uint *)PTR_DAT_8008d2ac;
     *(uint *)PTR_DAT_8008d2ac = uVar9 | 0x200000;
 
-	// BUG? Why would this happen?
+	// But why? ND typo?
     *(uint *)(puVar13 + 0x1d44) = uVar9 & 0x3e0020 | 0x200000;
+	
     puVar10 = PTR_DAT_8008d2ac;
 
 	// If you are not in Battle Mode

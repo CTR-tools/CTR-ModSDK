@@ -111,7 +111,10 @@ void MainGameEnd_Initialize(void)
 
     gGT->gameMode1 |= END_OF_RACE;
 
-    gGT->gameModeEnd = gameMode1 & 0x3e0020 | END_OF_RACE;
+	// But why? ND typo?
+	#if 0
+    gGT->gameModeEnd = (gameMode1 & 0x3e0020) | END_OF_RACE;
+	#endif
 
     // If you are not in Battle Mode
     if ((gameMode1 & BATTLE_MODE) == 0)

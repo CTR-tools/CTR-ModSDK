@@ -454,8 +454,10 @@ LAB_80035098:
 						(gGT->overlayIndex_Threads != -1)
 					)
 					{
-						// ND bug? why?
+						#if 0
+						// But why? ND typo?
 						gGT->gameModeEnd = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
+						#endif
 
 						DECOMP_MainFreeze_IfPressStart();
 
