@@ -6147,7 +6147,7 @@ void FUN_80039fa8(int param_1)
 	  *(uint *)(&DAT_8008e814 + iVar9) =
 	  *(uint *)(&DAT_8008e814 + iVar9) | 1;
 
-	  // | 0x8000
+	  // NTROPY_JUST_OPENED | NEW_HIGH_SCORE
 	  uVar8 = *(uint *)(puVar3 + 0x1d44) | 0x8008000;
     }
 
@@ -6164,7 +6164,8 @@ void FUN_80039fa8(int param_1)
       *(uint *)(&DAT_8008e814 + iVar7)
 		| 1 << (DAT_8008453c & 0x1f);
 
-	  // + 0x1d44) | 0x18000000
+	  // value = 0x18000000,
+	  // NEW_HIGH_SCORE | NTROPY_JUST_BEAT
 	  uVar8 = *(uint *)(puVar3 + 0x1d44) | DAT_80084548;
     }
   }

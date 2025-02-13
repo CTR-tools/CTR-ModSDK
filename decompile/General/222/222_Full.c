@@ -3,6 +3,8 @@
 static int str_number = 0x20; // " \0"
 extern struct RectMenu menu222;
 
+// 3528
+
 void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
@@ -84,7 +86,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			lerpStartY = hudCTR->y;
 			lerpEndX = lerpStartX + 0x10;
 			lerpEndY = lerpStartY + 0x10;
-			currFrame = elapsedFrames;
 			lerpFrames = FPS_DOUBLE(8);
 
 			// If you have not unlocked this CTR Token
@@ -97,9 +98,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				scaleDown = scaleDown >> 10;
 
 				// lerp letters off-screen
-				if (elapsedFrames > FPS_DOUBLE(230))
+				if (elapsedFrames >= FPS_DOUBLE(230))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(230);
+					elapsedFrames -= FPS_DOUBLE(230);
 
 					lerpStartX += 0x10;
 					lerpStartY += 0x50;
@@ -108,9 +109,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				}
 
 				// lerp letters to center
-				else if (elapsedFrames > FPS_DOUBLE(140))
+				else if (elapsedFrames >= FPS_DOUBLE(140))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(140);
+					elapsedFrames -= FPS_DOUBLE(140);
 
 					lerpStartX += 0x10;
 					lerpStartY += 0x10;
@@ -145,7 +146,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					// but they passed "elapsedFrames-50" instead of "elapsedFrames-230", kills effect.
 					//	txtStartX = 0x100;
 					//	txtEndX = -150;
-					//	currFrame = elapsedFrames - 50;
+					//	elapsedFrames -= 50;
 
 					// lerp on-screen: CTR TOKEN AWARDED
 					txtStartX = 0x264;
@@ -155,7 +156,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						&txtPos[0],
 						txtStartX, 0xA6,
 						txtEndX, 0xA6,
-						currFrame, FPS_DOUBLE(8));
+						elapsedFrames, FPS_DOUBLE(8));
 
 					txtColor = (gGT->timer & FPS_DOUBLE(1)) ? 0xFFFF8003 : 0xFFFF8004;
 
@@ -169,7 +170,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					&letterPos[0],
 					lerpStartX, lerpStartY,
 					lerpEndX, lerpEndY,
-					currFrame, FPS_DOUBLE(8));
+					elapsedFrames, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
@@ -183,10 +184,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			// If you already have this CTR Token unlocked
 			else
 			{
-				// or <= ?
-				if (elapsedFrames > FPS_DOUBLE(300))
+				if (elapsedFrames >= FPS_DOUBLE(300))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(300);
+					elapsedFrames -= FPS_DOUBLE(300);
 
 					lerpStartX = hudCTR->x + 0x10;
 					lerpStartY = hudCTR->y + 0x10;
@@ -199,7 +199,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					&letterPos[0],
 					lerpStartX, lerpStartY,
 					lerpEndX, lerpEndY,
-					currFrame, lerpFrames);
+					elapsedFrames, lerpFrames);
 
 				// variable reuse, frame timers
 				lerpStartY = 0;
@@ -256,9 +256,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// Draw how much time it took to finish laps and race
 		DECOMP_AA_EndEvent_DisplayTime(i, lerpEndY);
 	}
+	
+	elapsedFrames = sdata->framesSinceRaceEnded;
 
 	// If it hasn't been 1 second from race ended
-	if (elapsedFrames < FPS_DOUBLE(29))
+	if (elapsedFrames < FPS_DOUBLE(30))
 		return;
 
 	// If there is one player
