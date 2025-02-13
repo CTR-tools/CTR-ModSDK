@@ -14,18 +14,18 @@ void DECOMP_TT_EndEvent_DrawMenu(void)
     short endX;
     short pos[2];
 	char** lngStrings;
-	u_int unknownFlags_1d44;
+	u_int gameModeEnd;
     struct GameTracker *gGT;
 
 	gGT = sdata->gGT;
 	lngStrings = sdata->lngStrings;
-	unknownFlags_1d44 = gGT->unknownFlags_1d44;
+	gameModeEnd = gGT->gameModeEnd;
 
     sdata->flags_timeTrialEndOfRace |= 1;
 
     // If you just beat N Tropy && N Tropy was beaten on all tracks
     if (
-			((unknownFlags_1d44 & 0x10000000) != 0) &&
+			((gameModeEnd & 0x10000000) != 0) &&
 			((GAMEPROG_CheckGhostsBeaten(1) & 0xffff) != 0)
 		)
     {
@@ -43,7 +43,7 @@ void DECOMP_TT_EndEvent_DrawMenu(void)
 			
 			(
 				// if HIDE high score, is disabled
-				((unknownFlags_1d44 & 0x8000000) == 0) &&
+				((gameModeEnd & 0x8000000) == 0) &&
 				
 				(
 					// Transition the high scores on-screen
@@ -75,7 +75,7 @@ AddStuff:
 		// if dont need to show high scores,
 		// then dont increment framesSinceRaceEnded,
 		// and then the later "if > 900" wont happen
-        if ((unknownFlags_1d44 & 0x8000000) == 0)
+        if ((gameModeEnd & 0x8000000) == 0)
         {
 			// between 1001 and 1018, frame counter is paused until &0x10,
 			// that's 15 frames between lerp high score off-screen, and showing Menu
@@ -164,7 +164,7 @@ AddStuff:
 		if ((framesSinceRaceEnded > 0) &&
 
 			// if got new best lap
-			((unknownFlags_1d44 & 0x4000000) != 0))
+			((gameModeEnd & 0x4000000) != 0))
 		{
 			DECOMP_UI_Lerp2D_Linear(
 				&pos[0],
@@ -190,7 +190,7 @@ AddStuff:
 		if ((framesSinceRaceEnded > 0) &&
 
 			// if just open, or beat, n tropy
-			((unknownFlags_1d44 & 0x10008000) != 0))
+			((gameModeEnd & 0x10008000) != 0))
 		{
 			DECOMP_UI_Lerp2D_Linear(
 				&pos[0],
@@ -205,7 +205,7 @@ AddStuff:
 
 			// search "18000000"
 			// if just beat n tropy, YOU BEAT N. TROPY!
-			if ((unknownFlags_1d44 & 0x10000000) != 0)
+			if ((gameModeEnd & 0x10000000) != 0)
 				nTropyString = lngStrings[372];
 
 			// Draw the "N Tropy" related string
@@ -232,9 +232,9 @@ AddStuff:
     if (framesSinceRaceEnded < FPS_DOUBLE(1017))
     {
         // start drawing the high score menu that shows the top 5 best times
-        gGT->unknownFlags_1d44 |= 2;
+        gGT->gameModeEnd |= 2;
 
-		if ((unknownFlags_1d44 & 0x8000000) == 0)
+		if ((gameModeEnd & 0x8000000) == 0)
 		{
 
 			// ====== Draw High Score ===========
@@ -491,7 +491,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 		DecalFont_DrawLine(sdata->lngStrings[0x170], startX, startY + 0x95, 1, timeColor);
 
 		// If you got a new best lap
-		if (((gGT->unknownFlags_1d44 & 0x4000000) != 0) &&
+		if (((gGT->gameModeEnd & 0x4000000) != 0) &&
 			((gGT->timer & FPS_DOUBLE(2)) != 0))
 		{
 			timeColor = 0xffff8004;

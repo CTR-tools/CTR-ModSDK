@@ -398,8 +398,9 @@ LAB_8004f84c:
 	// === Relic Race Only ===
 
 	unsigned int* rewardsSet = sdata->advProgress.rewards;
-	// Draw (blue,gold,plat) based on the "next" goal
-	if ((gGT->unknownFlags_1d44 & 0x2000000) == 0)
+	
+	// If did not unlock relic, draw NEXT goal
+	if ((gGT->gameModeEnd & NEW_RELIC) == 0)
 	{
 		// Level ID
 		levID = gGT->levelID;

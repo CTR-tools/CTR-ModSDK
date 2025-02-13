@@ -6225,10 +6225,15 @@ void FUN_8003a2b4(void)
   FUN_80039fa8(0);
 
   puVar2 = PTR_DAT_8008d2ac;
+  
+  // HIGH_SCORE_SAVED
   uVar3 = *(uint *)(PTR_DAT_8008d2ac + 0x1d44);
-  if ((uVar3 & 0x10000) == 0) {
+  if ((uVar3 & 0x10000) == 0) 
+  {
+	// HIGH_SCORE_SAVED
     *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = uVar3 | 0x10000;
-    puVar7 = DAT_8008d738;
+    
+	puVar7 = DAT_8008d738;
 
 	// if there is a new best lap
     if ((uVar3 & 0x4000000) != 0)
@@ -6412,7 +6417,7 @@ void FUN_8003a3fc(void)
     uVar9 = *(uint *)PTR_DAT_8008d2ac;
     *(uint *)PTR_DAT_8008d2ac = uVar9 | 0x200000;
 
-
+	// BUG? Why would this happen?
     *(uint *)(puVar13 + 0x1d44) = uVar9 & 0x3e0020 | 0x200000;
     puVar10 = PTR_DAT_8008d2ac;
 

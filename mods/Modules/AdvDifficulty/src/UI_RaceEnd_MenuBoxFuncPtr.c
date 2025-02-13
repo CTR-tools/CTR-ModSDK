@@ -66,7 +66,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
         // destroy "most" fx, let menu fx play to end
         howl_StopAudio(1, 0, 0);
 
-        if ((gGT->unknownFlags_1d44 & 1) == 0)
+        if ((gGT->gameModeEnd & PLAYER_GHOST_BEAT) == 0)
           return;
 
         sdata->boolReplayHumanGhost = 1;

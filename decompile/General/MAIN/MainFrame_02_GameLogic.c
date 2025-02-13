@@ -454,7 +454,8 @@ LAB_80035098:
 						(gGT->overlayIndex_Threads != -1)
 					)
 					{
-						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
+						// ND bug? why?
+						gGT->gameModeEnd = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
 
 						DECOMP_MainFreeze_IfPressStart();
 
@@ -470,7 +471,7 @@ LAB_80035098:
 	}
 	else if (gGT->timerEndOfRaceVS == 0)
 	{
-		uVar3 = gGT->unknownFlags_1d44;
+		uVar3 = gGT->gameModeEnd;
 		if ((uVar3 & AKU_SONG) == 0)
 		{
 			if ((uVar3 & CRYSTAL_CHALLENGE) == 0)
@@ -506,7 +507,7 @@ LAB_80035098:
 					SelectProfile_ToggleMode(0x41);
 
 					DECOMP_RECTMENU_Show(&data.menuWarning2);
-					gGT->unknownFlags_1d44 |= AKU_SONG;
+					gGT->gameModeEnd |= NEW_NAME;
 
 					return;
 				}
@@ -514,7 +515,7 @@ LAB_80035098:
 
 				// if -1 (cancel)
 				gGT->newHighScoreIndex = -1;
-				gGT->unknownFlags_1d44 &= ~(RELIC_RACE | CRYSTAL_CHALLENGE);
+				gGT->gameModeEnd &= ~(NEW_BEST_LAP | NEW_HIGH_SCORE);
 				return;
 			}
 			gGT->unk_timerCooldown_similarTo_1d36--;

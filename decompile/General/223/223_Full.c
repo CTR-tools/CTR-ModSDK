@@ -62,7 +62,7 @@ void DECOMP_RR_EndEvent_UnlockAward()
 		// relic model
 		gGT->podiumRewardID = 0x61;
 
-		gGT->unknownFlags_1d44 |= 0x2000000;
+		gGT->gameModeEnd |= 0x2000000;
 
 		// unlocked sapphire
 		// do not make this an AND (&&) if statement
@@ -157,7 +157,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	if (sdata->framesSinceRaceEnded > FPS_DOUBLE(509))
 	{
 		// start drawing the high score menu that shows the top 5 best times
-		gGT->unknownFlags_1d44 |= 2;
+		gGT->gameModeEnd |= 2;
 	}
 
 	// if didn't get all crates in level
@@ -172,7 +172,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		}
 
 		// if race ended 229-250 frames ago
-		if (((u_int)(sdata->framesSinceRaceEnded - FPS_DOUBLE(21)) < FPS_DOUBLE(229)) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0))
+		if (((u_int)(sdata->framesSinceRaceEnded - FPS_DOUBLE(21)) < FPS_DOUBLE(229)) && ((gGT->gameModeEnd & 0x2000000) == 0))
 		{
 			// advance timer to 370 frames, since we can skip the amount of time
 			// that would have been taken to draw the animation
@@ -209,7 +209,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	DECOMP_UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
 
-	if ((gGT->unknownFlags_1d44 & 0x2000000) != 0)
+	if ((gGT->gameModeEnd & 0x2000000) != 0)
 	{
 		// if race ended less than 491 frames ago
 		if (boolEarly)
@@ -405,7 +405,7 @@ LAB_800a0594:
 
 LAB_800a096c:
 	if (
-		((gGT->unknownFlags_1d44 & 0xa000000) == 0x2000000) &&
+		((gGT->gameModeEnd & 0xa000000) == 0x2000000) &&
 
 		// race ended more than 489 frames ago
 		(FPS_DOUBLE(489) < framesElapsed))
@@ -431,7 +431,7 @@ LAB_800a096c:
 	// race ended than 489 frames ago or less
 	else
 	{
-		if (((gGT->unknownFlags_1d44 & 0xa000000) == 0xa000000) &&
+		if (((gGT->gameModeEnd & 0xa000000) == 0xa000000) &&
 
 			(FPS_DOUBLE(369) < framesElapsed))
 		{
@@ -441,7 +441,7 @@ LAB_800a096c:
 			goto LAB_800a0a64;
 		}
 
-		if (((gGT->unknownFlags_1d44 & 0x2000000) != 0) &&
+		if (((gGT->gameModeEnd & 0x2000000) != 0) &&
 
 			(FPS_DOUBLE(249) < framesElapsed))
 		{
@@ -452,7 +452,7 @@ LAB_800a096c:
 		}
 	}
 
-	if ((gGT->unknownFlags_1d44 & 0x8000000) != 0)
+	if ((gGT->gameModeEnd & 0x8000000) != 0)
 	{
 		// if race ended less than 490 frames ago
 		if (framesElapsed < FPS_DOUBLE(490))
@@ -517,7 +517,7 @@ LAB_800a0b58:
 
 		 // if race ended more than 509 frames ago
 		 (509 < sdata->framesSinceRaceEnded)) &&
-		((gGT->unknownFlags_1d44 & 0x8000000) == 0))
+		((gGT->gameModeEnd & 0x8000000) == 0))
 	{
 		DECOMP_RR_EndEvent_DrawHighScore(0x100, 10);
 

@@ -111,7 +111,7 @@ void MainGameEnd_Initialize(void)
 
     gGT->gameMode1 |= END_OF_RACE;
 
-    gGT->unknownFlags_1d44 = gameMode1 & 0x3e0020 | END_OF_RACE;
+    gGT->gameModeEnd = gameMode1 & 0x3e0020 | END_OF_RACE;
 
     // If you are not in Battle Mode
     if ((gameMode1 & BATTLE_MODE) == 0)
@@ -498,7 +498,7 @@ void MainGameEnd_Initialize(void)
           {
             GhostTape_End();
 
-            gGT->unknownFlags_1d44 |= 1;
+            gGT->gameModeEnd |= PLAYER_GHOST_BEAT;
           }
         }
         // If you are in Relic Race
