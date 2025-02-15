@@ -252,7 +252,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				
 			#endif
 
-			// RAM Optimization, NEVER do this here
+			// RAM Optimization, NEVER do this here,
+			// by loading other assets first, ptrMap
+			// has more room to load and realloc
 			#if 0
 			if
 			(
@@ -682,7 +684,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			gGT->gameMode1_prevFrame = 1;
 
-			// RAM optimization, always do this here
+			// RAM optimization, always do this here,
+			// because now ptrMap already loaded and realloc'd
 			#if 1
 			DECOMP_MEMPACK_SwapPacks(0);
 			DECOMP_MainInit_JitPoolsNew(gGT);
@@ -704,7 +707,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				((gGT->gameMode2 & CREDITS) == 0)
 			)
 			{
-				// RAM optimization, never do this here
+				// RAM optimization, never do this here,
+				// cause the optimized version already happened
 				#if 0
 				DECOMP_MainInit_JitPoolsNew(gGT);
 				#endif
