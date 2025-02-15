@@ -19,10 +19,46 @@
 //#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
 //#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
-//#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
+#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
 
 //#define USE_VR		// Virtual Reality
 
+
+
+// Required for Custom Levels
+#ifdef USE_NEWLEV
+
+#define USE_RAMEX
+#define CUSTOM_LEVEL_ID 0
+
+#define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000
+#define TRIGGER_VRM_RELOAD (volatile int*) 0x8000C004
+#define GHOST_READY (volatile int*) 0x8000C008
+#define CHAR_MODEL_PTRS (struct Model**) 0x8000C010
+
+#define CUSTOM_VRAM_ADDR (char*) 0x80200000
+#define GHOST_SIZE_ADDR (int*) 0x80280000
+#define DRIVER_ADDR (char*) 0x80290000
+#define GHOST_ADDR (char*) 0x80280004
+#define CUSTOM_MAP_PTR_ADDR (int*) 0x80300000
+#define CUSTOM_LEV_ADDR (char*) 0x80300004
+
+void HotReload();
+void HotReloadVRAM();
+
+enum HotReloadSteps
+{
+    HOT_RELOAD_DONE = 0,
+    HOT_RELOAD_START = 1,
+    HOT_RELOAD_LOAD = 2,
+    HOT_RELOAD_READY = 3,
+    HOT_RELOAD_EXEC = 4,
+};
+#endif
+
+
+
+// Required for Online
 #ifdef USE_ONLINE
 //#define USE_60FPS
 #define USE_BOOSTBAR
@@ -36,6 +72,9 @@
 #define USE_RETROFUELED //enabled only in certain rooms.
 #endif
 
+
+
+// Required for 60fps
 #ifdef USE_60FPS
 #define USE_HIGH1P // patch LODs
 #define FPS_DOUBLE(x) ((x)*2)
@@ -49,6 +88,8 @@
 #define FPS_RIGHTSHIFT(x) (x)
 #endif
 
+
+
 // WIDE_PICK:
 // param1 - normal
 // param2 - widescreen
@@ -60,6 +101,8 @@
 #define WIDE_PICK(x,y) (x)
 #endif
 
+
+// Not PC
 #ifndef REBUILD_PC
 #include <gccHeaders.h>
 #endif
@@ -67,6 +110,8 @@
 #include <macros.h>
 #include <ctr_math.h>
 
+
+// PC Only
 #ifndef REBUILD_PC
 #include <ctr_gte.h>
 #endif

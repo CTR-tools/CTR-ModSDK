@@ -15,7 +15,7 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 		#ifdef USE_NEWLEV
 		
 		// 1.5mb * 2 = 3mb PrimMem
-		newSize = 0x180000;
+		size = 0x180000;
 		
 		#else
 
