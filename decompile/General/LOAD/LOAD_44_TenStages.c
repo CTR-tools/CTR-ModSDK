@@ -557,6 +557,14 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// game is now loading
 			sdata->load_inProgress = 1;
 
+			#ifdef USE_NEWLEV
+			if(gGT->levelID == CUSTOM_LEVEL_ID)
+			{
+				sdata->load_inProgress = 0;
+				HotReloadVRAM();
+			}
+			#endif
+
 			// add VRAM to loading queue
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_VRAM);
 			DECOMP_LOAD_AppendQueue((int)bigfile, LT_VRAM, (int)uVar16, NULL, NULL);
@@ -565,6 +573,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_LEV);
 			DECOMP_LOAD_AppendQueue((int)bigfile, LT_DRAM, (int)uVar16, NULL, &DECOMP_LOAD_Callback_LEV);
 
+			// can this be optimized with this?
+			// I feel like we had this, then had to remove it for some reason?
+			// if ((gGT->gameMode2 & LEV_SWAP) != 0)
+				
 			// if level ID is AdvHub or Credits
 			if (
 					// 25-38 or 44-63
@@ -582,6 +594,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		{
 			// get level pointer
 			lev = sdata->ptrLEV_DuringLoading;
+			
+			#ifdef USE_NEWLEV
+			if (gGT->levelID == CUSTOM_LEVEL_ID) 
+				lev = (struct Level*)CUSTOM_LEV_ADDR;
+			#endif
 
 			// Set LEV pointer
 			gGT->level1 = lev;

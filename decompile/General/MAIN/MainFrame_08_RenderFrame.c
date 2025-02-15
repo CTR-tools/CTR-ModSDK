@@ -905,6 +905,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 
+#ifndef USE_NEWLEV
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
 		(u_long*)&gGT->backBuffer->otMem,
@@ -912,6 +913,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		(char*)(unsigned int)(unsigned char)sdata->LOD[lod], //this weird cast is what ghidra does
 		(char)numPlyrCurrGame,
 		gGT->gameMode1 & PAUSE_ALL);
+#endif
 
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,

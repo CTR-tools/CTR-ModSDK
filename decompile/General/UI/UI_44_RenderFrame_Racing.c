@@ -849,6 +849,10 @@ void DECOMP_UI_RenderFrame_Racing()
 		}
 	}
 
+#ifdef USE_NEWLEV
+	return;
+#endif
+
 	if(
 		(levPtrMap != 0) &&
 		((gameMode1 & BATTLE_MODE) == 0)
