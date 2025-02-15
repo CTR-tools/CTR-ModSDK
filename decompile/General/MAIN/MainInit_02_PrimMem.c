@@ -3,85 +3,22 @@
 // force parameter is a personal optimization
 void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 {
-	int size;
-	int levelID = gGT->levelID;
-	
-	// adv garage
-	if(levelID == ADVENTURE_CHARACTER_SELECT)
-	{
-		size = 0x1b800;
-		goto EndFunc;
-	}
-	
-	// main menu
-	if(levelID == MAIN_MENU_LEVEL)
-	{
-		size = 0x17c00;
-		goto EndFunc;
-	}
-	
-	if(gGT->numPlyrCurrGame == 1)
-	{
-		// any% end, 101% end, credits
-		if(levelID >= OXIDE_ENDING)
-		{
-			size = 0x17c00;
-			goto EndFunc;
-		}
-		
-		// intro cutscene
-		if(levelID >= INTRO_RACE_TODAY)
-		{
-			size = 0x1e000;
-			goto EndFunc;
-		}
-		
-		// adv hub
-		if(levelID >= GEM_STONE_VALLEY)
-		{
-			size = 0x1c000;
-			goto EndFunc;
-		}
-		
-		// ordinary tracks
 
-		// all are 0x67 or 0x5F, adv hub was 0x5F too
-		size = data.primMem_SizePerLEV_1P[levelID] << 10;
-		goto EndFunc;
-	}
-	
-	if(gGT->numPlyrCurrGame == 2)
-	{
-		// assume only levID 0-24
-		size = data.primMem_SizePerLEV_2P[levelID] << 10;
-		goto EndFunc;
-	}
-	
-	// 3P 4P
-	// assume only levID 0-24
-	size = data.primMem_SizePerLEV_4P[levelID] << 10;
-	
-EndFunc:
-
-#ifdef USE_HIGHMP
-
-	if(force != 0)
-		size = force/2;
-	else
-		size = 0x200000;
-
-#else
+	int GetOriginalSize(struct GameTracker* gGT);
+	int size = GetOriginalSize(gGT);
 
 	// optimization,
 	// use all remaining heap for primMem,
 	// LOAD_TenStages:Stage8
-	#if 1
 	if(force == 0)
 	{
-		// only for race tracks, menu/cutscenes
-		// dont need PrimMem expansion, and also
-		// menu/cutscene needs HighMem sometimes
+		#ifdef USE_NEWLEV
 		
+		// 1.5mb * 2 = 3mb PrimMem
+		newSize = 0x180000;
+		
+		#else
+
 		// gGT->levelID is set cause Stage8
 		// is past all the level load+callback
 		if(gGT->levelID <= CITADEL_CITY)
@@ -110,18 +47,15 @@ EndFunc:
 			printf("BonusPrim: %08x\n", newSize-size);
 			size = newSize;
 		}
+		
+		#endif
 	}
-	#endif
 	
 	// optimization,
 	// steal OT mem during loading screen,
 	// LOAD_TenStages:Stage0
-	#if 1
-		if(force != 0)
-			size = force/2;
-	#endif
-
-#endif
+	else
+		size = force/2;
 
 #ifdef REBUILD_PC
 	// only allocate early-stage
@@ -135,4 +69,47 @@ EndFunc:
 	
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
+}
+
+int GetOriginalSize(struct GameTracker* gGT)
+{
+	int levelID = gGT->levelID;
+	
+	// adv garage
+	if(levelID == ADVENTURE_CHARACTER_SELECT)
+		return 0x1b800;
+	
+	// main menu
+	if(levelID == MAIN_MENU_LEVEL)
+		return 0x17c00;
+	
+	if(gGT->numPlyrCurrGame == 1)
+	{
+		// any% end, 101% end, credits
+		if(levelID >= OXIDE_ENDING)
+			return 0x17c00;
+		
+		// intro cutscene
+		if(levelID >= INTRO_RACE_TODAY)
+			return 0x1e000;
+		
+		// adv hub
+		if(levelID >= GEM_STONE_VALLEY)
+			return 0x1c000;
+		
+		// ordinary tracks
+
+		// all are 0x67 or 0x5F, adv hub was 0x5F too
+		return data.primMem_SizePerLEV_1P[levelID] << 10;
+	}
+	
+	if(gGT->numPlyrCurrGame == 2)
+	{
+		// assume only levID 0-24
+		return data.primMem_SizePerLEV_2P[levelID] << 10;
+	}
+	
+	// 3P 4P
+	// assume only levID 0-24
+	return data.primMem_SizePerLEV_4P[levelID] << 10;
 }
