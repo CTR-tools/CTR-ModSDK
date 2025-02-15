@@ -80,6 +80,11 @@ u_int DECOMP_main()
 				DECOMP_MainInit_FinalizeInit(gGT);
 				DECOMP_GAMEPAD_GetNumConnected(gGS);
 
+				#ifdef USE_NEWLEV
+				void UseRedhotBoot();
+				UseRedhotBoot();
+				#endif
+
 				sdata->boolSoundPaused = 0;
 				DECOMP_VehBirth_EngineAudio_AllPlayers();
 
@@ -599,6 +604,34 @@ int GetSongTime()
 #endif
 
 #ifdef USE_NEWLEV
+static int once = 1;
+void UseRedhotBoot()
+{
+	// wont clear itself?
+	sdata->ptrLoadSaveObj = 0;
+
+	if (once)
+	{
+		once = 0;
+		// adds VRAM to loading queue
+		//LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 222, 0x80200000, 0);
+		// adds LEV to loading queue
+		//LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, 0x80300000, 0);
+
+		char* currDriver = 0x80290000;
+		for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
+		{
+			int fileSize;
+			LOAD_ReadFile(sdata->ptrBigfile1, LT_DRAM, BI_RACERMODELHI + i, currDriver, &fileSize, 0);
+			int* pMap = (int*) (currDriver + 4 + (*(int*)currDriver));
+			LOAD_RunPtrMap(currDriver + 4, pMap + 1, *pMap >> 2);
+			struct Model** g_charModelPtrs = CHAR_MODEL_PTRS;
+			g_charModelPtrs[i] = (struct Model*) (currDriver + 4);
+			currDriver += fileSize;
+		}
+	}
+}
+
 void HotReloadVRAM()
 {
 	int* vramBuf = (int *)CUSTOM_VRAM_ADDR;
