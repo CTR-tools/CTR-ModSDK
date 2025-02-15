@@ -942,7 +942,7 @@ LAB_800346b0:
 					{
 						// disable everything (except loading screen if still there)
 						// enable drawing render bucket
-						gameMode1 = gGT->renderFlags & 0x1000 | 0x20;
+						gameMode1 = (gGT->renderFlags & 0x1000) | 0x20;
 					}
 
 					// apply desired value
@@ -951,8 +951,8 @@ LAB_800346b0:
 				else
 				{
 					// disable everything (except loading screen if still there)
-					// enable pause menu? Or enable 3D cars on track?
-					gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
+					// enable drawing render bucket
+					gGT->renderFlags = (gGT->renderFlags & 0x1000) | 0x20;
 
 					iVar9 = DECOMP_RaceFlag_IsFullyOffScreen();
 					if (iVar9 == 1)
