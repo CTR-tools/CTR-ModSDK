@@ -351,9 +351,9 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			sdata->ptrMPK = 0;
 			sdata->load_inProgress = 1;
 			
-			data.driverModel_lowLOD[0] = 0;
-			data.driverModel_lowLOD[1] = 0;
-			data.driverModel_lowLOD[2] = 0;
+			data.driverModelExtras[0] = 0;
+			data.driverModelExtras[1] = 0;
+			data.driverModelExtras[2] = 0;
 			
 			LOAD_DriverMPK(bigfile, sdata->levelLOD, &LOAD_Callback_DriverModels);
 			break;
@@ -409,7 +409,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// == banks are done parsing ===
 			
 			// loop through models
-			piVar15 = &data.driverModel_lowLOD[0];
+			piVar15 = &data.driverModelExtras[0];
 			for (iVar9 = 0; iVar9 < 3; iVar9++, piVar15++)
 			{
 				// increment pointer by 4,

@@ -9,7 +9,7 @@ void highMp_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(struct 
 		// high lod CTR model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_RACERMODELHI + data.characterIDs[i],
-			&data.driverModel_lowLOD[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+			&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 	}
 
 	// Time Trial MPK
@@ -112,7 +112,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 			// low lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 				BI_RACERMODELLOW + data.characterIDs[i],
-				&data.driverModel_lowLOD[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 		}
 
 		// load 4P MPK of fourth player
@@ -174,7 +174,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 			// high lod model (temporary workaround)
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 				BI_RACERMODELHI + 0xF,
-				&data.driverModel_lowLOD[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+				&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 		}
 		
 		// get rid of oxide cause MPK is too big
@@ -193,7 +193,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_RACERMODELHI + data.characterIDs[0],
-			&data.driverModel_lowLOD[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+			&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 
 		// time trial mpk
 		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
@@ -215,7 +215,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_RACERMODELHI + data.characterIDs[0],
-			&data.driverModel_lowLOD[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+			&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 
 		// pack of four AIs with bosses
 		lastFileIndexMPK = BI_2PARCADEPACK + 7;
@@ -242,7 +242,7 @@ ForceOnlineLoad8:
 			// high lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 				BI_RACERMODELHI + data.characterIDs[i],
-				&data.driverModel_lowLOD[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 		}
 		
 		// time trial mpk
@@ -259,7 +259,7 @@ ForceOnlineLoad8:
 			// med lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 				BI_RACERMODELMED + data.characterIDs[i],
-				&data.driverModel_lowLOD[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
+				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0xfffffffe);
 		}
 
 		// this also loads MPK

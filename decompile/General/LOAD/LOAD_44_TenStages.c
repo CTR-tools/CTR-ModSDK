@@ -401,9 +401,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			sdata->ptrMPK = 0;
 			sdata->load_inProgress = 1;
 			
-			data.driverModel_lowLOD[0] = 0;
-			data.driverModel_lowLOD[1] = 0;
-			data.driverModel_lowLOD[2] = 0;
+			data.driverModelExtras[0] = 0;
+			data.driverModelExtras[1] = 0;
+			data.driverModelExtras[2] = 0;
 			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, &DECOMP_LOAD_Callback_DriverModels);
 			break;
 		}
@@ -465,7 +465,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			#endif
 			
 			// loop through models
-			piVar15 = &data.driverModel_lowLOD[0];
+			piVar15 = &data.driverModelExtras[0];
 			for (iVar9 = 0; iVar9 < NUM_CHECK; iVar9++, piVar15++)
 			{
 				// increment pointer by 4,

@@ -141,16 +141,16 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	
 	else if(gGT->numPlyrCurrGame == 2)
 	{
-		gGT->drivers[0]->instSelf->model = data.driverModel_lowLOD[0];
-		gGT->drivers[1]->instSelf->model = data.driverModel_lowLOD[1];
+		gGT->drivers[0]->instSelf->model = data.driverModelExtras[0];
+		gGT->drivers[1]->instSelf->model = data.driverModelExtras[1];
 		driverID = 2;
 	}
 	
 	else
 	{
-		gGT->drivers[0]->instSelf->model = data.driverModel_lowLOD[0];
-		gGT->drivers[1]->instSelf->model = data.driverModel_lowLOD[1];
-		gGT->drivers[2]->instSelf->model = data.driverModel_lowLOD[2];
+		gGT->drivers[0]->instSelf->model = data.driverModelExtras[0];
+		gGT->drivers[1]->instSelf->model = data.driverModelExtras[1];
+		gGT->drivers[2]->instSelf->model = data.driverModelExtras[2];
 		
 		if(gGT->numPlyrCurrGame == 4)
 			gGT->drivers[3]->instSelf->model = sdata->PLYROBJECTLIST[i++];	
@@ -206,7 +206,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		
 		// then replace with intended P1 model
 		*humanPlyrDriverModel =
-			data.driverModel_lowLOD[0];
+			data.driverModelExtras[0];
 		#endif
     }
 }

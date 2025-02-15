@@ -3,7 +3,7 @@
 void DECOMP_LOAD_GlobalModelPtrs_MPK()
 {
 	struct GameTracker* gGT = sdata->gGT;
-	struct Model** driverModelArr = (struct Model**)&data.driverModel_lowLOD[0];
+	struct Model** driverModelArr = (struct Model**)&data.driverModelExtras[0];
 	
 	// 3 drivers in VS mode
 	for(int i = 0; i < 3; i++)

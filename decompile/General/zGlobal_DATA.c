@@ -2707,9 +2707,9 @@ struct Data data =
 		0x00, 0x00, 0x00, 0x00,
 	},
 
-	.driverModel_lowLOD[0] = 0,
-	.driverModel_lowLOD[1] = 0,
-	.driverModel_lowLOD[2] = 0,
+	.driverModelExtras[0] = 0,
+	.driverModelExtras[1] = 0,
+	.driverModelExtras[2] = 0,
 
 	.podiumModel_firstPlace = 0,
 	.podiumModel_secondPlace = 0,
