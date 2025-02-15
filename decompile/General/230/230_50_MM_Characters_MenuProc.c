@@ -119,6 +119,8 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 			#ifdef USE_NEWLEV
 			gGT->currLEV = CUSTOM_LEVEL_ID;
 			MainRaceTrack_RequestLoad(CUSTOM_LEVEL_ID);
+			sdata->ptrActiveMenu = 0;
+			return;
 			#endif
 
 			// if going to track selection

@@ -35,7 +35,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	}
 	
 	levelID = gGT->levelID;
-
+	
 	switch(loadingStage)
 	{
 		case 0:

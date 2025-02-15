@@ -10,7 +10,7 @@ void DECOMP_VehStuckProc_PlantEaten_Update(struct Thread *t, struct Driver *d)
 	
 		// respawn driver at last valid quadblock
 		VehStuckProc_MaskGrab_FindDestPos((struct Thread*)d, (struct Driver*)d->lastValid);
-		VehBirth_TeleportSelf(d, 0, 0x80);
+		DECOMP_VehBirth_TeleportSelf(d, 0, 0x80);
 
 		// enable collision, make visible
 		t->flags &= ~(0x1000);

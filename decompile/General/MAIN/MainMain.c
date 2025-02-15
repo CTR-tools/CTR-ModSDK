@@ -637,6 +637,11 @@ void HotReload()
 	{
 		*g_triggerHotReload = HOT_RELOAD_READY;
 		while (*g_triggerHotReload != HOT_RELOAD_EXEC) {};
+		const char* pCustomLevel = CUSTOM_LEV_ADDR;
+		const int* pCustomMap = CUSTOM_MAP_PTR_ADDR;
+		int* pMap = (int*)(pCustomLevel + *pCustomMap);
+		DECOMP_LOAD_RunPtrMap(pCustomLevel, pMap + 1, *pMap >> 2);
+		*g_triggerHotReload = HOT_RELOAD_DONE;
 		return;
 	}
 

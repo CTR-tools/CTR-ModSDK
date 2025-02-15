@@ -107,7 +107,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
-		VehBirth_TeleportSelf(dr,3,0);
+		DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 		// realID
 		dr->driverID = i+1;
@@ -119,7 +119,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 	// fakeID, teleport
 	dr->driverID = (i-numDead)&bitFlag;
-	VehBirth_TeleportSelf(dr,3,0);
+	DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 	// realID
 	dr->driverID = 0;
@@ -138,7 +138,7 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
-		VehBirth_TeleportSelf(dr,3,0);
+		DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 		// realID
 		dr->driverID = i;
