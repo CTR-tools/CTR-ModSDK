@@ -14,16 +14,13 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 	{
 		// gGT->levelID is set cause Stage8
 		// is past all the level load+callback
-		if(
-				// use OriginalSize for cutscenes
-				(gGT->levelID <= CITADEL_CITY)
-				
-				// use OriginalSize for custom levels
-				#ifdef USE_NEWLEV
-				&& 0
-				#endif
-			)
+		if (gGT->levelID <= CITADEL_CITY)
 		{
+			#ifdef USE_NEWLEV
+			// store the memory here, past the level
+			sdata->PtrMempack->firstFreeByte = 0x80400000;
+			#endif
+				
 			int newSize = (DECOMP_MEMPACK_GetFreeBytes()/2);
 			
 			// adjust for alignment
