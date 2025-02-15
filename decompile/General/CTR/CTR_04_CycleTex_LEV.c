@@ -5,6 +5,10 @@ void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer)
 	int frameIndex;
 	struct AnimTex* curAnimTex = animtex;
 	
+	#ifdef USE_NEWLEV
+	if(animtex == 0) return;
+	#endif
+	
 	// iterate over All AnimTex's in a row,
 	// last one loops back to the beginning, could've also just been a null terminator
 	while (*(int*)curAnimTex != (int)animtex)// I feel like this should just be a do/while with `(int)curAnimText != (int)animtex`, but idk
