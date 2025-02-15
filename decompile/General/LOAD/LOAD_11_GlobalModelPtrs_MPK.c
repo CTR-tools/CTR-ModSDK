@@ -3,18 +3,22 @@
 void DECOMP_LOAD_GlobalModelPtrs_MPK()
 {
 	struct GameTracker* gGT = sdata->gGT;
-	struct Model** driverModelArr = (struct Model**)&data.driverModelExtras[0];
 	
-	// 3 drivers in VS mode
+	// Dead code?
+	// Driver models dont go to gGT->modelPtrs,
+	// the m->id will always be -1 for all of them
+	
+	#if 0
 	for(int i = 0; i < 3; i++)
 	{
-		struct Model* m = driverModelArr[i];
+		struct Model* m = data.driverModelExtras[i];
 		
 		if(m == 0) continue;
 		if(m->id != -1) continue;
 		
 		gGT->modelPtr[m->id] = m;
 	}
+	#endif
 	
 	if(sdata->PLYROBJECTLIST != 0)
 	{
