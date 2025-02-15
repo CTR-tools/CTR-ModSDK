@@ -12,16 +12,17 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 	// LOAD_TenStages:Stage8
 	if(force == 0)
 	{
-		#ifdef USE_NEWLEV
-		
-		// 1.5mb * 2 = 3mb PrimMem
-		size = 0x180000;
-		
-		#else
-
 		// gGT->levelID is set cause Stage8
 		// is past all the level load+callback
-		if(gGT->levelID <= CITADEL_CITY)
+		if(
+				// use OriginalSize for cutscenes
+				(gGT->levelID <= CITADEL_CITY)
+				
+				// use OriginalSize for custom levels
+				#ifdef USE_NEWLEV
+				&& 0
+				#endif
+			)
 		{
 			int newSize = (DECOMP_MEMPACK_GetFreeBytes()/2);
 			
@@ -47,8 +48,6 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 			printf("BonusPrim: %08x\n", newSize-size);
 			size = newSize;
 		}
-		
-		#endif
 	}
 	
 	// optimization,
