@@ -383,7 +383,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		
 				// "if != 0" means 
 				// "if text is not -10"
-				if (minusSeconds != 0)
+				else if (minusSeconds != 0)
 				{
 					// on every 5th frame, except the first frame
 					if (elapsedFrames % FPS_DOUBLE(5) == 0)
