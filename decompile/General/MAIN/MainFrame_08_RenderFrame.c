@@ -913,6 +913,8 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		(char*)(unsigned int)(unsigned char)sdata->LOD[lod], //this weird cast is what ghidra does
 		(char)numPlyrCurrGame,
 		gGT->gameMode1 & PAUSE_ALL);
+#else
+	RBI = gGT->ptrRenderBucketInstance;
 #endif
 
 	RBI = RenderBucket_QueueNonLevInstances(
