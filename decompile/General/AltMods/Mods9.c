@@ -127,12 +127,14 @@ void DebugProfiler_SectionEnd()
 
 int DebugProfiler_Scale(int input)
 {
-	return (((input * 1000) / 0x147e) * 0x104) / 100;
+	int cFS = gGT->clockFrameStart; 
+	
+	return (((((input-cFS) * 1000) / 0x147e) * 0x104) / 100) + 0x14;
 }
 
 // NOT finished
 void DebugProfiler_Draw()
-{
+{	
 	for(int i = 0; i < numSectionsUsed; i++)
 	{
 		struct ProfilerSection* s = &ptrSectArr[i];
@@ -140,7 +142,7 @@ void DebugProfiler_Draw()
 		if((s->flagsVDT & 1) != 0)
 		{
 			DecalFont_DrawLine("V", 
-				DebugProfiler_Scale(s->posV) + 0x14,
+				DebugProfiler_Scale(s->posV),
 				0x2F,
 				FONT_BIG,
 				0xffff8000);
@@ -149,7 +151,7 @@ void DebugProfiler_Draw()
 		if((s->flagsVDT & 2) != 0)
 		{
 			DecalFont_DrawLine("D", 
-				DebugProfiler_Scale(s->posD) + 0x14,
+				DebugProfiler_Scale(s->posD),
 				0x2B,
 				FONT_BIG,
 				0xffff8000);
@@ -159,7 +161,7 @@ void DebugProfiler_Draw()
 		if((s->flagsVDT & 4) != 0)
 		{
 			DecalFont_DrawLine("T", 
-				DebugProfiler_Scale(s->posT) + 0x14,
+				DebugProfiler_Scale(s->posT),
 				0x33,
 				FONT_BIG,
 				0xffff8000);
@@ -177,8 +179,8 @@ void DebugProfiler_Draw()
 		
 		setPolyF4(f4);
 		
-		int posLeft = DebugProfiler_Scale(s->timeStart) + 0x14;
-		int posRight = DebugProfiler_Scale(s->timeEnd) + 0x15;
+		int posLeft = DebugProfiler_Scale(s->timeStart);
+		int posRight = DebugProfiler_Scale(s->timeEnd) + 1;
 		
 		f4->x0 = posLeft;
 		f4->x2 = posLeft;
