@@ -10,14 +10,16 @@ struct ProfilerSection
 	char g;
 	char b;
 	
+#if 0
 	// 0x8
 	int unk8;
+#endif
 	
 	// 0xC
-	int primLeftX;
+	int timeStart;
 	
 	// 0x10
-	int primRightX;
+	int timeEnd;
 	
 	// 0x14
 	// 1 - DrawV
@@ -33,16 +35,161 @@ struct ProfilerSection
 	// DrawSyncCallback
 	int posD;
 	
+#if 0
 	// 0x20
 	// Unused
 	int posT;
+#endif
 
 	// size = 0x20
 };
 
 // No room, need MEMPACK_AllocMem
 // static struct ProfilerSection sections[64];
+struct ProfilerSection* ptrSectArr=0;
+struct ProfilerSection* ptrOpenSect=0;
 
 // No room, use global PrimMem instead,
 // especially since we have PrimMem expansion
 // POLY_F4 polyArrF4[128];
+
+static int numSectionsUsed = 0;
+
+int GetTime()
+{
+	// placeholder
+	return 0;
+}
+
+void DebugProfiler_Init()
+{
+	int size = sizeof(struct ProfilerSection) * 64;
+	ptrSectArr = MEMPACK_AllocMem(size);
+}
+
+void DebugProiler_Reset()
+{
+	// normally happens in DebugMenu_DrawMenuTwice,
+	// debug menu is not implemented in retail yet
+	numSectionsUsed = 0;
+}
+
+void DebugProfiler_SectionStart(char* name, char r, char g, char b)
+{
+	if(numSectionsUsed >= 64)
+	{
+		printf("Out of sections\n");
+		while(1) {}
+	}
+	
+	if(ptrOpenSect != 0)
+	{
+		printf("Another section is open\n");
+		while(1) {}
+	}
+	
+	struct ProfilerSection* s = 
+		&ptrSectArr[numSectionsUsed];
+	
+	ptrOpenSect = s;
+	
+	ptrOpenSect->r = r;
+	ptrOpenSect->g = g;
+	ptrOpenSect->b = b;
+	ptrOpenSect->a = 0;
+	
+	ptrOpenSect->flagsVDT = 0;
+	
+	ptrOpenSect->timeStart = GetTime();
+}
+
+void DebugProfiler_SectionRestart(int time)
+{
+	if(ptrOpenSect == 0)
+		return;
+	
+	ptrOpenSect->timeStart = time;
+}
+
+void DebugProfiler_SectionEnd()
+{
+	if(ptrOpenSect == 0)
+		return;
+	
+	ptrOpenSect->timeEnd = GetTime();
+	ptrOpenSect = 0;
+	
+	numSectionsUsed++;
+}
+
+int DebugProfiler_Scale(int input)
+{
+	return (((input * 1000) / 0x147e) * 0x104) / 100;
+}
+
+// NOT finished
+void DebugProfiler_Draw()
+{
+	for(int i = 0; i < numSectionsUsed; i++)
+	{
+		struct ProfilerSection* s = &ptrSectArr[i];
+		
+		if((s->flagsVDT & 1) != 0)
+		{
+			DecalFont_DrawLine("V", 
+				DebugProfiler_Scale(s->posV) + 0x14,
+				0x2F,
+				FONT_BIG,
+				0xffff8000);
+		}
+		
+		if((s->flagsVDT & 2) != 0)
+		{
+			DecalFont_DrawLine("D", 
+				DebugProfiler_Scale(s->posD) + 0x14,
+				0x2B,
+				FONT_BIG,
+				0xffff8000);
+		}
+		
+		#if 0
+		if((s->flagsVDT & 4) != 0)
+		{
+			DecalFont_DrawLine("T", 
+				DebugProfiler_Scale(s->posT) + 0x14,
+				0x33,
+				FONT_BIG,
+				0xffff8000);
+		}
+		#endif
+		
+		// TODO: Allocate
+		POLY_F4* f4 = 0;
+		
+		#if 0
+		f4->r = s->r;
+		f4->g = s->g;
+		f4->b = s->b;
+		#endif
+		
+		setPolyF4(f4);
+		
+		int posLeft = DebugProfiler_Scale(s->timeStart) + 0x14;
+		int posRight = DebugProfiler_Scale(s->timeEnd) + 0x15;
+		
+		f4->x0 = posLeft;
+		f4->x2 = posLeft;
+		
+		f4->x1 = posRight;
+		f4->x3 = posRight;
+		
+		f4->y0 = 0x28;
+		f4->y1 = 0x28;
+		f4->y2 = 0x40;
+		f4->y3 = 0x40;
+		
+		#if 0
+		AddPrim()
+		#endif
+	}
+}
