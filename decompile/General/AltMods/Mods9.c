@@ -193,3 +193,51 @@ void DebugProfiler_Draw()
 		#endif
 	}
 }
+
+void DebugMenu_LoadGame_GivenLevelId(struct GameTracker* gGT, int levelID)
+{
+	gGT->levelID = levelID;
+	
+	#if 0
+	// RELOAD LEVEL
+	#endif
+}
+
+void DebugMenu_LoadGame_GivenIndexE3(struct GameTracker* gGT, int index)
+{
+	/*
+		Row 1: 1P Dingo Canyon, P1 Crash
+		Row 2: 1P Crash Cove, P1 Coco
+		Row 3: 1P Blizzard Bluff, P1 Tiny
+		Row 4: 1P Tiger Temple, P1 Polar
+		Row 5: 1P Papu Pyramid, P1 Cortex
+		Row 6: 2P Papu Pyramid, drivers are Crash, Cortex, Tiny, Coco, NGin, Dingo (standard 2 players 4 AIs)
+		Row 7: 4P Tiger Temple, Crash Cortex Tiny Coco
+		Row 8: 4P Blizzard Bluff, Crash Cortex Tiny Coco
+	*/
+	
+	#if 0
+	// RELOAD LEVEL
+	#endif
+	
+	return;
+}
+
+void DebugMenu_LoadGame_GivenCharacterId(struct GameTracker* gGT, int charID)
+{
+	data.characterIDs[0] = charID;
+	DECOMP_LOAD_Robots1P(charID)
+	
+	#if 0
+	// RELOAD LEVEL
+	#endif
+}
+
+void DebugMenu_LoadGame_GivenNumPlyr(struct GameTracker* gGT, int numPlyr)
+{
+	gGT->numPlyrNextGame = numPlyr;
+	
+	#if 0
+	// RELOAD LEVEL
+	#endif
+}
