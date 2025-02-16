@@ -253,6 +253,12 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderAllHUD(gGT);
 
+	// Instance profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0xFF, 0);
+	#endif
+
 #ifndef REBUILD_PS1
 	RenderAllBeakerRain(gGT);
 	RenderAllBoxSceneSplitLines(gGT);
@@ -284,8 +290,20 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		TEST_DrawInstances(gGT);
 	}
 #endif
+	
+	// Instance Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 	DECOMP_PushBuffer_FadeAllWindows();
+	
+	// Level profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+	#endif
 
 	if((gGT->renderFlags & 1) != 0)
 	{
@@ -358,6 +376,12 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		}
 #endif
 	}
+
+	// Level Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 #ifndef REBUILD_PS1
 	// If in main menu, or in adventure arena,

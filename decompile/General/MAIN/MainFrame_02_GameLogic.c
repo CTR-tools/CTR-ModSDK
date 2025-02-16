@@ -85,13 +85,6 @@ LAB_80034e74:
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
-
-#ifdef USE_PROFILER
-		void DebugProiler_Reset();
-		DebugProiler_Reset();
-#endif
-
-
 // TODO: Rewritten now, merge into pc port,
 // make it so we dont need this ifdef anymore
 #ifndef REBUILD_PS1

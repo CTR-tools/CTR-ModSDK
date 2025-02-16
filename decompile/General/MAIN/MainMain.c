@@ -397,6 +397,11 @@ FinishLoading:
 					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 
+				#ifdef USE_PROFILER
+				void DebugProiler_Reset();
+				DebugProiler_Reset();
+				#endif
+
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
 					DECOMP_MainFrame_GameLogic(gGT, gGS);
