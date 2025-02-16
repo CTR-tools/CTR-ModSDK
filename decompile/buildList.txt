@@ -1169,7 +1169,7 @@ common, exe, TakeCupProgress_Activate, 0x0,              General/TakeCupProgress
 // ====================================================================================================================
 common, exe, Timer_Init, 0x0,                            General/Timer/Timer_0_Init.c
 common, exe, Timer_Destroy, 0x0,                         General/Timer/Timer_1_Destroy.c
-//common, exe, Timer_GetTime_Total, 0x0,                   General/Timer/Timer_2_GetTime_Total.c //TODO
+common, exe, Timer_GetTime_Total, 0x0,                   General/Timer/Timer_2_GetTime_Total.c
 //common, exe, Timer_GetTime_Elapsed, 0x0,                 General/Timer/Timer_3_GetTime_Elapsed.c //TODO
 
 // ====================================================================================================================

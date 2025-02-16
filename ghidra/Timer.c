@@ -38,17 +38,9 @@ int FUN_8004b3a4(void)
   // time past since vsync
   lVar1 = GetRCnt(0xf2000001);
 
-  // if less than 100 units past,
-  // which is less than 0.006 seconds
+  // This does nothing
   if (lVar1 < 100)
   {
-	// update, cause vsyncCallback
-	// already changed it since setting
-	// iVar2 the first time
-	
-	// Check assembly, make sure
-	// this actually updates, try 
-	// Redhotbr's "volatile" idea
     iVar2 = DAT_8008d988;
   }
 

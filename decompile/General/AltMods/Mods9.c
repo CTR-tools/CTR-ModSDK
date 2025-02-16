@@ -55,10 +55,13 @@ struct ProfilerSection* ptrOpenSect=0;
 
 static int numSectionsUsed = 0;
 
-int GetTime()
+int Debug_GetPreciseTime()
 {
-	// placeholder
-	return 0;
+	int sysClock =
+		GetRCnt(0xf2000001) +
+		sdata->rcntTotalUnits;
+		
+	return sysClock;
 }
 
 void DebugProfiler_Init()
@@ -100,7 +103,7 @@ void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 	
 	ptrOpenSect->flagsVDT = 0;
 	
-	ptrOpenSect->timeStart = GetTime();
+	ptrOpenSect->timeStart = Debug_GetPreciseTime();
 }
 
 void DebugProfiler_SectionRestart(int time)
@@ -116,7 +119,7 @@ void DebugProfiler_SectionEnd()
 	if(ptrOpenSect == 0)
 		return;
 	
-	ptrOpenSect->timeEnd = GetTime();
+	ptrOpenSect->timeEnd = Debug_GetPreciseTime();
 	ptrOpenSect = 0;
 	
 	numSectionsUsed++;
