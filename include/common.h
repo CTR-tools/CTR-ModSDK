@@ -11,6 +11,7 @@
 //#define USE_HARDER	// Difficulty Selector (Arcade)
 //#define USE_NEWCUPS	// Cup Randomizer
 //#define USE_BOOSTBAR	// Super's reserve bar
+//#define USE_PROFILER	// Debug profiler from PizzaHut
 
 //#define USE_RAMEX		// 8mb RAM expansion
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
