@@ -51,6 +51,9 @@ int FUN_8004b3a4(void)
 
 
 // Timer_GetTime_Elapsed
+// Usage: elapsed(frameStart, &frameStart)
+// will overwrite new frameStart, and return
+// elapsed time since previous frameStart 
 int FUN_8004b41c(int param_1,int *param_2)
 
 {
@@ -64,6 +67,7 @@ int FUN_8004b41c(int param_1,int *param_2)
     *param_2 = iVar1;
   }
 
+  // impossible?
   if (iVar1 < param_1) {
     iVar1 = iVar1 + 0xc7e18;
   }

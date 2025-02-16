@@ -86,7 +86,7 @@ LAB_80034e74:
 		gGT->unk1cc4[4] = 0;
 
 #ifndef REBUILD_PS1
-		iVar4 = Timer_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
+		iVar4 = Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
 		iVar4 = (iVar4 << 5) / 100;
 #else
 		iVar4 = FPS_HALF(0x20);

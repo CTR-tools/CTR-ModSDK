@@ -402,7 +402,7 @@ struct GameTracker
 
 	// 1d08
 	// microseconds per frame?
-	int anotherTimer;
+	int clockFrameStart;
 
 	// 1d0c
 	// 0xf00 - normal start of race

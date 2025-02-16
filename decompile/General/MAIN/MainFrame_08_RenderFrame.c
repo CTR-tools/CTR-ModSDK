@@ -386,7 +386,8 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderDispEnv_UI(gGT);
 
-#ifndef REBUILD_PS1
+#if 1
+	// leftover debug unused
 	gGT->countTotalTime =
 		Timer_GetTime_Total();
 #endif
@@ -395,7 +396,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 #ifndef REBUILD_PS1
 	RenderFMV();
+#endif
 
+#if 1
+	// leftover debug unused
 	gGT->countTotalTime =
 		Timer_GetTime_Elapsed(gGT->countTotalTime,0);
 #endif
