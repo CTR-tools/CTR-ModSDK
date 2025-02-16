@@ -197,10 +197,7 @@ void DebugProfiler_Draw()
 void DebugMenu_LoadGame_GivenLevelId(struct GameTracker* gGT, int levelID)
 {
 	gGT->levelID = levelID;
-	
-	#if 0
-	// RELOAD LEVEL
-	#endif
+	MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 void DebugMenu_LoadGame_GivenIndexE3(struct GameTracker* gGT, int index)
@@ -216,28 +213,49 @@ void DebugMenu_LoadGame_GivenIndexE3(struct GameTracker* gGT, int index)
 		Row 8: 4P Blizzard Bluff, Crash Cortex Tiny Coco
 	*/
 	
-	#if 0
-	// RELOAD LEVEL
-	#endif
-	
-	return;
+	MainRaceTrack_RequestLoad(gGT->levelID);
 }
+
+// Set by menu
+static int debugPlayerIndex = 0;
 
 void DebugMenu_LoadGame_GivenCharacterId(struct GameTracker* gGT, int charID)
 {
-	data.characterIDs[0] = charID;
-	DECOMP_LOAD_Robots1P(charID)
-	
-	#if 0
-	// RELOAD LEVEL
-	#endif
+	data.characterIDs[debugPlayerIndex] = charID;
+	MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 void DebugMenu_LoadGame_GivenNumPlyr(struct GameTracker* gGT, int numPlyr)
 {
 	gGT->numPlyrNextGame = numPlyr;
-	
-	#if 0
-	// RELOAD LEVEL
-	#endif
+	MainRaceTrack_RequestLoad(gGT->levelID);
 }
+
+void DebugMenu_SetLapCount(struct GameTracker* gGT, int numLaps)
+{
+	gGT->numLaps = numLaps;
+}
+
+static int debugModeArr[6] =
+{
+	ADVENTURE_MODE,
+	ADVENTURE_MODE | ADVENTURE_ARENA,
+	TIME_TRIAL,
+	BATTLE_MODE,
+	ARCADE_MODE,
+	0x0, // VS mode
+};
+
+void DebugMenu_SetGameMode(struct GameTracker* gGT, int index)
+{
+	int removeBits = ~(
+        ADVENTURE_MODE |
+        ADVENTURE_ARENA |
+        TIME_TRIAL |
+        BATTLE_MODE |
+        ARCADE_MODE
+	);
+	
+	gGT->gameMode1 &= removeBits;
+	gGT->gameMode1 |= debugModeArr[index];
+};
