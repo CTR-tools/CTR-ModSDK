@@ -123,7 +123,7 @@
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
-// unknown 8002a06c -- vsync callback
+8002a06c funcDrawSyncCallback	// records subsectionD
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
 
@@ -449,7 +449,7 @@
 80039990 MainDB_PrimMem
 800399f4 MainDB_InstanceMem
 80039a4c MainDB_OTMem
-80039aa4 MainDrawCb_Vsync
+80039aa4 MainDrawCb_Vsync			// record subsectionV
 80039b4c MainFrame_TogglePauseAudio
 
 // EnterYourName screen
