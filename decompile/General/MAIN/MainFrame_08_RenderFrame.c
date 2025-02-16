@@ -386,6 +386,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderDispEnv_UI(gGT);
 
+#ifdef USE_PROFILER
+	void DebugProfiler_Draw();
+	DebugProfiler_Draw();
+#endif
+
 #if 0
 	// leftover debug unused,
 	// clockDurationStall = sysclock (do NOT print)

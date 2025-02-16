@@ -127,14 +127,28 @@ void DebugProfiler_SectionEnd()
 
 int DebugProfiler_Scale(int input)
 {
-	int cFS = gGT->clockFrameStart; 
+	int cFS = sdata->gGT->clockFrameStart; 
 	
-	return (((((input-cFS) * 1000) / 0x147e) * 0x104) / 100) + 0x14;
+	int scaledInput = (input * 1000) / 0x147e;
+	int relativeToStart = scaledInput - cFS;
+	int scaledGraph = ((relativeToStart * 0x104) / 100) + 0x14;
+	
+	return scaledGraph;
 }
 
-// NOT finished
 void DebugProfiler_Draw()
-{	
+{
+	struct GameTracker* gGT = sdata->gGT;
+	
+	struct PrimMem* primMem = &gGT->backBuffer->primMem;
+	
+	// must be room for 100 POLY_F4s
+	POLY_F4* test = primMem->curr;
+	test = test + 100;
+	if(test > primMem->endMin100) return;
+	
+	void* ot = gGT->pushBuffer_UI.ptrOT;
+	
 	for(int i = 0; i < numSectionsUsed; i++)
 	{
 		struct ProfilerSection* s = &ptrSectArr[i];
@@ -168,14 +182,12 @@ void DebugProfiler_Draw()
 		}
 		#endif
 		
-		// TODO: Allocate
-		POLY_F4* f4 = 0;
+		POLY_F4* f4 = primMem->curr;
+		primMem->curr = f4 + 1;
 		
-		#if 0
-		f4->r = s->r;
-		f4->g = s->g;
-		f4->b = s->b;
-		#endif
+		f4->r0 = s->r;
+		f4->g0 = s->g;
+		f4->b0 = s->b;
 		
 		setPolyF4(f4);
 		
@@ -193,9 +205,7 @@ void DebugProfiler_Draw()
 		f4->y2 = 0x40;
 		f4->y3 = 0x40;
 		
-		#if 0
-		AddPrim()
-		#endif
+		AddPrim(ot, f4);
 	}
 }
 

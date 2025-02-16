@@ -85,6 +85,15 @@ LAB_80034e74:
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
+
+#ifdef USE_PROFILER
+		void DebugProiler_Reset();
+		DebugProiler_Reset();
+#endif
+
+
+// TODO: Rewritten now, merge into pc port,
+// make it so we dont need this ifdef anymore
 #ifndef REBUILD_PS1
 		iVar4 = Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
 		iVar4 = (iVar4 << 5) / 100;
@@ -190,6 +199,15 @@ LAB_80035098:
 		}
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
 		{
+			#ifdef USE_PROFILER
+			void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+			int color = iVar4 * 0x40;
+			int r = 0xFF;
+			int g = (color >> 0x0) & 0xFF;
+			int b = (color >> 0x8) & 0xFF;
+			DebugProfiler_SectionStart(0, r, g, b);
+			#endif
+			
 			if
 			(
 				(
@@ -296,6 +314,12 @@ LAB_80035098:
 				TEST_ThTickRunBucket(gGT->threadBuckets[iVar4].thread);
 #endif
 			}
+			
+			#ifdef USE_PROFILER
+			void DebugProfiler_SectionEnd();
+			DebugProfiler_SectionEnd();
+			#endif
+			
 		}
 
 #ifndef REBUILD_PS1

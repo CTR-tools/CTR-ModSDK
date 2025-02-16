@@ -694,6 +694,11 @@ void StateZero()
 	DECOMP_LOAD_InitCD();
 	DECOMP_RaceFlag_SetFullyOffScreen();
 
+#ifdef USE_PROFILER
+	void DebugProfiler_Init();
+	DebugProfiler_Init();
+#endif
+
 	ResetGraph(0);
 	SetGraphDebug(0);
 
