@@ -364,7 +364,7 @@ struct GameTracker
 	int unk1cc4[6];
 
 	// 1cdc
-	int countTotalTime;
+	int clockDurationStall;
 
 	// 1ce0
 	int vSync_between_drawSync;

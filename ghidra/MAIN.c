@@ -3801,10 +3801,17 @@ code_r0x800369d8:
   // 0x51f = 0x147c = pushBuffer_UI + 0xf4 (ptrOT)
   FUN_80042a8c(param_1[0x51f] + 0x10,param_1 + 0x4e2,param_1[4],0,0);
 
+
+#if 0
+  // leftover debug unused,
+  // clockDurationStall = sysclock (do NOT print)
+	
   // Timer_GetTime_Total
   uVar7 = FUN_8004b3a4();
   puVar14 = PTR_DAT_8008d2ac;
   param_1[0x737] = uVar7;
+#endif
+
 
   // gGT->256c & checkered flag
   if ((*(uint *)(puVar14 + 0x256c) & 0x1000) != 0) {
@@ -3849,12 +3856,21 @@ LAB_800378d0:
 	DrawSync(0);
   }
 
+
+
+#if 0
+  // leftover debug unused,
+  // clockDurationStall = time since stall started (NOW print)
+  
   // param1 is PTR_DAT_8008d2ac
 
   // 737 -> 1cdc
   // Timer_GetTime_Elapsed
   uVar7 = FUN_8004b41c(param_1[0x737],0);
   param_1[0x737] = uVar7;
+#endif
+
+
 
   // if frontBuffer exists
   if (param_1[5] != 0)

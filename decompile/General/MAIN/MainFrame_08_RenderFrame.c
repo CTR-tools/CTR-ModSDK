@@ -386,9 +386,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderDispEnv_UI(gGT);
 
-#if 1
-	// leftover debug unused
-	gGT->countTotalTime =
+#if 0
+	// leftover debug unused,
+	// clockDurationStall = sysclock (do NOT print)
+	gGT->clockDurationStall =
 		Timer_GetTime_Total();
 #endif
 
@@ -398,10 +399,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderFMV();
 #endif
 
-#if 1
-	// leftover debug unused
-	gGT->countTotalTime =
-		Timer_GetTime_Elapsed(gGT->countTotalTime,0);
+#if 0
+	// leftover debug unused,
+	// clockDurationStall = time since stall started (NOW print)
+	gGT->clockDurationStall =
+		Timer_GetTime_Elapsed(gGT->clockDurationStall,0);
 #endif
 
 	RenderSubmit(gGT);
@@ -1702,10 +1704,6 @@ void RenderVSYNC(struct GameTracker* gGT)
 		VSync(0);
 	}
 
-	#ifdef USE_ONLINE
-	int boolFirstFrame = 1;
-	#endif
-
 	while(1)
 	{
 
@@ -1720,13 +1718,6 @@ void RenderVSYNC(struct GameTracker* gGT)
 			// quit, end of stall
 			return;
 		}
-
-#ifdef USE_ONLINE
-		// gpu submission is not too late,
-		// we got to this while() loop before
-		// the flip was ready, so we're on-time
-		boolFirstFrame = 0;
-#endif
 
 #ifndef REBUILD_PC
 		if(ReadyToBreak(gGT))
