@@ -68,6 +68,13 @@ void DebugMenu_SetGameMode(struct GameTracker* gGT, int index)
 };
 #endif
 
+// Menu for BATTLE SELECT
+extern struct DebugRow rowsDbgBattle[10];
+struct DebugMenu menuDbgBattle =
+{
+	.parentMenu = 0,
+	.currRow = rowsDbgBattle,
+};
 struct DebugRow rowsDbgBattle[] =
 {
 	{3, 0x12, sdata_static.s_battle1, 	DebugMenu_LoadGame_GivenLevelId },
@@ -82,12 +89,13 @@ struct DebugRow rowsDbgBattle[] =
 	{0}
 };
 
-struct DebugMenu menuDbgBattle =
+// Menu for LEVEL SELECT
+extern struct DebugRow rowsDbgLevels[18];
+struct DebugMenu menuDbgLevels =
 {
 	.parentMenu = 0,
-	.rowArr = rowsDbgBattle,
+	.currRow = rowsDbgLevels,
 };
-
 struct DebugRow rowsDbgLevels[] =
 {
 	{1, 0x0, "BATTLE...", &menuDbgBattle },
@@ -110,26 +118,32 @@ struct DebugRow rowsDbgLevels[] =
 	{0}
 };
 
-struct DebugMenu menuDbgLevels =
+// Menu for PLAYER SELECT
+extern struct DebugRow rowsDbgPlayer[1];
+struct DebugMenu menuDbgPlayer =
 {
 	.parentMenu = 0,
-	.rowArr = rowsDbgLevels,
+	.currRow = rowsDbgPlayer,
 };
-
-struct DebugRow rowsDbgMain[] =
+struct DebugRow rowsDbgPlayer[] =
 {
-	{ 1, 0x0, "LEVEL...", &menuDbgLevels },
-	
-	// TODO: Change back to 1
-	{ 3, 0x0, "PLAYERS...", 0 }, // TODO: Submenu
 	{0}
 };
 
+// Menu for LEVELS/PLAYERS
+extern struct DebugRow rowsDbgMain[3];
 struct DebugMenu menuDbgMain =
 {
 	.parentMenu = 0,
-	.rowArr = rowsDbgMain,
+	.currRow = rowsDbgMain,
 };
+struct DebugRow rowsDbgMain[] =
+{
+	{ 1, 0x0, "LEVEL...", &menuDbgLevels },
+	{ 1, 0x0, "PLAYERS...", &menuDbgPlayer },
+	{0}
+};
+
 
 void DebugMenu_InitMenuPositionSize(
 	struct DebugMenu* dm, 
@@ -143,7 +157,7 @@ void DebugMenu_InitMenuPositionSize(
 	dm->posX = posX;
 	dm->posY = posY;
 	
-	dr = dm->rowArr;
+	dr = DMENU_GETROWS(dm);
 	while(dr->actionFlag != 0)
 	{
 		int rowLen = strlen(dr->rowText);
@@ -158,7 +172,7 @@ void DebugMenu_InitMenuPositionSize(
 	dm->sizeX = (charSizeX * len) + 6;
 	dm->sizeY = (charSizeY * rowCount) + 6;
 	
-	dr = dm->rowArr;
+	dr = DMENU_GETROWS(dm);
 	while(dr->actionFlag != 0)
 	{
 		if(dr->actionFlag == 1)

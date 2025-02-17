@@ -42,4 +42,10 @@ void DECOMP_RECTMENU_CollectInput()
 		sdata->AnyPlayerTap |= sdata->buttonTapPerPlayer[i];
 		sdata->AnyPlayerHold |= sdata->buttonHeldPerPlayer[i];
 	}
+	
+#ifdef USE_PROFILER
+	// prevent main menu interfering
+	if((sdata->gGT->gameMode1 & DEBUG_MENU) != 0)
+		sdata->buttonTapPerPlayer[0] = 0;
+#endif
 }

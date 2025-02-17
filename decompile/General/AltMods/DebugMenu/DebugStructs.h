@@ -48,13 +48,16 @@ struct ProfilerSection
 
 struct DebugRow;
 
+#define DMENU_GETROWS(x) \
+	(struct DebugRow*)((unsigned int)x + sizeof(struct DebugMenu))
+
 struct DebugMenu
 {
 	// initialized at runtime
 	struct DebugMenu* parentMenu;
 	
 	// set by compiler
-	struct DebugRow* rowArr;
+	struct DebugRow* currRow;
 	
 	// initialized at runtime
 	struct DebugMenu* childMenu;
@@ -77,7 +80,7 @@ struct DebugRow
 {
 	// & 0 -> null terminator
 	// & 1 -> leads to submenu
-	// & 3 -> run function
+	// & 3 -> leads to function
 	int actionFlag;
 	
 	// levelID, characterID, etc

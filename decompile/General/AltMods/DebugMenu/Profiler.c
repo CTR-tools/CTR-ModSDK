@@ -195,25 +195,59 @@ void DebugProfiler_Draw()
 // === End of DebugProfiler ===
 // === Start of DebugMenu ===
 
+void DebugMenu_Update(struct DebugMenu* dm)
+{
+	if(dm->childMenu != 0)
+	{
+		DebugMenu_Update(dm->childMenu);
+		return;
+	}
+	
+	int buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
+	
+	if ((buttonTap & BTN_UP) != 0)
+	{
+		if(dm->currRow == DMENU_GETROWS(dm))
+			return;
+		
+		dm->currRow--;
+	}
+	
+	if ((buttonTap & BTN_DOWN) != 0)
+	{
+		if(dm->currRow[1].actionFlag == 0)
+			return;
+		
+		dm->currRow++;
+	}
+	
+	if ((buttonTap & BTN_CROSS) != 0)
+	{
+		if(dm->currRow->actionFlag == 1)
+			dm->childMenu = dm->currRow;
+	}
+}
+
 void DebugMenu_Draw(struct DebugMenu* dm)
 {
 	struct GameTracker* gGT = sdata->gGT;
 	
-	struct PrimMem* primMem = &gGT->backBuffer->primMem;
-	
 	// must be room for 100 POLY_F4s
+	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 	POLY_F4* test = primMem->curr;
 	test = test + 100;
 	if(test > primMem->endMin100) return;
 	
+	DebugMenu_Update(dm);
+	
+	// insert primitives to UI
 	void* ot = gGT->pushBuffer_UI.ptrOT;
 		
 	int rowCount = 0;
 	struct DebugRow* dr;
 	
 	char text[16];
-	
-	dr = dm->rowArr;
+	dr = DMENU_GETROWS(dm);
 	while(dr->actionFlag != 0)
 	{
 		void DebugFont_DrawLine(char* text, int posX, int posY, int color);
@@ -226,12 +260,11 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 		if(dr->subMenu == dm->childMenu)
 			color = 0x804000;
 		
-		if(rowCount == 0)
+		if(dr == dm->currRow)
 			sprintf(text, ">%s", dr->rowText);
 		else
 			sprintf(text, " %s", dr->rowText);
-			
-		
+
 		DebugFont_DrawLine(
 			text,
 			3 + dm->posX,
@@ -243,11 +276,7 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 		rowCount++;
 	}
 	
-	// TEMPORARY TEST
-	if(dm->rowArr[0].actionFlag == 1)
-		dm->childMenu = dm->rowArr[0].subMenu;
-	
-	dr = dm->rowArr;
+	dr = DMENU_GETROWS(dm);
 	while(dr->actionFlag != 0)
 	{
 		if(dr->actionFlag == 1)
