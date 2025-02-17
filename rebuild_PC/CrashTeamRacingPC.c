@@ -22,6 +22,12 @@
 #include "PsyX/PsyX_globals.h"
 #include "PsyX/PsyX_render.h"
 
+// work around for PsyCross
+#include <time.h>
+clock_t startClock;
+#define ResetRCnt(x) startClock = clock();
+#define GetRCnt(x) ((clock() - startClock) * 16)
+
 // ======= Syntax Correction =============
 
 #define BUILD 926

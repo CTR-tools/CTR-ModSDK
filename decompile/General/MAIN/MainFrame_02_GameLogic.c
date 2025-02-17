@@ -88,11 +88,6 @@ LAB_80034e74:
 		iVar4 = DECOMP_Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
 		iVar4 = (iVar4 << 5) / 100;
 		
-		// GetRCnt unimplemented
-		#ifdef REBUILD_PC
-		iVar4 = 0x20;
-		#endif
-
 		gGT->elapsedTimeMS = iVar4;
 		if (iVar4 < 0)
 		{
