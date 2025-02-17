@@ -218,6 +218,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 		if
 		(
+			#ifdef USE_PROFILER
+			((gGT->gameMode1 & DEBUG_MENU) == 0) &&
+			#endif
+		
 			(D230.isMenuTransitioning == 1) &&
 			(
 				// get input from this player

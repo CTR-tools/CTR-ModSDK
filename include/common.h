@@ -12,6 +12,7 @@
 //#define USE_NEWCUPS	// Cup Randomizer
 //#define USE_BOOSTBAR	// Super's reserve bar
 //#define USE_PROFILER	// Debug profiler from PizzaHut
+//#define USE_4PADTEST	// 1 controller for all 4 players (not done)
 
 //#define USE_RAMEX		// 8mb RAM expansion
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
