@@ -226,6 +226,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 					gGT->timer);
 
 	if(
+		#ifdef USE_PROFILER
+		((gGT->gameMode1 & DEBUG_MENU) != 0) ||
+		#endif
+	
 		(sdata->ptrActiveMenu != 0) ||
 		((gGT->gameMode1 & END_OF_RACE) != 0)
 	)

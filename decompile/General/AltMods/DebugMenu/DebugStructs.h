@@ -48,13 +48,29 @@ struct ProfilerSection
 
 struct DebugRow;
 
+#ifdef REBUILD_PC
+
+// Visual Studio forces
+// the reorder, so work around it
+#define DMENU_GETROWS(x) \
+	(struct DebugRow*)(x->firstRow)
+
+#else
+
+// GCC has no reordering
 #define DMENU_GETROWS(x) \
 	(struct DebugRow*)((unsigned int)x + sizeof(struct DebugMenu))
+
+#endif
 
 struct DebugMenu
 {
 	// initialized at runtime
 	struct DebugMenu* parentMenu;
+	
+	#ifdef REBUILD_PC
+	struct DebugRow* firstRow;
+	#endif
 	
 	// set by compiler
 	struct DebugRow* currRow;
@@ -94,7 +110,7 @@ struct DebugRow
 		struct DebugMenu* subMenu;
 		
 		// & 3
-		int funcPtr;
+		void (*funcDbg)(struct GameTracker* gGT, int param);
 	};
 };
 
