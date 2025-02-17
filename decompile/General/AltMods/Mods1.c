@@ -48,6 +48,10 @@ void StatsUpgrade()
 #endif
 #endif
 
+#ifdef USE_PROFILER
+#include "Debug/Font.c"
+#endif
+
 // original ps1 with fragmented memory,
 // but also only if NOT using RAMEX, because
 // with RAMEX, we dont need to save 0x1b00 bytes
