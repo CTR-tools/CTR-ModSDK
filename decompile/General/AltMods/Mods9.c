@@ -312,10 +312,14 @@ struct DebugRow;
 
 struct DebugMenu
 {
+	// initialized at runtime
 	struct DebugMenu* parentMenu;
-	struct DebugRow* rowArr;
-	int unk1;
 	
+	// set by compiler
+	struct DebugRow* rowArr;
+	
+	// initialized at runtime
+	int unk1;
 	short posX;
 	short posY;
 	short sizeX;
@@ -344,6 +348,24 @@ struct DebugRow
 		// & 3
 		int funcPtr;
 	};
+};
+
+struct DebugRow rowsLevels[] =
+{
+	{1, 0, "BATTLE...", 0 }, // TODO: Submenu
+	{1, 0, sdata_static.s_proto8, 0 }, // TODO: Submenu
+};
+
+struct DebugRow rowsDbgMain[] =
+{
+	{ 1, 0, "LEVEL...", rowsLevels },
+	{ 1, 0, "PLAYERS...", 0 }, // TODO: Submenu
+};
+
+struct DebugMenu menuDbgMain =
+{
+	.parentMenu = 0,
+	.rowArr = rowsDbgMain,
 };
 
 // June 1999
