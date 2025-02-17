@@ -707,12 +707,6 @@ void StateZero()
 	
 	void DebugMenu_Init();
 	DebugMenu_Init();
-	
-	// PC port SELECT button does not work
-	#ifdef REBUILD_PC
-	gGT->gameMode1 |= DEBUG_MENU;
-	#endif
-	
 #endif
 
 	ResetGraph(0);
