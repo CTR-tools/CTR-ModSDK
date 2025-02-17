@@ -261,8 +261,6 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 		dr++;
 	}
 	
-	#ifndef REBUILD_PC
 	RECT* r = &dm->posX;
 	DECOMP_CTR_Box_DrawClearBox(r, 0x808080, 0, ot);
-	#endif
 }
