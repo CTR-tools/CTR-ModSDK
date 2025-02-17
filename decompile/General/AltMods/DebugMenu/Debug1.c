@@ -100,7 +100,13 @@ void DebugMenu_Update(struct DebugMenu* dm)
 	if ((buttonTap & BTN_CROSS) != 0)
 	{
 		if(dr->actionFlag == 1)
+		{
+			// link to child
 			dm->childMenu = dr->subMenu;
+			
+			// link to parent
+			dm->childMenu->parentMenu = dm;
+		}
 		
 		if(dr->actionFlag == 3)
 		{
@@ -109,6 +115,11 @@ void DebugMenu_Update(struct DebugMenu* dm)
 			dr->funcDbg(gGT, dr->actionParam);
 			gGT->gameMode1 &= ~(DEBUG_MENU);
 		}
+	}
+	
+	if ((buttonTap & BTN_SQUARE) != 0)
+	{
+		dm->parentMenu->childMenu = 0;
 	}
 }
 
