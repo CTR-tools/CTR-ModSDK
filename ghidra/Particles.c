@@ -438,7 +438,7 @@ LAB_8003f3f8:
 void FUN_8003f434(void)
 
 {
-  // if PauseAllThreads is diabled
+  // if DebugMenu is diabled
   if ((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0)
   {
 	// world-space particles (exhaust on cars)

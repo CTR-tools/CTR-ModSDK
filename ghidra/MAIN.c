@@ -467,7 +467,7 @@ LAB_80034e74:
     puVar9 = PTR_DAT_8008d2ac;
     if ((int)param_1[0x743] < 1)
 	{
-	  // if PauseAllThreads is diabled
+	  // if DebugMenu is diabled
       if ((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0) {
 
         // if amount of frozen time left (relic races) is less or equal than zero
@@ -593,7 +593,7 @@ LAB_80035098:
 
       if (
 			(
-				// if PauseAllThreads is diabled
+				// if DebugMenu is diabled
 				((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0) ||
 
 				// if this bucket cannot be paused

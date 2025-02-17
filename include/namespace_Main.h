@@ -5,7 +5,7 @@ enum GameMode1
 	PAUSE_3				= 0x4,	// unused, debug
 	PAUSE_4				= 0x8,	// unused, debug
 	PAUSE_ALL           = 0xF,
-	PAUSE_THREADS		= 0x10,
+	DEBUG_MENU			= 0x10,
 	BATTLE_MODE         = 0x20,
 	START_OF_RACE 		= 0x40,
 	// 0x80?

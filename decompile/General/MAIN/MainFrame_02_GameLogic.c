@@ -109,7 +109,7 @@ LAB_80034e74:
 		gGT->msInThisLEV += gGT->elapsedTimeMS;
 		if (gGT->trafficLightsTimer < 1)
 		{
-			if ((gGT->gameMode1 & PAUSE_THREADS) == 0)
+			if ((gGT->gameMode1 & DEBUG_MENU) == 0)
 			{
 				if (gGT->frozenTimeRemaining < 1)
 				{
@@ -200,7 +200,7 @@ LAB_80035098:
 			(
 				(
 					// if threads are not paused
-					((gGT->gameMode1 & PAUSE_THREADS) == 0) ||
+					((gGT->gameMode1 & DEBUG_MENU) == 0) ||
 
 					// if bucket can not be paused
 					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)

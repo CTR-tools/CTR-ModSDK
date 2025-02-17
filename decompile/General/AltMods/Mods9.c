@@ -1,4 +1,6 @@
 
+// ==== Contains Profiler and Debug Menu ====
+
 struct ProfilerSection
 {
 	// 0x0
