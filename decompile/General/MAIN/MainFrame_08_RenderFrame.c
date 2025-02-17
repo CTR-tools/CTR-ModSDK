@@ -427,8 +427,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	void DebugProfiler_SectionEnd();
 	DebugProfiler_SectionEnd();
 	
-	void DebugProfiler_Draw();
-	DebugProfiler_Draw();
+	if((gGT->gameMode1 & LOADING) == 0)
+	{
+		void DebugProfiler_Draw();
+		DebugProfiler_Draw();
+	}
 	#endif
 
 	RenderSubmit(gGT);
