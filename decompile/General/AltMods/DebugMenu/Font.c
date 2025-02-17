@@ -12,7 +12,9 @@ void DebugFont_DrawCharacter(int index, int screenPosX, int screenPosY, int lett
   unsigned int uVar5;
   unsigned int uVar6;
 
-  screenPosX += 7 * index;
+  // specific to DEBUG MENU,
+  // 8x index, not 7x index
+  screenPosX += 8 * index;
 
   uVar6 = screenPosX + 7 & 0xffff;
   uVar4 = (screenPosY + 7) * 0x10000;
@@ -95,6 +97,11 @@ void DebugFont_DrawLine(char* text, int posX, int posY, int color)
 		if (c == '.') 
 		{
 			c = 41;
+		}
+		
+		else if (c == '>')
+		{
+			c = 38;
 		}
 		
 		else if(c >= 'a' && c <= 'z')

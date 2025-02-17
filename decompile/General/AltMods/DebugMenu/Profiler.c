@@ -207,13 +207,11 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 	if(test > primMem->endMin100) return;
 	
 	void* ot = gGT->pushBuffer_UI.ptrOT;
-	
-	RECT* r = &dm->posX;
-	DECOMP_CTR_Box_DrawClearBox(r, 0x808080, 0, ot);
-	
-	
+		
 	int rowCount = 0;
 	struct DebugRow* dr;
+	
+	char text[16];
 	
 	dr = dm->rowArr;
 	while(dr->actionFlag != 0)
@@ -228,10 +226,16 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 		if(dr->subMenu == dm->childMenu)
 			color = 0x804000;
 		
+		if(rowCount == 0)
+			sprintf(text, ">%s", dr->rowText);
+		else
+			sprintf(text, " %s", dr->rowText);
+			
+		
 		DebugFont_DrawLine(
-			dr->rowText,
-			dm->posX,
-			dm->posY + (rowCount * 8),
+			text,
+			3 + dm->posX,
+			3 + dm->posY + (rowCount * 8),
 			color
 		);
 		
@@ -256,4 +260,9 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 		
 		dr++;
 	}
+	
+	#ifndef REBUILD_PC
+	RECT* r = &dm->posX;
+	DECOMP_CTR_Box_DrawClearBox(r, 0x808080, 0, ot);
+	#endif
 }

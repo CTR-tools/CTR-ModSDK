@@ -11,7 +11,7 @@
 //#define USE_HARDER	// Difficulty Selector (Arcade)
 //#define USE_NEWCUPS	// Cup Randomizer
 //#define USE_BOOSTBAR	// Super's reserve bar
-#define USE_PROFILER	// Debug profiler from PizzaHut
+//#define USE_PROFILER	// Debug profiler from PizzaHut
 
 //#define USE_RAMEX		// 8mb RAM expansion
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
@@ -19,7 +19,7 @@
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
 //#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
-#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
+//#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
 //#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
 
 //#define USE_VR		// Virtual Reality
