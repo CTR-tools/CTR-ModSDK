@@ -84,4 +84,12 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         pad->gamepadType = 0;
 		pad++;
     }
+	
+// here for byte budget
+#if 1
+	#ifdef USE_PROFILER
+	void DebugProfiler_Subsection(int flag);
+	DebugProfiler_Subsection(1);
+	#endif
+#endif
 }

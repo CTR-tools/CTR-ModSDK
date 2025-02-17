@@ -23,6 +23,16 @@ void DECOMP_MainDrawCb_Vsync()
 	PsyX_UpdateInput();
 	#endif
 	
-	DECOMP_GAMEPAD_PollVsync(sdata->gGamepads);	
+	DECOMP_GAMEPAD_PollVsync(sdata->gGamepads);
+	
+// wont fit here cause of byte budget,
+// called in gamepad poll instead
+#if 0
+	#ifdef USE_PROFILER
+	void DebugProfiler_Subsection(int flag);
+	DebugProfiler_Subsection(1);
+	#endif
+#endif
+	
 	return;
 }

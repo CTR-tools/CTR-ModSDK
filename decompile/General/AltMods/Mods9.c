@@ -106,6 +106,33 @@ void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 	ptrOpenSect->timeStart = Debug_GetPreciseTime();
 }
 
+void DebugProfiler_Subsection(int flag)
+{
+	if(ptrOpenSect == 0)
+		return;
+
+	ptrOpenSect->flagsVDT |= flag;
+	
+	int time = Debug_GetPreciseTime();
+	
+	if((flag & 1) != 0)
+	{
+		ptrOpenSect->posV = time;
+	}
+	
+	if((flag & 2) != 0)
+	{
+		ptrOpenSect->posD = time;
+	}
+	
+	#if 0
+	if((flag & 2) != 0)
+	{
+		ptrOpenSect->posT = time;
+	}
+	#endif
+}
+
 void DebugProfiler_SectionRestart(int time)
 {
 	if(ptrOpenSect == 0)
