@@ -2,5 +2,5 @@
 // ==== Contains Profiler ====
 
 #if defined (USE_PROFILER)
-#include "Debug/Profiler.c"
+#include "DebugMenu/Profiler.c"
 #endif

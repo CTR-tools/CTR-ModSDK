@@ -49,7 +49,7 @@ void StatsUpgrade()
 #endif
 
 #ifdef USE_PROFILER
-#include "Debug/Font.c"
+#include "DebugMenu/Font.c"
 #endif
 
 // original ps1 with fragmented memory,
