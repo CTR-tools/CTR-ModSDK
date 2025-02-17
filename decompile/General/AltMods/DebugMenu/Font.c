@@ -29,7 +29,15 @@ void DebugFont_DrawCharacter(int index, int screenPosX, int screenPosY, int lett
   // what we are about to add in this function
   sdata->gGT->backBuffer->primMem.curr = puVar2 + 10;
 
+// PsyCross has broken transparency in DECOMP_CTR_Box_DrawClearBox,
+// and also has does not handle transparency correctly in DebugFont,
+// so disable transparency in both places
+#ifdef REBUILD_PC
+  puVar2[1] = 0x2c000000 | color;
+#else
   puVar2[1] = 0x2e000000 | color;
+#endif
+  
   puVar2[2] = screenPosX & 0xffff | screenPosY << 0x10;
   puVar2[8] = uVar6 | uVar4;
   puVar2[4] = uVar6 | screenPosY << 0x10;
