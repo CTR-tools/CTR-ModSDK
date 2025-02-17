@@ -259,11 +259,11 @@
 80032e8c GhostTape_Start
 80032f14 GhostTape_WriteMoves
 800332c4 GhostTape_WriteBoosts
-80033324 GhostTape_Destroy
 
-// unknown 80033358
-// unknown 800333c4 -- ghost loading
-// unknown 80033400 -- ghost loading
+80033324 GhostDebug_Record
+80033358 GhostDebug_Playback
+800333c4 GhostDebug_Load
+80033400 GhostDebug_Save
 
 // === Everything below "Ghost" is "Howl"
 
@@ -522,7 +522,7 @@
 // unknown 80041ad4
 80041b9c VehBirth_SetConsts
 // unknown 80041d30
-// unknown 80041d8c
+// unknown 80041d8c -- DebugMenu set character mid-race?
 80041e38 VehBirth_EngineAudio_AllPlayers
 80041e90 VehBirth_TireSprites
 80041f0c VehBirth_NonGhost

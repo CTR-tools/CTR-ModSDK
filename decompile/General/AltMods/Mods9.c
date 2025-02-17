@@ -347,6 +347,13 @@ struct DebugRow
 };
 
 // June 1999
-// 80083788 - Levels/Players Menu
+// 800828F0 - Battle submenu
 // 80082b10 - Levels submenu
-// 8008314c - Players submenu
+// 80082d24 - Character submenu (reload level)
+// 80082f38 - Character submenu (mid-race swap?)
+// 8008314c - Players submenu (1/2/3/4/ResetPositions/StartRace)
+// 80083360 - Ghost submenu
+// 80083570 - Various Options (save, laps, game modes)
+// 80083788 - Levels/Players Menu
+
+// E3 demos were stripped
