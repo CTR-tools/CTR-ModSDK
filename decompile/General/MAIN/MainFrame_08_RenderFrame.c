@@ -403,10 +403,22 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		DECOMP_CAM_ClearScreen(gGT);
 	}
 
+	// DrawSelf profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0xFF, 0, 0xFF);
+	#endif
+	
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
 		DECOMP_RaceFlag_DrawSelf();
 	}
+	
+	// DrawSelf Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 	RenderDispEnv_UI(gGT);
 
@@ -427,7 +439,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	void DebugProfiler_SectionEnd();
 	DebugProfiler_SectionEnd();
 	
-	if((gGT->gameMode1 & LOADING) == 0)
+	if((gGT->gameMode1 & (LOADING|1)) == 0)
 	{
 		void DebugProfiler_Draw();
 		DebugProfiler_Draw();
