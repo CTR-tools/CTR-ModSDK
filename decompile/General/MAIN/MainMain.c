@@ -702,6 +702,9 @@ void StateZero()
 #ifdef USE_PROFILER
 	void DebugProfiler_Init();
 	DebugProfiler_Init();
+	
+	void DebugMenu_Init();
+	DebugMenu_Init();
 #endif
 
 	ResetGraph(0);
