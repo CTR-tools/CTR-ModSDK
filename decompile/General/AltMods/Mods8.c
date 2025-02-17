@@ -48,6 +48,7 @@ void DebugMenu_SetLapCount(struct GameTracker* gGT, int numLaps)
 	gGT->numLaps = numLaps;
 }
 
+#if 0
 static int debugModeArr[6] =
 {
 	ADVENTURE_MODE,
@@ -71,52 +72,9 @@ void DebugMenu_SetGameMode(struct GameTracker* gGT, int index)
 	gGT->gameMode1 &= removeBits;
 	gGT->gameMode1 |= debugModeArr[index];
 };
+#endif
 
-struct DebugRow;
-
-struct DebugMenu
-{
-	// initialized at runtime
-	struct DebugMenu* parentMenu;
-	
-	// set by compiler
-	struct DebugRow* rowArr;
-	
-	// initialized at runtime
-	int unk1;
-	
-	// 0xC
-	short posX;
-	short posY;
-	
-	// 0x10
-	short sizeX;
-	short sizeY;
-	
-	// RowArray[0]
-};
-
-struct DebugRow
-{
-	// & 0 -> null terminator
-	// & 1 -> leads to submenu
-	// & 3 -> run function
-	int actionFlag;
-	
-	// levelID, characterID, etc
-	int actionParam;
-	
-	char* rowText;
-	
-	union
-	{
-		// & 1
-		struct DebugMenu* subMenu;
-		
-		// & 3
-		int funcPtr;
-	};
-};
+#include "DebugStructs.h"
 
 struct DebugRow rowsDbgBattle[] =
 {
@@ -170,11 +128,8 @@ struct DebugRow rowsDbgMain[] =
 {
 	{ 1, 0x0, "LEVEL...", &menuDbgLevels },
 	
-	// dont deref nullptr
-	#if 0
-	{ 1, 0x0, "PLAYERS...", 0 }, // TODO: Submenu
-	#endif
-	
+	// TODO: Change back to 1
+	{ 3, 0x0, "PLAYERS...", 0 }, // TODO: Submenu
 	{}
 };
 
@@ -191,7 +146,6 @@ void DebugMenu_InitMenuPositionSize(
 {
 	int len = 0;
 	int rowCount = 0;
-	
 	struct DebugRow* dr;
 	
 	dm->posX = posX;
@@ -232,6 +186,21 @@ void DebugMenu_Init()
 {
 	DebugMenu_InitMenuPositionSize(
 		&menuDbgMain,8,8,0x14,0x41);
+}
+
+void DebugMenu_DrawIfOpen()
+{
+	struct GameTracker* gGT = sdata->gGT;
+	
+	int buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
+
+	if ((buttonTap & BTN_SELECT) != 0)
+		gGT->gameMode1 ^= DEBUG_MENU;
+
+	if ((gGT->gameMode1 & DEBUG_MENU) == 0)
+		return;
+	
+	DebugMenu_Draw(&menuDbgMain);
 }
 
 // June 1999

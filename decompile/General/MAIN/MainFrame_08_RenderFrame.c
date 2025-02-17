@@ -443,6 +443,9 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	{
 		void DebugProfiler_Draw();
 		DebugProfiler_Draw();
+		
+		void DebugMenu_DrawIfOpen();
+		DebugMenu_DrawIfOpen();
 	}
 	#endif
 

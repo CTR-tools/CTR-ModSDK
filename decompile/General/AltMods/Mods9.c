@@ -1,50 +1,9 @@
 
 // ==== Contains Profiler ====
 
-struct ProfilerSection
-{
-	// 0x0
-	char* name;
+#if defined (USE_PROFILER)
 
-	// 0x4
-	char a;
-	char r;
-	char g;
-	char b;
-	
-#if 0
-	// 0x8
-	int unk8;
-#endif
-	
-	// 0xC
-	int timeStart;
-	
-	// 0x10
-	int timeEnd;
-	
-	// 0x14
-	// 1 - DrawV
-	// 2 - DrawD
-	// 4 - DrawT
-	int flagsVDT;
-	
-	// 0x18
-	// VSyncCallback
-	int posV;
-	
-	// 0x1c
-	// DrawSyncCallback
-	int posD;
-	
-#if 0
-	// 0x20
-	// Unused
-	int posT;
-#endif
-
-	// size = 0x20
-};
+#include "DebugStructs.h"
 
 // No room, need MEMPACK_AllocMem
 // static struct ProfilerSection sections[64];
@@ -237,3 +196,60 @@ void DebugProfiler_Draw()
 		AddPrim(ot, f4);
 	}
 }
+
+// === End of DebugProfiler ===
+// === Start of DebugMenu ===
+
+void DebugMenu_Draw(struct DebugMenu* dm)
+{
+	struct GameTracker* gGT = sdata->gGT;
+	
+	struct PrimMem* primMem = &gGT->backBuffer->primMem;
+	
+	// must be room for 100 POLY_F4s
+	POLY_F4* test = primMem->curr;
+	test = test + 100;
+	if(test > primMem->endMin100) return;
+	
+	void* ot = gGT->pushBuffer_UI.ptrOT;
+	
+	
+	int rowCount = 0;
+	struct DebugRow* dr;
+	
+	dr = dm->rowArr;
+	while(dr->actionFlag != 0)
+	{
+		// TEMPORARY TEST,
+		// Should be debugfont instead
+		DECOMP_DecalFont_DrawLine(
+			dr->rowText,
+			dm->posX,
+			dm->posY + (rowCount * 8),
+			FONT_SMALL,
+			0);
+		
+		dr++;
+		rowCount++;
+	}
+	
+	// TEMPORARY TEST
+	if(dm->rowArr[0].actionFlag == 1)
+		dm->childMenu = dm->rowArr[0].subMenu;
+	
+	dr = dm->rowArr;
+	while(dr->actionFlag != 0)
+	{
+		if(dr->actionFlag == 1)
+		{
+			if(dr->subMenu == dm->childMenu)
+			{
+				DebugMenu_Draw(dr->subMenu);	
+			}
+		}
+		
+		dr++;
+	}
+}
+
+#endif
