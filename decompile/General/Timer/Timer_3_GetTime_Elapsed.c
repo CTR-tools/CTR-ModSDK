@@ -5,7 +5,7 @@
 // elapsed time since previous frameStart
 int DECOMP_Timer_GetTime_Elapsed(int oldVal, int* retVal)
 {
-	int newVal = Timer_GetTime_Total();
+	int newVal = DECOMP_Timer_GetTime_Total();
 	
 	if(retVal != 0)
 		*retVal = newVal;

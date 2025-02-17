@@ -67,7 +67,7 @@ int Debug_GetPreciseTime()
 void DebugProfiler_Init()
 {
 	int size = sizeof(struct ProfilerSection) * 64;
-	ptrSectArr = MEMPACK_AllocMem(size);
+	ptrSectArr = DECOMP_MEMPACK_AllocMem(size);
 }
 
 void DebugProiler_Reset()
@@ -182,7 +182,7 @@ void DebugProfiler_Draw()
 		
 		if((s->flagsVDT & 1) != 0)
 		{
-			DecalFont_DrawLine("V", 
+			DECOMP_DecalFont_DrawLine("V", 
 				DebugProfiler_Scale(s->posV),
 				0x2F,
 				FONT_BIG,
@@ -191,7 +191,7 @@ void DebugProfiler_Draw()
 		
 		if((s->flagsVDT & 2) != 0)
 		{
-			DecalFont_DrawLine("D", 
+			DECOMP_DecalFont_DrawLine("D", 
 				DebugProfiler_Scale(s->posD),
 				0x2B,
 				FONT_BIG,
@@ -201,7 +201,7 @@ void DebugProfiler_Draw()
 		#if 0
 		if((s->flagsVDT & 4) != 0)
 		{
-			DecalFont_DrawLine("T", 
+			DECOMP_DecalFont_DrawLine("T", 
 				DebugProfiler_Scale(s->posT),
 				0x33,
 				FONT_BIG,
@@ -239,7 +239,7 @@ void DebugProfiler_Draw()
 void DebugMenu_LoadGame_GivenLevelId(struct GameTracker* gGT, int levelID)
 {
 	gGT->levelID = levelID;
-	MainRaceTrack_RequestLoad(gGT->levelID);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 void DebugMenu_LoadGame_GivenIndexE3(struct GameTracker* gGT, int index)
@@ -255,7 +255,7 @@ void DebugMenu_LoadGame_GivenIndexE3(struct GameTracker* gGT, int index)
 		Row 8: 4P Blizzard Bluff, Crash Cortex Tiny Coco
 	*/
 	
-	MainRaceTrack_RequestLoad(gGT->levelID);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 // Set by menu
@@ -264,13 +264,13 @@ static int debugPlayerIndex = 0;
 void DebugMenu_LoadGame_GivenCharacterId(struct GameTracker* gGT, int charID)
 {
 	data.characterIDs[debugPlayerIndex] = charID;
-	MainRaceTrack_RequestLoad(gGT->levelID);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 void DebugMenu_LoadGame_GivenNumPlyr(struct GameTracker* gGT, int numPlyr)
 {
 	gGT->numPlyrNextGame = numPlyr;
-	MainRaceTrack_RequestLoad(gGT->levelID);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->levelID);
 }
 
 void DebugMenu_SetLapCount(struct GameTracker* gGT, int numLaps)

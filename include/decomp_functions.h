@@ -412,6 +412,8 @@ void DECOMP_SubmitName_RestoreName(short param_1);
 
 void DECOMP_Timer_Init(void);
 void DECOMP_Timer_Destroy(void);
+int DECOMP_Timer_GetTime_Total();
+int DECOMP_Timer_GetTime_Elapsed(int, int*);
 
 // UI
 void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket);

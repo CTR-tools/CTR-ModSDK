@@ -448,6 +448,9 @@
 
 #include "../decompile/General/Timer/Timer_0_Init.c"
 #include "../decompile/General/Timer/Timer_1_Destroy.c"
+#include "../decompile/General/Timer/Timer_2_GetTime_Total.c"
+#include "../decompile/General/Timer/Timer_3_GetTime_Elapsed.c"
+
 
 // UI
 #include "../decompile/General/prim.c"

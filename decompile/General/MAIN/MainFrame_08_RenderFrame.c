@@ -410,17 +410,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderDispEnv_UI(gGT);
 
-#ifdef USE_PROFILER
-	void DebugProfiler_Draw();
-	DebugProfiler_Draw();
-#endif
-
-#if 0
-	// leftover debug unused,
-	// clockDurationStall = sysclock (do NOT print)
-	gGT->clockDurationStall =
-		Timer_GetTime_Total();
-#endif
+	// VSYNC profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0);
+	#endif
 
 	RenderVSYNC(gGT);
 
@@ -428,12 +422,14 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderFMV();
 #endif
 
-#if 0
-	// leftover debug unused,
-	// clockDurationStall = time since stall started (NOW print)
-	gGT->clockDurationStall =
-		Timer_GetTime_Elapsed(gGT->clockDurationStall,0);
-#endif
+	// VSYNC Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	
+	void DebugProfiler_Draw();
+	DebugProfiler_Draw();
+	#endif
 
 	RenderSubmit(gGT);
 }
@@ -1732,6 +1728,8 @@ void RenderVSYNC(struct GameTracker* gGT)
 	{
 		VSync(0);
 	}
+
+
 
 	while(1)
 	{

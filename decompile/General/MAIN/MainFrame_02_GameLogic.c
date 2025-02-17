@@ -85,14 +85,13 @@ LAB_80034e74:
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
-// TODO: Rewritten now, merge into pc port,
-// make it so we dont need this ifdef anymore
-#ifndef REBUILD_PS1
-		iVar4 = Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
+		iVar4 = DECOMP_Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
 		iVar4 = (iVar4 << 5) / 100;
-#else
-		iVar4 = FPS_HALF(0x20);
-#endif
+		
+		// GetRCnt unimplemented
+		#ifdef REBUILD_PC
+		iVar4 = 0x20;
+		#endif
 
 		gGT->elapsedTimeMS = iVar4;
 		if (iVar4 < 0)
@@ -194,11 +193,7 @@ LAB_80035098:
 		{
 			#ifdef USE_PROFILER
 			void DebugProfiler_SectionStart(char* name, char r, char g, char b);
-			int color = iVar4 * 0x40;
-			int r = 0xFF;
-			int g = (color >> 0x0) & 0xFF;
-			int b = (color >> 0x8) & 0xFF;
-			DebugProfiler_SectionStart(0, r, g, b);
+			DebugProfiler_SectionStart(0, 0xFF, 0, 0);
 			#endif
 			
 			if

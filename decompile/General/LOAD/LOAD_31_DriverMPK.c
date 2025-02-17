@@ -20,7 +20,6 @@ void highMp_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(struct 
 #endif
 
 #ifdef USE_RANDOM
-int Timer_GetTime_Total();
 
 char ChRand_Repeat(int index, int character)
 {
@@ -66,7 +65,7 @@ void ChRand_SetCharacters()
 
 		id = (
 				// system clock
-				(Timer_GetTime_Total() & 0xf )
+				(DECOMP_Timer_GetTime_Total() & 0xf )
 
 				+
 
