@@ -444,9 +444,11 @@ FinishLoading:
 						gGT->pushBuffer[0].rot[1] = 0;
 						gGT->pushBuffer[0].rot[2] = 0;
 
+						#ifndef USE_PROFILER
 						// wait 5 seconds
 						if(gGT->timer > 30*5)
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+						#endif
 					}
 
 					int tap = gGS->gamepad[0].buttonsTapped;
@@ -705,6 +707,12 @@ void StateZero()
 	
 	void DebugMenu_Init();
 	DebugMenu_Init();
+	
+	// PC port SELECT button does not work
+	#ifdef REBUILD_PC
+	gGT->gameMode1 |= DEBUG_MENU;
+	#endif
+	
 #endif
 
 	ResetGraph(0);
