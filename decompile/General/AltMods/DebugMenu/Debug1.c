@@ -176,5 +176,7 @@ void DebugMenu_Draw(struct DebugMenu* dm)
 	}
 	
 	RECT* r = &dm->posX;
-	DECOMP_CTR_Box_DrawClearBox(r, 0x808080, 0, ot);
+	
+	int color = 0;
+	DECOMP_CTR_Box_DrawClearBox(r, &color, 0, ot);
 }
