@@ -238,6 +238,10 @@ void DebugProfiler_Draw()
 	}
 }
 
+// === End of DebugProfiler ===
+
+// === Start of DebugMenu ===
+
 void DebugMenu_LoadGame_GivenLevelId(struct GameTracker* gGT, int levelID)
 {
 	gGT->levelID = levelID;
@@ -303,3 +307,46 @@ void DebugMenu_SetGameMode(struct GameTracker* gGT, int index)
 	gGT->gameMode1 &= removeBits;
 	gGT->gameMode1 |= debugModeArr[index];
 };
+
+struct DebugRow;
+
+struct DebugMenu
+{
+	struct DebugMenu* parentMenu;
+	struct DebugRow* rowArr;
+	int unk1;
+	
+	short posX;
+	short posY;
+	short sizeX;
+	short sizeY;
+	
+	// RowArray[0]
+};
+
+struct DebugRow
+{
+	// & 0 -> null terminator
+	// & 1 -> leads to submenu
+	// & 3 -> run function
+	int actionFlag;
+	
+	// levelID, characterID, etc
+	int actionParam;
+	
+	char* rowText;
+	
+	union
+	{
+		// & 1
+		struct DebugMenu* subMenu;
+		
+		// & 3
+		int funcPtr;
+	};
+};
+
+// June 1999
+// 80083788 - Levels/Players Menu
+// 80082b10 - Levels submenu
+// 8008314c - Players submenu
