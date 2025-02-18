@@ -33,7 +33,7 @@ void DECOMP_UI_VsWaitForPressX(void)
 
     currDriver = gGT->drivers[i];
     r = &gGT->pushBuffer[i].rect;
-    tap = sdata->gGamepads[i].gamepad->buttonsTapped;
+    tap = sdata->gGamepads->gamepad[i].buttonsTapped;
 
     // If Player has not pressed X to continue
     // Draw comment, and battle stats

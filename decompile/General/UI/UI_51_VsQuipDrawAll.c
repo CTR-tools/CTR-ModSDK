@@ -29,45 +29,33 @@ void DECOMP_UI_VsQuipDrawAll(void)
 	if (printArr == 0)
 		continue;
 
-	// Retail game
-	#if 1
-    
+	printArr[2] = 0;
+	printArr[3] = 0;
+	
+	// if this is only one comment
+	if ((printArr[1] & 1) == 0) 
+	{
 		// Print the string as a comment
 		print = sdata->lngStrings[printArr[0]];
+	}
 	
-	// Dead code
-	// could have joined strings, feature cut
-	#else
-
-		printArr[2] = 0;
-		printArr[3] = 0;
+	// if the comment is conjoined
+	else 
+	{
+		// Add two strings together
+		sprintf(0x1f800000, "%s%s",
 	
-		// if this is only one comment
-		if ((printArr[1] & 1) == 0) 
-		{
-			// Print the string as a comment
-			print = sdata->lngStrings[printArr[0]];
-		}
+			// original end-of-race comment
+			sdata->lngStrings[printArr[0]],
 	
-		// if the comment is conjoined
-		else 
-		{
-			// Add two strings together
-			sprintf(acStack160, "%s%s",
-		
-				// original end-of-race comment
-				sdata->lngStrings[printArr[0]],
-		
-				// second part of comment,
-				// lngIndex of driver,
-				// for stuff like "hit by Crash Bandicoot" or something
-				sdata->lngStrings[data.MetaDataCharacters[d->EndOfRaceComment_characterID].name_LNG_long]);
-		
-			// Overwrite the stack pointer to print
-			print = acStack160;
-		}
+			// second part of comment,
+			// lngIndex of driver,
+			// for stuff like "hit by Crash Bandicoot" or something
+			sdata->lngStrings[data.MetaDataCharacters[d->EndOfRaceComment_characterID].name_LNG_long]);
 	
-	#endif
+		// Overwrite the stack pointer to print
+		print = 0x1f800000;
+	}
 
     // get current player's pushBuffer
 	RECT* r = &gGT->pushBuffer[d->driverID].rect;
