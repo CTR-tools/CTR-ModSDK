@@ -161,8 +161,8 @@ void DECOMP_UI_VsQuipAssignAll(void)
           switch(puVar17[-1]) {
           case 0:
 		  
-		    // UI_VsQuipReaddriverThread
-            iVar6 = UI_VsQuipReaddriverThread(driver,
+		    // UI_VsQuipReadDriver
+            iVar6 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);
@@ -178,8 +178,8 @@ LAB_80054f44:
             }
             break;
           case 1:
-			// UI_VsQuipReaddriverThread
-            iVar6 = UI_VsQuipReaddriverThread(driver,
+			// UI_VsQuipReadDriver
+            iVar6 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);
@@ -214,8 +214,8 @@ LAB_80054f44:
             } while (iVar12 < 8);
             break;
           case 4:
-			// UI_VsQuipReaddriverThread
-            uVar5 = UI_VsQuipReaddriverThread(driver,
+			// UI_VsQuipReadDriver
+            uVar5 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);
@@ -233,8 +233,8 @@ LAB_80054fd0:
             }
             break;
           case 5:
-			// UI_VsQuipReaddriverThread
-            uVar5 = UI_VsQuipReaddriverThread(driver,
+			// UI_VsQuipReadDriver
+            uVar5 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);
@@ -245,8 +245,8 @@ LAB_80054fd0:
                -bucket < (uVar18 - uVar5))) goto LAB_80054fd0;
             break;
           case 6:
-			// UI_VsQuipReaddriverThread
-            uVar18 = UI_VsQuipReaddriverThread(driver,
+			// UI_VsQuipReadDriver
+            uVar18 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);
@@ -269,8 +269,8 @@ LAB_80054fd0:
             }
             break;
           case 8:
-			// UI_VsQuipReaddriverThread
-            iVar4 = UI_VsQuipReaddriverThread(driver,
+			// UI_VsQuipReadDriver
+            iVar4 = UI_VsQuipReadDriver(driver,
 								(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverThreadOffset)
 								(puVar17 + 5)  // 0xA + 5*2 = 0x14
 								);

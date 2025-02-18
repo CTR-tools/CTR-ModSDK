@@ -1,6 +1,6 @@
-// 506 = 978-472, "comm... - //comm..."
-// 506+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 881 rewritten so far
-// 506 for every 'common' and ','
+// 512 = 978-466, "comm... - //comm..."
+// 512+43+33+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 887 rewritten so far
+// 512 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
