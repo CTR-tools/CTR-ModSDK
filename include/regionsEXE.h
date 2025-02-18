@@ -2356,18 +2356,31 @@ struct Data
 
 	#if 0
 
-	800864DC - 8008664c // lng offsets for VS meta
+	// 0x27 quip metas,
+	800864DC - 8008664c // lng offsets for VS meta (plus more than just index)
 	8008664c - 800869f4 // VS quip meta
 
-	800869f4 - 80086b64 // lng offsets for battle meta
+	// 0x13 quip metas, 
+	800869f4 - 80086b64 // lng offsets for battle meta (plus more than just index)
 	80086b64 - 80086d2c // battle quip meta
+
+	struct QuipStr
+	{
+		short lngIndex;
+		short flag; // &1 means include Crash/Cortex/Coco name
+		
+		short unused1;
+		short unused2;
+	}
 
 	// Quip = End-Of-Race comment
 	struct QuipMeta
 	{
-		// two comments to pick from
-		void* ptrToLngIndex1;
-		void* ptrToLngIndex2;
+		// two comments to pick from,
+		// this is MORE than just index
+		short* ptrToLngIndex1;
+		short* ptrToLngIndex2;
+		
 		short unk0;
 
 		// 0xA
