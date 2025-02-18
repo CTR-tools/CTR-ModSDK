@@ -2401,6 +2401,22 @@ struct Data
 	800864DC - 8008664c // VS QuipStr array (0x2E)
 	8008664c - 800869f4 // VS QuipMeta array (0x27)
 
+	// BATTLE QUIPs
+	// [0x0] = SMACK MAN, 	DISASTER MASTER!,	7, 0, 0,	0x559(numTimesAttacking), 1
+	// [0x1] = SO CLOSE!,	SMACK MAN,			7, 0, 1,	0x559(numTimesAttacking), 1
+	// [0x2] = TOASTED!,	LOST IN SPACE,		8, 8, 0,	0x559(numTimesAttacking), 1
+	// [0x3] = DISASTER MASTER!, THE DOMINATOR!,8, 2, 0xF,	0x4f6(quip4), 2
+	// [0x4] = THE DOMINATOR!, COMEBACK KID!,	4, 6, 2,	0x559(numTimesAttacking), 1
+	// [0x5] = COMEBACK KID!, GAVE IT AWAY!,	0, 6, 3,	0x4f2(quip2), 2
+	// [0x6] = GAVE IT AWAY!, DEATH TOUCH!,		0, 2, 2,	0x4f4(quip3), 2
+	// [0x7] = DEATH TOUCH!, ACID RAINMAN!,		8, 6, 6,	0x4f0(quip1), 2
+	// [0x8] = ACID RAINMAN!, BULL'S EYE!,		8, 6, 4,	0x4f0(quip1), 2
+	// [0x9] = BULL'S EYE!, FISH IN A BARREL!,	8, 6, 1,	0x4f0(quip1), 2
+	// [0xA] = FISH IN A BARREL!, --invalid--,	6, 4, 0,	0x575(NumMissilesComparedToNumAttacks>>8), 1
+	// [0xB] = LOST IN SPACE, SO CLOSE!,		9, 0, 0, 	0x559(numTimesAttacking, 1)
+	
+	// --invalid-- maybe should've been TOASTED,
+	// accidentally pointed to 80086c0c instead of QuipStr
 
 	// 0xC quip metas,
 	800869f4 - 80086c0c // Battle QuipStr array (0x43)
