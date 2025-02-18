@@ -2356,11 +2356,26 @@ struct Data
 
 	#if 0
 
+	// VS QUIPs
+	// 0x13 quip metas, 
+	// [0x00] = HOP HAPPY,		RARE AIR, 		0, 1, 0x28, 	0x554(numberOfJumps), 2
+	// [0x01] = RARE AIR, 		WALLFLOWER, 	1, 1, 0x12c0, 	0x53c(timeSpentJumping), 4
+	// [0x02] = WALLFLOWER, 	MISSILE MAGNET	0, 1, 0xf00,	0x530(timeSpentAgainstWall), 4
+	// [0x03] = MISSILE MAGNET,		---,		0, 0, 2, 		0x55d(numTimesMissileHitYou), 1
+	// [0x04] = MOST BOMBED, 		---, 		0, 0, 2,		0x55e(numTimesBombHitYou), 1
+	// [0x05] = WHAT'S A PICKUP?, 	---,		1, 1, 1,		0x568(numTimesHitWeaponBox), 1	
+	// [0x06] = SLOWPOKE,			---,		1, 0, 0xfa0,	0x518(distanceDriven), 4
+	
+	// ...
+
+	// [0x26] = OUT OF GAS!,		NULL,		9, 0, 0,		0x559(numTimesAttacking), 1
+
 	// 0x27 quip metas,
 	800864DC - 8008664c // lng offsets for VS meta (plus more than just index)
 	8008664c - 800869f4 // VS quip meta
 
-	// 0x13 quip metas, 
+
+	
 	800869f4 - 80086b64 // lng offsets for battle meta (plus more than just index)
 	80086b64 - 80086d2c // battle quip meta
 
@@ -2371,15 +2386,17 @@ struct Data
 		
 		short unused1;
 		short unused2;
-	}
+	};
 
 	// Quip = End-Of-Race comment
 	struct QuipMeta
 	{
-		// two comments to pick from,
-		// this is MORE than just index
-		struct QuipStr* ptrQuipStr1;
-		struct QuipStr* ptrQuipStr2;
+		// QuipMeta->next = QuipMeta->next->next,
+		// This removes QuipStr from search algorithm,
+		// to make it impossible for quips to repeat.
+		// Somewhere the linked list needs to restart itself
+		struct QuipStr* ptrQuipStrCurr;
+		struct QuipStr* ptrQuipStrNext;
 		
 		short unk0;
 
