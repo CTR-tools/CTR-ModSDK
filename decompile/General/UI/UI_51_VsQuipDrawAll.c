@@ -3,9 +3,8 @@
 void DECOMP_UI_VsQuipDrawAll(void) 
 {
   char* print;
-  short* printIndex;
+  short* printArr;
   struct Driver* d;
-  RECT* r;
   
   struct GameTracker* gGT = sdata->gGT;
   struct Thread* thread;
@@ -25,26 +24,29 @@ void DECOMP_UI_VsQuipDrawAll(void)
 		continue;
 
     // This is secretly a short[2], to hold a config bit
-    printIndex = (short*)&d->EndOfRaceComment_lngIndex;
+    printArr = (short*)d->EndOfRaceComment_ptrQuip;
+	
+	if (printArr == 0)
+		continue;
 
 	// Retail game
 	#if 1
     
 		// Print the string as a comment
-		print = sdata->lngStrings[printIndex[0]];
+		print = sdata->lngStrings[printArr[0]];
 	
 	// Dead code
 	// could have joined strings, feature cut
 	#else
 
-		printIndex[2] = 0;
-		printIndex[3] = 0;
+		printArr[2] = 0;
+		printArr[3] = 0;
 	
 		// if this is only one comment
-		if ((printIndex[1] & 1) == 0) 
+		if ((printArr[1] & 1) == 0) 
 		{
 			// Print the string as a comment
-			print = sdata->lngStrings[printIndex[0]];
+			print = sdata->lngStrings[printArr[0]];
 		}
 	
 		// if the comment is conjoined
@@ -54,7 +56,7 @@ void DECOMP_UI_VsQuipDrawAll(void)
 			sprintf(acStack160, "%s%s",
 		
 				// original end-of-race comment
-				sdata->lngStrings[printIndex[0]],
+				sdata->lngStrings[printArr[0]],
 		
 				// second part of comment,
 				// lngIndex of driver,
@@ -68,7 +70,7 @@ void DECOMP_UI_VsQuipDrawAll(void)
 	#endif
 
     // get current player's pushBuffer
-	r = &gGT->pushBuffer[d->driverID].rect;
+	RECT* r = &gGT->pushBuffer[d->driverID].rect;
 
     // Draw the string with a box around it
     RECTMENU_DrawQuip(

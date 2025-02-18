@@ -40,8 +40,7 @@ void DECOMP_UI_VsWaitForPressX(void)
     if ((*pressedX & 2) == 0)
     {
       // If you hit left or right on the D-Pad, or Analog Stick
-      if (((tap & 4) != 0) ||
-          ((tap & 8) != 0))
+      if ((tap & (BTN_LEFT | BTN_RIGHT)) != 0)
       {
         // Invert &1 bit
         *pressedX = *pressedX ^ 1;
@@ -57,16 +56,14 @@ void DECOMP_UI_VsWaitForPressX(void)
         *pressedX = *pressedX ^ 2;
       }
 
-      // ivar9 0x157: YOU HIT
-      // ivar9 0x158: HIT YOU
-      string = 0x157 + (*pressedX & 1);
-
       // If you're in Battle Mode
       if ((gGT->gameMode1 & 0x20) != 0)
       {
-        // ivar9 0x157: YOU HIT
-        // ivar9 0x158: HIT YOU
-        DecalFont_DrawLine(sdata->lngStrings[string],
+		// ivar9 0x157: YOU HIT
+		// ivar9 0x158: HIT YOU
+		string = 0x157 + (*pressedX & 1);
+		
+		DecalFont_DrawLine(sdata->lngStrings[string],
 
                            // Midpoint between pushBuffer Start X and End X
                            r->x + (r->w >> 1),
@@ -96,13 +93,13 @@ void DECOMP_UI_VsWaitForPressX(void)
           // YOU HIT THEM
           if ((*pressedX & 1) == 0)
           {
-            numAttacked = currDriver->numTimesAttackingPlayer[0];
+            numAttacked = currDriver->numTimesAttackingPlayer[j];
           }
 
           // HIT YOU
           else
           {
-            numAttacked = currDriver->numTimesAttackedByPlayer[0];
+            numAttacked = currDriver->numTimesAttackedByPlayer[j];
           }
 
 		  // only 8 bytes, use scratchpad

@@ -83,7 +83,7 @@ void DECOMP_UI_VsQuipAssignAll(void)
 	  // get Driver object from thread
       driver = bucket->thread->object;
 
-      driver->EndOfRaceComment_lngIndex = 0;
+      driver->EndOfRaceComment_ptrQuip = 0;
 
 	  // If you dont have a point limit (battle)
       if ((gGT->gameMode1 & POINT_LIMIT) == 0)
