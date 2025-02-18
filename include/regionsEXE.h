@@ -2357,7 +2357,6 @@ struct Data
 	#if 0
 
 	// VS QUIPs
-	// 0x13 quip metas, 
 	// [0x00] = HOP HAPPY,		RARE AIR, 		0, 1, 0x28, 	0x554(numberOfJumps), 2
 	// [0x01] = RARE AIR, 		WALLFLOWER, 	1, 1, 0x12c0, 	0x53c(timeSpentJumping), 4
 	// [0x02] = WALLFLOWER, 	MISSILE MAGNET	0, 1, 0xf00,	0x530(timeSpentAgainstWall), 4
@@ -2365,19 +2364,47 @@ struct Data
 	// [0x04] = MOST BOMBED, 		---, 		0, 0, 2,		0x55e(numTimesBombHitYou), 1
 	// [0x05] = WHAT'S A PICKUP?, 	---,		1, 1, 1,		0x568(numTimesHitWeaponBox), 1	
 	// [0x06] = SLOWPOKE,			---,		1, 0, 0xfa0,	0x518(distanceDriven), 4
-	
-	// ...
-
+	// [0x07] = MOST DIZZY, 		---,		0, 1, 0xb40,	0x540(timeSpentSpinningOut), 4
+	// [0x08] = SITTING DUCK,		---,		4, 0, 3,		0x57c(numTimesAttacked), 4
+	// [0x09] = S'S CHUMP,			---,		3, 0, 3,		0x560(numTimesAttackedByPlayer), 8
+	// [0x0A] = BAD SHOT,			---,		1, 0, 0x800,	0x574(NumMissilesComparedToNumAttacks), 4
+	// [0x0B] = FALL GUY,			---,		0, 0, 3,		0x56a(numTimesMaskGrab), 1
+	// [0x0C] = LEAST FRUIT,		---,		1, 1, 6,		0x569(numTimesWumpa), 1
+	// [0x0D] = MINE SWEEPER,		---,		0, 1, 1,		0x55f(numTimesMotionlessPotionHitYou), 1
+	// [0x0E] = MUD DOG,			---,		0, 1, 0xf00,	0x524(timeSpentInMud), 4
+	// [0x0F] = PLANT FOOD,			---,		0, 0, 0xb40,	0x548(timeSpentEaten), 4
+	// [0x10] = MOST BURNED,		---,		0, 1, 0xf00,	0x54c(timeSpentBurnt), 4
+	// [0x11] = FLATMAN,			---,		0, 1, 0x12c0,	0x544(timeSpentSquished), 4
+	// [0x12] = MR. REVERSE,		---,		0, 1, 0x1e00,	0x520(timeSpentReversing), 4
+	// [0x13] = SKID SQUID,			---,		0, 1, 0x12c0,	0x51c(timeSpentWithHighSpeed), 4
+	// [0x14] = TURBO MASTER,		---,		0, 1, 0x4b00,	0x534(timeSpentUsingReserves), 4
+	// [0x15] = SUPER SLIDER,		---,		0, 1, 0x4b00, 	0x538(timeSpentDrifting), 4
+	// [0x16] = MOST AIR TIME,		---,		0, 1, 0x1e00,	0x53c(timeSpentJumping), 4
+	// [0x17] = BIGGEST AIR,		---,		0, 0, 0x3c0,	0x550(highestJump), 2
+	// [0x18] = BEAKER ACE,			---,		0, 0, 0,		0x556(numTimesMovingPotionHitSomeone), 1
+	// [0x19] = MISSILE MASTER,		---,		0, 0, 2,		0x557(numTimesMissileHitSomeone), 1
+	// [0x1a] = CRATES 'R' US,		---,		0, 1, 2,		0x568(numTimesHitWeaponBox), 1
+	// [0x1b] = FASTEST RACER,		---,		0, 0, 0xfa0,	0x518(distanceDriven), 4
+	// [0x1c] = KING OF THE PACK,	---,		0, 0, 3,		0x559(numTimesAttacking), 1
+	// [0x1d] = UNTOUCHABLE,		---,		1, 0, 1,		0x57c(numTimesAttacked), 4
+	// [0x1e] = BEST AIM,			---,		0, 0, 0x800,	0x574(NumMissilesComparedToNumAttacks), 4
+	// [0x1f] = LONGEST SHOT,		---,		0, 0, 0x3c0,	0x552(longestShot), 2
+	// [0x20] = MOST JUICED UP,		---,		0, 1, 0x12c0,	0x52c(timeSpentInTenWumpa), 4
+	// [0x21] = FRUIT HOG,			---,		0, 1, 0xc,		0x569(numTimesWumpa), 1
+	// [0x22] = COMEBACK KID,		---,		0, 0, 0x2580,	0x578(TimeWinningDriverSpentLastPlace), 4
+	// [0x23] = CLOCK JOCK,			---,		0, 0, 1,		0x558(numTimesClockWeaponUsed), 1
+	// [0x24] = SPEED DEMON!,		---,		5, 0, 0x2580,	0x514(timeElapsedInRace), 4
+	// [0x25] = STEAMROLLER,		---,		0, 0, 1,		0x55b(numTimesSquishedSomeone), 1
 	// [0x26] = OUT OF GAS!,		NULL,		9, 0, 0,		0x559(numTimesAttacking), 1
 
 	// 0x27 quip metas,
-	800864DC - 8008664c // lng offsets for VS meta (plus more than just index)
-	8008664c - 800869f4 // VS quip meta
+	800864DC - 8008664c // VS QuipStr array (0x2E)
+	8008664c - 800869f4 // VS QuipMeta array (0x27)
 
 
-	
-	800869f4 - 80086b64 // lng offsets for battle meta (plus more than just index)
-	80086b64 - 80086d2c // battle quip meta
+	// 0xC quip metas,
+	800869f4 - 80086c0c // Battle QuipStr array (0x43)
+	80086c0c - 80086d2c // Battle QuipMeta array (0xC)
 
 	struct QuipStr
 	{

@@ -1241,7 +1241,7 @@ struct Driver
 	int timeSpentSquished;
 
 	// 0x548
-	int timeSpentMaskGrabbed;
+	int timeSpentEaten;
 
 	// 0x54c
 	int timeSpentBurnt;
