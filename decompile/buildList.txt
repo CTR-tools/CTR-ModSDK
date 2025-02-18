@@ -1250,8 +1250,10 @@ common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBl
 //common, exe, UI_RenderFrame_CrystChall, 0x0,             General/UI/UI_46_RenderFrame_CrystChall.c
 //UI_AAA_BigBlock1 ends here ---^
 
+// Removed from decomp because it is NOT USED
 //common, exe, UI_RenderFrame_Wumpa3D_2P3P4P, 0x0,         General/UI/UI_47_RenderFrame_Wumpa3D_2P3P4P.c //TODO (not called in the rewrite?)
-//common, exe, UI_VsQuipReadDriver, 0x0,                   General/UI/UI_48_VsQuipReadDriver.c //TODO
+
+common, exe, UI_VsQuipReadDriver, 0x0,                   General/UI/UI_48_VsQuipReadDriver.c
 //common, exe, UI_VsQuipAssign, 0x0,                       General/UI/UI_49_VsQuipAssign.c //TODO
 //common, exe, UI_VsQuipAssignAll, 0x0,                    General/UI/UI_50_VsQuipAssignAll.c //TODO
 
