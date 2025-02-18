@@ -2378,8 +2378,8 @@ struct Data
 	{
 		// two comments to pick from,
 		// this is MORE than just index
-		short* ptrToLngIndex1;
-		short* ptrToLngIndex2;
+		struct QuipStr* ptrQuipStr1;
+		struct QuipStr* ptrQuipStr2;
 		
 		short unk0;
 
