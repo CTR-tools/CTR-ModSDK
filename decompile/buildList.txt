@@ -1256,8 +1256,7 @@ common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBl
 //common, exe, UI_VsQuipAssignAll, 0x0,                    General/UI/UI_50_VsQuipAssignAll.c //TODO
 
 common, exe, UI_VsQuipDrawAll, 0x0,                      General/UI/UI_51_VsQuipDrawAll.c
-
-//common, exe, UI_VsWaitForPressX, 0x0,                    General/UI/UI_52_VsWaitForPressX.c //TODO
+common, exe, UI_VsWaitForPressX, 0x0,                    General/UI/UI_52_VsWaitForPressX.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0,             General/UI/UI_53_RaceEnd_GetDriverClock.c
 common, exe, UI_RaceStart_IntroText1P, 0x0,              General/UI/UI_54_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_MenuProc, 0x0,                   General/UI/UI_55_RaceEnd_MenuProc.c
