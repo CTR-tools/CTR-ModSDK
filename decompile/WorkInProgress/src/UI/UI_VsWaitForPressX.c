@@ -25,13 +25,13 @@ void DECOMP_UI_VsWaitForPressX(void)
   char numPlyr = gGT->numPlyrCurrGame;
   short ready = 0;
   int tap;
-  u_int* pressedX;
+  char* pressedX;
   u_int eor_flag;
 
     for (i = 0; i < numPlyr; i++)
     {
       // flags, for which players have pressed X to continue
-      pressedX = &sdata->Battle_EndOfRace.Flags_PressX[i];
+      pressedX = &sdata->Battle_EndOfRace.boolPressX[i];
 
       viewport = &gGT->pushBuffer[i].rect;
 
@@ -72,7 +72,7 @@ void DECOMP_UI_VsWaitForPressX(void)
         string = 0x157;
 
         // If you want to see HIT YOU
-        if ((pressedX & 1) != 0)
+        if ((*pressedX & 1) != 0)
         {
           // if you want to see who hit you
           string = 0x158;

@@ -3376,7 +3376,7 @@ struct sData
 		// 8008d564
 		// one byte per player
 		// Battle and VS
-		u_int Flags_PressX;
+		char boolPressX[4];
 
 		// 8008d568
 		// Normal flags are in registers,

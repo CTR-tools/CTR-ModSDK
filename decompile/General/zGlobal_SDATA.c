@@ -432,7 +432,7 @@ struct sData sdata_static =
 	
 	.Battle_EndOfRace =
 	{
-		.Flags_PressX = 0,
+		.boolPressX = {0},
 		
 		// default
 		#ifndef USE_NEW2P

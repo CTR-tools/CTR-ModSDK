@@ -7179,6 +7179,7 @@ void FUN_800550f4(void)
           pcVar6 = *(char **)((uint)*puVar5 * 4 + DAT_8008d878);
         }
 
+		// === CUT FEATURE ===
 		// if the comment is conjoined
         else
 		{
