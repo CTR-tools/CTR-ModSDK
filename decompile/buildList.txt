@@ -281,7 +281,7 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_03_Adv_
 //common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c //TODO
 //common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_08_ThTick_EngineRevving.c //TODO
 //common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c //TODO
-//common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //TODO
+common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //TODO
 //common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_11_ThTick_Drive.c //TODO
 //common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_12_ChangeState.c //TODO
 //common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_13_CollideWithOtherAI.c //TODO
