@@ -1,46 +1,34 @@
 #include <common.h>
 
-void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *destination, int *size, void * callback)
+void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *ptrDst, int *size, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
-	u_char bVar1;
-	u_int uVar2;
-	int iVar3;
 	int uVar5;
-	void *buf;
-	CdlLOC aCStack56[2];
-	u_char auStack48[8];
-
-	bVar1 = true;
+	CdlLOC cdLoc;
+	u_char paramOutput[8];
 
 	DECOMP_CDSYS_SetMode_StreamData();
 
-	uVar5 = 0;
-
+	// get size and offset of subfile
 	struct BigEntry* entry = BIG_GETENTRY(bigfile);
+	int eSize = entry[subfileIndex].size;
+	int eOffs = entry[subfileIndex].offset;
 
-	// get size of file from bigfile header
-	*size = entry[subfileIndex].size;
+	*size = eSize;
+	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
 
-	// bigfile cdpos + subfileOffset
-	CdIntToPos(bigfile->cdpos + entry[subfileIndex].offset, aCStack56);
-
-	// if a destination pointer is not given
-	if (destination == (void *)0x0)
+	// if not an overlay file with specific destination
+	if (ptrDst == (void *)0x0)
 	{
 		// set flag that we used MEMPACK_AllocMem
 		// to store this ReadFile somewhere random
-		//DAT_80083a40 = DAT_80083a40 | 1;
 		data.currSlot.flags = data.currSlot.flags | 1;
 
-		// MEMPACK_AllocMem
-		buf = (void *)DECOMP_MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
+		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((*size + 0x7ffU) & 0xfffff800); // "FILE"
 
-		// if allocation failed
-		if (buf == (void *)0x0)
+		if (ptrDst == (void *)0x0)
 		{
-			// function  failed
 			return (void *)0;
 		}
 	}
@@ -49,53 +37,60 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 	else
 	{
 		data.currSlot.flags = data.currSlot.flags & 0xfffe;
-
-		// use that
-		buf = destination;
 	}
 
-	while ((uVar5 == 0 || (!bVar1)))
+	
+	sdata->ReadFileAsyncCallbackFuncPtr = 0;
+	
+	if (callback != 0)
 	{
-		uVar5 = CdControl(CdlSetloc, (u_char *)aCStack56, auStack48);
-#ifdef REBUILD_PC
-		uVar5 = 1;
-#endif
-		CdlCB cdreadCB = (CdlCB)0x0;
-		// If no callback function pointer is given
-		if (callback == 0)
+		// Save the function pointer address
+		sdata->ReadFileAsyncCallbackFuncPtr = callback;		
+		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
+	}
+	
+	#if defined(REBUILD_PC) || defined(USE_PCDRV)
+	callback = 0;
+	#endif
+		
+	#ifdef USE_PCDRV
+	
+	PClseek(sdata->fd_bigfile, entry[subfileIndex].offset, PCDRV_SEEK_SET);
+	PCread(sdata->fd_bigfile, ptrDst, *size);
+	
+	#else
+	
+	while (1)
+	{
+		uVar5 =  CdControl(CdlSetloc, &cdLoc, &paramOutput[0]);		
+		uVar5 &= CdRead(*size + 0x7ffU >> 0xb, ptrDst, 0x80);
+
+		#ifndef REBUILD_PC
+		// if no errors
+		if(uVar5 != 0)
+		#endif
+		
 		{
-			// Set function pointers to nullptr
-			sdata->ReadFileAsyncCallbackFuncPtr = 0;
-		}
+			// if async, end here
+			if(callback != 0)
+				break;
 
-		// If you want a callback function pointer
-		// to execute after LOAD_ReadFile is done
-		else
-		{
-			// Save the function pointer address
-			sdata->ReadFileAsyncCallbackFuncPtr = callback;
-			cdreadCB = DECOMP_LOAD_ReadFileASyncCallback;
-		}
-
-		// Save this function as a callback,
-		// which does not execute the function pointer
-		CdReadCallback(cdreadCB);
-
-		uVar2 = CdRead(*size + 0x7ffU >> 0xb,buf,0x80);
-		uVar5 = uVar5 & uVar2;
-
-#ifndef REBUILD_PC
-		if (callback == 0)
-#endif
-		{
-			iVar3 = CdReadSync(0,(u_char *)0x0);
-			bVar1 = iVar3 == 0;
+			// if sync, wait until remainingSectors=0
+			uVar5 = CdReadSync(0,(u_char *)0x0);
+			
+			// if no sectors remain
+			if(uVar5 == 0)
+				break;
 		}
 	}
+	
+	#endif
 
-	if ((callback == 0) && (destination == (void *)0x0))
+	if ((callback == 0) && (ptrDst == (void *)0x0))
 	{
+		// undo sector-align alloc,
+		// allocate just "needed" bytes
 		DECOMP_MEMPACK_ReallocMem(*size);
 	}
-	return buf;
+	return ptrDst;
 }

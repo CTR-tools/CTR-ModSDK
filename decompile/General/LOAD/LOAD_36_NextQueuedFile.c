@@ -77,7 +77,7 @@ void DECOMP_LOAD_NextQueuedFile()
 		struct LoadQueueSlot* curr = &data.currSlot;
 #endif
 
-#ifdef REBUILD_PC
+#if defined(REBUILD_PC) || defined(USE_PCDRV)
 		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
 #else
 		// Use callback if present

@@ -3616,6 +3616,9 @@ struct sData
 	// 8008d6b4
 	int bool_XnfLoaded;
 
+// PS1
+#ifndef USE_PCDRV
+
 	// 8008d6b8
 	// = 0, most of the time
 	// = 1, finished, set on IRQ
@@ -3632,6 +3635,16 @@ struct sData
 
 	// 8008d6c8
 	int XA_VolumeDeduct;
+
+// PC
+#else
+	
+	int fd_bigfile;
+	int fd_kartHwl;
+
+	int willUseLater[3];
+	
+#endif
 
 	// 8008d6cc
 	int* ptrArray_numSongs;

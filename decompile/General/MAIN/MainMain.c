@@ -21,6 +21,38 @@ u_int DECOMP_main()
 	struct GamepadSystem* gGS;
 	gGS = sdata->gGamepads;
 
+#ifdef USE_PCDRV
+	ResetGraph(0);
+	SetGraphDebug(0);
+
+	SetDispMask(1);
+
+	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
+	SetDefDrawEnv(&gGT->db[1].drawEnv, 0, 0x128, 0x200, 0xd8);
+	SetDefDispEnv(&gGT->db[0].dispEnv, 0, 0x128, 0x200, 0xd8);
+	SetDefDispEnv(&gGT->db[1].dispEnv, 0, 0, 0x200, 0xd8);
+
+	gGT->db[0].dispEnv.screen.x = 0;
+	gGT->db[0].dispEnv.screen.y = 0xc;
+	gGT->db[0].dispEnv.screen.w = 0x100;
+	gGT->db[0].dispEnv.screen.h = 0xd8;
+
+	gGT->db[1].dispEnv.screen.x = 0;
+	gGT->db[1].dispEnv.screen.y = 0xc;
+	gGT->db[1].dispEnv.screen.w = 0x100;
+	gGT->db[1].dispEnv.screen.h = 0xd8;
+
+	gGT->db[0].drawEnv.isbg = 1;
+	gGT->db[0].drawEnv.r0 = 0;
+	gGT->db[0].drawEnv.g0 = 0;
+	gGT->db[0].drawEnv.b0 = 0;
+
+	gGT->db[1].drawEnv.isbg = 1;
+	gGT->db[1].drawEnv.r0 = 0;
+	gGT->db[1].drawEnv.g0 = 0;
+	gGT->db[1].drawEnv.b0 = 0;
+#endif
+
 #ifndef REBUILD_PS1
 	__main();
 #endif

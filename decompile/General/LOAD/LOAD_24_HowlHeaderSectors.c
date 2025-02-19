@@ -2,6 +2,10 @@
 
 int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector)
 {
+	
+// PS1
+#ifndef USE_PCDRV
+
 	CdlLOC loc;
 	
 	DECOMP_CDSYS_SetMode_StreamData();
@@ -24,4 +28,7 @@ int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int
 		return 0;
 	
 	return 1;
+
+#endif
+
 }

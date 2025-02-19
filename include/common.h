@@ -3,6 +3,7 @@
 
 // toggle these in decompile
 
+// 2mb
 //#define USE_60FPS		// 60 frames per second
 //#define USE_16BY9		// Widescreen
 //#define USE_NEW2P		// Requires 16BY9: Side-By-Side 2P
@@ -14,7 +15,8 @@
 //#define USE_PROFILER	// Debug profiler from PizzaHut
 //#define USE_4PADTEST	// 1 controller for all 4 players (not done)
 
-//#define USE_RAMEX		// 8mb RAM expansion
+// 8mb
+//#define USE_RAMEX		// 8mb RAM expansion		
 //#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
 //#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
@@ -23,7 +25,10 @@
 //#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
 //#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
 
+// PC only
 //#define USE_VR		// Virtual Reality
+//#define USE_PCDRV		// File Read/Write to PC
+// ...
 
 
 

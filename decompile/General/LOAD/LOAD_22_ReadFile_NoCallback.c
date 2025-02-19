@@ -1,7 +1,12 @@
 #include <common.h>
 
+// Used for XNF and only the XNF
 void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size)
 {
+
+// PS1
+#ifndef USE_PCDRV
+
 	CdlFILE cdlFile;
 	
 	DECOMP_LOAD_StringToUpper(filename);
@@ -33,4 +38,7 @@ void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int*
 		return 0;
 	
 	return ptrDestination;
+
+#endif
+
 }
