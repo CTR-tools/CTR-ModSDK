@@ -33,4 +33,8 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 	}
 	
 	sdata->frameFinishedVRAM = sdata->gGT->frameTimer_VsyncCallback;
+	
+	// BUGFIX: The OG CTR can crash in the loading screen
+	if (sdata->frameFinishedVRAM == 0)
+		sdata->frameFinishedVRAM = 1;
 }
