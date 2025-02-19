@@ -27,12 +27,18 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 	// PC
 	#else
 		
-		int fd = PCopen(filename, PCDRV_MODE_READ);
-		int rs = PCread(fd, bh, 0x80);
+		#ifdef REBUILD_PC
+		int v1;
+		#else
+		// because this API is STRANGE
+		register int v1 asm("v1");
+		#endif
 	
-		sdata->fd_bigfile = fd;
-		// assert(rs)
-	
+		v1 = PCopen("BIGFILE.BIG", PCDRV_MODE_READ);
+		sdata->fd_bigfile = v1;
+		
+		v1 = PCread(v1, bh, 0x80);
+		
 	#endif
 	
 	// undo allocation of 0x4000, only use "needed" size

@@ -15,10 +15,17 @@ void DECOMP_howl_LoadHeader(char* filename)
 // PC
 #ifdef USE_PCDRV
 	
-	int fd = PCopen(filename, PCDRV_MODE_READ);
-	int rs = PCread(fd, alloc, 0x800);
+	#ifdef REBUILD_PC
+	int v1;
+	#else
+	// because this API is STRANGE
+	register int v1 asm("v1");
+	#endif
 	
-	sdata->fd_kartHwl = fd;
+	v1 = PCopen("SOUNDS/KART.HWL", PCDRV_MODE_READ);
+	sdata->fd_kartHwl = v1;
+	
+	v1 = PCread(sdata->fd_kartHwl, alloc, 0x800);
 	
 	// allocate room for howlHeader + pointerTable
 	howlHeaderSize = sizeof(struct HowlHeader) + alloc->headerSize;
@@ -28,7 +35,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 	DECOMP_MEMPACK_ReallocMem(numSector << 0xb);
 	
 	char* byteOffset = (char*)alloc;
-	PCread(fd, &byteOffset[0x800], howlHeaderSize-0x800);
+	PCread(sdata->fd_kartHwl, &byteOffset[0x800], howlHeaderSize-0x800);
 	
 	return;
 
