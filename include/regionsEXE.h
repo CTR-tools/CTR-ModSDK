@@ -2874,7 +2874,7 @@ struct sData
 	int load_inProgress;
 
 	// 8008d0a8
-	int frameWhenLoadingFinished;
+	int frameFinishedVRAM;
 
 	// 8008D0AC
 	char s_FILE[8];

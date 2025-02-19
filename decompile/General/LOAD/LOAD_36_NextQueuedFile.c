@@ -73,8 +73,8 @@ void DECOMP_LOAD_NextQueuedFile()
 	}
 	if(
 		// two frames after end of loading
-		(sdata->frameWhenLoadingFinished != 0) &&
-		(2 < (unsigned int)(sdata->gGT->frameTimer_VsyncCallback - sdata->frameWhenLoadingFinished))
+		(sdata->frameFinishedVRAM != 0) &&
+		(2 < (unsigned int)(sdata->gGT->frameTimer_VsyncCallback - sdata->frameFinishedVRAM))
 	)
 	{
 		struct LoadQueueSlot* curr = &data.currSlot;
@@ -87,7 +87,7 @@ void DECOMP_LOAD_NextQueuedFile()
 #endif
 		
 		// reset timer
-		sdata->frameWhenLoadingFinished = 0;
+		sdata->frameFinishedVRAM = 0;
 		
 		// If we used MEMPACK_AllocMem, rather than 
 		// some other place to store Readfile

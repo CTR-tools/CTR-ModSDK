@@ -139,7 +139,7 @@ struct sData sdata_static =
 	.UnusedPadding1 = 0,
 	
 	.load_inProgress = 0,
-	.frameWhenLoadingFinished = 0,
+	.frameFinishedVRAM = 0,
 	
 	.s_FILE = "FILE",
 	

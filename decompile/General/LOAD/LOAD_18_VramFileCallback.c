@@ -32,5 +32,5 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 		}
 	}
 	
-	sdata->frameWhenLoadingFinished = sdata->gGT->frameTimer_VsyncCallback;
+	sdata->frameFinishedVRAM = sdata->gGT->frameTimer_VsyncCallback;
 }

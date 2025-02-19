@@ -24,7 +24,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		
 		VSync(2);
 		
-		sdata->frameWhenLoadingFinished = 0;
+		sdata->frameFinishedVRAM = 0;
 		
 		// SCEA Presents, Copyright, UI Textures
 		if(ptrDestination == 0)
