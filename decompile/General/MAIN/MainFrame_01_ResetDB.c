@@ -37,6 +37,12 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	CTR_EmptyFunc_MainFrame_ResetDB();
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
 #endif
+
+// Test for persistent storage,
+// This requires duckstation overclock of 10x
+#if 0
+	memset(gGT->backBuffer->primMem.start, 0, gGT->backBuffer->primMem.size);
+#endif
 	
 	ClearOTagR((uint32_t*)otSwapchainDB, gGT->numPlyrCurrGame << 10 | 6);
 	
