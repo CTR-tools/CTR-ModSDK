@@ -26,7 +26,8 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	{
 		// set flag that we used MEMPACK_AllocMem
 		// to store this ReadFile somewhere random
-		data.currSlot.flags = data.currSlot.flags | 1;
+		struct LoadQueueSlot* lqs = &data.currSlot;
+		lqs->flags |= 1;
 
 		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((*size + 0x7ffU) & 0xfffff800); // "FILE"
 
@@ -52,7 +53,7 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
 	
-	#if defined(REBUILD_PC)
+	#if defined(REBUILD_PC) || defined(USE_PCDRV)
 	callback = 0;
 	#endif
 		

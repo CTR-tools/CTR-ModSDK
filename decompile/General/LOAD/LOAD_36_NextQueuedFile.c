@@ -66,7 +66,10 @@ void DECOMP_LOAD_NextQueuedFile()
 		
 		sdata->queueLength--;
 
-#ifndef REBUILD_PC
+#if defined(REBUILD_PC) || defined(USE_PCDRV)
+		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
+#else
+
 	}
 	if(
 		// two frames after end of loading
@@ -75,11 +78,7 @@ void DECOMP_LOAD_NextQueuedFile()
 	)
 	{
 		struct LoadQueueSlot* curr = &data.currSlot;
-#endif
 
-#if defined(REBUILD_PC)
-		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
-#else
 		// Use callback if present
 		if(curr->callback.funcPtr != 0)
 		{
