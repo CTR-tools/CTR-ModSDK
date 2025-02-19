@@ -38,6 +38,7 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 		sdata->fd_bigfile = v1;
 		
 		v1 = PCread(v1, bh, 0x80);
+		printf("PCread: %d\n", v1);
 		
 	#endif
 	

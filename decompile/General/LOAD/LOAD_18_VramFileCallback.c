@@ -3,6 +3,7 @@
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 {	
 	int* vramBuf = lqs->ptrDestination;
+	printf("%s\n", __FUNCTION__);
 
 	if(vramBuf != 0)
 	{
@@ -16,6 +17,7 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 			
 			while(size != 0)
 			{	
+				printf("LoadImage\n");
 				LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
 				
 				vramBuf = (int*)vh;
@@ -28,6 +30,7 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 		// if just one TIM
 		else
 		{
+			printf("LoadImage\n");
 			LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
 		}
 	}

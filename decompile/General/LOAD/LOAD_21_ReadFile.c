@@ -49,15 +49,18 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
 	
-	#if defined(REBUILD_PC) || defined(USE_PCDRV)
+	#if defined(REBUILD_PC)
 	callback = 0;
 	#endif
 		
 	#ifdef USE_PCDRV
 	
+	register int v1 asm("v1");
+	printf("Read Index: %d, %d\n", loadType, subfileIndex);
 	PClseek(sdata->fd_bigfile, entry[subfileIndex].offset, PCDRV_SEEK_SET);
-	PCread(sdata->fd_bigfile, ptrDst, *size);
-	
+	v1 = PCread(sdata->fd_bigfile, ptrDst, *size);
+	printf("PCread: %d\n", v1);
+		
 	#else
 	
 	while (1)
@@ -85,7 +88,7 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	}
 	
 	#endif
-
+	
 	if ((callback == 0) && (ptrDst == (void *)0x0))
 	{
 		// undo sector-align alloc,
