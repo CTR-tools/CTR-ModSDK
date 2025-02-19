@@ -4,12 +4,6 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 {
 	struct LoadQueueSlot lqs;
 
-	// SCEA Presents, Copyright, UI Textures
-	if(ptrDestination == 0)
-	{
-		DECOMP_MEMPACK_PushState();
-	}
-	
 	if(callbackOrFlags == -1)
 	{
 		lqs.ptrBigfileCdPos = bigfilePtr;
@@ -25,12 +19,6 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		VSync(2);
 		
 		sdata->frameFinishedVRAM = 0;
-		
-		// SCEA Presents, Copyright, UI Textures
-		if(ptrDestination == 0)
-		{
-			DECOMP_MEMPACK_PopState();
-		}
 		
 		// optimization, dont use instructions writing
 		// return value, let it use whatever sits on 

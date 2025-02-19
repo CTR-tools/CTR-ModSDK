@@ -37,6 +37,13 @@ void DECOMP_howl_LoadHeader(char* filename)
 	char* byteOffset = (char*)alloc;
 	PCread(sdata->fd_kartHwl, &byteOffset[0x800], howlHeaderSize-0x800);
 	
+	// allocate room for howlHeader + pointerTable
+	howlHeaderSize = sizeof(struct HowlHeader) + alloc->headerSize;
+	
+	// reallocate room just howlHeader + pointerTable,
+	// deallocate sector-alignment padding
+	DECOMP_MEMPACK_ReallocMem(howlHeaderSize);
+	
 	return;
 
 // PS1

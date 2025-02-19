@@ -68,7 +68,7 @@ void DECOMP_LOAD_NextQueuedFile()
 
 #if defined(REBUILD_PC) || defined(USE_PCDRV)
 		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
-#else
+#endif
 
 	}
 	if(
@@ -84,19 +84,9 @@ void DECOMP_LOAD_NextQueuedFile()
 		{
 			(*curr->callback.funcPtr)(curr);
 		}
-#endif
 		
 		// reset timer
 		sdata->frameFinishedVRAM = 0;
-		
-		// If we used MEMPACK_AllocMem, rather than 
-		// some other place to store Readfile
-		if(curr->flags & 1)
-		{
-#ifndef REBUILD_PC
-			DECOMP_MEMPACK_PopState();
-#endif
-		}
 		
 		sdata->queueReady = 1;
 	}

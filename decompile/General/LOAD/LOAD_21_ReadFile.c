@@ -29,20 +29,21 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		struct LoadQueueSlot* lqs = &data.currSlot;
 		lqs->flags |= 1;
 
+		// make sure RAM has room for sector alignment
 		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((*size + 0x7ffU) & 0xfffff800); // "FILE"
+		
+		// undo sector-align alloc,
+		// allocate just "needed" bytes
+		DECOMP_MEMPACK_ReallocMem(*size);
+		
+		if (loadType == LT_VRAM)
+			DECOMP_MEMPACK_ReallocMem(0);
 
 		if (ptrDst == (void *)0x0)
 		{
 			return (void *)0;
 		}
 	}
-
-	// if destination pointer is given
-	else
-	{
-		data.currSlot.flags = data.currSlot.flags & 0xfffe;
-	}
-
 	
 	sdata->ReadFileAsyncCallbackFuncPtr = 0;
 	
@@ -90,12 +91,6 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	}
 	
 	#endif
-	
-	if ((callback == 0) && (ptrDst == (void *)0x0))
-	{
-		// undo sector-align alloc,
-		// allocate just "needed" bytes
-		DECOMP_MEMPACK_ReallocMem(*size);
-	}
+
 	return ptrDst;
 }
