@@ -16,7 +16,10 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	int eOffs = entry[subfileIndex].offset;
 
 	*size = eSize;
+	
+	#ifndef USE_PCDRV
 	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
+	#endif
 
 	// if not an overlay file with specific destination
 	if (ptrDst == (void *)0x0)
@@ -56,10 +59,11 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	#ifdef USE_PCDRV
 	
 	register int v1 asm("v1");
-	printf("Read Index: %d, %d\n", loadType, subfileIndex);
-	PClseek(sdata->fd_bigfile, entry[subfileIndex].offset, PCDRV_SEEK_SET);
-	v1 = PCread(sdata->fd_bigfile, ptrDst, *size);
-	printf("PCread: %d\n", v1);
+	printf("Read Index: %d, %d, %d\n", loadType, subfileIndex, eOffs);
+	v1 = PClseek(sdata->fd_bigfile, eOffs, PCDRV_SEEK_SET);
+	printf("PClseek: %d\n", v1);
+	v1 = PCread(sdata->fd_bigfile, ptrDst, eSize);
+	printf("PCread: %d, %08x, %d\n", v1, ptrDst, eSize);
 		
 	#else
 	
