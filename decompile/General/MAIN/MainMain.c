@@ -839,7 +839,6 @@ void StateZero()
 
 	#ifndef FastBoot
 	#ifndef REBUILD_PC
-	printf("SCEA Presents\n");
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
 	DECOMP_MainInit_VRAMDisplay();
@@ -872,7 +871,6 @@ void StateZero()
 
 	DECOMP_DecalGlobal_Clear(gGT);
 
-	printf("Shared.vram\n");
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
 	// In nopsx VRAM debug viewer:

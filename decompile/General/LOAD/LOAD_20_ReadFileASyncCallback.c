@@ -2,8 +2,6 @@
 
 void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 {
-	printf("%s\n", __FUNCTION__);
-	
 	CdReadCallback(0);
 	
 	struct LoadQueueSlot* lqs = &data.currSlot;

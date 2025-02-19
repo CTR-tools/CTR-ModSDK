@@ -59,11 +59,8 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	#ifdef USE_PCDRV
 	
 	register int v1 asm("v1");
-	printf("Read Index: %d, %d, %d\n", loadType, subfileIndex, eOffs);
-	v1 = PClseek(sdata->fd_bigfile, eOffs, PCDRV_SEEK_SET);
-	printf("PClseek: %d\n", v1);
+	v1 = PClseek(sdata->fd_bigfile, eOffs*0x800, PCDRV_SEEK_SET);
 	v1 = PCread(sdata->fd_bigfile, ptrDst, eSize);
-	printf("PCread: %d, %08x, %d\n", v1, ptrDst, eSize);
 		
 	#else
 	
