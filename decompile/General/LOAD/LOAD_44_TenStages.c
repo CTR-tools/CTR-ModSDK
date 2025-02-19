@@ -35,7 +35,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	}
 	
 	levelID = gGT->levelID;
-	printf("Load Stage: %d\n", loadingStage);
 	
 	switch(loadingStage)
 	{

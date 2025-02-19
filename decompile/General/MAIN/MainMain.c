@@ -124,6 +124,7 @@ u_int DECOMP_main()
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case 3:
+			
 			#ifdef USE_LANG
 			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
 				LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
@@ -256,6 +257,7 @@ FinishLoading:
 
 				// sync music, in case loading is too fast,
 				// https://www.youtube.com/watch?v=rzJcVdm4ny4
+				#ifndef USE_PCDRV
 				#ifndef REBUILD_PS1
 				#if 1 // not part of the OG game
 				else
@@ -268,6 +270,7 @@ FinishLoading:
 						{}
 					}
 				}
+				#endif
 				#endif
 				#endif
 
@@ -547,7 +550,6 @@ FinishLoading:
 
 
 
-
 #ifdef REBUILD_PC
 				PsyX_BeginScene();
 #endif
@@ -557,6 +559,9 @@ FinishLoading:
 				void NikoCalcFPS();
 				NikoCalcFPS();
 #endif
+
+
+
 
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
@@ -859,7 +864,7 @@ void StateZero()
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 
-#ifndef REBUILD_PC
+#if !defined(REBUILD_PC) && !defined(USE_PCDRV)
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written

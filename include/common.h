@@ -27,7 +27,7 @@
 
 // PC only
 //#define USE_VR		// Virtual Reality
-//#define USE_PCDRV		// File Read/Write to PC
+//#define USE_PCDRV		// File Read/Write to PC (needs USE_DEFRAG)
 // ...
 
 

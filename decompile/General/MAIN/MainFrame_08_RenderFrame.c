@@ -1721,12 +1721,11 @@ __attribute__((optimize("O0")))
 int ReadyToFlip(struct GameTracker* gGT)
 {
 	return
+			// two VSYNCs passed, 30fps lock
+			(sdata->vsyncTillFlip < 1) &&
 
 			// if DrawOTag finished
-			(gGT->bool_DrawOTag_InProgress == 0) &&
-
-			// two VSYNCs passed, 30fps lock
-			(sdata->vsyncTillFlip < 1);
+			(gGT->bool_DrawOTag_InProgress == 0);
 }
 
 __attribute__((optimize("O0")))
