@@ -38,7 +38,6 @@ void DECOMP_LOAD_NextQueuedFile()
 					LT_RAW,
 					curr->subfileIndex,
 					curr->ptrDestination,
-					&curr->size,
 					DECOMP_LOAD_CDRequestCallback);
 		}
 		
@@ -49,7 +48,6 @@ void DECOMP_LOAD_NextQueuedFile()
 					(void*)curr->ptrBigfileCdPos,
 					(int)curr->subfileIndex,
 					(int*)curr->ptrDestination,
-					(int*)&curr->size,
 					(int)curr->callback.funcPtr);
 		}
 		
@@ -60,7 +58,6 @@ void DECOMP_LOAD_NextQueuedFile()
 					(void*)curr->ptrBigfileCdPos,
 					(int)curr->subfileIndex,
 					(int*)curr->ptrDestination,
-					(int*)&curr->size,
 					(int)curr->callback.funcPtr);
 		}
 		
@@ -79,7 +76,8 @@ void DECOMP_LOAD_NextQueuedFile()
 	{
 		struct LoadQueueSlot* curr = &data.currSlot;
 
-		// Use callback if present
+		// UNUSED, there's no callback after completion
+		// of any VRAM file because its never the last in the queue
 		if(curr->callback.funcPtr != 0)
 		{
 			(*curr->callback.funcPtr)(curr);

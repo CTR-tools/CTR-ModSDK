@@ -157,7 +157,7 @@ struct LoadQueueSlot
 	void* ptrDestination;
 
 	// 0x10
-	unsigned int size;
+	unsigned int size_UNUSED;
 
 	// 0x14
 	union

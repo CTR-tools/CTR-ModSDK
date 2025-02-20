@@ -2,7 +2,7 @@
 
 void DECOMP_LOAD_DramFileCallback();
 
-void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags)
+void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int callbackOrFlags)
 {
 	struct LoadQueueSlot lqs;
 	
@@ -12,8 +12,7 @@ void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 		lqs.flags = 0;
 		lqs.type = LT_DRAM;
 		lqs.subfileIndex = subfileIndex;
-		lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, 0, size, 0);
-		lqs.size = *size;
+		lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, 0, 0);
 		lqs.callback.funcPtr = NULL;
 		
 		DECOMP_LOAD_DramFileCallback(&lqs);
@@ -27,7 +26,7 @@ void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	
 	if(callbackOrFlags == -2)
 	{
-		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, 0, size, DECOMP_LOAD_DramFileCallback);
+		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, 0, DECOMP_LOAD_DramFileCallback);
 		
 		*ptrDestination = (int)ptrDest;
 		data.currSlot.ptrDestination = ptrDest;
@@ -37,5 +36,5 @@ void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	
 	// valid callback
 	
-	return DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, ptrDestination, size, DECOMP_LOAD_DramFileCallback);
+	return DECOMP_LOAD_ReadFile(bigfilePtr, LT_DRAM, subfileIndex, ptrDestination, DECOMP_LOAD_DramFileCallback);
 }

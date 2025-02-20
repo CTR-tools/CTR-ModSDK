@@ -1,6 +1,6 @@
 #include <common.h>
 
-void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *ptrDst, int *size, void * callback)
+void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *ptrDst, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
@@ -14,8 +14,6 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	struct BigEntry* entry = BIG_GETENTRY(bigfile);
 	int eSize = entry[subfileIndex].size;
 	int eOffs = entry[subfileIndex].offset;
-
-	*size = eSize;
 	
 	#ifndef USE_PCDRV
 	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
@@ -30,11 +28,11 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		lqs->flags |= 1;
 
 		// make sure RAM has room for sector alignment
-		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((*size + 0x7ffU) & 0xfffff800); // "FILE"
+		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((eSize + 0x7ffU) & 0xfffff800); // "FILE"
 		
 		// undo sector-align alloc,
 		// allocate just "needed" bytes
-		DECOMP_MEMPACK_ReallocMem(*size);
+		DECOMP_MEMPACK_ReallocMem(eSize);
 		
 		if (loadType == LT_VRAM)
 			DECOMP_MEMPACK_ReallocMem(0);
@@ -69,7 +67,7 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	while (1)
 	{
 		uVar5 =  CdControl(CdlSetloc, &cdLoc, &paramOutput[0]);		
-		uVar5 &= CdRead(*size + 0x7ffU >> 0xb, ptrDst, 0x80);
+		uVar5 &= CdRead(eSize + 0x7ffU >> 0xb, ptrDst, 0x80);
 
 		#ifndef REBUILD_PC
 		// if no errors

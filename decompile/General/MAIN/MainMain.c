@@ -845,7 +845,7 @@ void StateZero()
 	#ifndef FastBoot
 	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, 0xffffffff);
 	DECOMP_MainInit_VRAMDisplay();
 	#endif
 	#endif
@@ -882,7 +882,7 @@ void StateZero()
 	// 	the area between 2 screen buffers and top right corner in vram
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, 0xffffffff);
 
 	sdata->mainGameState = 3;
 

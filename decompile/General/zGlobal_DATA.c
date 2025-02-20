@@ -2728,7 +2728,7 @@ struct Data data =
 		.type = 0,
 		.subfileIndex = -1,
 		.ptrDestination = 0,
-		.size = 0,
+		.size_UNUSED = 0,
 		.callback.flags = 0
 	},
 

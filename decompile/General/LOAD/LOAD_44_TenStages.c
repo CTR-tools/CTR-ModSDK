@@ -56,7 +56,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				#ifndef REBUILD_PC
 				// Load Intro TIM for Copyright Page from VRAM file
-				DECOMP_LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
+				DECOMP_LOAD_VramFile(bigfile, 0x1fe, 0, 0xffffffff);
 				DECOMP_MainInit_VRAMDisplay();
 				#endif
 				
