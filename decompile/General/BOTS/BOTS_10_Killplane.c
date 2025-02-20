@@ -22,10 +22,10 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 		// edge-case override?
 		switch (bot->unknown_lap_related[1])
 		{
-		case -0x6c:
+		case (unsigned char)-0x6c:
 			override = 0x84;
 			break;
-		case -0x60:
+		case (unsigned char)-0x60:
 			override = 0x80;
 			break;
 		default:
@@ -41,16 +41,16 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			backCount = frame->goBackCount;
 			boolOverride = (backCount < (override - 1));
 
-			while ((boolOverride || (override + 1U < backCount)))
+			while ((boolOverride || (override + 1 < backCount)))
 			{
 				// nav path index
 				i = bot->botPath;
 
 				// go back to previous point
-				frame -= 0x14; //sizeof(typeof(frame))
+				frame -= 1;
 
 				// if this is less than address of first nav point
-				if (frame < sdata->NavPath_ptrNavFrameArray[i]->pos[0])
+				if (frame < sdata->NavPath_ptrNavFrameArray[i])
 				{
 					// go to last nav point
 					frame = sdata->NavPath_ptrHeader[i]->last - 0x14;
@@ -82,10 +82,10 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			i = bot->botPath;
 
 			// go back one navFrame
-			frame -= 0x14;
+			frame -= 1;
 
 			// if you go back to far
-			if (frame < sdata->NavPath_ptrNavFrameArray[i]->pos[0])
+			if (frame < sdata->NavPath_ptrNavFrameArray[i])
 			{
 				// loop back to last navFrame
 				frame = sdata->NavPath_ptrHeader[i]->last - 0x14;
@@ -97,6 +97,6 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 		bot->botNavFrame = frame;
 	}
 
-	BOTS_MaskGrab(botThread);
+	DECOMP_BOTS_MaskGrab(botThread);
 	return;
 }
