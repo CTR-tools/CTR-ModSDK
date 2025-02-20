@@ -892,3 +892,4 @@ void DECOMP_MainKillGame_StopCTR(void);
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver* d);
 int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame);
 void DECOMP_RB_CtrLetter_ThTick(struct Thread* t);
+void DECOMP_BOTS_MaskGrab(struct Thread* botThread);
