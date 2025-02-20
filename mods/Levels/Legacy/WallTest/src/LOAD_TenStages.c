@@ -2,7 +2,7 @@
 
 void CDSYS_XAPauseRequest();
 void MEMPACK_PopToState(int id);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
+void LOAD_Callback_PatchMem(struct LoadQueueSlot * lqs);
 int MEMPACK_PushState();
 void MM_JumpTo_Title_FirstTime();
 void MM_JumpTo_Characters();
@@ -518,7 +518,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 							(gGT->levelID, sdata->levelLOD, LVI_PTR);
 	
 					// adds PTR map to loading queue
-					LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+					LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_PatchMem);
 				}
 			}
 			

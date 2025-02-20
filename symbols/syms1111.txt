@@ -450,7 +450,7 @@
 80033650 LOAD_Callback_MaskHints3D
 80033664 LOAD_Callback_Podiums
 80033678 LOAD_Callback_LEV
-800336a4 LOAD_Callback_LEV_Adv
+800336a4 LOAD_Callback_PatchMem
 80033700 LOAD_Callback_DriverModels
 
 80033714 LOAD_HubCallback

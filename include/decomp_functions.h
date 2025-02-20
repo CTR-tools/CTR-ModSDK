@@ -849,7 +849,7 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap, struct Thread* bucket);
 void DECOMP_UI_Map_DrawTracking(int ptrMap, struct Thread* bucket);
 void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
-void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_VehBirth_NullThread(struct Thread* t);

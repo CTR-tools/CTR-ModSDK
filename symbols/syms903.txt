@@ -430,7 +430,7 @@
 80030cbc LOAD_Callback_MaskHints3D
 80030cd0 LOAD_Callback_Podiums
 80030ce4 LOAD_Callback_LEV
-80030d10 LOAD_Callback_LEV_Adv
+80030d10 LOAD_Callback_PatchMem
 80030d6c LOAD_Callback_DriverModels
 
 80030d80 LOAD_HubCallback			// real ND name

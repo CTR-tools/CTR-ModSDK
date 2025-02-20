@@ -813,7 +813,7 @@ common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33
 //common, exe, LOAD_Callback_MaskHints3D, 0x0,             General/LOAD/LOAD_05_Callback_MaskHints3D.c
 //common, exe, LOAD_Callback_Podiums, 0x0,                 General/LOAD/LOAD_06_Callback_Podiums.c
 //common, exe, LOAD_Callback_LEV, 0x0,                     General/LOAD/LOAD_07_Callback_LEV.c
-//common, exe, LOAD_Callback_LEV_Adv, 0x0,                 General/LOAD/LOAD_08_Callback_LEV_Adv.c
+//common, exe, LOAD_Callback_PatchMem, 0x0,                 General/LOAD/LOAD_08_Callback_PatchMem.c
 //common, exe, LOAD_Callback_DriverModels, 0x0,            General/LOAD/LOAD_09_Callback_DriverModels.c
 //common, exe, LOAD_HubCallback, 0x0,                      General/LOAD/LOAD_10_HubCallback.c
 //common, exe, LOAD_GlobalModelPtrs_MPK, 0x0,              General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c

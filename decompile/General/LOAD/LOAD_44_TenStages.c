@@ -586,7 +586,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				// add PTR file to loading queue
 				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);
-				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, (int)uVar6, (void*)sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_LEV_Adv);
+				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, (int)uVar6, (void*)sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_PatchMem);
 			}			
 			break;
 		}

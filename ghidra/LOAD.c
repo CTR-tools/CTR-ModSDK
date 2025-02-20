@@ -121,7 +121,7 @@ void FUN_80031a78(int param_1)
   return;
 }
 
-// LOAD_Callback_LEV_Adv
+// LOAD_Callback_PatchMem
 // param_1 - LoadQueueSlot
 void FUN_80031aa4(int param_1)
 
@@ -173,7 +173,7 @@ void FUN_80031b14(int param_1)
   // game is done loading
   DAT_8008d0a4 = 0;
 
-  // LOAD_Callback_LEV_Adv
+  // LOAD_Callback_PatchMem
   FUN_80031aa4(param_1);
 
   // swap 1 and 2 during adventure mode
