@@ -4003,7 +4003,7 @@ struct sData
 	// 8008c7b4 -- JpnTrial
 	// 8008dc0c -- EurRetail
 	// 80090c80 -- JpnRetail
-	void (*ReadFileAsyncCallbackFuncPtr)(struct LoadQueueSlot*);
+	void (*callbackCdReadSuccess)(struct LoadQueueSlot*);
 
 	// 8008d860
 	// lock to zero, mask wont appear to give hints

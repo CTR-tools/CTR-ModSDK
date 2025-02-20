@@ -45,12 +45,12 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		}
 	}
 	
-	sdata->ReadFileAsyncCallbackFuncPtr = 0;
+	sdata->callbackCdReadSuccess = 0;
 	
 	if (callback != 0)
 	{
 		// Save the function pointer address
-		sdata->ReadFileAsyncCallbackFuncPtr = callback;		
+		sdata->callbackCdReadSuccess = callback;		
 		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
 	

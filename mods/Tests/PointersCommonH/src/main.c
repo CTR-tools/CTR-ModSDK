@@ -53,7 +53,7 @@ struct x y[] =
 	TEST16(&sdata_static.numIconsEOR),
 	TEST16(&sdata_static.s_NOSCRUB),
 	TEST16(&sdata_static.boolUseDisc),
-	TEST16(&sdata_static.ReadFileAsyncCallbackFuncPtr),
+	TEST16(&sdata_static.callbackCdReadSuccess),
 	TEST16(&sdata_static.lngStrings),
 	TEST16(&sdata_static.ptrLoadSaveObj),
 	TEST16(&sdata_static.ptrActiveMenu),

@@ -24,9 +24,9 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 	if(result == CdlComplete)
 	{
 		// callback
-		if(sdata->ReadFileAsyncCallbackFuncPtr != 0)
+		if(sdata->callbackCdReadSuccess != 0)
 		{
-			(*sdata->ReadFileAsyncCallbackFuncPtr)(lqs);
+			(*sdata->callbackCdReadSuccess)(lqs);
 		}
 	}
 	
