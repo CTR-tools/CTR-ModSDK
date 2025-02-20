@@ -447,7 +447,7 @@
 800312c8 LOAD_VramFile				
 800313fc LOAD_ReadFileASyncCallback	// real ND name
 800314b0 LOAD_ReadFile				// real ND name
-8003165c LOAD_ReadFile_NoCallback
+8003165c LOAD_XnfFile
 
 8003177c LOAD_FindFile
 

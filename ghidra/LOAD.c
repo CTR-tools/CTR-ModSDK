@@ -790,7 +790,7 @@ u_long * FUN_800321b4(int *param_1,undefined4 param_2,int param_3,u_long *param_
 
 
 // Read file on disc, store in buffer
-// LOAD_ReadFile_NoCallback
+// LOAD_XnfFile
 u_long * FUN_80032344(char *param_1,u_long *param_2,u_long *param_3)
 
 {

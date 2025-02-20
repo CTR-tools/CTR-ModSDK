@@ -16,8 +16,8 @@ int kartTex2_Count = 30;
 //Hooked at the very end of GAMEPROG_NewGame_OnBoot, which gets executed once at the end of a .lev load (I think).
 void LoadFile_CustomTextures()
 {
-	kartTex1 = (struct Textures *) LOAD_ReadFile_NoCallback("\\KARTTEX1.BIN;1", (void*)0x8000A000, 0);
-	kartTex2 = (struct Textures *) LOAD_ReadFile_NoCallback("\\KARTTEX2.BIN;1", (void*)0x8000E400, 0);
+	kartTex1 = (struct Textures *) LOAD_XnfFile("\\KARTTEX1.BIN;1", (void*)0x8000A000, 0);
+	kartTex2 = (struct Textures *) LOAD_XnfFile("\\KARTTEX2.BIN;1", (void*)0x8000E400, 0);
 }
 
 //Hooked at the very end of LOAD_VramFileCallback.

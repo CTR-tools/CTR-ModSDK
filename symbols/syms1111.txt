@@ -467,7 +467,7 @@
 80033bdc LOAD_VramFile
 80033d10 LOAD_ReadFileASyncCallback
 80033db4 LOAD_ReadFile
-80033f44 LOAD_ReadFile_NoCallback
+80033f44 LOAD_XnfFile
 
 80034038 LOAD_FindFile
 

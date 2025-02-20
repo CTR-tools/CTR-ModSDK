@@ -284,7 +284,7 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk);
 void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void* destination, int *size, void * callback);
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
 void* DECOMP_LOAD_ReadDirectory(char* filename);
-void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
+void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size);
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
 void DECOMP_LOAD_LevelFile(int levelID);
 

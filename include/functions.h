@@ -519,7 +519,7 @@ void LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
 void LOAD_ReadFileASyncCallback();
 u_long* LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
-void* LOAD_ReadFile_NoCallback(char* file, void* addr, int* size);
+void* LOAD_XnfFile(char* file, void* addr, int* size);
 //LOAD_FindFile()
 
 // these are the last howl functions ever

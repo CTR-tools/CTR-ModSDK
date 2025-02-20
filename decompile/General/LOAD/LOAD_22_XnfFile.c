@@ -1,7 +1,7 @@
 #include <common.h>
 
 // Used for XNF and only the XNF
-void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size)
+void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size)
 {
 
 // PS1

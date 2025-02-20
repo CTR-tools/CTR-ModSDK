@@ -827,7 +827,7 @@ common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_33
 //common, exe, LOAD_VramFile, 0x0,                         General/LOAD/LOAD_19_VramFile.c
 //common, exe, LOAD_ReadFileASyncCallback, 0x0,            General/LOAD/LOAD_20_ReadFileASyncCallback.c
 //common, exe, LOAD_ReadFile, 0x0,                         General/LOAD/LOAD_21_ReadFile.c
-//common, exe, LOAD_ReadFile_NoCallback, 0x0,              General/LOAD/LOAD_22_ReadFile_NoCallback.c
+//common, exe, LOAD_XnfFile, 0x0,              General/LOAD/LOAD_22_XnfFile.c
 //common, exe, LOAD_FindFile, 0x0,                         General/LOAD/LOAD_23_FindFile.c
 //common, exe, LOAD_HowlHeaderSectors, 0x0,                General/LOAD/LOAD_24_HowlHeaderSectors.c
 //common, exe, LOAD_HowlCallback, 0x0,                     General/LOAD/LOAD_25_HowlCallback.c
