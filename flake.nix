@@ -54,11 +54,11 @@
           };
         in
         rec {
-          retail = {
+          pc-retail = {
             release = mkCTR false false;
             debug = mkCTR true false;
           };
-          decomp = {
+          pc-decomp = {
             release = mkCTR false true;
             debug = mkCTR true true;
           };
