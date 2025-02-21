@@ -80,7 +80,7 @@ void Oxide_HookAppendLoadingQueue()
 	// add oxide request
 	lqs_curr->subfileIndex = packIndex + 0xf*2 + 0x18D;
 	lqs_curr->ptrDestination = (void*)&data.podiumModel_firstPlace;
-	lqs_curr->callback.flags = 0xfffffffe;
+	lqs_curr->callback = 0;
 
 	// increase size
 	sdata->queueLength++;

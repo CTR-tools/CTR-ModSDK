@@ -98,5 +98,16 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 	void DebugProfiler_Subsection(int flag);
 	DebugProfiler_Subsection(1);
 	#endif
+	
+	// wait two vsyncs for VRAM upload to finish
+	if (sdata->frameFinishedVRAM != 0)
+	{
+		sdata->frameFinishedVRAM--;
+		
+		if (sdata->frameFinishedVRAM == 0)
+		{
+			sdata->queueReady = 1;
+		}
+	}
 #endif
 }

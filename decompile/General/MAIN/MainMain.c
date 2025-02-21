@@ -770,7 +770,7 @@ void StateZero()
 
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
+	DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
 	ExitCriticalSection();
 
 	DECOMP_MEMCARD_InitCard();
@@ -845,14 +845,14 @@ void StateZero()
 	#ifndef FastBoot
 	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd);
 	DECOMP_MainInit_VRAMDisplay();
 	#endif
 	#endif
 
 	// \SOUNDS\KART.HWL;1
 	DECOMP_howl_InitGlobals(data.kartHwlPath);
-
+	
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
@@ -882,7 +882,7 @@ void StateZero()
 	// 	the area between 2 screen buffers and top right corner in vram
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102);
 
 	sdata->mainGameState = 3;
 

@@ -2729,7 +2729,7 @@ struct Data data =
 		.subfileIndex = -1,
 		.ptrDestination = 0,
 		.size_UNUSED = 0,
-		.callback.flags = 0
+		.callbackFuncPtr = 0
 	},
 
 	.characterIDs_2P_AIs =

@@ -1,42 +1,22 @@
 #include <common.h>
 
-void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int callbackOrFlags)
+void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex)
 {
 	struct LoadQueueSlot lqs;
-
-	if(callbackOrFlags == -1)
-	{
-		lqs.ptrBigfileCdPos = bigfilePtr;
-		lqs.flags = 0;
-		lqs.type = LT_VRAM;
-		lqs.subfileIndex = subfileIndex;
-		lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, 0);
-		lqs.callback.funcPtr = NULL;
-		
-		DECOMP_LOAD_VramFileCallback(&lqs);
-		
-		VSync(2);
-		
-		sdata->frameFinishedVRAM = 0;
-		
-		// optimization, dont use instructions writing
-		// return value, let it use whatever sits on 
-		// the register. Return value is never used 
-		// because callback.funcptr is zero
-		return NULL; //was just `return;`
-	}
 	
-	if(callbackOrFlags == -2)
-	{
-		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, &DECOMP_LOAD_VramFileCallback);
-		
-		*ptrDestination = (int)ptrDest;
-		data.currSlot.ptrDestination = ptrDest;
-		
-		return ptrDest;
-	}
+	// callback=0 means this calls CdSync and is not async
+	lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, subfileIndex, 0, 0);
 	
-	// valid callback
+	// undo allocation, next LOAD queue request
+	// will overwrite where VRAM was in RAM
+	DECOMP_MEMPACK_ReallocMem(0);
 	
-	return DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, ptrDestination, &DECOMP_LOAD_VramFileCallback);
+	// run callback
+	DECOMP_LOAD_VramFileCallback(&lqs);
+	
+	// wait 2 frames for LoadImage to finish
+	VSync(2);
+	
+	// do NOT trigger code in vsync callback to handle queue
+	sdata->frameFinishedVRAM = 0;
 }

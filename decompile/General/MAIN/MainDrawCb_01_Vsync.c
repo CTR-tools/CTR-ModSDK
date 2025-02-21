@@ -10,7 +10,7 @@ void DECOMP_MainDrawCb_Vsync()
 	gGT->frameTimer_VsyncCallback++;
 	gGT->vSync_between_drawSync++;
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0) gGT->frameTimer_Confetti++;
-
+	
 	// 1 unit = 1/16th millisecond
 	// 1 second = ~16,000 units
 	// increment timer, and reset system clock
@@ -32,6 +32,17 @@ void DECOMP_MainDrawCb_Vsync()
 	void DebugProfiler_Subsection(int flag);
 	DebugProfiler_Subsection(1);
 	#endif
+
+	// wait two vsyncs for VRAM upload to finish
+	if (sdata->frameFinishedVRAM != 0)
+	{
+		sdata->frameFinishedVRAM--;
+		
+		if (sdata->frameFinishedVRAM == 0)
+		{
+			sdata->queueReady = 1;
+		}
+	}
 #endif
 	
 	return;

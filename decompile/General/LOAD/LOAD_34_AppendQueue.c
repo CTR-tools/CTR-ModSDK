@@ -4,7 +4,7 @@ void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destina
 {
 	struct LoadQueueSlot* lqs;
 	
-	#ifdef USE_BIGQUEUE
+	#ifndef USE_BIGQUEUE
 	if(sdata->queueLength >= 8)
 		return;
 	#endif
@@ -15,7 +15,7 @@ void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destina
 	lqs->type = type;
 	lqs->subfileIndex = fileIndex;
 	lqs->ptrDestination = destinationPtr;
-	lqs->callback.funcPtr = callback;
+	lqs->callbackFuncPtr = callback;
 	
 	sdata->queueLength++;
 	

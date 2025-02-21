@@ -438,7 +438,7 @@ void StateZero()
 
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&MainDrawCb_DrawSync);
+	DrawSyncCallback(&MainDrawCb_DrawSync);
 	ExitCriticalSection();
 
 	MEMCARD_InitCard();

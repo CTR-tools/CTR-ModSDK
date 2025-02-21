@@ -160,16 +160,7 @@ struct LoadQueueSlot
 	unsigned int size_UNUSED;
 
 	// 0x14
-	union
-	{
-		// last 4 bytes will either be a function pointer,
-		// or a flag that signifies there is no function pointer
-
-		void (*funcPtr)(struct LoadQueueSlot*);
-
-		unsigned int flags;
-
-	} callback;
+	void (*callbackFuncPtr)(struct LoadQueueSlot*);
 };
 
 _Static_assert(sizeof(struct LoadQueueSlot) == 0x18);

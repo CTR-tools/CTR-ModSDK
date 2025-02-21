@@ -41,7 +41,7 @@ void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd)
     //if (bcd->bodyFile != 0)
     {
 		// CTR Model File (body)
-        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, bcd->bodyFile+index, ptrDestination, -0x2);
+        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, bcd->bodyFile+index, ptrDestination, 0);
     }
 
 	// CTR Model File (head)

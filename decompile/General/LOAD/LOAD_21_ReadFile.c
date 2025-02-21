@@ -1,6 +1,6 @@
 #include <common.h>
 
-void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *ptrDst, void * callback)
+void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
@@ -33,9 +33,6 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		// undo sector-align alloc,
 		// allocate just "needed" bytes
 		DECOMP_MEMPACK_ReallocMem(eSize);
-		
-		if (loadType == LT_VRAM)
-			DECOMP_MEMPACK_ReallocMem(0);
 	}
 	
 	sdata->callbackCdReadSuccess = 0;
@@ -84,6 +81,10 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 	}
 	
 	#endif
+	
+#if defined(REBUILD_PC) || defined(USE_PCDRV)
+	DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
+#endif
 
 	return ptrDst;
 }
