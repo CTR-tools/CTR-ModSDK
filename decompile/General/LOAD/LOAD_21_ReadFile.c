@@ -82,9 +82,5 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int su
 	
 	#endif
 	
-#if defined(REBUILD_PC) || defined(USE_PCDRV)
-	DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
-#endif
-
 	return ptrDst;
 }
