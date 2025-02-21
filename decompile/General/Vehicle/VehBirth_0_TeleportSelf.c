@@ -395,7 +395,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     }
 }
 
-#if defined (USE_DEFRAG)
+#if defined (USE_ALTMODS)
 #include "../AltMods/Mods9.c"
 
 void __attribute__ ((section (".end"))) Mods9_EndOfFile()

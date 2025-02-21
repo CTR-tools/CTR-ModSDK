@@ -38,7 +38,7 @@
 #include "LOAD_35_CDRequestCallback.c"
 #include "LOAD_36_NextQueuedFile.c"
 
-#if defined (USE_DEFRAG)
+#if defined (USE_ALTMODS)
 #include "../AltMods/Mods4.c"
 
 void __attribute__ ((section (".end"))) Mods4_EndOfFile()

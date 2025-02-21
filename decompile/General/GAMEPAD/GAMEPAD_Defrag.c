@@ -16,7 +16,7 @@
 #include "GAMEPAD_13_ShockForce1.c"
 #include "GAMEPAD_14_ShockForce2.c"
 
-#if defined (USE_DEFRAG)
+#if defined (USE_ALTMODS)
 #include "../AltMods/Mods2.c"
 
 void __attribute__ ((section (".end"))) Mods2_EndOfFile()

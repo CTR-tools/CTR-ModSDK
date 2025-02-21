@@ -686,7 +686,7 @@ void StateZero()
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
 
-    #if defined (USE_DEFRAG)
+    #if defined (USE_ALTMODS)
 	// for modding (code caves)
 	void ModsMain();
 	ModsMain();

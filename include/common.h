@@ -3,6 +3,8 @@
 
 // toggle these in decompile
 
+//#define USE_ALTMODS	// Enable this before ANY other mods
+
 // 2mb
 //#define USE_60FPS		// 60 frames per second
 //#define USE_16BY9		// Widescreen
@@ -22,12 +24,11 @@
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
 //#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
-//#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
 //#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
 
 // PC only
 //#define USE_VR		// Virtual Reality
-//#define USE_PCDRV		// File Read/Write to PC (needs USE_DEFRAG)
+//#define USE_PCDRV		// File Read/Write to PC (needs USE_ALTMODS)
 // ...
 
 
@@ -73,7 +74,7 @@ enum HotReloadSteps
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_HIGH1P
-#define USE_DEFRAG
+#define USE_ALTMODS
 
 //note: if you disable this, you'll need to fix anything related to the `ROOM_...` defines in global.h
 #define USE_RETROFUELED //enabled only in certain rooms.

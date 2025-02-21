@@ -22,11 +22,18 @@
 #include "PsyX/PsyX_globals.h"
 #include "PsyX/PsyX_render.h"
 
+// CLOCK cross-platform
+#ifdef _WIN32
+#define CLOCKS_PER_SEC_FIX CLOCKS_PER_SEC
+#else
+#define CLOCKS_PER_SEC_FIX ((clock_t)100000) // Original value (1000000), I removed one zero
+#endif
+
 // work around for PsyCross
 #include <time.h>
 clock_t startClock;
 #define ResetRCnt(x) startClock = clock();
-#define GetRCnt(x) ((clock() - startClock) * 16)
+#define GetRCnt(x) ((clock() - startClock) * 16000) / CLOCKS_PER_SEC_FIX
 
 // ======= Syntax Correction =============
 
