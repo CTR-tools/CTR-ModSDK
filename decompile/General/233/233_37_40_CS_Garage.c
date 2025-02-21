@@ -95,7 +95,7 @@ void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1)
 	#ifdef USE_OXIDE
     if (
 		// if Crash selected
-        (charSelectIndex == 0) &&
+        (currSelectIndex == 0) &&
 		(gGarage.numFramesCurr_GarageMove == 0) &&
 
 		// if at least one character unlocked

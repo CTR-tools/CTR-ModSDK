@@ -65,7 +65,7 @@ void Oxide_HookAppendLoadingQueue()
 	if(sdata->gGT->podium_modelIndex_First != 0x8D) return;
 
 	// quit if not this condition
-	if(lqs_curr->callback.funcPtr != DECOMP_LOAD_Callback_Podiums) return;
+	if(lqs_curr->callbackFuncPtr != DECOMP_LOAD_Callback_Podiums) return;
 
 	// if most recent addition to the queue, is the last append for podiums
 
@@ -80,7 +80,7 @@ void Oxide_HookAppendLoadingQueue()
 	// add oxide request
 	lqs_curr->subfileIndex = packIndex + 0xf*2 + 0x18D;
 	lqs_curr->ptrDestination = (void*)&data.podiumModel_firstPlace;
-	lqs_curr->callback = 0;
+	lqs_curr->callbackFuncPtr = 0;
 
 	// increase size
 	sdata->queueLength++;
