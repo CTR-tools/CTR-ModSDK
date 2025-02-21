@@ -843,11 +843,9 @@ void StateZero()
 	DrawSync(0);
 
 	#ifndef FastBoot
-	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd);
 	DECOMP_MainInit_VRAMDisplay();
-	#endif
 	#endif
 
 	// \SOUNDS\KART.HWL;1
@@ -878,10 +876,6 @@ void StateZero()
 
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
-	// In nopsx VRAM debug viewer:
-	// 	the area between 2 screen buffers and top right corner in vram
-	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
-	// Add a bookmark before loading (param_3 is 0 in the call)
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102);
 
 	sdata->mainGameState = 3;
