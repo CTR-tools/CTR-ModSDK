@@ -49,7 +49,7 @@ void ModsMain()
 		(int)howl_VolumeGet - (int)Mods3_EndOfFile,
 
 		// LOAD defrag Block1
-		(int)LOAD_AppendQueue - (int)Mods4_EndOfFile,
+		(int)LOAD_Hub_ReadFile - (int)Mods4_EndOfFile,
 
 		// VehPtr defrag Block1
 		(int)VehPickState_NewState - (int)Mods5_EndOfFile,
