@@ -276,7 +276,7 @@ common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_01_Init
 common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_02_EmptyFunc.c
 common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_03_Adv_NumTimesLostEvent.c
 //common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_04_Adv_AdjustDifficulty.c //TODO
-//common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c //this compiles but I think it's broken
+common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c //this compiles but I think it's broken
 //common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_06_SetRotation.c //needs testing, is overbudget.
 //common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c //TODO
 //common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_08_ThTick_EngineRevving.c //TODO
