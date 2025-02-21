@@ -22,7 +22,7 @@
 //#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
 //#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
-#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
+//#define USE_DEFRAG    // Enables defragged decomp sections (required for ModsMain.c/ModsX.c)
 //#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
 
 // PC only
