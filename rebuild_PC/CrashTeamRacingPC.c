@@ -26,7 +26,7 @@
 #ifdef _WIN32
 #define CLOCKS_PER_SEC_FIX CLOCKS_PER_SEC
 #else
-#define CLOCKS_PER_SEC_FIX ((clock_t)100000) // Original value (1000000), I removed one zero
+#define CLOCKS_PER_SEC_FIX ((clock_t)1000000)
 #endif
 
 // work around for PsyCross

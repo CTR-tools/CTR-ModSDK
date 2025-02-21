@@ -20,10 +20,11 @@
 #define SquareRoot0_stub SquareRoot0
 
 // temporarily require manual including
-#include "../decompile/General/AltMods/Mods1.c"
-#include "../decompile/General/AltMods/Mods3.c"
-#include "../decompile/General/AltMods/Mods4.c"
-#include "../decompile/General/AltMods/Mods8.c"
+#include "../decompile/General/AltMods/Mods1.c" // needs UI_AAA_BigBlock1
+#include "../decompile/General/AltMods/Mods2.c" // needs GAMEPAD_Defrag
+#include "../decompile/General/AltMods/Mods3.c" // needs h21_64_Bank_ResetAllocator
+#include "../decompile/General/AltMods/Mods4.c" // needs LOAD_00_xx Defrag
+#include "../decompile/General/AltMods/Mods8.c" // needs UI_58_CupStandings_InputAndDraw.c
 
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
