@@ -1,6 +1,12 @@
 #include <common.h>
 
-void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*))
+// This is a wonderful hack that removes an unused parameter,
+// which saves bytes everywhere, without needing to alter the game code,
+// We need the 'bigfile' parameter to stay in the C code, just to keep
+// the front-end looking similar to ghidra, for easy comparison purposes
+#define DECOMP_LOAD_AppendQueue(a,b,c,d,e) DECOMP_LOAD_AppendQueue_ex(b,c,d,e)
+
+void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*))
 {
 	struct LoadQueueSlot* lqs;
 	
@@ -10,7 +16,7 @@ void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destina
 	#endif
 
 	lqs = &sdata->queueSlots[sdata->queueLength];
-	lqs->ptrBigfileCdPos = (struct BigHeader*)bigfile;
+	//lqs->ptrBigfileCdPos = (struct BigHeader*)bigfile;
 	lqs->flags = 0;
 	lqs->type = type;
 	lqs->subfileIndex = fileIndex;

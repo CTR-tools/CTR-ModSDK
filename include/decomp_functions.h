@@ -281,7 +281,13 @@ void DECOMP_LOAD_Callback_Overlay_231(void);
 void DECOMP_LOAD_Callback_Overlay_232(void);
 void DECOMP_LOAD_Callback_Overlay_233(void);
 void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk);
-void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void* destination, /*int *size,*/ void * callback);
+
+// same hack as AppendQueue, see notes there
+#define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback);
+// void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void* destination, /*int *size,*/ void * callback);
+
+
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex /*, int* ptrDestination, int* size, int callbackOrFlags*/);
 //void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, /*int* size,*/ int callbackOrFlags);
 void* DECOMP_LOAD_ReadDirectory(char* filename);
@@ -296,7 +302,17 @@ int DECOMP_LOAD_HowlSectorChainEnd(void);
 void DECOMP_LOAD_InitCD(void);
 void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs); //1st param might be `struct Level*`, 2nd param might be `char*`
 void DECOMP_LOAD_LangFile(int bigfilePtr, int lang);
-void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+
+
+// This is a wonderful hack that removes an unused parameter,
+// which saves bytes everywhere, without needing to alter the game code,
+// We need the 'bigfile' parameter to stay in the C code, just to keep
+// the front-end looking similar to ghidra, for easy comparison purposes
+#define DECOMP_LOAD_AppendQueue(a,b,c,d,e) DECOMP_LOAD_AppendQueue_ex(b,c,d,e)
+void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+// void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+
+
 void DECOMP_LOAD_NextQueuedFile(void);
 
 void DECOMP_MainDB_OTMem(struct OTMem* otMem, u_int size);

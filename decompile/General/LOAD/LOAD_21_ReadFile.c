@@ -1,6 +1,9 @@
 #include <common.h>
 
-void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback)
+// same hack as AppendQueue, see notes there
+#define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
+
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
@@ -11,6 +14,7 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int su
 	DECOMP_CDSYS_SetMode_StreamData();
 
 	// get size and offset of subfile
+	struct BigHeader* bigfile = sdata->ptrBigfile1;
 	struct BigEntry* entry = BIG_GETENTRY(bigfile);
 	int eSize = entry[subfileIndex].size;
 	int eOffs = entry[subfileIndex].offset;
