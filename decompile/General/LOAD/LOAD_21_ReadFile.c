@@ -36,11 +36,6 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 		
 		if (loadType == LT_VRAM)
 			DECOMP_MEMPACK_ReallocMem(0);
-
-		if (ptrDst == (void *)0x0)
-		{
-			return (void *)0;
-		}
 	}
 	
 	sdata->callbackCdReadSuccess = 0;
