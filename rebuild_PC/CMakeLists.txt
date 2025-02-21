@@ -84,7 +84,7 @@ if(CTR_VR)
   target_compile_options(ctr_bin PUBLIC -DUSE_VR)
 endif()
 
-# Clang is rigorous
+# Compiler options
 if(CMAKE_C_COMPILER_ID MATCHES "Clang")
   target_compile_options(ctr_bin PUBLIC -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration -Wno-return-type)
   if(MINGW OR CYGWIN)
@@ -92,6 +92,9 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang")
       target_link_options(ctr_bin PUBLIC -static-libgcc)
     endif()
   endif()
+else()
+  # Assume GCC
+  target_compile_options(ctr_bin PRIVATE -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-implicit-int)
 endif()
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -141,7 +144,7 @@ add_library(psycross_static STATIC ${PSYCROSS_SRCS_C} ${PSYCROSS_SRCS_CPP})
 set_target_properties(psycross_static PROPERTIES OUTPUT_NAME "psycross")
 target_include_directories(psycross_static PUBLIC "../externals/PsyCross/include")
 
-target_compile_options(psycross_static PRIVATE -Wno-narrowing)
+target_compile_options(psycross_static PRIVATE -Wno-narrowing -Wno-incompatible-pointer-types -Wno-implicit-function-declaration)
 
 target_link_libraries(psycross_static ${SDL2_LIBRARIES})
 target_include_directories(psycross_static PRIVATE ${SDL2_INCLUDE_DIRS})
