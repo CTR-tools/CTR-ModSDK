@@ -27,7 +27,7 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang")
     target_compile_options(ctr_srv PRIVATE -Wno-int-conversion -Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration -Wno-return-type)
 else()
     # Assume GCC
-    target_compile_options(ctr_srv PRIVATE -Wno-implicit-function-declaration -Wno-incompatible-pointer-types)
+    target_compile_options(ctr_srv PRIVATE -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-implicit-int)
 endif()
 
 # Debug options
