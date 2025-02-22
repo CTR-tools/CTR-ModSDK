@@ -101,6 +101,9 @@ void DebugMenu_Update(struct DebugMenu* dm)
 	{
 		if(dr->actionFlag == 1)
 		{
+			void DbgMenuEnter(struct DebugMenu* dm);
+			DbgMenuEnter(dm);
+			
 			// link to child
 			dm->childMenu = dr->subMenu;
 			

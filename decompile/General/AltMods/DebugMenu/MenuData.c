@@ -120,6 +120,31 @@ struct DebugRow rowsDbgLevels[] =
 	{0}
 };
 
+// Menu for CHARACTER SELECT
+extern struct DebugRow rowsDbgChar[14];
+struct DebugMenu menuDbgChar =
+{
+	.parentMenu = 0,
+	.currRow = rowsDbgChar,
+};
+struct DebugRow rowsDbgChar[] =
+{
+	{3, 0x0, "CRASH", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x1, "CORTEX", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x2, "TINY", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x3, "COCO", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x4, "NGIN", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x5, "DINGO", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x6, "POLAR", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x7, "PURA", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x8, "PINSTRIPE", 	DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0x9, "PAPU", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xA, "ROO", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xB, "JOE", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xC, "NTROPY", 		DebugMenu_LoadGame_GivenCharacterId },
+	{0}
+};
+
 // Menu for PLAYER SELECT
 extern struct DebugRow rowsDbgPlayer[15];
 struct DebugMenu menuDbgPlayer =
@@ -129,22 +154,22 @@ struct DebugMenu menuDbgPlayer =
 };
 struct DebugRow rowsDbgPlayer[] =
 {
-	{3, 0x1, "1",						DebugMenu_LoadGame_GivenNumPlyr },
-	{3, 0x2, "2",						DebugMenu_LoadGame_GivenNumPlyr },
-	{3, 0x3, "3",					 	DebugMenu_LoadGame_GivenNumPlyr },
-	{3, 0x4, "4",					 	DebugMenu_LoadGame_GivenNumPlyr },
+	{3, 0x1, "1",				DebugMenu_LoadGame_GivenNumPlyr },
+	{3, 0x2, "2",				DebugMenu_LoadGame_GivenNumPlyr },
+	{3, 0x3, "3",				DebugMenu_LoadGame_GivenNumPlyr },
+	{3, 0x4, "4",				DebugMenu_LoadGame_GivenNumPlyr },
 	
-	{3, 0x4, "RESET POSITIONS",		 	1 /* Need Func */ },
-	{3, 0x5, "START RACE", 				1 /* Need Func */ },
-	{3, 0x6, "PLR 1 BUZZ OFF",			1 /* Need Func */ },
-	{3, 0x7, "PLR 2 BUZZ OFF",	 		1 /* Need Func */ },
-	{3, 0x8, "PLR 3 BUZZ OFF",	 		1 /* Need Func */ },
-	{3, 0x9, "PLR 4 BUZZ OFF",			1 /* Need Func */ },
+	{3, 0x4, "RESET POSITIONS",	1 /* Need Func */ },
+	{3, 0x5, "START RACE", 		1 /* Need Func */ },
+	{3, 0x6, "PLR 1 BUZZ OFF",	1 /* Need Func */ },
+	{3, 0x7, "PLR 2 BUZZ OFF",	1 /* Need Func */ },
+	{3, 0x8, "PLR 3 BUZZ OFF",	1 /* Need Func */ },
+	{3, 0x9, "PLR 4 BUZZ OFF",	1 /* Need Func */ },
 	
-	{3/*1*/, 0x0, "LOAD PLR 1...",			1 /* Need Character Menu */ },
-	{3/*1*/, 0x0, "LOAD PLR 2...", 			1 /* Need Character Menu */ },
-	{3/*1*/, 0x0, "LOAD PLR 3...",			1 /* Need Character Menu */ },
-	{3/*1*/, 0x0, "LOAD PLR 4...",			1 /* Need Character Menu */ },
+	{1, 0x0, "LOAD PLR 1...",	&menuDbgChar },
+	{1, 0x0, "LOAD PLR 2...", 	&menuDbgChar },
+	{1, 0x0, "LOAD PLR 3...",	&menuDbgChar },
+	{1, 0x0, "LOAD PLR 4...",	&menuDbgChar },
 	{0}
 };
 
@@ -161,6 +186,29 @@ struct DebugRow rowsDbgMain[] =
 	{ 1, 0x0, "PLAYERS...", &menuDbgPlayer },
 	{0}
 };
+
+void DbgMenuEnter(struct DebugMenu* dm)
+{
+	struct DebugRow* firstRow = DMENU_GETROWS(dm);
+	
+	if(dm == &menuDbgPlayer)
+	{
+		int rowIndex = ((unsigned int)dm->currRow - (unsigned int)firstRow) >> 4;
+		
+		// LOAD PLYR 1/2/3/4...
+		if(rowIndex >= 10)
+		{
+			debugPlayerIndex = rowIndex - 10;
+			
+			for(int i = 0; i < 4; i++)
+			{
+				firstRow[i+10].subMenu = -1;
+			}
+			
+			firstRow[rowIndex].subMenu = &menuDbgChar;
+		}
+	}
+}
 
 // June 1999
 // 800828F0 - Battle submenu
