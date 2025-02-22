@@ -121,7 +121,7 @@ struct DebugRow rowsDbgLevels[] =
 };
 
 // Menu for CHARACTER SELECT
-extern struct DebugRow rowsDbgChar[14];
+extern struct DebugRow rowsDbgChar[17];
 struct DebugMenu menuDbgChar =
 {
 	.parentMenu = 0,
@@ -142,6 +142,9 @@ struct DebugRow rowsDbgChar[] =
 	{3, 0xA, "ROO", 		DebugMenu_LoadGame_GivenCharacterId },
 	{3, 0xB, "JOE", 		DebugMenu_LoadGame_GivenCharacterId },
 	{3, 0xC, "NTROPY", 		DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xD, "PENGUIN", 	DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xE, "FAKECRASH", 	DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xF, "OXIDE", 		DebugMenu_LoadGame_GivenCharacterId },
 	{0}
 };
 
