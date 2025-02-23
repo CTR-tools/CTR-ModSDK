@@ -87,6 +87,9 @@ struct x y[] =
 	// 1020 - 0x2594
 	TEST16(sizeof(struct GameTracker)),
 
+	TEST16(sizeof(struct ScratchpadStruct)),
+	TEST16(OFFSETOF(struct ScratchpadStruct, numInstHitboxesHit)),
+
 	TEST16(OFFSETOF(struct GameTracker, pushBuffer_UI)),
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),

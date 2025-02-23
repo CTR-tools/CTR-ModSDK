@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadStruct *sps)
+void DECOMP_COLL_FIXED_BSPLEAF_TestInstance(struct BSP *node, struct ScratchpadStruct *sps)
 {
     int arraySize;
     struct BSP *bspArray = node->data.leaf.bspHitboxArray;
@@ -16,11 +16,10 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
 		bbox = &bspArray->box;
 		
         // 1F8001CC
-        arraySize = *(int*)&sps->unk4C[0x78] - 1;
+        arraySize = sps->numInstHitboxesHit - 1;
         for (;arraySize >= 0; arraySize--)
         {
-            // look for member in 1F800190 array
-            if ((int)bspArray == *(int*)&sps->unk4C[0x3c + arraySize*4])
+            if (bspArray == sps->bspInstHitboxArr[arraySize])
                 goto NextBSP;
         }
 
@@ -59,7 +58,7 @@ void DECOMP_COLL_PerBspLeaf_CheckInstances(struct BSP *node, struct ScratchpadSt
 		  )
         {
             // check with collision for this instance
-            COLL_Instance(sps, bspArray);
+            COLL_FIXED_INSTANC_TestPoint(sps, bspArray);
         }
 
 		NextBSP:

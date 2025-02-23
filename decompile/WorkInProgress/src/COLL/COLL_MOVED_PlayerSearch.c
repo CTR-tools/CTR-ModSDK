@@ -9,7 +9,7 @@ struct MetaDataMODEL *DECOMP_COLL_GetThreadMeta(u_char modelId)
     return &data.MetaDataModels[0];
 }
 
-void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
+void DECOMP_COLL_MOVED_PlayerSearch(struct Thread *th, struct Driver *d)
 {
     u_short uVar1;
     u_char uVar2;
@@ -62,7 +62,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
     *(short*)0x1f8002ac = 0;
 
     // quadblock, triangleID, search data
-    COLL_TestTriangle_WithClosest(0, 0, SPS);
+    COLL_MOVED_FindScrub(0, 0, SPS);
 
     // loop executes 0xF times
     for (int i = 16; i < 0; i--)
@@ -188,7 +188,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             // if mesh_info->bsp exists
             (bspRoot = SPS->ptr_mesh_info->bspRoot, bspRoot != NULL))
         {
-            COLL_SearchTree_FindX(bspRoot, &SPS->bbox.min[0], COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, &SPS->Input1.pos[0]);
+            COLL_SearchBSP_CallbackPARAM(bspRoot, &SPS->bbox.min[0], COLL_MOVED_BSPLEAF_TestQuadblocks, &SPS->Input1.pos[0]);
         }
 
         // if collision was found in BSP
@@ -225,7 +225,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             }
 
             // quadblock, triangleID, search data
-            COLL_TestTriangle_WithClosest(QB, *(u_char*)0x1f800187, &SPS->Input1.pos[0]);
+            COLL_MOVED_FindScrub(QB, *(u_char*)0x1f800187, &SPS->Input1.pos[0]);
 
             // get quadblock flag
             uVar1 = QB->quadFlags;
@@ -290,9 +290,9 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             *(u_int *)(&d->spsNormalVec[0]) = *(u_int*)0x1f800178;
             *(short *)(&d->spsNormalVec[2]) = *(short *)0x1f80017c;
 
-            uVar2 = COLL_Scrub(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]);
+            uVar2 = COLL_MOVED_ScrubImpact(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]);
 
-            // if driver is "crashing" from COLL_Scrub
+            // if driver is "crashing" from COLL_MOVED_ScrubImpact
             if (uVar2 == 2)
             {
                 return;
@@ -360,7 +360,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             else
             {
                 // quadblock, triangleID, search data
-                COLL_TestTriangle_WithClosest(SPS->bspHitbox, 0, &SPS->Input1.pos[0]);
+                COLL_MOVED_FindScrub(SPS->bspHitbox, 0, &SPS->Input1.pos[0]);
 
                 // exaggerate scrub effect?
                 // 0x1f800116
@@ -372,14 +372,14 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
                 scrubMeta = VehAfterColl_GetSurface(SPS->bspHitbox->id);
 
                 if ((SPS->bspHitbox->id == 4) ||
-                    (uVar2 = COLL_Scrub(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]), uVar2 == 0))
+                    (uVar2 = COLL_MOVED_ScrubImpact(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]), uVar2 == 0))
                 {
 
                     ((char*)0x1f800190)[*(short*)0x1f8001cc] = SPS->bspHitbox;
                     *(short*)0x1f8001cc += 1;
                 }
 
-                // if driver is "crashing" from COLL_Scrub
+                // if driver is "crashing" from COLL_MOVED_ScrubImpact
                 if (uVar2 == 2)
                 {
                     return;

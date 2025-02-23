@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_COLL_TestTriangle_WithClosest(struct QuadBlock* ptrQuad, int triangleID, struct ScratchpadStructExtended* spex)
+void DECOMP_COLL_MOVED_FindScrub(struct QuadBlock* ptrQuad, int triangleID, struct ScratchpadStructExtended* spex)
 {
 
   struct BspSearchTriangle* bspTriangle;
@@ -19,9 +19,9 @@ void DECOMP_COLL_TestTriangle_WithClosest(struct QuadBlock* ptrQuad, int triangl
   }
 
   // if this function is being called from the 
-  // loop of 15 calls, from COLL_StartSearch_Player
+  // loop of 15 calls, from COLL_FIXED_PlayerSearch
 
-  // since start of COLL_StartSearch_Player, check all existing
+  // since start of COLL_FIXED_PlayerSearch, check all existing
   // records of quadblock and triangle, so far
 
   for (char i = spex->numTriangles - 1; i >= 0; i--)

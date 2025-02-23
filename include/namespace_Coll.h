@@ -10,8 +10,8 @@ struct BspSearchVertex
 	short pos[3];
 	
 	// 0x6
-	// FUN_8001f2dc - COLL_TestTriangle_GetNormalVector
-	// FUN_8001ef50 - COLL_TestTriangle_FindAny
+	// FUN_8001f2dc - COLL_FIXED_TRIANGL_GetNormVec
+	// FUN_8001ef50 - COLL_FIXED_TRIANGL_TestPoint
 	u_short flags;
 	
 	// 0x8
@@ -143,7 +143,11 @@ struct ScratchpadStruct
 		
 		// 0x5c
 		// distanceFromDriverToUNK
-		char unk[8];
+		short unk[3];
+		
+		// 0x62
+		char unk62;
+		char unk63_someIndex;
 		
 		// 0x64
 		void* ptrQuadblock;
@@ -192,16 +196,12 @@ struct ScratchpadStruct
 	// 0xd8, 0xdc, 0xe0
 	struct BspSearchVertex* bspSearchVertHit[3];
 	
-	// vec3, subtract positions (FUN_8001d0c4)
-	// 0xe2, 0xe4, 0xe6
-	short unkVecE2[3];
+	// 0xe4
+	int unkE4;
 	
 	// vec3, bsp->0x10 - position (FUN_8001d0c4)
-	// 0xe8, 0xea, 0xec
-	short unkVecE8[3];
-	
-	// 0xee - padding
-	short paddingEE;
+	// 0xe8, 0xea, 0xec, 0xee
+	short unkVecE8[4];
 	
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
@@ -209,6 +209,9 @@ struct ScratchpadStruct
 	// 0x1a4 - quadblock action flags
 	// 0x1a8 - fastmath normalization
 	char dataOutput[0x68];
+	
+	// offset 0x1c4
+	// FUN_8001d0c4
 	
 	// 0x20C -- size of struct
 };

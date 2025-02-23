@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP *node, struct ScratchpadStruct *sps)
+void DECOMP_COLL_FIXED_BSPLEAF_TestQuadblocks(struct BSP *node, struct ScratchpadStruct *sps)
 {
     u_int numQuads;
     struct QuadBlock* ptrQuad;
@@ -17,11 +17,11 @@ void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP *node, struct Sc
     // loop through all quadblocks
     while (numQuads-- != 0)
     {
-        COLL_PerQuadblock_CheckTriangles_Touching(ptrQuad++, sps);
+        COLL_FIXED_QUADBLK_TestTriangles(ptrQuad++, sps);
     }
 
     if ((sps->Union.QuadBlockColl.searchFlags & 1) != 0)
     {
-        COLL_PerBspLeaf_CheckInstances(node, sps);
+        COLL_FIXED_BSPLEAF_TestInstance(node, sps);
     }
 }

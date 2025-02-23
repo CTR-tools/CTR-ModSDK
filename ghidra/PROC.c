@@ -657,7 +657,7 @@ void FUN_80042544(short *param_1)
   puVar2 = PTR_DAT_8008d2ac;
   param_1[0x13] = param_1[2] + sVar1;
 
-  // COLL_SearchTree_FindX, callback is PROC_PerBspLeaf_CheckInstances
+  // COLL_SearchBSP_CallbackPARAM, callback is PROC_PerBspLeaf_CheckInstances
   FUN_8001ebec(*(undefined4 *)(**(int **)(puVar2 + 0x160) + 0x18),param_1 + 0xe,FUN_800423fc);
   return;
 }

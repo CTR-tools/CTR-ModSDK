@@ -75,30 +75,30 @@
 // BSPLEAF
 // INSTANC
 
-// only stubbed in 926									// Rename in-progress, NOT DONE
+// only stubbed in 926
 8001d094 COLL_LevModelMeta
-8001d0c4 COLL_Instance									// COLL_FIXED_INSTANC_TestPoint
-8001d610 COLL_PerBspLeaf_CheckInstances					// COLL_FIXED_BSPLEAF_TestInstance
-8001d77c COLL_StartSearch_AI							// COLL_FIXED_BotsSearch
-8001d944 COLL_StartSearch_Player						// COLL_FIXED_PlayerSearch
-8001eb0c COLL_SearchTree_FindQuadblock_Touching			// COLL_SearchBSP_CallbackQUADBLK
-8001ebec COLL_SearchTree_FindX							// COLL_SearchBSP_CallbackPARAM
-8001ede4 COLL_TestTriangle_FindClosest_Subfunction2		// COLL_FIXED_TRIANGL_Barycentrics
-8001ef1c COLL_TestTriangle_Unused						// COLL_FIXED_TRIANGL_UNUSED
-8001ef50 COLL_TestTriangle_FindAny						// COLL_FIXED_TRIANGL_TestPoint
-8001f2dc COLL_TestTriangle_GetNormalVector				// COLL_FIXED_TRIANGL_GetNormVec
-8001f41c COLL_PerQuadblock_CheckTriangles_Touching		// COLL_FIXED_QUADBLK_TestTriangles
-8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching		// COLL_FIXED_BSPLEAF_TestQuadblocks
-8001f67c COLL_TestQuadblock_TwoTris						// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
-8001f6f0 COLL_TestQuadblock_EightTris					// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
-8001f7f0 COLL_ResetScratchpadCache						// COLL_FIXED_QUADBLK_LoadScratchpadVerts
-8001f928 COLL_TestTriangle_FindClosest_Subfunction1		// COLL_MOVED_TRIANGL_ReorderNormals
-8001fc40 COLL_TestTriangle_FindClosest					// COLL_MOVED_TRIANGL_TestPoint
-80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// COLL_MOVED_QUADBLK_TestTriangles
-800202a8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer		// COLL_MOVED_BSPLEAF_TestQuadblocks
-80020334 COLL_TestTriangle_WithClosest					// COLL_MOVED_FindScrub
-80020410 COLL_StartSearch_NearPlayer					// COLL_MOVED_PlayerSearch
-80020c58 COLL_Scrub										// COLL_MOVED_ScrubImpact
+8001d0c4 COLL_FIXED_INSTANC_TestPoint
+8001d610 COLL_FIXED_BSPLEAF_TestInstance
+8001d77c COLL_FIXED_BotsSearch
+8001d944 COLL_FIXED_PlayerSearch
+8001eb0c COLL_SearchBSP_CallbackQUADBLK
+8001ebec COLL_SearchBSP_CallbackPARAM
+8001ede4 COLL_FIXED_TRIANGL_Barycentrics
+8001ef1c COLL_FIXED_TRIANGL_UNUSED
+8001ef50 COLL_FIXED_TRIANGL_TestPoint
+8001f2dc COLL_FIXED_TRIANGL_GetNormVec
+8001f41c COLL_FIXED_QUADBLK_TestTriangles
+8001f5f0 COLL_FIXED_BSPLEAF_TestQuadblocks
+8001f67c COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
+8001f6f0 COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
+8001f7f0 COLL_FIXED_QUADBLK_LoadScratchpadVerts
+8001f928 COLL_MOVED_TRIANGL_ReorderNormals
+8001fc40 COLL_MOVED_TRIANGL_TestPoint
+80020064 COLL_MOVED_QUADBLK_TestTriangles
+800202a8 COLL_MOVED_BSPLEAF_TestQuadblocks
+80020334 COLL_MOVED_FindScrub
+80020410 COLL_MOVED_PlayerSearch
+80020c58 COLL_MOVED_ScrubImpact
 
 80021500 CTR_Box_DrawWirePrims
 80021594 CTR_Box_DrawWireBox

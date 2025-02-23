@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_COLL_StartSearch_AI(short *posCurr, short *posPrev, struct ScratchpadStruct* sps)
+void DECOMP_COLL_FIXED_BotsSearch(short *posCurr, short *posPrev, struct ScratchpadStruct* sps)
 {
     char i;
     short radius = sps->Input1.hitRadius;
@@ -30,9 +30,9 @@ void DECOMP_COLL_StartSearch_AI(short *posCurr, short *posPrev, struct Scratchpa
     sps->unk3C = 0;
     sps->boolDidTouchHitbox = 0;
 
-    *(u_int *)&sps->unk4C[0x38] = 0x1000;
-    *(u_int *)&sps->unk4C[0x78] = 0; // 0xC4 arraySize
+    sps->countByOne_ForWhatReason = 0x1000;
+	sps->numInstHitboxesHit = 0;
     *(u_int *)&sps->dataOutput[0] = 0;
 
-    COLL_SearchTree_FindX(sps->ptr_mesh_info->bspRoot, &sps->bbox, COLL_PerBspLeaf_CheckInstances, &sps->Input1.pos[0]);
+    COLL_SearchBSP_CallbackPARAM(sps->ptr_mesh_info->bspRoot, &sps->bbox, COLL_FIXED_BSPLEAF_TestInstance, &sps->Input1.pos[0]);
 }

@@ -348,7 +348,7 @@ RunMineCOLL:
 
 			sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-			COLL_SearchTree_FindQuadblock_Touching((u_int*)pos1, (u_int*)pos2, sps, 0x40);
+			COLL_SearchBSP_CallbackQUADBLK((u_int*)pos1, (u_int*)pos2, sps, 0x40);
 
 			if(sps->boolDidTouchHitbox != 0)
 			{
@@ -375,7 +375,7 @@ RunMineCOLL:
 				}
 
 				sps->Union.QuadBlockColl.searchFlags = 0;
-				COLL_SearchTree_FindQuadblock_Touching((u_int*)pos1, (u_int*)pos2, sps, 0);
+				COLL_SearchBSP_CallbackQUADBLK((u_int*)pos1, (u_int*)pos2, sps, 0);
 			}
 
 			RB_MakeInstanceReflective(sps, weaponInst);

@@ -66,13 +66,13 @@
 8001d694 CDSYS_XAPauseAtEnd
 
 8001d6bc COLL_LevModelMeta
-8001d6ec COLL_Instance
+8001d6ec COLL_FIXED_INSTANC_TestPoint
 // extra function here in sep3?
-8001dd40 COLL_PerBspLeaf_CheckInstances
-8001deac COLL_StartSearch_AI
-8001e080 COLL_StartSearch_Player
-8001f1ec COLL_SearchTree_FindQuadblock_Touching
-8001f2e8 COLL_SearchTree_FindX
+8001dd40 COLL_FIXED_BSPLEAF_TestInstance
+8001deac COLL_FIXED_BotsSearch
+8001e080 COLL_FIXED_PlayerSearch
+8001f1ec COLL_SearchBSP_CallbackQUADBLK
+8001f2e8 COLL_SearchBSP_CallbackPARAM
 
 // unknown 8001f500
 // unknown 8001f638
@@ -80,8 +80,8 @@
 // 1f690 is not a real function
 // unknown 8001f9f8
 
-8001fb38 COLL_PerQuadblock_CheckTriangles_Touching
-8001fd0c COLL_PerBspLeaf_CheckQuadblocks_Touching
+8001fb38 COLL_FIXED_QUADBLK_TestTriangles
+8001fd0c COLL_FIXED_BSPLEAF_TestQuadblocks
 
 // unknown 8001fd98
 // unknown 8001fe0c
@@ -92,13 +92,13 @@
 // unknown 8002032c
 // unknown 8002035c
 
-80020780 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800209c4 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+80020780 COLL_MOVED_QUADBLK_TestTriangles
+800209c4 COLL_MOVED_BSPLEAF_TestQuadblocks
 
 // unknown 80020a50
 // unknown 80020b2c
 
-8002137c COLL_Scrub
+8002137c COLL_MOVED_ScrubImpact
 
 80021c24 CTR_Box_DrawWirePrims
 80021cb8 CTR_Box_DrawWireBox

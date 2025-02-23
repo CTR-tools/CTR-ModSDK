@@ -66,12 +66,12 @@
 8001d0ac CDSYS_XAPauseAtEnd
 
 8001d0d4 COLL_LevModelMeta
-8001d104 COLL_Instance
-8001d650 COLL_PerBspLeaf_CheckInstances
-8001d7bc COLL_StartSearch_AI
-8001d984 COLL_StartSearch_Player
-8001eb4c COLL_SearchTree_FindQuadblock_Touching
-8001ec2c COLL_SearchTree_FindX
+8001d104 COLL_FIXED_INSTANC_TestPoint
+8001d650 COLL_FIXED_BSPLEAF_TestInstance
+8001d7bc COLL_FIXED_BotsSearch
+8001d984 COLL_FIXED_PlayerSearch
+8001eb4c COLL_SearchBSP_CallbackQUADBLK
+8001ec2c COLL_SearchBSP_CallbackPARAM
 
 // unknown 8001ee24
 // unknown 8001ef5c
@@ -79,8 +79,8 @@
 // 1efb4 is not a real function
 // unknown 8001f31c
 
-8001f45c COLL_PerQuadblock_CheckTriangles_Touching
-8001f630 COLL_PerBspLeaf_CheckQuadblocks_Touching
+8001f45c COLL_FIXED_QUADBLK_TestTriangles
+8001f630 COLL_FIXED_BSPLEAF_TestQuadblocks
 
 // unknown 8001f6bc
 // unknown 8001f730
@@ -91,13 +91,13 @@
 // unknown 8001fc50
 // unknown 8001fc80
 
-800200a4 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800202e8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+800200a4 COLL_MOVED_QUADBLK_TestTriangles
+800202e8 COLL_MOVED_BSPLEAF_TestQuadblocks
 
 // unknown 80020374
 // unknown 80020450
 
-80020c98 COLL_Scrub
+80020c98 COLL_MOVED_ScrubImpact
 
 80021540 CTR_Box_DrawWirePrims
 800215d4 CTR_Box_DrawWireBox

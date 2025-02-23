@@ -338,29 +338,29 @@ common, exe, CDSYS_XAPauseAtEnd, 0x0,                  General/CDSYS/CDSYS_18_XA
 // ====================================================================================================================
 // COLL (stubbed for this file)
 // ====================================================================================================================
-common, exe, COLL_LevModelMeta, 0x0,                                     General/COLL/COLL_00_LevModelMeta.c
-//common, exe, COLL_Instance, 0x0,                                         General/COLL/COLL_01_Instance.c //TODO
-common, exe, COLL_PerBspLeaf_CheckInstances, 0x0,                        General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
-common, exe, COLL_StartSearch_AI, 0x0,                                   General/COLL/COLL_03_StartSearch_AI.c
-//common, exe, COLL_StartSearch_Player, 0x0,                               General/COLL/COLL_04_StartSearch_Player.c //TODO
-//common, exe, COLL_SearchTree_FindQuadblock_Touching, 0x0,                General/COLL/COLL_05_SearchTree_FindQuadblock_Touching.c //TODO
-//common, exe, COLL_SearchTree_FindX, 0x0,                                 General/COLL/COLL_06_SearchTree_FindX.c //TODO
-//common, exe, COLL_TestTriangle_FindClosest_Subfunction2, 0x0,            General/COLL/COLL_07_TestTriangle_FindClosest_Subfunction2.c //TODO
-//common, exe, COLL_TestTriangle_Unused, 0x0,                              General/COLL/COLL_08_TestTriangle_Unused.c //TODO
-//common, exe, COLL_TestTriangle_FindAny, 0x0,                             General/COLL/COLL_09_TestTriangle_FindAny.c //TODO
-//common, exe, COLL_TestTriangle_GetNormalVector, 0x0,                     General/COLL/COLL_10_TestTriangle_GetNormalVector.c //TODO
-//common, exe, COLL_PerQuadblock_CheckTriangles_Touching, 0x0,             General/COLL/COLL_11_PerQuadblock_CheckTriangles_Touching.c //over budget, but assumed working
-//common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0,              General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c //over budget, but assumed working
-//common, exe, COLL_TestQuadblock_TwoTris, 0x0,                            General/COLL/COLL_13_TestQuadblock_TwoTris.c //over budget, but assumed working
-//common, exe, COLL_TestQuadblock_EightTris, 0x0,                          General/COLL/COLL_14_TestQuadblock_EightTris.c //over budget, but assumed working
-//common, exe, COLL_ResetScratchpadCache, 0x0,                          General/COLL/COLL_15_ResetScratchpadCache.c //TODO
-//common, exe, COLL_TestTriangle_FindClosest_Subfunction1, 0x0,            General/COLL/COLL_16_TestTriangle_FindClosest_Subfunction1.c //TODO
-//common, exe, COLL_TestTriangle_FindClosest, 0x0,                        General/COLL/COLL_17_TestTriangle_FindClosest.c //TODO
-//common, exe, COLL_PerQuadblock_CheckTriangles_NearPlayer, 0x0,           General/COLL/COLL_18_PerQuadblock_CheckTriangles_NearPlayer.c //over budget, but assumed working
-//common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0,            General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c //over budget, but assumed working
-//common, exe, COLL_TestTriangle_WithClosest, 0x0,                         General/COLL/COLL_20_TestTriangle_WithClosest.c //TODO
-//common, exe, COLL_StartSearch_NearPlayer, 0x0,                           General/COLL/COLL_21_StartSearch_NearPlayer.c //TODO
-//common, exe, COLL_Scrub, 0x0,                                          General/COLL/COLL_22_Scrub.c //TODO
+common, exe, COLL_LevModelMeta, 0x0,                       	General/COLL/COLL_00_LevModelMeta.c
+//common, exe, COLL_FIXED_INSTANC_TestPoint, 0x0,          	General/COLL/COLL_01_FIXED_INSTANC_TestPoint.c //TODO
+common, exe, COLL_FIXED_BSPLEAF_TestInstance, 0x0,         	General/COLL/COLL_02_FIXED_BSPLEAF_TestInstance.c
+common, exe, COLL_FIXED_BotsSearch, 0x0,                   	General/COLL/COLL_03_FIXED_BotsSearch.c
+//common, exe, COLL_FIXED_PlayerSearch, 0x0,               	General/COLL/COLL_04_FIXED_PlayerSearch.c //TODO
+//common, exe, COLL_SearchBSP_CallbackQUADBLK, 0x0,        	General/COLL/COLL_05_SearchBSP_CallbackQUADBLK.c //TODO
+//common, exe, COLL_SearchBSP_CallbackPARAM, 0x0,          	General/COLL/COLL_06_SearchBSP_CallbackPARAM.c //TODO
+//common, exe, COLL_FIXED_TRIANGL_Barycentrics, 0x0,       	General/COLL/COLL_07_FIXED_TRIANGL_Barycentrics.c //TODO
+//common, exe, COLL_FIXED_TRIANGL_UNUSED, 0x0,             	General/COLL/COLL_08_FIXED_TRIANGL_UNUSED.c //TODO
+//common, exe, COLL_FIXED_TRIANGL_TestPoint, 0x0,          	General/COLL/COLL_09_FIXED_TRIANGL_TestPoint.c //TODO
+//common, exe, COLL_FIXED_TRIANGL_GetNormVec, 0x0,         	General/COLL/COLL_10_FIXED_TRIANGL_GetNormVec.c //TODO
+//common, exe, COLL_FIXED_QUADBLK_TestTriangles, 0x0,      	General/COLL/COLL_11_FIXED_QUADBLK_TestTriangles.c //over budget, but assumed working
+//common, exe, COLL_FIXED_BSPLEAF_TestQuadblocks, 0x0,     	General/COLL/COLL_12_FIXED_BSPLEAF_TestQuadblocks.c //over budget, but assumed working
+//common, exe, COLL_FIXED_QUADBLK_GetNormVecs_LoLOD, 0x0,	General/COLL/COLL_13_FIXED_QUADBLK_GetNormVecs_LoLOD.c //over budget, but assumed working
+//common, exe, COLL_FIXED_QUADBLK_GetNormVecs_HiLOD, 0x0,  	General/COLL/COLL_14_FIXED_QUADBLK_GetNormVecs_HiLOD.c //over budget, but assumed working
+//common, exe, COLL_FIXED_QUADBLK_LoadScratchpadVerts, 0x0,	General/COLL/COLL_15_FIXED_QUADBLK_LoadScratchpadVerts.c //TODO
+//common, exe, COLL_MOVED_TRIANGL_ReorderNormals, 0x0,     	General/COLL/COLL_16_MOVED_TRIANGL_ReorderNormals.c //TODO
+//common, exe, COLL_MOVED_TRIANGL_TestPoint, 0x0,          	General/COLL/COLL_17_MOVED_TRIANGL_TestPoint.c //TODO
+//common, exe, COLL_MOVED_QUADBLK_TestTriangles, 0x0,      	General/COLL/COLL_18_MOVED_QUADBLK_TestTriangles.c //over budget, but assumed working
+//common, exe, COLL_MOVED_BSPLEAF_TestQuadblocks, 0x0,     	General/COLL/COLL_19_MOVED_BSPLEAF_TestQuadblocks.c //over budget, but assumed working
+//common, exe, COLL_MOVED_FindScrub, 0x0,                  	General/COLL/COLL_20_MOVED_FindScrub.c //TODO
+//common, exe, COLL_MOVED_PlayerSearch, 0x0,               	General/COLL/COLL_21_MOVED_PlayerSearch.c //TODO
+//common, exe, COLL_MOVED_ScrubImpact, 0x0,                	General/COLL/COLL_22_MOVED_ScrubImpact.c //TODO
 
 // ====================================================================================================================
 // CTR (stubbed for this file)

@@ -233,7 +233,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     sps->Union.QuadBlockColl.searchFlags = (gGT->numPlyrCurrGame > 3) ? 2 : 0;
     sps->ptr_mesh_info = level1->ptr_mesh_info;
 
-    COLL_SearchTree_FindQuadblock_Touching(&posTop[0], &posBottom[0], sps, 0);
+    COLL_SearchBSP_CallbackQUADBLK(&posTop[0], &posBottom[0], sps, 0);
 
     // if collision was not found
     if (sps->boolDidTouchQuadblock == 0)
@@ -245,10 +245,10 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     // if it was found
     else
     {
-        d->AxisAngle3_normalVec[0] = *(short*)&sps->unk4C[0x24];
-        d->AxisAngle3_normalVec[1] = *(short*)&sps->unk4C[0x26];
-        d->AxisAngle3_normalVec[2] = *(short*)&sps->unk4C[0x28];
-        d->lastValid = *(int*)&sps->unk4C[0x34];
+        d->AxisAngle3_normalVec[0] = sps->Set2.normalVec[0];
+        d->AxisAngle3_normalVec[1] = sps->Set2.normalVec[1];
+        d->AxisAngle3_normalVec[2] = sps->Set2.normalVec[2];
+        d->lastValid = sps->Set2.ptrQuadblock;
     }
 
     // set all normal vectors to spawn

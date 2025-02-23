@@ -14,7 +14,7 @@ undefined ** FUN_8001d094(uint param_1)
 
 
 
-// COLL_Instance
+// COLL_FIXED_INSTANC_TestPoint
 // param_1 - 0x1f800108
 // param_2 - struct BSP* instanceHitbox
 uint FUN_8001d0c4(short *param_1,byte *param_2)
@@ -50,13 +50,14 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
   // if instance is on the track? (not floating in air)
   if ((param_1[0x11] & 0x40U) == 0) 
   { 
+	// box size? offset 0x1c8
     *(undefined4 *)(param_1 + 0xe4) = 0;
     
 	// subtract two points
 	uVar5 = (int)*param_1 - (int)param_1[8];
     uVar7 = (int)param_1[2] - (int)param_1[10]; 
 	
-	// box size?
+	// box size? offset 0x1c4
     *(uint *)(param_1 + 0xe2) = uVar5;
     *(uint *)(param_1 + 0xe6) = uVar7;
 	
@@ -365,7 +366,7 @@ void FUN_8001d610(int param_1,int param_2)
 			(*(short *)piVar4 <= *(short *)(param_2 + 0x3a))
 		 ) 
 	  {
-		// COLL_Instance
+		// COLL_FIXED_INSTANC_TestPoint
 		// check with collision for this instance
         FUN_8001d0c4(param_2,piVar3); 
       }
@@ -381,7 +382,7 @@ LAB_8001d750:
 }
 
 
-// COLL_StartSearch_AI
+// COLL_FIXED_BotsSearch
 // param1 is driver posCurr,
 // param2 is driver posPrev
 // param3 is 1f800108
@@ -464,7 +465,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
     sVar1 = (short)((int)param_3[2] + (int)param_3[3]);
   }
   
-  // sps->unk4C[0x38]
+  // sps->countByOne_ForWhatReason
   *(undefined4 *)(param_3 + 0x42) = 0x1000;
   
   param_3[0x1d] = sVar1;
@@ -478,10 +479,10 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   // sps->dataOutput[0]
   *(undefined4 *)(param_3 + 0xd2) = 0;
   
-  // sps->unk4C[0x78]
+  // sps->numInstHitboxesHit = 0;
   *(undefined4 *)(param_3 + 0x62) = 0;
 
-  // COLL_SearchTree_FindX, callback
+  // COLL_SearchBSP_CallbackPARAM, callback
   // PerBspLeaf_CheckInstances
   FUN_8001ebec(
 	*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),
@@ -494,7 +495,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
 
 
 
-// COLL_StartSearch_Player
+// COLL_FIXED_PlayerSearch
 // check collisions with all quadblocks (no instances)
 void FUN_8001d944(int param_1,int param_2)
 // param_1 = thread
@@ -605,15 +606,15 @@ void FUN_8001d944(int param_1,int param_2)
   if (*(int *)(param_2 + 0x350) != 0)
   {
 	// check, if touching same quadblock still
-	// COLL_PerQuadblock_CheckTriangles_Touching
+	// COLL_FIXED_QUADBLK_TestTriangles
     FUN_8001f41c(*(int *)(param_2 + 0x350),&DAT_1f800108);
   }
 
   // if no collision is found, search for another
   if (((DAT_1f800146 == 0) && (DAT_1f800134 != 0)) && (*(int *)(DAT_1f800134 + 0x18) != 0))
   {
-	// COLL_SearchTree_FindX, callback
-	// COLL_PerBspLeaf_CheckQuadblocks_Touching
+	// COLL_SearchBSP_CallbackPARAM, callback
+	// COLL_FIXED_BSPLEAF_TestQuadblocks
     FUN_8001ebec(*(int *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
   }
 
@@ -1510,7 +1511,7 @@ code_r0x8001e96c:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_SearchTree_FindQuadblock_Touching
+// COLL_SearchBSP_CallbackQUADBLK
 // param1 - posTop
 // param2 - posBottom
 // param3 - 1f800108
@@ -1663,7 +1664,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
       _DAT_1f800068 = iVar14;
       DAT_1f80006c = iVar3;
 
-	  // COLL_PerBspLeaf_CheckQuadblocks_Touching
+	  // COLL_FIXED_BSPLEAF_TestQuadblocks
       FUN_8001f5f0(iVar12,param_3);
 
 	  iVar3 = DAT_1f80006c;
@@ -1674,7 +1675,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
 }
 
 
-// COLL_SearchTree_FindX
+// COLL_SearchBSP_CallbackPARAM
 // param1, pointer to bsp
 // param2, pointer to boundingbox
 // param3, callback if item collides with anything
@@ -1956,7 +1957,7 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
 }
 
 
-// COLL_TestTriangle_Unused
+// COLL_FIXED_TRIANGL_UNUSED
 // hand-written assembly, stores $s0, $s1, and $s2
 // then restores registers, and saves t2 into $a0->58
 void FUN_8001ef1c(void)
@@ -1982,7 +1983,7 @@ void FUN_8001ef1c(void)
 }
 
 
-// COLL_TestTriangle_FindAny
+// COLL_FIXED_TRIANGL_TestPoint
 // param1 - 1f800108
 // param2,3,4, are all NormalVectors
 void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
@@ -2292,7 +2293,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 }
 
 
-// COLL_TestTriangle_GetNormalVector
+// COLL_FIXED_TRIANGL_GetNormVec
 void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 
 {
@@ -2407,7 +2408,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 }
 
 
-// COLL_PerQuadblock_CheckTriangles_Touching
+// COLL_FIXED_QUADBLK_TestTriangles
 // param1 - ptrQuadblock
 // param2 - BSP Search Result: either 0x1f800108, 0x1f800118, 8008db1c
 void FUN_8001f41c(int param_1,int param_2)
@@ -2461,7 +2462,7 @@ void FUN_8001f41c(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// COLL_TestQuadblock_TwoTris
+		// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
         FUN_8001f67c(param_2,param_1);
 		
 		// call FUN_8001ef50 two times, one per triangle
@@ -2474,7 +2475,7 @@ void FUN_8001f41c(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // COLL_TestQuadblock_EightTris
+		  // COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
           FUN_8001f6f0(param_2,param_1);
         }
 		
@@ -2501,7 +2502,7 @@ void FUN_8001f41c(int param_1,int param_2)
 }
 
 
-// COLL_PerBspLeaf_CheckQuadblocks_Touching
+// COLL_FIXED_BSPLEAF_TestQuadblocks
 // param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_8001f5f0(uint *param_1,int param_2)
@@ -2524,7 +2525,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
   // loop through all quadblocks
   do
   {
-	// COLL_PerQuadblock_CheckTriangles_Touching
+	// COLL_FIXED_QUADBLK_TestTriangles
     FUN_8001f41c(uVar2,param_2);
 
 	// reduce count
@@ -2544,13 +2545,13 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 }
 
 
-// COLL_TestQuadblock_TwoTris
+// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
 void FUN_8001f67c(int param_1,int param_2)
 
 {
   undefined uVar1;
 
-  // COLL_ResetScratchpadCache
+  // COLL_FIXED_QUADBLK_LoadScratchpadVerts
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2574,13 +2575,13 @@ void FUN_8001f67c(int param_1,int param_2)
 }
 
 
-// COLL_TestQuadblock_EightTris
+// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
 void FUN_8001f6f0(int param_1,int param_2)
 
 {
   undefined uVar1;
 
-  // COLL_ResetScratchpadCache
+  // COLL_FIXED_QUADBLK_LoadScratchpadVerts
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2619,7 +2620,7 @@ void FUN_8001f6f0(int param_1,int param_2)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_ResetScratchpadCache
+// COLL_FIXED_QUADBLK_LoadScratchpadVerts
 void FUN_8001f7f0(int param_1)
 
 {
@@ -2899,7 +2900,7 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
 // WARNING: Instruction at (ram,0x8001fefc) overlaps instruction at (ram,0x8001fef8)
 //
 
-// COLL_TestTriangle_FindClosest
+// COLL_MOVED_TRIANGL_TestPoint
 // param1 - scratchpad struct
 // 2/3/4 - BspSearchVertex
 void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
@@ -3180,7 +3181,7 @@ LAB_8001ff14:
 }
 
 
-// COLL_PerQuadblock_CheckTriangles_NearPlayer
+// COLL_MOVED_QUADBLK_TestTriangles
 // param_1 - quadblock
 // param_2 - 1f800108
 void FUN_80020064(int param_1,int param_2)
@@ -3234,7 +3235,7 @@ void FUN_80020064(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// COLL_TestQuadblock_TwoTris
+		// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
         FUN_8001f67c(param_2,param_1);
 		
 		// call FUN_8001fc40 two times, one per triangle
@@ -3250,7 +3251,7 @@ void FUN_80020064(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // COLL_TestQuadblock_EightTris
+		  // COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
           FUN_8001f6f0(param_2,param_1);
         }
 		
@@ -3283,7 +3284,7 @@ void FUN_80020064(int param_1,int param_2)
 }
 
 
-// COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+// COLL_MOVED_BSPLEAF_TestQuadblocks
 // param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_800202a8(uint *param_1,int param_2)
@@ -3306,7 +3307,7 @@ void FUN_800202a8(uint *param_1,int param_2)
   // loop through all quadblocks
   do 
   {
-	// COLL_PerQuadblock_CheckTriangles_NearPlayer
+	// COLL_MOVED_QUADBLK_TestTriangles
     FUN_80020064(uVar2,param_2);
 
 	// reduce count
@@ -3326,7 +3327,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 }
 
 
-// COLL_TestTriangle_WithClosest
+// COLL_MOVED_FindScrub
 // param_1 = ptrQuadblock
 // param_2 = triangleID
 // param_3 = 0x1F800108
@@ -3359,9 +3360,9 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   }
 
   // if this function is being called from the 
-  // loop of 15 calls, from COLL_StartSearch_Player
+  // loop of 15 calls, from COLL_FIXED_PlayerSearch
 
-  // since start of COLL_StartSearch_Player, check all existing
+  // since start of COLL_FIXED_PlayerSearch, check all existing
   // records of quadblock and triangle, so far
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   
@@ -3431,7 +3432,7 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_StartSearch_NearPlayer
+// COLL_MOVED_PlayerSearch
 // param_1 = driver thread
 // param_2 = driver ptr
 void FUN_80020410(undefined4 param_1,int param_2)
@@ -3488,7 +3489,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
   // erase quadblock flags
   DAT_1f8002ac = 0;
   
-  // COLL_TestTriangle_WithClosest
+  // COLL_MOVED_FindScrub
   // quadblock, triangleID, search data
   FUN_80020334(0,0,&DAT_1f800108);
   
@@ -3600,8 +3601,8 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		(iVar11 = *(int *)(iVar11 + 0x18), iVar11 != 0)
 	   )
 	{
-	  // COLL_SearchTree_FindX, callback 
-	  // COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+	  // COLL_SearchBSP_CallbackPARAM, callback 
+	  // COLL_MOVED_BSPLEAF_TestQuadblocks
       FUN_8001ebec(iVar11,&DAT_1f800138,FUN_800202a8,&DAT_1f800108);
     }
 
@@ -3635,7 +3636,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
       }
 
-	  // COLL_TestTriangle_WithClosest
+	  // COLL_MOVED_FindScrub
 	  // quadblock, triangleID, search data
       FUN_80020334(DAT_1f800188,(uint)DAT_1f800187,&DAT_1f800108);
 
@@ -3714,10 +3715,10 @@ void FUN_80020410(undefined4 param_1,int param_2)
       *(undefined4 *)(param_2 + 0xb4) = uVar8;
       *(undefined2 *)(param_2 + 0xb8) = DAT_1f80017c;
 
-	  // COLL_Scrub
+	  // COLL_MOVED_ScrubImpact
       iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar12,param_2 + 0x88);
 
-	  // if driver is "crashing" from COLL_Scrub
+	  // if driver is "crashing" from COLL_MOVED_ScrubImpact
 	  if (iVar5 == 2) {
         return;
       }
@@ -3800,7 +3801,7 @@ LAB_800209b0:
       }
       else 
 	  {
-		// COLL_TestTriangle_WithClosest
+		// COLL_MOVED_FindScrub
 		// quadblock, triangleID, search data
         FUN_80020334(DAT_1f800150,0,&DAT_1f800108);
         
@@ -3815,7 +3816,7 @@ LAB_800209b0:
 	    // if BSP->flag = instance hitbox
         if ((DAT_1f800150[1] == 4) ||
 
-			// COLL_Scrub
+			// COLL_MOVED_ScrubImpact
 		   (iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar8,param_2 + 0x88), iVar5 == 0)) {
 
 		  // add to array of BSPs collided with instance hitboxes
@@ -3823,7 +3824,7 @@ LAB_800209b0:
           DAT_1f8001cc = DAT_1f8001cc + 1;
         }
 		
-		// if driver is "crashing" from COLL_Scrub
+		// if driver is "crashing" from COLL_MOVED_ScrubImpact
         if (iVar5 == 2) {
           return;
         }
@@ -3840,7 +3841,7 @@ LAB_800209b0:
   return;
 }
 
-// COLL_Scrub
+// COLL_MOVED_ScrubImpact
 // "scrub" like rubbing, for sparks
 // param_1 driver ptr
 // param_2 driver thread
