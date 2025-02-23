@@ -2960,13 +2960,19 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
 	
     iVar7 = -iVar7;
     iVar8 = -iVar8;
+	
+	// Flip NormalVec in the other direction
     *(short *)(param_1 + 0x15) = -sVar1;
     *(short *)((int)param_1 + 0x56) = -*(short *)((int)param_1 + 0x56);
     *(short *)(param_1 + 0x16) = -*(short *)(param_1 + 0x16);
     *(short *)((int)param_1 + 0x5a) = -*(short *)((int)param_1 + 0x5a);
   }
+  
 LAB_8001fd38:
+  
+  // quadblock->flags
   uVar2 = *(ushort *)(iVar9 + 0x12);
+  
   *(short *)(param_1 + 0xf) = *(short *)(param_1 + 0xf) + 1;
   if (-1 < iVar7 - *(short *)((int)param_1 + 6)) {
     return;
@@ -2995,11 +3001,10 @@ LAB_8001fd38:
   gte_gpf12_b();
   uVar5 = gte_stMAC1();
   uVar6 = gte_stMAC2();
-
-  *(short *)(param_1 + 0x17) = *(short *)param_1 - (short)uVar5;
-
   uVar5 = gte_stMAC3();
 
+  // 0x5c (unknown) distanceFromDriverToUNK
+  *(short *)(param_1 + 0x17) = *(short *)param_1 - (short)uVar5;
   *(short *)((int)param_1 + 0x5e) = *(short *)((int)param_1 + 2) - (short)uVar6;
   *(short *)(param_1 + 0x18) = *(short *)(param_1 + 1) - (short)uVar5;
   

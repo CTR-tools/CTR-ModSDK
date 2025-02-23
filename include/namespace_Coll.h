@@ -142,6 +142,7 @@ struct ScratchpadStruct
 		short normalVec[4];
 		
 		// 0x5c
+		// distanceFromDriverToUNK
 		char unk[8];
 		
 		// 0x64
@@ -163,6 +164,7 @@ struct ScratchpadStruct
 		short normalVec[4];
 		
 		// 0x78
+		// distanceFromDriverToUNK
 		char unk[8];
 		
 		// 0x80
