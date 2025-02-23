@@ -3490,6 +3490,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
       *(int *)(param_2 + 0x2dc) = *(int *)(param_2 + 0x2dc) + (iVar7 * DAT_1f80018c >> 0xc);
     }
 	
+	// Collide with Quadblock (not instance)
     if (DAT_1f80014a == 0) 
 	{
 	  uVar1 = DAT_1f80012a;
@@ -3598,6 +3599,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
       DAT_1f80012a = DAT_1f80012a | 8;
     }
     
+	// Collide with Instance (not quadblock)
 	else 
 	{
       DAT_1f80012a = DAT_1f80012a & 0xfff7;
