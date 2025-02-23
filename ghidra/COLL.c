@@ -2031,6 +2031,15 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  *(short *)(param_1 + 0x4c) = (short)iVar11;
       *(short *)(param_1 + 0x4e) = (short)uVar12;
       *(short *)(param_1 + 0x50) = (short)iVar14;
+	  
+	  // Define vectors:
+	  // Let P be the point you want to check for collision.
+	  // Let A, B, and C be the three vertices of the triangle.
+	  
+	  // Calculate vectors between vertices:
+	  // v1 = B - A
+	  // v2 = C - A
+	  // v3 = P - A
       
 	  psVar3 = param_3;
 	  
@@ -2039,9 +2048,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  {
 		// Z length vectors
         iVar2 = (int)param_2[2];
-        iVar9 = param_3[2] - iVar2;
-        iVar7 = param_4[2] - iVar2;
-        iVar2 = iVar14 - iVar2;
+        iVar9 = param_3[2] - iVar2;	// v1 = B - A
+        iVar7 = param_4[2] - iVar2;	// v2 = C - A
+        iVar2 = iVar14 - iVar2;		// v3 = P - A
         
 		// absolute value
 		iVar5 = iVar9;
@@ -2066,9 +2075,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         
 		// X length vectors
 		iVar14 = (int)*param_2;
-        iVar5 = *psVar3 - iVar14;
-        iVar9 = *param_4 - iVar14;
-        iVar11 = iVar11 - iVar14;
+        iVar5 = *psVar3 - iVar14;	// v1 = B - A
+        iVar9 = *param_4 - iVar14;	// v2 = C - A
+        iVar11 = iVar11 - iVar14;	// v3 = P - A
       }
       
 	  // != 3
@@ -2081,9 +2090,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         if (*(short *)(param_1 + 0x52) == 1) 
 		{
 		  // X length vectors
-          iVar14 = *param_3 - iVar2;
-          iVar7 = *param_4 - iVar2;
-          iVar2 = iVar11 - iVar2;
+          iVar14 = *param_3 - iVar2;	// v1 = B - A	
+          iVar7 = *param_4 - iVar2;		// v2 = C - A
+          iVar2 = iVar11 - iVar2;		// v3 = P - A
           
 		  // absolute value
 		  iVar5 = iVar14;
@@ -2108,9 +2117,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           
 		  // Y length vectors
 		  iVar11 = (int)param_2[1];
-          iVar5 = psVar3[1] - iVar11;
-          iVar9 = param_4[1] - iVar11;
-          iVar11 = uVar12 - iVar11;
+          iVar5 = psVar3[1] - iVar11;	// v1 = B - A
+          iVar9 = param_4[1] - iVar11;	// v2 = C - A
+          iVar11 = uVar12 - iVar11;	    // v3 = P - A
         }
         
 		// != 1
@@ -2118,9 +2127,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		{
 		  // Y length vectors
           iVar2 = (int)param_2[1];
-          iVar11 = param_3[1] - iVar2;
-          iVar7 = param_4[1] - iVar2;
-          iVar2 = uVar12 - iVar2;
+          iVar11 = param_3[1] - iVar2; // v1 = B - A
+          iVar7 = param_4[1] - iVar2;  // v2 = C - A
+          iVar2 = uVar12 - iVar2;      // v3 = P - A
 		  
 		  // absolute value
           iVar5 = iVar11;
@@ -2145,9 +2154,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		  
 		  // Z length vectors
           iVar11 = (int)param_2[2];
-          iVar5 = psVar3[2] - iVar11;
-          iVar9 = param_4[2] - iVar11;
-          iVar11 = iVar14 - iVar11;
+          iVar5 = psVar3[2] - iVar11;  // v1 = B - A
+          iVar9 = param_4[2] - iVar11; // v2 = C - A
+          iVar11 = iVar14 - iVar11;    // v3 = P - A
         }
       }
 	  
