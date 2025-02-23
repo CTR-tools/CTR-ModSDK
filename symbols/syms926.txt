@@ -65,10 +65,6 @@
 8001cfec CDSYS_XAPauseForce
 8001d06c CDSYS_XAPauseAtEnd
 
-// only stubbed in 926									// Rename in-progress, NOT DONE
-8001d094 COLL_LevModelMeta
-8001d0c4 COLL_Instance									// NX_PerInstance_HitboxTestSelf
-8001d610 COLL_PerBspLeaf_CheckInstances					// NX_PerBspLeaf_HitboxTestInstances
 
 // N2 = FIXED - not moving
 // N1 = MOVED - moving (test every 1/16th)
@@ -77,15 +73,17 @@
 // QUADBLK
 // TRIANGL
 // BSPLEAF
+// INSTANC
 
+// only stubbed in 926									// Rename in-progress, NOT DONE
+8001d094 COLL_LevModelMeta
+8001d0c4 COLL_Instance									// COLL_FIXED_INSTANC_TestPoint
+8001d610 COLL_PerBspLeaf_CheckInstances					// COLL_FIXED_BSPLEAF_TestInstance
 8001d77c COLL_StartSearch_AI							// COLL_FIXED_BotsSearch
 8001d944 COLL_StartSearch_Player						// COLL_FIXED_PlayerSearch
-
 8001eb0c COLL_SearchTree_FindQuadblock_Touching			// COLL_SearchBSP_CallbackQUADBLK
 8001ebec COLL_SearchTree_FindX							// COLL_SearchBSP_CallbackPARAM
-
 8001ede4 COLL_TestTriangle_FindClosest_Subfunction2		// COLL_FIXED_TRIANGL_unk
-
 8001ef1c COLL_TestTriangle_Unused						// COLL_FIXED_TRIANGL_UNUSED
 8001ef50 COLL_TestTriangle_FindAny						// COLL_FIXED_TRIANGL_TestPoint
 8001f2dc COLL_TestTriangle_GetNormalVector				// COLL_FIXED_TRIANGL_GetNormVec
@@ -93,9 +91,7 @@
 8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching		// COLL_FIXED_BSPLEAF_TestQuadblocks
 8001f67c COLL_TestQuadblock_TwoTris						// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
 8001f6f0 COLL_TestQuadblock_EightTris					// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
-
 8001f7f0 COLL_ResetScratchpadCache
-
 8001f928 COLL_TestTriangle_FindClosest_Subfunction1		// COLL_MOVED_TRIANGL_ReorderNormals
 8001fc40 COLL_TestTriangle_FindClosest					// COLL_MOVED_TRIANGL_TestPoint
 80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// COLL_MOVED_QUADBLK_TestTriangles
