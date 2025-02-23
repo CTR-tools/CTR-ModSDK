@@ -43,9 +43,10 @@ void DECOMP_UI_VsQuipDrawAll(void)
 	else 
 	{
 		// Add two strings together
-		sprintf(0x1f800000, "%s%s",
+		sprintf(0x1f800000,
 	
-			// original end-of-race comment
+			// Contains '%s' format:
+			// Original end-of-race comment
 			sdata->lngStrings[printArr[0]],
 	
 			// second part of comment,
