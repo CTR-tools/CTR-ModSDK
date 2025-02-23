@@ -3542,11 +3542,14 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		  // quadblock under driver
           *(undefined4 *)(param_2 + 0x350) = 0;
         }
+		
+		// normVec X
         uVar8 = _DAT_1f800178;
 
 		// set quadblock you are touching
         *(int *)(param_2 + 0xa0) = DAT_1f800188;
 
+		// normVec XYZ
 		*(undefined4 *)(param_2 + 0xa4) = uVar8;
         uVar8 = _DAT_1f800178;
         *(undefined2 *)(param_2 + 0xa8) = DAT_1f80017c;
