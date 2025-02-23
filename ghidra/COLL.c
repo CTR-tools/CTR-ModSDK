@@ -2871,6 +2871,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
 //
 
 // COLL_TestTriangle_FindClosest
+// param1 - scratchpad struct
+// 2/3/4 - BspSearchVertex
 void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
 {
@@ -2887,13 +2889,20 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
   int iVar9;
   int iVar10;
 
+  // BspSearchVertex->flags (which way does normal point)
   sVar1 = *(short *)(param_2 + 6);
+  
+  // BspSearchVertex normalVec
   uVar5 = *(undefined4 *)(param_2 + 0xc);
   uVar6 = *(undefined4 *)(param_2 + 0x10);
+  
   *(short *)(param_1 + 0xf) = *(short *)(param_1 + 0xf) + 1;
   *(short *)((int)param_1 + 0x52) = sVar1;
+  
+  // SPS normalVec (0x54)
   param_1[0x15] = uVar5;
   param_1[0x16] = uVar6;
+  
   iVar9 = param_1[0x19];
 
   // If collision on this quadblock is not scriptable
@@ -2961,9 +2970,12 @@ LAB_8001fd38:
   if (iVar8 < 0) {
     return;
   }
+  
+  // if not triggerScript
   if (((uVar2 & 0x40) == 0) && (0 < iVar7 - iVar8)) {
     return;
   }
+  
   if (-1 < iVar7) {
     gte_ldIR0(iVar7);
     gte_ldsv_((int)*(short *)(param_1 + 0x15),(int)*(short *)((int)param_1 + 0x56),
