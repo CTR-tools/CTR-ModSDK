@@ -3109,11 +3109,10 @@ LAB_8001ff14:
           gte_gpf12_b();
           uVar5 = gte_stMAC1();
           uVar6 = gte_stMAC2();
-
-          *(short *)(param_1 + 7) = *(short *)(param_1 + 4) + (short)uVar5;
-
 		  uVar5 = gte_stMAC3();
 
+		  // QuadBlockColl hitPos - QuadBlockColl pos <-- input
+          *(short *)(param_1 + 7) = *(short *)(param_1 + 4) + (short)uVar5;
           *(short *)((int)param_1 + 0x1e) = *(short *)((int)param_1 + 0x12) + (short)uVar6;
           *(short *)(param_1 + 8) = *(short *)(param_1 + 5) + (short)uVar5;
         }
@@ -3124,7 +3123,9 @@ LAB_8001ff14:
       else 
 	  {
 		// if killplane
-        if ((uVar2 & 0x200) != 0) {
+        if ((uVar2 & 0x200) != 0) 
+		{
+		  // quadblock action flags
           param_1[0x69] = param_1[0x69] | 0x4000;
         }
       }
@@ -3134,11 +3135,16 @@ LAB_8001ff14:
     if (iVar7 < 0) {
       uVar4 = param_1[0x69];
     }
-    else {
+    else 
+	{
+	  // quadblock action flags
       uVar4 = param_1[0x69];
-      if (-1 < (iVar7 - *(short *)((int)param_1 + 6) | iVar8 - *(short *)((int)param_1 + 6)))
+      
+	  if (-1 < (iVar7 - *(short *)((int)param_1 + 6) | iVar8 - *(short *)((int)param_1 + 6)))
       goto LAB_8001ff14;
     }
+	
+	// quadblock action flags
     param_1[0x69] = uVar4 | *(byte *)(iVar10 + 0x38);
   }
   return;
