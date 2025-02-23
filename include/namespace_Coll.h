@@ -132,7 +132,11 @@ struct ScratchpadStruct
 	struct
 	{
 		// 0x4c
-		short hitPos[4];
+		short hitPos[3];
+		
+		// 0x52
+		// which way does normal point
+		int BspSearchVertexFlags;
 		
 		// 0x54 
 		short normalVec[4];
@@ -149,7 +153,11 @@ struct ScratchpadStruct
 	struct
 	{
 		// 0x68
-		short hitPos[4];
+		short hitPos[3];
+		
+		// 0x6e
+		// which way does normal point
+		int BspSearchVertexFlags;
 		
 		// 0x70 
 		short normalVec[4];
