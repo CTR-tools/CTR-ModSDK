@@ -92,7 +92,7 @@
 8001fc40 COLL_TestTriangle_FindClosest					// N1_PerTriangle_HitboxTestSelf
 80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// N1_PerQuadblock_HitboxTestTriangles
 800202a8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer		// N1_PerBspLeaf_HitboxTestQuadblocks
-80020334 COLL_TestTriangle_WithClosest					// determine scrub
+80020334 COLL_TestTriangle_WithClosest					// N1: determine scrub
 80020410 COLL_StartSearch_NearPlayer					// N1: This tests 16 times, move position by 1/16th velocity
 80020c58 COLL_Scrub										// N1: called from the 16-test function
 
