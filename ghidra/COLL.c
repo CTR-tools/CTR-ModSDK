@@ -3019,13 +3019,20 @@ LAB_8001fd38:
   if (iVar9 < 0) {
     return;
   }
-  if (-1 < iVar7) {
+  
+  if (-1 < iVar7) 
+  {
+	// DriverPos - Set1_HitPos
+	  
     *(short *)(param_1 + 0x39) = *(short *)param_1 - *(short *)(param_1 + 0x13);
     *(short *)((int)param_1 + 0xe6) = *(short *)((int)param_1 + 2) - *(short *)((int)param_1 + 0x4e)
     ;
     *(short *)(param_1 + 0x3a) = *(short *)(param_1 + 1) - *(short *)(param_1 + 0x14);
   }
-  else {
+  
+  else 
+  {
+	// 0x5C(unknown) - Set1_HitPos
     *(short *)(param_1 + 0x39) = *(short *)(param_1 + 0x17) - *(short *)(param_1 + 0x13);
     *(short *)((int)param_1 + 0xe6) =
          *(short *)((int)param_1 + 0x5e) - *(short *)((int)param_1 + 0x4e);
