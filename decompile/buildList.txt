@@ -287,7 +287,7 @@ common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Kill
 //common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_13_CollideWithOtherAI.c //TODO
 //common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_14_GotoStartingLine.c //TODO
 //common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_15_Driver_Init.c //TODO //a comment in this file explicitly stated that this is not finished
-//common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_16_Driver_Convert.c //TODO
+common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_16_Driver_Convert.c //TODO
 
 // ====================================================================================================================
 // CAM (stubbed for this file)

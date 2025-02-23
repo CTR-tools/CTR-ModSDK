@@ -53,6 +53,8 @@ struct NavHeader
 {
 	// 0
 	short magicNumber;
+
+	// 2
 	short numPoints;
 
 	// 4
