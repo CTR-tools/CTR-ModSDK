@@ -2764,6 +2764,13 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       iVar4 = *(short *)(param_1 + 5) - iVar4;
     }
   }
+  
+  // where does this fit?
+  // u = dot(v2, cross(v1,v3)) / dot(v1, cross(v1,v2))
+  // v = dot(v1, cross(v3,v2)) / dot(v2, cross(v1,v2))
+  // w = 1 - u - v
+  // if all > 0, collision
+  
   iVar7 = -0x1000;
   iVar8 = -0x1000;
   if (iVar6 == 0) {
@@ -2785,6 +2792,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   if ((iVar7 == -0x1000) || (iVar7 == -0x1000)) {
     return 0xffffffff;
   }
+  
+  
   if (iVar7 < 0) {
     if (iVar8 < 0) {
       sVar1 = *(short *)(param_2 + 1);
