@@ -3702,6 +3702,7 @@ LAB_800209b0:
 // param_2 driver thread
 // param_3 scratchpad address 1f800108
 // param_4 MetaDataScrub
+// param_5 velocity
 undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,int *param_5)
 
 {
@@ -3957,6 +3958,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
           if ((uVar10 == 0xffffffff) && (iVar13 * iVar6 == -0x80000000)) {
             trap(0x1800);
           }
+		  
+		  // partially invert velocity to prevent going "through" wall
           param_5[2] = (iVar13 * iVar6) / (int)uVar10;
           *param_5 = *param_5 - ((int)((uint)local_48 << 0x10) >> 0x11);
           param_5[1] = param_5[1] - ((int)((uint)local_46 << 0x10) >> 0x11);

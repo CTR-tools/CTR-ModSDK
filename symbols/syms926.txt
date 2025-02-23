@@ -95,7 +95,7 @@
 80020334 COLL_TestTriangle_WithClosest					// determine scrub
 80020410 COLL_StartSearch_NearPlayer					// N1: This tests 16 times, move position by 1/16th velocity
 
-80020c58 COLL_Scrub // GetImpact_Player
+80020c58 COLL_Scrub										// N1: 
 
 80021500 CTR_Box_DrawWirePrims
 80021594 CTR_Box_DrawWireBox
