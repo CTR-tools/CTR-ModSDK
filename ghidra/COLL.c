@@ -2225,6 +2225,8 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0x4c);
         *(undefined2 *)(param_1 + 0x6c) = *(undefined2 *)(param_1 + 0x50);
         *(undefined2 *)(param_1 + 0x20) = *(undefined2 *)(param_1 + 0x50);
+		
+		// Normal vector
         *(undefined4 *)(param_1 + 0x70) = *(undefined4 *)(param_1 + 0x54);
         *(undefined4 *)(param_1 + 0x74) = *(undefined4 *)(param_1 + 0x58);
       }
@@ -3736,6 +3738,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
   ushort local_44;
   int local_30;
 
+  // normal vector
   local_48 = *(ushort *)(param_3 + 0x70);
   local_46 = *(ushort *)(param_3 + 0x72);
   local_44 = *(ushort *)(param_3 + 0x74);
@@ -3806,8 +3809,10 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
     }
   }
 
+  // multiply velocity by normVec
   iVar3 = (*param_5 >> 3) * (int)(short)local_48 + (param_5[1] >> 3) * (int)(short)local_46 +
           (param_5[2] >> 3) * (int)(short)local_44 >> 9;
+		  
   if (iVar3 < -0xa00) {
     //turn on 8th bit of Actions Flag set (means ?)
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x80;
