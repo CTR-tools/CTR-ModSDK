@@ -3814,6 +3814,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	// scrubMeta->4
     uVar9 = *(uint *)(param_4 + 4);
 
+	// RUBBER/SANDBAG/SOLID
 	if ((uVar9 & 4) == 0)
 	{
       //turn on 14th bit of Actions Flag set (means
@@ -3821,6 +3822,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
       *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x2000;
     }
 
+	// RUBBER/SANDBAG/SOLID
 	if ((uVar9 & 8) == 0)
 	{
 	  // reset reserves
@@ -3834,6 +3836,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	// if just touched the wall for the first frame
 	if (*(short *)(param_1 + 0x3fe) == 0)
 	{
+	  // If Road/NoEffect,
+	  // If !Slowdown
       bVar2 = 0x3e7ff < iVar5;
     }
 
@@ -3862,7 +3866,10 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
     }
 
 	uVar4 = 0;
-    if ((uVar9 & 1) != 0) {
+	
+	// Solid/Rubber/Sandbag/Road
+    if ((uVar9 & 1) != 0) 
+	{
       iVar15 = iVar3 * (short)local_46;
       local_30 = 0;
       uVar10 = iVar3 * (short)local_48 >> 0xc;
@@ -3966,6 +3973,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
           param_5[2] = param_5[2] - ((int)((uint)local_44 << 0x10) >> 0x11);
         }
       }
+	  
+	  // Solid/Sandbag
       if ((((uVar9 & 2) != 0) && (iVar3 < -0x13ff)) &&
          (
 			// get approximate speed
