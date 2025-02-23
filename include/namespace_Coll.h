@@ -173,7 +173,7 @@ struct ScratchpadStruct
 	} Set2;
 	
 	// 0x84
-	char unk84[4];
+	int countByOne_ForWhatReason; // ??
 	
 	// 0x88 - array of pointer,
 	// size of array at offset 0xc4,
