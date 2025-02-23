@@ -319,7 +319,9 @@ void FUN_8001d610(int param_1,int param_2)
       // 1F8001CC
 	  // number of BSP instanceHitbox collided with
 	  iVar1 = *(int *)(param_2 + 0xc4) + -1;
-      if (-1 < iVar1) {
+      
+	  if (-1 < iVar1) 
+	  {
         iVar2 = iVar1 * 4 + param_2;
         do 
 		{
