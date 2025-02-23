@@ -3760,8 +3760,12 @@ LAB_800209b0:
           }
         }
       }
+	  
+	  // if LInC returns collision,
+	  // if BSP->flag = instance hitbox
       if ((iVar5 == 2) || (DAT_1f800150[1] == 4)) 
 	  {
+		// add to array of BSPs collided with instance hitboxes
         *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
         DAT_1f8001cc = DAT_1f8001cc + 1;
       }
@@ -3779,11 +3783,13 @@ LAB_800209b0:
 		// VehAfterColl_GetSurface
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
 
+	    // if BSP->flag = instance hitbox
         if ((DAT_1f800150[1] == 4) ||
 
 			// COLL_Scrub
 		   (iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar8,param_2 + 0x88), iVar5 == 0)) {
 
+		  // add to array of BSPs collided with instance hitboxes
 		  *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
           DAT_1f8001cc = DAT_1f8001cc + 1;
         }
