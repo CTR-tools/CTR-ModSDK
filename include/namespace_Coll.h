@@ -175,9 +175,10 @@ struct ScratchpadStruct
 	// 0x84
 	int countByOne_ForWhatReason; // ??
 	
-	// 0x88 - array of pointer,
-	// size of array at offset 0xc4,
-	// can only be size 1?
+	// 0x88 - array of BSP*
+	// one for each instanceHitbox collision
+	
+	// 0xc4 (num BSP instanceHitbox collisions)
 	
 	// --------
 	
