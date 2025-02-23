@@ -276,18 +276,18 @@ common, exe, BOTS_InitNavPath, 0x0,                    General/BOTS/BOTS_01_Init
 common, exe, BOTS_EmptyFunc, 0x0,                      General/BOTS/BOTS_02_EmptyFunc.c
 common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_03_Adv_NumTimesLostEvent.c
 //common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_04_Adv_AdjustDifficulty.c //TODO
-common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c //this compiles but I think it's broken
+common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c //needs testing
 //common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_06_SetRotation.c //needs testing, is overbudget.
 //common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c //TODO
 //common, exe, BOTS_ThTick_EngineRevving, 0x0,           General/BOTS/BOTS_08_ThTick_EngineRevving.c //TODO
-common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c //TODO
-common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //TODO
+common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c //needs testing
+common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //needs testing
 //common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_11_ThTick_Drive.c //TODO
 //common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_12_ChangeState.c //TODO
 //common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_13_CollideWithOtherAI.c //TODO
-//common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_14_GotoStartingLine.c //TODO
-common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_15_Driver_Init.c //TODO //a comment in this file explicitly stated that this is not finished
-common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_16_Driver_Convert.c //TODO
+common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_14_GotoStartingLine.c //needs testing
+common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_15_Driver_Init.c //needs testing
+common, exe, BOTS_Driver_Convert, 0x0,                 General/BOTS/BOTS_16_Driver_Convert.c //needs testing
 
 // ====================================================================================================================
 // CAM (stubbed for this file)
