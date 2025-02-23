@@ -2986,6 +2986,8 @@ LAB_8001fd38:
 
   *(short *)((int)param_1 + 0x5e) = *(short *)((int)param_1 + 2) - (short)uVar6;
   *(short *)(param_1 + 0x18) = *(short *)(param_1 + 1) - (short)uVar5;
+  
+  // save 3 pointers to BspSearchVertex
   param_1[0x36] = param_2;
   param_1[0x37] = param_3;
   param_1[0x38] = param_4;
@@ -3045,11 +3047,14 @@ LAB_8001ff14:
 		// set new shortest distance
         param_1[0x21] = iVar8;
 		
+		// From 3 pointers to BspSearchVertex,
+		// Save 3 pointers to pLevVertex (offset 8)
         uVar5 = *(undefined4 *)(param_1[0x37] + 8);
         uVar6 = *(undefined4 *)(param_1[0x38] + 8);
         param_1[0x33] = *(undefined4 *)(param_1[0x36] + 8);
         param_1[0x34] = uVar5;
         param_1[0x35] = uVar6;
+		
         param_1[0x1a] = param_1[0x13];
         param_1[0x1b] = param_1[0x14];
         param_1[0x1c] = param_1[0x15];

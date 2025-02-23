@@ -155,6 +155,11 @@ struct ScratchpadStruct
 	// 0xd4
 	// 3 pointers to BspSearchVertex->pLevelVertex
 	
+	// 0xdc
+	// 0xe0
+	// 0xe4
+	// 3 pointers to BspSearchVertex
+	
 	// vec3, subtract positions (FUN_8001d0c4)
 	// 0xe2
 	// 0xe4
