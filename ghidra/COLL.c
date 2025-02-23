@@ -3455,8 +3455,14 @@ void FUN_80020410(undefined4 param_1,int param_2)
   }
 
   iVar13 = 0x1000;
+  
+  // num bsp instanceHitbox collisions
   DAT_1f8001cc = 0;
+  
+  // collide modelID
   DAT_1f800114 = 0x18;
+  
+  // erase quadblock flags
   DAT_1f8002ac = 0;
   
   // COLL_TestTriangle_WithClosest
