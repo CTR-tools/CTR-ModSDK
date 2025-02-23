@@ -129,17 +129,41 @@ struct ScratchpadStruct
 	struct BSP* bspHitbox;
 	
 	// 0x4c
-	// 1f800154
-	char unk4C[0xA4]; //unk4C + 0x24 seems to be a rotation of some sort, possibly related to potions. See 231_014.c
-	
-	// 0x64
-	// ptrQuadblock
+	struct
+	{
+		// 0x4c
+		short hitPos[4];
+		
+		// 0x54 
+		short normalVec[4];
+		
+		// 0x5c
+		char unk[8];
+		
+		// 0x64
+		void* ptrQuadblock;
+		
+	} Set1;
 	
 	// 0x68
-	// short hitPos[4]
+	struct
+	{
+		// 0x68
+		short hitPos[4];
+		
+		// 0x70 
+		short normalVec[4];
+		
+		// 0x78
+		char unk[8];
+		
+		// 0x80
+		void* ptrQuadblock;
+		
+	} Set2;
 	
-	// 0x70 
-	// short normalVec[4]
+	// 0x84
+	char unk84[4];
 	
 	// 0x88 - array of pointer,
 	// size of array at offset 0xc4,

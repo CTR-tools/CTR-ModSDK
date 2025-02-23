@@ -3055,13 +3055,14 @@ LAB_8001ff14:
         param_1[0x34] = uVar5;
         param_1[0x35] = uVar6;
 		
+		// sps 0x68 = 0x4c (Set2 = Set1)
         param_1[0x1a] = param_1[0x13];
         param_1[0x1b] = param_1[0x14];
         param_1[0x1c] = param_1[0x15];
         param_1[0x1d] = param_1[0x16];
         param_1[0x1e] = param_1[0x17];
         param_1[0x1f] = param_1[0x18];
-        param_1[0x20] = iVar10;
+        param_1[0x20] = iVar10; // param_1[0x19]
 		
 		// triangle ID (0-9)
 		// 0x1f800187
