@@ -2896,13 +2896,17 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
   uVar5 = *(undefined4 *)(param_2 + 0xc);
   uVar6 = *(undefined4 *)(param_2 + 0x10);
   
+  // 0x3c?
   *(short *)(param_1 + 0xf) = *(short *)(param_1 + 0xf) + 1;
+  
+  // save BspSearchVertex->flags to SPS
   *(short *)((int)param_1 + 0x52) = sVar1;
   
   // SPS normalVec (0x54)
   param_1[0x15] = uVar5;
   param_1[0x16] = uVar6;
   
+  // quadblock
   iVar9 = param_1[0x19];
 
   // If collision on this quadblock is not scriptable
