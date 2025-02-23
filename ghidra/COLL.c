@@ -3554,12 +3554,15 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		// ROAD
 		uVar12 = 5;
         
+		// normVec X+Y
 		*(undefined4 *)(param_2 + 0x360) = uVar8;
+		
         uVar2 = DAT_1f80017c;
 
 		// driver is now on ground
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 8;
 
+		// normVec Z
 		*(undefined2 *)(param_2 + 0x364) = uVar2;
       }
 
