@@ -136,7 +136,7 @@ struct ScratchpadStruct
 		
 		// 0x52
 		// which way does normal point
-		int BspSearchVertexFlags;
+		short BspSearchVertexFlags;
 		
 		// 0x54 
 		short normalVec[4];
@@ -158,7 +158,7 @@ struct ScratchpadStruct
 		
 		// 0x6e
 		// which way does normal point
-		int BspSearchVertexFlags;
+		short BspSearchVertexFlags;
 		
 		// 0x70 
 		short normalVec[4];

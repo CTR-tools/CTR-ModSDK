@@ -1883,6 +1883,8 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 
 
 // part of triangle collision
+// param1 - sps->Set1
+// param2 + param3 BspSearchVertex
 uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param_4)
 {
   short sVar1;
@@ -1897,13 +1899,18 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   int iVar10;
   uint uVar11;
 
+  // vertex1
   iVar6 = (int)*param_2;
   iVar7 = (int)param_2[1];
   iVar8 = (int)param_2[2];
+  
   sVar1 = param_4[1];
+  
+  // vertex2 - vertex1
   uVar9 = *param_3 - iVar6;
   iVar10 = param_3[1] - iVar7;
   uVar11 = param_3[2] - iVar8;
+  
   uVar2 = uVar9 & 0xffff | iVar10 * 0x10000;
   gte_ldR11R12(uVar2);
   gte_ldR13R21(uVar11 & 0xffff | (*param_4 - iVar6) * 0x10000);
@@ -1939,9 +1946,12 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   gte_ldsv_(uVar9,iVar10,uVar11);
   gte_gpl12();
   read_mt(uVar9,iVar10,uVar11);
+  
+  // get position from barycentrics
   *param_1 = (short)uVar9;
   param_1[1] = (short)iVar10;
   param_1[2] = (short)uVar11;
+  
   return sVar1 - iVar7;
 }
 
@@ -2700,7 +2710,7 @@ void FUN_8001f7f0(int param_1)
 
 
 // part of triangle collision in the function below
-// param_1 - 1f800154,
+// param_1 - 1f800154 (sps->Set1),
 // other parameters are the vertices
 undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
 
@@ -2837,25 +2847,35 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   }
   
   
-  if (iVar7 < 0) {
-    if (iVar8 < 0) {
+  if (iVar7 < 0) 
+  {
+    if (iVar8 < 0) 
+	{
+	  // Set1 HitPos = param2 bspSearchVertex pos,
+	  // this is later adjusted with barycentrics
       sVar1 = *(short *)(param_2 + 1);
       *param_1 = *param_2;
       *(short *)(param_1 + 1) = sVar1;
       return 0;
     }
-    if (-1 < iVar7 + iVar8 + -0x1000) {
+    if (-1 < iVar7 + iVar8 + -0x1000) 
+	{
+	  // Set1 HitPos = param4 bspSearchVertex pos,
+	  // this is later adjusted with barycentrics
       sVar1 = *(short *)(param_4 + 1);
       *param_1 = *param_4;
       *(short *)(param_1 + 1) = sVar1;
       return 4;
     }
+	
     FUN_8001ede4(param_1,param_2,param_4,param_1 + 4);
     return 5;
   }
   iVar3 = iVar7 + iVar8 + -0x1000;
   if (-1 < iVar8) {
-    if (iVar3 < 1) {
+    if (iVar3 < 1) 
+	{
+	  // Set1 HitPos = ???
       *param_1 = param_1[4];
       *(undefined2 *)(param_1 + 1) = *(undefined2 *)(param_1 + 5);
       return 6;
@@ -2863,7 +2883,10 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
     FUN_8001ede4(param_1,puVar2,param_4,param_1 + 4);
     return 3;
   }
-  if (-1 < iVar3) {
+  if (-1 < iVar3) 
+  {
+	// Set1 HitPos = param(2/3/4) bspSearchVertex pos,
+	// this is later adjusted with barycentrics
     sVar1 = *(short *)(puVar2 + 1);
     *param_1 = *puVar2;
     *(short *)(param_1 + 1) = sVar1;
@@ -3019,7 +3042,7 @@ LAB_8001fd38:
   param_1[0x37] = param_3;
   param_1[0x38] = param_4;
   
-  // always passes 1f800154
+  // always passes 1f800154 (sps->Set1)
   iVar9 = FUN_8001f928(param_1 + 0x13,param_2,param_3,param_4);
   
   if (iVar9 < 0) {
