@@ -1956,7 +1956,7 @@ void FUN_8001ef1c(void)
 
 // COLL_TestTriangle_FindAny
 // param1 - 1f800108
-// param2,3,4, are 3 NormalVectors
+// param2,3,4, are all NormalVectors
 void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 
 {
@@ -2424,7 +2424,8 @@ void FUN_8001f41c(int param_1,int param_2)
 		
 		// call FUN_8001ef50 eight times, one per triangle
 		
-		// all values are offset 0x10 from what they should be, for some reason?
+		// All values are offset 0x10,
+		// because that's where the normalVec of each triangle is
 		
         FUN_8001ef50(0x1f800118, 0x1f8002a8, 0x1f800280, 0x1f800294); // 8, 6, 7
         FUN_8001ef50(0x1f800118, 0x1f800294, 0x1f800244, 0x1f8002a8); // 7, 3, 8
