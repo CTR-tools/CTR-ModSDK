@@ -70,31 +70,39 @@
 8001d0c4 COLL_Instance									// NX_PerInstance_HitboxTestSelf
 8001d610 COLL_PerBspLeaf_CheckInstances					// NX_PerBspLeaf_HitboxTestInstances
 
-8001d77c COLL_StartSearch_AI							// calls NX_PerBspLeaf_HitboxTestInstances (no quadblock)
-8001d944 COLL_StartSearch_Player						// N2: This is the LAST collision check post-movement
+// N2 = FIXED - not moving
+// N1 = MOVED - moving (test every 1/16th)
+// NX = FIXED - not moving (or motion not dependent)
 
-8001eb0c COLL_SearchTree_FindQuadblock_Touching			// calls N2_PerBspLeaf_HitboxTestQuadblocks
-8001ebec COLL_SearchTree_FindX							// calls PerBspLeaf N2_Quadblock/Instance/N1_Quadblock/PROC_PerBspLeaf_CheckInstances
+// QUADBLK
+// TRIANGL
+// BSPLEAF
 
-8001ede4 COLL_TestTriangle_FindClosest_Subfunction2		// N1 final test of triangle
+8001d77c COLL_StartSearch_AI							// COLL_FIXED_BotsSearch
+8001d944 COLL_StartSearch_Player						// COLL_FIXED_PlayerSearch
 
-8001ef1c COLL_TestTriangle_Unused						// N2_PerTriangle_UNUSED
-8001ef50 COLL_TestTriangle_FindAny						// N2_PerTriangle_HitboxTestSelf
-8001f2dc COLL_TestTriangle_GetNormalVector				// NX_PerTriangle_GetNormalVector
-8001f41c COLL_PerQuadblock_CheckTriangles_Touching		// N2_PerQuadblock_HitboxTestTriangles
-8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching		// N2_PerBspLeaf_HitboxTestQuadblocks
-8001f67c COLL_TestQuadblock_TwoTris						// NX_PerQuadblock_GetNormalVector_LoLOD
-8001f6f0 COLL_TestQuadblock_EightTris					// NX_PerQuadblock_GetNormalVector_HiLOD
+8001eb0c COLL_SearchTree_FindQuadblock_Touching			// COLL_SearchBSP_CallbackQUADBLK
+8001ebec COLL_SearchTree_FindX							// COLL_SearchBSP_CallbackPARAM
+
+8001ede4 COLL_TestTriangle_FindClosest_Subfunction2		// COLL_FIXED_TRIANGL_unk
+
+8001ef1c COLL_TestTriangle_Unused						// COLL_FIXED_TRIANGL_UNUSED
+8001ef50 COLL_TestTriangle_FindAny						// COLL_FIXED_TRIANGL_TestPoint
+8001f2dc COLL_TestTriangle_GetNormalVector				// COLL_FIXED_TRIANGL_GetNormVec
+8001f41c COLL_PerQuadblock_CheckTriangles_Touching		// COLL_FIXED_QUADBLK_TestTriangles
+8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching		// COLL_FIXED_BSPLEAF_TestQuadblocks
+8001f67c COLL_TestQuadblock_TwoTris						// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
+8001f6f0 COLL_TestQuadblock_EightTris					// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
 
 8001f7f0 COLL_ResetScratchpadCache
 
-8001f928 COLL_TestTriangle_FindClosest_Subfunction1		// N1 reorder based on normal
-8001fc40 COLL_TestTriangle_FindClosest					// N1_PerTriangle_HitboxTestSelf
-80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// N1_PerQuadblock_HitboxTestTriangles
-800202a8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer		// N1_PerBspLeaf_HitboxTestQuadblocks
-80020334 COLL_TestTriangle_WithClosest					// N1: determine scrub
-80020410 COLL_StartSearch_NearPlayer					// N1: This tests 16 times, move position by 1/16th velocity
-80020c58 COLL_Scrub										// N1: called from the 16-test function
+8001f928 COLL_TestTriangle_FindClosest_Subfunction1		// COLL_MOVED_TRIANGL_ReorderNormals
+8001fc40 COLL_TestTriangle_FindClosest					// COLL_MOVED_TRIANGL_TestPoint
+80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// COLL_MOVED_QUADBLK_TestTriangles
+800202a8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer		// COLL_MOVED_BSPLEAF_TestQuadblocks
+80020334 COLL_TestTriangle_WithClosest					// COLL_MOVED_FindScrub
+80020410 COLL_StartSearch_NearPlayer					// COLL_MOVED_PlayerSearch
+80020c58 COLL_Scrub										// COLL_MOVED_ScrubImpact
 
 80021500 CTR_Box_DrawWirePrims
 80021594 CTR_Box_DrawWireBox
