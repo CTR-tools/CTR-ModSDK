@@ -804,18 +804,27 @@ void FUN_8001d944(int param_1,int param_2)
         *(ushort *)(param_2 + 0x364) = DAT_1f80017c;
       }
 
-      if (((DAT_1f8001d4 != 0) && (DAT_1f8001d8 != 0)) && (DAT_1f8001dc != 0)) {
-        uVar12 = (uint)*(byte *)(DAT_1f8001d4 + 8);
-        iVar14 = (int)DAT_1f8001d0;
+	  // 3 pointers to pLevelVertex that driver collided with
+      if (((DAT_1f8001d4 != 0) && (DAT_1f8001d8 != 0)) && (DAT_1f8001dc != 0)) 
+	  {
+		// barycentric vectors
+		iVar14 = (int)DAT_1f8001d0;
         iVar13 = (int)DAT_1f8001d2;
+		  
+		// color of one vertex
+        uVar12 = (uint)*(byte *)(DAT_1f8001d4 + 8);		
         uVar10 = (uint)*(byte *)(DAT_1f8001d4 + 9);
         uVar6 = (uint)*(byte *)(DAT_1f8001d4 + 10);
+		
+		// barycentrics with other vectors,
+		// calculate the color of this one point
         iVar15 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 8) - uVar12)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 8) - uVar12)) >> 0xc) + uVar12;
         iVar11 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 9) - uVar10)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 9) - uVar10)) >> 0xc) + uVar10;
         iVar13 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 10) - uVar6)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 10) - uVar6)) >> 0xc) + uVar6;
+				 
         if (iVar15 < 0) {
           iVar15 = 0;
         }
@@ -848,8 +857,14 @@ void FUN_8001d944(int param_1,int param_2)
           iVar15 = 0x8000;
         }
         iVar13 = (iVar15 - iVar13) * 8;
+		
+		// modify brightness of instance
+		
+		// driver->alphaScaleBackup
         *(undefined2 *)(param_2 + 0x508) =
              (short)((uint)*(ushort *)(param_2 + 0x508) * 200 + iVar13 >> 8);
+		
+		// instance->alpha
         *(undefined2 *)(iVar9 + 0x22) = (short)((uint)*(ushort *)(iVar9 + 0x22) * 200 + iVar13 >> 8)
         ;
       }

@@ -150,6 +150,11 @@ struct ScratchpadStruct
 	// 0xc8, 0xca,
 	// vectors for barycentrics
 	
+	// 0xcc
+	// 0xd0
+	// 0xd4
+	// 3 pointers to BspSearchVertex->pLevelVertex
+	
 	// vec3, subtract positions (FUN_8001d0c4)
 	// 0xe2
 	// 0xe4
