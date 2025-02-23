@@ -175,10 +175,13 @@ struct ScratchpadStruct
 	// 0x84
 	int countByOne_ForWhatReason; // ??
 	
-	// 0x88 - array of BSP*
-	// one for each instanceHitbox collision
+	// 0x88
+	// This can happen 15 times cause of FUN_80020410,
+	// so this prevents any duplicate collisions
+	struct BSP* bspInstHitboxArr[15];
 	
-	// 0xc4 (num BSP instanceHitbox collisions)
+	// 0xc4
+	int numInstHitboxesHit;
 	
 	// --------
 	
