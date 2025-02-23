@@ -143,7 +143,7 @@ struct DebugRow rowsDbgChar[] =
 	{3, 0xB, "JOE", 		DebugMenu_LoadGame_GivenCharacterId },
 	{3, 0xC, "NTROPY", 		DebugMenu_LoadGame_GivenCharacterId },
 	{3, 0xD, "PENGUIN", 	DebugMenu_LoadGame_GivenCharacterId },
-	{3, 0xE, "FAKECRASH", 	DebugMenu_LoadGame_GivenCharacterId },
+	{3, 0xE, "FCRASH", 		DebugMenu_LoadGame_GivenCharacterId },
 	{3, 0xF, "OXIDE", 		DebugMenu_LoadGame_GivenCharacterId },
 	{0}
 };
