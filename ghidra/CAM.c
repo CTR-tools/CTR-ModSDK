@@ -2194,18 +2194,28 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   }
 
   // if not arcade end-of-race
-  if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) {
+  if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) 
+  {
     if ((*(char *)(param_2 + 0x376) != '\x06') && (*(short *)(param_1 + 0xc6) == 0))
-    goto LAB_8001a8c0;
-    if (*(short *)(param_1 + 0xc6) == 0) {
+		goto LAB_8001a8c0;
+	
+    if (*(short *)(param_1 + 0xc6) == 0) 
+	{
       *(short *)(param_1 + 200) = *(short *)(param_1 + 0x68) - *(short *)(param_1 + 0x5c);
       *(short *)(param_1 + 0xca) =
            *(short *)(param_1 + 0x5c) - (short)((uint)*(undefined4 *)(param_2 + 0x2d0) >> 8);
     }
-    *(undefined2 *)(param_1 + 0xc6) = 1;
-    if ((*(int *)(param_1 + 0x5c) < *(int *)(param_4 + 0x244)) &&
-       (x = (int)*(short *)(param_1 + 0xca) + (*(int *)(param_2 + 0x2d0) >> 8),
-       x < *(int *)(param_4 + 0x244))) {
+    
+	*(undefined2 *)(param_1 + 0xc6) = 1;
+    
+	if (
+		(*(int *)(param_1 + 0x5c) < *(int *)(param_4 + 0x244)) &&
+		(
+			x = (int)*(short *)(param_1 + 0xca) + (*(int *)(param_2 + 0x2d0) >> 8),
+			x < *(int *)(param_4 + 0x244)
+		)
+	   ) 
+	{
       *(int *)(param_4 + 0x244) = x;
     }
 LAB_8001a8b0:
