@@ -2155,6 +2155,12 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
       iVar14 = -0x1000;
       iVar13 = -0x1000;
 	  
+	  // where does this fit?
+	  // u = dot(v2, cross(v1,v3)) / dot(v1, cross(v1,v2))
+	  // v = dot(v1, cross(v3,v2)) / dot(v2, cross(v1,v2))
+	  // w = 1 - u - v
+	  // if all > 0, collision
+	  
 	  // if one length is zero
       if (iVar10 == 0) 
 	  {
