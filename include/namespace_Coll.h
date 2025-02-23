@@ -10,7 +10,8 @@ struct BspSearchVertex
 	short pos[3];
 	
 	// 0x6
-	// FUN_8001ef50
+	// FUN_8001f2dc - COLL_TestTriangle_GetNormalVector
+	// FUN_8001ef50 - COLL_TestTriangle_FindAny
 	u_short flags;
 	
 	// 0x8

@@ -1982,10 +1982,14 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   // collision flag
   sVar1 = param_2[3];
   
+  // Normal Vector
   uVar6 = *(undefined4 *)(param_2 + 6);
   iVar7 = *(int *)(param_2 + 8);
+  
   *(short *)(param_1 + 0x3c) = *(short *)(param_1 + 0x3c) + 1;
   *(short *)(param_1 + 0x52) = sVar1;
+  
+  // Normal Vector
   *(undefined4 *)(param_1 + 0x54) = uVar6;
   *(int *)(param_1 + 0x58) = iVar7;
   
@@ -1998,8 +2002,11 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   
   gte_ldR13R21(iVar11 * 0x10000 | uVar8 & 0xffff);
   gte_ldR22R23(uVar12 & 0xffff | iVar14 * 0x10000);
+  
+  // Normal Vector
   gte_ldVXY0(param_1 + 0x54);
   gte_ldVZ0(iVar7);
+  
   gte_mvmva_b(0,0,0,3,0);
   iVar5 = gte_stMAC2();
   iVar2 = gte_stMAC1();
@@ -2070,6 +2077,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar2 = (int)*param_2;
 		
 		// flag == 1
+		// if normalVec points X
         if (*(short *)(param_1 + 0x52) == 1) 
 		{
 		  // X length vectors
@@ -2211,6 +2219,8 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         *(undefined4 *)(param_1 + 0xd0) = uVar6;
         *(undefined4 *)(param_1 + 0xd4) = uVar4;
         *(short *)(param_1 + 0x3e) = *(short *)(param_1 + 0x3e) + 1;
+		
+		// Record Position (x2)
         *(undefined4 *)(param_1 + 0x68) = *(undefined4 *)(param_1 + 0x4c);
         *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0x4c);
         *(undefined2 *)(param_1 + 0x6c) = *(undefined2 *)(param_1 + 0x50);
@@ -2307,17 +2317,32 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   if (iVar6 < 0) iVar6 = -iVar6;
   if (iVar4 < 0) iVar4 = -iVar4;
   
+  // normalVec points X
   sVar2 = 1;
-  if (iVar5 - iVar6 < 0) {
+  
+  // if Y axis > X axis
+  if (iVar5 - iVar6 < 0) 
+  {
+	// normalVec points X
     sVar2 = 1;
-    if (-1 < iVar6 - iVar4) {
+	
+	// Y axis > Z axis
+    if (-1 < iVar6 - iVar4) 
+	{
+	  // normalVec points Y
       sVar2 = 3;
     }
   }
-  else if (-1 < iVar5 - iVar4) {
+  
+  // (else means Y < X) &&
+  // if X > Z
+  else if (-1 < iVar5 - iVar4) 
+  {
+	// normalVec points Z
     sVar2 = 2;
   }
   
+  // BspSearchVertex Flags (1,2,3)
   *(short *)((int)param_2 + 6) = sVar2;
   
   return;
@@ -2643,6 +2668,11 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   int iVar10;
 
   puVar2 = param_3;
+  
+  // rearrange algorithm based on
+  // the direction the normalVec faces
+  
+  // NormalVec Direction #3
   if (*(short *)((int)param_1 + 6) == 3) {
     iVar3 = (int)*(short *)(param_2 + 1);
     iVar5 = *(short *)(param_3 + 1) - iVar3;
@@ -2670,6 +2700,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   }
   else {
     iVar3 = (int)*(short *)param_2;
+	
+	// NormalVec Direction #1
     if (*(short *)((int)param_1 + 6) == 1) {
       iVar5 = *(short *)param_3 - iVar3;
       iVar9 = *(short *)param_4 - iVar3;
@@ -2695,6 +2727,9 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       iVar4 = *(short *)((int)param_1 + 0x12) - iVar4;
     }
     else {
+		
+	  // NormalVec Direction #2
+		
       iVar3 = (int)*(short *)((int)param_2 + 2);
       iVar5 = *(short *)((int)param_3 + 2) - iVar3;
       iVar9 = *(short *)((int)param_4 + 2) - iVar3;
@@ -3327,7 +3362,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
   // quadblock, triangleID, search data
   FUN_80020334(0,0,&DAT_1f800108);
   
-  // loop executes 0xF times
+  // loop 16 times (0xF -> 0)
+  // Check every 1/16th distance
+  // between CurrFrame and NextFrame
   iVar14 = 0xf;
   do 
   {
@@ -3341,6 +3378,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
     DAT_1f80014a = 0;
     DAT_1f800148 = 0;
     DAT_1f80018c = 0x1000;
+
+	// 1f800118: vec3 kartPosCurrFrame
+	// 1f800108: vec3 kartPosNextFrame
 
 	// kartCenter = vec3_originToCenter + driverPos (origin of model is bottom-center)
 	sVar9 = *(short *)(param_2 + 0x94) + (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
@@ -3443,7 +3483,8 @@ void FUN_80020410(undefined4 param_1,int param_2)
 
     if (0 < DAT_1f80018c) 
 	{
-      // increase position by velocity
+      // increase position by PARTIAL velocity,
+	  // slowly increment one each frame of 16 checks
       *(int *)(param_2 + 0x2d4) = *(int *)(param_2 + 0x2d4) + (iVar5 * DAT_1f80018c >> 0xc);
       *(int *)(param_2 + 0x2d8) = *(int *)(param_2 + 0x2d8) + (iVar6 * DAT_1f80018c >> 0xc);
       *(int *)(param_2 + 0x2dc) = *(int *)(param_2 + 0x2dc) + (iVar7 * DAT_1f80018c >> 0xc);
