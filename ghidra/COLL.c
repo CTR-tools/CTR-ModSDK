@@ -3256,11 +3256,11 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 	  // meaning we've already found collision with this triangle on this frame
 	  if ((*piVar4 == param_1) && (piVar4[1] == param_2)) 
 	  {
-		// frame timer?
+		// count number of times collided this frame
         iVar3 = piVar4[2];
         uVar2 = (undefined2)iVar3;
         
-		// if collision is found less than 4 frames
+		// count a max of 4 timse this frame
 		if (iVar3 < 0x401) 
 		{
 		  // increment
