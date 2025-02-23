@@ -91,7 +91,7 @@
 8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching		// COLL_FIXED_BSPLEAF_TestQuadblocks
 8001f67c COLL_TestQuadblock_TwoTris						// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
 8001f6f0 COLL_TestQuadblock_EightTris					// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
-8001f7f0 COLL_ResetScratchpadCache
+8001f7f0 COLL_ResetScratchpadCache						// COLL_FIXED_QUADBLK_LoadScratchpadVerts
 8001f928 COLL_TestTriangle_FindClosest_Subfunction1		// COLL_MOVED_TRIANGL_ReorderNormals
 8001fc40 COLL_TestTriangle_FindClosest					// COLL_MOVED_TRIANGL_TestPoint
 80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer	// COLL_MOVED_QUADBLK_TestTriangles
