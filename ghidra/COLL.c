@@ -2044,6 +2044,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  psVar3 = param_3;
 	  
 	  // flag == 3
+	  // normVec points Y
       if (*(short *)(param_1 + 0x52) == 3) 
 	  {
 		// Z length vectors
@@ -2086,7 +2087,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar2 = (int)*param_2;
 		
 		// flag == 1
-		// if normalVec points X
+		// if normalVec points Z
         if (*(short *)(param_1 + 0x52) == 1) 
 		{
 		  // X length vectors
@@ -2123,6 +2124,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         }
         
 		// != 1
+		// (must be == 2) -- normVec points X
 		else 
 		{
 		  // Y length vectors
@@ -2192,10 +2194,15 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
       
 	  else 
 	  {
+		// comments assume == 2,
+		// comments assume normVec points X
+		  
+		// v2z * v1y - v2y * v1z
         iVar9 = iVar9 * iVar10 - iVar7 * iVar5 >> 6;
         
 		if (iVar9 != 0) 
 		{
+		  // v3z * v1y - v3y * v1z
           iVar13 = ((iVar11 * iVar10 - iVar2 * iVar5) * 0x40) / iVar9;
           
 		  if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
@@ -2334,13 +2341,13 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   if (iVar6 < 0) iVar6 = -iVar6;
   if (iVar4 < 0) iVar4 = -iVar4;
   
-  // normalVec points X
+  // normalVec points Z
   sVar2 = 1;
   
   // if Y axis > X axis
   if (iVar5 - iVar6 < 0) 
   {
-	// normalVec points X
+	// normalVec points Z
     sVar2 = 1;
 	
 	// Y axis > Z axis
@@ -2355,7 +2362,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   // if X > Z
   else if (-1 < iVar5 - iVar4) 
   {
-	// normalVec points Z
+	// normalVec points X
     sVar2 = 2;
   }
   
