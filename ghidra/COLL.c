@@ -2186,6 +2186,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		
         iVar13 = (iVar2 << 0xc) / iVar7;
 		
+		// iVar13 is between 0 and 0x1000 (0.0 and 1.0)
         if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
 		{
           iVar14 = (iVar11 * 0x1000 - iVar13 * iVar9) / iVar5;
@@ -2205,6 +2206,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		  // v3z * v1y - v3y * v1z
           iVar13 = ((iVar11 * iVar10 - iVar2 * iVar5) * 0x40) / iVar9;
           
+		  // iVar13 is between 0 and 0x1000 (0.0 and 1.0)
 		  if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
 		  {
             iVar14 = (iVar2 * 0x1000 - iVar13 * iVar7) / iVar10;
@@ -2212,13 +2214,10 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         }
       }
       
-	  // quadblock
+	  // quadblock (offset 0x64)
 	  iVar2 = *(int *)(param_1 + 100);
 	  
-	  // if iVar14 or iVar13 is -0x1000,
-	  // then the function quits
-	  
-	  // if neither of these are -0x1000
+	  // iVar14 > 0, and (w=1-u-v, w>0)
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
 		// quadblock flags & TriggerScript,
@@ -2232,15 +2231,22 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		
 		// if collision is not disabled, record the detection
 		
+		// save quadblock
         *(int *)(param_1 + 0x80) = iVar2;
+		
+		// save vectors for barycentrics
         *(short *)(param_1 + 200) = (short)iVar14;
         *(short *)(param_1 + 0xca) = (short)iVar13;
+		
+		// Save BspSearchVertex->pLevelVertex (x3 vertices)
         uVar6 = *(undefined4 *)(psVar3 + 4);
         uVar4 = *(undefined4 *)(param_4 + 4);
         *(undefined4 *)(param_1 + 0xcc) = *(undefined4 *)(param_2 + 4);
         *(undefined4 *)(param_1 + 0xd0) = uVar6;
         *(undefined4 *)(param_1 + 0xd4) = uVar4;
-        *(short *)(param_1 + 0x3e) = *(short *)(param_1 + 0x3e) + 1;
+        
+		// boolDidTouchQuadblock
+		*(short *)(param_1 + 0x3e) = *(short *)(param_1 + 0x3e) + 1;
 		
 		// Record Position (x2)
         *(undefined4 *)(param_1 + 0x68) = *(undefined4 *)(param_1 + 0x4c);

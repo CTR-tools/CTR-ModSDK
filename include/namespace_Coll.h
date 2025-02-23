@@ -147,6 +147,9 @@ struct ScratchpadStruct
 	
 	// --------
 	
+	// 0xc8, 0xca,
+	// vectors for barycentrics
+	
 	// vec3, subtract positions (FUN_8001d0c4)
 	// 0xe2
 	// 0xe4
