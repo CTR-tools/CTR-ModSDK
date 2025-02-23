@@ -290,7 +290,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 }
 
 
-// PerBspLeaf_CheckInstances
+// COLL_FIXED_BSPLEAF_TestInstance
 // param1 - bsp node
 // param2 - 1f800108
 void FUN_8001d610(int param_1,int param_2)
@@ -483,7 +483,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   *(undefined4 *)(param_3 + 0x62) = 0;
 
   // COLL_SearchBSP_CallbackPARAM, callback
-  // PerBspLeaf_CheckInstances
+  // funcPtr COLL_FIXED_BSPLEAF_TestInstance
   FUN_8001ebec(
 	*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),
 	param_3 + 0x18,
@@ -2465,7 +2465,7 @@ void FUN_8001f41c(int param_1,int param_2)
 		// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
         FUN_8001f67c(param_2,param_1);
 		
-		// call FUN_8001ef50 two times, one per triangle
+		// call COLL_FIXED_TRIANGL_TestPoint two times, one per triangle
 		  
         FUN_8001ef50(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0,1,2
         if (*(uint *)(param_1 + 4) >> 0x10 != (*(uint *)(param_1 + 4) & 0xffff)) {
@@ -2479,7 +2479,7 @@ void FUN_8001f41c(int param_1,int param_2)
           FUN_8001f6f0(param_2,param_1);
         }
 		
-		// call FUN_8001ef50 eight times, one per triangle
+		// call COLL_FIXED_TRIANGL_TestPoint eight times, one per triangle
 		
 		// All values are offset 0x10,
 		// because that's where the normalVec of each triangle is
@@ -2538,7 +2538,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerBspLeaf_CheckInstances
+	// COLL_FIXED_BSPLEAF_TestInstance
     FUN_8001d610(param_1,param_2);
   }
   return;
@@ -2563,7 +2563,7 @@ void FUN_8001f67c(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1aa) = uVar1;
   
   // calculate normal vectors for two triangles,
-  // no collision detection here
+  // COLL_FIXED_TRIANGL_GetNormVec
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x5a);
@@ -2593,7 +2593,7 @@ void FUN_8001f6f0(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1aa) = uVar1;
   
   // calculate normal vectors for eight triangles,
-  // no collision detection here
+  // COLL_FIXED_TRIANGL_GetNormVec
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {  // Do we hit two quads? if then, check two quads.
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // triangle 4
@@ -2869,6 +2869,7 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       return 4;
     }
 	
+	// COLL_FIXED_TRIANGL_Barycentrics
     FUN_8001ede4(param_1,param_2,param_4,param_1 + 4);
     return 5;
   }
@@ -2881,6 +2882,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       *(undefined2 *)(param_1 + 1) = *(undefined2 *)(param_1 + 5);
       return 6;
     }
+	
+	// COLL_FIXED_TRIANGL_Barycentrics
     FUN_8001ede4(param_1,puVar2,param_4,param_1 + 4);
     return 3;
   }
@@ -2893,6 +2896,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
     *(short *)(param_1 + 1) = sVar1;
     return 2;
   }
+  
+  // COLL_FIXED_TRIANGL_Barycentrics
   FUN_8001ede4();
   return 1;
 }
@@ -3320,7 +3325,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerBspLeaf_CheckInstances
+	// COLL_FIXED_BSPLEAF_TestInstance
     FUN_8001d610(param_1,param_2);
   }
   return;
