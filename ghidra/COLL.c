@@ -2808,6 +2808,9 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   // w = 1 - u - v
   // if all > 0, collision
   
+  
+  // === See 8001ef50 for comments on this logic ===
+  
   iVar7 = -0x1000;
   iVar8 = -0x1000;
   if (iVar6 == 0) {
