@@ -892,3 +892,7 @@ void DECOMP_MainKillGame_StopCTR(void);
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver* d);
 int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame);
 void DECOMP_RB_CtrLetter_ThTick(struct Thread* t);
+void DECOMP_BOTS_MaskGrab(struct Thread* botThread);
+void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* d);
+void DECOMP_GAMEPAD_JogCon2(struct Driver* d, char val, short timeMS);
+void DECOMP_CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d);

@@ -25,7 +25,7 @@ void DECOMP_RB_MakeInstanceReflective(struct ScratchpadStruct* param_1, struct I
         // if there is one player
         quadFlags = ((struct QuadBlock *)param_1 + 0x80)->quadFlags;
 
-        if ((quadFlags & 0x2000) == 0)
+        if ((quadFlags & 0x2000) == 0) //is not wall
         {
             // visible?
             if ((quadFlags & 1) != 0)

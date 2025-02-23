@@ -1,72 +1,57 @@
 #include <common.h>
 
-// Budget: 336/436 bytes
-
-// according to buildList.txt, this function isn't done being decomped/cleaned up yet?
-
 struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 {
-	int pathIndex;
-	int numPoints;
-	int i;
 	struct Thread* t;
 	struct Driver* d;
-	struct GameTracker *gGT = sdata->gGT;
-	
-	// take default
-	pathIndex = sdata->driver_pathIndexIDs[driverID];
-	numPoints = sdata->NavPath_ptrHeader[pathIndex]->numPoints;
-	
-	// if invalid path
-	if(numPoints == 0)
+
+	char initialNavPathIndex = sdata->driver_pathIndexIDs[driverID];
+	char navPathIndex;
+	short navPathPointsCount;// = sdata->NavPath_ptrHeader[navPathIndex]->numPoints;
+
+	for (navPathIndex = initialNavPathIndex; ; navPathIndex--)
 	{
-		// check all paths
-		for(i = 0; i < 3; i++)
+		navPathPointsCount = sdata->NavPath_ptrHeader[navPathIndex]->numPoints;
+		if (1 < navPathPointsCount) break; //success
+		if (navPathIndex < 0)
 		{
-			// quit loop when found
-			if(sdata->NavPath_ptrHeader[i]->numPoints != 0) 
-			{
-				// when is one path valid, but another invalid?
-				// maybe just left over from early betas?
-				while(1) {}
-			}
+			navPathIndex = 2; //I have no clue
 		}
-		
-		// dont spawn driver
-		// will happen on Nitro Court
-		return 0;
+		if (navPathIndex == initialNavPathIndex)
+		{
+			return NULL; //failure
+		}
 	}
-	
+
 	// path data found
-	 
-	t = PROC_BirthWithObject
+	t = DECOMP_PROC_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
 			(
-				sizeof(struct Driver), 
+				sizeof(struct Driver), //sizeof (struct Driver) == 1584, and yet original code implies size should be 1580?
 				NONE, 
 				LARGE, 
 				ROBOT
 			), 
 			
 			BOTS_ThTick_Drive,	// behavior
-			0,					// debug name
+			0, //"robotcar",	// debug name
 			0					// thread relative
 		);
 		
 	d = t->object;
-	memset(d, 0x0, 0x62C);
+	memset(d, 0x0, sizeof(struct Driver));
 	VehBirth_NonGhost(t, driverID);
-	gGT->drivers[driverID] = d;
+	sdata->gGT->drivers[driverID] = d;
 	t->modelIndex = DYNAMIC_ROBOT_CAR;
 	
-	d->botPath = i;
-	d->botNavFrame = sdata->NavPath_ptrNavFrameArray[i];
+	d->botPath = navPathIndex;
+	d->botNavFrame = sdata->NavPath_ptrNavFrameArray[navPathIndex];
 	d->actionsFlagSet |= 0x100000;
-	LIST_AddFront(&sdata->unk_NavRelated[i], (struct Item*)(&d->unk598));
+	DECOMP_LIST_AddFront(&sdata->unk_NavRelated[navPathIndex], (struct Item*)(&d->unk598));
 	
-	gGT->numBotsNextGame++;
+	sdata->gGT->numBotsNextGame++;
 	BOTS_GotoStartingLine(d);
 	return d;
 }
