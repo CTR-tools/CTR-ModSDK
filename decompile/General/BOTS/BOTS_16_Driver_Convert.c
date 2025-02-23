@@ -1,5 +1,10 @@
 #include <common.h>
 
+// BUG (probably in this file)
+// In vanilla, when you finish a race with high speed, you "keep" that speed as you transition into a bot as you cross the finish line.
+// The same is not true in the decomp. When you finish a race, you "hiccup" your speed and slow down significantly when passing the finish line.
+
+
 void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 {
 	if ((d->actionsFlagSet & 0x100000) == 0) //if this racer is currently human
