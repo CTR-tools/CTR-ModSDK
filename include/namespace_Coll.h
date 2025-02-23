@@ -183,32 +183,25 @@ struct ScratchpadStruct
 	// 0xc4
 	int numInstHitboxesHit;
 	
-	// --------
-	
 	// 0xc8, 0xca,
-	// vectors for barycentrics
+	short barycentrics[2];
+		
+	// 0xcc, 0xd0, 0xd4
+	struct LevVertex* levVertHit[3];
 	
-	// 0xcc
-	// 0xd0
-	// 0xd4
-	// 3 pointers to BspSearchVertex->pLevelVertex
-	
-	// 0xdc
-	// 0xe0
-	// 0xe4
-	// 3 pointers to BspSearchVertex
+	// 0xd8, 0xdc, 0xe0
+	struct BspSearchVertex* bspSearchVertHit[3];
 	
 	// vec3, subtract positions (FUN_8001d0c4)
-	// 0xe2
-	// 0xe4
-	// 0xe6
+	// 0xe2, 0xe4, 0xe6
+	short unkVecE2[3];
 	
 	// vec3, bsp->0x10 - position (FUN_8001d0c4)
-	// 0xe8
-	// 0xea
-	// 0xec
+	// 0xe8, 0xea, 0xec
+	short unkVecE8[3];
 	
 	// 0xee - padding
+	short paddingEE;
 	
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
