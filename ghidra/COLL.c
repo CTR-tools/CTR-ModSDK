@@ -2710,7 +2710,7 @@ void FUN_8001f7f0(int param_1)
 }
 
 
-// part of triangle collision in the function below
+// COLL_MOVED_TRIANGL_ReorderNormals
 // param_1 - 1f800154 (sps->Set1),
 // other parameters are the vertices
 undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
@@ -3048,7 +3048,8 @@ LAB_8001fd38:
   param_1[0x37] = param_3;
   param_1[0x38] = param_4;
   
-  // always passes 1f800154 (sps->Set1)
+  // COLL_MOVED_TRIANGL_ReorderNormals 
+  // passes 1f800154 (sps->Set1)
   iVar9 = FUN_8001f928(param_1 + 0x13,param_2,param_3,param_4);
   
   if (iVar9 < 0) {
