@@ -1198,7 +1198,7 @@ common, exe, Timer_GetTime_Elapsed, 0x0,                 General/Timer/Timer_3_G
 //     * comment the block of individual files below
 //     * enable USE_DEFRAG in common.h
 
-common, exe, UI_ThTick_CountPickup, 0x0,                 General/UI/UI_AAA_BigBlock1.c //why is this linked to UI_ThTick_CountPickup and not UI_SaveLapTime?
+common, exe, UI_SaveLapTime, 0x0,                 General/UI/UI_AAA_BigBlock1.c 
 
 //UI_AAA_BigBlock1 starts here ---v
 //common, exe, UI_SaveLapTime, 0x0,                        General/UI/UI_00_SaveLapTime.c
