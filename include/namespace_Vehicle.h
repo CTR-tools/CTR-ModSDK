@@ -1483,6 +1483,13 @@ struct Driver
 	short botPath;
 	short unk5ba;
 
+
+	/*
+	* regarding unk5bc:
+	*
+	* 0x5bc - 0x5bd: likely a short, a timer of some sort, similar to squishTimer.
+	*/
+
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs

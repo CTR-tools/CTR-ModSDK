@@ -283,7 +283,7 @@ common, exe, BOTS_ThTick_RevEngine, 0x0,               General/BOTS/BOTS_08_ThTi
 common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c //needs testing
 common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c //needs testing
 //common, exe, BOTS_ThTick_Drive, 0x0,                   General/BOTS/BOTS_11_ThTick_Drive.c //TODO
-//common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_12_ChangeState.c //TODO
+common, exe, BOTS_ChangeState, 0x0,                    General/BOTS/BOTS_12_ChangeState.c //needs testing
 common, exe, BOTS_CollideWithOtherAI, 0x0,             General/BOTS/BOTS_13_CollideWithOtherAI.c //needs testing
 common, exe, BOTS_GotoStartingLine, 0x0,               General/BOTS/BOTS_14_GotoStartingLine.c //needs testing
 common, exe, BOTS_Driver_Init, 0x0,                    General/BOTS/BOTS_15_Driver_Init.c //needs testing
