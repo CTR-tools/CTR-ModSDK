@@ -353,7 +353,7 @@ common, exe, COLL_FIXED_BotsSearch, 0x0,                   	General/COLL/COLL_03
 //common, exe, COLL_FIXED_BSPLEAF_TestQuadblocks, 0x0,     	General/COLL/COLL_12_FIXED_BSPLEAF_TestQuadblocks.c //over budget, but assumed working
 //common, exe, COLL_FIXED_QUADBLK_GetNormVecs_LoLOD, 0x0,	General/COLL/COLL_13_FIXED_QUADBLK_GetNormVecs_LoLOD.c //over budget, but assumed working
 //common, exe, COLL_FIXED_QUADBLK_GetNormVecs_HiLOD, 0x0,  	General/COLL/COLL_14_FIXED_QUADBLK_GetNormVecs_HiLOD.c //over budget, but assumed working
-//common, exe, COLL_FIXED_QUADBLK_LoadScratchpadVerts, 0x0,	General/COLL/COLL_15_FIXED_QUADBLK_LoadScratchpadVerts.c //TODO
+//common, exe, COLL_FIXED_QUADBLK_LoadScratchpadVerts, 0x0,	General/COLL/COLL_15_FIXED_QUADBLK_LoadScratchpadVerts.c //TODO, breaks asm-optimized ND
 //common, exe, COLL_MOVED_TRIANGL_ReorderNormals, 0x0,     	General/COLL/COLL_16_MOVED_TRIANGL_ReorderNormals.c //TODO
 //common, exe, COLL_MOVED_TRIANGL_TestPoint, 0x0,          	General/COLL/COLL_17_MOVED_TRIANGL_TestPoint.c //TODO
 //common, exe, COLL_MOVED_QUADBLK_TestTriangles, 0x0,      	General/COLL/COLL_18_MOVED_QUADBLK_TestTriangles.c //over budget, but assumed working
