@@ -35,7 +35,7 @@ void DECOMP_CDSYS_XAPauseRequest(void);
 void DECOMP_CDSYS_XAPauseForce(void);
 void DECOMP_CDSYS_XAPauseAtEnd(void);
 
-void* DECOMP_COLL_LevModelMeta(unsigned int id);
+struct MetaDataMODEL* DECOMP_COLL_LevModelMeta(unsigned int id);
 
 void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
