@@ -2241,6 +2241,9 @@ LAB_80014094:
     iVar4 = *(int *)(iVar17 + 0x5a8);
   }
 
+  // END OF TOP-DOWN
+  // ========================================================================
+
   local_44 = local_44 | (ushort)psVar19[7];
 
   // flag from NavData?
@@ -3479,7 +3482,10 @@ LAB_8001686c:
 	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
-  
+
+  // ========================================================================
+  // BEGINNING OF BOTTOM-UP
+
   // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);
 
