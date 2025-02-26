@@ -2623,6 +2623,10 @@ struct Data
 	// 8008a408 -- 8 jmp pointers for RenderListInit
 	// 8008a428 -- 7 jmp pointers for RenderBucket
 	// 8008a444 -- 7 jmp pointers for RenderBucket
+	// 8008a474 -- 3 funcPtrs for RenderBucket
+
+	// ==== End of ND ====
+	// ==== Start PSYQ ====
 
 	// From here to end is probably all psyq data
 	// 8008a480 -- count 0 to 0x200
@@ -2630,13 +2634,8 @@ struct Data
 	// 8008ad7c -- funcPtr to Printf
 	// 8008b000 to 8008c000 -- $sp for psyq libs
 	// 8008c050 -- check if booted before
-	// 8008cb34 -- 0x00008000
-	// 8008cb38 -- 0x00800000
-
 	// 8008c054 -- pointer to first overlay
-
 	// 8008c05c -- pointer to first exe function
-
 	// 8008cf6b -- end of Data
 };
 
