@@ -29,27 +29,27 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 			}
 		}
 
-		memset(&d->unk598, 0, 0x94);
+		memset(&d->botData, 0, sizeof(struct BotData));
 
-		d->unk5bc[0x14] = d->ySpeed;
+		d->botData.unk5bc[0x14] = d->ySpeed;
 
 		short speedApprox = d->speedApprox;
 
-		d->botPath = navPathIndex;
+		d->botData.botPath = navPathIndex;
 
 		speedApprox = ((speedApprox < 0) ? -speedApprox : speedApprox);
 
-		d->unk5bc[0x18] = speedApprox;
+		d->botData.unk5bc[0x18] = speedApprox;
 
 		struct NavFrame* firstNavFrame = sdata->NavPath_ptrNavFrameArray[navPathIndex];
 
-		d->unk5a8 = 0;
+		d->botData.unk5a8 = 0;
 		d->turnAngleCurr = 0;
 		d->multDrift = 0;
 		d->ampTurnState = 0;
 		d->set_0xF0_OnWallRub = 0;
 
-		d->botNavFrame = firstNavFrame;
+		d->botData.botNavFrame = firstNavFrame;
 
 		d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
 
@@ -61,7 +61,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 			d->posCurr.z = nf->pos[2] << 8;
 		}
 
-		DECOMP_LIST_AddFront(&sdata->unk_NavRelated[navPathIndex], (struct Item*)d->unk598);
+		DECOMP_LIST_AddFront(&sdata->navBotList[navPathIndex], (struct Item*)&d->botData);
 
 		BOTS_SetRotation(d, 0);
 

@@ -46,10 +46,10 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	sdata->gGT->drivers[driverID] = d;
 	t->modelIndex = DYNAMIC_ROBOT_CAR;
 	
-	d->botPath = navPathIndex;
-	d->botNavFrame = sdata->NavPath_ptrNavFrameArray[navPathIndex];
+	d->botData.botPath = navPathIndex;
+	d->botData.botNavFrame = sdata->NavPath_ptrNavFrameArray[navPathIndex];
 	d->actionsFlagSet |= 0x100000;
-	DECOMP_LIST_AddFront(&sdata->unk_NavRelated[navPathIndex], (struct Item*)(&d->unk598));
+	DECOMP_LIST_AddFront(&sdata->navBotList[navPathIndex], (struct Item*)(&d->botData));
 	
 	sdata->gGT->numBotsNextGame++;
 	BOTS_GotoStartingLine(d);

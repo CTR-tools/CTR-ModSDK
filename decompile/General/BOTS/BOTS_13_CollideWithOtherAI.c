@@ -15,13 +15,13 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 		robot_2 = temp;
 	}
 
-	if ((robot_1->botFlags & 1) == 0)
+	if ((robot_1->botData.botFlags & 1) == 0)
 	{
 		// nav path index
-		short botPathIndex = robot_1->botPath;
+		short botPathIndex = robot_1->botData.botPath;
 
 		// pointer to navFrame
-		botNavFrame = robot_1->botNavFrame;
+		botNavFrame = robot_1->botData.botNavFrame;
 
 		// next navFrame
 		botNavFrame++;
@@ -36,7 +36,7 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	else
 	{
 		// pointer to nav frame
-		botNavFrame = robot_1->botNavFrame;
+		botNavFrame = robot_1->botData.botNavFrame;
 	}
 
 	short pos[3];
@@ -46,7 +46,7 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	pos[2] = (short)(robot_1->posCurr.z >> 8);
 
 	// two navFrame structs, and position pointer
-	int res1 = CAM_MapRange_PosPoints(botNavFrame->pos, robot_1->estimatePos, &pos[0]);
+	int res1 = CAM_MapRange_PosPoints(botNavFrame->pos, robot_1->botData.estimatePos, &pos[0]);
 
 	// position of other driver
 	pos[0] = (short)(robot_2->posCurr.x >> 8);
@@ -54,7 +54,7 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	pos[2] = (short)(robot_2->posCurr.z >> 8);
 
 	// two navFrame structs, and position pointer
-	int res2 = CAM_MapRange_PosPoints(botNavFrame->pos, robot_1->estimatePos, &pos[0]);
+	int res2 = CAM_MapRange_PosPoints(botNavFrame->pos, robot_1->botData.estimatePos, &pos[0]);
 
 	// reduce speed of one AI,
 	// the AI that is closer to the previous nav point,
@@ -63,15 +63,15 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	if (res1 < res2)
 	{
 		// reduce AI speed
-		int speed = *(int*)(&robot_2->unk5bc[0x18]) - 3000;
+		int speed = *(int*)(&robot_2->botData.unk5bc[0x18]) - 3000;
 		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		*(int*)(&robot_1->unk5bc[0x18]) = speed;
+		*(int*)(&robot_1->botData.unk5bc[0x18]) = speed;
 	}
 	else
 	{
 		// reduce AI speed
-		int speed = *(int*)(&robot_1->unk5bc[0x18]) - 3000;
+		int speed = *(int*)(&robot_1->botData.unk5bc[0x18]) - 3000;
 		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		*(int*)(&robot_2->unk5bc[0x18]) = speed;
+		*(int*)(&robot_2->botData.unk5bc[0x18]) = speed;
 	}
 }

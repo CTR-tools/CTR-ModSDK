@@ -208,10 +208,13 @@ give_this_label_a_better_name2:
 		}
 
 		//between these start and end tags, there's confusing variable lifetime that needs to be looked at closer.
+
+		unsigned int botFlags = botDriver->botFlags;
+
 		/////// START
-		if ((botDriver->botFlags & 0xc0) == 0x40)
+		if ((botFlags & 0xc0) == 0x40)
 		{
-			struct NavFrame* uVar11 = nextNavFrameOfConcern + 1; //also uVar20 = (uint)uVar11
+			short uVar11 = nextNavFrameOfConcern->pathIndexOfffff; //also uVar20 = (uint)uVar11
 
 			//memory bounds check for the navFrame???
 			int idk = ((((int)uVar11) << 0x10) >> 0x1a); //6 bits
@@ -235,15 +238,204 @@ give_this_label_a_better_name2:
 
 				BOTS_SetRotation(botDriver, 0);
 
-				//psVar21 = botDriver->botNavFrame
+				nextNavFrameOfConcern = botDriver->botNavFrame;
 			}
 		}
 		else /////// END
 		{
 			//todo
+			if (450 < sdata->unk_counter_upTo450)
+			{
+				struct Driver* otherDriver = NULL; //iVar4
+				if ((botFlags & 1) == 0)
+				{
+					int iVar3 = 1000;
+					short sVar7 = 1000;
+
+					//idk = probably a pointer to `struct Driver*`->unk598 of some `struct Driver*`
+					//sizeof(typeof(`struct Driver*`->unk598)) == 0x94 probably.
+					struct Item* idk = (struct Item*)DECOMP_List_GetFirstItem(&sdata->unk_NavRelated[botDriver->botPath]);
+					while (idk != NULL)
+					{
+						//todo
+						if (((char*)idk) - 0x598 != (char*)botDriver)
+						{
+							int iVar13 = (*(int*)(((char*)idk) + 0xc) - *(int*)botDriver->botNavFrame->pos) * -0x33333333 >> 2;
+							if (iVar13 << 0x10 < 0)
+							{
+								iVar13 += sdata->NavPath_ptrHeader[botDriver->botPath]->numPoints;
+							}
+							if (iVar13 << 0x10 < iVar3 << 0x10)
+							{
+								iVar3 = iVar13;
+								otherDriver = (struct Driver*)(((char*)idk) - 0x598);
+							}
+						}
+						sVar7 = (short)iVar3;
+
+						idk = LIST_GetNextItem(idk);
+					}
+
+					if (iVar4 != NULL && sVar7 < 3)
+					{
+						int diff = botDriver->distanceToFinish_curr - otherDriver->distanceToFinish_curr;
+
+						if (diff < 0)
+						{
+							diff += sdata->gGT->level1->ptr_restart_points->distToFinish * 8;
+						}
+						if (diff < 0x200)
+						{
+							short uVar11 = nextNavFrameOfConcern->pathIndexOfffff; //also uVar20 = (uint)uVar11
+
+							if (uVar11 < 0xc00)
+							{
+								DECOMP_List_RemoveMember(sdata->unk_NavRelated[botDriver->botPath], botDriver->unk598);
+
+								int iVar4 = uVar11 >> 0xa;
+								botDriver->botPath = uVar11 >> 10;
+
+								DECOMP_List_AddFront(sdata->unk_NavRelated[iVar4], botDriver->unk598);
+
+								iVar4 = sdata->NavPath_ptrNavFrameArray[iVar4];
+
+								goto //TODO
+							}
+						}
+					}
+				}
+			}
 		}
 
-		//todo
+		//puVar5 = gGT but different?
+
+		if ((botDriver->actionsFlagSet & 1) == 0)
+		{
+			int ZY = (botDriver->unk5bc[0x18] * botDriver->unk5bc[0x18]) + (botDriver->unk5bc[0x14] * botDriver->unk5bc[0x14]); //sqrZY
+
+			if (0x2b110000 < sqrZY) //sqrZY
+			{
+				ZY = SquareRoot0_stub(sqrZY);
+
+				int zVel = botDriver->unk5bc[0x18] * 0x6900; //iVar3
+
+				if (ZY == 0)
+				{
+					//trap(0x1c00);
+				}
+				if ((ZY == -1) && (zVel == -0x80000000))
+				{
+					//trap(0x1800);
+				}
+				int yVel = botDriver->unk5bc[0x14] * 0x6900; //iVar15
+				if (ZY == 0)
+				{
+					//trap(0x1c00);
+				}
+				if ((ZY == -1) && (yVel == -0x80000000))
+				{
+					//trap(0x1800);
+				}
+				botDriver->unk5bc[0x18] = (zVel /  ZY);
+				botDriver->unk5bc[0x14] = (yVel /  ZY);
+			}
+		}
+		else
+		{
+			botDriver->actionsFlagSet &= 0xfff7ffff;
+
+			//iVar4 = sdata->bestHumanRank
+
+			struct Driver* bestDriverRank = sdata->bestHumanRank;
+
+			if ((sdata->gGT->gameMode1 & 0x4000000) != 0)
+			{
+				bestDriverRank = sdata->bestRobotRank;
+			}
+
+			int speed;
+
+			if (bestDriverRank == NULL || (bestDriverRank == botDriver))
+			{
+				speed = sdata->gGT->constVal_9000;
+			}
+			else
+			{
+				int driverRank = botDriver->driverRank;
+				bool isInAdvArcadeOrVSCup = false;
+				if ((sdata->gGT->gameMode1 & 0x10000000) != 0 || (sdata->gGT->gameMode2 & 0x10) != 0)
+				{
+					isInAdvArcadeOrVSCup = true;
+				}
+
+				if (sdata->gGT->drivers[0]->driverRank < botDriver->driverRank)
+				{
+					driverRank--;
+				}
+
+				if (1 < sdata->gGT->numPlyrCurrGame && sdata->gGT->drivers[1]->driverRank <= driverRank)
+				{
+					driverRank--;
+				}
+
+				if ((sdata->gGT->gameMode1 & 0x10000000) != 0 || (sdata->gGT->gameMode2 & 0x10) != 0)
+				{
+					driverRank = sdata->accelerateOrder[botDriver->driverID];
+					if (sdata->accelerateOrder[0] < 2)
+					{
+						driverRank--;
+					}
+					if (sdata->accelerateOrder[1] < 2)
+					{
+						driverRank--;
+					}
+				}
+
+				short sVar7;
+
+				if (bestDriverRank->lapIndex == 0)
+				{
+					sVar7 = sdata->arcade_difficultyParams[0xB];
+				}
+				else
+				{
+					if (bestDriverRank->lapIndex == sdata->gGT->numLaps - 1)
+					{
+						sVar7 = sdata->arcade_difficultyParams[0xD];
+					}
+					else
+					{
+						sVar7 = sdata->arcade_difficultyParams[0xC];
+					}
+				}
+
+				int distToFinish = sdata->gGT->level1->ptr_restart_points->distToFinish * 8;
+
+				int lapIndex = bestDriverRank->lapIndex;
+
+				if ((bestDriverRank->actionsFlagSet & 0x1000000) != 0)
+				{
+					lapIndex--;
+				}
+
+				int botLapIndex = botDriver->lapIndex;
+
+				if ((botDriver->actionsFlagSet & 0x1000000) != 0)
+				{
+					botLapIndex--;
+				}
+
+				//not super meaningful, probably just a difficulty statistic
+				int idk = ((distToFinish - bestDriverRank->distanceToFinish_curr) + (lapIndex * distToFinish)) - ((distToFinish - botDriver->distanceToFinish_curr) + (botLapIndex * distToFinish)) - sdata->arcade_difficultyParams[driverRank + sVar7];
+
+				//// CONTINUE FROM HERE
+
+				if (isInAdvArcadeOrVSCup && ((driverRank & 0xffff) == 0))
+				{
+
+				}
+			}
+		}
 	}
 	else
 	{

@@ -4501,7 +4501,7 @@ struct sData
 	struct NavHeader* NavPath_ptrHeader[3];
 
 	// 8008daf8
-	struct LinkedList unk_NavRelated[3];
+	struct LinkedList navBotList[3];
 
 	// 8008DB1C - BSP Search Result
 	struct ScratchpadStruct scratchpadStruct;
