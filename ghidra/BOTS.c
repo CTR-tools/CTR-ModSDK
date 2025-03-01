@@ -1631,7 +1631,9 @@ LAB_80013fbc:
     }
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
-    
+
+	////////// START
+
 	if ((uVar8 & 0xc0) == 0x40) 
 	{  
 	  // offset 0x10 of NavFrame
@@ -1891,6 +1893,9 @@ LAB_800144a0:
         iVar15 = (((iVar3 - *(int *)(iVar4 + 0x488)) + uVar20 * iVar3) -
                  ((iVar3 - *(int *)(iVar17 + 0x488)) + uVar18 * iVar3)) -
                  ((int)*(short *)(PTR_DAT_8008cf70 + ((int)(uVar8 << 0x10) >> 0xf)) + (int)sVar7);
+
+		//// CONTINUE FROM HERE
+
         if ((bVar1) && ((uVar8 & 0xffff) == 0)) {
           if (iVar15 < 1) {
 LAB_800147e8:

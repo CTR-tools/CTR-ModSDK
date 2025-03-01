@@ -35,7 +35,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 		if (override != 0xff)
 		{
 			// pointer to nav point
-			frame = bot->botNavFrame;
+			frame = bot->botData.botNavFrame;
 
 			// goBackCount
 			backCount = frame->goBackCount;
@@ -44,7 +44,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			while ((boolOverride || (override + 1 < backCount)))
 			{
 				// nav path index
-				i = bot->botPath;
+				i = bot->botData.botPath;
 
 				// go back to previous point
 				frame -= 1;
@@ -59,7 +59,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 				backCount = frame->goBackCount;
 				boolOverride = (backCount < (override - 1));
 			}
-			bot->botNavFrame = frame;
+			bot->botData.botNavFrame = frame;
 			boolOverride = true;
 		}
 	}
@@ -68,7 +68,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 	if (!boolOverride)
 	{
 		// pointer to navFrame
-		frame = bot->botNavFrame;
+		frame = bot->botData.botNavFrame;
 
 		// current nav point (player turned AI)
 		currNav = bot->unknown_lap_related[1];
@@ -79,7 +79,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 		while ((backCount == currNav || ((frame->flags & 0x4000) != 0)))
 		{
 			// nav path index
-			i = bot->botPath;
+			i = bot->botData.botPath;
 
 			// go back one navFrame
 			frame -= 1;
@@ -94,7 +94,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			currNav = bot->unknown_lap_related[1];
 		}
 		// save ptr to nav frame
-		bot->botNavFrame = frame;
+		bot->botData.botNavFrame = frame;
 	}
 
 	DECOMP_BOTS_MaskGrab(botThread);

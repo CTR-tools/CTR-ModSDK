@@ -3,9 +3,9 @@
 void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
 {
 	struct Driver* botDriver = (struct Driver*)botThread->object;
-	struct MaskHeadWeapon* mask = botDriver->maskObj;
+	struct MaskHeadWeapon* mask = botDriver->botData.maskObj;
 
-	if (botDriver->ai_posBackup[1] < botDriver->posCurr.y)
+	if (botDriver->botData.ai_posBackup[1] < botDriver->posCurr.y)
 	{ //mask grabbed
 		botDriver->posCurr.y -= ((sdata->gGT->elapsedTimeMS << 9) >> 5);
 
@@ -29,7 +29,7 @@ void DECOMP_BOTS_ThTick_RevEngine(struct Thread* botThread)
 			mask->rot[2] &= 0xfffe;
 		}
 
-		botDriver->maskObj = NULL;
+		botDriver->botData.maskObj = NULL;
 		botDriver->kartState = KS_ENGINE_REVVING;
 		botDriver->clockReceive = 0;
 		botDriver->squishTimer = 0;
