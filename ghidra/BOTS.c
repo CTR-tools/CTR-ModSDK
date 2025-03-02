@@ -2058,6 +2058,8 @@ LAB_80014a98:
       if (0x6900 < iVar3) {
         iVar3 = 0x6900;
       }
+
+	  //// CONTINUE FROM HERE 2
       
 	  // terrain->0x38
 	  iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;
