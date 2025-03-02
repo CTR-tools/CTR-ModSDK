@@ -372,6 +372,8 @@ struct BotData
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs
+
+	//unk5bc + 18 is botVelocity?
 	char unk5bc[0x34];
 
 	// 0x5d4
