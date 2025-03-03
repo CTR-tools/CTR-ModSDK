@@ -73,6 +73,7 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 		speedApprox = ((speedApprox << 1) >> 1);
 	}
 
+	bool local_38; //something to do with incrementing the fire level when drift boosting
 	short idk = (((speedApprox * 0x89) + (botDriver->unkSpeedValue2 * 0x177)) * 8 >> 0xC);
 	botDriver->unkSpeedValue2 = idk;
 
@@ -468,7 +469,7 @@ give_this_label_a_better_name2:
 					iVar9 = -iVar13;
 
 				botVelocity = iVar9 * (((botVelocity + 0x80) * 0x1000) / 0xa00) >> 0xc;
-				bool local_38 = 0 < iVar15;
+				local_38 = 0 < iVar15;
 				botVelocity = botVelocity + ((botVelocity << 3) / 100) * (7 - driverRank);
 
 				if (iVar9 < botVelocity)
@@ -653,7 +654,7 @@ give_this_label_a_better_name2:
 			*(int*)&botDriver->botData.unk5bc[0x18] = 0x6400;
 		}
 
-		int idk = *(int*)&botDriver->botData.unk5bc[0x18] * elapsedMilliseconds >> 5;
+		int idk = *(int*)&botDriver->botData.unk5bc[0x18] * elapsedMilliseconds >> 5; //iVar4
 		if (idk < 0)
 		{
 			idk = 0;
@@ -677,6 +678,185 @@ give_this_label_a_better_name2:
 		}
 
 		iVar4_lifetime_2 = botDriver->unk5a8;
+	}
+
+	int idk = botDriver->botData.unk61a; //local_44
+	int idk2 = *((char*)&botDriver->botData.unk61c + 3); //local_40
+	//local_3c == 0
+	if ((idk2 & 0x80) != 0)
+	{
+		botDriver->botData.botFlags |= 0x20;
+	}
+
+	int gravity;
+	if ((botDriver->botData.botFlags & 0x20) == 0)
+	{
+		gravity = botDriver->const_Gravity;
+	}
+	else
+	{
+		gravity = (botDriver->const_Gravity * 41) / 100;
+	}
+
+	gravity = (*(int*)&botDriver->botData.unk5bc[0x14]) - (gravity * elapsedMilliseconds >> 5);
+
+	short navDist; //sVar7
+
+	if ((botDriver->actionsFlagSet & 1) == 0)
+	{
+		navDist = botDriver->botData.distToNextNavXZ;
+	}
+	else
+	{
+		navDist = botDriver->botData.distToNextNavXYZ;
+	}
+
+	int local_3c = 0;
+	char local_30 = 0;
+	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x10) != 0)
+	{
+		local_3c = *((char*)&botDriver->botData.unk61c + 3);
+	}
+
+	for ()
+	{
+		//TODO
+	}
+
+	//botDriver->botData.unk5a8 = iVar4;
+
+	int actionFlagsBuildup = (idk & 2) << 10; // uVar20
+
+	botDriver->actionsFlagSet &= 0xfffee7ff;
+
+	if ((idk & 0x2000) != 0)
+	{
+		actionFlagsBuildup |= 0x10000;
+	}
+
+	if ((idk & 4) != 0)
+	{
+		//normally goes to uVar8, but doing it to actionFlagsBuildup should be equivalent.
+		actionFlagsBuildup |= 0x1000;
+	}
+
+	botDriver->actionsFlagSet = actionFlagsBuildup;
+
+	struct Terrain* terrain = VehAfterColl_GetTerrain(*(char*)(((int)&botDriver->botData.estimatePos[0]) + 7) >> 3);
+
+	botDriver->terrainMeta1 = terrain;
+
+	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x20) != 0)
+	{
+		short vertSplit;
+		if ((*((char*)&botDriver->botData.unk61c + 3) & 0xf) == 0)
+		{
+			vertSplit = *(short*)&sdata->gGT->level1->splitLines[0];
+		}
+		else
+		{
+			vertSplit = *(short*)&sdata->gGT->level1->splitLines[2];
+		}
+
+		botInstance->vertSplit = vertSplit;
+
+		botInstance->flags |= 0x4000;
+	}
+
+	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x30) == 0 && (botThread->modelIndex != 0x4b))
+	{
+		int transparency = (*((char*)&botDriver->botData.unk61c + 3) & 0xf) * 0x9c00;
+
+		botDriver->alphaScaleBackup = ((botDriver->alphaScaleBackup * 100) + transparency >> 8);
+
+		botInstance->alphaScale = ((botInstance->alphaScale * 0x100) + transparency >> 8);
+	}
+
+	if ((botDriver->actionsFlagSet & 0x1000) == 0 || (actionFlagsBuildup & 0x1800) == 0)
+	{
+		botDriver->turbo_MeterRoomLeft = 0;
+		*(short*)&botDriver->botData.unk5bc[0x8] = 0;
+		*(short*)&botDriver->botData.unk5bc[0xA] = 0;
+	}
+	else
+	{
+		botDriver->actionsFlagSet |= 0x80;
+		*(short*)&botDriver->botData.unk5bc[0x8] += elapsedMilliseconds;
+		int uVar6;
+		//this ugly tree of ifs may have been a switch perhaps?
+		if ((*(short*)&botDriver->botData.unk5bc[0x8] * 0x10000 >> 0x10 < 0xb41) || (5 < *(short*)&botDriver->botData.unk5bc[0xA]))
+		{
+			if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x961) || (uVar6 = 5, 4 < *(short*)&botDriver->botData.unk5bc[0xA]))
+			{
+				if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x781) || (3 < *(short*)&botDriver->botData.unk5bc[0xA]))
+				{
+					if ((0x5a0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 3, *(short*)&botDriver->botData.unk5bc[0xA] < 3))
+					{
+						//goto //todo
+						if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x3c1) || (1 < *(short*)&botDriver->botData.unk5bc[0xA]))
+						{
+							if ((0x1e0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 1, *(short*)&botDriver->botData.unk5bc[0xA] < 1))
+							{
+								//goto //todo
+							}
+						}
+						else
+						{
+							//trigger a turbo boost?
+							*(short*)&botDriver->botData.unk5bc[0xA] = 2;
+							botDriver->turbo_MeterRoomLeft = 0;
+
+							VehFire_Increment(botDriver, 0xf0, 2, local_38 << 7);
+						}
+					}
+					else
+					{
+						//trigger a turbo boost?
+						*(short*)&botDriver->botData.unk5bc[0xA] = 4;
+						botDriver->turbo_MeterRoomLeft = 0;
+
+						VehFire_Increment(botDriver, 0x1e0, 2, local_38 << 8);
+					}
+				}
+				else
+				{
+					//trigger a turbo boost?
+					*(short*)&botDriver->botData.unk5bc[0xA] = uVar6;
+					botDriver->turbo_MeterRoomLeft = 0xa0;
+				}
+			}
+			else
+			{
+				//trigger a turbo boost?
+				*(short*)&botDriver->botData.unk5bc[0xA] = 6;
+				botDriver->turbo_MeterRoomLeft = 0;
+
+				VehFire_Increment(botDriver, 0x2d0, 2, local_38 * 0x180);
+			}
+		}
+
+		if ((idk & 0x100) != 0)
+		{
+			VehFire_Increment(botDriver, 0x78, 1, 0x900);
+
+			botDriver->botData.botFlags |= 0x10;
+		}
+
+		if ((idk & 0x1) != 0)
+		{
+			VehFire_Increment(botDriver, 0x2d0, 1, 0x900);
+
+			botDriver->botData.botFlags |= 0x10;
+		}
+
+		if ((botDriver->botData.botFlags & 1) == 0)
+		{
+			//botDriver->botData.botNavFrame = //psVar19 //TODO
+
+			short botPath = botDriver->botData.botPath;
+
+			//// CONTINUE FROM HERE 3
+		}
 	}
 
 	// END OF TOP-DOWN

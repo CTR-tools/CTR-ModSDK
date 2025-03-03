@@ -2248,9 +2248,6 @@ LAB_80014094:
     iVar4 = *(int *)(iVar17 + 0x5a8);
   }
 
-  // END OF TOP-DOWN
-  // ========================================================================
-
   local_44 = local_44 | (ushort)psVar19[7];
 
   // flag from NavData?
@@ -2413,6 +2410,9 @@ LAB_8001509c:
   //turn on bits in uVar20, and optionally, 13th and 17th bit of Actions Flag set
   *(uint *)(iVar17 + 0x2c8) = uVar8 | uVar20;
 
+  // END OF TOP-DOWN
+  // ========================================================================
+
   // terrain meta
   uVar12 = FUN_80057c68((uint)(*(byte *)(psVar19 + 7) >> 3));
   *(undefined4 *)(iVar17 + 0x358) = uVar12;
@@ -2543,6 +2543,8 @@ LAB_800153d0:
 
 	// path index: 0, 1, or 2
     iVar13 = (int)*(short *)(iVar17 + 0x5b8) * 4;
+
+	//// CONTINUE FROM HERE 3
 
 	// set next nav point to current + 20 bytes
     psVar21 = psVar19 + 10;
