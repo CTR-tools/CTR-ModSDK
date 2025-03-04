@@ -92,12 +92,15 @@ struct CameraDC
 	struct PushBuffer* pushBuffer;
 
 	// 0x4C
+	// vel[3]
 	int unkTriplet1[3];
 	
 	// 0x58
+	// pos[3]
 	int unkTriplet2[3];
 	
 	// 0x64
+	// rot[3]
 	int unkTriplet3[3];
 	
 	// 0x70 - flags
