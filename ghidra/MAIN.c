@@ -1287,7 +1287,7 @@ LAB_80035900:
 		// VisMem 0x50-0x5F
         iVar3 = *(int *)(param_1 + 0x1a38) + iVar7;
 
-		// if cameraDC->0x24 changed
+		// if cameraDC->0x24 changed (visFaceSrc)
 		if (*(int *)(iVar3 + 0x50) != iVar2)
 		{
           *(int *)(iVar3 + 0x50) = iVar2;
@@ -1341,23 +1341,27 @@ LAB_80035900:
 
           else
 		  {
-			// camera is moving on path, not followinig driver
+			// camera is quadblock invisible to driver PVS
             uVar5 = *(uint *)(iVar6 + 0x70) | 0x2000;
           }
 
           *(uint *)(iVar6 + 0x70) = uVar5;
 
-		  // if driver quadblock is wall, therefore need to improvise?
+		  // camera is quadblock invisible to driver PVS
 		  if ((*(uint *)(iVar6 + 0x70) & 0x2000) != 0)
 		  {
 			// param1 is PTR_DAT_8008d2ac
 			// ivar9 is screen ID (0,1,2,3)
             FUN_80035684(param_1,iVar9);
+			
+			// camera is on quadblock NOT visible by driver PVS,
+			// and new camera PVS was set this frame
             *(uint *)(iVar6 + 0x70) = *(uint *)(iVar6 + 0x70) | 0x4000;
           }
         }
       }
 
+	  // Demo Mode, and not already called FUN_80035684
 	  if ((*(uint *)(iVar6 + 0x70) & 0x5000) == 0x1000)
 	  {
 		// param1 is PTR_DAT_8008d2ac
@@ -1369,7 +1373,9 @@ LAB_80035900:
 			(
 				// if camera is following driver "normally"
 				(*(short *)(iVar6 + 0x9a) == 0) &&
-                // and not wall
+				
+                // if PVS has NOT been taken from camera,
+				// then take from driver instead
 				((*(uint *)(iVar6 + 0x70) & 0x2000) != 0)
 			) &&
 			(
