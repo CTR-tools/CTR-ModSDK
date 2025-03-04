@@ -2185,12 +2185,15 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
     *(short *)(param_1 + 0xd6) = *(short *)(param_1 + 0x5c) - *(short *)(param_4 + 0x244);
     *(short *)(param_1 + 0xd8) = *(short *)(param_1 + 0x60) - *(short *)(param_4 + 0x248);
 
+	// rotation interpolation
     *(short *)(param_1 + 0xcc) = *(short *)(param_1 + 100) - *(short *)(param_4 + 600);
     *(short *)(param_1 + 0xce) = *(short *)(param_1 + 0x68) - *(short *)(param_4 + 0x25c);
     sVar10 = *(short *)(param_4 + 0x260);
+    *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
+	
+	// 8 frame transition
     *(undefined2 *)(param_1 + 0xda) = 8;
     *(undefined2 *)(param_1 + 0xc6) = 0;
-    *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
   }
 
   // if not arcade end-of-race
@@ -2233,12 +2236,15 @@ LAB_8001a8b0:
       *(short *)(param_1 + 0xd6) = *(short *)(param_1 + 0x5c) - *(short *)(param_4 + 0x244);
       *(short *)(param_1 + 0xd8) = *(short *)(param_1 + 0x60) - *(short *)(param_4 + 0x248);
 
+	  // rotation interpolation
 	  *(short *)(param_1 + 0xcc) = *(short *)(param_1 + 100) - *(short *)(param_4 + 600);
       *(short *)(param_1 + 0xce) = *(short *)(param_1 + 0x68) - *(short *)(param_4 + 0x25c);
       sVar10 = *(short *)(param_4 + 0x260);
+      *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
+	  
+	  // 8 frame transition
       *(undefined2 *)(param_1 + 0xda) = 8;
       *(undefined2 *)(param_1 + 0xc6) = 0;
-      *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
       goto LAB_8001a8b0;
     }
 LAB_8001a8c0:
