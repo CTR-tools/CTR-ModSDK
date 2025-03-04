@@ -1229,8 +1229,8 @@ LAB_80035900:
 	  // CameraDC 0x24
 	  iVar2 = *(int *)(iVar6 + 0x24);
 
-	  // if camera can't figure out what to draw on it's own,
-	  // if not following warpball path like track select videos,
+	  // if camera does NOT have its own PVS,
+	  // then pull PVS from driver quadblock
 	  if (iVar2 == 0)
 	  {
         if (
@@ -1279,8 +1279,9 @@ LAB_80035900:
         }
       }
 
-	  // if camera can figure out what to draw on it's own,
-	  // if following warpball path like track select videos,
+	  // if camera has its own PVS,
+	  // from Demo Mode or TrackSel videos,
+	  // use that instead of driver quadblock
       else
 	  {
 		// VisMem 0x50-0x5F
