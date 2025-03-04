@@ -204,9 +204,8 @@ struct CameraDC
 
 	// extra transition effect added
 
-	// This zooms in X and Z
-	// to get to player, then zooms
-	// Y in the end
+	// 0xcc
+	// short[4] rotXYZW
 
 	// 0xd4 - distX per frame
 	// 0xd6 - distY per frame
