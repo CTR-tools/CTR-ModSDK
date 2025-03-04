@@ -1026,14 +1026,14 @@ void FUN_80035684(int param_1,int param_2)
 		// if quadblock exists
 		(iVar2 != 0) &&
 		(
-			// quadblock -> ptr_add_tex
+			// quadblock -> PVS
 			puVar1 = *(uint **)(iVar2 + 0x44),
 
 			puVar1 != (uint *)0x0
 		)
 	  )
   {
-	// ptr_add_tex->offset0
+	// PVS->visLeafSrc
     uVar3 = *puVar1;
 
     if (uVar3 != 0) {
@@ -1059,7 +1059,7 @@ void FUN_80035684(int param_1,int param_2)
       }
     }
 
-	// driver -> ptr_add_tex -> offset4
+	// driver -> PVS -> visFaceSrc
     uVar3 = *(uint *)(*(int *)(*(int *)(iVar5 + 0x350) + 0x44) + 4);
 
 	if (uVar3 != 0) 
@@ -1153,11 +1153,11 @@ void FUN_800357b8(int param_1,int param_2)
 					// driver -> quadblock under driver
 					(*(int *)(iVar8 + 0x350) != 0) &&
 
-					// quadblock -> ptr_add_tex
+					// quadblock -> PVS
 					(piVar1 = *(int **)(*(int *)(iVar8 + 0x350) + 0x44), piVar1 != (int *)0x0)
 				) &&
 
-				// pull vismem data from quadblock + 0x44
+				// PVS->visLeafSrc
 				(iVar2 = *piVar1, iVar2 != 0)
 			)
 		{
@@ -1167,7 +1167,7 @@ void FUN_800357b8(int param_1,int param_2)
 		  // VisMem 0x40-0x4F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x40) = iVar2;
 
-		  // quadblock -> ptr_add_tex -> 0x0
+		  // quadblock -> PVS -> visLeafSrc
           uVar5 = **(uint **)(*(int *)(iVar8 + 0x350) + 0x44);
 
 		  // only memcpy if size is specified
@@ -1239,12 +1239,13 @@ LAB_80035900:
 					(*(int *)(iVar8 + 0x350) != 0) &&
 
 					(
-						// quadblock -> ptr_add_tex
+						// quadblock -> PVS
 						iVar2 = *(int *)(*(int *)(iVar8 + 0x350) + 0x44),
 						iVar2 != 0
 					)
 				) &&
 
+				// PVS visFaceSrc
 				(iVar2 = *(int *)(iVar2 + 4), iVar2 != 0)
 		   )
 		{
@@ -1254,7 +1255,7 @@ LAB_80035900:
 		  // VisMem 0x50-0x5F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x50) = iVar2;
 
-		  // quadblock -> ptr_add_tex -> 0x4
+		  // quadblock -> PVS -> 0x4 (visFaceSrc)
           uVar5 = *(uint *)(*(int *)(*(int *)(iVar8 + 0x350) + 0x44) + 4);
 
 		  // only memcpy if size is specified
@@ -1319,10 +1320,10 @@ LAB_80035900:
           iVar2 = *(int *)(iVar8 + 0x350);
 
           if (
-				// if no quadblock exists, or quadblock -> ptr_add_tex does not exist
+				// if no quadblock exists, or quadblock -> PVS does not exist
 				((iVar2 == 0) || (piVar1 = *(int **)(iVar2 + 0x44), piVar1 == (int *)0x0)) ||
 				(
-					// data from quadblock -> ptr_add_tex is invalid
+					// data from quadblock -> PVS is invalid (visLeafSrc/visFaceSrc/visInstSrc)
 					(*piVar1 == 0 || (((piVar1[1] == 0 || (piVar1[2] == 0)) ||
 
 					// LEV -> mesh_info -> ptrQuadBlockArray
@@ -1376,9 +1377,10 @@ LAB_80035900:
 					*(int *)(iVar8 + 0x350) != 0 &&
 
 					(
-						// driver -> quadblock -> ptr_add_tex
+						// driver -> quadblock -> PVS
 						(iVar2 = *(int *)(*(int *)(iVar8 + 0x350) + 0x44), iVar2 != 0 &&
 
+						// PVS -> visInstSrc
 						(iVar2 = *(int *)(iVar2 + 8), iVar2 != 0))
 					)
 				)

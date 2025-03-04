@@ -3376,10 +3376,10 @@ LAB_8001c150:
   // camera quadblock exists
   if (piVar18[7] != 0)
   {
-	// quadblock -> ptr_add_tex
+	// quadblock -> PVS
     piVar8 = *(int **)(piVar18[7] + 0x44);
 
-	// ptr_add_tex -> 0x0
+	// PVS -> visLeafSrc
 	if ((piVar8 != (int *)0x0) && (iVar22 = *piVar8, iVar22 != 0))
 	{
 	  // CameraDC 0x20
@@ -3392,10 +3392,10 @@ LAB_8001c150:
     // camera quadblock exists
     if (piVar18[7] != 0)
 	{
-	  // quadblock -> ptr_add_tex
+	  // quadblock -> PVS
       iVar22 = *(int *)(piVar18[7] + 0x44);
 
-	  // ptr_add_tex -> 0x4
+	  // PVS -> visFaceSrc
       if ((iVar22 != 0) && (iVar22 = *(int *)(iVar22 + 4), iVar22 != 0))
 	  {
 	    // CameraDC 0x24
@@ -3405,20 +3405,20 @@ LAB_8001c150:
 	  // camera quadblock exists
       if (piVar18[7] != 0)
 	  {
-		// quadblock -> ptr_add_tex
+		// quadblock -> PVS
         iVar22 = *(int *)(piVar18[7] + 0x44);
 
-		// ptr_add_tex -> 0x8
+		// PVS -> visInstSrc
 		if ((iVar22 != 0) && (iVar22 = *(int *)(iVar22 + 8), iVar22 != 0))
 		{
 		  // CameraDC 0x28
           piVar18[10] = iVar22;
         }
 
-		// camera quadblock exists 		quadblock -> ptr_add_tex
+		// camera quadblock exists 		quadblock -> PVS
         if (((piVar18[7] != 0) && (iVar22 = *(int *)(piVar18[7] + 0x44), iVar22 != 0)) &&
 
-			// ptr_add_tex -> 0xC
+			// PVS -> visExtraSrc
 		   (iVar22 = *(int *)(iVar22 + 0xc), iVar22 != 0))
 		{
 		  // if no lev animated vertices
