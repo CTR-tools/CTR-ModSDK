@@ -31,7 +31,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 
 		memset(&d->botData, 0, sizeof(struct BotData));
 
-		d->botData.unk5bc[0x14] = d->ySpeed;
+		d->botData.unk5bc.ai_speedY = d->ySpeed;
 
 		short speedApprox = d->speedApprox;
 
@@ -39,7 +39,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 
 		speedApprox = ((speedApprox < 0) ? -speedApprox : speedApprox);
 
-		d->botData.unk5bc[0x18] = speedApprox;
+		d->botData.unk5bc.ai_speedLinear = speedApprox;
 
 		struct NavFrame* firstNavFrame = sdata->NavPath_ptrNavFrameArray[navPathIndex];
 

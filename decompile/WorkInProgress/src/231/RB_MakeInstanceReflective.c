@@ -32,7 +32,7 @@ void DECOMP_RB_MakeInstanceReflective(struct ScratchpadStruct* param_1, struct I
             {
                 // make instance reflective
                 inst->flags |= 0x4000;
-                inst->vertSplit = gGT->level1->splitLines[2];
+                inst->vertSplit = gGT->level1->splitLines[1];
 
                 return;
             }
