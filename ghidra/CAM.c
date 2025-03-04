@@ -2199,8 +2199,17 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   // if not arcade end-of-race
   if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) 
   {
-    if ((*(char *)(param_2 + 0x376) != '\x06') && (*(short *)(param_1 + 0xc6) == 0))
+    if (
+			// if NOT blasted
+			(*(char *)(param_2 + 0x376) != '\x06') &&
+			
+			// blasted lerp not set
+			(*(short *)(param_1 + 0xc6) == 0)
+		)
+		
 		goto LAB_8001a8c0;
+		
+	// === If Blasted ===
 	
     if (*(short *)(param_1 + 0xc6) == 0) 
 	{

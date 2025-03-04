@@ -198,14 +198,19 @@ struct CameraDC
 	// 0xc4
 	short framesZoomingOut;
 
+	// Sep3
+	#if BUILD < UsaRetail
+	
 	// 0xc6
-	short unk_c6;
+	short paddingC6;
+	
+	#else // >= UsaRetail
 
-	// 0xC8
-	#if BUILD >= UsaRetail
-	char data14[0x14];
+	// 0xC6
+	char data16[0x16];
 
-	// extra transition effect added
+	// BLASTED 8-frame transition,
+	// triggered how? unused?
 
 	// 0xcc
 	// short[4] rotXYZW
