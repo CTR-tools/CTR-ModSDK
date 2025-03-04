@@ -41,14 +41,14 @@ void DECOMP_BOTS_MaskGrab(struct Thread* botThread)
 	bot->botData.ai_posBackup[2] = midpoint;
 	bot->posPrev.z = midpoint;
 
-	*(short*)(bot->botData.unk5bc + 0x4) = 0;
-	*(int*)(bot->botData.unk5bc + 0xc) = 0;
-	*(int*)(bot->botData.unk5bc + 0x10) = 0;
-	*(int*)(bot->botData.unk5bc + 0x14) = 0;
-	*(int*)(bot->botData.unk5bc + 0x18) = 0;
-	*(int*)(bot->botData.unk5bc + 0x28) = 0;
-	*(int*)(bot->botData.unk5bc + 0x2c) = 0;
-	*(int*)(bot->botData.unk5bc + 0x30) = 0;
+	bot->botData.unk5bc.ai_mulDrift = 0;
+	bot->botData.unk5bc.ai_squishCooldown = 0;
+	bot->botData.unk5bc.unk5cc = 0;
+	bot->botData.unk5bc.ai_speedY = 0;
+	bot->botData.unk5bc.ai_speedLinear = 0;
+	bot->botData.unk5bc.ai_velAxis[0] = 0;
+	bot->botData.unk5bc.ai_velAxis[1] = 0;
+	bot->botData.unk5bc.ai_velAxis[2] = 0;
 
 	// turn on 1st flag of actions flag set (means racer is on the ground)
 	bot->actionsFlagSet |= 1;

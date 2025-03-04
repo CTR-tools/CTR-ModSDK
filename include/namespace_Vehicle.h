@@ -336,14 +336,18 @@ struct BotData
 	//these offset are from the perspective as they exist from within `struct Driver`
 
 	// 0x598
-	int unk598;
-	int unk59c;
+	struct Item item;
+
+	// 0x5a0
 	int unk5a0;
 
 	// 0x5a4
 	struct NavFrame* botNavFrame;
 
+	// 0x5a8
 	int unk5a8;
+
+	// 0x5ac
 	int unk5ac;
 
 	// 0x5b0
@@ -360,6 +364,8 @@ struct BotData
 	// 0x5b8
 	// short path index
 	short botPath;
+
+	// 0x5ba
 	short unk5ba;
 
 
@@ -374,7 +380,49 @@ struct BotData
 	// probably only for AIs
 
 	//unk5bc + 18 is botVelocity?
-	char unk5bc[0x34];
+	//char unk5bc[0x34];
+	union
+	{
+		char raw[0x34];
+		struct
+		{
+			// 0x5bc
+			short rotXZ;
+
+			// 0x5be
+			short drift_unk1;
+
+			// 0x5c0
+			short ai_mulDrift;
+
+			// 0x5c2
+			short ai_simpTurnState;
+
+			// 0x5c4
+			short ai_turboMeter;
+
+			// 0x5c6
+			short ai_fireLevel;
+
+			// 0x5c8
+			int ai_squishCooldown;
+
+			// 0x5cc
+			int unk5cc;
+
+			// 0x5d0
+			int ai_speedY;
+
+			// 0x5d4
+			int ai_speedLinear;
+
+			// 0x5d8
+			int ai_accelAxis[3];
+
+			// 0x5e4
+			int ai_velAxis[3];
+		};
+	} unk5bc;
 
 	// 0x5d4
 	// AI speed
@@ -399,6 +447,8 @@ struct BotData
 
 	// 0x612
 	char estimateRotNav[3];
+
+	// 0x615
 	char estimateRotCurrY;
 
 	// 0x616
@@ -409,6 +459,8 @@ struct BotData
 
 	// 0x61A
 	short unk61a;
+
+	// 0x61c
 	int unk61c;
 
 	// 0x620

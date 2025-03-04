@@ -15,16 +15,16 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 
 	botInstance->flags &= 0xffff9fff;
 
-	if (botDriver->weaponCooldown != 0)
+	if (botDriver->botData.weaponCooldown != 0)
 	{
-		botDriver->weaponCooldown--;
+		botDriver->botData.weaponCooldown--;
 	}
 
 	if (botDriver->ChangeState_param2 == 0)
 	{
-		if ((botDriver->actionsFlagSet & 0x2000000) == 0 && botDriver->weaponCooldown != 0)
+		if ((botDriver->actionsFlagSet & 0x2000000) == 0 && botDriver->botData.weaponCooldown != 0)
 		{
-			botDriver->weaponCooldown--;
+			botDriver->botData.weaponCooldown--;
 		}
 	}
 	else
@@ -55,7 +55,8 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 	if (botDriver->clockReceive * 0x1000 < 0)
 		botDriver->clockReceive = 0;
 
-	(*(short*)&botDriver->unk5bc[0x2]) = 0;
+	//(*(short*)&botDriver->unk5bc[0x2]) = 0;
+	botDriver->botData.unk5bc.drift_unk1 = 0;
 	botDriver->kartState = KS_NORMAL;
 
 	botDriver->actionsFlagSetPrevFrame = botDriver->actionsFlagSet;
@@ -105,21 +106,21 @@ give_this_label_a_better_name:
 		botDriver->tireColor = 0x2e808080;
 	}
 
-	struct NavFrame* navFrameOfConcern = (struct NavFrame*)&botDriver->estimatePos[0]; //psVar19
+	struct NavFrame* navFrameOfConcern = (struct NavFrame*)&botDriver->botData.estimatePos[0]; //psVar19
 	struct NavFrame* nextNavFrameOfConcern; //psVar21
 
-	if ((botDriver->botFlags & 1) == 0)
+	if ((botDriver->botData.botFlags & 1) == 0)
 	{
-		navFrameOfConcern = botDriver->botNavFrame;
+		navFrameOfConcern = botDriver->botData.botNavFrame;
 		nextNavFrameOfConcern = currNavFrame + 1;
-		if (sdata->NavPath_ptrHeader[botDriver->botPath]->last <= nextNavFrameOfConcern)
+		if (sdata->NavPath_ptrHeader[botDriver->botData.botPath]->last <= nextNavFrameOfConcern)
 		{
 			nextNavFrameOfConcern = NavPath_ptrNavFrameArray[0];
 		}
 	}
 	else
 	{
-		nextNavFrameOfConcern = botDriver->botNavFrame;
+		nextNavFrameOfConcern = botDriver->botData.botNavFrame;
 	}
 
 	struct Need_New_Name cpwb_param_2; //.pos[3] unused?
@@ -156,9 +157,9 @@ give_this_label_a_better_name2:
 		if (cpwb_param_2.radius < iVar4 * iVar4)
 		{
 			int xyz[3];
-			xyz[0] = botDriver->xSpeed + (*(int*)&botDriver->unk5bc[0x1c]);
-			xyz[1] = botDriver->ySpeed + (*(int*)&botDriver->unk5bc[0x20]);
-			xyz[2] = botDriver->zSpeed + (*(int*)&botDriver->unk5bc[0x24]);
+			xyz[0] = botDriver->xSpeed + botDriver->botData.unk5bc.ai_accelAxis[0]; //(*(int*)&botDriver->unk5bc[0x1c]);
+			xyz[1] = botDriver->ySpeed + botDriver->botData.unk5bc.ai_accelAxis[1]; //(*(int*)&botDriver->unk5bc[0x20]);
+			xyz[2] = botDriver->zSpeed + botDriver->botData.unk5bc.ai_accelAxis[2]; //(*(int*)&botDriver->unk5bc[0x24]);
 			//similar to Need_New_Name usage, idk if this will overrun the stack from assignment within this call, needs investigation.
 			VehPhysCrash_AnyTwoCars(botThread, (u_short*)cpwb_param_2, &xyz[0]);
 		}
@@ -166,7 +167,7 @@ give_this_label_a_better_name2:
 
 	//puVar5 = sdata->gGT
 
-	if (botDriver->ai_progress_cooldown == 0)
+	if (botDriver->botData.ai_progress_cooldown == 0)
 	{
 		int trafficLightsTimer = sdata->gGT->trafficLightsTimer;
 
@@ -179,16 +180,16 @@ give_this_label_a_better_name2:
 		if (0 < trafficLightsTimer) goto give_this_label_a_better_name3; //if race not started, then skip
 
 		if (sdata->gGT->boolDemoMode != 0 &&
-			(botDriver->botFlags & 0x100) == 0 &&
+			(botDriver->botData.botFlags & 0x100) == 0 &&
 			botThread->modelIndex == 0x18)
 		{
-			botDriver->botFlags |= 0x100;
+			botDriver->botData.botFlags |= 0x100;
 			DECOMP_CAM_EndOfRace(sdata->gGT->cameraDC[botDriver->driverID], botDriver);
 		}
 
-		if ((botDriver->botFlags & 0x200) == 0)
+		if ((botDriver->botData.botFlags & 0x200) == 0)
 		{ //first frame of race
-			botDriver->botFlags |= 0x200;
+			botDriver->botData.botFlags |= 0x200;
 
 			if (data.characterIDs[botDriver->driverID] == 0xf)
 			{ //if oxide, then talk
@@ -211,7 +212,7 @@ give_this_label_a_better_name2:
 
 		//between these start and end tags, there's confusing variable lifetime that needs to be looked at closer.
 
-		unsigned int botFlags = botDriver->botFlags;
+		unsigned int botFlags = botDriver->botData.botFlags;
 		short botEstimatePos[3];
 
 		/////// START
@@ -222,26 +223,26 @@ give_this_label_a_better_name2:
 			//memory bounds check for the navFrame???
 			int idk = ((((int)uVar11) << 0x10) >> 0x1a); //6 bits
 			if (((int)(uVar20 << 0x10) >> 0x10 < 0xc00) &&
-				idk == *(((char*)&botDriver->unk626) + 1)) //compare to Driver* + 0x627
+				idk == *(((char*)&botDriver->botData.unk626) + 1)) //compare to Driver* + 0x627
 			{
-				botDriver->botFlags |= 0x80;
+				botDriver->botData.botFlags |= 0x80;
 
-				DECOMP_LIST_RemoveMember(sdata->unk_NavRelated[botDriver->botPath], (struct Item*)&botDriver->unk598);
+				DECOMP_LIST_RemoveMember(sdata->unk_NavRelated[botDriver->botData.botPath], &botDriver->botData.item);
 
-				botDriver->botPath = (short)(int)uVar11 >> 10;
+				botDriver->botData.botPath = (short)(int)uVar11 >> 10;
 
-				DECOMP_LIST_AddFront(sdata->unk_NavRelated[idk], (struct Item*)&botDriver->unk598);
+				DECOMP_LIST_AddFront(sdata->unk_NavRelated[idk], botDriver->botData.item);
 
 				struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[idk];
 				LAB_800144a0:
 				botEstimatePos = botDriver->botData.estimatePos;
 
 				//idk how to better write this
-				botDriver->botNavFrame = (struct NavFrame*)(((unsigned int)firstNavFrameOnPath) + ((((unsigned int)uVar11) & 0x3ff) * 0x14));
+				botDriver->botData.botNavFrame = (struct NavFrame*)(((unsigned int)firstNavFrameOnPath) + ((((unsigned int)uVar11) & 0x3ff) * 0x14));
 
 				BOTS_SetRotation(botDriver, 0);
 
-				nextNavFrameOfConcern = botDriver->botNavFrame;
+				nextNavFrameOfConcern = botDriver->botData.botNavFrame;
 			}
 		}
 		else /////// END
@@ -257,16 +258,16 @@ give_this_label_a_better_name2:
 
 					//idk = probably a pointer to `struct Driver*`->unk598 of some `struct Driver*`
 					//sizeof(typeof(`struct Driver*`->unk598)) == 0x94 probably.
-					struct Item* idk = (struct Item*)DECOMP_List_GetFirstItem(&sdata->unk_NavRelated[botDriver->botPath]);
+					struct Item* idk = (struct Item*)DECOMP_List_GetFirstItem(&sdata->unk_NavRelated[botDriver->botData.botPath]);
 					while (idk != NULL)
 					{
 						//todo
 						if (((char*)idk) - 0x598 != (char*)botDriver)
 						{
-							int iVar13 = (*(int*)(((char*)idk) + 0xc) - *(int*)botDriver->botNavFrame->pos) * -0x33333333 >> 2;
+							int iVar13 = (*(int*)(((char*)idk) + 0xc) - *(int*)botDriver->botData.botNavFrame->pos) * -0x33333333 >> 2;
 							if (iVar13 << 0x10 < 0)
 							{
-								iVar13 += sdata->NavPath_ptrHeader[botDriver->botPath]->numPoints;
+								iVar13 += sdata->NavPath_ptrHeader[botDriver->botData.botPath]->numPoints;
 							}
 							if (iVar13 << 0x10 < iVar3 << 0x10)
 							{
@@ -293,12 +294,12 @@ give_this_label_a_better_name2:
 
 							if (uVar11 < 0xc00)
 							{
-								DECOMP_List_RemoveMember(sdata->unk_NavRelated[botDriver->botPath], botDriver->unk598);
+								DECOMP_LIST_RemoveMember(sdata->unk_NavRelated[botDriver->botData.botPath], &botDriver->botData.item);
 
 								int iVar4 = uVar11 >> 0xa;
-								botDriver->botPath = uVar11 >> 10;
+								botDriver->botData.botPath = uVar11 >> 10;
 
-								DECOMP_List_AddFront(sdata->unk_NavRelated[iVar4], botDriver->unk598);
+								DECOMP_LIST_AddFront(sdata->unk_NavRelated[iVar4], &botDriver->botData.item);
 
 								iVar4 = sdata->NavPath_ptrNavFrameArray[iVar4];
 
@@ -314,13 +315,13 @@ give_this_label_a_better_name2:
 
 		if ((botDriver->actionsFlagSet & 1) == 0)
 		{
-			int ZY = (botDriver->unk5bc[0x18] * botDriver->unk5bc[0x18]) + (botDriver->unk5bc[0x14] * botDriver->unk5bc[0x14]); //sqrZY
+			int ZY = (botDriver->botData.unk5bc.ai_speedLinear[0] * botDriver->botData.unk5bc.ai_speedLinear[0]) + (botDriver->botData.unk5bc.ai_speedY * botDriver->botData.unk5bc.ai_speedY);
 
 			if (0x2b110000 < sqrZY) //sqrZY
 			{
 				ZY = SquareRoot0_stub(sqrZY);
 
-				int zVel = botDriver->unk5bc[0x18] * 0x6900; //iVar3
+				int zVel = botDriver->botData.unk5bc.ai_speedLinear[0] * 0x6900; //iVar3
 
 				if (ZY == 0)
 				{
@@ -330,7 +331,7 @@ give_this_label_a_better_name2:
 				{
 					//trap(0x1800);
 				}
-				int yVel = botDriver->unk5bc[0x14] * 0x6900; //iVar15
+				int yVel = botDriver->botData.unk5bc.ai_speedY * 0x6900; //iVar15
 				if (ZY == 0)
 				{
 					//trap(0x1c00);
@@ -339,8 +340,8 @@ give_this_label_a_better_name2:
 				{
 					//trap(0x1800);
 				}
-				botDriver->unk5bc[0x18] = (zVel /  ZY);
-				botDriver->unk5bc[0x14] = (yVel /  ZY);
+				botDriver->botData.unk5bc.ai_speedLinear[0] = (zVel /  ZY);
+				botDriver->botData.unk5bc.ai_speedY = (yVel /  ZY);
 			}
 		}
 		else
@@ -544,6 +545,8 @@ give_this_label_a_better_name2:
 				{
 					botVelocity = 0;
 				}
+
+				//Pickup on struct Driver->BotData translation here
 
 				struct Terrain* botTerrain = botDriver->terrainMeta1;
 
@@ -751,11 +754,11 @@ give_this_label_a_better_name2:
 		short vertSplit;
 		if ((*((char*)&botDriver->botData.unk61c + 3) & 0xf) == 0)
 		{
-			vertSplit = *(short*)&sdata->gGT->level1->splitLines[0];
+			vertSplit = sdata->gGT->level1->splitLines[0];
 		}
 		else
 		{
-			vertSplit = *(short*)&sdata->gGT->level1->splitLines[2];
+			vertSplit = sdata->gGT->level1->splitLines[1];
 		}
 
 		botInstance->vertSplit = vertSplit;
