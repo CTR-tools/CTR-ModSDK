@@ -998,6 +998,7 @@ LAB_80035098:
 }
 
 
+// Add Driver PVS to Camera PVS?
 // param1 is PTR_DAT_8008d2ac
 // param2 is screen ID (0, 1, 2, 3)
 void FUN_80035684(int param_1,int param_2)
@@ -1347,7 +1348,7 @@ LAB_80035900:
 
           *(uint *)(iVar6 + 0x70) = uVar5;
 
-		  // camera is quadblock invisible to driver PVS
+		  // camera quadblock is invisible to driver PVS
 		  if ((*(uint *)(iVar6 + 0x70) & 0x2000) != 0)
 		  {
 			// param1 is PTR_DAT_8008d2ac
