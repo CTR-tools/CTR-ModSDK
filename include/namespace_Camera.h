@@ -206,19 +206,27 @@ struct CameraDC
 	
 	#else // >= UsaRetail
 
-	// 0xC6
-	char data16[0x16];
-
-	// BLASTED 8-frame transition,
-	// triggered how? unused?
-
-	// 0xcc
-	// short[4] rotXYZW
-
-	// 0xd4 - distX per frame
-	// 0xd6 - distY per frame
-	// 0xd8 - distZ per frame
-	// 0xda - frameCountdown
+	// Store data on first frame of BLASTED,
+	// Use data on first frame of NOT BLASTED,
+	// 8-frame lerp to bring camera back to kart
+	struct
+	{
+		// 0xC6
+		short boolLerpPending;
+		
+		// 0xc8
+		short unkOffset[2];
+	
+		// 0xcc
+		short desiredRot[4];
+	
+		// 0xd4
+		short desiredPos[3];
+		
+		// 0xda
+		short framesRemaining;
+		
+	} BlastedLerp;
 
 	// 0xdc - end of struct
 	#endif

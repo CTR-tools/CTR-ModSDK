@@ -2176,7 +2176,9 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
     *(undefined2 *)(param_1 + 0xc0) = 0;
     *(undefined2 *)(param_1 + 0xc2) = 0;
   }
-  //if kart is not being blasted, racer is on the ground and (?)
+  
+  // Basically: IF first frame after blasted finished, start BlastedLerp.
+  // If kart is not being blasted, racer is on the ground and BLASTED lerp pending
   if (((*(char *)(param_2 + 0x376) != '\x06') && ((*(uint *)(param_2 + 0x2c8) & 1) != 0)) &&
      (*(short *)(param_1 + 0xc6) != 0))
   {
@@ -2196,14 +2198,14 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
     *(undefined2 *)(param_1 + 0xc6) = 0;
   }
 
-  // if not arcade end-of-race
+  // if not arcade end-of-race, if camera following driver
   if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) 
   {
     if (
 			// if NOT blasted
 			(*(char *)(param_2 + 0x376) != '\x06') &&
 			
-			// blasted lerp not set
+			// if no pending lerp is stored
 			(*(short *)(param_1 + 0xc6) == 0)
 		)
 		
@@ -2211,11 +2213,11 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
 		
 	// === If Blasted ===
 	
+	// if no pending lerp is stored
     if (*(short *)(param_1 + 0xc6) == 0) 
 	{
       *(short *)(param_1 + 200) = *(short *)(param_1 + 0x68) - *(short *)(param_1 + 0x5c);
-      *(short *)(param_1 + 0xca) =
-           *(short *)(param_1 + 0x5c) - (short)((uint)*(undefined4 *)(param_2 + 0x2d0) >> 8);
+      *(short *)(param_1 + 0xca) = *(short *)(param_1 + 0x5c) - (short)((uint)*(undefined4 *)(param_2 + 0x2d0) >> 8);
     }
     
 	*(undefined2 *)(param_1 + 0xc6) = 1;
@@ -2237,7 +2239,7 @@ LAB_8001a8b0:
   // if this is arcade end-of-race
   else
   {
-	// something to do with camera position interpolation
+	// Finish BLASTED lerp if started before end-of-race
     if (*(short *)(param_1 + 0xc6) != 0)
 	{
 	  // camera distance = camera speed, minus camera position
