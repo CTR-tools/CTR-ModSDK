@@ -68,7 +68,7 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 		speedApprox = -speedApprox;
 
 	if ((botDriver->actionsFlagSet & 1) == 0) {
-		speedApprorx += 0xf00;
+		speedApprox += 0xf00;
 	}
 	else {
 		speedApprox = ((speedApprox << 1) >> 1);
@@ -112,7 +112,7 @@ give_this_label_a_better_name:
 	if ((botDriver->botData.botFlags & 1) == 0)
 	{
 		navFrameOfConcern = botDriver->botData.botNavFrame;
-		nextNavFrameOfConcern = currNavFrame + 1;
+		nextNavFrameOfConcern = navFrameOfConcern + 1;
 		if (sdata->NavPath_ptrHeader[botDriver->botData.botPath]->last <= nextNavFrameOfConcern)
 		{
 			nextNavFrameOfConcern = NavPath_ptrNavFrameArray[0];
@@ -213,7 +213,6 @@ give_this_label_a_better_name2:
 		//between these start and end tags, there's confusing variable lifetime that needs to be looked at closer.
 
 		unsigned int botFlags = botDriver->botData.botFlags;
-		short botEstimatePos[3];
 
 		/////// START
 		if ((botFlags & 0xc0) == 0x40)
@@ -235,7 +234,7 @@ give_this_label_a_better_name2:
 
 				struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[idk];
 				LAB_800144a0:
-				botEstimatePos = botDriver->botData.estimatePos;
+				navFrameOfConcern = (struct NavFrame*)&botDriver->botData.estimatePos[0];
 
 				//idk how to better write this
 				botDriver->botData.botNavFrame = (struct NavFrame*)(((unsigned int)firstNavFrameOnPath) + ((((unsigned int)uVar11) & 0x3ff) * 0x14));
@@ -290,6 +289,7 @@ give_this_label_a_better_name2:
 						}
 						if (diff < 0x200)
 						{
+							// this line may be wrong
 							short uVar11 = nextNavFrameOfConcern->pathIndexOfffff; //also uVar20 = (uint)uVar11
 
 							if (uVar11 < 0xc00)
@@ -627,7 +627,7 @@ give_this_label_a_better_name2:
 				}
 
 				//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
-				int wtf = (int)((int)botEstimatePos - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
+				int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
 
 				if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < *(int*)botDriver->botData.unk5bc[0x18])
 				{
@@ -637,13 +637,13 @@ give_this_label_a_better_name2:
 				}
 			}
 
-			if (0x80 < *(char*)(((int)botEstimatePos) + 9)) //after the estimate pos is estimate rot, which is probably what is being checked here. (check euler pitch)
+			if (0x80 < navFrameOfConcern->goBackCount)
 			{
 				velocityAccountingForTerrain += botDriver->unk47E;
 
 				if (*(int*)&botDriver->botData.unk5bc[0x18] < velocityAccountingForTerrain)
 				{
-					int sinOfAngle = MATH_Sin(*(char*)(((int)botEstimatePos) + 9) << 4);
+					int sinOfAngle = MATH_Sin(navFrameOfConcern->goBackCount << 4);
 
 					*(int*)&botDriver->botData.unk5bc[0x18] -= botDriver->const_Gravity * sinOfAngle >> 0xc; //force on a slope due to gravity
 				}
@@ -683,8 +683,8 @@ give_this_label_a_better_name2:
 		iVar4_lifetime_2 = botDriver->unk5a8;
 	}
 
-	int idk = botDriver->botData.unk61a; //local_44
-	int idk2 = *((char*)&botDriver->botData.unk61c + 3); //local_40
+	int idk = navFrameOfConcern->flags; //local_44
+	int idk2 = navFrameOfConcern->specialBits; //local_40
 	//local_3c == 0
 	if ((idk2 & 0x80) != 0)
 	{
@@ -701,26 +701,37 @@ give_this_label_a_better_name2:
 		gravity = (botDriver->const_Gravity * 41) / 100;
 	}
 
-	gravity = (*(int*)&botDriver->botData.unk5bc[0x14]) - (gravity * elapsedMilliseconds >> 5);
+	int speedY = botDriver->botData.unk5bc.ai_speedY -= (gravity * elapsedMilliseconds >> 5);
+
+	if (speedY < -0x5000)
+	{
+		botDriver->botData.unk5bc.ai_speedY = 0xffffb000;
+	}
+
+	botDriver->botData.ai_posBackup[1] += (botDriver->botData.unk5bc.ai_speedY * elapsedMilliseconds >> 5);
 
 	short navDist; //sVar7
 
 	if ((botDriver->actionsFlagSet & 1) == 0)
 	{
-		navDist = botDriver->botData.distToNextNavXZ;
+		//unk[1] may be distToNextNavXZ
+		navDist = navFrameOfConcern->unk[1];
+		//navDist = botDriver->botData.distToNextNavXZ;
 	}
 	else
 	{
-		navDist = botDriver->botData.distToNextNavXYZ;
+		//unk[0] may be distToNextNavXYZ
+		navDist = navFrameOfConcern->unk[0];
+		//navDist = botDriver->botData.distToNextNavXYZ;
 	}
 
 	int local_3c = 0;
 	char local_30 = 0;
-	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x10) != 0)
+	if ((navFrameOfConcern->specialBits & 0x10) != 0)
 	{
-		local_3c = *((char*)&botDriver->botData.unk61c + 3);
+		local_3c = navFrameOfConcern->specialBits;
 	}
-
+	
 	for ()
 	{
 		//TODO
@@ -744,15 +755,15 @@ give_this_label_a_better_name2:
 	}
 
 	botDriver->actionsFlagSet = actionFlagsBuildup;
-
-	struct Terrain* terrain = VehAfterColl_GetTerrain(*(char*)(((int)&botDriver->botData.estimatePos[0]) + 7) >> 3);
+	
+	struct Terrain* terrain = VehAfterColl_GetTerrain(navFrameOfConcern->flags >> 3);
 
 	botDriver->terrainMeta1 = terrain;
 
-	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x20) != 0)
+	if ((navFrameOfConcern->specialBits & 0x20) != 0)
 	{
 		short vertSplit;
-		if ((*((char*)&botDriver->botData.unk61c + 3) & 0xf) == 0)
+		if ((navFrameOfConcern->specialBits & 0xf) == 0)
 		{
 			vertSplit = sdata->gGT->level1->splitLines[0];
 		}
@@ -766,9 +777,9 @@ give_this_label_a_better_name2:
 		botInstance->flags |= 0x4000;
 	}
 
-	if ((*((char*)&botDriver->botData.unk61c + 3) & 0x30) == 0 && (botThread->modelIndex != 0x4b))
+	if ((navFrameOfConcern->specialBits & 0x30) == 0 && (botThread->modelIndex != 0x4b))
 	{
-		int transparency = (*((char*)&botDriver->botData.unk61c + 3) & 0xf) * 0x9c00;
+		int transparency = (navFrameOfConcern->specialBits & 0xf) * 0x9c00;
 
 		botDriver->alphaScaleBackup = ((botDriver->alphaScaleBackup * 100) + transparency >> 8);
 
@@ -854,11 +865,13 @@ give_this_label_a_better_name2:
 
 		if ((botDriver->botData.botFlags & 1) == 0)
 		{
-			//botDriver->botData.botNavFrame = //psVar19 //TODO
+			botDriver->botData.botNavFrame = navFrameOfConcern;
 
 			short botPath = botDriver->botData.botPath;
 
 			//// CONTINUE FROM HERE 3
+
+			struct NavFrame* nf = NAVFRAME_GETNEXTFRAME(navFrameOfConcern);
 		}
 	}
 
