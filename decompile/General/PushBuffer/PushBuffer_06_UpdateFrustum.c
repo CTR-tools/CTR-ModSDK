@@ -27,15 +27,8 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 	  };
   } frustumCorner[4];
   
-  // footer only
-  short uVar12;
-  short uVar15;
-  short uVar18;
-  
   int iVar19;
-  int i;
   int corner1;
-  int uVar22;
  
   int tx;
   int ty;
@@ -51,9 +44,6 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   int max_X;
   int max_Y;
   int max_Z;
-  
-  int iVar4;
-  int iVar9;
   
   #if 0
   // TRAP checks removed
@@ -71,10 +61,8 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 	: : "r"(r0), "r"(r1), "r"(r2))
 
   DECOMP_PushBuffer_SetMatrixVP(pb);
-
-  // disable the rest of the function by setting
-  // 80043124 to 0x08010E3E (j 0x800438f8),
-  // proves the rest of this function updates frustum
+  
+  gte_ldVZ0(pb->distanceToScreen_PREV);
 
   cameraPosX = pb->pos[0];
   cameraPosY = pb->pos[1];
@@ -110,20 +98,18 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 	
   
   
-  gte_ldVZ0(pb->distanceToScreen_PREV);
-  
   corner1 = 0x1f800012;
   
-  min_X = cameraPosX;		// min X 1f800000 (default cameraPosX)
-  min_Y = cameraPosY;		// min Y 1f800004 (default cameraPosY)
-  min_Z = cameraPosZ;		// min Z 1f800008 (default cameraPosZ)
+  min_X = cameraPosX;
+  min_Y = cameraPosY;
+  min_Z = cameraPosZ;
   
-  max_X = cameraPosX;		// max X 1f800000 (default cameraPosX)
-  max_Y = cameraPosY;	// max Y 1f800004 (default cameraPosY)
-  max_Z = cameraPosZ;	// max Z 1f800008 (default cameraPosZ)
+  max_X = cameraPosX;
+  max_Y = cameraPosY;
+  max_Z = cameraPosZ;
   
   
-  for (i = 0; i < 4; i++)
+  for (int i = 0; i < 4; i++)
   {	  
 	// multiply corner of screen,
 	// by view-projection matrix, 
@@ -310,45 +296,53 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   gte_ldVZ0(0x1000);
   gte_llv0();
   
-  read_mt(val_Y,iVar4,min_Y);
+  int retX;
+  int retY;
+  int retZ;
+  read_mt(retX,retY,retZ);
 
-  *(short*)&pb->frustumData[0x20] = -(short)val_Y;
-  *(short*)&pb->frustumData[0x22] = -(short)iVar4;
-  *(short*)&pb->frustumData[0x24] = -(short)min_Y;
+  *(short*)&pb->frustumData[0x20] = -(short)retX;
+  *(short*)&pb->frustumData[0x22] = -(short)retY;
+  *(short*)&pb->frustumData[0x24] = -(short)retZ;
 
 
   int distToScreen = pb->distanceToScreen_PREV;
 
-  iVar9 = distToScreen;
+  int iVar9 = distToScreen;
   if (distToScreen < 0) {
     iVar9 = distToScreen + 3;
   }
 
   *(short*)&pb->frustumData[0x26] =
-       (short)(-(cameraPosX * (short)val_Y + cameraPosY * (short)iVar4 + cameraPosZ * (short)min_Y) >> 0xd) -
-       (short)(iVar9 >> 2);
+       (short)
+	   (
+			-(
+				cameraPosX * (short)retX + 
+				cameraPosY * (short)retY + 
+				cameraPosZ * (short)retZ
+			) >> 0xd) - (short)(iVar9 >> 2);
 
-  val_Y = (unsigned int)val_Y >> 0x1f;
-  if (iVar4 < 0) {
-    val_Y = val_Y | 2;
+  int flags = (unsigned int)retX >> 0x1f;
+  if (retY < 0) {
+    flags = flags | 2;
   }
-  if (min_Y < 0) {
-    val_Y = val_Y | 4;
+  if (retZ < 0) {
+    flags = flags | 4;
   }
 
   // 0xE0, 0xE4
-  pb->RenderListJmpIndex[4] = ~val_Y & 7;
-  pb->RenderListJmpIndex[5] = val_Y;
+  pb->RenderListJmpIndex[4] = ~flags & 7;
+  pb->RenderListJmpIndex[5] = flags;
   
   gte_ldVXY0(0);
   gte_ldVZ0(distToScreen / 2);
   gte_llv0();
   
-  read_mt(uVar12,uVar15,uVar18);
+  read_mt(retX,retY,retZ);
   
-  *(short*)&pb->data6[0] = (short)uVar12 + cameraPosX;
-  *(short*)&pb->data6[2] = (short)uVar15 + cameraPosY;
-  *(short*)&pb->data6[4] = (short)uVar18 + cameraPosZ;
+  *(short*)&pb->data6[0] = (short)retX + cameraPosX;
+  *(short*)&pb->data6[2] = (short)retY + cameraPosY;
+  *(short*)&pb->data6[4] = (short)retZ + cameraPosZ;
   return;
 }
  
