@@ -1,8 +1,5 @@
 #include <common.h>
 
-// 1924 pre-changes
-// 1760 pre-SPF
-
 struct FrustumCornerOUT
 {
 	short pos[3];
@@ -324,6 +321,7 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 				cameraPosZ * (short)retZ
 			) >> 0xd) - (short)(iVar9 >> 2);
 
+  // Negation Flags
   int flags = (unsigned int)retX >> 0x1f;
   if (retY < 0) {
     flags = flags | 2;
