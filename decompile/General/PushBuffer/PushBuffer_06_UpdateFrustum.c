@@ -1,15 +1,31 @@
 #include <common.h>
 
-void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
+// 1924 pre-changes
 
+void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 {
   int cameraPosX;
   int cameraPosY;
   int cameraPosZ;
   
-  int val_Y;
   int val_X;
-  int half_Y;
+  int val_Y;
+  
+  // Let the compiler figure it out,
+  // the bitshifting annoys me
+  union
+  {
+	  struct
+	  {
+		  short x;
+		  short y;
+	  };
+	  
+	  struct
+	  {
+		  int self;
+	  };
+  } frustumCorner[4];
   
   // footer only
   short uVar12;
@@ -20,7 +36,6 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   int i;
   int corner1;
   int uVar22;
-  int distToScreen;
  
   int tx;
   int ty;
@@ -65,31 +80,38 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   cameraPosY = pb->pos[1];
   cameraPosZ = pb->pos[2];
 
+
+
+  val_X = pb->rect.w;  
+  val_X = val_X / 2;
+  
+  // Is this correct?
+  // SetMatrixVP changes 0x360 to 0x3b0,
+  // This was an assumption based on results
   #ifdef USE_16BY9
-  min_Y = (pb->rect.w * 1000) / 750;
-  #else
-  min_Y = pb->rect.w;
+  val_X = (val_X * 1000) / 750;
   #endif
   
-  val_X = min_Y / 2;
+  val_Y = ((pb->rect.h * 0x600) / 0x360);
+  val_Y = val_Y / 2;
 
-  iVar4 = ((pb->rect.h * 0x600) / 0x360) << 0x10;
-  iVar9 = iVar4 >> 0x10;
-  val_Y = (iVar9 - ((unsigned int)iVar4 >> 0x1f) >> 1) << 0x10;
+
+  frustumCorner[0].x = val_X;
+  frustumCorner[0].y = val_Y;
   
-  distToScreen = pb->distanceToScreen_PREV;
+  frustumCorner[1].x = -val_X;
+  frustumCorner[1].y = val_Y;
   
-  // first "do" loop iteration
-  // X | (Y << 0x10)
-  uVar22 = val_X | val_Y;
+  frustumCorner[2].x = val_X;
+  frustumCorner[2].y = -val_Y;
   
-  // distToScreen
-  gte_ldVZ0(distToScreen);
+  frustumCorner[3].x = -val_X;
+  frustumCorner[3].y = -val_Y;
+	
   
-  // -1 * rect.w/2
-  half_Y = -min_Y / 2 & 0xffff;
   
-  iVar9 = -iVar9;
+  gte_ldVZ0(pb->distanceToScreen_PREV);
+  
   corner1 = 0x1f800012;
   
   min_X = cameraPosX;		// min X 1f800000 (default cameraPosX)
@@ -100,44 +122,13 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   max_Y = cameraPosY;	// max Y 1f800004 (default cameraPosY)
   max_Z = cameraPosZ;	// max Z 1f800008 (default cameraPosZ)
   
-  // uVar5, uVar6, uVar8, uVar9 never change
-  // beyond this point, they are constant
-  
-  // 4 points (uVar22) (x,y,z):
-  // uVar6, uVar5, distToScreen
-  // uVar8, uVar5, distToScreen
-  // uVar8, uVar9, distToScreen
-  // uVar6, uVar9, distToFinish_checkpoint
   
   for (i = 0; i < 4; i++)
-  {
-	if (i == 0)
-	{
-		// nothing, it's set
-	}
-	
-    if (i == 1) 
-	{
-	  // prepare for second iteration
-      uVar22 = half_Y | val_Y;
-    }
-
-	if (i == 2) 
-	{
-	  // prepare for third iteration
-      uVar22 = val_X | ((iVar9 / 2) << 0x10);
-    }
-
-    if (i == 3) 
-	{
-	  // prepare for fourth iteration
-      uVar22 = half_Y | ((iVar9 / 2) << 0x10);
-    }
-	  
+  {	  
 	// multiply corner of screen,
 	// by view-projection matrix, 
 	// to get frustum plane world-pos
-    gte_ldVXY0(uVar22);
+    gte_ldVXY0(frustumCorner[i].self);
     gte_llv0();
 	
 	// this is ViewProj matrix, loaded into GTE
@@ -324,6 +315,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   *(short*)&pb->frustumData[0x20] = -(short)val_Y;
   *(short*)&pb->frustumData[0x22] = -(short)iVar4;
   *(short*)&pb->frustumData[0x24] = -(short)min_Y;
+
+
+  int distToScreen = pb->distanceToScreen_PREV;
 
   iVar9 = distToScreen;
   if (distToScreen < 0) {
