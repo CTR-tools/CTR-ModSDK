@@ -96,9 +96,6 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   val_X = pb->rect.w;  
   val_X = val_X / 2;
   
-  // Is this correct?
-  // SetMatrixVP changes 0x360 to 0x3b0,
-  // This was an assumption based on results
   #ifdef USE_16BY9
   val_X = (val_X * 1000) / 750;
   #endif
