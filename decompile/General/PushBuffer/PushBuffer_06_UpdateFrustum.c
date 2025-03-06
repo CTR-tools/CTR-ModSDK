@@ -1,41 +1,5 @@
 #include <common.h>
 
-struct FrustumCornerOUT
-{
-	short pos[3];
-};
-
-struct ScratchpadFrustum
-{
-	// 1f800000
-	int pos[3];
-	
-	// 1f80000C
-	struct FrustumCornerOUT fc[4];
-	
-	// 1f800024
-	short camPos[3];
-	
-	// 1f80002A
-	// -- end --
-};
-
-// Let the compiler figure it out,
-// the bitshifting annoys me
-union FrustumCornerIN
-{
-  struct
-  {
-	  short x;
-	  short y;
-  };
-  
-  struct
-  {
-	  int self;
-  };
-};
-
 void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 {
   int cameraPosX;
