@@ -440,7 +440,7 @@ struct BotData
 	short ai_rotY_608;
 
 	// 0x60a
-	short ai_quadblock_checkpointIndex;
+	short ai_quadblock_checkpointIndex; //0x60a may be a char and not a short.
 
 	// 0x60c
 	short estimatePos[3];
