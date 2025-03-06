@@ -395,7 +395,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 void DECOMP_PROC_CheckAllForDead(void);
 void DECOMP_PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
 void DECOMP_PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
-void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
+void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct BucketSearchParams* buf);
 void DECOMP_PROC_DestroyInstance(struct Thread* t);
 void DECOMP_PROC_DestroyObject(void* object, int threadFlags);
 void DECOMP_PROC_DestroySelf(struct Thread* t);
