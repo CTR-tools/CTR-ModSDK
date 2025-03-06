@@ -2410,9 +2410,6 @@ LAB_8001509c:
   //turn on bits in uVar20, and optionally, 13th and 17th bit of Actions Flag set
   *(uint *)(iVar17 + 0x2c8) = uVar8 | uVar20;
 
-  // END OF TOP-DOWN
-  // ========================================================================
-
   // terrain meta
   uVar12 = FUN_80057c68((uint)(*(byte *)(psVar19 + 7) >> 3));
   *(undefined4 *)(iVar17 + 0x358) = uVar12;
@@ -2445,8 +2442,7 @@ LAB_8001509c:
 	// set transparency of AI (for water)
 	iVar13 = ((uint)*(byte *)((int)psVar19 + 0x13) & 0xf) * 0x9c00;
 	
-    *(undefined2 *)(iVar17 + 0x508) = (short)((uint)*(ushort *)(iVar17 + 0x508) * 100 + iVar13 >> 8)
-    ;
+    *(undefined2 *)(iVar17 + 0x508) = (short)((uint)*(ushort *)(iVar17 + 0x508) * 100 + iVar13 >> 8);
 
 	// set alpha
     *(undefined2 *)(iVar22 + 0x22) = (short)((uint)*(ushort *)(iVar22 + 0x22) * 100 + iVar13 >> 8);
@@ -2544,7 +2540,6 @@ LAB_800153d0:
 	// path index: 0, 1, or 2
     iVar13 = (int)*(short *)(iVar17 + 0x5b8) * 4;
 
-	//// CONTINUE FROM HERE 3
 
 	// set next nav point to current + 20 bytes
     psVar21 = psVar19 + 10;
@@ -2681,7 +2676,8 @@ LAB_800156b0:
 	// modify AI's respawn index (why?)
     *(undefined *)(iVar17 + 0x60a) = *(undefined *)(psVar19 + 9);
   }
-
+  // END OF TOP-DOWN
+  // ========================================================================
   else {
     uVar8 = (uint)*(byte *)((int)psVar21 + 7) * 0x10 + (uint)*(byte *)((int)psVar19 + 7) * -0x10 &
             0xfff;

@@ -323,6 +323,7 @@ give_this_label_a_better_name2:
 
 				int zVel = botDriver->botData.unk5bc.ai_speedLinear[0] * 0x6900; //iVar3
 
+#if 0 //in the OG game
 				if (ZY == 0)
 				{
 					//trap(0x1c00);
@@ -331,7 +332,9 @@ give_this_label_a_better_name2:
 				{
 					//trap(0x1800);
 				}
+#endif
 				int yVel = botDriver->botData.unk5bc.ai_speedY * 0x6900; //iVar15
+#if 0 //in the OG game
 				if (ZY == 0)
 				{
 					//trap(0x1c00);
@@ -340,6 +343,7 @@ give_this_label_a_better_name2:
 				{
 					//trap(0x1800);
 				}
+#endif
 				botDriver->botData.unk5bc.ai_speedLinear[0] = (zVel /  ZY);
 				botDriver->botData.unk5bc.ai_speedY = (yVel /  ZY);
 			}
@@ -731,13 +735,71 @@ give_this_label_a_better_name2:
 	{
 		local_3c = navFrameOfConcern->specialBits;
 	}
-	
-	for ()
+	int iVar15 = iVar4_lifetime_2 >> 8;
+	int iVar3;
+
+	for (iVar3 = navDist; iVar3 <= iVar15; iVar15 -= iVar3)
 	{
-		//TODO
+		navFrameOfConcern = nextNavFrameOfConcern;
+
+		iVar4_lifetime_2 += iVar3 * -0x100;
+
+		int index = botDriver->botData.botPath; //index = iVar13
+
+		nextNavFrameOfConcern = NAVFRAME_GETNEXTFRAME(navFrameOfConcern);
+
+		iVar15 -= iVar3;
+
+		if (sdata->NavPath_ptrHeader[index]->last <= nextNavFrameOfConcern)
+		{
+			nextNavFrameOfConcern = sdata->NavPath_ptrNavFrameArray[index];
+		}
+
+		if (botDriver->botData.ai_posBackup[1] >> 8 < nextNavFrameOfConcern->pos[1] && ((navFrameOfConcern->flags & 0x200) != 0))
+		{
+			DECOMP_BOTS_Killplane(botThread);
+		}
+
+		idk |= navFrameOfConcern->flags;
+		idk2 |= navFrameOfConcern->specialBits;
+
+		int uVar8;
+		if ((botDriver->botData.botFlags & 0x80) == 0)
+		{
+			uVar8 = 0xfffffffe;
+		}
+		else
+		{
+			uVar8 = 0xffffff3e;
+		}
+
+		botDriver->botData.botFlags &= uVar8;
+
+		short unk;
+
+		if (local_30 == 0 && (0x9e < navFrameOfConcern->rot[3] - 0x31))
+		{
+			if ((botDriver->actionsFlagSet & 1) == 0)
+				; //goto todo
+
+			unk = navFrameOfConcern->unk[0];
+		}
+		else
+		{
+			local_30 = 1;
+
+			unk = navFrameOfConcern->unk[1];
+		}
+
+		iVar3 = unk;
+
+		if ((navFrameOfConcern->specialBits & 0x10) != 0)
+		{
+			local_3c = navFrameOfConcern->specialBits;
+		}
 	}
 
-	//botDriver->botData.unk5a8 = iVar4;
+	botDriver->botData.unk5a8 = iVar4_lifetime_2;
 
 	int actionFlagsBuildup = (idk & 2) << 10; // uVar20
 
@@ -793,7 +855,7 @@ give_this_label_a_better_name2:
 		*(short*)&botDriver->botData.unk5bc[0xA] = 0;
 	}
 	else
-	{
+	{ //The curly braces for this block are wrong
 		botDriver->actionsFlagSet |= 0x80;
 		*(short*)&botDriver->botData.unk5bc[0x8] += elapsedMilliseconds;
 		int uVar6;
@@ -805,78 +867,190 @@ give_this_label_a_better_name2:
 				if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x781) || (3 < *(short*)&botDriver->botData.unk5bc[0xA]))
 				{
 					if ((0x5a0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 3, *(short*)&botDriver->botData.unk5bc[0xA] < 3))
+						; //goto //todo
+					if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x3c1) || (1 < *(short*)&botDriver->botData.unk5bc[0xA]))
 					{
-						//goto //todo
-						if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x3c1) || (1 < *(short*)&botDriver->botData.unk5bc[0xA]))
+						if ((0x1e0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 1, *(short*)&botDriver->botData.unk5bc[0xA] < 1))
 						{
-							if ((0x1e0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 1, *(short*)&botDriver->botData.unk5bc[0xA] < 1))
-							{
-								//goto //todo
-							}
-						}
-						else
-						{
-							//trigger a turbo boost?
-							*(short*)&botDriver->botData.unk5bc[0xA] = 2;
-							botDriver->turbo_MeterRoomLeft = 0;
-
-							VehFire_Increment(botDriver, 0xf0, 2, local_38 << 7);
+							//goto //todo
 						}
 					}
 					else
 					{
 						//trigger a turbo boost?
-						*(short*)&botDriver->botData.unk5bc[0xA] = 4;
+						*(short*)&botDriver->botData.unk5bc[0xA] = 2;
 						botDriver->turbo_MeterRoomLeft = 0;
 
-						VehFire_Increment(botDriver, 0x1e0, 2, local_38 << 8);
+						VehFire_Increment(botDriver, 0xf0, 2, local_38 << 7);
 					}
 				}
 				else
 				{
 					//trigger a turbo boost?
-					*(short*)&botDriver->botData.unk5bc[0xA] = uVar6;
-					botDriver->turbo_MeterRoomLeft = 0xa0;
+					*(short*)&botDriver->botData.unk5bc[0xA] = 4;
+					botDriver->turbo_MeterRoomLeft = 0;
+
+					VehFire_Increment(botDriver, 0x1e0, 2, local_38 << 8);
 				}
 			}
 			else
 			{
 				//trigger a turbo boost?
-				*(short*)&botDriver->botData.unk5bc[0xA] = 6;
-				botDriver->turbo_MeterRoomLeft = 0;
-
-				VehFire_Increment(botDriver, 0x2d0, 2, local_38 * 0x180);
+				*(short*)&botDriver->botData.unk5bc[0xA] = uVar6;
+				botDriver->turbo_MeterRoomLeft = 0xa0;
 			}
 		}
-
-		if ((idk & 0x100) != 0)
+		else
 		{
-			VehFire_Increment(botDriver, 0x78, 1, 0x900);
+			//trigger a turbo boost?
+			*(short*)&botDriver->botData.unk5bc[0xA] = 6;
+			botDriver->turbo_MeterRoomLeft = 0;
 
-			botDriver->botData.botFlags |= 0x10;
-		}
-
-		if ((idk & 0x1) != 0)
-		{
-			VehFire_Increment(botDriver, 0x2d0, 1, 0x900);
-
-			botDriver->botData.botFlags |= 0x10;
-		}
-
-		if ((botDriver->botData.botFlags & 1) == 0)
-		{
-			botDriver->botData.botNavFrame = navFrameOfConcern;
-
-			short botPath = botDriver->botData.botPath;
-
-			//// CONTINUE FROM HERE 3
-
-			struct NavFrame* nf = NAVFRAME_GETNEXTFRAME(navFrameOfConcern);
+			VehFire_Increment(botDriver, 0x2d0, 2, local_38 * 0x180);
 		}
 	}
 
+	if ((idk & 0x100) != 0)
+	{
+		VehFire_Increment(botDriver, 0x78, 1, 0x900);
+
+		botDriver->botData.botFlags |= 0x10;
+	}
+
+	if ((idk & 0x1) != 0)
+	{
+		VehFire_Increment(botDriver, 0x2d0, 1, 0x900);
+
+		botDriver->botData.botFlags |= 0x10;
+	}
+
+	if ((botDriver->botData.botFlags & 1) == 0)
+	{
+		botDriver->botData.botNavFrame = navFrameOfConcern;
+
+		short botPath = botDriver->botData.botPath;
+
+		nextNavFrameOfConcern = NAVFRAME_GETNEXTFRAME(navFrameOfConcern);
+
+		if (sdata->NavPath_ptrHeader[botPath]->last <= nextNavFrameOfConcern)
+		{
+			nextNavFrameOfConcern = sdata->NavPath_ptrNavFrameArray[0];
+		}
+	}
+
+	int percentage; //aka iVar13
+	if (iVar3 == 0)
+		percentage = 0;
+	else
+	{
+		percentage = (iVar15 << 0xc) / iVar3;
+
+#if 0 //traps in the OG code.
+		if (iVar3 == 0)
+			;//trap(0x1c00)
+		if ((iVar3 == -1) && (iVar15 << 0xc == -0x80000000))
+			;//trap(0x1800)
+#endif
+	}
+
+	botDriver->posPrev.x = botDriver->posCurr.x;
+	botDriver->posPrev.y = botDriver->posCurr.y;
+	botDriver->posPrev.z = botDriver->posCurr.z;
+
+	botDriver->rotPrev.x = botDriver->rotCurr.x;
+	botDriver->rotPrev.y = botDriver->rotCurr.y;
+	botDriver->rotPrev.z = botDriver->rotCurr.z;
+
+	botDriver->botData.ai_posBackup[0] = (navFrameOfConcern->pos[0] + ((nextNavFrameOfConcern->pos[0] - navFrameOfConcern->pos[0]) * percentage >> 0xc)) * 0x100;
+	botDriver->quadBlockHeight = (navFrameOfConcern->pos[1] + ((nextNavFrameOfConcern->pos[1] - navFrameOfConcern->pos[1]) * percentage >> 0xc)) * 0x100;
+	botDriver->botData.ai_posBackup[2] = (navFrameOfConcern->pos[2] + ((nextNavFrameOfConcern->pos[2] - navFrameOfConcern->pos[2]) * percentage >> 0xc)) * 0x100;
+
+	if ((botDriver->botData.botFlags & 0x8) != 0)
+	{
+		botDriver->botData.unk5bc.ai_accelAxis[1] = 0;
+		botDriver->botData.unk5bc.ai_velAxis[0] += botDriver->botData.unk5bc.ai_accelAxis[0];
+		botDriver->botData.unk5bc.ai_velAxis[1] += botDriver->botData.unk5bc.ai_accelAxis[1];
+		botDriver->botData.unk5bc.ai_velAxis[2] += botDriver->botData.unk5bc.ai_accelAxis[2];
+		int preX = botDriver->botData.unk5bc.ai_accelAxis[0]; //iVar3
+		botDriver->botData.unk5bc.ai_accelAxis[0] >>= 1;
+		int preZ = botDriver->botData.unk5bc.ai_accelAxis[2]; //iVar15
+		botDriver->botData.unk5bc.ai_accelAxis[2] >>= 1;
+		botDriver->botData.unk5bc.ai_velAxis[1] += botDriver->botData.unk5bc.ai_accelAxis[1];
+		botDriver->botData.unk5bc.ai_velAxis[0] += preX;
+		preX = botDriver->botData.unk5bc.ai_velAxis[0];
+		botDriver->botData.unk5bc.ai_velAxis[2] += preZ;
+		if (preX != 0)
+		{
+			if (preX < 1)
+			{
+				botDriver->botData.unk5bc.ai_velAxis[0] = preX + 0x444;
+				if (0 < preX + 0x444); //goto todo
+				if (botDriver->botData.unk5bc.ai_accelAxis[0] == 0)
+				{
+					botDriver->botData.unk5bc.ai_accelAxis[0] = 0x444;
+				}
+			}
+			else
+			{
+				botDriver->botData.unk5bc.ai_velAxis[0] = preX - 0x444;
+				if (preX - 0x444 < 0)
+				{
+					botDriver->botData.unk5bc.ai_velAxis[0] = 0;
+				}
+				else
+				{
+					if (botDriver->botData.unk5bc.ai_accelAxis[0] == 0)
+					{
+						botDriver->botData.unk5bc.ai_accelAxis[0] = 0xfffffbbc;
+					}
+				}
+			}
+		}
+		int preZ = botDriver->botData.unk5bc.ai_velAxis[2]; //new scope of iVar3?
+		if (preZ != 0)
+		{
+			if (preZ < 1)
+			{
+				botDriver->botData.unk5bc.ai_velAxis[2] = preZ + 0x444;
+				if (0 < preZ + 0x444); //goto todo
+				if (botDriver->botData.unk5bc.ai_accelAxis[2] == 0)
+				{
+					botDriver->botData.unk5bc.ai_accelAxis[2] = 0x444;
+				}
+			}
+			else
+			{
+				botDriver->botData.unk5bc.ai_velAxis[2] = preZ - 0x444;
+				if (preZ - 0x444 < 0)
+				{
+					botDriver->botData.unk5bc.ai_velAxis[2] = 0;
+				}
+				else
+				{
+					if (botDriver->botData.unk5bc.ai_accelAxis[2] == 0)
+					{
+						botDriver->botData.unk5bc.ai_accelAxis[2] = 0xfffffbbc;
+					}
+				}
+			}
+		}
+		if (botDriver->botData.unk5bc.ai_velAxis[0] == 0 && botDriver->botData.unk5bc.ai_velAxis[2] == 0)
+		{
+			botDriver->botData.botFlags &= 0xfffffff7;
+		}
+	}
+
+	if ((botDriver->botData.botFlags & 0x9) == 0)
+	{
+		botDriver->ai_quadblock_checkpointIndex = navFrameOfConcern->goBackCount;
+	}
 	// END OF TOP-DOWN
 	// ========================================================================
+	else
+	{
+
+	}
+
 
 	// This middle chunk of the function hasn't been looked at yet.
 
