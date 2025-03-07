@@ -665,25 +665,31 @@ uint FUN_80042e50(undefined2 *param_1,short *param_2,short *param_3,short *param
     uVar3 = -unaff_s0;
   }
   gte_ldLZCS(uVar3);
+  
   iVar2 = gte_stLZCR();
+  
   iVar1 = unaff_s1;
   if (unaff_s1 < 0) {
     iVar1 = -unaff_s1;
   }
   gte_ldLZCS(iVar1);
+  
   iVar1 = gte_stLZCR();
   if (iVar1 < iVar2) {
     iVar2 = iVar1;
   }
+  
   iVar1 = unaff_s2;
   if (unaff_s2 < 0) {
     iVar1 = -unaff_s2;
   }
   gte_ldLZCS(iVar1);
+  
   iVar1 = gte_stLZCR();
   if (iVar1 < iVar2) {
     iVar2 = iVar1;
   }
+  
   if (iVar2 < 0x12) {
     uVar3 = 0x12 - iVar2;
     unaff_s0 = (int)unaff_s0 >> (uVar3 & 0x1f);
@@ -692,39 +698,59 @@ uint FUN_80042e50(undefined2 *param_1,short *param_2,short *param_3,short *param
   }
   iVar1 = FUN_8006c618(unaff_s0 * unaff_s0 + unaff_s1 * unaff_s1 + unaff_s2 * unaff_s2);
   iVar2 = unaff_s0 << 0xc;
-  if (iVar1 != 0) {
+  
+  if (iVar1 != 0) 
+  {
     unaff_s0 = iVar2 / iVar1;
-    if (iVar1 == 0) {
+    
+	#if 0
+	if (iVar1 == 0) {
       trap(0x1c00);
     }
     if ((iVar1 == -1) && (iVar2 == -0x80000000)) {
       trap(0x1800);
     }
+	#endif
+	
     iVar2 = unaff_s1 << 0xc;
     unaff_s1 = iVar2 / iVar1;
+	
+	
+	#if 0
     if (iVar1 == 0) {
       trap(0x1c00);
     }
     if ((iVar1 == -1) && (iVar2 == -0x80000000)) {
       trap(0x1800);
     }
+	#endif
+	
     iVar2 = unaff_s2 << 0xc;
     unaff_s2 = iVar2 / iVar1;
+	
+	
+	#if 0
     if (iVar1 == 0) {
       trap(0x1c00);
     }
     if ((iVar1 == -1) && (iVar2 == -0x80000000)) {
       trap(0x1800);
     }
+	#endif
   }
-  
-  uVar3 = unaff_s0 >> 0x1f;
   
   // 8 bytes written to return parameter
   *param_1 = (short)unaff_s0;
   param_1[1] = (short)unaff_s1;
   param_1[2] = (short)unaff_s2;
-  param_1[3] = (short)((int)(unaff_s0 * iVar6 + unaff_s1 * iVar4 + unaff_s2 * iVar5) >> 0xd);
+  
+  param_1[3] = (short)((int)(
+					unaff_s0 * iVar6 + 
+					unaff_s1 * iVar4 + 
+					unaff_s2 * iVar5) >> 0xd);
+  
+  // Negation Flags
+  uVar3 = unaff_s0 >> 0x1f;
   
   if (unaff_s1 < 0) {
     uVar3 = uVar3 | 2;

@@ -96,7 +96,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		{
 			// Only continue if LEV instances are enabled,
 			// they may be disabled due to podium scene on adv hub
-			if ((gGT->gameMode2 & DISABLE_LEV_INSTANCE) == 0)
+			if ((gGT->gameMode2 & NO_LEV_INSTANCE) == 0)
 			{
 				meta = DECOMP_COLL_LevModelMeta(modelID);
 				

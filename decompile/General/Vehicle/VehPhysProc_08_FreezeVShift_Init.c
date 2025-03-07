@@ -31,9 +31,9 @@ void *PlayerAntiVShiftFuncTable[13] =
 	DECOMP_VehPhysForce_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-	COLL_StartSearch_NearPlayer,
+	COLL_MOVED_PlayerSearch,
 	VehPhysForce_CollideDrivers,
-	COLL_StartSearch_Player,
+	COLL_FIXED_PlayerSearch,
 	DECOMP_VehPhysProc_FreezeVShift_ReverseOneFrame,
 	VehPhysForce_TranslateMatrix,
 	VehFrameProc_Driving,

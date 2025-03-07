@@ -32,8 +32,8 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 
 	lngFile =
 		DECOMP_LOAD_ReadFile(
-			(struct BigHeader*)bigfilePtr, 1, BI_LANGUAGEFILE + lang, 
-			(void*)sdata->lngFile, &size, NULL);
+			(struct BigHeader*)bigfilePtr, BI_LANGUAGEFILE + lang, 
+			(void*)sdata->lngFile, NULL);
 
 	// This is not ReadFileAsync, this is ReadFile,
 	// so the program halts until completion of read

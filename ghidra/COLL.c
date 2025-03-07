@@ -14,7 +14,7 @@ undefined ** FUN_8001d094(uint param_1)
 
 
 
-// COLL_Instance
+// COLL_FIXED_INSTANC_TestPoint
 // param_1 - 0x1f800108
 // param_2 - struct BSP* instanceHitbox
 uint FUN_8001d0c4(short *param_1,byte *param_2)
@@ -50,13 +50,14 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
   // if instance is on the track? (not floating in air)
   if ((param_1[0x11] & 0x40U) == 0) 
   { 
+	// box size? offset 0x1c8
     *(undefined4 *)(param_1 + 0xe4) = 0;
     
 	// subtract two points
 	uVar5 = (int)*param_1 - (int)param_1[8];
     uVar7 = (int)param_1[2] - (int)param_1[10]; 
 	
-	// box size?
+	// box size? offset 0x1c4
     *(uint *)(param_1 + 0xe2) = uVar5;
     *(uint *)(param_1 + 0xe6) = uVar7;
 	
@@ -289,7 +290,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 }
 
 
-// PerBspLeaf_CheckInstances
+// COLL_FIXED_BSPLEAF_TestInstance
 // param1 - bsp node
 // param2 - 1f800108
 void FUN_8001d610(int param_1,int param_2)
@@ -317,8 +318,11 @@ void FUN_8001d610(int param_1,int param_2)
     while (iVar1 != 0) 
 	{
       // 1F8001CC
+	  // number of BSP instanceHitbox collided with
 	  iVar1 = *(int *)(param_2 + 0xc4) + -1;
-      if (-1 < iVar1) {
+      
+	  if (-1 < iVar1) 
+	  {
         iVar2 = iVar1 * 4 + param_2;
         do 
 		{
@@ -362,7 +366,7 @@ void FUN_8001d610(int param_1,int param_2)
 			(*(short *)piVar4 <= *(short *)(param_2 + 0x3a))
 		 ) 
 	  {
-		// COLL_Instance
+		// COLL_FIXED_INSTANC_TestPoint
 		// check with collision for this instance
         FUN_8001d0c4(param_2,piVar3); 
       }
@@ -378,7 +382,7 @@ LAB_8001d750:
 }
 
 
-// COLL_StartSearch_AI
+// COLL_FIXED_BotsSearch
 // param1 is driver posCurr,
 // param2 is driver posPrev
 // param3 is 1f800108
@@ -461,7 +465,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
     sVar1 = (short)((int)param_3[2] + (int)param_3[3]);
   }
   
-  // sps->unk4C[0x38]
+  // sps->countByOne_ForWhatReason
   *(undefined4 *)(param_3 + 0x42) = 0x1000;
   
   param_3[0x1d] = sVar1;
@@ -475,11 +479,11 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   // sps->dataOutput[0]
   *(undefined4 *)(param_3 + 0xd2) = 0;
   
-  // sps->unk4C[0x78]
+  // sps->numInstHitboxesHit = 0;
   *(undefined4 *)(param_3 + 0x62) = 0;
 
-  // COLL_SearchTree_FindX, callback
-  // PerBspLeaf_CheckInstances
+  // COLL_SearchBSP_CallbackPARAM, callback
+  // funcPtr COLL_FIXED_BSPLEAF_TestInstance
   FUN_8001ebec(
 	*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),
 	param_3 + 0x18,
@@ -491,7 +495,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
 
 
 
-// COLL_StartSearch_Player
+// COLL_FIXED_PlayerSearch
 // check collisions with all quadblocks (no instances)
 void FUN_8001d944(int param_1,int param_2)
 // param_1 = thread
@@ -602,15 +606,15 @@ void FUN_8001d944(int param_1,int param_2)
   if (*(int *)(param_2 + 0x350) != 0)
   {
 	// check, if touching same quadblock still
-	// COLL_PerQuadblock_CheckTriangles_Touching
+	// COLL_FIXED_QUADBLK_TestTriangles
     FUN_8001f41c(*(int *)(param_2 + 0x350),&DAT_1f800108);
   }
 
   // if no collision is found, search for another
   if (((DAT_1f800146 == 0) && (DAT_1f800134 != 0)) && (*(int *)(DAT_1f800134 + 0x18) != 0))
   {
-	// COLL_SearchTree_FindX, callback
-	// COLL_PerBspLeaf_CheckQuadblocks_Touching
+	// COLL_SearchBSP_CallbackPARAM, callback
+	// COLL_FIXED_BSPLEAF_TestQuadblocks
     FUN_8001ebec(*(int *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
   }
 
@@ -804,18 +808,27 @@ void FUN_8001d944(int param_1,int param_2)
         *(ushort *)(param_2 + 0x364) = DAT_1f80017c;
       }
 
-      if (((DAT_1f8001d4 != 0) && (DAT_1f8001d8 != 0)) && (DAT_1f8001dc != 0)) {
-        uVar12 = (uint)*(byte *)(DAT_1f8001d4 + 8);
-        iVar14 = (int)DAT_1f8001d0;
+	  // 3 pointers to pLevelVertex that driver collided with
+      if (((DAT_1f8001d4 != 0) && (DAT_1f8001d8 != 0)) && (DAT_1f8001dc != 0)) 
+	  {
+		// barycentric vectors
+		iVar14 = (int)DAT_1f8001d0;
         iVar13 = (int)DAT_1f8001d2;
+		  
+		// color of one vertex
+        uVar12 = (uint)*(byte *)(DAT_1f8001d4 + 8);		
         uVar10 = (uint)*(byte *)(DAT_1f8001d4 + 9);
         uVar6 = (uint)*(byte *)(DAT_1f8001d4 + 10);
+		
+		// barycentrics with other vectors,
+		// calculate the color of this one point
         iVar15 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 8) - uVar12)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 8) - uVar12)) >> 0xc) + uVar12;
         iVar11 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 9) - uVar10)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 9) - uVar10)) >> 0xc) + uVar10;
         iVar13 = ((int)(iVar14 * (*(byte *)(DAT_1f8001d8 + 10) - uVar6)) >> 0xc) +
                  ((int)(iVar13 * (*(byte *)(DAT_1f8001dc + 10) - uVar6)) >> 0xc) + uVar6;
+				 
         if (iVar15 < 0) {
           iVar15 = 0;
         }
@@ -848,8 +861,14 @@ void FUN_8001d944(int param_1,int param_2)
           iVar15 = 0x8000;
         }
         iVar13 = (iVar15 - iVar13) * 8;
+		
+		// modify brightness of instance
+		
+		// driver->alphaScaleBackup
         *(undefined2 *)(param_2 + 0x508) =
              (short)((uint)*(ushort *)(param_2 + 0x508) * 200 + iVar13 >> 8);
+		
+		// instance->alpha
         *(undefined2 *)(iVar9 + 0x22) = (short)((uint)*(ushort *)(iVar9 + 0x22) * 200 + iVar13 >> 8)
         ;
       }
@@ -1492,7 +1511,7 @@ code_r0x8001e96c:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_SearchTree_FindQuadblock_Touching
+// COLL_SearchBSP_CallbackQUADBLK
 // param1 - posTop
 // param2 - posBottom
 // param3 - 1f800108
@@ -1645,7 +1664,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
       _DAT_1f800068 = iVar14;
       DAT_1f80006c = iVar3;
 
-	  // COLL_PerBspLeaf_CheckQuadblocks_Touching
+	  // COLL_FIXED_BSPLEAF_TestQuadblocks
       FUN_8001f5f0(iVar12,param_3);
 
 	  iVar3 = DAT_1f80006c;
@@ -1656,7 +1675,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
 }
 
 
-// COLL_SearchTree_FindX
+// COLL_SearchBSP_CallbackPARAM
 // param1, pointer to bsp
 // param2, pointer to boundingbox
 // param3, callback if item collides with anything
@@ -1865,6 +1884,8 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 
 
 // part of triangle collision
+// param1 - sps->Set1
+// param2 + param3 BspSearchVertex
 uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param_4)
 {
   short sVar1;
@@ -1879,13 +1900,18 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   int iVar10;
   uint uVar11;
 
+  // vertex1
   iVar6 = (int)*param_2;
   iVar7 = (int)param_2[1];
   iVar8 = (int)param_2[2];
+  
   sVar1 = param_4[1];
+  
+  // vertex2 - vertex1
   uVar9 = *param_3 - iVar6;
   iVar10 = param_3[1] - iVar7;
   uVar11 = param_3[2] - iVar8;
+  
   uVar2 = uVar9 & 0xffff | iVar10 * 0x10000;
   gte_ldR11R12(uVar2);
   gte_ldR13R21(uVar11 & 0xffff | (*param_4 - iVar6) * 0x10000);
@@ -1921,14 +1947,17 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   gte_ldsv_(uVar9,iVar10,uVar11);
   gte_gpl12();
   read_mt(uVar9,iVar10,uVar11);
+  
+  // get position from barycentrics
   *param_1 = (short)uVar9;
   param_1[1] = (short)iVar10;
   param_1[2] = (short)uVar11;
+  
   return sVar1 - iVar7;
 }
 
 
-// COLL_TestTriangle_Unused
+// COLL_FIXED_TRIANGL_UNUSED
 // hand-written assembly, stores $s0, $s1, and $s2
 // then restores registers, and saves t2 into $a0->58
 void FUN_8001ef1c(void)
@@ -1954,9 +1983,9 @@ void FUN_8001ef1c(void)
 }
 
 
-// COLL_TestTriangle_FindAny
+// COLL_FIXED_TRIANGL_TestPoint
 // param1 - 1f800108
-// param2,3,4, triangle points
+// param2,3,4, are all NormalVectors
 void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 
 {
@@ -1982,10 +2011,14 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   // collision flag
   sVar1 = param_2[3];
   
+  // Normal Vector
   uVar6 = *(undefined4 *)(param_2 + 6);
   iVar7 = *(int *)(param_2 + 8);
+  
   *(short *)(param_1 + 0x3c) = *(short *)(param_1 + 0x3c) + 1;
   *(short *)(param_1 + 0x52) = sVar1;
+  
+  // Normal Vector
   *(undefined4 *)(param_1 + 0x54) = uVar6;
   *(int *)(param_1 + 0x58) = iVar7;
   
@@ -1998,8 +2031,11 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   
   gte_ldR13R21(iVar11 * 0x10000 | uVar8 & 0xffff);
   gte_ldR22R23(uVar12 & 0xffff | iVar14 * 0x10000);
+  
+  // Normal Vector
   gte_ldVXY0(param_1 + 0x54);
   gte_ldVZ0(iVar7);
+  
   gte_mvmva_b(0,0,0,3,0);
   iVar5 = gte_stMAC2();
   iVar2 = gte_stMAC1();
@@ -2024,17 +2060,27 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  *(short *)(param_1 + 0x4c) = (short)iVar11;
       *(short *)(param_1 + 0x4e) = (short)uVar12;
       *(short *)(param_1 + 0x50) = (short)iVar14;
+	  
+	  // Define vectors:
+	  // Let P be the point you want to check for collision.
+	  // Let A, B, and C be the three vertices of the triangle.
+	  
+	  // Calculate vectors between vertices:
+	  // v1 = B - A
+	  // v2 = C - A
+	  // v3 = P - A
       
 	  psVar3 = param_3;
 	  
 	  // flag == 3
+	  // normVec points Y
       if (*(short *)(param_1 + 0x52) == 3) 
 	  {
 		// Z length vectors
         iVar2 = (int)param_2[2];
-        iVar9 = param_3[2] - iVar2;
-        iVar7 = param_4[2] - iVar2;
-        iVar2 = iVar14 - iVar2;
+        iVar9 = param_3[2] - iVar2;	// v1 = B - A
+        iVar7 = param_4[2] - iVar2;	// v2 = C - A
+        iVar2 = iVar14 - iVar2;		// v3 = P - A
         
 		// absolute value
 		iVar5 = iVar9;
@@ -2059,9 +2105,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         
 		// X length vectors
 		iVar14 = (int)*param_2;
-        iVar5 = *psVar3 - iVar14;
-        iVar9 = *param_4 - iVar14;
-        iVar11 = iVar11 - iVar14;
+        iVar5 = *psVar3 - iVar14;	// v1 = B - A
+        iVar9 = *param_4 - iVar14;	// v2 = C - A
+        iVar11 = iVar11 - iVar14;	// v3 = P - A
       }
       
 	  // != 3
@@ -2070,12 +2116,13 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar2 = (int)*param_2;
 		
 		// flag == 1
+		// if normalVec points Z
         if (*(short *)(param_1 + 0x52) == 1) 
 		{
 		  // X length vectors
-          iVar14 = *param_3 - iVar2;
-          iVar7 = *param_4 - iVar2;
-          iVar2 = iVar11 - iVar2;
+          iVar14 = *param_3 - iVar2;	// v1 = B - A	
+          iVar7 = *param_4 - iVar2;		// v2 = C - A
+          iVar2 = iVar11 - iVar2;		// v3 = P - A
           
 		  // absolute value
 		  iVar5 = iVar14;
@@ -2100,19 +2147,20 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           
 		  // Y length vectors
 		  iVar11 = (int)param_2[1];
-          iVar5 = psVar3[1] - iVar11;
-          iVar9 = param_4[1] - iVar11;
-          iVar11 = uVar12 - iVar11;
+          iVar5 = psVar3[1] - iVar11;	// v1 = B - A
+          iVar9 = param_4[1] - iVar11;	// v2 = C - A
+          iVar11 = uVar12 - iVar11;	    // v3 = P - A
         }
         
 		// != 1
+		// (must be == 2) -- normVec points X
 		else 
 		{
 		  // Y length vectors
           iVar2 = (int)param_2[1];
-          iVar11 = param_3[1] - iVar2;
-          iVar7 = param_4[1] - iVar2;
-          iVar2 = uVar12 - iVar2;
+          iVar11 = param_3[1] - iVar2; // v1 = B - A
+          iVar7 = param_4[1] - iVar2;  // v2 = C - A
+          iVar2 = uVar12 - iVar2;      // v3 = P - A
 		  
 		  // absolute value
           iVar5 = iVar11;
@@ -2137,15 +2185,21 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		  
 		  // Z length vectors
           iVar11 = (int)param_2[2];
-          iVar5 = psVar3[2] - iVar11;
-          iVar9 = param_4[2] - iVar11;
-          iVar11 = iVar14 - iVar11;
+          iVar5 = psVar3[2] - iVar11;  // v1 = B - A
+          iVar9 = param_4[2] - iVar11; // v2 = C - A
+          iVar11 = iVar14 - iVar11;    // v3 = P - A
         }
       }
 	  
 	  
       iVar14 = -0x1000;
       iVar13 = -0x1000;
+	  
+	  // where does this fit?
+	  // u = dot(v2, cross(v1,v3)) / dot(v1, cross(v1,v2))
+	  // v = dot(v1, cross(v3,v2)) / dot(v2, cross(v1,v2))
+	  // w = 1 - u - v
+	  // if all > 0, collision
 	  
 	  // if one length is zero
       if (iVar10 == 0) 
@@ -2161,6 +2215,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		
         iVar13 = (iVar2 << 0xc) / iVar7;
 		
+		// iVar13 is between 0 and 0x1000 (0.0 and 1.0)
         if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
 		{
           iVar14 = (iVar11 * 0x1000 - iVar13 * iVar9) / iVar5;
@@ -2169,12 +2224,18 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
       
 	  else 
 	  {
+		// comments assume == 2,
+		// comments assume normVec points X
+		  
+		// v2z * v1y - v2y * v1z
         iVar9 = iVar9 * iVar10 - iVar7 * iVar5 >> 6;
         
 		if (iVar9 != 0) 
 		{
+		  // v3z * v1y - v3y * v1z
           iVar13 = ((iVar11 * iVar10 - iVar2 * iVar5) * 0x40) / iVar9;
           
+		  // iVar13 is between 0 and 0x1000 (0.0 and 1.0)
 		  if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
 		  {
             iVar14 = (iVar2 * 0x1000 - iVar13 * iVar7) / iVar10;
@@ -2182,13 +2243,10 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         }
       }
       
-	  // quadblock
+	  // quadblock (offset 0x64)
 	  iVar2 = *(int *)(param_1 + 100);
 	  
-	  // if iVar14 or iVar13 is -0x1000,
-	  // then the function quits
-	  
-	  // if neither of these are -0x1000
+	  // iVar14 > 0, and (w=1-u-v, w>0)
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
 		// quadblock flags & TriggerScript,
@@ -2202,19 +2260,30 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 		
 		// if collision is not disabled, record the detection
 		
+		// save quadblock
         *(int *)(param_1 + 0x80) = iVar2;
+		
+		// save vectors for barycentrics
         *(short *)(param_1 + 200) = (short)iVar14;
         *(short *)(param_1 + 0xca) = (short)iVar13;
+		
+		// Save BspSearchVertex->pLevelVertex (x3 vertices)
         uVar6 = *(undefined4 *)(psVar3 + 4);
         uVar4 = *(undefined4 *)(param_4 + 4);
         *(undefined4 *)(param_1 + 0xcc) = *(undefined4 *)(param_2 + 4);
         *(undefined4 *)(param_1 + 0xd0) = uVar6;
         *(undefined4 *)(param_1 + 0xd4) = uVar4;
-        *(short *)(param_1 + 0x3e) = *(short *)(param_1 + 0x3e) + 1;
+        
+		// boolDidTouchQuadblock
+		*(short *)(param_1 + 0x3e) = *(short *)(param_1 + 0x3e) + 1;
+		
+		// Record Position (x2)
         *(undefined4 *)(param_1 + 0x68) = *(undefined4 *)(param_1 + 0x4c);
         *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(param_1 + 0x4c);
         *(undefined2 *)(param_1 + 0x6c) = *(undefined2 *)(param_1 + 0x50);
         *(undefined2 *)(param_1 + 0x20) = *(undefined2 *)(param_1 + 0x50);
+		
+		// Normal vector
         *(undefined4 *)(param_1 + 0x70) = *(undefined4 *)(param_1 + 0x54);
         *(undefined4 *)(param_1 + 0x74) = *(undefined4 *)(param_1 + 0x58);
       }
@@ -2224,7 +2293,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 }
 
 
-// COLL_TestTriangle_GetNormalVector
+// COLL_FIXED_TRIANGL_GetNormVec
 void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 
 {
@@ -2307,24 +2376,39 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   if (iVar6 < 0) iVar6 = -iVar6;
   if (iVar4 < 0) iVar4 = -iVar4;
   
+  // normalVec points Z
   sVar2 = 1;
-  if (iVar5 - iVar6 < 0) {
+  
+  // if Y axis > X axis
+  if (iVar5 - iVar6 < 0) 
+  {
+	// normalVec points Z
     sVar2 = 1;
-    if (-1 < iVar6 - iVar4) {
+	
+	// Y axis > Z axis
+    if (-1 < iVar6 - iVar4) 
+	{
+	  // normalVec points Y
       sVar2 = 3;
     }
   }
-  else if (-1 < iVar5 - iVar4) {
+  
+  // (else means Y < X) &&
+  // if X > Z
+  else if (-1 < iVar5 - iVar4) 
+  {
+	// normalVec points X
     sVar2 = 2;
   }
   
+  // BspSearchVertex Flags (1,2,3)
   *(short *)((int)param_2 + 6) = sVar2;
   
   return;
 }
 
 
-// COLL_PerQuadblock_CheckTriangles_Touching
+// COLL_FIXED_QUADBLK_TestTriangles
 // param1 - ptrQuadblock
 // param2 - BSP Search Result: either 0x1f800108, 0x1f800118, 8008db1c
 void FUN_8001f41c(int param_1,int param_2)
@@ -2378,10 +2462,10 @@ void FUN_8001f41c(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// COLL_TestQuadblock_TwoTris
+		// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
         FUN_8001f67c(param_2,param_1);
 		
-		// call FUN_8001ef50 two times, one per triangle
+		// call COLL_FIXED_TRIANGL_TestPoint two times, one per triangle
 		  
         FUN_8001ef50(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0,1,2
         if (*(uint *)(param_1 + 4) >> 0x10 != (*(uint *)(param_1 + 4) & 0xffff)) {
@@ -2391,13 +2475,14 @@ void FUN_8001f41c(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // COLL_TestQuadblock_EightTris
+		  // COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
           FUN_8001f6f0(param_2,param_1);
         }
 		
-		// call FUN_8001ef50 eight times, one per triangle
+		// call COLL_FIXED_TRIANGL_TestPoint eight times, one per triangle
 		
-		// all values are offset 0x10 from what they should be, for some reason?
+		// All values are offset 0x10,
+		// because that's where the normalVec of each triangle is
 		
         FUN_8001ef50(0x1f800118, 0x1f8002a8, 0x1f800280, 0x1f800294); // 8, 6, 7
         FUN_8001ef50(0x1f800118, 0x1f800294, 0x1f800244, 0x1f8002a8); // 7, 3, 8
@@ -2417,7 +2502,7 @@ void FUN_8001f41c(int param_1,int param_2)
 }
 
 
-// COLL_PerBspLeaf_CheckQuadblocks_Touching
+// COLL_FIXED_BSPLEAF_TestQuadblocks
 // param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_8001f5f0(uint *param_1,int param_2)
@@ -2440,7 +2525,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
   // loop through all quadblocks
   do
   {
-	// COLL_PerQuadblock_CheckTriangles_Touching
+	// COLL_FIXED_QUADBLK_TestTriangles
     FUN_8001f41c(uVar2,param_2);
 
 	// reduce count
@@ -2453,20 +2538,20 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerBspLeaf_CheckInstances
+	// COLL_FIXED_BSPLEAF_TestInstance
     FUN_8001d610(param_1,param_2);
   }
   return;
 }
 
 
-// COLL_TestQuadblock_TwoTris
+// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
 void FUN_8001f67c(int param_1,int param_2)
 
 {
   undefined uVar1;
 
-  // COLL_ResetScratchpadCache
+  // COLL_FIXED_QUADBLK_LoadScratchpadVerts
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2478,7 +2563,7 @@ void FUN_8001f67c(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1aa) = uVar1;
   
   // calculate normal vectors for two triangles,
-  // no collision detection here
+  // COLL_FIXED_TRIANGL_GetNormVec
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x5a);
@@ -2490,13 +2575,13 @@ void FUN_8001f67c(int param_1,int param_2)
 }
 
 
-// COLL_TestQuadblock_EightTris
+// COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
 void FUN_8001f6f0(int param_1,int param_2)
 
 {
   undefined uVar1;
 
-  // COLL_ResetScratchpadCache
+  // COLL_FIXED_QUADBLK_LoadScratchpadVerts
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2508,7 +2593,7 @@ void FUN_8001f6f0(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1aa) = uVar1;
   
   // calculate normal vectors for eight triangles,
-  // no collision detection here
+  // COLL_FIXED_TRIANGL_GetNormVec
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {  // Do we hit two quads? if then, check two quads.
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // triangle 4
@@ -2535,7 +2620,7 @@ void FUN_8001f6f0(int param_1,int param_2)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_ResetScratchpadCache
+// COLL_FIXED_QUADBLK_LoadScratchpadVerts
 void FUN_8001f7f0(int param_1)
 
 {
@@ -2625,8 +2710,8 @@ void FUN_8001f7f0(int param_1)
 }
 
 
-// part of triangle collision in the function below
-// param_1 - 1f800154,
+// COLL_MOVED_TRIANGL_ReorderNormals
+// param_1 - 1f800154 (sps->Set1),
 // other parameters are the vertices
 undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
 
@@ -2643,6 +2728,11 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   int iVar10;
 
   puVar2 = param_3;
+  
+  // rearrange algorithm based on
+  // the direction the normalVec faces
+  
+  // NormalVec Direction #3
   if (*(short *)((int)param_1 + 6) == 3) {
     iVar3 = (int)*(short *)(param_2 + 1);
     iVar5 = *(short *)(param_3 + 1) - iVar3;
@@ -2670,6 +2760,8 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   }
   else {
     iVar3 = (int)*(short *)param_2;
+	
+	// NormalVec Direction #1
     if (*(short *)((int)param_1 + 6) == 1) {
       iVar5 = *(short *)param_3 - iVar3;
       iVar9 = *(short *)param_4 - iVar3;
@@ -2695,6 +2787,9 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       iVar4 = *(short *)((int)param_1 + 0x12) - iVar4;
     }
     else {
+		
+	  // NormalVec Direction #2
+		
       iVar3 = (int)*(short *)((int)param_2 + 2);
       iVar5 = *(short *)((int)param_3 + 2) - iVar3;
       iVar9 = *(short *)((int)param_4 + 2) - iVar3;
@@ -2720,6 +2815,16 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
       iVar4 = *(short *)(param_1 + 5) - iVar4;
     }
   }
+  
+  // where does this fit?
+  // u = dot(v2, cross(v1,v3)) / dot(v1, cross(v1,v2))
+  // v = dot(v1, cross(v3,v2)) / dot(v2, cross(v1,v2))
+  // w = 1 - u - v
+  // if all > 0, collision
+  
+  
+  // === See 8001ef50 for comments on this logic ===
+  
   iVar7 = -0x1000;
   iVar8 = -0x1000;
   if (iVar6 == 0) {
@@ -2741,38 +2846,58 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   if ((iVar7 == -0x1000) || (iVar7 == -0x1000)) {
     return 0xffffffff;
   }
-  if (iVar7 < 0) {
-    if (iVar8 < 0) {
+  
+  
+  if (iVar7 < 0) 
+  {
+    if (iVar8 < 0) 
+	{
+	  // Set1 HitPos = param2 bspSearchVertex pos,
+	  // this is later adjusted with barycentrics
       sVar1 = *(short *)(param_2 + 1);
       *param_1 = *param_2;
       *(short *)(param_1 + 1) = sVar1;
       return 0;
     }
-    if (-1 < iVar7 + iVar8 + -0x1000) {
+    if (-1 < iVar7 + iVar8 + -0x1000) 
+	{
+	  // Set1 HitPos = param4 bspSearchVertex pos,
+	  // this is later adjusted with barycentrics
       sVar1 = *(short *)(param_4 + 1);
       *param_1 = *param_4;
       *(short *)(param_1 + 1) = sVar1;
       return 4;
     }
+	
+	// COLL_FIXED_TRIANGL_Barycentrics
     FUN_8001ede4(param_1,param_2,param_4,param_1 + 4);
     return 5;
   }
   iVar3 = iVar7 + iVar8 + -0x1000;
   if (-1 < iVar8) {
-    if (iVar3 < 1) {
+    if (iVar3 < 1) 
+	{
+	  // Set1 HitPos = ???
       *param_1 = param_1[4];
       *(undefined2 *)(param_1 + 1) = *(undefined2 *)(param_1 + 5);
       return 6;
     }
+	
+	// COLL_FIXED_TRIANGL_Barycentrics
     FUN_8001ede4(param_1,puVar2,param_4,param_1 + 4);
     return 3;
   }
-  if (-1 < iVar3) {
+  if (-1 < iVar3) 
+  {
+	// Set1 HitPos = param(2/3/4) bspSearchVertex pos,
+	// this is later adjusted with barycentrics
     sVar1 = *(short *)(puVar2 + 1);
     *param_1 = *puVar2;
     *(short *)(param_1 + 1) = sVar1;
     return 2;
   }
+  
+  // COLL_FIXED_TRIANGL_Barycentrics
   FUN_8001ede4();
   return 1;
 }
@@ -2780,7 +2905,9 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
 // WARNING: Instruction at (ram,0x8001fefc) overlaps instruction at (ram,0x8001fef8)
 //
 
-// COLL_TestTriangle_FindClosest
+// COLL_MOVED_TRIANGL_TestPoint
+// param1 - scratchpad struct
+// 2/3/4 - BspSearchVertex
 void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
 {
@@ -2797,13 +2924,24 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
   int iVar9;
   int iVar10;
 
+  // BspSearchVertex->flags (which way does normal point)
   sVar1 = *(short *)(param_2 + 6);
+  
+  // BspSearchVertex normalVec
   uVar5 = *(undefined4 *)(param_2 + 0xc);
   uVar6 = *(undefined4 *)(param_2 + 0x10);
+  
+  // 0x3c?
   *(short *)(param_1 + 0xf) = *(short *)(param_1 + 0xf) + 1;
+  
+  // save BspSearchVertex->flags to SPS
   *(short *)((int)param_1 + 0x52) = sVar1;
+  
+  // SPS normalVec (0x54)
   param_1[0x15] = uVar5;
   param_1[0x16] = uVar6;
+  
+  // quadblock
   iVar9 = param_1[0x19];
 
   // If collision on this quadblock is not scriptable
@@ -2857,13 +2995,19 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
 	
     iVar7 = -iVar7;
     iVar8 = -iVar8;
+	
+	// Flip NormalVec in the other direction
     *(short *)(param_1 + 0x15) = -sVar1;
     *(short *)((int)param_1 + 0x56) = -*(short *)((int)param_1 + 0x56);
     *(short *)(param_1 + 0x16) = -*(short *)(param_1 + 0x16);
     *(short *)((int)param_1 + 0x5a) = -*(short *)((int)param_1 + 0x5a);
   }
+  
 LAB_8001fd38:
+  
+  // quadblock->flags
   uVar2 = *(ushort *)(iVar9 + 0x12);
+  
   *(short *)(param_1 + 0xf) = *(short *)(param_1 + 0xf) + 1;
   if (-1 < iVar7 - *(short *)((int)param_1 + 6)) {
     return;
@@ -2871,9 +3015,12 @@ LAB_8001fd38:
   if (iVar8 < 0) {
     return;
   }
+  
+  // if not triggerScript
   if (((uVar2 & 0x40) == 0) && (0 < iVar7 - iVar8)) {
     return;
   }
+  
   if (-1 < iVar7) {
     gte_ldIR0(iVar7);
     gte_ldsv_((int)*(short *)(param_1 + 0x15),(int)*(short *)((int)param_1 + 0x56),
@@ -2889,30 +3036,39 @@ LAB_8001fd38:
   gte_gpf12_b();
   uVar5 = gte_stMAC1();
   uVar6 = gte_stMAC2();
-
-  *(short *)(param_1 + 0x17) = *(short *)param_1 - (short)uVar5;
-
   uVar5 = gte_stMAC3();
 
+  // 0x5c (unknown) distanceFromDriverToUNK
+  *(short *)(param_1 + 0x17) = *(short *)param_1 - (short)uVar5;
   *(short *)((int)param_1 + 0x5e) = *(short *)((int)param_1 + 2) - (short)uVar6;
   *(short *)(param_1 + 0x18) = *(short *)(param_1 + 1) - (short)uVar5;
+  
+  // save 3 pointers to BspSearchVertex
   param_1[0x36] = param_2;
   param_1[0x37] = param_3;
   param_1[0x38] = param_4;
   
-  // always passes 1f800154
+  // COLL_MOVED_TRIANGL_ReorderNormals 
+  // passes 1f800154 (sps->Set1)
   iVar9 = FUN_8001f928(param_1 + 0x13,param_2,param_3,param_4);
   
   if (iVar9 < 0) {
     return;
   }
-  if (-1 < iVar7) {
+  
+  if (-1 < iVar7) 
+  {
+	// DriverPos - Set1_HitPos
+	  
     *(short *)(param_1 + 0x39) = *(short *)param_1 - *(short *)(param_1 + 0x13);
     *(short *)((int)param_1 + 0xe6) = *(short *)((int)param_1 + 2) - *(short *)((int)param_1 + 0x4e)
     ;
     *(short *)(param_1 + 0x3a) = *(short *)(param_1 + 1) - *(short *)(param_1 + 0x14);
   }
-  else {
+  
+  else 
+  {
+	// 0x5C(unknown) - Set1_HitPos
     *(short *)(param_1 + 0x39) = *(short *)(param_1 + 0x17) - *(short *)(param_1 + 0x13);
     *(short *)((int)param_1 + 0xe6) =
          *(short *)((int)param_1 + 0x5e) - *(short *)((int)param_1 + 0x4e);
@@ -2955,18 +3111,22 @@ LAB_8001ff14:
 		// set new shortest distance
         param_1[0x21] = iVar8;
 		
+		// From 3 pointers to BspSearchVertex,
+		// Save 3 pointers to pLevVertex (offset 8)
         uVar5 = *(undefined4 *)(param_1[0x37] + 8);
         uVar6 = *(undefined4 *)(param_1[0x38] + 8);
         param_1[0x33] = *(undefined4 *)(param_1[0x36] + 8);
         param_1[0x34] = uVar5;
         param_1[0x35] = uVar6;
+		
+		// sps 0x68 = 0x4c (Set2 = Set1)
         param_1[0x1a] = param_1[0x13];
         param_1[0x1b] = param_1[0x14];
         param_1[0x1c] = param_1[0x15];
         param_1[0x1d] = param_1[0x16];
         param_1[0x1e] = param_1[0x17];
         param_1[0x1f] = param_1[0x18];
-        param_1[0x20] = iVar10;
+        param_1[0x20] = iVar10; // param_1[0x19]
 		
 		// triangle ID (0-9)
 		// 0x1f800187
@@ -2985,11 +3145,10 @@ LAB_8001ff14:
           gte_gpf12_b();
           uVar5 = gte_stMAC1();
           uVar6 = gte_stMAC2();
-
-          *(short *)(param_1 + 7) = *(short *)(param_1 + 4) + (short)uVar5;
-
 		  uVar5 = gte_stMAC3();
 
+		  // QuadBlockColl hitPos - QuadBlockColl pos <-- input
+          *(short *)(param_1 + 7) = *(short *)(param_1 + 4) + (short)uVar5;
           *(short *)((int)param_1 + 0x1e) = *(short *)((int)param_1 + 0x12) + (short)uVar6;
           *(short *)(param_1 + 8) = *(short *)(param_1 + 5) + (short)uVar5;
         }
@@ -3000,7 +3159,9 @@ LAB_8001ff14:
       else 
 	  {
 		// if killplane
-        if ((uVar2 & 0x200) != 0) {
+        if ((uVar2 & 0x200) != 0) 
+		{
+		  // quadblock action flags
           param_1[0x69] = param_1[0x69] | 0x4000;
         }
       }
@@ -3010,18 +3171,23 @@ LAB_8001ff14:
     if (iVar7 < 0) {
       uVar4 = param_1[0x69];
     }
-    else {
+    else 
+	{
+	  // quadblock action flags
       uVar4 = param_1[0x69];
-      if (-1 < (iVar7 - *(short *)((int)param_1 + 6) | iVar8 - *(short *)((int)param_1 + 6)))
+      
+	  if (-1 < (iVar7 - *(short *)((int)param_1 + 6) | iVar8 - *(short *)((int)param_1 + 6)))
       goto LAB_8001ff14;
     }
+	
+	// quadblock action flags
     param_1[0x69] = uVar4 | *(byte *)(iVar10 + 0x38);
   }
   return;
 }
 
 
-// COLL_PerQuadblock_CheckTriangles_NearPlayer
+// COLL_MOVED_QUADBLK_TestTriangles
 // param_1 - quadblock
 // param_2 - 1f800108
 void FUN_80020064(int param_1,int param_2)
@@ -3075,7 +3241,7 @@ void FUN_80020064(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// COLL_TestQuadblock_TwoTris
+		// COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
         FUN_8001f67c(param_2,param_1);
 		
 		// call FUN_8001fc40 two times, one per triangle
@@ -3091,7 +3257,7 @@ void FUN_80020064(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // COLL_TestQuadblock_EightTris
+		  // COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
           FUN_8001f6f0(param_2,param_1);
         }
 		
@@ -3124,7 +3290,7 @@ void FUN_80020064(int param_1,int param_2)
 }
 
 
-// COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+// COLL_MOVED_BSPLEAF_TestQuadblocks
 // param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_800202a8(uint *param_1,int param_2)
@@ -3147,7 +3313,7 @@ void FUN_800202a8(uint *param_1,int param_2)
   // loop through all quadblocks
   do 
   {
-	// COLL_PerQuadblock_CheckTriangles_NearPlayer
+	// COLL_MOVED_QUADBLK_TestTriangles
     FUN_80020064(uVar2,param_2);
 
 	// reduce count
@@ -3160,14 +3326,14 @@ void FUN_800202a8(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerBspLeaf_CheckInstances
+	// COLL_FIXED_BSPLEAF_TestInstance
     FUN_8001d610(param_1,param_2);
   }
   return;
 }
 
 
-// COLL_TestTriangle_WithClosest
+// COLL_MOVED_FindScrub
 // param_1 = ptrQuadblock
 // param_2 = triangleID
 // param_3 = 0x1F800108
@@ -3200,9 +3366,9 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   }
 
   // if this function is being called from the 
-  // loop of 15 calls, from COLL_StartSearch_Player
+  // loop of 15 calls, from COLL_FIXED_PlayerSearch
 
-  // since start of COLL_StartSearch_Player, check all existing
+  // since start of COLL_FIXED_PlayerSearch, check all existing
   // records of quadblock and triangle, so far
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   
@@ -3221,11 +3387,11 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 	  // meaning we've already found collision with this triangle on this frame
 	  if ((*piVar4 == param_1) && (piVar4[1] == param_2)) 
 	  {
-		// frame timer?
+		// count number of times collided this frame
         iVar3 = piVar4[2];
         uVar2 = (undefined2)iVar3;
         
-		// if collision is found less than 4 frames
+		// count a max of 4 timse this frame
 		if (iVar3 < 0x401) 
 		{
 		  // increment
@@ -3272,7 +3438,7 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_StartSearch_NearPlayer
+// COLL_MOVED_PlayerSearch
 // param_1 = driver thread
 // param_2 = driver ptr
 void FUN_80020410(undefined4 param_1,int param_2)
@@ -3319,15 +3485,23 @@ void FUN_80020410(undefined4 param_1,int param_2)
   }
 
   iVar13 = 0x1000;
+  
+  // num bsp instanceHitbox collisions
   DAT_1f8001cc = 0;
+  
+  // collide modelID
   DAT_1f800114 = 0x18;
+  
+  // erase quadblock flags
   DAT_1f8002ac = 0;
   
-  // COLL_TestTriangle_WithClosest
+  // COLL_MOVED_FindScrub
   // quadblock, triangleID, search data
   FUN_80020334(0,0,&DAT_1f800108);
   
-  // loop executes 0xF times
+  // loop 16 times (0xF -> 0)
+  // Check every 1/16th distance
+  // between CurrFrame and NextFrame
   iVar14 = 0xf;
   do 
   {
@@ -3341,6 +3515,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
     DAT_1f80014a = 0;
     DAT_1f800148 = 0;
     DAT_1f80018c = 0x1000;
+
+	// 1f800118: vec3 kartPosCurrFrame
+	// 1f800108: vec3 kartPosNextFrame
 
 	// kartCenter = vec3_originToCenter + driverPos (origin of model is bottom-center)
 	sVar9 = *(short *)(param_2 + 0x94) + (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
@@ -3430,8 +3607,8 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		(iVar11 = *(int *)(iVar11 + 0x18), iVar11 != 0)
 	   )
 	{
-	  // COLL_SearchTree_FindX, callback 
-	  // COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+	  // COLL_SearchBSP_CallbackPARAM, callback 
+	  // COLL_MOVED_BSPLEAF_TestQuadblocks
       FUN_8001ebec(iVar11,&DAT_1f800138,FUN_800202a8,&DAT_1f800108);
     }
 
@@ -3443,12 +3620,14 @@ void FUN_80020410(undefined4 param_1,int param_2)
 
     if (0 < DAT_1f80018c) 
 	{
-      // increase position by velocity
+      // increase position by PARTIAL velocity,
+	  // slowly increment one each frame of 16 checks
       *(int *)(param_2 + 0x2d4) = *(int *)(param_2 + 0x2d4) + (iVar5 * DAT_1f80018c >> 0xc);
       *(int *)(param_2 + 0x2d8) = *(int *)(param_2 + 0x2d8) + (iVar6 * DAT_1f80018c >> 0xc);
       *(int *)(param_2 + 0x2dc) = *(int *)(param_2 + 0x2dc) + (iVar7 * DAT_1f80018c >> 0xc);
     }
 	
+	// Collide with Quadblock (not instance)
     if (DAT_1f80014a == 0) 
 	{
 	  uVar1 = DAT_1f80012a;
@@ -3463,7 +3642,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
       }
 
-	  // COLL_TestTriangle_WithClosest
+	  // COLL_MOVED_FindScrub
 	  // quadblock, triangleID, search data
       FUN_80020334(DAT_1f800188,(uint)DAT_1f800187,&DAT_1f800108);
 
@@ -3500,11 +3679,14 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		  // quadblock under driver
           *(undefined4 *)(param_2 + 0x350) = 0;
         }
+		
+		// normVec X
         uVar8 = _DAT_1f800178;
 
 		// set quadblock you are touching
         *(int *)(param_2 + 0xa0) = DAT_1f800188;
 
+		// normVec XYZ
 		*(undefined4 *)(param_2 + 0xa4) = uVar8;
         uVar8 = _DAT_1f800178;
         *(undefined2 *)(param_2 + 0xa8) = DAT_1f80017c;
@@ -3512,12 +3694,15 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		// ROAD
 		uVar12 = 5;
         
+		// normVec X+Y
 		*(undefined4 *)(param_2 + 0x360) = uVar8;
+		
         uVar2 = DAT_1f80017c;
 
 		// driver is now on ground
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 8;
 
+		// normVec Z
 		*(undefined2 *)(param_2 + 0x364) = uVar2;
       }
 
@@ -3536,10 +3721,10 @@ void FUN_80020410(undefined4 param_1,int param_2)
       *(undefined4 *)(param_2 + 0xb4) = uVar8;
       *(undefined2 *)(param_2 + 0xb8) = DAT_1f80017c;
 
-	  // COLL_Scrub
+	  // COLL_MOVED_ScrubImpact
       iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar12,param_2 + 0x88);
 
-	  // if driver is "crashing" from COLL_Scrub
+	  // if driver is "crashing" from COLL_MOVED_ScrubImpact
 	  if (iVar5 == 2) {
         return;
       }
@@ -3557,6 +3742,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
       DAT_1f80012a = DAT_1f80012a | 8;
     }
     
+	// Collide with Instance (not quadblock)
 	else 
 	{
       DAT_1f80012a = DAT_1f80012a & 0xfff7;
@@ -3610,14 +3796,18 @@ LAB_800209b0:
           }
         }
       }
+	  
+	  // if LInC returns collision,
+	  // if BSP->flag = instance hitbox
       if ((iVar5 == 2) || (DAT_1f800150[1] == 4)) 
 	  {
+		// add to array of BSPs collided with instance hitboxes
         *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
         DAT_1f8001cc = DAT_1f8001cc + 1;
       }
       else 
 	  {
-		// COLL_TestTriangle_WithClosest
+		// COLL_MOVED_FindScrub
 		// quadblock, triangleID, search data
         FUN_80020334(DAT_1f800150,0,&DAT_1f800108);
         
@@ -3629,16 +3819,18 @@ LAB_800209b0:
 		// VehAfterColl_GetSurface
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
 
+	    // if BSP->flag = instance hitbox
         if ((DAT_1f800150[1] == 4) ||
 
-			// COLL_Scrub
+			// COLL_MOVED_ScrubImpact
 		   (iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar8,param_2 + 0x88), iVar5 == 0)) {
 
+		  // add to array of BSPs collided with instance hitboxes
 		  *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
           DAT_1f8001cc = DAT_1f8001cc + 1;
         }
 		
-		// if driver is "crashing" from COLL_Scrub
+		// if driver is "crashing" from COLL_MOVED_ScrubImpact
         if (iVar5 == 2) {
           return;
         }
@@ -3655,12 +3847,13 @@ LAB_800209b0:
   return;
 }
 
-// COLL_Scrub
+// COLL_MOVED_ScrubImpact
 // "scrub" like rubbing, for sparks
 // param_1 driver ptr
 // param_2 driver thread
 // param_3 scratchpad address 1f800108
 // param_4 MetaDataScrub
+// param_5 velocity
 undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,int *param_5)
 
 {
@@ -3686,6 +3879,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
   ushort local_44;
   int local_30;
 
+  // normal vector
   local_48 = *(ushort *)(param_3 + 0x70);
   local_46 = *(ushort *)(param_3 + 0x72);
   local_44 = *(ushort *)(param_3 + 0x74);
@@ -3756,8 +3950,10 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
     }
   }
 
+  // multiply velocity by normVec
   iVar3 = (*param_5 >> 3) * (int)(short)local_48 + (param_5[1] >> 3) * (int)(short)local_46 +
           (param_5[2] >> 3) * (int)(short)local_44 >> 9;
+		  
   if (iVar3 < -0xa00) {
     //turn on 8th bit of Actions Flag set (means ?)
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x80;
@@ -3772,6 +3968,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	// scrubMeta->4
     uVar9 = *(uint *)(param_4 + 4);
 
+	// RUBBER/SANDBAG/SOLID
 	if ((uVar9 & 4) == 0)
 	{
       //turn on 14th bit of Actions Flag set (means
@@ -3779,6 +3976,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
       *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x2000;
     }
 
+	// RUBBER/SANDBAG/SOLID
 	if ((uVar9 & 8) == 0)
 	{
 	  // reset reserves
@@ -3792,6 +3990,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	// if just touched the wall for the first frame
 	if (*(short *)(param_1 + 0x3fe) == 0)
 	{
+	  // If Road/NoEffect,
+	  // If !Slowdown
       bVar2 = 0x3e7ff < iVar5;
     }
 
@@ -3820,7 +4020,10 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
     }
 
 	uVar4 = 0;
-    if ((uVar9 & 1) != 0) {
+	
+	// Solid/Rubber/Sandbag/Road
+    if ((uVar9 & 1) != 0) 
+	{
       iVar15 = iVar3 * (short)local_46;
       local_30 = 0;
       uVar10 = iVar3 * (short)local_48 >> 0xc;
@@ -3916,12 +4119,16 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
           if ((uVar10 == 0xffffffff) && (iVar13 * iVar6 == -0x80000000)) {
             trap(0x1800);
           }
+		  
+		  // partially invert velocity to prevent going "through" wall
           param_5[2] = (iVar13 * iVar6) / (int)uVar10;
           *param_5 = *param_5 - ((int)((uint)local_48 << 0x10) >> 0x11);
           param_5[1] = param_5[1] - ((int)((uint)local_46 << 0x10) >> 0x11);
           param_5[2] = param_5[2] - ((int)((uint)local_44 << 0x10) >> 0x11);
         }
       }
+	  
+	  // Solid/Sandbag
       if ((((uVar9 & 2) != 0) && (iVar3 < -0x13ff)) &&
          (
 			// get approximate speed

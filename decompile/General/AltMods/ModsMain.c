@@ -37,7 +37,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 
-	int modSizes[8] =
+	int modSizes[9] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -49,7 +49,7 @@ void ModsMain()
 		(int)howl_VolumeGet - (int)Mods3_EndOfFile,
 
 		// LOAD defrag Block1
-		(int)LOAD_AppendQueue - (int)Mods4_EndOfFile,
+		(int)LOAD_Hub_ReadFile - (int)Mods4_EndOfFile,
 
 		// VehPtr defrag Block1
 		(int)VehPickState_NewState - (int)Mods5_EndOfFile,
@@ -62,9 +62,12 @@ void ModsMain()
 
 		// CupStandings defrag
 		(int)Vector_SpecLightSpin2D - (int)Mods8_EndOfFile,
+		
+		// VehBirth_TeleportSelf
+		(int)VehBirth_TeleportAll - (int)Mods9_EndOfFile,
 	};
 
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < 9; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}

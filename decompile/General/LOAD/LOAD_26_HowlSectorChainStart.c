@@ -2,6 +2,10 @@
 
 int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector)
 {
+	#ifdef USE_PCDRV
+	return 1;
+	#endif
+	
 	CdlLOC loc;
 	
 	if(numSector == 0) 

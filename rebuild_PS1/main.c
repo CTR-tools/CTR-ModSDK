@@ -20,8 +20,11 @@
 #define SquareRoot0_stub SquareRoot0
 
 // temporarily require manual including
-#include "../decompile/General/AltMods/Mods3.c"
-#include "../decompile/General/AltMods/Mods4.c"
+#include "../decompile/General/AltMods/Mods1.c" // needs UI_AAA_BigBlock1
+#include "../decompile/General/AltMods/Mods2.c" // needs GAMEPAD_Defrag
+#include "../decompile/General/AltMods/Mods3.c" // needs h21_64_Bank_ResetAllocator
+#include "../decompile/General/AltMods/Mods4.c" // needs LOAD_00_xx Defrag
+#include "../decompile/General/AltMods/Mods8.c" // needs UI_58_CupStandings_InputAndDraw.c
 
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
@@ -296,7 +299,7 @@
 #include "../decompile/General/LOAD/LOAD_05_Callback_MaskHints3D.c"
 #include "../decompile/General/LOAD/LOAD_06_Callback_Podiums.c"
 #include "../decompile/General/LOAD/LOAD_07_Callback_LEV.c"
-#include "../decompile/General/LOAD/LOAD_08_Callback_LEV_Adv.c"
+#include "../decompile/General/LOAD/LOAD_08_Callback_PatchMem.c"
 #include "../decompile/General/LOAD/LOAD_09_Callback_DriverModels.c"
 // hole
 #include "../decompile/General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c"
@@ -310,7 +313,7 @@
 #include "../decompile/General/LOAD/LOAD_19_VramFile.c" 
 #include "../decompile/General/LOAD/LOAD_20_ReadFileASyncCallback.c"
 #include "../decompile/General/LOAD/LOAD_21_ReadFile.c"
-#include "../decompile/General/LOAD/LOAD_22_ReadFile_NoCallback.c"
+#include "../decompile/General/LOAD/LOAD_22_XnfFile.c"
 #include "../decompile/General/LOAD/LOAD_23_FindFile.c"
 #include "../decompile/General/LOAD/LOAD_24_HowlHeaderSectors.c"
 #include "../decompile/General/LOAD/LOAD_25_HowlCallback.c"
@@ -448,6 +451,9 @@
 
 #include "../decompile/General/Timer/Timer_0_Init.c"
 #include "../decompile/General/Timer/Timer_1_Destroy.c"
+#include "../decompile/General/Timer/Timer_2_GetTime_Total.c"
+#include "../decompile/General/Timer/Timer_3_GetTime_Elapsed.c"
+
 
 // UI
 #include "../decompile/General/prim.c"

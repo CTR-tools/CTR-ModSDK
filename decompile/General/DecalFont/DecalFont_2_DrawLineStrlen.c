@@ -329,6 +329,10 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 
 			#if BUILD <= UsaRetail
 
+				#ifdef REBUILD_PC
+				if(gGT->iconGroup[iconGroupID] != 0)
+				#endif
+
 				if (iconID < gGT->iconGroup[iconGroupID]->numIcons)
 				{
 					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);

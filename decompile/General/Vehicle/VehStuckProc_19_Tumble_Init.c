@@ -14,9 +14,9 @@ void* PlayerBlastedFuncTable[0xD] =
 	DECOMP_VehPhysForce_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-	COLL_StartSearch_NearPlayer,
+	COLL_MOVED_PlayerSearch,
 	VehPhysForce_CollideDrivers,
-	COLL_StartSearch_Player,
+	COLL_FIXED_PlayerSearch,
 	VehPhysGeneral_JumpAndFriction,
 	VehPhysForce_TranslateMatrix,
 	DECOMP_VehStuckProc_Tumble_Animate,

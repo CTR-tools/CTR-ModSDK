@@ -744,7 +744,10 @@ void FUN_800ac714(void)
   // CameraDC, it must be zero to follow you
   *(undefined2 *)(PTR_DAT_8008d2ac + 0x1532) = 0;
   
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(puVar2 + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar2 + 0x274) = 0x100;
   return;
 }
@@ -920,12 +923,19 @@ LAB_800acb0c:
   
   psVar14 = *(short **)(param_2 + 0x10);
   local_3c = (int)psVar14[1];
-  if (param_1 == 0) {
+  
+  if (param_1 == 0) 
+  {
+	// CAM_Path_GetNumPoints
     sVar5 = FUN_80018b18();
-    if ((int)sVar5 != 0) {
+	
+    if ((int)sVar5 != 0) 
+	{
+	  // gGT->msInThisLEV
       iVar10 = (*(int *)(puVar3 + 0x1d00) << 0xb) >> 0x10;
-      if (iVar10 < (int)sVar5 + -1) {
-        
+      
+	  if (iVar10 < (int)sVar5 + -1) 
+	  {  
 		// CAM_Path_Move
 		FUN_80018ba0(iVar10,&local_48,&local_50,local_40);
         
@@ -948,25 +958,42 @@ LAB_800acb0c:
 		FUN_80018ba0((int)(short)(sVar5 + -1),puVar3 + 0x168,puVar3 + 0x16e,local_40);
       }
       
-	  // disable screen blur
+	  // gGT->clockEffectEnabled
 	  uVar6 = *(ushort *)(puVar3 + 0x2570);
       *(ushort *)(puVar3 + 0x2570) = uVar6 & 0xfffe;
 	  
       if ((local_40[0] & 1) != 0) {
         *(ushort *)(puVar3 + 0x2570) = uVar6 & 0xfffe | 1;
       }
-      if ((*(ushort *)(param_2 + 0x16) & 0x20) == 0) {
+      if ((*(ushort *)(param_2 + 0x16) & 0x20) == 0) 
+	  {
+		// This variable is gGT->0x168+0x18
+		// gGT->pushBuffer[0].distanceToScreen_PREV
+		  
+		// Default FOV
         *(undefined4 *)(puVar3 + 0x180) = 0x100;
-        if ((local_40[0] & 2) != 0) {
+		
+		// Oxide Intro, Transition between Polar/Dingo
+        if ((local_40[0] & 2) != 0) 
+		{
+		  // Wide FOV (zoom out)
           *(undefined4 *)(puVar3 + 0x180) = 0x50;
         }
-        if ((local_40[0] & 4) != 0) {
+        
+		// Oxide Intro, oxide flies down to earth
+		if ((local_40[0] & 4) != 0) 
+		{
+		  // Narrow FOV (zoom in)
           *(undefined4 *)(puVar3 + 0x180) = 0x278;
         }
-        if ((local_40[0] & 0x20) != 0) {
+        
+		if ((local_40[0] & 0x20) != 0) 
+		{
           *(undefined4 *)(puVar3 + 0x180) = 0x1eb;
         }
-        if ((local_40[0] & 0x40) != 0) {
+        
+		if ((local_40[0] & 0x40) != 0) 
+		{
           *(undefined4 *)(puVar3 + 0x180) = 0x14d;
         }
       }
@@ -981,10 +1008,14 @@ LAB_800acb0c:
       }
 	  
 	  // if level ID is Naughty Dog Box
-      if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x29) {
+      if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x29) 
+	  {
+		// Narrow FOV (zoom in)
+		// gGT->pushBuffer[0].distanceToScreen_PREV
         *(undefined4 *)(puVar3 + 0x180) = 0x140;
       }
 	  
+	  // gGT->pushBuffer[0].distToScreen_CURR
       *(undefined4 *)(puVar3 + 0x274) = *(undefined4 *)(puVar3 + 0x180);
     }
     puVar4 = PTR_DAT_8008d2ac;
@@ -1004,7 +1035,7 @@ LAB_800acb0c:
 		  // if less than 6 seconds passed, Start button does nothing
           if (*(uint *)(puVar3 + 0x1d00) >> 5 < 0xb5) goto LAB_800acef4;
           
-		  // enable checkered flag
+		  // RaceFlag_SetCanDraw
 		  FUN_80044088(1);
           
 		  // RaceFlag_IsTransitioning
@@ -1029,7 +1060,7 @@ LAB_800acb0c:
 		// if level ID is not Naughty Dog Box
         else 
 		{
-		  // enable checkered flag
+		  // RaceFlag_SetCanDraw
           FUN_80044088(1);
 		  
 		  // RaceFlag_IsTransitioning
@@ -1062,6 +1093,7 @@ LAB_800acb0c:
 		// CDSYS_XAPauseRequest
         FUN_8001cf98();
 		
+		// RaceFlag_SetDrawOrder
         FUN_80043f8c(0);
         
 		// main menu
@@ -1071,9 +1103,13 @@ LAB_800ace7c:
 		// load LEV
         FUN_8003cfc0(uVar11);
 		
+		// end cutscene
         DAT_800b7760 = 1;
+		
+	    // remove VEH_FREEZE_PODIUM
         *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
-        *(undefined4 *)(param_2 + 0x4c) = local_68;
+        
+		*(undefined4 *)(param_2 + 0x4c) = local_68;
         *(undefined4 *)(param_2 + 0x50) = local_64;
         *(undefined4 *)(param_2 + 0x54) = local_60;
         *(undefined4 *)(param_2 + 0x58) = local_5c;
@@ -1099,6 +1135,7 @@ switchD_800acf30_caseD_14:
     *(undefined2 *)(param_2 + 0x14) = (undefined2)local_38;
     iVar10 = (int)psVar14[8];
     iVar12 = iVar12 >> 5;
+	
     if (iVar10 != (int)psVar14[9]) {
       iVar13 = *(int *)(psVar14 + 4);
       if (*(int *)(psVar14 + 6) != iVar13) {
@@ -1131,17 +1168,24 @@ switchD_800acf30_caseD_14:
       local_3c._0_1_ = 0;
       iVar12 = 0;
     }
-    if (param_1 != 0) {
+    if (param_1 != 0) 
+	{
+	  // instance animation
       *(undefined2 *)(param_1 + 0x54) = (short)iVar12;
       *(undefined *)(param_1 + 0x52) = (undefined)local_3c;
     }
-    if (*(int **)(param_2 + 0x48) != (int *)0x0) {
+    if (*(int **)(param_2 + 0x48) != (int *)0x0) 
+	{
       psVar14 = (short *)(**(int **)(param_2 + 0x48) + iVar12 * 0x20);
-      *(undefined4 *)(param_1 + 0x30) = *(undefined4 *)(psVar14 + 4);
+      
+	  // instance matrix
+	  *(undefined4 *)(param_1 + 0x30) = *(undefined4 *)(psVar14 + 4);
       *(undefined4 *)(param_1 + 0x34) = *(undefined4 *)(psVar14 + 6);
       *(undefined4 *)(param_1 + 0x38) = *(undefined4 *)(psVar14 + 8);
       *(undefined4 *)(param_1 + 0x3c) = *(undefined4 *)(psVar14 + 10);
       *(undefined4 *)(param_1 + 0x40) = *(undefined4 *)(psVar14 + 0xc);
+	  
+	  // instance position
       *(int *)(param_1 + 0x44) = (int)*psVar14;
       *(int *)(param_1 + 0x48) = (int)psVar14[1];
       *(int *)(param_1 + 0x4c) = (int)psVar14[2];
@@ -1247,6 +1291,7 @@ LAB_800ad8ec:
     }
     goto LAB_800adcc0;
 	
+  // ???
   case 1:
     local_34 = 1;
 	
@@ -1255,6 +1300,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // ???
   case 2:
     if (param_1 != 0) 
 	{
@@ -1270,6 +1316,7 @@ LAB_800ad8ec:
 	// kill cutscene thread
 	return 1;
 	
+  // ???
   case 3:
     if (param_1 != 0) 
 	{
@@ -1277,25 +1324,31 @@ LAB_800ad8ec:
       FUN_800ac320
                 (param_1,(int)psVar14[1],*(undefined4 *)(psVar14 + 4),&DAT_1f800108,&DAT_1f800118,0)
       ;
-      DAT_1f800108 = DAT_1f800108 + *(short *)(param_1 + 0x44);
+      
+	  // position
+	  DAT_1f800108 = DAT_1f800108 + *(short *)(param_1 + 0x44);
       DAT_1f80010a = DAT_1f80010a + *(short *)(param_1 + 0x48);
-      DAT_1f800110 = 0;
+      DAT_1f80010c = DAT_1f80010c + *(short *)(param_1 + 0x4c);
+      
+	  // rotation
+	  DAT_1f800110 = 0;
       DAT_1f800112 = 0;
       DAT_1f800114 = 0;
-      DAT_1f80010c = DAT_1f80010c + *(short *)(param_1 + 0x4c);
+	  
       if (*(int *)(psVar14 + 6) == 0xc0) {
         DAT_1f800118._0_2_ = 0;
         DAT_1f800118._2_2_ = 0;
         DAT_1f80011c._0_2_ = 0;
       }
 	  
-	  // make a thread for "spawn"
+	  // CS_Thread_Init for "spawn"
       FUN_800af328
                 (*(undefined4 *)(psVar14 + 6),s_spawn_800ab9f4,&DAT_1f800108,0,
                  *(undefined4 *)(param_1 + 0x6c));
     }
     break;
 	
+  // ???
   case 4:
 	// random number
     iVar10 = FUN_8003ea28();
@@ -1312,6 +1365,8 @@ LAB_800ad8ec:
     }
     local_34 = 1;
     goto LAB_800adcc0;
+	
+  // PLAY SOUND
   case 5:
   
 	// if you're at the adventure character select screen
@@ -1339,42 +1394,68 @@ LAB_800ad8ec:
       }
     }
     break;
-	
+
+  // STOP SOUND
   case 6:
 	// OtherFX_Stop2
     FUN_80028844((uint)(ushort)psVar14[6]);
     break;
 	
+  // START MUSIC
   case 7:
 	// CseqMusic_Start
     FUN_80028c78((uint)(ushort)psVar14[6],0,0,0,*(undefined4 *)(psVar14 + 4));
     break;
 	
+  // RESTART MUSIC
   case 8:
 	// CseqMusic_Restart
     FUN_80028f34((uint)(ushort)psVar14[6],1);
     break;
 	
+  // FORCE LOD
   case 9:
+  
+    // if Instance
     if (param_1 != 0) {
-      iVar10 = (int)*(short *)(*(int *)(param_1 + 0x18) + 0x12);
-      if ((iVar10 != 0) && (iVar13 = *(int *)(*(int *)(param_1 + 0x18) + 0x14), iVar13 != 0)) {
-        iVar15 = *(int *)(psVar14 + 6);
+      
+	  // Inst -> model -> numHeaders,
+	  iVar10 = (int)*(short *)(*(int *)(param_1 + 0x18) + 0x12);
+	  
+      if (
+			(iVar10 != 0) && 
+			
+			// Inst -> model -> modelHeader,
+			(iVar13 = *(int *)(*(int *)(param_1 + 0x18) + 0x14), iVar13 != 0)
+		 ) 
+	  {
+        // LOD index from opcode
+		iVar15 = *(int *)(psVar14 + 6);
+		
         iVar8 = iVar15;
         if (iVar10 <= iVar15) {
           iVar15 = iVar10 + -1;
           iVar8 = iVar15;
         }
-        while (iVar15 != 0) {
+		
+		// Disable drawing LODs
+        while (iVar15 != 0) 
+		{
+		  // erase maxDistanceLOD
           *(undefined2 *)(iVar13 + 0x14) = 0;
+		  
+		  // next LOD
           iVar15 = iVar15 + -1;
           iVar13 = iVar13 + 0x40;
         }
+		
+		// headers[x].maxDistanceLOD
         *(undefined2 *)(iVar13 + 0x14) = 20000;
       }
     }
     break;
 	
+  // ???
   case 10:
     if (*(int *)(psVar14 + 6) == -1) {
       uVar6 = *(ushort *)(param_2 + 0x16) | 1;
@@ -1386,6 +1467,7 @@ LAB_800ad8ec:
     *(ushort *)(param_2 + 0x16) = uVar6;
     break;
 	
+  // ???
   case 0xb:
     *(short *)(param_2 + 0x2c) = psVar14[4];
     *(short *)(param_2 + 0x2a) = psVar14[6];
@@ -1395,6 +1477,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // FADE WHITE TO NORMAL
   case 0xc:
   
 	// pushBuffer fade values
@@ -1407,10 +1490,12 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // ???
   case 0xd:
     uVar6 = *(ushort *)(param_2 + 0x16) | psVar14[6];
     goto LAB_800ad444;
 	
+  // ???
   case 0xe:
     *(ushort *)(param_2 + 0x16) = *(ushort *)(param_2 + 0x16) & ~psVar14[6];
 	
@@ -1419,6 +1504,7 @@ LAB_800ad8ec:
 	
     goto LAB_800adcc0;
 	
+  // SWAP LEVEL
   case 0xf:
   
 	// need to swap LEV files
@@ -1447,8 +1533,10 @@ LAB_800ad8ec:
 	
     goto switchD_800acf30_caseD_14;
 	
+  // LOAD LEVEL
   case 0x10:
     
+	// get level from opcode
 	iVar10 = *(int *)(psVar14 + 6);
     
 	// set level ID
@@ -1457,22 +1545,28 @@ LAB_800ad8ec:
 	// oxide intro
 	if (iVar10 == 0x1e) 
 	{
-	  // disable checkered flag
+	  // RaceFlag_SetCanDraw
       FUN_80044088(0);
 	  
 LAB_800ad2fc:
+
+	  // remove VEH_FREEZE_PODIUM
       *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
       
 	  // load LEV
 	  FUN_8003cfc0((int)(short)iVar10);
     }
     else {
-      if (iVar10 < 0x1f) {
+      if (iVar10 < 0x1f) 
+	  {
+		// gemstone valley
         if (iVar10 == 0x19) 
 		{
 		  // gemstone valley
           uVar11 = 0x19;
 LAB_800ad334:
+
+		  // remove VEH_FREEZE_PODIUM
           *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
           
 		  // load LEV
@@ -1481,14 +1575,28 @@ LAB_800ad334:
 		  break;
         }
       }
-      else {
-        if (iVar10 == 0x27) {
+      else 
+	  {
+		// main menu
+        if (iVar10 == 0x27) 
+		{
+		  // RaceFlag_SetDrawOrder
           FUN_80043f8c(0);
           uVar11 = 0x27;
           goto LAB_800ad334;
         }
+		
+		// Credits
         if (iVar10 == 0x2c) goto LAB_800ad2fc;
       }
+	  
+	  // Not:
+	  //	Oxide Intro, 
+	  //	Gemstone Valley
+	  //	Main Menu
+	  //	Credits
+	  
+	  // loading next swap-level
       DAT_800b0b80 = 1;
 	  
 	  // LOAD_Hub_ReadFile
@@ -1496,11 +1604,25 @@ LAB_800ad334:
     }
     break;
 	
+  // ???
+  // what? loading 'something' that isnt a swap-level?
   case 0x11:
-    if (((DAT_800b0b80 == 0) || (DAT_8008d0a0 == '\0')) || (DAT_8008d0a2 != 0))
-    goto switchD_800acf30_caseD_14;
-    break;
+    if (
+		// not loading next swap-level
+		(DAT_800b0b80 == 0) || 
+		
+		// queueReady (queue in use)
+		(DAT_8008d0a0 == 0) || 
+		
+		// queueLength (queue in use)
+		(DAT_8008d0a2 != 0)
+	   )
+	{
+		goto switchD_800acf30_caseD_14;
+    }
+	break;
 	
+  // SET XA
   case 0x12:
     
 	// CDSYS_XAPlay
@@ -1522,7 +1644,8 @@ LAB_800ad334:
 	
   case 0x14:
     goto switchD_800acf30_caseD_14;
-	
+
+  // SET STARS
   case 0x15:
     
 	// number of players
@@ -1543,24 +1666,27 @@ LAB_800ad334:
 	// other star-related data
     *(undefined2 *)(puVar3 + 0x1b0e) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x17e);
     *(undefined2 *)(puVar3 + 0x1b10) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x180);
-    DAT_800b0b80 = 0;
     *(undefined2 *)(puVar3 + 0x1b12) = *(undefined2 *)(*(int *)(puVar3 + 0x160) + 0x182);
+	
+	// not loading swap-level
+    DAT_800b0b80 = 0;
 	
 	// CS_ScriptCmd_OpcodeNext
     FUN_800ac1c0(param_2);
 	
     goto LAB_800adcc0;
 	
+  // FLAG TRANSITION ON
   case 0x16:
   
 	// RaceFlag_IsFullyOffScreen
     iVar10 = FUN_80043f28();
     if (iVar10 == 1) 
 	{
-	  // enable checkered flag
+	  // RaceFlag_SetCanDraw
       FUN_80044088(1);
 	  
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
     break;
@@ -1571,13 +1697,14 @@ LAB_800ad334:
     uVar7 = FUN_80043f1c();
     goto joined_r0x800ad160;
 	
+  // FLAG TRANSITION OFF
   case 0x18:
   
     // RaceFlag_IsFullyOnScreen
     iVar10 = FUN_80043f1c();
     if (iVar10 == 1) 
 	{
-	  // checkered flag, begin transition off-screen
+	  // RaceFlag_BeginTransition(GoOffscreen)
       FUN_80043fb0(2);
     }
     break;
@@ -1590,6 +1717,7 @@ LAB_800ad334:
 	
     goto LAB_800adcc0;
 	
+  // MAKE INVISIBLE
   case 0x1a:
     if (param_1 != 0) 
 	{
@@ -1598,6 +1726,7 @@ LAB_800ad334:
     }
     break;
 	
+  // MAKE VISIBLE
   case 0x1b:
     if (param_1 != 0) 
 	{
@@ -1606,6 +1735,7 @@ LAB_800ad334:
     }
     break;
 	
+  // Instance OT sorting offset
   case 0x1c:
     if (param_1 != 0) {
       *(char *)(param_1 + 0x50) = *(char *)(param_1 + 0x50) + *(char *)(psVar14 + 6);
@@ -1613,12 +1743,14 @@ LAB_800ad334:
     }
     break;
 	
+  // INSTANCE SET FLAG
   case 0x1d:
     if (param_1 != 0) {
       *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | *(uint *)(psVar14 + 6);
     }
     break;
 	
+  // INSTANCE REMOVE FLAG
   case 0x1e:
     if (param_1 != 0) {
       *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) & ~*(uint *)(psVar14 + 6);
@@ -1629,18 +1761,24 @@ LAB_800ad334:
     *(undefined2 *)(param_2 + 4) = 0x1333;
     break;
 	
+  // END PODIUM CUTSCENE
   case 0x20:
+	
+	// end cutscene
     DAT_800b7760 = 1;
 	
 	// CS_DestroyPodium_StartDriving
     FUN_800ac714();
 	
     puVar4 = PTR_DAT_8008d2ac;
+	
+	// undecided boss cutscene
     DAT_800b0b88 = -1;
     
 	// hold 233 overlay, dont load 232 yet
 	PTR_DAT_8008d2ac[0x2579] = 3;
 	
+	// remove VEH_FREEZE_PODIUM
     *(uint *)(puVar4 + 8) = *(uint *)(puVar4 + 8) & 0xfffffffb;
 	
 	// CS_ScriptCmd_OpcodeNext
@@ -1648,18 +1786,38 @@ LAB_800ad334:
 	
     goto LAB_800adcc0;
 	
+  // PICK BOSS CUTSCENE
   case 0x21:
+  
+    // boss cutscene from opcode
     DAT_800b0b88 = *(int *)(psVar14 + 6);
-    if ((DAT_800b0b88 == 0) && (0x11 < *(int *)(PTR_DAT_8008d2ac + 0x1e34))) {
+	
+    if (
+		// if oxide intro (collected all trophies)
+		(DAT_800b0b88 == 0) && 
+		
+		// all 18 relics
+		(0x11 < *(int *)(PTR_DAT_8008d2ac + 0x1e34))
+	  ) 
+	{
+	  // oxide intro (all relics) on gemstone valley
       DAT_800b0b88 = 9;
     }
+	
+	// go to boss cutscene
     DAT_800b7774 = 1;
     break;
 	
+  // SET FOV
   case 0x22:
     uVar11 = *(undefined4 *)(psVar14 + 6);
-    *(undefined4 *)(puVar3 + 0x180) = uVar11;
+    
+	// gGT->pushBuffer[0].distToScreen_PREV
+	*(undefined4 *)(puVar3 + 0x180) = uVar11;
+	
+	// gGT->pushBuffer[0].distToScreen_CURR
     *(undefined4 *)(puVar3 + 0x274) = uVar11;
+	
     uVar6 = *(ushort *)(param_2 + 0x16) | 0x20;
 LAB_800ad444:
     *(ushort *)(param_2 + 0x16) = uVar6;
@@ -1674,6 +1832,7 @@ LAB_800ad444:
     uVar7 = FUN_800b92a0();
     goto joined_r0x800ad160;
 	
+  // CREDITS NEW DANCER
   case 0x24:
     DAT_1f800108 = 0;
     DAT_1f80010a = 0;
@@ -1684,23 +1843,29 @@ LAB_800ad444:
     DAT_1f800110 = 0;
     DAT_1f800112 = 0;
     DAT_1f800114 = 0;
+	
     PTR_DAT_8008d2ac[0x2575] = *(undefined *)(psVar14 + 6);
     PTR_DAT_8008d2ac[0x2576] = 0;
     PTR_DAT_8008d2ac[0x2577] = 0;
     iVar10 = *(int *)(psVar14 + 6);
+	
+	// STATIC_OXIDEDANCE
     if (iVar10 == 0x8d) {
       PTR_DAT_8008d2ac[0x2575] = 0;
       PTR_DAT_8008d2ac[0x2576] = 0x8d;
       iVar10 = *(int *)(psVar14 + 6);
     }
+	
+	// STATIC_CRASHDANCE
     if (iVar10 == 0x7e) {
       DAT_1f800118._2_2_ = DAT_1f800118._2_2_ + 0x800;
     }
+	
     DAT_1f800118._0_2_ = (short)DAT_1f800118 + DAT_800b7480;
     DAT_1f800118._2_2_ = DAT_1f800118._2_2_ + DAT_800b7482;
     DAT_1f80011c._0_2_ = (short)DAT_1f80011c + DAT_800b7484;
     
-	// make a thread for "dancer"
+	// CS_Thread_Init for "dancer"
 	uVar11 = FUN_800af328
                        (*(undefined4 *)(psVar14 + 6),s_g_dancer_800ab9fc,&DAT_1f800108,0,0);
     
@@ -1711,6 +1876,7 @@ LAB_800ad444:
 	FUN_800b92cc(uVar11,(int)psVar14[6]);
     break;
 	
+  // CREDITS NEW GHOST
   case 0x25:
 	
 	// CS_Credits_NewCreditGhosts
@@ -1722,6 +1888,7 @@ joined_r0x800ad160:
     if (uVar7 == 0) goto switchD_800acf30_caseD_14;
     break;
 	
+  // ADV GARAGE
   case 0x26:
     if (psVar14[3] == 0) {
       if ((*(int *)(psVar14 + 4) != (int)*(short *)(&DAT_800b85d8 + (int)DAT_8008d914 * 2))
@@ -1742,10 +1909,14 @@ LAB_800ad9f4:
       }
     }
     break;
+  
   case 0x27:
+	
+	// gGT->msInThisLEV
     if (*(uint *)(puVar3 + 0x1d00) >> 5 < *(uint *)(psVar14 + 6))
-    goto switchD_800acf30_caseD_14;
+		goto switchD_800acf30_caseD_14;
     break;
+	
   case 0x28:
     
 	// CS_Instance_SafeCheckAnimFrame
@@ -1754,6 +1925,7 @@ LAB_800ad9f4:
 	iVar12 = iVar12 << 5;
     goto switchD_800acf30_caseD_14;
   
+  // CREDITS END
   case 0x29:
   
     // CS_Credits_End
@@ -1768,24 +1940,33 @@ LAB_800ad9f4:
 	// kill cutscene thread
     return 1;
 	
+  // SET GAME MODES
   case 0x2c:
     sVar5 = psVar14[1];
-    if (sVar5 == 1) {
+    if (sVar5 == 1) 
+	{
+	  // gGT->gameMode2 |= flags
       *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) | *(uint *)(psVar14 + 6);
     }
     else {
       if (sVar5 < 2) {
-        if (sVar5 == 0) {
+        if (sVar5 == 0) 
+		{
+		  // gGT->gameMode1 |= flags
           *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac | *(uint *)(psVar14 + 6);
         }
       }
       else {
-        if (sVar5 == 2) {
+        if (sVar5 == 2) 
+		{
+		  // gGT->renderFlags |= flags
           *(uint *)(PTR_DAT_8008d2ac + 0x256c) =
                *(uint *)(PTR_DAT_8008d2ac + 0x256c) | *(uint *)(psVar14 + 6);
         }
         else {
-          if (sVar5 == 3) {
+          if (sVar5 == 3) 
+		  {
+			// gGT->renderFlags &= ~(flags)
             *(uint *)(PTR_DAT_8008d2ac + 0x256c) =
                  *(uint *)(PTR_DAT_8008d2ac + 0x256c) & ~*(uint *)(psVar14 + 6);
           }
@@ -1793,6 +1974,7 @@ LAB_800ad9f4:
       }
     }
     break;
+	
   case 0x2d:
     *(short *)(param_2 + 0x2e) = psVar14[1];
     *(short *)(param_2 + 0x30) = psVar14[2];
@@ -1804,7 +1986,11 @@ LAB_800ad9f4:
     FUN_800ac1c0(param_2);
 	
     goto LAB_800adcc0;
+  
+  // FADE NORMAL TO BLACK
   case 0x2e:
+	
+	// pushBuffer_UI fade to black
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x139c) = 0;
     *(undefined2 *)(puVar4 + 0x139e) = 0xfd56;
 	
@@ -1812,9 +1998,13 @@ LAB_800ad9f4:
     FUN_800ac1c0(param_2);
 	
     goto LAB_800adcc0;
+  
   case 0x2f:
+    // pushBuffer_UI fade is NOT black
     if (0 < *(short *)(PTR_DAT_8008d2ac + 0x139a)) goto switchD_800acf30_caseD_14;
     break;
+  
+  // SET VOLUME MODES
   case 0x30:
 	// cutscene manipulated audio
     DAT_800b0b8c = 1;
@@ -2359,7 +2549,7 @@ LAB_800ae744:
 }
 
 
-// CS_Boss_Init
+// CS_LoadBoss
 void FUN_800ae834(int *param_1)
 
 {
@@ -2399,6 +2589,7 @@ void FUN_800ae834(int *param_1)
   
   if (*param_1 != 0) 
   {
+	// CTR vram file (body and head)
 	// add to load queue, '3' means vram
     FUN_80032d30(DAT_8008d09c,3,*param_1 + -1 + iVar5,0,0);
   }
@@ -2410,6 +2601,7 @@ void FUN_800ae834(int *param_1)
     iVar3 = iVar2;
     if (*piVar4 != 0) 
 	{
+	  // CTR Model File (body)
 	  // add to load queue, '2' means dram
       FUN_80032d30(DAT_8008d09c,2,*piVar4 + -1 + iVar5,puVar1,0xfffffffe);
     }
@@ -2418,6 +2610,7 @@ void FUN_800ae834(int *param_1)
     piVar4 = piVar4 + -1;
   } while (0 < iVar2);
   
+  // CTR Model File (head)
   // add to load queue, '2' means dram
   FUN_80032d30(DAT_8008d09c,2,param_1[iVar3] + -1 + iVar5,0,&LAB_800ae81c);
   
@@ -2425,7 +2618,7 @@ void FUN_800ae834(int *param_1)
 }
 
 
-// CS_Boss_ThTick
+// CS_Camera_ThTick_Boss
 void FUN_800ae9a8(int param_1)
 
 {
@@ -2448,11 +2641,15 @@ void FUN_800ae9a8(int param_1)
   
   puVar1 = PTR_DAT_8008d2ac;
   
-  // first determine which cutscene will play
+  // If cutscene is undecided
   if (DAT_800b0b88 < 0) 
   {
 	// Intro Boss Cutscene
-	  
+	
+	// each boss is 13 INTs large
+	// levelID=0 -> 0
+	// levelID=1 -> 26
+	
 	// subtract 25 from lev ID to get adv hub index (0-5)
     iVar6 = (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2;
     iVar2 = (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 4;
@@ -2461,12 +2658,20 @@ void FUN_800ae9a8(int param_1)
     if (*(short *)(PTR_DAT_8008d2ac + 0x2572) == 99) 
 	{
 	  // Outro Boss Cutscene
+	  
+	  // increase by 1*5 + 2*4
+	  // increase by 13 INTs
       iVar6 = iVar6 + 1;
       iVar2 = iVar6 * 2;
     }
+	
     iVar2 = iVar2 * 4 + iVar6 * 5;
   }
-  else {
+  
+  // If cutscene came from script opcode
+  else 
+  {
+	// 13 INTs large
     iVar2 = DAT_800b0b88 * 0xd;
   }
   
@@ -2477,7 +2682,7 @@ void FUN_800ae9a8(int param_1)
   
   switch(DAT_800b7774) 
   {
-	// first state of boss cutscene
+	// Start Fade-to-black
   case 0:
   case 1:
   
@@ -2491,6 +2696,9 @@ void FUN_800ae9a8(int param_1)
     *(undefined2 *)(puVar1 + 0x139e) = 0xfc00;
 	
     break;
+	
+  // Wait for fade-to-black
+  // Start loading process
   case 2:
   
 	// if pushBuffer_UI is fully faded to black
@@ -2512,7 +2720,7 @@ void FUN_800ae9a8(int param_1)
 	  // if all podium threads are dead
       if (*(int *)(PTR_DAT_8008d2ac + 0x1c30) == 0) 
 	  {
-		// CS_Boss_Init
+		// CS_LoadBoss
         FUN_800ae834(iVar2 + -0x7ff48b78); // 800B7488
 		
 		// go to state 3
@@ -2520,32 +2728,55 @@ void FUN_800ae9a8(int param_1)
       }
     }
     break;
+	
+  // Wait for loading callback,
+  // start thread for head+body
+  // start fade-to-normal
   case 3:
-    iVar6 = 0;
-    if (DAT_800b7778 != 0) {
+    
+	iVar6 = 0;
+    
+	// if CTR Model File (head)
+	if (DAT_800b7778 != 0) 
+	{
+	  // loop through 2 models (head + body)
       piVar4 = &DAT_800b7778;
       do {
-        if (*piVar4 != 0) {
+        
+		// if model exists
+		if (*piVar4 != 0) 
+		{
+		  // increment ONLY body by 4,
+		  // head was incremented in callback
           if (iVar6 != 0) {
             *piVar4 = *piVar4 + 4;
           }
+		  
+		  // store in gGT->modelPtrs
           *(int *)(puVar1 + (int)*(short *)(*piVar4 + 0x10) * 4 + 0x2160) = *piVar4;
         }
-        iVar6 = iVar6 + 1;
+        
+		iVar6 = iVar6 + 1;
         piVar4 = piVar4 + 1;
       } while (iVar6 < 2);
+	  
       iVar6 = 0;
 	  
 	  // change active mempack
       FUN_8003e80c((int)*(short *)(PTR_DAT_8008d2ac + 0x254a));
 	  
+	  // Boss Head+Body Position
       local_60 = *(undefined2 *)(iVar2 + -0x7ff48b54); // 0x800B74AC
       local_5e = *(undefined2 *)(iVar2 + -0x7ff48b52); // 0x800B74AE
       local_5c = *(undefined2 *)(iVar2 + -0x7ff48b50); // 0x800B74B0
-      local_50 = *(undefined2 *)(iVar2 + -0x7ff48b4c); // 0x800B74B4
-      iVar7 = 1;
+      
+	  // Boss Head+Body Rotation
+	  local_50 = *(undefined2 *)(iVar2 + -0x7ff48b4c); // 0x800B74B4
       local_4e = *(undefined2 *)(iVar2 + -0x7ff48b4a); // 0x800B74B6
       local_4c = *(undefined2 *)(iVar2 + -0x7ff48b48); // 0x800B74B8
+	  
+	  // Loop through 2 models (head + body)
+      iVar7 = 1;
       piVar4 = &DAT_800b777c;
       local_58 = 0;
       local_56 = 0;
@@ -2554,9 +2785,11 @@ void FUN_800ae9a8(int param_1)
         if (0 < iVar7) {
           iVar6 = 0;
         }
+		
+		// Create Thread for Head + Body
         if ((*piVar4 != 0) &&
            (
-				// make a thread, return instance
+				// CS_Thread_Init, return instance
 				iVar6 = FUN_800af328((int)*(short *)(*piVar4 + 0x10),*piVar4,&local_60,0,iVar6),
 				
 				// check for valid instance
@@ -2569,6 +2802,7 @@ void FUN_800ae9a8(int param_1)
 		  // get object from thread
           iVar5 = *(int *)(iVar6 + 0x30);
 		  
+		  // If head, start animation opcode
           if (iVar7 == 0) 
 		  {
 			// CS_ScriptCmd_OpcodeAt
@@ -2576,6 +2810,8 @@ void FUN_800ae9a8(int param_1)
 			
             *(undefined2 *)(iVar5 + 0x14) = 0;
           }
+		  
+		  // if body, set scale
           else 
 		  {
 			// Set scale (x, y, z)
@@ -2591,18 +2827,18 @@ void FUN_800ae9a8(int param_1)
         piVar4 = piVar4 + -1;
       } while (-1 < iVar7);
 	  
-	  // set camera position and rotation for cutscene
-      *(undefined2 *)(PTR_DAT_8008d2ac + 0x168) = *(undefined2 *)(iVar2 + -0x7ff48b64);
+	  // Camera Position 800B749C
+      *(undefined2 *)(puVar1 + 0x168) = *(undefined2 *)(iVar2 + -0x7ff48b64);
       *(undefined2 *)(puVar1 + 0x16a) = *(undefined2 *)(iVar2 + -0x7ff48b62);
       *(undefined2 *)(puVar1 + 0x16c) = *(undefined2 *)(iVar2 + -0x7ff48b60);
-      *(short *)(puVar1 + 0x16e) = *(short *)(iVar2 + -0x7ff48b5c) + 0x800;
+	  
+	  // Camera Rotation 800B74A4
+      *(undefined2 *)(puVar1 + 0x16e) = *(undefined2 *)(iVar2 + -0x7ff48b5c) + 0x800;
       *(undefined2 *)(puVar1 + 0x170) = *(undefined2 *)(iVar2 + -0x7ff48b5a);
+      *(undefined2 *)(puVar1 + 0x172) = *(undefined2 *)(iVar2 + -0x7ff48b58);
       
 	  // stage 4
 	  DAT_800b7774 = 4;
-	  
-	  // last camera variable
-      *(undefined2 *)(puVar1 + 0x172) = *(undefined2 *)(iVar2 + -0x7ff48b58);
       
 	  // set desired brightness to normal brightness
 	  *(undefined2 *)(puVar1 + 0x139c) = 0x1000;
@@ -2611,6 +2847,8 @@ void FUN_800ae9a8(int param_1)
       *(undefined2 *)(puVar1 + 0x139e) = 0x400;
     }
     break;
+	
+  // wait for fade-to-normal
   case 4:
   
 	// if screen is at max brightness
@@ -2620,6 +2858,8 @@ void FUN_800ae9a8(int param_1)
       DAT_800b7774 = 5;
     }
     break;
+	
+  // kill thread at end of cutscene
   case 5:
   
 	// if cutscene is over
@@ -2636,7 +2876,7 @@ void FUN_800ae9a8(int param_1)
 }
 
 
-// CS_Boss_BoolShouldStart
+// CS_Camera_BoolGotoBoss
 undefined4 FUN_800aed48(void)
 
 {
@@ -2652,6 +2892,8 @@ undefined4 FUN_800aed48(void)
 				// if number of relics is less than 18
 				(*(int *)(PTR_DAT_8008d2ac + 0x1e34) < 0x12)
 			) || 
+			
+			// if BeatOxide2
 			((DAT_8008fbb0 & 0x100000) != 0)
 		) &&
 	
@@ -2659,6 +2901,7 @@ undefined4 FUN_800aed48(void)
 		(*(short *)(PTR_DAT_8008d2ac + 0x2572) != 99)
 	) 
   {
+	// gGT->level1->ptrSpawnType2_PosRot[1].posCoords
     psVar2 = *(short **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144) + 0xc);
     
 	uVar1 = 1;
@@ -2683,7 +2926,7 @@ undefined4 FUN_800aed48(void)
 }
 
 
-// CS_Podium_Camera_ThTick
+// CS_Camera_ThTick_Podium
 void FUN_800aedf8(int param_1)
 
 {
@@ -2758,10 +3001,15 @@ void FUN_800aedf8(int param_1)
 	
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xffffcfff;
   }
-  if ((DAT_800b7774 == 0) || (DAT_8008d908 != 0)) {
+  
+  if ((DAT_800b7774 == 0) || (DAT_8008d908 != 0)) 
+  {
+	// CAM_Path_GetNumPoints
     iVar5 = FUN_80018b18();
     iVar8 = (iVar5 << 0x15) >> 0x10;
-    if (iVar8 != 0) {
+	
+    if (iVar8 != 0) 
+	{
       _uVar4 = (uint)*puVar10 + (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x1d04);
       uVar4 = (ushort)_uVar4;
       iVar9 = _uVar4 * 0x10000 >> 0x10;
@@ -2829,7 +3077,10 @@ void FUN_800aedf8(int param_1)
 	  // podium reward
 	  *(undefined2 *)(puVar3 + 0x2572) = 0;
       
+	  // remove VEH_FREEZE_PODIUM
 	  *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) & 0xfffffffb;
+	  
+	  // RaceFlag_SetDrawOrder
       FUN_80043f8c(0);
 	  
 	  // go to main menu
@@ -2856,13 +3107,15 @@ void FUN_800aedf8(int param_1)
 	// If this is not a "beaten oxide" podium
 	if (sVar2 != 0x38) 
 	{
-	  // CS_Boss_BoolShouldStart
+	  // CS_Camera_BoolGotoBoss
       iVar5 = FUN_800aed48();
 	  
       puVar3 = PTR_DAT_8008d2ac;
 	  
 	  // if you do not go to boss cutscene
-      if (iVar5 == 0) {
+      if (iVar5 == 0) 
+	  {
+		// end cutscene (podium?)
         DAT_800b7760 = 1;
 		
 		// This thread is now dead
@@ -2941,22 +3194,28 @@ void FUN_800aedf8(int param_1)
 	  // At this point, there must be a boss cutscene,
 	  // or else the function would return by now
 	  
-	  // Change ThTick function, CS_Boss_ThTick
+	  // Change ThTick function, CS_Camera_ThTick_Boss
       *(undefined4 *)(param_1 + 0x2c) = 0x800ae9a8;
 	  
 	  // If you are not at the podium for winning a relic
-      if (*(short *)(puVar3 + 0x2572) != 0x61) {
+      if (*(short *)(puVar3 + 0x2572) != 0x61) 
+	  {
+		// undecided
         DAT_800b0b88 = 0xffffffff;
         return;
       }
       
 	  // less than 18 relics
-	  if (*(int *)(puVar3 + 0x1e34) < 0x12) {
+	  if (*(int *)(puVar3 + 0x1e34) < 0x12) 
+	  {
+		// undecided
         DAT_800b0b88 = 0xffffffff;
         return;
       }
 	  
-	  // Assuming the last relic was just won...
+	  // Assuming the last relic was just won,
+	  // Start cutscene of "this one is for keeps!" 
+	  // on the advhub that the driver is loaded into
       DAT_800b0b88 = *(int *)(puVar3 + 0x1a10) + -0x10;
       return;
     }
@@ -2967,6 +3226,8 @@ void FUN_800aedf8(int param_1)
     // podium reward
 	*(undefined2 *)(puVar3 + 0x2572) = 0;
     *(uint *)puVar3 = *(uint *)puVar3 & 0xffefffff;
+	
+	  // remove VEH_FREEZE_PODIUM
     *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) & 0xfffffffb;
     
 	// load LEV for beat oxide any%
@@ -3471,7 +3732,7 @@ void FUN_800af994(int param_1)
   
   // Give hints at the end of each race
   
-  // CS_Boss_BoolShouldStart
+  // CS_Camera_BoolGotoBoss
   iVar5 = FUN_800aed48();
   
   // if you do not go to boss cutscene
@@ -3553,6 +3814,7 @@ LAB_800afa68:
   // begin the async 232 load
   PTR_DAT_8008d2ac[0x2579] = 2;
   
+  // remove VEH_FREEZE_PODIUM
   *(uint *)(puVar1 + 8) = *(uint *)(puVar1 + 8) & 0xfffffffb;
   
   // Play "Unlock" Sound
@@ -3661,7 +3923,9 @@ void FUN_800afcc4(int param_1)
   // Cosine(angle)
   iVar4 = FUN_8003d1c0((int)psVar5[5]);
   
+  // isCutsceneNotOver
   bVar1 = DAT_800b7760 == 0;
+  
   *(int *)(iVar6 + 0x4c) = (int)psVar5[2] + (psVar5[0x11] * iVar4 >> 0xc);
   
   if (bVar1) 
@@ -3742,8 +4006,11 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
     if (DAT_800b7774 < 1) {
       DAT_800b7774 = 1;
     }
+	
+	// remove VEH_FREEZE_PODIUM
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffb;
-    return;
+    
+	return;
   }
   
   // set scale (x, y, z)
@@ -3779,7 +4046,10 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
   sVar1 = param_3[2];
   psVar11[10] = -0x200;
   psVar11[2] = sVar1 + (short)uVar10;
+  
+  // hudStructPtr
   puVar2 = PTR_DAT_8008625c;
+  
   switch(param_1) 
   {
   // if reward is [empty], used for Oxide Podium
@@ -4000,7 +4270,9 @@ void FUN_800b0300(void)
   DAT_800b776c = howl_VolumeGet(2);
   DAT_800b776c = DAT_800b776c & 0xff;
   
+  // cutscene not finished
   DAT_800b7760 = 0;
+  
   DAT_800b7774 = 0;
   DAT_800b7770 = 0;
   
@@ -4033,7 +4305,7 @@ void FUN_800b0300(void)
   // Draw Confetti
   *(uint *)(puVar2 + 0x256c) = *(uint *)(puVar2 + 0x256c) | 4;
   
-  // gGT + 8 |= 4
+  // gGT->gameMode2 |= VEH_FREEZE_PODIUM
   *(uint *)(puVar3 + 8) = *(uint *)(puVar3 + 8) | 4;
   
   // position and rotation of podium scene
@@ -4066,7 +4338,7 @@ void FUN_800b0300(void)
     local_46 = 0xffab;
     local_44 = 0;
 	
-	// create thread for "third"
+	// CS_Thread_Init for "third"
     FUN_800af328((uint)(byte)puVar2[0x2577],s_third_800abca4,&local_50,0x600,0);
   }
   
@@ -4076,7 +4348,7 @@ void FUN_800b0300(void)
     local_46 = 0xffd6;
     local_44 = 0;
 	
-	// create thread for "second"
+	// CS_Thread_Init for "second"
     FUN_800af328
               ((uint)(byte)PTR_DAT_8008d2ac[0x2576],s_second_800abcac,&local_50,0x200,0);
   }
@@ -4085,14 +4357,14 @@ void FUN_800b0300(void)
   local_46 = 0;
   local_44 = 0;
   
-  // create thread for "first"
+  // CS_Thread_Init for "first"
   FUN_800af328((uint)(byte)PTR_DAT_8008d2ac[0x2575],s_first_800abcb4,&local_50,0,0);
   
   local_48 = 0x1a8;
   local_46 = 0xff80;
   local_44 = 0x140;
   
-  // create thread for "tawna"
+  // CS_Thread_Init for "tawna"
   FUN_800af328
             ((uint)(byte)PTR_DAT_8008d2ac[0x2578],s_tawna_800abcbc,&local_50,0xfffffd56,0);
   
@@ -4154,7 +4426,7 @@ void FUN_800b0300(void)
 }
 
 
-// CS_LevThread_LInB
+// CS_Thread_LInB
 // for all cutscene threads
 void FUN_800b06ac(int param_1)
 
@@ -4167,6 +4439,7 @@ void FUN_800b06ac(int param_1)
   undefined *puVar6;
   int *piVar7;
   
+  // cutscene not finished
   DAT_800b7760 = 0;
   
   // If this Instance's thread does not exist
@@ -4251,15 +4524,23 @@ void FUN_800b06ac(int param_1)
     piVar7[0x12] = 0;
     *(undefined2 *)(piVar7 + 0xb) = 0x1000;
     *(undefined *)(piVar7 + 0x11) = 0xff;
+	
+	// gGT
     puVar6 = PTR_DAT_8008d2ac;
-    *(short *)(piVar7 + 5) =
+    
+	*(short *)(piVar7 + 5) =
          sVar3 + (short)((int)((iVar4 >> 2 & 0xfffU) * (((int)sVar1 - (int)sVar2) + 1)) >> 0xc);
-    iVar4 = *(int *)(puVar6 + 0x2114);
-    *(undefined2 *)(piVar7 + 1) = 0;
+    
+	// gGT->iconGroup
+	iVar4 = *(int *)(puVar6 + 0x2114);
+    
+	*(undefined2 *)(piVar7 + 1) = 0;
     *(undefined2 *)((int)piVar7 + 6) = 0;
     piVar7[2] = 0x2e808080;
     *(undefined2 *)(piVar7 + 3) = 0;
     *(undefined2 *)((int)piVar7 + 0xe) = 0;
+	
+	// array of icons
     *piVar7 = iVar4 + 0x14;
   }
   
@@ -4272,7 +4553,7 @@ void FUN_800b06ac(int param_1)
 }
 
 
-// CS_LevCamera_OnInit
+// CS_Cutscene_Start
 // for oxide intro and ND box
 void FUN_800b087c(void)
 
@@ -4287,7 +4568,7 @@ void FUN_800b087c(void)
   undefined2 local_36;
   undefined2 local_34;
   
-  // create thread for "introcam"
+  // CS_Thread_Init for "introcam"
   FUN_800af328(0,s_introcam_800abd24,0,0,0);
   
   // if not going to credits
@@ -4308,7 +4589,7 @@ void FUN_800b087c(void)
       local_3e = 0;
       local_3c = 0;
 	  
-	  // Create 19 threads for the Naughty Dog Box Scene
+	  // CS_Thread_Init 19x for the Naughty Dog Box Scene
       FUN_800af328(0xb6,s_BOX_01_800abd30,&local_48,0,0);
       FUN_800af328(0xb7,s_BOX_02_800abd38,&local_48,0,0);
       FUN_800af328(0xb8,s_BOX_02_BOTTOM_800abd40,&local_48,0,0);
@@ -4337,9 +4618,7 @@ void FUN_800b087c(void)
 	  // 800abd84 = "LID2"
 	  FUN_800af328(0xbf,&DAT_800abd9c,&local_48,0,0);
       
-	  // There are 5 cars that appear in the cutscene,
-	  // but the pointers and strings suggest there 
-	  // could have been 8
+	  // CS_Thread_Init for 5 karts (strings say couldve been 8)
 	  FUN_800af328(0xc1,s_KART0_800abda4,&local_48,0,0);
       FUN_800af328(0xc2,s_KART1_800abdac,&local_48,0,0);
       FUN_800af328(0xc3,s_KART2_800abdb4,&local_48,0,0);
@@ -4352,6 +4631,7 @@ void FUN_800b087c(void)
   // if going to credits
   else 
   {
+    // cutscene not finished
     DAT_800b7760 = 0;
     
 	// CS_Credits_Init
@@ -5051,8 +5331,10 @@ LAB_800b821c:
   }
   iVar7 = DAT_800b85d0 + iVar7 / DAT_800b85cc;
   
-  // what? Why is this pushBuffer[1]
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(int *)(puVar2 + 0x274) = iVar7;
+  
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(int *)(puVar2 + 0x180) = iVar7;
   return;
 }
@@ -5072,6 +5354,7 @@ void FUN_800b8558(void)
   // go to 3D character selection
   DAT_8008d908 = &DAT_800b8598;
   
+  // remove VEH_FREEZE_PODIUM
   DAT_800b85a0 = DAT_800b85a0 & 0xfffffffb;
   
   // CS_Garage_ZoomOut (0 = just entered garage)

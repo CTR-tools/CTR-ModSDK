@@ -2935,13 +2935,20 @@ LAB_800aede8:
   
   puVar2 = PTR_DAT_8008d2ac;
   local_28 = (int)*(short *)(*(int *)(iVar10 + 0x2c) + 0x34) + (iVar4 * -0x280 >> 0xc);
+  
+  // driverPos - garagePos
   iVar10 = *(int *)(iVar11 + 0x44) - local_30;
   iVar4 = *(int *)(iVar11 + 0x48) - local_2c;
   iVar11 = *(int *)(iVar11 + 0x4c) - local_28;
-  if (iVar10 * iVar10 + iVar4 * iVar4 + iVar11 * iVar11 < 0x40000) {
+  
+  if (iVar10 * iVar10 + iVar4 * iVar4 + iVar11 * iVar11 < 0x40000) 
+  {
+	// pushBuffer FadeToBlack
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x139c) = 0;
     *(undefined2 *)(puVar2 + 0x139e) = 0xfd56;
   }
+  
+  // pushBuffer_UI fade is fully black
   if (*(short *)(PTR_DAT_8008d2ac + 0x139a) == 0) 
   {
 	// when loading is done, remove flag for In Adventure Arena
@@ -2981,7 +2988,8 @@ LAB_800aede8:
     
 	// RaceFlag_SetDrawOrder
 	FUN_80043f8c(1);
-													// Level ID - 0x19: Adventure Hub (0-4)
+	
+	// MainRaceTrack_RequestLoad (array[gGT->levelID-0x19])
     FUN_8003cfc0((int)*(short *)((int)&local_60 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2)
                 );
   }
@@ -5391,11 +5399,20 @@ void FUN_800b1c90(void)
   DAT_8008d000 = DAT_8008d000 & 0xfffffff7;
   
   local_20 = 0;
+  
+  // gGT->drivers
   uVar4 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec);
+  
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar2 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
+  
   iVar3 = 0;
+  
+  // RaceFlag_GetCanDraw
   iVar1 = FUN_80044094();
-  if (iVar1 == 0) {
+  if (iVar1 == 0) 
+  {
+	// RaceFlag_SetCanDraw
     FUN_80044088(1);
   }
   
@@ -7630,7 +7647,7 @@ void FUN_800b4c80(int param_1)
   DAT_1f80010c = *(short *)(param_1 + 0x4c) + (ushort)DAT_1f80011c * 2;
   DAT_1f800114 = DAT_1f80010c + (ushort)DAT_1f80011c * -4;
   
-  // COLL_SearchTree_FindQuadblock_Touching
+  // COLL_SearchBSP_CallbackQUADBLK
   FUN_8001eb0c(&DAT_1f800108,&DAT_1f800110,&DAT_1f800120,0);
   
   if (DAT_1f80015e != 0) {

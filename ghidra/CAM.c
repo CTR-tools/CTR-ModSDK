@@ -921,15 +921,15 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
 	// if camera -> ptrQuadblock
     if (*(int *)(param_2 + 0x1c) != 0)
 	{
-	  // COLL_PerQuadblock_CheckTriangles_Touching
+	  // COLL_FIXED_QUADBLK_TestTriangles
       FUN_8001f41c(*(int *)(param_2 + 0x1c),param_1);
     }
 
     if (
 			(param_1[0x1f] == 0) &&
 			(
-				// COLL_SearchTree_FindX, callback
-				// COLL_PerBspLeaf_CheckQuadblocks_Touching
+				// COLL_SearchBSP_CallbackPARAM, callback
+				// COLL_FIXED_BSPLEAF_TestQuadblocks
 				FUN_8001ebec(*(undefined4 *)(*(int *)(param_1 + 0x16) + 0x18),param_1 + 0x18,FUN_8001f5f0,
 						param_1), param_1[0x1f] == 0
 			)
@@ -1015,7 +1015,7 @@ undefined4 FUN_80018ba0(int param_1,ushort *param_2,ushort *param_3,ushort *para
   // frame index
   sVar4 = (short)param_1;
 
-  // get number of position on track
+  // CAM_Path_GetNumPoints
   sVar1 = FUN_80018b18();
 
   if (sVar4 < 0)
@@ -1225,7 +1225,7 @@ void FUN_80018ec0(undefined2 *param_1)
     local_18 = local_20;
     local_14 = local_1c;
 
-	// COLL_SearchTree_FindQuadblock_Touching
+	// COLL_SearchBSP_CallbackQUADBLK
     FUN_8001eb0c(&local_20,&local_18,&DAT_8008db1c,0,local_20,local_1c);
 
 	iVar2 = iVar2 + 1;
@@ -2176,7 +2176,9 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
     *(undefined2 *)(param_1 + 0xc0) = 0;
     *(undefined2 *)(param_1 + 0xc2) = 0;
   }
-  //if kart is not being blasted, racer is on the ground and (?)
+  
+  // Basically: IF first frame after blasted finished, start BlastedLerp.
+  // If kart is not being blasted, racer is on the ground and BLASTED lerp pending
   if (((*(char *)(param_2 + 0x376) != '\x06') && ((*(uint *)(param_2 + 0x2c8) & 1) != 0)) &&
      (*(short *)(param_1 + 0xc6) != 0))
   {
@@ -2185,27 +2187,49 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
     *(short *)(param_1 + 0xd6) = *(short *)(param_1 + 0x5c) - *(short *)(param_4 + 0x244);
     *(short *)(param_1 + 0xd8) = *(short *)(param_1 + 0x60) - *(short *)(param_4 + 0x248);
 
+	// rotation interpolation
     *(short *)(param_1 + 0xcc) = *(short *)(param_1 + 100) - *(short *)(param_4 + 600);
     *(short *)(param_1 + 0xce) = *(short *)(param_1 + 0x68) - *(short *)(param_4 + 0x25c);
     sVar10 = *(short *)(param_4 + 0x260);
+    *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
+	
+	// 8 frame transition
     *(undefined2 *)(param_1 + 0xda) = 8;
     *(undefined2 *)(param_1 + 0xc6) = 0;
-    *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
   }
 
-  // if not arcade end-of-race
-  if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) {
-    if ((*(char *)(param_2 + 0x376) != '\x06') && (*(short *)(param_1 + 0xc6) == 0))
-    goto LAB_8001a8c0;
-    if (*(short *)(param_1 + 0xc6) == 0) {
+  // if not arcade end-of-race, if camera following driver
+  if (((*(uint *)(param_1 + 0x70) & 0x20) == 0) && (*(short *)(param_1 + 0x9a) == 0)) 
+  {
+    if (
+			// if NOT blasted
+			(*(char *)(param_2 + 0x376) != '\x06') &&
+			
+			// if no pending lerp is stored
+			(*(short *)(param_1 + 0xc6) == 0)
+		)
+		
+		goto LAB_8001a8c0;
+		
+	// === If Blasted ===
+	
+	// if no pending lerp is stored
+    if (*(short *)(param_1 + 0xc6) == 0) 
+	{
       *(short *)(param_1 + 200) = *(short *)(param_1 + 0x68) - *(short *)(param_1 + 0x5c);
-      *(short *)(param_1 + 0xca) =
-           *(short *)(param_1 + 0x5c) - (short)((uint)*(undefined4 *)(param_2 + 0x2d0) >> 8);
+      *(short *)(param_1 + 0xca) = *(short *)(param_1 + 0x5c) - (short)((uint)*(undefined4 *)(param_2 + 0x2d0) >> 8);
     }
-    *(undefined2 *)(param_1 + 0xc6) = 1;
-    if ((*(int *)(param_1 + 0x5c) < *(int *)(param_4 + 0x244)) &&
-       (x = (int)*(short *)(param_1 + 0xca) + (*(int *)(param_2 + 0x2d0) >> 8),
-       x < *(int *)(param_4 + 0x244))) {
+    
+	*(undefined2 *)(param_1 + 0xc6) = 1;
+    
+	if (
+		(*(int *)(param_1 + 0x5c) < *(int *)(param_4 + 0x244)) &&
+		(
+			x = (int)*(short *)(param_1 + 0xca) + (*(int *)(param_2 + 0x2d0) >> 8),
+			x < *(int *)(param_4 + 0x244)
+		)
+	   ) 
+	{
       *(int *)(param_4 + 0x244) = x;
     }
 LAB_8001a8b0:
@@ -2215,7 +2239,7 @@ LAB_8001a8b0:
   // if this is arcade end-of-race
   else
   {
-	// something to do with camera position interpolation
+	// Finish BLASTED lerp if started before end-of-race
     if (*(short *)(param_1 + 0xc6) != 0)
 	{
 	  // camera distance = camera speed, minus camera position
@@ -2223,12 +2247,15 @@ LAB_8001a8b0:
       *(short *)(param_1 + 0xd6) = *(short *)(param_1 + 0x5c) - *(short *)(param_4 + 0x244);
       *(short *)(param_1 + 0xd8) = *(short *)(param_1 + 0x60) - *(short *)(param_4 + 0x248);
 
+	  // rotation interpolation
 	  *(short *)(param_1 + 0xcc) = *(short *)(param_1 + 100) - *(short *)(param_4 + 600);
       *(short *)(param_1 + 0xce) = *(short *)(param_1 + 0x68) - *(short *)(param_4 + 0x25c);
       sVar10 = *(short *)(param_4 + 0x260);
+      *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
+	  
+	  // 8 frame transition
       *(undefined2 *)(param_1 + 0xda) = 8;
       *(undefined2 *)(param_1 + 0xc6) = 0;
-      *(short *)(param_1 + 0xd0) = *(short *)(param_1 + 0x6c) - sVar10;
       goto LAB_8001a8b0;
     }
 LAB_8001a8c0:
@@ -3366,10 +3393,10 @@ LAB_8001c150:
   // camera quadblock exists
   if (piVar18[7] != 0)
   {
-	// quadblock -> ptr_add_tex
+	// quadblock -> PVS
     piVar8 = *(int **)(piVar18[7] + 0x44);
 
-	// ptr_add_tex -> 0x0
+	// PVS -> visLeafSrc
 	if ((piVar8 != (int *)0x0) && (iVar22 = *piVar8, iVar22 != 0))
 	{
 	  // CameraDC 0x20
@@ -3382,10 +3409,10 @@ LAB_8001c150:
     // camera quadblock exists
     if (piVar18[7] != 0)
 	{
-	  // quadblock -> ptr_add_tex
+	  // quadblock -> PVS
       iVar22 = *(int *)(piVar18[7] + 0x44);
 
-	  // ptr_add_tex -> 0x4
+	  // PVS -> visFaceSrc
       if ((iVar22 != 0) && (iVar22 = *(int *)(iVar22 + 4), iVar22 != 0))
 	  {
 	    // CameraDC 0x24
@@ -3395,20 +3422,20 @@ LAB_8001c150:
 	  // camera quadblock exists
       if (piVar18[7] != 0)
 	  {
-		// quadblock -> ptr_add_tex
+		// quadblock -> PVS
         iVar22 = *(int *)(piVar18[7] + 0x44);
 
-		// ptr_add_tex -> 0x8
+		// PVS -> visInstSrc
 		if ((iVar22 != 0) && (iVar22 = *(int *)(iVar22 + 8), iVar22 != 0))
 		{
 		  // CameraDC 0x28
           piVar18[10] = iVar22;
         }
 
-		// camera quadblock exists 		quadblock -> ptr_add_tex
+		// camera quadblock exists 		quadblock -> PVS
         if (((piVar18[7] != 0) && (iVar22 = *(int *)(piVar18[7] + 0x44), iVar22 != 0)) &&
 
-			// ptr_add_tex -> 0xC
+			// PVS -> visExtraSrc
 		   (iVar22 = *(int *)(iVar22 + 0xc), iVar22 != 0))
 		{
 		  // if no lev animated vertices

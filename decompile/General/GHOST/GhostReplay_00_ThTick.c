@@ -47,7 +47,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 
   if (
 		(sdata->boolGhostsDrawing == 0) ||
-		((gGT->gameMode1 & PAUSE_THREADS) != 0) ||
+		((gGT->gameMode1 & DEBUG_MENU) != 0) ||
 		(d == 0) ||
 		(tape->ptrEnd == tape->ptrStart) ||
 		(d->ghostBoolInit == 0)

@@ -148,13 +148,23 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 
     // Set next stage to 2 for Time Trial
     D230.desiredMenuIndex = 2;
-
-    // set number of players to 1
-    gGT->numPlyrNextGame = 1;
-
+	
     // set game mode to Time Trial Mode
+    gGT->numPlyrNextGame = 1;
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
+	
+	#ifdef USE_NEWLEV
+    sdata->gameProgress.unlocks[0] |= UNLOCK_CHARACTERS;
+    data.metaDataLEV[CUSTOM_LEVEL_ID].timeTrial = 0x7FFFFFFF;
+    if(sdata->ptrGhostTapePlaying == 0)
+    {
+      SelectProfile_ToggleMode(0x30);
+      sdata->boolReplayHumanGhost = 0;
+      sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
+    }
+	#endif
+	
     return;
   }
   

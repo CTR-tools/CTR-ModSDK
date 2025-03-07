@@ -8,11 +8,6 @@ int OnlineGetNumDrivers()
 
 void octr_entryHook()
 {
-	// Until VehBirth_TeleportSelf is rewritten
-	// AdvHub, replace default spawn with unused
-	// start-line spawn, turn BEQ to JMP
-	*(char*)0x80058072 = 0;
-
 	// BOTS_Adv_AdjustDifficulty(); must be called before
 	// initializing any AI, either BOTS_Driver_Init or
 	// from BOTS_Driver_Convert. If AIs are wanted, then
@@ -112,16 +107,10 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
-		VehBirth_TeleportSelf(dr,3,0);
+		DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 		// realID
 		dr->driverID = i+1;
-
-		#ifdef USE_60FPS
-		// needed cause VehBirth_TeleportSelf
-		// has not been rewritten yet for decomp
-		dr->instSelf->animFrame = FPS_DOUBLE(10);
-		#endif
 	}
 
 	// init, save
@@ -130,16 +119,10 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 	// fakeID, teleport
 	dr->driverID = (i-numDead)&bitFlag;
-	VehBirth_TeleportSelf(dr,3,0);
+	DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 	// realID
 	dr->driverID = 0;
-
-	#ifdef USE_60FPS
-	// needed cause VehBirth_TeleportSelf
-	// has not been rewritten yet for decomp
-	dr->instSelf->animFrame = FPS_DOUBLE(10);
-	#endif
 
 	for(i = i+1; i < octr->NumDrivers; i++)
 	{
@@ -155,16 +138,10 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 
 		// fakeID, teleport
 		dr->driverID = (i-numDead)&bitFlag;
-		VehBirth_TeleportSelf(dr,3,0);
+		DECOMP_VehBirth_TeleportSelf(dr,3,0);
 
 		// realID
 		dr->driverID = i;
-
-		#ifdef USE_60FPS
-		// needed cause VehBirth_TeleportSelf
-		// has not been rewritten yet for decomp
-		dr->instSelf->animFrame = FPS_DOUBLE(10);
-		#endif
 	}
 
 	if (gGT->levelID != 0x26/*INTRO_RACE_TODAY*/) //was 0x26 (globe level)

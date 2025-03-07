@@ -8,7 +8,7 @@ void DECOMP_Particle_UpdateAllParticles(void)
   // Pretty sure this is only for debugging,
   // not an actual game feature, and we need bytes
 #if 0
-  if ((gGT->gameMode1 & PAUSE_THREADS) != 0)
+  if ((gGT->gameMode1 & DEBUG_MENU) != 0)
 	  return;
 #endif
   

@@ -115,6 +115,13 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				DECOMP_MM_CupSelect_Init();
 				return;
 			}
+			
+			#ifdef USE_NEWLEV
+			gGT->currLEV = CUSTOM_LEVEL_ID;
+			MainRaceTrack_RequestLoad(CUSTOM_LEVEL_ID);
+			sdata->ptrActiveMenu = 0;
+			return;
+			#endif
 
 			// if going to track selection
 			sdata->ptrDesiredMenu = &D230.menuTrackSelect;
@@ -211,6 +218,10 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 
 		if
 		(
+			#ifdef USE_PROFILER
+			((gGT->gameMode1 & DEBUG_MENU) == 0) &&
+			#endif
+		
 			(D230.isMenuTransitioning == 1) &&
 			(
 				// get input from this player

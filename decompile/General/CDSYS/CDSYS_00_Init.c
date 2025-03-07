@@ -4,6 +4,7 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 {
 	sdata->boolUseDisc = boolUseDisc;
 	
+#ifndef USE_PCDRV
 	// if using parallel port (Naughty Dog Devs only)
 	if(boolUseDisc == 0) return;
 	
@@ -53,7 +54,8 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	// 1 - English
 	DECOMP_CDSYS_SetXAToLang(1);
 	
-#ifndef REBUILD_PS1
+	#ifndef REBUILD_PS1
 	Voiceline_PoolClear();
+	#endif
 #endif
 }

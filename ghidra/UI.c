@@ -370,7 +370,7 @@ int FUN_8004cae8(int param_1,undefined4 param_2,int param_3,int param_4,int para
   // get model pointer
   iVar16 = *(int *)(PTR_DAT_8008d2ac + param_1 * 4 + 0x2160);
 
-								// numPlyrCurrGame - 1
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar8 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   iVar13 = 0;
@@ -5177,7 +5177,7 @@ void FUN_80052f98(void)
   short local_36;
   undefined2 local_30 [4];
 
-  // Get pointer to array of HUD structs                numPlyrCurrGame - 1
+  // hudStructPtr[numPlyrCurrGame - 1]
   psVar20 = (short *)(&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   iVar21 = 0;
@@ -6314,7 +6314,7 @@ void FUN_80054298(void)
   // get Player 1
   uVar2 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec);
 
-								// numPlyrCurrGame - 1
+  // hudStructPtr[numPlyrCurrGame - 1]
   puVar1 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   // UI_DrawNumRelic
@@ -6345,7 +6345,7 @@ void FUN_8005435c(void)
   //iVar3 = player 1 pointer struct
   iVar3 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 
-											// numPlyrCurrGame - 1
+  // hudStructPtr[numPlyrCurrGame - 1]
   psVar4 = (short *)(&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   // If game is not paused
@@ -6562,7 +6562,7 @@ void FUN_8005465c(int param_1)
   // if there is more than 1 screen
   if (1 < *(byte *)(param_1 + 0x1ca8))
   {
-	// get HUD position variables [numPlyrCurrGame - 1]
+	// hudStructPtr[numPlyrCurrGame - 1]
     puVar5 = (&PTR_DAT_8008625c)[(uint)*(byte *)(param_1 + 0x1ca8) - 1];
 
     iVar6 = 0;
@@ -7179,6 +7179,7 @@ void FUN_800550f4(void)
           pcVar6 = *(char **)((uint)*puVar5 * 4 + DAT_8008d878);
         }
 
+		// === CUT FEATURE ===
 		// if the comment is conjoined
         else
 		{
@@ -7903,7 +7904,7 @@ void FUN_80055c90(int param_1)
 
             if (iVar4 == 1)
 			{
-			  // RaceFlag_BeginTransition
+			  // RaceFlag_BeginTransition(GoOnscreen)
               FUN_80043fb0(1);
             }
 
@@ -8332,7 +8333,7 @@ void FUN_800562fc(void)
 		)
 	)
   {
-	// RaceFlag_BeginTransition
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 

@@ -102,7 +102,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 			if ((int)gameMode < 0) // BOSS Race
 			{
 				sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;
-				sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
+				sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 			}
 			level_to_load = gGT->prevLEV;
 		}

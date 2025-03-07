@@ -852,16 +852,22 @@ void DECOMP_UI_RenderFrame_Racing()
 	if(
 		(levPtrMap != 0) &&
 		((gameMode1 & BATTLE_MODE) == 0)
+		
+		// if loaded battle map in arcade,
+		// this can happen when playing with debug menus
+		#ifdef USE_PROFILER
+		&& (gGT->ptrIcons[3] != 0)
+		#endif
 	)
 	{
 		if
 		(
 			(
 				(numPlyr == 1)
+				
 				#ifndef USE_ONLINE
-				&&
 				// if want to draw map, not speedometer
-				(sdata->HudAndDebugFlags & 8) == 0
+				&& (sdata->HudAndDebugFlags & 8) == 0
 				#endif
 			) ||
 
