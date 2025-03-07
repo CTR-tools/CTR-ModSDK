@@ -206,6 +206,7 @@ struct QuadBlock
 	// 0x3C
 	short blockID;
 
+	// 0x3E
 	// used for checkpoint progression
 	// and also respawns
 	char checkpointIndex;
