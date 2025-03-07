@@ -146,7 +146,7 @@ struct BucketSearchParams
 	struct Thread* th;
 	
 	// 0xC
-	int radius;
+	int radius; //actually probably (radius or diameter) squared
 	
 	// 0x10
 	short distX;

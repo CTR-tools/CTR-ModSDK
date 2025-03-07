@@ -969,7 +969,8 @@ struct Level
 	// for ice, mud, water
 	// 0x184
 	// 0x186
-	s8 splitLines[4];
+	// s8 splitLines[4]; //wrong I think
+	s16 splitLines[2];
 
 	// 0x188
 	u32 PTRtoPTR_LevNavHeader;
