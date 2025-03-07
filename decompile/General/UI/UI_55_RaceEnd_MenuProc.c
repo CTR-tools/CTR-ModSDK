@@ -80,7 +80,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 	
 		// if did not improve time, then dont
 		// overwrite old ghost with new ghost
-		if ((gGT->unknownFlags_1d44 & 1) == 0)
+		if ((gGT->gameModeEnd & PLAYER_GHOST_BEAT) == 0)
 			break;
 		
 		sdata->boolReplayHumanGhost = 1;

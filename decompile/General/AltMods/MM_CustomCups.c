@@ -97,10 +97,8 @@ void CustomCups_MenuProc(struct RectMenu* menu)
 				DECOMP_MixRNG_Scramble();
 
 				id = (
-						#ifndef REBUILD_PS1
 						// system clock
-						(Timer_GetTime_Total() & 0xf) +
-						#endif
+						(DECOMP_Timer_GetTime_Total() & 0xf) +
 		
 						// from RNG
 						(sdata->randomNumber >> 8)

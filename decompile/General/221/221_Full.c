@@ -28,6 +28,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	int growVal;
 	int bitIndex;
 	int levelID;
+	int elapsedFrames;
 	
 	gGT = sdata->gGT;
 	levelID = gGT->levelID;
@@ -50,9 +51,13 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
 	
-	// count frames
-	if(sdata->framesSinceRaceEnded < FPS_DOUBLE(900))
-		sdata->framesSinceRaceEnded++;
+	elapsedFrames = sdata->framesSinceRaceEnded;
+
+	// count frames if hasn't been 30 seconds
+	if (elapsedFrames < FPS_DOUBLE(900))
+		elapsedFrames++;
+
+	sdata->framesSinceRaceEnded = elapsedFrames;
 	
 	// hide hud crystal
 	sdata->ptrHudCrystal->flags |= 0x80;
@@ -65,7 +70,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			&posXY[0],
 			0x264, 0x56, // startX, startY,
 			0xcd, 0x56, // endX, endY
-			sdata->framesSinceRaceEnded,
+			elapsedFrames,
 			FPS_DOUBLE(0x14));
 	
 		sdata->ptrMenuCrystal->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
@@ -93,7 +98,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			&posXY[0],
 			-0x63, 0x18, // startX, startY,
 			0x100, 0x18, // endX, endY
-			sdata->framesSinceRaceEnded,
+			elapsedFrames,
 			FPS_DOUBLE(0x14));
 			
 		// TIME REMAINING
@@ -160,14 +165,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	tokenInst->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
 	tokenInst->matrix.t[1] = DECOMP_UI_ConvertY_2(0xA2-0x18, 0x200);
 
-	// play unlock sound after exactly 1 second
-	if(sdata->framesSinceRaceEnded == FPS_DOUBLE(30))
-	{
-		OtherFX_Play(0x67, 1);
-	}
-	
 	// grow token after first second
-	if(sdata->framesSinceRaceEnded > FPS_DOUBLE(30))
+	if(elapsedFrames > FPS_DOUBLE(30))
 	{
 		if(tokenInst->scale[0] < 0x2001)
 		{
@@ -176,6 +175,12 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			tokenInst->scale[1] = growVal;
 			tokenInst->scale[2] = growVal;
 		}
+	}
+
+	// play unlock sound after exactly 1 second
+	else if(elapsedFrames == FPS_DOUBLE(30))
+	{
+		OtherFX_Play(0x67, 1);
 	}
 	
 	// PRESS * TO CONTINUE

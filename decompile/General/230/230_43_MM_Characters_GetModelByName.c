@@ -50,7 +50,7 @@ struct Model* MM_Characters_GetModelByID(int id)
 	  //return sdata->PLYROBJECTLIST[18];
 	  
 	  // temporary workaround
-	  return data.driverModel_lowLOD[0];
+	  return data.driverModelExtras[0];
   #endif
 
   models = level1->ptrModelsPtrArray;

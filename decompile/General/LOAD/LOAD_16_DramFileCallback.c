@@ -23,31 +23,14 @@ void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 			struct DramPointerMap* dpm = (struct DramPointerMap*)&realFileBuf[ptrMapOffset];
 		
 			DECOMP_LOAD_RunPtrMap((int)realFileBuf, (int*)DRAM_GETOFFSETS(dpm), dpm->numBytes>>2);
-			
-			// if overly allocated
-			if(lqs->flags & 1)
-			{
-				// undo allocation, allocate "needed" size,
-				// ptrMapOffset+4 equals the filesize
-				DECOMP_MEMPACK_ReallocMem(ptrMapOffset+4);
-			}
-		}
-	}
-	
-	void* callbackFunc = lqs->callback.funcPtr;
-	
-	if(callbackFunc != 0)
-	{
-		// if function, and not flags
-		#ifndef REBUILD_PC
-		if(((unsigned int)callbackFunc & 0xff000000) == 0x80000000)
-		#else
-		if((int)callbackFunc > 0)
-		#endif
-		{
-			(*lqs->callback.funcPtr)(lqs);
+
+			// undo allocation, allocate "needed" size,
+			// ptrMapOffset+4 equals the filesize
+			DECOMP_MEMPACK_ReallocMem(ptrMapOffset+4);
 		}
 	}
 	
 	sdata->queueReady = 1;
+	if (lqs->callbackFuncPtr != 0)
+		lqs->callbackFuncPtr(lqs);
 }

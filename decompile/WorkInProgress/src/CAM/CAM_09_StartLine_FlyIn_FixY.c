@@ -31,7 +31,7 @@ void DECOMP_CAM_StartLine_FlyIn_FixY(short* posRot)
     local_18 = local_20;
     local_14 = local_1c;
 
-    COLL_SearchTree_FindQuadblock_Touching(&local_20,&local_18,&sdata->scratchpadStruct,0,local_20,local_1c);
+    COLL_SearchBSP_CallbackQUADBLK(&local_20,&local_18,&sdata->scratchpadStruct,0,local_20,local_1c);
 
     sVar3 = sdata->scratchpadStruct.Union.QuadBlockColl.unk1E;
     if (sdata->scratchpadStruct.boolDidTouchQuadblock != 0) break;

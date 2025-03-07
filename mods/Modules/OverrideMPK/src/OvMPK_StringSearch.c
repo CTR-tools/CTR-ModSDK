@@ -14,7 +14,7 @@ int* newSearchFunc(int* str)
 	// check every highLOD-model loaded
 	for(i = 0; i < 8; i++)
 	{
-		m = ((int**)&data.driverModel_lowLOD)[i];
+		m = ((int**)&data.driverModelExtras)[i];
 		if (m == 0) continue;
 
 		if(CheckString(m,str)) return m;

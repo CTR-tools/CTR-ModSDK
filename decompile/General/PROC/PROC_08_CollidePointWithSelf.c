@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf)
+void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct BucketSearchParams* buf)
 {
 	struct Instance* inst;
 	int distX;

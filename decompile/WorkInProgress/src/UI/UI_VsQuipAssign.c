@@ -38,8 +38,8 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
         uVar4 = uVar4 + 8;
       } while (uVar4 < param_2[1]);
     }
-    if (d->EndOfRaceComment_lngIndex != 0) {
-      currIndex = (d->EndOfRaceComment_lngIndex + 4);
+    if (d->EndOfRaceComment_ptrQuip != 0) {
+      currIndex = (d->EndOfRaceComment_ptrQuip + 4);
       if ((uVar5 + 4) <= currIndex) {
         if ((uVar5 + 4) != currIndex) {
           return;
@@ -52,7 +52,7 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
           return;
         }
       }
-      currIndex = d->EndOfRaceComment_lngIndex;
+      currIndex = d->EndOfRaceComment_ptrQuip;
       if (currIndex != 0 && currIndex < -4) {
         currIndex = -currIndex - 4;
       }
@@ -61,7 +61,7 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
       uVar5 = -(uVar5 + 4);
     }
     gGT = sdata->gGT;
-    d->EndOfRaceComment_lngIndex= uVar5;
+    d->EndOfRaceComment_ptrQuip= uVar5;
     d->EndOfRaceComment_characterID = param_4;
 
 	// 150 frames (5 seconds) for Battle

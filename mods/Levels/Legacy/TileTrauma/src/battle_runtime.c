@@ -166,7 +166,7 @@ void RunUpdateHook()
 	
 	// disable end-of-race high score saving,
 	// but &1 is needed for the ghosts to work
-	gGT->unknownFlags_1d44 = 1;
+	gGT->gameModeEnd = PLAYER_GHOST_BEAT;
 	
 	d = gGT->drivers[0];
 	

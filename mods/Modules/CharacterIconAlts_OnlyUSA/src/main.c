@@ -29,11 +29,11 @@ char wasLoadedYet;
 void LoadFile_CustomTextures()
 {
 	//load in 8000A000
-	CTRICON1 = (struct Texture*)LOAD_ReadFile_NoCallback("\\CTRICON1.BIN;1", (void*)0x80009FB0, 0);
+	CTRICON1 = (struct Texture*)LOAD_XnfFile("\\CTRICON1.BIN;1", (void*)0x80009FB0, 0);
 	//load in 8000BF48
-	CTRICON2 = (struct Texture*)LOAD_ReadFile_NoCallback("\\CTRICON2.BIN;1", (void*)0x8000BF48, 0);
+	CTRICON2 = (struct Texture*)LOAD_XnfFile("\\CTRICON2.BIN;1", (void*)0x8000BF48, 0);
 	//load in 8000E400
-	CTRICON3 = (struct Texture*)LOAD_ReadFile_NoCallback("\\CTRICON3.BIN;1", (void*)0x8000E400, 0);
+	CTRICON3 = (struct Texture*)LOAD_XnfFile("\\CTRICON3.BIN;1", (void*)0x8000E400, 0);
 
 	chr[0].maxIndex = 5;
 	chr[1].maxIndex = 3;
@@ -247,7 +247,7 @@ void LoadFile_CustomTextures()
 void LoadFile_CustomTexturesMempack()
 {
 	//load in mempack
-	CTRICON4 = (struct Texture*)LOAD_ReadFile_NoCallback("\\CTRICON4.BIN;1", (void*)0x801CE000, 0);
+	CTRICON4 = (struct Texture*)LOAD_XnfFile("\\CTRICON4.BIN;1", (void*)0x801CE000, 0);
 
 	//crash august 14
 	chr[0].icons[3] = CTRICON4[1].image;

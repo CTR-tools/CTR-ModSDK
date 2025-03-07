@@ -18,6 +18,5 @@ void DECOMP_VehStuckProc_PlantEaten_PhysLinear(struct Thread* t, struct Driver* 
 	d->actionsFlagSet &= ~(0x20024);
 	d->actionsFlagSet |= 8;
 
-	// increment time spent in mask grab
-	d->timeSpentMaskGrabbed += sdata->gGT->elapsedTimeMS;
+	d->timeSpentEaten += sdata->gGT->elapsedTimeMS;
 }

@@ -34,7 +34,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   gGT->numWinners = 0;
   gGT->numCrystalsInLEV = 0;
   gGT->timeCratesInLEV = 0;
-  gGT->unknownFlags_1d44 = 0;
+  gGT->gameModeEnd = 0;
   gGT->frozenTimeRemaining = 0;
   gGT->numMissiles = 0;
   gGT->numPlayersWith3Missiles = 0;

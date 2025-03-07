@@ -1,13 +1,13 @@
 
-// loads bigfile 221 as lev
-common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
-
 // sets lev to bigfile 221
 926, 221, 0x8009f6fc, 0x0, src/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/customtrack.vrm
 
 // disable LevInstDef_UnPack
 common, exe, LevInstDef_UnPack, 0x0, src/return1.c
+
+// ghost init is combined using the decomp function
+common, exe, GhostReplay_Init2, 0x0, src/return2.c
 
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
@@ -17,10 +17,19 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
 common, exe, RenderBucket_QueueLevInstances, 0x0, src/disableQueueLevInst.c
 
 // Battle weapons
-common, exe, BOTS_SetRotation, -0x8, src/battle_hookUpdate.s
-common, exe, MainInit_StringToLevID, -0x8, src/battle_hookInit.s
-common, exe, rdata_free, 0x0, src/battle_runtime.c
+common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
+common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
+common, exe, rdata_free, 0x0, src/hooks.c
 
 // 230
-common, 230, MM_Characters_MenuProc, 0x0, src/230_50_MM_Characters_MenuProc.c
-common, 230, MM_MenuProc_Main, 0x0, src/230_31_MM_MenuProc_Main.c
+common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
+common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
+
+// exe
+common, exe, LOAD_TenStages, 0x0, src/load_lev.c
+common, exe, main, 0x0, src/ctr_main.c
+common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
+common, exe, MEMCARD_Save, 0x0, src/memcard_save_hook.c
+common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
+common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c
+common, exe, GhostReplay_Init1, 0x0, src/ghost_init.c

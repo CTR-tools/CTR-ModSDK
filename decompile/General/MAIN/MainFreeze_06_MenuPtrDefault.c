@@ -200,7 +200,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 					sdata->Loading.OnBegin.RemBitsConfig0 |= 0x8c000000;
 
 					// When loading is done add bit to spawn driver near boss door
-					sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
+					sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 				}
 
 				// set levID to level you were in previously

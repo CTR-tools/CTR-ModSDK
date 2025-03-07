@@ -1,11 +1,11 @@
-enum GameMode1 
+enum GameMode1
 {
 	PAUSE_1				= 0x1,
 	PAUSE_2				= 0x2,	// unused, debug
 	PAUSE_3				= 0x4,	// unused, debug
 	PAUSE_4				= 0x8,	// unused, debug
 	PAUSE_ALL           = 0xF,
-	PAUSE_THREADS		= 0x10,
+	DEBUG_MENU			= 0x10,
 	BATTLE_MODE         = 0x20,
 	START_OF_RACE 		= 0x40,
 	// 0x80?
@@ -19,7 +19,7 @@ enum GameMode1
 	LIFE_LIMIT			= 0x8000,
 	TIME_LIMIT			= 0x10000,
 	TIME_TRIAL          = 0x20000,
-	// 0x40000?
+	BETA_UNLIMITED		= 0x40000, // Spyro 2 demo
 	ADVENTURE_MODE      = 0x80000,
 	ADVENTURE_ARENA     = 0x100000,
 	END_OF_RACE 		= 0x200000,
@@ -35,26 +35,58 @@ enum GameMode1
 	ADVENTURE_BOSS      = 0x80000000
 };
 
+enum GameModeEnd
+{
+	PLAYER_GHOST_BEAT 	= 1,
+	DRAW_HIGH_SCORES	= 2,
+
+
+#if 0
+	// Same as GameMode1	
+	BATTLE_MODE         = 0x20,
+#endif
+	
+	
+	// new flags
+	NTROPY_JUST_OPENED	= 0x8000,
+	HIGH_SCORE_SAVED 	= 0x10000,
+	
+	
+#if 0
+	// Same as GameMode1
+	TIME_TRIAL          = 0x20000,
+	BETA_UNLIMITED		= 0x40000, // Spyro 2 demo
+	ADVENTURE_MODE      = 0x80000,
+	ADVENTURE_ARENA     = 0x100000,
+	END_OF_RACE 		= 0x200000,
+#endif	
+
+	
+	// new flags
+	NEW_NAME			= 0x1000000,
+	NEW_RELIC			= 0x2000000,
+	NEW_BEST_LAP		= 0x4000000,
+	NEW_HIGH_SCORE		= 0x8000000,
+	NTROPY_JUST_BEAT	= 0x10000000,
+	
+};
+
 enum GameMode2
 {
 	SPAWN_AT_BOSS = 1,
-	
+
 	VEH_FREEZE_PODIUM = 4,
 	TOKEN_RACE 		= 0x8,
 	CUP_ANY_KIND 	= 0x10,
 	LEV_SWAP 		= 0x20,
 	// 0x40?
 	CREDITS 		= 0x80,
-	
-	DISABLE_LEV_INSTANCE = 0x100,
-	
+	NO_LEV_INSTANCE = 0x100,
 	CHEAT_WUMPA 	= 0x200,
 	CHEAT_MASK 		= 0x400,
 	CHEAT_TURBO		= 0x800,
-	
-	// & 0x1000 - FIRST_TIME_WIN_CUP
-	// & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
-	
+	CUP_NEW_WIN 	= 0x1000,
+	CUP_NEW_BATTLE 	= 0x2000,
 	VEH_FREEZE_DOOR = 0x4000,
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,
@@ -69,7 +101,20 @@ enum GameMode2
 	INC_KEY			= 0x2000000,
 	INC_TROPHY		= 0x4000000,
 	CHEAT_TURBOCOUNT= 0x8000000,
-	LNG_CHANGE		= 0x10000000 // (EurRetail Only)
+	LNG_CHANGE		= 0x10000000, // (EurRetail Only)
+	CHEAT_ALL 		= CHEAT_ADV | CHEAT_BOMBS | CHEAT_ENGINE | CHEAT_ICY | CHEAT_INVISIBLE | CHEAT_MASK | CHEAT_ONELAP | CHEAT_SUPERHARD | CHEAT_TURBO | CHEAT_TURBOCOUNT | CHEAT_TURBOPAD | CHEAT_WUMPA,
+};
+
+enum CharacterUnlock
+{
+	UNLOCK_TROPY = 0x20,
+	UNLOCK_PENTA = 0x40,
+	UNLOCK_ROO = 0x80,
+	UNLOCK_PAPU = 0x100,
+	UNLOCK_JOE = 0x200,
+	UNLOCK_PINSTRIPE = 0x400,
+	UNLOCK_FAKE_CRASH = 0x800,
+	UNLOCK_CHARACTERS = UNLOCK_TROPY | UNLOCK_PENTA | UNLOCK_ROO | UNLOCK_PAPU | UNLOCK_JOE | UNLOCK_PINSTRIPE | UNLOCK_FAKE_CRASH,
 };
 
 // real ND name
@@ -314,12 +359,12 @@ struct GameTracker
 
 	// 1cc0
 	int bspLeafsDrawn;
-	
+
 	// 1cc4
 	int unk1cc4[6];
 
 	// 1cdc
-	int countTotalTime;
+	int clockDurationStall;
 
 	// 1ce0
 	int vSync_between_drawSync;
@@ -357,7 +402,7 @@ struct GameTracker
 
 	// 1d08
 	// microseconds per frame?
-	int anotherTimer;
+	int clockFrameStart;
 
 	// 1d0c
 	// 0xf00 - normal start of race
@@ -421,7 +466,7 @@ struct GameTracker
 	int lapIndexNewBest;
 
 	// 1d44
-	u_int unknownFlags_1d44;
+	u_int gameModeEnd;
 
 	// 1d48
 	char unknown_1d48_notFound;
@@ -508,7 +553,7 @@ struct GameTracker
 
 	// 1da8
 	int finishedRankOfEachTeam[4];
-	
+
 	// 1db8
 	int unk1DB8[4];
 
@@ -553,13 +598,13 @@ struct GameTracker
 	{
 		// 1e30
 		int numTrophies;
-	
+
 		// 1e34
 		int numRelics;
-	
+
 		// 1e38
 		int numKeys;
-	
+
 		// 1e3c
 		struct
 		{
@@ -570,7 +615,7 @@ struct GameTracker
 			int yellow;
 			int purple;
 		} numCtrTokens;
-	
+
 		// 1e54
 		int completionPercent; // 0 to 101
 
@@ -580,10 +625,10 @@ struct GameTracker
 	{
 		// 1e58
 		int cupID; // 0-3, or 4 for Purple cup
-		
+
 		// 1e5c
 		int trackIndex; // 0-3
-		
+
 		// 1e60
 		int points[8];
 

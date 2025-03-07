@@ -4,7 +4,10 @@ void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color* color, int transparency, u_lon
 {
 	typedef struct TPage_PolyF4
 	{
+		#ifndef REBUILD_PC
 		TPage t;
+		#endif
+		
 		PolyF4 p;
 	} TPage_PolyF4;
 
@@ -12,12 +15,19 @@ void DECOMP_CTR_Box_DrawClearBox(RECT * r, Color* color, int transparency, u_lon
 	GetPrimMem(p);
 	if (p == nullptr) { return; }
 
+	#ifndef REBUILD_PC
 	p->t.texpage = (Texpage){ .code = 0xE1, .semiTransparency = transparency, .dither = 1 };
+	#endif
+	
 	p->p.tag.self = 0;
 
 	const PrimCode primCode = { .poly = { .renderCode = RenderCode_Polygon, .quad = 1, .semiTransparency = 1 } };
 	color->code = primCode;
 	p->p.colorCode = *color;
+	
+	#ifdef REBUILD_PC
+	setPolyF4(&p->p);
+	#endif
 
 	s16 topX = r->x;
 	s16 topY = r->y;

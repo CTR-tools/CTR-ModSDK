@@ -1159,55 +1159,70 @@ int main(int argc, char *argv[])
 	//int enableDeferredGPU = 1;
 
 	int numDuckInstances = 0;
-	const char* duckTemplate = "duckstation";
 	int duckPID = -1;
+	const char* duckTemplate = "duckstation";
+	int duckAttempts = 0;
 
-	// copy from
-	// https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
-	DWORD aProcesses[1024], cbNeeded, cProcesses;
-	EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
-	cProcesses = cbNeeded / sizeof(DWORD);
-
-	for (int i = 0; i < cProcesses; i++)
+	while (numDuckInstances == 0 && duckAttempts < 20)
 	{
-		DWORD processID = aProcesses[i];
+	  // copy from
+	  // https://learn.microsoft.com/en-us/windows/win32/psapi/enumerating-all-processes
+	  DWORD aProcesses[1024], cbNeeded, cProcesses;
+	  EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
+	  cProcesses = cbNeeded / sizeof(DWORD);
+	  
+	  for (int i = 0; i < cProcesses; i++)
+	  {
+	  	DWORD processID = aProcesses[i];
+	  
+	  	if (processID != 0)
+	  	{
+	  		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
+	  
+	  		if (NULL != hProcess)
+	  		{
+	  			HMODULE hMod;
+	  			DWORD cbNeeded;
+	  
+	  			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
+	  			{
+	  				char szProcessName[MAX_PATH];
+	  				GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
+	  
+	  				char* procName = (char*)&szProcessName[0];
+	  
+	  				if (
+	  					(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
+	  					(*(int*)&procName[4] == *(int*)&duckTemplate[4])
+	  					)
+	  				{
+	  					numDuckInstances++;
+	  					duckPID = processID;
+	  				}
+	  			}
+	  		}
+	  	}
+	  }
+	  
+	  if (numDuckInstances == 0)
+	  {
+	  	printf("DuckStation is not running! waiting 5 seconds...\n\n");
 
-		if (processID != 0)
-		{
-			HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processID);
+			Sleep(5000);
 
-			if (NULL != hProcess)
-			{
-				HMODULE hMod;
-				DWORD cbNeeded;
-
-				if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
-				{
-					char szProcessName[MAX_PATH];
-					GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
-
-					char* procName = (char*)&szProcessName[0];
-
-					if (
-						(*(int*)&procName[0] == *(int*)&duckTemplate[0]) &&
-						(*(int*)&procName[4] == *(int*)&duckTemplate[4])
-						)
-					{
-						numDuckInstances++;
-						duckPID = processID;
-					}
-				}
-			}
-		}
+			duckAttempts++;
+	  	numDuckInstances = 0;
+	  	duckPID = -1;
+	  }
+	  else printf("Client: DuckStation detected\n");
 	}
 
-	if (numDuckInstances == 0)
+	if (duckAttempts == 20)
 	{
-		printf("Error: DuckStation is not running!\n\n");
+		printf("Error: couldn't find duckstation after 20 attempts, quitting...\n\n");
 		system("pause");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
-	else printf("Client: DuckStation detected\n");
 
 	char pidStr[16];
 
@@ -1230,29 +1245,27 @@ int main(int argc, char *argv[])
 	TCHAR duckNameT[100];
 	swprintf(duckNameT, 100, L"%hs", duckName);
 
-	// 8 MB RAM
-	const unsigned int size = 0x800000;
-	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+	duckAttempts = 0;
+
+	while (duckAttempts < 20)
+	{
+		// 8 MB RAM
+		const unsigned int size = 0x800000;
+		HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+		pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+
+		if (pBuf == 0)
+		{
+			printf("Failed to open DuckStation shmem, waiting 5 seconds...\n\n");
+			Sleep(5000);
+		}
+		else break;
+	}
 
 	if (pBuf == 0)
 	{
-		printf("Error: Failed to open DuckStation!\n\n");
+		printf("Error: Failed to open Duckstation shmem after 20 attempts, quitting...\n\n");
 		system("pause");
-		//system("cls");
-		//char* newargv[4];
-		//newargv[0] = argv[0];
-		//if (argc > 1)
-		//	newargv[1] = argv[1];
-		//else
-		//	newargv[1] = NULL;
-		//if (argc > 2)
-		//	newargv[2] = argv[2];
-		//else
-		//	newargv[2] = NULL;
-		//newargv[3] = NULL;
-
-		//execv(argv[0], newargv);
 		exit(EXIT_FAILURE);
 	}
 

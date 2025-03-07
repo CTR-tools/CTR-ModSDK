@@ -2,6 +2,12 @@
 
 void DECOMP_howl_InitGlobals(char* filename)
 {
+	// TEMPORARY
+	#ifdef USE_PCDRV
+	sdata->boolAudioEnabled = 0;
+	return;
+	#endif
+	
 	if(sdata->boolAudioEnabled == 1) return;
 	sdata->boolAudioEnabled = 1;
 

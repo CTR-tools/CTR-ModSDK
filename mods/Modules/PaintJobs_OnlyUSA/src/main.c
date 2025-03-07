@@ -21,7 +21,7 @@ void loadCLUT(int character)
 void LoadFile_CustomTexturesMempack()
 {
 	//load in mempack
-	texData = (TexData *) LOAD_ReadFile_NoCallback("\\PAINTALL.BIN;1", (void *) 0x801CE000, 0);
+	texData = (TexData *) LOAD_XnfFile("\\PAINTALL.BIN;1", (void *) 0x801CE000, 0);
 
 	/* Loads CLUTs in their specific locations */
 	for(int i = 0; i < NUM_CHARACTERS; i++) loadCLUT(i);

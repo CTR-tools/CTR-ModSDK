@@ -2,6 +2,10 @@
 
 void DECOMP_CDSYS_SpuCallbackIRQ()
 {
+	
+// PS1
+#ifndef USE_PCDRV
+
   // disable IRQ, now that it's finished
   SpuSetIRQ(0);
 
@@ -46,4 +50,6 @@ half.
   
   // really? ND bug? or variable reuse?
   sdata->XA_CurrOffset++;
+  
+#endif
 }

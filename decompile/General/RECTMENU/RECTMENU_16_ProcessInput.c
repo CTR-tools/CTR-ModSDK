@@ -15,14 +15,34 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 	RngDeadCoed();
 #endif
 
+	// button from any player
+	button = sdata->AnyPlayerTap;
+
+	// if only P1 can use menu
+	if ((m->state & ALL_PLAYERS_USE_MENU) == 0)
+	{
+		// get button from P1
+		button = sdata->buttonTapPerPlayer[0];
+	}
+
 	if
 	(
+		#ifdef USE_PROFILER
+		((sdata->gGT->gameMode1 & DEBUG_MENU) == 0) &&
+		#endif
+	
 		// if not drawing only title bar,
 		// therefore this is the bottom of hierarchy
 		((m->state & ONLY_DRAW_TITLE) == 0) &&
 
 		// must be both 0x20000 and 0x40000
-		((m->state & 0x60000) != 0x60000)
+		((m->state & 0x60000) != 0x60000) &&
+		
+		// D-pad or Cross/Triangle
+		((button & 0x4007f) != 0) &&
+		
+		// No cheat code entering
+		((sdata->buttonHeldPerPlayer[0] & (BTN_L1 | BTN_R1)) == 0)
 	)
 	{
 		oldRow = m->rowSelected;
@@ -40,24 +60,6 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 				DECOMP_RECTMENU_ClearInput();
 			}
 		}
-
-		// button from any player
-		button = sdata->AnyPlayerTap;
-
-		// if only P1 can use menu
-		if ((m->state & ALL_PLAYERS_USE_MENU) == 0)
-		{
-			// get button from P1
-			button = sdata->buttonTapPerPlayer[0];
-		}
-
-		// if P1 is not holding L1 or R1
-		if ((sdata->buttonHeldPerPlayer[0] & (BTN_L1 | BTN_R1)) != 0)
-			goto AfterButtons;
-
-		// If nobody pressed D-Pad, Cross, Square, Triangle, Circle
-		if ((button & 0x4007f) == 0)
-			goto AfterButtons;
 
 		// optimized way to check all four button presses:
 		// up, down, left, right, and get new row
@@ -111,7 +113,7 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 					m->funcPtr(m);
 				}
 
-				// useless? cause set later?
+				// Save row
 				m->rowSelected = newRow;
 			}
 		}
@@ -119,30 +121,20 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 		// if Cross or Circle
 		else
 		{
-			// if row is locked
-			if ((m->rows[m->rowSelected].stringIndex & 0x8000) != 0)
-			{
-				// if menu is not muted
-				if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
-				{
-					// "womp" sound
-					DECOMP_OtherFX_Play(5, 1);
-				}
-			}
-
+			// "womp" sound for LOCKED row
+			int sound = 5;
+			
 			// unlocked row
-			else
+			if ((m->rows[m->rowSelected].stringIndex & 0x8000) == 0)
 			{
-				// if menu is not muted
-				if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
-				{
-					// enter sound
-					DECOMP_OtherFX_Play(1, 1);
-				}
+				// "enter" sound
+				sound = 1;
 
 				m->unk1e = 0;
 
-				// useless? cause set later?
+				// Save row BEFORE processing the Cross button,
+				// this is why you can glitch into 3P VS with
+				// only 2 controllers, by pressing DOWN+X same frame
 				m->rowSelected = newRow;
 
 				returnVal = 1;
@@ -153,14 +145,16 @@ int DECOMP_RECTMENU_ProcessInput(struct RectMenu *m)
 					m->funcPtr(m);
 				}
 			}
+
+			// if menu is not muted
+			if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
+			{
+				DECOMP_OtherFX_Play(sound, 1);
+			}
 		}
 
 		DECOMP_RECTMENU_ClearInput();
 
-AfterButtons:
-		// this is why you can bug character select
-		// by pressing Down and X at the same time,
-		// cause the row isn't set until after X is processed
 		m->rowSelected = newRow;
 	}
 

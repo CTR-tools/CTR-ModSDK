@@ -86,7 +86,7 @@ void FUN_80026ed8(int param_1)
 		// if no ghosts are drawing
 		(DAT_8008d740 == 0) ||
 
-		// if PauseAllThreads is enabled
+		// if DebugMenu is enabled
 		((*(uint *)PTR_DAT_8008d2ac & 0x10) != 0) ||
 		
 		// driver == nullptr

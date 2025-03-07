@@ -62,57 +62,54 @@
 
 // COLL
 800244b8 COLL_GetThreadMeta
-800244f0 COLL_Instance
-800249e4 COLL_PerBspLeaf_CheckInstances
-80024b5c COLL_StartSearch_AI
-80024cd8 COLL_StartSearch_Player
-80025db8 COLL_SearchTree_FindQuadblock_Touching
-// no COLL_SearchTree_FindX
-80026094 COLL_TestTriangle_FindClosest_Subfunction2
+800244f0 COLL_FIXED_INSTANC_TestPoint
+800249e4 COLL_FIXED_BSPLEAF_TestInstance
+80024b5c COLL_FIXED_BotsSearch
+80024cd8 COLL_FIXED_PlayerSearch
+80025db8 COLL_SearchBSP_CallbackQUADBLK
+// no COLL_SearchBSP_CallbackPARAM
+80026094 COLL_FIXED_TRIANGL_Barycentrics
 
 // unknown 800261cc (jumps halfway through next func)
-80026200 COLL_TestTriangle_FindAny // (and TestTriangle_Unused)
+80026200 COLL_FIXED_TRIANGL_TestPoint // (and TestTriangle_Unused)
 
-8002658c COLL_TestTriangle_GetNormalVector
-800266cc COLL_PerQuadblock_CheckTriangles_Touching
-800268a0 COLL_PerBspLeaf_CheckQuadblocks_Touching
-8002692c COLL_TestQuadblock_TwoTris
-800269a0 COLL_TestQuadblock_EightTris
-80026aa0 COLL_ResetScratchpadCache
-80026bd8 COLL_TestTriangle_FindClosest_Subfunction1
-80026ef0 COLL_TestTriangle_FindClosest
-800272e4 COLL_PerQuadblock_CheckTriangles_NearPlayer
-80027528 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
-800275b4 COLL_TestTriangle_WithClosest
-80027690 COLL_StartSearch_NearPlayer
-80027e64 COLL_Scrub
+8002658c COLL_FIXED_TRIANGL_GetNormVec
+800266cc COLL_FIXED_QUADBLK_TestTriangles
+800268a0 COLL_FIXED_BSPLEAF_TestQuadblocks
+8002692c COLL_FIXED_QUADBLK_GetNormVecs_LoLOD
+800269a0 COLL_FIXED_QUADBLK_GetNormVecs_HiLOD
+80026aa0 COLL_FIXED_QUADBLK_LoadScratchpadVerts
+80026bd8 COLL_MOVED_TRIANGL_ReorderNormals
+80026ef0 COLL_MOVED_TRIANGL_TestPoint
+800272e4 COLL_MOVED_QUADBLK_TestTriangles
+80027528 COLL_MOVED_BSPLEAF_TestQuadblocks
+800275b4 COLL_MOVED_FindScrub
+80027690 COLL_MOVED_PlayerSearch
+80027e64 COLL_MOVED_ScrubImpact
 
-// unknown 8002869c
-
-8002873c DebugSetRes_640x480i
+8002869c DebugSetRes_640x480i
+8002873c DebugSetRes_512x480i
 800287dc DebugCamera_SetPathPoint
 80028814 DebugMenu_LoadGame_GivenLevelId
 80028854 DebugMenu_LoadGame_GivenIndexE3
 80028a6c DebugMenu_LoadGame_GivenCharacterId
 80028a98 DebugMenu_LoadGame_GivenNumPlyr
 
+// touches gp(0x90) which normally
+// enables the debug ZoomOut
 // unknown 80028ab0
 // unknown 80028ac8
 
-// unknown 80028ae0 -- DebugMenu_TimeStamp_RecordStart
-// unknown 80028b9c -- DebugMenu_TimeStamp_RecordEndLast
-// unknown 80028bb8 -- DebugMenu_TimeStamp_RecordEnd
+80028ae0 DebugProfiler_SectionStart
+80028b9c DebugProfiler_SectionResetart
+80028bb8 DebugProfiler_SectionEnd
 
 80028c10 DebugMenu_InitMenuPositionSize
 
-// unknown 80028d30 -- DebugMenu_TimeStamp_DrawOutline
+80028d30 DebugProfiler_Draw
 
 800291ac DebugMenu_Draw
 8002977c DebugMenu_ExecFuncPtr
-
-// Not the TimeStamp menu, but another debug menu,
-// This can be triggered by pressing Select, if you 
-// NOP the instruction at 8003E3CC that reboots game on Select
 800297a0 DebugMenu_Open
 800297b4 DebugMenu_Close
 800297e8 DebugMenu_Update
@@ -120,18 +117,21 @@
 80029d70 DebugMenu_DrawIfOpen
 80029dc0 DebugMenu_DrawMenuTwice
 
-// unknown 80029e64 -- DebugMenu_TimeStamp_RecordTime
-// unknown 80029efc -- DebugMenu_TimeStamp_GetElapsed
+80029e64 DebugProfiler_Subsection
+80029efc DebugProfiler_ElapsedAndTotal
+
 80029f48 Timer_GetTime_Total_Precise // cut in retail
 80029f98 Timer_GetTime_Total
 8002a018 Timer_GetTime_Elapsed
-// unknown 8002a06c -- vsync callback
+8002a06c funcDrawSyncCallback	// records subsectionD
 8002a0bc Timer_Init
 8002a164 Timer_Destroy
-// unknown 8002a194 -- DebugMenu_SetLapCount
+
+8002a194 DebugMenu_SetLapCount
 // unknown 8002a1a4 -- empty
-// unknown 8002a1c4 -- DebugMenu_SetGameMode
+8002a1c4 DebugMenu_SetGameMode
 // unknown 8002a204
+
 8002a304 Debug_PrimMem_ZoomOut
 // unknown 8002a960
 // unknown 8002ad28 // copy buffer to scratchpad
@@ -140,6 +140,7 @@
 8002adf4 CTR_Box_DrawWireBox
 8002afdc Debug_Draw3dLineF2
 8002b14c Debug_DrawWireCube
+
 // unknown 8002b46c (uses GTE)
 8002b5dc Debug_CountPrimDepths
 // unknown 8002b6d4
@@ -258,11 +259,11 @@
 80032e8c GhostTape_Start
 80032f14 GhostTape_WriteMoves
 800332c4 GhostTape_WriteBoosts
-80033324 GhostTape_Destroy
 
-// unknown 80033358
-// unknown 800333c4 -- ghost loading
-// unknown 80033400 -- ghost loading
+80033324 GhostDebug_Record
+80033358 GhostDebug_Playback
+800333c4 GhostDebug_Load
+80033400 GhostDebug_Save
 
 // === Everything below "Ghost" is "Howl"
 
@@ -448,7 +449,7 @@
 80039990 MainDB_PrimMem
 800399f4 MainDB_InstanceMem
 80039a4c MainDB_OTMem
-80039aa4 MainDrawCb_Vsync
+80039aa4 MainDrawCb_Vsync			// record subsectionV
 80039b4c MainFrame_TogglePauseAudio
 
 // EnterYourName screen
@@ -521,7 +522,7 @@
 // unknown 80041ad4
 80041b9c VehBirth_SetConsts
 // unknown 80041d30
-// unknown 80041d8c
+// unknown 80041d8c -- DebugMenu set character mid-race?
 80041e38 VehBirth_EngineAudio_AllPlayers
 80041e90 VehBirth_TireSprites
 80041f0c VehBirth_NonGhost
