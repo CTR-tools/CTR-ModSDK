@@ -123,7 +123,7 @@ give_this_label_a_better_name:
 		nextNavFrameOfConcern = botDriver->botData.botNavFrame;
 	}
 
-	struct Need_New_Name cpwb_param_2; //.pos[3] unused?
+	struct BucketSearchParams cpwb_param_2; //.pos[3] unused?
 	cpwb_param_2.pos[0] = (short)(botDriver->posCurr.x >> 8);
 	cpwb_param_2.pos[1] = (short)(botDriver->posCurr.y >> 8);
 	cpwb_param_2.pos[2] = (short)(botDriver->posCurr.z >> 8);
@@ -160,7 +160,7 @@ give_this_label_a_better_name2:
 			xyz[0] = botDriver->xSpeed + botDriver->botData.unk5bc.ai_accelAxis[0]; //(*(int*)&botDriver->unk5bc[0x1c]);
 			xyz[1] = botDriver->ySpeed + botDriver->botData.unk5bc.ai_accelAxis[1]; //(*(int*)&botDriver->unk5bc[0x20]);
 			xyz[2] = botDriver->zSpeed + botDriver->botData.unk5bc.ai_accelAxis[2]; //(*(int*)&botDriver->unk5bc[0x24]);
-			//similar to Need_New_Name usage, idk if this will overrun the stack from assignment within this call, needs investigation.
+			//similar to BucketSearchParams usage, idk if this will overrun the stack from assignment within this call, needs investigation.
 			VehPhysCrash_AnyTwoCars(botThread, (u_short*)cpwb_param_2, &xyz[0]);
 		}
 	}
@@ -1048,7 +1048,50 @@ give_this_label_a_better_name2:
 	// ========================================================================
 	else
 	{
+		int uVar8 = (nextNavFrameOfConcern->rot[1] * 0x10) + (navFrameOfConcern->rot[1] * -0x10) & 0xfff;
+		if (0x7ff < uVar8)
+		{
+			uVar8 -= 0x1000;
+		}
 
+		botDriver->botData.ai_rot4[1] = navFrameOfConcern->rot[1] * 0x10 + ((uVar8 * percentage) >> 0xc) & 0xfff;
+
+		struct BucketSearchParams buckSearchParams;
+		buckSearchParams.pos[0] = botDriver->botData.ai_posBackup[0] + botDriver->botData.unk5bc.ai_velAxis[0] >> 8;
+		short sVar7 = botDriver->botData.ai_posBackup[1] + botDriver->botData.unk5bc.ai_velAxis[1] >> 8;
+		buckSearchParams.pos[1] = sVar7 - 0x100;
+		//TODO CONCAT22
+		buckSearchParams.pos[2] = botDriver->botData.ai_posBackup[2] + botDriver->botData.unk5bc.ai_velAxis[2] >> 8;
+		//TODO: more stuff here local_8c
+
+		/*
+		* from my understanding:
+			first param: 98 is x, 96 is y, 94 is z
+			second param: 92 is padding, 90 is x, 8e is y, 8c is z
+		*/
+
+		sps->ptr_mesh_info = sdata->gGT->level1->ptr_mesh_info;
+		sps->Union.QuadBlockColl.qbFlagsWanted = 0x1000;
+		sps->Union.QuadBlockColl.qbFlagsIgnored = 0x10;
+		sps->Union.QuadBlockColl.searchFlags = 2;
+
+		COLL_SearchBSP_CallbackQUADBLK(&buckSearchParams, , sps, 0);
+
+		if (sps->boolDidTouchQuadblock)
+		{
+			botDriver->quadBlockHeight = sps->Union.QuadBlockColl.hitPos[1] << 8;
+
+			botDriver->ai_quadblock_checkpointIndex = sps->Set2.ptrQuadblock->checkpointIndex;
+
+			VehPhysForce_RotAxisAngle(botInstance->matrix, &sps->Set2.normalVec[0], botDriver->botData.ai_rot4[1]);
+
+			botDriver->AxisAngle3_normalVec[0] = sps->Set2.normalVec[0];
+			botDriver->AxisAngle3_normalVec[1] = sps->Set2.normalVec[1];
+			botDriver->AxisAngle3_normalVec[2] = sps->Set2.normalVec[2];
+
+			//this line is cringe.
+			//botInstance->bitCompressed_NormalVector_AndDriverIndex = 
+		}
 	}
 
 

@@ -172,7 +172,7 @@ struct ScratchpadStruct
 		char unk[8];
 		
 		// 0x80
-		void* ptrQuadblock;
+		struct QuadBlock* ptrQuadblock;
 		
 	} Set2;
 	
