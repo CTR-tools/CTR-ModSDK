@@ -14,6 +14,7 @@ void Mods6_EndOfFile();
 void Mods7_EndOfFile();
 void Mods8_EndOfFile();
 void Mods9_EndOfFile();
+void ModsA_EndOfFile();
 
 void ModsMain()
 {
@@ -37,7 +38,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 
-	int modSizes[9] =
+	int modSizes[10] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -65,9 +66,12 @@ void ModsMain()
 		
 		// VehBirth_TeleportSelf
 		(int)VehBirth_TeleportAll - (int)Mods9_EndOfFile,
+		
+		// MAIN BigBlock2
+		(int)0x80035684 - (int)ModsA_EndOfFile
 	};
 
-	for(int i = 0; i < 9; i++)
+	for(int i = 0; i < 10; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}

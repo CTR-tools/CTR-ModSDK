@@ -72,7 +72,6 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 	
 		sdata->Loading.stage = -5;
 	
-		// howl_StopAudio
 		// clear backup,
 		// keep music,
 		// destroy "most" fx, let menu fx play to end

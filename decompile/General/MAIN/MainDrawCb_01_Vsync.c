@@ -17,8 +17,18 @@ void DECOMP_MainDrawCb_Vsync()
 	sdata->rcntTotalUnits += GetRCnt(0xf2000001);
 	ResetRCnt(0xf2000001);
 
-	DECOMP_howl_PlayAudio_Update();
-
+	// If Software-CriticalSection is active,
+	// then vsync ticked during a block of code
+	// where channelTaken/channelFree are mid-edit,
+	// traversing the list here will cause corruption.
+	// This avoids the use of Hardware-CriticalSection,
+	// which allows the rest of VsyncCallback to run,
+	// preventing a frame spike from 30fps->20fps
+	if (sdata->criticalSectionCount == 0)
+	{
+		DECOMP_howl_PlayAudio_Update();
+	}
+	
 	#ifdef REBUILD_PC
 	PsyX_UpdateInput();
 	#endif

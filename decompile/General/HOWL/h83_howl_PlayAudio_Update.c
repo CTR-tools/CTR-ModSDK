@@ -6,15 +6,6 @@ void DECOMP_howl_PlayAudio_Update()
 	struct ChannelStats* curr, *backupNext;
 	u_char statFlags;
 	
-	// If Software-CriticalSection is active,
-	// then vsync ticked during a block of code
-	// where channelTaken/channelFree are mid-edit,
-	// traversing the list here will cause corruption.
-	// This avoids the use of Hardware-CriticalSection,
-	// which allows the rest of VsyncCallback to run,
-	// preventing a frame spike from 30fps->20fps
-	if (sdata->criticalSectionCount != 0) return;
-	
 	if(sdata->boolAudioEnabled != 0)
 	{
 		// if copy exists, make audio fade slowly

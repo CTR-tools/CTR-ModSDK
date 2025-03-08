@@ -186,7 +186,7 @@ void FUN_80034b48(int param_1)
       // OtherFX_Stop2
       FUN_80028844(1);
 
-	  //pause audio
+	  // howl_PauseAudio
       FUN_8002c510();
 
 	  //set sound to paused

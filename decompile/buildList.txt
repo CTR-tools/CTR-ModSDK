@@ -1,5 +1,5 @@
 // 509 = 978-469, "comm... - //comm..."
-// 509+43+36+27+38+14+18+35+46+12+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 887 rewritten so far
+// 509+43+36+27+38+14+18+35+46+12+7+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 887 rewritten so far
 // 509 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
@@ -10,7 +10,8 @@
 // 18 for 230_Block3
 // 35 for 232 adv hub
 // 46 for UI Block #1
-// 12 for MAIN block
+// 12 for MAIN block1
+// +7 for MAIN block2
 // +6 for ElimBG
 // +9 for GAMEPAD Block #1
 // +2 for DebugAndDecalBlock
@@ -862,14 +863,20 @@ common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_Is
 // ====================================================================================================================
 // MAIN (stubbed for this file)
 // ====================================================================================================================
-common, exe, MainDB_GetClipSize, 0x0,                    General/MAIN/MainDB_00_GetClipSize.c
-common, exe, MainDB_PrimMem, 0x0,                        General/MAIN/MainDB_01_PrimMem.c
-common, exe, MainDB_OTMem, 0x0,                          General/MAIN/MainDB_02_OTMem.c
-common, exe, MainDrawCb_DrawSync, 0x0,                   General/MAIN/MainDrawCb_00_DrawSync.c
-common, exe, MainDrawCb_Vsync, 0x0,                      General/MAIN/MainDrawCb_01_Vsync.c
-common, exe, MainFrame_TogglePauseAudio, 0x0,            General/MAIN/MainFrame_00_TogglePauseAudio.c
-common, exe, MainFrame_ResetDB, 0x0,                     General/MAIN/MainFrame_01_ResetDB.c
-common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_02_GameLogic.c
+
+// MAIN_AAA_BigBlock2
+common, exe, MainDB_GetClipSize, 0x0, 	General/MAIN/MAIN_AAA_BigBlock2.c
+
+// MAIN_AAA_BigBlock2
+//common, exe, MainDB_GetClipSize, 0x0,                    General/MAIN/MainDB_00_GetClipSize.c
+//common, exe, MainDB_PrimMem, 0x0,                        General/MAIN/MainDB_01_PrimMem.c
+//common, exe, MainDB_OTMem, 0x0,                          General/MAIN/MainDB_02_OTMem.c
+//common, exe, MainDrawCb_DrawSync, 0x0,                   General/MAIN/MainDrawCb_00_DrawSync.c
+//common, exe, MainDrawCb_Vsync, 0x0,                      General/MAIN/MainDrawCb_01_Vsync.c
+//common, exe, MainFrame_TogglePauseAudio, 0x0,            General/MAIN/MainFrame_00_TogglePauseAudio.c
+//common, exe, MainFrame_ResetDB, 0x0,                     General/MAIN/MainFrame_01_ResetDB.c
+//common, exe, MainFrame_GameLogic, 0x0,                   General/MAIN/MainFrame_02_GameLogic.c
+
 //common, exe, MainFrame, 0x0,                             General/MAIN/MainFrame_03_idk.c //TODO
 //common, exe, MainFrame_VisMemFullFrame, 0x0,             General/MAIN/MainFrame_04_VisMemFullFrame.c //TODO
 //common, exe, MainFrame_InitVideoSTR, 0x0,                General/MAIN/MainFrame_05_InitVideoSTR.c //TODO
