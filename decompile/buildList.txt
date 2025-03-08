@@ -1049,7 +1049,10 @@ common, exe, PushBuffer_SetPsyqGeom, 0x0,                General/PushBuffer/Push
 //common, exe, PushBuffer_SetDrawEnv_DecalMP, 0x0,          General/PushBuffer/PushBuffer_02_SetDrawEnv_DecalMP.c //TODO
 common, exe, PushBuffer_SetDrawEnv_Normal, 0x0,          General/PushBuffer/PushBuffer_03_SetDrawEnv_Normal.c
 common, exe, PushBuffer_SetMatrixVP, 0x0,                General/PushBuffer/PushBuffer_04_SetMatrixVP.c
-common, exe, PushBuffer_SetFrustumPlane, 0x0,             General/PushBuffer/PushBuffer_05_SetFrustumPlane.c
+
+// Breaks AdvGarage when moving Crash->Pura or Pura->Crash
+//common, exe, PushBuffer_SetFrustumPlane, 0x0,             General/PushBuffer/PushBuffer_05_SetFrustumPlane.c
+
 common, exe, PushBuffer_UpdateFrustum, 0x0,              General/PushBuffer/PushBuffer_06_UpdateFrustum.c
 common, exe, PushBuffer_FadeOneWindow, 0x0,              General/PushBuffer/PushBuffer_07_FadeOneWindow.c
 common, exe, PushBuffer_FadeAllWindows, 0x0,             General/PushBuffer/PushBuffer_08_FadeAllWindows.c
