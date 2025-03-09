@@ -799,6 +799,12 @@ void StateZero()
 	firstEntry[231].size = 28*0x800;
 	//firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
 	//printf("Size: %08x\n", firstEntry[231].size);
+	
+	// Cut off Region1 overlays at 2 sectors (not 3),
+	// This protects Region2 RAM so it is not overwritten
+	// during Region1 disc streaming, saves loading time
+	for(int i = 221; i <= 225; i++)
+		firstEntry[i].size = 2*0x800;
 	#endif
 
 	#ifndef FastBoot

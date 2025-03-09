@@ -311,6 +311,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 2:
 		{
+			int levelID = gGT->levelID;
+			
+			if (levelID == MAIN_MENU_LEVEL) break;
+			
 			#ifdef USE_HIGHMP
 			DECOMP_LOAD_OvrLOD(1);
 			#else

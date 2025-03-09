@@ -22,7 +22,14 @@ void DECOMP_LOAD_OvrEndRace(unsigned int param_1)
 
 	// save ID, and reload next overlay (sector read invalidation)
 	gGT->overlayIndex_EndOfRace = param_1;
+	
+	// Optimization, new Region1 overlays
+	// cut off loading at 2 disc sectors (not 3),
+	// so Region2 RAM is protected, dont reload
+	// Region2 unless numPlayers changes (LOAD_OvrLOD)
+	#if 0
     gGT->overlayIndex_LOD = 0xff;
+	#endif
   }
   return;
 }
