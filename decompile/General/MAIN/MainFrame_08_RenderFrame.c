@@ -445,6 +445,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 	if((gGT->gameMode1 & (LOADING|1)) == 0)
 	{
+		// reset depth to CLOSEST
+		gGT->pushBuffer_UI.ptrOT =
+			gGT->otSwapchainDB[gGT->swapchainIndex];
+		
 		void DebugProfiler_Draw();
 		DebugProfiler_Draw();
 		
