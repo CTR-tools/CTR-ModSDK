@@ -37,6 +37,8 @@ enum RotateFlipType
 	RFT_NoMatch = -1
 };
 
+int Debug_GetPreciseTime();
+
 void DECOMP_DrawLevelOvr1P(
 	struct RenderList* RL,
 	struct PushBuffer* pb,
@@ -49,6 +51,8 @@ void DECOMP_DrawLevelOvr1P(
 	short posScreen2[4];
 	short posScreen3[4];
 	short posScreen4[4];
+	
+	int startTime = Debug_GetPreciseTime();
 
 	struct LevVertex* pVA = &mi->ptrVertexArray[0];
 	
@@ -424,4 +428,16 @@ void DECOMP_DrawLevelOvr1P(
 			}
 		}
 	}
+	
+	int endTime = Debug_GetPreciseTime();
+	printf("Level: %d\n", endTime - startTime);
+}
+
+int Debug_GetPreciseTime()
+{
+	int sysClock =
+		GetRCnt(0xf2000001) +
+		sdata->rcntTotalUnits;
+		
+	return sysClock;
 }
