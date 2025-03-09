@@ -28,7 +28,7 @@ void DebugMenu_InitMenuPositionSize(
 		rowCount++;
 	}
 	
-	dm->sizeX = (charSizeX * len) + 6;
+	dm->sizeX = WIDE_34(charSizeX * len) + 6;
 	dm->sizeY = (charSizeY * rowCount) + 6;
 	
 	dr = DMENU_GETROWS(dm);

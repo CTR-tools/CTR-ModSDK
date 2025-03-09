@@ -14,9 +14,9 @@ void DebugFont_DrawCharacter(int index, int screenPosX, int screenPosY, int lett
 
   // specific to DEBUG MENU,
   // 8x index, not 7x index
-  screenPosX += 8 * index;
+  screenPosX += WIDE_34(8 * index);
 
-  uVar6 = screenPosX + 7 & 0xffff;
+  uVar6 = (screenPosX + (WIDE_34(8)-1)) & 0xffff;
   uVar4 = (screenPosY + 7) * 0x10000;
 
   // primitive memory

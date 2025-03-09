@@ -113,7 +113,7 @@ int DebugProfiler_Scale(int input)
 	int cFS = sdata->gGT->clockFrameStart; 
 	
 	int scaledInput = (input * 1000) / 0x147e;
-	int relativeToStart = scaledInput - cFS;
+	int relativeToStart = WIDE_34(scaledInput - cFS);
 	int scaledGraph = ((relativeToStart * 0x104) / 100) + 0x14;
 	
 	return scaledGraph;
