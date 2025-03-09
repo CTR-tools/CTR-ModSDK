@@ -379,6 +379,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = 0x2d00;
     d->heldItemID = weaponId;
 
+	if(weaponId != 0xf)
+		d->numHeldItems = 9;
 
     if (
         // If Permanent Invisibility Cheat is Enabled
