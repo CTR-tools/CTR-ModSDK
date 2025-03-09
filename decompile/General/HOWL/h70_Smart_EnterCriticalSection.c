@@ -6,6 +6,4 @@ void DECOMP_Smart_EnterCriticalSection(void)
   // that does not actually block callbacks,
   // just prevent use of audio during callbacks
   sdata->criticalSectionCount++;
-  
-  return;
 }

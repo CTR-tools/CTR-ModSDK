@@ -6,11 +6,4 @@ void DECOMP_Smart_ExitCriticalSection(void)
   // that does not actually block callbacks,
   // just prevent use of audio during callbacks
   sdata->criticalSectionCount--;
-  
-  // Temporary Test
-  #if 1
-  if(sdata->criticalSectionCount < 0) while(1) {}
-  #endif
-  
-  return;
 }
