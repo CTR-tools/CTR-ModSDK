@@ -103,8 +103,18 @@ void DebugProfiler_SectionEnd()
 		return;
 	
 	ptrOpenSect->timeEnd = Debug_GetPreciseTime();
-	ptrOpenSect = 0;
 	
+#if 0
+	if (ptrOpenSect->b != 0)
+	{
+		int time = ptrOpenSect->timeEnd - ptrOpenSect->timeStart;
+		
+		if(time > 0)
+		printf("Level: %d\n", time);
+	}
+#endif
+	
+	ptrOpenSect = 0;
 	numSectionsUsed++;
 }
 

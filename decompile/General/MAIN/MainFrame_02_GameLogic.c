@@ -184,13 +184,14 @@ LAB_80035098:
 		{
 			psVar8->quip2 = (short)iVar4;
 		}
+		
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0xFF, 0, 0);
+		#endif
+		
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
-		{
-			#ifdef USE_PROFILER
-			void DebugProfiler_SectionStart(char* name, char r, char g, char b);
-			DebugProfiler_SectionStart(0, 0xFF, 0, 0);
-			#endif
-			
+		{			
 			if
 			(
 				(
@@ -296,14 +297,13 @@ LAB_80035098:
 #else
 				TEST_ThTickRunBucket(gGT->threadBuckets[iVar4].thread);
 #endif
-			}
-			
-			#ifdef USE_PROFILER
-			void DebugProfiler_SectionEnd();
-			DebugProfiler_SectionEnd();
-			#endif
-			
+			}			
 		}
+		
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+		#endif
 
 #ifndef REBUILD_PS1
 		BOTS_UpdateGlobals();
