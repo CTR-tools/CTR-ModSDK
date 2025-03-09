@@ -39,6 +39,8 @@ enum RotateFlipType
 
 int Debug_GetPreciseTime();
 
+void FileEnd();
+
 void DECOMP_DrawLevelOvr1P(
 	struct RenderList* RL,
 	struct PushBuffer* pb,
@@ -69,6 +71,10 @@ void DECOMP_DrawLevelOvr1P(
 	POLY_GT4* p;
 	void* pNext;
 	void* pCurr;
+	
+	// Persistent PrimMem
+	int backupPrimMemCurr = primMem->curr;
+	//primMem->curr = sdata->PtrMempack->firstFreeByte;
 	
 	for (int i = 0; i < 5; i++)
 	{
@@ -198,11 +204,14 @@ void DECOMP_DrawLevelOvr1P(
 					pCurr = p;
 					if (pNext > ((unsigned int)primMem->end - 0x200)) return;
 	
-					*(int*)&p->r0 = *(int*)&pVA[block->index[id[4 * k + 0]]].color_hi[0];
-					*(int*)&p->r1 = *(int*)&pVA[block->index[id[4 * k + 1]]].color_hi[0];
-					*(int*)&p->r2 = *(int*)&pVA[block->index[id[4 * k + 2]]].color_hi[0];
-					*(int*)&p->r3 = *(int*)&pVA[block->index[id[4 * k + 3]]].color_hi[0];
-	
+					if(*(int*)0x8000c000 == 0)
+					{
+						*(int*)&p->r0 = *(int*)&pVA[block->index[id[4 * k + 0]]].color_hi[0];
+						*(int*)&p->r1 = *(int*)&pVA[block->index[id[4 * k + 1]]].color_hi[0];
+						*(int*)&p->r2 = *(int*)&pVA[block->index[id[4 * k + 2]]].color_hi[0];
+						*(int*)&p->r3 = *(int*)&pVA[block->index[id[4 * k + 3]]].color_hi[0];
+					}
+					
 					setPolyGT4(p);
 	
 					gte_ldv0(&pVA[block->index[id[4 * k + 0]]].pos[0]);
@@ -259,7 +268,13 @@ void DECOMP_DrawLevelOvr1P(
 					unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
 					unsigned int justRot = rotAndOrder & 7;
 					unsigned int justOrder = (rotAndOrder >> 3) & 3;
-	
+
+					if(*(int*)0x8000c000 != 0)
+					{
+						tl = 0;
+						justOrder = 0;
+					}
+
 					if (tl != 0)
 					{
 						// 2031
@@ -431,6 +446,8 @@ void DECOMP_DrawLevelOvr1P(
 	
 	int endTime = Debug_GetPreciseTime();
 	printf("Level: %d\n", endTime - startTime);
+	
+	//primMem->curr = backupPrimMemCurr;
 }
 
 int Debug_GetPreciseTime()
@@ -440,4 +457,9 @@ int Debug_GetPreciseTime()
 		sdata->rcntTotalUnits;
 		
 	return sysClock;
+}
+
+void FileEnd()
+{
+	// leave empty
 }
