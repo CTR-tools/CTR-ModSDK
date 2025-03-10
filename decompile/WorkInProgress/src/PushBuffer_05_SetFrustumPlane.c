@@ -4,7 +4,7 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
 {
     int leadingZeroBits;
     int temp;
-    int normalX = 0;
+    u_int normalX = 0;
     int normalY = 0;
     int normalZ = 0;
     int cameraPosX;
@@ -55,13 +55,13 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
 #define gte_ldLZCS(r0) __asm__ volatile("mtc2   %0, $30" : : "r"(r0))
 
     // absolute
-    normalX = (normalX < 0) ? -normalX : normalX;
-    gte_ldLZCS(normalX);
+    u_int absNormalX = ((int)normalX < 0) ? -normalX : normalX;
+    gte_ldLZCS(absNormalX);
     leadingZeroBits = gte_stLZCR();
 
     // absolute
-    normalY = (normalY < 0) ? -normalY : normalY;
-    gte_ldLZCS(normalY);
+    int absNormalY = (normalY < 0) ? -normalY : normalY;
+    gte_ldLZCS(absNormalY);
     temp = gte_stLZCR();
     if (temp < leadingZeroBits)
     {
@@ -69,8 +69,8 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
     }
 
     // absolute
-    normalZ = (normalZ < 0) ? -normalZ : normalZ;
-    gte_ldLZCS(normalZ);
+    int absNormalZ = (normalZ < 0) ? -normalZ : normalZ;
+    gte_ldLZCS(absNormalZ);
     temp = gte_stLZCR();
     if (temp < leadingZeroBits)
     {
@@ -82,7 +82,7 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
     if (leadingZeroBits < 0x12)
     {
         vecBitShift = 0x12 - leadingZeroBits;
-        normalX = normalX >> (vecBitShift & 0x1f);
+        normalX = (int)normalX >> (vecBitShift & 0x1f);
         normalY = normalY >> (vecBitShift & 0x1f);
         normalZ = normalZ >> (vecBitShift & 0x1f);
     }
@@ -120,7 +120,7 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
 
     // Calculate plane equation: Ax + By + Cz + D = 0
     // where (A,B,C) is the normal and D is -dot(normal, point)
-    int planeD = (normalX * cameraPosX + normalY * cameraPosY + normalZ * cameraPosZ) >> 13;
+    int planeD = (int)(normalX * cameraPosX + normalY * cameraPosY + normalZ * cameraPosZ) >> 13;
 
     // Store the plane equation coefficients
     frustumData[0] = (short)normalX; // A
@@ -128,21 +128,20 @@ int DECOMP_PushBuffer_SetFrustumPlane(short *frustumData, struct FrustumCornerOU
     frustumData[2] = (short)normalZ; // C
     frustumData[3] = (short)planeD;  // D
 
+    // Determine plane type based on normal direction
+    u_int planeType = normalX >> 31; // Extract sign bit of X
+
     // Encode plane type based on normal direction
     // Bit 0: X is negative
     // Bit 1: Y is negative
     // Bit 2: Z is negative
-	
-	// Extract sign bit of X
-    int planeType = normalX >> 31;
-
     if (normalY < 0)
     {
-        planeType = planeType | 2;
+        planeType |= 2;
     }
     if (normalZ < 0)
     {
-        planeType = planeType | 4;
+        planeType |= 4;
     }
     return planeType;
 }

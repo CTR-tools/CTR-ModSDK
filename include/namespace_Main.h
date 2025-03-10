@@ -292,18 +292,10 @@ struct GameTracker
 	} confetti;
 
 	// 0x1b0c
-	struct
-	{
-		// 0x1b0c
-		short numStars;
-
-		// 0x1b0e
-		short unk[3];
-
-		// 1b14
-		int offsetOT;
-
-	} stars;
+	struct Stars stars;
+	
+	// 1b14
+	unsigned int ptrCircle;
 
 	// 1b18
 	unsigned int ptrClod;
