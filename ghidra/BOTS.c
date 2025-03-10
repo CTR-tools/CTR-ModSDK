@@ -2676,8 +2676,6 @@ LAB_800156b0:
 	// modify AI's respawn index (why?)
     *(undefined *)(iVar17 + 0x60a) = *(undefined *)(psVar19 + 9);
   }
-  // END OF TOP-DOWN
-  // ========================================================================
   else {
     uVar8 = (uint)*(byte *)((int)psVar21 + 7) * 0x10 + (uint)*(byte *)((int)psVar19 + 7) * -0x10 &
             0xfff;
@@ -2982,6 +2980,9 @@ LAB_80015b98:
     }
   }
   *(undefined2 *)(iVar17 + 0x3da) = *(undefined2 *)(iVar17 + 0x5c0);
+
+  // END OF TOP-DOWN
+  // ========================================================================
 
   if ((*(uint *)(iVar17 + 0x5b0) & 2) != 0) {
     sVar7 = *(short *)(iVar17 + 0x5ba);
