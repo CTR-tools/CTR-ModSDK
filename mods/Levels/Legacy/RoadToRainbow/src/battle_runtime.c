@@ -190,14 +190,13 @@ void RunInitHook()
 	
 	sdata->ptrActiveMenu = 0;
 	
-	// oxide station: 12c, 0, 1, 3FE, 0
-	// ND Box scene: 12c, 1, -1, 3FE, 0
+	// oxide station: 12c, 0, 1, 3FE
+	// ND Box scene: 12c, 1, -1, 3FE
 	
 	gGT->stars.numStars = 0x300;
-	gGT->stars.unk[0] = 0;
-	gGT->stars.unk[1] = 1;
-	gGT->stars.unk[2] = 0x3FE;
-	gGT->stars.offsetOT = 0;
+	gGT->stars.spread = 0;
+	gGT->stars.seed = 1;
+	gGT->stars.distance = 0x3FE;
 	
 	// this is for tokens down below
 	rot[0] = 0x400;
