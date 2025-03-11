@@ -313,7 +313,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		{
 			int levelID = gGT->levelID;
 			
-			if (levelID == MAIN_MENU_LEVEL) break;
+			// force no-load on main menu
+			if (levelID == MAIN_MENU_LEVEL) 
+				break;
+			
+			// force reload, so that 230 functions are not 
+			// overwritten by 233 on first-frame loading,
+			// which starts on X-Press, does not wait AT ALL
+			if (levelID == ADVENTURE_CHARACTER_SELECT)
+				gGT->overlayIndex_LOD = 0xFF;
 			
 			#ifdef USE_HIGHMP
 			DECOMP_LOAD_OvrLOD(1);
