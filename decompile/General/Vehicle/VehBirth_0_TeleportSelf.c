@@ -23,6 +23,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     struct ScratchpadStruct* sps = (struct ScratchpadStruct*)&scratchpad[0];
 #endif
 
+	int spawnAtBoss = 
+		gGT->gameMode2 & SPAWN_AT_BOSS;
+
     // cheat flags
 	gGT->gameMode2 &= ~(SPAWN_AT_BOSS | 2);
 
@@ -79,10 +82,8 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	// if you want to spawn outside boss door
     else if (
 			// After leaving a boss race
-			(
-				// Set in 222 EndRace function
-				((gGT->gameMode2 & SPAWN_AT_BOSS) != 0)
-			) ||
+			(spawnAtBoss) 
+			||
 			
 			// Before starting a boss cutscene
 			(
@@ -95,29 +96,25 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         // position outside boss door
         posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
 		
-		// spawn facing boss door
+		// spawn facing TOWARDS boss door,
+		// after winning last trophy on hub
 		rotArr = &posRot->rot[0];
 		rotDeltaY = 0x400;
 		
-		// if just beat boss
-		if ((gGT->gameMode2 & SPAWN_AT_BOSS) != 0)
+		// After leaving a boss race
+		if (spawnAtBoss)
 		{
-            // just finished pinstripe boss,
-            if (gGT->prevLEV == HOT_AIR_SKYWAY)
-			{
-				// if spawn by pinstripe, dont face wall
-				if(gGT->levelID == CITADEL_CITY)
-					rotDeltaY = 0x800;
-				
-				// else if spawn by oxide,
-				// do nothing, rotation already faces the door
-			}
+			// spawn facing AWAY from door
+			rotDeltaY = 0xC00;
 			
-			// if just beat ANY other boss
-			else
+            if (
+					// Pinstripe -> Citadel (not gemstone)
+					(gGT->prevLEV == HOT_AIR_SKYWAY) &&
+					(gGT->levelID == CITADEL_CITY)
+				)
 			{
-				// spawn facing AWAY from door
-				rotDeltaY = 0xC00;
+				// face to the RIGHT from door
+				rotDeltaY = 0x800;
 			}
 		}
     }
