@@ -74,7 +74,7 @@ void DECOMP_DrawLevelOvr1P(
 	
 	// Persistent PrimMem
 	int backupPrimMemCurr = primMem->curr;
-	//primMem->curr = sdata->PtrMempack->firstFreeByte;
+	primMem->curr = sdata->PtrMempack->firstFreeByte;
 	
 	for (int i = 0; i < 5; i++)
 	{
@@ -202,7 +202,10 @@ void DECOMP_DrawLevelOvr1P(
 					p = primMem->curr;
 					pNext = p + 1;
 					pCurr = p;
-					if (pNext > ((unsigned int)primMem->end - 0x200)) return;
+					
+					// Do NOT do this with persistent primitive cache
+					// if (pNext > ((unsigned int)primMem->end - 0x200)) return;
+					if (pNext > ((unsigned int)0x80200000 - 0xA00)) return;
 	
 					if(*(int*)0x8000c000 == 0)
 					{
@@ -447,7 +450,7 @@ void DECOMP_DrawLevelOvr1P(
 	int endTime = Debug_GetPreciseTime();
 	printf("Level: %d\n", endTime - startTime);
 	
-	//primMem->curr = backupPrimMemCurr;
+	primMem->curr = backupPrimMemCurr;
 }
 
 int Debug_GetPreciseTime()
