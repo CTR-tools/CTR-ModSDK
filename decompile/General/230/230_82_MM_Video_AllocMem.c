@@ -50,10 +50,5 @@ void DECOMP_MM_Video_AllocMem(u_int width, u_short height, u_int flags, int size
     DecDCTReset(0);
 
     DecDCTvlcSize2(V230.field25_0x48);
-
-    EnterCriticalSection();
-
     DecDCToutCallback(&MM_Video_DecDCToutCallbackFunc);
-
-    ExitCriticalSection();
 }

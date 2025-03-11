@@ -767,11 +767,7 @@ void StateZero()
 	gGT->trafficLightsTimer = 0xfffffc40;
 
 	DECOMP_Timer_Init();
-
-	// set callback and save callback
-	EnterCriticalSection();
 	DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
-	ExitCriticalSection();
 
 	DECOMP_MEMCARD_InitCard();
 	VSync(0);
