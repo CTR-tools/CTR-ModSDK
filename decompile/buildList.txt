@@ -882,9 +882,9 @@ common, exe, MainDB_GetClipSize, 0x0, 	General/MAIN/MAIN_AAA_BigBlock2.c
 common, exe, MainFrame_HaveAllPads, 0x0,                 General/MAIN/MainFrame_06_HaveAllPads.c //may need further testing
 common, exe, MainFrame_RequestMaskHint, 0x0,             General/MAIN/MainFrame_07_RequestMaskHint.c
 common, exe, MainFrame_RenderFrame, 0x0,                 General/MAIN/MainFrame_08_RenderFrame.c //Mods7 lives in this file
-//common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_00_idk.c //TODO
+//common, exe, MainFreeze_ConfigDrawNPC105, 0x0,           General/MAIN/MainFreeze_00_ConfigDrawNPC105.c //TODO
 common, exe, MainFreeze_ConfigDrawArrows, 0x0,           General/MAIN/MainFreeze_01_ConfigDrawArrows.c
-//common, exe, MainFreeze, 0x0,                            General/MAIN/MainFreeze_02_idk.c //TODO
+//common, exe, MainFreeze_ConfigSetupEntry, 0x0,           General/MAIN/MainFreeze_02_ConfigSetupEntry.c //TODO
 //common, exe, MainFreeze_MenuPtrOptions, 0x0,             General/MAIN/MainFreeze_03_MenuPtrOptions.c
 common, exe, MainFreeze_MenuPtrQuit, 0x0,                General/MAIN/MainFreeze_04_MenuPtrQuit.c
 common, exe, MainFreeze_SafeAdvDestroy, 0x0,             General/MAIN/MainFreeze_05_SafeAdvDestroy.c
