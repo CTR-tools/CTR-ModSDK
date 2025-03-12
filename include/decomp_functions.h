@@ -354,7 +354,7 @@ void DECOMP_MEMCARD_InitCard(void);
 
 void DECOMP_MEMPACK_Init(int ramSize);
 void DECOMP_MEMPACK_SwapPacks(int index);
-void DECOMP_MEMPACK_NewPack_StartEnd(void* start,int size);
+void DECOMP_MEMPACK_NewPack(void* start,int size);
 int DECOMP_MEMPACK_GetFreeBytes(void);
 void* DECOMP_MEMPACK_AllocMem(int size);
 void* DECOMP_MEMPACK_AllocHighMem(int allocSize);

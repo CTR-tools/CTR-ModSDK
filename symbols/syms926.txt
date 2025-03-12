@@ -575,7 +575,7 @@
 
 8003e740 MEMPACK_Init				// real ND name
 8003e80c MEMPACK_SwapPacks
-8003e830 MEMPACK_NewPack_StartEnd
+8003e830 MEMPACK_NewPack
 8003e85c MEMPACK_GetFreeBytes
 8003e874 MEMPACK_AllocMem			// real ND name
 8003e8e8 MEMPACK_AllocHighMem		// real ND name

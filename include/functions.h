@@ -679,7 +679,7 @@ uint8_t MEMCARD_EraseFile(int slotIdx, char *srcString);
 
 void MEMPACK_Init(int ramSize);
 void MEMPACK_SwapPacks(int index);
-void MEMPACK_NewPack_StartEnd(void* start, int size);
+void MEMPACK_NewPack(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocMem(int allocSize); // also has a second parameter? --Super
 //void* MEMPACK_AllocHighMem(int allocSize, char*);

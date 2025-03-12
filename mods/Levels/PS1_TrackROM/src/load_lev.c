@@ -13,7 +13,7 @@ void CS_Garage_Init();
 void MM_JumpTo_Scrapbook();
 
 void CseqMusic_StopAll();
-void MEMPACK_NewPack_StartEnd(void* start, int size);
+void MEMPACK_NewPack(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocHighMem(int allocSize);
 u_int RaceFlag_IsFullyOffScreen();

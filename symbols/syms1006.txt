@@ -623,7 +623,7 @@
 
 8003fc9c MEMPACK_Init
 8003fd68 MEMPACK_SwapPacks
-8003fd8c MEMPACK_NewPack_StartEnd
+8003fd8c MEMPACK_NewPack
 8003fdb8 MEMPACK_GetFreeBytes
 8003fdd0 MEMPACK_AllocMem
 8003fe44 MEMPACK_AllocHighMem

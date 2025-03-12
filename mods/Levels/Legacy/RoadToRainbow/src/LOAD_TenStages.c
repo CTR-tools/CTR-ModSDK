@@ -12,7 +12,7 @@ void CS_Garage_Init();
 void MM_JumpTo_Scrapbook();
 
 void CseqMusic_StopAll();
-void MEMPACK_NewPack_StartEnd(void* start, int size);
+void MEMPACK_NewPack(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocHighMem(int allocSize);
 u_int RaceFlag_IsFullyOffScreen();
@@ -442,12 +442,12 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// Change active allocation system to #2
 				// pack = [hubAlloc, hubAlloc+size1]
 				MEMPACK_SwapPacks(1);
-				MEMPACK_NewPack_StartEnd(iVar5, iVar9);
+				MEMPACK_NewPack(iVar5, iVar9);
 
 				// Change active allocation system to #3
 				// pack = [hubAlloc+size1, hubAlloc+size1+size2]
 				MEMPACK_SwapPacks(2);
-				MEMPACK_NewPack_StartEnd(iVar5 + iVar9, iVar12);
+				MEMPACK_NewPack(iVar5 + iVar9, iVar12);
 
 				// Intro cutscene with oxide spaceship and all racers
 				if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)

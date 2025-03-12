@@ -511,12 +511,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// Change active allocation system to #2
 				// pack = [hubAlloc, hubAlloc+size1]
 				DECOMP_MEMPACK_SwapPacks(1);
-				DECOMP_MEMPACK_NewPack_StartEnd((void*)iVar5, iVar9);
+				DECOMP_MEMPACK_NewPack((void*)iVar5, iVar9);
 
 				// Change active allocation system to #3
 				// pack = [hubAlloc+size1, hubAlloc+size1+size2]
 				DECOMP_MEMPACK_SwapPacks(2);
-				DECOMP_MEMPACK_NewPack_StartEnd((void*)(iVar5 + iVar9), iVar12);
+				DECOMP_MEMPACK_NewPack((void*)(iVar5 + iVar9), iVar12);
 
 				// Intro cutscene with oxide spaceship and all racers
 				if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)

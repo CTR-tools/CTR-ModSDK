@@ -14,27 +14,27 @@ void OVR_Region3();
 
 void DECOMP_MEMPACK_Init(int ramSize)
 {
-	struct Mempack* ptrMempack;
 
-	// Get the pointer to the memory allocation system
-	ptrMempack = sdata->PtrMempack;
+	unsigned int startPtr;
 
 #ifdef REBUILD_PC
 
 	// must be a 24-bit address
 	// Visual Studio -> Properties -> Linker -> Advanced -> 
 	// Base Address, Randomized Base Address, Fixed Base Address
-	ptrMempack->start = &memory[0];
+	startPtr = &memory[0];
+	
+	int boolValid = startPtr < 0x01000000;
+	
 	printf(
 		"[CTR] Where does memory starts? (%s) %08x\n",
-		(ptrMempack->start < 0x01000000 ? "GOOD" : "BAD"),
-		ptrMempack->start
+		boolValid ? "GOOD" : "BAD",
+		startPtr
 	);
 	
-	memset(memory, 0, 32*1024*1024);
-	ptrMempack->endOfAllocator = &memory[32*1024*1024 - 4];
-	ptrMempack->lastFreeByte = &memory[32*1024*1024 - 4];
-
+	ramSize = 32*1024*1024;
+	memset(startPtr, 0, ramSize);
+	
 #else
 	
 	// Defragmentation requires a lower overlay size in bigfile,
@@ -42,7 +42,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// manually in MainMain after call to DECOMP_LOAD_ReadDirectory
 	
 	// RB_EndOfFile		800ba548	30 sectors (original game, deprecated by decomp)
-	// (defragged 231)	800b8c78	28 sectors
+	// Defragged 231	800b8c78	28 sectors
 	// CS_EndOfFile		800b97fc	28 sectors (original game, current largest size)
 	
 	u_int Aligned231 = 28*0x800;
@@ -52,12 +52,9 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	
 	// Original game allocated 0x800 to stack,
 	// but now Stack is relocated to kernel memory
-	ptrMempack->start = (void*)((u_int)OVR_Region3 + Aligned231);
-	ptrMempack->endOfAllocator = (void *)(ramSize + 0x80000000);
-	ptrMempack->lastFreeByte = (void *)(ramSize + 0x80000000);
+	startPtr = ((u_int)OVR_Region3 + Aligned231);
+	ramSize -= (int)(startPtr & 0xffffff);
 #endif
 
-	ptrMempack->numBookmarks = 0;
-	ptrMempack->firstFreeByte = ptrMempack->start;
-	//printf("%08x\n", ptrMempack->firstFreeByte);
+	DECOMP_MEMPACK_NewPack(startPtr, ramSize);
 }
