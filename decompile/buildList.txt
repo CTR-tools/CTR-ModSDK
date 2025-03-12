@@ -1,9 +1,9 @@
 // 509 = 978-469, "comm... - //comm..."
-// 509+43+36+27+38+14+18+35+46+12+7+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 887 rewritten so far
+// 509+43+50+27+38+14+18+35+46+12+7+6+9+2+1+1+2+2+3+3+2+4+2+3+3+16+3+47 = 887 rewritten so far
 // 509 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
-// 36 for LOAD block
+// 50 for LOAD block
 // 27 for VehPtr block
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -795,17 +795,17 @@ common, exe, LIST_Init, 0x0,                             General/LIST/LIST_8_Ini
 // LOAD (complete?)
 // ====================================================================================================================
 // for individual byteBudget.bat calculation (note, mods must be disabled for byteBudget.bat):
-//     * comment the LOAD_00_36_Callback_Overlay_Generic line below
+//     * comment the LOAD_00_50_FULL line below
 //     * uncomment the block of individual files below
 //     * disable USE_DEFRAG in common.h
 // for defrag & Mods4.c (required for /AltMods):
-//     * uncomment the LOAD_00_36_Callback_Overlay_Generic line below
+//     * uncomment the LOAD_00_50_FULL line below
 //     * comment the block of individual files below
 //     * enable USE_DEFRAG in common.h
 
-common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_36_Callback_Overlay_Generic.c // 00 to 33
+common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_50_FULL.c // 00 to 50
 
-//LOAD_00_36_Callback_Overlay_Generic starts here ---v
+//LOAD_00_50_FULL starts here ---v
 //common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_Callback_Overlay_Generic.c
 //common, exe, LOAD_Callback_Overlay_230, 0x0,             General/LOAD/LOAD_01_Callback_Overlay_230.c
 //common, exe, LOAD_Callback_Overlay_231, 0x0,             General/LOAD/LOAD_02_Callback_Overlay_231.c
@@ -828,7 +828,7 @@ common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_36
 //common, exe, LOAD_VramFile, 0x0,                         General/LOAD/LOAD_19_VramFile.c
 //common, exe, LOAD_ReadFileASyncCallback, 0x0,            General/LOAD/LOAD_20_ReadFileASyncCallback.c
 //common, exe, LOAD_ReadFile, 0x0,                         General/LOAD/LOAD_21_ReadFile.c
-//common, exe, LOAD_XnfFile, 0x0,              General/LOAD/LOAD_22_XnfFile.c
+//common, exe, LOAD_XnfFile, 0x0,              			   General/LOAD/LOAD_22_XnfFile.c
 //common, exe, LOAD_FindFile, 0x0,                         General/LOAD/LOAD_23_FindFile.c
 //common, exe, LOAD_HowlHeaderSectors, 0x0,                General/LOAD/LOAD_24_HowlHeaderSectors.c
 //common, exe, LOAD_HowlCallback, 0x0,                     General/LOAD/LOAD_25_HowlCallback.c
@@ -843,22 +843,21 @@ common, exe, LOAD_Callback_Overlay_Generic, 0x0,         General/LOAD/LOAD_00_36
 //common, exe, LOAD_AppendQueue, 0x0,                      General/LOAD/LOAD_34_AppendQueue.c
 //common, exe, LOAD_CDRequestCallback, 0x0,                General/LOAD/LOAD_35_CDRequestCallback.c
 //common, exe, LOAD_NextQueuedFile, 0x0,                   General/LOAD/LOAD_36_NextQueuedFile.c
-//LOAD_00_36_Callback_Overlay_Generic ends here ---^
-
-common, exe, LOAD_Hub_ReadFile, 0x0,                     General/LOAD/LOAD_37_Hub_ReadFile.c
-common, exe, LOAD_Hub_SwapNow, 0x0,                      General/LOAD/LOAD_38_Hub_SwapNow.c
-common, exe, LOAD_Hub_Main, 0x0,                         General/LOAD/LOAD_39_Hub_Main.c
-common, exe, LOAD_OvrLOD, 0x0,                           General/LOAD/LOAD_40_OvrLOD.c
-common, exe, LOAD_OvrEndRace, 0x0,                       General/LOAD/LOAD_41_OvrEndRace.c
-common, exe, LOAD_OvrThreads, 0x0,                       General/LOAD/LOAD_42_OvrThreads.c
-common, exe, LOAD_GetAdvPackIndex, 0x0,                  General/LOAD/LOAD_43_GetAdvPackIndex.c
-common, exe, LOAD_TenStages, 0x0,                        General/LOAD/LOAD_44_TenStages.c
-common, exe, LOAD_TalkingMask, 0x0,                      General/LOAD/LOAD_45_TalkingMask.c
-common, exe, LOAD_LevelFile, 0x0,                        General/LOAD/LOAD_46_LevelFile.c
-common, exe, LOAD_IsOpen_RacingOrBattle, 0x0,            General/LOAD/LOAD_47_IsOpen_RacingOrBattle.c
-common, exe, LOAD_IsOpen_MainMenu, 0x0,                  General/LOAD/LOAD_48_IsOpen_MainMenu.c
-common, exe, LOAD_IsOpen_AdvHub, 0x0,                    General/LOAD/LOAD_49_IsOpen_AdvHub.c
-common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_IsOpen_Podiums.c
+//common, exe, LOAD_Hub_ReadFile, 0x0,                     General/LOAD/LOAD_37_Hub_ReadFile.c
+//common, exe, LOAD_Hub_SwapNow, 0x0,                      General/LOAD/LOAD_38_Hub_SwapNow.c
+//common, exe, LOAD_Hub_Main, 0x0,                         General/LOAD/LOAD_39_Hub_Main.c
+//common, exe, LOAD_OvrLOD, 0x0,                           General/LOAD/LOAD_40_OvrLOD.c
+//common, exe, LOAD_OvrEndRace, 0x0,                       General/LOAD/LOAD_41_OvrEndRace.c
+//common, exe, LOAD_OvrThreads, 0x0,                       General/LOAD/LOAD_42_OvrThreads.c
+//common, exe, LOAD_GetAdvPackIndex, 0x0,                  General/LOAD/LOAD_43_GetAdvPackIndex.c
+//common, exe, LOAD_TenStages, 0x0,                        General/LOAD/LOAD_44_TenStages.c
+//common, exe, LOAD_TalkingMask, 0x0,                      General/LOAD/LOAD_45_TalkingMask.c
+//common, exe, LOAD_LevelFile, 0x0,                        General/LOAD/LOAD_46_LevelFile.c
+//common, exe, LOAD_IsOpen_RacingOrBattle, 0x0,            General/LOAD/LOAD_47_IsOpen_RacingOrBattle.c
+//common, exe, LOAD_IsOpen_MainMenu, 0x0,                  General/LOAD/LOAD_48_IsOpen_MainMenu.c
+//common, exe, LOAD_IsOpen_AdvHub, 0x0,                    General/LOAD/LOAD_49_IsOpen_AdvHub.c
+//common, exe, LOAD_IsOpen_Podiums, 0x0,                   General/LOAD/LOAD_50_IsOpen_Podiums.c
+//LOAD_00_50_FULL ends here ---^
 
 // ====================================================================================================================
 // MAIN (stubbed for this file)

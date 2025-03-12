@@ -28,6 +28,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	// Patch call to VehPhysProc_SlamWall_Init from COLL
 	#ifndef REBUILD_PS1
 	#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+	if(*(int*)0x800214bc == 0xC018EF5)
 	*(int*)0x800214bc = JAL(DECOMP_VehPhysProc_SlamWall_Init);
 	#endif
 	

@@ -49,8 +49,8 @@ void ModsMain()
 		// HOWL defrag Block1
 		(int)howl_VolumeGet - (int)Mods3_EndOfFile,
 
-		// LOAD defrag Block1
-		(int)LOAD_Hub_ReadFile - (int)Mods4_EndOfFile,
+		// LOAD defrag Block1 (potentially join with MAIN_AAA_Block2)
+		(int)MainDB_GetClipSize - (int)Mods4_EndOfFile,
 
 		// VehPtr defrag Block1
 		(int)VehPickState_NewState - (int)Mods5_EndOfFile,

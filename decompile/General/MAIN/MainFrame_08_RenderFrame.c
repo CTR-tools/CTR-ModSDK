@@ -848,7 +848,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					#ifndef REBUILD_PS1
 					gGT->overlayTransition--;
 					if(gGT->overlayTransition == 1)
-						LOAD_OvrThreads(2);
+						DECOMP_LOAD_OvrThreads(2);
 					#endif
 				}
 

@@ -22,7 +22,7 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 			)
 		{
 			gGT->bool_AdvHub_NeedToSwapLEV = 0;
-			LOAD_Hub_SwapNow();
+			DECOMP_LOAD_Hub_SwapNow();
 		}
 	}
 
@@ -34,7 +34,7 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 		unsigned int currLevelID = gGT->levelID - 0x19;
 		if (currLevelID >= 5) return;
 
-		LOAD_Hub_ReadFile(
+		DECOMP_LOAD_Hub_ReadFile(
 			bigfilePtr,
 			rdata.MetaDataHubs[currLevelID].connectedHub_LevID[nextLevelID - 1],
 			3 - gGT->activeMempackIndex

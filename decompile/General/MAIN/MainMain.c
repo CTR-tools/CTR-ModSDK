@@ -127,7 +127,7 @@ u_int DECOMP_main()
 			
 			#ifdef USE_LANG
 			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
-				LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
+				DECOMP_LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
 				gGT->gameMode2 &= ~(LNG_CHANGE);
 			}
 			#endif
