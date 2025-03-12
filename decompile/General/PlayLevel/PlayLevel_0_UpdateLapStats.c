@@ -32,14 +32,21 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	iVar9 = 0;
 	iVar13 = 0;
 	currRank = 0;
+	
+	// driver pointer,
+	// unlike other "rank" index variables
+	firstRank = 0;
 
 	// find farthest-ahead human
 	for (int iVar9 = 0; iVar9 < 8; iVar9++)
 	{
-		firstRank = gGT->driversInRaceOrder[iVar9];
+		currDriver = gGT->driversInRaceOrder[iVar9];
 
-		if ((firstRank != 0) && ((firstRank->actionsFlagSet & 0x100000) == 0))
+		if ((currDriver != 0) && ((currDriver->actionsFlagSet & 0x100000) == 0))
+		{
+			firstRank = currDriver;
 			break;
+		}
 	}
 
 	#ifdef USE_ONLINE
