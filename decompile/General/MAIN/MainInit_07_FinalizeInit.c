@@ -345,7 +345,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 	// stars
     gGT->stars.numStars = (short)(lev1->stars.numStars / numPlyr);
     gGT->stars.spread = lev1->stars.spread;
-    gGT->stars.seed = lev1->stars.seed
+	gGT->stars.seed = lev1->stars.seed;
     gGT->stars.distance = lev1->stars.distance;
 
 	// confetti
