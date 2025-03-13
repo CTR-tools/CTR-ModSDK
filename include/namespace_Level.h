@@ -505,7 +505,7 @@ struct Stars {
 	short spread;
 	short seed;
 	short distance;
-}
+};
 
 struct SkyboxFace {
 	u_short A; //ABC stores offsets to add to ptrVerts. divide by 12 if you need an index
