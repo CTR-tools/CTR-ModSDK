@@ -149,54 +149,15 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 	// === Check Last Place ===
 
+	int numDriverInRace = 
+		gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
-	driverRankItemValue = driver->driverRank;
-
-	// Basically, if racer is in last place in any possible race scenario
-	if
-	(
-		(
-			(
-				(
-					// If racer is in 8th place
-					(driverRankItemValue == 7) &&
-
-					// If numPlyrCurrGame is 1
-					(gGT->numPlyrCurrGame == 1)
-				) ||
-				(
-					(
-						// If racer is in 6th place
-						driverRankItemValue == 5 &&
-
-						// if numPlyrCurrGame is 2
-						(gGT->numPlyrCurrGame == 2)
-					)
-				)
-			) ||
-			(
-				(
-					// if racer is in 4th place
-					driverRankItemValue == 3 &&
-
-					// if numPlyrCurrGame is more than 2
-					(2 < (u_char)gGT->numPlyrCurrGame)
-				)
-			)
-		) &&
-		(
-			// race timer is not frozen for this player
-			(driver->actionsFlagSet & 0x40000) == 0
-		)
-	)
-	{
-		// Increase the time racer has been in last place by elapsed milliseconds
-		driver->timeSpentInLastPlace += msPerFrame;
-	}
-
+	// Last Place, and time is unfrozen
+	if (driver->driverRank == (numDriverInRace-1))
+		if((driver->actionsFlagSet & 0x40000) == 0)
+			driver->timeSpentInLastPlace += msPerFrame;
 
 	// === Determine Hazard ===
-
 
 	driverRankItemValue = 4;
 
