@@ -584,18 +584,11 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 				// wait 5 frames before next weapon use
 				driver->noItemTimer = FPS_DOUBLE(5);
 
-				// not spring weapon
-				if (heldItemID != 5)
-				{
-					// only reduce numHeldItem if not using item cheats
-					if ((gameMode2 & (CHEAT_BOMBS | CHEAT_TURBO | CHEAT_MASK)) == 0) driver->numHeldItems--;
-				}
-
 				// no spring in final game
 				#if 0
 
 				// If you have the Spring weapon
-				else
+				if (heldItemID == 5)
 				{
 					if (
 						(driver->jump_CoyoteTimerMS != 0) &&
@@ -605,8 +598,12 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 						driver->numHeldItems--;
 					}
 				}
-
+				
+				else
 				#endif
+			
+				// only reduce numHeldItem if not using item cheats
+				if ((gameMode2 & (CHEAT_BOMBS | CHEAT_TURBO | CHEAT_MASK)) == 0) driver->numHeldItems--;
 			}
 		}
 	}
