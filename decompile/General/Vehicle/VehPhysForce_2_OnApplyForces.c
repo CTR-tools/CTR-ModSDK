@@ -12,7 +12,8 @@ void DECOMP_VehPhysForce_OnApplyForces(struct Thread * thread, struct Driver * d
     const SVec3 radius = { .x = 0, .y = 25, .z = 0 };
     MulMatrixVec(&driver->originToCenter, (Matrix*)&driver->matrixFacingDir, &radius);
 
-    DECOMP_VehPhysForce_ConvertSpeedToVec(driver);
+    // DECOMP_VehPhysForce_ConvertSpeedToVec(driver);
+	VehPhysForce_ConvertSpeedToVec(driver, &driver->velocity, 0);
 
     if ((driver->underDriver) && (driver->underDriver->terrain_type == TERRAIN_MUD))
     {

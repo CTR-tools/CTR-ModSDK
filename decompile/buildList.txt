@@ -1325,7 +1325,11 @@ common, exe, VehGroundSkids_Subset2, 0x0,                General/Vehicle/VehGrou
 //common, exe, VehPhysCrash_AI, 0x0,                       General/Vehicle/VehPhysCrash_2_AI.c //TODO
 //common, exe, VehPhysCrash_Attack, 0x0,                   General/Vehicle/VehPhysCrash_3_Attack.c //TODO
 //common, exe, VehPhysCrash_AnyTwoCars, 0x0,               General/Vehicle/VehPhysCrash_4_AnyTwoCars.c //TODO
-common, exe, VehPhysForce_ConvertSpeedToVec, 0x0,        General/Vehicle/VehPhysForce_0_ConvertSpeedToVec.c
+
+// causes bug:
+// https://discord.com/channels/527135227546435584/527136553957589005/1349544147916292106
+//common, exe, VehPhysForce_ConvertSpeedToVec, 0x0,        General/Vehicle/VehPhysForce_0_ConvertSpeedToVec.c
+
 //common, exe, VehPhysForce_OnGravity, 0x0,                General/Vehicle/VehPhysForce_1_OnGravity.c
 common, exe, VehPhysForce_OnApplyForces, 0x0,            General/Vehicle/VehPhysForce_2_OnApplyForces.c
 //common, exe, VehPhysForce_CollideDrivers, 0x0,           General/Vehicle/VehPhysForce_3_CollideDrivers.c //TODO

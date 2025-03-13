@@ -983,7 +983,7 @@ void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
 //VehPhysCrash_AI()
 //VehPhysCrash_Attack()
 void VehPhysCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-//VehPhysForce_ConvertSpeedToVec()
+void VehPhysForce_ConvertSpeedToVec(struct Driver* d, short* velArr, int x);
 //VehPhysForce_OnGravity()
 void VehPhysForce_OnApplyForces(struct Thread* t, struct Driver* d);
 void VehPhysForce_CollideDrivers(struct Thread* t, struct Driver* d);
