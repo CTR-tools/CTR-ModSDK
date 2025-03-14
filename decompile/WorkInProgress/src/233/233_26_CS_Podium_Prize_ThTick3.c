@@ -69,7 +69,7 @@ void CS_Podium_Prize_ThTick3(struct Thread *th)
     // Give hints at the end of each race
 
     // if you do not go to boss cutscene
-    if (CS_Boss_BoolShouldStart() == 0)
+    if (CS_Camera_BoolGotoBoss() == 0)
     {
 		int rewards = sdata->advProgress.rewards[4];
 		

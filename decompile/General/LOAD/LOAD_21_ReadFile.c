@@ -1,101 +1,90 @@
 #include <common.h>
 
-void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *destination, int *size, void * callback)
+// same hack as AppendQueue, see notes there
+#define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
+
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
-	u_char bVar1;
-	u_int uVar2;
-	int iVar3;
 	int uVar5;
-	void *buf;
-	CdlLOC aCStack56[2];
-	u_char auStack48[8];
-
-	bVar1 = true;
+	CdlLOC cdLoc;
+	u_char paramOutput[8];
 
 	DECOMP_CDSYS_SetMode_StreamData();
 
-	uVar5 = 0;
-
+	// get size and offset of subfile
+	struct BigHeader* bigfile = sdata->ptrBigfile1;
 	struct BigEntry* entry = BIG_GETENTRY(bigfile);
+	int eSize = entry[subfileIndex].size;
+	int eOffs = entry[subfileIndex].offset;
+	
+	#ifndef USE_PCDRV
+	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
+	#endif
 
-	// get size of file from bigfile header
-	*size = entry[subfileIndex].size;
-
-	// bigfile cdpos + subfileOffset
-	CdIntToPos(bigfile->cdpos + entry[subfileIndex].offset, aCStack56);
-
-	// if a destination pointer is not given
-	if (destination == (void *)0x0)
+	// if not an overlay file with specific destination
+	if (ptrDst == (void *)0x0)
 	{
 		// set flag that we used MEMPACK_AllocMem
 		// to store this ReadFile somewhere random
-		//DAT_80083a40 = DAT_80083a40 | 1;
-		data.currSlot.flags = data.currSlot.flags | 1;
+		struct LoadQueueSlot* lqs = &data.currSlot;
+		lqs->flags |= 1;
 
-		// MEMPACK_AllocMem
-		buf = (void *)DECOMP_MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
-
-		// if allocation failed
-		if (buf == (void *)0x0)
-		{
-			// function  failed
-			return (void *)0;
-		}
+		// make sure RAM has room for sector alignment
+		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((eSize + 0x7ffU) & 0xfffff800); // "FILE"
+		
+		// undo sector-align alloc,
+		// allocate just "needed" bytes
+		DECOMP_MEMPACK_ReallocMem(eSize);
 	}
-
-	// if destination pointer is given
-	else
+	
+	sdata->callbackCdReadSuccess = 0;
+	
+	if (callback != 0)
 	{
-		data.currSlot.flags = data.currSlot.flags & 0xfffe;
-
-		// use that
-		buf = destination;
+		// Save the function pointer address
+		sdata->callbackCdReadSuccess = callback;		
+		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
-
-	while ((uVar5 == 0 || (!bVar1)))
+	
+	#if defined(REBUILD_PC) || defined(USE_PCDRV)
+	callback = 0;
+	#endif
+		
+	#ifdef USE_PCDRV
+	
+	register int v1 asm("v1");
+	v1 = PClseek(sdata->fd_bigfile, eOffs*0x800, PCDRV_SEEK_SET);
+	v1 = PCread(sdata->fd_bigfile, ptrDst, eSize);
+		
+	#else
+	
+	while (1)
 	{
-		uVar5 = CdControl(CdlSetloc, (u_char *)aCStack56, auStack48);
-#ifdef REBUILD_PC
-		uVar5 = 1;
-#endif
-		CdlCB cdreadCB = (CdlCB)0x0;
-		// If no callback function pointer is given
-		if (callback == 0)
+		uVar5 =  CdControl(CdlSetloc, &cdLoc, &paramOutput[0]);		
+		uVar5 &= CdRead(eSize + 0x7ffU >> 0xb, ptrDst, 0x80);
+
+		#ifndef REBUILD_PC
+		// if no errors
+		if(uVar5 != 0)
+		#endif
+		
 		{
-			// Set function pointers to nullptr
-			sdata->ReadFileAsyncCallbackFuncPtr = 0;
-		}
+			// if async, end here
+			if(callback != 0)
+				break;
 
-		// If you want a callback function pointer
-		// to execute after LOAD_ReadFile is done
-		else
-		{
-			// Save the function pointer address
-			sdata->ReadFileAsyncCallbackFuncPtr = callback;
-			cdreadCB = DECOMP_LOAD_ReadFileASyncCallback;
-		}
-
-		// Save this function as a callback,
-		// which does not execute the function pointer
-		CdReadCallback(cdreadCB);
-
-		uVar2 = CdRead(*size + 0x7ffU >> 0xb,buf,0x80);
-		uVar5 = uVar5 & uVar2;
-
-#ifndef REBUILD_PC
-		if (callback == 0)
-#endif
-		{
-			iVar3 = CdReadSync(0,(u_char *)0x0);
-			bVar1 = iVar3 == 0;
+			// if sync, wait until remainingSectors=0
+			uVar5 = CdReadSync(0,(u_char *)0x0);
+			
+			// if no sectors remain
+			if(uVar5 == 0)
+				break;
 		}
 	}
-
-	if ((callback == 0) && (destination == (void *)0x0))
-	{
-		DECOMP_MEMPACK_ReallocMem(*size);
-	}
-	return buf;
+	
+	#endif
+	
+	return ptrDst;
 }

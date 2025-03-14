@@ -343,10 +343,10 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     numPlyr = gGT->numPlyrCurrGame;
 
 	// stars
-    gGT->stars.numStars = (short)(lev1->unkStarData[0] / numPlyr);
-    gGT->stars.unk[0] = lev1->unkStarData[1];
-    gGT->stars.unk[1] = lev1->unkStarData[2];
-    gGT->stars.unk[2] = lev1->unkStarData[3];
+    gGT->stars.numStars = (short)(lev1->stars.numStars / numPlyr);
+    gGT->stars.spread = lev1->stars.spread;
+	gGT->stars.seed = lev1->stars.seed;
+    gGT->stars.distance = lev1->stars.distance;
 
 	// confetti
     gGT->confetti.numParticles_curr = 0;
@@ -385,7 +385,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         // disable all HUD flags
         gGT->hudFlags = 0;
 
-        CS_LevCamera_OnInit();
+        CS_Cutscene_Start();
     }
 
     PickupBots_Init();

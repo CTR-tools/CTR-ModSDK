@@ -10,7 +10,8 @@ struct BspSearchVertex
 	short pos[3];
 	
 	// 0x6
-	// FUN_8001ef50
+	// FUN_8001f2dc - COLL_FIXED_TRIANGL_GetNormVec
+	// FUN_8001ef50 - COLL_FIXED_TRIANGL_TestPoint
 	u_short flags;
 	
 	// 0x8
@@ -128,35 +129,79 @@ struct ScratchpadStruct
 	struct BSP* bspHitbox;
 	
 	// 0x4c
-	// 1f800154
-	char unk4C[0xA4]; //unk4C + 0x24 seems to be a rotation of some sort, possibly related to potions. See 231_014.c
-	
-	// 0x64
-	// ptrQuadblock
+	struct
+	{
+		// 0x4c
+		short hitPos[3];
+		
+		// 0x52
+		// which way does normal point
+		short BspSearchVertexFlags;
+		
+		// 0x54 
+		short normalVec[4];
+		
+		// 0x5c
+		// distanceFromDriverToUNK
+		short unk[3];
+		
+		// 0x62
+		char unk62;
+		char unk63_someIndex;
+		
+		// 0x64
+		void* ptrQuadblock;
+		
+	} Set1;
 	
 	// 0x68
-	// short hitPos[4]
+	struct
+	{
+		// 0x68
+		short hitPos[3];
+		
+		// 0x6e
+		// which way does normal point
+		short BspSearchVertexFlags;
+		
+		// 0x70 
+		short normalVec[4];
+		
+		// 0x78
+		// distanceFromDriverToUNK
+		char unk[8];
+		
+		// 0x80
+		void* ptrQuadblock;
+		
+	} Set2;
 	
-	// 0x70 
-	// short normalVec[4]
+	// 0x84
+	int countByOne_ForWhatReason; // ??
 	
-	// 0x88 - array of pointer,
-	// size of array at offset 0xc4,
-	// can only be size 1?
+	// 0x88
+	// This can happen 15 times cause of FUN_80020410,
+	// so this prevents any duplicate collisions
+	struct BSP* bspInstHitboxArr[15];
 	
-	// --------
+	// 0xc4
+	int numInstHitboxesHit;
 	
-	// vec3, subtract positions (FUN_8001d0c4)
-	// 0xe2
+	// 0xc8, 0xca,
+	short barycentrics[2];
+		
+	// 0xcc, 0xd0, 0xd4
+	struct LevVertex* levVertHit[3];
+	
+	// 0xd8, 0xdc, 0xe0
+	struct BspSearchVertex* bspSearchVertHit[3];
+	
 	// 0xe4
-	// 0xe6
+	int unkE4;
 	
 	// vec3, bsp->0x10 - position (FUN_8001d0c4)
-	// 0xe8
-	// 0xea
-	// 0xec
-	
-	// 0xee - padding
+	// 0xe8, 0xea, 0xec, 0xee
+	short unkVecE8[4];
 	
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
@@ -164,6 +209,9 @@ struct ScratchpadStruct
 	// 0x1a4 - quadblock action flags
 	// 0x1a8 - fastmath normalization
 	char dataOutput[0x68];
+	
+	// offset 0x1c4
+	// FUN_8001d0c4
 	
 	// 0x20C -- size of struct
 };

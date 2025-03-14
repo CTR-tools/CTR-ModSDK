@@ -2,6 +2,10 @@
 
 void DECOMP_CDSYS_SpuEnableIRQ()
 {
+	
+// PS1
+#ifndef USE_PCDRV
+	
 	for(int i = 0; i < 0x100; i++)
 	{
 		sdata->SpuDecodedData[i] = 0;
@@ -14,4 +18,6 @@ void DECOMP_CDSYS_SpuEnableIRQ()
 	sdata->irqAddr = 0x200;
 	SpuSetIRQAddr(0x200);
 	SpuSetIRQ(1);
+
+#endif
 }

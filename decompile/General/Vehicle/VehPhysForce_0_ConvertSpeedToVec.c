@@ -1,5 +1,8 @@
 #include <common.h>
 
+// causes bug:
+// https://discord.com/channels/527135227546435584/527136553957589005/1349544147916292106
+
 void DECOMP_VehPhysForce_ConvertSpeedToVec(struct Driver* driver)
 {
   int yAngle = driver->axisRotationY;

@@ -19,11 +19,11 @@ void FUN_8003116c(int *param_1)
   while (uVar3 < uVar4)
   {
     if (
-			// quadblock -> ptr_add_tex
+			// quadblock -> PVS
 			(*(int *)(uVar3 + 0x44) != 0) &&
 
 			(
-				// array of InstDef pointers
+				// PVS->visInstSrc
 				piVar1 = *(int **)(*(int *)(uVar3 + 0x44) + 8),
 
 				piVar1 != (int *)0x0
@@ -91,11 +91,11 @@ void FUN_80031268(int *param_1,int param_2)
   while (uVar5 < uVar3)
   {
     if (
-			// quadblock -> ptr_add_tex
+			// quadblock -> PVS
 			(*(int *)(uVar5 + 0x44) != 0) &&
 
 			(
-				// array of instances visible from quadblock
+				// PVS->visInstSrc
 				piVar1 = *(int **)(*(int *)(uVar5 + 0x44) + 8),
 
 				piVar1 != (int *)0x0

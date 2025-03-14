@@ -3,6 +3,8 @@
 static int str_number = 0x20; // " \0"
 extern struct RectMenu menu222;
 
+// 3528
+
 void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
@@ -71,12 +73,17 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// if not in Token mode, these won't be used until later;
 	lerpStartY = 0;
 	lerpEndY = 0;
+	
+	// For trophy race, check 1st place
+	int boolWin = (driver->driverRank == 0);
 
-	// If you're in Adventure Mode
-	if ((gGT->gameMode1 & ADVENTURE_MODE) != 0)
+	// If C-T-R token race
+	if ((gGT->gameMode2 & TOKEN_RACE) != 0)
 	{
-		// If you won the race, and you have all 3 letters (C, T, and R)
-		if ((driver->driverRank == 0) && (driver->PickupLetterHUD.numCollected == 3))
+		// add requirement of C-T-R letters
+		boolWin = (boolWin) && (driver->PickupLetterHUD.numCollected == 3);
+		
+		if (boolWin)
 		{
 			// lerp C-T-R letters closer to center by 16 pixels
 			// default (unlocking and frames < 140) or (already unlocked and frames < 300)
@@ -84,7 +91,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			lerpStartY = hudCTR->y;
 			lerpEndX = lerpStartX + 0x10;
 			lerpEndY = lerpStartY + 0x10;
-			currFrame = elapsedFrames;
 			lerpFrames = FPS_DOUBLE(8);
 
 			// If you have not unlocked this CTR Token
@@ -97,9 +103,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				scaleDown = scaleDown >> 10;
 
 				// lerp letters off-screen
-				if (elapsedFrames > FPS_DOUBLE(230))
+				if (elapsedFrames >= FPS_DOUBLE(230))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(230);
+					elapsedFrames -= FPS_DOUBLE(230);
 
 					lerpStartX += 0x10;
 					lerpStartY += 0x50;
@@ -108,9 +114,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				}
 
 				// lerp letters to center
-				else if (elapsedFrames > FPS_DOUBLE(140))
+				else if (elapsedFrames >= FPS_DOUBLE(140))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(140);
+					elapsedFrames -= FPS_DOUBLE(140);
 
 					lerpStartX += 0x10;
 					lerpStartY += 0x10;
@@ -145,7 +151,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					// but they passed "elapsedFrames-50" instead of "elapsedFrames-230", kills effect.
 					//	txtStartX = 0x100;
 					//	txtEndX = -150;
-					//	currFrame = elapsedFrames - 50;
+					//	elapsedFrames -= 50;
 
 					// lerp on-screen: CTR TOKEN AWARDED
 					txtStartX = 0x264;
@@ -155,7 +161,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						&txtPos[0],
 						txtStartX, 0xA6,
 						txtEndX, 0xA6,
-						currFrame, FPS_DOUBLE(8));
+						elapsedFrames, FPS_DOUBLE(8));
 
 					txtColor = (gGT->timer & FPS_DOUBLE(1)) ? 0xFFFF8003 : 0xFFFF8004;
 
@@ -169,7 +175,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					&letterPos[0],
 					lerpStartX, lerpStartY,
 					lerpEndX, lerpEndY,
-					currFrame, FPS_DOUBLE(8));
+					elapsedFrames, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
@@ -183,10 +189,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			// If you already have this CTR Token unlocked
 			else
 			{
-				// or <= ?
-				if (elapsedFrames > FPS_DOUBLE(300))
+				if (elapsedFrames >= FPS_DOUBLE(300))
 				{
-					currFrame = elapsedFrames - FPS_DOUBLE(300);
+					elapsedFrames -= FPS_DOUBLE(300);
 
 					lerpStartX = hudCTR->x + 0x10;
 					lerpStartY = hudCTR->y + 0x10;
@@ -199,7 +204,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					&letterPos[0],
 					lerpStartX, lerpStartY,
 					lerpEndX, lerpEndY,
-					currFrame, lerpFrames);
+					elapsedFrames, lerpFrames);
 
 				// variable reuse, frame timers
 				lerpStartY = 0;
@@ -256,9 +261,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// Draw how much time it took to finish laps and race
 		DECOMP_AA_EndEvent_DisplayTime(i, lerpEndY);
 	}
+	
+	elapsedFrames = sdata->framesSinceRaceEnded;
 
 	// If it hasn't been 1 second from race ended
-	if (elapsedFrames < FPS_DOUBLE(29))
+	if (elapsedFrames < FPS_DOUBLE(30))
 		return;
 
 	// If there is one player
@@ -399,30 +406,31 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// If you have not pressed X
 	if ((sdata->AnyPlayerTap & 0x50) == 0)
 		return;
-
-	// clear gamepad input
+	
+	// === If Pressed X ===
+	
 	RECTMENU_ClearInput();
+	
+	sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
+	sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_BOSS | TOKEN_RACE);
 
-	// if event was not won
-	if (driver->driverRank > 0)
+	// If you are in boss mode
+	if (gGT->gameMode1 < 0)
 	{
-		// pass pointer to menu buffer that shows Retry / Exit To Map,
-		// identical to buffer in 221 dll, except this one in EXE space
-		RECTMENU_Show(&data.menuRetryExit);
+		sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
+	}
 
-		// record that the menu is now showing
+	if (!boolWin)
+	{
+		RECTMENU_Show(&data.menuRetryExit);
 		sdata->menuReadyToPass |= 1;
 		return;
 	}
 
-	// If you won the race
-	// If you have pressed X to continue...
+	// === If you won the race ===
 
 	sdata->framesSinceRaceEnded = 0;
 	sdata->numIconsEOR = 1;
-
-	// when loading is done, add flag for "In Adventure Arena"
-	sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
 
 	// Load the levelID for Adventure Hub that you came from
 	levSpawn = gGT->prevLEV;
@@ -430,12 +438,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// If you are in boss mode
 	if (gGT->gameMode1 < 0)
 	{
-		// when loading is done, add flag for "spawn near boss door"
-		sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
-
-		// when loading is done, remove flag for Boss Mode
-		sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;
-
 		// bitIndex of keys unlocked, and boss beaten
 		bitIndex = gGT->bossID + 0x5e;
 
@@ -474,18 +476,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				// beat 2nd time
 				adv->rewards[3] |= 0x100008;
 			}
-		}
-	}
-	// if you are in token race
-	else if ((gGT->gameMode2 & 0x8) != 0)
-	{
-		// If you have collected 3 letters (C, T, and R)
-		if (driver->PickupLetterHUD.numCollected == 3)
-		{
-			// set bit to tokens
-			bitIndex = gGT->levelID + 0x4c;
-			// when loading is done, remove flag for CTR Challenge
-			sdata->Loading.OnBegin.RemBitsConfig8 |= TOKEN_RACE;
 		}
 	}
 

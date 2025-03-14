@@ -357,7 +357,7 @@ LAB_80058158:
   local_3c = local_34;
   local_3e = local_36 + -0x100;
 
-  // COLL_SearchTree_FindQuadblock_Touching
+  // COLL_SearchBSP_CallbackQUADBLK
   FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0);
 
   // if collision was not found
@@ -10357,9 +10357,9 @@ void FUN_80062b74(undefined4 param_1,int param_2)
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
     *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
     *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
 	*(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-	*(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+	*(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
     *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
     *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
     *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // VehFrameProc_Driving
@@ -10427,9 +10427,9 @@ void FUN_80062d04(undefined4 param_1,int param_2)
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
     *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
     *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
 	*(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-	*(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+	*(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
     *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
     *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
     *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // VehFrameProc_Driving
@@ -10536,9 +10536,9 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80062e04; // alter jump mechanics
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
   *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // VehFrameProc_Driving
@@ -11253,9 +11253,9 @@ void FUN_80063934(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80062f4c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
   *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // VehFrameProc_Driving
@@ -11450,9 +11450,9 @@ void FUN_80063bd4(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80063a44; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -11652,9 +11652,9 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80063dc8;
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -11872,9 +11872,9 @@ void FUN_80064254(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x800640a4; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -12058,9 +12058,9 @@ void FUN_800644d0(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80064320; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -13527,7 +13527,7 @@ LAB_800659ec:
 
     DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
 
-	// COLL_SearchTree_FindQuadblock_Touching
+	// COLL_SearchBSP_CallbackQUADBLK
     FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0x40);
 
 	if (DAT_1f80014a == 0) {
@@ -13558,7 +13558,7 @@ LAB_800659ec:
 	  // low-LOD collision (2 triangles)
       DAT_1f80012a = 0;
 
-	  // COLL_SearchTree_FindQuadblock_Touching
+	  // COLL_SearchBSP_CallbackQUADBLK
       FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0);
     }
 
@@ -13756,7 +13756,7 @@ LAB_800659ec:
 
       DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
 
-	  // COLL_SearchTree_FindQuadblock_Touching
+	  // COLL_SearchBSP_CallbackQUADBLK
 	  FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0x40);
 
       if (DAT_1f80014a == 0) {
@@ -13781,7 +13781,7 @@ LAB_800659ec:
 		// low-LOD collision (2 triangles)
         DAT_1f80012a = 0;
 
-		// COLL_SearchTree_FindQuadblock_Touching
+		// COLL_SearchBSP_CallbackQUADBLK
         FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0);
       }
 
@@ -14470,8 +14470,8 @@ void FUN_8006677c(int param_1,short *param_2)
         DAT_1f800124._2_2_ = DAT_1f80010a;
         DAT_1f800128 = DAT_1f80010c;
 
-		// COLL_SearchTree_FindX, callback for touching quadblocks,
-		// COLL_PerBspLeaf_CheckQuadblocks_Touching
+		// COLL_SearchBSP_CallbackPARAM, callback for touching quadblocks,
+		// COLL_FIXED_BSPLEAF_TestQuadblocks
         FUN_8001ebec(*(undefined4 *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
 
 		// cur respawn = next respawn
@@ -15017,9 +15017,9 @@ void FUN_800671b0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -15295,9 +15295,9 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x54) = 0;
   *(undefined4 *)(param_2 + 100) = 0;
   *(undefined4 *)(param_2 + 0x68) = 0;
-  *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
   *(undefined4 *)(param_2 + 0x7c) = 0;
 
@@ -15786,9 +15786,9 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x54) = 0;
   *(undefined4 *)(param_2 + 100) = 0;
   *(undefined4 *)(param_2 + 0x68) = 0;
-  *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
   *(int *)(param_2 + 0x584) =
        (int)*(short *)(param_2 + 0x42e) + (int)*(short *)(param_2 + 0x432) / 3;
@@ -15987,9 +15987,9 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80068150; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // VehPhysForce_OnApplyForces
-  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_StartSearch_NearPlayer
+  *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // COLL_MOVED_PlayerSearch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // VehPhysForce_CollideDrivers
-  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_StartSearch_Player
+  *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // COLL_FIXED_PlayerSearch
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // VehPhysForce_TranslateMatrix -- move position to instance matrix
 
@@ -16535,9 +16535,9 @@ void FUN_80068e04(undefined4 param_1,int param_2)
 	*(undefined4 *)(param_2 + 0x5c) = 0; // OnPhysLinear -- disable input, timers, and effects
 
     *(undefined4 *)(param_2 + 0x68) = 0;
-    *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_StartSearch_NearPlayer
+    *(undefined4 *)(param_2 + 0x6c) = 0; // COLL_MOVED_PlayerSearch
     *(undefined4 *)(param_2 + 0x70) = 0; // VehPhysForce_CollideDrivers
-    *(undefined4 *)(param_2 + 0x74) = 0; // COLL_StartSearch_Player
+    *(undefined4 *)(param_2 + 0x74) = 0; // COLL_FIXED_PlayerSearch
     *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
 
 	// VehEmitter_DriverMain

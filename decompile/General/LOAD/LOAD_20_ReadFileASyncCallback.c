@@ -1,36 +1,47 @@
 #include <common.h>
 
+// test a failure
+#if 0
+int last = -1;
+#endif
+
 void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 {
 	CdReadCallback(0);
 	
 	struct LoadQueueSlot* lqs = &data.currSlot;
-	int flags = lqs->flags & 1;
+	
+	// test a failure
+	#if 0
+	if(last != lqs->subfileIndex)
+	{
+		last = lqs->subfileIndex;
+		result = -5;
+		printf("Retry: %d\n", last);
+	}
+	#endif
 	
 	if(result == CdlComplete)
 	{
-		if(flags)
-		{
-			// undo sector-align alloc,
-			// allocate just "needed" bytes
-			DECOMP_MEMPACK_ReallocMem(lqs->size);
-		}
-		
 		// callback
-		if(sdata->ReadFileAsyncCallbackFuncPtr != 0)
+		if(sdata->callbackCdReadSuccess != 0)
 		{
-			(*sdata->ReadFileAsyncCallbackFuncPtr)(lqs);
+			(*sdata->callbackCdReadSuccess)(lqs);
 		}
 	}
 	
 	// CdlDiskError
 	else
 	{
-		if(flags)
+		if(lqs->flags & 1)
 		{
-			DECOMP_MEMPACK_PopState();
+			// undo allocation, try again
+			DECOMP_MEMPACK_ReallocMem(0);
 		}
 		
 		sdata->queueRetry = 1;
+		
+		sdata->queueReady = 1;
+		sdata->queueLength++;
 	}
 }

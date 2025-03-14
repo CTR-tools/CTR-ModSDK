@@ -226,6 +226,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 					gGT->timer);
 
 	if(
+		#ifdef USE_PROFILER
+		((gGT->gameMode1 & DEBUG_MENU) != 0) ||
+		#endif
+	
 		(sdata->ptrActiveMenu != 0) ||
 		((gGT->gameMode1 & END_OF_RACE) != 0)
 	)
@@ -252,6 +256,12 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #endif
 
 	RenderAllHUD(gGT);
+
+	// Instance profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0xFF, 0);
+	#endif
 
 #ifndef REBUILD_PS1
 	RenderAllBeakerRain(gGT);
@@ -284,8 +294,20 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		TEST_DrawInstances(gGT);
 	}
 #endif
+	
+	// Instance Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 	DECOMP_PushBuffer_FadeAllWindows();
+	
+	// Level profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+	#endif
 
 	if((gGT->renderFlags & 1) != 0)
 	{
@@ -359,6 +381,12 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #endif
 	}
 
+	// Level Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
+
 #ifndef REBUILD_PS1
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
@@ -379,26 +407,55 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		DECOMP_CAM_ClearScreen(gGT);
 	}
 
+	// DrawSelf profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0xFF, 0, 0xFF);
+	#endif
+	
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
 		DECOMP_RaceFlag_DrawSelf();
 	}
+	
+	// DrawSelf Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 	RenderDispEnv_UI(gGT);
 
-#ifndef REBUILD_PS1
-	gGT->countTotalTime =
-		Timer_GetTime_Total();
-#endif
+	// VSYNC profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0);
+	#endif
 
 	RenderVSYNC(gGT);
 
 #ifndef REBUILD_PS1
 	RenderFMV();
-
-	gGT->countTotalTime =
-		Timer_GetTime_Elapsed(gGT->countTotalTime,0);
 #endif
+
+	// VSYNC Profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	
+	if((gGT->gameMode1 & (LOADING|1)) == 0)
+	{
+		// reset depth to CLOSEST
+		gGT->pushBuffer_UI.ptrOT =
+			gGT->otSwapchainDB[gGT->swapchainIndex];
+		
+		void DebugProfiler_Draw();
+		DebugProfiler_Draw();
+		
+		void DebugMenu_DrawIfOpen();
+		DebugMenu_DrawIfOpen();
+	}
+	#endif
 
 	RenderSubmit(gGT);
 }
@@ -791,7 +848,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					#ifndef REBUILD_PS1
 					gGT->overlayTransition--;
 					if(gGT->overlayTransition == 1)
-						LOAD_OvrThreads(2);
+						DECOMP_LOAD_OvrThreads(2);
 					#endif
 				}
 
@@ -840,7 +897,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 						#endif
 
 						// allow instances again
-						gGT->gameMode2 &= ~(DISABLE_LEV_INSTANCE);
+						gGT->gameMode2 &= ~(NO_LEV_INSTANCE);
 
 						// fade transition
 						gGT->pushBuffer_UI.fadeFromBlack_desiredResult = 0x1000;
@@ -905,6 +962,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 
+#ifndef USE_NEWLEV
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
 		(u_long*)&gGT->backBuffer->otMem,
@@ -912,6 +970,9 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		(char*)(unsigned int)(unsigned char)sdata->LOD[lod], //this weird cast is what ghidra does
 		(char)numPlyrCurrGame,
 		gGT->gameMode1 & PAUSE_ALL);
+#else
+	RBI = gGT->ptrRenderBucketInstance;
+#endif
 
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
@@ -1664,12 +1725,11 @@ __attribute__((optimize("O0")))
 int ReadyToFlip(struct GameTracker* gGT)
 {
 	return
+			// two VSYNCs passed, 30fps lock
+			(sdata->vsyncTillFlip < 1) &&
 
 			// if DrawOTag finished
-			(gGT->bool_DrawOTag_InProgress == 0) &&
-
-			// two VSYNCs passed, 30fps lock
-			(sdata->vsyncTillFlip < 1);
+			(gGT->bool_DrawOTag_InProgress == 0);
 }
 
 __attribute__((optimize("O0")))
@@ -1694,9 +1754,7 @@ void RenderVSYNC(struct GameTracker* gGT)
 		VSync(0);
 	}
 
-	#ifdef USE_ONLINE
-	int boolFirstFrame = 1;
-	#endif
+
 
 	while(1)
 	{
@@ -1712,13 +1770,6 @@ void RenderVSYNC(struct GameTracker* gGT)
 			// quit, end of stall
 			return;
 		}
-
-#ifdef USE_ONLINE
-		// gpu submission is not too late,
-		// we got to this while() loop before
-		// the flip was ready, so we're on-time
-		boolFirstFrame = 0;
-#endif
 
 #ifndef REBUILD_PC
 		if(ReadyToBreak(gGT))
@@ -1788,7 +1839,7 @@ void RenderSubmit(struct GameTracker* gGT)
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }
 
-#if defined (USE_DEFRAG)
+#if defined (USE_ALTMODS)
 #include "../AltMods/Mods7.c"
 
 void __attribute__ ((section (".end"))) Mods7_EndOfFile()

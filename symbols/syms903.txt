@@ -66,13 +66,13 @@
 8001d694 CDSYS_XAPauseAtEnd
 
 8001d6bc COLL_LevModelMeta
-8001d6ec COLL_Instance
+8001d6ec COLL_FIXED_INSTANC_TestPoint
 // extra function here in sep3?
-8001dd40 COLL_PerBspLeaf_CheckInstances
-8001deac COLL_StartSearch_AI
-8001e080 COLL_StartSearch_Player
-8001f1ec COLL_SearchTree_FindQuadblock_Touching
-8001f2e8 COLL_SearchTree_FindX
+8001dd40 COLL_FIXED_BSPLEAF_TestInstance
+8001deac COLL_FIXED_BotsSearch
+8001e080 COLL_FIXED_PlayerSearch
+8001f1ec COLL_SearchBSP_CallbackQUADBLK
+8001f2e8 COLL_SearchBSP_CallbackPARAM
 
 // unknown 8001f500
 // unknown 8001f638
@@ -80,8 +80,8 @@
 // 1f690 is not a real function
 // unknown 8001f9f8
 
-8001fb38 COLL_PerQuadblock_CheckTriangles_Touching
-8001fd0c COLL_PerBspLeaf_CheckQuadblocks_Touching
+8001fb38 COLL_FIXED_QUADBLK_TestTriangles
+8001fd0c COLL_FIXED_BSPLEAF_TestQuadblocks
 
 // unknown 8001fd98
 // unknown 8001fe0c
@@ -92,13 +92,13 @@
 // unknown 8002032c
 // unknown 8002035c
 
-80020780 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800209c4 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+80020780 COLL_MOVED_QUADBLK_TestTriangles
+800209c4 COLL_MOVED_BSPLEAF_TestQuadblocks
 
 // unknown 80020a50
 // unknown 80020b2c
 
-8002137c COLL_Scrub
+8002137c COLL_MOVED_ScrubImpact
 
 80021c24 CTR_Box_DrawWirePrims
 80021cb8 CTR_Box_DrawWireBox
@@ -430,7 +430,7 @@
 80030cbc LOAD_Callback_MaskHints3D
 80030cd0 LOAD_Callback_Podiums
 80030ce4 LOAD_Callback_LEV
-80030d10 LOAD_Callback_LEV_Adv
+80030d10 LOAD_Callback_PatchMem
 80030d6c LOAD_Callback_DriverModels
 
 80030d80 LOAD_HubCallback			// real ND name
@@ -447,7 +447,7 @@
 800312c8 LOAD_VramFile				
 800313fc LOAD_ReadFileASyncCallback	// real ND name
 800314b0 LOAD_ReadFile				// real ND name
-8003165c LOAD_ReadFile_NoCallback
+8003165c LOAD_XnfFile
 
 8003177c LOAD_FindFile
 
@@ -612,7 +612,7 @@
 
 8003d42c MEMPACK_Init				// real ND name
 8003d534 MEMPACK_SwapPacks
-8003d558 MEMPACK_NewPack_StartEnd
+8003d558 MEMPACK_NewPack
 8003d584 MEMPACK_GetFreeBytes
 8003d59c MEMPACK_AllocMem			// real ND name
 8003d658 MEMPACK_AllocHighMem		// real ND name
@@ -1518,10 +1518,10 @@
 800ac734 CS_Thread_InterpolateFramesMS
 800ac968 CS_Thread_ThTick
 // small func here?
-800acbb4 CS_Boss_Init
-800acd18 CS_Boss_ThTick
-800ad09c CS_Boss_BoolShouldStart
-800ad134 CS_Podium_Camera_ThTick
+800acbb4 CS_LoadBoss
+800acd18 CS_Camera_ThTick_Boss
+800ad09c CS_Camera_BoolGotoBoss
+800ad134 CS_Camera_ThTick_Podium
 800ad65c CS_Thread_Init
 800adb4c CS_Podium_Prize_Spin
 800add20 CS_Podium_Prize_ThTick3
@@ -1531,8 +1531,8 @@
 800ae1b0 CS_Podium_Prize_Init
 800ae4b0 CS_Podium_Stand_Init
 800ae568 CS_Podium_FullScene_Init
-800ae938 CS_LevThread_LInB
-800aebb0 CS_LevCamera_OnInit
+800ae938 CS_Thread_LInB
+800aebb0 CS_Cutscene_Start
 800aee6c CS_BoxScene_InstanceSplitLines
 800b7ea4 CS_Garage_ZoomOut
 800b7f08 CS_Garage_MenuProc

@@ -121,7 +121,7 @@ void FUN_80031a78(int param_1)
   return;
 }
 
-// LOAD_Callback_LEV_Adv
+// LOAD_Callback_PatchMem
 // param_1 - LoadQueueSlot
 void FUN_80031aa4(int param_1)
 
@@ -173,7 +173,7 @@ void FUN_80031b14(int param_1)
   // game is done loading
   DAT_8008d0a4 = 0;
 
-  // LOAD_Callback_LEV_Adv
+  // LOAD_Callback_PatchMem
   FUN_80031aa4(param_1);
 
   // swap 1 and 2 during adventure mode
@@ -790,7 +790,7 @@ u_long * FUN_800321b4(int *param_1,undefined4 param_2,int param_3,u_long *param_
 
 
 // Read file on disc, store in buffer
-// LOAD_ReadFile_NoCallback
+// LOAD_XnfFile
 u_long * FUN_80032344(char *param_1,u_long *param_2,u_long *param_3)
 
 {
@@ -1948,7 +1948,10 @@ void FUN_80033108(void)
   // uadblock under driver
   *(undefined4 *)(*(int *)(puVar1 + 0x24ec) + 0x350) = 0;
 
+  // gGT->framesInThisLEV
   *(undefined4 *)(puVar1 + 0x1cfc) = 0;
+  
+  // gGT->msInThisLEV
   *(undefined4 *)(puVar1 + 0x1d00) = 0;
   return;
 }
@@ -3321,7 +3324,7 @@ LAB_800346b0:
         iVar9 = FUN_80043f28();
         if (iVar9 == 1)
 		{
-		  // checkered flag, begin transition on-screen
+		  // RaceFlag_BeginTransition(GoOnscreen)
           FUN_80043fb0(1);
         }
       }
@@ -3416,7 +3419,7 @@ void FUN_80034874(undefined4 param_1)
   iVar4 = FUN_80043f28();
   if (iVar4 == 1)
   {
-	// checkered flag, begin transition on-screen
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 

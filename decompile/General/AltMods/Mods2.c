@@ -17,7 +17,7 @@ void Online_CollidePointWithBucket(struct Thread* th, short* vec3_pos)
 		return;
 	while (th != 0)
 	{
-		DECOMP_PROC_CollidePointWithSelf(th, (struct Need_New_Name*)vec3_pos);
+		DECOMP_PROC_CollidePointWithSelf(th, (struct BucketSearchParams*)vec3_pos);
 		// next
 		th = th->siblingThread;
 	}
@@ -65,7 +65,7 @@ void Oxide_HookAppendLoadingQueue()
 	if(sdata->gGT->podium_modelIndex_First != 0x8D) return;
 
 	// quit if not this condition
-	if(lqs_curr->callback.funcPtr != DECOMP_LOAD_Callback_Podiums) return;
+	if(lqs_curr->callbackFuncPtr != DECOMP_LOAD_Callback_Podiums) return;
 
 	// if most recent addition to the queue, is the last append for podiums
 
@@ -80,7 +80,7 @@ void Oxide_HookAppendLoadingQueue()
 	// add oxide request
 	lqs_curr->subfileIndex = packIndex + 0xf*2 + 0x18D;
 	lqs_curr->ptrDestination = (void*)&data.podiumModel_firstPlace;
-	lqs_curr->callback.flags = 0xfffffffe;
+	lqs_curr->callbackFuncPtr = 0;
 
 	// increase size
 	sdata->queueLength++;

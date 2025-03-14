@@ -4,6 +4,10 @@ int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame)
 {
 	short isGamepadsConnected = 1;
 
+	#ifdef USE_4PADTEST
+	return 1;
+	#endif
+
 	// if game is not loading
 	if (sdata->Loading.stage == -1)
 	{

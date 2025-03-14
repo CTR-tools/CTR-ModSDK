@@ -53,7 +53,7 @@ struct x y[] =
 	TEST16(&sdata_static.numIconsEOR),
 	TEST16(&sdata_static.s_NOSCRUB),
 	TEST16(&sdata_static.boolUseDisc),
-	TEST16(&sdata_static.ReadFileAsyncCallbackFuncPtr),
+	TEST16(&sdata_static.callbackCdReadSuccess),
 	TEST16(&sdata_static.lngStrings),
 	TEST16(&sdata_static.ptrLoadSaveObj),
 	TEST16(&sdata_static.ptrActiveMenu),
@@ -86,6 +86,9 @@ struct x y[] =
 	// 1006 - 0x258C
 	// 1020 - 0x2594
 	TEST16(sizeof(struct GameTracker)),
+
+	TEST16(sizeof(struct ScratchpadStruct)),
+	TEST16(OFFSETOF(struct ScratchpadStruct, numInstHitboxesHit)),
 
 	TEST16(OFFSETOF(struct GameTracker, pushBuffer_UI)),
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),

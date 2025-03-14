@@ -51,7 +51,7 @@ void FUN_8009f71c(void)
 	  // Go to podium with Relic
       *(undefined2 *)(iVar6 + 0x2572) = 0x61;
       
-	  // Show that you unlocked a new relic in End Of Race menu
+	  // NEW_RELIC
 	  *(uint *)(iVar6 + 0x1d44) = *(uint *)(iVar6 + 0x1d44) | 0x2000000;
       
 	  // If you get a relic on Turbo Track
@@ -89,7 +89,7 @@ void FUN_8009f71c(void)
 	  // Get Level ID
       iVar3 = *(int *)(puVar1 + 0x1a10);
 	  
-	  // Show that you unlocked a new relic in End Of Race menu
+	  // NEW_RELIC
       *(uint *)(puVar1 + 0x1d44) = *(uint *)(puVar1 + 0x1d44) | 0x2000000;
 	  
 	  // store relic time globally
@@ -131,7 +131,7 @@ void FUN_8009f71c(void)
 	  // Get Level ID
 	  iVar7 = *(int *)(puVar1 + 0x1a10);
 	  
-	  // Show that you unlocked a new relic in End Of Race menu
+	  // NEW_RELIC
       *(uint *)(puVar1 + 0x1d44) = *(uint *)(puVar1 + 0x1d44) | 0x2000000
 	  
 	  // 0xe100, number of milliseconds in 10 minutes (0x2580 * 6)
@@ -325,7 +325,7 @@ void FUN_8009fcd0(short param_1,int param_2,short param_3)
 	// Change the way text flickers
     sVar6 = -0x8000;
 	
-	// If you got a new best lap
+	// NEW_BEST_LAP
     if (((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x4000000) != 0) &&
 	
 		// Same logic to make text flicker as earlier in the function, but different colors
@@ -470,7 +470,7 @@ LAB_800a0290:
   // if race ended more than 509 frames ago
   if (0x1fd < DAT_8008d52c) 
   {
-	// start drawing the high score menu that shows the top 5 best times
+	// DRAW_HIGH_SCORES
     *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)(PTR_DAT_8008d2ac + 0x1d44) | 2;
   }
   
@@ -488,7 +488,7 @@ LAB_800a0290:
     DAT_8008d52c = 0x8c;
   }
   
-   // if race ended less than 250 frames ago
+   // if race ended less than 250 frames ago, && NEW_RELIC
   if (((DAT_8008d52c - 0x15U < 0xe5) && ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x2000000) == 0)) && 
   
 		// If the amount of time crates you collected is not equal to
@@ -521,6 +521,7 @@ LAB_800a0290:
   // UI_DrawRaceClock
   FUN_8004edac((int)(short)local_50,(int)(((uint)local_4e - 8) * 0x10000) >> 0x10,1,iVar10);
   
+  // NEW_RELIC
   if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x2000000) != 0) 
   {
 	// if race ended less than 491 frames ago
@@ -756,6 +757,7 @@ LAB_800a07f8:
   
 LAB_800a096c:
   if (
+		// NEW RELIC, but not NEW HIGH SCORE, how?
 		((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0xa000000) == 0x2000000) && 
 		
 		// race ended more than 489 frames ago
@@ -780,6 +782,7 @@ LAB_800a0a64:
   else 
   {
     if (
+			// new relic and new high score
 			((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0xa000000) == 0xa000000) && 
 			
 			// race ended more than 369 frames ago
@@ -793,6 +796,7 @@ LAB_800a0a64:
     }
 	
     if (
+			// NEW_RELIC
 			((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x2000000) != 0) && 
 			
 			// if race ended more than 249 frames ago
@@ -806,6 +810,7 @@ LAB_800a0a64:
     }
   }
   
+  // NEW_HIGH_SCORE
   if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x8000000) != 0) 
   {
 	// if race ended less than 490 frames ago
@@ -865,6 +870,7 @@ LAB_800a0b58:
 			(0x1fd < DAT_8008d52c)
 		) &&
 		(
+			// NEW_HIGH_SCORE
 			(*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x8000000) == 0
 		)
 	  ) 

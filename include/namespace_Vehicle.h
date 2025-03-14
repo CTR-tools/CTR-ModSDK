@@ -450,9 +450,9 @@ struct Driver
 	// 0x60 - OnAudio, engine sounds (always same)
 	// 0x64 - OnPhysAngular
 	// 0x68 - VehPhysForce_OnApplyForces
-	// 0x6C - Coll_StartSearch_Player
+	// 0x6C - COLL_FIXED_PlayerSearch
 	// 0x70 - VehPhysForce_CollideDrivers
-	// 0x74 - Coll_StartSearch_NearPlayer
+	// 0x74 - COLL_MOVED_PlayerSearch
 	// 0x78 - OnWeapon (jump related?)
 	// 0x7C - VehPhysForce_TranslateMatrix (pos, rot, scale)
 	// 0x80 - OnAnimate
@@ -1241,7 +1241,7 @@ struct Driver
 	int timeSpentSquished;
 
 	// 0x548
-	int timeSpentMaskGrabbed;
+	int timeSpentEaten;
 
 	// 0x54c
 	int timeSpentBurnt;
@@ -1306,7 +1306,7 @@ struct Driver
 	// characterID "Crash Bandicoot"
 
 	// 0x56c
-	int EndOfRaceComment_lngIndex;
+	short* EndOfRaceComment_ptrQuip;
 
 	// 0x570
 	int EndOfRaceComment_characterID;

@@ -37,7 +37,7 @@ void CS_Thread_ThTick(struct Thread *t)
     inst = t->inst;
 
     // if instance exists
-    if (inst)
+    if (inst != 0)
     {
 
 #define SPS \

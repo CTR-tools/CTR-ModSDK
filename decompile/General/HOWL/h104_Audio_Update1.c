@@ -269,10 +269,10 @@ void DECOMP_Audio_Update1(void)
         if ((d->actionsFlagSet & 0x2000000) != 0)
         {
             // if did not just open N Tropy
-            if ((gGT->unknownFlags_1d44 & 0x8000) == 0)
+            if ((gGT->gameModeEnd & NTROPY_JUST_OPENED) == 0)
             {
                 // If you did not just beat N Tropy in Time Trial
-                if ((gGT->unknownFlags_1d44 & 0x10000000) == 0)
+                if ((gGT->gameModeEnd & NTROPY_JUST_BEAT) == 0)
                 {
 					// defeat music
 					uVar1 = 5;

@@ -126,7 +126,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 		// add to load queue from range 242=models\racers\*_hi.ctr
 		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + bigfileIndex_modelHigh,
-			&data.driverModel_lowLOD[i],0xfffffffe);
+			&data.driverModelExtras[i],0xfffffffe);
 	}
 
 	i = 0;
@@ -150,7 +150,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 		// add to load queue from range 242=models\racers\*_hi.ctr
 		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + bigfileIndex_modelHigh,
-			&data.driverModel_lowLOD[i],0xfffffffe);
+			&data.driverModelExtras[i],0xfffffffe);
 
 		// load 4P MPK of Penta,
 		// required to get all the weapon models

@@ -886,6 +886,7 @@ void FUN_800ac94c(void)
 	// CameraDC, it must be zero to follow you
     *(undefined2 *)(puVar1 + 0x1532) = 0;
 	
+	// gGT->pushBuffer[0].distToScreen_CURR
     *(undefined4 *)(puVar1 + 0x274) = 0x100;
   }
   return;
@@ -6839,7 +6840,7 @@ void FUN_800b3fe4(void)
   // set scrapbook state
   DAT_800b59d8 = 0;
   
-  // change checkered flag
+  // RaceFlag_SetDrawOrder
   FUN_80043f8c(1);
   
   // clear gamepad input (for menus)
@@ -6868,7 +6869,7 @@ void FUN_800b4014(int param_1)
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
-	  // checkered flag, begin transition off-screen
+	  // RaceFlag_BeginTransition(GoOffscreen)
       FUN_80043fb0(2);
     }
     
@@ -6997,7 +6998,7 @@ void FUN_800b4014(int param_1)
 	iVar1 = FUN_80043f28();
     if (iVar1 == 1) 
 	{
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
 LAB_800b4224:
@@ -7006,15 +7007,15 @@ LAB_800b4224:
     DAT_800b59d8 = 4;
     break;
 	
-	// send player back to adv hub,
-	// or back to main menu
+  // send player back to adv hub,
+  // or back to main menu
   case 4:
   
 	// RaceFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
-	  // change checkered flag back
+	  // RaceFlag_SetDrawOrder
       FUN_80043f8c(0);
 	  
 	  // If you're not in Adventure Mode
@@ -7132,8 +7133,10 @@ void FUN_800b4364(void)
   
   DAT_800b4548 = DAT_800b4548 & 0xfffffbfb | 0x20;
   
-  // distance to screen (perspective)
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(puVar1 + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar1 + 0x274) = 0x100;
   
   *(uint *)puVar1 = *(uint *)puVar1 & 0xfffdffff;

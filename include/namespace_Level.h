@@ -500,6 +500,13 @@ struct CheckpointNode
 	// 0xC -- size
 };
 
+struct Stars {
+	short numStars;
+	short spread;
+	short seed;
+	short distance;
+};
+
 struct SkyboxFace {
 	u_short A; //ABC stores offsets to add to ptrVerts. divide by 12 if you need an index
 	u_short B;
@@ -732,7 +739,7 @@ struct Level
 	void* ptrSCVert;
 
 	// 0x17c - 0x182
-	short unkStarData[4];
+	struct Stars stars;
 
 	// split-lines
 	// for ice, mud, water

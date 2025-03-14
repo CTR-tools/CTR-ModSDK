@@ -13,7 +13,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 #ifndef REBUILD_PS1
 	// check if new adv hub should be loaded,
 	// this was a random place for ND to put it
-	LOAD_Hub_Main(sdata->ptrBigfile1);
+	DECOMP_LOAD_Hub_Main(sdata->ptrBigfile1);
 #endif
 	
 #ifndef REBUILD_PC
@@ -36,6 +36,12 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 #if 0
 	CTR_EmptyFunc_MainFrame_ResetDB();
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
+#endif
+
+// Test for persistent storage,
+// This requires duckstation overclock of 10x
+#if 0
+	memset(gGT->backBuffer->primMem.start, 0, gGT->backBuffer->primMem.size);
 #endif
 	
 	ClearOTagR((uint32_t*)otSwapchainDB, gGT->numPlyrCurrGame << 10 | 6);

@@ -9,7 +9,7 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
 
   sdata->unk_counter_upTo450 = 0;
 
-  VehBirth_TeleportSelf(d, 3, 0);
+  DECOMP_VehBirth_TeleportSelf(d, 3, 0);
 
   // get position where driver should spawn
   spawnPos = sdata->kartSpawnOrderArray[d->driverID];

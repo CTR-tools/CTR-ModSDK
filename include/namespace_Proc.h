@@ -137,7 +137,7 @@ struct Thread
 };
 
 // used for PROC_CollidePointWithSelf
-struct Need_New_Name
+struct BucketSearchParams
 {
 	// 0x0
 	short pos[4];

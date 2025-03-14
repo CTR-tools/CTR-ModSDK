@@ -231,7 +231,7 @@ void FUN_8009f8c0(short param_1,int param_2,short param_3)
 	// Change the way text flickers
     sVar6 = -0x8000;
 	
-	// If you got a new best lap
+	// NEW_BEST_LAP
     if (((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x4000000) != 0) &&
 	
 		// Same logic to make text flicker as earlier in the function, but different colors
@@ -296,7 +296,7 @@ void FUN_8009fdc8(void)
   DAT_8008d98c = DAT_8008d98c | 1;
   
   if (
-		// If you just beat N Tropy
+		// NTROPY_JUST_BEAT
 		((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x10000000) != 0) &&
      
 		(
@@ -324,6 +324,7 @@ LAB_8009fe84:
   // If the race ended 900 frames ago or more (30 seconds) 
   else 
   {
+	// NEW_HIGH_SCORE == 0
     if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x8000000) == 0) {
       if ((DAT_8008d52c < 0x3fa) && ((DAT_8008d4bc & 0x10) != 0)) goto LAB_8009fe84;
       if (DAT_8008d52c < 0x3e9) 
@@ -340,7 +341,7 @@ LAB_8009fe84:
   // If the race ended more than 900 frames ago (30 seconds) 
   if (900 < DAT_8008d52c) 
   {
-	// start drawing the high score menu that shows the top 5 best times
+	// DRAW_HIGH_SCORES
     uVar1 = *(uint *)(PTR_DAT_8008d2ac + 0x1d44);
     *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = uVar1 | 2;
 	
@@ -453,6 +454,8 @@ LAB_8009fe84:
   
 	// Fly-in Interpolation
      (FUN_8004ecd4(&local_10,0xffffff9c,0x8e,0x100,0x8e,DAT_8008d52c + -0x96,0x14),
+	 
+	 // NEW_BEST_LAP
      (*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x4000000) != 0)) 
   {
 	// Change color of text every frame to make it blink
@@ -504,9 +507,10 @@ LAB_8009fe84:
 	// Fly-in Interpolation
     FUN_8004ecd4(&local_10,0x264,0xa2,0x100,0xa2,DAT_8008d52c + -0xb4,0x14);
 	
+	// NTROPY_JUST_OPENED == 0
     if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x8000) == 0) 
 	{
-	  // If you did not just beat N Tropy
+	  // NTROPY_JUST_BEAT
       if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x10000000) == 0) goto LAB_800a016c;
       
 	  // The next block of code only happens
@@ -528,6 +532,7 @@ LAB_8009fe84:
 	  // YOU BEAT N. TROPY!
       uVar3 = *(undefined4 *)(DAT_8008d878 + 0x5d0);
     }
+	
     else 
 	{
 	  // Change color of text every frame to make it blink

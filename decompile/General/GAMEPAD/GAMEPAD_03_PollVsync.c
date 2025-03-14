@@ -5,12 +5,9 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
     u_int uVar2;
     u_int uVar4;
     struct GamepadBuffer *pad;
-    int numConnected;
     int port;
     int numPorts;
     int maxPadsPerPort;
-
-    numConnected = 0;
 
     // 2 players, no multitap
     numPorts = 2;
@@ -27,6 +24,12 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 #ifdef USE_ONLINE
 	numPorts = 1;
 	maxPadsPerPort = 1;
+#endif
+
+#ifdef USE_4PADTEST
+	// use 1 controller for all 4
+    numPorts = 1;
+    maxPadsPerPort = 4;
 #endif
 
 	pad = &gGamepads->gamepad[0];
@@ -67,12 +70,16 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                 // 1 - PadStateFindPad
                 // and many more...
                 uVar2 = PadGetState(uVar4);
+				
+				// use 1 controller for all 4
+				#ifdef USE_4PADTEST
+				uVar2 = PadGetState(0);
+				#endif
 
                 DECOMP_GAMEPAD_ProcessState(pad, uVar2, uVar4);
 			}
 
             // increment gamepad counter
-            numConnected++;
 			pad++;
         }
     }
@@ -84,4 +91,23 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         pad->gamepadType = 0;
 		pad++;
     }
+	
+// here for byte budget
+#if 1
+	#ifdef USE_PROFILER
+	void DebugProfiler_Subsection(int flag);
+	DebugProfiler_Subsection(1);
+	#endif
+	
+	// wait two vsyncs for VRAM upload to finish
+	if (sdata->frameFinishedVRAM != 0)
+	{
+		sdata->frameFinishedVRAM--;
+		
+		if (sdata->frameFinishedVRAM == 0)
+		{
+			sdata->queueReady = 1;
+		}
+	}
+#endif
 }

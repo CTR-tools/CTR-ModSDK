@@ -68,7 +68,9 @@ void ui60_entryHook()
 {
 	u_int i;
 
-	// replace call to LIST_RemoveFront inside Particle_Init
+	// replace call to LIST_RemoveFront inside Particle_Init,
+	// this alternative version is stored in Mods7.c
+	struct Particle* NewParticleInit(struct LinkedList* param_1);
 	*(unsigned int*)0x80040348 = JAL(NewParticleInit);
 
 	// Gravity
@@ -151,7 +153,9 @@ void ui60_entryHook()
 		*(int*)0x80040f78 = 0x31900;
 	}
 
-	// Inject new hooks
+	// Inject new hooks, these are stored in Mods7.c
+	void NewCallback231();
+	void NewCallback233();
 	data.overlayCallbackFuncs[1] = NewCallback231;
 	data.overlayCallbackFuncs[3] = NewCallback233;
 	return;

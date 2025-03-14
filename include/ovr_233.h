@@ -1,3 +1,26 @@
+
+struct CsThreadInitData
+{
+	// podium position
+	// X Y Z and ?
+	short podiumPos[4];
+	
+	// character position
+	// X Y Z and ?
+	short characterPos[4];
+	
+	// rotation (for both)
+	// X Y Z and ?
+	short rot[4];
+
+	// matrix
+	u_int local_30;
+	u_int local_2c;
+	u_int local_28;
+	u_int local_24;
+	u_int local_20;
+};
+
 struct Prize
 {
 	// 0x0
@@ -112,6 +135,64 @@ struct CutsceneObj
 	// size is supposedly 0x60, some things are still missing
 };
 
+enum BOSS_CUTSCENE_ORDER
+{
+	// Gemstone
+	OXIDE_TROPHIES,
+	PINSTRIPE_BEAT,
+	
+	// Beach
+	ROO_START,
+	ROO_BEAT,
+	
+	// ruins
+	PAPU_START,
+	PAPU_BEAT,
+	
+	// glacier
+	KJOE_START,
+	KJOE_BEAT,
+	
+	// citadel
+	PINSTRIPE_START,
+	
+	// 0x9
+	OXIDE_RELICS_GEMSTONE,
+	OXIDE_RELICS_BEACH,
+	OXIDE_RELICS_RUINS,
+	OXIDE_RELICS_GLACIER,
+	OXIDE_RELICS_CITADEL,
+	
+	// 0xE
+	BOSS_CUTSCENE_COUNT,
+};
+
+struct BossCutsceneData
+{	
+	// 0x0
+	int vrmFile;
+	int headFile;
+	int bodyFile;
+	
+	// Unused, cause it does model->id
+	// to get the model index anyway
+	int modelIndex_unused;
+
+	// 0x10
+	int opcode;
+	
+	// 0x14
+	short camPos[4];
+	short camRot[4];
+	
+	// 0x24
+	short bossPos[4];
+	short bossRot[4];
+	
+	// 0x34
+	
+};
+
 extern struct
 {
 	char fill_beginning[4];
@@ -133,7 +214,7 @@ extern struct
 
 	char fill_strings2[0x3c];
 
-	// CS_LevThread_LInB
+	// CS_Thread_LInB
 	char s_introguy[12];
 	char s_introcam[12];
 
@@ -158,16 +239,23 @@ extern struct
 	char s_kart6[8];
 	char s_kart7[8];
 
-	// only functions and labels in this gap
+
+	// TODO: Divide OVR_233 into 'real' sections
 	char fill1[0x4DA8];
+
 
 	// 800b0b7c
 	u_short VertSplitLine;
 	u_short VertSplit_unknown;
 	
-	int unknown1;
-	int unknown2;
-	int unknown3;
+	// 800b0b80
+	int boolLoadNextSwap;
+	
+	// 800b0b84
+	int boolStartToSkip;
+	
+	// 800b0b88
+	int bossCutsceneIndex;
 
 	// 800b0b8c
 	int CutsceneManipulatesAudio;
@@ -176,12 +264,26 @@ extern struct
 	// 120 bytes
 	struct unknown233 whateverThisMeans[10];
 
+
+
+	// TODO: Divide OVR_233 into 'real' sections
 	char fill2[0x864];
+
+
 
 	// 800b146c
 	struct unknown233* pointerToWhateverThisMeans[10];
 
-	char fill3[0x62CC];
+
+
+
+	// TODO: Divide OVR_233 into 'real' sections
+	char fill3[0x5FF4];
+	
+	
+	
+	// 800B7488
+	struct BossCutsceneData bossCS[0xE];
 
 	// 800b7760
 	int isCutsceneOver;
@@ -200,6 +302,12 @@ extern struct
 	int PodiumInitUnk3;
 	// 800b7774
 	int cutsceneState;
+	
+	// 800b7778
+	struct Model* ptrModelBossHead;
+	struct Model* ptrModelBossBody;
+	
+	// 800b7780
 
 } OVR_233;
 

@@ -42,6 +42,9 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	bitwiseConnected = 0;
 	padCurr = &gGamepads->gamepad[0];
 	
+	// TODO: Rename to match PollVsync
+	// should be ports and padsPerPort
+	
 	for(int Slot = 0; Slot < numSlots; Slot++)
 	{
 		for(int Port = 0; Port < numPortsPerSlot; Port++)
@@ -59,7 +62,6 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 				{
 					bitwiseConnected |= 1 << (Slot*4 + Port);
 					
-					
 					padCurr->ptrControllerPacket = (struct ControllerPacket*)ptrControllerPacket;
 					padCurr->gamepadID = Slot*0x10 + Port;
 				}
@@ -70,6 +72,12 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 			padCurr++;
 		}
 	}
+	
+	#ifdef USE_4PADTEST
+	numConnected = 4;
+	bitwiseConnected = 0xF;
+	#endif
+	
 	
 	gGamepads->numGamepadsConnected = numConnected;
 					

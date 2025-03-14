@@ -8,7 +8,7 @@ struct Model* VehBirth_GetModelByName(char *searchName)
 
     // array to character models loaded,
     // maximum of 4, used in VS mode
-    models = (struct Model **)&data.driverModel_lowLOD[0];
+    models = (struct Model **)&data.driverModelExtras[0];
 
 	#ifdef USE_HIGH1P
 	#define NUM_CHECK 8 // modding: 8 drivers

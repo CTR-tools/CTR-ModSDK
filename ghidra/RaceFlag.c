@@ -157,7 +157,9 @@ void FUN_80043fb0(int param_1)
 
   // Begin Transition off-screen
   else {
-    if (param_1 == 2) {
+    if (param_1 == 2) 
+	{
+	  // RaceFlag_SetDrawOrder
       FUN_80043f8c(0);
 
       // RaceFlag_Position = 0

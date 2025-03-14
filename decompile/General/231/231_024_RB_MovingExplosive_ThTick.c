@@ -278,7 +278,7 @@ LAB_800add14:
 
   sps->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-  COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
+  COLL_SearchBSP_CallbackQUADBLK((u_int*)&posA, (u_int*)&posB, sps, 0);
 
   RB_MakeInstanceReflective(sps,inst);
 
@@ -309,7 +309,7 @@ LAB_800add14:
       posA[1] = inst->matrix.t[1] - 0x900;
       posA[2] = inst->matrix.t[2];
 
-      COLL_SearchTree_FindQuadblock_Touching((u_int*)&posA, (u_int*)&posB, sps, 0);
+      COLL_SearchBSP_CallbackQUADBLK((u_int*)&posA, (u_int*)&posB, sps, 0);
 
 	  // if still nothing, then explode
       if (sps->boolDidTouchQuadblock == 0)
@@ -344,7 +344,7 @@ LAB_800add14:
 	  {
         VehPhysForce_RotAxisAngle(
 			&inst->matrix,
-			(short*)&sps->unk4C[0x24], // normalVec
+			&sps->Set2.normalVec[0],
 			tw->rotY);
       }
 

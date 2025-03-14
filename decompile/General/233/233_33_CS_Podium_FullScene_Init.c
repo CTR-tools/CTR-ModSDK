@@ -3,35 +3,14 @@
 void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
 int CS_Thread_Init(u_int, char*, short *, short, u_int);
-void CS_Podium_Camera_ThTick(int param_1);
+void CS_Camera_ThTick_Podium(int param_1);
 
 void DECOMP_CS_Podium_FullScene_Init()
 {
 	struct Instance *driverInstSelf;
 	struct Thread *victoryCamThread;
 	u_int podiumMusic;
-	
-	struct
-	{
-		// podium position
-		// X Y Z and ?
-		short podiumPos[4];
-		
-		// character position
-		// X Y Z and ?
-		short characterPos[4];
-		
-		// rotation (for both)
-		// X Y Z and ?
-		short rot[4];
-
-		// matrix
-		u_int local_30;
-		u_int local_2c;
-		u_int local_28;
-		u_int local_24;
-		u_int local_20;
-	} InitData;
+	struct CsThreadInitData InitData;
 	
 	struct PosRot
 	{
@@ -153,7 +132,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
 	// 0xf = camera thread bucket
-	victoryCamThread = (struct Thread *)PROC_BirthWithObject(0x4030f, (void*)CS_Podium_Camera_ThTick, NULL, NULL);
+	victoryCamThread = (struct Thread *)PROC_BirthWithObject(0x4030f, (void*)CS_Camera_ThTick_Podium, NULL, NULL);
 	
 	// if it allocated correctly
 	if (victoryCamThread != 0) 

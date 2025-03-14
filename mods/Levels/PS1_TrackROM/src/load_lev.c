@@ -3,7 +3,7 @@
 
 void CDSYS_XAPauseRequest();
 void MEMPACK_PopToState(int id);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
+void LOAD_Callback_PatchMem(struct LoadQueueSlot * lqs);
 int MEMPACK_PushState();
 void MM_JumpTo_Title_FirstTime();
 void MM_JumpTo_Characters();
@@ -13,7 +13,7 @@ void CS_Garage_Init();
 void MM_JumpTo_Scrapbook();
 
 void CseqMusic_StopAll();
-void MEMPACK_NewPack_StartEnd(void* start, int size);
+void MEMPACK_NewPack(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocHighMem(int allocSize);
 u_int RaceFlag_IsFullyOffScreen();
@@ -109,7 +109,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// disable certain game mode flags
 			gGT->gameMode1 &= ~(GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU);
-			gGT->gameMode2 &= ~(LEV_SWAP | CREDITS | DISABLE_LEV_INSTANCE);
+			gGT->gameMode2 &= ~(LEV_SWAP | CREDITS | NO_LEV_INSTANCE);
 
 			gGT->visMem1 = 0;
 			gGT->visMem2 = 0;
@@ -451,7 +451,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 							(gGT->levelID, sdata->levelLOD, LVI_PTR);
 
 					// adds PTR map to loading queue
-					LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+					LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_PatchMem);
 				}
 			}
 			break;
@@ -487,7 +487,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 				// search for icon by string
 				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_circle);
-				gGT->stars.unk[2] = uVar16;
+				gGT->ptrCircle = uVar16;
 
 				// search for icon by string
 				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_clod);

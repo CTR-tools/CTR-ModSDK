@@ -281,10 +281,17 @@ void DECOMP_LOAD_Callback_Overlay_231(void);
 void DECOMP_LOAD_Callback_Overlay_232(void);
 void DECOMP_LOAD_Callback_Overlay_233(void);
 void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk);
-void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void* destination, int *size, void * callback);
-void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
+
+// same hack as AppendQueue, see notes there
+#define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback);
+// void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void* destination, /*int *size,*/ void * callback);
+
+
+void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex /*, int* ptrDestination, int* size, int callbackOrFlags*/);
+//void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, /*int* size,*/ int callbackOrFlags);
 void* DECOMP_LOAD_ReadDirectory(char* filename);
-void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
+void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size);
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
 void DECOMP_LOAD_LevelFile(int levelID);
 
@@ -295,7 +302,17 @@ int DECOMP_LOAD_HowlSectorChainEnd(void);
 void DECOMP_LOAD_InitCD(void);
 void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs); //1st param might be `struct Level*`, 2nd param might be `char*`
 void DECOMP_LOAD_LangFile(int bigfilePtr, int lang);
-void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+
+
+// This is a wonderful hack that removes an unused parameter,
+// which saves bytes everywhere, without needing to alter the game code,
+// We need the 'bigfile' parameter to stay in the C code, just to keep
+// the front-end looking similar to ghidra, for easy comparison purposes
+#define DECOMP_LOAD_AppendQueue(a,b,c,d,e) DECOMP_LOAD_AppendQueue_ex(b,c,d,e)
+void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+// void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void (*callback)(struct LoadQueueSlot*));
+
+
 void DECOMP_LOAD_NextQueuedFile(void);
 
 void DECOMP_MainDB_OTMem(struct OTMem* otMem, u_int size);
@@ -337,7 +354,7 @@ void DECOMP_MEMCARD_InitCard(void);
 
 void DECOMP_MEMPACK_Init(int ramSize);
 void DECOMP_MEMPACK_SwapPacks(int index);
-void DECOMP_MEMPACK_NewPack_StartEnd(void* start,int size);
+void DECOMP_MEMPACK_NewPack(void* start,int size);
 int DECOMP_MEMPACK_GetFreeBytes(void);
 void* DECOMP_MEMPACK_AllocMem(int size);
 void* DECOMP_MEMPACK_AllocHighMem(int allocSize);
@@ -378,7 +395,7 @@ struct Thread* DECOMP_PROC_BirthWithObject(
 void DECOMP_PROC_CheckAllForDead(void);
 void DECOMP_PROC_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
 void DECOMP_PROC_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
-void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
+void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct BucketSearchParams* buf);
 void DECOMP_PROC_DestroyInstance(struct Thread* t);
 void DECOMP_PROC_DestroyObject(void* object, int threadFlags);
 void DECOMP_PROC_DestroySelf(struct Thread* t);
@@ -412,6 +429,8 @@ void DECOMP_SubmitName_RestoreName(short param_1);
 
 void DECOMP_Timer_Init(void);
 void DECOMP_Timer_Destroy(void);
+int DECOMP_Timer_GetTime_Total();
+int DECOMP_Timer_GetTime_Elapsed(int, int*);
 
 // UI
 void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket);
@@ -826,7 +845,6 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK(void);
 void DECOMP_LOAD_OvrEndRace(unsigned int param_1);
 void DECOMP_LOAD_OvrLOD(unsigned int param_1);
 void DECOMP_LOAD_OvrThreads(unsigned int param_1);
-void* DECOMP_LOAD_DramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
 void DECOMP_LOAD_DriverMPK(unsigned int param_1, int levelLOD, void (*param_3)(struct LoadQueueSlot*));
 void DECOMP_LibraryOfModels_Clear(struct GameTracker* gGT);
 void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL);
@@ -847,7 +865,7 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap, struct Thread* bucket);
 void DECOMP_UI_Map_DrawTracking(int ptrMap, struct Thread* bucket);
 void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
-void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_VehBirth_NullThread(struct Thread* t);

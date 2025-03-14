@@ -186,7 +186,7 @@ void FUN_80034b48(int param_1)
       // OtherFX_Stop2
       FUN_80028844(1);
 
-	  //pause audio
+	  // howl_PauseAudio
       FUN_8002c510();
 
 	  //set sound to paused
@@ -467,7 +467,7 @@ LAB_80034e74:
     puVar9 = PTR_DAT_8008d2ac;
     if ((int)param_1[0x743] < 1)
 	{
-	  // if PauseAllThreads is diabled
+	  // if DebugMenu is diabled
       if ((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0) {
 
         // if amount of frozen time left (relic races) is less or equal than zero
@@ -593,7 +593,7 @@ LAB_80035098:
 
       if (
 			(
-				// if PauseAllThreads is diabled
+				// if DebugMenu is diabled
 				((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0) ||
 
 				// if this bucket cannot be paused
@@ -877,8 +877,7 @@ LAB_80035098:
                (PTR_DAT_8008d2ac[0x2541] != -1)
 			  )
 			{
-			  // This pauses the game somehow
-
+			  // But why? ND typo?
               *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)PTR_DAT_8008d2ac & 0x3e0020 | 1;
 
 			  // MainFreeze_IfPressStart
@@ -999,6 +998,7 @@ LAB_80035098:
 }
 
 
+// Add Driver PVS to Camera PVS?
 // param1 is PTR_DAT_8008d2ac
 // param2 is screen ID (0, 1, 2, 3)
 void FUN_80035684(int param_1,int param_2)
@@ -1027,14 +1027,14 @@ void FUN_80035684(int param_1,int param_2)
 		// if quadblock exists
 		(iVar2 != 0) &&
 		(
-			// quadblock -> ptr_add_tex
+			// quadblock -> PVS
 			puVar1 = *(uint **)(iVar2 + 0x44),
 
 			puVar1 != (uint *)0x0
 		)
 	  )
   {
-	// ptr_add_tex->offset0
+	// PVS->visLeafSrc
     uVar3 = *puVar1;
 
     if (uVar3 != 0) {
@@ -1060,7 +1060,7 @@ void FUN_80035684(int param_1,int param_2)
       }
     }
 
-	// driver -> ptr_add_tex -> offset4
+	// driver -> PVS -> visFaceSrc
     uVar3 = *(uint *)(*(int *)(*(int *)(iVar5 + 0x350) + 0x44) + 4);
 
 	if (uVar3 != 0) 
@@ -1154,11 +1154,11 @@ void FUN_800357b8(int param_1,int param_2)
 					// driver -> quadblock under driver
 					(*(int *)(iVar8 + 0x350) != 0) &&
 
-					// quadblock -> ptr_add_tex
+					// quadblock -> PVS
 					(piVar1 = *(int **)(*(int *)(iVar8 + 0x350) + 0x44), piVar1 != (int *)0x0)
 				) &&
 
-				// pull vismem data from quadblock + 0x44
+				// PVS->visLeafSrc
 				(iVar2 = *piVar1, iVar2 != 0)
 			)
 		{
@@ -1168,7 +1168,7 @@ void FUN_800357b8(int param_1,int param_2)
 		  // VisMem 0x40-0x4F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x40) = iVar2;
 
-		  // quadblock -> ptr_add_tex -> 0x0
+		  // quadblock -> PVS -> visLeafSrc
           uVar5 = **(uint **)(*(int *)(iVar8 + 0x350) + 0x44);
 
 		  // only memcpy if size is specified
@@ -1230,8 +1230,8 @@ LAB_80035900:
 	  // CameraDC 0x24
 	  iVar2 = *(int *)(iVar6 + 0x24);
 
-	  // if camera can't figure out what to draw on it's own,
-	  // if not following warpball path like track select videos,
+	  // if camera does NOT have its own PVS,
+	  // then pull PVS from driver quadblock
 	  if (iVar2 == 0)
 	  {
         if (
@@ -1240,12 +1240,13 @@ LAB_80035900:
 					(*(int *)(iVar8 + 0x350) != 0) &&
 
 					(
-						// quadblock -> ptr_add_tex
+						// quadblock -> PVS
 						iVar2 = *(int *)(*(int *)(iVar8 + 0x350) + 0x44),
 						iVar2 != 0
 					)
 				) &&
 
+				// PVS visFaceSrc
 				(iVar2 = *(int *)(iVar2 + 4), iVar2 != 0)
 		   )
 		{
@@ -1255,7 +1256,7 @@ LAB_80035900:
 		  // VisMem 0x50-0x5F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x50) = iVar2;
 
-		  // quadblock -> ptr_add_tex -> 0x4
+		  // quadblock -> PVS -> 0x4 (visFaceSrc)
           uVar5 = *(uint *)(*(int *)(*(int *)(iVar8 + 0x350) + 0x44) + 4);
 
 		  // only memcpy if size is specified
@@ -1279,14 +1280,15 @@ LAB_80035900:
         }
       }
 
-	  // if camera can figure out what to draw on it's own,
-	  // if following warpball path like track select videos,
+	  // if camera has its own PVS,
+	  // from Demo Mode or TrackSel videos,
+	  // use that instead of driver quadblock
       else
 	  {
 		// VisMem 0x50-0x5F
         iVar3 = *(int *)(param_1 + 0x1a38) + iVar7;
 
-		// if cameraDC->0x24 changed
+		// if cameraDC->0x24 changed (visFaceSrc)
 		if (*(int *)(iVar3 + 0x50) != iVar2)
 		{
           *(int *)(iVar3 + 0x50) = iVar2;
@@ -1320,10 +1322,10 @@ LAB_80035900:
           iVar2 = *(int *)(iVar8 + 0x350);
 
           if (
-				// if no quadblock exists, or quadblock -> ptr_add_tex does not exist
+				// if no quadblock exists, or quadblock -> PVS does not exist
 				((iVar2 == 0) || (piVar1 = *(int **)(iVar2 + 0x44), piVar1 == (int *)0x0)) ||
 				(
-					// data from quadblock -> ptr_add_tex is invalid
+					// data from quadblock -> PVS is invalid (visLeafSrc/visFaceSrc/visInstSrc)
 					(*piVar1 == 0 || (((piVar1[1] == 0 || (piVar1[2] == 0)) ||
 
 					// LEV -> mesh_info -> ptrQuadBlockArray
@@ -1340,23 +1342,27 @@ LAB_80035900:
 
           else
 		  {
-			// camera is moving on path, not followinig driver
+			// camera is quadblock invisible to driver PVS
             uVar5 = *(uint *)(iVar6 + 0x70) | 0x2000;
           }
 
           *(uint *)(iVar6 + 0x70) = uVar5;
 
-		  // if driver quadblock is wall, therefore need to improvise?
+		  // camera quadblock is invisible to driver PVS
 		  if ((*(uint *)(iVar6 + 0x70) & 0x2000) != 0)
 		  {
 			// param1 is PTR_DAT_8008d2ac
 			// ivar9 is screen ID (0,1,2,3)
             FUN_80035684(param_1,iVar9);
+			
+			// camera is on quadblock NOT visible by driver PVS,
+			// and new camera PVS was set this frame
             *(uint *)(iVar6 + 0x70) = *(uint *)(iVar6 + 0x70) | 0x4000;
           }
         }
       }
 
+	  // Demo Mode, and not already called FUN_80035684
 	  if ((*(uint *)(iVar6 + 0x70) & 0x5000) == 0x1000)
 	  {
 		// param1 is PTR_DAT_8008d2ac
@@ -1368,7 +1374,9 @@ LAB_80035900:
 			(
 				// if camera is following driver "normally"
 				(*(short *)(iVar6 + 0x9a) == 0) &&
-                // and not wall
+				
+                // if PVS has NOT been taken from camera,
+				// then take from driver instead
 				((*(uint *)(iVar6 + 0x70) & 0x2000) != 0)
 			) &&
 			(
@@ -1377,9 +1385,10 @@ LAB_80035900:
 					*(int *)(iVar8 + 0x350) != 0 &&
 
 					(
-						// driver -> quadblock -> ptr_add_tex
+						// driver -> quadblock -> PVS
 						(iVar2 = *(int *)(*(int *)(iVar8 + 0x350) + 0x44), iVar2 != 0 &&
 
+						// PVS -> visInstSrc
 						(iVar2 = *(int *)(iVar2 + 8), iVar2 != 0))
 					)
 				)
@@ -3802,10 +3811,17 @@ code_r0x800369d8:
   // 0x51f = 0x147c = pushBuffer_UI + 0xf4 (ptrOT)
   FUN_80042a8c(param_1[0x51f] + 0x10,param_1 + 0x4e2,param_1[4],0,0);
 
+
+#if 0
+  // leftover debug unused,
+  // clockDurationStall = sysclock (do NOT print)
+	
   // Timer_GetTime_Total
   uVar7 = FUN_8004b3a4();
   puVar14 = PTR_DAT_8008d2ac;
   param_1[0x737] = uVar7;
+#endif
+
 
   // gGT->256c & checkered flag
   if ((*(uint *)(puVar14 + 0x256c) & 0x1000) != 0) {
@@ -3850,12 +3866,21 @@ LAB_800378d0:
 	DrawSync(0);
   }
 
+
+
+#if 0
+  // leftover debug unused,
+  // clockDurationStall = time since stall started (NOW print)
+  
   // param1 is PTR_DAT_8008d2ac
 
   // 737 -> 1cdc
   // Timer_GetTime_Elapsed
   uVar7 = FUN_8004b41c(param_1[0x737],0);
   param_1[0x737] = uVar7;
+#endif
+
+
 
   // if frontBuffer exists
   if (param_1[5] != 0)
@@ -5647,12 +5672,12 @@ void FUN_80039a44(int param_1)
   
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
-    i
+    
 	// RaceFlag_IsFullyOffScreen
 	Var3 = FUN_80043f28();
     if (iVar3 == 1)
 	{
-	  // checkered flag, begin transition on-screen
+	  // RaceFlag_BeginTransition(GoOnscreen)
       FUN_80043fb0(1);
     }
 
@@ -6148,7 +6173,7 @@ void FUN_80039fa8(int param_1)
 	  *(uint *)(&DAT_8008e814 + iVar9) =
 	  *(uint *)(&DAT_8008e814 + iVar9) | 1;
 
-	  // | 0x8000
+	  // NTROPY_JUST_OPENED | NEW_HIGH_SCORE
 	  uVar8 = *(uint *)(puVar3 + 0x1d44) | 0x8008000;
     }
 
@@ -6165,7 +6190,8 @@ void FUN_80039fa8(int param_1)
       *(uint *)(&DAT_8008e814 + iVar7)
 		| 1 << (DAT_8008453c & 0x1f);
 
-	  // + 0x1d44) | 0x18000000
+	  // value = 0x18000000,
+	  // NEW_HIGH_SCORE | NTROPY_JUST_BEAT
 	  uVar8 = *(uint *)(puVar3 + 0x1d44) | DAT_80084548;
     }
   }
@@ -6225,10 +6251,15 @@ void FUN_8003a2b4(void)
   FUN_80039fa8(0);
 
   puVar2 = PTR_DAT_8008d2ac;
+  
+  // HIGH_SCORE_SAVED
   uVar3 = *(uint *)(PTR_DAT_8008d2ac + 0x1d44);
-  if ((uVar3 & 0x10000) == 0) {
+  if ((uVar3 & 0x10000) == 0) 
+  {
+	// HIGH_SCORE_SAVED
     *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = uVar3 | 0x10000;
-    puVar7 = DAT_8008d738;
+    
+	puVar7 = DAT_8008d738;
 
 	// if there is a new best lap
     if ((uVar3 & 0x4000000) != 0)
@@ -6412,8 +6443,9 @@ void FUN_8003a3fc(void)
     uVar9 = *(uint *)PTR_DAT_8008d2ac;
     *(uint *)PTR_DAT_8008d2ac = uVar9 | 0x200000;
 
-
+	// But why? ND typo?
     *(uint *)(puVar13 + 0x1d44) = uVar9 & 0x3e0020 | 0x200000;
+	
     puVar10 = PTR_DAT_8008d2ac;
 
 	// If you are not in Battle Mode
@@ -7799,8 +7831,11 @@ void FUN_8003b934(uint *param_1)
 
   // loop counter
   iVar8 = 0;
-
+  
+  // gGT->pushBuffer[0].distToScreen_PREV
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x180) = 0x100;
+  
+  // gGT->pushBuffer[0].distToScreen_CURR
   *(undefined4 *)(puVar2 + 0x274) = 0x100;
 
   // erase all threadBucket structs
@@ -8355,7 +8390,7 @@ void FUN_8003b934(uint *param_1)
   // If you are in a cutscene
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20000000) != 0)
   {
-	// CS_LevCamera_OnInit
+	// CS_Cutscene_Start
     FUN_800b087c();
   }
 
@@ -8973,7 +9008,7 @@ LAB_8003ca68:
 		// if it is
         else
 		{
-		  // checkered flag, begin transition off-screen
+		  // RaceFlag_BeginTransition(GoOffscreen)
           FUN_80043fb0(2);
         }
       }
@@ -9234,7 +9269,7 @@ LAB_8003ca68:
             iVar8 = FUN_80043f28();
             if (iVar8 == 1)
 			{
-			  // checkered flag, begin transition on-screen
+			  // RaceFlag_BeginTransition(GoOnscreen)
               FUN_80043fb0(1);
             }
           }
@@ -9474,7 +9509,7 @@ void FUN_8003cfc0(short param_1)
 
   if (iVar1 == 1)
   {
-	// checkered flag, begin transition on-screen
+	// RaceFlag_BeginTransition(GoOnscreen)
     FUN_80043fb0(1);
   }
 

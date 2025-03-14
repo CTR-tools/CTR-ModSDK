@@ -8,7 +8,11 @@ void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info)
 	struct QuadBlock* qbCurr;
 	struct InstDef** visInstSrc;
 	struct Level* level1;
-	 
+
+	#ifdef USE_NEWLEV
+	return;
+	#endif
+
 	numQuadBlock = ptr_mesh_info->numQuadBlock;
 	ptrQuadBlockArray = ptr_mesh_info->ptrQuadBlockArray;
 	

@@ -85,13 +85,9 @@ LAB_80034e74:
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
-#ifndef REBUILD_PS1
-		iVar4 = Timer_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
+		iVar4 = DECOMP_Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
 		iVar4 = (iVar4 << 5) / 100;
-#else
-		iVar4 = FPS_HALF(0x20);
-#endif
-
+		
 		gGT->elapsedTimeMS = iVar4;
 		if (iVar4 < 0)
 		{
@@ -108,7 +104,7 @@ LAB_80034e74:
 		gGT->msInThisLEV += gGT->elapsedTimeMS;
 		if (gGT->trafficLightsTimer < 1)
 		{
-			if ((gGT->gameMode1 & PAUSE_THREADS) == 0)
+			if ((gGT->gameMode1 & DEBUG_MENU) == 0)
 			{
 				if (gGT->frozenTimeRemaining < 1)
 				{
@@ -188,13 +184,19 @@ LAB_80035098:
 		{
 			psVar8->quip2 = (short)iVar4;
 		}
+		
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0xFF, 0, 0);
+		#endif
+		
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
-		{
+		{			
 			if
 			(
 				(
 					// if threads are not paused
-					((gGT->gameMode1 & PAUSE_THREADS) == 0) ||
+					((gGT->gameMode1 & DEBUG_MENU) == 0) ||
 
 					// if bucket can not be paused
 					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)
@@ -295,8 +297,13 @@ LAB_80035098:
 #else
 				TEST_ThTickRunBucket(gGT->threadBuckets[iVar4].thread);
 #endif
-			}
+			}			
 		}
+		
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+		#endif
 
 #ifndef REBUILD_PS1
 		BOTS_UpdateGlobals();
@@ -454,7 +461,10 @@ LAB_80035098:
 						(gGT->overlayIndex_Threads != -1)
 					)
 					{
-						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
+						#if 0
+						// But why? ND typo?
+						gGT->gameModeEnd = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
+						#endif
 
 						DECOMP_MainFreeze_IfPressStart();
 
@@ -470,7 +480,7 @@ LAB_80035098:
 	}
 	else if (gGT->timerEndOfRaceVS == 0)
 	{
-		uVar3 = gGT->unknownFlags_1d44;
+		uVar3 = gGT->gameModeEnd;
 		if ((uVar3 & AKU_SONG) == 0)
 		{
 			if ((uVar3 & CRYSTAL_CHALLENGE) == 0)
@@ -506,7 +516,7 @@ LAB_80035098:
 					SelectProfile_ToggleMode(0x41);
 
 					DECOMP_RECTMENU_Show(&data.menuWarning2);
-					gGT->unknownFlags_1d44 |= AKU_SONG;
+					gGT->gameModeEnd |= NEW_NAME;
 
 					return;
 				}
@@ -514,7 +524,7 @@ LAB_80035098:
 
 				// if -1 (cancel)
 				gGT->newHighScoreIndex = -1;
-				gGT->unknownFlags_1d44 &= ~(RELIC_RACE | CRYSTAL_CHALLENGE);
+				gGT->gameModeEnd &= ~(NEW_BEST_LAP | NEW_HIGH_SCORE);
 				return;
 			}
 			gGT->unk_timerCooldown_similarTo_1d36--;

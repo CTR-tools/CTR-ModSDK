@@ -70,28 +70,28 @@ void CDSYS_XAPauseAtEnd();
 // COLL
 
 u_char* COLL_LevModelMeta(u_int index);
-u_int COLL_Instance(struct ScratchpadStruct* param_1, struct BSP* node);
-void COLL_PerBspLeaf_CheckInstances(struct BSP* node, struct ScratchpadStruct *sps);
-void COLL_StartSearch_AI(short* posCurr, short* posPrev, short* param_3);
-void COLL_StartSearch_Player(struct Thread* t, struct Driver* d);
-void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
-void COLL_SearchTree_FindX(struct BSP* param_1, struct BoundingBox* bbox, void (*callback)(struct BSP*, struct ScratchpadStruct*), short* param_4); //4th param might be `struct ScratchpadStruct*`
+u_int COLL_FIXED_INSTANC_TestPoint(struct ScratchpadStruct* param_1, struct BSP* node);
+void COLL_FIXED_BSPLEAF_TestInstance(struct BSP* node, struct ScratchpadStruct *sps);
+void COLL_FIXED_BotsSearch(short* posCurr, short* posPrev, short* param_3);
+void COLL_FIXED_PlayerSearch(struct Thread* t, struct Driver* d);
+void COLL_SearchBSP_CallbackQUADBLK(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
+void COLL_SearchBSP_CallbackPARAM(struct BSP* param_1, struct BoundingBox* bbox, void (*callback)(struct BSP*, struct ScratchpadStruct*), short* param_4); //4th param might be `struct ScratchpadStruct*`
 u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001ef1c();
 void FUN_8001ef50(int param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001f2dc(int param_1, short* param_2, short* param_3, short* param_4);
-void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock* qb, struct ScratchpadStruct *sps);
-void COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP* node, struct ScratchpadStruct *sps);
+void COLL_FIXED_QUADBLK_TestTriangles(struct QuadBlock* qb, struct ScratchpadStruct *sps);
+void COLL_FIXED_BSPLEAF_TestQuadblocks(struct BSP* node, struct ScratchpadStruct *sps);
 void FUN_8001f67c(int param_1, int param_2);
 void FUN_8001f6f0(int param_1, int param_2);
 void FUN_8001f7f0(int param_1);
 u_int FUN_8001f928(u_int* param_1, u_int* param_2, u_int* param_3, u_int* param_4);
 void FUN_8001fc40(u_int* param_1, int param_2, u_int param_3, u_int param_4);
-void COLL_PerQuadblock_CheckTriangles_NearPlayer(struct QuadBlock* qb, struct ScratchpadStruct *sps);
-void COLL_PerBspLeaf_CheckQuadblocks_NearPlayer(struct BSP* node, struct ScratchpadStruct *sps);
+void COLL_MOVED_QUADBLK_TestTriangles(struct QuadBlock* qb, struct ScratchpadStruct *sps);
+void COLL_MOVED_BSPLEAF_TestQuadblocks(struct BSP* node, struct ScratchpadStruct *sps);
 void FUN_80020334(struct QuadBlock* qb, int triangleID, int param_3);
-void COLL_StartSearch_NearPlayer(struct Thread* t, struct Driver* d);
-u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, int* param_5);
+void COLL_MOVED_PlayerSearch(struct Thread* t, struct Driver* d);
+u_int COLL_MOVED_ScrubImpact(struct Driver* d, struct Thread* t, int param_3, int param_4, int* param_5);
 
 // CTR
 
@@ -505,7 +505,7 @@ void LOAD_Callback_Overlay_233();
 void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
 void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
+void LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs);
 void LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 //LOAD_HubCallback()
 void LOAD_GlobalModelPtrs_MPK();
@@ -519,7 +519,7 @@ void LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
 void LOAD_ReadFileASyncCallback();
 u_long* LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
-void* LOAD_ReadFile_NoCallback(char* file, void* addr, int* size);
+void* LOAD_XnfFile(char* file, void* addr, int* size);
 //LOAD_FindFile()
 
 // these are the last howl functions ever
@@ -679,7 +679,7 @@ uint8_t MEMCARD_EraseFile(int slotIdx, char *srcString);
 
 void MEMPACK_Init(int ramSize);
 void MEMPACK_SwapPacks(int index);
-void MEMPACK_NewPack_StartEnd(void* start, int size);
+void MEMPACK_NewPack(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocMem(int allocSize); // also has a second parameter? --Super
 //void* MEMPACK_AllocHighMem(int allocSize, char*);
@@ -983,7 +983,7 @@ void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
 //VehPhysCrash_AI()
 //VehPhysCrash_Attack()
 void VehPhysCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-//VehPhysForce_ConvertSpeedToVec()
+void VehPhysForce_ConvertSpeedToVec(struct Driver* d, short* velArr, int x);
 //VehPhysForce_OnGravity()
 void VehPhysForce_OnApplyForces(struct Thread* t, struct Driver* d);
 void VehPhysForce_CollideDrivers(struct Thread* t, struct Driver* d);
@@ -1236,9 +1236,9 @@ void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst);
 #endif
 void RB_GenericMine_ThTick(struct Thread*);
 void RB_MakeInstanceReflective(struct ScratchpadStruct*, struct Instance*);
-//void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
+//void COLL_MOVED_PlayerSearch(struct Thread* thread, struct Driver* driver);
 //void VehPhysForce_CollideDrivers(struct Thread* thread, struct Driver* driver);
-//void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
+//void COLL_FIXED_PlayerSearch(struct Thread* thread, struct Driver* driver);
 void VehPhysForce_TranslateMatrix(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
 void VehEmitter_DriverMain(struct Thread* thread, struct Driver* driver); //this is present WITH A DIFFERENT SIGNATURE further up the file. Idk why.
 void FLARE_Init(short*); //this is present (but commented out) further up the file. Idk why.
@@ -1294,7 +1294,7 @@ void SpuSetIRQCallback(void(*)(void));
 void SpuSetTransferCallback(void(*)(void));
 void MainInit_RainBuffer(struct GameTracker*);
 void CS_Podium_FullScene_Init();
-void CS_LevCamera_OnInit();
+void CS_Cutscene_Start();
 void howl_StopAudio(int boolErasePauseBackup, int boolEraseMusic, int boolDestroyAllFX);
 u_int OtherFX_Modify(u_int soundId, u_int flags);
 void RB_TNT_ThTick_ThrowOnHead(struct Thread*);

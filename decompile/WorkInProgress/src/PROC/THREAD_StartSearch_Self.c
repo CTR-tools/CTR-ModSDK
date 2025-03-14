@@ -16,7 +16,7 @@ void DECOMP_PROC_StartSearch_Self(struct ScratchpadStruct* param)
   param->Union.ThBuckColl.max[1] = param->Input1.pos[1] + sVar1;
   param->Union.ThBuckColl.max[2] = param->Input1.pos[2] + sVar1;
 
-  COLL_SearchTree_FindX(
+  COLL_SearchBSP_CallbackPARAM(
 	gGT->level1->ptr_mesh_info->bspRoot,
 	param->funcCallback,
 	PROC_PerBspLeaf_CheckInstances, /*??? param here*/);

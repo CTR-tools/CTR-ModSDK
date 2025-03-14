@@ -2,47 +2,31 @@
 
 void DECOMP_Garage_Enter(char charId)
 {
-  struct GarageFX* garageSounds;
-  unsigned char* soundIDs;
-  char i;
-  char charRight;
-  char charLeft;
-  int* audioPtr;
-
-  // if characterID is valid
-  if (charId < 8)
-  {
-	// characterID to the left
-    charLeft = charId + -1;
-
-	// characterID to the right
-    charRight = charId + 1;
-
-	// if left of Crash
-    if (charLeft < 0)
-	{
-	  // go to pura
-      charLeft = 7;
-    }
-
-	// if right of pura
-    if (7 < charRight)
-	{
-	  // go to Crash
-      charRight = 0;
-    }
+	struct GarageFX* garageSounds;
+	unsigned char* soundIDs;
+	int i;
+	int charRight;
+	int charLeft;
+	int* audioPtr;
+	int LR;
+	
+	if (charId >= 8)
+		return;
+  
+	// characterID to the left/right
+    charLeft = (charId + -1) & 7;
+    charRight = (charId + 1) & 7;
     
     soundIDs = &sdata->garageSoundIDs[0];
     
-
 	// loop through all characters in garage
 	for (i = 0; i < 8; i++)
 	{
       garageSounds = &sdata->garageSoundPool[i];
-	  audioPtr = (int*)&garageSounds->audioPtr;
 	  
       garageSounds->gsp_prev = GSP_GONE;
       garageSounds->volume = 0;
+	  garageSounds->audioPtr = 0;
 	  
 	  // if this character is in focus
       if (i == charId)
@@ -50,12 +34,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->gsp_curr = GSP_CENTER;
 
 		// Balance Left/Right
-        garageSounds->LR = 0x80;
-
-		if (soundIDs[i] != 0) {
-		  OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x8080);
-		  continue;
-		}
+		LR = 0x80;
 	  }
 
 	  // if this character is to the left
@@ -64,12 +43,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->gsp_curr = GSP_LEFT;
 
 		// 75% left, 25% right
-        garageSounds->LR = 0x3c;
-
-		if (soundIDs[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x803c);
-          continue;
-        }
+		LR = 0x3c;
       }
 		
 	  // if this character is to the right
@@ -78,12 +52,7 @@ void DECOMP_Garage_Enter(char charId)
         garageSounds->gsp_curr = GSP_RIGHT;
 	  
 	  	// 25% left, 75% right
-        garageSounds->LR = 0xc3;
-	  
-	  	if (soundIDs[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x80c3);
-          continue;
-        }
+		LR = 0xc3;
       }
 	  
 	  // if this character is too far away
@@ -92,11 +61,19 @@ void DECOMP_Garage_Enter(char charId)
 	  {
         garageSounds->gsp_curr = GSP_GONE;
         garageSounds->LR = 0x80;
+		continue;
       }
 	  
-      *audioPtr = 0;
-
-    } 
-  }
-  return;
+	  // === only if 'i' is center/left/right ===
+	  
+      garageSounds->LR = LR;
+	  
+	  if (soundIDs[i] == 0)
+		  continue;
+	  
+      OtherFX_RecycleNew(
+	  	&garageSounds->audioPtr,
+	  	(int)soundIDs[i],
+	  	0x8000 | LR);
+	}
 }

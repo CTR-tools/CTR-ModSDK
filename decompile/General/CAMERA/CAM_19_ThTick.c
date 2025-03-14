@@ -289,7 +289,7 @@ SkipNewCameraEOR:
 	if (sVar6 != 0)
 	{
 		sVar5 = cDC->cameraMode;
-		*(short*)&cDC->data14[0x12] = 0;
+		cDC->BlastedLerp.framesRemaining = 0;
 
 		if (sVar6 != 0)
 		{

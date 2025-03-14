@@ -1330,7 +1330,7 @@ switchD_80047c84_caseD_8:
 // the 2 functions are only called here.
 void FUN_80047d64(void)
 {
-  // if PauseAllThreads is diabled
+  // if DebugMenu is diabled
   if ((*(uint *)PTR_DAT_8008d2ac & 0x10) == 0)
   {
     FUN_80047a58();

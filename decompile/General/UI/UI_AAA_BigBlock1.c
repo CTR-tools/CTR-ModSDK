@@ -67,7 +67,7 @@
 #endif
 
 
-#if defined (USE_DEFRAG)
+#if defined (USE_ALTMODS)
 #include "../AltMods/Mods1.c"
 
 void __attribute__ ((section (".end"))) Mods1_EndOfFile()

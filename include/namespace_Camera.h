@@ -92,12 +92,15 @@ struct CameraDC
 	struct PushBuffer* pushBuffer;
 
 	// 0x4C
+	// vel[3]
 	int unkTriplet1[3];
 	
 	// 0x58
+	// pos[3]
 	int unkTriplet2[3];
 	
 	// 0x64
+	// rot[3]
 	int unkTriplet3[3];
 	
 	// 0x70 - flags
@@ -195,23 +198,35 @@ struct CameraDC
 	// 0xc4
 	short framesZoomingOut;
 
+	// Sep3
+	#if BUILD < UsaRetail
+	
 	// 0xc6
-	short unk_c6;
+	short paddingC6;
+	
+	#else // >= UsaRetail
 
-	// 0xC8
-	#if BUILD >= UsaRetail
-	char data14[0x14];
-
-	// extra transition effect added
-
-	// This zooms in X and Z
-	// to get to player, then zooms
-	// Y in the end
-
-	// 0xd4 - distX per frame
-	// 0xd6 - distY per frame
-	// 0xd8 - distZ per frame
-	// 0xda - frameCountdown
+	// Store data on first frame of BLASTED,
+	// Use data on first frame of NOT BLASTED,
+	// 8-frame lerp to bring camera back to kart
+	struct
+	{
+		// 0xC6
+		short boolLerpPending;
+		
+		// 0xc8
+		short unkOffset[2];
+	
+		// 0xcc
+		short desiredRot[4];
+	
+		// 0xd4
+		short desiredPos[3];
+		
+		// 0xda
+		short framesRemaining;
+		
+	} BlastedLerp;
 
 	// 0xdc - end of struct
 	#endif

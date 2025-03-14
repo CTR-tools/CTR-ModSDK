@@ -77,12 +77,12 @@
 8001e4bc CDSYS_XAPauseAtEnd
 
 8001e4e4 COLL_LevModelMeta
-8001e514 COLL_Instance
-8001ea60 COLL_PerBspLeaf_CheckInstances
-8001ebcc COLL_StartSearch_AI
-8001ed94 COLL_StartSearch_Player
-8001ff5c COLL_SearchTree_FindQuadblock_Touching
-8002003c COLL_SearchTree_FindX
+8001e514 COLL_FIXED_INSTANC_TestPoint
+8001ea60 COLL_FIXED_BSPLEAF_TestInstance
+8001ebcc COLL_FIXED_BotsSearch
+8001ed94 COLL_FIXED_PlayerSearch
+8001ff5c COLL_SearchBSP_CallbackQUADBLK
+8002003c COLL_SearchBSP_CallbackPARAM
 
 // unknown 80020234
 // unknown 8002036c
@@ -90,8 +90,8 @@
 // 203c4 is not a real function
 // unknown 8002072c
 
-8002086c COLL_PerQuadblock_CheckTriangles_Touching
-80020a40 COLL_PerBspLeaf_CheckQuadblocks_Touching
+8002086c COLL_FIXED_QUADBLK_TestTriangles
+80020a40 COLL_FIXED_BSPLEAF_TestQuadblocks
 
 // unknown 80020acc
 // unknown 80020b40
@@ -102,13 +102,13 @@
 // unknown 80021060
 // unknown 80021090
 
-800214b4 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800216f8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+800214b4 COLL_MOVED_QUADBLK_TestTriangles
+800216f8 COLL_MOVED_BSPLEAF_TestQuadblocks
 
 // unknown 80021784
 // unknown 80021860
 
-800220a8 COLL_Scrub
+800220a8 COLL_MOVED_ScrubImpact
 
 80022950 CTR_Box_DrawWirePrims
 800229e4 CTR_Box_DrawWireBox
@@ -448,7 +448,7 @@
 8003301c LOAD_Callback_MaskHints3D
 80033030 LOAD_Callback_Podiums
 80033044 LOAD_Callback_LEV
-80033070 LOAD_Callback_LEV_Adv
+80033070 LOAD_Callback_PatchMem
 800330cc LOAD_Callback_DriverModels
 
 800330e0 LOAD_HubCallback
@@ -465,7 +465,7 @@
 800335a8 LOAD_VramFile
 800336dc LOAD_ReadFileASyncCallback
 80033780 LOAD_ReadFile
-80033910 LOAD_ReadFile_NoCallback
+80033910 LOAD_XnfFile
 
 80033a04 LOAD_FindFile
 
@@ -623,7 +623,7 @@
 
 8003fc9c MEMPACK_Init
 8003fd68 MEMPACK_SwapPacks
-8003fd8c MEMPACK_NewPack_StartEnd
+8003fd8c MEMPACK_NewPack
 8003fdb8 MEMPACK_GetFreeBytes
 8003fdd0 MEMPACK_AllocMem
 8003fe44 MEMPACK_AllocHighMem
@@ -1522,10 +1522,10 @@
 800ad2cc CS_Thread_InterpolateFramesMS
 800ad500 CS_Thread_ThTick
 // small func here?
-800ad7e8 CS_Boss_Init
-800ad95c CS_Boss_ThTick
-800adcfc CS_Boss_BoolShouldStart
-800addac CS_Podium_Camera_ThTick
+800ad7e8 CS_LoadBoss
+800ad95c CS_Camera_ThTick_Boss
+800adcfc CS_Camera_BoolGotoBoss
+800addac CS_Camera_ThTick_Podium
 800ae2dc CS_Thread_Init
 800ae774 CS_Podium_Prize_Spin
 800ae948 CS_Podium_Prize_ThTick3
@@ -1535,8 +1535,8 @@
 800aee44 CS_Podium_Prize_Init
 800af1fc CS_Podium_Stand_Init
 800af2b4 CS_Podium_FullScene_Init
-800af660 CS_LevThread_LInB
-800af830 CS_LevCamera_OnInit
+800af660 CS_Thread_LInB
+800af830 CS_Cutscene_Start
 800afaec CS_BoxScene_InstanceSplitLines
 800b6690 CS_Garage_ZoomOut
 800b6740 CS_Garage_MenuProc

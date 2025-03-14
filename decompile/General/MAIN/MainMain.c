@@ -38,6 +38,10 @@ u_int DECOMP_main()
 
 		DECOMP_LOAD_NextQueuedFile();
 		DECOMP_CDSYS_XAPauseAtEnd();
+		
+		#ifdef USE_NEWLEV
+		HotReload();
+		#endif
 
 		switch(sdata->mainGameState)
 		{
@@ -120,9 +124,10 @@ u_int DECOMP_main()
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case 3:
+			
 			#ifdef USE_LANG
 			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
-				LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
+				DECOMP_LOAD_LangFile(sdata->ptrBigfileCdPos_2, gGT->langIndex);
 				gGT->gameMode2 &= ~(LNG_CHANGE);
 			}
 			#endif
@@ -252,6 +257,7 @@ FinishLoading:
 
 				// sync music, in case loading is too fast,
 				// https://www.youtube.com/watch?v=rzJcVdm4ny4
+				#ifndef USE_PCDRV
 				#ifndef REBUILD_PS1
 				#if 1 // not part of the OG game
 				else
@@ -264,6 +270,7 @@ FinishLoading:
 						{}
 					}
 				}
+				#endif
 				#endif
 				#endif
 
@@ -393,6 +400,11 @@ FinishLoading:
 					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 
+				#ifdef USE_PROFILER
+				void DebugProiler_Reset();
+				DebugProiler_Reset();
+				#endif
+
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
 					DECOMP_MainFrame_GameLogic(gGT, gGS);
@@ -435,9 +447,11 @@ FinishLoading:
 						gGT->pushBuffer[0].rot[1] = 0;
 						gGT->pushBuffer[0].rot[2] = 0;
 
+						#ifndef USE_PROFILER
 						// wait 5 seconds
 						if(gGT->timer > 30*5)
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+						#endif
 					}
 
 					int tap = gGS->gamepad[0].buttonsTapped;
@@ -536,7 +550,6 @@ FinishLoading:
 
 
 
-
 #ifdef REBUILD_PC
 				PsyX_BeginScene();
 #endif
@@ -546,6 +559,9 @@ FinishLoading:
 				void NikoCalcFPS();
 				NikoCalcFPS();
 #endif
+
+
+
 
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
@@ -594,6 +610,64 @@ int GetSongTime()
 }
 #endif
 
+#ifdef USE_NEWLEV
+void HotReloadVRAM()
+{
+	int* vramBuf = (int *)CUSTOM_VRAM_ADDR;
+	struct VramHeader* vh = (struct VramHeader*) vramBuf;
+	if(vramBuf[0] == 0x20)
+	{
+		int size = vramBuf[1];
+		vh = &vramBuf[2];
+
+		while(size != 0)
+		{
+			LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
+
+			vramBuf = (int*)vh;
+			vramBuf = &vramBuf[size>>2];
+			size = vramBuf[0];
+			vh = &vramBuf[1];
+		}
+	}
+	else { LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh)); }
+}
+
+void HotReload()
+{
+	volatile int* g_triggerVRMReload = TRIGGER_VRM_RELOAD;
+	if (*g_triggerVRMReload)
+	{
+		HotReloadVRAM();
+		*g_triggerVRMReload = 0;
+		return;
+	}
+
+	struct GameTracker* gGT = sdata->gGT;
+	volatile int* g_triggerHotReload = TRIGGER_HOT_RELOAD;
+	if (*g_triggerHotReload == HOT_RELOAD_LOAD && (gGT->gameMode1 & LOADING || gGT->levelID == MAIN_MENU_LEVEL))
+	{
+		*g_triggerHotReload = HOT_RELOAD_READY;
+		while (*g_triggerHotReload != HOT_RELOAD_EXEC) {};
+		const char* pCustomLevel = CUSTOM_LEV_ADDR;
+		const int* pCustomMap = CUSTOM_MAP_PTR_ADDR;
+		int* pMap = (int*)(pCustomLevel + *pCustomMap);
+		DECOMP_LOAD_RunPtrMap(pCustomLevel, pMap + 1, *pMap >> 2);
+		*g_triggerHotReload = HOT_RELOAD_DONE;
+		return;
+	}
+
+	if (*g_triggerHotReload != HOT_RELOAD_START || gGT->gameMode1 & LOADING) { return; }
+
+	*g_triggerHotReload = HOT_RELOAD_LOAD;
+	if (gGT->levelID == MAIN_MENU_LEVEL) { return; }
+	DECOMP_GhostTape_Destroy();
+	sdata->mainMenuState = 0;
+	gGT->gameMode1 |= MAIN_MENU;
+	DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+}
+#endif
+
 // by separating this, it can be
 // overwritten dynamically (oxide fix)
 void StateZero()
@@ -612,7 +686,7 @@ void StateZero()
 	memset(gGT, 0, sizeof(struct GameTracker));
 	#endif
 
-    #if defined (USE_DEFRAG)
+    #if defined (USE_ALTMODS)
 	// for modding (code caves)
 	void ModsMain();
 	ModsMain();
@@ -631,6 +705,14 @@ void StateZero()
 	DECOMP_MEMPACK_Init(MEMPACK_SIZE);
 	DECOMP_LOAD_InitCD();
 	DECOMP_RaceFlag_SetFullyOffScreen();
+
+#ifdef USE_PROFILER
+	void DebugProfiler_Init();
+	DebugProfiler_Init();
+	
+	void DebugMenu_Init();
+	DebugMenu_Init();
+#endif
 
 	ResetGraph(0);
 	SetGraphDebug(0);
@@ -685,11 +767,7 @@ void StateZero()
 	gGT->trafficLightsTimer = 0xfffffc40;
 
 	DECOMP_Timer_Init();
-
-	// set callback and save callback
-	EnterCriticalSection();
-	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
-	ExitCriticalSection();
+	DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
 
 	DECOMP_MEMCARD_InitCard();
 	VSync(0);
@@ -717,6 +795,12 @@ void StateZero()
 	firstEntry[231].size = 28*0x800;
 	//firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
 	//printf("Size: %08x\n", firstEntry[231].size);
+	
+	// Cut off Region1 overlays at 2 sectors (not 3),
+	// This protects Region2 RAM so it is not overwritten
+	// during Region1 disc streaming, saves loading time
+	for(int i = 221; i <= 225; i++)
+		firstEntry[i].size = 2*0x800;
 	#endif
 
 	#ifndef FastBoot
@@ -761,16 +845,14 @@ void StateZero()
 	DrawSync(0);
 
 	#ifndef FastBoot
-	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd);
 	DECOMP_MainInit_VRAMDisplay();
-	#endif
 	#endif
 
 	// \SOUNDS\KART.HWL;1
 	DECOMP_howl_InitGlobals(data.kartHwlPath);
-
+	
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 
 	#if !defined(FastBoot) && !defined(USE_ONLINE)
@@ -782,7 +864,7 @@ void StateZero()
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 
-#ifndef REBUILD_PC
+#if !defined(REBUILD_PC) && !defined(USE_PCDRV)
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written
@@ -796,11 +878,7 @@ void StateZero()
 
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
-	// In nopsx VRAM debug viewer:
-	// 	the area between 2 screen buffers and top right corner in vram
-	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
-	// Add a bookmark before loading (param_3 is 0 in the call)
-	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102);
 
 	sdata->mainGameState = 3;
 

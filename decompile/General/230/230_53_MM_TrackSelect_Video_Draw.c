@@ -12,6 +12,10 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 
   selectMenu = &selectMenu[trackIndex];
   videoID = selectMenu->videoID;
+  
+  #ifdef USE_PCDRV
+  return;
+  #endif
 
   if (
 		(entry[videoID].size == 0) || 
@@ -46,7 +50,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
         D230.trackSel_video_boolAllocated = D230.trackSel_unk;
       }
 
-// Set to 0, to avoid no$psx crashing
+// no$psx crashes here, disable if needed
 #if 1
       // CD position of video, and numFrames
       MM_Video_StartStream(bh->cdpos + entry[videoID].offset, selectMenu->videoLength);

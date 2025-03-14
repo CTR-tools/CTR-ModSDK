@@ -2,11 +2,7 @@
 
 void DECOMP_MainKillGame_StopCTR(void)
 {
-  // set callback and save callback
-  EnterCriticalSection();
-  DrawSyncCallback(sdata->MainDrawCb_DrawSyncPtr);
-  ExitCriticalSection();
-
+  DrawSyncCallback(0);
   StopCallback();
 
   #ifndef REBUILD_PC

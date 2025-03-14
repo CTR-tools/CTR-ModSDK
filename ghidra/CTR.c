@@ -632,8 +632,13 @@ void FUN_80021e1c(byte *param_1,byte *param_2)
   byte bVar1;
   int iVar2;
 
+  // on first iteration,
+  // jump to a nullptr check
   jmp 80021e90;
+  
+  80021e24:
 
+  // loop through vismem
   do {
     while( true ) {
       if (*param_2 == 0) {
@@ -641,6 +646,8 @@ void FUN_80021e1c(byte *param_1,byte *param_2)
       }
       iVar2 = (int)(char)*param_2;
       if (iVar2 < 0) break;
+	  
+	  // add vismem bits
       for (; param_2 = param_2 + 1, iVar2 != 0; iVar2 = iVar2 + -1) {
         *param_1 = *param_1 | *param_2;
         param_1 = param_1 + 1;
@@ -650,9 +657,13 @@ void FUN_80021e1c(byte *param_1,byte *param_2)
     bVar1 = param_2[1];
     param_2 = param_2 + 2;
   } while (iVar2 == 0);
+  
+  // loop through vismem
   do {
     iVar2 = iVar2 + -1;
-    *param_1 = *param_1 | bVar1;
+    
+	// add vismem bits
+	*param_1 = *param_1 | bVar1;
     param_1 = param_1 + 1;
   } while (iVar2 != 0);
 

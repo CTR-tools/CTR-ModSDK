@@ -39,7 +39,7 @@ void AH_Sign_LInB();
 //void DECOMP_AH_SaveObj_LInB();	-- DONE
 //void DECOMP_AH_WarpPad_LInB();	-- DONE
 
-void CS_LevThread_LInB();
+void CS_Thread_LInB();
 
 // temporary, until 231 compiles into PC port
 #ifdef REBUILD_PC
@@ -77,7 +77,7 @@ void AH_Sign_LInB() {}
 //void DECOMP_AH_SaveObj_LInB() {}	-- DONE
 //void DECOMP_AH_WarpPad_LInB() {}	-- DONE
 
-void CS_LevThread_LInB() {}
+void CS_Thread_LInB() {}
 #endif
 
 // Missing from Decomp/General:
@@ -1067,52 +1067,52 @@ struct Data data =
 		SET_MDM(NULL,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 
 		// 0x96 - STATIC_CRASHINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x97 - STATIC_COCOINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x98 - STATIC_CORTEXINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x99 - STATIC_TINYINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9A - STATIC_POLARINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9B - STATIC_DINGOINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9C - STATIC_OXIDEINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9D - STATIC_SIMPLEKARTINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9E - STATIC_TINYKARTINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0x9F - STATIC_DINGOKARTINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA0 - STATIC_SIMPLEOBJINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA1 - STATIC_PPOINTTHINGINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA2 - STATIC_PRTHINGINTRO
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA3 - STATIC_OXIDELILSHIP
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA4 - STATIC_INTROOXIDECAM
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xA5 - STATIC_INTROOXIDEBODY
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xa6 - STATIC_STARTBANNERWAVE
 		SET_MDM(NULL,RB_Banner_LInB,NULL),
@@ -1229,67 +1229,67 @@ struct Data data =
 		SET_MDM(NULL,NULL,NULL),
 
 		// 0xcc - STATIC_INTRO_FLASH
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xcd - STATIC_INTRODOORS
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xce - STATIC_CRASHSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xcf - STATIC_CORTEXSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd0 - STATIC_TINYSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd1 - STATIC_COCOSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd2 - STATIC_NGINSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd3 - STATIC_DINGOSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd4 - STATIC_POLARSELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd5 - STATIC_PURASELECT
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd6 - STATIC_ENDDOORS
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd7 - STATIC_ENDFLASH
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd8 - STATIC_ENDINGOXIDE
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xd9 - STATIC_ENDIGNOXIDE_02 (mispelled in-game)
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xda - STATIC_ENDOXIDEBIGSHIP
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xdb - STATIC_ENDOXIDELILSHIP
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xdc - STATIC_OXIDECAMEND
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xdd - STATIC_OXIDECAMEND02
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xde - STATIC_JLOGO_FLAG
 		SET_MDM(NULL,NULL,NULL),
 
 		// 0xdf - STATIC_OXIDESPEAKER
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xe0 - STATIC_INTROSPARKS
-		SET_MDM(NULL,CS_LevThread_LInB,NULL),
+		SET_MDM(NULL,CS_Thread_LInB,NULL),
 
 		// 0xe1 - STATIC_GNORMALZ
 		SET_MDM(NULL,AH_Sign_LInB,NULL),
@@ -2707,9 +2707,9 @@ struct Data data =
 		0x00, 0x00, 0x00, 0x00,
 	},
 
-	.driverModel_lowLOD[0] = 0,
-	.driverModel_lowLOD[1] = 0,
-	.driverModel_lowLOD[2] = 0,
+	.driverModelExtras[0] = 0,
+	.driverModelExtras[1] = 0,
+	.driverModelExtras[2] = 0,
 
 	.podiumModel_firstPlace = 0,
 	.podiumModel_secondPlace = 0,
@@ -2728,8 +2728,8 @@ struct Data data =
 		.type = 0,
 		.subfileIndex = -1,
 		.ptrDestination = 0,
-		.size = 0,
-		.callback.flags = 0
+		.size_UNUSED = 0,
+		.callbackFuncPtr = 0
 	},
 
 	.characterIDs_2P_AIs =
