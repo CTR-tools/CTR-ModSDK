@@ -66,7 +66,7 @@ void RunInitHook()
 	{
 		once = 0;
 		// adds VRAM to loading queue
-		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 222, 0x80200000, 0);
+		LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, 0x80200000, 0);
 		// adds LEV to loading queue
 		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, 0x80300000, 0);
 
