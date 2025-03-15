@@ -11,22 +11,27 @@ void BOTS_UpdateGlobals(void) //UNTESTED
 
 	sdata->bestHumanRank = NULL;
 	sdata->bestRobotRank = NULL;
-	struct Driver* worstRobotDriver = NULL;
+	struct Driver* worstRobotDriver = NULL, *bestHumanDriver = NULL;
 
 	for (int i = MAX_KARTS - 1; i >= 0; i--)
 	{
 		struct Driver* d = sdata->gGT->driversInRaceOrder[i];
+		struct Driver* bestHuman = sdata->bestHumanRank;
 		if (d != NULL)
 		{
-			if (d->actionsFlagSet & 0x100000 != 0) //is AI
+			bestHuman = d; //assume human for now
+			if (d->actionsFlagSet & 0x100000 != 0)
 			{
-				sdata->bestRobotRank = d;
+				bestHuman = sdata->bestHumanRank; //is bot, nevermind
+				sdata->bestRobotRank = d; //since it's a bot, it is also the *best* bot so far
 				if (worstRobotDriver == NULL)
-					worstRobotDriver = d;
+				{
+					worstRobotDriver = d; //if not yet assigned, assign worst bot.
+				}
 			}
-			else //is human
-				sdata->bestHumanRank = d;
 		}
+
+		sdata->bestHumanRank = bestHuman;
 	}
 
 	if (sdata->bestHumanRank == NULL)

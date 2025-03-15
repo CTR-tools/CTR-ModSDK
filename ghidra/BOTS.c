@@ -2981,9 +2981,6 @@ LAB_80015b98:
   }
   *(undefined2 *)(iVar17 + 0x3da) = *(undefined2 *)(iVar17 + 0x5c0);
 
-  // END OF TOP-DOWN
-  // ========================================================================
-
   if ((*(uint *)(iVar17 + 0x5b0) & 2) != 0) {
     sVar7 = *(short *)(iVar17 + 0x5ba);
     if (sVar7 == 2) {
@@ -3174,6 +3171,9 @@ LAB_800160f4:
       *(uint *)(iVar17 + 0x5b0) = *(uint *)(iVar17 + 0x5b0) & 0xfffffff9;
     }
   }
+
+  // END OF TOP-DOWN
+  // ========================================================================
 
   if ((0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U)) &&
      (0x9e < (byte)(*(char *)((int)psVar21 + 9) - 0x31U))) {
