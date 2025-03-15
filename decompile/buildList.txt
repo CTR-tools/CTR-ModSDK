@@ -278,7 +278,10 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0,          General/BOTS/BOTS_03_Adv_
 //common, exe, BOTS_Adv_AdjustDifficulty, 0x0,           General/BOTS/BOTS_04_Adv_AdjustDifficulty.c   //TODO
 common, exe, BOTS_UpdateGlobals, 0x0,                  General/BOTS/BOTS_05_UpdateGlobals.c          //needs testing
 //common, exe, BOTS_SetRotation, 0x0,                    General/BOTS/BOTS_06_SetRotation.c            //needs testing, is overbudget.
-common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c            //needs testing
+
+// Incorrect usage of MDM
+//common, exe, BOTS_LevInstColl, 0x0,                    General/BOTS/BOTS_07_LevInstColl.c            //needs testing
+
 common, exe, BOTS_ThTick_RevEngine, 0x0,               General/BOTS/BOTS_08_ThTick_RevEngine.c       //needs testing
 common, exe, BOTS_MaskGrab, 0x0,                       General/BOTS/BOTS_09_MaskGrab.c               //needs testing
 common, exe, BOTS_Killplane, 0x0,                      General/BOTS/BOTS_10_Killplane.c              //needs testing

@@ -23,7 +23,7 @@ void DECOMP_BOTS_LevInstColl(struct Thread* param_1)
 	prevPos[1] = ((short)(d->posPrev.y >> 8)) + 0x19;
 	prevPos[2] = (short)(d->posPrev.z >> 8);
 
-	DECOMP_COLL_FIXED_BotsSearch(currPos, prevPos, (short*)sps);
+	COLL_FIXED_BotsSearch(currPos, prevPos, (short*)sps);
 
 	if (sps->boolDidTouchHitbox)
 	{
