@@ -23,14 +23,14 @@ void DECOMP_RB_MakeInstanceReflective(struct ScratchpadStruct* sps, struct Insta
         // if there is one player
         quadFlags = ((struct QuadBlock *)sps->Set2.ptrQuadblock)->quadFlags;
 
-        if ((quadFlags & 0x2000) == 0)
+        if ((quadFlags & 0x2000) == 0) //is not wall
         {
             // visible?
             if ((quadFlags & 1) != 0)
             {
                 // make instance reflective
                 inst->flags |= REFLECTIVE;
-                inst->vertSplit = gGT->level1->splitLines[2];
+                inst->vertSplit = gGT->level1->splitLines[1];
 
                 return;
             }

@@ -1631,7 +1631,9 @@ LAB_80013fbc:
     }
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
-    
+
+	////////// START
+
 	if ((uVar8 & 0xc0) == 0x40) 
 	{  
 	  // offset 0x10 of NavFrame
@@ -1891,6 +1893,9 @@ LAB_800144a0:
         iVar15 = (((iVar3 - *(int *)(iVar4 + 0x488)) + uVar20 * iVar3) -
                  ((iVar3 - *(int *)(iVar17 + 0x488)) + uVar18 * iVar3)) -
                  ((int)*(short *)(PTR_DAT_8008cf70 + ((int)(uVar8 << 0x10) >> 0xf)) + (int)sVar7);
+
+		//// CONTINUE FROM HERE
+
         if ((bVar1) && ((uVar8 & 0xffff) == 0)) {
           if (iVar15 < 1) {
 LAB_800147e8:
@@ -2053,6 +2058,8 @@ LAB_80014a98:
       if (0x6900 < iVar3) {
         iVar3 = 0x6900;
       }
+
+	  //// CONTINUE FROM HERE 2
       
 	  // terrain->0x38
 	  iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;
@@ -2435,8 +2442,7 @@ LAB_8001509c:
 	// set transparency of AI (for water)
 	iVar13 = ((uint)*(byte *)((int)psVar19 + 0x13) & 0xf) * 0x9c00;
 	
-    *(undefined2 *)(iVar17 + 0x508) = (short)((uint)*(ushort *)(iVar17 + 0x508) * 100 + iVar13 >> 8)
-    ;
+    *(undefined2 *)(iVar17 + 0x508) = (short)((uint)*(ushort *)(iVar17 + 0x508) * 100 + iVar13 >> 8);
 
 	// set alpha
     *(undefined2 *)(iVar22 + 0x22) = (short)((uint)*(ushort *)(iVar22 + 0x22) * 100 + iVar13 >> 8);
@@ -2533,6 +2539,7 @@ LAB_800153d0:
 
 	// path index: 0, 1, or 2
     iVar13 = (int)*(short *)(iVar17 + 0x5b8) * 4;
+
 
 	// set next nav point to current + 20 bytes
     psVar21 = psVar19 + 10;
@@ -2669,7 +2676,6 @@ LAB_800156b0:
 	// modify AI's respawn index (why?)
     *(undefined *)(iVar17 + 0x60a) = *(undefined *)(psVar19 + 9);
   }
-
   else {
     uVar8 = (uint)*(byte *)((int)psVar21 + 7) * 0x10 + (uint)*(byte *)((int)psVar19 + 7) * -0x10 &
             0xfff;
@@ -3166,6 +3172,9 @@ LAB_800160f4:
     }
   }
 
+  // END OF TOP-DOWN
+  // ========================================================================
+
   if ((0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U)) &&
      (0x9e < (byte)(*(char *)((int)psVar21 + 9) - 0x31U))) {
 
@@ -3479,7 +3488,10 @@ LAB_8001686c:
 	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
-  
+
+  // ========================================================================
+  // BEGINNING OF BOTTOM-UP
+
   // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);
 

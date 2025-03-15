@@ -420,7 +420,7 @@ LAB_8001c128:
 					{
 						if ((sVar6 == 8) || (sVar6 == 0xe))
 						{
-							if ((d->botFlags & 2U) == 0)
+							if ((d->botData.botFlags & 2U) == 0)
 							{
 								if ((cDC->driver5B0_prevFrame & 2) != 0)
 								{
@@ -436,7 +436,7 @@ LAB_8001c128:
 								}
 								CAM_FollowDriver_Normal(cDC, d, pb->pos, 0x1f800108, (short*)ptrZoomData);
 							}
-							cDC->driver5B0_prevFrame = d->botFlags;
+							cDC->driver5B0_prevFrame = d->botData.botFlags;
 							goto LAB_8001c150;
 						}
 						if ((cDC->cameraMode == 9) || (psVar21 = (short *)0x1f800108, cDC->cameraMode == 0xd))

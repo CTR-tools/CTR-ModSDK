@@ -1,7 +1,8 @@
 #include <common.h>
 
-void BOTS_ThTick_Drive(int param_1) //TODO: & add "DECOMP_" prefix
+//NOT DONE YET
+
+void BOTS_ThTick_Drive(struct Thread* botThread) //todo: DECOMP_ prefix
 {
-	//1st param may be `int`, but is almost certainly a `struct*` of some kind
-	//TODO
+	//see the WIP version.
 }

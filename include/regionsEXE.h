@@ -4472,7 +4472,7 @@ struct sData
 
 	// 8008da48
 	// pointer at 8008cf70
-	short arcadeDiff[0xE];
+	short arcadeDiff[0xE]; //this might be a MATRIX too.
 
 	// 8008da64
 	// pointer at 8008cf74
@@ -4501,7 +4501,7 @@ struct sData
 	struct NavHeader* NavPath_ptrHeader[3];
 
 	// 8008daf8
-	struct LinkedList unk_NavRelated[3];
+	struct LinkedList navBotList[3];
 
 	// 8008DB1C - BSP Search Result
 	struct ScratchpadStruct scratchpadStruct;

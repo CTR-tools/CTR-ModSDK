@@ -1,39 +1,43 @@
 #include <common.h>
 
+#define MAX_KARTS 8
+
 void BOTS_UpdateGlobals(void) //UNTESTED
 {
-	if (sdata->gGT->numBotsNextGame > 0)
+	if (sdata->gGT->numBotsNextGame != 0)
 	{
 		EngineSound_NearestAIs();
 	}
+
 	sdata->bestHumanRank = NULL;
 	sdata->bestRobotRank = NULL;
-	struct Driver* worstAI = NULL;
-	for (int i = 7; i >= 0; i--) //loop through all driver rank low to high (7 to 0)
+	struct Driver* worstRobotDriver = NULL, *bestHumanDriver = NULL;
+
+	for (int i = MAX_KARTS - 1; i >= 0; i--)
 	{
-		struct Driver* d = sdata->gGT->driversInRaceOrder[7];
+		struct Driver* d = sdata->gGT->driversInRaceOrder[i];
 		struct Driver* bestHuman = sdata->bestHumanRank;
-		if (
-	           (
-				   (d != NULL) && //is valid (for races w/ less than 8 drivers?)
-				   (bestHuman = d, d->actionsFlagSet & 0x100000 != 0) //if this is an AI
-			   ) &&
-			   (
-				   bestHuman = sdata->bestHumanRank, //get best human from backup
-				   sdata->bestRobotRank = d, //set best AI driver
-				   worstAI == NULL //if worst AI is not found
-			   )
-		   )
+		if (d != NULL)
 		{
-			worstAI = d;
+			bestHuman = d; //assume human for now
+			if (d->actionsFlagSet & 0x100000 != 0)
+			{
+				bestHuman = sdata->bestHumanRank; //is bot, nevermind
+				sdata->bestRobotRank = d; //since it's a bot, it is also the *best* bot so far
+				if (worstRobotDriver == NULL)
+				{
+					worstRobotDriver = d; //if not yet assigned, assign worst bot.
+				}
+			}
 		}
+
 		sdata->bestHumanRank = bestHuman;
 	}
+
 	if (sdata->bestHumanRank == NULL)
 	{
-		sdata->bestHumanRank = worstAI;
+		sdata->bestHumanRank = worstRobotDriver;
 	}
+
 	sdata->unk_counter_upTo450++;
-	//I finished doing this decomp, and before testing I realized there's also an entry
-	//in /WIP for this function. Whoops.
 }

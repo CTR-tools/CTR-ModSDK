@@ -35,7 +35,7 @@ void DECOMP_CDSYS_XAPauseRequest(void);
 void DECOMP_CDSYS_XAPauseForce(void);
 void DECOMP_CDSYS_XAPauseAtEnd(void);
 
-void* DECOMP_COLL_LevModelMeta(unsigned int id);
+struct MetaDataMODEL* DECOMP_COLL_LevModelMeta(unsigned int id);
 
 void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
@@ -892,3 +892,10 @@ void DECOMP_MainKillGame_StopCTR(void);
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver* d);
 int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame);
 void DECOMP_RB_CtrLetter_ThTick(struct Thread* t);
+void DECOMP_BOTS_MaskGrab(struct Thread* botThread);
+void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* d);
+void DECOMP_GAMEPAD_JogCon2(struct Driver* d, char val, short timeMS);
+void DECOMP_CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d);
+u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
+void DECOMP_BOTS_Killplane(struct Thread* botThread);
+void DECOMP_COLL_FIXED_BotsSearch(short* posCurr, short* posPrev, struct ScratchpadStruct* sps);

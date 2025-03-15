@@ -331,6 +331,152 @@ struct Turbo
    short fireVisibilityCooldown;
 };
 
+struct BotData
+{
+	//these offset are from the perspective as they exist from within `struct Driver`
+
+	// 0x598
+	struct Item item;
+
+	// 0x5a0
+	int unk5a0;
+
+	// 0x5a4
+	struct NavFrame* botNavFrame;
+
+	// 0x5a8
+	int unk5a8;
+
+	// 0x5ac
+	int unk5ac;
+
+	// 0x5b0
+	// unsigned int flags
+	// & 0x010 - is blasted? Something to do with damage
+	// & 0x100 - camera spectates this AI
+	// & 0x200 - race started for AI
+	int botFlags;
+
+	// 0x5b4
+	// acceleration from start-line
+	int botAccel;
+
+	// 0x5b8
+	// short path index
+	short botPath;
+
+	// 0x5ba
+	short unk5ba;
+
+
+	/*
+	* regarding unk5bc:
+	*
+	* 0x5bc - 0x5bd: likely a short, a timer of some sort, similar to squishTimer.
+	*/
+
+	// 0x5bc
+	// incline rotXZ
+	// probably only for AIs
+
+	//unk5bc + 18 is botVelocity?
+	//char unk5bc[0x34];
+	union
+	{
+		char raw[0x34];
+		struct
+		{
+			// 0x5bc
+			short rotXZ;
+
+			// 0x5be
+			short drift_unk1;
+
+			// 0x5c0
+			short ai_mulDrift;
+
+			// 0x5c2
+			short ai_simpTurnState;
+
+			// 0x5c4
+			short ai_turboMeter;
+
+			// 0x5c6
+			short ai_fireLevel;
+
+			// 0x5c8
+			int ai_squishCooldown;
+
+			// 0x5cc
+			int unk5cc;
+
+			// 0x5d0
+			int ai_speedY;
+
+			// 0x5d4
+			int ai_speedLinear;
+
+			// 0x5d8
+			int ai_accelAxis[3];
+
+			// 0x5e4
+			int ai_velAxis[3];
+		};
+	} unk5bc;
+
+	// 0x5d4
+	// AI speed
+
+	// 0x5f0
+	int ai_posBackup[3];
+
+	// 0x5fc
+	short ai_rot4[4];
+
+	// 0x604
+	int ai_progress_cooldown;
+
+	// 0x608
+	short ai_rotY_608;
+
+	// 0x60a
+	short ai_quadblock_checkpointIndex; //0x60a may be a char and not a short.
+
+	// 0x60c
+	short estimatePos[3];
+
+	// 0x612
+	char estimateRotNav[3];
+
+	// 0x615
+	char estimateRotCurrY;
+
+	// 0x616
+	short distToNextNavXYZ;
+
+	// 0x618
+	short distToNextNavXZ;
+
+	// 0x61A
+	short unk61a;
+
+	// 0x61c
+	int unk61c;
+
+	// 0x620
+	struct MaskHeadWeapon* maskObj;
+
+	// 0x624
+	short weaponCooldown;
+
+	// 0x626
+	// short ??? // Something set when blasted ?
+	short unk626;
+
+	// 0x628
+	int unk628;
+};
+
 // for Players, AIs and Ghosts
 struct Driver
 {
@@ -1455,86 +1601,7 @@ struct Driver
 
 	// 0x598
 	// === Robotcar and Ghost ===
-
-	// 0x598
-	int unk598;
-	int unk59c;
-	int unk5a0;
-
-	// 0x5a4
-	struct NavFrame* botNavFrame;
-
-	int unk5a8;
-	int unk5ac;
-
-	// 0x5b0
-	// unsigned int flags
-	// & 0x010 - is blasted? Something to do with damage
-	// & 0x100 - camera spectates this AI
-	// & 0x200 - race started for AI
-	int botFlags;
-
-	// 0x5b4
-	// acceleration from start-line
-	int botAccel;
-
-	// 0x5b8
-	// short path index
-	short botPath;
-	short unk5ba;
-
-	// 0x5bc
-	// incline rotXZ
-	// probably only for AIs
-	char unk5bc[0x34];
-
-	// 0x5d4
-	// AI speed
-
-	// 0x5f0
-	int ai_posBackup[3];
-
-	// 0x5fc
-	short ai_rot4[4];
-
-	// 0x604
-	int ai_progress_cooldown;
-
-	// 0x608
-	short ai_rotY_608;
-
-	// 0x60a
-	short ai_quadblock_checkpointIndex;
-
-	// 0x60c
-	short estimatePos[3];
-
-	// 0x612
-	char estimateRotNav[3];
-	char estimateRotCurrY;
-
-	// 0x616
-	short distToNextNavXYZ;
-
-	// 0x618
-	short distToNextNavXZ;
-
-	// 0x61A
-	short unk61a;
-	int unk61c;
-
-	// 0x620
-	struct MaskHeadWeapon* maskObj;
-
-	// 0x624
-	short weaponCooldown;
-
-	// 0x626
-	// short ??? // Something set when blasted ?
-	short unk626;
-
-	// 0x628
-	int unk628;
+	struct BotData botData;
 
 	// ===========================================
 
@@ -1586,4 +1653,8 @@ _Static_assert(sizeof(struct MetaPhys) == 0x1C);
 
 #if BUILD == UsaRetail && !defined(USE_ONLINE)
 _Static_assert(sizeof(struct Driver) == 0x638);
+#endif
+
+#if 1 //idk this might be version dependant
+_Static_assert(sizeof(struct BotData) == 0x94);
 #endif

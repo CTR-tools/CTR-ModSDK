@@ -53,6 +53,8 @@ struct NavHeader
 {
 	// 0
 	short magicNumber;
+
+	// 2
 	short numPoints;
 
 	// 4
@@ -70,7 +72,10 @@ struct NavHeader
 	//struct NavFrame frame[0];
 };
 #define NAVHEADER_GETFRAME(x) \
-	(struct NavFrame*)((unsigned int)x + sizeof(struct NavHeader))
+	((struct NavFrame*)((unsigned int)x + sizeof(struct NavHeader)))
+
+#define NAVFRAME_GETNEXTFRAME(x) \
+	(((struct NavFrame*)x) + 1)
 
 _Static_assert(sizeof(struct NavFrame) == 0x14);
 _Static_assert(sizeof(struct NavHeader) == 0x4c);

@@ -206,6 +206,7 @@ struct QuadBlock
 	// 0x3C
 	short blockID;
 
+	// 0x3E
 	// used for checkpoint progression
 	// and also respawns
 	char checkpointIndex;
@@ -745,7 +746,8 @@ struct Level
 	// for ice, mud, water
 	// 0x184
 	// 0x186
-	char splitLines[4];
+	//char splitLines[4]; //probably 2 shorts, not char[4]
+	short splitLines[2];
 
 	// 0x188
 	struct NavHeader** LevNavTable;
