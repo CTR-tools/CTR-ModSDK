@@ -1,9 +1,12 @@
-#include <common.h>
+#include "utils.h"
 
 void GhostReplay_ThTick(struct Thread *);
 
 void GhostReplay_Init(void)
 {
+#ifdef DISABLE_GHOSTS
+	return;
+#else DISABLE_GHOSTS
 	char i;
 	u_short uVar1;
 	int iVar2;
@@ -204,4 +207,5 @@ void GhostReplay_Init(void)
 		// just so Oxide doesn't block your view
 		GhostReplay_ThTick(t);
 	}
+#endif
 }

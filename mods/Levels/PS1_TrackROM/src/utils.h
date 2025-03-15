@@ -4,15 +4,7 @@
 #include <common.h>
 
 #define CUSTOM_LEVEL_ID 0
-
-enum HotReloadSteps
-{
-    HOT_RELOAD_DONE = 0,
-    HOT_RELOAD_START = 1,
-    HOT_RELOAD_LOAD = 2,
-    HOT_RELOAD_READY = 3,
-    HOT_RELOAD_EXEC = 4,
-};
+#define DISABLE_GHOSTS
 
 #define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000
 #define TRIGGER_VRM_RELOAD (volatile int*) 0x8000C004
