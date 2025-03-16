@@ -310,41 +310,25 @@ void DrawOneInst(struct Instance* curr)
 				void* pCurr;
 				void* pNext;
 				
-				short zz;
-				posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-				posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
-				posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
+				// The X, Z, Y, is not a typo
+				posWorld1[0] = ((((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+				posWorld1[1] = ((((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+				posWorld1[2] = ((((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
 				posWorld1[3] = 0;
-				zz = posWorld1[2];
-				posWorld1[2] = posWorld1[1];
-				posWorld1[1] = zz;
-				posWorld1[0] = (posWorld1[0] * curr->scale[0]) >> 12;
-				posWorld1[1] = (posWorld1[1] * curr->scale[1]) >> 12;
-				posWorld1[2] = (posWorld1[2] * curr->scale[2]) >> 12;
 				gte_ldv0(&posWorld1[0]);
 
-				posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-				posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
-				posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
+				// The X, Z, Y, is not a typo
+				posWorld2[0] = ((((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+				posWorld2[1] = ((((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+				posWorld2[2] = ((((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
 				posWorld2[3] = 0;
-				zz = posWorld2[2];
-				posWorld2[2] = posWorld2[1];
-				posWorld2[1] = zz;
-				posWorld2[0] = (posWorld2[0] * curr->scale[0]) >> 12;
-				posWorld2[1] = (posWorld2[1] * curr->scale[1]) >> 12;
-				posWorld2[2] = (posWorld2[2] * curr->scale[2]) >> 12;
 				gte_ldv1(&posWorld2[0]);
 
-				posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-				posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
-				posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
+				// The X, Z, Y, is not a typo
+				posWorld3[0] = ((((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+				posWorld3[1] = ((((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+				posWorld3[2] = ((((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
 				posWorld3[3] = 0;
-				zz = posWorld3[2];
-				posWorld3[2] = posWorld3[1];
-				posWorld3[1] = zz;
-				posWorld3[0] = (posWorld3[0] * curr->scale[0]) >> 12;
-				posWorld3[1] = (posWorld3[1] * curr->scale[1]) >> 12;
-				posWorld3[2] = (posWorld3[2] * curr->scale[2]) >> 12;
 				gte_ldv2(&posWorld3[0]);
 				
 				gte_rtpt();
