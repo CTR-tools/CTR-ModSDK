@@ -2,6 +2,13 @@
 
 int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 {
+
+  /*
+	Breakpoint 800aa790
+	$s7/r23 is pointer to start Clip Buffer (buffer start)
+	$t8/r24 is pointer to curr Clip Buffer (last write)
+  */
+	
 	if(levelID == PAPU_PYRAMID || levelID == POLAR_PASS)
 		if (2 < numPlyrCurrGame)
 			return 2500;
