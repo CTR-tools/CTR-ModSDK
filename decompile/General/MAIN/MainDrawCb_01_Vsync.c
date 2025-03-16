@@ -34,26 +34,5 @@ void DECOMP_MainDrawCb_Vsync()
 	#endif
 	
 	DECOMP_GAMEPAD_PollVsync(sdata->gGamepads);
-	
-// wont fit here cause of byte budget,
-// called in gamepad poll instead
-#if 0
-	#ifdef USE_PROFILER
-	void DebugProfiler_Subsection(int flag);
-	DebugProfiler_Subsection(1);
-	#endif
-
-	// wait two vsyncs for VRAM upload to finish
-	if (sdata->frameFinishedVRAM != 0)
-	{
-		sdata->frameFinishedVRAM--;
-		
-		if (sdata->frameFinishedVRAM == 0)
-		{
-			sdata->queueReady = 1;
-		}
-	}
-#endif
-	
 	return;
 }
