@@ -24,9 +24,4 @@ void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int type, int fileIndex, void* 
 	lqs->callbackFuncPtr = callback;
 	
 	sdata->queueLength++;
-	
-	#ifdef USE_OXIDE
-	void Oxide_HookAppendLoadingQueue();
-	Oxide_HookAppendLoadingQueue();
-	#endif
 }

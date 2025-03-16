@@ -775,14 +775,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// podium first place
 				podiumModel = gGT->podium_modelIndex_First;
 
-				if
-				(
-					(podiumModel != 0) && 
-				
-					// if not 0x7e + 0xF
-					// if not oxide
-					(podiumModel != 0x8d)
-			 	)
+				// Fix for Oxide (faster than OG code that does nothing)
+				// If Oxide WIN is requested, add 16 to load Oxide LOSE
+				if (podiumModel == 0x8d)
+					podiumModel = 0x8d + 16;
+
+				if (podiumModel != 0)
 				{
 					DECOMP_LOAD_AppendQueue(
 						(int)bigfile, LT_DRAM, 
