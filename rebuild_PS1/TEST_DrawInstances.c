@@ -309,6 +309,45 @@ void DrawOneInst(struct Instance* curr)
 			{
 				void* pCurr;
 				void* pNext;
+				
+				short zz;
+				posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
+				posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
+				posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
+				posWorld1[3] = 0;
+				zz = posWorld1[2];
+				posWorld1[2] = posWorld1[1];
+				posWorld1[1] = zz;
+				posWorld1[0] = (posWorld1[0] * curr->scale[0]) >> 12;
+				posWorld1[1] = (posWorld1[1] * curr->scale[1]) >> 12;
+				posWorld1[2] = (posWorld1[2] * curr->scale[2]) >> 12;
+				gte_ldv0(&posWorld1[0]);
+
+				posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
+				posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
+				posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
+				posWorld2[3] = 0;
+				zz = posWorld2[2];
+				posWorld2[2] = posWorld2[1];
+				posWorld2[1] = zz;
+				posWorld2[0] = (posWorld2[0] * curr->scale[0]) >> 12;
+				posWorld2[1] = (posWorld2[1] * curr->scale[1]) >> 12;
+				posWorld2[2] = (posWorld2[2] * curr->scale[2]) >> 12;
+				gte_ldv1(&posWorld2[0]);
+
+				posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
+				posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
+				posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
+				posWorld3[3] = 0;
+				zz = posWorld3[2];
+				posWorld3[2] = posWorld3[1];
+				posWorld3[1] = zz;
+				posWorld3[0] = (posWorld3[0] * curr->scale[0]) >> 12;
+				posWorld3[1] = (posWorld3[1] * curr->scale[1]) >> 12;
+				posWorld3[2] = (posWorld3[2] * curr->scale[2]) >> 12;
+				gte_ldv2(&posWorld3[0]);
+				
+				gte_rtpt();
 
 				if (tempTex[3] == 0)
 				{
@@ -321,58 +360,11 @@ void DrawOneInst(struct Instance* curr)
 					*(int*)&p->r2 = tempColor[3];
 
 					setPolyG3(p);
-
-					// === Copy/Paste in both prims
-					short zz;
-					posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-					posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
-					posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
-					posWorld1[3] = 0;
-					zz = posWorld1[2];
-					posWorld1[2] = posWorld1[1];
-					posWorld1[1] = zz;
-					posWorld1[0] = (posWorld1[0] * curr->scale[0]) >> 12;
-					posWorld1[1] = (posWorld1[1] * curr->scale[1]) >> 12;
-					posWorld1[2] = (posWorld1[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld1[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen1[0]);
-
-					posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-					posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
-					posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
-					posWorld2[3] = 0;
-					zz = posWorld2[2];
-					posWorld2[2] = posWorld2[1];
-					posWorld2[1] = zz;
-					posWorld2[0] = (posWorld2[0] * curr->scale[0]) >> 12;
-					posWorld2[1] = (posWorld2[1] * curr->scale[1]) >> 12;
-					posWorld2[2] = (posWorld2[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld2[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen2[0]);
-
-					posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-					posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
-					posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
-					posWorld3[3] = 0;
-					zz = posWorld3[2];
-					posWorld3[2] = posWorld3[1];
-					posWorld3[1] = zz;
-					posWorld3[0] = (posWorld3[0] * curr->scale[0]) >> 12;
-					posWorld3[1] = (posWorld3[1] * curr->scale[1]) >> 12;
-					posWorld3[2] = (posWorld3[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld3[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen3[0]);
-
-					// to be in viewport, coordinates must be
-					// X: [0, 0x40]
-					// Y: [0, 0xA0]
-					setXY3(p,
-						(posScreen1[0]), (posScreen1[1]),	// XY0
-						(posScreen2[0]), (posScreen2[1]),	// XY1
-						(posScreen3[0]), (posScreen3[1]));	// XY2
+					
+					gte_stsxy3(
+						&p->x0,
+						&p->x1,
+						&p->x2);
 				}
 				else
 				{
@@ -381,67 +373,19 @@ void DrawOneInst(struct Instance* curr)
 					pCurr = p;
 
 					*(int*)&p->r0 = tempColor[1];
-					*(int*)&p->u0 = *(int*)&tempTex[3]->u0;
-
 					*(int*)&p->r1 = tempColor[2];
-					*(int*)&p->u1 = *(int*)&tempTex[3]->u1;
-
 					*(int*)&p->r2 = tempColor[3];
+					
+					*(int*)&p->u0 = *(int*)&tempTex[3]->u0;
+					*(int*)&p->u1 = *(int*)&tempTex[3]->u1;
 					*(short*)&p->u2 = *(short*)&tempTex[3]->u2;
 
 					setPolyGT3(p);
-
-					// === Copy/Paste in both prims
-					short zz;
-					posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-					posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
-					posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
-					posWorld1[3] = 0;
-					zz = posWorld1[2];
-					posWorld1[2] = posWorld1[1];
-					posWorld1[1] = zz;
-					posWorld1[0] = (posWorld1[0] * curr->scale[0]) >> 12;
-					posWorld1[1] = (posWorld1[1] * curr->scale[1]) >> 12;
-					posWorld1[2] = (posWorld1[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld1[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen1[0]);
-
-					posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-					posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
-					posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
-					posWorld2[3] = 0;
-					zz = posWorld2[2];
-					posWorld2[2] = posWorld2[1];
-					posWorld2[1] = zz;
-					posWorld2[0] = (posWorld2[0] * curr->scale[0]) >> 12;
-					posWorld2[1] = (posWorld2[1] * curr->scale[1]) >> 12;
-					posWorld2[2] = (posWorld2[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld2[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen2[0]);
-
-					posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-					posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
-					posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
-					posWorld3[3] = 0;
-					zz = posWorld3[2];
-					posWorld3[2] = posWorld3[1];
-					posWorld3[1] = zz;
-					posWorld3[0] = (posWorld3[0] * curr->scale[0]) >> 12;
-					posWorld3[1] = (posWorld3[1] * curr->scale[1]) >> 12;
-					posWorld3[2] = (posWorld3[2] * curr->scale[2]) >> 12;
-					gte_ldv0(&posWorld3[0]);
-					gte_rtps();
-					gte_stsxy(&posScreen3[0]);
-
-					// to be in viewport, coordinates must be
-					// X: [0, 0x40]
-					// Y: [0, 0xA0]
-					setXY3(p,
-						(posScreen1[0]), (posScreen1[1]),	// XY0
-						(posScreen2[0]), (posScreen2[1]),	// XY1
-						(posScreen3[0]), (posScreen3[1]));	// XY2
+					
+					gte_stsxy3(
+						&p->x0,
+						&p->x1,
+						&p->x2);
 				}
 
 				// automatic pass, if no frontface or backface culling
