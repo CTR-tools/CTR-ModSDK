@@ -1,13 +1,16 @@
 #include <common.h>
 
+// Debug clip space
+#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+void RunHook226();
+
 int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 {
-
-  /*
-	Breakpoint 800aa790
-	$s7/r23 is pointer to start Clip Buffer (buffer start)
-	$t8/r24 is pointer to curr Clip Buffer (last write)
-  */
+#if 0
+    // jal 800aa790 (can breakpoint to see regs)
+	if (*(int*)0x800a0eac == 0xC02A9e4)
+		*(int*)0x800a0eac = JAL(RunHook226);
+#endif
 	
 	if(levelID == PAPU_PYRAMID || levelID == POLAR_PASS)
 		if (2 < numPlyrCurrGame)
@@ -20,3 +23,24 @@ int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 
 	return 3000;
 }
+
+#if 0
+void RunHook226()
+{
+	// ra = 0x8000c000;
+	asm("lui $ra, 0x8000");
+	asm("ori $ra, $ra, 0xc000");
+	
+	// Save start(s7) and end(t8)
+	asm("sw $s7, 0x0($ra)");
+	asm("sw $t8, 0x4($ra)");
+	asm("nop");
+	
+	// ra = 0x800a0eb4;
+	asm("lui $ra, 0x800a");
+	asm("ori $ra, $ra, 0xeb4");
+	
+	asm("j 0x800aa790");
+	asm("nop");
+}
+#endif
