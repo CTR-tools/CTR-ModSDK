@@ -1,7 +1,10 @@
 #include "DebugStructs.h"
 
+// June 1999 used 64, reduced for Retail CTR
+#define MAX_SECTIONS 32
+
 // No room, need MEMPACK_AllocMem
-// static struct ProfilerSection sections[64];
+// static struct ProfilerSection sections[32];
 struct ProfilerSection* ptrSectArr=0;
 struct ProfilerSection* ptrOpenSect=0;
 
@@ -22,7 +25,7 @@ int Debug_GetPreciseTime()
 
 void DebugProfiler_Init()
 {
-	int size = sizeof(struct ProfilerSection) * 64;
+	int size = sizeof(struct ProfilerSection) * 32;
 	ptrSectArr = DECOMP_MEMPACK_AllocMem(size);
 }
 
@@ -35,7 +38,7 @@ void DebugProiler_Reset()
 
 void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 {
-	if(numSectionsUsed >= 64)
+	if(numSectionsUsed >= 32)
 	{
 		printf("Out of sections\n");
 		while(1) {}
