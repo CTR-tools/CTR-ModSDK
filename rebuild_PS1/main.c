@@ -26,6 +26,7 @@
 #include "../decompile/General/AltMods/Mods4.c" // needs LOAD_00_xx Defrag
 #include "../decompile/General/AltMods/Mods8.c" // needs UI_58_CupStandings_InputAndDraw.c
 
+// contains MATH_Sin and LibraryOfModels_Store
 #include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
@@ -276,7 +277,7 @@
 #include "../decompile/General/LevInstDef/LevInstDef_0_UnPack.c"
 #include "../decompile/General/LevInstDef/LevInstDef_1_RePack.c"
 
-#include "../decompile/General/LibraryOfModels/LibraryOfModels_0_Store.c"
+//#include "../decompile/General/LibraryOfModels/LibraryOfModels_0_Store.c" -- relocated MAIN_AAA_BigBlock1
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_1_Clear.c"
 
 #include "../decompile/General/LinkedCollide/LinkedCollide_2_Hitbox.c"
@@ -364,7 +365,7 @@
 #include "../decompile/General/MAIN/MainRaceTrack_00_StartLoad.c"
 #include "../decompile/General/MAIN/MainRaceTrack_01_RequestLoad.c"
 
-#include "../decompile/General/MATH/MATH_0_Sin.c"
+//#include "../decompile/General/MATH/MATH_0_Sin.c" -- relocated to MAIN_AAA_BigBlock1
 #include "../decompile/General/MATH/MATH_1_Cos.c"
 
 #include "../decompile/General/MEMCARD/MEMCARD_06_InitCard.c"

@@ -14,6 +14,10 @@
 #include "MainLoadVLC.c"
 #include "MainMain.c"
 
+// byte budget requirement
+#include "../MATH/Math_0_Sin.c"
+#include "../LibraryOfModels/LibraryOfModels_0_Store.c"
+
 #if defined (USE_ALTMODS)
 // for modding
 #include "../AltMods/ModsMain.c"

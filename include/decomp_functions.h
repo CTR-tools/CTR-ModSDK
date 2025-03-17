@@ -346,8 +346,7 @@ void DECOMP_MainInit_VRAMDisplay(void);
 void DECOMP_MainRaceTrack_StartLoad(short levelID);
 void DECOMP_MainRaceTrack_RequestLoad(short levelID);
 
-//int DECOMP_MATH_Sin(u_int angle);
-#define DECOMP_MATH_Sin(angle) MATH_Sin(angle)
+int DECOMP_MATH_Sin(u_int angle);
 int DECOMP_MATH_Cos(u_int angle);
 
 void DECOMP_MEMCARD_InitCard(void);

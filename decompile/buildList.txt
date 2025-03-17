@@ -769,9 +769,9 @@ common, exe, LHMatrix_Parent, 0x0,                       General/LHMatrix/LHMatr
 // ====================================================================================================================
 // LibraryOfModels (complete?)
 // ====================================================================================================================
-// LibraryOfModels_Store relocated to RDATA
+// LibraryOfModels_Store relocated to MAIN/MAIN_AAA_BigBlock1
 //common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store.c //overbudget, using ND for now
-//common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
+common, exe, LibraryOfModels_Store, 0x0,                 General/LibraryOfModels/LibraryOfModels_0_Store_hook.s
 common, exe, LibraryOfModels_Clear, 0x0,                 General/LibraryOfModels/LibraryOfModels_1_Clear.c
 
 // ====================================================================================================================
@@ -936,9 +936,9 @@ common, exe, MainStats_RestartRaceCountLoss, 0x0,        General/MAIN/MainStats_
 // ====================================================================================================================
 // MATH (stubbed for this file)
 // ====================================================================================================================
-// MATH_Sin relocated to RDATA
+// MATH_Sin is compiled in MAIN_AAA_BigBlock1 (no other choice)
 //common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin.c
-//common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin_hook.s
+common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin_hook.s
 common, exe, MATH_Cos, 0x0,                            General/MATH/MATH_1_Cos.c
 //common, exe, MATH_FastSqrt, 0x0,                       General/MATH/MATH_2_FastSqrt.c //TODO
 //common, exe, MATH_HitboxMatrix, 0x0,                General/MATH/MATH_3_HitboxMatrix.c //TODO
