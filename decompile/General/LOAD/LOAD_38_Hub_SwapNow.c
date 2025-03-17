@@ -63,15 +63,9 @@ void DECOMP_LOAD_Hub_SwapNow()
 	
 	if(level1 != 0)
 	{
-#ifdef REBUILD_PC
 		DECOMP_LibraryOfModels_Store(
 			gGT, level1->numModels,
 			(int*)level1->ptrModelsPtrArray);
-#else
-		LibraryOfModels_Store(
-			gGT, level1->numModels, 
-			level1->ptrModelsPtrArray);
-#endif
 			
 		INSTANCE_LevInitAll(
 			level1->ptrInstDefs,

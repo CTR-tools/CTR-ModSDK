@@ -628,13 +628,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if level is not nullptr
 			if (lev != 0)
 			{
-#ifdef REBUILD_PC
 				// store array of model pointers in GameTracker
 				DECOMP_LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
-#else
-				// store array of model pointers in GameTracker
-				LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
-#endif
 
 #ifndef REBUILD_PS1
 				// == must use RDATA strings ==
