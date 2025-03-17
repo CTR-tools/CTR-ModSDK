@@ -18,6 +18,90 @@ int GetBit(unsigned int* vertData)
 	return ret;
 }
 
+// copied out of PsyCross library,
+// is this equal to the CTR function?
+#ifndef REBUILD_PC
+VECTOR* ApplyMatrixLV(MATRIX* m, VECTOR* v0, VECTOR* v1)
+{
+#if 1
+	// correct Psy-Q implementation
+	VECTOR tmpHI;
+	VECTOR tmpLO;
+
+	gte_SetRotMatrix(m);
+
+	tmpHI.vx = v0->vx;
+	tmpHI.vy = v0->vy;
+	tmpHI.vz = v0->vz;
+
+	if (tmpHI.vx < 0)
+	{
+		tmpLO.vx = -(-tmpHI.vx >> 0xf);
+		tmpHI.vx = -(-tmpHI.vx & 0x7fff);
+	}
+	else
+	{
+		tmpLO.vx = tmpHI.vx >> 0xf;
+		tmpHI.vx = tmpHI.vx & 0x7fff;
+	}
+
+	if (tmpHI.vy < 0)
+	{
+		tmpLO.vy = -(-tmpHI.vy >> 0xf);
+		tmpHI.vy = -(-tmpHI.vy & 0x7fff);
+	}
+	else
+	{
+		tmpLO.vy = tmpHI.vy >> 0xf;
+		tmpHI.vy = tmpHI.vy & 0x7fff;
+	}
+
+	if (tmpHI.vz < 0)
+	{
+		tmpLO.vz = -(-tmpHI.vz >> 0xf);
+		tmpHI.vz = -(-tmpHI.vz & 0x7fff);
+	}
+	else
+	{
+		tmpLO.vz = tmpHI.vz >> 0xf;
+		tmpHI.vz = tmpHI.vz & 0x7fff;
+	}
+
+	gte_ldlvl(&tmpLO);
+	gte_rtir_sf0();
+	gte_stlvnl(&tmpLO);
+
+	gte_ldlvl(&tmpHI);
+	gte_rtir();
+
+	if (tmpLO.vx < 0)
+		tmpLO.vx *= 8;
+	else
+		tmpLO.vx <<= 3;
+
+	if (tmpLO.vy < 0)
+		tmpLO.vy *= 8;
+	else
+		tmpLO.vy <<= 3;
+
+	if (tmpLO.vz < 0)
+		tmpLO.vz *= 8;
+	else
+		tmpLO.vz <<= 3;
+
+	gte_stlvnl(&tmpHI);
+
+	v1->vx = tmpHI.vx + tmpLO.vx;
+	v1->vy = tmpHI.vy + tmpLO.vy;
+	v1->vz = tmpHI.vz + tmpLO.vz;
+#else
+	APPLYMATRIX(m, v0, v1);
+#endif
+	return v1;
+}
+#endif
+
+
 void DrawOneInst(struct Instance* curr)
 {
 	short posScreen1[4];
@@ -76,14 +160,9 @@ void DrawOneInst(struct Instance* curr)
 		pos.vy = curr->matrix.t[1] - pb->matrix_Camera.t[1];
 		pos.vz = curr->matrix.t[2] - pb->matrix_Camera.t[2];
 
-#ifdef REBUILD_PC
+		// TODO: ApplyMatrixLV_stub needs to be rewritten,
+		// may be optimizations that Naughty Dog used in it
 		ApplyMatrixLV(&pb->matrix_ViewProj, &pos, &mat2->t[0]);
-#else
-		// Not rewritten yet,
-#if 0
-		ApplyMatrixLV_stub(&pb->matrix_ViewProj, &pos, &mat2->t[0]);
-#endif
-#endif
 
 		gte_SetRotMatrix(mat2);
 		gte_SetTransMatrix(mat2);
