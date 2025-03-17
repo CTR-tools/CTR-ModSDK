@@ -171,7 +171,11 @@ void DrawOneInst(struct Instance* curr)
 		//the idea is that it loads vertices to scratchpad and with proper sorting,
 		//you can draw may trigles of the list with minimum additional loads
 		//then once you don't need vertex data, you can overwrite same indices with new data
+		#ifdef REBUILD_PC
 		CompVertex stack[256] = { 0 };
+		#else
+		CompVertex* stack = 0x1f800000;
+		#endif
 
 		// pCmd[0] is number of commands
 		pCmd++;
@@ -429,15 +433,6 @@ void DrawOneInst(struct Instance* curr)
 
 void TEST_DrawInstances(struct GameTracker* gGT)
 {
-
-// If PS1, but not PC, dont draw,
-// our function is too slow for PS1
-#ifndef REBUILD_PC
-#ifdef REBUILD_PS1
-	return;
-#endif
-#endif
-
 	if (gGT->level1 != 0)
 	{
 		if (gGT->level1->ptrInstDefs != 0)
