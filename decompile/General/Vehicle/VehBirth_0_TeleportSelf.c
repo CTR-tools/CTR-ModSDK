@@ -197,7 +197,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	d->rotCurr.y = (rotArr[1] + rotDeltaY) & 0xfff;
 	d->rotCurr.z = rotArr[2];
 
-	#ifdef REBUILD_PC
+	#ifdef REBUILD_PS1
 
 	for(int i = 0; i < 7; i++)
 		sdata->kartSpawnOrderArray[i] = i;
