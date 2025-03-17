@@ -385,7 +385,9 @@ LAB_800add14:
 			)
 		)
 	  {
+		#if (!defined(REBUILD_PS1) || defined(REBUILD_PC))
         DECOMP_RB_Teeth_OpenDoor(instDef->ptrInstance);
+		#endif
       }
       goto LAB_800ae42c;
     }

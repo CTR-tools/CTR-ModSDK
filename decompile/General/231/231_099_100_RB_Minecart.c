@@ -62,6 +62,7 @@ void RB_Minecart_NewPoint(
 		minecartObj->dir[i] = start - end;
 	}
 	
+	#if (!defined(REBUILD_PS1) || defined(REBUILD_PC))
 	minecartObj->rotDesired[0] =
 		ratan2(
 			minecartObj->dir[1],
@@ -70,6 +71,7 @@ void RB_Minecart_NewPoint(
 				minecartObj->dir[2]*minecartObj->dir[2]
 			)
 		);
+	#endif
 		
 	minecartObj->rotDesired[1] =
 		ratan2(

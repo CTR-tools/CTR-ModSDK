@@ -89,10 +89,13 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
 	distX = warppadInst->matrix.t[0] - dMat->t[0];
 	distY = warppadInst->matrix.t[1] - dMat->t[1];
 	distZ = warppadInst->matrix.t[2] - dMat->t[2];
+	
+	#if (!defined(REBUILD_PS1) || defined(REBUILD_PC))
 	currDistance = SquareRoot0_stub(distX * distX + distY * distY + distZ * distZ);
 	
 	if (minDistance > currDistance)
 		minDistance = currDistance;
+	#endif
   }
   
 #ifndef REBUILD_PS1

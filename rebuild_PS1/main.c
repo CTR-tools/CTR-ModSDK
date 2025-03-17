@@ -625,6 +625,7 @@
 
 #include "../decompile/General/231/231_082_085_RB_Armadillo.c"
 #include "../decompile/General/231/231_086_088_RB_Fireball.c"
+#include "../decompile/General/231/231_095_098_RB_Fruit.c"
 #include "../decompile/General/231/231_099_100_RB_Minecart.c"
 #include "../decompile/General/231/231_104_109_RB_Plant.c"
 #include "../decompile/General/231/231_110_113_RB_Seal.c"

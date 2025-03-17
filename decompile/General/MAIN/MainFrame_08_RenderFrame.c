@@ -814,7 +814,8 @@ void RenderAllHUD(struct GameTracker* gGT)
 					#endif
 
 					// PC can't share address spaces
-					#ifndef REBUILD_PC
+					// and PS1 rebuild wont have the funcs
+					#ifndef REBUILD_PS1
 
 					// temporary, until we rewrite MainGameEnd_Initialize
 					if((gGT->gameMode1 & RELIC_RACE) == 0)
