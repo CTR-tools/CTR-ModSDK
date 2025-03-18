@@ -62,4 +62,6 @@ struct DB
 
 _Static_assert(sizeof(struct PrimMem) == 0x1C);
 _Static_assert(sizeof(struct OTMem) == 0x14);
+#ifndef REBUILD_PC
 _Static_assert(sizeof(struct DB) == 0xA4);
+#endif
