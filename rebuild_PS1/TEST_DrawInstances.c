@@ -18,6 +18,36 @@ int GetBit(unsigned int* vertData)
 	return ret;
 }
 
+#ifdef REBUILD_PC
+#ifndef __GNUC__
+inline
+#endif
+#endif
+int GetBitStream(unsigned int* vertData, int size)
+{
+	int* x = &vertData[bi >> 5];
+
+	int size2 = 0;
+	int size1 = size;
+	int lastBit = ((bi&31)+size);
+	
+	if (lastBit >= 32)
+	{
+		size2 = lastBit - 32;
+		size1 -= size2;
+		lastBit = 32;
+	}
+	
+	int ret = ((x[0] >> (32-lastBit)) & ((1 << size1)-1));
+	
+	if(size2 > 0)
+		ret = (ret << size2) | ((x[1] >> (32-size2)) & ((1 << size2)-1));
+
+	bi += size;
+
+	return ret;
+}
+
 // copied out of PsyCross library,
 // is this equal to the CTR function?
 #ifndef REBUILD_PC
@@ -313,22 +343,13 @@ void DrawOneInst(struct Instance* curr)
 
 					// convert XZY frame data
 					int newX = GetBit(vertData) ? -(1 << XBits) : 0;
-					for (int j = XBits - 1; j >= 0; j--)
-					{
-						newX |= GetBit(vertData) << j;
-					}
+					newX |= GetBitStream(vertData, XBits);
 
 					int newY = GetBit(vertData) ? -(1 << YBits) : 0;
-					for (int j = YBits - 1; j >= 0; j--)
-					{
-						newY |= GetBit(vertData) << j;
-					}
+					newY |= GetBitStream(vertData, YBits);
 
 					int newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
-					for (int j = ZBits - 1; j >= 0; j--)
-					{
-						newZ |= GetBit(vertData) << j;
-					}
+					newZ |= GetBitStream(vertData, ZBits);
 
 					//calculate decompressed coord value
 					x_alu = (x_alu + newX + bx);
