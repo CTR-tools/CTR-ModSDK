@@ -258,7 +258,7 @@ void DrawOneInst(struct Instance* curr)
 		//you need same cache for both colors and texture layouts
 		CompVertex tempCoords[4] = {0};
 		int tempColor[4] = {0};
-		struct TextureLayout* tempTex[4] = {0};
+		struct TextureLayout* tempTex = 0;
 
 		//i believe this must be scratchpad, but it uses 4 bytes, this array is only 3 bytes (like array buffer for simplicity).
 		//the idea is that it loads vertices to scratchpad and with proper sorting,
@@ -376,10 +376,7 @@ void DrawOneInst(struct Instance* curr)
 			tempColor[2] = tempColor[3];
 			tempColor[3] = mh->ptrColors[colorIndex];
 
-			tempTex[0] = tempTex[1];
-			tempTex[1] = tempTex[2];
-			tempTex[2] = tempTex[3];
-			tempTex[3] = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex - 1]);
+			tempTex = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex - 1]);
 
 			//this is probably some tristrip optimization, so we can reuse vertex from the last triangle
 			//and only spend 1 command
@@ -424,7 +421,7 @@ void DrawOneInst(struct Instance* curr)
 				
 				gte_rtpt();
 
-				if (tempTex[3] == 0)
+				if (tempTex == 0)
 				{
 					POLY_G3* p = primMem->curr;
 					pNext = p + 1;
@@ -451,9 +448,9 @@ void DrawOneInst(struct Instance* curr)
 					*(int*)&p->r1 = tempColor[2];
 					*(int*)&p->r2 = tempColor[3];
 					
-					*(int*)&p->u0 = *(int*)&tempTex[3]->u0;
-					*(int*)&p->u1 = *(int*)&tempTex[3]->u1;
-					*(short*)&p->u2 = *(short*)&tempTex[3]->u2;
+					*(int*)&p->u0 = *(int*)&tempTex->u0;
+					*(int*)&p->u1 = *(int*)&tempTex->u1;
+					*(short*)&p->u2 = *(short*)&tempTex->u2;
 
 					setPolyGT3(p);
 					
