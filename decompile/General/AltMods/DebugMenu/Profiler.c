@@ -23,6 +23,11 @@ int Debug_GetPreciseTime()
 	return sysClock;
 }
 
+struct ProfilerSection* DebugProfiler_GetOpen()
+{
+	return ptrOpenSect;
+}
+
 void DebugProfiler_Init()
 {
 	int size = sizeof(struct ProfilerSection) * 32;
@@ -100,25 +105,19 @@ void DebugProfiler_SectionRestart(int time)
 	ptrOpenSect->timeStart = time;
 }
 
-void DebugProfiler_SectionEnd()
+int DebugProfiler_SectionEnd()
 {
 	if(ptrOpenSect == 0)
-		return;
+		return 0;
 	
 	ptrOpenSect->timeEnd = Debug_GetPreciseTime();
 	
-#if 0
-	if (ptrOpenSect->b != 0)
-	{
-		int time = ptrOpenSect->timeEnd - ptrOpenSect->timeStart;
-		
-		if(time > 0)
-		printf("Level: %d\n", time);
-	}
-#endif
+	int ret = ptrOpenSect->timeEnd - ptrOpenSect->timeStart;
 	
 	ptrOpenSect = 0;
 	numSectionsUsed++;
+	
+	return ret;
 }
 
 int DebugProfiler_Scale(int input)

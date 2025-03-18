@@ -301,7 +301,7 @@ LAB_80035098:
 		}
 		
 		#ifdef USE_PROFILER
-		void DebugProfiler_SectionEnd();
+		int DebugProfiler_SectionEnd();
 		DebugProfiler_SectionEnd();
 		#endif
 

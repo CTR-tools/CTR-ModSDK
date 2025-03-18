@@ -297,8 +297,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 	// Instance Profiler
 	#ifdef USE_PROFILER
-	void DebugProfiler_SectionEnd();
+	int DebugProfiler_SectionEnd();
+	int x = 
 	DebugProfiler_SectionEnd();
+	
+	printf("Retail Instance: %d\n", x);
 	#endif
 
 	DECOMP_PushBuffer_FadeAllWindows();
@@ -383,7 +386,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	// Level Profiler
 	#ifdef USE_PROFILER
-	void DebugProfiler_SectionEnd();
+	int DebugProfiler_SectionEnd();
 	DebugProfiler_SectionEnd();
 	#endif
 
@@ -419,7 +422,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 		// RaceFlag_DrawSelf Profiler
 		#ifdef USE_PROFILER
-		void DebugProfiler_SectionEnd();
+		int DebugProfiler_SectionEnd();
 		DebugProfiler_SectionEnd();
 		#endif
 	}
@@ -440,7 +443,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	// VSYNC Profiler
 	#ifdef USE_PROFILER
-	void DebugProfiler_SectionEnd();
+	int DebugProfiler_SectionEnd();
 	DebugProfiler_SectionEnd();
 	
 	if((gGT->gameMode1 & (LOADING|1)) == 0)
