@@ -115,6 +115,18 @@ VECTOR* ApplyMatrixLV(MATRIX* m, VECTOR* v0, VECTOR* v1)
 }
 #endif
 
+typedef struct CompVertex {
+	u_char X;
+	u_char Y;
+	u_char Z;
+} CompVertex;
+
+typedef struct V4 {
+	u_char X;
+	u_char Y;
+	u_char Z;
+	u_char W;
+} V4;
 
 void DrawOneInst(struct Instance* curr)
 {
@@ -228,14 +240,6 @@ void DrawOneInst(struct Instance* curr)
 		// 3FF is background, 0x0 is minimum depth
 		void* ot = &pb->ptrOT[0];
 
-		//helper type, kinda same as RGB
-		//a 255 grid "compressed vertex" 0 = 0.0 and 255 = 1.0. 256 steps only.
-		typedef struct CompVertex {
-			u_char X;
-			u_char Y;
-			u_char Z;
-		} CompVertex;
-
 		//flag values and end of list
 #define END_OF_LIST 0xFFFFFFFF
 #define DRAW_CMD_FLAG_NEW_STRIP (1 << 7)
@@ -256,7 +260,7 @@ void DrawOneInst(struct Instance* curr)
 
 		//a "shifting window", here we update the vertices and read triangle once it's ready
 		//you need same cache for both colors and texture layouts
-		CompVertex tempCoords[4] = {0};
+		V4 tempCoords[4] = {0};
 		int tempColor[4] = {0};
 		struct TextureLayout* tempTex = 0;
 
@@ -265,9 +269,9 @@ void DrawOneInst(struct Instance* curr)
 		//you can draw may trigles of the list with minimum additional loads
 		//then once you don't need vertex data, you can overwrite same indices with new data
 		#ifdef REBUILD_PC
-		CompVertex stack[256] = { 0 };
+		V4 stack[256] = { 0 };
 		#else
-		CompVertex* stack = 0x1f800000;
+		V4* stack = 0x1f800000;
 		#endif
 
 		// pCmd[0] is number of commands
@@ -280,7 +284,12 @@ void DrawOneInst(struct Instance* curr)
 		bi = 0;
 
 		//loop commands until we hit the end marker 
-		while (*pCmd != END_OF_LIST)
+		for (
+				/* */;
+				*pCmd != END_OF_LIST;
+				
+				pCmd++, stripLength++
+			)
 		{
 			//extract individual values from the command
 			//refactor to a set of inline macros?
@@ -355,7 +364,9 @@ void DrawOneInst(struct Instance* curr)
 				else
 				{
 					//copy from vertex buffer to stack index
-					stack[stackIndex] = ptrVerts[vertexIndex];
+					stack[stackIndex].X = ptrVerts[vertexIndex].X;
+					stack[stackIndex].Y = ptrVerts[vertexIndex].Y;
+					stack[stackIndex].Z = ptrVerts[vertexIndex].Z;
 				}
 
 				//and point to next vertex
@@ -376,8 +387,6 @@ void DrawOneInst(struct Instance* curr)
 			tempColor[2] = tempColor[3];
 			tempColor[3] = mh->ptrColors[colorIndex];
 
-			tempTex = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex - 1]);
-
 			//this is probably some tristrip optimization, so we can reuse vertex from the last triangle
 			//and only spend 1 command
 			if ((flags & DRAW_CMD_FLAG_SWAP_VERTEX) != 0)
@@ -392,127 +401,121 @@ void DrawOneInst(struct Instance* curr)
 				stripLength = 0;
 			}
 
-			//enough data to add prim
-			if (stripLength >= 2)
+			if (stripLength < 2)
+				continue;
+
+			void* pCurr;
+			void* pNext;
+			
+			// The X, Z, Y, is not a typo
+			posWorld1[0] = ((((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+			posWorld1[1] = ((((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+			posWorld1[2] = ((((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
+			posWorld1[3] = 0;
+			gte_ldv0(&posWorld1[0]);
+
+			// The X, Z, Y, is not a typo
+			posWorld2[0] = ((((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+			posWorld2[1] = ((((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+			posWorld2[2] = ((((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
+			posWorld2[3] = 0;
+			gte_ldv1(&posWorld2[0]);
+
+			// The X, Z, Y, is not a typo
+			posWorld3[0] = ((((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
+			posWorld3[1] = ((((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
+			posWorld3[2] = ((((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
+			posWorld3[3] = 0;
+			gte_ldv2(&posWorld3[0]);
+			
+			gte_rtpt();
+			
+			// automatic pass, if no frontface or backface culling
+			int boolPassCull = ((flags & DRAW_CMD_FLAG_CULLING) == 0);
+
+			// if culling is required
+			if (!boolPassCull)
 			{
-				void* pCurr;
-				void* pNext;
-				
-				// The X, Z, Y, is not a typo
-				posWorld1[0] = ((((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
-				posWorld1[1] = ((((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
-				posWorld1[2] = ((((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
-				posWorld1[3] = 0;
-				gte_ldv0(&posWorld1[0]);
+				// assume backface culling
+				int opZ;
+				gte_nclip();
+				gte_stopz(&opZ);
+				boolPassCull = (opZ >= 0);
 
-				// The X, Z, Y, is not a typo
-				posWorld2[0] = ((((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
-				posWorld2[1] = ((((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
-				posWorld2[2] = ((((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
-				posWorld2[3] = 0;
-				gte_ldv1(&posWorld2[0]);
+				// if polygon is flipped
+				if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
+					boolPassCull = !boolPassCull;
 
-				// The X, Z, Y, is not a typo
-				posWorld3[0] = ((((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8) * curr->scale[0]) >> 12;
-				posWorld3[1] = ((((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8) * curr->scale[1]) >> 12;
-				posWorld3[2] = ((((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8) * curr->scale[2]) >> 12;
-				posWorld3[3] = 0;
-				gte_ldv2(&posWorld3[0]);
-				
-				gte_rtpt();
-
-				if (tempTex == 0)
-				{
-					POLY_G3* p = primMem->curr;
-					pNext = p + 1;
-					pCurr = p;
-
-					*(int*)&p->r0 = tempColor[1];
-					*(int*)&p->r1 = tempColor[2];
-					*(int*)&p->r2 = tempColor[3];
-
-					setPolyG3(p);
-					
-					gte_stsxy3(
-						&p->x0,
-						&p->x1,
-						&p->x2);
-				}
-				else
-				{
-					POLY_GT3* p = primMem->curr;
-					pNext = p + 1;
-					pCurr = p;
-
-					*(int*)&p->r0 = tempColor[1];
-					*(int*)&p->r1 = tempColor[2];
-					*(int*)&p->r2 = tempColor[3];
-					
-					*(int*)&p->u0 = *(int*)&tempTex->u0;
-					*(int*)&p->u1 = *(int*)&tempTex->u1;
-					*(short*)&p->u2 = *(short*)&tempTex->u2;
-
-					setPolyGT3(p);
-					
-					gte_stsxy3(
-						&p->x0,
-						&p->x1,
-						&p->x2);
-				}
-
-				// automatic pass, if no frontface or backface culling
-				int boolPassCull = ((flags & DRAW_CMD_FLAG_CULLING) == 0);
-
-				// if culling is required
-				if (!boolPassCull)
-				{
-					// assume backface culling
-					int opZ;
-					gte_nclip();
-					gte_stopz(&opZ);
-					boolPassCull = (opZ >= 0);
-
-					// if polygon is flipped
-					if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
-						boolPassCull = !boolPassCull;
-
-					// if instance is flipped
-					if ((curr->flags & REVERSE_CULL_DIRECTION) != 0)
-						boolPassCull = !boolPassCull;
-				}
-					
-				if (boolPassCull)
-				{
-					// sorting
-					int otZ;
-					gte_avsz3();
-					gte_stotz(&otZ);
-
-					// near-range for instances should be higher
-					// for instances than level (not exact number)
-					if (otZ > 32)
-					{
-						// make sure instances draw on top of the road,
-						// reduce depth in the sorting table (not exact number)
-						otZ -= 32;
-
-						if (otZ < 4080)
-						{
-							AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-							primMem->curr = pNext;
-						}
-					}
-				}
+				// if instance is flipped
+				if ((curr->flags & REVERSE_CULL_DIRECTION) != 0)
+					boolPassCull = !boolPassCull;
 			}
+			
+			if (!boolPassCull)
+				continue;
+			
+			// sorting
+			int otZ;
+			gte_avsz3();
+			gte_stotz(&otZ);
 
-			//strip length increases
-			stripLength++;
+			// near-range for instances should be higher
+			// for instances than level (not exact number)
+			if (otZ <= 32) continue;
 
-			//proceed to the next command
-			pCmd++;
+			// make sure instances draw on top of the road,
+			// reduce depth in the sorting table (not exact number)
+			otZ -= 32;
+
+			if (otZ >= 4080) continue;
+
+			tempTex = (texIndex == 0) 
+				? 0 : 							// index=0 -> tempTex = nullptr
+				mh->ptrTexLayout[texIndex - 1];	// can still be nullptr
+			
+			if (tempTex == 0)
+			{
+				POLY_G3* p = primMem->curr;
+				pNext = p + 1;
+				pCurr = p;
+
+				*(int*)&p->r0 = tempColor[1];
+				*(int*)&p->r1 = tempColor[2];
+				*(int*)&p->r2 = tempColor[3];
+
+				setPolyG3(p);
+				
+				gte_stsxy3(
+					&p->x0,
+					&p->x1,
+					&p->x2);
+			}
+			else
+			{
+				POLY_GT3* p = primMem->curr;
+				pNext = p + 1;
+				pCurr = p;
+
+				*(int*)&p->r0 = tempColor[1];
+				*(int*)&p->r1 = tempColor[2];
+				*(int*)&p->r2 = tempColor[3];
+				
+				*(int*)&p->u0 = *(int*)&tempTex->u0;
+				*(int*)&p->u1 = *(int*)&tempTex->u1;
+				*(short*)&p->u2 = *(short*)&tempTex->u2;
+
+				setPolyGT3(p);
+				
+				gte_stsxy3(
+					&p->x0,
+					&p->x1,
+					&p->x2);
+			}
+			
+			AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+			primMem->curr = pNext;
 		}
 	}
-
 }
 
 void TEST_DrawInstances(struct GameTracker* gGT)
