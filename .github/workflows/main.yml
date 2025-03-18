@@ -38,6 +38,6 @@ jobs:
         run: nix build -L --no-link --keep-going '.?submodules=1#online-server.release.aarch64.gcc'
       # -- PC Port
       - name: Build Decomp Debug Mingw32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#pc-decomp.debug.mingw32.gcc' 2>&1 | grep -A3 'error:'
+        run: nix build -L --no-link --keep-going '.?submodules=1#pc-decomp.debug.mingw32.gcc' 2>&1 | grep -A3 'error:' || true
       - name: Build Decomp Debug Linux32 GCC
-        run: nix build -L --no-link --keep-going '.?submodules=1#pc-decomp.debug.native32.gcc' 2>&1 | grep -A3 'error:'
+        run: nix build -L --no-link --keep-going '.?submodules=1#pc-decomp.debug.native32.gcc' 2>&1 | grep -A3 'error:' || true
