@@ -7,22 +7,6 @@ int bi = 0;
 inline
 #endif
 #endif
-int GetBit(unsigned int* vertData)
-{
-	unsigned int vertInt = vertData[bi >> 5];
-
-	int ret = (vertInt >> (31-(bi & 31))) & 1;
-
-	bi++;
-
-	return ret;
-}
-
-#ifdef REBUILD_PC
-#ifndef __GNUC__
-inline
-#endif
-#endif
 int GetBitStream(unsigned int* vertData, int size)
 {
 	int* x = &vertData[bi >> 5];
@@ -331,30 +315,33 @@ void DrawOneInst(struct Instance* curr)
 					u_char by = (temporal << 7) >> 0x18;
 					u_char bz = (temporal << 0xf) >> 0x18;
 
-					//printf("pos: %i %i %i bits: %i %i %i\n", bx, by, bz, XBits, YBits, ZBits);
-
-					//maybe reset the coord value, each axis separately
+					// If reading a full 8 bits (7+1)
+					// reset accumulator, this is an 
+					// uncompressed 1-byte number
 					if (XBits == 7) x_alu = 0;
 					if (YBits == 7) y_alu = 0;
 					if (ZBits == 7) z_alu = 0;
 
-					//we first read sign bit, then we read required number of bits of the coord shift.
-					//so it's Xbits + 1, YBits + 1, ZBits + 1
+					// Read NumBits+1, where the first
+					// extra (+1) bit, determines negative
 
 					// convert XZY frame data
-					int newX = GetBit(vertData) ? -(1 << XBits) : 0;
-					newX |= GetBitStream(vertData, XBits);
+					unsigned int newX = 0;
+					newX = GetBitStream(vertData, XBits+1);
+					if (newX >> XBits) newX |= -(1 << XBits);
 
-					int newY = GetBit(vertData) ? -(1 << YBits) : 0;
-					newY |= GetBitStream(vertData, YBits);
+					unsigned int newY = 0;
+					newY = GetBitStream(vertData, YBits+1);
+					if (newY >> YBits) newY |= -(1 << YBits);
 
-					int newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
-					newZ |= GetBitStream(vertData, ZBits);
+					unsigned int newZ = 0;
+					newZ = GetBitStream(vertData, ZBits+1);
+					if (newZ >> ZBits) newZ |= -(1 << ZBits);
 
 					//calculate decompressed coord value
-					x_alu = (x_alu + newX + bx);
-					y_alu = (y_alu + newY + by);
-					z_alu = (z_alu + newZ + bz);
+					x_alu = (x_alu + (int)newX + bx);
+					y_alu = (y_alu + (int)newY + by);
+					z_alu = (z_alu + (int)newZ + bz);
 
 					//store values to stack index, axis swap is important
 					stack[stackIndex].X = x_alu;
