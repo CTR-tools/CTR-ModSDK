@@ -128,6 +128,15 @@ typedef struct V4 {
 	u_char W;
 } V4;
 
+int Debug_GetPreciseTime2()
+{
+	int sysClock =
+		GetRCnt(0xf2000001) +
+		sdata->rcntTotalUnits;
+		
+	return sysClock;
+}
+
 void DrawOneInst(struct Instance* curr)
 {
 	short posScreen1[4];
@@ -520,6 +529,8 @@ void DrawOneInst(struct Instance* curr)
 
 void TEST_DrawInstances(struct GameTracker* gGT)
 {
+	int start = Debug_GetPreciseTime2();
+	
 	if (gGT->level1 != 0)
 	{
 		if (gGT->level1->ptrInstDefs != 0)
@@ -555,4 +566,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 		DrawOneInst(curr);
 	}
+	
+	int end = Debug_GetPreciseTime2();
+	
+	printf("TEST_DrawInstances: %d\n", end-start);
 }
