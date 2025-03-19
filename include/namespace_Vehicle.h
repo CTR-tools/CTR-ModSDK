@@ -405,7 +405,7 @@ struct BotData
 			short ai_fireLevel;
 
 			// 0x5c8
-			int ai_squishCooldown;
+			int ai_squishCooldown; //why does this get interpreted as a short sometimes and an int other times
 
 			// 0x5cc
 			int unk5cc;

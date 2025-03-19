@@ -3007,6 +3007,7 @@ LAB_800160f4:
       }
       else {
         if (sVar7 == 3) {
+			//TODO
           sVar7 = *(short *)(iVar17 + 0x5c8);
           iVar4 = *(int *)(iVar17 + 0x5c8) + -0xc;
           *(int *)(iVar17 + 0x5c8) = iVar4;
@@ -3026,6 +3027,7 @@ LAB_800160f4:
           }
         }
         else {
+	      //TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
           if (sVar7 == 5) {
             iVar4 = *(int *)(iVar17 + 0x4a8);
 
@@ -3171,9 +3173,6 @@ LAB_800160f4:
       *(uint *)(iVar17 + 0x5b0) = *(uint *)(iVar17 + 0x5b0) & 0xfffffff9;
     }
   }
-
-  // END OF TOP-DOWN
-  // ========================================================================
 
   if ((0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U)) &&
      (0x9e < (byte)(*(char *)((int)psVar21 + 9) - 0x31U))) {
@@ -3488,9 +3487,6 @@ LAB_8001686c:
 	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
-
-  // ========================================================================
-  // BEGINNING OF BOTTOM-UP
 
   // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);
