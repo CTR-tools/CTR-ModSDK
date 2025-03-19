@@ -7,29 +7,16 @@ int bi = 0;
 inline
 #endif
 #endif
-int GetBitStream(unsigned int* vertData, int size)
+int GetSignedBits(unsigned int* vertData, int bits)
 {
-	int* x = &vertData[bi >> 5];
-
-	int size2 = 0;
-	int size1 = size;
-	int lastBit = ((bi&31)+size);
-	
-	if (lastBit >= 32)
-	{
-		size2 = lastBit - 32;
-		size1 -= size2;
-		lastBit = 32;
-	}
-	
-	int ret = ((x[0] >> (32-lastBit)) & ((1 << size1)-1));
-	
-	if(size2 > 0)
-		ret = (ret << size2) | ((x[1] >> (32-size2)) & ((1 << size2)-1));
-
-	bi += size;
-
-	return ret;
+	int const b = bi >> 5;
+	int const e = 32 - bits;
+	int const s = e - (bi & 31);
+	int const ret = s < 0 ?
+		(vertData[b] << -s) | (vertData[b + 1] >> (s & 31)) :
+		vertData[b] >> s;
+	bi += bits;
+	return (ret << e) >> e;
 }
 
 // copied out of PsyCross library,
@@ -271,7 +258,6 @@ void DrawOneInst(struct Instance* curr)
 		//you need same cache for both colors and texture layouts
 		V4 tempCoords[4] = {0};
 		int tempColor[4] = {0};
-		struct TextureLayout* tempTex = 0;
 
 		//i believe this must be scratchpad, but it uses 4 bytes, this array is only 3 bytes (like array buffer for simplicity).
 		//the idea is that it loads vertices to scratchpad and with proper sorting,
@@ -344,17 +330,9 @@ void DrawOneInst(struct Instance* curr)
 					// extra (+1) bit, determines negative
 
 					// convert XZY frame data
-					unsigned int newX = 0;
-					newX = GetBitStream(vertData, XBits+1);
-					if (newX >> XBits) newX |= -(1 << XBits);
-
-					unsigned int newY = 0;
-					newY = GetBitStream(vertData, YBits+1);
-					if (newY >> YBits) newY |= -(1 << YBits);
-
-					unsigned int newZ = 0;
-					newZ = GetBitStream(vertData, ZBits+1);
-					if (newZ >> ZBits) newZ |= -(1 << ZBits);
+					int newX = GetSignedBits(vertData, XBits + 1);
+					int newY = GetSignedBits(vertData, YBits + 1);
+					int newZ = GetSignedBits(vertData, ZBits + 1);
 
 					//calculate decompressed coord value
 					x_alu = (x_alu + (int)newX + bx);
@@ -478,11 +456,8 @@ void DrawOneInst(struct Instance* curr)
 
 			if (otZ >= 4080) continue;
 
-			tempTex = (texIndex == 0) 
-				? 0 : 							// index=0 -> tempTex = nullptr
-				mh->ptrTexLayout[texIndex - 1];	// can still be nullptr
-			
-			if (tempTex == 0)
+			// check both fails (0 or 0xFFFFFFFF)
+			if (texIndex == 0)
 			{
 				POLY_G3* p = primMem->curr;
 				pNext = p + 1;
@@ -509,6 +484,8 @@ void DrawOneInst(struct Instance* curr)
 				*(int*)&p->r1 = tempColor[2];
 				*(int*)&p->r2 = tempColor[3];
 				
+				struct TextureLayout* tempTex;
+				tempTex = mh->ptrTexLayout[texIndex - 1];
 				*(int*)&p->u0 = *(int*)&tempTex->u0;
 				*(int*)&p->u1 = *(int*)&tempTex->u1;
 				*(short*)&p->u2 = *(short*)&tempTex->u2;
