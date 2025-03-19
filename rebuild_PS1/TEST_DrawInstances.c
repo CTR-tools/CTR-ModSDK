@@ -153,6 +153,18 @@ void DrawOneInst(struct Instance* curr)
 		gte_SetGeomScreen(pb->distanceToScreen_PREV);
 #endif
 
+		// ============ Get Scale ==============
+		
+		struct Model* m = curr->model;
+		struct ModelHeader* mh = &m->headers[0];
+		
+		// Can this be applied to the GTE matrix,
+		// to remove the need to multiply vertices by scale?
+		int scale[3];
+		scale[0] = (mh->scale[0] * curr->scale[0]) >> 12;
+		scale[1] = (mh->scale[1] * curr->scale[1]) >> 12;
+		scale[2] = (mh->scale[2] * curr->scale[2]) >> 12;
+
 		// ============ Get ModelViewProj Matrix ==============
 
 		MATRIX mvp;
@@ -160,8 +172,16 @@ void DrawOneInst(struct Instance* curr)
 		
 		// why is this shifting by 0x10 instead of 0xC?
 		
-#define RCC(row, col, index) \
-	((int)((int)pb->matrix_ViewProj.m[row][index] * (int)curr->matrix.m[index][col]) >> 0x10)
+#define RCC(row, col, index) 						\
+	(												\
+		(											\
+			pb->matrix_ViewProj.m[row][index] * 	\
+			((										\
+				curr->matrix.m[index][col] *		\
+				scale[col]						\
+			) >> 8)									\
+		) >> 0x10									\
+	)
 
 		mvp.m[0][0] = RCC(0, 0, 0) + RCC(0, 0, 1) + RCC(0, 0, 2);
 		mvp.m[0][1] = RCC(0, 1, 0) + RCC(0, 1, 1) + RCC(0, 1, 2);
@@ -201,9 +221,6 @@ void DrawOneInst(struct Instance* curr)
 		}
 
 		// ============ Draw Instance ==============
-
-		struct Model* m = curr->model;
-		struct ModelHeader* mh = &m->headers[0];
 
 		// assume unanimated
 		struct ModelFrame* mf = mh->ptrFrameData;
@@ -277,7 +294,7 @@ void DrawOneInst(struct Instance* curr)
 		int y_alu = 0;
 		int z_alu = 0;
 		bi = 0;
-
+		
 		//loop commands until we hit the end marker 
 		for (
 				/* */;
@@ -393,30 +410,25 @@ void DrawOneInst(struct Instance* curr)
 
 			void* pCurr;
 			void* pNext;
-			
-			int scale[3];
-			scale[0] = (mh->scale[0] * curr->scale[0]) >> 12;
-			scale[1] = (mh->scale[1] * curr->scale[1]) >> 12;
-			scale[2] = (mh->scale[2] * curr->scale[2]) >> 12;
-			
+						
 			// The X, Z, Y, is not a typo
-			posWorld1[0] = (((mf->pos[0] + tempCoords[1].X) * scale[0]) >> 8);
-			posWorld1[1] = (((mf->pos[1] + tempCoords[1].Z) * scale[1]) >> 8);
-			posWorld1[2] = (((mf->pos[2] + tempCoords[1].Y) * scale[2]) >> 8);
+			posWorld1[0] = mf->pos[0] + tempCoords[1].X;
+			posWorld1[1] = mf->pos[1] + tempCoords[1].Z;
+			posWorld1[2] = mf->pos[2] + tempCoords[1].Y;
 			posWorld1[3] = 0;
 			gte_ldv0(&posWorld1[0]);
 
 			// The X, Z, Y, is not a typo
-			posWorld2[0] = (((mf->pos[0] + tempCoords[2].X) * scale[0]) >> 8);
-			posWorld2[1] = (((mf->pos[1] + tempCoords[2].Z) * scale[1]) >> 8);
-			posWorld2[2] = (((mf->pos[2] + tempCoords[2].Y) * scale[2]) >> 8);
+			posWorld2[0] = mf->pos[0] + tempCoords[2].X;
+			posWorld2[1] = mf->pos[1] + tempCoords[2].Z;
+			posWorld2[2] = mf->pos[2] + tempCoords[2].Y;
 			posWorld2[3] = 0;
 			gte_ldv1(&posWorld2[0]);
 
 			// The X, Z, Y, is not a typo
-			posWorld3[0] = (((mf->pos[0] + tempCoords[3].X) * scale[0]) >> 8);
-			posWorld3[1] = (((mf->pos[1] + tempCoords[3].Z) * scale[1]) >> 8);
-			posWorld3[2] = (((mf->pos[2] + tempCoords[3].Y) * scale[2]) >> 8);
+			posWorld3[0] = mf->pos[0] + tempCoords[3].X;
+			posWorld3[1] = mf->pos[1] + tempCoords[3].Z;
+			posWorld3[2] = mf->pos[2] + tempCoords[3].Y;
 			posWorld3[3] = 0;
 			gte_ldv2(&posWorld3[0]);
 			
