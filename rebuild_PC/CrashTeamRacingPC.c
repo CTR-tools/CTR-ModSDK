@@ -44,7 +44,9 @@ clock_t startClock;
 #define u_long unsigned int
 
 // these two should do nothing
+#ifndef __GNUC__
 #define _Static_assert(x) 
+#endif
 #define __attribute__(x)
 
 // ======= Replace Psn00bsdk Data =============

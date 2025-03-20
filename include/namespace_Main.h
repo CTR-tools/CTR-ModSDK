@@ -1321,6 +1321,7 @@ struct GameTracker
 	#endif
 };
 
+#ifndef REBUILD_PC
 #if BUILD == SepReview
 _Static_assert(sizeof(struct GameTracker) == 0x24F8);
 #elif BUILD == UsaRetail
@@ -1329,4 +1330,5 @@ _Static_assert(sizeof(struct GameTracker) == 0x2584);
 _Static_assert(sizeof(struct GameTracker) == 0x258C);
 #elif BUILD >= EurRetail
 _Static_assert(sizeof(struct GameTracker) == 0x2594);
+#endif
 #endif

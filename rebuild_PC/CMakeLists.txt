@@ -3,6 +3,7 @@ project(CTR-PC)
 include(CMakeDependentOption)
 
 # === OPTIONS ===
+option(CTR_ALTMODS "Enables defragged decomp sections" ON)
 
 option(CTR_60FPS "60 frames per second" ON)
 option(CTR_16BY9 "Widescreen" ON)
@@ -12,15 +13,19 @@ option(CTR_PENTA "Penta Max Stats" ON)
 option(CTR_HARDER "Difficulty Selector (Arcade)" ON)
 option(CTR_NEWCUPS "Cup Randomizer" ON)
 option(CTR_BOOSTBAR "Super's reserve bar" ON)
+cmake_dependent_option(CTR_PROFILER "Debug profiler from PizzaHut" ON "CTR_ALTMODS" OFF)
 
+option(USE_4PADTEST "1 controller for all 4 players" OFF)
 option(CTR_RAMEX "8mb RAM expansion" OFF)
 cmake_dependent_option(CTR_BIGQUEUE "Extended loading queue" OFF "CTR_RAMEX" OFF)
 cmake_dependent_option(CTR_HIGH1P "All high model drivers" OFF "CTR_BIGQUEUE" OFF)
 cmake_dependent_option(CTR_RANDOM "Character Randomizer" OFF "CTR_HIGH1P" OFF)
 cmake_dependent_option(CTR_ONLINE "Online Multiplayer" OFF "CTR_HIGH1P" OFF)
 cmake_dependent_option(CTR_HIGHMP "Multiplayer Maxed mod" OFF "CTR_RAMEX" OFF)
+cmake_dependent_option(CTR_NEWLEV "Enables custom levels" OFF "CTR_RAMEX" OFF)
 
 option(CTR_VR "Virtual Reality" OFF)
+cmake_dependent_option(CTR_PCDRV "Enables custom levels" OFF "CTR_DEFRAG" OFF)
 
 option(CTR_PRIM "PsyX USE_EXTENDED_PRIM_POINTERS" 0)
 
@@ -35,6 +40,10 @@ target_include_directories(ctr_bin PUBLIC "../include")
 
 set_property(TARGET ctr_bin PROPERTY C_STANDARD 99)
 target_compile_options(ctr_bin PUBLIC -DUSE_EXTENDED_PRIM_POINTERS=${CTR_PRIM})
+
+if(CTR_ALTMODS)
+  target_compile_options(ctr_bin PUBLIC -DUSE_ALTMODS)
+endif()
 
 if(CTR_60FPS)
   target_compile_options(ctr_bin PUBLIC -DUSE_60FPS)
@@ -60,6 +69,9 @@ endif()
 if(CTR_BOOSTBAR)
   target_compile_options(ctr_bin PUBLIC -DUSE_BOOSTBAR)
 endif()
+if(CTR_PROFILER)
+  target_compile_options(ctr_bin PUBLIC -DUSE_PROFILER)
+endif()
 
 if(CTR_RAMEX)
   target_compile_options(ctr_bin PUBLIC -DUSE_RAMEX)
@@ -79,9 +91,15 @@ endif()
 if(CTR_HIGHMP)
   target_compile_options(ctr_bin PUBLIC -DUSE_HIGHMP)
 endif()
+if(CTR_NEWLEV)
+  target_compile_options(ctr_bin PUBLIC -DUSE_NEWLEV)
+endif()
 
 if(CTR_VR)
   target_compile_options(ctr_bin PUBLIC -DUSE_VR)
+endif()
+if(CTR_PCDRV)
+  target_compile_options(ctr_bin PUBLIC -DUSE_PCDRV)
 endif()
 
 # Compiler options
@@ -94,7 +112,7 @@ if(CMAKE_C_COMPILER_ID MATCHES "Clang")
   endif()
 else()
   # Assume GCC
-  target_compile_options(ctr_bin PRIVATE -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-implicit-int)
+  target_compile_options(ctr_bin PRIVATE -Wno-int-conversion -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-implicit-int)
 endif()
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
