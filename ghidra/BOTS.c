@@ -3004,7 +3004,6 @@ LAB_800160f4:
       }
       else {
         if (sVar7 == 3) {
-			//TODO
           sVar7 = *(short *)(iVar17 + 0x5c8);
           iVar4 = *(int *)(iVar17 + 0x5c8) + -0xc;
           *(int *)(iVar17 + 0x5c8) = iVar4;
@@ -3024,7 +3023,6 @@ LAB_800160f4:
           }
         }
         else {
-	      //TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
           if (sVar7 == 5) {
             iVar4 = *(int *)(iVar17 + 0x4a8);
 
