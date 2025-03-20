@@ -1300,7 +1300,7 @@ give_this_label_a_better_name2:
 
 		botDriver->actionsFlagSet = botDriver->actionsFlagSet & 0xfffffffe | 0x80000;
 
-		botDriver->jump_LandingBoost += elapsedMilliseconds;// idk & 0x1800;
+botDriver->jump_LandingBoost += elapsedMilliseconds;// idk & 0x1800;
 	}
 
 	iVar4_lifetime_2 = 0x18;
@@ -1335,6 +1335,7 @@ give_this_label_a_better_name2:
 
 	if ((botDriver->botData.botFlags & 2) != 0)
 	{
+		char newKartState; //uVar2
 		short sVar7 = botDriver->botData.unk5ba;
 		if (sVar7 == 2)
 		{
@@ -1357,16 +1358,15 @@ give_this_label_a_better_name2:
 						botDriver->botData.unk5bc.ai_speedLinear = 0;
 						botDriver->botData.botFlags &= 0xfffffff9;
 					}
-					//uVar2 = 3;
-					//label
-					//botDriver->kartState = uVar2;
+					newKartState = 3;
+				LAB_800160f4:
+					botDriver->kartState = newKartState;
 				}
 			}
 			else
 			{
 				if (sVar7 == 3)
 				{
-					//TODO
 					int sVar7 = botDriver->botData.unk5bc.ai_squishCooldown; //deref as short
 					int iVar4 = botDriver->botData.unk5bc.ai_squishCooldown + -0xc;
 					botDriver->botData.unk5bc.ai_squishCooldown = iVar4;
@@ -1389,7 +1389,61 @@ give_this_label_a_better_name2:
 				{
 					if (sVar7 == 5)
 					{
-						//TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+						struct Thread* plant = botDriver->plantEatingMe;
+
+						struct Instance* plantInst = plant->inst;
+
+						if (botDriver->botData.unk5bc.rotXZ < 0xb40)
+						{
+							SVECTOR v;
+							v.vx = 0xfa;
+							if (plant != NULL && (plant->inst != NULL || (v.vx = -0xfa, plant->inst->prev == NULL))))
+							{
+								v.vx = 0xfa;
+							}
+							v.vy = 0;
+							v.vz = 0x2ee;
+
+							SetRotMatrix(plantInst->matrix);
+							SetTransMatrix(plantInst->matrix);
+
+							VECTOR v2;
+							long l3;
+
+							RotTrans(&v, &v2, &l3);
+
+							sdata->gGT->pushBuffer[botDriver->driverID].pos[0] = v2.vx;
+							sdata->gGT->pushBuffer[botDriver->driverID].pos[1] = plantInst->matrix.t[1] + 0xc0;
+							sdata->gGT->pushBuffer[botDriver->driverID].pos[2] = v2.vz;
+
+							int camDriverXDelta = v2.vx - plantInst->matrix.t[0];
+							int camY = sdata->gGT->pushBuffer[botDriver->driverID].pos[1];
+							int driverY = plantInst->matrix.t[1];
+							int camDriverZDelta = v2.vz - plantInst->matrix.t[2];
+
+							int rotY = ratan2(camDriverXDelta, camDriverZDelta);
+							sdata->gGT->pushBuffer[botDriver->driverID].rot[1] = rotY;
+
+							int rotX = SquareRoot0_stub(camDriverXDelta * camDriverXDelta + camDriverZDelta * camDriverZDelta);
+							rotX = ratan2(camY - driverY, rotX);
+
+							sdata->gGT->pushBuffer[botDriver->driverID].rot[0] = 0x800 - rotX;
+							sdata->gGT->pushBuffer[botDriver->driverID].rot[2] = 0;
+						}
+
+						botDriver->botData.unk5bc.ai_speedLinear = 0;
+						int iVar4 = botDriver->botData.unk5bc.rotXZ - local_34;
+						botDriver->botData.unk5bc.rotXZ = iVar4;
+						newKartState = 5;
+						if (iVar4 * 0x10000 < 1) //what is this condition
+						{
+							botDriver->botData.botFlags &= 0xfffffff9;
+							botInstance->flags &= 0xffffff7f;
+							botDriver->botData.ai_progress_cooldown = 1;
+							DECOMP_BOTS_MaskGrab(botThread);
+							newKartState = 5; //wtf is this doing, it's not read anywhere.
+						}
+						goto LAB_800160f4;
 					}
 				}
 			}
