@@ -64,7 +64,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     if (gGT->threadBuckets[OTHER].thread != 0)
 		break;
     
-    CS_LoadBoss(bcd);
+    DECOMP_CS_LoadBoss(bcd);
     OVR_233.cutsceneState = 3;
     break;
 
