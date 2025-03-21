@@ -355,7 +355,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 			elapsedFrames -= FPS_DOUBLE(140);
 			
 			// -10
-			char* str = 0x1f800000;
+			char* str = (char*)0x1f800000;
 			str[0] = '-';
 			str[1] = '1';
 			str[2] = '0';
