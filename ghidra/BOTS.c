@@ -1632,8 +1632,6 @@ LAB_80013fbc:
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
 
-	////////// START
-
 	if ((uVar8 & 0xc0) == 0x40) 
 	{  
 	  // offset 0x10 of NavFrame
@@ -1750,6 +1748,9 @@ LAB_800144a0:
         }
       }
     }
+
+	//PICK IT UP HEREEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
     //puVar5 = 0x96B20
     puVar5 = PTR_DAT_8008d2ac;
 	
@@ -3172,9 +3173,6 @@ LAB_800160f4:
     }
   }
 
-  // END OF TOP-DOWN
-  // ========================================================================
-
   if ((0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U)) &&
      (0x9e < (byte)(*(char *)((int)psVar21 + 9) - 0x31U))) {
 
@@ -3488,9 +3486,6 @@ LAB_8001686c:
 	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
-
-  // ========================================================================
-  // BEGINNING OF BOTTOM-UP
 
   // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);
