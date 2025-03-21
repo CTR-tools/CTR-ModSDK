@@ -1632,8 +1632,6 @@ LAB_80013fbc:
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
 
-	////////// START
-
 	if ((uVar8 & 0xc0) == 0x40) 
 	{  
 	  // offset 0x10 of NavFrame
@@ -1750,6 +1748,9 @@ LAB_800144a0:
         }
       }
     }
+
+	//PICK IT UP HEREEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
     //puVar5 = 0x96B20
     puVar5 = PTR_DAT_8008d2ac;
 	

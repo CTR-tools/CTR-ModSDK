@@ -64,7 +64,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     if (gGT->threadBuckets[OTHER].thread != 0)
 		break;
     
-    CS_LoadBoss(bcd);
+    DECOMP_CS_LoadBoss(bcd);
     OVR_233.cutsceneState = 3;
     break;
 
@@ -81,7 +81,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
 
 	// head is incremented by callback,
 	// body has no callback, increment now
-	mArr[1] = (unsigned int)mArr[1] + 4;
+	mArr[1] = mArr[1] + 1;
 	
 	gGT->modelPtr[mArr[0]->id] = mArr[0];
 	gGT->modelPtr[mArr[1]->id] = mArr[1];
