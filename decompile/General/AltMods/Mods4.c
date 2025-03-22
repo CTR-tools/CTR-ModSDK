@@ -33,6 +33,9 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 	
 	struct Mempack* ptrMempack = sdata->PtrMempack;
 	
+	if(ma->name[0] != 't')
+		return;
+	
 	printf("Run Animation: %s\n", ma->name);	
 	
 	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
@@ -60,6 +63,13 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 		
 		int vertexIndex = 0;
 		int stripLength = 0;
+		
+		// AlignUp
+		unsigned int byte = 
+			(unsigned int)ptrMempack->firstFreeByte;
+		byte += 3;
+		byte &= ~(4);
+		ptrMempack->firstFreeByte = byte;
 		
 		// keep record
 		addrArray[i] = ptrMempack->firstFreeByte;
