@@ -672,7 +672,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_MainInit_JitPoolsNew(gGT);
 			
 			#ifdef USE_MOREPRIM
-			// Stage 8: Fill remaining heap
+			// Stage 7: Fill remaining heap
 			DECOMP_MainInit_PrimMem(gGT, 0);
 			#endif
 

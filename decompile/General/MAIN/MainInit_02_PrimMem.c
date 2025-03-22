@@ -18,7 +18,7 @@ void DECOMP_MainInit_PrimMem(
 
   // On PS1
   // Stage 0 allocates PrimMem to HighMem,
-  // Stage 8 allocates PrimMem to fill rest of RAM
+  // Stage 7 allocates PrimMem to fill rest of RAM
   #ifndef REBUILD_PC
 	
 	// optimization,
@@ -37,11 +37,11 @@ void DECOMP_MainInit_PrimMem(
 	}
 
 	// optimization,
-	// LOAD_TenStages: Stage 8,
+	// LOAD_TenStages: Stage 7,
 	// allocate all remaining RAM
 	else
 	{
-		// gGT->levelID is set cause Stage 8
+		// gGT->levelID is set cause Stage 7
 		// is past all the level load+callback
 		if (gGT->levelID <= CITADEL_CITY)
 		{
@@ -78,7 +78,7 @@ void DECOMP_MainInit_PrimMem(
 
   // On PC
   // Stage 0 allocates all 24-bit RAM to primitives,
-  // Stage 8 does nothing,
+  // Stage 7 does nothing,
   // The rest of LOAD_TenStages can use 
   // 		32-bit addresses above 24-bit max
   #else
@@ -94,7 +94,7 @@ void DECOMP_MainInit_PrimMem(
 	}
 	
 	// optimization,
-	// LOAD_TenStages: Stage 8,
+	// LOAD_TenStages: Stage 7,
 	else
 	{
 		return;
