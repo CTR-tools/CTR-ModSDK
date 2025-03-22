@@ -195,10 +195,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 #endif
 
 #ifdef USE_FASTANIM
-#ifndef REBUILD_PC
 	void FastAnim_Start(struct GameTracker* gGT);
 	FastAnim_Start(gGT);
-#endif
 #endif
 
     // assume 1P fov

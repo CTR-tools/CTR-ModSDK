@@ -10,18 +10,18 @@
 
 
 #ifdef USE_FASTANIM
-static int bi = 0;
+static int bi2 = 0;
 
 // do NOT inline, byte budget
-int GetSignedBits(unsigned int* vertData, int bits)
+static int GetSignedBits2(unsigned int* vertData, int bits)
 {
-	int const b = bi >> 5;
+	int const b = bi2 >> 5;
 	int const e = 32 - bits;
-	int const s = e - (bi & 31);
+	int const s = e - (bi2 & 31);
 	int const ret = s < 0 ?
 		(vertData[b] << -s) | (vertData[b + 1] >> (s & 31)) :
 		vertData[b] >> s;
-	bi += bits;
+	bi2 += bits;
 	return (ret << e) >> e;
 }
 
@@ -29,8 +29,12 @@ int GetSignedBits(unsigned int* vertData, int bits)
 #define DRAW_CMD_FLAG_NEW_VERTEX (1 << 2)
 void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 {
+#ifdef REBUILD_PC
+	int addrArray[32];
+#else
 	int* addrArray = 0x1f800000;
-	
+#endif
+
 	struct Mempack* ptrMempack = sdata->PtrMempack;
 	
 	if(ma->name[0] != 't')
@@ -59,7 +63,7 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 		int x_alu = 0;
 		int y_alu = 0;
 		int z_alu = 0;
-		bi = 0;
+		bi2 = 0;
 		
 		int vertexIndex = 0;
 		int stripLength = 0;
@@ -110,9 +114,9 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 			// extra (+1) bit, determines negative
 
 			// convert XZY frame data
-			int newX = GetSignedBits(vertData, XBits + 1);
-			int newY = GetSignedBits(vertData, YBits + 1);
-			int newZ = GetSignedBits(vertData, ZBits + 1);
+			int newX = GetSignedBits2(vertData, XBits + 1);
+			int newY = GetSignedBits2(vertData, YBits + 1);
+			int newZ = GetSignedBits2(vertData, ZBits + 1);
 
 			//calculate decompressed coord value
 			x_alu = (x_alu + (int)newX + bx);
@@ -126,7 +130,7 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 			WRITE_PTR[1] = z_alu;
 			WRITE_PTR[2] = y_alu;
 			
-			ptrMempack->firstFreeByte += 3;
+			ptrMempack->firstFreeByte = &WRITE_PTR[3];
 			
 			if (DECOMP_MEMPACK_GetFreeBytes() < 16)
 			{

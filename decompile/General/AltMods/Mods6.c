@@ -10,7 +10,18 @@ void FastAnim_Start(struct GameTracker* gGT)
 			continue;
 		
 		struct Instance* inst = d->instSelf;
+
+#ifdef REBUILD_PC
+		if (inst == 0)
+			continue;
+#endif
+
 		struct Model* m = inst->model;
+
+#ifdef REBUILD_PC
+		if (m == 0)
+			continue;
+#endif
 		
 		for(int j = 0; j < m->numHeaders; j++)
 		{

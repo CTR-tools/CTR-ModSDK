@@ -24,6 +24,7 @@
 #include "../decompile/General/AltMods/Mods2.c" // needs GAMEPAD_Defrag
 #include "../decompile/General/AltMods/Mods3.c" // needs h21_64_Bank_ResetAllocator
 #include "../decompile/General/AltMods/Mods4.c" // needs LOAD_00_xx Defrag
+#include "../decompile/General/AltMods/Mods6.c" // needs ElimBG_Defrag
 #include "../decompile/General/AltMods/Mods8.c" // needs UI_58_CupStandings_InputAndDraw.c
 
 // contains MATH_Sin and LibraryOfModels_Store

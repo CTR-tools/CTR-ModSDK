@@ -1,6 +1,6 @@
 #include <common.h>
 
-int bi = 0;
+static int bi = 0;
 
 #ifdef REBUILD_PC
 #ifndef __GNUC__
