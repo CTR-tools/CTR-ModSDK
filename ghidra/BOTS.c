@@ -1895,8 +1895,6 @@ LAB_800144a0:
                  ((iVar3 - *(int *)(iVar17 + 0x488)) + uVar18 * iVar3)) -
                  ((int)*(short *)(PTR_DAT_8008cf70 + ((int)(uVar8 << 0x10) >> 0xf)) + (int)sVar7);
 
-		//// CONTINUE FROM HERE
-
         if ((bVar1) && ((uVar8 & 0xffff) == 0)) {
           if (iVar15 < 1) {
 LAB_800147e8:
@@ -2059,8 +2057,6 @@ LAB_80014a98:
       if (0x6900 < iVar3) {
         iVar3 = 0x6900;
       }
-
-	  //// CONTINUE FROM HERE 2
       
 	  // terrain->0x38
 	  iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;

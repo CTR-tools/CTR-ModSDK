@@ -318,11 +318,11 @@ give_this_label_a_better_name2:
 
 		if ((botDriver->actionsFlagSet & 1) == 0)
 		{
-			int ZY = (botDriver->botData.unk5bc.ai_speedLinear * botDriver->botData.unk5bc.ai_speedLinear) + (botDriver->botData.unk5bc.ai_speedY * botDriver->botData.unk5bc.ai_speedY);
+			int ZYsqr = (botDriver->botData.unk5bc.ai_speedLinear * botDriver->botData.unk5bc.ai_speedLinear) + (botDriver->botData.unk5bc.ai_speedY * botDriver->botData.unk5bc.ai_speedY);
 
-			if (0x2b110000 < ZY) //sqrZY
+			if (0x2b110000 < ZYsqr) //sqrZY
 			{
-				ZY = SquareRoot0_stub(ZY);
+				int ZY = SquareRoot0_stub(ZYsqr);
 
 				int zVel = botDriver->botData.unk5bc.ai_speedLinear * 0x6900; //iVar3
 
@@ -355,27 +355,24 @@ give_this_label_a_better_name2:
 		{
 			botDriver->actionsFlagSet &= 0xfff7ffff;
 
-			//iVar4 = sdata->bestHumanRank
+			struct Driver* bestDriverRank = sdata->bestHumanRank; //iVar4
 
-			struct Driver* bestDriverRank = sdata->bestHumanRank;
-
-			if ((sdata->gGT->gameMode1 & 0x4000000) != 0)
+			if ((sdata->gGT->gameMode1 & RELIC_RACE) != 0)
 			{
 				bestDriverRank = sdata->bestRobotRank;
 			}
 
-			int speed;
-			int velocityAccountingForTerrain;
+			int botVelocity; //iVar3
 
 			if (bestDriverRank == NULL || (bestDriverRank == botDriver))
 			{
-				speed = sdata->gGT->constVal_9000;
+				botVelocity = sdata->gGT->constVal_9000;
 			}
 			else
 			{
-				int driverRank = botDriver->driverRank;
-				bool isInAdvArcadeOrVSCup = false;
-				if ((sdata->gGT->gameMode1 & 0x10000000) != 0 || (sdata->gGT->gameMode2 & 0x10) != 0)
+				int driverRank = botDriver->driverRank; //uVar8
+				bool isInAdvArcadeOrVSCup = false; //bVar1
+				if ((sdata->gGT->gameMode1 & ADVENTURE_CUP) != 0 || (sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 				{
 					isInAdvArcadeOrVSCup = true;
 				}
@@ -390,7 +387,7 @@ give_this_label_a_better_name2:
 					driverRank--;
 				}
 
-				if ((sdata->gGT->gameMode1 & 0x10000000) != 0 || (sdata->gGT->gameMode2 & 0x10) != 0)
+				if ((sdata->gGT->gameMode1 & ADVENTURE_CUP) != 0 || (sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 				{
 					driverRank = sdata->accelerateOrder[botDriver->driverID];
 					if (sdata->accelerateOrder[0] < 2)
@@ -403,34 +400,34 @@ give_this_label_a_better_name2:
 					}
 				}
 
-				short sVar7;
+				short difficultyStat; //sVar7
 
 				if (bestDriverRank->lapIndex == 0)
 				{
-					sVar7 = sdata->arcade_difficultyParams[0xB];
+					difficultyStat = sdata->arcade_difficultyParams[0xB];
 				}
 				else
 				{
 					if (bestDriverRank->lapIndex == sdata->gGT->numLaps - 1)
 					{
-						sVar7 = sdata->arcade_difficultyParams[0xD];
+						difficultyStat = sdata->arcade_difficultyParams[0xD];
 					}
 					else
 					{
-						sVar7 = sdata->arcade_difficultyParams[0xC];
+						difficultyStat = sdata->arcade_difficultyParams[0xC];
 					}
 				}
 
-				int distToFinish = sdata->gGT->level1->ptr_restart_points->distToFinish * 8;
+				int distToFinish = sdata->gGT->level1->ptr_restart_points->distToFinish * 8; //iVar3
 
-				int lapIndex = bestDriverRank->lapIndex;
+				int lapIndex = bestDriverRank->lapIndex; //uVar20
 
 				if ((bestDriverRank->actionsFlagSet & 0x1000000) != 0)
 				{
 					lapIndex--;
 				}
 
-				int botLapIndex = botDriver->lapIndex;
+				int botLapIndex = botDriver->lapIndex; //uVar18
 
 				if ((botDriver->actionsFlagSet & 0x1000000) != 0)
 				{
@@ -438,49 +435,59 @@ give_this_label_a_better_name2:
 				}
 
 				//not super meaningful, probably just a difficulty statistic
-				int iVar15 = ((distToFinish - bestDriverRank->distanceToFinish_curr) + (lapIndex * distToFinish)) - ((distToFinish - botDriver->distanceToFinish_curr) + (botLapIndex * distToFinish)) - sdata->arcade_difficultyParams[driverRank + sVar7];
+				int complexDifficultyStat = ((distToFinish - bestDriverRank->distanceToFinish_curr) + (lapIndex * distToFinish)) - ((distToFinish - botDriver->distanceToFinish_curr) + (botLapIndex * distToFinish)) - sdata->arcade_difficultyParams[driverRank + difficultyStat]; //iVar15
 
-				int iVar13;
+				int otherDifficultyStat; //iVar13
 				if (isInAdvArcadeOrVSCup && ((driverRank & 0xffff) == 0))
 				{
-					if (iVar15 < 1)
+					if (complexDifficultyStat < 1)
 					{
-					LAB_800147e8:
-						iVar13 = sdata->arcade_difficultyParams[0x9];
+						otherDifficultyStat = sdata->arcade_difficultyParams[0x9];
 					}
 					else
 					{
 						if (botDriver->lapIndex < sdata->gGT->numLaps - 1)
 						{
-							iVar13 = sdata->cup_difficultyParams[0x8];
+							otherDifficultyStat = sdata->cup_difficultyParams[0x8];
 						}
 						else
 						{
-						code_r0x800147c4:
-							iVar13 = sdata->cup_difficultyParams[0x8] + sdata->cup_difficultyParams[0xA];
+							otherDifficultyStat = sdata->cup_difficultyParams[0x8] + sdata->cup_difficultyParams[0xA];
 						}
 					}
 				}
 				else
 				{
-					if (iVar15 < 1) goto LAB_800147e8;
-					if (sdata->gGT->numLaps - 1 <= botDriver->lapIndex) goto code_r0x800147c4;
-					iVar13 = sdata->arcade_difficultyParams[0x8];
+					if (complexDifficultyStat < 1)
+					{
+						otherDifficultyStat = sdata->arcade_difficultyParams[0x9];
+					}
+					else
+					{
+						if (sdata->gGT->numLaps - 1 <= botDriver->lapIndex)
+						{
+							otherDifficultyStat = sdata->cup_difficultyParams[0x8] + sdata->cup_difficultyParams[0xA];
+						}
+						else
+						{
+							otherDifficultyStat = sdata->arcade_difficultyParams[0x8];
+						}
+					}
 				}
-				int botVelocity = iVar15; //botVelocity == iVar3
-				if (iVar15 < 0)
-					botVelocity = -iVar15;
-				int iVar9 = iVar13;
-				if (iVar13 < 0)
-					iVar9 = -iVar13;
+				botVelocity = complexDifficultyStat; //iVar3
+				if (complexDifficultyStat < 0)
+					botVelocity = -complexDifficultyStat;
+				int iVar9 = otherDifficultyStat;
+				if (otherDifficultyStat < 0)
+					iVar9 = -otherDifficultyStat;
 
 				botVelocity = iVar9 * (((botVelocity + 0x80) * 0x1000) / 0xa00) >> 0xc;
-				local_38 = 0 < iVar15;
+				local_38 = 0 < complexDifficultyStat;
 				botVelocity = botVelocity + ((botVelocity << 3) / 100) * (7 - driverRank);
 
 				if (iVar9 < botVelocity)
 					botVelocity = iVar9;
-				if (iVar13 < 0)
+				if (otherDifficultyStat < 0)
 					botVelocity = -iVar9;
 
 				int bestDriverWumpaCount = bestDriverRank->numWumpas; //iVar15, assume max of 9?
@@ -491,14 +498,14 @@ give_this_label_a_better_name2:
 				if (5 < turboMult)
 					turboMult = 5;
 
-				int netSpeedStat = (((bestDriverRank->const_AccelSpeed_ClassStat - bestDriverRank->const_Speed_ClassStat) * 0x1000) / 5) - 1;
+				int netSpeedStat = (((bestDriverRank->const_AccelSpeed_ClassStat - bestDriverRank->const_Speed_ClassStat) * 0x1000) / 5) - 1; //iVar9
 
-				int speedAdditional = ((bestDriverRank->const_Speed_ClassStat << 3) / 10) + ((bestDriverWumpaCount * iVar9) / 10 + iVar13 * iVar9 >> 0xc);
+				int additionalVelocity = ((bestDriverRank->const_Speed_ClassStat << 3) / 10) + ((bestDriverWumpaCount * netSpeedStat) / 10 + turboMult * netSpeedStat >> 0xc); //iVar4
 
-				if (0x6900 < speedAdditional)
-					speedAdditional = 0x6900;
+				if (0x6900 < additionalVelocity)
+					additionalVelocity = 0x6900;
 
-				botVelocity += speedAdditional;
+				botVelocity += additionalVelocity;
 
 				if (botVelocity < 0x5dc1)
 				{
@@ -507,138 +514,136 @@ give_this_label_a_better_name2:
 				}
 				else
 					botVelocity = 24000;
+			}
 
-				if (botDriver->reserves == 0)
-					botDriver->botData.botFlags &= 0xffffffef;
+			if (botDriver->reserves == 0)
+				botDriver->botData.botFlags &= 0xffffffef;
+			else
+			{
+				if ((botDriver->botData.botFlags & 0x10) == 0)
+					botVelocity += botDriver->fireSpeedCap;
 				else
+					botVelocity = botDriver->fireSpeedCap + 10000;
+			}
+
+			if (botDriver->clockReceive != 0 || botDriver->squishTimer != 0)
+				botVelocity = botVelocity * 0xc00 >> 0xc;
+
+			if ((botDriver->botData.botFlags & 2) == 0)
+			{
+				if (botDriver->instTntRecv != NULL || botDriver->thCloud != NULL)
 				{
-					if ((botDriver->botData.botFlags & 0x10) == 0)
-						botVelocity += botDriver->fireSpeedCap;
-					else
-						botVelocity = botDriver->fireSpeedCap + 10000;
-				}
+					int damagedVelocityPenalty = botDriver->const_DamagedSpeed / 2; //iVar4
 
-				if (botDriver->clockReceive != 0 || botDriver->squishTimer != 0)
-					botVelocity = botVelocity * 0xc00 >> 0xc;
-
-				if ((botDriver->botData.botFlags & 2) == 0)
-				{
-					if (botDriver->instTntRecv != NULL || botDriver->thCloud != NULL)
-					{
-						speedAdditional = (botDriver->const_DamagedSpeed << 0x10) >> 0x11;
-
-						//goto //TODO
-						botVelocity -= speedAdditional; //just do it here, gotos are stupid
-					}
-				}
-				else
-				{
-					botDriver->botData.unk5bc.ai_turboMeter = 0;
-
-					if (data.characterIDs[botDriver->driverID] == 0xf)
-					{
-						speedAdditional = (botDriver->const_DamagedSpeed << 0x10) >> 0x12;
-
-						botVelocity -= speedAdditional;
-					}
-					else
-					{
-						botVelocity -= botDriver->const_DamagedSpeed;
-					}
-				}
-				if (botVelocity < 0)
-				{
-					botVelocity = 0;
-				}
-
-				//Pickup on struct Driver->BotData translation here
-
-				struct Terrain* botTerrain = botDriver->terrainMeta1;
-
-				speedAdditional = (*(int*)&botDriver->botData.unk5bc[0x18]) - (botDriver->const_PedalFriction_Forward * botTerrain->accel_impact >> 8);
-
-				(*(int*)&botDriver->botData.unk5bc[0x18]) = speedAdditional;
-
-				if (speedAdditional < 0)
-					(*(int*)&botDriver->botData.unk5bc[0x18]) = 0;
-				if (0x6900 < botVelocity)
-					botVelocity = 0x6900;
-
-				int velocityAccountingForTerrain = botVelocity * botTerrain->unk_0x34[2] >> 8;
-
-				if ((botTerrain->unk_0x34[1] & 0x80) == 0)
-				{
-				LAB_80014b34:
-					if ((*(int*)&botDriver->botData.unk5bc[0x18]) < velocityAccountingForTerrain)
-					{
-					LAB_80014b48:
-						short accel;
-						if (botDriver->reserves < 1)
-						{
-							accel = botDriver->const_Accel_ClassStat;
-						}
-						else
-						{
-							accel = botDriver->const_Accel_Reserves;
-						}
-						botVelocity = accel * botTerrain->unk_0x34[3] >> 8;
-
-						if (botDriver->botData.botAccel != 0)
-						{
-							botDriver->botData.botAccel--;
-							botVelocity = (botVelocity * (0x100 - sdata->AI_AccelFrameSteps * sdata->accelerateOrder[botDriver->driverID])) >> 8;
-						}
-
-						(*(int*)&botDriver->botData.unk5bc[0x18]) += botVelocity;
-					}
-				}
-				else
-				{
-					botVelocity = *(int*)&botDriver->botData.unk5bc[0x18] >> 1;
-
-					if (*(int*)&botDriver->botData.unk5bc[0x18] < velocityAccountingForTerrain) goto LAB_80014b48;
-
-					*(int*)&botDriver->botData.unk5bc[0x18] = botVelocity;
-					if (botVelocity < velocityAccountingForTerrain)
-					{
-						*(int*)&botDriver->botData.unk5bc[0x18] = velocityAccountingForTerrain;
-						goto LAB_80014b34;
-					}
-				}
-
-				int levelID = sdata->gGT->levelID; // iVar3
-
-				if ((levelID == 7 || levelID == 5) || levelID == 0xc) //hot air skyway, papu's pyramid, polar pass.
-				{
-					int botPathIndex = botDriver->botData.botPath; //iVar3
-
-					if (levelID == 0xc)
-					{
-						botPathIndex += 3;
-					}
-					else
-					{
-						if (levelID == 5)
-						{
-							botPathIndex += 6;
-						}
-						else if (levelID == 0x10) //what the heck isn't this dead code?
-						{
-							botPathIndex += 9;
-						}
-					}
-				}
-
-				//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
-				int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
-
-				if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < *(int*)botDriver->botData.unk5bc[0x18])
-				{
-					*(short*)&botDriver->botData.unk5bc[0x8] = 0;
-
-					*(int*)&botDriver->botData.unk5bc[0x18] -= 100 + botDriver->const_Accel_ClassStat;
+					botVelocity -= damagedVelocityPenalty;
 				}
 			}
+			else
+			{
+				botDriver->botData.unk5bc.ai_turboMeter = 0;
+
+				if (data.characterIDs[botDriver->driverID] == NITROS_OXIDE)
+				{
+					int damagedVelocityPenalty = botDriver->const_DamagedSpeed / 4; //iVar4
+
+					botVelocity -= damagedVelocityPenalty;
+				}
+				else
+				{
+					botVelocity -= botDriver->const_DamagedSpeed;
+				}
+			}
+			if (botVelocity < 0)
+			{
+				botVelocity = 0;
+			}
+
+			struct Terrain* botTerrain = botDriver->terrainMeta1; //iVar15
+
+			int velSomethingIdk = botDriver->botData.unk5bc.ai_speedLinear - (botDriver->const_PedalFriction_Forward * botTerrain->accel_impact >> 8); //iVar4
+
+			botDriver->botData.unk5bc.ai_speedLinear = velSomethingIdk;
+
+			if (velSomethingIdk < 0)
+				botDriver->botData.unk5bc.ai_speedLinear = 0;
+			if (0x6900 < botVelocity)
+				botVelocity = 0x6900;
+
+			int velocityAccountingForTerrain = botVelocity * botTerrain->unk_0x34[2] >> 8; //iVar4
+
+			if ((botTerrain->unk_0x34[1] & 0x80) == 0)
+			{
+			LAB_80014b34:
+				if (botDriver->botData.unk5bc.ai_speedLinear < velocityAccountingForTerrain)
+				{
+				LAB_80014b48:
+					short accel; //sVar7
+					if (botDriver->reserves < 1)
+					{
+						accel = botDriver->const_Accel_ClassStat;
+					}
+					else
+					{
+						accel = botDriver->const_Accel_Reserves;
+					}
+					botVelocity = accel * botTerrain->unk_0x34[3] >> 8;
+
+					if (botDriver->botData.botAccel != 0)
+					{
+						botDriver->botData.botAccel--;
+						botVelocity = (botVelocity * (0x100 - sdata->AI_AccelFrameSteps * sdata->accelerateOrder[botDriver->driverID])) >> 8;
+					}
+
+					botDriver->botData.unk5bc.ai_speedLinear += botVelocity;
+				}
+			}
+			else
+			{
+				botVelocity = botDriver->botData.unk5bc.ai_speedLinear / 2;
+
+				if (botDriver->botData.unk5bc.ai_speedLinear < velocityAccountingForTerrain) goto LAB_80014b48;
+
+				botDriver->botData.unk5bc.ai_speedLinear = botVelocity;
+				if (botVelocity < velocityAccountingForTerrain)
+				{
+					botDriver->botData.unk5bc.ai_speedLinear = velocityAccountingForTerrain;
+					goto LAB_80014b34;
+				}
+			}
+
+			int levelID = sdata->gGT->levelID; // iVar3
+
+			if ((levelID == HOT_AIR_SKYWAY || levelID == PAPU_PYRAMID) || levelID == POLAR_PASS)
+			{
+				int botPathIndex = botDriver->botData.botPath; //iVar3
+
+				if (levelID == POLAR_PASS)
+				{
+					botPathIndex += 3;
+				}
+				else
+				{
+					if (levelID == PAPU_PYRAMID)
+					{
+						botPathIndex += 6;
+					}
+					else if (levelID == SLIDE_COLISEUM) //what the heck isn't this dead code?
+					{
+						botPathIndex += 9;
+					}
+				}
+			}
+
+			//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
+			int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
+
+			if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < *(int*)botDriver->botData.unk5bc[0x18])
+			{
+				*(short*)&botDriver->botData.unk5bc[0x8] = 0;
+
+				*(int*)&botDriver->botData.unk5bc[0x18] -= 100 + botDriver->const_Accel_ClassStat;
+			}
+			
 
 			if (0x80 < navFrameOfConcern->goBackCount)
 			{
