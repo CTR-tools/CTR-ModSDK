@@ -222,22 +222,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_MainInit_OTMem(gGT);
 				DECOMP_MainInit_PrimMem(gGT, 0xA000);
 			#endif
-
-			// RAM Optimization, NEVER do this here,
-			// by loading other assets first, ptrMap
-			// has more room to load and realloc
-			#if 0
-			if
-			(
-				// if cutscene, adventure arena, or credits
-				((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) != 0) ||
-				((gGT->gameMode2 & CREDITS) != 0)
-			)
-			{
-				// (now, at beginning of mempack)
-				DECOMP_MainInit_JitPoolsNew(gGT);
-			}
-			#endif
+			
+			// RAM optimization, never call DECOMP_MainInit_JitPoolsNew
+			// in Stage 0, just no point, and also ptrMap in DRAM files
+			// will have more room to load if the allocation is delayed
 			
 			break;
 		}
@@ -681,35 +669,24 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 			// RAM optimization, always do this here,
 			// because now ptrMap already loaded and realloc'd
-			#if 1
 			DECOMP_MEMPACK_SwapPacks(0);
 			DECOMP_MainInit_JitPoolsNew(gGT);
 			
 			// end of RAM, steal rest of heap
+			#if 1
 			DECOMP_MainInit_PrimMem(gGT, 0);
-
-			if ((gGT->gameMode2 & LEV_SWAP) != 0)
-				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			#endif
+
+			if ((gGT->gameMode2 & LEV_SWAP) == 0)
+				break;
 			
-			if
-			(
-				// 2 is for cutscene
-				// 1 is for If you're in Adventure Arena
-				((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) == 0) &&
-
-				// if not going to credits
-				((gGT->gameMode2 & CREDITS) == 0)
-			)
-			{
-				// RAM optimization, never do this here,
-				// cause the optimized version already happened
-				#if 0
-				DECOMP_MainInit_JitPoolsNew(gGT);
-				#endif
-
-				return loadingStage + 1;
-			}
+			// === LEV_SWAP ===
+			
+			// Adventure Hub, or Credits
+			DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
+			
+			if (gGT->gameMode1 & (ADVENTURE_ARENA) == 0)
+				break;
 			
 			// podium reward
 			if (gGT->podiumRewardID != 0)
@@ -968,7 +945,7 @@ LAB_800346b0:
 		default:
 			return loadingStage;
 	}
+	
 	loadingStage++;
-	switchD_80033660_caseD_a:
 	return loadingStage;
 }
