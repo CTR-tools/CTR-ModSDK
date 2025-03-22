@@ -685,7 +685,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// Adventure Hub, or Credits
 			DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			
-			if (gGT->gameMode1 & (ADVENTURE_ARENA) == 0)
+			if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 				break;
 			
 			// podium reward
@@ -701,11 +701,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					puVar8--;
 				} while (iVar9 > -1);
 			
-				// Get Memory Allocation System Index
+				// Load models to memory of opposite hub
 				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
-
-				// change active allocation system
-				// Swap 1 and 2 while on adventure map
 				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
 
 				// game is now loading
