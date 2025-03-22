@@ -214,40 +214,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// RAM optimization, dont do this OG code
 			#if 0
-			
 				// OG game
 				DECOMP_MainInit_PrimMem(gGT);
 				DECOMP_MainInit_OTMem(gGT);
-			
 			#else
-				
-				// first allocate OT for RaceFlag
+				// Reversed order, for RAM optimizations
 				DECOMP_MainInit_OTMem(gGT);
-				
-
-				// use HighMem for RaceFlag, dont use MEMPACK_AllocHighMem,
-				// then later this allocation is extended to remainder of heap,
-				// this will always be LESS than OG game allocation, so it wont
-				// impact any intended loading screens
-				#ifndef REBUILD_PC
-					
-					int backup = (int)sdata->mempack[0].firstFreeByte;
-					
-					sdata->mempack[0].firstFreeByte = 
-						(void*)((int)sdata->mempack[0].lastFreeByte
-						- 0xA000 // primMem needed
-						- (0x2200*2)); // ghost HighMem
-					
-					DECOMP_MainInit_PrimMem(gGT, 0xA000);
-					sdata->mempack[0].firstFreeByte = (void*)backup;
-				
-				// use low-end addressing for PC port
-				#else
-					
-					DECOMP_MainInit_PrimMem(gGT, 0xA000);
-				
-				#endif
-				
+				DECOMP_MainInit_PrimMem(gGT, 0xA000);
 			#endif
 
 			// RAM Optimization, NEVER do this here,

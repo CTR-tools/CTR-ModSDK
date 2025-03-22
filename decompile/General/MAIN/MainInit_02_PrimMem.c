@@ -7,12 +7,34 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 	int GetOriginalSize(struct GameTracker* gGT);
 	int size = GetOriginalSize(gGT);
 
+	int backup = 0;
+
+// On PS1
+// Stage 0 allocates PrimMem to HighMem,
+// Stage 8 allocates PrimMem to fill rest of RAM
+#ifndef REBUILD_PC
+	
 	// optimization,
-	// use all remaining heap for primMem,
-	// LOAD_TenStages:Stage8
-	if(force == 0)
+	// LOAD_TenStages: Stage 0,
+	// allocate HighMem for checkered flag
+	if(force != 0)
 	{
-		// gGT->levelID is set cause Stage8
+		size = force/2;
+		
+		backup = (int)sdata->mempack[0].firstFreeByte;
+		
+		sdata->mempack[0].firstFreeByte = 
+			(void*)((int)sdata->mempack[0].lastFreeByte
+			- 0xA000 // primMem needed
+			- (0x2200*2)); // ghost HighMem
+	}
+
+	// optimization,
+	// LOAD_TenStages: Stage 8,
+	// allocate all remaining RAM
+	else
+	{
+		// gGT->levelID is set cause Stage 8
 		// is past all the level load+callback
 		if (gGT->levelID <= CITADEL_CITY)
 		{
@@ -46,25 +68,45 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 			size = newSize;
 		}
 	}
+
+// On PC
+// Stage 0 allocates all 24-bit RAM to primitives,
+// Stage 8 does nothing,
+// The rest of LOAD_TenStages can use 
+// 		32-bit addresses above 24-bit max
+#else
 	
 	// optimization,
-	// steal OT mem during loading screen,
-	// LOAD_TenStages:Stage0
-	else
-		size = force/2;
-
-#ifdef REBUILD_PC
-	// only allocate early-stage
-	if(force == 0) return;
+	// LOAD_TenStages: Stage 0
+	if(force != 0)
+	{
+		// allocate rest of 24-bit range
+		size = 0x1000000 - (int)sdata->mempack[0].firstFreeByte;
+		size /= 2;
+		size -= 0x100;
+	}
 	
-	// allocate rest of 24-bit range
-	size = 0x1000000 - (int)sdata->mempack[0].firstFreeByte;
-	size /= 2;
-	size -= 0x100;
+	// optimization,
+	// LOAD_TenStages: Stage 8,
+	else
+	{
+		return;
+	}
+
 #endif
 	
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
+	
+#ifndef REBUILD_PC
+	// Stage 0:
+	// restore firstFreeByte for the rest
+	// of the LOAD_TenStages loading system
+	if(backup != 0)
+	{
+		sdata->mempack[0].firstFreeByte = (void*)backup;
+	}
+#endif
 }
 
 int GetOriginalSize(struct GameTracker* gGT)
