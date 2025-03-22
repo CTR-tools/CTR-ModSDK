@@ -31,21 +31,18 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 {
 	int* addrArray = 0x1f800000;
 	
+	struct Mempack* ptrMempack = sdata->PtrMempack;
+	
 	printf("Run Animation: %s\n", ma->name);	
 	
 	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
 	{
-		// really only need 256*3, but this is safety
-		if (DECOMP_MEMPACK_GetFreeBytes() < 256*4)
+		if (DECOMP_MEMPACK_GetFreeBytes() < 16)
 		{
 			printf("Skip Animation: %s\n", ma->name);
 			return;
 		}
-		
-		// bump animations crash the game?
-		if (ma->name[0] != 't')
-			return;
-		
+				
 		char* firstFrame = MODELANIM_GETFRAME(ma);
 		struct ModelFrame* mf = &firstFrame[ma->frameSize * i];
 		
@@ -64,10 +61,8 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 		int vertexIndex = 0;
 		int stripLength = 0;
 		
-		unsigned char* writePtr = sdata->PtrMempack->firstFreeByte;
-		
 		// keep record
-		addrArray[i] = writePtr;
+		addrArray[i] = ptrMempack->firstFreeByte;
 		
 		//loop commands until we hit the end marker 
 		for (
@@ -115,15 +110,22 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 			z_alu = (z_alu + (int)newZ + bz);
 
 			//store values to stack index, axis swap is important
-			writePtr[0] = x_alu;
-			writePtr[1] = z_alu;
-			writePtr[2] = y_alu;
-			writePtr += 3;
+			char* WRITE_PTR = ptrMempack->firstFreeByte;
+			
+			WRITE_PTR[0] = x_alu;
+			WRITE_PTR[1] = z_alu;
+			WRITE_PTR[2] = y_alu;
+			
+			ptrMempack->firstFreeByte += 3;
+			
+			if (DECOMP_MEMPACK_GetFreeBytes() < 16)
+			{
+				printf("Skip Animation: %s\n", ma->name);
+				return;
+			}
 			
 			vertexIndex++;
 		}
-		
-		sdata->PtrMempack->firstFreeByte = writePtr;
 	}
 	
 	// if all frames are finished in this animation,
