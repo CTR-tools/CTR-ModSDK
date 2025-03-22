@@ -6,8 +6,25 @@ int OnlineGetNumDrivers()
 	return octr->NumDrivers;
 }
 
+void StatsUpgrade()
+{
+	/*
+		Stat 9 is acceleration,
+		Stats 11 and 12 speed related
+	*/
+	for (int i = 9; i < 13; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			data.metaPhys[i].value[j] = data.metaPhys[i].value[4]; // copy MAX
+		}
+	}
+}
+
 void octr_entryHook()
 {
+	void StatsUpgrade(); StatsUpgrade();
+	
 	// BOTS_Adv_AdjustDifficulty(); must be called before
 	// initializing any AI, either BOTS_Driver_Init or
 	// from BOTS_Driver_Convert. If AIs are wanted, then

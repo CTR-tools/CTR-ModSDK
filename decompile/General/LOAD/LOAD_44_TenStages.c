@@ -675,6 +675,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// Stage 7: Fill remaining heap
 			DECOMP_MainInit_PrimMem(gGT, 0);
 			#endif
+			
+			#ifdef USE_FASTANIM
+			#endif
 
 			if ((gGT->gameMode2 & LEV_SWAP) == 0)
 				break;

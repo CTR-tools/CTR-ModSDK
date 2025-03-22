@@ -31,7 +31,6 @@ void ModsMain()
 
 	#ifdef USE_ONLINE
 	void octr_entryHook(); octr_entryHook();
-	void StatsUpgrade(); StatsUpgrade();
 	#endif
 
 // PC port has unlimited byte budget
