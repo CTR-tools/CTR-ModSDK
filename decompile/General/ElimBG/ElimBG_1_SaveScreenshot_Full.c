@@ -82,9 +82,6 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   // wait for last Store
   DrawSync(0);
 
-  rDst.x = 0x200;
-  rDst.w = 0x80;
-  rDst.h = STRIP_H;
   DECOMP_ElimBG_SaveScreenshot_Chunk(
 		(u_short*)sdata->PausePtrsVRAM[4+(iVar4)],
 		(u_short*)sdata->PausePtrsVRAM[2+(iVar4)],
@@ -92,7 +89,6 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 
   LoadImage(&rDst,(uint32_t*)sdata->PausePtrsVRAM[4+(iVar4)]);
 
-  rDst.x = 0x200;
   rDst.y = 0xff;
   rDst.w = 0x10;
   rDst.h = 1;

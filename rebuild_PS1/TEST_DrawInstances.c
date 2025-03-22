@@ -245,7 +245,7 @@ void DrawOneInst(struct Instance* curr)
 		}
 
 		// may be compressed vertData, or uncompresed
-		char* vertData = (char*)&mf[0] + mf->vertexOffset;
+		char* vertData = MODELFRAME_GETVERT(mf);
 
 		// 3FF is background, 0x0 is minimum depth
 		void* ot = &pb->ptrOT[0];

@@ -20,6 +20,10 @@ void FastAnim_Start(struct GameTracker* gGT)
 			{
 				struct ModelAnim* ma = h->ptrAnimations[k];
 				
+				// if animation is already decompressed, skip
+				if(ma->ptrDeltaArray == 0)
+					continue;
+				
 				void FastAnim_Decompress(struct ModelAnim* ma);
 				FastAnim_Decompress(ma);	
 			}			

@@ -2,32 +2,36 @@
 #ifdef USE_FASTANIM
 void FastAnim_Decompress(struct ModelAnim* ma)
 {
-	
+	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
+	{
+		char* firstFrame = MODELANIM_GETFRAME(ma);
+		struct ModelFrame* mf = &firstFrame[ma->frameSize * i];
+		
+		// may be compressed vertData, or uncompresed
+		char* vertData = MODELFRAME_GETVERT(mf);
+		
+		printf("%s: %d, %d\n", ma->name, i);
+	}
 }
 #endif
 
 #if 0
-
-  // animation
-  ma = m->headers[0].ptrAnimations[curr->animIndex];
   
   // temporary solution, plays animations
   // at 30fps while rest of the game is 60fps
   int frameIndex = FPS_HALF(curr->animFrame);
   
-  // cast
-  char* maByte = (char*)ma;
-  maByte = MODELANIM_GETFRAME(maByte);
-  maByte = &maByte[ma->frameSize * frameIndex];
+  // Get first frame, then current frame
+  char* firstFrame = MODELANIM_GETFRAME(ma);
+  mf = &firstFrame[ma->frameSize * frameIndex];
   
-  // frame data
-  mf = maByte;
-  
-  char* vertData = (char*)&mf[0] + mf->vertexOffset;
+  char* vertData = MODELFRAME_GETVERT(mf);
 
 	Decompressed
 	
-		//copy from vertex buffer to stack index
+		// Copy uncompressed vertices to scratchpad
+		CompVertex* ptrVerts = (CompVertex*)vertData;
+		
 		stack[stackIndex].X = ptrVerts[vertexIndex].X;
 		stack[stackIndex].Y = ptrVerts[vertexIndex].Y;
 		stack[stackIndex].Z = ptrVerts[vertexIndex].Z;
