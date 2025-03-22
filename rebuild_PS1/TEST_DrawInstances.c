@@ -239,15 +239,12 @@ void DrawOneInst(struct Instance* curr)
 			// at 30fps while rest of the game is 60fps
 			int frameIndex = FPS_HALF(curr->animFrame);
 
-			// cast
-			char* maByte = (char*)ma;
-			maByte = MODELANIM_GETFRAME(maByte);
-			maByte = &maByte[ma->frameSize * frameIndex];
-
-			// frame data
-			mf = maByte;
+			// Get first frame, then current frame
+			char* firstFrame = MODELANIM_GETFRAME(ma);
+			mf = &firstFrame[ma->frameSize * frameIndex];
 		}
 
+		// may be compressed vertData, or uncompresed
 		char* vertData = (char*)&mf[0] + mf->vertexOffset;
 
 		// 3FF is background, 0x0 is minimum depth
@@ -268,7 +265,6 @@ void DrawOneInst(struct Instance* curr)
 		int vertexIndex = 0;
 		//current strip length
 		int stripLength = 0;
-		CompVertex* ptrVerts = (CompVertex*)vertData;
 		u_int* pCmd = mh->ptrCommandList;
 
 		//a "shifting window", here we update the vertices and read triangle once it's ready
@@ -367,7 +363,9 @@ void DrawOneInst(struct Instance* curr)
 				}
 				else
 				{
-					//copy from vertex buffer to stack index
+					// Copy uncompressed vertices to scratchpad
+					CompVertex* ptrVerts = (CompVertex*)vertData;
+					
 					stack[stackIndex].X = ptrVerts[vertexIndex].X;
 					stack[stackIndex].Y = ptrVerts[vertexIndex].Y;
 					stack[stackIndex].Z = ptrVerts[vertexIndex].Z;

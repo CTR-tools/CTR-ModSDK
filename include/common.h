@@ -115,16 +115,16 @@ enum HotReloadSteps
 // Not PC
 #ifndef REBUILD_PC
 #include <gccHeaders.h>
+#include <ctr_gte.h>
+#endif
+
+// PC-only, always use this
+#ifdef REBUILD_PC
+#define USE_MOREPRIM
 #endif
 
 #include <macros.h>
 #include <ctr_math.h>
-
-
-// PC Only
-#ifndef REBUILD_PC
-#include <ctr_gte.h>
-#endif
 
 #include <prim.h>
 
