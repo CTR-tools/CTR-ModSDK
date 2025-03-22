@@ -212,8 +212,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				sdata->levelLOD = 8;
 			}
 			
-			// RAM optimization, dont do this OG code
-			#if 0
+			#ifndef USE_MOREPRIM
 				// OG game
 				DECOMP_MainInit_PrimMem(gGT);
 				DECOMP_MainInit_OTMem(gGT);
@@ -672,8 +671,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_MEMPACK_SwapPacks(0);
 			DECOMP_MainInit_JitPoolsNew(gGT);
 			
-			// end of RAM, steal rest of heap
-			#if 1
+			#ifdef USE_MOREPRIM
+			// Stage 8: Fill remaining heap
 			DECOMP_MainInit_PrimMem(gGT, 0);
 			#endif
 

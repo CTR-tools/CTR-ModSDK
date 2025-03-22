@@ -1,18 +1,25 @@
 #include <common.h>
 
-// force parameter is a personal optimization
-void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
-{
+void DECOMP_MainInit_PrimMem(
+	struct GameTracker* gGT
 
+	#ifdef USE_MOREPRIM
+	, int force
+	#endif
+)
+
+{
 	int GetOriginalSize(struct GameTracker* gGT);
 	int size = GetOriginalSize(gGT);
 
 	int backup = 0;
 
-// On PS1
-// Stage 0 allocates PrimMem to HighMem,
-// Stage 8 allocates PrimMem to fill rest of RAM
-#ifndef REBUILD_PC
+#ifdef USE_MOREPRIM
+
+  // On PS1
+  // Stage 0 allocates PrimMem to HighMem,
+  // Stage 8 allocates PrimMem to fill rest of RAM
+  #ifndef REBUILD_PC
 	
 	// optimization,
 	// LOAD_TenStages: Stage 0,
@@ -69,12 +76,12 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 		}
 	}
 
-// On PC
-// Stage 0 allocates all 24-bit RAM to primitives,
-// Stage 8 does nothing,
-// The rest of LOAD_TenStages can use 
-// 		32-bit addresses above 24-bit max
-#else
+  // On PC
+  // Stage 0 allocates all 24-bit RAM to primitives,
+  // Stage 8 does nothing,
+  // The rest of LOAD_TenStages can use 
+  // 		32-bit addresses above 24-bit max
+  #else
 	
 	// optimization,
 	// LOAD_TenStages: Stage 0
@@ -93,12 +100,16 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 		return;
 	}
 
-#endif
+  #endif // PS1 or PC
+  
+#endif // USE_MOREPRIM
 	
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
 	
-#ifndef REBUILD_PC
+#ifdef USE_MOREPRIM
+	
+  #ifndef REBUILD_PC
 	// Stage 0:
 	// restore firstFreeByte for the rest
 	// of the LOAD_TenStages loading system
@@ -106,7 +117,10 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force)
 	{
 		sdata->mempack[0].firstFreeByte = (void*)backup;
 	}
+  #endif
+
 #endif
+
 }
 
 int GetOriginalSize(struct GameTracker* gGT)

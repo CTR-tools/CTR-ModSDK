@@ -337,7 +337,15 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
 void DECOMP_MainInit_Drivers(struct GameTracker *gGT);
 void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT);
 void DECOMP_MainInit_JitPoolsReset(struct GameTracker* gGT);
-void DECOMP_MainInit_PrimMem(struct GameTracker* gGT, int force);
+
+void DECOMP_MainInit_PrimMem(
+	struct GameTracker* gGT
+
+	#ifdef USE_MOREPRIM
+	, int force
+	#endif
+);
+
 void DECOMP_MainInit_OTMem(struct GameTracker* gGT);
 void DECOMP_MainInit_FinalizeInit(struct GameTracker* gGT);
 void DECOMP_MainInit_VRAMClear(void);
