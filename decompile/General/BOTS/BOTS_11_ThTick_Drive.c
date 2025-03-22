@@ -561,7 +561,15 @@ give_this_label_a_better_name2:
 			struct Terrain* botTerrain = botDriver->terrainMeta1; //iVar15
 
 			int velSomethingIdk = botDriver->botData.unk5bc.ai_speedLinear - (botDriver->const_PedalFriction_Forward * botTerrain->accel_impact >> 8); //iVar4
+			struct Terrain* botTerrain = botDriver->terrainMeta1; //iVar15
 
+			botDriver->botData.unk5bc.ai_speedLinear = velSomethingIdk;
+			int velSomethingIdk = botDriver->botData.unk5bc.ai_speedLinear - (botDriver->const_PedalFriction_Forward * botTerrain->accel_impact >> 8); //iVar4
+
+			if (velSomethingIdk < 0)
+				botDriver->botData.unk5bc.ai_speedLinear = 0;
+			if (0x6900 < botVelocity)
+				botVelocity = 0x6900;
 			botDriver->botData.unk5bc.ai_speedLinear = velSomethingIdk;
 
 			if (velSomethingIdk < 0)
@@ -632,19 +640,45 @@ give_this_label_a_better_name2:
 						botPathIndex += 9;
 					}
 				}
+				if (levelID == POLAR_PASS)
+				{
+					botPathIndex += 3;
+				}
+				else
+				{
+					if (levelID == PAPU_PYRAMID)
+					{
+						botPathIndex += 6;
+					}
+					else if (levelID == SLIDE_COLISEUM) //what the heck isn't this dead code?
+					{
+						botPathIndex += 9;
+					}
+				}
+			}
 
 				//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
 				int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10; //iVar15
+			//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
+			int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
 
 				if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < botDriver->botData.unk5bc.ai_speedLinear)
 				{
 					botDriver->botData.unk5bc.ai_turboMeter = 0;
+			if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < *(int*)botDriver->botData.unk5bc[0x18])
+			{
+				*(short*)&botDriver->botData.unk5bc[0x8] = 0;
 
 					botDriver->botData.unk5bc.ai_speedLinear -= 100 + botDriver->const_Accel_ClassStat;
 				}
 			}
 
 			if ((unsigned char)0x80u < navFrameOfConcern->goBackCount)
+				*(int*)&botDriver->botData.unk5bc[0x18] -= 100 + botDriver->const_Accel_ClassStat;
+			}
+			
+
+			if (0x80 < navFrameOfConcern->goBackCount)
 			{
 				velocityAccountingForTerrain += botDriver->unk47E;
 
