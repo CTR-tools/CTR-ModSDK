@@ -1,6 +1,22 @@
 
 #ifdef USE_FASTANIM
-void FastAnim_Decompress(struct ModelAnim* ma)
+static int bi = 0;
+
+// do NOT inline, byte budget
+int GetSignedBits(unsigned int* vertData, int bits)
+{
+	int const b = bi >> 5;
+	int const e = 32 - bits;
+	int const s = e - (bi & 31);
+	int const ret = s < 0 ?
+		(vertData[b] << -s) | (vertData[b + 1] >> (s & 31)) :
+		vertData[b] >> s;
+	bi += bits;
+	return (ret << e) >> e;
+}
+
+#define END_OF_LIST 0xFFFFFFFF
+void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 {
 	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
 	{
@@ -10,7 +26,37 @@ void FastAnim_Decompress(struct ModelAnim* ma)
 		// may be compressed vertData, or uncompresed
 		char* vertData = MODELFRAME_GETVERT(mf);
 		
-		printf("%s: %d, %d\n", ma->name, i);
+		printf("%s: %d\n", ma->name, i);
+		
+		// pCmd[0] is number of commands
+		pCmd++;
+
+		// compression
+		int x_alu = 0;
+		int y_alu = 0;
+		int z_alu = 0;
+		bi = 0;
+		
+		int vertexIndex = 0;
+		int stripLength = 0;
+		
+		//loop commands until we hit the end marker 
+		for (
+				/* */;
+				*pCmd != END_OF_LIST;
+				
+				pCmd++, stripLength++
+			)
+		{
+			//store temporal vertex packed uint
+			u_int temporal = ma->ptrDeltaArray[vertexIndex];
+			
+			u_char XBits = (temporal >> 6) & 7;
+			u_char YBits = (temporal >> 3) & 7;
+			u_char ZBits = (temporal) & 7;
+			
+			int newX = GetSignedBits(vertData, XBits + 1);
+		}
 	}
 }
 #endif

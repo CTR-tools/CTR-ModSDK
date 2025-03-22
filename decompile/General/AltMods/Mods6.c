@@ -24,8 +24,8 @@ void FastAnim_Start(struct GameTracker* gGT)
 				if(ma->ptrDeltaArray == 0)
 					continue;
 				
-				void FastAnim_Decompress(struct ModelAnim* ma);
-				FastAnim_Decompress(ma);	
+				void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd);
+				FastAnim_Decompress(ma, h->ptrCommandList);	
 			}			
 		}
 	}
