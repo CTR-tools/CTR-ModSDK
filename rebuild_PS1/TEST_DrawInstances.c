@@ -307,6 +307,7 @@ void DrawOneInst(struct Instance* curr)
 			u_short texIndex = *pCmd & 0x1FF; //9 bits
 
 			// if got a new vertex, load it
+			// TODO: Adjust naming of NEW_VERTEX
 			if ((flags & DRAW_CMD_FLAG_NEW_VERTEX) == 0)
 			{
 				// exactly Crash 2 delta compression algorithm
