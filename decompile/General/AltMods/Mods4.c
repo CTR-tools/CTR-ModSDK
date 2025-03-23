@@ -160,7 +160,7 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 	// remove ptrDeltaArray to signify as decompressed,
 	ma->ptrDeltaArray = 0;
 	
-	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
+	for(int i = 0; i < numFrames; i++)
 	{	
 		char* firstFrame = MODELANIM_GETFRAME(ma);
 		struct ModelFrame* mf = &firstFrame[ma->frameSize * i];
