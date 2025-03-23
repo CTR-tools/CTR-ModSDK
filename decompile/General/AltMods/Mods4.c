@@ -37,10 +37,6 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 
 	struct Mempack* ptrMempack = sdata->PtrMempack;
 	
-	// TODO: Only Turn animation works
-	if(ma->name[0] != 't')
-		return;
-	
 	printf("Run Animation: %s\n", ma->name);
 
 	u_int pCmd_backup = pCmd;
@@ -55,7 +51,11 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 				
 		char* firstFrame = MODELANIM_GETFRAME(ma);
 		struct ModelFrame* mf = &firstFrame[ma->frameSize * i];
-		
+
+		// TEMPORARY workaround, will break some anims
+		if (mf->vertexOffset != 0x1C)
+			mf->vertexOffset = 0x1C;
+
 		// may be compressed vertData, or uncompresed
 		char* vertData = MODELFRAME_GETVERT(mf);
 		
