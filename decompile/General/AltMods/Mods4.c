@@ -40,8 +40,20 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 	printf("Run Animation: %s\n", ma->name);
 
 	u_int pCmd_backup = pCmd;
+
+	int numFrames = ma->numFrames;
+	if ((numFrames & 0x8000) != 0)
+	{
+		// 0x8007 -> 4
+		// animation interpolates between real frames,
+		// part of compression to store less data
+
+		numFrames &= 0x7fff;
+		numFrames += 1;
+		numFrames /= 2;
+	}
 	
-	for(int i = 0; i < (ma->numFrames&0x7fff); i++)
+	for(int i = 0; i < numFrames; i++)
 	{
 		if (DECOMP_MEMPACK_GetFreeBytes() < 16)
 		{
@@ -51,10 +63,6 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 				
 		char* firstFrame = MODELANIM_GETFRAME(ma);
 		struct ModelFrame* mf = &firstFrame[ma->frameSize * i];
-
-		// TEMPORARY workaround, will break some anims
-		if (mf->vertexOffset != 0x1C)
-			mf->vertexOffset = 0x1C;
 
 		// may be compressed vertData, or uncompresed
 		char* vertData = MODELFRAME_GETVERT(mf);
