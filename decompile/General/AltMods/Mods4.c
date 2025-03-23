@@ -51,6 +51,22 @@ void FastAnim_Decompress(struct ModelAnim* ma, u_int* pCmd)
 		numFrames &= 0x7fff;
 		numFrames += 1;
 		numFrames /= 2;
+		
+		#if 1
+		// TEMPORARY
+		
+		// In the OG game renderer, there may not exist
+		// a function that can handle & 0x8000 AND frames
+		// that are decompressed, so this data cant be fed
+		// the the OG game renderer
+		
+		// These &0x8000 animations will still corrupt,
+		// even with the 0x8007->4 fix being used.
+		// On 4P Polar Pass, there's not enough memory
+		// for all animations to decompress anyway,
+		// so do not decompress animations with &0x8000.
+		return;
+		#endif
 	}
 	
 	for(int i = 0; i < numFrames; i++)
