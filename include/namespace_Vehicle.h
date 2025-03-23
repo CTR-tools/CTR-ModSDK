@@ -352,9 +352,11 @@ struct BotData
 
 	// 0x5b0
 	// unsigned int flags
-	// & 0x010 - is blasted? Something to do with damage
+	// & 0x010 - is blasted? Something to do with damage, might also be "am currently on a s/tp"
 	// & 0x100 - camera spectates this AI
 	// & 0x200 - race started for AI
+	// & 0x020 - bot has moon gravity
+	// bits 9-16 might be = (navframe flags << 8)
 	int botFlags;
 
 	// 0x5b4
@@ -440,7 +442,7 @@ struct BotData
 	short ai_rotY_608;
 
 	// 0x60a
-	short ai_quadblock_checkpointIndex; //0x60a may be a char and not a short.
+	short ai_quadblock_checkpointIndex; //0x60a almost certainly is a char and not a short.
 
 	// within the regions POTENTALNAVFRAMESTART/END, is this a navframe?
 	// POTENTAL NAV FRAME START
@@ -781,7 +783,7 @@ struct Driver
 	// 0x36e
     // Seems to control the speedometer needle to show base current speed
     // Altought the needle is also controlled a little bit by other variables that are not constants
-	short unk36E;
+	short unk36E; 
 
 	// 0x370
 	short AxisAngle3_normalVec[3];

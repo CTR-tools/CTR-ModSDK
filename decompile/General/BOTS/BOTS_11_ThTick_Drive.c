@@ -75,8 +75,8 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 	}
 
 	bool local_38; //something to do with incrementing the fire level when drift boosting
-	short idk = (((speedApprox * 0x89) + (botDriver->unkSpeedValue2 * 0x177)) * 8 >> 0xC);
-	botDriver->unkSpeedValue2 = idk;
+	short unkSpeedThing = (((speedApprox * 0x89) + (botDriver->unkSpeedValue2 * 0x177)) * 8 >> 0xC); //sVar7
+	botDriver->unkSpeedValue2 = unkSpeedThing;
 
 	if ((botDriver->actionsFlagSetPrevFrame & 8) == 0)
 	{
@@ -92,7 +92,7 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 			if (baseSpeed < 0x201) goto give_this_label_a_better_name;
 		}
 
-		botDriver->unkSpeedValue1 -= idk;
+		botDriver->unkSpeedValue1 -= unkSpeedThing;
 	}
 give_this_label_a_better_name:
 
@@ -134,7 +134,7 @@ give_this_label_a_better_name:
 
 	if ((botThread->flags & 0x1800) == 0)
 	{
-		if (botThread->modelIndex == 0x18)
+		if (botThread->modelIndex == DYNAMIC_PLAYER)
 		{
 			DECOMP_PROC_CollidePointWithBucket(botThread->siblingThread, (short*)&cpwb_param_2);
 
@@ -142,7 +142,7 @@ give_this_label_a_better_name:
 		}
 		else
 		{
-			if (botThread->modelIndex != 0x3f) goto give_this_label_a_better_name2;
+			if (botThread->modelIndex != DYNAMIC_ROBOT_CAR) goto give_this_label_a_better_name2;
 
 			uVar12 = botThread->siblingThread;
 		}
@@ -166,6 +166,8 @@ give_this_label_a_better_name2:
 	}
 
 	//puVar5 = sdata->gGT
+
+	int deltaPosThisFrame; //iVar4
 
 	if (botDriver->botData.ai_progress_cooldown == 0)
 	{
@@ -632,47 +634,44 @@ give_this_label_a_better_name2:
 						botPathIndex += 9;
 					}
 				}
+
+				//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
+				int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10; //iVar15
+
+				if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < botDriver->botData.unk5bc.ai_speedLinear)
+				{
+					botDriver->botData.unk5bc.ai_turboMeter = 0;
+
+					botDriver->botData.unk5bc.ai_speedLinear -= 100 + botDriver->const_Accel_ClassStat;
+				}
 			}
 
-			//why are we casting an address and doing arithmatic on it? as far as I can tell, this is what the original code was doing.
-			int wtf = (int)((int)navFrameOfConcern - *(int*)&sdata->NavPath_ptrNavFrameArray[botDriver->botData.botPath]->pos[0]) * 0x33334000 >> 0x10;
-
-			if ((data.botsThrottle[botPathIndex] <= wtf && wtf < data.botsThrottle[botPathIndex] + 0xb) && 9000 < *(int*)botDriver->botData.unk5bc[0x18])
-			{
-				*(short*)&botDriver->botData.unk5bc[0x8] = 0;
-
-				*(int*)&botDriver->botData.unk5bc[0x18] -= 100 + botDriver->const_Accel_ClassStat;
-			}
-			
-
-			if (0x80 < navFrameOfConcern->goBackCount)
+			if ((unsigned char)0x80u < navFrameOfConcern->goBackCount)
 			{
 				velocityAccountingForTerrain += botDriver->unk47E;
 
-				if (*(int*)&botDriver->botData.unk5bc[0x18] < velocityAccountingForTerrain)
+				if (botDriver->botData.unk5bc.ai_speedLinear < velocityAccountingForTerrain)
 				{
 					int sinOfAngle = MATH_Sin(navFrameOfConcern->goBackCount << 4);
 
-					*(int*)&botDriver->botData.unk5bc[0x18] -= botDriver->const_Gravity * sinOfAngle >> 0xc; //force on a slope due to gravity
+					botDriver->botData.unk5bc.ai_speedLinear -= botDriver->const_Gravity * sinOfAngle >> 0xc; //force on a slope due to gravity
 				}
 
 				botDriver->fireSpeed = velocityAccountingForTerrain;
 			}
 		}
 
-		if (0x6400 < *(int*)&botDriver->botData.unk5bc[0x18])
+		if (0x6400 < botDriver->botData.unk5bc.ai_speedLinear)
 		{
-			*(int*)&botDriver->botData.unk5bc[0x18] = 0x6400;
+			botDriver->botData.unk5bc.ai_speedLinear = 0x6400;
 		}
 
-		int idk = *(int*)&botDriver->botData.unk5bc[0x18] * elapsedMilliseconds >> 5; //iVar4
-		if (idk < 0)
+		deltaPosThisFrame = botDriver->botData.unk5bc.ai_speedLinear * elapsedMilliseconds >> 5; //iVar4
+		if (deltaPosThisFrame < 0)
 		{
-			idk = 0;
+			deltaPosThisFrame = 0;
 		}
-		idk += *(int*)&botDriver->botData.unk5a8;
-		//"idk"'s lifetime doesn't end here probably bc it isn't used.
-		//idk = velocity * deltaTime, probably a deltaPosition ?estimate?
+		deltaPosThisFrame += botDriver->botData.unk5a8;
 	}
 	else
 	{
@@ -681,20 +680,20 @@ give_this_label_a_better_name2:
 		botInstance->scale[1] = 0xccc;
 		botInstance->scale[2] = 0xccc;
 
-		(*(int*)&botDriver->unk5bc[0x18]) = 0; //AI speed
+		botDriver->botData.unk5bc.ai_speedLinear = 0;
 
-		if (botDriver->ai_progress_cooldown != 0)
+		if (botDriver->botData.ai_progress_cooldown != 0)
 		{
-			botDriver->ai_progress_cooldown--;
+			botDriver->botData.ai_progress_cooldown--;
 		}
 
-		iVar4_lifetime_2 = botDriver->unk5a8;
+		deltaPosThisFrame = botDriver->botData.unk5a8;
 	}
 
-	int idk = navFrameOfConcern->flags; //local_44
-	int idk2 = navFrameOfConcern->specialBits; //local_40
+	int navFrameFlags = navFrameOfConcern->flags; //local_44 idk
+	int navFrameSpecialBits = navFrameOfConcern->specialBits; //local_40 idk2
 	//local_3c == 0
-	if ((idk2 & 0x80) != 0)
+	if ((navFrameSpecialBits & 0x80) != 0)
 	{
 		botDriver->botData.botFlags |= 0x20;
 	}
@@ -709,7 +708,7 @@ give_this_label_a_better_name2:
 		gravity = (botDriver->const_Gravity * 41) / 100;
 	}
 
-	int speedY = botDriver->botData.unk5bc.ai_speedY -= (gravity * elapsedMilliseconds >> 5);
+	int speedY = botDriver->botData.unk5bc.ai_speedY -= (gravity * elapsedMilliseconds >> 5); //iVar3
 
 	if (speedY < -0x5000)
 	{
@@ -739,14 +738,14 @@ give_this_label_a_better_name2:
 	{
 		local_3c = navFrameOfConcern->specialBits;
 	}
-	int iVar15 = iVar4_lifetime_2 >> 8;
+	int iVar15 = deltaPosThisFrame >> 8;
 	int iVar3;
 
 	for (iVar3 = navDist; iVar3 <= iVar15; iVar15 -= iVar3)
 	{
 		navFrameOfConcern = nextNavFrameOfConcern;
 
-		iVar4_lifetime_2 += iVar3 * -0x100;
+		deltaPosThisFrame += iVar3 * -0x100;
 
 		int index = botDriver->botData.botPath; //index = iVar13
 
@@ -764,8 +763,8 @@ give_this_label_a_better_name2:
 			DECOMP_BOTS_Killplane(botThread);
 		}
 
-		idk |= navFrameOfConcern->flags;
-		idk2 |= navFrameOfConcern->specialBits;
+		navFrameFlags |= navFrameOfConcern->flags;
+		navFrameSpecialBits |= navFrameOfConcern->specialBits;
 
 		int uVar8;
 		if ((botDriver->botData.botFlags & 0x80) == 0)
@@ -779,14 +778,18 @@ give_this_label_a_better_name2:
 
 		botDriver->botData.botFlags &= uVar8;
 
-		short unk;
+		short unk; //sVar7
 
 		if (local_30 == 0 && (0x9e < navFrameOfConcern->rot[3] - 0x31))
 		{
 			if ((botDriver->actionsFlagSet & 1) == 0)
-				; //goto todo
-
-			unk = navFrameOfConcern->unk[0];
+			{
+				unk = navFrameOfConcern->unk[1];
+			}
+			else
+			{
+				unk = navFrameOfConcern->unk[0];
+			}
 		}
 		else
 		{
@@ -803,26 +806,25 @@ give_this_label_a_better_name2:
 		}
 	}
 
-	botDriver->botData.unk5a8 = iVar4_lifetime_2;
+	botDriver->botData.unk5a8 = deltaPosThisFrame;
 
-	int actionFlagsBuildup = (idk & 2) << 10; // uVar20
+	int actionFlagsBuildup = (navFrameFlags & 2) << 10; // uVar20
 
 	botDriver->actionsFlagSet &= 0xfffee7ff;
 
-	if ((idk & 0x2000) != 0)
+	if ((navFrameFlags & 0x2000) != 0)
 	{
 		actionFlagsBuildup |= 0x10000;
 	}
 
-	if ((idk & 4) != 0)
+	if ((navFrameFlags & 4) != 0)
 	{
-		//normally goes to uVar8, but doing it to actionFlagsBuildup should be equivalent.
 		actionFlagsBuildup |= 0x1000;
 	}
 
 	botDriver->actionsFlagSet = actionFlagsBuildup;
 
-	struct Terrain* terrain = VehAfterColl_GetTerrain(navFrameOfConcern->flags >> 3);
+	struct Terrain* terrain = VehAfterColl_GetTerrain((u_char)(navFrameOfConcern->flags >> 3));
 
 	botDriver->terrainMeta1 = terrain;
 
@@ -843,7 +845,7 @@ give_this_label_a_better_name2:
 		botInstance->flags |= 0x4000;
 	}
 
-	if ((navFrameOfConcern->specialBits & 0x30) == 0 && (botThread->modelIndex != 0x4b))
+	if ((navFrameOfConcern->specialBits & 0x30) == 0 && (botThread->modelIndex != DYNAMIC_GHOST))
 	{
 		int transparency = (navFrameOfConcern->specialBits & 0xf) * 0x9c00;
 
@@ -855,34 +857,34 @@ give_this_label_a_better_name2:
 	if ((botDriver->actionsFlagSet & 0x1000) == 0 || (actionFlagsBuildup & 0x1800) == 0)
 	{
 		botDriver->turbo_MeterRoomLeft = 0;
-		*(short*)&botDriver->botData.unk5bc[0x8] = 0;
-		*(short*)&botDriver->botData.unk5bc[0xA] = 0;
+		botDriver->botData.unk5bc.ai_turboMeter = 0;
+		botDriver->botData.unk5bc.ai_fireLevel = 0;
 	}
 	else
-	{ //The curly braces for this block are wrong
+	{
 		botDriver->actionsFlagSet |= 0x80;
-		*(short*)&botDriver->botData.unk5bc[0x8] += elapsedMilliseconds;
+		botDriver->botData.unk5bc.ai_turboMeter += elapsedMilliseconds;
 		int uVar6;
 		//this ugly tree of ifs may have been a switch perhaps?
-		if ((*(short*)&botDriver->botData.unk5bc[0x8] * 0x10000 >> 0x10 < 0xb41) || (5 < *(short*)&botDriver->botData.unk5bc[0xA]))
+		if ((botDriver->botData.unk5bc.ai_turboMeter < 0xb41) || (5 < botDriver->botData.unk5bc.ai_fireLevel))
 		{
-			if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x961) || (uVar6 = 5, 4 < *(short*)&botDriver->botData.unk5bc[0xA]))
+			if ((botDriver->botData.unk5bc.ai_turboMeter < 0x961) || (uVar6 = 5, 4 < botDriver->botData.unk5bc.ai_fireLevel))
 			{
-				if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x781) || (3 < *(short*)&botDriver->botData.unk5bc[0xA]))
+				if ((botDriver->botData.unk5bc.ai_turboMeter < 0x781) || (3 < botDriver->botData.unk5bc.ai_fireLevel))
 				{
-					if ((0x5a0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 3, *(short*)&botDriver->botData.unk5bc[0xA] < 3))
-						; //goto //todo
-					if ((*(short*)&botDriver->botData.unk5bc[0x8] < 0x3c1) || (1 < *(short*)&botDriver->botData.unk5bc[0xA]))
+					if ((0x5a0 < botDriver->botData.unk5bc.ai_turboMeter) && (uVar6 = 3, botDriver->botData.unk5bc.ai_fireLevel < 3))
+						goto LAB_800153d0;
+					if ((botDriver->botData.unk5bc.ai_turboMeter < 0x3c1) || (1 < botDriver->botData.unk5bc.ai_fireLevel))
 					{
-						if ((0x1e0 < *(short*)&botDriver->botData.unk5bc[0x8]) && (uVar6 = 1, *(short*)&botDriver->botData.unk5bc[0xA] < 1))
+						if ((0x1e0 < botDriver->botData.unk5bc.ai_turboMeter) && (uVar6 = 1, botDriver->botData.unk5bc.ai_fireLevel < 1))
 						{
-							//goto //todo
+							goto LAB_800153d0;
 						}
 					}
 					else
 					{
 						//trigger a turbo boost?
-						*(short*)&botDriver->botData.unk5bc[0xA] = 2;
+						botDriver->botData.unk5bc.ai_fireLevel = 2;
 						botDriver->turbo_MeterRoomLeft = 0;
 
 						VehFire_Increment(botDriver, 0xf0, 2, local_38 << 7);
@@ -891,7 +893,7 @@ give_this_label_a_better_name2:
 				else
 				{
 					//trigger a turbo boost?
-					*(short*)&botDriver->botData.unk5bc[0xA] = 4;
+					botDriver->botData.unk5bc.ai_fireLevel = 4;
 					botDriver->turbo_MeterRoomLeft = 0;
 
 					VehFire_Increment(botDriver, 0x1e0, 2, local_38 << 8);
@@ -899,29 +901,30 @@ give_this_label_a_better_name2:
 			}
 			else
 			{
+			LAB_800153d0:
 				//trigger a turbo boost?
-				*(short*)&botDriver->botData.unk5bc[0xA] = uVar6;
+				botDriver->botData.unk5bc.ai_fireLevel = uVar6;
 				botDriver->turbo_MeterRoomLeft = 0xa0;
 			}
 		}
 		else
 		{
 			//trigger a turbo boost?
-			*(short*)&botDriver->botData.unk5bc[0xA] = 6;
+			botDriver->botData.unk5bc.ai_fireLevel = 6;
 			botDriver->turbo_MeterRoomLeft = 0;
 
 			VehFire_Increment(botDriver, 0x2d0, 2, local_38 * 0x180);
 		}
 	}
 
-	if ((idk & 0x100) != 0)
+	if ((navFrameFlags & 0x100) != 0)
 	{
 		VehFire_Increment(botDriver, 0x78, 1, 0x900);
 
 		botDriver->botData.botFlags |= 0x10;
 	}
 
-	if ((idk & 0x1) != 0)
+	if ((navFrameFlags & 0x1) != 0)
 	{
 		VehFire_Increment(botDriver, 0x2d0, 1, 0x900);
 
@@ -942,7 +945,7 @@ give_this_label_a_better_name2:
 		}
 	}
 
-	int percentage; //aka iVar13
+	int percentage; //iVar13
 	if (iVar3 == 0)
 		percentage = 0;
 	else
@@ -971,27 +974,37 @@ give_this_label_a_better_name2:
 
 	if ((botDriver->botData.botFlags & 0x8) != 0)
 	{
+		//this block of += nonsense may not be 100% correct.
 		botDriver->botData.unk5bc.ai_accelAxis[1] = 0;
 		botDriver->botData.unk5bc.ai_velAxis[0] += botDriver->botData.unk5bc.ai_accelAxis[0];
 		botDriver->botData.unk5bc.ai_velAxis[1] += botDriver->botData.unk5bc.ai_accelAxis[1];
 		botDriver->botData.unk5bc.ai_velAxis[2] += botDriver->botData.unk5bc.ai_accelAxis[2];
-		int preX = botDriver->botData.unk5bc.ai_accelAxis[0]; //iVar3
+		int preAccelX = botDriver->botData.unk5bc.ai_accelAxis[0]; //iVar3
+		int preAccelZ = botDriver->botData.unk5bc.ai_accelAxis[2]; //iVar15
 		botDriver->botData.unk5bc.ai_accelAxis[0] >>= 1;
-		int preZ = botDriver->botData.unk5bc.ai_accelAxis[2]; //iVar15
 		botDriver->botData.unk5bc.ai_accelAxis[2] >>= 1;
+		botDriver->botData.unk5bc.ai_velAxis[0] += botDriver->botData.unk5bc.ai_accelAxis[0];
 		botDriver->botData.unk5bc.ai_velAxis[1] += botDriver->botData.unk5bc.ai_accelAxis[1];
-		botDriver->botData.unk5bc.ai_velAxis[0] += preX;
-		preX = botDriver->botData.unk5bc.ai_velAxis[0];
-		botDriver->botData.unk5bc.ai_velAxis[2] += preZ;
+		botDriver->botData.unk5bc.ai_velAxis[2] += botDriver->botData.unk5bc.ai_accelAxis[2];
+
+		botDriver->botData.unk5bc.ai_velAxis[2] += preAccelZ;
+
+		int preX = botDriver->botData.unk5bc.ai_velAxis[0]; //iVar3
 		if (preX != 0)
 		{
 			if (preX < 1)
 			{
 				botDriver->botData.unk5bc.ai_velAxis[0] = preX + 0x444;
-				if (0 < preX + 0x444); //goto todo
-				if (botDriver->botData.unk5bc.ai_accelAxis[0] == 0)
+				if (0 < preX + 0x444)
 				{
-					botDriver->botData.unk5bc.ai_accelAxis[0] = 0x444;
+					botDriver->botData.unk5bc.ai_velAxis[0] = 0;
+				}
+				else
+				{
+					if (botDriver->botData.unk5bc.ai_accelAxis[0] == 0)
+					{
+						botDriver->botData.unk5bc.ai_accelAxis[0] = 0x444;
+					}
 				}
 			}
 			else
@@ -1010,16 +1023,22 @@ give_this_label_a_better_name2:
 				}
 			}
 		}
-		int preZ = botDriver->botData.unk5bc.ai_velAxis[2]; //new scope of iVar3?
+		int preZ = botDriver->botData.unk5bc.ai_velAxis[2]; //iVar3
 		if (preZ != 0)
 		{
 			if (preZ < 1)
 			{
 				botDriver->botData.unk5bc.ai_velAxis[2] = preZ + 0x444;
-				if (0 < preZ + 0x444); //goto todo
-				if (botDriver->botData.unk5bc.ai_accelAxis[2] == 0)
+				if (0 < preZ + 0x444)
 				{
-					botDriver->botData.unk5bc.ai_accelAxis[2] = 0x444;
+					botDriver->botData.unk5bc.ai_velAxis[2] = 0;
+				}
+				else
+				{
+					if (botDriver->botData.unk5bc.ai_accelAxis[2] == 0)
+					{
+						botDriver->botData.unk5bc.ai_accelAxis[2] = 0x444;
+					}
 				}
 			}
 			else
@@ -1046,28 +1065,34 @@ give_this_label_a_better_name2:
 
 	if ((botDriver->botData.botFlags & 0x9) == 0)
 	{
-		botDriver->ai_quadblock_checkpointIndex = navFrameOfConcern->goBackCount;
+		botDriver->botData.ai_quadblock_checkpointIndex = navFrameOfConcern->goBackCount;
 	}
 	else
 	{
-		int uVar8 = (nextNavFrameOfConcern->rot[1] * 0x10) + (navFrameOfConcern->rot[1] * -0x10) & 0xfff;
-		if (0x7ff < uVar8)
+		int funnyYRotation = (nextNavFrameOfConcern->rot[1] * 0x10) + (navFrameOfConcern->rot[1] * -0x10) & 0xfff; //uVar8
+		if (0x7ff < funnyYRotation)
 		{
-			uVar8 -= 0x1000;
+			funnyYRotation -= 0x1000;
 		}
 
-		botDriver->botData.ai_rot4[1] = navFrameOfConcern->rot[1] * 0x10 + ((uVar8 * percentage) >> 0xc) & 0xfff;
+		botDriver->botData.ai_rot4[1] = navFrameOfConcern->rot[1] * 0x10 + ((funnyYRotation * percentage) >> 0xc) & 0xfff;
 
-		struct BucketSearchParams buckSearchParams;
-		buckSearchParams.pos[0] = botDriver->botData.ai_posBackup[0] + botDriver->botData.unk5bc.ai_velAxis[0] >> 8;
+		short top[3];
+		top[0] = botDriver->botData.ai_posBackup[0] + botDriver->botData.unk5bc.ai_velAxis[0] >> 8;
 		short sVar7 = botDriver->botData.ai_posBackup[1] + botDriver->botData.unk5bc.ai_velAxis[1] >> 8;
-		buckSearchParams.pos[1] = sVar7 - 0x100;
-		//TODO CONCAT22
-		buckSearchParams.pos[2] = botDriver->botData.ai_posBackup[2] + botDriver->botData.unk5bc.ai_velAxis[2] >> 8;
-		//TODO: more stuff here local_8c
+		top[1] = sVar7 - 0x100;
+		top[2] = botDriver->botData.ai_posBackup[2] + botDriver->botData.unk5bc.ai_velAxis[2] >> 8;
+
+		short bot[3];
+		bot[0] = top[0]; //OG code does CONCAT22 for 0/1, but with endianness in mind, I think this is right?
+		bot[1] = sVar7 + 0x80;
+		bot[2] = top[2];
+
+
+
 
 		/*
-		* from my understanding:
+		    from my understanding:
 			first param: 98 is x, 96 is y, 94 is z
 			second param: 92 is padding, 90 is x, 8e is y, 8c is z
 		*/
@@ -1077,15 +1102,15 @@ give_this_label_a_better_name2:
 		sps->Union.QuadBlockColl.qbFlagsIgnored = 0x10;
 		sps->Union.QuadBlockColl.searchFlags = 2;
 
-		COLL_SearchBSP_CallbackQUADBLK(&buckSearchParams, , sps, 0);
+		COLL_SearchBSP_CallbackQUADBLK((u_int*)&top[0], (u_int*)&bot[0], sps, 0);
 
 		if (sps->boolDidTouchQuadblock)
 		{
 			botDriver->quadBlockHeight = sps->Union.QuadBlockColl.hitPos[1] << 8;
 
-			botDriver->ai_quadblock_checkpointIndex = sps->Set2.ptrQuadblock->checkpointIndex;
+			botDriver->botData.ai_quadblock_checkpointIndex = sps->Set2.ptrQuadblock->checkpointIndex;
 
-			VehPhysForce_RotAxisAngle(botInstance->matrix, &sps->Set2.normalVec[0], botDriver->botData.ai_rot4[1]);
+			VehPhysForce_RotAxisAngle(&botInstance->matrix, &sps->Set2.normalVec[0], botDriver->botData.ai_rot4[1]);
 
 			botDriver->AxisAngle3_normalVec[0] = sps->Set2.normalVec[0];
 			botDriver->AxisAngle3_normalVec[1] = sps->Set2.normalVec[1];
@@ -1100,7 +1125,7 @@ give_this_label_a_better_name2:
 			}
 		}
 	}
-	iVar4_lifetime_2 >>= 8;
+	deltaPosThisFrame >>= 8;
 	if (botDriver->botData.ai_posBackup[1] < botDriver->quadBlockHeight)
 	{
 		int oldBotFlags = botDriver->botData.botFlags; //uVar8
@@ -1112,7 +1137,7 @@ give_this_label_a_better_name2:
 			{
 				if ((botDriver->actionsFlagSet & 1) == 0)
 				{
-					if (botDriver->instSelf->thread->modelIndex == 0x18)
+					if (botDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 					{
 						int mapped = DECOMP_VehCalc_MapToRange(botDriver->jumpHeightCurr - botDriver->jumpHeightPrev, 0x300, 0x1400, 0x4b, 200); //uVar8
 
@@ -1150,12 +1175,12 @@ give_this_label_a_better_name2:
 						{
 							trap(0x1c00);
 						}
-						if ((iVar3 == -1) && (iVar4_lifetime_2 * navFrameOfConcern->unk[0] == -0x80000000))
+						if ((iVar3 == -1) && (deltaPosThisFrame * navFrameOfConcern->unk[0] == -0x80000000))
 						{
 							trap(0x1800);
 						}
 #endif
-						botDriver->botData.unk5a8 = (iVar4_lifetime_2 * navFrameOfConcern->unk[0]) / iVar3 << 8;
+						botDriver->botData.unk5a8 = (deltaPosThisFrame * navFrameOfConcern->unk[0]) / iVar3 << 8;
 					}
 					short sVar7 = botDriver->jump_LandingBoost;
 
@@ -1163,36 +1188,33 @@ give_this_label_a_better_name2:
 					{
 						if (0x3c0 < sVar7)
 						{
-							iVar4_lifetime_2 = local_38 * 0x60;
-							//goto todo
+							deltaPosThisFrame = !!local_38 * 0x60;
 						}
-						if (0x280 < sVar7)
+						else if (0x280 < sVar7)
 						{
-							iVar4_lifetime_2 = 0;
-							//goto todo
+							deltaPosThisFrame = 0;
 						}
 					}
 					else
 					{
-						iVar4_lifetime_2 = local_38 * 0xc0;
-
-						VehFire_Increment(botDriver, 0x2d0, 2, iVar4_lifetime_2);
+						deltaPosThisFrame = !!local_38 * 0xc0;
 					}
+					VehFire_Increment(botDriver, 0x2d0, 2, deltaPosThisFrame);
 					botDriver->actionsFlagSet |= 2;
 				}
-				iVar4_lifetime_2 = botDriver->quadBlockHeight - botDriver->posPrev.y;
+				deltaPosThisFrame = botDriver->quadBlockHeight - botDriver->posPrev.y;
 
 				botDriver->botData.ai_posBackup[1] = botDriver->quadBlockHeight;
 
-				botDriver->botData.ai_posBackup[0] = iVar4_lifetime_2;
+				botDriver->botData.ai_posBackup[0] = deltaPosThisFrame;
 
-				if ((idk & 0x400) != 0 || (botDriver->instTntRecv != NULL))
+				if ((navFrameFlags & 0x400) != 0 || (botDriver->instTntRecv != NULL))
 				{
 					int oldActionsFlags = botDriver->actionsFlagSet;
 
 					botDriver->actionsFlagSet |= 0x400;
 
-					botDriver->botData.unk5bc.ai_speedY = iVar4_lifetime_2 + 0x1400;
+					botDriver->botData.unk5bc.ai_speedY = deltaPosThisFrame + 0x1400;
 
 					if (botThread->modelIndex == 0x18)
 					{
@@ -1204,7 +1226,7 @@ give_this_label_a_better_name2:
 					botDriver->botData.unk5bc.ai_speedY = 16000;
 				}
 
-				if ((idk & 0x1800) == 0)
+				if ((navFrameFlags & 0x1800) == 0)
 				{
 					botDriver->botData.unk5bc.drift_unk1 = 0;
 
@@ -1214,7 +1236,7 @@ give_this_label_a_better_name2:
 				{
 					botDriver->kartState = KS_DRIFTING;
 
-					if ((idk & 0x800) == 0)
+					if ((navFrameFlags & 0x800) == 0)
 					{
 						botDriver->botData.unk5bc.drift_unk1 = 0x2aa;
 					}
@@ -1236,21 +1258,21 @@ give_this_label_a_better_name2:
 						{
 							trap(0x1c00);
 						}
-						if ((iVar3 == -1) && (iVar4_lifetime_2 * navFrameOfConcern->unk[0] == -0x80000000))
+						if ((iVar3 == -1) && (deltaPosThisFrame * navFrameOfConcern->unk[0] == -0x80000000))
 						{
 							trap(0x1800);
 						}
 #endif
-						botDriver->botData.unk5a8 = (iVar4_lifetime_2 * navFrameOfConcern->unk[0]) / iVar3 << 8;
+						botDriver->botData.unk5a8 = (deltaPosThisFrame * navFrameOfConcern->unk[0]) / iVar3 << 8;
 					}
 				}
-				iVar4_lifetime_2 = -botDriver->botData.unk5bc.ai_speedY >> 1;
+				deltaPosThisFrame = -botDriver->botData.unk5bc.ai_speedY >> 1;
 
-				botDriver->botData.unk5bc.ai_speedY = iVar4_lifetime_2;
+				botDriver->botData.unk5bc.ai_speedY = deltaPosThisFrame;
 
-				if (iVar4_lifetime_2 < 0)
+				if (deltaPosThisFrame < 0)
 				{
-					botDriver->botData.unk5bc.ai_speedY = -iVar4_lifetime_2;
+					botDriver->botData.unk5bc.ai_speedY = -deltaPosThisFrame;
 				}
 
 				char bVar10 = botDriver->botData.unk626 + 1;
@@ -1307,32 +1329,32 @@ give_this_label_a_better_name2:
 		botDriver->jump_LandingBoost += elapsedMilliseconds;// idk & 0x1800;
 	}
 
-	iVar4_lifetime_2 = 0x18;
+	int iVar4_lifetime_3 = 0x18;
 
-	if (botDriver->botData.unk5ba.drift_unk1 != 0)
+	if (botDriver->botData.unk5bc.drift_unk1 != 0)
 	{
-		iVar4_lifetime_2 = 0x60;
+		iVar4_lifetime_3 = 0x60;
 	}
 
-	int iVar3 = botDriver->botData.unk5bc.ai_mulDrift - iVar4_lifetime_2;
-	if (botDriver->botData.unk5ba.drift_unk1 < botDriver->botData.unk5bc.ai_mulDrift)
+	int iVar3_lifetime_2 = botDriver->botData.unk5bc.ai_mulDrift - iVar4_lifetime_3;
+	if (botDriver->botData.unk5bc.drift_unk1 < botDriver->botData.unk5bc.ai_mulDrift)
 	{
-		botDriver->botData.unk5bc.ai_mulDrift = iVar3;
+		botDriver->botData.unk5bc.ai_mulDrift = iVar3_lifetime_2;
 
-		if (iVar3 * 0x10000 >> 0x10 < botDriver->botData.unk5ba.drift_unk1)
+		if (iVar3_lifetime_2 < botDriver->botData.unk5bc.drift_unk1)
 		{
-			botDriver->botData.unk5bc.ai_mulDrift = botDriver->botData.unk5ba.drift_unk1;
+			botDriver->botData.unk5bc.ai_mulDrift = botDriver->botData.unk5bc.drift_unk1;
 		}
 	}
 	else
 	{
-		iVar4_lifetime_2 += botDriver->botData.unk5bc.ai_mulDrift;
+		iVar4_lifetime_3 += botDriver->botData.unk5bc.ai_mulDrift;
 
-		botDriver->botData.unk5bc.ai_mulDrift = iVar4_lifetime_2;
+		botDriver->botData.unk5bc.ai_mulDrift = iVar4_lifetime_3;
 
-		if (botDriver->botData.unk5ba.drift_unk1 < iVar4_lifetime_2 * 0x10000 >> 0x10)
+		if (botDriver->botData.unk5bc.drift_unk1 < iVar4_lifetime_3)
 		{
-			botDriver->botData.unk5bc.ai_mulDrift = botDriver->botData.unk5ba.drift_unk1;
+			botDriver->botData.unk5bc.ai_mulDrift = botDriver->botData.unk5bc.drift_unk1;
 		}
 	}
 	botDriver->multDrift = botDriver->botData.unk5bc.ai_mulDrift;
@@ -1363,7 +1385,6 @@ give_this_label_a_better_name2:
 						botDriver->botData.botFlags &= 0xfffffff9;
 					}
 					newKartState = 3;
-				LAB_800160f4:
 					botDriver->kartState = newKartState;
 				}
 			}
@@ -1380,7 +1401,7 @@ give_this_label_a_better_name2:
 						botDriver->botData.unk5bc.ai_squishCooldown = 0;
 						botDriver->botData.unk5bc.ai_mulDrift = 0;
 					}
-					iVar4 = botDriver->botData.unk5bc.rotXZ - local_34;
+					iVar4 = botDriver->botData.unk5bc.rotXZ - elapsedMilliseconds;
 					botDriver->botData.unk5bc.rotXZ = iVar4;
 					if (iVar4 * 0x10000 < 1)
 					{
@@ -1401,15 +1422,15 @@ give_this_label_a_better_name2:
 						{
 							SVECTOR v;
 							v.vx = 0xfa;
-							if (plant != NULL && (plant->inst != NULL || (v.vx = -0xfa, plant->inst->prev == NULL))))
+							if (plant != NULL && (plant->inst != NULL || (v.vx = -0xfa, plant->inst->prev == NULL)))
 							{
 								v.vx = 0xfa;
 							}
 							v.vy = 0;
 							v.vz = 0x2ee;
 
-							SetRotMatrix(plantInst->matrix);
-							SetTransMatrix(plantInst->matrix);
+							SetRotMatrix(&plantInst->matrix);
+							SetTransMatrix(&plantInst->matrix);
 
 							VECTOR v2;
 							long l3;
@@ -1436,7 +1457,7 @@ give_this_label_a_better_name2:
 						}
 
 						botDriver->botData.unk5bc.ai_speedLinear = 0;
-						int iVar4 = botDriver->botData.unk5bc.rotXZ - local_34;
+						int iVar4 = botDriver->botData.unk5bc.rotXZ - elapsedMilliseconds;
 						botDriver->botData.unk5bc.rotXZ = iVar4;
 						newKartState = 5;
 						if (iVar4 * 0x10000 < 1) //what is this condition
@@ -1445,9 +1466,9 @@ give_this_label_a_better_name2:
 							botInstance->flags &= 0xffffff7f;
 							botDriver->botData.ai_progress_cooldown = 1;
 							DECOMP_BOTS_MaskGrab(botThread);
-							newKartState = 5; //wtf is this doing, it's not read anywhere.
+							newKartState = 5; //why re-assign it to the same value?
 						}
-						goto LAB_800160f4;
+						botDriver->kartState = newKartState;
 					}
 				}
 			}
@@ -1472,8 +1493,8 @@ give_this_label_a_better_name2:
 	}
 
 	if (
-		((local_40 & 0x10) != 0) &&
-		(0x1c1f < botDriver->botData.unk5bc.ai_speedLinear || data.characterIDs[botDriver->driverID] == 0xf)
+		((navFrameSpecialBits & 0x10) != 0) &&
+		(0x1c1f < botDriver->botData.unk5bc.ai_speedLinear || data.characterIDs[botDriver->driverID] == NITROS_OXIDE)
 		)
 	{
 		int iVar4 = (local_3c & 0xf);
@@ -1562,7 +1583,7 @@ give_this_label_a_better_name2:
 		}
 		else
 		{
-			int uVar11 - botDriver->botData.unk5bc.ai_mulDrift & 0xfff;
+			int uVar11 = -botDriver->botData.unk5bc.ai_mulDrift & 0xfff;
 
 			botDriver->botData.unk5bc.ai_simpTurnState = uVar11;
 			if (0x7ff < uVar11)
@@ -1626,7 +1647,9 @@ give_this_label_a_better_name2:
 
 		//some GTE stuff TODO
 
-		int uVar16, uVar12, uVar14;
+		int uVar16 = 0, uVar12 = 0, uVar14 = 0; //no wiggle for now
+
+		botDriver->botData.unk5bc.ai_turboMeter = 0;
 
 		botDriver->rotCurr.x += uVar16;
 		botDriver->rotCurr.z += uVar14;
@@ -1640,16 +1663,18 @@ give_this_label_a_better_name2:
 		rot[1] = navFrameOfConcern->rot[1] << 4;
 		rot[2] = navFrameOfConcern->rot[2] << 4;
 
-		ConvertRotToMatrix(local_80, rot); //TODO local_80
+		MATRIX m;
 
-		botDriver->AxisAngle3_normalVec[0] = local_80._2_2_; //2 bytes in, 2 bytes long?
-		botDriver->AxisAngle3_normalVec[1] = local_78;
-		botDriver->AxisAngle3_normalVec[2] = local_72;
+		ConvertRotToMatrix(&m, rot);
 
-		//botInstance->bitCompressed_NormalVector_AndDriverIndex = TODO
+		botDriver->AxisAngle3_normalVec[0] = m.m[0][0];
+		botDriver->AxisAngle3_normalVec[1] = m.m[0][1];
+		botDriver->AxisAngle3_normalVec[2] = m.m[1][1];
+
+		botInstance->bitCompressed_NormalVector_AndDriverIndex = (m.m[0][0] >> 6) & 0xff | m.m[0][1] & 0x3fc0 << 2 | ((m.m[1][1] >> 6) & 0xff) << 0x10 | (botDriver->driverID + 1) * 0x1000000;
 	}
 
-	ConvertRotToMatrix(botInstance->matrix, botDriver->rotCurr);
+	ConvertRotToMatrix(&botInstance->matrix, &botDriver->rotCurr.x);
 
 	//c is row-major (i.e., ticking the rightmost indeces has smaller memory address delta vs ticking the leftmost indeces)
 	botDriver->AxisAngle2_normalVec[0] = botInstance->matrix.m[0][1];
@@ -1664,23 +1689,23 @@ give_this_label_a_better_name2:
 	botDriver->axisRotationX = botDriver->botData.ai_rot4[1] & 0xfff;
 	botDriver->AxisAngle2_normalVec[2] = uVar6;
 
-	int iVar4 = MATH_Cos(navFrameOfConcern->rot[3]);
+	int iVar4_lifetime_2 = MATH_Cos(navFrameOfConcern->rot[3]);
 
 	//bruh the jump is sinosuidal and not parabolic???
-	botDriver->jumpHeightCurr = botDriver->botData.unk5bc.ai_speedY * iVar4 >> 0xc;
+	botDriver->jumpHeightCurr = botDriver->botData.unk5bc.ai_speedY * iVar4_lifetime_2 >> 0xc;
 
-	iVar4 = MATH_Cos(botDriver->axisRotationX);
+	iVar4_lifetime_2 = MATH_Cos(botDriver->axisRotationX);
 
-	botDriver->zSpeed = botDriver->botData.unk5bc.ai_speedLinear * iVar4 >> 0xc;
+	botDriver->zSpeed = botDriver->botData.unk5bc.ai_speedLinear * iVar4_lifetime_2 >> 0xc;
 
-	iVar4 = MATH_Sin(botDriver->axisRotationX);
+	iVar4_lifetime_2 = MATH_Sin(botDriver->axisRotationX);
 
 	int uVar11 = botDriver->rotCurr.z & 0xfff;
 
 	botDriver->ySpeed = botDriver->botData.unk5bc.ai_speedY;
 	botDriver->rotCurr.z = uVar11;
 
-	botDriver->xSpeed = botDriver->botData.unk5bc.ai_speedLinear * iVar4 >> 0xc;
+	botDriver->xSpeed = botDriver->botData.unk5bc.ai_speedLinear * iVar4_lifetime_2 >> 0xc;
 	if (0x7ff < uVar11)
 	{
 		botDriver->rotCurr.z = uVar11 - 0x1000;
@@ -1770,12 +1795,12 @@ give_this_label_a_better_name2:
 
 LAB_8001686c:
 
-	if ((local_40 & 0x40) != 0 || (botDriver->botData.botFlags & 9) != 0)
+	if ((navFrameSpecialBits & 0x40) != 0 || (botDriver->botData.botFlags & 9) != 0)
 	{
 		DECOMP_BOTS_LevInstColl(botThread);
 	}
 
-	if (local_44 & 0x8000 != 0)
+	if (navFrameFlags & 0x8000 != 0)
 	{
 		botInstance->flags |= 0x2000;
 	}
@@ -1786,24 +1811,24 @@ LAB_8001686c:
 
 	VehFrameProc_Driving(botThread, botDriver);
 
-	if ((botDriver->botFlags & 2) != 0 && botDriver->unk5ba == 2)
+	if ((botDriver->botData.botFlags & 2) != 0 && botDriver->botData.unk5ba == 2)
 	{
 		short rot[3];
-		rot[0] = (*(short*)&botDriver->unk5bc[0]) << 8;
+		rot[0] = (*(short*)&botDriver->botData.unk5bc.rotXZ) << 8;
 		rot[2] = 0;
-		rot[1] = (*(short*)&botDriver->unk5bc[0] * 0xe0);
+		rot[1] = (*(short*)&botDriver->botData.unk5bc.rotXZ * 0xe0);
 
 		ConvertRotToMatrix(&sdata->rotXZ, &rot[0]);
 
-		MATH_MatrixMul(&sdata->rotXYZ, &botInstance->matrix, &sdata->rotXZ);
+		MATH_MatrixMul(&sdata->rotXYZ, &botInstance->matrix, (VECTOR*)&sdata->rotXZ);
 
-		MATH_MatrixMul(&botInstance->matrix, &sdata->rotXYZ, &sdata->arcadeDiff);
+		MATH_MatrixMul(&botInstance->matrix, &sdata->rotXYZ, (VECTOR*)&sdata->arcadeDiff);
 
 		//MATRIX is only 30 bytes, but is 32 because there's 2 bytes of padding (at the end?) this additional data is stored there?
 		(*(int*)(((char*)botInstance) + 0x48)) += 0x20;
 	}
 
-	if ((botDriver->botFlags & 4) == 0)
+	if ((botDriver->botData.botFlags & 4) == 0)
 	{
 		VehEmitter_DriverMain(botThread, botDriver);
 	}
@@ -1813,7 +1838,7 @@ LAB_8001686c:
 		EngineSound_Player(botDriver);
 	}
 
-	short camRot = botDriver->angle - (botDriver->ai_rotY_608 & 0xfff);
+	short camRot = botDriver->angle - (botDriver->botData.ai_rotY_608 & 0xfff);
 
 	botDriver->rotCurr.w = -camRot;
 
@@ -1821,18 +1846,18 @@ LAB_8001686c:
 		camRot |= 0xf000;
 	}
 
-	botDriver->ai_rotY_608 += (camRot >> 3) & 0xfff;
+	botDriver->botData.ai_rotY_608 += (camRot >> 3) & 0xfff;
 
 	if (botThread->modelIndex == 0x18)
 	{
 		short posTop[3];
 		short posBot[3];
 
-		posTop[0] = (short)((botDriver->ai_posBackup[0] + (*(int*)&botDriver->unk5bc[0x28])) >> 8);
-		posBot[1] = (short)((botDriver->ai_posBackup[1] + (*(int*)&botDriver->unk5bc[0x28 + 0x4])) >> 8);
+		posTop[0] = (short)((botDriver->botData.ai_posBackup[0] + botDriver->botData.unk5bc.ai_velAxis[0]) >> 8);
+		posBot[1] = (short)((botDriver->botData.ai_posBackup[1] + botDriver->botData.unk5bc.ai_velAxis[1]) >> 8);
 		posTop[1] = posBot[1] - 0x100;
 		posBot[1] += 0x40;
-		posTop[2] = (short)((botDriver->ai_posBackup[2] + (*(int*)&botDriver->unk5bc[0x28 + 0x8])) >> 8);
+		posTop[2] = (short)((botDriver->botData.ai_posBackup[2] + botDriver->botData.unk5bc.ai_velAxis[2]) >> 8);
 		posBot[0] = posTop[0];
 		posBot[2] = posTop[2];
 
@@ -1841,11 +1866,11 @@ LAB_8001686c:
 		sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
 		sps->Union.QuadBlockColl.searchFlags = 2;
 
-		COLL_SearchTree_FindQuadblock_Touching((u_int*)&posTop[0], (u_int*)&posBot[0], sps, 0);
+		COLL_SearchBSP_CallbackQUADBLK((u_int*)&posTop[0], (u_int*)&posBot[0], sps, 0);
 
 		if (sps->boolDidTouchQuadblock)
 		{
-			botDriver->underDriver = (struct QuadBlock*)&sps->unk4C[0x34];
+			botDriver->underDriver = sps->Set2.ptrQuadblock;
 		}
 	}
 }

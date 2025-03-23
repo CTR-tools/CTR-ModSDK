@@ -2462,8 +2462,8 @@ LAB_8001509c:
       if ((*(short *)(iVar17 + 0x5c4) < 0x961) || (uVar6 = 5, 4 < *(short *)(iVar17 + 0x5c6))) {
         if ((*(short *)(iVar17 + 0x5c4) < 0x781) || (3 < *(short *)(iVar17 + 0x5c6))) {
           if ((0x5a0 < *(short *)(iVar17 + 0x5c4)) && (uVar6 = 3, *(short *)(iVar17 + 0x5c6) < 3))
-          //skip next 12 lines of code
-          goto LAB_800153d0;
+			//skip next 12 lines of code
+			goto LAB_800153d0;
           if ((*(short *)(iVar17 + 0x5c4) < 0x3c1) || (1 < *(short *)(iVar17 + 0x5c6))) {
             if ((0x1e0 < *(short *)(iVar17 + 0x5c4)) && (uVar6 = 1, *(short *)(iVar17 + 0x5c6) < 1))
             //skip next 9 lines of code
