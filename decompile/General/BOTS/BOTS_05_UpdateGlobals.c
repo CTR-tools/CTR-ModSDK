@@ -20,7 +20,7 @@ void BOTS_UpdateGlobals(void) //UNTESTED
 		if (d != NULL)
 		{
 			bestHuman = d; //assume human for now
-			if (d->actionsFlagSet & 0x100000 != 0)
+			if ((d->actionsFlagSet & 0x100000) != 0)
 			{
 				bestHuman = sdata->bestHumanRank; //is bot, nevermind
 				sdata->bestRobotRank = d; //since it's a bot, it is also the *best* bot so far
