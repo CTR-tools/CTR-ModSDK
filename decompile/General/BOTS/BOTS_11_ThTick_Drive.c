@@ -33,29 +33,27 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 	}
 
 	int elapsedMilliseconds = sdata->gGT->elapsedTimeMS; //local_34
-	int iVar4 = -elapsedMilliseconds;
 
-	botDriver->reserves += iVar4;
+	botDriver->reserves -= elapsedMilliseconds;
 	if (botDriver->reserves * 0x1000 < 0)
 		botDriver->reserves = 0;
 
-	botDriver->turbo_outsideTimer += iVar4;
+	botDriver->turbo_outsideTimer -= elapsedMilliseconds;
 	if (botDriver->turbo_outsideTimer * 0x1000 < 0)
 		botDriver->turbo_outsideTimer = 0;
 
-	botDriver->squishTimer += iVar4;
+	botDriver->squishTimer -= elapsedMilliseconds;
 	if (botDriver->squishTimer * 0x1000 < 0)
 		botDriver->squishTimer = 0;
 
-	botDriver->burnTimer += iVar4;
+	botDriver->burnTimer -= elapsedMilliseconds;
 	if (botDriver->burnTimer * 0x1000 < 0)
 		botDriver->burnTimer = 0;
 
-	botDriver->clockReceive += iVar4;
+	botDriver->clockReceive -= elapsedMilliseconds;
 	if (botDriver->clockReceive * 0x1000 < 0)
 		botDriver->clockReceive = 0;
 
-	//(*(short*)&botDriver->unk5bc[0x2]) = 0;
 	botDriver->botData.unk5bc.drift_unk1 = 0;
 	botDriver->kartState = KS_NORMAL;
 
@@ -71,7 +69,7 @@ void DECOMP_BOTS_ThTick_Drive(struct Thread* botThread)
 		speedApprox += 0xf00;
 	}
 	else {
-		speedApprox = ((speedApprox << 1) >> 1);
+		speedApprox = ((speedApprox << 1) >> 1); //why does the OG code do this? is this just abs(speedApprox)?
 	}
 
 	bool local_38; //something to do with incrementing the fire level when drift boosting
@@ -1800,7 +1798,7 @@ LAB_8001686c:
 		DECOMP_BOTS_LevInstColl(botThread);
 	}
 
-	if (navFrameFlags & 0x8000 != 0)
+	if ((navFrameFlags & 0x8000) != 0)
 	{
 		botInstance->flags |= 0x2000;
 	}
@@ -1833,7 +1831,7 @@ LAB_8001686c:
 		VehEmitter_DriverMain(botThread, botDriver);
 	}
 
-	if (botInstance->thread->modelIndex == 0x18) //why doesn't the original code just use botThread???
+	if (botInstance->thread->modelIndex == DYNAMIC_PLAYER) //why doesn't the original code just use botThread???
 	{
 		EngineSound_Player(botDriver);
 	}
@@ -1848,7 +1846,7 @@ LAB_8001686c:
 
 	botDriver->botData.ai_rotY_608 += (camRot >> 3) & 0xfff;
 
-	if (botThread->modelIndex == 0x18)
+	if (botThread->modelIndex == DYNAMIC_PLAYER)
 	{
 		short posTop[3];
 		short posBot[3];
