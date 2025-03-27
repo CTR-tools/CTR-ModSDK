@@ -76,7 +76,8 @@ void DebugProfiler_Subsection(int flag)
 	
 	if(ptrOpenSect == 0)
 	{
-		if(flag != 2)
+		// dont let fake sections explode on-boot
+		if(numSectionsUsed > 20)
 			return;
 		
 		fakeSectionOpen = 1;
@@ -96,7 +97,6 @@ void DebugProfiler_Subsection(int flag)
 	
 	if((flag & 2) != 0)
 	{
-		printf("DrawSync: %d %d\n", fakeSectionOpen, time);
 		ptrOpenSect->posD = time;
 	}
 	
@@ -164,12 +164,6 @@ void DebugProfiler_Draw()
 	for(int i = 0; i < numSectionsUsed; i++)
 	{
 		struct ProfilerSection* s = &ptrSectArr[i];
-		
-		if(i == 0) printf("\n\n");
-		printf("Start: %d %08x %d\n", 
-			i, 
-			*(int*)&s->a,
-			s->timeStart);
 		
 		if((s->flagsVDT & 1) != 0)
 		{
