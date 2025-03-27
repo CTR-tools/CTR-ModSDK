@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
+void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGamepads)
 {
 	//this is missing a bunch of stuff vs ghidra
     unsigned char bVar1;
@@ -10,12 +10,26 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
     int iVar7;
     short sVar8;
 
-    // racing wheel data
-    for (char i = 0; i < 8; i++)
-    {
-        struct GamepadBuffer *pad = &gGS->gamepad[i];
-        struct ControllerPacket *packet = pad->ptrControllerPacket;
-        struct RacingWheelData *rwd = &data.rwd[i];
+    struct GamepadBuffer *pad;
+    struct ControllerPacket *packet;
+	 struct RacingWheelData *rwd;
+
+	#ifdef USE_4PADTEST
+	packet = gGamepads->gamepad[0].ptrControllerPacket;
+	#endif
+
+	// for RWD
+	int i;
+
+    for(
+			pad = &gGamepads->gamepad[0], rwd = &data.rwd[0], i = 0; 
+			pad < &gGamepads->gamepad[8]; 
+			pad++, rwd++, i++
+		)
+    {	
+		#ifndef USE_4PADTEST
+        packet = pad->ptrControllerPacket;
+		#endif
 
 		// wipe to default
         pad->rwd = NULL;
@@ -95,31 +109,29 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 				pad->stickLX_dontUse1 = sVar8;
 			}
         }
-
-        iVar4 = pad->stickLX_dontUse1 - 0x80;
-        if (iVar4 < 0) iVar4 = -iVar4;
-        if (0x30 < iVar4) pad->framesSinceLastInput = 0;
-
-        iVar4 = pad->stickLY_dontUse1 - 0x80;
-        if (iVar4 < 0) iVar4 = -iVar4;
-        if (0x30 < iVar4) pad->framesSinceLastInput = 0;
-
-        iVar4 = pad->stickRX - 0x80;
-        if (iVar4 < 0) iVar4 = -iVar4;
-        if (0x30 < iVar4) pad->framesSinceLastInput = 0;
 		
-        iVar4 = pad->stickRY - 0x80;
-        if (iVar4 < 0) iVar4 = -iVar4;
-        if (0x30 < iVar4) pad->framesSinceLastInput = 0;
+        if ((unsigned int)(pad->stickLX_dontUse1 - 0x80) > 0x30)
+			pad->framesSinceLastInput = 0;
+		
+        if ((unsigned int)(pad->stickLY_dontUse1 - 0x80) > 0x30)
+			pad->framesSinceLastInput = 0;
+		
+        if ((unsigned int)(pad->stickRX - 0x80) > 0x30)
+			pad->framesSinceLastInput = 0;
+		
+        if ((unsigned int)(pad->stickRY - 0x80) > 0x30)
+			pad->framesSinceLastInput = 0;
 
 		pad->stickLX = pad->stickLX_dontUse1;
 		pad->stickLY = pad->stickLY_dontUse1;
 
+		int held = pad->buttonsHeldCurrFrame;
+
         // In this order: Up, Down, Left, Right
-        if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
-        if ((pad->buttonsHeldCurrFrame & 2) != 0) pad->stickLY = 0xFF;
-        if ((pad->buttonsHeldCurrFrame & 4) != 0) pad->stickLX = 0;
-        if ((pad->buttonsHeldCurrFrame & 8) != 0) pad->stickLX = 0xFF;
+        if ((held & 1) != 0) pad->stickLY = 0;
+        if ((held & 2) != 0) pad->stickLY = 0xFF;
+        if ((held & 4) != 0) pad->stickLX = 0;
+        if ((held & 8) != 0) pad->stickLX = 0xFF;
 
 		#ifdef USE_ONLINE
 		break;

@@ -8,18 +8,28 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
     char j;
     char* btnMapPtr;
     u_int *puVar2;
-    struct ControllerPacket *ptrControllerPacket;
     unsigned short uVar4;
     u_int uVar5;
 
     struct GamepadBuffer *pad;
+    struct ControllerPacket *ptrControllerPacket;
+
+	#ifdef USE_4PADTEST
+	ptrControllerPacket = gGamepads->gamepad[0].ptrControllerPacket;
+	#endif
 
     // loop through all 8 gamepadBuffers
-    for(pad = &gGamepads->gamepad[0]; pad < &gGamepads->gamepad[8]; pad++)
+    for(
+			pad = &gGamepads->gamepad[0]; 
+			pad < &gGamepads->gamepad[8]; 
+			pad++
+		)
     {
-        ptrControllerPacket = pad->ptrControllerPacket;
-
         pad->buttonsHeldPrevFrame = pad->buttonsHeldCurrFrame;
+
+		#ifndef USE_4PADTEST
+        ptrControllerPacket = pad->ptrControllerPacket;
+		#endif
 
         // if pointer is invalid
         if (ptrControllerPacket == NULL)

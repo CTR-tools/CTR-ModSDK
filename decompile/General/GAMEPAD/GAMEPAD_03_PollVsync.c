@@ -59,7 +59,7 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 			);
 			
 			#ifdef USE_4PADTEST
-			unplugged = 0;
+			unpluggedPort = 0;
 			#endif
 			
             if (unpluggedPort)

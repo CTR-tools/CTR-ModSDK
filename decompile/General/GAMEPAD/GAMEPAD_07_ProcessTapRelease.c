@@ -6,20 +6,31 @@
 
 void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 {
+    int numConnected = gGamepads->numGamepadsConnected;
+    if (numConnected == 0) return;
+
     char cVar1;
-    struct GamepadBuffer *pad;
-
-    char numConnected = gGamepads->numGamepadsConnected;
-
     cVar1 = sdata->unkPadSetActAlign[6];
+	
+    struct GamepadBuffer *pad;
+    struct ControllerPacket *ptrControllerPacket;
 
-    if (!numConnected)
-        return;
+	#ifdef USE_4PADTEST
+	ptrControllerPacket = gGamepads->gamepad[0].ptrControllerPacket;
+	#endif
 
-    for (char i = 0; i < numConnected; i++)
-    {
-        pad = &gGamepads->gamepad[i];
-        if (pad->ptrControllerPacket == NULL)
+    for(
+			pad = &gGamepads->gamepad[0]; 
+			pad < &gGamepads->gamepad[numConnected]; 
+			pad++
+		)
+    {	
+		#ifndef USE_4PADTEST
+        ptrControllerPacket = pad->ptrControllerPacket;
+		#endif
+
+        // if pointer is invalid
+        if (ptrControllerPacket == NULL)
         {
             // erase tap and release
             pad->buttonsTapped = 0;
