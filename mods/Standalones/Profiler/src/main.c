@@ -359,15 +359,77 @@ void DebugProfiler_DrawOTag()
 	}
 }
 
+void Hook_MEMPACK_Init(int a)
+{
+	DebugProfiler_Init();
+	
+	MEMPACK_Init(a);
+}
+
+void Hook_MainFrame_ResetDB(int a, int b)
+{
+	MainFrame_ResetDB(a, b);
+	
+	void DebugProfiler_Reset();
+	DebugProfiler_Reset();
+}
+
+void Hook_MainFrame_GameLogic(int a, int b)
+{
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0xFF, 0, 0);
+	
+	MainFrame_GameLogic(a, b);
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
+
+void Hook_RenderBucket_Execute(int a, int b)
+{
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0xFF, 0);
+	
+	RenderBucket_Execute(a, b);
+	
+	int DebugProfiler_SectionEnd();
+	//int x = 
+	DebugProfiler_SectionEnd();
+	//printf("Retail Instance: %d\n", x);
+}
+
+// ...
+
+int Hook_Timer()
+{
+	// vsync profiler
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0);
+	
+	return Timer_GetTime_Total();
+}
+
+void Hook_DrawOTag(int a)
+{
+	void DebugProfiler_DrawOTag();
+	DebugProfiler_DrawOTag();
+	
+	DrawOTag(a);
+}
+
+#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+
 void RunEntryHook()
 {
-	// 4P 1 pad: Set 800255c4 to 1-byte 0x04
+	// 4P with 1 pad
+	*(char*)0x800255c4 = 4;
 	
 	// Find each by breakpointing function,
 	// then find $ra and go back 2 instructions
 	
-	// [JAL hook] 	[RaceFlag_DrawSelf] 	(pink start/end)
-	// [unk]								(black stall start)
+	// [JAL hook]	[MEMPACK_Init]			(profiler init)
+	// [JAL hook]	[MainFrame_ResetDB]		(profiler reset)
+	// [JAL hook]	[MainFrame_GameLogic]	(red start/end)
 	// [JAL hook]	[RenderBucket_Execute]	(green start/end)
 	// [JAL hook]	[CTR_ClearRenderLists_1P2P]	(blue start) -- 1p
 	// [JAL hook]	[CTR_ClearRenderLists_1P2P]	(blue start) -- 2p
@@ -377,6 +439,21 @@ void RunEntryHook()
 	// [JAL hook]	[227]					(blue end) -- 2p
 	// [JAL hook]	[228]					(blue end) -- 3p
 	// [JAL hook]	[229]					(blue end) -- 4p
+	// [JAL hook] 	[RaceFlag_DrawSelf] 	(pink start/end)
+	
+	// Timer_GetTime_Total is only in the OG game, stripped in decomp
+	// [JAL hook]	[Timer_GetTime_Total]	(black stall start)
 	// [JAL hook]	[DrawOTag]				(black end)
-	// [JAL hook]	[MainFrame_GameLogic]	(red start/end)
+	
+	// JMP hooks are needed on the JR $RA
+	// of VSync callback and DrawSync callback for Vs and Ds
+
+	*(int*)0x8003c634 = JAL(Hook_MEMPACK_Init);
+	*(int*)0x8003cd70 = JAL(Hook_MainFrame_ResetDB);
+	*(int*)0x8003ce74 = JAL(Hook_MainFrame_GameLogic);
+	*(int*)0x80036be0 = JAL(Hook_RenderBucket_Execute);
+	
+	
+	*(int*)0x80037854 = JAL(Hook_Timer);
+	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
 }
