@@ -84,6 +84,9 @@ void DebugProfiler_Subsection(int flag)
 {
 	bool fakeSectionOpen = 0;
 	
+	if(sdata->boolPlayVideoSTR == 1)
+		return;
+
 	if(ptrOpenSect == 0)
 	{
 		// dont let fake sections explode on-boot
