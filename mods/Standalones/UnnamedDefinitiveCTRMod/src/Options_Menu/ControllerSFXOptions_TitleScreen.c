@@ -22,10 +22,13 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* me
 		{
 			struct ControllerPacket* ptrControllerPacket = sdata->gGamepads->gamepad[i].ptrControllerPacket;
 
+			// === THIS IS NOT CORRECT ===
+			// Since discovering plugged enum, this is not right
+
 			// if gamepad is not an "analog controller", as CTR uses to refer to jogcons and negcons
 			if
 			(
-				((ptrControllerPacket == 0) || (ptrControllerPacket->isControllerConnected != 0)) ||
+				((ptrControllerPacket == 0) || (ptrControllerPacket->plugged != PLUGGED)) ||
 				((ptrControllerPacket->controllerData != ((PAD_ID_JOGCON << 4) | 3) && (ptrControllerPacket->controllerData != ((PAD_ID_NEGCON << 4) | 3))))
 			)
 			{
@@ -302,14 +305,14 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 		{
 			for(int i = 0; i < gamepad->numGamepads; i++)
 			{
-				int gamepadConnected = false;
+				int gamepadUnplugged = false;
 				int dualShockRowColor = ORANGE;
 				int currPad = gamepad->gamepadId[i];
 				struct ControllerPacket* ptrControllerPacket = sdata->gGamepads->gamepad[currPad].ptrControllerPacket;
 
-				if (ptrControllerPacket == 0 || ptrControllerPacket->isControllerConnected != 0)
+				if (ptrControllerPacket == 0 || ptrControllerPacket->plugged != PLUGGED)
 				{
-					gamepadConnected = true;
+					gamepadUnplugged = true;
 					dualShockRowColor = GRAY;
 				}
 
@@ -337,7 +340,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 				dualShockRowColor = GRAY;
 				/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
-				if ((!gamepadConnected) && (dualShockRowColor = CORTEX_RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0))
+				if ((!gamepadUnplugged) && (dualShockRowColor = CORTEX_RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0))
 				{
 					dualShockRowColor = TINY_GREEN;
 				}

@@ -20,12 +20,17 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* me
 	{
 		struct ControllerPacket* ptrControllerPacket = sdata->gGamepads->gamepad[i].ptrControllerPacket;
 
+		// === THIS IS NOT CORRECT ===
+		// Since discovering plugged enum, this is not right
+		// Last checked Mar 27 2025, this is NOT on buildList,
+		// need to double-check with ghidra, what should this do?
+
 		// if gamepad is not an "analog controller", as CTR uses to refer to jogcons and negcons
 		if
 		(
 			(
 				(ptrControllerPacket == 0) ||
-				(ptrControllerPacket->isControllerConnected != 0)
+				(ptrControllerPacket->plugged != PLUGGED)
 			) ||
 
 			(
@@ -354,16 +359,14 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 
 		for(int i = 0; i < gamepad->numGamepads; i++)
 		{
-			int gamepadConnected = false;
 			int dualShockRowColor = ORANGE;
 			int currPad = gamepad->gamepadId[i];
 
 			struct ControllerPacket* ptrControllerPacket =
 				sdata->gGamepads->gamepad[currPad].ptrControllerPacket;
 
-			if (ptrControllerPacket == 0 || ptrControllerPacket->isControllerConnected != 0)
+			if (ptrControllerPacket == 0 || ptrControllerPacket->plugged != PLUGGED)
 			{
-				gamepadConnected = true;
 				dualShockRowColor = GRAY;
 			}
 
@@ -386,8 +389,7 @@ force_inline void DISPLAYRECTMENU_MainFreeze_MenuPtrOptions(struct RectMenu* men
 			int boolDisabled =
 				(gGT->gameMode1 & data.gGT_gameMode1_VibPerPlayer[currPad]) == 0;
 
-			dualShockRowColor = GRAY;
-			if (!gamepadConnected)
+			if (dualShockRowColor != GRAY)
 			{
 				// RED: 3
 				// WHITE: 4

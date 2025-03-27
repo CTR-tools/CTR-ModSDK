@@ -34,7 +34,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry()
 		sdata_boolOpenWheelConfig = 0;
 		return;
 	}
-	if (psVar4->isControllerConnected != '\0')
+	if (psVar4->plugged != PLUGGED)
 	{
 		sdata_boolOpenWheelConfig = 0;
 		return;

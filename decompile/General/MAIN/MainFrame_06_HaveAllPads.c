@@ -2,50 +2,28 @@
 
 int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame)
 {
-	short isGamepadsConnected = 1;
-
-	#ifdef USE_4PADTEST
-	return 1;
-	#endif
-
+	
+#ifndef USE_4PADTEST
+	
 	// if game is not loading
 	if (sdata->Loading.stage == -1)
 	{
-		// if there are no players (cutscene)
-		if (numPlyrNextGame == 0)
+		struct GamepadBuffer* gb = 
+			&sdata->gGamepads->gamepad[0];
+					
+		for (int i = 0; i < numPlyrNextGame; i++)
 		{
-			// return 0 means gamepad is missing
-			isGamepadsConnected = 0;
+			struct ControllerPacket* packet = 
+				gb->ptrControllerPacket;
+			
+			if (packet == NULL) return 0;
+			if (packet->plugged != PLUGGED) return 0;
+			
+			gb++
 		}
-
-		// if number of players is not zero
-		else
-		{
-			u_int uVar4 = 1;
-			for (int i = 0; i < numPlyrNextGame; i++)
-			{
-				bool bVar1 = uVar4 != 0;
-				uVar4 = 0;
-				if (
-					// if there are no other gamepads unplugged (so far)
-					(bVar1) &&
-
-					// if this gamepad is plugged in
-					(sdata->gGamepads->gamepad[i].ptrControllerPacket != NULL)
-					)
-				{
-					// Check if gamepad is compatible with game (not a gun or mouse)
-					uVar4 = (u_int)(sdata->gGamepads->gamepad[i].ptrControllerPacket->isControllerConnected == 0);
-				}
-
-				// save the result
-				isGamepadsConnected = (short)uVar4;
-			}
-		}
-
-		// return 0 only if a gamepad is missing
-		// that is currently needed in the game
-		return isGamepadsConnected;
 	}
+	
+#endif
+	
 	return 1;
 }

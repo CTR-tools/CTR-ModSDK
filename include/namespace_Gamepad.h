@@ -49,10 +49,16 @@ enum Buttons
 	BTN_TRIANGLE = 0x40000
 };
 
+enum Plug
+{
+	UNPLUGGED = -1,
+	PLUGGED = 0
+};
+
 struct __attribute__((packed)) ControllerPacket
 {
 	// 0x0
-	uint8_t	isControllerConnected;    // A.K.A. controller status -- name might be wrong...
+	uint8_t	plugged;
 
 	// 0x1
 	// single byte that you can access as either a pair of nibbles or a whole integer
@@ -117,7 +123,7 @@ struct __attribute__((packed)) MultitapPacket
 {
 	// 0x0
 	// see ControllerPacket
-	uint8_t	isControllerConnected;
+	uint8_t	plugged;
 
 	// 0x1
 	// ditto

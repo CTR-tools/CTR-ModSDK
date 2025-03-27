@@ -30,7 +30,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
         }
 
         // must be zero to confirm connection
-        else if (ptrControllerPacket->isControllerConnected == 0)
+        else if (ptrControllerPacket->plugged == PLUGGED)
 		{
 			// endian flip
 			uVar4 = (ptrControllerPacket->controllerInput1 << 8) | ptrControllerPacket->controllerInput2;

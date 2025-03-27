@@ -406,7 +406,7 @@ FinishLoading:
 				}
 
 				if ((gGT->gameMode1 & LOADING) == 0)
-				{
+				{					
 					#ifdef USE_PROFILER					
 					void DebugProfiler_SectionStart(char* name, char r, char g, char b);
 					DebugProfiler_SectionStart(0, 0xFF, 0, 0);

@@ -14,7 +14,10 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
     maxPadsPerPort = 1;
 
     // If there is a multitap present
-    if ((gGamepads->slotBuffer[0].isControllerConnected == 0) && gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
+    if (
+			(gGamepads->slotBuffer[0].plugged == PLUGGED) && 
+			(gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
+		)
     {
         // 4 players, with multitap
         numPorts = 1;
@@ -43,19 +46,16 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         // to this gamepad port. 1 for no mtap, 4 for mtap
         for (char i = 0; i < maxPadsPerPort; i++)
         {	
-            // if this is not a multitap,
-            // skip next block, and just start
-            // if-body with ptrPadBuff
             if
             (
 				(
-					// multitap here, and controller connected
+					// multitap here, and unplugged
 					(gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
-					(gGamepads->slotBuffer[port].controllers[i].isControllerConnected != 0)
+					(gGamepads->slotBuffer[port].controllers[i].plugged != PLUGGED)
 				) ||
 				
-				// controller connected
-				(gGamepads->slotBuffer[port].isControllerConnected != 0)
+				// controller unplugged
+				(gGamepads->slotBuffer[port].plugged != PLUGGED)
             )
             {
                 // no analog sticks found

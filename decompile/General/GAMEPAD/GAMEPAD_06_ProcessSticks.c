@@ -29,7 +29,7 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
         // if pointer is valid
         if (packet == NULL) continue;
 
-        if (packet->isControllerConnected == 0)
+        if (packet->plugged == PLUGGED)
         {
 			bVar1 = packet->controllerData;
 			
