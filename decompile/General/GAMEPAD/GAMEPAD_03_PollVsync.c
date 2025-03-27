@@ -45,9 +45,9 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         // loop through all gamepads that can connect
         // to this gamepad port. 1 for no mtap, 4 for mtap
         for (char i = 0; i < maxPadsPerPort; i++)
-        {	
-            if
-            (
+        {
+			bool unpluggedPort =
+			(
 				(
 					// multitap here, and unplugged
 					(gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
@@ -56,11 +56,18 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 				
 				// controller unplugged
 				(gGamepads->slotBuffer[port].plugged != PLUGGED)
-            )
+			);
+			
+			#ifdef USE_4PADTEST
+			unplugged = 0;
+			#endif
+			
+            if (unpluggedPort)
             {
                 // no analog sticks found
                 pad->gamepadType = 0;
             }
+			
             else
             {
                 uVar4 = (port << 4) | i;

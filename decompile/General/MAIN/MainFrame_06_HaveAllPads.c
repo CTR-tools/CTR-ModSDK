@@ -19,7 +19,7 @@ int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame)
 			if (packet == NULL) return 0;
 			if (packet->plugged != PLUGGED) return 0;
 			
-			gb++
+			gb++;
 		}
 	}
 	
