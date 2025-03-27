@@ -30,10 +30,12 @@
 #endif
 
 // work around for PsyCross
+// no$psx executes vsync callback once every 262 units,
+// determined by rcntTotalUnits global, 262*60 = 15720
 #include <time.h>
 clock_t startClock;
 #define ResetRCnt(x) startClock = clock();
-#define GetRCnt(x) ((clock() - startClock) * 16000) / CLOCKS_PER_SEC_FIX
+#define GetRCnt(x) ((clock() - startClock) * 15720) / CLOCKS_PER_SEC_FIX
 
 // ======= Syntax Correction =============
 

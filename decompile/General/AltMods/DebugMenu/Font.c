@@ -137,3 +137,101 @@ void DebugFont_DrawLine(char* text, int posX, int posY, int color)
 		i++;
 	}
 }
+
+// Jam this here, cause byte budget
+static int timeFrame;
+static int timeCpu;
+static int timeGpu;
+static int timeRed;
+static int timeGreen;
+static int timeBlue;
+
+void DebugProfiler_ListAllDebugStats()
+{
+	if((sdata->gGT->gameMode1 & DEBUG_MENU) != 0)
+		return;
+	
+	int Debug_GetNumSections();
+	int numSectionsUsed = Debug_GetNumSections();
+	
+	int Debug_GetFirstSect();
+	struct ProfilerSection* ptrSectArr = Debug_GetFirstSect();
+	
+	if((sdata->gGT->timer & FPS_DOUBLE(16)) != 0)
+	{
+		timeFrame =
+			ptrSectArr[numSectionsUsed-1].timeEnd -
+			ptrSectArr[0].timeStart;
+			
+		timeCpu =
+			ptrSectArr[numSectionsUsed-2].timeEnd -
+			ptrSectArr[0].timeStart;
+			
+		for(int i = 0; i < numSectionsUsed; i++)
+		{
+			if((ptrSectArr[i].flagsVDT & 2) != 0)
+			{
+				timeGpu = 
+					ptrSectArr[i].posD -
+					ptrSectArr[0].timeStart;
+			}
+			
+			if(*(int*)&ptrSectArr[i].a == 0xff00)
+			{
+				timeRed =
+					ptrSectArr[i].timeEnd -
+					ptrSectArr[i].timeStart;
+			}
+			
+			if(*(int*)&ptrSectArr[i].a == 0xff0000)
+			{
+				timeGreen =
+					ptrSectArr[i].timeEnd -
+					ptrSectArr[i].timeStart;
+			}
+			
+			if(*(int*)&ptrSectArr[i].a == 0xff000000)
+			{
+				timeBlue =
+					ptrSectArr[i].timeEnd -
+					ptrSectArr[i].timeStart;
+			}
+		}
+	}
+	
+	if(timeFrame == 0) return;
+	if(timeCpu == 0) return;
+	if(timeGpu == 0) return;
+	if(timeRed == 0) return;
+	if(timeGreen == 0) return;
+	if(timeBlue == 0) return;
+	
+	#ifndef REBUILD_PC
+	char* string = 0x1f800000;
+	#else
+	char string[128];
+	#endif
+
+	// Time units:
+	// 262 -> 1 vsync (60fps)
+	// 524 -> 2 vsync (30fps)
+	// 15720 -> 1 full second
+
+	sprintf(string, "FULL %d %dFPS", timeFrame, 15720/timeFrame);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x44, FONT_SMALL, 0);
+	
+	sprintf(string, "CPU  %d %dFPS", timeCpu, 15720/timeCpu);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x4C, FONT_SMALL, 0);
+	
+	sprintf(string, "GPU  %d %dFPS", timeGpu, 15720/timeGpu);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x54, FONT_SMALL, 0);
+	
+	sprintf(string, "RED  %d", timeRed);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x5C, FONT_SMALL, 0);
+	
+	sprintf(string, "GREN %d", timeGreen);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x64, FONT_SMALL, 0);
+	
+	sprintf(string, "BLUE %d", timeBlue);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x6C, FONT_SMALL, 0);
+}

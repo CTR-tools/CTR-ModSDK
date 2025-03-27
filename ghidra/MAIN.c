@@ -431,7 +431,7 @@ LAB_80034e74:
 	// divide by ~3
 	uVar5 = (iVar10 << 5) / 100;
 
-	// 1000 * 16000 units / 5246 / 3 = 1000ms
+	// 1000 * 15720 units / 5246 / 3 = 1000ms
 	// 1000 * elapsedUnits / 5246 / 3 = milliseconds
 
 	// elapsed milliseconds per frame

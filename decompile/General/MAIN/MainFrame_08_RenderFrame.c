@@ -494,6 +494,11 @@ void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RECT window;
 	int i;
 
+#ifdef USE_PROFILER
+	// cause it annoys me when I'm busy
+	return;
+#endif
+
 	// dont draw error if demo mode, or cutscene,
 	// or if no controllers are missing currently
 	if(gGT->boolDemoMode == 1) return;

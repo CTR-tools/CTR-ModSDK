@@ -5,14 +5,24 @@
 
 // No room, need MEMPACK_AllocMem
 // static struct ProfilerSection sections[32];
-struct ProfilerSection* ptrSectArr=0;
-struct ProfilerSection* ptrOpenSect=0;
+static struct ProfilerSection* ptrSectArr=0;
+static struct ProfilerSection* ptrOpenSect=0;
 
 // No room, use global PrimMem instead,
 // especially since we have PrimMem expansion
 // POLY_F4 polyArrF4[128];
 
 static int numSectionsUsed = 0;
+
+int Debug_GetNumSections()
+{
+	return numSectionsUsed;
+}
+
+int Debug_GetFirstSect()
+{
+	return ptrSectArr;
+}
 
 int Debug_GetPreciseTime()
 {
@@ -150,6 +160,9 @@ int DebugProfiler_Scale(int input)
 
 void DebugProfiler_Draw()
 {
+	void DebugProfiler_ListAllDebugStats();
+	DebugProfiler_ListAllDebugStats();
+	
 	struct GameTracker* gGT = sdata->gGT;
 	
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
