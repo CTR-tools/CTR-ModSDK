@@ -115,40 +115,41 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
 	// used for multiplayer wumpa
     sdata->ptrPushBufferUI = (int)NULL;
+	
+#ifdef USE_DECALMP // OG game
 	if (1 < gGT->numPlyrCurrGame)
 	{
-      sdata->ptrPushBufferUI = (int)&sdata->pushBuffer_DecalMP;
-    }
-
-// skipping pixelLOD
-#if 0
-	// second half of pixel-LOD pushBuffer, copy from PushBuffer_UI
-    sdata->dataLibFiller[40] = gGT->pushBuffer_UI.matrix_ViewProj.m[0][0];
-    sdata->dataLibFiller[44] = gGT->pushBuffer_UI.matrix_ViewProj.m[0][2];
-    sdata->dataLibFiller[48] = gGT->pushBuffer_UI.matrix_ViewProj.m[1][1];
-    sdata->dataLibFiller[52] = gGT->pushBuffer_UI.matrix_ViewProj.m[2][0];
-    sdata->dataLibFiller[56] = gGT->pushBuffer_UI.matrix_ViewProj.m[2][2];
-    sdata->dataLibFiller[60] = gGT->pushBuffer_UI.matrix_ViewProj.t[0];
-    sdata->dataLibFiller[64] = gGT->pushBuffer_UI.matrix_ViewProj.t[1];
-    sdata->dataLibFiller[68] = gGT->pushBuffer_UI.matrix_ViewProj.t[2];
-
-	// first half of pixel-LOD pushBuffer, copy from PushBuffer_UI
-    sdata->dataLibFiller[0] = gGT->pushBuffer_UI.pos[0];
-    sdata->dataLibFiller[2] = gGT->pushBuffer_UI.pos[1];
-    sdata->dataLibFiller[4] = gGT->pushBuffer_UI.pos[2];
-    sdata->dataLibFiller[28] = gGT->pushBuffer_UI.rect.x;
-    sdata->dataLibFiller[30] = gGT->pushBuffer_UI.rect.y;
-    sdata->dataLibFiller[32] = gGT->pushBuffer_UI.rect.w;
-    sdata->dataLibFiller[34] = gGT->pushBuffer_UI.rect.h;
+	  struct PushBuffer* pb = &sdata->pushBuffer_DecalMP;
+	  struct PushBuffer* ui = &gGT->pushBuffer_UI;
+	  
+      sdata->ptrPushBufferUI = (int)pb;
+    
+	  // second half of pixel-LOD pushBuffer, copy from PushBuffer_UI
+	  *(int*)&pb->matrix_ViewProj.m[0][0] = *(int*)&ui->matrix_ViewProj.m[0][0];
+	  *(int*)&pb->matrix_ViewProj.m[0][2] = *(int*)&ui->matrix_ViewProj.m[0][2];
+	  *(int*)&pb->matrix_ViewProj.m[1][1] = *(int*)&ui->matrix_ViewProj.m[1][1];
+	  *(int*)&pb->matrix_ViewProj.m[2][0] = *(int*)&ui->matrix_ViewProj.m[2][0];
+	  *(int*)&pb->matrix_ViewProj.m[2][2] = *(int*)&ui->matrix_ViewProj.m[2][2];
+	  pb->matrix_ViewProj.t[0] = ui->matrix_ViewProj.t[0];
+	  pb->matrix_ViewProj.t[1] = ui->matrix_ViewProj.t[1];
+	  pb->matrix_ViewProj.t[2] = ui->matrix_ViewProj.t[2];
+	  
+	  // first half of pixel-LOD pushBuffer, copy from PushBuffer_UI
+	  pb->pos[0] = ui->pos[0];
+	  pb->pos[1] = ui->pos[1];
+	  pb->pos[2] = ui->pos[2];
+	  pb->rect.x = ui->rect.x;
+	  pb->rect.y = ui->rect.y;
+	  pb->rect.w = ui->rect.w;
+	  pb->rect.h = ui->rect.h;
+	  
+	  pb->ptrOT = ui->ptrOT;
+	  pb->distanceToScreen_PREV = ui->distanceToScreen_PREV;
+	}
 #endif
 
-    sdata->pushBuffer_DecalMP.ptrOT = gGT->pushBuffer->ptrOT;
-    sdata->pushBuffer_DecalMP.distanceToScreen_PREV = gGT->pushBuffer->distanceToScreen_PREV;
-
-	// Replace PushBufferUI with regular PushBuffer,
-	// workaround for decompile, and it just looks better
     sdata->ptrFruitDisp =
-		(int) DECOMP_UI_INSTANCE_BirthWithThread(0x37,(int)DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrPushBufferUI*/0,/*sdata->s_fruitdisp*/0);
+		(int) DECOMP_UI_INSTANCE_BirthWithThread(0x37,(int)DECOMP_UI_ThTick_CountPickup,3,1,sdata->ptrPushBufferUI,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&

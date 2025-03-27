@@ -5026,13 +5026,13 @@ struct sData
 	// 8009AE58 start of psyq lib data
 	#endif
 
-	// 8009AD18 - UsaRetail
+	// 8009AE28 - UsaRetail
 	#if BUILD == UsaRetail || BUILD == EurRetail
-	char dataLibFiller[0x140];
+	char dataLibFiller[0x30];
 	#elif BUILD == JpnTrial
-	char dataLibFiller[0x13C];
+	char dataLibFiller[0x2C];
 	#elif BUILD == JpnRetail
-	char dataLibFiller[0x168];
+	char dataLibFiller[0x58];
 	#endif
 
 	// after dataLibFiller is 8009AE58,

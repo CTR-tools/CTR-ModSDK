@@ -250,8 +250,15 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllConfetti(gGT);
 	RenderAllStars(gGT);
 
-	#if 0
-	// Multiplayer PixelLOD Part 1
+	#ifdef USE_DECALMP // OG game
+	if((gGT->renderFlags & 0x100) != 0)
+	{
+		if(gGT->numPlyrCurrGame > 1)
+		{
+			void DecalMP_01(struct GameTracker* gGT);
+			DecalMP_01(gGT);
+		}
+	}
 	#endif
 #endif
 
@@ -271,8 +278,15 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllNormalParticles(gGT);
 	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 
-	#if 0
-	// Multiplayer PixelLOD Part 2
+	#ifdef USE_DECALMP // OG game
+	if((gGT->renderFlags & 0x100) != 0)
+	{
+		if(gGT->numPlyrCurrGame > 1)
+		{
+			void DecalMP_02(struct GameTracker* gGT);
+			DecalMP_02(gGT);
+		}
+	}
 	#endif
 
 	RenderAllFlag0x40(gGT); // I need a better name
@@ -340,11 +354,17 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 
-		// We just draw full wumpa geometry instead
 		MultiplayerWumpaHUD(gGT);
 
-		#if 0
-		// Multiplayer Pixel LOD Part 3
+		#ifdef USE_DECALMP
+		if((gGT->renderFlags & 0x100) != 0)
+		{
+			if(gGT->numPlyrCurrGame > 1)
+			{
+				void DecalMP_03(struct GameTracker* gGT);
+				DecalMP_03(gGT);
+			}
+		}
 		#endif
 
 		if(
@@ -1542,7 +1562,20 @@ SkyboxGlow:
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
-	// must also work for 1P, or Online breaks
+#ifdef USE_DECALMP
+
+	// OG game code
+	if((gGT->hudFlags & 1) == 0) return;
+	if(gGT->numPlyrCurrGame < 2) return;
+
+	void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
+	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
+	
+#else
+	
+	if((gGT->hudFlags & 1) == 0) return;
+
+	// Remove manually at end-of-race
 	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		struct Driver* d = gGT->drivers[i];
@@ -1559,14 +1592,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 		}
 	}
 
-	if((gGT->hudFlags & 1) == 0) return;
-	if(gGT->numPlyrCurrGame < 2) return;
-
-	// we just draw 3D Wumpa instead of 2D,
-	// come back to this later for purists
-	#if 0
-	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
-	#endif
+#endif
 }
 
 #ifndef USE_ONLINE

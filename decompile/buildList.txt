@@ -1262,7 +1262,7 @@ common, exe, UI_SaveLapTime, 0x0,                 		General/UI/UI_AAA_BigBlock1.
 //common, exe, UI_RenderFrame_CrystChall, 0x0,             General/UI/UI_46_RenderFrame_CrystChall.c
 //UI_AAA_BigBlock1 ends here ---^
 
-// Removed from decomp because it is NOT USED
+// Needed for USE_DECALMP
 //common, exe, UI_RenderFrame_Wumpa3D_2P3P4P, 0x0,         General/UI/UI_47_RenderFrame_Wumpa3D_2P3P4P.c //TODO (not called in the rewrite?)
 
 common, exe, UI_VsQuipReadDriver, 0x0,                   General/UI/UI_48_VsQuipReadDriver.c

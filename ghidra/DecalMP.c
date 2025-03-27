@@ -65,7 +65,7 @@ void FUN_80023488(void)
 		  // get instance
           iVar6 = *(int *)(iVar1 + 0x1c);
 
-		  // instance flags
+		  // instance flags (PushBuffer exists, PIXEL_LOD)
           *(uint *)(iVar6 + 0x28) = *(uint *)(iVar6 + 0x28) | 0x300;
 
 		  // if this driver in the loop of 8,

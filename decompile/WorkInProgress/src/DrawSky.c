@@ -69,7 +69,7 @@ u_int numSegment = 8;
 // draws skybox segment
 // every skybox is splitted in 8 segments, only 4 are drawn at a time
 // pSkybox - lev ptr_skybox
-// pPushBuffer - pushBuffer, do we really use tileview in this func?
+// pPushBuffer - pushBuffer, do we really use it?
 // primMem - primMem
 // ptrOT - pushBuffer->ptrOT
 void DrawSky_Piece(Skybox* pSkybox, void* pPushBuffer, void* primMem, int ptrOT)

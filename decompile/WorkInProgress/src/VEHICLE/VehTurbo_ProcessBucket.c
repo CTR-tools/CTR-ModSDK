@@ -23,7 +23,7 @@ void DECOMP_VehTurbo_ProcessBucket(struct Thread* turboThread) {
       for (char i = 0; i < numPlyr; i++) {
         temp4 = driveridpp[i].instFlags;
         // judging by 0x28 being copied to 0xb8 ?
-        if ((temp4 & TILEVIEW_EXISTS) == 0) {
+        if ((temp4 & PUSHBUFFER_EXISTS) == 0) {
           // flags
           temp4 &= ~(DRAW_SUCCESSFUL); // failed
           turboIdpp[i].instFlags |= temp4;
