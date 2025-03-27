@@ -69,15 +69,14 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   DECOMP_MEMPACK_PushState();
 
 
-// original ps1 with fragmented memory,
-// but also only if NOT using RAMEX, because
-// with RAMEX, we dont need to save 0x1b00 bytes
+// 2mb RAM, decomp/General, ram holes
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
   // saves 0x1B00 bytes
   void RelocMemory_DefragUI_Mods1();
   int backup = (int)sdata->mempack[0].firstFreeByte;
   sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1;
 #endif
+
 
   // normally maxed at 96
   int numThread = uVar9 * 3 >> 7;
@@ -88,6 +87,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	sizeof(struct Thread), /*"ThreadPool"*/0);
 
 
+// 2mb RAM, decomp/General, ram holes
 // 8000F000 - 8000F820 to MediumStackPool
 // 8000F820 - 8000FFF0 to $sp stack memory
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
@@ -108,22 +108,20 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	sizeof(struct Item) + sizeof(struct WarpPad), 
 	/*"MediumStackPool"*/0);
 
-// original ps1 with fragmented memory
+
+// 2mb RAM, decomp/General, ram holes
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
   sdata->mempack[0].firstFreeByte = (void*)backup;
+  
+  // override, only if 3P4P VS
+  if(gGT->numPlyrCurrGame > 2)
+  {
+	  void OVR_Region3();
+	  unsigned int addrSmallPool = (unsigned int)OVR_Region3;
+	  addrSmallPool -= 6500;
+	  sdata->mempack[0].firstFreeByte = (void*)addrSmallPool;
+  }
 #endif
-
-
-
-  // normally maxed at 128
-  int numInstance = uVar9 >> 5;
-
-  // InstancePool
-  DECOMP_JitPool_Init(
-	&gGT->JitPools.instance, numInstance,
-	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr),
-	/*"InstancePool"*/0);
-
 
 
   // normally maxed at 100
@@ -139,7 +137,24 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	/*"SmallStackPool"*/0);
 
 
+// 2mb RAM, decomp/General, ram holes
+#if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
+  // override, only if 3P4P VS
+  if(gGT->numPlyrCurrGame > 2)
+	  sdata->mempack[0].firstFreeByte = (void*)backup;
+#endif
 
+
+  // normally maxed at 128
+  int numInstance = uVar9 >> 5;
+
+  // InstancePool
+  DECOMP_JitPool_Init(
+	&gGT->JitPools.instance, numInstance,
+	sizeof(struct Instance) + (sizeof(struct InstDrawPerPlayer) * numPlyr),
+	/*"InstancePool"*/0);
+	
+	
   int numDriver = uVar7 >> 9;
   if (gGT->numPlyrCurrGame == 2) numDriver = 6;
   if (gGT->numPlyrCurrGame > 2) numDriver = 4;
