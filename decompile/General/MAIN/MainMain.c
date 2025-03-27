@@ -339,6 +339,11 @@ FinishLoading:
 				// Start new frame (ClearOTagR)
 				DECOMP_MainFrame_ResetDB(gGT);
 
+				#ifdef USE_PROFILER
+				void DebugProfiler_Reset();
+				DebugProfiler_Reset();
+				#endif
+
 				if
 				(
 					// If you're in Demo Mode
@@ -400,16 +405,21 @@ FinishLoading:
 					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 
-				#ifdef USE_PROFILER
-				void DebugProiler_Reset();
-				DebugProiler_Reset();
-				#endif
-
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
+					#ifdef USE_PROFILER					
+					void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+					DebugProfiler_SectionStart(0, 0xFF, 0, 0);
+					#endif
+				
 					DECOMP_MainFrame_GameLogic(gGT, gGS);
+				
+					#ifdef USE_PROFILER
+					int DebugProfiler_SectionEnd();
+					DebugProfiler_SectionEnd();
+					#endif
 				}
-
+				
 				// If you are in demo mode
 				if (gGT->boolDemoMode != '\0')
 				{

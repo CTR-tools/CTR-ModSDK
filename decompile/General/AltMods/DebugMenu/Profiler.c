@@ -34,7 +34,7 @@ void DebugProfiler_Init()
 	ptrSectArr = DECOMP_MEMPACK_AllocMem(size);
 }
 
-void DebugProiler_Reset()
+void DebugProfiler_Reset()
 {
 	// normally happens in DebugMenu_DrawMenuTwice,
 	// debug menu is not implemented in retail yet
@@ -64,7 +64,7 @@ void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 	ptrOpenSect->g = g;
 	ptrOpenSect->b = b;
 	ptrOpenSect->a = 0;
-	
+		
 	ptrOpenSect->flagsVDT = 0;
 	
 	ptrOpenSect->timeStart = Debug_GetPreciseTime();
@@ -72,8 +72,18 @@ void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 
 void DebugProfiler_Subsection(int flag)
 {
+	bool fakeSectionOpen = 0;
+	
 	if(ptrOpenSect == 0)
-		return;
+	{
+		if(flag != 2)
+			return;
+		
+		fakeSectionOpen = 1;
+		
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0xFF, 0xFF, 0xFF);
+	}
 
 	ptrOpenSect->flagsVDT |= flag;
 	
@@ -86,6 +96,7 @@ void DebugProfiler_Subsection(int flag)
 	
 	if((flag & 2) != 0)
 	{
+		printf("DrawSync: %d %d\n", fakeSectionOpen, time);
 		ptrOpenSect->posD = time;
 	}
 	
@@ -95,6 +106,12 @@ void DebugProfiler_Subsection(int flag)
 		ptrOpenSect->posT = time;
 	}
 	#endif
+	
+	if (fakeSectionOpen)
+	{
+		int DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+	}
 }
 
 void DebugProfiler_SectionRestart(int time)
@@ -147,6 +164,12 @@ void DebugProfiler_Draw()
 	for(int i = 0; i < numSectionsUsed; i++)
 	{
 		struct ProfilerSection* s = &ptrSectArr[i];
+		
+		if(i == 0) printf("\n\n");
+		printf("Start: %d %08x %d\n", 
+			i, 
+			*(int*)&s->a,
+			s->timeStart);
 		
 		if((s->flagsVDT & 1) != 0)
 		{

@@ -264,12 +264,6 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderAllHUD(gGT);
 
-	// Instance profiler
-	#ifdef USE_PROFILER
-	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
-	DebugProfiler_SectionStart(0, 0, 0xFF, 0);
-	#endif
-
 #ifndef REBUILD_PS1
 	RenderAllBeakerRain(gGT);
 	RenderAllBoxSceneSplitLines(gGT);
@@ -304,33 +298,43 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	if ((gGT->renderFlags & 0x20) != 0)
 	{
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		
+		// Instance profiler
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0, 0xFF, 0);
+		#endif
+		
 		void TEST_DrawInstances(struct GameTracker* gGT);
 		TEST_DrawInstances(gGT);
+	
+		// Instance Profiler
+		#ifdef USE_PROFILER
+		int DebugProfiler_SectionEnd();
+		//int x = 
+		DebugProfiler_SectionEnd();
+		//printf("Retail Instance: %d\n", x);
+		#endif
 	}
 #endif
 	
-	// Instance Profiler
-	#ifdef USE_PROFILER
-	int DebugProfiler_SectionEnd();
-	int x = 
-	DebugProfiler_SectionEnd();
-	
-	printf("Retail Instance: %d\n", x);
-	#endif
-
 	DECOMP_PushBuffer_FadeAllWindows();
 	
-	// Level profiler
-	#ifdef USE_PROFILER
-	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
-	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
-	#endif
-
 	if((gGT->renderFlags & 1) != 0)
 	{
+
 #ifndef REBUILD_PS1
+
 		RenderAllLevelGeometry(gGT);
+
 #else
+
+		// Level profiler
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+		#endif
+		
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			// 226-229
@@ -349,9 +353,15 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 				&gGT->pushBuffer[i],
 				&gGT->backBuffer->primMem);
 		}
+		
+		// Level Profiler
+		#ifdef USE_PROFILER
+		int DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+		#endif
+		
 #endif
-
-
+	
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 
 		MultiplayerWumpaHUD(gGT);
@@ -403,12 +413,6 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		}
 #endif
 	}
-
-	// Level Profiler
-	#ifdef USE_PROFILER
-	int DebugProfiler_SectionEnd();
-	DebugProfiler_SectionEnd();
-	#endif
 
 #ifndef REBUILD_PS1
 	// If in main menu, or in adventure arena,
@@ -1096,9 +1100,25 @@ void RenderBucket_ExecuteAllInstances(struct GameTracker* gGT)
 {
 	if((gGT->renderFlags & 0x20) == 0) return;
 
+	// Instance profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0xFF, 0);
+	#endif
+		
 	RenderBucket_Execute(
 		gGT->ptrRenderBucketInstance,
 		&gGT->backBuffer->primMem);
+	
+	// Instance Profiler
+	#ifdef USE_PROFILER
+	int DebugProfiler_SectionEnd();
+	//int x = 
+	DebugProfiler_SectionEnd();
+	//printf("Retail Instance: %d\n", x);
+	#endif
+
+
 }
 
 void RenderAllTires(struct GameTracker* gGT)
@@ -1237,11 +1257,18 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	struct CameraDC dc0;
 	memcpy(&dc0, &gGT->cameraDC[0], sizeof(struct CameraDC));
 
+	// Level profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+	#endif
+
 	for(int i = 0; i < numPlyrCurrGame; i++)
 	{
 		pushBuffer = &gGT->pushBuffer[i];
 
 		CTR_ClearRenderLists_1P2P(gGT, 1);
+				
 		RenderLists_PreInit();
 
 		if(i != 0)
@@ -1292,6 +1319,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				&pushBuffer->ptrOT[0x3ff]);
 		}
 	}
+	
+	// Level Profiler
+	#ifdef USE_PROFILER
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 	// restore
 	gGT->drivers[0] = d0;
@@ -1319,6 +1352,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 
 	if(numPlyrCurrGame == 1)
 	{
+		// Level profiler
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+		#endif
+		
 		CTR_ClearRenderLists_1P2P(gGT, 1);
 
 		// === Temporary 60FPS macros ===
@@ -1417,6 +1456,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			level1->ptr_skybox,
 			pushBuffer,
 			&gGT->backBuffer->primMem);
+			
+		// Level Profiler
+		#ifdef USE_PROFILER
+		int DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+		#endif
 
 		// skybox gradient
 		if((level1->configFlags & 1) != 0)
@@ -1429,6 +1474,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 
 	if(numPlyrCurrGame == 2)
 	{
+		// Level profiler
+		#ifdef USE_PROFILER
+		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+		DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+		#endif
+		
 		CTR_ClearRenderLists_1P2P(gGT, 2);
 
 		// if no SCVert
@@ -1465,9 +1516,21 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			gGT->visMem1->visFaceList[0],
 			gGT->visMem1->visFaceList[1],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+			
+		// Level Profiler
+		#ifdef USE_PROFILER
+		int DebugProfiler_SectionEnd();
+		DebugProfiler_SectionEnd();
+		#endif
 
 		goto SkyboxGlow;
 	}
+
+	// Level profiler
+	#ifdef USE_PROFILER
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+	#endif
 
 	// 3P or 4P
 	CTR_ClearRenderLists_3P4P(gGT, numPlyrCurrGame);
@@ -1539,6 +1602,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			gGT->visMem1->visFaceList[3],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 	}
+	
+	// Level Profiler
+	#ifdef USE_PROFILER
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	#endif
 
 SkyboxGlow:
 

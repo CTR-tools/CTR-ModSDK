@@ -184,12 +184,7 @@ LAB_80035098:
 		{
 			psVar8->quip2 = (short)iVar4;
 		}
-		
-		#ifdef USE_PROFILER
-		void DebugProfiler_SectionStart(char* name, char r, char g, char b);
-		DebugProfiler_SectionStart(0, 0xFF, 0, 0);
-		#endif
-		
+				
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
 		{			
 			if
@@ -300,11 +295,6 @@ LAB_80035098:
 			}			
 		}
 		
-		#ifdef USE_PROFILER
-		int DebugProfiler_SectionEnd();
-		DebugProfiler_SectionEnd();
-		#endif
-
 #ifndef REBUILD_PS1
 		BOTS_UpdateGlobals();
 #endif
