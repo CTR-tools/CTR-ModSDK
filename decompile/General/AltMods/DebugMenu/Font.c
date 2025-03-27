@@ -157,7 +157,7 @@ void DebugProfiler_ListAllDebugStats()
 	int Debug_GetFirstSect();
 	struct ProfilerSection* ptrSectArr = Debug_GetFirstSect();
 	
-	if((sdata->gGT->timer & FPS_DOUBLE(16)) != 0)
+	if((sdata->gGT->timer & (FPS_DOUBLE(16)-1)) == 0)
 	{
 		timeFrame =
 			ptrSectArr[numSectionsUsed-1].timeEnd -
