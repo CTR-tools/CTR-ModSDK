@@ -73,6 +73,9 @@ common, 230, MM_Video_CheckIfFinished, 0x0,                            General/2
 // ====================================================================================================================
 // 231 (incomplete)
 // ====================================================================================================================
+
+common, 231, D231, 0x0,                                                General/231/D231.c
+
 //common, 231, RB_MakeInstanceReflective, 0x0,                           General/231/231_000_RB_MakeInstanceReflective.c //TODO
 //common, 231, RB_Player_KillPlayer, 0x0,                                General/231/231_001_RB_Player_KillPlayer.c //TODO
 
@@ -133,7 +136,6 @@ common, 231, RB_Burst_CollThBucket, 0x0,                               General/2
 common, 231, RB_Burst_CollLevInst, 0x0,                                General/231/231_052_RB_Burst_CollLevInst.c
 common, 231, RB_Burst_Init, 0x0,                                       General/231/231_053_RB_Burst_Init.c
 //common, 231, RB_Burst_DrawAll, 0x0,                                    General/231/231_054_RB_Burst_DrawAll.c //TODO
-common, 231, D231, 0x0,                                                General/231/D231.c
 common, 231, RB_GetThread_ClosestTracker, 0x0,                         General/231/231_055_RB_GetThread_ClosestTracker.c
 
 // everything from RB_Baron_ThTick to RB_Crystal_LInB
