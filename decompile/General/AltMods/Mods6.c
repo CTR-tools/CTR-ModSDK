@@ -27,9 +27,13 @@ void FastAnim_Start(struct GameTracker* gGT)
 		{
 			struct ModelHeader* h = &m->headers[j];
 			
-			for(int k = 0; k < h->numAnimations; k++)
+			// Just do TURN
+			//for(int k = 0; k < h->numAnimations; k++)
+			if(h->numAnimations != 0)
 			{
-				struct ModelAnim* ma = h->ptrAnimations[k];
+				// Just do TURN
+				// struct ModelAnim* ma = h->ptrAnimations[k];
+				struct ModelAnim* ma = h->ptrAnimations[0];
 				
 				// if animation is already decompressed, skip
 				if(ma->ptrDeltaArray == 0)

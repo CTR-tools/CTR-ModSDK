@@ -235,3 +235,25 @@ void DebugProfiler_ListAllDebugStats()
 	sprintf(string, "BLUE %d", timeBlue);
 	DECOMP_DecalFont_DrawLine(string, 0x14, 0x6C, FONT_SMALL, 0);
 }
+
+void DebugProfiler_DrawOTag()
+{
+	// VSYNC Profiler
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+	
+	struct GameTracker* gGT = sdata->gGT;
+	
+	if((gGT->gameMode1 & (LOADING|1)) == 0)
+	{
+		// reset depth to CLOSEST
+		gGT->pushBuffer_UI.ptrOT =
+			gGT->otSwapchainDB[gGT->swapchainIndex];
+		
+		void DebugProfiler_Draw();
+		DebugProfiler_Draw();
+		
+		void DebugMenu_DrawIfOpen();
+		DebugMenu_DrawIfOpen();
+	}
+}

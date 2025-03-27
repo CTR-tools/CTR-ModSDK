@@ -465,25 +465,6 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderFMV();
 #endif
 
-	// VSYNC Profiler
-	#ifdef USE_PROFILER
-	int DebugProfiler_SectionEnd();
-	DebugProfiler_SectionEnd();
-	
-	if((gGT->gameMode1 & (LOADING|1)) == 0)
-	{
-		// reset depth to CLOSEST
-		gGT->pushBuffer_UI.ptrOT =
-			gGT->otSwapchainDB[gGT->swapchainIndex];
-		
-		void DebugProfiler_Draw();
-		DebugProfiler_Draw();
-		
-		void DebugMenu_DrawIfOpen();
-		DebugMenu_DrawIfOpen();
-	}
-	#endif
-
 	RenderSubmit(gGT);
 }
 
@@ -1936,6 +1917,11 @@ void RenderSubmit(struct GameTracker* gGT)
 #if 0 && defined(USE_ONLINE)
 	void OnlineMirrorMode(u_long* ot);
 	OnlineMirrorMode(ot);
+#endif
+
+#ifdef USE_PROFILER
+	void DebugProfiler_DrawOTag();
+	DebugProfiler_DrawOTag();
 #endif
 
 	DrawOTag(ot);
