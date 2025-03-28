@@ -2,10 +2,9 @@
 #include "DebugStructs.h"
 
 // June 1999 used 64, reduced for Retail CTR
-#define MAX_SECTIONS 32
+#define MAX_SECTIONS 16
 
-// No room, need MEMPACK_AllocMem
-// static struct ProfilerSection sections[32];
+static struct ProfilerSection sections[MAX_SECTIONS];
 static struct ProfilerSection* ptrSectArr=0;
 static struct ProfilerSection* ptrOpenSect=0;
 
@@ -41,7 +40,7 @@ struct ProfilerSection* DebugProfiler_GetOpen()
 
 void DebugProfiler_Init()
 {
-	ptrSectArr = 0x8000F000;
+	ptrSectArr = &sections[0];
 }
 
 void DebugProfiler_Reset()
@@ -53,7 +52,7 @@ void DebugProfiler_Reset()
 
 void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 {
-	if(numSectionsUsed >= 32)
+	if(numSectionsUsed >= MAX_SECTIONS)
 	{
 		printf("Out of sections\n");
 		while(1) {}
@@ -89,8 +88,15 @@ void DebugProfiler_Subsection(int flag)
 
 	if(ptrOpenSect == 0)
 	{
+		// dont force-open for DrawSync
+		if(flag == 2)
+			return;
+		
+		if(sdata->mainGameState != 3)
+			return;
+		
 		// dont let fake sections explode on-boot
-		if(numSectionsUsed > 20)
+		if(numSectionsUsed > (MAX_SECTIONS-6))
 			return;
 		
 		fakeSectionOpen = 1;
@@ -127,6 +133,7 @@ void DebugProfiler_Subsection(int flag)
 	}
 }
 
+#if 0
 void DebugProfiler_SectionRestart(int time)
 {
 	if(ptrOpenSect == 0)
@@ -134,6 +141,7 @@ void DebugProfiler_SectionRestart(int time)
 	
 	ptrOpenSect->timeStart = time;
 }
+#endif
 
 int DebugProfiler_SectionEnd()
 {
@@ -301,9 +309,6 @@ void DebugProfiler_ListAllDebugStats()
 	if(timeFrame == 0) return;
 	if(timeCpu == 0) return;
 	if(timeGpu == 0) return;
-	if(timeRed == 0) return;
-	if(timeGreen == 0) return;
-	if(timeBlue == 0) return;
 	
 	#ifndef REBUILD_PC
 	char* string = 0x1f800000;
@@ -495,10 +500,8 @@ void Hook_ENTER_DrawSync()
 	{
 		gGT->bool_DrawOTag_InProgress = 0;
 	
-		#ifdef USE_PROFILER
 		void DebugProfiler_Subsection(int flag);
 		DebugProfiler_Subsection(2);
-		#endif
 	}
 	
 	return;

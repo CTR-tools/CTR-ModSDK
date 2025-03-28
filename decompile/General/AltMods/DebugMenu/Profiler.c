@@ -1,10 +1,10 @@
 #include "DebugStructs.h"
 
 // June 1999 used 64, reduced for Retail CTR
-#define MAX_SECTIONS 32
+#define MAX_SECTIONS 16
 
 // No room, need MEMPACK_AllocMem
-// static struct ProfilerSection sections[32];
+// static struct ProfilerSection sections[MAX_SECTIONS];
 static struct ProfilerSection* ptrSectArr=0;
 static struct ProfilerSection* ptrOpenSect=0;
 
@@ -40,7 +40,7 @@ struct ProfilerSection* DebugProfiler_GetOpen()
 
 void DebugProfiler_Init()
 {
-	int size = sizeof(struct ProfilerSection) * 32;
+	int size = sizeof(struct ProfilerSection) * MAX_SECTIONS;
 	ptrSectArr = DECOMP_MEMPACK_AllocMem(size);
 }
 
@@ -53,7 +53,7 @@ void DebugProfiler_Reset()
 
 void DebugProfiler_SectionStart(char* name, char r, char g, char b)
 {
-	if(numSectionsUsed >= 32)
+	if(numSectionsUsed >= MAX_SECTIONS)
 	{
 		printf("Out of sections\n");
 		while(1) {}
@@ -89,8 +89,15 @@ void DebugProfiler_Subsection(int flag)
 
 	if(ptrOpenSect == 0)
 	{
+		// dont force-open for DrawSync
+		if(flag == 2)
+			return;
+		
+		if(sdata->mainGameState != 3)
+			return;
+		
 		// dont let fake sections explode on-boot
-		if(numSectionsUsed > 20)
+		if(numSectionsUsed > (MAX_SECTIONS-6))
 			return;
 		
 		fakeSectionOpen = 1;
