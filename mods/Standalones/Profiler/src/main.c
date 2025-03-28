@@ -252,6 +252,7 @@ static int timeGpu;
 static int timeRed;
 static int timeGreen;
 static int timeBlue;
+static int timePink;
 
 void DebugProfiler_ListAllDebugStats()
 {
@@ -303,6 +304,13 @@ void DebugProfiler_ListAllDebugStats()
 					ptrSectArr[i].timeEnd -
 					ptrSectArr[i].timeStart;
 			}
+			
+			if(*(int*)&ptrSectArr[i].a == 0xff00ff00)
+			{
+				timePink =
+					ptrSectArr[i].timeEnd -
+					ptrSectArr[i].timeStart;
+			}
 		}
 	}
 	
@@ -338,6 +346,9 @@ void DebugProfiler_ListAllDebugStats()
 	
 	sprintf(string, "BLUE %d", timeBlue);
 	DecalFont_DrawLine(string, 0x14, 0x6C, FONT_SMALL, 0);
+	
+	sprintf(string, "PINK %d", timePink);
+	DecalFont_DrawLine(string, 0x14, 0x74, FONT_SMALL, 0);
 }
 
 void DebugProfiler_DrawOTag()
