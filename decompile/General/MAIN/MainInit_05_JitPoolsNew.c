@@ -113,13 +113,20 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
   sdata->mempack[0].firstFreeByte = (void*)backup;
   
-  // override, only if 3P4P VS
-  if(gGT->numPlyrCurrGame > 2)
+  if(
+		// override, only if 3P4P VS
+		(gGT->numPlyrCurrGame > 2) &&
+		
+		// main menu is "4p" dont corruput 1p overlay
+		(gGT->levelID != MAIN_MENU_LEVEL)
+	)
   {
 	  void OVR_Region3();
 	  unsigned int addrSmallPool = (unsigned int)OVR_Region3;
 	  addrSmallPool -= 6500;
 	  sdata->mempack[0].firstFreeByte = (void*)addrSmallPool;
+	  
+	  printf("Here %s\n", __FUNCTION__);
   }
 #endif
 
@@ -139,9 +146,16 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 // 2mb RAM, decomp/General, ram holes
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
-  // override, only if 3P4P VS
-  if(gGT->numPlyrCurrGame > 2)
+  if(
+		// override, only if 3P4P VS
+		(gGT->numPlyrCurrGame > 2) &&
+		
+		// main menu is "4p" dont corruput 1p overlay
+		(gGT->levelID != MAIN_MENU_LEVEL)
+	)
+	{
 	  sdata->mempack[0].firstFreeByte = (void*)backup;
+	}
 #endif
 
 
