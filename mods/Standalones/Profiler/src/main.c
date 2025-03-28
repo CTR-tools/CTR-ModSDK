@@ -398,7 +398,70 @@ void Hook_RenderBucket_Execute(int a, int b)
 	//printf("Retail Instance: %d\n", x);
 }
 
-// ...
+void Hook_StartLev1P2P(int a, int b)
+{
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+		
+	CTR_ClearRenderLists_1P2P(a, b);
+}
+
+void Hook_StartLev3P4P(int a, int b)
+{
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0, 0, 0xFF);
+		
+	CTR_ClearRenderLists_3P4P(a, b);
+}
+
+void Hook_EndLev1P(int a, int b, int c)
+{
+	DrawSky_Full(a, b, c);
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
+
+void Hook_EndLev2P(
+	int a, int b, int c, int d,
+	int e, int f, int g)
+{
+	DrawLevelOvr2P(a,b,c,d,e,f,g);
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
+
+void Hook_EndLev3P(
+	int a, int b, int c, int d,
+	int e, int f, int g, int h)
+{
+	DrawLevelOvr3P(a,b,c,d,e,f,g,h);
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
+
+void Hook_EndLev4P(
+	int a, int b, int c, int d,
+	int e, int f, int g, int h, int i)
+{
+	DrawLevelOvr4P(a,b,c,d,e,f,g,h,i);
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
+
+void Hook_RaceFlag_DrawSelf()
+{
+	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
+	DebugProfiler_SectionStart(0, 0xFF, 0, 0xFF);
+	
+	RaceFlag_DrawSelf();
+	
+	int DebugProfiler_SectionEnd();
+	DebugProfiler_SectionEnd();
+}
 
 int Hook_Timer()
 {
@@ -416,6 +479,8 @@ void Hook_DrawOTag(int a)
 	
 	DrawOTag(a);
 }
+
+// JMP hooks for callbacks...
 
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
@@ -452,8 +517,18 @@ void RunEntryHook()
 	*(int*)0x8003cd70 = JAL(Hook_MainFrame_ResetDB);
 	*(int*)0x8003ce74 = JAL(Hook_MainFrame_GameLogic);
 	*(int*)0x80036be0 = JAL(Hook_RenderBucket_Execute);
-	
+	*(int*)0x80036d94 = JAL(Hook_StartLev1P2P);
+	*(int*)0x80036f90 = JAL(Hook_StartLev1P2P);
+	*(int*)0x800370d4 = JAL(Hook_StartLev3P4P);
+	*(int*)0x8003723c = JAL(Hook_StartLev3P4P);
+	*(int*)0x80036f50 = JAL(Hook_EndLev1P);
+	*(int*)0x80037088 = JAL(Hook_EndLev2P);
+	*(int*)0x800371e4 = JAL(Hook_EndLev3P);
+	*(int*)0x80037374 = JAL(Hook_EndLev4P);
+	*(int*)0x80037830 = JAL(Hook_RaceFlag_DrawSelf);
 	
 	*(int*)0x80037854 = JAL(Hook_Timer);
 	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
+
+	// JMPs for vsync/drawsync
 }

@@ -99,6 +99,11 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 		pad++;
     }
 	
+// NEED TO MOVE
+// Should be in MainDrawCb_01_Vsync
+// Check defrag to make sure bytes allow
+#if 1
+	
 	#ifdef USE_PROFILER
 	void DebugProfiler_Subsection(int flag);
 	DebugProfiler_Subsection(1);
@@ -114,4 +119,7 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 			sdata->queueReady = 1;
 		}
 	}
+	
+#endif
+
 }
