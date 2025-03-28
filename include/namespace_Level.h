@@ -129,13 +129,13 @@ struct AnimTex
 	short numFrames;
 
 	// 0x6
-	short frameDuration;
+	short frameOffset;
 
 	// 0x8
-	short shiftFactor;
+	short frameSkip;
 
 	// 0xA
-	u_short frameIndex;
+	short frameCurr;
 
 	// 0xC
 	// size = numFrames

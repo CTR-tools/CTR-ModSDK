@@ -159,9 +159,6 @@ struct LevelFile file =
 	{
 		.ptrActiveTex = LEV_OFFSETOF(turbo_pad[0]),
 		.numFrames = 10,
-		.frameDuration = 0,
-		.shiftFactor = 0,
-		.frameIndex = 0,
 	},
 	
 	.TPA_ptrarray =
