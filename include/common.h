@@ -19,7 +19,7 @@
 //#define USE_4PADTEST	// 1 controller for all 4 players
 //#define USE_MOREPRIM  // Bonus Primitive Memory
 //#define USE_FASTANIM	// Decompress animations
-//#define USE_GT4TOFT4	// Requires Profiler, Only for NGin Labs
+//#define USE_REAL60PS1	// Requires Profiler, Only for NGin Labs
 
 // 8mb
 //#define USE_RAMEX		// 8mb RAM expansion		

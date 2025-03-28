@@ -431,7 +431,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			)
 		)
 	{
+		// 60fps NGin Labs test
+		#ifndef USE_REAL60PS1
 		DECOMP_CAM_ClearScreen(gGT);
+		#endif
 	}
 	
 	if ((gGT->renderFlags & 0x1000) != 0)
@@ -455,7 +458,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	// requires USE_PROFILER,
 	// only for NGin Labs
-	#ifdef USE_GT4TOFT4
+	#ifdef USE_REAL60PS1
 	void DbgOptimizeFrameForGpuBottleneck();
 	DbgOptimizeFrameForGpuBottleneck();
 	#endif

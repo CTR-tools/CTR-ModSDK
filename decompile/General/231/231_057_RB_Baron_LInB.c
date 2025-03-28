@@ -3,7 +3,14 @@
 void DECOMP_RB_Baron_LInB(struct Instance* inst)
 {
 	struct Baron* baronObj;
-
+	
+	// NGin Labs 60fps test,
+	// make invisible, and quit thread
+	#ifdef USE_REAL60PS1
+	inst->flags |= 0x80;
+	return;
+	#endif
+	
 	struct Thread* t =
 		DECOMP_PROC_BirthWithObject
 		(

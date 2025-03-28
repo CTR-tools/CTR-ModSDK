@@ -178,6 +178,11 @@ void DebugProfiler_ListAllDebugStats()
 					ptrSectArr[0].timeStart;
 			}
 			
+			// NGin Labs 60fps test
+			#ifdef USE_REAL60PS1
+				continue;
+			#endif
+			
 			if(*(int*)&ptrSectArr[i].a == 0xff00)
 			{
 				timeRed =
@@ -237,6 +242,11 @@ void DebugProfiler_ListAllDebugStats()
 	sprintf(string, "GPU  %d %dFPS", timeGpu, 15720/timeGpu);
 	DECOMP_DecalFont_DrawLine(string, 0x14, 0x54, FONT_SMALL, 0);
 	
+// NGin Labs 60fps test
+#ifdef USE_REAL60PS1
+	return;
+#endif
+	
 	sprintf(string, "RED  %d", timeRed);
 	DECOMP_DecalFont_DrawLine(string, 0x14, 0x5C, FONT_SMALL, 0);
 	
@@ -250,7 +260,7 @@ void DebugProfiler_ListAllDebugStats()
 	DecalFont_DrawLine(string, 0x14, 0x74, FONT_SMALL, 0);
 }
 
-#ifdef USE_GT4TOFT4
+#ifdef USE_REAL60PS1
 void Gx_To_Fx(u_long* startOT)
 {
   u_int* header;
@@ -384,6 +394,13 @@ void Gx_To_Fx(u_long* startOT)
 
 void DbgOptimizeFrameForGpuBottleneck()
 {
+	// After removing swapchain clear,
+	// the scene became cpu-bottlenecked again
+	
+	// This will be unused until further notice,
+	// in case the bottleneck flips again
+	
+	#if 0
 	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
 	DebugProfiler_SectionStart(0, 0xFF, 0xFF, 0);
 	
@@ -394,6 +411,7 @@ void DbgOptimizeFrameForGpuBottleneck()
 	
 	int DebugProfiler_SectionEnd();
 	DebugProfiler_SectionEnd();
+	#endif
 }
 #endif
 
