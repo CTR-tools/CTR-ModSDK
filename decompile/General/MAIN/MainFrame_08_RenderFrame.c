@@ -1847,7 +1847,16 @@ void RenderVSYNC(struct GameTracker* gGT)
 	// render checkered flag
 	if((gGT->renderFlags & 0x1000) != 0)
 	{
-		VSync(0);
+		#ifdef USE_60FPS
+		// if main menu runs at 45fps,
+		// do NOT cap to 30fps
+		if(gGT->levelID != MAIN_MENU_LEVEL)
+		#endif
+	
+			// Wait until "next" vsync,
+			// Main Menu at 45fps will cap to 30fps
+			// Levels+RaceFlag at 25fps will cap to 20fps
+			VSync(0);
 	}
 
 
