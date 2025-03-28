@@ -453,6 +453,13 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 	RenderDispEnv_UI(gGT);
 
+	// requires USE_PROFILER,
+	// only for NGin Labs
+	#ifdef USE_GT4TOFT4
+	void DbgOptimizeFrameForGpuBottleneck();
+	DbgOptimizeFrameForGpuBottleneck();
+	#endif
+
 	// VSYNC profiler
 	#ifdef USE_PROFILER
 	void DebugProfiler_SectionStart(char* name, char r, char g, char b);
