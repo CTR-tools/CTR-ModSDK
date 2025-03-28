@@ -486,10 +486,22 @@ void Hook_RA_Vsync()
 	DebugProfiler_Subsection(1);
 }
 
-void Hook_RA_DrawSync()
+void Hook_ENTER_DrawSync()
 {
-	void DebugProfiler_Subsection(int flag);
-	DebugProfiler_Subsection(2);
+	struct GameTracker* gGT;
+	gGT = sdata->gGT;
+	
+	if (gGT->bool_DrawOTag_InProgress == 1)
+	{
+		gGT->bool_DrawOTag_InProgress = 0;
+	
+		#ifdef USE_PROFILER
+		void DebugProfiler_Subsection(int flag);
+		DebugProfiler_Subsection(2);
+		#endif
+	}
+	
+	return;
 }
 
 #define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
@@ -543,5 +555,6 @@ void RunEntryHook()
 
 	// JMPs for vsync/drawsync on JR $RA
 	*(int*)0x80034b40 = JMP(Hook_RA_Vsync);
-	*(int*)0x80034a9c = JMP(Hook_RA_DrawSync);
+	*(int*)0x80034a80 = JMP(Hook_ENTER_DrawSync);
+	*(int*)0x80034a84 = 0;
 }
