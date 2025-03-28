@@ -195,8 +195,12 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 #endif
 
 #ifdef USE_FASTANIM
-	void FastAnim_Start(struct GameTracker* gGT);
-	FastAnim_Start(gGT);
+	// leave room for FMV video
+	if(gGT->levelID != MAIN_MENU_LEVEL)
+	{
+		void FastAnim_Start(struct GameTracker* gGT);
+		FastAnim_Start(gGT);
+	}
 #endif
 
     // assume 1P fov

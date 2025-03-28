@@ -274,7 +274,8 @@ void DebugProfiler_ListAllDebugStats()
 		timeCpu =
 			ptrSectArr[numSectionsUsed-2].timeEnd -
 			ptrSectArr[0].timeStart;
-			
+		
+		int pinkExist = 0;
 		for(int i = 0; i < numSectionsUsed; i++)
 		{
 			if((ptrSectArr[i].flagsVDT & 2) != 0)
@@ -310,8 +311,13 @@ void DebugProfiler_ListAllDebugStats()
 				timePink =
 					ptrSectArr[i].timeEnd -
 					ptrSectArr[i].timeStart;
+					
+				pinkExist = 1;
 			}
 		}
+	
+		if(pinkExist == 0)
+			timePink = 0;
 	}
 	
 	if(timeFrame == 0) return;
