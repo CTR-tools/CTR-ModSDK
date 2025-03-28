@@ -480,8 +480,19 @@ void Hook_DrawOTag(int a)
 	DrawOTag(a);
 }
 
-// JMP hooks for callbacks...
+void Hook_RA_Vsync()
+{
+	void DebugProfiler_Subsection(int flag);
+	DebugProfiler_Subsection(1);
+}
 
+void Hook_RA_DrawSync()
+{
+	void DebugProfiler_Subsection(int flag);
+	DebugProfiler_Subsection(2);
+}
+
+#define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
 void RunEntryHook()
@@ -530,5 +541,7 @@ void RunEntryHook()
 	*(int*)0x80037854 = JAL(Hook_Timer);
 	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
 
-	// JMPs for vsync/drawsync
+	// JMPs for vsync/drawsync on JR $RA
+	*(int*)0x80034b40 = JMP(Hook_RA_Vsync);
+	*(int*)0x80034a9c = JMP(Hook_RA_DrawSync);
 }
