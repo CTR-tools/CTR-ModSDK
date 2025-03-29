@@ -20,7 +20,7 @@ struct NavFrame
 	// bit 3 (0x4): skid back wheels
 	// bits 4,5,6,7: 15 terrains in 4 bits
 	// bit 8 (0x100) TurboIncrement(super turbo)
-	// bit 9 (0x200) ?
+	// bit 9 (0x200) something to do with killplane?
 	// 0x400: jumping
 	// 0x800: drift left
 	// 0x1000: drift right
@@ -34,7 +34,7 @@ struct NavFrame
 	
 	// 0x12
 	// how many nodes to go back, if AI hits killplane
-	char goBackCount;
+	unsigned char goBackCount;
 	
 	// 0x13 - flags
 	// & 0x10 - need rampPhys
@@ -42,6 +42,7 @@ struct NavFrame
 	// & 0xF - (if & 0x10) NavHeader rampPhys index
 	// & 0xF - (if & 0x20) reflection variable
 	// & 0xF - (if not 0x10 and not 0x20)
+	// & 0x80 - tagged as "moon gravity"
 		// 15 levels of alpha,
 		// for darkening model in coco park tunnel)
 	char specialBits;
