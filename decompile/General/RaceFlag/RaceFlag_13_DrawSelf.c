@@ -91,19 +91,19 @@ SKIP_LOADING_TEXT:
 	// === Step 2 ===
 	if (0xfff < angle[0])
 	{
+		// reset counter
 		data.checkerFlagVariables[4] &= 0x1ffff;
 		angle[0] = (int)data.checkerFlagVariables[4] >> 5;
 
-		// Linear +=
 		data.checkerFlagVariables[0] += 0x200;
 		data.checkerFlagVariables[2] += 200;
 
-		// Trigonometric +=
-		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
-		data.checkerFlagVariables[1] = (approx[0] * 0x20 >> 0xd) + 0x96;
-
-		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
-		data.checkerFlagVariables[3] = (approx[0] * 0x40 >> 0xd) + 0xb4;
+		int sin0 = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
+		int sin2 = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
+		
+		// reset based on trig
+		data.checkerFlagVariables[1] = ((sin0 * 0x20) >> 0xd) + 0x96;
+		data.checkerFlagVariables[3] = ((sin2 * 0x40) >> 0xd) + 0xb4;
 	}
 
 
@@ -194,19 +194,19 @@ SKIP_LOADING_TEXT:
 		// === Step 2 ===
 		if (0xfff < angle[0])
 		{
+			// reset counter
 			local4 &= 0x1ffff;
 			angle[0] = (int)local4 >> 5;
 
-			// Linear +=
 			local0 += 0x200;
 			local2 += 200;
 			
-			// Trigonometric +=
-			approx[0] = DECOMP_MATH_Sin(local0) + 0xfff;
-			local1 = (approx[0] * 0x20 >> 0xd) + 0x96;
-
-			approx[0] = DECOMP_MATH_Sin(local2) + 0xfff;
-			local3 = (approx[0] * 0x40 >> 0xd) + 0xb4;
+			int sin0 = DECOMP_MATH_Sin(local0) + 0xfff;
+			int sin2 = DECOMP_MATH_Sin(local2) + 0xfff;
+			
+			// reset based on trig
+			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
+			local3 = (sin2 * 0x40 >> 0xd) + 0xb4;
 		}
 
 
