@@ -23,18 +23,13 @@ int MathSinInline(u_int param_1)
   // approximate trigonometry
   iVar1 = *(u_int*)&data.trigApprox[param_1 & 0x3ff];
 
-  // if (0 < angle < 90) or (180 < angle < 270)
   if ((param_1 & 0x400) == 0)
   {
-	// shift bottom 2-byte to become top 2-byte
     iVar1 = iVar1 << 0x10;
   }
 
-  // move top 2-byte to bottom 2-byte,
-  // and make top 2-byte zero
   iVar1 = iVar1 >> 0x10;
 
-  // if (angle > 180)
   if ((param_1 & 0x800) != 0)
   {
 	// make negative
@@ -45,18 +40,21 @@ int MathSinInline(u_int param_1)
 
 void DECOMP_RaceFlag_DrawSelf()
 {
-	char i, j;
-	char column, row;
-	u_char toggle;
+	int i, j;
+	int column, row;
+	int toggle;
+	
 	short flagPos;
 	u_long *ot;
 	u_int *scratchpad;
 	u_int screenlimit;
 	u_int dimensions;
-	int approx[2];
-	u_int angle[2];
+	
+	int var2;
+	int var3;
+	u_int var1;
+	
 	POLY_G4 *p;
-	SVECTOR *vect;
 	struct GameTracker *gGT = sdata->gGT;
 
 	int time;
@@ -137,14 +135,14 @@ SKIP_LOADING_TEXT:
 		// === Step 1 ===
 		int stepRate = gGT->elapsedTimeMS;
 		local[4] += local[3] * stepRate;
-		angle[0] = (int)local[4] >> 5;
+		var1 = (int)local[4] >> 5;
 		
 		// === Step 2 ===
-		if (0xfff < angle[0])
+		if (0xfff < var1)
 		{
 			// reset counter
 			local[4] &= 0x1ffff;
-			angle[0] = (int)local[4] >> 5;
+			var1 = (int)local[4] >> 5;
 
 			local[0] += 0x200;
 			local[2] += 200;
@@ -158,13 +156,13 @@ SKIP_LOADING_TEXT:
 		}
 
 		// === Step 3 ===
-		approx[0] = MathSinInline(angle[0]) + 0xfff;
-		approx[0] = approx[0] * local[1];
-		approx[0] = (approx[0] >> 0xd) + 0x280;
+		var2 = MathSinInline(var1) + 0xfff;
+		var2 = var2 * local[1];
+		var2 = (var2 >> 0xd) + 0x280;
 
 		// === Step 4 ===
-		angle[0] += 0xc80;
-		lightL = MathSinInline(angle[0]) + 0xfff;
+		var1 += 0xc80;
+		lightL = MathSinInline(var1) + 0xfff;
 
 		// === Step 5 ===
 		pos[0].vy = 0xfc72;
@@ -179,7 +177,7 @@ SKIP_LOADING_TEXT:
 		data.checkerFlagVariables[4] = local[4];
 		
 		time = sdata->RaceFlag_ElapsedTime >> 5;
-		angle[0] = time;
+		var1 = time;
 
 		flagPos = sdata->RaceFlag_Position;
 		flagPos = -0xbbe - flagPos;
@@ -191,17 +189,18 @@ SKIP_LOADING_TEXT:
 		// === Step 7 ===
 		for (row = 0; row < 10; row++)
 		{
+			SVECTOR* vect;
 			for (
-				j = 0, vect = &pos[0];
-				j < 3;
-				j++, vect++)
+				vect = &pos[0];
+				vect < &pos[3];
+				vect++)
 			{
 				// Range: [1.0, 2.0]
-				approx[1] = MathSinInline(angle[0]) + 0xfff;
-				angle[0] += 300;
+				var3 = MathSinInline(var1) + 0xfff;
+				var1 += 300;
 
 				// change all vector posZ
-				vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
+				vect->vz = (short)var2 + (short)(var3 * 0x20 >> 0xd);
 			}
 
 			gte_ldv3(&pos[0], &pos[1], &pos[2]);
@@ -234,14 +233,14 @@ SKIP_LOADING_TEXT:
 		// === Step 1 ===
 		int stepRate = 0x40;
 		local[4] += local[3] * stepRate;
-		angle[0] = (int)local[4] >> 5;
+		var1 = (int)local[4] >> 5;
 		
 		// === Step 2 ===
-		if (0xfff < angle[0])
+		if (0xfff < var1)
 		{
 			// reset counter
 			local[4] &= 0x1ffff;
-			angle[0] = (int)local[4] >> 5;
+			var1 = (int)local[4] >> 5;
 
 			local[0] += 0x200;
 			local[2] += 200;
@@ -255,13 +254,13 @@ SKIP_LOADING_TEXT:
 		}
 
 		// === Step 3 ===
-		approx[0] = MathSinInline(angle[0]) + 0xfff;
-		approx[0] = approx[0] * local[1];
-		approx[0] = (approx[0] >> 0xd) + 0x280;
+		var2 = MathSinInline(var1) + 0xfff;
+		var2 = var2 * local[1];
+		var2 = (var2 >> 0xd) + 0x280;
 
 		// === Step 4 ===
-		angle[0] += 0xc80;
-		lightL = MathSinInline(angle[0]) + 0xfff;
+		var1 += 0xc80;
+		lightL = MathSinInline(var1) + 0xfff;
 
 		// === Step 5 ===
 		pos[0].vy = 0xfc72;
@@ -270,7 +269,7 @@ SKIP_LOADING_TEXT:
 
 		// === Step 6 ===
 		time += 0x100;
-		angle[0] = time;
+		var1 = time;
 
 		pos[0].vx += 100;
 		pos[1].vx += 100;
@@ -280,17 +279,18 @@ SKIP_LOADING_TEXT:
 		// === Step 7 ===
 		for (row = 0; row < 10; row++)
 		{
+			SVECTOR* vect;
 			for (
-				j = 0, vect = &pos[0];
-				j < 3;
-				j++, vect++)
+				vect = &pos[0];
+				vect < &pos[3];
+				vect++)
 			{
 				// Range: [1.0, 2.0]
-				approx[1] = MathSinInline(angle[0]) + 0xfff;
-				angle[0] += 300;
+				var3 = MathSinInline(var1) + 0xfff;
+				var1 += 300;
 
 				// change all vector posZ
-				vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
+				vect->vz = (short)var2 + (short)(var3 * 0x20 >> 0xd);
 			}
 
 			gte_ldv3(&pos[0], &pos[1], &pos[2]);
