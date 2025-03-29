@@ -174,7 +174,7 @@ SKIP_LOADING_TEXT:
 	local4 = data.checkerFlagVariables[4];
 
 	// vertical strips
-	for (column = 1; column < 35; column++)
+	for (column = 1; column < 36; column++)
 	{
 #ifdef REBUILD_PC
 		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
