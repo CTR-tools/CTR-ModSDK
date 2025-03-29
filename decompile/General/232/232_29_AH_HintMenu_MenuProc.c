@@ -117,9 +117,9 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
 
 		iVar10 = DECOMP_DecalFont_GetLineWidth(strExit, 1);
 
-        iVar7 = (iVar10 + 6) * 0x10000;
-        box.x = 0xff - (short)((iVar7 >> 0x10) - (iVar7 >> 0x1f) >> 1);
-        box.w = (short)(iVar10 + 6);
+        iVar7 = (iVar10 + 6);
+        box.x = 0xff - (iVar7 >> 1);
+        box.w = iVar7;
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
