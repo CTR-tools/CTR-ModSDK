@@ -92,9 +92,11 @@ SKIP_LOADING_TEXT:
 	local3 = data.checkerFlagVariables[3];
 	local4 = data.checkerFlagVariables[4];
 
-	// vertical strips
 	toggle = 0;
-	for (column = 0; column < 36; column++)
+	
+	// === First Loop Iteration ===
+	// Remove 36*10 branching instructions,
+	// Reduces clock from ~150 to ~120
 	{
 #ifdef REBUILD_PC
 		posL = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
@@ -107,10 +109,7 @@ SKIP_LOADING_TEXT:
 #endif
 
 		// === Step 1 ===
-		int stepRate = 0x40;
-		if (column == 0)
-			stepRate = gGT->elapsedTimeMS;
-		
+		int stepRate = gGT->elapsedTimeMS;
 		local4 += local3 * stepRate;
 		angle[0] = (int)local4 >> 5;
 		
@@ -147,36 +146,23 @@ SKIP_LOADING_TEXT:
 		pos[2].vy = 0xfd2e;
 
 		// === Step 6 ===
-		if(column == 0)
-		{
-			data.checkerFlagVariables[0] = local0;
-			data.checkerFlagVariables[1] = local1;
-			data.checkerFlagVariables[2] = local2;
-			data.checkerFlagVariables[3] = local3;
-			data.checkerFlagVariables[4] = local4;
-			
-			time = sdata->RaceFlag_ElapsedTime >> 5;
-			angle[0] = time;
-
-			flagPos = sdata->RaceFlag_Position;
-			flagPos = -0xbbe - flagPos;
-			pos[0].vx = flagPos;
-			pos[1].vx = flagPos;
-			pos[2].vx = flagPos;
-		}
+		data.checkerFlagVariables[0] = local0;
+		data.checkerFlagVariables[1] = local1;
+		data.checkerFlagVariables[2] = local2;
+		data.checkerFlagVariables[3] = local3;
+		data.checkerFlagVariables[4] = local4;
 		
-		else
-		{
-			time += 0x100;
-			angle[0] = time;
+		time = sdata->RaceFlag_ElapsedTime >> 5;
+		angle[0] = time;
 
-			pos[0].vx += 100;
-			pos[1].vx += 100;
-			pos[2].vx += 100;
-		}
+		flagPos = sdata->RaceFlag_Position;
+		flagPos = -0xbbe - flagPos;
+		pos[0].vx = flagPos;
+		pos[1].vx = flagPos;
+		pos[2].vx = flagPos;
 
 		i = 0;
-		// === Step 8 ===
+		// === Step 7 ===
 		for (row = 0; row < 10; row++)
 		{
 			for (
@@ -200,12 +186,95 @@ SKIP_LOADING_TEXT:
 			pos[2].vy += 0x11a;
 			
 			gte_stsxy3((long *)(posL + 1), (long *)(posL + 2), (long *)(posL + 3));
+			posL += 3;
+		}
+	}
+		
+
+	// === Rest of Iterations ===
+	// Now executing without branching
+	for (column = 1; column < 36; column++)
+	{
+#ifdef REBUILD_PC
+		posL = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
+		toggle = toggle ^ 1;
+		posR = &scratchpadBuf[(toggle * 0x78 / 4)];
+#else
+		posL = (u_int *)((0x1f800000 + toggle * 0x78) - 4);
+		toggle = toggle ^ 1;
+		posR = (u_int *)(0x1f800000 + toggle * 0x78);
+#endif
+
+		// === Step 1 ===
+		int stepRate = 0x40;
+		local4 += local3 * stepRate;
+		angle[0] = (int)local4 >> 5;
+		
+		// === Step 2 ===
+		if (0xfff < angle[0])
+		{
+			// reset counter
+			local4 &= 0x1ffff;
+			angle[0] = (int)local4 >> 5;
+
+			local0 += 0x200;
+			local2 += 200;
 			
-			if(column == 0)
+			int sin0 = DECOMP_MATH_Sin(local0) + 0xfff;
+			int sin2 = DECOMP_MATH_Sin(local2) + 0xfff;
+			
+			// reset based on trig
+			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
+			local3 = (sin2 * 0x40 >> 0xd) + 0xb4;
+		}
+
+		// === Step 3 ===
+		approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		approx[0] = approx[0] * local1;
+		approx[0] = (approx[0] >> 0xd) + 0x280;
+
+		// === Step 4 ===
+		angle[0] += 0xc80;
+		lightL = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+
+		// === Step 5 ===
+		pos[0].vy = 0xfc72;
+		pos[1].vy = 0xfcd0;
+		pos[2].vy = 0xfd2e;
+
+		// === Step 6 ===
+		time += 0x100;
+		angle[0] = time;
+
+		pos[0].vx += 100;
+		pos[1].vx += 100;
+		pos[2].vx += 100;
+
+		i = 0;
+		// === Step 7 ===
+		for (row = 0; row < 10; row++)
+		{
+			for (
+				j = 0, vect = &pos[0];
+				j < 3;
+				j++, vect++)
 			{
-				posL += 3;
-				continue;
+				// Range: [1.0, 2.0]
+				approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+				angle[0] += 300;
+
+				// change all vector posZ
+				vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
 			}
+
+			gte_ldv3(&pos[0], &pos[1], &pos[2]);
+			gte_rtpt();
+			
+			pos[0].vy += 0x11a;
+			pos[1].vy += 0x11a;
+			pos[2].vy += 0x11a;
+			
+			gte_stsxy3((long *)(posL + 1), (long *)(posL + 2), (long *)(posL + 3));
 			
 			// ============================
 			
@@ -232,14 +301,12 @@ SKIP_LOADING_TEXT:
 					}
 
 					u_char colorR = RaceFlag_CalculateBrightness(lightR, boolDark);
-					u_int rgbR = (colorR) | (colorR << 8) | (colorR << 16);
-					*(int*)&p->r0 = rgbR;
-					*(int*)&p->r2 = rgbR;
+					setRGB0(p, colorR, colorR, colorR);
+					*(int*)&p->r2 = *(int*)&p->r0;
 					
 					u_char colorL = RaceFlag_CalculateBrightness(lightL, boolDark);
-					u_int rgbL = (colorL) | (colorL << 8) | (colorL << 16);
-					*(int*)&p->r1 = rgbL;
-					*(int*)&p->r3 = rgbL;
+					setRGB1(p, colorL, colorL, colorL);
+					*(int*)&p->r3 = *(int*)&p->r1;
 
 					// positions
 					*(int *)&p->x0 = posR[0];
