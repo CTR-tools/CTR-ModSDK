@@ -30,7 +30,6 @@ void DECOMP_RaceFlag_DrawSelf()
 	u_int *bottom;
 	POLY_G4 *p;
 	SVECTOR *vect;
-	struct DB *backDB;
 	struct GameTracker *gGT = sdata->gGT;
 
 	// 0x10, 0x18, 0x20
@@ -72,7 +71,7 @@ SKIP_LOADING_TEXT:
 	gte_SetGeomOffset(0x100, 0x78);
 	gte_SetGeomScreen(0x100);
 
-	p = NULL;
+	p = (POLY_G4 *)gGT->backBuffer->primMem.curr;
 
 #ifdef REBUILD_PC
 	scratchpad = &scratchpadBuf[0];
@@ -154,9 +153,11 @@ SKIP_LOADING_TEXT:
 
 		gte_ldv3(&pos[0], &pos[1], &pos[2]);
 		gte_rtpt();
+		
 		pos[0].vy += 0x11a;
 		pos[1].vy += 0x11a;
 		pos[2].vy += 0x11a;
+		
 		gte_stsxy3(scratchpad, scratchpad + 1, scratchpad + 2);
 		scratchpad += 3;
 	}
@@ -238,75 +239,47 @@ SKIP_LOADING_TEXT:
 		pos[2].vx += 100;
 
 
-		// === Step 8 ===
-		for (
-			i = 0, vect = &pos[0];
-			i < 3;
-			i++, vect++)
-		{
-			// Range: [1.0, 2.0]
-			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-			angle[0] += 300;
-
-			// change all vector posZ
-			vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
-		}
-
-		gte_ldv3(&pos[0], &pos[1], &pos[2]);
-		gte_rtpt();
-
 		i = 0;
-
-		// horizontal strips
-		// draws bottoms-up
+		// === Step 8 ===
 		for (row = 0; row < 10; row++)
 		{
-			gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
-
-			if (row < 9)
+			for (
+				j = 0, vect = &pos[0];
+				j < 3;
+				j++, vect++)
 			{
-				for (
-					j = 0, vect = &pos[0];
-					j < 3;
-					j++, vect++)
-				{
-					// Range: [1.0, 2.0]
-					approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-					angle[0] += 300;
+				// Range: [1.0, 2.0]
+				approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+				angle[0] += 300;
 
-					// change all vector posZ
-					vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
-				}
-
-				pos[0].vy += 0x11a;
-				pos[1].vy += 0x11a;
-				pos[2].vy += 0x11a;
-				gte_ldv3(&pos[0], &pos[1], &pos[2]);
-				gte_rtpt();
+				// change all vector posZ
+				vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
 			}
 
+			gte_ldv3(&pos[0], &pos[1], &pos[2]);
+			gte_rtpt();
+			
+			pos[0].vy += 0x11a;
+			pos[1].vy += 0x11a;
+			pos[2].vy += 0x11a;
+			
+			gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
+			
+			// ============================
+			
+			j = 0;
 			if (i == 0)
 			{
+				j++;
 				top++;
 			}
 
-			for (j = (i == 0); j < 3; bottom++, top++, j++, i++)
+			for (/**/; j < 3; bottom++, top++, j++, i++)
 			{
 				if (
 					((bottom[0] & bottom[1] & top[0] & top[1] & screenlimit) == 0) &&
 					((dimensions - bottom[0] & dimensions - bottom[1] & dimensions - top[0] & dimensions - top[1] & screenlimit) == 0))
 				{
-					backDB = gGT->backBuffer;
-
-					p = (POLY_G4 *)backDB->primMem.curr;
-					if (p <= (POLY_G4 *)backDB->primMem.endMin100)
-					{
-						backDB->primMem.curr = p + 1;
-					}
-
-					if (p == NULL)
-						return;
-
 					// white tile
 					u_char boolDark = false;
 
@@ -340,10 +313,14 @@ SKIP_LOADING_TEXT:
 					// addPrim(ot, p); works but uses more instructions.
 					*(int *)p = *ot | 0x8000000;
 					*ot = (u_int)p & 0xffffff;
+					
+					p++;
 				}
 			}
 		}
 		colorSine[0] = colorSine[1];
 	}
+	
+	gGT->backBuffer->primMem.curr = p;
 	sdata->RaceFlag_ElapsedTime += gGT->elapsedTimeMS * 100;
 }
