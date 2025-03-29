@@ -231,16 +231,15 @@ SKIP_LOADING_TEXT:
 						boolDark = true;
 					}
 
-					char colorR = RaceFlag_CalculateBrightness(lightR, boolDark);
-					char colorL = RaceFlag_CalculateBrightness(lightL, boolDark);
-
-					// right corner
-					setRGB0(p, colorR, colorR, colorR);
-					setRGB2(p, colorR, colorR, colorR);
-
-					// left corner
-					setRGB1(p, colorL, colorL, colorL);
-					setRGB3(p, colorL, colorL, colorL);
+					u_char colorR = RaceFlag_CalculateBrightness(lightR, boolDark);
+					u_int rgbR = (colorR) | (colorR << 8) | (colorR << 16);
+					*(int*)&p->r0 = rgbR;
+					*(int*)&p->r2 = rgbR;
+					
+					u_char colorL = RaceFlag_CalculateBrightness(lightL, boolDark);
+					u_int rgbL = (colorL) | (colorL << 8) | (colorL << 16);
+					*(int*)&p->r1 = rgbL;
+					*(int*)&p->r3 = rgbL;
 
 					// positions
 					*(int *)&p->x0 = posR[0];
