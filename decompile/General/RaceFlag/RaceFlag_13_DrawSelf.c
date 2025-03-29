@@ -38,11 +38,12 @@ void DECOMP_RaceFlag_DrawSelf()
 
 	// 0x28, 0x2C, 0x30, 0x34, 0x38
 	// copies of data.checkeredFlag[X]
-	int unk1;
-	int unk2;
-	int waveAngle;
-	int brightness;
-	int darkness;
+	int local0;
+	int local1;
+	int local2;
+	int local3;
+	int local4;
+	
 	int time;
 
 	if (sdata->RaceFlag_CanDraw == 0)
@@ -80,57 +81,63 @@ SKIP_LOADING_TEXT:
 	scratchpad = (u_int*)0x1f800000;
 #endif
 	toggle = 1;
+
+
+	// === Step 1 ===
 	data.checkerFlagVariables[4] += data.checkerFlagVariables[3] * gGT->elapsedTimeMS;
 	angle[0] = (int)data.checkerFlagVariables[4] >> 5;
 
+
+	// === Step 2 ===
 	if (0xfff < angle[0])
 	{
 		data.checkerFlagVariables[4] &= 0x1ffff;
 		angle[0] = (int)data.checkerFlagVariables[4] >> 5;
 
-		// += 45 degrees
+		// Linear +=
 		data.checkerFlagVariables[0] += 0x200;
+		data.checkerFlagVariables[2] += 200;
 
-		// Range: [1.0, 2.0]
+		// Trigonometric +=
 		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
-
-		// Range: [16, 32] + 0x96
 		data.checkerFlagVariables[1] = (approx[0] * 0x20 >> 0xd) + 0x96;
 
-		// += 18 degrees
-		data.checkerFlagVariables[2] = data.checkerFlagVariables[2] + 200;
-
-		// Range: [1.0, 2.0]
 		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
-
-		// Range: [32, 64] + 0xb4
 		data.checkerFlagVariables[3] = (approx[0] * 0x40 >> 0xd) + 0xb4;
 	}
 
-	// Range: [1.0, 2.0]
+
+	// === Step 3 ===
 	approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 	approx[0] = approx[0] * data.checkerFlagVariables[1];
 	approx[0] = (approx[0] >> 0xd) + 0x280;
 
-	// 280 degrees (3/4 of 360)
-	angle[0] += 0xc80;
 
-	// Range: [1.0, 2.0]
+	// === Step 4 ===
+	angle[0] += 0xc80;
 	colorSine[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 
-	time = sdata->RaceFlag_ElapsedTime >> 5;
-	angle[0] = time;
 
+	// === Step 5 ===
 	pos[0].vy = 0xfc72;
 	pos[1].vy = 0xfcd0;
 	pos[2].vy = 0xfd2e;
 
+
+	// === Step 6 ===
+	time = sdata->RaceFlag_ElapsedTime >> 5;
+	angle[0] = time;
+
+
+	// === Step 7 ===
 	flagPos = sdata->RaceFlag_Position;
 	flagPos = -0xbbe - flagPos;
 	pos[0].vx = flagPos;
 	pos[1].vx = flagPos;
 	pos[2].vx = flagPos;
 
+
+	// === Step 8 ===
 	for (i = 0; i < 10; i++)
 	{
 		for (
@@ -159,11 +166,11 @@ SKIP_LOADING_TEXT:
 	// screen size
 	dimensions = 0xd80200;
 
-	unk1 = data.checkerFlagVariables[0];
-	unk2 = data.checkerFlagVariables[1];
-	waveAngle = data.checkerFlagVariables[2];
-	brightness = data.checkerFlagVariables[3];
-	darkness = data.checkerFlagVariables[4];
+	local0 = data.checkerFlagVariables[0];
+	local1 = data.checkerFlagVariables[1];
+	local2 = data.checkerFlagVariables[2];
+	local3 = data.checkerFlagVariables[3];
+	local4 = data.checkerFlagVariables[4];
 
 	// vertical strips
 	for (column = 1; column < 35; column++)
@@ -178,58 +185,60 @@ SKIP_LOADING_TEXT:
 		bottom = (u_int *)(0x1f800000 + toggle * 0x78);
 #endif
 
-		// increment
-		darkness += brightness * 0x40;
-		angle[0] = darkness;
-		angle[1] = (int)angle[0] >> 5;
 
-		if (0xfff < angle[1])
+		// === Step 1 ===
+		local4 += local3 * 0x40;
+		angle[0] = (int)local4 >> 5;
+		
+		
+		// === Step 2 ===
+		if (0xfff < angle[0])
 		{
-			angle[1] = (int)(angle[0] & 0x1ffff) >> 5;
-			darkness = angle[0] & 0x1ffff;
+			local4 &= 0x1ffff;
+			angle[0] = (int)local4 >> 5;
 
-			// increment
-			unk1 += 0x200;
-			angle[0] = unk1;
+			// Linear +=
+			local0 += 0x200;
+			local2 += 200;
+			
+			// Trigonometric +=
+			approx[0] = DECOMP_MATH_Sin(local0) + 0xfff;
+			local1 = (approx[0] * 0x20 >> 0xd) + 0x96;
 
-			// Range: [1.0, 2.0]
-			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-
-			// Range: [16, 32] + 0x96
-			unk2 = (approx[0] * 0x20 >> 0xd) + 0x96;
-
-			// increment
-			waveAngle += 200;
-			angle[0] = waveAngle;
-
-			// Range: [1.0, 2.0]
-			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-
-			// Range: [32, 64] + 0xb4
-			brightness = (approx[0] * 0x40 >> 0xd) + 0xb4;
+			approx[0] = DECOMP_MATH_Sin(local2) + 0xfff;
+			local3 = (approx[0] * 0x40 >> 0xd) + 0xb4;
 		}
 
-		// Range: [1.0, 2.0]
-		approx[0] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
-		approx[0] = (approx[0] * unk2 >> 0xd) + 0x280;
 
-		// 280 degrees
-		angle[1] += 0xc80;
+		// === Step 3 ===
+		approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		approx[0] = approx[0] * local1;
+		approx[0] = (approx[0] >> 0xd) + 0x280;
 
-		// range: [1.0, 2.0]
-		colorSine[1] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
 
+		// === Step 4 ===
+		angle[0] += 0xc80;
+		colorSine[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+
+
+		// === Step 5 ===
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
 		pos[2].vy = 0xfd2e;
+
+		
+		// === Step 6 ===
+		time += 0x100;
+		angle[0] = time;
+		
+		
+		// === Step 7 ===
 		pos[0].vx += 100;
 		pos[1].vx += 100;
 		pos[2].vx += 100;
 
-		// increment
-		time += 0x100;
-		angle[0] = time;
 
+		// === Step 8 ===
 		for (
 			i = 0, vect = &pos[0];
 			i < 3;
