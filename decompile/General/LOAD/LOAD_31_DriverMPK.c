@@ -189,6 +189,13 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 
 	else if((gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
+		#ifdef USE_REAL60PS1
+		
+		// load 4P MPK of fourth player
+		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[0];
+		
+		#else
+		
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			BI_RACERMODELHI + data.characterIDs[0],
@@ -196,6 +203,8 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 
 		// time trial mpk
 		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
+		
+		#endif
 	}
 
 	else if(

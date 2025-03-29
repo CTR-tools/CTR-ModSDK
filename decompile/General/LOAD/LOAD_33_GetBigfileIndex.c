@@ -8,6 +8,10 @@ int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 	lod = 1;
 #endif
 
+#ifdef USE_REAL60PS1
+	lod = 4;
+#endif
+
 	if(levelID <= LAB_BASEMENT)
 		return BI_ARCADETRACKS + levelID*8 + sdata->levBigLodIndex[lod-1] + fileType;
 	
