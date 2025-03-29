@@ -59,24 +59,16 @@ void DECOMP_RaceFlag_DrawSelf()
 	SVECTOR *vect;
 	struct GameTracker *gGT = sdata->gGT;
 
+	int time;
 	int lightL;
 	int lightR;
 	
+	// scratchpad
 	u_int *posL;
 	u_int *posR;
-
-	// 0x10, 0x18, 0x20
-	SVECTOR pos[3];
-
-	// 0x28, 0x2C, 0x30, 0x34, 0x38
-	// copies of data.checkeredFlag[X]
-	int local0;
-	int local1;
-	int local2;
-	int local3;
-	int local4;
+	int* local;
+	SVECTOR* pos;
 	
-	int time;
 
 	if (sdata->RaceFlag_CanDraw == 0)
 		return;
@@ -116,12 +108,6 @@ SKIP_LOADING_TEXT:
 	dimensions = 0xd80200;
 	screenlimit = 0x80008000;
 
-	local0 = data.checkerFlagVariables[0];
-	local1 = data.checkerFlagVariables[1];
-	local2 = data.checkerFlagVariables[2];
-	local3 = data.checkerFlagVariables[3];
-	local4 = data.checkerFlagVariables[4];
-
 	toggle = 0;
 	
 	// === First Loop Iteration ===
@@ -132,38 +118,48 @@ SKIP_LOADING_TEXT:
 		posL = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
 		toggle = toggle ^ 1;
 		posR = &scratchpadBuf[(toggle * 0x78 / 4)];
+		local = &scratchpadBuf[0xF0/4];
+		pos = &scratchpadBuf[0x108/4];
 #else
-		posL = (u_int *)((0x1f800000 + toggle * 0x78) - 4);
+		posL = (u_int *)(0x1f800000 + toggle * 0x78 - 4);
 		toggle = toggle ^ 1;
 		posR = (u_int *)(0x1f800000 + toggle * 0x78);
+		local = (u_int *)(0x1f8000F0);
+		pos = (u_int *)(0x1f800108);
 #endif
+
+		local[0] = data.checkerFlagVariables[0];
+		local[1] = data.checkerFlagVariables[1];
+		local[2] = data.checkerFlagVariables[2];
+		local[3] = data.checkerFlagVariables[3];
+		local[4] = data.checkerFlagVariables[4];
 
 		// === Step 1 ===
 		int stepRate = gGT->elapsedTimeMS;
-		local4 += local3 * stepRate;
-		angle[0] = (int)local4 >> 5;
+		local[4] += local[3] * stepRate;
+		angle[0] = (int)local[4] >> 5;
 		
 		// === Step 2 ===
 		if (0xfff < angle[0])
 		{
 			// reset counter
-			local4 &= 0x1ffff;
-			angle[0] = (int)local4 >> 5;
+			local[4] &= 0x1ffff;
+			angle[0] = (int)local[4] >> 5;
 
-			local0 += 0x200;
-			local2 += 200;
+			local[0] += 0x200;
+			local[2] += 200;
 			
-			int sin0 = MathSinInline(local0) + 0xfff;
-			int sin2 = MathSinInline(local2) + 0xfff;
+			int sin0 = MathSinInline(local[0]) + 0xfff;
+			int sin2 = MathSinInline(local[2]) + 0xfff;
 			
 			// reset based on trig
-			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
-			local3 = (sin2 * 0x40 >> 0xd) + 0xb4;
+			local[1] = (sin0 * 0x20 >> 0xd) + 0x96;
+			local[3] = (sin2 * 0x40 >> 0xd) + 0xb4;
 		}
 
 		// === Step 3 ===
 		approx[0] = MathSinInline(angle[0]) + 0xfff;
-		approx[0] = approx[0] * local1;
+		approx[0] = approx[0] * local[1];
 		approx[0] = (approx[0] >> 0xd) + 0x280;
 
 		// === Step 4 ===
@@ -176,11 +172,11 @@ SKIP_LOADING_TEXT:
 		pos[2].vy = 0xfd2e;
 
 		// === Step 6 ===
-		data.checkerFlagVariables[0] = local0;
-		data.checkerFlagVariables[1] = local1;
-		data.checkerFlagVariables[2] = local2;
-		data.checkerFlagVariables[3] = local3;
-		data.checkerFlagVariables[4] = local4;
+		data.checkerFlagVariables[0] = local[0];
+		data.checkerFlagVariables[1] = local[1];
+		data.checkerFlagVariables[2] = local[2];
+		data.checkerFlagVariables[3] = local[3];
+		data.checkerFlagVariables[4] = local[4];
 		
 		time = sdata->RaceFlag_ElapsedTime >> 5;
 		angle[0] = time;
@@ -237,30 +233,30 @@ SKIP_LOADING_TEXT:
 
 		// === Step 1 ===
 		int stepRate = 0x40;
-		local4 += local3 * stepRate;
-		angle[0] = (int)local4 >> 5;
+		local[4] += local[3] * stepRate;
+		angle[0] = (int)local[4] >> 5;
 		
 		// === Step 2 ===
 		if (0xfff < angle[0])
 		{
 			// reset counter
-			local4 &= 0x1ffff;
-			angle[0] = (int)local4 >> 5;
+			local[4] &= 0x1ffff;
+			angle[0] = (int)local[4] >> 5;
 
-			local0 += 0x200;
-			local2 += 200;
+			local[0] += 0x200;
+			local[2] += 200;
 			
-			int sin0 = MathSinInline(local0) + 0xfff;
-			int sin2 = MathSinInline(local2) + 0xfff;
+			int sin0 = MathSinInline(local[0]) + 0xfff;
+			int sin2 = MathSinInline(local[2]) + 0xfff;
 			
 			// reset based on trig
-			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
-			local3 = (sin2 * 0x40 >> 0xd) + 0xb4;
+			local[1] = (sin0 * 0x20 >> 0xd) + 0x96;
+			local[3] = (sin2 * 0x40 >> 0xd) + 0xb4;
 		}
 
 		// === Step 3 ===
 		approx[0] = MathSinInline(angle[0]) + 0xfff;
-		approx[0] = approx[0] * local1;
+		approx[0] = approx[0] * local[1];
 		approx[0] = (approx[0] >> 0xd) + 0x280;
 
 		// === Step 4 ===
@@ -321,14 +317,8 @@ SKIP_LOADING_TEXT:
 					((posR[0] & posR[1] & posL[0] & posL[1] & screenlimit) == 0) &&
 					((dimensions - posR[0] & dimensions - posR[1] & dimensions - posL[0] & dimensions - posL[1] & screenlimit) == 0))
 				{
-					// white tile
-					u_char boolDark = false;
-
-					// grey tile
-					if (((column >> 2) + (i >> 2) & 1U) != 0)
-					{
-						boolDark = true;
-					}
+					// TRUE for gray, FALSE for white
+					u_char boolDark = (((column >> 2) + (i >> 2) & 1U) != 0);
 
 					u_char colorR = RaceFlag_CalculateBrightness(lightR, boolDark);
 					setRGB0(p, colorR, colorR, colorR);
