@@ -24,13 +24,16 @@ void DECOMP_RaceFlag_DrawSelf()
 	u_int screenlimit;
 	u_int dimensions;
 	int approx[2];
-	int colorSine[2];
 	u_int angle[2];
-	u_int *top;
-	u_int *bottom;
 	POLY_G4 *p;
 	SVECTOR *vect;
 	struct GameTracker *gGT = sdata->gGT;
+
+	int lightL;
+	int lightR;
+	
+	u_int *posL;
+	u_int *posR;
 
 	// 0x10, 0x18, 0x20
 	SVECTOR pos[3];
@@ -79,93 +82,9 @@ SKIP_LOADING_TEXT:
 #else
 	scratchpad = (u_int*)0x1f800000;
 #endif
-	toggle = 1;
-
-
-	// === Step 1 ===
-	data.checkerFlagVariables[4] += data.checkerFlagVariables[3] * gGT->elapsedTimeMS;
-	angle[0] = (int)data.checkerFlagVariables[4] >> 5;
-
-
-	// === Step 2 ===
-	if (0xfff < angle[0])
-	{
-		// reset counter
-		data.checkerFlagVariables[4] &= 0x1ffff;
-		angle[0] = (int)data.checkerFlagVariables[4] >> 5;
-
-		data.checkerFlagVariables[0] += 0x200;
-		data.checkerFlagVariables[2] += 200;
-
-		int sin0 = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
-		int sin2 = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
-		
-		// reset based on trig
-		data.checkerFlagVariables[1] = ((sin0 * 0x20) >> 0xd) + 0x96;
-		data.checkerFlagVariables[3] = ((sin2 * 0x40) >> 0xd) + 0xb4;
-	}
-
-
-	// === Step 3 ===
-	approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-	approx[0] = approx[0] * data.checkerFlagVariables[1];
-	approx[0] = (approx[0] >> 0xd) + 0x280;
-
-
-	// === Step 4 ===
-	angle[0] += 0xc80;
-	colorSine[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-
-
-	// === Step 5 ===
-	pos[0].vy = 0xfc72;
-	pos[1].vy = 0xfcd0;
-	pos[2].vy = 0xfd2e;
-
-
-	// === Step 6 ===
-	time = sdata->RaceFlag_ElapsedTime >> 5;
-	angle[0] = time;
-
-
-	// === Step 7 ===
-	flagPos = sdata->RaceFlag_Position;
-	flagPos = -0xbbe - flagPos;
-	pos[0].vx = flagPos;
-	pos[1].vx = flagPos;
-	pos[2].vx = flagPos;
-
-
-	// === Step 8 ===
-	for (i = 0; i < 10; i++)
-	{
-		for (
-			j = 0, vect = &pos[0];
-			j < 3;
-			j++, vect++)
-		{
-			// Range: [1.0, 2.0]
-			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-			angle[0] += 300;
-
-			vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
-		}
-
-		gte_ldv3(&pos[0], &pos[1], &pos[2]);
-		gte_rtpt();
-		
-		pos[0].vy += 0x11a;
-		pos[1].vy += 0x11a;
-		pos[2].vy += 0x11a;
-		
-		gte_stsxy3(scratchpad, scratchpad + 1, scratchpad + 2);
-		scratchpad += 3;
-	}
-
-	screenlimit = 0x80008000;
-
-	// screen size
+	
 	dimensions = 0xd80200;
+	screenlimit = 0x80008000;
 
 	local0 = data.checkerFlagVariables[0];
 	local1 = data.checkerFlagVariables[1];
@@ -174,23 +93,26 @@ SKIP_LOADING_TEXT:
 	local4 = data.checkerFlagVariables[4];
 
 	// vertical strips
-	for (column = 1; column < 36; column++)
+	toggle = 0;
+	for (column = 0; column < 36; column++)
 	{
 #ifdef REBUILD_PC
-		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
+		posL = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
 		toggle = toggle ^ 1;
-		bottom = &scratchpadBuf[(toggle * 0x78 / 4)];
+		posR = &scratchpadBuf[(toggle * 0x78 / 4)];
 #else
-		top = (u_int *)((0x1f800000 + toggle * 0x78) - 4);
+		posL = (u_int *)((0x1f800000 + toggle * 0x78) - 4);
 		toggle = toggle ^ 1;
-		bottom = (u_int *)(0x1f800000 + toggle * 0x78);
+		posR = (u_int *)(0x1f800000 + toggle * 0x78);
 #endif
 
-
 		// === Step 1 ===
-		local4 += local3 * 0x40;
-		angle[0] = (int)local4 >> 5;
+		int stepRate = 0x40;
+		if (column == 0)
+			stepRate = gGT->elapsedTimeMS;
 		
+		local4 += local3 * stepRate;
+		angle[0] = (int)local4 >> 5;
 		
 		// === Step 2 ===
 		if (0xfff < angle[0])
@@ -210,34 +132,48 @@ SKIP_LOADING_TEXT:
 			local3 = (sin2 * 0x40 >> 0xd) + 0xb4;
 		}
 
-
 		// === Step 3 ===
 		approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 		approx[0] = approx[0] * local1;
 		approx[0] = (approx[0] >> 0xd) + 0x280;
 
-
 		// === Step 4 ===
 		angle[0] += 0xc80;
-		colorSine[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
-
+		lightL = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 
 		// === Step 5 ===
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
 		pos[2].vy = 0xfd2e;
 
-		
 		// === Step 6 ===
-		time += 0x100;
-		angle[0] = time;
-		
-		
-		// === Step 7 ===
-		pos[0].vx += 100;
-		pos[1].vx += 100;
-		pos[2].vx += 100;
+		if(column == 0)
+		{
+			data.checkerFlagVariables[0] = local0;
+			data.checkerFlagVariables[1] = local1;
+			data.checkerFlagVariables[2] = local2;
+			data.checkerFlagVariables[3] = local3;
+			data.checkerFlagVariables[4] = local4;
+			
+			time = sdata->RaceFlag_ElapsedTime >> 5;
+			angle[0] = time;
 
+			flagPos = sdata->RaceFlag_Position;
+			flagPos = -0xbbe - flagPos;
+			pos[0].vx = flagPos;
+			pos[1].vx = flagPos;
+			pos[2].vx = flagPos;
+		}
+		
+		else
+		{
+			time += 0x100;
+			angle[0] = time;
+
+			pos[0].vx += 100;
+			pos[1].vx += 100;
+			pos[2].vx += 100;
+		}
 
 		i = 0;
 		// === Step 8 ===
@@ -263,7 +199,13 @@ SKIP_LOADING_TEXT:
 			pos[1].vy += 0x11a;
 			pos[2].vy += 0x11a;
 			
-			gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
+			gte_stsxy3((long *)(posL + 1), (long *)(posL + 2), (long *)(posL + 3));
+			
+			if(column == 0)
+			{
+				posL += 3;
+				continue;
+			}
 			
 			// ============================
 			
@@ -271,14 +213,14 @@ SKIP_LOADING_TEXT:
 			if (i == 0)
 			{
 				j++;
-				top++;
+				posL++;
 			}
 
-			for (/**/; j < 3; bottom++, top++, j++, i++)
+			for (/**/; j < 3; posR++, posL++, j++, i++)
 			{
 				if (
-					((bottom[0] & bottom[1] & top[0] & top[1] & screenlimit) == 0) &&
-					((dimensions - bottom[0] & dimensions - bottom[1] & dimensions - top[0] & dimensions - top[1] & screenlimit) == 0))
+					((posR[0] & posR[1] & posL[0] & posL[1] & screenlimit) == 0) &&
+					((dimensions - posR[0] & dimensions - posR[1] & dimensions - posL[0] & dimensions - posL[1] & screenlimit) == 0))
 				{
 					// white tile
 					u_char boolDark = false;
@@ -289,22 +231,22 @@ SKIP_LOADING_TEXT:
 						boolDark = true;
 					}
 
-					char colorRight = RaceFlag_CalculateBrightness(colorSine[0], boolDark);
-					char colorLeft = RaceFlag_CalculateBrightness(colorSine[1], boolDark);
+					char colorR = RaceFlag_CalculateBrightness(lightR, boolDark);
+					char colorL = RaceFlag_CalculateBrightness(lightL, boolDark);
 
 					// right corner
-					setRGB0(p, colorRight, colorRight, colorRight);
-					setRGB2(p, colorRight, colorRight, colorRight);
+					setRGB0(p, colorR, colorR, colorR);
+					setRGB2(p, colorR, colorR, colorR);
 
 					// left corner
-					setRGB1(p, colorLeft, colorLeft, colorLeft);
-					setRGB3(p, colorLeft, colorLeft, colorLeft);
+					setRGB1(p, colorL, colorL, colorL);
+					setRGB3(p, colorL, colorL, colorL);
 
 					// positions
-					*(int *)&p->x0 = bottom[0];
-					*(int *)&p->x2 = bottom[1];
-					*(int *)&p->x1 = top[0];
-					*(int *)&p->x3 = top[1];
+					*(int *)&p->x0 = posR[0];
+					*(int *)&p->x2 = posR[1];
+					*(int *)&p->x1 = posL[0];
+					*(int *)&p->x3 = posL[1];
 
 					// prim/code
 					setPolyG4(p);
@@ -318,7 +260,8 @@ SKIP_LOADING_TEXT:
 				}
 			}
 		}
-		colorSine[0] = colorSine[1];
+		
+		lightR = lightL;
 	}
 	
 	gGT->backBuffer->primMem.curr = p;
