@@ -1,8 +1,5 @@
 #include <common.h>
 
-// read DCxDemo's commments on this:
-// https://discord.com/channels/527135227546435584/637616020177289236/1141975626035777536
-
 char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen)
 {
 	int var1;
@@ -15,6 +12,12 @@ char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen)
 		currNote++;
 		
 		// what on earth?
+		// from DCxDemo: its delta time.
+		// midi format uses a kind of compression. every byte is
+		// 1 bit "has next byte flag".
+		// 7 bits is number data
+		// so that code skips proper amount of bytes it uses. 
+		// it allows to send only 1 byte for short events.
 		var1 = (var1 * 0x80) + (currNote[0] & 0x7f);
 	}
 	

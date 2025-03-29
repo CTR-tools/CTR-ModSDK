@@ -8,7 +8,6 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	int numSlots;
 	int numPortsPerSlot;
 	
-	int padIndex;
 	struct MultitapPacket* ptrControllerPacket;
 	struct GamepadBuffer* padCurr;
 	
@@ -37,7 +36,6 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	numPortsPerSlot = 1;
 #endif
 	
-	padIndex = 0;
 	numConnected = 0;
 	bitwiseConnected = 0;
 	padCurr = &gGamepads->gamepad[0];
@@ -68,7 +66,6 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 			}
 			
 			numConnected++;
-			padIndex++;
 			padCurr++;
 		}
 	}
