@@ -13,6 +13,36 @@ force_inline char RaceFlag_CalculateBrightness(u_int sine, u_char darkTile)
 	return((sine * -125 + 0x1fe000) >> 0xD);
 }
 
+// inline Sine operation
+// drops clock from ~130 to
+force_inline
+int MathSinInline(u_int param_1)
+{
+  u_int iVar1;
+
+  // approximate trigonometry
+  iVar1 = *(u_int*)&data.trigApprox[param_1 & 0x3ff];
+
+  // if (0 < angle < 90) or (180 < angle < 270)
+  if ((param_1 & 0x400) == 0)
+  {
+	// shift bottom 2-byte to become top 2-byte
+    iVar1 = iVar1 << 0x10;
+  }
+
+  // move top 2-byte to bottom 2-byte,
+  // and make top 2-byte zero
+  iVar1 = iVar1 >> 0x10;
+
+  // if (angle > 180)
+  if ((param_1 & 0x800) != 0)
+  {
+	// make negative
+    iVar1 = -iVar1;
+  }
+  return iVar1;
+}
+
 void DECOMP_RaceFlag_DrawSelf()
 {
 	char i, j;
@@ -96,7 +126,7 @@ SKIP_LOADING_TEXT:
 	
 	// === First Loop Iteration ===
 	// Remove 36*10 branching instructions,
-	// Reduces clock from ~150 to ~120
+	// Reduces clock from ~150 to ~130
 	{
 #ifdef REBUILD_PC
 		posL = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
@@ -123,8 +153,8 @@ SKIP_LOADING_TEXT:
 			local0 += 0x200;
 			local2 += 200;
 			
-			int sin0 = DECOMP_MATH_Sin(local0) + 0xfff;
-			int sin2 = DECOMP_MATH_Sin(local2) + 0xfff;
+			int sin0 = MathSinInline(local0) + 0xfff;
+			int sin2 = MathSinInline(local2) + 0xfff;
 			
 			// reset based on trig
 			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
@@ -132,13 +162,13 @@ SKIP_LOADING_TEXT:
 		}
 
 		// === Step 3 ===
-		approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		approx[0] = MathSinInline(angle[0]) + 0xfff;
 		approx[0] = approx[0] * local1;
 		approx[0] = (approx[0] >> 0xd) + 0x280;
 
 		// === Step 4 ===
 		angle[0] += 0xc80;
-		lightL = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		lightL = MathSinInline(angle[0]) + 0xfff;
 
 		// === Step 5 ===
 		pos[0].vy = 0xfc72;
@@ -171,7 +201,7 @@ SKIP_LOADING_TEXT:
 				j++, vect++)
 			{
 				// Range: [1.0, 2.0]
-				approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+				approx[1] = MathSinInline(angle[0]) + 0xfff;
 				angle[0] += 300;
 
 				// change all vector posZ
@@ -220,8 +250,8 @@ SKIP_LOADING_TEXT:
 			local0 += 0x200;
 			local2 += 200;
 			
-			int sin0 = DECOMP_MATH_Sin(local0) + 0xfff;
-			int sin2 = DECOMP_MATH_Sin(local2) + 0xfff;
+			int sin0 = MathSinInline(local0) + 0xfff;
+			int sin2 = MathSinInline(local2) + 0xfff;
 			
 			// reset based on trig
 			local1 = (sin0 * 0x20 >> 0xd) + 0x96;
@@ -229,13 +259,13 @@ SKIP_LOADING_TEXT:
 		}
 
 		// === Step 3 ===
-		approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		approx[0] = MathSinInline(angle[0]) + 0xfff;
 		approx[0] = approx[0] * local1;
 		approx[0] = (approx[0] >> 0xd) + 0x280;
 
 		// === Step 4 ===
 		angle[0] += 0xc80;
-		lightL = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+		lightL = MathSinInline(angle[0]) + 0xfff;
 
 		// === Step 5 ===
 		pos[0].vy = 0xfc72;
@@ -260,7 +290,7 @@ SKIP_LOADING_TEXT:
 				j++, vect++)
 			{
 				// Range: [1.0, 2.0]
-				approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+				approx[1] = MathSinInline(angle[0]) + 0xfff;
 				angle[0] += 300;
 
 				// change all vector posZ
