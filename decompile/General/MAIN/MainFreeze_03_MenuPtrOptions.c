@@ -20,14 +20,12 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct RectMenu* me
 	{
 		struct ControllerPacket* ptrControllerPacket = sdata->gGamepads->gamepad[i].ptrControllerPacket;
 
-		// === THIS IS NOT CORRECT ===
-		// Since discovering plugged enum, this is not right
-		// Last checked Mar 27 2025, this is NOT on buildList,
-		// need to double-check with ghidra, what should this do?
-
 		// if gamepad is not an "analog controller", as CTR uses to refer to jogcons and negcons
 		if
 		(
+			// this function needs to display menu graphics for digital controllers at all times,
+			// even if they're unplugged; this is simply an additional check for if
+			// an "analog controller" is connected or not
 			(
 				(ptrControllerPacket == 0) ||
 				(ptrControllerPacket->plugged != PLUGGED)
