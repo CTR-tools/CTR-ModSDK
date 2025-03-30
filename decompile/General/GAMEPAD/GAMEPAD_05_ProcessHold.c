@@ -112,5 +112,9 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 		#ifdef USE_ONLINE
 		break;
 		#endif
+		
+		#ifdef USE_REAL60PS1
+		break;
+		#endif
 	}
 }

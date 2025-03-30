@@ -7788,7 +7788,14 @@ struct Data data =
 				{
 						.particle_funcPtr = 0x00000000,
 						.particle_colorFlags = 0x08a3,
+						
+						// less particles on-screen
+						#ifdef USE_REAL60PS1
+						.particle_lifespan = 0x0003,
+						#else
 						.particle_lifespan = 0x0005,
+						#endif
+						
 						.particle_Type = 0,
 				}
 		},

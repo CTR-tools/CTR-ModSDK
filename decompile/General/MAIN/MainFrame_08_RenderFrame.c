@@ -1411,6 +1411,11 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			// 0x1c2 in 1P mode
 			distToScreen = pushBuffer->distanceToScreen_PREV;
 
+			#ifdef USE_REAL60PS1
+			// lower LOD in distance
+			distToScreen = 0x20;
+			#endif
+
 			// int and unsigned int have specific purposes
 			*(unsigned int*)0x1f800014 = distToScreen * 0x2080;
 			if(*(int*)0x1f800014 < 0) *(int*)0x1f800014 = *(int*)0x1f800014 + 0xff;

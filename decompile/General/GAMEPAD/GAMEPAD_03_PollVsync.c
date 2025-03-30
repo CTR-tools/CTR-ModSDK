@@ -29,6 +29,11 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 	maxPadsPerPort = 1;
 #endif
 
+#ifdef USE_REAL60PS1
+	numPorts = 1;
+	maxPadsPerPort = 1;
+#endif
+
 #ifdef USE_4PADTEST
 	// use 1 controller for all 4
     numPorts = 1;

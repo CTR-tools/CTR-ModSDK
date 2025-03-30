@@ -136,5 +136,9 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGamepads)
 		#ifdef USE_ONLINE
 		break;
 		#endif
+		
+		#ifdef USE_REAL60PS1
+		break;
+		#endif
 	}
 }
