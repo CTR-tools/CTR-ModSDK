@@ -16,7 +16,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 	{
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					(CdlFILE*)&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
+					&sdata->KartHWL_CdFile,  // CdLoc of HOWL
 					(void*)sdata->ptrSampleBlock2, // destination in RAM for banks
 					sdata->bankSectorOffset,// bank offset on disc, from CdLoc
 					1	// one sector
@@ -75,7 +75,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					(CdlFILE*)&sdata->KartHWL_CdLoc,  				// CdLoc of HOWL
+					&sdata->KartHWL_CdFile,  				// CdLoc of HOWL
 					(void*)((int)sdata->ptrSampleBlock2 + 0x800),	// destination
 					sdata->bankSectorOffset+1,				// offset of howl
 					sdata->numAudioSectors					// number of sectors

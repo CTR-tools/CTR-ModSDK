@@ -23,9 +23,9 @@ void DECOMP_howl_LoadHeader(char* filename)
 	#endif
 	
 	v1 = PCopen("SOUNDS/KART.HWL", PCDRV_MODE_READ);
-	sdata->fd_kartHwl = v1;
+	int fd_kartHwl = v1;
 	
-	v1 = PCread(sdata->fd_kartHwl, alloc, 0x800);
+	v1 = PCread(fd_kartHwl, alloc, 0x800);
 	
 	// allocate room for howlHeader + pointerTable
 	howlHeaderSize = sizeof(struct HowlHeader) + alloc->headerSize;
@@ -35,7 +35,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 	DECOMP_MEMPACK_ReallocMem(numSector << 0xb);
 	
 	char* byteOffset = (char*)alloc;
-	PCread(sdata->fd_kartHwl, &byteOffset[0x800], howlHeaderSize-0x800);
+	PCread(fd_kartHwl, &byteOffset[0x800], howlHeaderSize-0x800);
 	
 	// allocate room for howlHeader + pointerTable
 	howlHeaderSize = sizeof(struct HowlHeader) + alloc->headerSize;
@@ -49,14 +49,14 @@ void DECOMP_howl_LoadHeader(char* filename)
 // PS1
 #else
 	
-	if (DECOMP_LOAD_FindFile(filename, (CdlFILE*)&sdata->KartHWL_CdLoc) == 0) 
+	if (DECOMP_LOAD_FindFile(filename, &sdata->KartHWL_CdFile) == 0) 
 		alloc = 0;
 	
 	if (alloc != 0)
 	{
 		// read sector #1 of HOWL, just for header
 		ret = DECOMP_LOAD_HowlHeaderSectors(
-					(CdlFILE*)&sdata->KartHWL_CdLoc, 
+					&sdata->KartHWL_CdFile, 
 					alloc, 0, 1);
 	
 		if(
@@ -85,7 +85,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 
 			// read remaining sectors
 			ret = DECOMP_LOAD_HowlHeaderSectors(
-						(CdlFILE*)&sdata->KartHWL_CdLoc, 
+						&sdata->KartHWL_CdFile, 
 						(void*)((int)alloc + 0x800), 1, numSector - 1);
 						
 			if (ret != 0)

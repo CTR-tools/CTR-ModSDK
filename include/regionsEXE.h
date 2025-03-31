@@ -3615,9 +3615,6 @@ struct sData
 	// 8008d6b4
 	int bool_XnfLoaded;
 
-// PS1
-#ifndef USE_PCDRV
-
 	// 8008d6b8
 	// = 0, most of the time
 	// = 1, finished, set on IRQ
@@ -3634,16 +3631,6 @@ struct sData
 
 	// 8008d6c8
 	int XA_VolumeDeduct;
-
-// PC
-#else
-	
-	int fd_bigfile;
-	int fd_kartHwl;
-
-	int willUseLater[3];
-	
-#endif
 
 	// 8008d6cc
 	int* ptrArray_numSongs;
@@ -4703,15 +4690,7 @@ struct sData
 	struct Song songPool[2];
 
 	// 80095e7c
-	// two CdlLoc files are here
-	CdlLOC KartHWL_CdLoc;
-
-	// 80095E80
-	int KartHWL_fileSize;
-	//instead of the two above variables (80095e7c and 80095e80), it's almost certainly a `CdlFILE` instead of a `CdlLOC` & `int`
-
-	// 80095E84
-	char KartHWL_filename[0x10];
+	CdlFILE KartHWL_CdFile;
 
 	// 80095e94
 	// backed up during pause

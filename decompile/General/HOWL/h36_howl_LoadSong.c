@@ -16,7 +16,7 @@ int DECOMP_howl_LoadSong()
 	{
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					(CdlFILE*)&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
+					&sdata->KartHWL_CdFile,  // CdLoc of HOWL
 					sdata->sampleBlock1, 	// destination in RAM for songs
 					sdata->songSectorOffset,// song offset on disc, from CdLoc
 					1	// one sector
@@ -42,7 +42,7 @@ int DECOMP_howl_LoadSong()
 		
 		ret = DECOMP_LOAD_HowlSectorChainStart
 				(
-					(CdlFILE*)&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
+					&sdata->KartHWL_CdFile,  // CdLoc of HOWL
 					sdata->tenSampleBlocks, // (sampleBlock1+0x800) RAM destination
 					sdata->songSectorOffset+1,// song offset on disc, from CdLoc
 					numSector-1
