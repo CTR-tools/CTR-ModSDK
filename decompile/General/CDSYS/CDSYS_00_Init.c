@@ -7,7 +7,6 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	// if using parallel port (Naughty Dog Devs only)
 	if(boolUseDisc == 0) return;
 	
-#ifndef USE_PCDRV
 	// if Cd does not initialize
 	if(CdInit() == 0)
 	{
@@ -17,7 +16,6 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	}
 		
 	CdSetDebug(1);
-#endif
 	
 	sdata->discMode = -1;
 	sdata->bool_XnfLoaded = 0;

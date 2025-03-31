@@ -2,7 +2,6 @@
 
 void DECOMP_CDSYS_SetMode_StreamAudio()
 {
-#ifndef USE_PCDRV
 	char buf[8];
 
 	// dont check boolUseDisc,
@@ -33,5 +32,4 @@ void DECOMP_CDSYS_SetMode_StreamAudio()
 
 	CdSyncCallback(DECOMP_CDSYS_XaCallbackCdSync);
 	CdReadyCallback(DECOMP_CDSYS_XaCallbackCdReady);
-#endif
 }

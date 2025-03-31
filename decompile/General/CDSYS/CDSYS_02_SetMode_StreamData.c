@@ -2,7 +2,6 @@
 
 void DECOMP_CDSYS_SetMode_StreamData()
 {
-#ifndef USE_PCDRV
 	char buf[8];
 
 	// quit if using parallel
@@ -32,5 +31,4 @@ void DECOMP_CDSYS_SetMode_StreamData()
 	
 	CdSyncCallback(0);
 	CdReadyCallback(0);
-#endif
 }
