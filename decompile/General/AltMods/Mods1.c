@@ -14,6 +14,10 @@
 #include "DebugMenu/Font.c"
 #endif
 
+#ifdef USE_PCDRV
+#include "PCDRV/pcdrv.c"
+#endif
+
 // original ps1 with fragmented memory,
 // but also only if NOT using RAMEX, because
 // with RAMEX, we dont need to save 0x1b00 bytes

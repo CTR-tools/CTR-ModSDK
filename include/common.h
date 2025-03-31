@@ -114,21 +114,32 @@ enum HotReloadSteps
 #endif
 
 
+
 // Not PC
 #ifndef REBUILD_PC
 #include <gccHeaders.h>
 #include <ctr_gte.h>
 #endif
 
+
+
 // PC-only, always use this
 #ifdef REBUILD_PC
+#define USE_PCDRV
 #define USE_MOREPRIM
 #endif
 
+
+// headers we wrote to simplify the code
 #include <macros.h>
 #include <ctr_math.h>
-
 #include <prim.h>
+
+
+#ifdef USE_PCDRV
+#include "../decompile/General/AltMods/PCDRV/pcdrv.h"
+#endif
+
 
 // =============================
 

@@ -88,7 +88,7 @@ void DECOMP_LOAD_NextQueuedFile()
 		DECOMP_MEMPACK_ReallocMem(0);
 	}
 	
-#if defined(REBUILD_PC) || defined(USE_PCDRV)
+#if defined(USE_PCDRV)
 	// After curr->ptrDestination is written,
 	// run the callback and use the destination
 	DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);

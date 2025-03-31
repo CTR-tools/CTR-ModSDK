@@ -18,10 +18,10 @@ force_inline char RaceFlag_CalculateBrightness(u_int sine, u_char darkTile)
 force_inline
 int MathSinInline(u_int param_1)
 {
-  u_int iVar1;
+  int iVar1;
 
   // approximate trigonometry
-  iVar1 = *(u_int*)&data.trigApprox[param_1 & 0x3ff];
+  iVar1 = *(int*)&data.trigApprox[param_1 & 0x3ff];
 
   if ((param_1 & 0x400) == 0)
   {
@@ -213,6 +213,8 @@ SKIP_LOADING_TEXT:
 			gte_stsxy3((long *)(posL + 1), (long *)(posL + 2), (long *)(posL + 3));
 			posL += 3;
 		}
+
+		lightR = lightL;
 	}
 		
 

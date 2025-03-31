@@ -19,10 +19,8 @@ void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int
 	int eSize = entry[subfileIndex].size;
 	int eOffs = entry[subfileIndex].offset;
 	
-	#ifndef USE_PCDRV
 	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
-	#endif
-
+	
 	// if not an overlay file with specific destination
 	if (ptrDst == (void *)0x0)
 	{
@@ -47,44 +45,28 @@ void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int
 		sdata->callbackCdReadSuccess = callback;		
 		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
-	
-	#if defined(REBUILD_PC) || defined(USE_PCDRV)
-	callback = 0;
-	#endif
-		
-	#ifdef USE_PCDRV
-	
-	register int v1 asm("v1");
-	v1 = PClseek(sdata->fd_bigfile, eOffs*0x800, PCDRV_SEEK_SET);
-	v1 = PCread(sdata->fd_bigfile, ptrDst, eSize);
-		
-	#else
-	
+
 	while (1)
 	{
 		uVar5 =  CdControl(CdlSetloc, &cdLoc, &paramOutput[0]);		
 		uVar5 &= CdRead(eSize + 0x7ffU >> 0xb, ptrDst, 0x80);
 
-		#ifndef REBUILD_PC
-		// if no errors
-		if(uVar5 != 0)
-		#endif
+		// if either command failed,
+		// retry Control and Read again
+		if(uVar5 == 0)
+			continue;
 		
-		{
-			// if async, end here
-			if(callback != 0)
-				break;
+		// if async, end here
+		if(callback != 0)
+			break;
 
-			// if sync, wait until remainingSectors=0
-			uVar5 = CdReadSync(0,(u_char *)0x0);
-			
-			// if no sectors remain
-			if(uVar5 == 0)
-				break;
-		}
+		// if sync, wait until remainingSectors=0
+		uVar5 = CdReadSync(0,(u_char *)0x0);
+		
+		// if no sectors remain
+		if(uVar5 == 0)
+			break;
 	}
-	
-	#endif
 	
 	return ptrDst;
 }
