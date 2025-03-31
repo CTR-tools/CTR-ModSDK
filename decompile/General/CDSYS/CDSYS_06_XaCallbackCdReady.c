@@ -2,10 +2,6 @@
 
 void DECOMP_CDSYS_XaCallbackCdReady(CdlIntrResult result, uint8_t* unk) //+unk to adhere to *CdlCB
 {
-
-// PS1
-#ifndef USE_PCDRV
-	
 	if(result == CdlDataReady)
 	{
 		CdGetSector(&sdata->cdlFile_CdReady[0], 3);
@@ -41,6 +37,4 @@ void DECOMP_CDSYS_XaCallbackCdReady(CdlIntrResult result, uint8_t* unk) //+unk t
 	}
 	
 	sdata->countFail_CdReadyCallback++;
-	
-#endif
 }

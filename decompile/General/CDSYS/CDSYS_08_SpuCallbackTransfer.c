@@ -2,10 +2,6 @@
 
 void DECOMP_CDSYS_SpuCallbackTransfer()
 {
-	
-// PS1
-#ifndef USE_PCDRV
-
 	if (sdata->irqAddr == 0)
 		sdata->irqAddr = 0x200;
 	
@@ -19,7 +15,4 @@ void DECOMP_CDSYS_SpuCallbackTransfer()
 	sdata->countPass_CdTransferCallback++;
 	
 	DECOMP_CDSYS_SpuGetMaxSample();
-
-#endif
-
 }

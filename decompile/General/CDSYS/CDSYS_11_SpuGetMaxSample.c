@@ -2,10 +2,6 @@
 
 void DECOMP_CDSYS_SpuGetMaxSample(void)
 {
-	
-// PS1
-#ifndef USE_PCDRV
-	
 	int endIndex;
     int currIndex;
     int index2;
@@ -75,7 +71,4 @@ void DECOMP_CDSYS_SpuGetMaxSample(void)
         if (sdata->XA_MaxSampleValInArr < sdata->XA_MaxSampleValArr[currIndex])
             sdata->XA_MaxSampleValInArr = sdata->XA_MaxSampleValArr[currIndex];
     }
-	
-#endif
-
 }
