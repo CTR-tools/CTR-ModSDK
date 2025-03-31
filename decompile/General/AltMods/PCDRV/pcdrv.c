@@ -56,9 +56,11 @@ CdlFILE *pcCdSearchFile(CdlFILE *loc, const char *filename)
 	
 	v1 = PCopen(&filename[1], PCDRV_MODE_READ);
 	
-	// if Error: return 0;
-	
+	#ifdef REBUILD_PC
 	fileFD[fileCount] = v1;
+	#else
+	fileFD[fileCount] = fileCount;
+	#endif
 	
 	// max of 256 files
 	// CTR has 40 files,

@@ -1,12 +1,16 @@
 #include <common.h>
 
 int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector)
-{
-	#ifdef USE_PCDRV
-	return 1;
-	#endif
-	
+{	
 	CdlLOC loc;
+	
+// Make PS1 PCDRV boot,
+// will mean that sound does NOT load
+#ifdef USE_PCDRV
+#ifndef REBUILD_PC
+	return 1;
+#endif
+#endif
 	
 	if(numSector == 0) 
 		return 1;
@@ -19,11 +23,13 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	
 	DECOMP_CDSYS_SetMode_StreamData();
 	
+#ifndef USE_PCDRV
 	int sizeOver = ((firstSector + numSector) * 0x800 - cdlFileHWL->size);
 
 	// If reading out of file bounds, quit
 	if (sizeOver >= 0x800 )
 		return 0;
+#endif
 	
 	CdIntToPos(CdPosToInt(&cdlFileHWL->pos) + firstSector, &loc);
 		

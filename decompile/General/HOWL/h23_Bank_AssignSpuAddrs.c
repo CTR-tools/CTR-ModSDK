@@ -5,6 +5,14 @@ int DECOMP_Bank_AssignSpuAddrs()
 	int i;
 	int ret;
 	
+// Make PS1 PCDRV boot,
+// will mean that sound does NOT load
+#ifdef USE_PCDRV
+#ifndef REBUILD_PC
+	return 1;
+#endif
+#endif
+	
 	// if Stage 4: Complete
 	if(sdata->bankLoadStage == 4)
 	{
