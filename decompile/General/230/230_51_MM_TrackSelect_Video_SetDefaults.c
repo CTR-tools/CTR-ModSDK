@@ -18,6 +18,6 @@ void DECOMP_MM_TrackSelect_Video_SetDefaults(void)
   // Data is not allocated for TrackSel videos
   D230.trackSel_video_boolAllocated = 0;
   
-  D230.trackSel_video_state = 1;
-  D230.trackSel_unk = 1;
+  D230.trackSel_videoStateCurr = 1;
+  D230.trackSel_videoStatePrev = 1;
 }

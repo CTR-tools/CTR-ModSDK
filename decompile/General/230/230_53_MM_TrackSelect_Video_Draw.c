@@ -12,10 +12,6 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 
   selectMenu = &selectMenu[trackIndex];
   videoID = selectMenu->videoID;
-  
-  #ifdef USE_PCDRV
-  return;
-  #endif
 
   if (
 		(entry[videoID].size == 0) || 
@@ -28,16 +24,16 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
     )
   {
     // draw icon
-    D230.trackSel_video_state = 1;
+    D230.trackSel_videoStateCurr = 1;
   }
 
 #ifndef REBUILD_PS1
   else
   {
-    // Lock D230.trackSel_video_state to zero to prevent allocation,
+    // Lock D230.trackSel_videoStateCurr to zero to prevent allocation,
     // which helps the Oxide efforts
 
-    if ((D230.trackSel_video_state == 2) && (D230.trackSel_unk == 1))
+    if ((D230.trackSel_videoStateCurr == 2) && (D230.trackSel_videoStatePrev == 1))
     {
 
       // If you have not allocated memory for video yet
@@ -47,17 +43,14 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
         MM_Video_AllocMem(0xb0, 0x4b, 4, 0, 0);
 
         // You have now allocated the memory
-        D230.trackSel_video_boolAllocated = D230.trackSel_unk;
+        D230.trackSel_video_boolAllocated = D230.trackSel_videoStatePrev;
       }
 
-// no$psx crashes here, disable if needed
-#if 1
       // CD position of video, and numFrames
       MM_Video_StartStream(bh->cdpos + entry[videoID].offset, selectMenu->videoLength);
-#endif
 	}
 	
-    if (((D230.trackSel_unk == 3) || (D230.trackSel_video_state == 3)) || (D230.trackSel_video_state == 2))
+    if (((D230.trackSel_videoStatePrev == 3) || (D230.trackSel_videoStateCurr == 3)) || (D230.trackSel_videoStateCurr == 2))
     {
       tpage = gGT->ptrIcons[0x3f]->texLayout.tpage;
       u0 = gGT->ptrIcons[0x3f]->texLayout.u0;
@@ -71,11 +64,11 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 	  #endif
 		ret = MM_Video_DecodeFrame(512, 0);
 
-      if ((ret == 1) && (D230.trackSel_video_state == 2))
+      if ((ret == 1) && (D230.trackSel_videoStateCurr == 2))
       {
-        D230.trackSel_video_state = 3;
+        D230.trackSel_videoStateCurr = 3;
       }
-      if (D230.trackSel_unk == 3)
+      if (D230.trackSel_videoStatePrev == 3)
       {
         // RECT position (x,y)
         sdata->videoSTR_src_vramRect.x = (u_short)u0 + (tpage & 0xf) * 0x40 + 3;
@@ -97,7 +90,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 #endif
 
   // if not playing video, draw icon
-  if (D230.trackSel_video_state != 3)
+  if (D230.trackSel_videoStateCurr != 3)
   {
     // Draw Video icon
     DECOMP_RECTMENU_DrawPolyGT4(
@@ -113,20 +106,26 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   }
 
 #ifndef REBUILD_PS1
-  if (D230.trackSel_unk == 1)
+  if (D230.trackSel_videoStatePrev == 1)
   {
     // disable video copy
     MainFrame_InitVideoSTR(0, 0, 0, 0);
   }
   
+  // First frame to start video
   if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
-    D230.trackSel_video_state = 1;
+    D230.trackSel_videoStateCurr = 1;
   }
-  if ((D230.trackSel_video_state == 1) && (D230.trackSel_unk != 1))
+  
+  // First frame to stop video
+  if ((D230.trackSel_videoStateCurr == 1) && (D230.trackSel_videoStatePrev != 1))
   {
     MM_Video_StopStream();
   }
+  
+  // First frame to start video,
+  // but this time after stopping video safely
   if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
     MM_Video_ClearMem();
@@ -135,7 +134,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   }
 #endif
   
-  D230.trackSel_unk = D230.trackSel_video_state;
+  D230.trackSel_videoStatePrev = D230.trackSel_videoStateCurr;
 
   // Draw 2D Menu rectangle background
   DECOMP_RECTMENU_DrawInnerRect(

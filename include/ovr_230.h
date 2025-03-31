@@ -848,10 +848,10 @@ struct OverlayDATA_230
 	// Also used in HighScore menu
 	// 800b59b8 - UsaRetail
 	// 800b625c - EurRetail
-	short trackSel_video_state;
+	short trackSel_videoStateCurr;
 	// 800b59ba - UsaRetail
 	// 800b625e - EurRetail
-	short trackSel_unk;
+	short trackSel_videoStatePrev;
 
 	// ============== Cup Select DYN ========================
 

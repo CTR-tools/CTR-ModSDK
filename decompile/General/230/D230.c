@@ -994,8 +994,8 @@ struct OverlayDATA_230 D230 =
 	.trackSel_transitionFrames = 0,
 	.trackSel_video_frameCount = 0,
 	.trackSel_video_boolAllocated = 0,
-	.trackSel_video_state = 0,
-	.trackSel_unk = 0,
+	.trackSel_videoStateCurr = 0,
+	.trackSel_videoStatePrev = 0,
 
 	// CUP SELECT DYN
 	.cupSel_transitionState = 0,
