@@ -82,7 +82,7 @@ int pcCdControl(u_char com, u_long *buf, u_char * result)
 	register int v1 asm("v1");
 	#endif
 	
-	// for now, assume com = CdlSetloc
+	if(com == CdlSetloc)
 	{
 		currFD = *(int*)buf >> 24;
 		int sector = *(int*)buf & 0xffffff;
