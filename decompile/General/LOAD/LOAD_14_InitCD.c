@@ -2,12 +2,11 @@
 
 void DECOMP_LOAD_InitCD()
 {
-	#ifndef USE_PCDRV
-		#define boolUseDisc 1 // PS1
-	#else
-		#define boolUseDisc 0 // PC
-		PCinit();
+	#ifdef USE_PCDRV
+	PCinit();
+	DECOMP_CDSYS_Init(0);
+	return;
 	#endif
 	
-	DECOMP_CDSYS_Init(boolUseDisc);
+	DECOMP_CDSYS_Init(1);
 }

@@ -3,10 +3,6 @@
 // Used for XNF and only the XNF
 void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size)
 {
-
-// PS1
-#ifndef USE_PCDRV
-
 	CdlFILE cdlFile;
 	
 	DECOMP_LOAD_StringToUpper(filename);
@@ -38,7 +34,4 @@ void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size)
 		return 0;
 	
 	return ptrDestination;
-
-#endif
-
 }

@@ -2,12 +2,6 @@
 
 void DECOMP_CDSYS_SetXAToLang(int lang)
 {
-
-// PS1
-#ifdef USE_PCDRV
-	return;
-#endif
-
 	char* xaLang;
 	int fileSize;
 	struct XNF* xnf;
