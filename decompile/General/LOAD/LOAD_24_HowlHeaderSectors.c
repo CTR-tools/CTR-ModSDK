@@ -6,12 +6,13 @@ int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int
 	
 	DECOMP_CDSYS_SetMode_StreamData();
 	
-#ifndef USE_PCDRV
+// This will never fail. HowlHeaderSectors will load 1 sector
+// for the beginning of the header, then that says how big the
+// rest of the header is, then load more sectors to complete header
+#if 0
+	// Return error, if reading out-of-bounds after the end of KART HWL
 	int sizeOver = ((firstSector + numSector) * 0x800 - cdlFileHWL->size);
-
-	// If reading out of file bounds, quit
-	if (sizeOver >= 0x800 )
-		return 0;
+	if (sizeOver >= 0x800 ) return 0;
 #endif
 	
 	CdIntToPos(CdPosToInt(&cdlFileHWL->pos) + firstSector, &loc);

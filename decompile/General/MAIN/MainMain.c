@@ -874,14 +874,11 @@ void StateZero()
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 
-#if !defined(USE_PCDRV)
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written
 		DECOMP_CDSYS_XAPauseAtEnd();
 	}
-#endif
-
 	#endif
 
 	DECOMP_DecalGlobal_Clear(gGT);
