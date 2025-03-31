@@ -4,14 +4,6 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 {	
 	CdlLOC loc;
 	
-// Make PS1 PCDRV boot,
-// will mean that sound does NOT load
-#ifdef USE_PCDRV
-#ifndef REBUILD_PC
-	return 1;
-#endif
-#endif
-	
 	if(numSector == 0) 
 		return 1;
 	
@@ -38,17 +30,13 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	
 	sdata->howlChainState = 1;
 	
-	#ifndef REBUILD_PC
-
-	CdReadCallback(DECOMP_LOAD_HowlCallback);
-	return (CdRead(numSector, ptrDestination, 0x80) != 0);
-	
-	#else
-	
+#ifdef USE_PCDRV
 	CdRead(numSector, ptrDestination, 0x80);
 	CdReadSync(0, 0);
 	DECOMP_LOAD_HowlCallback(CdlComplete, NULL);
-	
-	#endif
 	return 1;
+#endif
+
+	CdReadCallback(DECOMP_LOAD_HowlCallback);
+	return (CdRead(numSector, ptrDestination, 0x80) != 0);
 }

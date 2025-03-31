@@ -6,14 +6,6 @@ int DECOMP_LOAD_HowlSectorChainEnd()
 	int howlChainState = sdata->howlChainState;
 	howlChainParams = sdata->howlChainParams;
 	
-// Make PS1 PCDRV boot,
-// will mean that sound does NOT load
-#ifdef USE_PCDRV
-#ifndef REBUILD_PC
-	return 1;
-#endif
-#endif
-	
 	if(howlChainState == -1)
 	{
 		DECOMP_LOAD_HowlSectorChainStart(
