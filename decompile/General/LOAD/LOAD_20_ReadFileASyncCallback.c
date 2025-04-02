@@ -21,11 +21,22 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 	}
 	#endif
 	
+	// whether success or fail...
+	sdata->queueReady = 1;
+	
 	if(result == CdlComplete)
 	{
 		// callback
 		if(sdata->callbackCdReadSuccess != 0)
 		{
+			// success on VRAM, wait 2 VSYNCs
+			// before starting the next load
+			if(lqs->type == LT_VRAM)
+				sdata->queueReady = 0;
+			
+			if(sdata->queueLength == 0)
+				sdata->load_inProgress = 0;
+
 			(*sdata->callbackCdReadSuccess)(lqs);
 		}
 	}
@@ -40,8 +51,6 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 		}
 		
 		sdata->queueRetry = 1;
-		
-		sdata->queueReady = 1;
 		sdata->queueLength++;
 	}
 }

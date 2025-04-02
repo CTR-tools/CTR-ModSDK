@@ -526,7 +526,7 @@ void DECOMP_MM_ParseCheatCodes()
 		// if spyro 2 cheat
 		if(cheat == &cheats[0])
 		{	
-			#ifndef REBUILD_PS1
+			#ifndef USE_PCDRV
 			DECOMP_MainKillGame_LaunchSpyro2();
 			#endif
 			

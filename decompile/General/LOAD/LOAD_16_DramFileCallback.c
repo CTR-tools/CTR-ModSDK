@@ -8,18 +8,11 @@ void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 	{
 		int ptrMapOffset = *(int*)&fileBuf[0];
 		char* realFileBuf = &fileBuf[4];
-		lqs->ptrDestination = realFileBuf;
-		
-		// if no map
-		if(ptrMapOffset < 0)
-		{
-			lqs->flags |= 2;
-		}
-		
-		// if ptrMapOffset is valid
-		else
-		{
-			
+	
+		// if ptrMapOffset is valid,
+		// for all levels except AdvHub LEVs
+		if(ptrMapOffset >= 0)
+		{	
 			struct DramPointerMap* dpm = (struct DramPointerMap*)&realFileBuf[ptrMapOffset];
 		
 			DECOMP_LOAD_RunPtrMap((int)realFileBuf, (int*)DRAM_GETOFFSETS(dpm), dpm->numBytes>>2);
@@ -30,7 +23,6 @@ void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 		}
 	}
 	
-	sdata->queueReady = 1;
 	if (lqs->callbackFuncPtr != 0)
 		lqs->callbackFuncPtr(lqs);
 }

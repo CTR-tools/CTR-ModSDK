@@ -266,7 +266,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 #ifndef REBUILD_PS1
 	RenderAllBeakerRain(gGT);
+	
+	// DEAD CODE
+	#if 0
 	RenderAllBoxSceneSplitLines(gGT);
+	#endif
 
 	RenderBucket_QueueAllInstances(gGT);
 	RenderAllNormalParticles(gGT);
@@ -961,6 +965,10 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 		gGT->gameMode1 & PAUSE_ALL);
 }
 
+// DEAD CODE,
+// vertSplit is set to zero from INSTANCE_Birth,
+// and the value set in this function is zero anyway
+#if 0
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 {
 	// check 233 overlay, cause levelID is set
@@ -974,6 +982,7 @@ void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 		}
 	}
 }
+#endif
 
 void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 {

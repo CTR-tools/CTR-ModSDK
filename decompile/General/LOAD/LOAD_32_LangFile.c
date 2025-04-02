@@ -29,11 +29,12 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 		sdata->lngFile =
 			DECOMP_MEMPACK_AllocMem(sdata->langBufferSize /* "lang buffer" */);
 	}
+	
+	lngFile = sdata->lngFile;
 
-	lngFile =
-		DECOMP_LOAD_ReadFile(
-			(struct BigHeader*)bigfilePtr, BI_LANGUAGEFILE + lang, 
-			(void*)sdata->lngFile, NULL);
+	DECOMP_LOAD_ReadFile(
+		(struct BigHeader*)bigfilePtr, BI_LANGUAGEFILE + lang, 
+		(void*)lngFile, NULL);
 
 	// This is not ReadFileAsync, this is ReadFile,
 	// so the program halts until completion of read

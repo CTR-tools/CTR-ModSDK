@@ -11,8 +11,6 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
     if ((unsigned int)gGT->overlayIndex_Threads != param_1)
     {
 #ifndef REBUILD_PC
-        sdata->load_inProgress = 1;
-
 		// gets overwritten in overlay callback,
 		// commented out or this function wont fit,
 		// dont erase this, need more research

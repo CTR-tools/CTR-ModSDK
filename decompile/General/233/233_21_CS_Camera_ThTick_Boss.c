@@ -73,15 +73,10 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
   // start fade-to-normal
   case 3:
 
-	struct Model** mArr = &OVR_233.ptrModelBossHead;
-
 	// wait for BossHead loading to finish
-	if(mArr[0] == 0)
-		break;
+	if(sdata->load_inProgress == 1) break;
 
-	// head is incremented by callback,
-	// body has no callback, increment now
-	mArr[1] = (unsigned int)mArr[1] + 4;
+	struct Model** mArr = &OVR_233.ptrModelBossHead;
 	
 	gGT->modelPtr[mArr[0]->id] = mArr[0];
 	gGT->modelPtr[mArr[1]->id] = mArr[1];

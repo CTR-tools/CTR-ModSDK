@@ -34,63 +34,64 @@ void DECOMP_LOAD_NextQueuedFile()
 	}
 	
 	sdata->queueLength--;
-		
-	if(curr->type == LT_RAW)
+	
+	switch(curr->type)
 	{
-		// For LT_RAW:
-		// INPUT  curr->ptrDestination is where the file WILL load
-		// OUTPUT curr->ptrDestination is where the file DID load
-		
-		curr->ptrDestination =
+		case LT_RAW:
+		{
+			// For LT_RAW:
+			// INPUT  curr->ptrDestination is where the file WILL load
+			// OUTPUT curr->ptrDestination is where the file DID load
+			
 			DECOMP_LOAD_ReadFile(
 				curr->ptrBigfileCdPos,
 				curr->subfileIndex,
 				curr->ptrDestination,
 				DECOMP_LOAD_CDRequestCallback);
-	}
-	
-	else if(curr->type == LT_DRAM)
-	{
-		// For LT_DRAM:
-		// OUTPUT curr->ptrDestination is where the file DID load
-		// INPUT  curr->ptrDestination is where the output pointer is written
+				
+			break;
+		}
 		
-		int* prevValue = curr->ptrDestination;
-		
-		curr->ptrDestination =
+		case LT_DRAM:
+		{
+			// For LT_DRAM:
+			// OUTPUT curr->ptrDestination is where the file DID load
+			// INPUT  curr->ptrDestination is where the output pointer is written
+
+			int* prevValue = curr->ptrDestination;
+			
 			DECOMP_LOAD_ReadFile(
 				curr->ptrBigfileCdPos,
 				curr->subfileIndex,
 				0,
 				DECOMP_LOAD_DramFileCallback);
-				
-		if(prevValue != 0)
-		{
-			*prevValue = curr->ptrDestination;
+					
+			if(prevValue != 0)
+			{
+				*prevValue = curr->ptrDestination;
+				*prevValue = *prevValue + 4;
+			}
+			
+			break;
 		}
-	}
-	
-	else if(curr->type == LT_VRAM)
-	{
-		// For LT_VRAM:
-		// OUTPUT curr->ptrDestination is where the file DID load
-		// INPUT  curr->ptrDestination is ignored
 		
-		curr->ptrDestination =
+		case LT_VRAM:
+		{
+			// For LT_VRAM:
+			// OUTPUT curr->ptrDestination is where the file DID load
+			// INPUT  curr->ptrDestination is ignored
+			
 			DECOMP_LOAD_ReadFile(
 				curr->ptrBigfileCdPos,
 				curr->subfileIndex,
 				0,
 				DECOMP_LOAD_VramFileCallback);
-				
-		// undo allocation, next LOAD queue request
-		// will overwrite where VRAM was in RAM
-		DECOMP_MEMPACK_ReallocMem(0);
+					
+			// undo allocation, next LOAD queue request
+			// will overwrite where VRAM was in RAM
+			DECOMP_MEMPACK_ReallocMem(0);
+			
+			break;
+		}
 	}
-	
-#if defined(USE_PCDRV)
-	// After curr->ptrDestination is written,
-	// run the callback and use the destination
-	DECOMP_LOAD_ReadFileASyncCallback(CdlComplete, NULL);
-#endif
 }

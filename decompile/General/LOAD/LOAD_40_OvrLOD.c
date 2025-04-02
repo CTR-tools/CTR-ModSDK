@@ -14,13 +14,10 @@ void DECOMP_LOAD_OvrLOD(unsigned int param_1)
   if ((unsigned int)gGT->overlayIndex_LOD != param_1)
   {
 #ifndef REBUILD_PC
-    sdata->load_inProgress = 1;
-
 	// LOD overlay 226-229
     DECOMP_LOAD_AppendQueue(
 		(int)sdata->ptrBigfileCdPos_2,LT_RAW,
-		BI_OVERLAYSECT2 + param_1, &OVR_Region2,
-		&DECOMP_LOAD_Callback_Overlay_Generic);
+		BI_OVERLAYSECT2 + param_1, &OVR_Region2, NULL);
 #endif
 
 	// save ID, and reload next overlay (sector read invalidation)

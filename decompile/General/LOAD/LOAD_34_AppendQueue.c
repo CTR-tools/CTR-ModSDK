@@ -24,4 +24,5 @@ void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int type, int fileIndex, void* 
 	lqs->callbackFuncPtr = callback;
 	
 	sdata->queueLength++;
+	sdata->load_inProgress = 1;
 }

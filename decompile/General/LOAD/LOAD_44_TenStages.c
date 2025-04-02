@@ -25,9 +25,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	int ovrRegion3;
 	struct Model* m;
 
-	// pointer to LEV
-	iVar9 = (int)sdata->ptrLEV_DuringLoading;
-
 	// if game is loading
 	if (sdata->load_inProgress != 0)
 	{
@@ -369,12 +366,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}
 			
 			sdata->ptrMPK = 0;
-			sdata->load_inProgress = 1;
-			
 			data.driverModelExtras[0] = 0;
 			data.driverModelExtras[1] = 0;
 			data.driverModelExtras[2] = 0;
-			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, &DECOMP_LOAD_Callback_DriverModels);
+			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, NULL);
 			break;
 		}
 		case 5:
@@ -427,22 +422,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}
 			
 			// == banks are done parsing ===
-			
-			#ifdef USE_HIGH1P
-			#define NUM_CHECK 8 // modding: 8 drivers
-			#else
-			#define NUM_CHECK 3 // OG game: 3 drivers in VS mode
-			#endif
-			
-			// loop through models
-			piVar15 = &data.driverModelExtras[0];
-			for (iVar9 = 0; iVar9 < NUM_CHECK; iVar9++, piVar15++)
-			{
-				// increment pointer by 4,
-				// change pointer to file (starting at pointer map)
-				// into a pointer to the model itself
-				if (*piVar15 != 0) *piVar15 += 4;
-			};
 
 			// If the world you're in is made of multiple LEV files
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
@@ -524,24 +503,23 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}
 
-			// game is now loading
-			sdata->load_inProgress = 1;
-
 			#ifdef USE_NEWLEV
 			if(gGT->levelID == CUSTOM_LEVEL_ID)
 			{
-				sdata->load_inProgress = 0;
 				HotReloadVRAM();
 			}
 			#endif
 
+			// base index of the group
+			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD);
+
 			// add VRAM to loading queue
-			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_VRAM);
-			DECOMP_LOAD_AppendQueue((int)bigfile, LT_VRAM, (int)uVar16, NULL, NULL);
+			DECOMP_LOAD_AppendQueue((int)bigfile, LT_VRAM, 
+				uVar16 + LVI_VRAM, NULL, NULL);
 
 			// add LEV to loading queue
-			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_LEV);
-			DECOMP_LOAD_AppendQueue((int)bigfile, LT_DRAM, (int)uVar16, NULL, &DECOMP_LOAD_Callback_LEV);
+			DECOMP_LOAD_AppendQueue((int)bigfile, LT_DRAM, 
+				uVar16 + LVI_LEV, &sdata->ptrLevelFile, NULL);
 
 			// can this be optimized with this?
 			// I feel like we had this, then had to remove it for some reason?
@@ -555,25 +533,33 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				)
 			{
 				// add PTR file to loading queue
-				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);
-				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, (int)uVar6, (void*)sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_PatchMem);
+				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, 
+					uVar16 + LVI_PTR, (void*)sdata->PatchMem_Ptr, NULL);
 			}			
 			break;
 		}
 		case 7:
 		{
 			// get level pointer
-			lev = sdata->ptrLEV_DuringLoading;
+			lev = sdata->ptrLevelFile;
 			
 			#ifdef USE_NEWLEV
 			if (gGT->levelID == CUSTOM_LEVEL_ID) 
 				lev = (struct Level*)CUSTOM_LEV_ADDR;
 			#endif
+			
+			// If level file does not contain a pointer map,
+			// then patch it now, with sdata->PatchMem_Ptr
+			int* ptrLevelINT = lev;
+			if (ptrLevelINT[-1] < 0)
+			{
+				DECOMP_LOAD_Callback_PatchMem();
+			}
 
 			// Set LEV pointer
 			gGT->level1 = lev;
 			
-			// iVar9 is set to sdata->ptrLEV_DuringLoading at the top of the function
+			// iVar9 is set to sdata->ptrLevelFile at the top of the function
 			gGT->visMem1 = lev->visMem;
 
 			// if LEV is valid
@@ -704,9 +690,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
 				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
 
-				// game is now loading
-				sdata->load_inProgress = 1;
-
 				// VRAM for podium and all related models
 				DECOMP_LOAD_AppendQueue(
 					(int)bigfile, LT_VRAM, 
@@ -714,41 +697,27 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					NULL, NULL);
 
 				// podium first place
-				podiumModel = gGT->podium_modelIndex_First;
+				u_char* ptrIndexArr = &gGT->podium_modelIndex_First;
+				int* ptrModelPtrArr = &data.podiumModel_firstPlace;
+				int baseIndexPM = BI_DANCEMODELWIN + iVar9;
 
 				// Fix for Oxide (faster than OG code that does nothing)
 				// If Oxide WIN is requested, add 16 to load Oxide LOSE
-				if (podiumModel == 0x8d)
-					podiumModel = 0x8d + 16;
+				if (ptrIndexArr[0] == 0x8d)
+					baseIndexPM = BI_DANCEMODELLOSE + iVar9;
 
-				if (podiumModel != 0)
+				// Loop through 3 podium models
+				for(int i = 0; i < 3; i++)
 				{
-					DECOMP_LOAD_AppendQueue(
-						(int)bigfile, LT_DRAM, 
-						BI_DANCEMODELWIN + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_firstPlace, (void(*)(struct LoadQueueSlot*))0);
-				}
-
-				// podium second place exists
-				podiumModel = gGT->podium_modelIndex_Second;
-
-				if (podiumModel != 0)
-				{
-					DECOMP_LOAD_AppendQueue(
-						(int)bigfile, LT_DRAM, 
-						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_secondPlace, (void(*)(struct LoadQueueSlot*))0);
-				}
-			
-				// podium third place exists
-				podiumModel = gGT->podium_modelIndex_Third;
-				
-				if (podiumModel != 0)
-				{
-					DECOMP_LOAD_AppendQueue(
-						(int)bigfile, LT_DRAM, 
-						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
-						(void*)&data.podiumModel_thirdPlace, (void(*)(struct LoadQueueSlot*))0);
+					if(ptrIndexArr[i] != 0)
+					{
+						DECOMP_LOAD_AppendQueue(
+							(int)bigfile, LT_DRAM, 
+							baseIndexPM + (ptrIndexArr[i] - 0x7e) * 2, 
+							&ptrModelPtrArr[i], 0);
+					}
+					
+					baseIndexPM = BI_DANCEMODELLOSE + iVar9;
 				}
 				
 				// TAWNA
@@ -774,7 +743,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_LOAD_AppendQueue(
 					(int)bigfile, LT_DRAM, 
 					BI_PODIUM + iVar9, 
-					NULL, &DECOMP_LOAD_Callback_Podiums);
+					&data.podiumModel_podiumStands, NULL);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
@@ -783,46 +752,26 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			break;
 		}
 		case 8:
-		{			
-			// If you're in Adventure Arena
+		{
+			// If going to the podium		
 			if
 			(
 				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(
-					// loop counter
-					iVar9 = 0,
-
-					// podium reward
-					gGT->podiumRewardID != 0
-				)
+				(gGT->podiumRewardID != 0)
 			)
 			{
-				piVar15 = &data.podiumModel_firstPlace;
+				struct Model** modelPtrArr = 
+					&data.podiumModel_firstPlace;
 
-				// for iVar9 = 0; iVar9 < 8; iVar9++
-				do
+				for(int i = 0; i < 8; i++)
 				{
-					iVar12 = *piVar15;
-					if (iVar12 != 0)
-					{
-						if (iVar9 < 7)
-						{
-							*piVar15 = iVar12 + 4;
-							iVar12 = *piVar15;
-						}
-
-						m = (struct Model*)iVar12;
-						if (m->id != -1)
-						{
-							gGT->modelPtr[m->id] = m;
-						}
-					}
-
-					// increment loop counter
-					iVar9 = iVar9 + 1;
-
-					piVar15 = piVar15 + 1;
-				} while (iVar9 < 8);
+					m = modelPtrArr[i];
+					
+					if (m == 0) continue;
+					if (m->id == -1) continue;
+					
+					gGT->modelPtr[m->id] = m;
+				}
 
 				// change active allocation system
 				// Swap 1 and 2 while on adventure map

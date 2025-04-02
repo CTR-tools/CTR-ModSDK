@@ -17,11 +17,13 @@ CdlCB pcCdReadCallback(CdlCB x)
 	fpReadCallback = x;
 }
 
+// TODO: Remove when MM_Video is done
 int pcCdPosToInt(const CdlLOC *p)
 {
 	return *(int*)p;
 }
 
+// TODO: Remove when MM_Video is done
 int pcCdIntToPos(int val, const CdlLOC *p)
 {
 	*(int*)p = val;
@@ -105,18 +107,12 @@ int pcCdRead(int sectors, u_long *buf, int mode)
 	
 	v1 = PCread(fileFD[currFD], buf, sectors*0x800);
 	
-// Specific to CTR, do NOT do this,
-// see LOAD_NextQueuedFile, need to wait
-// for curr->ptrDestination to write, cause
-// that variable is used in the read callback
-#if 0
 	if(fpReadCallback != 0)
 	{
 		// TODO: Error handling of v1
 		fpReadCallback(CdlComplete, 0);
 	}
-#endif
-	
+
 	return 1;
 }
 

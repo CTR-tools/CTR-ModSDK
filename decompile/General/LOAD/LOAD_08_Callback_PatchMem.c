@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs)
+void DECOMP_LOAD_Callback_PatchMem()
 {		
 	char* patchPtr;
 	char* patchStart;
@@ -11,14 +11,13 @@ void DECOMP_LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs)
 	// it loads one ReadFile for LEV in a sub-mempack,
 	// it loads one ReadFile for PtrMap with AllocHighMem
 	
-	// that's why patchPtr is ptrDestination
-	patchPtr = (char*)lqs->ptrDestination;
+	// that's why patchPtr is here
+	patchPtr = sdata->PatchMem_Ptr;
 	patchStart = &patchPtr[4];
 	patchSize = *(int*)&patchPtr[0];
 	patchNum = patchSize >> 2;
 	
-	sdata->load_inProgress = 0;
-	DECOMP_LOAD_RunPtrMap((int)sdata->ptrLEV_DuringLoading, (int*)patchStart, patchNum);
+	DECOMP_LOAD_RunPtrMap((int)sdata->ptrLevelFile, (int*)patchStart, patchNum);
 	DECOMP_MEMPACK_SwapPacks(0);
 	DECOMP_MEMPACK_ClearHighMem();
 	DECOMP_MEMPACK_SwapPacks(sdata->gGT->activeMempackIndex);

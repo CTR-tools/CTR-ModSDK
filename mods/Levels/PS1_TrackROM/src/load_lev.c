@@ -48,7 +48,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	struct Model* m;
 
 	// pointer to LEV
-	iVar9 = sdata->ptrLEV_DuringLoading;
+	iVar9 = sdata->ptrLevelFile;
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
@@ -458,12 +458,12 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		}
 		case 7:
 			// get level pointer
-			lev = (gGT->levelID == CUSTOM_LEVEL_ID) ? (struct Level*) CUSTOM_LEV_ADDR : sdata->ptrLEV_DuringLoading;
+			lev = (gGT->levelID == CUSTOM_LEVEL_ID) ? (struct Level*) CUSTOM_LEV_ADDR : sdata->ptrLevelFile;
 
 			// Set LEV pointer
 			gGT->level1 = lev;
 
-			// iVar9 is set to sdata->ptrLEV_DuringLoading at the top of the function
+			// iVar9 is set to sdata->ptrLevelFile at the top of the function
 			gGT->visMem1 = lev->visMem;
 
 			// if LEV is valid

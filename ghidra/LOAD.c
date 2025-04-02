@@ -113,7 +113,7 @@ void FUN_80031a78(int param_1)
   }
 
   // gp -> 0x120 (0x8008d08c)
-  // sdata->ptrLEV_DuringLoading
+  // sdata->ptrLevelFile
   // param_1 -> 0xC
   // LoadQueueSlot -> ptrDestination
   uGp00000120 = *(undefined4 *)(param_1 + 0xc);

@@ -1,9 +1,16 @@
 #include <common.h>
 
-void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs)
+void DECOMP_LOAD_RunPtrMap(char* origin, int* patchArr, int numPtrs)
 {
-	for(int i = 0; i < numPtrs; i++)
+	int* ptrCurrOffset = patchArr;
+	
+	for(
+			ptrCurrOffset = &patchArr[0];
+			ptrCurrOffset < &patchArr[numPtrs];
+			ptrCurrOffset++
+		)
 	{
-		*(unsigned int*)(origin + patchArr[i]) += origin;
+		*(int*)&origin[*ptrCurrOffset] =
+		*(int*)&origin[*ptrCurrOffset] + origin;
 	}
 }

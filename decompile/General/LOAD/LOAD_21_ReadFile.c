@@ -37,6 +37,9 @@ void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int
 		DECOMP_MEMPACK_ReallocMem(eSize);
 	}
 	
+	struct LoadQueueSlot* curr = &data.currSlot;
+	curr->ptrDestination = ptrDst;
+	
 	sdata->callbackCdReadSuccess = 0;
 	
 	if (callback != 0)

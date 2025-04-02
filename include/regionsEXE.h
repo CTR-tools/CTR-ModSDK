@@ -2825,7 +2825,7 @@ struct sData
 	// 8008d08c
 	// ptrLEV, stored here during loading,
 	// before passed to gGT for drawing
-	struct Level* ptrLEV_DuringLoading;
+	struct Level* ptrLevelFile;
 
 	// 8008b4f0 - Sep3
 	// 8008d090 - UsaRetail

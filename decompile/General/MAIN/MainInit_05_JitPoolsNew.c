@@ -125,8 +125,6 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	  unsigned int addrSmallPool = (unsigned int)OVR_Region3;
 	  addrSmallPool -= 6500;
 	  sdata->mempack[0].firstFreeByte = (void*)addrSmallPool;
-	  
-	  printf("Here %s\n", __FUNCTION__);
   }
 #endif
 

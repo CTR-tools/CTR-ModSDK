@@ -1,5 +1,9 @@
 #include <common.h>
 
+// DEAD CODE,
+// vertSplit is set to zero from INSTANCE_Birth,
+// and the value set in this function is zero anyway
+#if 0
 void DECOMP_CS_BoxScene_InstanceSplitLines(void)
 {
     short split = OVR_233.VertSplitLine;
@@ -13,3 +17,4 @@ void DECOMP_CS_BoxScene_InstanceSplitLines(void)
         t = t->siblingThread;
     }
 }
+#endif

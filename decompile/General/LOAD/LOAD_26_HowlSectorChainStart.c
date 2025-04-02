@@ -30,13 +30,6 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	CdControl(CdlSetloc, &loc, buf);
 	
 	sdata->howlChainState = 1;
-	
-#ifdef USE_PCDRV
-	CdRead(numSector, ptrDestination, 0x80);
-	CdReadSync(0, 0);
-	DECOMP_LOAD_HowlCallback(CdlComplete, NULL);
-	return 1;
-#endif
 
 	CdReadCallback(DECOMP_LOAD_HowlCallback);
 	return (CdRead(numSector, ptrDestination, 0x80) != 0);

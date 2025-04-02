@@ -300,7 +300,7 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 int DECOMP_LOAD_HowlSectorChainEnd(void);
 
 void DECOMP_LOAD_InitCD(void);
-void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs); //1st param might be `struct Level*`, 2nd param might be `char*`
+void DECOMP_LOAD_RunPtrMap(char* origin, int* patchArr, int numPtrs); //1st param might be `struct Level*`, 2nd param might be `char*`
 void DECOMP_LOAD_LangFile(int bigfilePtr, int lang);
 
 
@@ -846,7 +846,7 @@ int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int
 void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID); //third param should maybe be `u_int`
 void DECOMP_LibraryOfModels_Store(struct GameTracker* gGT, unsigned int numModels, struct Model** ptrModelArray);
 void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs);
-int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType);
+int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod);
 void DECOMP_LOAD_HubSwapPtrs(struct GameTracker* gGT);
 void DECOMP_LOAD_GlobalModelPtrs_MPK(void);
 void DECOMP_LOAD_OvrEndRace(unsigned int param_1);
@@ -872,11 +872,11 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap, struct Thread* bucket);
 void DECOMP_UI_Map_DrawTracking(int ptrMap, struct Thread* bucket);
 void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
-void DECOMP_LOAD_Callback_PatchMem(struct LoadQueueSlot* lqs);
+void DECOMP_LOAD_Callback_PatchMem();
 void DECOMP_LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 void DECOMP_VehBirth_NullThread(struct Thread* t);
-void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, void (*)(struct LoadQueueSlot*));
+int DECOMP_LOAD_Robots2P(int p1, int p2);
 void DECOMP_ElimBG_SaveScreenshot_Chunk(u_short* param_1, u_short* param_2, int param_3);
 void DECOMP_ElimBG_ToggleInstance(struct Instance* inst, char boolGameIsPaused);
 void DECOMP_ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPaused);

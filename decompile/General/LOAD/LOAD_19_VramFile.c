@@ -2,17 +2,19 @@
 
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex)
 {
-	struct LoadQueueSlot lqs;
+	// This works cause all sync-loads for VRAM
+	// happen before any of the async queue starts
+	struct LoadQueueSlot* curr = &data.currSlot;
 	
 	// callback=0 means this calls CdSync and is not async
-	lqs.ptrDestination = DECOMP_LOAD_ReadFile(bigfilePtr, subfileIndex, 0, 0);
+	DECOMP_LOAD_ReadFile(bigfilePtr, subfileIndex, 0, 0);
 	
 	// undo allocation, next LOAD queue request
 	// will overwrite where VRAM was in RAM
 	DECOMP_MEMPACK_ReallocMem(0);
 	
 	// run callback
-	DECOMP_LOAD_VramFileCallback(&lqs);
+	DECOMP_LOAD_VramFileCallback(curr);
 	
 	// wait 2 frames for LoadImage to finish
 	VSync(2);

@@ -3,19 +3,6 @@
 void DECOMP_CDSYS_SetMode_StreamAudio()
 {
 	char buf[8];
-
-	// dont check boolUseDisc,
-	// already checked in XaPlay() and XaSeek()
-
-	if(
-		// quit if already in AUDIO mode, or
-		// playing game without XNF loaded
-		(sdata->discMode == DM_AUDIO) ||
-		(sdata->bool_XnfLoaded == 0)
-	)
-	{
-		return;
-	}
 	
 	// https://www.cybdyn-systems.com.au/forum/viewtopic.php?t=1956
     // CdControl('\x0e',local_10,(u_char *)0x0);

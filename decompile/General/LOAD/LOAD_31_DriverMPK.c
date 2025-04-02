@@ -15,7 +15,7 @@ void highMp_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(struct 
 	// Time Trial MPK
 	DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 		BI_TIMETRIALPACK + data.characterIDs[i],
-		0,param_3);
+		&sdata->ptrMPK, param_3);
 }
 #endif
 
@@ -270,16 +270,16 @@ ForceOnlineLoad8:
 				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0);
 		}
 
-		// this also loads MPK
-		DECOMP_LOAD_Robots2P(param_1, data.characterIDs[0], data.characterIDs[1], param_3);
-
-		return;
+		i = DECOMP_LOAD_Robots2P(data.characterIDs[0], data.characterIDs[1]);
+		
+		// 2p arcade mpk
+		lastFileIndexMPK = BI_2PARCADEPACK + i;
 	}
 
 	DECOMP_LOAD_AppendQueue(
 		param_1,LT_DRAM,
 		lastFileIndexMPK,
-		NULL, param_3);
+		&sdata->ptrMPK, param_3);
 
 	return;
 }
