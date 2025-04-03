@@ -1,5 +1,15 @@
 #include <common.h>
 
+void (*mainMenuInit[6])() =
+{
+	DECOMP_MM_JumpTo_Title_FirstTime,
+	DECOMP_MM_JumpTo_Characters,
+	DECOMP_MM_JumpTo_TrackSelect,
+	DECOMP_MM_JumpTo_BattleSetup,
+	DECOMP_CS_Garage_Init,
+	DECOMP_MM_JumpTo_Scrapbook
+};
+
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	u_char numPlyrNextGame;
@@ -353,23 +363,18 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					sdata->gameProgress.unlocks[0] |= 1;
 				#endif
 				
-				// all these are 230, except for adv garage in 233
-				switch(sdata->mainMenuState)
-				{
-					case 0:	DECOMP_MM_JumpTo_Title_FirstTime();	break;
-					case 1:	DECOMP_MM_JumpTo_Characters();		break;
-					case 2:	DECOMP_MM_JumpTo_TrackSelect();		break;
-					case 3:	DECOMP_MM_JumpTo_BattleSetup();		break;
-					case 4:	DECOMP_CS_Garage_Init();			break;
-					case 5:	DECOMP_MM_JumpTo_Scrapbook();		break;
-				}
+				mainMenuInit[sdata->mainMenuState]();
 			}
 			
+			// Risky, but we can afford it
+			#if 0
 			sdata->ptrMPK = 0;
 			data.driverModelExtras[0] = 0;
 			data.driverModelExtras[1] = 0;
 			data.driverModelExtras[2] = 0;
-			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD, NULL);
+			#endif
+			
+			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD);
 			break;
 		}
 		case 5:
@@ -380,8 +385,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// clear and reset
 			DECOMP_LibraryOfModels_Clear(gGT);
 			DECOMP_LOAD_GlobalModelPtrs_MPK();
-
-			// clear and reset
 			DECOMP_DecalGlobal_Clear(gGT);
 
 			gGT->mpkIcons = 0;
@@ -514,12 +517,14 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD);
 
 			// add VRAM to loading queue
-			DECOMP_LOAD_AppendQueue((int)bigfile, LT_VRAM, 
-				uVar16 + LVI_VRAM, NULL, NULL);
+			DECOMP_LOAD_AppendQueue(
+				0, LT_SETVRAM, uVar16 + LVI_VRAM, 
+				NULL, DECOMP_LOAD_VramFileCallback);
 
 			// add LEV to loading queue
-			DECOMP_LOAD_AppendQueue((int)bigfile, LT_DRAM, 
-				uVar16 + LVI_LEV, &sdata->ptrLevelFile, NULL);
+			DECOMP_LOAD_AppendQueue( 
+				0, LT_GETADDR, uVar16 + LVI_LEV, 
+				&sdata->ptrLevelFile, DECOMP_LOAD_DramFileCallback);
 
 			// can this be optimized with this?
 			// I feel like we had this, then had to remove it for some reason?
@@ -533,8 +538,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				)
 			{
 				// add PTR file to loading queue
-				DECOMP_LOAD_AppendQueue((int)bigfile, LT_RAW, 
-					uVar16 + LVI_PTR, (void*)sdata->PatchMem_Ptr, NULL);
+				DECOMP_LOAD_AppendQueue(
+					0, LT_SETADDR, uVar16 + LVI_PTR, 
+					(void*)sdata->PatchMem_Ptr, DECOMP_LOAD_Callback_PatchMem);
 			}			
 			break;
 		}
@@ -547,25 +553,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if (gGT->levelID == CUSTOM_LEVEL_ID) 
 				lev = (struct Level*)CUSTOM_LEV_ADDR;
 			#endif
-			
-			// If level file does not contain a pointer map,
-			// then patch it now, with sdata->PatchMem_Ptr
-			int* ptrLevelINT = lev;
-			if (ptrLevelINT[-1] < 0)
-			{
-				DECOMP_LOAD_Callback_PatchMem();
-			}
 
-			// Set LEV pointer
 			gGT->level1 = lev;
-			
-			// iVar9 is set to sdata->ptrLevelFile at the top of the function
 			gGT->visMem1 = lev->visMem;
 
-			// if LEV is valid
 			if (lev != 0)
 			{
-				// Load Icons and IconGroups from LEV
 				DECOMP_DecalGlobal_Store(gGT, lev->levTexLookup);
 			}
 
@@ -574,7 +567,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if level is not nullptr
 			if (lev != 0)
 			{
-				// store array of model pointers in GameTracker
 				DECOMP_LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
 
 #ifndef REBUILD_PS1
@@ -582,25 +574,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// they have bigger sizes that the 
 				// search algorithm depends on
 
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_circle);
-				gGT->ptrCircle = uVar16;
-
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_clod);
-				gGT->ptrClod = uVar16;
-
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_dustpuff);
-				gGT->ptrDustpuff = uVar16;
-
-				// search for icon by string "Smoke Ring"
-				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_smokering);
-				gGT->ptrSmoking = uVar16;
-
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_sparkle);
-				gGT->ptrSparkle = uVar16;
+				gGT->ptrCircle = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_circle);
+				gGT->ptrClod = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_clod);
+				gGT->ptrDustpuff = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_dustpuff);
+				gGT->ptrSmoking = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_smokering); // "Smoke Ring"
+				gGT->ptrSparkle = (u_int)DecalGlobal_FindInLEV(lev, rdata.s_sparkle);
 #endif
 			}
 
@@ -609,24 +587,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				piVar15 = (int*)(*(u_int*)((u_int)gGT->mpkIcons + 4));
 				
-#ifndef REBUILD_PS1
-				// search for icon by string
-				//what even are these first arguments? --Super
-				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightredoff);
-				gGT->trafficLightIcon[0] = (struct Icon*)uVar16;
+				// Removed usage of DecalGlobal_FindInMPK
+				// OG game would search every string one-by-one
 
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightredon);
-				gGT->trafficLightIcon[1] = (struct Icon*)uVar16;
-
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenoff);
-				gGT->trafficLightIcon[2] = (struct Icon*)uVar16;
-
-				// search for icon by string
-				uVar16 = (u_int)DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenon);
-				gGT->trafficLightIcon[3] = (struct Icon*)uVar16;
-#else
 				for(
 						struct Icon* firstIcon = (struct Icon*)piVar15; 
 						*(int*)&firstIcon->name[0];
@@ -647,7 +610,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 						break;
 					}
 				}
-#endif
 			}
 			
 			gGT->gameMode1_prevFrame = 1;
@@ -692,58 +654,58 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// VRAM for podium and all related models
 				DECOMP_LOAD_AppendQueue(
-					(int)bigfile, LT_VRAM, 
-					BI_PODIUMVRMS + iVar9, 
-					NULL, NULL);
+					0, LT_SETVRAM, BI_PODIUMVRMS + iVar9, 
+					NULL, DECOMP_LOAD_VramFileCallback);
 
 				// podium first place
 				u_char* ptrIndexArr = &gGT->podium_modelIndex_First;
 				int* ptrModelPtrArr = &data.podiumModel_firstPlace;
-				int baseIndexPM = BI_DANCEMODELWIN + iVar9;
+				int baseIndexPM = BI_DANCEMODELWIN;
 
 				// Fix for Oxide (faster than OG code that does nothing)
 				// If Oxide WIN is requested, add 16 to load Oxide LOSE
 				if (ptrIndexArr[0] == 0x8d)
-					baseIndexPM = BI_DANCEMODELLOSE + iVar9;
+					baseIndexPM = BI_DANCEMODELLOSE;
+				
+				int drmCb = DECOMP_LOAD_DramFileCallback;
 
 				// Loop through 3 podium models
 				for(int i = 0; i < 3; i++)
 				{
 					if(ptrIndexArr[i] != 0)
 					{
+						podiumModel = baseIndexPM + iVar9 + 
+							(ptrIndexArr[i] - 0x7e) * 2;
+						
 						DECOMP_LOAD_AppendQueue(
-							(int)bigfile, LT_DRAM, 
-							baseIndexPM + (ptrIndexArr[i] - 0x7e) * 2, 
-							&ptrModelPtrArr[i], 0);
+							0, LT_GETADDR, podiumModel, 
+							&ptrModelPtrArr[i], drmCb);
 					}
 					
-					baseIndexPM = BI_DANCEMODELLOSE + iVar9;
+					baseIndexPM = BI_DANCEMODELLOSE;
 				}
 				
 				// TAWNA
-				podiumModel = gGT->podium_modelIndex_tawna;
+				podiumModel = BI_DANCETAWNAGIRL + iVar9 + 
+					(gGT->podium_modelIndex_tawna - 0x8f) * 2;
 
 				// add TAWNA to loading queue
 				DECOMP_LOAD_AppendQueue(
-					(int)bigfile, LT_DRAM, 
-					BI_DANCETAWNAGIRL + iVar9 + (podiumModel - 0x8f) * 2, 
-					(void*)&data.podiumModel_tawna, (void(*)(struct LoadQueueSlot*))0);
+					0, LT_GETADDR, podiumModel, 
+					(void*)&data.podiumModel_tawna, drmCb);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
 					DECOMP_LOAD_AppendQueue(
-						(int)bigfile, LT_DRAM, 
-						BI_DINGOFIRE + iVar9, 
-						(void*)&data.podiumModel_dingoFire, (void(*)(struct LoadQueueSlot*))0);
+						0, LT_GETADDR, BI_DINGOFIRE + iVar9, 
+						(void*)&data.podiumModel_dingoFire, drmCb);
 				}
 
 				// add Podium
-				DECOMP_LOAD_AppendQueue(
-					(int)bigfile, LT_DRAM, 
-					BI_PODIUM + iVar9, 
-					&data.podiumModel_podiumStands, NULL);
+				DECOMP_LOAD_AppendQueue(0, LT_GETADDR, BI_PODIUM + iVar9, 
+					&data.podiumModel_podiumStands, DECOMP_LOAD_VramFileCallback);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;

@@ -170,7 +170,7 @@ enum BOSS_CUTSCENE_ORDER
 struct BossCutsceneData
 {	
 	// 0x0
-	int vrmFile;
+	int vrmFile_UNUSED;
 	int headFile;
 	int bodyFile;
 	

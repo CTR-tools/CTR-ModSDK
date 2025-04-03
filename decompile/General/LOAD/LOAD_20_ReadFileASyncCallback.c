@@ -25,26 +25,18 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk)
 	sdata->queueReady = 1;
 	
 	if(result == CdlComplete)
-	{
-		// callback
-		if(sdata->callbackCdReadSuccess != 0)
-		{
-			// success on VRAM, wait 2 VSYNCs
-			// before starting the next load
-			if(lqs->type == LT_VRAM)
-				sdata->queueReady = 0;
-			
-			if(sdata->queueLength == 0)
-				sdata->load_inProgress = 0;
+	{		
+		if(sdata->queueLength == 0)
+			sdata->load_inProgress = 0;
 
-			(*sdata->callbackCdReadSuccess)(lqs);
-		}
+		if (lqs->callbackFuncPtr != 0)
+			lqs->callbackFuncPtr(lqs);
 	}
 	
 	// CdlDiskError
 	else
 	{
-		if(lqs->flags & 1)
+		if((lqs->flags & LT_MEMPACK) != 0)
 		{
 			// undo allocation, try again
 			DECOMP_MEMPACK_ReallocMem(0);

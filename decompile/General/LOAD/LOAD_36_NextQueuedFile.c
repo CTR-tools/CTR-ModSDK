@@ -35,63 +35,21 @@ void DECOMP_LOAD_NextQueuedFile()
 	
 	sdata->queueLength--;
 	
-	switch(curr->type)
+	// get value originally passed
+	// BEFORE calling ReadFile, which may change it
+	int* prevValue = curr->ptrDestination;
+	
+	int forceSetAddr = 0;
+	if ((curr->flags & LT_SETADDR) != 0)
+		forceSetAddr = prevValue;
+	
+	DECOMP_LOAD_ReadFile(0,
+		curr->flags | LT_ASYNC,
+		curr->subfileIndex, forceSetAddr);
+		
+	if ((curr->flags & LT_GETADDR) != 0)
 	{
-		case LT_RAW:
-		{
-			// For LT_RAW:
-			// INPUT  curr->ptrDestination is where the file WILL load
-			// OUTPUT curr->ptrDestination is where the file DID load
-			
-			DECOMP_LOAD_ReadFile(
-				curr->ptrBigfileCdPos,
-				curr->subfileIndex,
-				curr->ptrDestination,
-				DECOMP_LOAD_CDRequestCallback);
-				
-			break;
-		}
-		
-		case LT_DRAM:
-		{
-			// For LT_DRAM:
-			// OUTPUT curr->ptrDestination is where the file DID load
-			// INPUT  curr->ptrDestination is where the output pointer is written
-
-			int* prevValue = curr->ptrDestination;
-			
-			DECOMP_LOAD_ReadFile(
-				curr->ptrBigfileCdPos,
-				curr->subfileIndex,
-				0,
-				DECOMP_LOAD_DramFileCallback);
-					
-			if(prevValue != 0)
-			{
-				*prevValue = curr->ptrDestination;
-				*prevValue = *prevValue + 4;
-			}
-			
-			break;
-		}
-		
-		case LT_VRAM:
-		{
-			// For LT_VRAM:
-			// OUTPUT curr->ptrDestination is where the file DID load
-			// INPUT  curr->ptrDestination is ignored
-			
-			DECOMP_LOAD_ReadFile(
-				curr->ptrBigfileCdPos,
-				curr->subfileIndex,
-				0,
-				DECOMP_LOAD_VramFileCallback);
-					
-			// undo allocation, next LOAD queue request
-			// will overwrite where VRAM was in RAM
-			DECOMP_MEMPACK_ReallocMem(0);
-			
-			break;
-		}
+		*prevValue = curr->ptrDestination;
+		*prevValue = *prevValue + 4;
 	}
 }

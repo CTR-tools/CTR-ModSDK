@@ -11,7 +11,7 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 	
 	if(
 		(sdata->modelMaskHints3D != 0) &&
-		(sdata->load_inProgress == 0)
+		(DRAM_IS_PATCHED(sdata->modelMaskHints3D))
 	  )
 	{
 		mhInst->model = sdata->modelMaskHints3D;

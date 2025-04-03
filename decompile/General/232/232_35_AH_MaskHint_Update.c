@@ -157,8 +157,7 @@ void DECOMP_AH_MaskHint_Update()
 			// of the first 3-second spawn (curr < spawnFrame, break)
 			#if 0
 			// wait for mask to finish loading
-			if (sdata->load_inProgress != 0) break;
-			if (sdata->modelMaskHints3D == NULL) break;
+			if (!DRAM_IS_PATCHED(sdata->modelMaskHints3D)) break;
 			#endif
 			
 			if(

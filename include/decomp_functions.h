@@ -284,7 +284,7 @@ void DECOMP_LOAD_ReadFileASyncCallback(CdlIntrResult result, uint8_t* unk);
 
 // same hack as AppendQueue, see notes there
 #define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
-void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback);
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile,*/ u_int loadType, int subfileIndex, void *ptrDst);
 // void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, /*u_int loadType,*/ int subfileIndex, void* destination, /*int *size,*/ void * callback);
 
 
@@ -852,7 +852,7 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK(void);
 void DECOMP_LOAD_OvrEndRace(unsigned int param_1);
 void DECOMP_LOAD_OvrLOD(unsigned int param_1);
 void DECOMP_LOAD_OvrThreads(unsigned int param_1);
-void DECOMP_LOAD_DriverMPK(unsigned int param_1, int levelLOD, void (*param_3)(struct LoadQueueSlot*));
+void DECOMP_LOAD_DriverMPK(unsigned int param_1, int levelLOD);
 void DECOMP_LibraryOfModels_Clear(struct GameTracker* gGT);
 void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL);
 void DECOMP_DebugFont_Init(struct GameTracker* gGT);

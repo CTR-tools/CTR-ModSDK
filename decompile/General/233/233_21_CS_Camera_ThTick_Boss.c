@@ -74,7 +74,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
   case 3:
 
 	// wait for BossHead loading to finish
-	if(sdata->load_inProgress == 1) break;
+	if (!DRAM_IS_PATCHED(OVR_233.ptrModelBossHead)) break;
 
 	struct Model** mArr = &OVR_233.ptrModelBossHead;
 	

@@ -19,8 +19,8 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 
 		// Threads overlay 230-233
         DECOMP_LOAD_AppendQueue(
-			(int)sdata->ptrBigfileCdPos_2,LT_RAW,
-			(param_1+0xe6),&OVR_Region3,
+			0, LT_SETADDR,
+			(param_1+0xe6), &OVR_Region3,
 			data.overlayCallbackFuncs[param_1]
 		);
 #else

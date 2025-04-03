@@ -106,6 +106,15 @@ struct DramPointerMap
 #define DRAM_GETOFFSETS(x) \
 	((unsigned int)x + sizeof(struct DramPointerMap))
 
+#define DRAM_SET_UNPATCHED(x) \
+	*(int*)x = 0
+
+#define DRAM_SET_PATCHED(x) \
+	*(int*)x = *(int*)x | 0x10000000;
+
+#define DRAM_IS_PATCHED(x) \
+	((*(int*)((unsigned int)x - 4) & 0x10000000) != 0)
+
 struct VramHeader
 {
 	char data[0xC];
@@ -129,26 +138,37 @@ enum LevVramIndex
 
 enum LoadType
 {
-	// ordinary read to ram
-	LT_RAW = 1,
+	// load to specified ram address
+	LT_SETADDR = 0x1,
 	
-	// read with pointer map at the end
-	LT_DRAM = 2,
+	// get result of mempack_allocmem
+	LT_GETADDR = 0x2,
 	
-	// read with vram transfer
-	LT_VRAM = 3
+	// send to vram
+	LT_SETVRAM = 0x4,
+	
+	// === BITWISE OR ===
+	
+	// blocking read
+	LT_SYNC = 0x10,
+	
+	// non-blocking read
+	LT_ASYNC = 0x20,
+	
+	// === BITWISE OR ===
+	LT_MEMPACK = 0x100,
 };
 
 struct LoadQueueSlot
 {
 	// 0x0
-	struct BigHeader* ptrBigfileCdPos;
+	struct BigHeader* ptrBigfileCdPos_UNUSED;
 
 	// 0x4
 	unsigned short flags;
 
 	// 0x6
-	unsigned short type;
+	unsigned short type_UNUSED;
 
 	// 0x8
 	unsigned int subfileIndex;

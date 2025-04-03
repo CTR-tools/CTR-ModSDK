@@ -3,7 +3,7 @@
 // same hack as AppendQueue, see notes there
 #define DECOMP_LOAD_ReadFile(a,b,c,d) DECOMP_LOAD_ReadFile_ex(b,c,d)
 
-void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int subfileIndex, void *ptrDst, void * callback)
+void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile,*/ u_int loadType, int subfileIndex, void *ptrDst)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
@@ -21,31 +21,36 @@ void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int
 	
 	CdIntToPos(bigfile->cdpos + eOffs, &cdLoc);
 	
-	// if not an overlay file with specific destination
-	if (ptrDst == (void *)0x0)
+	
+	struct LoadQueueSlot* lqs = &data.currSlot;
+	
+	// vram is safe to overwrite after upload
+	if ((loadType & LT_SETVRAM) != 0)
 	{
-		// set flag that we used MEMPACK_AllocMem
-		// to store this ReadFile somewhere random
-		struct LoadQueueSlot* lqs = &data.currSlot;
-		lqs->flags |= 1;
+		//if (DECOMP_MEMPACK_GetFreeBytes() > eSize)
+			ptrDst = sdata->PtrMempack->firstFreeByte;
+	}
+	
+	// If no address given, then find one
+	else if (ptrDst == (void *)0x0)
+	{
+		lqs->flags |= LT_MEMPACK;
 
-		// make sure RAM has room for sector alignment
-		ptrDst = (void *)DECOMP_MEMPACK_AllocMem((eSize + 0x7ffU) & 0xfffff800); // "FILE"
-		
-		// undo sector-align alloc,
-		// allocate just "needed" bytes
+		// allocate room for all sectors,
+		// remove alignment before next Read
+		int sectorSize = (eSize + 0x7ffU) & 0xfffff800;
+		ptrDst = (void *)DECOMP_MEMPACK_AllocMem(sectorSize); // "FILE"
 		DECOMP_MEMPACK_ReallocMem(eSize);
 	}
 	
-	struct LoadQueueSlot* curr = &data.currSlot;
-	curr->ptrDestination = ptrDst;
+	lqs->ptrDestination = ptrDst;
 	
-	sdata->callbackCdReadSuccess = 0;
+	// Set first 4 bytes to zero, this is for DRAM files,
+	// and will have no impact on non-DRAM files loading
+	DRAM_SET_UNPATCHED(ptrDst);
 	
-	if (callback != 0)
+	if ((loadType & LT_ASYNC) != 0)
 	{
-		// Save the function pointer address
-		sdata->callbackCdReadSuccess = callback;		
 		CdReadCallback(DECOMP_LOAD_ReadFileASyncCallback);
 	}
 
@@ -59,14 +64,16 @@ void* DECOMP_LOAD_ReadFile_ex(/*struct BigHeader* bigfile, u_int loadType,*/ int
 		if(uVar5 == 0)
 			continue;
 		
-		// if async, end here
-		if(callback != 0)
+		// ASync commmands passed successfully,
+		// only stay in the loop for Sync loads
+		if ((loadType & LT_SYNC) == 0)
 			break;
 
-		// if sync, wait until remainingSectors=0
+		// Wait for all sectors to finish
 		uVar5 = CdReadSync(0,(u_char *)0x0);
 		
-		// if no sectors remain
+		// if ZERO sectors remain,
+		// then Sync commands passed, end loop
 		if(uVar5 == 0)
 			break;
 	}

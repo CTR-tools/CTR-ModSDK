@@ -2723,12 +2723,13 @@ struct Data data =
 
 	.currSlot =
 	{
-		.ptrBigfileCdPos = 0,
+		.ptrBigfileCdPos_UNUSED = 0,
+		.type_UNUSED = 0,
+		.size_UNUSED = 0,
+		
 		.flags = 0,
-		.type = 0,
 		.subfileIndex = -1,
 		.ptrDestination = 0,
-		.size_UNUSED = 0,
 		.callbackFuncPtr = 0
 	},
 

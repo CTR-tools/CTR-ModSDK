@@ -32,12 +32,9 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 	
 	lngFile = sdata->lngFile;
 
-	DECOMP_LOAD_ReadFile(
-		(struct BigHeader*)bigfilePtr, BI_LANGUAGEFILE + lang, 
-		(void*)lngFile, NULL);
-
-	// This is not ReadFileAsync, this is ReadFile,
-	// so the program halts until completion of read
+	DECOMP_LOAD_ReadFile(0, 
+		LT_SETADDR | LT_SYNC,
+		BI_LANGUAGEFILE + lang, (void*)lngFile);
 
 	numStrings = lngFile->numStrings;
 	strArray = (char**)((unsigned int)lngFile + lngFile->offsetToPtrArr);

@@ -1,21 +1,23 @@
 #include <common.h>
 
+static int cbDRAM = DECOMP_LOAD_DramFileCallback;
+
 #ifdef USE_HIGHMP
-void highMp_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(struct LoadQueueSlot*))
+void highMp_DriverMPK(unsigned int param_1,int levelLOD)
 {
 	int i;
 	for(i = 0; i < 3; i++)
 	{
 		// high lod CTR model
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 			BI_RACERMODELHI + data.characterIDs[i],
-			&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0);
+			&data.driverModelExtras[i], cbDRAM);
 	}
 
 	// Time Trial MPK
-	DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+	DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 		BI_TIMETRIALPACK + data.characterIDs[i],
-		&sdata->ptrMPK, param_3);
+		&sdata->ptrMPK, cbDRAM);
 }
 #endif
 
@@ -84,7 +86,7 @@ void ChRand_SetCharacters()
 }
 #endif
 
-void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(struct LoadQueueSlot*))
+void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 {
 	int i;
 	int gameMode1;
@@ -94,7 +96,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 #endif
 		
 #ifdef USE_HIGHMP
-	highMp_DriverMPK(param_1, levelLOD, param_3);
+	highMp_DriverMPK(param_1, levelLOD);
 	return;
 #endif
 	
@@ -109,9 +111,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		for(i = 0; i < 3; i++)
 		{
 			// low lod CTR model
-			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 				BI_RACERMODELLOW + data.characterIDs[i],
-				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0);
+				&data.driverModelExtras[i],cbDRAM);
 		}
 
 		// load 4P MPK of fourth player
@@ -171,9 +173,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		if(gGT->levelID == MAIN_MENU_LEVEL)
 		{
 			// high lod model (temporary workaround)
-			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+			DECOMP_LOAD_AppendQueue(
+				0, LT_GETADDR,
 				BI_RACERMODELHI + 0xF,
-				&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0);
+				&data.driverModelExtras[0],cbDRAM);
 		}
 		
 		// get rid of oxide cause MPK is too big
@@ -197,9 +200,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		#else
 		
 		// high lod model
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 			BI_RACERMODELHI + data.characterIDs[0],
-			&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0);
+			&data.driverModelExtras[0],cbDRAM);
 
 		// time trial mpk
 		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
@@ -221,9 +224,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD, void (*param_3)(st
 		data.characterIDs[4] = 0x8;
 
 		// high lod model
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 			BI_RACERMODELHI + data.characterIDs[0],
-			&data.driverModelExtras[0],(void(*)(struct LoadQueueSlot*))0);
+			&data.driverModelExtras[0],cbDRAM);
 
 		// pack of four AIs with bosses
 		lastFileIndexMPK = BI_2PARCADEPACK + 7;
@@ -248,9 +251,9 @@ ForceOnlineLoad8:
 		for(i = 0; i < 7; i++)
 		{
 			// high lod CTR model
-			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 				BI_RACERMODELHI + data.characterIDs[i],
-				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0);
+				&data.driverModelExtras[i],cbDRAM);
 		}
 		
 		// time trial mpk
@@ -265,9 +268,9 @@ ForceOnlineLoad8:
 		for(i = 0; i < 2; i++)
 		{
 			// med lod CTR model
-			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 				BI_RACERMODELMED + data.characterIDs[i],
-				&data.driverModelExtras[i],(void(*)(struct LoadQueueSlot*))0);
+				&data.driverModelExtras[i],cbDRAM);
 		}
 
 		i = DECOMP_LOAD_Robots2P(data.characterIDs[0], data.characterIDs[1]);
@@ -277,9 +280,9 @@ ForceOnlineLoad8:
 	}
 
 	DECOMP_LOAD_AppendQueue(
-		param_1,LT_DRAM,
+		0, LT_GETADDR,
 		lastFileIndexMPK,
-		&sdata->ptrMPK, param_3);
+		&sdata->ptrMPK, cbDRAM);
 
 	return;
 }

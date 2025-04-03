@@ -15,17 +15,15 @@ void* DECOMP_LOAD_XnfFile(char* filename, void* ptrDestination, int* size)
 	
 	if(ptrDestination == 0)
 	{
-		ptrDestination = DECOMP_MEMPACK_AllocMem(cdlFile.size + 0x7ff & 0xfffff800/*, fileName*/);
-		
-		if(ptrDestination == 0)
-			return 0;
+		// allocate room for all sectors,
+		// remove alignment before next Read
+		int sectorSize = (cdlFile.size + 0x7ffU) & 0xfffff800;
+		ptrDestination = DECOMP_MEMPACK_AllocMem(sectorSize /*, fileName*/);
+		DECOMP_MEMPACK_ReallocMem(cdlFile.size);
 	}
 	
 	char buf[8];
 	CdControl(CdlSetloc, &cdlFile, buf);
-	
-	// only allocate "needed" bytes
-	DECOMP_MEMPACK_ReallocMem(cdlFile.size);
 	
 	if(CdRead((cdlFile.size + 0x7ff)>>0xb, ptrDestination, 0x80) == 0) 
 		return 0;

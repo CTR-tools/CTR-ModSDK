@@ -26,21 +26,11 @@ void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd)
 	// now equals 0 or 1
 	index -= 1;
 
-	#if 0 // UNUSED
-    if (bcd->vrmFile != 0)
-    {
-		// CTR vram file (body and head)
-        DECOMP_LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_VRAM, bcd->vrmFile+index, 0, 0);
-    }
-	#endif
-
-	// skip null check
-    //if (bcd->bodyFile != 0)
-    {
-		// CTR Model File (body)
-        DECOMP_LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, bcd->bodyFile+index, &OVR_233.ptrModelBossBody, 0);
-    }
+	// CTR Model File (body)
+    DECOMP_LOAD_AppendQueue(0, LT_GETADDR, bcd->bodyFile+index, 
+		&OVR_233.ptrModelBossBody, DECOMP_LOAD_DramFileCallback);
 
 	// CTR Model File (head)
-    DECOMP_LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, bcd->headFile+index, &OVR_233.ptrModelBossHead, 0);
+    DECOMP_LOAD_AppendQueue(0, LT_GETADDR, bcd->headFile+index, 
+		&OVR_233.ptrModelBossHead, DECOMP_LOAD_DramFileCallback);
 }

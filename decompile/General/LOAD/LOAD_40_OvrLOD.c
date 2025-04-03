@@ -16,8 +16,9 @@ void DECOMP_LOAD_OvrLOD(unsigned int param_1)
 #ifndef REBUILD_PC
 	// LOD overlay 226-229
     DECOMP_LOAD_AppendQueue(
-		(int)sdata->ptrBigfileCdPos_2,LT_RAW,
-		BI_OVERLAYSECT2 + param_1, &OVR_Region2, NULL);
+		0, LT_SETADDR,
+		BI_OVERLAYSECT2 + param_1, 
+		&OVR_Region2, NULL);
 #endif
 
 	// save ID, and reload next overlay (sector read invalidation)
