@@ -3989,6 +3989,9 @@ struct sData
 	// 8008c7b4 -- JpnTrial
 	// 8008dc0c -- EurRetail
 	// 80090c80 -- JpnRetail
+	
+	// Not used in decomp/General, 
+	// replaced 3-part callback with 2-part callback
 	void (*callbackCdReadSuccess)(struct LoadQueueSlot*);
 
 	// 8008d860
