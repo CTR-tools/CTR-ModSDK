@@ -76,8 +76,6 @@ void DECOMP_LOAD_Hub_SwapNow()
 		DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
 	}
 	
-	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
-	
 	MainInit_VisMem(gGT);
 	
 	cDC = &gGT->cameraDC[0];

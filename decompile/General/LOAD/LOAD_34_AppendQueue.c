@@ -15,6 +15,8 @@ void DECOMP_LOAD_AppendQueue_ex(/*int bigfile,*/ int flags, int fileIndex, void*
 		return;
 	#endif
 
+	printf("%d\n", fileIndex);
+
 	lqs = &sdata->queueSlots[sdata->queueLength];
 	lqs->flags = flags;
 	lqs->subfileIndex = fileIndex;

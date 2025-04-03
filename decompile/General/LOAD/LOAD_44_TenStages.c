@@ -21,7 +21,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	int iVar9;
 	struct Level* lev;
 	u_int gameMode1; //-- redundant
-	u_char podiumModel;
 	int iVar12;
 	char *levelNamePtr;
 	u_char* moremoredata; //-- redundant
@@ -426,7 +425,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// == banks are done parsing ===
 
-			// If the world you're in is made of multiple LEV files
+			// If this world is made of multiple LEVs
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
 				// Cutscene Packs
@@ -502,7 +501,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 				#endif
 				
-				// make all futuere allocations in subpacks
+				// For Oxide-Intro and Credits, set active pack
 				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}
 
@@ -526,16 +525,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				0, LT_GETADDR, uVar16 + LVI_LEV, 
 				&sdata->ptrLevelFile, DECOMP_LOAD_DramFileCallback);
 
-			// can this be optimized with this?
-			// I feel like we had this, then had to remove it for some reason?
-			// if ((gGT->gameMode2 & LEV_SWAP) != 0)
-				
-			// if level ID is AdvHub or Credits
-			if (
-					// 25-38 or 44-63
-					((u_int)(gGT->levelID - GEM_STONE_VALLEY) < 0xe) ||
-					((u_int)(gGT->levelID - CREDITS_CRASH) < 0x14)
-				)
+			// if world is made of multiple LEVs
+			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
 				// add PTR file to loading queue
 				DECOMP_LOAD_AppendQueue(
@@ -629,9 +620,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// === LEV_SWAP ===
 			
-			// Adventure Hub, or Credits
-			DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
-			
 			if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 				break;
 			
@@ -648,9 +636,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					puVar8--;
 				} while (iVar9 > -1);
 			
-				// Load models to memory of opposite hub
-				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
+				// Set Pack of the hub you're NOT on
 				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
+				
+				// Load model+vrm files on the VRAM page
+				// that does NOT overwrite the hub VRAM
+				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
 
 				// VRAM for podium and all related models
 				DECOMP_LOAD_AppendQueue(
@@ -667,6 +658,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				if (ptrIndexArr[0] == 0x8d)
 					baseIndexPM = BI_DANCEMODELLOSE;
 				
+				int fileIndex;
 				int drmCb = DECOMP_LOAD_DramFileCallback;
 
 				// Loop through 3 podium models
@@ -674,11 +666,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				{
 					if(ptrIndexArr[i] != 0)
 					{
-						podiumModel = baseIndexPM + iVar9 + 
+						fileIndex = baseIndexPM + iVar9 + 
 							(ptrIndexArr[i] - 0x7e) * 2;
 						
 						DECOMP_LOAD_AppendQueue(
-							0, LT_GETADDR, podiumModel, 
+							0, LT_GETADDR, fileIndex, 
 							&ptrModelPtrArr[i], drmCb);
 					}
 					
@@ -686,12 +678,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				}
 				
 				// TAWNA
-				podiumModel = BI_DANCETAWNAGIRL + iVar9 + 
+				fileIndex = BI_DANCETAWNAGIRL + iVar9 + 
 					(gGT->podium_modelIndex_tawna - 0x8f) * 2;
 
 				// add TAWNA to loading queue
 				DECOMP_LOAD_AppendQueue(
-					0, LT_GETADDR, podiumModel, 
+					0, LT_GETADDR, fileIndex, 
 					(void*)&data.podiumModel_tawna, drmCb);
 
 				// if 0x7e+5 (dingo)
@@ -734,10 +726,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					
 					gGT->modelPtr[m->id] = m;
 				}
-
-				// change active allocation system
-				// Swap 1 and 2 while on adventure map
-				DECOMP_MEMPACK_SwapPacks((int)gGT->activeMempackIndex);
 			}
 
 			// Level ID

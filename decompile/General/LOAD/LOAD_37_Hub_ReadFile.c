@@ -1,5 +1,6 @@
 #include <common.h>
 
+// packID will always be 3-gGT->activeMempackIndex
 void DECOMP_LOAD_Hub_ReadFile(int bigfile, int levID, int packID)
 {
 	int iVar2;
@@ -14,6 +15,8 @@ void DECOMP_LOAD_Hub_ReadFile(int bigfile, int levID, int packID)
 	gGT->level2 = 0;
 	sdata->modelMaskHints3D = 0;
 	
+	// Swap to pack of hub you're NOT on,
+	// wipe the pack to reload the new hub
 	DECOMP_MEMPACK_SwapPacks(packID);
 	DECOMP_MEMPACK_ClearLowMem();
 	

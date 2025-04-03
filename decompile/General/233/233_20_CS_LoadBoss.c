@@ -19,6 +19,8 @@ void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd)
 	// the boss will load in that level's RAM
     sdata->gGT->levID_in_each_mempack[index] = -1;
 
+	// Swap to pack of hub you're NOT on,
+	// wipe the pack to reload the new BOSS
     DECOMP_MEMPACK_SwapPacks(index);
     DECOMP_MEMPACK_ClearLowMem();
 
