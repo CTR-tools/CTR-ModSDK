@@ -9,7 +9,10 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 	
 	int scale = mhObj->scale;
 	
-	if(sdata->modelMaskHints3D != 0)
+	if(
+		(sdata->modelMaskHints3D != 0) &&
+		(sdata->load_inProgress == 0)
+	  )
 	{
 		mhInst->model = sdata->modelMaskHints3D;
 		scale *= 2;

@@ -152,39 +152,42 @@ void DECOMP_AH_MaskHint_Update()
 				break;
 			}
 			
-			if (sdata->modelMaskHints3D != 0)
-			{
-				if(
-					((D232.maskWarppadBoolInterrupt & 1) != 0) ||
-					((gGT->cameraDC[0].flags & 0x800) != 0)
-				  )
-				{
-					DECOMP_AH_MaskHint_LerpVol(0x1000);
-					
-					DECOMP_AH_MaskHint_SpawnParticles
-						(0x18, &D232.emSet_maskLeave[0], 0x1000);
-
-					DECOMP_VehTalkMask_PlayXA((struct Instance*)sdata->modelMaskHints3D, D232.maskHintID);
-					
-					if (
-						((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-						
-						// Not "Welcome to Adventure" or "You need a Boss Key"
-						(D232.maskHintID != 0) &&
-						(D232.maskHintID != 0x18)
-					) 
-					{
-						// hide UI map
-						gGT->hudFlags |= 0x10;
-					}
-					
-					sdata->AkuAkuHintState++;
-					break;
-				}
-			}
+			// Should be pointless,
+			// Mask will always be loaded by the end
+			// of the first 3-second spawn (curr < spawnFrame, break)
+			#if 0
+			// wait for mask to finish loading
+			if (sdata->load_inProgress != 0) break;
+			if (sdata->modelMaskHints3D == NULL) break;
+			#endif
 			
-			// if sdata->modelMaskHints3D == NULL,
-			// stay here forever stuck
+			if(
+				((D232.maskWarppadBoolInterrupt & 1) != 0) ||
+				((gGT->cameraDC[0].flags & 0x800) != 0)
+			  )
+			{
+				DECOMP_AH_MaskHint_LerpVol(0x1000);
+				
+				DECOMP_AH_MaskHint_SpawnParticles
+					(0x18, &D232.emSet_maskLeave[0], 0x1000);
+
+				DECOMP_VehTalkMask_PlayXA((struct Instance*)sdata->modelMaskHints3D, D232.maskHintID);
+				
+				if (
+					((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
+					
+					// Not "Welcome to Adventure" or "You need a Boss Key"
+					(D232.maskHintID != 0) &&
+					(D232.maskHintID != 0x18)
+				) 
+				{
+					// hide UI map
+					gGT->hudFlags |= 0x10;
+				}
+				
+				sdata->AkuAkuHintState++;
+				break;
+			}
 			break;
 			
 		case 4: {
