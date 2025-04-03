@@ -705,7 +705,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// add Podium
 				DECOMP_LOAD_AppendQueue(0, LT_GETADDR, BI_PODIUM + iVar9, 
-					&data.podiumModel_podiumStands, DECOMP_LOAD_VramFileCallback);
+					&data.podiumModel_podiumStands, drmCb);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
