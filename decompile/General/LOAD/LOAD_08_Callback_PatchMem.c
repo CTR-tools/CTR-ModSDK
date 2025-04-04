@@ -18,5 +18,11 @@ void DECOMP_LOAD_Callback_PatchMem()
 	patchNum = patchSize >> 2;
 	
 	DECOMP_LOAD_RunPtrMap((int)sdata->ptrLevelFile, (int*)patchStart, patchNum);
+	
+	// Fix character model breaking post-roo?
+	#if 1
+	DECOMP_MEMPACK_SwapPacks(sdata->gGT->activeMempackIndex);
+	#endif
+	
 	return;
 }

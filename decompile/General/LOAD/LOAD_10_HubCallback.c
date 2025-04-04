@@ -6,4 +6,10 @@ void DECOMP_LOAD_HubCallback(struct LoadQueueSlot* lqs)
 	
 	struct GameTracker* gGT = sdata->gGT;	
 	gGT->level2 = sdata->ptrLevelFile;
+	
+
+	// Fix character model breaking post-roo?
+	#if 1
+	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
+	#endif
 }

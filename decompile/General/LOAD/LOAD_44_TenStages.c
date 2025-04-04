@@ -620,6 +620,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// === LEV_SWAP ===
 			
+			// needed to fix boss cutscene?
+			#if 1
+			DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
+			#endif
+			
 			if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 				break;
 			
@@ -726,6 +731,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					
 					gGT->modelPtr[m->id] = m;
 				}
+				
+				// needed to fix boss cutscene?
+				#if 1
+				DECOMP_MEMPACK_SwapPacks((int)gGT->activeMempackIndex);
+				#endif
 			}
 
 			// Level ID

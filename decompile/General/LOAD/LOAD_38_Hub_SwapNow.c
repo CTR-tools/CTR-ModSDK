@@ -76,6 +76,11 @@ void DECOMP_LOAD_Hub_SwapNow()
 		DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
 	}
 	
+	// needed to fix boss cutscene?
+	#if 1
+	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
+	#endif
+	
 	MainInit_VisMem(gGT);
 	
 	cDC = &gGT->cameraDC[0];
