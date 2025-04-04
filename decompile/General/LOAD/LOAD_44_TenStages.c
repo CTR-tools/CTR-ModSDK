@@ -365,13 +365,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				mainMenuInit[sdata->mainMenuState]();
 			}
 			
-			// Risky, but we can afford it
-			#if 0
+			// Needed, or else Post-Boss Outro
+			// will break the character animations
 			sdata->ptrMPK = 0;
 			data.driverModelExtras[0] = 0;
 			data.driverModelExtras[1] = 0;
 			data.driverModelExtras[2] = 0;
-			#endif
 			
 			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD);
 			break;
