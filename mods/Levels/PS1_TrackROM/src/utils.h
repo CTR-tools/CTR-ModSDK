@@ -18,6 +18,15 @@
 #define CUSTOM_MAP_PTR_ADDR (int*) 0x80300000
 #define CUSTOM_LEV_ADDR (char*) 0x80300004
 
+enum HotReloadSteps
+{
+    HOT_RELOAD_DONE = 0,
+    HOT_RELOAD_START = 1,
+    HOT_RELOAD_LOAD = 2,
+    HOT_RELOAD_READY = 3,
+    HOT_RELOAD_EXEC = 4,
+};
+
 void HotReload();
 void HotReloadVRAM();
 
