@@ -22,7 +22,7 @@ int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 		// New to our decomp
 		// Increase later when we save more heap
 		if(levelID == OXIDE_STATION)
-			return 1200;
+			return 1050;
 	}
 	
 	if(levelID == SEWER_SPEEDWAY) 	return 1500;	// down from 6000
