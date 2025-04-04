@@ -168,7 +168,7 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
       }
       else {
         clipSize = 12000>>2;
-        if (gGT->levelID == ADVENTURE_CHARACTER_SELECT) {
+        if (gGT->levelID == ADVENTURE_GARAGE) {
           clipSize = 0x1000>>2;
         }
       }

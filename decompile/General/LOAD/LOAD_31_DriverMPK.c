@@ -180,7 +180,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		}
 		
 		// get rid of oxide cause MPK is too big
-		if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+		if(gGT->levelID == ADVENTURE_GARAGE)
 		{
 			data.characterIDs[0] = 0;
 		}

@@ -128,7 +128,7 @@ int GetOriginalSize(struct GameTracker* gGT)
 	int levelID = gGT->levelID;
 	
 	// adv garage
-	if(levelID == ADVENTURE_CHARACTER_SELECT)
+	if(levelID == ADVENTURE_GARAGE)
 		return 0x1b800;
 	
 	// main menu

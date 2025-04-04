@@ -22,7 +22,7 @@ int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod)
 	if(levelID <= INTRO_OXIDE)
 		return BI_CUTSCENES_INTRO + (levelID-INTRO_RACE_TODAY)*3;
 	
-	if(levelID <= ADVENTURE_CHARACTER_SELECT)
+	if(levelID <= ADVENTURE_GARAGE)
 		return BI_MAINMENUFILE + (levelID-MAIN_MENU_LEVEL)*2;
 	
 	if(levelID == NAUGHTY_DOG_CRATE)

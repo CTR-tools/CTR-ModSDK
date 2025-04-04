@@ -72,7 +72,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		{
 
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
+			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Cutscene_VolumeBackup();
 			}
@@ -165,7 +165,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// enable flag that shows you are in main menu
 				gGT->gameMode1 |= MAIN_MENU;
 
-				if(levelID == ADVENTURE_CHARACTER_SELECT)
+				if(levelID == ADVENTURE_GARAGE)
 				{
 					// Enter Adventure Character Selection
 					sdata->mainMenuState = 4;
@@ -296,7 +296,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		{
 			// main menu + scrapbook, 230
 			if (
-					(levelID != ADVENTURE_CHARACTER_SELECT) &&
+					(levelID != ADVENTURE_GARAGE) &&
 					((gGT->gameMode1 & MAIN_MENU) != 0)
 				)
 			{
@@ -330,7 +330,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 4:
 		{
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
+			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Music_Restart();
 			}
@@ -383,7 +383,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
+			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Music_Stop();
 				CseqMusic_StopAll();
@@ -395,7 +395,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 6:
 		{
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
+			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				iVar9 = Music_AsyncParseBanks();
 
@@ -801,7 +801,7 @@ LAB_800346b0:
 
 					// If level ID == 40
 					// If you are in Adventure Character Selection
-					(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+					(gGT->levelID == ADVENTURE_GARAGE)
 				)
 				{
 					// if not going to credits

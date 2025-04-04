@@ -444,7 +444,7 @@ FinishLoading:
 				if (
 						(gGT->level1 != 0) && // for ND Box
 						(gGT->levelID != MAIN_MENU_LEVEL) &&
-						(gGT->levelID != ADVENTURE_CHARACTER_SELECT)
+						(gGT->levelID != ADVENTURE_GARAGE)
 					)
 				{
 					// placeholder until 233 is done

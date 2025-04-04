@@ -49,7 +49,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	  // Main Menu, bare minimum
       uVar9 = 0x400;
 
-      if (gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+      if (gGT->levelID == ADVENTURE_GARAGE)
 	  {
         uVar9 = 0x800;
       }

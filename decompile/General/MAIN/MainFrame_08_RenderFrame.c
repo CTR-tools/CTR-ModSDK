@@ -1213,7 +1213,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 
 	if(
 		// adv character selection screen
-		(gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
+		(gGT->levelID == ADVENTURE_GARAGE) ||
 
 		// cutscene that's not Crash Bandicoot intro
 		// where he's sleeping and snoring on a hill
@@ -1392,7 +1392,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 
 		if(
 			// adv character selection screen
-			(gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
+			(gGT->levelID == ADVENTURE_GARAGE) ||
 
 			// cutscene that's not Crash Bandicoot intro
 			// where he's sleeping and snoring on a hill

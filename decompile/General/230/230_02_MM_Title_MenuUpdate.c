@@ -132,7 +132,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // go to adventure character select screen
     sdata->mainMenuState = 4;
 
-    DECOMP_MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
+    DECOMP_MainRaceTrack_RequestLoad(ADVENTURE_GARAGE);
     break;
 
   // adventure save/load
