@@ -107,14 +107,18 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			// spawn facing AWAY from door
 			rotDeltaY = 0xC00;
 			
-            if (
-					// Pinstripe -> Citadel (not gemstone)
-					(gGT->prevLEV == HOT_AIR_SKYWAY) &&
-					(gGT->levelID == CITADEL_CITY)
-				)
+			// if leaving pinstripe boss
+			if (gGT->prevLEV == HOT_AIR_SKYWAY)
 			{
-				// face to the RIGHT from door
-				rotDeltaY = 0x800;
+				// if exited to pinstripe,
+				// face to the RIGHT from the door
+				if (gGT->levelID == CITADEL_CITY)
+					rotDeltaY = 0x800;
+				
+				// if exited to oxide,
+				// face TOWARDS the door
+				if (gGT->levelID == GEM_STONE_VALLEY)
+					rotDeltaY = 0x400;
 			}
 		}
     }
