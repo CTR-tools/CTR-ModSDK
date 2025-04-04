@@ -81,11 +81,6 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
 	gGT->modelPtr[mArr[0]->id] = mArr[0];
 	gGT->modelPtr[mArr[1]->id] = mArr[1];
 
-	// Fix character model breaking post-roo?
-	#if 1
-	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
-	#endif
-
 	struct CsThreadInitData initData;
 	initData.podiumPos[0] = bcd->bossPos[0];
 	initData.podiumPos[1] = bcd->bossPos[1];
