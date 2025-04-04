@@ -156,7 +156,9 @@ void DECOMP_AH_MaskHint_Update()
 			// Mask will always be loaded by the end
 			// of the first 3-second spawn (curr < spawnFrame, break)
 			#if 0
-			// wait for mask to finish loading
+			// NULLPTR checks if load started
+			// IS_PATCHED checks if load finished
+			if (sdata->modelMaskHints3D == 0) break;
 			if (!DRAM_IS_PATCHED(sdata->modelMaskHints3D)) break;
 			#endif
 			

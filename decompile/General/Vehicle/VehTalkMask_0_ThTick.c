@@ -8,8 +8,10 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 	struct Instance* mhInst = t->inst;
 	
 	int scale = mhObj->scale;
-	
+		
 	if(
+		// NULLPTR checks if load started
+		// IS_PATCHED checks if load finished
 		(sdata->modelMaskHints3D != 0) &&
 		(DRAM_IS_PATCHED(sdata->modelMaskHints3D))
 	  )

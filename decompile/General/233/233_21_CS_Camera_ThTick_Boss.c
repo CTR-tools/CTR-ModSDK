@@ -73,7 +73,9 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
   // start fade-to-normal
   case 3:
 
-	// wait for BossHead loading to finish
+	// NULLPTR checks if load started
+	// IS_PATCHED checks if load finished
+	if (OVR_233.ptrModelBossHead != 0) break;
 	if (!DRAM_IS_PATCHED(OVR_233.ptrModelBossHead)) break;
 
 	struct Model** mArr = &OVR_233.ptrModelBossHead;
