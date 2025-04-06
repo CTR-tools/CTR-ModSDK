@@ -11,12 +11,24 @@
 #define GHOST_READY (volatile int*) 0x8000C008
 #define CHAR_MODEL_PTRS (struct Model**) 0x8000C010
 
-#define CUSTOM_VRAM_ADDR (char*) 0x80200000
-#define GHOST_SIZE_ADDR (int*) 0x80280000
-#define DRIVER_ADDR (char*) 0x80290000
-#define GHOST_ADDR (char*) 0x80280004
-#define CUSTOM_MAP_PTR_ADDR (int*) 0x80300000
-#define CUSTOM_LEV_ADDR (char*) 0x80300004
+#define VRM_FILESIZE 0x70038
+#define GHOST_FILESIZE 0x3E00
+
+#define FREE_MEM_START 0x80200000
+#define VRM_LOCATION FREE_MEM_START
+#define GHOST_SIZE_LOCATION (VRM_LOCATION + VRM_FILESIZE)
+#define GHOST_LOCATION (GHOST_SIZE_LOCATION + sizeof(int))
+#define DRIVER_LOCATION (GHOST_LOCATION + GHOST_FILESIZE)
+/* First free byte: 0x802BE670 : Pre-calculated value after every driver is loaded */
+#define CUSTOM_LEV_MAP_LOCATION 0x80300000
+#define CUSTOM_LEV_LOCATION (CUSTOM_LEV_MAP_LOCATION + sizeof(int))
+
+#define CUSTOM_VRAM_ADDR (char*) VRM_LOCATION
+#define GHOST_SIZE_ADDR (int*) GHOST_SIZE_LOCATION
+#define GHOST_ADDR (char*) GHOST_LOCATION
+#define DRIVER_ADDR (char*) DRIVER_LOCATION
+#define CUSTOM_MAP_PTR_ADDR (int*) CUSTOM_LEV_MAP_LOCATION
+#define CUSTOM_LEV_ADDR (char*) CUSTOM_LEV_LOCATION
 
 /* Load Type - obsolete file format */
 enum LT
