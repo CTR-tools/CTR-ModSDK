@@ -20,8 +20,11 @@
 #define GHOST_LOCATION (GHOST_SIZE_LOCATION + sizeof(int))
 #define DRIVER_LOCATION (GHOST_LOCATION + GHOST_FILESIZE)
 /* First free byte: 0x802BE670 : Pre-calculated value after every driver is loaded */
+#define INPUT_LOCATION 0x802BE670
 #define CUSTOM_LEV_MAP_LOCATION 0x80300000
 #define CUSTOM_LEV_LOCATION (CUSTOM_LEV_MAP_LOCATION + sizeof(int))
+
+#define MAX_RECORDED_FRAMES ((CUSTOM_LEV_MAP_LOCATION - INPUT_LOCATION) / 2)
 
 #define CUSTOM_VRAM_ADDR (char*) VRM_LOCATION
 #define GHOST_SIZE_ADDR (int*) GHOST_SIZE_LOCATION
@@ -29,6 +32,14 @@
 #define DRIVER_ADDR (char*) DRIVER_LOCATION
 #define CUSTOM_MAP_PTR_ADDR (int*) CUSTOM_LEV_MAP_LOCATION
 #define CUSTOM_LEV_ADDR (char*) CUSTOM_LEV_LOCATION
+
+enum GameState
+{
+    STATE_INIT = 0,
+    STATE_LOADING_END = 1,
+    STATE_RESET_STAGE = 2,
+    STATE_GAMEPLAY = 3,
+};
 
 /* Load Type - obsolete file format */
 enum LT
