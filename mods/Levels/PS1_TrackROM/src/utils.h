@@ -18,6 +18,14 @@
 #define CUSTOM_MAP_PTR_ADDR (int*) 0x80300000
 #define CUSTOM_LEV_ADDR (char*) 0x80300004
 
+/* Load Type - obsolete file format */
+enum LT
+{
+    LT_RAW = 1,
+    LT_DRAM = 2,
+    LT_VRAM = 3
+};
+
 enum HotReloadSteps
 {
     HOT_RELOAD_DONE = 0,
