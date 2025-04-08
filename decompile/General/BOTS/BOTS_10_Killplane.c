@@ -15,17 +15,16 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 
 	boolOverride = false;
 
-	// check for level "asphalt2"
 	// check for Tiny Arena
-	if (strcmp(sdata->gGT->levelName, rdata.s_asphalt2_thisAppearsTwice) == 0) //2nd arg of strcmp 0x80010000
+	if (gGT->levelID == TINY_ARENA)
 	{
 		// edge-case override?
 		switch (bot->unknown_lap_related[1])
 		{
-		case (unsigned char)-0x6c:
+		case 0x94:
 			override = 0x84;
 			break;
-		case (unsigned char)-0x60:
+		case 0xa0:
 			override = 0x80;
 			break;
 		default:
@@ -88,7 +87,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			if (frame < sdata->NavPath_ptrNavFrameArray[i])
 			{
 				// loop back to last navFrame
-				frame = sdata->NavPath_ptrHeader[i]->last - 0x14;
+				frame = sdata->NavPath_ptrHeader[i]->last[-1];
 			}
 			backCount = frame->goBackCount;
 			currNav = bot->unknown_lap_related[1];

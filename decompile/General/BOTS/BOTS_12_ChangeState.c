@@ -26,7 +26,10 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 			driverVictim->botData.unk5ba = 1;
 			driverVictim->botData.unk5bc.ai_turboMeter = 0;
 
-			if ((data.characterIDs[driverVictim->driverID] != 0xf) || ((driverVictim->actionsFlagSet & 1) != 0))
+			if (
+					(data.characterIDs[driverVictim->driverID] != 0xf) || 
+					((driverVictim->actionsFlagSet & 1) != 0)
+				)
 			{
 				driverVictim->reserves = 0;
 				driverVictim->turbo_outsideTimer = 0;

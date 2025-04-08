@@ -9,18 +9,22 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	char navPathIndex;
 	short navPathPointsCount;// = sdata->NavPath_ptrHeader[navPathIndex]->numPoints;
 
-	for (navPathIndex = initialNavPathIndex; ; navPathIndex--)
+	navPathIndex = initialNavPathIndex;
+	while(1)
 	{
 		navPathPointsCount = sdata->NavPath_ptrHeader[navPathIndex]->numPoints;
 		if (1 < navPathPointsCount) break; //success
+		
+		navPathIndex--;
+		
+		// If subtracted below zero,
+		// go back to highest index (2)
 		if (navPathIndex < 0)
-		{
-			navPathIndex = 2; //I have no clue
-		}
+			navPathIndex = 2;
+		
+		// If all 3 are checked, quit
 		if (navPathIndex == initialNavPathIndex)
-		{
-			return NULL; //failure
-		}
+			return NULL;
 	}
 
 	// path data found

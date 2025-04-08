@@ -13,29 +13,36 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	//robot_2 = param_2
 
 	short* uVar3;
-	short* estimatePos = robot_1->botData.estimatePos; //iVar4
+	short* estimatePos;
 	if ((robot_1->botData.botFlags & 1) == 0)
 	{
 		// nav path index
 		short botPathIndex = robot_1->botData.botPath;
 
 		// pointer to navFrame
-		estimatePos = &robot_1->botData.botNavFrame->pos[0];
+		struct NavFrame* nfCurr = &robot_1->botData.botNavFrame;
+		struct NavFrame* nfNext = nfCurr + 1;
 		
-		uVar3 = (short*)((&estimatePos[0]) + sizeof(struct NavFrame));
+		// iVar4
+		estimatePos = &nfCurr->pos[0];
 
 		// if you go out of bounds
-		if (sdata->NavPath_ptrHeader[botPathIndex]->last <= (struct NavFrame*)uVar3)
+		if (sdata->NavPath_ptrHeader[botPathIndex]->last <= (struct NavFrame*)nfNext)
 		{
 			// loop back to first navFrame
-			uVar3 = &sdata->NavPath_ptrNavFrameArray[botPathIndex]->pos[0];
+			nfNext = &sdata->NavPath_ptrNavFrameArray[botPathIndex];
 		}
 	}
 	else
 	{
 		// pointer to nav frame
-		uVar3 = &robot_1->botData.botNavFrame->pos[0];
+		nfNext = &robot_1->botData.botNavFrame;
+		
+		// iVar4
+		estimatePos = robot_1->botData.estimatePos;
 	}
+	
+	uVar3 = &nfNext->pos[0];
 
 	short pos[3];
 	// position of one driver
