@@ -68,18 +68,15 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	// the AI that is closer to the previous nav point,
 	// who therefore is the driver in the back of the collision
 
+	struct Driver* d;
+	d = robot_2;
 	if (res1 < res2)
 	{
-		// reduce AI speed
-		int speed = robot_1->botData.unk5bc.ai_speedLinear - 3000;
-		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		robot_1->botData.unk5bc.ai_speedLinear = speed;
+		d = robot_1;
 	}
-	else
-	{
-		// reduce AI speed
-		int speed = robot_2->botData.unk5bc.ai_speedLinear - 3000;
-		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		robot_2->botData.unk5bc.ai_speedLinear = speed;
-	}
+
+	// reduce AI speed
+	int speed = robot_1->botData.unk5bc.ai_speedLinear - 3000;
+	speed = ((speed < 0) ? 0 : speed); //clamp to 0
+	robot_1->botData.unk5bc.ai_speedLinear = speed;
 }
