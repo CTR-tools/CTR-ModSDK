@@ -66,11 +66,11 @@ void RunInitHook()
 	{
 		once = 0;
 		// adds VRAM to loading queue
-		LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, 0x80200000, 0);
+		LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, 0);
 		// adds LEV to loading queue
-		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, 0x80300000, 0);
+		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, 0);
 
-		char* currDriver = 0x80290000;
+		char* currDriver = DRIVER_ADDR;
 		for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
 		{
 			int fileSize;

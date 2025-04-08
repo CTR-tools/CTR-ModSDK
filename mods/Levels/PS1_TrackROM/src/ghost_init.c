@@ -6,7 +6,7 @@ void GhostReplay_Init(void)
 {
 #ifdef DISABLE_GHOSTS
 	return;
-#else DISABLE_GHOSTS
+#else
 	char i;
 	u_short uVar1;
 	int iVar2;
