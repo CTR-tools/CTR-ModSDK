@@ -13,7 +13,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 	
 	DECOMP_UI_RaceEnd_GetDriverClock(d);
 
-	char initialNavPathIndex = sdata->driver_pathIndexIDs[driverID];
+	char initialNavPathIndex = sdata->driver_pathIndexIDs[d->driverID];
 	char navPathIndex;
 	short navPathPointsCount;// = sdata->NavPath_ptrHeader[navPathIndex]->numPoints;
 

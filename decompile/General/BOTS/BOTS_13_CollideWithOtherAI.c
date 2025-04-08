@@ -2,6 +2,9 @@
 
 void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot_2)
 {
+	struct NavFrame* nfCurr;
+	struct NavFrame* nfNext;
+
 	// first determine which driver bumps forward and which bumps backwards
 	if (robot_1->driverRank < robot_2->driverRank)
 	{
@@ -20,8 +23,8 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 		short botPathIndex = robot_1->botData.botPath;
 
 		// pointer to navFrame
-		struct NavFrame* nfCurr = &robot_1->botData.botNavFrame;
-		struct NavFrame* nfNext = nfCurr + 1;
+		nfCurr = &robot_1->botData.botNavFrame;
+		nfNext = nfCurr + 1;
 		
 		// iVar4
 		estimatePos = &nfCurr->pos[0];

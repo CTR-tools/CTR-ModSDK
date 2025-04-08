@@ -16,7 +16,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 	boolOverride = false;
 
 	// check for Tiny Arena
-	if (gGT->levelID == TINY_ARENA)
+	if (sdata->gGT->levelID == TINY_ARENA)
 	{
 		// edge-case override?
 		switch (bot->unknown_lap_related[1])
@@ -87,7 +87,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread)
 			if (frame < sdata->NavPath_ptrNavFrameArray[i])
 			{
 				// loop back to last navFrame
-				frame = sdata->NavPath_ptrHeader[i]->last[-1];
+				frame = &sdata->NavPath_ptrHeader[i]->last[-1];
 			}
 			backCount = frame->goBackCount;
 			currNav = bot->unknown_lap_related[1];

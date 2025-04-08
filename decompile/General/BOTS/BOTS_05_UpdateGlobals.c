@@ -13,6 +13,7 @@ void BOTS_UpdateGlobals(void) //UNTESTED
 
 	sdata->bestHumanRank = NULL;
 	sdata->bestRobotRank = NULL;
+	struct Driver* worstRobotDriver;
 
 	for (int i = MAX_KARTS - 1; i >= 0; i--)
 	{
@@ -23,6 +24,9 @@ void BOTS_UpdateGlobals(void) //UNTESTED
 		
 		if ((d->actionsFlagSet & 0x100000) != 0)
 		{
+			if(sdata->bestRobotRank == 0)
+				worstRobotDriver = d;
+			
 			sdata->bestRobotRank = d;
 		}
 		else
