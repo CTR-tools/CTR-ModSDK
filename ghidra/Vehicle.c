@@ -3994,16 +3994,23 @@ void FUN_8005b720(void)
                        (short)((uint)*(ushort *)(puVar22 + 4) - (uint)*(ushort *)(puVar23 + 0x26)) *
                        4;
                   uVar7 = (uint)((int)puVar23[0x90] < 0x101);
-                  if ((uVar7 == 0) ||
+                  
+				  // If shadow needs to be drawn
+				  if ((uVar7 == 0) ||
                      ((((iVar9 < 0x1771 && (iVar19 < 0x1771)) &&
                        ((iVar17 < 0x1771 && ((-0x1771 < iVar9 && (-0x1771 < iVar19)))))) &&
-                      (-0x1771 < iVar17)))) {
+                      (-0x1771 < iVar17)))) 
+				  {
+					// Distance from Kart to Ground
                     gte_ldv0((SVECTOR *)(puVar23 + 0x27));
                     gte_rtv0();
                     iVar5 = gte_stMAC3();
                     iVar5 = iVar5 >> 2;
+					
                     if (-0x35 < iVar5) {
-                      if (uVar7 == 0) {
+                      if (uVar7 == 0) 
+					  {
+						// Shadow Color
                         uVar7 = 0x2e1f1f1f;
                       }
                       else {
@@ -4026,6 +4033,8 @@ void FUN_8005b720(void)
 						  // skip shadow draw
 						  if ((int)uVar7 < 1) goto LAB_8005c0b8;
                         }
+						
+						// Shadow Color
                         uVar7 = uVar7 | uVar7 << 8 | 0x2e000000 | uVar7 << 0x10;
                       }
                       puVar25 = puVar12;
