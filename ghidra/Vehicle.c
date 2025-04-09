@@ -4119,19 +4119,25 @@ void FUN_8005b720(void)
 						
                         gte_SetRotMatrix((MATRIX *)(puVar23 + 0x14));
 						
+						// vector {Point minus Camera.t position}
                         sVar8 = *(short *)(puVar23 + 0x27);
                         sVar14 = *(short *)((int)puVar23 + 0x9e);
                         sVar18 = *(short *)(puVar23 + 0x28);
+						
+						// vector {Point minus Camera.t position}
                         *(char *)((int)puVar22 + -2) = (char)uVar21;
                         iVar9 = (int)sVar8;
                         iVar19 = (int)sVar14;
                         iVar17 = (int)sVar18;
                       }
-                      sVar18 = (short)iVar9;
+                      
+					  // vector {Point minus Camera.t position}
+					  sVar18 = (short)iVar9;
                       *(short *)(puVar23 + 0x83) = sVar18;
                       sVar14 = (short)iVar19;
                       *(short *)((int)puVar23 + 0x20e) = sVar14;
                       sVar8 = (short)iVar17;
+					  
                       *(short *)(puVar23 + 0x84) = sVar8;
                       *(short *)(puVar23 + 0x85) =
                            (sVar18 - *(short *)puVar25) - *(short *)((int)puVar22 + -0xe);
