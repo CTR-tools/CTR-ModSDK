@@ -3945,11 +3945,16 @@ void FUN_8005b720(void)
       r0_00 = (SVECTOR *)(puVar23 + 0x12);
       uVar21 = 1;
 	  
-	  // pushBuffer offset 0x38
+	  // short* pushBuffer offset 0x38,
+	  // matrix_ViewProj is offset 0x28
       puVar26 = (undefined2 *)(puVar1 + iVar4 * 0x110 + 0x1a0);
 	  
-      do {
+      do 
+	  {
+		// pb->distanceToScreen_PREV
         puVar23[0x90] = *(uint *)(puVar26 + -0x10);
+		
+		// pb->OT (0xf4)
         puVar23[0x8f] = *(uint *)(puVar26 + 0x5e);
 		
 		// screen dimensions
@@ -3959,16 +3964,18 @@ void FUN_8005b720(void)
 		// distToScreen
         gte_ldH(puVar23[0x90]);
 		
+		// pushbuffer offset 0x7C
+		// pb->matrix_Camera.t Transformation Pos
         puVar23[0x24] = *(uint *)(puVar26 + 0x22);
         puVar23[0x25] = *(uint *)(puVar26 + 0x24);
         puVar23[0x26] = *(uint *)(puVar26 + 0x26);
-        puVar23[0x14] = *(uint *)(puVar26 + -8);
-        puVar23[0x15] = *(uint *)(puVar26 + -6);
-        puVar23[0x16] = *(uint *)(puVar26 + -4);
-        uVar6 = *(uint *)(puVar26 + -2);
-        *(undefined2 *)(puVar23 + 0x18) = *puVar26;
-        puVar23[0x17] = uVar6;
 		
+		// pb->matrix_ViewProj 3x3 matrix
+        puVar23[0x14] = *(uint *)(puVar26 + -8); // 00 01
+        puVar23[0x15] = *(uint *)(puVar26 + -6); // 02 10
+        puVar23[0x16] = *(uint *)(puVar26 + -4); // 11 12
+        puVar23[0x17] = *(uint *)(puVar26 + -2); // 20 21
+        puVar23[0x18] = *(uint *)(puVar26 + -0); // 22 00
         gte_SetRotMatrix((MATRIX *)(puVar23 + 0x14));
         
 		puVar12 = puVar23 + 0x29;
@@ -3978,22 +3985,34 @@ void FUN_8005b720(void)
           do {
             if (*(char *)((int)puVar22 + -2) != iVar11) {
               if ((*(ushort *)((int)puVar22 + 0x12) & 0x80) == 0) {
-                if ((*(byte *)((int)puVar12 + iVar4 + 0x1c) & 0x40) != 0) {
+                if ((*(byte *)((int)puVar12 + iVar4 + 0x1c) & 0x40) != 0) 
+				{
+				  // puVar22 offset 0xC
+				  // minus
+				  // pb->matrix_Camera.t[0]
                   uVar3 = *(ushort *)(puVar22 + 3);
                   *(short *)(puVar23 + 0x27) =
                        (short)((uint)uVar3 - (uint)*(ushort *)(puVar23 + 0x24)) * 4;
-                  iVar9 = (int)(((uint)uVar3 - (uint)*(ushort *)(puVar23 + 0x24)) * 0x40000) >> 0x10
-                  ;
-                  iVar17 = (uint)*(ushort *)((int)puVar22 + 0xe) - (uint)*(ushort *)(puVar23 + 0x25)
-                  ;
+				  iVar9 = (int)(((uint)uVar3 - (uint)*(ushort *)(puVar23 + 0x24)) * 0x40000) >> 0x10;
+				  
+				  // puVar22 offset 0xE
+				  // minus
+				  // pb->matrix_Camera.t[1]
+                  iVar17 = (uint)*(ushort *)((int)puVar22 + 0xe) - (uint)*(ushort *)(puVar23 + 0x25);
                   *(short *)((int)puVar23 + 0x9e) = (short)iVar17 * 4;
                   iVar19 = iVar17 * 0x40000 >> 0x10;
-                  iVar17 = (int)(((uint)*(ushort *)(puVar22 + 4) - (uint)*(ushort *)(puVar23 + 0x26)
+                  
+				  // puVar22 offset 0x10
+				  // minus
+				  // pb->matrix_Camera.t[2]
+				  iVar17 = (int)(((uint)*(ushort *)(puVar22 + 4) - (uint)*(ushort *)(puVar23 + 0x26)
                                  ) * 0x40000) >> 0x10;
-                  *(short *)(puVar23 + 0x28) =
+				  *(short *)(puVar23 + 0x28) =
                        (short)((uint)*(ushort *)(puVar22 + 4) - (uint)*(ushort *)(puVar23 + 0x26)) *
                        4;
-                  uVar7 = (uint)((int)puVar23[0x90] < 0x101);
+                  
+				  // distToScreen
+				  uVar7 = (uint)((int)puVar23[0x90] < 0x101);
                   
 				  // If shadow needs to be drawn
 				  if ((uVar7 == 0) ||
