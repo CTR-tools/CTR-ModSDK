@@ -643,8 +643,21 @@ void HotReloadVRAM()
 	else { LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh)); }
 }
 
+uint8_t MEMCARD_Save_Hook(int slotIdx, char *name, char *param_3, char *ptrData, int fileSize, unsigned int param6)
+{
+    *GHOST_SIZE_ADDR = fileSize;
+    memcpy(GHOST_ADDR, ptrData, fileSize);
+    volatile int * g_ghostReady = GHOST_READY;
+    *g_ghostReady = 1;
+    return 0;
+}
+
 void HotReload()
 {
+	// asm hook
+	#define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
+	*(int*)0x8003e344 = JMP(MEMCARD_Save_Hook);
+	
 	volatile int* g_triggerVRMReload = TRIGGER_VRM_RELOAD;
 	if (*g_triggerVRMReload)
 	{
