@@ -173,7 +173,8 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		if((gameMode1 & RELIC_RACE) == 0)
 		{
 			#ifdef USE_DRIVERLOD
-			highLOD_DriverMPK(1);
+			// Time Trial / Boss
+			highLOD_DriverMPK(2);
 			return;
 			#endif
 			
@@ -184,7 +185,8 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		}
 		
 		#ifdef USE_DRIVERLOD
-		highLOD_DriverMPK(2);
+		// Relic Race
+		highLOD_DriverMPK(1);
 		return;
 		#endif
 		
