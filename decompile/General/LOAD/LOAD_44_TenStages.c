@@ -365,6 +365,32 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				mainMenuInit[sdata->mainMenuState]();
 			}
 			
+			#ifdef USE_PRELOAD
+			// TODO: Duplicate DriverMPK just for setting DriverIDs
+			DECOMP_LOAD_Robots1P(data.characterIDs[0]);
+			
+			// only once on-boot
+			if(sdata->ptrMPK != 0)
+				break;
+
+			int* arr = 0x8000a000;
+			
+			int i;
+			for(i = 0; i < 16; i++)
+			{
+				// high lod CTR model
+				DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+					BI_RACERMODELHI + i,
+					&arr[i], cbDRAM);
+			}
+		
+			// Time Trial MPK
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+				BI_TIMETRIALPACK + 0xD,
+				&sdata->ptrMPK, cbDRAM);
+			break;
+			#endif
+			
 			// Needed, or else Post-Boss Outro
 			// will break the character animations
 			sdata->ptrMPK = 0;
@@ -381,6 +407,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 5:
 		{
+			#ifdef USE_PRELOAD
+			// first-boot
+			if(sdata->PLYROBJECTLIST == 0)
+			{
+				// Never de-allocate lower than here
+				sdata->bookmarkID = DECOMP_MEMPACK_PushState();
+			}
+			#endif
+			
 			sdata->PLYROBJECTLIST = (int**)((unsigned int)sdata->ptrMPK + 4);
 			if (sdata->ptrMPK == 0) sdata->PLYROBJECTLIST = 0;
 						
@@ -512,6 +547,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if(gGT->levelID == CUSTOM_LEVEL_ID)
 			{
 				HotReloadVRAM();
+				
+				// do NOT load bigfile level file,
+				// instead load the hot-reload level
+				break;
 			}
 			#endif
 

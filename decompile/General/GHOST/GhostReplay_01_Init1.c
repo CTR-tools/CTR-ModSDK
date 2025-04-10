@@ -143,12 +143,19 @@ void DECOMP_GhostReplay_Init1(void)
 		// characterID and model
 		charID = data.characterIDs[charID];
 		
-// set in MainInit_Drivers for PC port
-#ifndef REBUILD_PS1
-		struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
-#else
-		struct Model* model = NULL;
-#endif
+		#ifdef USE_PRELOAD
+		int* arr = 0x8000a000;
+		struct Model* model = arr[charID];
+		#else
+		
+			// set in MainInit_Drivers for PC port
+			#ifndef REBUILD_PS1
+			struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+			#else
+			struct Model* model = NULL;
+			#endif
+
+		#endif
 
 		inst = DECOMP_INSTANCE_Birth3D(model, NULL, NULL);
 		inst->unk51 = 0xc;

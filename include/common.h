@@ -24,11 +24,17 @@
 //#define USE_DRIVERLOD // Requires BIGQUEUE: High Driver LODs
 //#define USE_DRIVERRND // Requiers DRIVERLOD: Character Randomizer
 
+// 2mb: On-Boot preload 8 custom characters
+// 8mb: On-Boot preload 16 CTR drivers
+// Requires: BIGQUEUE
+// Optional: RAMEX
+//#define USE_PRELOAD
+
 // 8mb
 //#define USE_RAMEX		// 8mb RAM expansion
 //#define USE_ONLINE	// Requires RAMEX + DRIVERLOD: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX + DRIVERLOD: Multiplayer Maxed mod
-//#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
+//#define USE_NEWLEV	// Requires RAMEX + PRELOAD + BIGQUEUE: Level Hot-Reload
 
 // PC only
 //#define USE_VR		// Virtual Reality

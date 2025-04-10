@@ -45,13 +45,17 @@ struct Model* MM_Characters_GetModelByID(int id)
 
   #ifdef USE_OXIDE
   if(id == 0xf)
-	  // Use this when nullptr-deref is fixed,
-	  // see LOAD_DriverMPK for more details
-	  //return sdata->PLYROBJECTLIST[18];
-	  
-	  // temporary workaround
 	  return data.driverModelExtras[0];
   #endif
+  
+  // Only use Preload in the main menu
+  // if an entirely new roster of characters
+  // is ready. Otherwise it breaks animations
+  
+  // #ifdef USE_PRELOAD
+  // int* arr = 0x8000a000;
+  // return arr[id];
+  // #endif
 
   models = level1->ptrModelsPtrArray;
   return models[0xE - id];
