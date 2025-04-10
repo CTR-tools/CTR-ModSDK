@@ -45,7 +45,7 @@ void DECOMP_MainInit_PrimMem(
 		// is past all the level load+callback
 		if (gGT->levelID <= CITADEL_CITY)
 		{
-			#ifdef USE_NEWLEV
+			#ifdef USE_LEVELDEV
 			// store the memory here, past the level
 			sdata->PtrMempack->firstFreeByte = 0x80400000;
 			#endif

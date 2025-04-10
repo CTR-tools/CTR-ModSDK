@@ -39,7 +39,7 @@ u_int DECOMP_main()
 		DECOMP_LOAD_NextQueuedFile();
 		DECOMP_CDSYS_XAPauseAtEnd();
 		
-		#ifdef USE_NEWLEV
+		#ifdef USE_LEVELDEV
 		HotReload();
 		#endif
 
@@ -620,7 +620,7 @@ int GetSongTime()
 }
 #endif
 
-#ifdef USE_NEWLEV
+#ifdef USE_LEVELDEV
 void HotReloadVRAM()
 {
 	int* vramBuf = (int *)CUSTOM_VRAM_ADDR;

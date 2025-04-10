@@ -543,7 +543,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}
 
-			#ifdef USE_NEWLEV
+			#ifdef USE_LEVELDEV
 			if(gGT->levelID == CUSTOM_LEVEL_ID)
 			{
 				HotReloadVRAM();
@@ -582,7 +582,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// get level pointer
 			lev = sdata->ptrLevelFile;
 			
-			#ifdef USE_NEWLEV
+			#ifdef USE_LEVELDEV
 			if (gGT->levelID == CUSTOM_LEVEL_ID) 
 				lev = (struct Level*)CUSTOM_LEV_ADDR;
 			#endif

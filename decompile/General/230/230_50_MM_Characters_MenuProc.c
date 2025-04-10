@@ -116,7 +116,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 				return;
 			}
 			
-			#ifdef USE_NEWLEV
+			#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 			gGT->currLEV = CUSTOM_LEVEL_ID;
 			MainRaceTrack_RequestLoad(CUSTOM_LEVEL_ID);
 			sdata->ptrActiveMenu = 0;

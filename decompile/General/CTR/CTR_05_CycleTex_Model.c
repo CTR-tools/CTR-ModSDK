@@ -5,10 +5,6 @@ void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer)
 	int frameCurr;
 	struct AnimTex* curAnimTex = animtex;
 	
-	#ifdef USE_NEWLEV
-	if(animtex == 0) return;
-	#endif
-	
 	// Termination is determined by pointer to First AnimTex
 	while (*(int*)curAnimTex != (int)animtex)
 	{

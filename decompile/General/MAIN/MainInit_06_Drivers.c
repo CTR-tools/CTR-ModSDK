@@ -21,7 +21,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     }
 #endif
 
-#ifndef USE_NEWLEV
+#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
     DECOMP_GhostReplay_Init1();
 #endif
 

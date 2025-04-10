@@ -996,7 +996,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 
-#ifndef USE_NEWLEV
+#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
 		(u_long*)&gGT->backBuffer->otMem,

@@ -154,7 +154,7 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
 	
-	#ifdef USE_NEWLEV
+	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
     sdata->gameProgress.unlocks[0] |= UNLOCK_CHARACTERS;
     data.metaDataLEV[CUSTOM_LEVEL_ID].timeTrial = 0x7FFFFFFF;
     if(sdata->ptrGhostTapePlaying == 0)

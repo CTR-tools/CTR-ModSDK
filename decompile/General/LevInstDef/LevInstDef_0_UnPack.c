@@ -9,7 +9,7 @@ void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info)
 	struct InstDef** visInstSrc;
 	struct Level* level1;
 
-	#ifdef USE_NEWLEV
+	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 	return;
 	#endif
 

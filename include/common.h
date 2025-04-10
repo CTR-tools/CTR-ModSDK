@@ -23,6 +23,7 @@
 //#define USE_BIGQUEUE	// Allow LOAD queue to be more than 8
 //#define USE_DRIVERLOD // Requires BIGQUEUE: High Driver LODs
 //#define USE_DRIVERRND // Requiers DRIVERLOD: Character Randomizer
+//#define USE_LEVELDISC // New Level on Disc
 
 // 2mb: On-Boot preload 8 custom characters
 // 8mb: On-Boot preload 16 CTR drivers
@@ -34,7 +35,7 @@
 //#define USE_RAMEX		// 8mb RAM expansion
 //#define USE_ONLINE	// Requires RAMEX + DRIVERLOD: Online Multiplayer
 //#define USE_HIGHMP	// Requires RAMEX + DRIVERLOD: Multiplayer Maxed mod
-//#define USE_NEWLEV	// Requires RAMEX + PRELOAD + BIGQUEUE: Level Hot-Reload
+//#define USE_LEVELDEV	// Level with hot-reload
 
 // PC only
 //#define USE_VR		// Virtual Reality
@@ -44,10 +45,18 @@
 
 
 // Required for Custom Levels
-#ifdef USE_NEWLEV
+#ifdef USE_LEVELDISC
+#define CUSTOM_LEVEL_ID 0
+#endif
+
+#ifdef USE_LEVELDEV
+
+#define CUSTOM_LEVEL_ID 0
 
 #define USE_RAMEX
-#define CUSTOM_LEVEL_ID 0
+#define USE_BIGQUEUE
+#define USE_PRELOAD
+#define USE_MOREPRIM
 
 #define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000
 #define TRIGGER_VRM_RELOAD (volatile int*) 0x8000C004
