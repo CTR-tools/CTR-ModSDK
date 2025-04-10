@@ -657,6 +657,7 @@ void HotReload()
 	// asm hook
 	#define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 	*(int*)0x8003e344 = JMP(MEMCARD_Save_Hook);
+	*(int*)0x8003e348 = 0;
 	
 	volatile int* g_triggerVRMReload = TRIGGER_VRM_RELOAD;
 	if (*g_triggerVRMReload)
