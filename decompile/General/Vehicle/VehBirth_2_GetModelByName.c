@@ -10,7 +10,7 @@ struct Model* VehBirth_GetModelByName(char *searchName)
     // maximum of 4, used in VS mode
     models = (struct Model **)&data.driverModelExtras[0];
 
-	#ifdef USE_HIGH1P
+	#ifdef USE_DRIVERLOD
 	#define NUM_CHECK 8 // modding: 8 drivers
 	#else
 	#define NUM_CHECK 3 // OG game: 3 drivers in VS mode

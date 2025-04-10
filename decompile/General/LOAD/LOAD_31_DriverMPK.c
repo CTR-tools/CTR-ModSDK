@@ -2,26 +2,7 @@
 
 static int cbDRAM = DECOMP_LOAD_DramFileCallback;
 
-#ifdef USE_HIGHMP
-void highMp_DriverMPK(unsigned int param_1,int levelLOD)
-{
-	int i;
-	for(i = 0; i < 3; i++)
-	{
-		// high lod CTR model
-		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-			BI_RACERMODELHI + data.characterIDs[i],
-			&data.driverModelExtras[i], cbDRAM);
-	}
-
-	// Time Trial MPK
-	DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-		BI_TIMETRIALPACK + data.characterIDs[i],
-		&sdata->ptrMPK, cbDRAM);
-}
-#endif
-
-#ifdef USE_RANDOM
+#ifdef USE_DRIVERRND
 
 char ChRand_Repeat(int index, int character)
 {
@@ -86,6 +67,32 @@ void ChRand_SetCharacters()
 }
 #endif
 
+#ifdef USE_DRIVERLOD
+void highLOD_DriverMPK(int numDrivers)
+{	
+	#ifdef USE_DRIVERRND
+	ChRand_SetCharacters();
+	#endif
+	
+	// TODO: Should restore Purple Gem Cup
+	// so that those are still Boss drivers
+	
+	int i;
+	for(i = 1; i < numDrivers; i++)
+	{
+		// high lod CTR model
+		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+			BI_RACERMODELHI + data.characterIDs[i],
+			&data.driverModelExtras[i], cbDRAM);
+	}
+
+	// Time Trial MPK
+	DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+		BI_TIMETRIALPACK + data.characterIDs[0],
+		&sdata->ptrMPK, cbDRAM);
+}
+#endif
+
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 {
 	int i;
@@ -94,12 +101,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 #ifdef USE_ONLINE
 	goto ForceOnlineLoad8;
 #endif
-		
-#ifdef USE_HIGHMP
-	highMp_DriverMPK(param_1, levelLOD);
-	return;
-#endif
-	
+
 	struct GameTracker* gGT = sdata->gGT;
 	gameMode1 = gGT->gameMode1;
 	
@@ -108,7 +110,12 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 	// 3P/4P
 	if(levelLOD - 3U < 2)
 	{
-		for(i = 0; i < 3; i++)
+		#ifdef USE_DRIVERLOD
+		highLOD_DriverMPK(levelLOD);
+		return;
+		#endif
+		
+		for(i = 1; i < levelLOD; i++)
 		{
 			// low lod CTR model
 			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
@@ -117,48 +124,31 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		}
 
 		// load 4P MPK of fourth player
-		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[i];
+		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[0];
 	}
 
-// This fails ONLY on DuckStation for any MPK
-// other than BI_ADVENTUREPACK + data.characterIDs[0],
-// VehBirth_GetModelByString will return nullptr and
-// nullptr-dereference "somewhere" will explode, but 
-// PC port works fine, so how is model used?
-
-// Remember to change MM_SetMenuLayout and MM_GetModelByName 
-// to reflect loading oxide in MPK (not lowLOD)
-#if 0
 	#ifdef USE_OXIDE
 	// need oxide model for character select
 	else if(gGT->levelID == MAIN_MENU_LEVEL)
 	{
-		lastFileIndexMPK = BI_ADVENTUREPACK + 0xf;
-	}
-	#endif
-
-	// adv mpk for adventure
-	else if((gameMode1 & ADVENTURE_ARENA) != 0)
-	{
+		// high lod model (temporary workaround)
+		DECOMP_LOAD_AppendQueue(
+			0, LT_GETADDR,
+			BI_RACERMODELHI + 0xF,
+			&data.driverModelExtras[0],cbDRAM);
+			
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
 	
-	else if(
-		// adv mpk when we just need text from MPK
-		((gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0)
-		||
-
-		// credits
-		((gGT->gameMode2 & CREDITS) != 0)
-	  )
+	// get rid of oxide cause MPK is too big
+	else if(gGT->levelID == ADVENTURE_GARAGE)
 	{
-		// penta penguin, smallest MPK
-		lastFileIndexMPK = BI_ADVENTUREPACK + 0xD;
+		data.characterIDs[0] = 0;
+		
+		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
+	#endif
 
-// This is what we're stuck with
-// until further notice, it'll do
-#else
 	else if(
 		// adv mpk when we just need text from MPK
 		((gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) != 0)
@@ -167,28 +157,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		// credits
 		((gGT->gameMode2 & CREDITS) != 0)
 	  )
-	{
-		#ifdef USE_OXIDE
-		// need oxide model for character select
-		if(gGT->levelID == MAIN_MENU_LEVEL)
-		{
-			// high lod model (temporary workaround)
-			DECOMP_LOAD_AppendQueue(
-				0, LT_GETADDR,
-				BI_RACERMODELHI + 0xF,
-				&data.driverModelExtras[0],cbDRAM);
-		}
-		
-		// get rid of oxide cause MPK is too big
-		if(gGT->levelID == ADVENTURE_GARAGE)
-		{
-			data.characterIDs[0] = 0;
-		}
-		#endif
-		
+	{		
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
-#endif
 
 	else if((gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
@@ -199,13 +170,26 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		
 		#else
 		
-		// high lod model
-		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-			BI_RACERMODELHI + data.characterIDs[0],
-			&data.driverModelExtras[0],cbDRAM);
-
+		if((gameMode1 & RELIC_RACE) == 0)
+		{
+			#ifdef USE_DRIVERLOD
+			highLOD_DriverMPK(1);
+			return;
+			#endif
+			
+			// high lod model (boss race + time trial ghost)
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+				BI_RACERMODELHI + data.characterIDs[1],
+				&data.driverModelExtras[1],cbDRAM);
+		}
+		
+		#ifdef USE_DRIVERLOD
+		highLOD_DriverMPK(2);
+		return;
+		#endif
+		
 		// time trial mpk
-		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
+		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[0];
 		
 		#endif
 	}
@@ -223,6 +207,11 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		data.characterIDs[3] = 0xB;
 		data.characterIDs[4] = 0x8;
 
+		#ifdef USE_DRIVERLOD
+		highLOD_DriverMPK(5);
+		return;
+		#endif
+
 		// high lod model
 		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 			BI_RACERMODELHI + data.characterIDs[0],
@@ -239,31 +228,23 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 ForceOnlineLoad8:
 		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
 
+		#ifdef USE_DRIVERLOD
+		highLOD_DriverMPK(8);
+		return;
+		#endif
+
 		// arcade mpk
 		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
-		
-		#ifdef USE_RANDOM
-		ChRand_SetCharacters();
-		#endif
-		
-		#ifdef USE_HIGH1P
-		int i;
-		for(i = 0; i < 7; i++)
-		{
-			// high lod CTR model
-			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-				BI_RACERMODELHI + data.characterIDs[i],
-				&data.driverModelExtras[i],cbDRAM);
-		}
-		
-		// time trial mpk
-		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[7];
-		#endif
 	}
 
 	//else if(levelLOD == 2)
 	else
 	{
+		#ifdef USE_DRIVERLOD
+		highLOD_DriverMPK(6);
+		return;
+		#endif
+		
 		// med models
 		for(i = 0; i < 2; i++)
 		{

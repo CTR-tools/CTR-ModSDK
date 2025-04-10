@@ -368,9 +368,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// Needed, or else Post-Boss Outro
 			// will break the character animations
 			sdata->ptrMPK = 0;
-			data.driverModelExtras[0] = 0;
-			data.driverModelExtras[1] = 0;
-			data.driverModelExtras[2] = 0;
+			
+			// Clear driver extras, and podium models
+			int* ptrArray = &data.driverModelExtras[0];
+			for(int i = 0; i < 11; i++)
+			{
+				ptrArray[i] = 0;
+			}
 			
 			DECOMP_LOAD_DriverMPK((unsigned int)bigfile, sdata->levelLOD);
 			break;
@@ -624,17 +628,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// podium reward
 			if (gGT->podiumRewardID != 0)
-			{
-				// clear all podium model pointers
-				iVar9 = 7;
-				puVar8 = &data.podiumModel_podiumStands;
-				do
-				{
-					*puVar8 = 0;
-					iVar9--;
-					puVar8--;
-				} while (iVar9 > -1);
-			
+			{			
 				// Set Pack of the hub you're NOT on
 				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
 				

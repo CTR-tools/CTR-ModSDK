@@ -45,7 +45,7 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 u_int MM_Video_CheckIfFinished(int param_1);
 
-#ifdef USE_HIGH1P
+#ifdef USE_DRIVERLOD
 void PatchModel_60fps(struct Model* m)
 {
 	struct ModelHeader* h;
@@ -200,7 +200,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 {
 	struct Level* lev = gGT->level1;
 
-	#ifdef USE_HIGH1P
+	#ifdef USE_DRIVERLOD
 	if ((gGT->renderFlags & 0x20) != 0)
 		ScanInstances_60FPS(gGT);
 	#endif
