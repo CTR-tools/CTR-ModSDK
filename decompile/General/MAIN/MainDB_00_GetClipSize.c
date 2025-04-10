@@ -28,7 +28,7 @@ int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 	if(levelID == SEWER_SPEEDWAY) 	return 1500;	// down from 6000
 	if(levelID == MYSTERY_CAVES) 	return 2500;	// same
 	if(levelID == MAIN_MENU_LEVEL) 	return 1; 		// down from 16
-	if(levelID == ADVENTURE_GARAGE)	return 6000; 	// down from 24000
+	if(levelID == ADVENTURE_GARAGE)	return 4500; 	// down from 24000
 
 	return 3000;
 }
