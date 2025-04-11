@@ -7,6 +7,10 @@
 extern struct MenuRow rowsOnlyVsBattle[3];
 #endif
 
+#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+extern struct MenuRow rowsOnlyTT[2];
+#endif
+
 void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
 {
   short choose;
@@ -15,6 +19,10 @@ void DECOMP_MM_MenuProc_Main(struct RectMenu *mainMenu)
   // if scrapbook is unlocked, change "rows" to extended array
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
     mainMenu->rows = &D230.rowsMainMenuWithScrapbook[0];
+
+  #if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+  mainMenu->rows = &rowsOnlyTT[0];
+  #endif
 
   #ifdef USE_HIGHMP
   mainMenu->rows = &rowsOnlyVsBattle[0];
@@ -239,6 +247,14 @@ struct MenuRow rowsOnlyVsBattle[3] =
 {
 	{0x4F, 0,1,0,0},
 	{0x50, 0,1,1,1},
+	{-1},
+};
+#endif
+
+#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+struct MenuRow rowsOnlyTT[2] =
+{
+	{0x4D, 0,0,0,0},
 	{-1},
 };
 #endif

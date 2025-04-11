@@ -33,8 +33,8 @@
 
 // 8mb
 //#define USE_RAMEX		// 8mb RAM expansion
-//#define USE_ONLINE	// Requires RAMEX + DRIVERLOD: Online Multiplayer
-//#define USE_HIGHMP	// Requires RAMEX + DRIVERLOD: Multiplayer Maxed mod
+//#define USE_ONLINE	// Online Multiplayer
+//#define USE_HIGHMP	// Multiplayer Maxed mod
 //#define USE_LEVELDEV	// Level with hot-reload
 
 // PC only
@@ -44,15 +44,25 @@
 
 
 
-// Required for Custom Levels
+
+// Multiplayer Maxed Mod
+#ifdef USE_HIGHMP
+#define USE_RAMEX
+#define USE_BIGQUEUE
+#define USE_DRIVERLOD
+#define USE_MOREPRIM
+#endif
+
+
+// Required for Custom Levels (disc play)
 #ifdef USE_LEVELDISC
 #define CUSTOM_LEVEL_ID 0
 #endif
 
+
+// Required for Custom Levels (hot reload)
 #ifdef USE_LEVELDEV
-
 #define CUSTOM_LEVEL_ID 0
-
 #define USE_RAMEX
 #define USE_BIGQUEUE
 #define USE_PRELOAD
