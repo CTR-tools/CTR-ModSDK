@@ -40,20 +40,10 @@ int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 		*(int*)0x800a0eac = JAL(RunHook226);
 #endif
 	
-	// Take a risk for levels that
-	// are very low on free RAM
-	if (numPlyrCurrGame > 2)
-	{
-		if(levelID == PAPU_PYRAMID || levelID == POLAR_PASS)
-			return 2500;
-		
-		// New to our decomp
-		// Increase later when we save more heap
-		if(levelID == OXIDE_STATION)
+	if(levelID == OXIDE_STATION)
+		if (numPlyrCurrGame > 2)
 			return 1050;
-	}
-	
-	
+
 	if (levelID >= CREDITS_CRASH) 		return 1;		// 44 - 64
 	if (levelID >= OXIDE_ENDING)		return 2700;	// 42, 43
 	if (levelID == NAUGHTY_DOG_CRATE)	return 1;		// 41
