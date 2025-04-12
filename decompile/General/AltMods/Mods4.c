@@ -5,9 +5,14 @@
 #endif
 
 #ifdef USE_PROFILER
+#include "DebugMenu/Font.c"
 #include "DebugMenu/MenuData.c"
+#include "DebugMenu/ProfilerDrawBars.c"
 #endif
 
+#ifdef USE_PCDRV
+#include "PCDRV/pcdrv.c"
+#endif
 
 #ifdef USE_FASTANIM
 static int bi2 = 0;

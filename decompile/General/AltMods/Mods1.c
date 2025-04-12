@@ -1,5 +1,8 @@
 // OnlineCTR (part 1)
-#ifndef REBUILD_PC
+// This is 10,000 bytes of code,
+// Safe to store here because OnlineCTR
+// Uses RAMEX, which disables the below
+// optimizations of ThreadPool and XNF
 #ifdef USE_ONLINE
 #include "OnlineCTR/hooks.c"
 #include "OnlineCTR/menu.c"
@@ -8,15 +11,6 @@
 #include "OnlineCTR/endOfRaceUI.c"
 #include "OnlineCTR/meterGrade.c"
 #endif
-#endif
-
-#ifdef USE_PROFILER
-#include "DebugMenu/Font.c"
-#endif
-
-#ifdef USE_PCDRV
-#include "PCDRV/pcdrv.c"
-#endif
 
 // original ps1 with fragmented memory,
 // but also only if NOT using RAMEX, because
@@ -24,6 +18,11 @@
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
 
 #include "ByteFiller.h"
+
+void RelocMemory_DefragUI_Mods1_XNF()
+{
+	// ...
+}
 
 void RelocMemory_DefragUI_Mods1()
 {
