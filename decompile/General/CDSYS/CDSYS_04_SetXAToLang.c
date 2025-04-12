@@ -17,7 +17,16 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 	strncpy(&data.s_XA_ENG_EXTRA[4],	xaLang, 3);
 	strncpy(&data.s_XA_ENG_GAME[4],		xaLang, 3);
 	
-	xnf = DECOMP_LOAD_XnfFile(data.s_XA_ENG_XNF, 0, &fileSize);
+	// store on heap
+	void* ptrDst = 0;
+	
+	// store in EXE memory, to save heap space
+	#if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
+	void RelocMemory_DefragUI_Mods1_XNF();
+	ptrDst = RelocMemory_DefragUI_Mods1_XNF;
+	#endif
+	
+	xnf = DECOMP_LOAD_XnfFile(data.s_XA_ENG_XNF, ptrDst, &fileSize);
 	
 	// read error
 	if(xnf == 0) return;

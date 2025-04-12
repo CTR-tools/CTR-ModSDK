@@ -13,20 +13,21 @@
 #endif
 
 // original ps1 with fragmented memory,
-// but also only if NOT using RAMEX, because
-// with RAMEX, we dont need to save 0x1b00 bytes
+// REBUILD_PS1 does not have fragmenting,
+// RAMEX does not need memory-saving hacks
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX)
 
 #include "ByteFiller.h"
 
 void RelocMemory_DefragUI_Mods1_XNF()
 {
-	// ...
+	// 0x730 = 1840 bytes
+	FILLER(0,7,3,0);
 }
 
-void RelocMemory_DefragUI_Mods1()
+void RelocMemory_DefragUI_Mods1_ThreadPool()
 {
-	// 0x2320
+	// 0x1b00 = 6912 bytes
 	FILLER(1,B,0,0);
 }
 

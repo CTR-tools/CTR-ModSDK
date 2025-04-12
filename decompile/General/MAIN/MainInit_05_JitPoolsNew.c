@@ -72,9 +72,9 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 // 2mb RAM, decomp/General, ram holes
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
   // saves 0x1B00 bytes
-  void RelocMemory_DefragUI_Mods1();
+  void RelocMemory_DefragUI_Mods1_ThreadPool();
   int backup = (int)sdata->mempack[0].firstFreeByte;
-  sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1;
+  sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1_ThreadPool;
 #endif
 
 
