@@ -18,7 +18,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	// ptrintf("gGT->level2 = 0x%08x\n",gGT->level2);
 	// ptrintf("SWAPPING 1...\n");
 	
-	LevInstDef_RePack(gGT->level1->ptr_mesh_info, 1);
+	DECOMP_LevInstDef_RePack(gGT->level1->ptr_mesh_info, 1);
 	
 	// Aug 5
 	// ptrintf("SWAPPING 2...\n");
@@ -31,12 +31,14 @@ void DECOMP_LOAD_Hub_SwapNow()
 	gGT->prevLEV = gGT->levelID;
 	gGT->levelID = gGT->levID_in_each_mempack[gGT->activeMempackIndex];
 	
+	#ifndef REBUILD_PS1
 	Audio_AdvHub_SwapSong(gGT->levelID);
+	#endif
 	
 	// Aug 5
 	// ptrintf("SWAPPING 3...\n");
 	
-	LibraryOfModels_Clear(gGT);
+	DECOMP_LibraryOfModels_Clear(gGT);
 	
 	/*
 	In Aug 5
@@ -67,16 +69,18 @@ void DECOMP_LOAD_Hub_SwapNow()
 			gGT, level1->numModels,
 			(int*)level1->ptrModelsPtrArray);
 			
-		INSTANCE_LevInitAll(
+		DECOMP_INSTANCE_LevInitAll(
 			level1->ptrInstDefs,
 			level1->numInstances);
 			
-		LevInstDef_UnPack(level1->ptr_mesh_info);
+		DECOMP_LevInstDef_UnPack(level1->ptr_mesh_info);
 		
-		DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
+		DECOMP_DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
 	}
 	
+	#ifndef REBUILD_PS1
 	MainInit_VisMem(gGT);
+	#endif
 	
 	cDC = &gGT->cameraDC[0];
 	cDC->ptrQuadBlock = 0;

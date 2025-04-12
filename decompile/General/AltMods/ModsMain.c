@@ -33,8 +33,10 @@ void ModsMain()
 	void octr_entryHook(); octr_entryHook();
 	#endif
 
-// PC port has unlimited byte budget
-#ifndef REBUILD_PC
+// PS1 rebuild does not need defrag,
+// PC port does not need defrag
+#ifndef REBUILD_PS1
+
 	printf("\n\nMods:\n");
 
 	int modSizes[10] =
