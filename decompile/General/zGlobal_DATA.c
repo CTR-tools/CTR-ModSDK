@@ -596,7 +596,7 @@ struct Data data =
 		// turn off for rebuild_ps1,
 		// leave on for rebuild_pc,
 		// leave on for decomp/General
-		#if 0
+		#if 1
 
 		// 0x00 - NO_FUNC
 		SET_MDM(NULL,NULL,NULL),
