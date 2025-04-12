@@ -42,7 +42,7 @@ int DECOMP_MainDB_GetClipSize(u_int levelID, int numPlyrCurrGame)
 	
 	if(levelID == OXIDE_STATION)
 		if (numPlyrCurrGame > 2)
-			return 1200;
+			return 1100;
 
 	if (levelID >= CREDITS_CRASH) 		return 1;		// 44 - 64
 	if (levelID >= OXIDE_ENDING)		return 2700;	// 42, 43
