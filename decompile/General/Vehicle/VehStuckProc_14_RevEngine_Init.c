@@ -42,7 +42,11 @@ void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d)
 	
 	// WHY does this break if we dont put it here?
 	// What custom level data are we missing?
-	// Causes driver to have very-small scale at startline
+	// Causes driver to have very-small scale at startline.
+	// ---
+	// Tip: Penta3 found another fix, remove rewrite of
+	// VehBirth_0_TeleportSelf.c, and the problem is solved,
+	// maybe a collision check fails in our rewrite?
 	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 	d->funcPtrs[8] = COLL_FIXED_PlayerSearch;
 	#endif
