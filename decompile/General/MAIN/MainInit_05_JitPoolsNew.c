@@ -169,6 +169,17 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	// no weapons, nothing on the track
 	numInstance = 32;
 	
+	// NOP these instructions in 226,
+	// these cap the quadblock count to 4096,
+	// the top bits of quadblockID are unused,
+	// no need to do any AND operation here
+	*(int*)0x800a0f18 = 0;
+	*(int*)0x800a1e80 = 0;
+	*(int*)0x800a36d8 = 0;
+	*(int*)0x800a4fd0 = 0;
+	*(int*)0x800a6f70 = 0;
+	*(int*)0x800a8b90 = 0;
+	
 	#else
 		
 	if(gGT->numPlyrCurrGame == 1)
