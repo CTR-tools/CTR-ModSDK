@@ -21,9 +21,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     }
 #endif
 
-#if !defined(USE_LEVELDEV) && !defined(USE_LEVELDISC)
     DECOMP_GhostReplay_Init1();
-#endif
 
     if (DECOMP_LOAD_IsOpen_RacingOrBattle())
     {
