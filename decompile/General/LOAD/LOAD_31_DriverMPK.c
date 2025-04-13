@@ -173,28 +173,23 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		
 		#else
 		
-		if((gameMode1 & RELIC_RACE) == 0)
-		{
-			#ifdef USE_DRIVERLOD
-			// Time Trial / Boss
-			highLOD_DriverMPK(2);
-			return;
-			#endif
-			
-			// high lod model (boss race + time trial ghost)
-			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-				BI_RACERMODELHI + data.characterIDs[1],
-				&data.driverModelExtras[1],cbDRAM);
-		}
-		
 		#ifdef USE_DRIVERLOD
-		// Relic Race
-		highLOD_DriverMPK(1);
+		highLOD_DriverMPK(2);
 		return;
 		#endif
 		
-		// time trial mpk
-		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[0];
+		// Do NOT switch the order to optimize Relic,
+		// if HI+IDs[1] and PACK+IDs[0] is loaded,
+		// then mask-grab breaks for all characters
+		// on Hot Air Skyway (except Crash Bandicoot)
+		
+		// Load Player 1 [0]
+		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
+			BI_RACERMODELHI + data.characterIDs[0],
+			&data.driverModelExtras[0],cbDRAM);
+		
+		// Load boss or ghost [1]
+		lastFileIndexMPK = BI_TIMETRIALPACK + data.characterIDs[1];
 		
 		#endif
 	}
