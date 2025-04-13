@@ -174,7 +174,6 @@ void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread* t, struct Driver* d)
 		// if new rev < 1
 		if (iVar4 < 1)
 		{
-
 			d->KartStates.RevEngine.unk590 = 0xc0;
 
 			// curr rev = 0
