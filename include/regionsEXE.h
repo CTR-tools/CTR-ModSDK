@@ -4819,10 +4819,7 @@ struct sData
 	// 80098098 -- JpnTrial
 	// 800994AC -- EurRetail
 	// 8009C5AC -- JpnRetail
-	struct Mempack mempack[3]; // each is 0x60 bytes
-
-	// 80099204
-	char fillerAfterMempack[0x60];
+	struct Mempack mempack[4]; // each is 0x60 bytes
 
 	// 80099264 (time string at end of time trial race)
 	char ghostStrTrackTime[0x20];
