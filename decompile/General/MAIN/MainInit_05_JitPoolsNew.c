@@ -169,10 +169,9 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	// no weapons, nothing on the track
 	numInstance = 32;
 	
-	// NOP these instructions in 226,
-	// these cap the quadblock count to 4096,
-	// the top bits of quadblockID are unused,
-	// no need to do any AND operation here
+	// Extend bit range of quadblockID,
+	// upper bits are never used, but still
+	// need AND for alignment with LW instruction
 	*(unsigned short*)0x800a0f18 = 0xFFFC;
 	*(unsigned short*)0x800a1e80 = 0xFFFC;
 	*(unsigned short*)0x800a36d8 = 0xFFFC;
