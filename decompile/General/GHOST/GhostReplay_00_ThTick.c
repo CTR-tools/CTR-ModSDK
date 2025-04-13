@@ -101,6 +101,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         d->actionsFlagSet &= 0xffefffff; // driver is not AI anymore
         d->speedApprox = gh->speedApprox;
 
+		// TODO: Remove for LEVEL when redhot makes 3 NavHeader with numPoints=0
 		#if defined(REBUILD_PS1) || defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 
 		// kill thread, no AI yet

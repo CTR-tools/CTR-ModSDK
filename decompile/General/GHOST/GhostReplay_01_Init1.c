@@ -106,7 +106,7 @@ void DECOMP_GhostReplay_Init1(void)
 					break;
 			}
 			
-			// Custom levels need null checks
+			// TODO: Remove when redhot fixes NULL ghosts (ptrMap bug)
 			#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 			if(gh == 0)
 				return;

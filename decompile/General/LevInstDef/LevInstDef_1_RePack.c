@@ -10,6 +10,7 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 	struct Level* level1;
 	struct Thread* th;
 
+	// TODO: Remove when redhot makes visInstSrc null terminated
 	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 	return;
 	#endif

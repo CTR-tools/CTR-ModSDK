@@ -3785,13 +3785,19 @@
      6::800a36c0 1c 00 78 8c     lw         t8,0x1c(v1)
      6::800a36c4 18 00 79 8c     lw         t9,0x18(v1)
      6::800a36c8 c8 00 2a 8c     lw         t2,0xc8(at)
+	 
+	 // t0 = quadblockID (quadblock->0x3c)
      6::800a36cc 3c 00 08 97     lhu        t0,0x3c(t8)
      6::800a36d0 68 00 39 ac     sw         t9,0x68(at)
      6::800a36d4 c2 48 08 00     srl        t1,t0,0x3
+	 
+	 // PVS bitwise and, limit to 4096 quadblocks
      6::800a36d8 fc 01 29 31     andi       t1,t1,0x1fc
      6::800a36dc 21 48 2a 01     addu       t1,t1,t2
      6::800a36e0 c0 00 29 ac     sw         t1,0xc0(at)
      6::800a36e4 00 00 29 8d     lw         t1,0x0(t1)
+	 
+	 // max 32 in bsp leaf
      6::800a36e8 1f 00 08 31     andi       t0,t0,0x1f
      6::800a36ec bc 00 28 ac     sw         t0,0xbc(at)
      6::800a36f0 c4 00 29 ac     sw         t1,0xc4(at)
@@ -5603,13 +5609,19 @@
      6::800a4fb8 1c 00 78 8c     lw         t8,0x1c(v1)
      6::800a4fbc 18 00 79 8c     lw         t9,0x18(v1)
      6::800a4fc0 c8 00 2a 8c     lw         t2,0xc8(at)
+	 
+	 // t0 = quadblockID (quadblock->0x3c)
      6::800a4fc4 3c 00 08 97     lhu        t0,0x3c(t8)
      6::800a4fc8 68 00 39 ac     sw         t9,0x68(at)
      6::800a4fcc c2 48 08 00     srl        t1,t0,0x3
+	 
+	 // PVS bitwise and, limit to 4096 quadblocks
      6::800a4fd0 fc 01 29 31     andi       t1,t1,0x1fc
      6::800a4fd4 21 48 2a 01     addu       t1,t1,t2
      6::800a4fd8 c0 00 29 ac     sw         t1,0xc0(at)
      6::800a4fdc 00 00 29 8d     lw         t1,0x0(t1)
+	 
+	 // max 32 in bsp leaf
      6::800a4fe0 1f 00 08 31     andi       t0,t0,0x1f
      6::800a4fe4 bc 00 28 ac     sw         t0,0xbc(at)
      6::800a4fe8 c4 00 29 ac     sw         t1,0xc4(at)
@@ -8053,13 +8065,19 @@
      6::800a6f58 1c 00 78 8c     lw         t8,0x1c(v1)
      6::800a6f5c 18 00 79 8c     lw         t9,0x18(v1)
      6::800a6f60 c8 00 2a 8c     lw         t2,0xc8(at)
+	 
+	 // t0 = quadblockID (quadblock->0x3c)
      6::800a6f64 3c 00 08 97     lhu        t0,0x3c(t8)
      6::800a6f68 68 00 39 ac     sw         t9,0x68(at)
      6::800a6f6c c2 48 08 00     srl        t1,t0,0x3
+	 
+	 // PVS bitwise and, limit to 4096 quadblocks
      6::800a6f70 fc 01 29 31     andi       t1,t1,0x1fc
      6::800a6f74 21 48 2a 01     addu       t1,t1,t2
      6::800a6f78 c0 00 29 ac     sw         t1,0xc0(at)
      6::800a6f7c 00 00 29 8d     lw         t1,0x0(t1)
+	 
+	 // max 32 in bsp leaf
      6::800a6f80 1f 00 08 31     andi       t0,t0,0x1f
      6::800a6f84 bc 00 28 ac     sw         t0,0xbc(at)
      6::800a6f88 c4 00 29 ac     sw         t1,0xc4(at)
@@ -10319,13 +10337,19 @@
      6::800a8b78 1c 00 78 8c     lw         t8,0x1c(v1)
      6::800a8b7c 18 00 79 8c     lw         t9,0x18(v1)
      6::800a8b80 c8 00 2a 8c     lw         t2,0xc8(at)
+	 
+	 // t0 = quadblockID (quadblock->0x3c)
      6::800a8b84 3c 00 08 97     lhu        t0,0x3c(t8)
      6::800a8b88 68 00 39 ac     sw         t9,0x68(at)
      6::800a8b8c c2 48 08 00     srl        t1,t0,0x3
+	 
+	 // PVS bitwise and, limit to 4096 quadblocks
      6::800a8b90 fc 01 29 31     andi       t1,t1,0x1fc
      6::800a8b94 21 48 2a 01     addu       t1,t1,t2
      6::800a8b98 c0 00 29 ac     sw         t1,0xc0(at)
      6::800a8b9c 00 00 29 8d     lw         t1,0x0(t1)
+	 
+	 // max 32 in bsp leaf
      6::800a8ba0 1f 00 08 31     andi       t0,t0,0x1f
      6::800a8ba4 bc 00 28 ac     sw         t0,0xbc(at)
      6::800a8ba8 c4 00 29 ac     sw         t1,0xc4(at)
