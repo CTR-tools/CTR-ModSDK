@@ -21,6 +21,12 @@ common, exe, BOTS_SetRotation, -0x8, src/hooks/hookUpdate.s
 common, exe, MainInit_StringToLevID, -0x8, src/hooks/hookInit.s
 common, exe, rdata_free, 0x0, src/hooks.c
 
+// 229 - patch vistree lookup to not do modulo 4096
+926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
+926, 226, 0x800a36d8, 0x0, src/patches/lod2.s
+926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
+926, 226, 0x800a6f70, 0x0, src/patches/lod4.s
+
 // 230
 common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
