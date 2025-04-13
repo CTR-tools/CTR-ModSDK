@@ -763,7 +763,7 @@ struct OverlayDATA_230
 	// 800b594c - UsaRetail
 	// 800b618c - EurRetail 
 	// 800b99f0 - JpnRetail
-	u_short highscore_unkflags[2];
+	u_short highscore_ghostBeatFlags[2];
 
 	// 800b5950 - UsaRetail
 	// 800b6190 - EurRetail

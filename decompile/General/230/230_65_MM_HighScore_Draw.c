@@ -89,7 +89,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
             if (
 					((
 						sdata->gameProgress.highScoreTracks[levelID].timeTrialFlags >>
-						D230.highscore_unkflags[i]
+						D230.highscore_ghostBeatFlags[i]
 					)&1) != 0
 				)
                 {

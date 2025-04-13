@@ -2,21 +2,21 @@
 
 u_char* DECOMP_RECTMENU_DrawTime(int milliseconds)
 {
-	// Here's how it works:
 	// 32 is added to milliseconds every frame,
-	// 30 fps, so milliseconds gets 960 added every second,
-	// 60 seconds per minute, so milliseconds gets 57600
-	// added per minute, which is 0xe100 in hex
+	// 960 per second, the rest is basic math
 
-	// 32 is the number of milliseconds passed since
-	// last frame, which is calculated here:
-	// PTR_DAT_8008d2ac + 0x1d04
+	#ifdef REBUILD_PC
+		// Overwrite unused mempack,
+		// the original game actually did this
+		char* str = &sdata->mempack[4];
+	#else
+		char* str = 0x1f800000;
+	#endif
 
 	// build a string
 	sprintf(
 
-		// where string will be stored
-		&sdata->fillerAfterMempack[0x60],
+		str,
 
 #ifndef REBUILD_PS1
 		// Format
@@ -26,22 +26,12 @@ u_char* DECOMP_RECTMENU_DrawTime(int milliseconds)
 		"%ld:%ld%ld:%ld%ld",
 #endif
 
-		// minutes
-		milliseconds / 0xe100,
-
-		// seconds / 10
-		(milliseconds / 0x2580) % 6,
-
-		// seconds
-		(milliseconds / 0x3c0) % 10,
-
-		// milliseconds / 10
-        ((milliseconds * 10) / 0x3c0) % 10,
-
-		// milliseconds
-        ((milliseconds * 100) / 0x3c0) % 10
+		milliseconds / 0xe100,				// minutes
+		(milliseconds / 0x2580) % 6,		// seconds / 10
+		(milliseconds / 0x3c0) % 10,		// seconds
+        ((milliseconds * 10) / 0x3c0) % 10,	// milliseconds / 10
+        ((milliseconds * 100) / 0x3c0) % 10	// milliseconds
 	  );
 
-	// return the string
-	return &sdata->fillerAfterMempack[0x60];
+	return str;
 }

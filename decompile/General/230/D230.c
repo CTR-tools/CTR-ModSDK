@@ -926,7 +926,7 @@ struct OverlayDATA_230 D230 =
 
 	.colorIndexArray = {0xE, 0x16},
 
-	.highscore_unkflags = {0x1, 0x2},
+	.highscore_ghostBeatFlags = {0x1, 0x2},
 
 	.highscore_iconColor = 0x808080,
 
