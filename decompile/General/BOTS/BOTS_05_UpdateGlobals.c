@@ -4,34 +4,35 @@
 
 void BOTS_UpdateGlobals(void) //UNTESTED
 {
-	if (sdata->gGT->numBotsNextGame != 0)
+	struct GameTracker* gGT = sdata->gGT;
+	
+	if (gGT->numBotsNextGame != 0)
 	{
 		EngineSound_NearestAIs();
 	}
 
 	sdata->bestHumanRank = NULL;
 	sdata->bestRobotRank = NULL;
-	struct Driver* worstRobotDriver = NULL, *bestHumanDriver = NULL;
+	struct Driver* worstRobotDriver;
 
 	for (int i = MAX_KARTS - 1; i >= 0; i--)
 	{
-		struct Driver* d = sdata->gGT->driversInRaceOrder[i];
-		struct Driver* bestHuman = sdata->bestHumanRank;
-		if (d != NULL)
+		struct Driver* d = gGT->driversInRaceOrder[i];
+		
+		if (d == NULL)
+			continue;
+		
+		if ((d->actionsFlagSet & 0x100000) != 0)
 		{
-			bestHuman = d; //assume human for now
-			if ((d->actionsFlagSet & 0x100000) != 0)
-			{
-				bestHuman = sdata->bestHumanRank; //is bot, nevermind
-				sdata->bestRobotRank = d; //since it's a bot, it is also the *best* bot so far
-				if (worstRobotDriver == NULL)
-				{
-					worstRobotDriver = d; //if not yet assigned, assign worst bot.
-				}
-			}
+			if(sdata->bestRobotRank == 0)
+				worstRobotDriver = d;
+			
+			sdata->bestRobotRank = d;
 		}
-
-		sdata->bestHumanRank = bestHuman;
+		else
+		{
+			sdata->bestHumanRank = d;
+		}
 	}
 
 	if (sdata->bestHumanRank == NULL)

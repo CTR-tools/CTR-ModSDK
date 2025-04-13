@@ -20,15 +20,22 @@
 //#define USE_MOREPRIM  // Bonus Primitive Memory
 //#define USE_FASTANIM	// Decompress animations
 //#define USE_REAL60PS1	// Requires Profiler, Only for NGin Labs
+//#define USE_BIGQUEUE	// Allow LOAD queue to be more than 8
+//#define USE_DRIVERLOD // Requires BIGQUEUE: High Driver LODs
+//#define USE_DRIVERRND // Requiers DRIVERLOD: Character Randomizer
+//#define USE_LEVELDISC // New Level on Disc
+
+// 2mb: On-Boot preload 8 custom characters
+// 8mb: On-Boot preload 16 CTR drivers
+// Requires: BIGQUEUE
+// Optional: RAMEX
+//#define USE_PRELOAD
 
 // 8mb
-//#define USE_RAMEX		// 8mb RAM expansion		
-//#define USE_BIGQUEUE	// Requires RAMEX: Extended loading queue
-//#define USE_HIGH1P	// Requires BIGQUEUE: All high model drivers
-//#define USE_RANDOM	// Requires HIGH1P: Character Randomizer
-//#define USE_ONLINE	// Requires HIGH1P: Online Multiplayer
-//#define USE_HIGHMP	// Requires RAMEX: Multiplayer Maxed mod
-//#define USE_NEWLEV	// Requires RAMEX: Enables custom levels
+//#define USE_RAMEX		// 8mb RAM expansion
+//#define USE_ONLINE	// Online Multiplayer
+//#define USE_HIGHMP	// Multiplayer Maxed mod
+//#define USE_LEVELDEV	// Level with hot-reload
 
 // PC only
 //#define USE_VR		// Virtual Reality
@@ -37,11 +44,30 @@
 
 
 
-// Required for Custom Levels
-#ifdef USE_NEWLEV
 
+// Multiplayer Maxed Mod
+#ifdef USE_HIGHMP
 #define USE_RAMEX
+#define USE_BIGQUEUE
+#define USE_DRIVERLOD
+#define USE_MOREPRIM
+#endif
+
+
+// Required for Custom Levels (disc play)
+#ifdef USE_LEVELDISC
 #define CUSTOM_LEVEL_ID 0
+#define USE_MOREPRIM
+#endif
+
+
+// Required for Custom Levels (hot reload)
+#ifdef USE_LEVELDEV
+#define CUSTOM_LEVEL_ID 0
+#define USE_RAMEX
+#define USE_BIGQUEUE
+#define USE_PRELOAD
+#define USE_MOREPRIM
 
 #define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000
 #define TRIGGER_VRM_RELOAD (volatile int*) 0x8000C004
@@ -77,7 +103,7 @@ enum HotReloadSteps
 #define USE_16BY9
 #define USE_RAMEX
 #define USE_BIGQUEUE
-#define USE_HIGH1P
+#define USE_DRIVERLOD
 #define USE_ALTMODS
 
 //note: if you disable this, you'll need to fix anything related to the `ROOM_...` defines in global.h
@@ -88,7 +114,7 @@ enum HotReloadSteps
 
 // Required for 60fps
 #ifdef USE_60FPS
-#define USE_HIGH1P // patch LODs
+#define USE_DRIVERLOD // patch LODs
 #define FPS_DOUBLE(x) ((x)*2)
 #define FPS_HALF(x) ((x)/2)
 #define FPS_LEFTSHIFT(x) ((x)-1)

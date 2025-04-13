@@ -23,7 +23,6 @@
 #include "../decompile/General/AltMods/Mods1.c" // needs UI_AAA_BigBlock1
 #include "../decompile/General/AltMods/Mods2.c" // needs GAMEPAD_Defrag
 #include "../decompile/General/AltMods/Mods3.c" // needs h21_64_Bank_ResetAllocator
-#include "../decompile/General/AltMods/Mods4.c" // needs LOAD_00_xx Defrag
 #include "../decompile/General/AltMods/Mods6.c" // needs ElimBG_Defrag
 #include "../decompile/General/AltMods/Mods8.c" // needs UI_58_CupStandings_InputAndDraw.c
 
@@ -293,55 +292,7 @@
 #include "../decompile/General/LIST/LIST_7_RemoveBack.c"
 #include "../decompile/General/LIST/LIST_8_Init.c"
 
-#include "../decompile/General/LOAD/LOAD_00_Callback_Overlay_Generic.c"
-#include "../decompile/General/LOAD/LOAD_01_Callback_Overlay_230.c"
-#include "../decompile/General/LOAD/LOAD_02_Callback_Overlay_231.c"
-#include "../decompile/General/LOAD/LOAD_03_Callback_Overlay_232.c"
-#include "../decompile/General/LOAD/LOAD_04_Callback_Overlay_233.c"
-#include "../decompile/General/LOAD/LOAD_05_Callback_MaskHints3D.c"
-#include "../decompile/General/LOAD/LOAD_06_Callback_Podiums.c"
-#include "../decompile/General/LOAD/LOAD_07_Callback_LEV.c"
-#include "../decompile/General/LOAD/LOAD_08_Callback_PatchMem.c"
-#include "../decompile/General/LOAD/LOAD_09_Callback_DriverModels.c"
-// hole
-#include "../decompile/General/LOAD/LOAD_11_GlobalModelPtrs_MPK.c"
-// hole
-#include "../decompile/General/LOAD/LOAD_13_StringToUpper.c" 
-#include "../decompile/General/LOAD/LOAD_14_InitCD.c" 
-#include "../decompile/General/LOAD/LOAD_15_ReadDirectory.c" 
-#include "../decompile/General/LOAD/LOAD_16_DramFileCallback.c"
-#include "../decompile/General/LOAD/LOAD_17_DramFile.c"
-#include "../decompile/General/LOAD/LOAD_18_VramFileCallback.c"
-#include "../decompile/General/LOAD/LOAD_19_VramFile.c" 
-#include "../decompile/General/LOAD/LOAD_20_ReadFileASyncCallback.c"
-#include "../decompile/General/LOAD/LOAD_21_ReadFile.c"
-#include "../decompile/General/LOAD/LOAD_22_XnfFile.c"
-#include "../decompile/General/LOAD/LOAD_23_FindFile.c"
-#include "../decompile/General/LOAD/LOAD_24_HowlHeaderSectors.c"
-#include "../decompile/General/LOAD/LOAD_25_HowlCallback.c"
-#include "../decompile/General/LOAD/LOAD_26_HowlSectorChainStart.c"
-#include "../decompile/General/LOAD/LOAD_27_HowlSectorChainEnd.c"
-#include "../decompile/General/LOAD/LOAD_28_RunPtrMap.c"
-#include "../decompile/General/LOAD/LOAD_29_Robots2P.c"
-#include "../decompile/General/LOAD/LOAD_30_Robots1P.c"
-#include "../decompile/General/LOAD/LOAD_31_DriverMPK.c"
-#include "../decompile/General/LOAD/LOAD_32_LangFile.c"
-#include "../decompile/General/LOAD/LOAD_33_GetBigfileIndex.c"
-#include "../decompile/General/LOAD/LOAD_34_AppendQueue.c"
-#include "../decompile/General/LOAD/LOAD_35_CDRequestCallback.c"
-#include "../decompile/General/LOAD/LOAD_36_NextQueuedFile.c"
-// hole
-#include "../decompile/General/LOAD/LOAD_40_OvrLOD.c"
-#include "../decompile/General/LOAD/LOAD_41_OvrEndRace.c"
-#include "../decompile/General/LOAD/LOAD_42_OvrThreads.c"
-#include "../decompile/General/LOAD/LOAD_43_GetAdvPackIndex.c"
-#include "../decompile/General/LOAD/LOAD_44_TenStages.c"
-#include "../decompile/General/LOAD/LOAD_45_TalkingMask.c"
-#include "../decompile/General/LOAD/LOAD_46_LevelFile.c"
-#include "../decompile/General/LOAD/LOAD_47_IsOpen_RacingOrBattle.c"
-#include "../decompile/General/LOAD/LOAD_48_IsOpen_MainMenu.c"
-#include "../decompile/General/LOAD/LOAD_49_IsOpen_AdvHub.c"
-#include "../decompile/General/LOAD/LOAD_50_IsOpen_Podiums.c"
+#include "../decompile/General/LOAD/LOAD_00_50_FULL.c"
 
 #include "../decompile/General/MAIN/MainDB_00_GetClipSize.c"
 #include "../decompile/General/MAIN/MainDB_01_PrimMem.c"

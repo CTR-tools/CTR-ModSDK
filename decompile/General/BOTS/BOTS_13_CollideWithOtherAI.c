@@ -2,6 +2,9 @@
 
 void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot_2)
 {
+	struct NavFrame* nfCurr;
+	struct NavFrame* nfNext;
+
 	// first determine which driver bumps forward and which bumps backwards
 	if (robot_1->driverRank < robot_2->driverRank)
 	{
@@ -13,29 +16,36 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	//robot_2 = param_2
 
 	short* uVar3;
-	short* estimatePos = robot_1->botData.estimatePos; //iVar4
+	short* estimatePos;
 	if ((robot_1->botData.botFlags & 1) == 0)
 	{
 		// nav path index
 		short botPathIndex = robot_1->botData.botPath;
 
 		// pointer to navFrame
-		estimatePos = &robot_1->botData.botNavFrame->pos[0];
+		nfCurr = &robot_1->botData.botNavFrame;
+		nfNext = nfCurr + 1;
 		
-		uVar3 = (short*)((&estimatePos[0]) + sizeof(struct NavFrame));
+		// iVar4
+		estimatePos = &nfCurr->pos[0];
 
 		// if you go out of bounds
-		if (sdata->NavPath_ptrHeader[botPathIndex]->last <= (struct NavFrame*)uVar3)
+		if (sdata->NavPath_ptrHeader[botPathIndex]->last <= (struct NavFrame*)nfNext)
 		{
 			// loop back to first navFrame
-			uVar3 = &sdata->NavPath_ptrNavFrameArray[botPathIndex]->pos[0];
+			nfNext = &sdata->NavPath_ptrNavFrameArray[botPathIndex];
 		}
 	}
 	else
 	{
 		// pointer to nav frame
-		uVar3 = &robot_1->botData.botNavFrame->pos[0];
+		nfNext = &robot_1->botData.botNavFrame;
+		
+		// iVar4
+		estimatePos = robot_1->botData.estimatePos;
 	}
+	
+	uVar3 = &nfNext->pos[0];
 
 	short pos[3];
 	// position of one driver
@@ -58,18 +68,15 @@ void DECOMP_BOTS_CollideWithOtherAI(struct Driver* robot_1, struct Driver* robot
 	// the AI that is closer to the previous nav point,
 	// who therefore is the driver in the back of the collision
 
+	struct Driver* d;
+	d = robot_2;
 	if (res1 < res2)
 	{
-		// reduce AI speed
-		int speed = robot_1->botData.unk5bc.ai_speedLinear - 3000;
-		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		robot_1->botData.unk5bc.ai_speedLinear = speed;
+		d = robot_1;
 	}
-	else
-	{
-		// reduce AI speed
-		int speed = robot_2->botData.unk5bc.ai_speedLinear - 3000;
-		speed = ((speed < 0) ? 0 : speed); //clamp to 0
-		robot_2->botData.unk5bc.ai_speedLinear = speed;
-	}
+
+	// reduce AI speed
+	int speed = robot_1->botData.unk5bc.ai_speedLinear - 3000;
+	speed = ((speed < 0) ? 0 : speed); //clamp to 0
+	robot_1->botData.unk5bc.ai_speedLinear = speed;
 }

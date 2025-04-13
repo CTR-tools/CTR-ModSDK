@@ -74,39 +74,43 @@ void DECOMP_GhostReplay_Init1(void)
 		// second ghost pointer is n tropy or oxide
 		else
 		{
+			// Bitwise ORs
+			// 0|0|0 (0) - No Ghost Unlocked
+			// 1|0|0 (1) - NTropy Ghost Open
+			// 1|2|0 (3) - NTropy Ghost Beaten, Oxide Ghost Open
+			// 1|2|4 (7) - NOxide Ghost Beaten
 			timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
 			
+			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+			
 			#ifdef REBUILD_PC
-			// 1 for n tropy, 3 for oxide
-			timeTrialFlags = 3;
+			timeTrialFlags = 7;
 			#endif
 			
-			// No ghost unlocked
-			if ((timeTrialFlags & 1) == 0)
+			switch(timeTrialFlags)
 			{
-				// skip initialization of ghost[1] thread
-				return;
-			}
-
-			// if N Tropy Opened
-			else
-			{
-				void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-				
-				// If you have not beaten N Tropy
-				if ((timeTrialFlags & 2) == 0)
-				{
+				// no ghost
+				case 0:
+					return;
+					
+				// ntropy
+				case 1:
 					gh = pointers[ST1_NTROPY];	
 					charID = 2;
-				}
-	
-				// If you have beaten N Tropy
-				else
-				{
+					break;
+				
+				// oxide
+				default:
 					gh = pointers[ST1_NOXIDE];	
 					charID = 3;
-				}
+					break;
 			}
+			
+			// Custom levels need null checks
+			#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+			if(gh == 0)
+				return;
+			#endif
 		}
 		
 		sdata->boolGhostsDrawing = 1;
@@ -143,12 +147,19 @@ void DECOMP_GhostReplay_Init1(void)
 		// characterID and model
 		charID = data.characterIDs[charID];
 		
-// set in MainInit_Drivers for PC port
-#ifndef REBUILD_PS1
-		struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
-#else
-		struct Model* model = NULL;
-#endif
+		#ifdef USE_PRELOAD
+		int* arr = 0x8000a000;
+		struct Model* model = arr[charID];
+		#else
+		
+			// set in MainInit_Drivers for PC port
+			#ifndef REBUILD_PS1
+			struct Model* model = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+			#else
+			struct Model* model = NULL;
+			#endif
+
+		#endif
 
 		inst = DECOMP_INSTANCE_Birth3D(model, NULL, NULL);
 		inst->unk51 = 0xc;

@@ -32,11 +32,18 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	*(int*)0x800214bc = JAL(DECOMP_VehPhysProc_SlamWall_Init);
 	#endif
 	
-#ifndef REBUILD_PS1
-	struct Model* m = VehBirth_GetModelByName(data.MetaDataCharacters[id].name_Debug);
-#else
-	struct Model* m = 0;
-#endif
+	#ifdef USE_PRELOAD
+	int* arr = 0x8000a000;
+	struct Model* m = arr[id];
+	#else
+	
+		#ifndef REBUILD_PS1
+		struct Model* m = VehBirth_GetModelByName(data.MetaDataCharacters[id].name_Debug);
+		#else
+		struct Model* m = 0;
+		#endif
+
+	#endif
 
 	struct Instance* inst =
 		DECOMP_INSTANCE_Birth3D(m, 0, t);

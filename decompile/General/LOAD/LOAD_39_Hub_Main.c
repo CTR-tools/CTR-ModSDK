@@ -34,10 +34,12 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 		unsigned int currLevelID = gGT->levelID - 0x19;
 		if (currLevelID >= 5) return;
 
+		#ifndef REBUILD_PS1
 		DECOMP_LOAD_Hub_ReadFile(
 			bigfilePtr,
 			rdata.MetaDataHubs[currLevelID].connectedHub_LevID[nextLevelID - 1],
 			3 - gGT->activeMempackIndex
 		);
+		#endif
 	}
 }

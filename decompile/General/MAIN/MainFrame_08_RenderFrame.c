@@ -45,7 +45,7 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 u_int MM_Video_CheckIfFinished(int param_1);
 
-#ifdef USE_HIGH1P
+#ifdef USE_60FPS
 void PatchModel_60fps(struct Model* m)
 {
 	struct ModelHeader* h;
@@ -108,7 +108,6 @@ void PatchModel_60fps(struct Model* m)
 	}
 	#endif
 
-	#ifdef USE_60FPS
 	// loop through headers
 	for(i = 0; i < m->numHeaders; i++)
 	{
@@ -140,7 +139,6 @@ void PatchModel_60fps(struct Model* m)
 			a[j]->numFrames | 0x8000;
 		}
 	}
-	#endif
 }
 void ScanInstances_60FPS(struct GameTracker* gGT)
 {
@@ -200,7 +198,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 {
 	struct Level* lev = gGT->level1;
 
-	#ifdef USE_HIGH1P
+	#ifdef USE_60FPS
 	if ((gGT->renderFlags & 0x20) != 0)
 		ScanInstances_60FPS(gGT);
 	#endif
@@ -996,16 +994,20 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 
-#ifndef USE_NEWLEV
+#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+	
+	// modded to skip level instances
+	RBI = gGT->ptrRenderBucketInstance;
+
+#else
+	// default
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
 		(u_long*)&gGT->backBuffer->otMem,
 		gGT->ptrRenderBucketInstance,
 		(char*)(unsigned int)(unsigned char)sdata->LOD[lod], //this weird cast is what ghidra does
 		(char)numPlyrCurrGame,
-		gGT->gameMode1 & PAUSE_ALL);
-#else
-	RBI = gGT->ptrRenderBucketInstance;
+		gGT->gameMode1 & PAUSE_ALL);	
 #endif
 
 	RBI = RenderBucket_QueueNonLevInstances(

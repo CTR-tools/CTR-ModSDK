@@ -22,8 +22,7 @@ void DECOMP_BOTS_MaskGrab(struct Thread* botThread)
 
 	bot->kartState = KS_MASK_GRABBED;
 
-	int idk = frame->unk[1] << 0x10;
-	bot->botData.unk5a8 = ((idk >> 0x10) - (idk >> 0x1f) >> 1) << 8;
+	bot->botData.unk5a8 = (frame->unk[1]/2) << 8;
 
 	// midpointX between nav frames
 	midpoint = (frame->pos[0] + (nextframe->pos[0] - frame->pos[0]) / 2) * 0x100;
@@ -83,11 +82,9 @@ void DECOMP_BOTS_MaskGrab(struct Thread* botThread)
 	bot->posCurr.z = bot->botData.ai_posBackup[2];
 
 	mask = VehPickupItem_MaskUseWeapon(bot, 1);
-
-	// Mask Object (620?)
 	bot->botData.maskObj = mask;
 
-	if (mask)
+	if (mask != 0)
 	{
 		mask->duration = 0x1e00;
 		mask->rot[2] |= 1;

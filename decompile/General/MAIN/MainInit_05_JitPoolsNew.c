@@ -72,9 +72,9 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 // 2mb RAM, decomp/General, ram holes
 #if !defined(REBUILD_PS1) && !defined(USE_RAMEX) && defined(USE_ALTMODS)
   // saves 0x1B00 bytes
-  void RelocMemory_DefragUI_Mods1();
+  void RelocMemory_DefragUI_Mods1_ThreadPool();
   int backup = (int)sdata->mempack[0].firstFreeByte;
-  sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1;
+  sdata->mempack[0].firstFreeByte = (void*)RelocMemory_DefragUI_Mods1_ThreadPool;
 #endif
 
 
@@ -159,6 +159,45 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // normally maxed at 128
   int numInstance = uVar9 >> 5;
+
+  // Optimization tech
+  if (numInstance == 128)
+  {
+	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+	
+	// custom tracks have no level instances,
+	// no weapons, nothing on the track
+	numInstance = 32;
+	
+	#else
+		
+	if(gGT->numPlyrCurrGame == 1)
+	{
+		// Do NOT touch Crystal Challenge, AdvHub, Cutscene,
+		// only apply to race tracks: TimeTrial/Relic/Arcade
+		if(gGT->levelID <= TURBO_TRACK)
+		{
+			// Except Dingo Canyon,
+			// This track is why we need 128 in the first place,
+			// Rest of tracks are MORE than 16 behind Dingo Canyon
+			if(gGT->levelID != DINGO_CANYON)
+			{
+				numInstance -= 16;
+			}
+		}
+	}
+	
+	else
+	{
+		// Apply to VS and Battle
+		if(gGT->levelID <= LAB_BASEMENT)
+		{
+			numInstance -= 16;
+		}
+	}
+	
+	#endif
+  }
 
   // InstancePool
   DECOMP_JitPool_Init(

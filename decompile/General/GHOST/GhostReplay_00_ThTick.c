@@ -101,7 +101,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
         d->actionsFlagSet &= 0xffefffff; // driver is not AI anymore
         d->speedApprox = gh->speedApprox;
 
-		#ifdef REBUILD_PS1
+		#if defined(REBUILD_PS1) || defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 
 		// kill thread, no AI yet
 		t->flags |= 0x800;

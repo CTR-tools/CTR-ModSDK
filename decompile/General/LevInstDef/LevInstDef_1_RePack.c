@@ -9,7 +9,11 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 	struct Instance** visInstSrc;
 	struct Level* level1;
 	struct Thread* th;
-	 
+
+	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
+	return;
+	#endif
+
 	numQuadBlock = ptr_mesh_info->numQuadBlock;
 	ptrQuadBlockArray = ptr_mesh_info->ptrQuadBlockArray;
 	
