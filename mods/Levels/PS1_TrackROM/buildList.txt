@@ -3,18 +3,11 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
-// disable LevInstDef_UnPack
-common, exe, LevInstDef_UnPack, 0x0, src/hacks/return1.c
-
 // ghost init is combined using the decomp function
 common, exe, GhostReplay_Init2, 0x0, src/hacks/return2.c
 
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return3.c
-
-// disable LevInstQueue
-// required? or just needed cause I messed up? crashes in relocate attempts
-common, exe, RenderBucket_QueueLevInstances, 0x0, src/hacks/disableQueueLevInst.c
 
 // Battle weapons
 common, exe, BOTS_SetRotation, -0x8, src/hooks/hookUpdate.s
