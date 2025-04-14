@@ -40,4 +40,3 @@ common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
 common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c
 common, exe, GhostReplay_Init1, 0x0, src/ghost_init.c
 common, exe, GhostReplay_ThTick, 0x0, src/ghost_onUpdate.c
-common, exe, CTR_CycleTex_LEV, 0x0, src/cycle_tex.c
