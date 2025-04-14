@@ -3,18 +3,8 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
-// disable LevInstDef_UnPack
-common, exe, LevInstDef_UnPack, 0x0, src/hacks/return1.c
-
-// ghost init is combined using the decomp function
-common, exe, GhostReplay_Init2, 0x0, src/hacks/return2.c
-
 // disable map
-common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return3.c
-
-// disable LevInstQueue
-// required? or just needed cause I messed up? crashes in relocate attempts
-common, exe, RenderBucket_QueueLevInstances, 0x0, src/hacks/disableQueueLevInst.c
+common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
 // Battle weapons
 common, exe, BOTS_SetRotation, -0x8, src/hooks/hookUpdate.s
@@ -38,5 +28,3 @@ common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
 common, exe, MEMCARD_Save, 0x0, src/memcard_save_hook.c
 common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
 common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c
-common, exe, GhostReplay_Init1, 0x0, src/ghost_init.c
-common, exe, GhostReplay_ThTick, 0x0, src/ghost_onUpdate.c
