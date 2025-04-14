@@ -4,7 +4,7 @@
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
 // disable map
-common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return3.c
+common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
 // Battle weapons
 common, exe, BOTS_SetRotation, -0x8, src/hooks/hookUpdate.s
