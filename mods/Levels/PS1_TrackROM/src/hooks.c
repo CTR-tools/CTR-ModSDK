@@ -45,8 +45,6 @@ struct MenuRow NewRowsPAUSE[5] =
 	}
 };
 
-static int once = 1;
-
 void RunInitHook()
 {
 	struct GameTracker* gGT = sdata->gGT;
@@ -65,28 +63,7 @@ void RunInitHook()
 	// wont clear itself?
 	sdata->ptrLoadSaveObj = 0;
 
-	if (once)
-	{
-		once = 0;
-		// adds VRAM to loading queue
-		LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, 0);
-		// adds LEV to loading queue
-		LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, 0);
-
-		char* currDriver = DRIVER_ADDR;
-		for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
-		{
-			int fileSize;
-			LOAD_ReadFile(sdata->ptrBigfile1, LT_DRAM, BI_RACERMODELHI + i, currDriver, &fileSize, 0);
-			int* pMap = (int*) (currDriver + 4 + (*(int*)currDriver));
-			LOAD_RunPtrMap(currDriver + 4, pMap + 1, *pMap >> 2);
-			struct Model** g_charModelPtrs = CHAR_MODEL_PTRS;
-			g_charModelPtrs[i] = (struct Model*) (currDriver + 4);
-			currDriver += fileSize;
-		}
-	}
-
-	if(gGT->levelID != CUSTOM_LEVEL_ID) return;
+	if(gGT->levelID != CUSTOM_LEVEL_ID) { return; }
 
 	sdata->ptrActiveMenu = 0;
 }
