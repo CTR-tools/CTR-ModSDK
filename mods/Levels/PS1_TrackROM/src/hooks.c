@@ -57,7 +57,10 @@ void RunInitHook()
 	// required for AI Nav, cause I dont have
 	// offsets [0xA] or [0xC] and it gets stuck
 	// in a loop, so this breaks the loop
-	*(int*)0x800150c0 = 0;
+	*(unsigned int*)0x800150c0 = 0;
+	*(unsigned int*)0x800277c8 = 0;
+	*(unsigned int*)0x800277d0 = 0;
+	*(unsigned short*)0x800277f2 = 0x800;
 
 	// wont clear itself?
 	sdata->ptrLoadSaveObj = 0;

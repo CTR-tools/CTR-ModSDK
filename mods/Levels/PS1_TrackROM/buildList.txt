@@ -21,6 +21,9 @@ common, exe, rdata_free, 0x0, src/hooks.c
 common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 
+// exe nav patches
+926, exe, 0x800150c0, 0x0, src/patches/nop.s
+
 // exe
 common, exe, LOAD_TenStages, 0x0, src/load_lev.c
 common, exe, main, 0x0, src/ctr_main.c
