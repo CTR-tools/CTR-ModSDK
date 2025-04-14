@@ -9,11 +9,6 @@ void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info)
 	struct InstDef** visInstSrc;
 	struct Level* level1;
 
-	// TODO: Remove when redhot makes visInstSrc null terminated
-	#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
-	return;
-	#endif
-
 	numQuadBlock = ptr_mesh_info->numQuadBlock;
 	ptrQuadBlockArray = ptr_mesh_info->ptrQuadBlockArray;
 	
