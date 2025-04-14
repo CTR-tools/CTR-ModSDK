@@ -994,21 +994,13 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 
-#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
-	
-	// modded to skip level instances
-	RBI = gGT->ptrRenderBucketInstance;
-
-#else
-	// default
 	RBI = RenderBucket_QueueLevInstances(
 		&gGT->cameraDC[0],
 		(u_long*)&gGT->backBuffer->otMem,
 		gGT->ptrRenderBucketInstance,
 		(char*)(unsigned int)(unsigned char)sdata->LOD[lod], //this weird cast is what ghidra does
 		(char)numPlyrCurrGame,
-		gGT->gameMode1 & PAUSE_ALL);	
-#endif
+		gGT->gameMode1 & PAUSE_ALL);
 
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
