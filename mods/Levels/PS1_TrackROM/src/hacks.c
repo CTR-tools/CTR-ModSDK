@@ -45,27 +45,15 @@ struct MenuRow NewRowsPAUSE[5] =
 	}
 };
 
-void RunInitHook()
+void PatchInstructions()
 {
-	struct GameTracker* gGT = sdata->gGT;
+	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE; /* set arcade/TT menu to use adv cup rows */
 
-	// set arcade/TT menu to use adv cup rows
-	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE;
-
-	// required for AI Nav, cause I dont have
-	// offsets [0xA] or [0xC] and it gets stuck
-	// in a loop, so this breaks the loop
+	/* AI nav patches*/
 	*(unsigned int*)0x800150c0 = 0;
 	*(unsigned int*)0x800277c8 = 0;
 	*(unsigned int*)0x800277d0 = 0;
 	*(unsigned short*)0x800277f2 = 0x800;
-
-	// wont clear itself?
-	sdata->ptrLoadSaveObj = 0;
-
-	if(gGT->levelID != CUSTOM_LEVEL_ID) { return; }
-
-	sdata->ptrActiveMenu = 0;
 }
 
 struct MenuRow NewRowsMM[2] =
@@ -120,7 +108,7 @@ struct MenuRow NewRowsEND[] =
 	}
 };
 
-void RunUpdateHook()
+void PatchMenus()
 {
 	struct GameTracker* gGT = sdata->gGT;
 
@@ -137,6 +125,8 @@ void RunUpdateHook()
 	}
 
 	if (gGT->levelID != CUSTOM_LEVEL_ID) return;
+
+	sdata->ptrActiveMenu = 0;
 }
 
 void HotReloadVRAM()

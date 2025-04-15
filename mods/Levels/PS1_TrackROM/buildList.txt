@@ -6,10 +6,8 @@
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
-// Battle weapons
-common, exe, BOTS_SetRotation, -0x8, src/hooks/hookUpdate.s
-common, exe, MainInit_StringToLevID, -0x8, src/hooks/hookInit.s
-common, exe, rdata_free, 0x0, src/hooks.c
+// Hot patches, hot reload
+common, exe, rdata_free, 0x0, src/hacks.c
 
 // 229 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
@@ -17,12 +15,9 @@ common, exe, rdata_free, 0x0, src/hooks.c
 926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
 926, 226, 0x800a6f70, 0x0, src/patches/lod4.s
 
-// 230
+// Menus
 common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
-
-// exe nav patches
-926, exe, 0x800150c0, 0x0, src/patches/nop.s
 
 // exe
 common, exe, LOAD_TenStages, 0x0, src/load_lev.c

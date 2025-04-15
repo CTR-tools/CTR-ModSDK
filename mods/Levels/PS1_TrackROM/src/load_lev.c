@@ -1,24 +1,6 @@
 #include <common.h>
 #include "utils.h"
 
-void CDSYS_XAPauseRequest();
-void MEMPACK_PopToState(int id);
-void LOAD_Callback_PatchMem(struct LoadQueueSlot * lqs);
-int MEMPACK_PushState();
-void MM_JumpTo_Title_FirstTime();
-void MM_JumpTo_Characters();
-void MM_JumpTo_TrackSelect();
-void MM_JumpTo_BattleSetup();
-void CS_Garage_Init();
-void MM_JumpTo_Scrapbook();
-
-void CseqMusic_StopAll();
-void MEMPACK_NewPack(void* start, int size);
-u_int MEMPACK_GetFreeBytes();
-void* MEMPACK_AllocHighMem(int allocSize);
-u_int RaceFlag_IsFullyOffScreen();
-void RaceFlag_BeginTransition(int param_1);
-
 // LOAD_TenStages
 // loadingStage is loading stage
 // bigfile is the Pointer to "cd position of bigfile"

@@ -1,8 +1,6 @@
 #include <common.h>
 #include "utils.h"
 
-void TimeTrialCallback(struct LoadQueueSlot* lqs);
-
 void LoadDriverModels(unsigned int param_1, int levelLOD, void (*param_3)(struct LoadQueueSlot*))
 {
     if (sdata->gGT->gameMode1 & MAIN_MENU)
