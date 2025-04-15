@@ -77,19 +77,17 @@ void highLOD_DriverMPK(int numDrivers)
 	// TODO: Should restore Purple Gem Cup
 	// so that those are still Boss drivers
 	
-	// LOOP Starts at 1,
-	// MUST use -1 for index
-	for(int i = 1; i < numDrivers; i++)
+	for(int i = 0; i < numDrivers-1; i++)
 	{
 		// high lod CTR model
 		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 			BI_RACERMODELHI + data.characterIDs[i],
-			&data.driverModelExtras[i-1], cbDRAM); // MUST be -1
+			&data.driverModelExtras[i], cbDRAM);
 	}
 
 	// Time Trial MPK
 	DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-		BI_TIMETRIALPACK + data.characterIDs[0],
+		BI_TIMETRIALPACK + data.characterIDs[i],
 		&sdata->ptrMPK, cbDRAM);
 }
 #endif
@@ -116,18 +114,16 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		return;
 		#endif
 		
-		// LOOP Starts at 1,
-		// MUST use -1 for index
-		for(i = 1; i < levelLOD; i++)
+		for(i = 0; i < levelLOD-1; i++)
 		{
 			// low lod CTR model
 			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
 				BI_RACERMODELLOW + data.characterIDs[i],
-				&data.driverModelExtras[i-1],cbDRAM); // MUST be -1
+				&data.driverModelExtras[i],cbDRAM);
 		}
 
 		// load 4P MPK of fourth player
-		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[0];
+		lastFileIndexMPK = BI_4PARCADEPACK + data.characterIDs[i];
 	}
 
 	#ifdef USE_OXIDE
