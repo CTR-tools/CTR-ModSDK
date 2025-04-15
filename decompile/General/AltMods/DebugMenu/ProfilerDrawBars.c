@@ -118,7 +118,7 @@ void DebugProfiler_ListAllDebugStats()
 	DECOMP_DecalFont_DrawLine(string, 0x14, 0x6C, FONT_SMALL, 0);
 	
 	sprintf(string, "PINK %d", timePink);
-	DecalFont_DrawLine(string, 0x14, 0x74, FONT_SMALL, 0);
+	DECOMP_DecalFont_DrawLine(string, 0x14, 0x74, FONT_SMALL, 0);
 }
 
 #ifdef USE_REAL60PS1

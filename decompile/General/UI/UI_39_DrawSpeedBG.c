@@ -33,7 +33,7 @@ const Point speedometerData[]=
 };
 #else
 
-#ifdef REBUILD_PC
+#ifdef _MSC_VER
 #define SPEEDO_GREEN 0xb500
 #define SPEEDO_YELLOW 0xffd1
 #define SPEEDO_RED 0xdb
