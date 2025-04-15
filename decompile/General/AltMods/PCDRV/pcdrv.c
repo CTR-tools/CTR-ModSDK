@@ -52,7 +52,12 @@ CdlFILE *pcCdSearchFile(CdlFILE *loc, const char *filename)
 	{
 		if (*str == ';')
 			*str = '\0';
-		
+#ifdef REBUILD_PC
+#ifndef _WIN32
+		else if (*str == '\\')
+			*str = '/';
+#endif
+#endif
 		str++;
 	}
 	
