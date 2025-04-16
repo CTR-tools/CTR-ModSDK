@@ -14,6 +14,11 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
 // Hot patches, hot reload
 common, exe, rdata_free, 0x0, src/hacks.c
+926, exe, 0x800150c0, 0x0, src/patches/nop.bin
+926, exe, 0x800277c8, 0x0, src/patches/nop.bin
+926, exe, 0x800277d0, 0x0, src/patches/nop.bin
+926, exe, 0x800277f0, 0x0, src/patches/killThread.s
+926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
 
 // 229 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
