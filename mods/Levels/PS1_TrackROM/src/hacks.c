@@ -48,12 +48,6 @@ struct MenuRow NewRowsPAUSE[5] =
 void PatchInstructions()
 {
 	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE; /* set arcade/TT menu to use adv cup rows */
-
-	/* AI nav patches*/
-	*(unsigned int*)0x800150c0 = 0;
-	*(unsigned int*)0x800277c8 = 0;
-	*(unsigned int*)0x800277d0 = 0;
-	*(unsigned short*)0x800277f2 = 0x800;
 }
 
 struct MenuRow NewRowsMM[2] =
@@ -177,5 +171,7 @@ void HotReload()
 	GhostTape_Destroy();
 	sdata->mainMenuState = 0;
 	gGT->gameMode1 |= MAIN_MENU;
+	data.metaDataLEV[CUSTOM_LEVEL_ID].timeTrial = 0x7FFFFFFF;
+	sdata->gameProgress.highScoreTracks[CUSTOM_LEVEL_ID].timeTrialFlags = 0;
 	MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 }
