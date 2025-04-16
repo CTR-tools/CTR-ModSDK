@@ -3,8 +3,14 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
+// Saphi
+926, DLL, 0x802BE670, 0x0, src/saphi/icons.c src/saphi/prim.c, DLL.BIN
+
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
+
+// Race UI hook
+926, exe, 0x80036740, 0x0, src/patches/raceui.s
 
 // Hot patches, hot reload
 common, exe, rdata_free, 0x0, src/hacks.c

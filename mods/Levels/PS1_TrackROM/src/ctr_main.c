@@ -1,5 +1,6 @@
 #include <common.h>
 #include "utils.h"
+#include "saphi/icons.h"
 
 static void InitGame();
 static void OnLoadingEnd();
@@ -129,8 +130,8 @@ static void InitGame()
 	gGT->clockEffectEnabled &= 0xfffe;
 
 	PatchInstructions();
-	LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, 0);
-	LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, 0);
+	LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, nullptr);
+	LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, nullptr);
 
 	char* currDriver = DRIVER_ADDR;
 	for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
@@ -143,6 +144,10 @@ static void InitGame()
 		g_charModelPtrs[i] = (struct Model*) (currDriver + 4);
 		currDriver += fileSize;
 	}
+
+	int dummy;
+	LOAD_XnfFile("\\DLL.BIN;1", SAPHI_DLL_ADDR, &dummy);
+	LoadCustomIcons();
 }
 
 static void OnLoadingEnd()

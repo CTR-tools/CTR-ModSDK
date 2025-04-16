@@ -3,6 +3,8 @@
 
 #include <common.h>
 
+#define ARR_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 #define CUSTOM_LEVEL_ID 0
 #define DISABLE_GHOSTS
 
@@ -20,11 +22,9 @@
 #define GHOST_LOCATION (GHOST_SIZE_LOCATION + sizeof(int))
 #define DRIVER_LOCATION (GHOST_LOCATION + GHOST_FILESIZE)
 /* First free byte: 0x802BE670 : Pre-calculated value after every driver is loaded */
-#define INPUT_LOCATION 0x802BE670
+#define SAPHI_DLL_ADDR 0x802BE670
 #define CUSTOM_LEV_MAP_LOCATION 0x80300000
 #define CUSTOM_LEV_LOCATION (CUSTOM_LEV_MAP_LOCATION + sizeof(int))
-
-#define MAX_RECORDED_FRAMES ((CUSTOM_LEV_MAP_LOCATION - INPUT_LOCATION) / 2)
 
 #define CUSTOM_VRAM_ADDR (char*) VRM_LOCATION
 #define GHOST_SIZE_ADDR (int*) GHOST_SIZE_LOCATION
