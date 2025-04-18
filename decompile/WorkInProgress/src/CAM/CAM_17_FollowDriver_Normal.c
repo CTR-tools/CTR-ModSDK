@@ -576,6 +576,11 @@ LAB_8001ab04:
             {
                 flyInDone = false;
 
+				// === Naughty Dog Bug ===
+				// if pointer count is 7 (ntropy/noxide) and camera path is nullptr, 
+				// the game does not check that nullptr and explodes. Only impacts 
+				// custom levels, that contain ghost data, and no camera path
+
                 // if fly-in data is not in LEV
                 if (gGT->level1->ptrSpawnType1->count < 4)
                 {
@@ -587,10 +592,16 @@ LAB_8001ab04:
                 // if fly-in data exists in LEV
                 else
                 {
-                    local_2c = gGT->level1->ptrSpawnType1->pointers[ST1_NTROPY];
-                    local_26 = 0x8e;
-                    local_28 = 0x96;
-                    local_30 = local_2c + 0x354;
+					// === Decomp Bug ===
+					// This will not act as a struct on stack,
+					// will make CAM_StartLine_FlyIn explode
+					
+					x = gGT->level1->ptrSpawnType1->pointers[ST1_CAMERA_PATH];
+					
+                    /* struct offset 0x4 */ local_2c = x;
+                    /* struct offset 0xA */ local_26 = 0x8e;
+                    /* struct offset 0x8 */ local_28 = 0x96;
+                    /* struct offset 0x0 */ local_30 = local_2c + 0x354;
 
                     // which frame of fly-in you are in
                     x = 0xa5 - (u_int)cDC->unk8E;
