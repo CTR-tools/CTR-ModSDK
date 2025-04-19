@@ -3,6 +3,10 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
+926, 224, 0x8009f6fc, 0xD38, src/hacks/tt_menu_save.c
+926, 224, 0x8009f6fc, 0xD5C, src/hacks/tt_menu.c
+926, 224, 0x8009f6fc, 0xD88, src/hacks/tt_menu_no_save.c
+
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 

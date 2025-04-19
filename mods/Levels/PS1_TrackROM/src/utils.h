@@ -59,7 +59,7 @@ enum HotReloadSteps
 };
 
 void PatchInstructions();
-void PatchMenus();
+void PatchMainMenu();
 void HotReload();
 void HotReloadVRAM();
 

@@ -299,12 +299,12 @@ void CseqMusic_StopAll();
 	//SongPool_FindFreeChannel()
 	//SongPool_CalculateTempo()
 	void SongPool_ChangeTempo(struct Song* song, short p2);
-	
+
 	void SongPool_Start(
 		struct Song* song, int songID, int deltaBPM,
 		int boolLoopAtEnd, struct SongSet* songSet, int songSetActiveBits);
 
-	
+
 	void SongPool_Volume(struct Song* song, char param_2, char param_3, int param_4);
 	//SongPool_AdvHub1()
 	//SongPool_AdvHub2()
@@ -920,7 +920,7 @@ void UI_VsQuipDrawAll();
 void UI_VsWaitForPressX();
 //UI_RaceEnd_GetDriverClock()
 void UI_RaceStart_IntroText1P();
-//UI_RaceEnd_MenuProc()
+void UI_RaceEnd_MenuProc();
 //UI_CupStandings_FinalizeCupRanks()
 //UI_CupStandings_UpdateCupRanks()
 //UI_CupStandings_InputAndDraw()

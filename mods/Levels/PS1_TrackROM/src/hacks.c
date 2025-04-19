@@ -67,58 +67,11 @@ struct MenuRow NewRowsMM[2] =
 	}
 };
 
-struct MenuRow NewRowsEND[] =
+void PatchMainMenu()
 {
-	[0] =
-	{
-		.stringIndex = 4, // retry
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
-		.rowOnPressLeft = 0,
-		.rowOnPressRight = 0,
-	},
+	if (sdata->ptrActiveMenu == &D230.menuMainMenu) { sdata->ptrActiveMenu->rows = &NewRowsMM[0]; }
 
-	[1] =
-	{
-		.stringIndex = 3, // quit
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 2,
-		.rowOnPressLeft = 1,
-		.rowOnPressRight = 1,
-	},
-
-	[2] =
-	{
-		.stringIndex = 9,
-		.rowOnPressUp = 1,
-		.rowOnPressDown = 2,
-		.rowOnPressLeft = 2,
-		.rowOnPressRight = 2,
-	},
-
-	[3] =
-	{
-		.stringIndex = 0xFFFF,
-	}
-};
-
-void PatchMenus()
-{
-	struct GameTracker* gGT = sdata->gGT;
-
-	// main menu
-	if (sdata->ptrActiveMenu == &D230.menuMainMenu)
-	{
-		sdata->ptrActiveMenu->rows = &NewRowsMM[0];
-	}
-
-	// time trial end of race
-	if ((sdata->ptrActiveMenu == 0x800a0458) || (sdata->ptrActiveMenu == 0x800A04A4))
-	{
-		sdata->ptrActiveMenu->rows = &NewRowsEND[0];
-	}
-
-	if (gGT->levelID != CUSTOM_LEVEL_ID) return;
+	if (sdata->gGT->levelID != CUSTOM_LEVEL_ID) { return; }
 
 	sdata->ptrActiveMenu = 0;
 }
