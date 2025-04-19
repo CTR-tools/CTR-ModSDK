@@ -355,10 +355,8 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // if this is arcade end-of-race
     else
     {
-        // something to do with camera position interpolation
         if (cDC->BlastedLerp.boolLerpPending != 0)
         {
-            // camera distance = camera speed, minus camera position
             cDC->BlastedLerp.boolLerpPending = 0;
 
             cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(scratchpad + 0x258);
@@ -369,7 +367,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
             cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
 
-            *(short *)((int)cDC + 0xda) = 8;
+            cDC->BlastedLerp.framesRemaining = 8;
 
             goto LAB_8001a8b0;
         }
