@@ -20,16 +20,9 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     SVECTOR *psVar12;
     u_int uVar13;
     int iVar14;
-    short local_40;
-    short local_3e;
-    short local_3c;
-    short local_38;
-    short local_36;
-    short local_34;
-    int local_30;
-    int local_2c;
-    short local_28;
-    short local_26;
+    short local_40[3];
+    short local_38[3];
+    struct FlyInData flyInData;
 
     // backup flags
     backupFlags = cDC->flags;
@@ -98,18 +91,12 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     {
         // absolute value driver speed
         x = (int)d->speedApprox;
+        if (x < 0) x = -x;
 
-        if (x < 0)
-        {
-            x = -x;
-        }
-
-        // cameraSpeed = driverSpeed
         cDC->cameraMoveSpeed = x;
     }
 
     uVar8 = 0;
-
     if (gGT->numPlyrCurrGame != 2)
     {
         uVar8 = 0xff9c;
@@ -221,13 +208,9 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     }
     *(int *)(scratchpad + 0x248) += *(int *)(scratchpad + 0x260);
 
-    // rotX
     uVar8 = 0;
-
     if (gGT->numPlyrCurrGame != 2)
-    {
         uVar8 = 0xff9c;
-    }
 
     // rotX
     *(short *)(scratchpad + 0x20c) = uVar8;
@@ -304,53 +287,58 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
 
         // reset camera interpolation
-        *(short *)(cDC + 0xc0) = 0;
-        *(short *)(cDC + 0xc2) = 0;
+        *(short *)((int)cDC + 0xc0) = 0;
+        *(short *)((int)cDC + 0xc2) = 0;
         cDC->framesZoomingOut = 0;
     }
 
     if (state == KS_ENGINE_REVVING)
     {
         // reset camera interpolation
-        *(short *)(cDC + 0xc0) = 0;
-        *(short *)(cDC + 0xc2) = 0;
+        *(short *)((int)cDC + 0xc0) = 0;
+        *(short *)((int)cDC + 0xc2) = 0;
         cDC->framesZoomingOut = 0;
     }
 
-    if (((d->kartState != KS_BLASTED) && ((d->actionsFlagSet & 1) != 0)) &&
-        (cDC->unk_c6 != 0))
+    if (
+			(d->kartState != KS_BLASTED) && 
+			((d->actionsFlagSet & 1) != 0) &&
+			(cDC->BlastedLerp.boolLerpPending != 0)
+		)
     {
-        // camera distance = camera speed, minus camera position
-        cDC->unk_c6 = 0;
+        cDC->BlastedLerp.boolLerpPending = 0;
 
-        *(short *)(cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
-        *(short *)(cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-        *(short *)(cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+        *(short *)((int)cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
+        *(short *)((int)cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
+        *(short *)((int)cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
 
-        *(short *)(cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-        *(short *)(cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-        *(short *)(cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+        *(short *)((int)cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
+        *(short *)((int)cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
+        *(short *)((int)cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
 
-        *(short *)(cDC + 0xda) = 8;
+        *(short *)((int)cDC + 0xda) = 8;
     }
 
     // if not arcade end-of-race
     if (((cDC->flags & 0x20) == 0) && (cDC->cameraMode == 0))
     {
 
-        if ((d->kartState != KS_BLASTED) && (cDC->unk_c6 == 0))
+        if (
+				(d->kartState != KS_BLASTED) && 
+				(cDC->BlastedLerp.boolLerpPending == 0)
+			)
             goto LAB_8001a8c0;
 
-        if (cDC->unk_c6 == 0)
+        if (cDC->BlastedLerp.boolLerpPending == 0)
         {
-            *(short *)(cDC + 0xc8) = cDC->unkTriplet3[1] - cDC->unkTriplet2[1];
-            *(short *)(cDC + 0xca) = cDC->unkTriplet2[1] - (d->quadBlockHeight >> 8);
+            *(short *)((int)cDC + 0xc8) = cDC->unkTriplet3[1] - cDC->unkTriplet2[1];
+            *(short *)((int)cDC + 0xca) = cDC->unkTriplet2[1] - (d->quadBlockHeight >> 8);
         }
 
-        cDC->unk_c6 = 1;
+        cDC->BlastedLerp.boolLerpPending = 1;
 
         if (((int)cDC->unkTriplet2[1] < *(int *)(scratchpad + 0x244)) &&
-            (x = (int)*(short *)(cDC + 0xca) + (d->quadBlockHeight >> 8),
+            (x = (int)*(short *)((int)cDC + 0xca) + (d->quadBlockHeight >> 8),
              x < *(int *)(scratchpad + 0x244)))
         {
             *(int *)(scratchpad + 0x244) = x;
@@ -358,7 +346,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
     LAB_8001a8b0:
 
-        if (cDC->unk_c6 == 0)
+        if (cDC->BlastedLerp.boolLerpPending == 0)
             goto LAB_8001a8c0;
     }
 
@@ -366,20 +354,20 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     else
     {
         // something to do with camera position interpolation
-        if (cDC->unk_c6 != 0)
+        if (cDC->BlastedLerp.boolLerpPending != 0)
         {
             // camera distance = camera speed, minus camera position
-            cDC->unk_c6 = 0;
+            cDC->BlastedLerp.boolLerpPending = 0;
 
-            *(short *)(cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
-            *(short *)(cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-            *(short *)(cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+            *(short *)((int)cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
+            *(short *)((int)cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
+            *(short *)((int)cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
 
-            *(short *)(cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-            *(short *)(cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-            *(short *)(cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+            *(short *)((int)cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
+            *(short *)((int)cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
+            *(short *)((int)cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
 
-            *(short *)(cDC + 0xda) = 8;
+            *(short *)((int)cDC + 0xda) = 8;
 
             goto LAB_8001a8b0;
         }
@@ -387,21 +375,21 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     LAB_8001a8c0:
 
         // if frame countdown is not finished
-        if ((int)*(short *)(cDC + 0xda) != 0)
+        if ((int)*(short *)((int)cDC + 0xda) != 0)
         {
-            *(int *)(scratchpad + 0x240) += ((int)*(short *)(cDC + 0xd4) * (int)*(short *)(cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x244) += ((int)*(short *)(cDC + 0xd6) * (int)*(short *)(cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x248) += ((int)*(short *)(cDC + 0xd8) * (int)*(short *)(cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x258) += ((int)*(short *)(cDC + 0xcc) * (int)*(short *)(cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x25c) += ((int)*(short *)(cDC + 0xce) * (int)*(short *)(cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x260) += ((int)*(short *)(cDC + 0xd0) * (int)*(short *)(cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x240) += ((int)*(short *)((int)cDC + 0xd4) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x244) += ((int)*(short *)((int)cDC + 0xd6) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x248) += ((int)*(short *)((int)cDC + 0xd8) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x258) += ((int)*(short *)((int)cDC + 0xcc) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x25c) += ((int)*(short *)((int)cDC + 0xce) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x260) += ((int)*(short *)((int)cDC + 0xd0) * (int)*(short *)((int)cDC + 0xda) >> 3);
 
             // decrease frame countdown
-            *(short *)(cDC + 0xda) += -1;
+            *(short *)((int)cDC + 0xda) += -1;
         }
     }
 
-    CAM_FindClosestQuadblock(scratchpad, cDC, d, *(short *)(scratchpad + 0x240));
+    CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
 
     if (
         (*(short *)(scratchpad + 0x3e) == 0) ||
@@ -411,15 +399,15 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     {
         if (*(int *)(scratchpad + 0x244) < (int)cDC->framesZoomingOut + (d->posCurr.y >> 8))
         {
-            *(short *)(cDC + 0xc2) = 8;
-            *(short *)(cDC + 0xc0) = cDC->framesZoomingOut;
+            *(short *)((int)cDC + 0xc2) = 8;
+            *(short *)((int)cDC + 0xc0) = cDC->framesZoomingOut;
             *(int *)(scratchpad + 0x244) = (int)cDC->framesZoomingOut + (d->posCurr.y >> 8);
 
             goto LAB_8001ab04;
         }
 
-        *(short *)(cDC + 0xc2) = 8;
-        *(short *)(cDC + 0xc0) = *(short *)(scratchpad + 0x244) - (short)(d->posCurr.y >> 8);
+        *(short *)((int)cDC + 0xc2) = 8;
+        *(short *)((int)cDC + 0xc0) = *(short *)(scratchpad + 0x244) - (short)(d->posCurr.y >> 8);
     }
 
     else
@@ -439,16 +427,16 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             *(int *)(scratchpad + 0x244) = x;
         }
 
-        x = (int)*(short *)(cDC + 0xc2);
+        x = (int)*(short *)((int)cDC + 0xc2);
         if (x != 0)
         {
             *(int *)(scratchpad + 0x244) =
 
                 (8 - x) * *(int *)(scratchpad + 0x244) +
-                    x * ((int)*(short *)(cDC + 0xc0) + (d->posCurr.y >> 8)) >>
+                    x * ((int)*(short *)((int)cDC + 0xc0) + (d->posCurr.y >> 8)) >>
                 3;
 
-            *(short *)(cDC + 0xc2) += -1;
+            *(short *)((int)cDC + 0xc2) += -1;
         }
     }
     cDC->framesZoomingOut = *(short *)(scratchpad + 0x244) - (d->posCurr.y >> 8);
@@ -461,9 +449,9 @@ LAB_8001ab04:
         *(int *)(scratchpad + 0x244) = zoom->vertDistance;
     }
 
-    if (cDC->unk_c6 != 0)
+    if (cDC->BlastedLerp.boolLerpPending != 0)
     {
-        *(int *)(scratchpad + 0x25c) = *(int *)(scratchpad + 0x244) + (int)*(short *)(cDC + 0xc8);
+        *(int *)(scratchpad + 0x25c) = *(int *)(scratchpad + 0x244) + (int)*(short *)((int)cDC + 0xc8);
     }
 
     if (d->kartState == KS_MASK_GRABBED)
@@ -499,7 +487,7 @@ LAB_8001ab04:
         x_00 = ratan2(*(long *)(scratchpad + 0x24c), x);
         pb->rot[1] = (short)x_00;
 
-        x_00 = SquareRoot0(*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
+        x_00 = SquareRoot0_stub(*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
                            *(int *)(scratchpad + 0x254) * *(int *)(scratchpad + 0x254));
         x_00 = ratan2(*(long *)(scratchpad + 0x250), x_00);
         pb->rot[0] = 0x800 - (short)x_00;
@@ -512,9 +500,9 @@ LAB_8001ab04:
     *(int *)(scratchpad + 0x218) = *(int *)(scratchpad + 0x244) - (int)pb->pos[1];
     *(int *)(scratchpad + 0x21c) = *(int *)(scratchpad + 0x248) - (int)pb->pos[2];
 
-    cDC->unkTriplet1[0] -= (*(int *)(scratchpad + 0x240) - *(int *)(cDC + 0x58));
-    cDC->unkTriplet1[1] -= (*(int *)(scratchpad + 0x244) - *(int *)(cDC + 0x5c));
-    cDC->unkTriplet1[2] -= (*(int *)(scratchpad + 0x248) - *(int *)(cDC + 0x60));
+    cDC->unkTriplet1[0] -= (*(int *)(scratchpad + 0x240) - *(int *)((int)cDC + 0x58));
+    cDC->unkTriplet1[1] -= (*(int *)(scratchpad + 0x244) - *(int *)((int)cDC + 0x5c));
+    cDC->unkTriplet1[2] -= (*(int *)(scratchpad + 0x248) - *(int *)((int)cDC + 0x60));
 
     if (2 < cDC->unkTriplet1[0])
     {
@@ -596,26 +584,21 @@ LAB_8001ab04:
 					// This will not act as a struct on stack,
 					// will make CAM_StartLine_FlyIn explode
 					
-					x = gGT->level1->ptrSpawnType1->pointers[ST1_CAMERA_PATH];
+					void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+					x = pointers[ST1_CAMERA_PATH];
 					
-                    /* struct offset 0x4 */ local_2c = x;
-                    /* struct offset 0xA */ local_26 = 0x8e;
-                    /* struct offset 0x8 */ local_28 = 0x96;
-                    /* struct offset 0x0 */ local_30 = local_2c + 0x354;
+					flyInData.ptrEnd = x + 0x354;
+					flyInData.ptrStart = x;
+					flyInData.frameCount1 = 0x96;
+					flyInData.frameCount2 = 0x8e;
 
                     // which frame of fly-in you are in
                     x = 0xa5 - (u_int)cDC->unk8E;
+					
+					if (x > 0x96)
+						x = 0x96;
 
-                    // cast to short
-                    sVar10 = (short)x;
-
-                    // set max value
-                    if (0x96 < sVar10)
-                    {
-                        sVar10 = 0x96;
-                    }
-
-                    CAM_StartLine_FlyIn(&local_30, 0x96, (int)sVar10, &local_40, &local_38);
+                    CAM_StartLine_FlyIn(&flyInData, 0x96, x, &local_40[0], &local_38[0]);
 
                     // get interpolation of fly-in [0 - 0x1000]
                     x = (int)cDC->unk8C;
@@ -651,31 +634,32 @@ LAB_8001ab04:
             else
             {
                 // cameraDC TransitionTo pos and rot
-                local_40 = *(short *)(cDC + 0xa4);
-                local_3e = *(short *)(cDC + 0xa6);
-                local_3c = *(short *)(cDC + 0xa8);
-                local_38 = *(short *)(cDC + 0xaa);
-                local_36 = *(short *)(cDC + 0xac);
-                local_34 = *(short *)(cDC + 0xae);
+                local_40[0] = *(short *)((int)cDC + 0xa4);
+                local_40[1] = *(short *)((int)cDC + 0xa6);
+                local_40[2] = *(short *)((int)cDC + 0xa8);
+                
+				local_38[0] = *(short *)((int)cDC + 0xaa);
+                local_38[1] = *(short *)((int)cDC + 0xac);
+                local_38[2] = *(short *)((int)cDC + 0xae);
 
                 // interpolate fly-in [0 to 0x1000]
-                x = (int)*(short *)(cDC + 0x8c);
+                x = (int)*(short *)((int)cDC + 0x8c);
             }
         }
 
         // if end-of-race battle
         else
         {
-            DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40, &local_38);
+            DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
 
             // reverse interpolation of fly-in [0x1000 to 0]
-            x = 0x1000 - (int)*(short *)(cDC + 0x8c);
+            x = 0x1000 - (int)*(short *)((int)cDC + 0x8c);
         }
 
         // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
         CAM_ProcessTransition(
 			&pb->pos[0], &pb->rot[0],
-			&local_40, &local_38,
+			&local_40[0], &local_38[0],
 			&pb->pos[0], &pb->rot[0],
 			x);
 
@@ -685,7 +669,7 @@ LAB_8001ab04:
 
         CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
 
-        x = (u_int) * (u_short *)(cDC + 0x9e) << 0x10;
+        x = (u_int) * (u_short *)((int)cDC + 0x9e) << 0x10;
         iVar14 = x >> 0x10;
 
         if (iVar14 != 0)
@@ -694,19 +678,10 @@ LAB_8001ab04:
 
             if (iVar12 <= iVar14)
             {
-                x = iVar14 - (x >> 0x1f) >> 1;
+                x = x >> 1;
 
                 if (iVar12 < x)
                 {
-                    if (x == 0)
-                    {
-                        trap(0x1c00);
-                    }
-                    if ((x == -1) && (iVar12 << 10 == -0x80000000))
-                    {
-                        trap(0x1800);
-                    }
-
                     // Sine(angle)
                     x = MATH_Sin(0x400 - (iVar12 << 10) / x);
 
@@ -714,21 +689,12 @@ LAB_8001ab04:
                 }
                 else
                 {
-
                     iVar14 = (iVar12 - iVar14) * 0x400;
-                    if (x == 0)
-                    {
-                        trap(0x1c00);
-                    }
-                    if ((x == -1) && (iVar14 == -0x80000000))
-                    {
-                        trap(0x1800);
-                    }
 
                     // Cosine(angle)
                     x = MATH_Cos(iVar14 / x);
 
-                    *(short *)(cDC + 0x8c) = 0x800 - (short)(x / 2);
+                    *(short *)((int)cDC + 0x8c) = 0x800 - (short)(x / 2);
                 }
             }
         }
