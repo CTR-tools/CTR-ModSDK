@@ -1,6 +1,6 @@
 #include <common.h>
 #include "utils.h"
-#include "saphi/icons.h"
+#include "saphi/saphi.h"
 
 static void InitGame();
 static void OnLoadingEnd();
@@ -146,7 +146,7 @@ static void InitGame()
 
 	int dummy;
 	LOAD_XnfFile("\\DLL.BIN;1", SAPHI_DLL_ADDR, &dummy);
-	LoadCustomIcons();
+	Saphi_LoadCustomIcons();
 }
 
 static void OnLoadingEnd()
@@ -181,7 +181,11 @@ static void OnLoadingEnd()
 	sdata->mainGameState = STATE_GAMEPLAY;
 	gGT->clockEffectEnabled &= 0xfffe;
 
-	if (sdata->gGT->levelID == CUSTOM_LEVEL_ID) { sdata->ptrActiveMenu = 0; }
+	if (sdata->gGT->levelID == CUSTOM_LEVEL_ID)
+	{
+		sdata->ptrActiveMenu = 0;
+		Saphi_ResetVariables();
+	}
 }
 
 static void ResetStage()

@@ -1,4 +1,4 @@
-#include "icons.h"
+#include "saphi.h"
 #include "utils.h"
 
 // CLUT = clut_0
@@ -102,7 +102,7 @@ static const CustomIcon icons[] = {
     },
 };
 
-void LoadCustomIcons()
+void Saphi_LoadCustomIcons()
 {
     const unsigned int ICON_COUNT = ARR_SIZE(icons);
     const uint32_t* images[] = {(uint32_t*)&champion, (uint32_t*)&god, (uint32_t*)&hero, (uint32_t*)&titan};
@@ -114,7 +114,7 @@ void LoadCustomIcons()
     }
 }
 
-static void DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned transparency, int scale, Color color)
+void Saphi_DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned transparency, int scale, Color color)
 {
 	PolyFT4 * p;
 	GetPrimMem(p);
@@ -170,24 +170,4 @@ static void DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned tran
 	p->v[3].texCoords.v = v1;
 
 	AddPrimitive(p, ot);
-}
-
-void RaceUI()
-{
-    UI_RenderFrame_Racing();
-
-    struct GameTracker* gGT = sdata->gGT;
-
-    Point pos = { .x = 256, .y = 10 };
-    Color color = { .r = 0x7F, .g = 0x7F, .b = 0x7F };
-    DrawCustomIcon(ICON_CHAMPION, pos, gGT->pushBuffer_UI.ptrOT, 0, 0x1000, color);
-
-    pos.y = 40;
-    DrawCustomIcon(ICON_GOD, pos, gGT->pushBuffer_UI.ptrOT, 0, 0x1000, color);
-
-    pos.y = 70;
-    DrawCustomIcon(ICON_TITAN, pos, gGT->pushBuffer_UI.ptrOT, 0, 0x1000, color);
-
-    pos.y = 100;
-    DrawCustomIcon(ICON_HERO, pos, gGT->pushBuffer_UI.ptrOT, 0, 0x1000, color);
 }

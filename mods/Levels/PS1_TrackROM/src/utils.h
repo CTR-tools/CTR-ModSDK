@@ -21,7 +21,6 @@
 #define GHOST_LOCATION (GHOST_SIZE_LOCATION + sizeof(int))
 #define DRIVER_LOCATION (GHOST_LOCATION + GHOST_FILESIZE)
 /* First free byte: 0x802BE670 : Pre-calculated value after every driver is loaded */
-#define SAPHI_DLL_ADDR 0x802BE670
 #define CUSTOM_LEV_MAP_LOCATION 0x80300000
 #define CUSTOM_LEV_LOCATION (CUSTOM_LEV_MAP_LOCATION + sizeof(int))
 
