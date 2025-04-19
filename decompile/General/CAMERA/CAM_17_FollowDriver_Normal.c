@@ -6,9 +6,6 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad;
     char state;
     char flyInDone;
-    short sVar2;
-    short sVar3;
-    short sVar4;
     short uVar8;
     u_short uVar9;
     short sVar10;
@@ -107,11 +104,12 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // 0x20e
     // camera RotY
     *(u_short *)(scratchpad + 0x20e) =
-        d->rotCurr.w + // camera rotation
-            d->angle + // player rotation
-            0x800 +    // constant value
-            sVar10 &
-        0xfff; // 0x800 only if reverse cam is active
+        (
+			d->rotCurr.w +
+			d->angle +
+			0x800 +
+			sVar10 
+		) & 0xfff;
 
     *(short *)(scratchpad + 0x210) = cDC->desiredRot[0] * -2;
 
@@ -196,19 +194,18 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // rotX
     *(short *)(scratchpad + 0x20c) = uVar8;
 
-    // camera rotation
-    sVar2 = d->rotCurr.w;
-
-    // player rotation
-    sVar3 = d->angle;
-
-    sVar4 = d->turnAngleCurr;
-
     // rotZ
     *(short *)(scratchpad + 0x210) = 0;
 
     // rotY
-    *(u_short *)(scratchpad + 0x20e) = sVar4 + sVar3 + sVar2 + 0x800 + sVar10 & 0xfff;
+    *(u_short *)(scratchpad + 0x20e) = 
+		(
+			d->rotCurr.w +
+			d->angle +
+			d->turnAngleCurr +
+			0x800 + 
+			sVar10
+		) & 0xfff;
 
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
