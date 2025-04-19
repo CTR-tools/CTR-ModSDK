@@ -210,34 +210,27 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
 
-    *(short *)(scratchpad + 0x20c) = 0;
-    *(short *)(scratchpad + 0x20e) = 0;
-
     // if racer is not damaged
     if ((d->actionsFlagSet & 0x4000) == 0)
     {
-        sVar10 = cDC->unk1A + -8;
-        cDC->unk1A = sVar10;
-
-        if (sVar10 < -0x20)
-        {
-            cDC->unk1A = 0xffe0;
-        }
+        cDC->unk1A -= 8;
+        if (cDC->unk1A < -0x20)
+            cDC->unk1A = -0x20;
     }
 
     // if racer is damaged
     else
     {
-        uVar9 = cDC->unk1A + 8;
-        cDC->unk1A = uVar9;
-        if (0 < (int)((u_int)uVar9 << 0x10))
-        {
-            cDC->unk1A = 0;
-        }
+		cDC->unk1A += 8;
+		if (cDC->unk1A > 0)
+			cDC->unk1A = 0;
     }
 
+	// Z, Y, X
     *(short *)(scratchpad + 0x210) = cDC->unk1A;
-
+    *(short *)(scratchpad + 0x20e) = 0;
+    *(short *)(scratchpad + 0x20c) = 0;
+	
     gte_SetRotMatrix((MATRIX *)(scratchpad + 0x220));
 
     psVar12 = (SVECTOR *)(scratchpad + 0x20c);
@@ -482,30 +475,13 @@ LAB_8001ab04:
     cDC->unkTriplet1[1] -= (*(int *)(scratchpad + 0x244) - *(int *)((int)cDC + 0x5c));
     cDC->unkTriplet1[2] -= (*(int *)(scratchpad + 0x248) - *(int *)((int)cDC + 0x60));
 
-    if (2 < cDC->unkTriplet1[0])
-    {
-        cDC->unkTriplet1[0] = 2;
-    }
-    if (cDC->unkTriplet1[0] < -2)
-    {
-        cDC->unkTriplet1[0] = 0xfffffffe;
-    }
-    if (2 < cDC->unkTriplet1[1])
-    {
-        cDC->unkTriplet1[1] = 2;
-    }
-    if (cDC->unkTriplet1[1] < -2)
-    {
-        cDC->unkTriplet1[1] = 0xfffffffe;
-    }
-    if (2 < cDC->unkTriplet1[2])
-    {
-        cDC->unkTriplet1[2] = 2;
-    }
-    if (cDC->unkTriplet1[2] < -2)
-    {
-        cDC->unkTriplet1[2] = 0xfffffffe;
-    }
+    if (cDC->unkTriplet1[0] > 2)  cDC->unkTriplet1[0] = 2;
+    if (cDC->unkTriplet1[1] > 2)  cDC->unkTriplet1[1] = 2;
+    if (cDC->unkTriplet1[2] > 2)  cDC->unkTriplet1[2] = 2;
+	
+    if (cDC->unkTriplet1[0] < -2) cDC->unkTriplet1[0] = -2;
+    if (cDC->unkTriplet1[1] < -2) cDC->unkTriplet1[1] = -2;
+    if (cDC->unkTriplet1[2] < -2) cDC->unkTriplet1[2] = -2;
 
     if (d->kartState != KS_MASK_GRABBED)
     {
@@ -527,207 +503,211 @@ LAB_8001ab04:
 
     cDC->flags &= 0xffffffef;
 
-    if (
-        // if transitioning, or end-of-race battle
-        ((backupFlags & 0x204) != 0) ||
+	if (
+			// transitioning, end-race battle, intro-race
+			((backupFlags & 0x204) == 0) &&
+			((gGT->gameMode1 & START_OF_RACE) == 0)
+		)
+	{
+		return;
+	}
 
-        // If drawing intro-race cutscene
-        ((gGT->gameMode1 & START_OF_RACE) != 0))
+	// === Transition, end-race battle, intro-race ===
+
+    // if not end-of-race battle
+    if ((backupFlags & 4) == 0)
     {
-        // if not end-of-race battle
-        if ((backupFlags & 4) == 0)
-        {
-            // if not transitioning
-            if ((backupFlags & 0x200) == 0)
-            {
-                flyInDone = false;
-
-				// === Naughty Dog Bug ===
-				// if pointer count is 7 (ntropy/noxide) and camera path is nullptr, 
-				// the game does not check that nullptr and explodes. Only impacts 
-				// custom levels, that contain ghost data, and no camera path
-
-                // if fly-in data is not in LEV
-                if (gGT->level1->ptrSpawnType1->count < 4)
-                {
-                    // startline fly-in is done
-                    flyInDone = true;
-                    x = 0x1000;
-                }
-
-                // if fly-in data exists in LEV
-                else
-                {
-					// === Decomp Bug ===
-					// This will not act as a struct on stack,
-					// will make CAM_StartLine_FlyIn explode
-					
-					void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-					x = pointers[ST1_CAMERA_PATH];
-					
-					flyInData.ptrEnd = x + 0x354;
-					flyInData.ptrStart = x;
-					flyInData.frameCount1 = 0x96;
-					flyInData.frameCount2 = 0x8e;
-
-                    // which frame of fly-in you are in
-                    x = 0xa5 - (u_int)cDC->unk8E;
-					
-					if (x > 0x96)
-						x = 0x96;
-
-                    CAM_StartLine_FlyIn(&flyInData, 0x96, x, &local_40[0], &local_38[0]);
-
-                    // get interpolation of fly-in [0 - 0x1000]
-                    x = (int)cDC->unk8C;
-                }
-
-                // if timer for fly-in camera is finished
-                if (cDC->unk8E < 1)
-                {
-                    // startline fly-in is done
-                    flyInDone = true;
-                }
-
-                // If you press Triangle
-                if ((pad[d->driverID].buttonsTapped & 0x40000) != 0)
-                {
-                    // Skip Intro-Race cutscene, jump to traffic lights
-                    cDC->flags |= 9;
-
-                    // startline fly-in is done
-                    flyInDone = true;
-                }
-                // if startline fly-in is done
-                if (flyInDone)
-                {
-                    // enable drawing HUD
-                    gGT->hudFlags |= 1;
-                    gGT->gameMode1 &= ~(START_OF_RACE);
-                    gGT->hudFlags |= 0x20;
-                }
-            }
-
-            // if transitioning
-            else
-            {
-                // cameraDC TransitionTo pos and rot
-                local_40[0] = *(short *)((int)cDC + 0xa4);
-                local_40[1] = *(short *)((int)cDC + 0xa6);
-                local_40[2] = *(short *)((int)cDC + 0xa8);
-                
-				local_38[0] = *(short *)((int)cDC + 0xaa);
-                local_38[1] = *(short *)((int)cDC + 0xac);
-                local_38[2] = *(short *)((int)cDC + 0xae);
-
-                // interpolate fly-in [0 to 0x1000]
-                x = (int)*(short *)((int)cDC + 0x8c);
-            }
-        }
-
-        // if end-of-race battle
-        else
-        {
-            DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
-
-            // reverse interpolation of fly-in [0x1000 to 0]
-            x = 0x1000 - (int)*(short *)((int)cDC + 0x8c);
-        }
-
-        // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
-        CAM_ProcessTransition(
-			&pb->pos[0], &pb->rot[0],
-			&local_40[0], &local_38[0],
-			&pb->pos[0], &pb->rot[0],
-			x);
-
-        *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
-        *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
-        *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
-
-        CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
-
-        x = (u_int) * (u_short *)((int)cDC + 0x9e) << 0x10;
-        iVar14 = x >> 0x10;
-
-        if (iVar14 != 0)
-        {
-            iVar12 = (int)cDC->unk8E;
-
-            if (iVar12 <= iVar14)
-            {
-                x = x >> 1;
-
-                if (iVar12 < x)
-                {
-                    // Sine(angle)
-                    x = MATH_Sin(0x400 - (iVar12 << 10) / x);
-
-                    cDC->unk8C = (short)(x / 2) + 0x800;
-                }
-                else
-                {
-                    iVar14 = (iVar12 - iVar14) * 0x400;
-
-                    // Cosine(angle)
-                    x = MATH_Cos(iVar14 / x);
-
-                    *(short *)((int)cDC + 0x8c) = 0x800 - (short)(x / 2);
-                }
-            }
-        }
-
-        // backup  flags
-        backupFlags = cDC->flags;
-
-        // if not transitioning away from player
+        // if not transitioning
         if ((backupFlags & 0x200) == 0)
         {
-            // If game is paused
-            if ((gGT->gameMode1 & PAUSE_ALL) != 0)
-                return;
+            flyInDone = false;
 
-            // decrement counter for fly-in camera
-            sVar10 = cDC->unk8E + -1;
-            if (cDC->unk8E < 1)
-                return;
-        }
+			// === Naughty Dog Bug ===
+			// if pointer count is 7 (ntropy/noxide) and camera path is nullptr, 
+			// the game does not check that nullptr and explodes. Only impacts 
+			// custom levels, that contain ghost data, and no camera path
 
-        // if transitioning from player
-        else
-        {
-            // if not transitioning back to player
-            if ((backupFlags & 0x400) == 0)
+            // if fly-in data is not in LEV
+            if (gGT->level1->ptrSpawnType1->count < 4)
             {
-                // increment counter until limit is hit
-                sVar10 = cDC->unk8E + 1;
-
-                // compare two transition timers
-                if (cDC->frameCounterTransition <= cDC->unk8E)
-                {
-                    // stop transitioning away from player,
-                    // sit stationary away from player
-                    cDC->flags |= 0x800;
-                    return;
-                }
+                // startline fly-in is done
+                flyInDone = true;
+                x = 0x1000;
             }
 
-            // if transitioning back to player
+            // if fly-in data exists in LEV
             else
             {
-                // decrement counter to zero
-                sVar10 = cDC->unk8E + -1;
+				// === Decomp Bug ===
+				// This will not act as a struct on stack,
+				// will make CAM_StartLine_FlyIn explode
+				
+				void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+				x = pointers[ST1_CAMERA_PATH];
+				
+				flyInData.ptrEnd = x + 0x354;
+				flyInData.ptrStart = x;
+				flyInData.frameCount1 = 0x96;
+				flyInData.frameCount2 = 0x8e;
 
-                // if timer is over
-                if (cDC->unk8E < 1)
-                {
-                    // remove all transition flags
-                    cDC->flags &= 0xfffff1ff;
-                    return;
-                }
+                // which frame of fly-in you are in
+                x = 0xa5 - (u_int)cDC->unk8E;
+				
+				if (x > 0x96)
+					x = 0x96;
+
+                CAM_StartLine_FlyIn(&flyInData, 0x96, x, &local_40[0], &local_38[0]);
+
+                // get interpolation of fly-in [0 - 0x1000]
+                x = (int)cDC->unk8C;
+            }
+
+            // if timer for fly-in camera is finished
+            if (cDC->unk8E < 1)
+            {
+                // startline fly-in is done
+                flyInDone = true;
+            }
+
+            // If you press Triangle
+            if ((pad[d->driverID].buttonsTapped & 0x40000) != 0)
+            {
+                // Skip Intro-Race cutscene, jump to traffic lights
+                cDC->flags |= 9;
+
+                // startline fly-in is done
+                flyInDone = true;
+            }
+            // if startline fly-in is done
+            if (flyInDone)
+            {
+                // enable drawing HUD
+                gGT->hudFlags |= 1;
+                gGT->gameMode1 &= ~(START_OF_RACE);
+                gGT->hudFlags |= 0x20;
             }
         }
-        cDC->unk8E = sVar10;
+
+        // if transitioning
+        else
+        {
+            // cameraDC TransitionTo pos and rot
+            local_40[0] = *(short *)((int)cDC + 0xa4);
+            local_40[1] = *(short *)((int)cDC + 0xa6);
+            local_40[2] = *(short *)((int)cDC + 0xa8);
+            
+			local_38[0] = *(short *)((int)cDC + 0xaa);
+            local_38[1] = *(short *)((int)cDC + 0xac);
+            local_38[2] = *(short *)((int)cDC + 0xae);
+
+            // interpolate fly-in [0 to 0x1000]
+            x = (int)*(short *)((int)cDC + 0x8c);
+        }
     }
+
+    // if end-of-race battle
+    else
+    {
+        DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
+
+        // reverse interpolation of fly-in [0x1000 to 0]
+        x = 0x1000 - (int)*(short *)((int)cDC + 0x8c);
+    }
+
+    // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
+    CAM_ProcessTransition(
+		&pb->pos[0], &pb->rot[0],
+		&local_40[0], &local_38[0],
+		&pb->pos[0], &pb->rot[0],
+		x);
+
+    *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
+    *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
+    *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
+
+    CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
+
+    x = (u_int) * (u_short *)((int)cDC + 0x9e) << 0x10;
+    iVar14 = x >> 0x10;
+
+    if (iVar14 != 0)
+    {
+        iVar12 = (int)cDC->unk8E;
+
+        if (iVar12 <= iVar14)
+        {
+            x = x >> 1;
+
+            if (iVar12 < x)
+            {
+                // Sine(angle)
+                x = MATH_Sin(0x400 - (iVar12 << 10) / x);
+
+                cDC->unk8C = (short)(x / 2) + 0x800;
+            }
+            else
+            {
+                iVar14 = (iVar12 - iVar14) * 0x400;
+
+                // Cosine(angle)
+                x = MATH_Cos(iVar14 / x);
+
+                *(short *)((int)cDC + 0x8c) = 0x800 - (short)(x / 2);
+            }
+        }
+    }
+
+    // backup  flags
+    backupFlags = cDC->flags;
+
+    // if not transitioning away from player
+    if ((backupFlags & 0x200) == 0)
+    {
+        // If game is paused
+        if ((gGT->gameMode1 & PAUSE_ALL) != 0)
+            return;
+
+        // decrement counter for fly-in camera
+        sVar10 = cDC->unk8E + -1;
+        if (cDC->unk8E < 1)
+            return;
+    }
+
+    // if transitioning from player
+    else
+    {
+        // if not transitioning back to player
+        if ((backupFlags & 0x400) == 0)
+        {
+            // increment counter until limit is hit
+            sVar10 = cDC->unk8E + 1;
+
+            // compare two transition timers
+            if (cDC->frameCounterTransition <= cDC->unk8E)
+            {
+                // stop transitioning away from player,
+                // sit stationary away from player
+                cDC->flags |= 0x800;
+                return;
+            }
+        }
+
+        // if transitioning back to player
+        else
+        {
+            // decrement counter to zero
+            sVar10 = cDC->unk8E + -1;
+
+            // if timer is over
+            if (cDC->unk8E < 1)
+            {
+                // remove all transition flags
+                cDC->flags &= 0xfffff1ff;
+                return;
+            }
+        }
+    }
+    cDC->unk8E = sVar10;
+
     return;
 }
