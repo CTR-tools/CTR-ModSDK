@@ -1878,6 +1878,8 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   undefined2 local_38;
   undefined2 local_36;
   undefined2 local_34;
+  
+  // struct to CAM_StartLine_FlyIn
   int local_30;
   int local_2c;
   undefined2 local_28;
@@ -2145,9 +2147,11 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   *(int *)(param_4 + 0x260) = *(int *)(param_4 + 0x260) + (int)*(short *)(param_4 + 0x210);
   *(int *)(param_4 + 0x25c) =
        *(int *)(param_4 + 0x25c) + (int)*(short *)(param_4 + 0x20e) + (int)sVar10;
+
   *(undefined2 *)(param_1 + 0x10) =
        (short)((uint)((int)param_5[6] * (int)*(short *)(param_1 + 0x10) +
                      (0x100 - (int)param_5[6]) * (int)*(short *)(param_2 + 0x2f0)) >> 8);
+
   //cVar1 = kart state
   cVar1 = *(char *)(param_2 + 0x376);
 
@@ -2465,10 +2469,12 @@ LAB_8001ab04:
         else
 		{
 		  // LEV -> ptrSpawn1 -> ptr_intro_cam
-          local_2c = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[4];
-          local_26 = 0x8e;
-          local_28 = 0x96;
-          local_30 = local_2c + 0x354;
+		  x = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[4];
+		  
+          /* struct offset 0x4 */ local_2c = x;
+		  /* struct offset 0xA */ local_26 = 0x8e;
+          /* struct offset 0x8 */ local_28 = 0x96;
+          /* struct offset 0x0 */ local_30 = local_2c + 0x354;
 
 		  // which frame of fly-in you are in
           x = 0xa5 - (uint)*(ushort *)(param_1 + 0x8e);

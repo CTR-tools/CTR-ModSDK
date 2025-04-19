@@ -22,6 +22,14 @@ struct ZoomData
 	short vertDistance;
 };
 
+struct FlyInData
+{
+	int ptrEnd;
+	int ptrStart;
+	short frameCount1;
+	short frameCount2;
+};
+
 struct CameraDC
 {
 	// 0x0
