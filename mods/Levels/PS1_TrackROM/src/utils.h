@@ -4,7 +4,6 @@
 #include <common.h>
 
 #define ARR_SIZE(x) (sizeof(x) / sizeof(x[0]))
-
 #define CUSTOM_LEVEL_ID 0
 #define DISABLE_GHOSTS
 
@@ -58,8 +57,6 @@ enum HotReloadSteps
     HOT_RELOAD_EXEC = 4,
 };
 
-void PatchInstructions();
-void PatchMenus();
 void HotReload();
 void HotReloadVRAM();
 

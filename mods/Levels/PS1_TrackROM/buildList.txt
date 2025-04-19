@@ -6,19 +6,25 @@
 // Saphi
 926, DLL, 0x802BE670, 0x0, src/saphi/icons.c src/saphi/prim.c, DLL.BIN
 
+// patching menus
+926, exe, 0x800844E4, 0x0, src/hacks/pause_menu.c
+926, 230, 0x800ab9f0, 0x8AF4, src/hacks/title_main_menu.c
+926, 224, 0x8009f6fc, 0xD38, src/hacks/tt_menu_save.c
+926, 224, 0x8009f6fc, 0xD5C, src/hacks/tt_menu.c
+926, 224, 0x8009f6fc, 0xD88, src/hacks/tt_menu_no_save.c
+
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
-// Race UI hook
-926, exe, 0x80036740, 0x0, src/patches/raceui.s
-
-// Hot patches, hot reload
-common, exe, rdata_free, 0x0, src/hacks.c
+// Assembly patches
 926, exe, 0x800150c0, 0x0, src/patches/nop.bin
 926, exe, 0x800277c8, 0x0, src/patches/nop.bin
 926, exe, 0x800277d0, 0x0, src/patches/nop.bin
 926, exe, 0x800277f0, 0x0, src/patches/killThread.s
 926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
+
+// Race UI hook
+926, exe, 0x80036740, 0x0, src/patches/raceui.s
 
 // 229 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
@@ -31,6 +37,7 @@ common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 
 // exe
+common, exe, rdata_free, 0x0, src/hot_reload.c
 common, exe, LOAD_TenStages, 0x0, src/load_lev.c
 common, exe, main, 0x0, src/ctr_main.c
 common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
