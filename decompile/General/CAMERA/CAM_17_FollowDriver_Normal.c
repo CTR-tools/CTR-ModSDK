@@ -246,13 +246,8 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     cDC->desiredRot[0] =
         (
 			(zoom->angle[1] * (int)cDC->desiredRot[0]) +
-            ((0x100 - (int)zoom->angle[1]) * (int)d->rotCurr.y)
+            ((0x100 - (int)zoom->angle[1]) * (int)d->rotCurr.z)
         ) >> 8;
-
-
-
-	// === Camera Flipping is before  line 250 ====
-
 
 
 

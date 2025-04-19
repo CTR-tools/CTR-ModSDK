@@ -2147,9 +2147,11 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   *(int *)(param_4 + 0x260) = *(int *)(param_4 + 0x260) + (int)*(short *)(param_4 + 0x210);
   *(int *)(param_4 + 0x25c) =
        *(int *)(param_4 + 0x25c) + (int)*(short *)(param_4 + 0x20e) + (int)sVar10;
+
   *(undefined2 *)(param_1 + 0x10) =
        (short)((uint)((int)param_5[6] * (int)*(short *)(param_1 + 0x10) +
                      (0x100 - (int)param_5[6]) * (int)*(short *)(param_2 + 0x2f0)) >> 8);
+
   //cVar1 = kart state
   cVar1 = *(char *)(param_2 + 0x376);
 
