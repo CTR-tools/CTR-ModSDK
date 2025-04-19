@@ -119,9 +119,9 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
 
     if (((cDC->flags & 0x80) != 0) &&
-        (x = (int)((u_int)d->fireSpeedCap << 0x10) >> 0x14, cDC->unk_b8[4] < x))
+        (x = (int)((u_int)d->fireSpeedCap << 0x10) >> 0x14, *(int*)&cDC->unk_b8[4] < x))
     {
-        cDC->unk_b8[4] = x;
+        *(int*)&cDC->unk_b8[4] = x;
     }
     *(short *)(scratchpad + 0x20c) = 0;
     *(short *)(scratchpad + 0x20e) = 0;
@@ -135,47 +135,27 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
     *(short *)(scratchpad + 0x210) = uVar8;
 
-    if (cDC->unk_b8[4] == 0)
+    if (*(int*)&cDC->unk_b8[4] == 0)
     {
-        if (
-            // compare &&
-            (cDC->unk_b8[0] != 0) &&
-
-            (
-                x = cDC->unk_b8[0] + gGT->elapsedTimeMS * -0x10,
-
-                cDC->unk_b8[0] = x,
-
-                // compare <
-                x < 0
-            ))
-        {
-            cDC->unk_b8[0] = 0;
-        }
+		if (*(int*)&cDC->unk_b8[0] != 0)
+		{
+			*(int*)&cDC->unk_b8[0] -= gGT->elapsedTimeMS * 0x10;
+			
+			if (*(int*)&cDC->unk_b8[0] < 0)
+				*(int*)&cDC->unk_b8[0] = 0;
+		}
     }
     else
     {
+        *(int*)&cDC->unk_b8[0] += gGT->elapsedTimeMS * 0x40;
+        if (*(int*)&cDC->unk_b8[0] > 0x6000)
+            *(int*)&cDC->unk_b8[0] = 0x6000;
 
-        // 0xb8 is a countdown timer in MS
-        x = cDC->unk_b8[0] + gGT->elapsedTimeMS * 0x40;
-        cDC->unk_b8[0] = x;
-        // maximum value of 0x6000
-        if (0x6000 < x)
-        {
-            cDC->unk_b8[0] = 0x6000;
-        }
-
-        // 0xbc is a countdown timer in MS
-
-        x = cDC->unk_b8[4] - gGT->elapsedTimeMS;
-        cDC->unk_b8[4] = x;
-        // maximum value of 0
-        if (x < 0)
-        {
-            cDC->unk_b8[4] = 0;
-        }
+        *(int*)&cDC->unk_b8[4] -= gGT->elapsedTimeMS;
+        if (*(int*)&cDC->unk_b8[4] < 0)
+            *(int*)&cDC->unk_b8[4] = 0;
     }
-    *(short *)(scratchpad + 0x210) += cDC->unk_b8[0] >> 8;
+    *(short *)(scratchpad + 0x210) += *(int*)&cDC->unk_b8[0] >> 8;
 
     gte_SetRotMatrix((MATRIX *)(scratchpad + 0x220));
     psVar12 = (SVECTOR *)(scratchpad + 0x20c);
