@@ -58,8 +58,6 @@ enum HotReloadSteps
     HOT_RELOAD_EXEC = 4,
 };
 
-void PatchInstructions();
-void PatchMainMenu();
 void HotReload();
 void HotReloadVRAM();
 
