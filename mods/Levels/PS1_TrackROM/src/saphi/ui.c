@@ -13,8 +13,8 @@ static void ElapsedTimeToTotalTime(char * out, int elapsedTime)
 	totalTime.seconds = elapsedTime / SECONDS(1);
 	elapsedTime -= SECONDS(1) * totalTime.seconds;
 	totalTime.miliseconds = (elapsedTime * 1000) / SECONDS(1);
-    if (totalTime.hours > 0) { sprintf(out, "%d:%02d:%02d.%03d", totalTime.hours, totalTime.minutes, totalTime.seconds, totalTime.miliseconds); }
-    else { sprintf(out, "%d:%02d.%03d", totalTime.minutes, totalTime.seconds, totalTime.miliseconds); }
+    if (totalTime.hours > 0) { sprintf(out, "%d:%02d:%02d.%02d", totalTime.hours, totalTime.minutes, totalTime.seconds, totalTime.miliseconds); }
+    else { sprintf(out, "%d:%02d.%02d", totalTime.minutes, totalTime.seconds, totalTime.miliseconds); }
 }
 
 void Saphi_ResetVariables()
@@ -29,7 +29,12 @@ void Saphi_RaceUI()
     struct GameTracker* gGT = sdata->gGT;
     struct GamepadBuffer * controller = &sdata->gGamepads->gamepad[0];
 
-    if (controller->buttonsTapped & BTN_SELECT) { showStandards = !showStandards; }
+    if (controller->buttonsTapped & BTN_SELECT)
+    {
+        showStandards = !showStandards;
+        if (showStandards) { gGT->gameMode1 |= PAUSE_1; }
+        else { gGT->gameMode1 &= ~PAUSE_1; }
+    }
 
     if (showStandards)
     {
@@ -48,8 +53,8 @@ void Saphi_RaceUI()
         Standard* standardTimes = STANDARDS_ADDR;
         for (int i = 0; i < ARR_SIZE(icons); i++)
         {
-            char lapTime[12];
-            char courseTime[12];
+            char lapTime[11];
+            char courseTime[11];
             ElapsedTimeToTotalTime(lapTime, standardTimes[i].lap);
             ElapsedTimeToTotalTime(courseTime, standardTimes[i].course);
             DecalFont_DrawLine(standards[i], menuX + 108, pos.y, FONT_SMALL, JUSTIFY_CENTER | PENTA_WHITE);
