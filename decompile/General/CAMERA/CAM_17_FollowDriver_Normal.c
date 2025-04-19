@@ -107,7 +107,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // 0x20e
     // camera RotY
     *(u_short *)(scratchpad + 0x20e) =
-        d->rotCurr.z + // camera rotation
+        d->rotCurr.w + // camera rotation
             d->angle + // player rotation
             0x800 +    // constant value
             sVar10 &
@@ -197,7 +197,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     *(short *)(scratchpad + 0x20c) = uVar8;
 
     // camera rotation
-    sVar2 = d->rotCurr.z;
+    sVar2 = d->rotCurr.w;
 
     // player rotation
     sVar3 = d->angle;
