@@ -1,5 +1,6 @@
 #include <common.h>
 #include "utils.h"
+#include "saphi/icons.h"
 
 static void InitGame();
 static void OnLoadingEnd();
@@ -142,6 +143,10 @@ static void InitGame()
 		g_charModelPtrs[i] = (struct Model*) (currDriver + 4);
 		currDriver += fileSize;
 	}
+
+	int dummy;
+	LOAD_XnfFile("\\DLL.BIN;1", SAPHI_DLL_ADDR, &dummy);
+	LoadCustomIcons();
 }
 
 static void OnLoadingEnd()

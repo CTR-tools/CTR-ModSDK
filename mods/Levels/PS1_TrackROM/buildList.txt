@@ -3,6 +3,9 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
+// Saphi
+926, DLL, 0x802BE670, 0x0, src/saphi/icons.c src/saphi/prim.c, DLL.BIN
+
 // patching menus
 926, exe, 0x800844E4, 0x0, src/hacks/pause_menu.c
 926, 230, 0x800ab9f0, 0x8AF4, src/hacks/title_main_menu.c
@@ -19,6 +22,9 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 926, exe, 0x800277d0, 0x0, src/patches/nop.bin
 926, exe, 0x800277f0, 0x0, src/patches/killThread.s
 926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
+
+// Race UI hook
+926, exe, 0x80036740, 0x0, src/patches/raceui.s
 
 // 229 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
