@@ -193,8 +193,9 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
     *(int *)(scratchpad + 600) = d->posCurr.x >> 8;
     *(int *)(scratchpad + 0x25c) = d->posCurr.y >> 8;
-    *(int *)(scratchpad + 600) += *(int *)(scratchpad + 0x27c);
     *(int *)(scratchpad + 0x260) = d->posCurr.z >> 8;
+	
+    *(int *)(scratchpad + 600) += *(int *)(scratchpad + 0x27c);
     *(int *)(scratchpad + 0x260) += *(int *)(scratchpad + 0x284);
     *(int *)(scratchpad + 0x240) += *(int *)(scratchpad + 600);
 
@@ -273,9 +274,10 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     *(int *)(scratchpad + 0x25c) += (int)*(short *)(scratchpad + 0x20e) + (int)zoom->angle[2];
 
     cDC->desiredRot[0] =
-        (short)((u_int)(int)zoom->angle[1] * (int)cDC->desiredRot[0] +
-                    (0x100 - (int)zoom->angle[1]) * (int)d->rotCurr.y >>
-                8);
+        (
+			(zoom->angle[1] * (int)cDC->desiredRot[0]) +
+            ((0x100 - (int)zoom->angle[1]) * (int)d->rotCurr.y)
+        ) >> 8;
 
     state = d->kartState;
 
@@ -308,15 +310,15 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     {
         cDC->BlastedLerp.boolLerpPending = 0;
 
-        *(short *)((int)cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
-        *(short *)((int)cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-        *(short *)((int)cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+        cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
+        cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
+        cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
 
-        *(short *)((int)cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-        *(short *)((int)cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-        *(short *)((int)cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+        cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
+        cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
+        cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
 
-        *(short *)((int)cDC + 0xda) = 8;
+        cDC->BlastedLerp.framesRemaining = 8;
     }
 
     // if not arcade end-of-race
@@ -359,13 +361,13 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             // camera distance = camera speed, minus camera position
             cDC->BlastedLerp.boolLerpPending = 0;
 
-            *(short *)((int)cDC + 0xcc) = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
-            *(short *)((int)cDC + 0xce) = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-            *(short *)((int)cDC + 0xd0) = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+            cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(scratchpad + 0x258);
+            cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
+            cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
 
-            *(short *)((int)cDC + 0xd4) = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-            *(short *)((int)cDC + 0xd6) = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-            *(short *)((int)cDC + 0xd8) = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+            cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
+            cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
+            cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
 
             *(short *)((int)cDC + 0xda) = 8;
 
@@ -375,17 +377,18 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     LAB_8001a8c0:
 
         // if frame countdown is not finished
-        if ((int)*(short *)((int)cDC + 0xda) != 0)
+        if (cDC->BlastedLerp.framesRemaining != 0)
         {
-            *(int *)(scratchpad + 0x240) += ((int)*(short *)((int)cDC + 0xd4) * (int)*(short *)((int)cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x244) += ((int)*(short *)((int)cDC + 0xd6) * (int)*(short *)((int)cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x248) += ((int)*(short *)((int)cDC + 0xd8) * (int)*(short *)((int)cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x258) += ((int)*(short *)((int)cDC + 0xcc) * (int)*(short *)((int)cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x25c) += ((int)*(short *)((int)cDC + 0xce) * (int)*(short *)((int)cDC + 0xda) >> 3);
-            *(int *)(scratchpad + 0x260) += ((int)*(short *)((int)cDC + 0xd0) * (int)*(short *)((int)cDC + 0xda) >> 3);
+            *(int *)(scratchpad + 0x240) += (cDC->BlastedLerp.desiredPos[0] * cDC->BlastedLerp.framesRemaining) >> 3;
+            *(int *)(scratchpad + 0x244) += (cDC->BlastedLerp.desiredPos[1] * cDC->BlastedLerp.framesRemaining) >> 3;
+            *(int *)(scratchpad + 0x248) += (cDC->BlastedLerp.desiredPos[2] * cDC->BlastedLerp.framesRemaining) >> 3;
+
+            *(int *)(scratchpad + 0x258) += (cDC->BlastedLerp.desiredRot[0] * cDC->BlastedLerp.framesRemaining) >> 3;
+            *(int *)(scratchpad + 0x25c) += (cDC->BlastedLerp.desiredRot[1] * cDC->BlastedLerp.framesRemaining) >> 3;
+            *(int *)(scratchpad + 0x260) += (cDC->BlastedLerp.desiredRot[2] * cDC->BlastedLerp.framesRemaining) >> 3;
 
             // decrease frame countdown
-            *(short *)((int)cDC + 0xda) += -1;
+            cDC->BlastedLerp.framesRemaining--;
         }
     }
 
