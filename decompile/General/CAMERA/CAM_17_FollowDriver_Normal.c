@@ -249,6 +249,13 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             ((0x100 - (int)zoom->angle[1]) * (int)d->rotCurr.y)
         ) >> 8;
 
+
+
+	// === Camera Flipping is before  line 250 ====
+
+
+
+
     state = d->kartState;
 
     if (state == KS_MASK_GRABBED)
