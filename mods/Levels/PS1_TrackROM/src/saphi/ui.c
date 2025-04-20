@@ -31,11 +31,11 @@ void Saphi_ResetVariables()
     showUI = 0;
 }
 
-static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int selfPos)
+static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int selfPos, int course)
 {
     const int screenCenterX = 256;
     const int menuWidth = 385;
-    const int menuHeight = 213;
+    const int menuHeight = 212;
     const int menuX = screenCenterX - (menuWidth / 2);
     const int menuY = 2;
 
@@ -61,7 +61,7 @@ static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int sel
             boardPos[0] = '1';
             boardPos[1] = '0' + ((i + 1) % 10);
         }
-        int yPos = menuY + 21 + 13 * i;
+        int yPos = menuY + 18 + 13 * i;
 
         int fontColor = PENTA_WHITE;
         if (i == 0) { fontColor = PLAYER_YELLOW; }
@@ -73,7 +73,6 @@ static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int sel
             else { boardPos[0] = '0' + (selfPos / 10); boardPos[1] = '0' + (selfPos % 10); }
             fontColor = OXIDE_LIGHT_GREEN;
         }
-        ElapsedTimeToTotalTime(courseTime, boards[i].time);
         DecalFont_DrawLine(boardPos, menuX + 15, yPos, FONT_SMALL, fontColor | JUSTIFY_CENTER);
         Saphi_DrawSprite(&imagePos, &clutPos, (Point){menuX + 30, yPos - 1}, ot, 0, 0x1000, color);
         DecalFont_DrawLine("TheRedhotbrwzyz", menuX + 65, yPos, FONT_SMALL, fontColor);
@@ -95,8 +94,32 @@ static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int sel
         };
 
         Saphi_DrawSprite(&iconPos, &iconClut, (Point){menuX + 260, yPos - 1}, ot, 0, FP(0.42), color);
+
+        ElapsedTimeToTotalTime(courseTime, boards[i].time);
         DecalFont_DrawLine(courseTime, menuX + 280, yPos, FONT_SMALL, fontColor);
-        Saphi_DrawCustomIcon(ICON_GOD, (Point){menuX + 360, yPos - 1}, ot, 0, FP(0.42), color);
+
+        int hasIcon = 0;
+        int iconID = 0;
+        Standard* standards = STANDARDS_ADDR;
+        for (int j = 0; i < ICON_MAX; i++)
+        {
+            if (course)
+            {
+                if (boards[i].time >= standards[j].course) { break; }
+
+                hasIcon = 1;
+                iconID = j;
+            }
+            else
+            {
+                if (boards[i].time >= standards[j].lap) { break; }
+
+                hasIcon = 1;
+                iconID = j;
+            }
+        }
+
+        if (hasIcon) { Saphi_DrawCustomIcon(ICON_GOD, (Point){menuX + 360, yPos - 1}, ot, 0, FP(0.42), color); }
 
         if (clutPos.y == 295) { clutPos.x = 32; clutPos.y = 290; }
         else { clutPos.y++; }
@@ -135,8 +158,8 @@ void Saphi_RaceUI()
 
             DecalFont_DrawLine("Standards", screenCenterX, menuY + 5, FONT_SMALL, JUSTIFY_CENTER | PENTA_WHITE);
 
-            int icons[] = { ICON_CHAMPION, ICON_HERO, ICON_TITAN, ICON_GOD };
-            char* standards[] = { "Champion", "Hero", "Titan", "God" };
+            int icons[] = { ICON_HERO, ICON_CHAMPION, ICON_TITAN, ICON_GOD };
+            char* standards[] = { "Hero", "Champion", "Titan", "God" };
             Point pos = { .x = menuX + 10, .y = menuY + 20 };
             Color color = { .r = 0x7F, .g = 0x7F, .b = 0x7F };
             Standard* standardTimes = STANDARDS_ADDR;
@@ -144,8 +167,8 @@ void Saphi_RaceUI()
             {
                 char lapTime[11];
                 char courseTime[11];
-                int fontColor = POLAR_CYAN;
-                if (i == 1) { fontColor = PLAYER_YELLOW; }
+                int fontColor = PLAYER_YELLOW;
+                if (i == 1) { fontColor = POLAR_CYAN; }
                 if (i == 2) { fontColor = ROO_ORANGE; }
                 if (i == 3) { fontColor = SILVER; }
                 ElapsedTimeToTotalTime(lapTime, standardTimes[i].lap);
@@ -163,11 +186,11 @@ void Saphi_RaceUI()
         }
         else if (showUI == SUI_COURSE)
         {
-            Saphi_DrawLeaderboard("Course Leaderboard", (LeaderboardEntry*) BOARDS_COURSE_ADDR, 33);
+            Saphi_DrawLeaderboard("Course Leaderboard", (LeaderboardEntry*) BOARDS_COURSE_ADDR, 33, true);
         }
         else if (showUI == SUI_LAP)
         {
-            Saphi_DrawLeaderboard("Lap Leaderboard", (LeaderboardEntry*) BOARDS_LAP_ADDR, 33);
+            Saphi_DrawLeaderboard("Lap Leaderboard", (LeaderboardEntry*) BOARDS_LAP_ADDR, 33, false);
         }
 
         if (controller->buttonsTapped & BTN_R1)

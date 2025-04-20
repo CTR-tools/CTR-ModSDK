@@ -9,6 +9,7 @@ enum CustomIcons
     ICON_GOD,
     ICON_HERO,
     ICON_TITAN,
+    ICON_MAX
 };
 
 typedef struct TotalTime

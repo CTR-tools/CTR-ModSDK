@@ -147,7 +147,6 @@ static void InitGame()
 
 	int dummy;
 	LOAD_XnfFile("\\DLL.BIN;1", SAPHI_DLL_ADDR, &dummy);
-	printf("Loaded at: %d\n", SAPHI_DLL_ADDR);
 	Saphi_LoadCustomIcons();
 }
 
