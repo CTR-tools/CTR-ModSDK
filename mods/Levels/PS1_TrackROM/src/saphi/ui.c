@@ -119,7 +119,7 @@ static void Saphi_DrawLeaderboard(char* title, LeaderboardEntry* boards, int sel
             }
         }
 
-        if (hasIcon) { Saphi_DrawCustomIcon(ICON_GOD, (Point){menuX + 360, yPos - 1}, ot, 0, FP(0.42), color); }
+        if (hasIcon) { Saphi_DrawCustomIcon(iconID, (Point){menuX + 360, yPos - 1}, ot, 0, FP(0.42), color); }
 
         if (clutPos.y == 295) { clutPos.x = 32; clutPos.y = 290; }
         else { clutPos.y++; }
