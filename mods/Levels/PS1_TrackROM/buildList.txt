@@ -3,11 +3,17 @@
 926, 221, 0x8009f6fc, 0x0, src/assets/customtrack.lev
 926, 222, 0x8009f6fc, 0x0, src/assets/customtrack.vrm
 
+// patching menus
+926, exe, 0x800844E4, 0x0, src/hacks/pause_menu.c
+926, 230, 0x800ab9f0, 0x8AF4, src/hacks/title_main_menu.c
+926, 224, 0x8009f6fc, 0xD38, src/hacks/tt_menu_save.c
+926, 224, 0x8009f6fc, 0xD5C, src/hacks/tt_menu.c
+926, 224, 0x8009f6fc, 0xD88, src/hacks/tt_menu_no_save.c
+
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 
-// Hot patches, hot reload
-common, exe, rdata_free, 0x0, src/hacks.c
+// Assembly patches
 926, exe, 0x800150c0, 0x0, src/patches/nop.bin
 926, exe, 0x800277c8, 0x0, src/patches/nop.bin
 926, exe, 0x800277d0, 0x0, src/patches/nop.bin
@@ -25,6 +31,7 @@ common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 
 // exe
+common, exe, rdata_free, 0x0, src/hot_reload.c
 common, exe, LOAD_TenStages, 0x0, src/load_lev.c
 common, exe, main, 0x0, src/ctr_main.c
 common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c

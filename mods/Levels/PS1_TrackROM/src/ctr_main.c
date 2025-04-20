@@ -128,7 +128,6 @@ static void InitGame()
 	gGT->gameMode1 |= LOADING;
 	gGT->clockEffectEnabled &= 0xfffe;
 
-	PatchInstructions();
 	LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, 0);
 	LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, 0);
 
@@ -177,7 +176,7 @@ static void OnLoadingEnd()
 	sdata->mainGameState = STATE_GAMEPLAY;
 	gGT->clockEffectEnabled &= 0xfffe;
 
-	PatchMenus();
+	if (sdata->gGT->levelID == CUSTOM_LEVEL_ID) { sdata->ptrActiveMenu = 0; }
 }
 
 static void ResetStage()
@@ -192,8 +191,8 @@ static void OnGameplay()
 {
 	struct GameTracker* gGT = sdata->gGT;
 	struct GamepadSystem* gGS = sdata->gGamepads;
-	// if loading, or gameplay interrupted
-	if (sdata->Loading.stage != -1)
+
+	if (sdata->Loading.stage != -1) // if loading, or gameplay interrupted
 	{
 		int finishedLoading = 0;
 		if ((RaceFlag_IsFullyOnScreen() == 1) || (gGT->levelID == NAUGHTY_DOG_CRATE) || (sdata->pause_state != 0))
