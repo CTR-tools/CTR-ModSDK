@@ -3,9 +3,8 @@
 void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct PushBuffer* pb, int scratchpad, struct ZoomData *zoom)
 {
     struct GameTracker *gGT = sdata->gGT;
-    struct GamepadBuffer *pad = &sdata->gGamepads->gamepad;
+    struct GamepadBuffer *pad = &sdata->gGamepads->gamepad[d->driverID];
     char state;
-    char flyInDone;
     short uVar8;
     u_short uVar9;
     short sVar10;
@@ -29,15 +28,15 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     cDC->flags &= 0xfffeffff;
 
     if (
-        (
-            // If this is human and not AI
-            ((d->actionsFlagSet & 0x100000) == 0) &&
-
-            // If not drawing intro-race cutscene
-            ((gGT->gameMode1 & START_OF_RACE) == 0))
-
-        // If you are holding R2
-        && ((pad[d->driverID].buttonsHeldCurrFrame & 0x200) != 0))
+			// If this is human and not AI
+			((d->actionsFlagSet & 0x100000) == 0) &&
+			
+			// If not drawing intro-race cutscene
+			((gGT->gameMode1 & START_OF_RACE) == 0) &&
+			
+			// If you are holding R2
+			((pad->buttonsHeldCurrFrame & 0x200) != 0)
+		)
     {
         // Reverse the camera
         cDC->flags |= 0x10000;
@@ -79,6 +78,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         {
             // transition outward
             uVar13 = (u_int)zoom->percentage1;
+			uVar11 = (u_int)zoom->percentage1;
         }
         cDC->cameraMoveSpeed = (int)(uVar11 * cDC->cameraMoveSpeed + (0x100 - uVar13) * x) >> 8;
     }
@@ -177,14 +177,18 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     *(int *)(scratchpad + 0x260) += *(int *)(scratchpad + 0x284);
     *(int *)(scratchpad + 0x240) += *(int *)(scratchpad + 600);
 
-    if ((cDC->flags & 0x10) == 0)
-    {
-        *(int *)(scratchpad + 0x244) += *(int *)(scratchpad + 0x25c) + (int)zoom->vertDistance;
-    }
-    else
+
+	// mask-grab
+    if ((cDC->flags & 0x10) != 0)
     {
         *(int *)(scratchpad + 0x244) = (d->quadBlockHeight >> 8) + (int)cDC->unk98 + (int)zoom->vertDistance;
     }
+	
+    else
+    {
+        *(int *)(scratchpad + 0x244) += *(int *)(scratchpad + 0x25c) + (int)zoom->vertDistance;
+    }
+
     *(int *)(scratchpad + 0x248) += *(int *)(scratchpad + 0x260);
 
     uVar8 = 0;
@@ -210,7 +214,8 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
 
-    // if racer is not damaged
+    // if racer is not damaged,
+	// slight-down view angle
     if ((d->actionsFlagSet & 0x4000) == 0)
     {
         cDC->unk1A -= 8;
@@ -218,7 +223,8 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
             cDC->unk1A = -0x20;
     }
 
-    // if racer is damaged
+    // if racer is damaged,
+	// straight-forward angle
     else
     {
 		cDC->unk1A += 8;
@@ -460,9 +466,12 @@ LAB_8001ab04:
         x_00 = ratan2(*(long *)(scratchpad + 0x24c), x);
         pb->rot[1] = (short)x_00;
 
-        x_00 = SquareRoot0_stub(*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
-                           *(int *)(scratchpad + 0x254) * *(int *)(scratchpad + 0x254));
-        x_00 = ratan2(*(long *)(scratchpad + 0x250), x_00);
+        x_00 = SquareRoot0_stub(
+				*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
+				*(int *)(scratchpad + 0x254) * *(int *)(scratchpad + 0x254)
+			);
+        
+		x_00 = ratan2(*(long *)(scratchpad + 0x250), x_00);
         pb->rot[0] = 0x800 - (short)x_00;
 
         pb->rot[2] = (short)((u_int)((int)zoom->angle[0] * (int)cDC->desiredRot[0]) >> 8);
@@ -516,37 +525,61 @@ LAB_8001ab04:
 
 	// === Transition, end-race battle, intro-race ===
 
-    // if not end-of-race battle
-    if ((backupFlags & 4) == 0)
+    // if end-of-race battle
+    if ((backupFlags & 4) != 0)
     {
-        // if not transitioning
-        if ((backupFlags & 0x200) == 0)
+        DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
+
+        // reverse interpolation of fly-in [0x1000 to 0]
+        x = 0x1000 - cDC->unk8C;
+    }
+
+    // if not end-of-race battle
+    else
+    {
+        // if transitioning round-trip
+        if ((backupFlags & 0x200) != 0)
         {
-            flyInDone = false;
+            // cameraDC TransitionTo pos and rot
+            local_40[0] = cDC->transitionTo.pos[0];
+            local_40[1] = cDC->transitionTo.pos[1];
+            local_40[2] = cDC->transitionTo.pos[2];
+            
+			local_38[0] = cDC->transitionTo.rot[0];
+            local_38[1] = cDC->transitionTo.rot[1];
+            local_38[2] = cDC->transitionTo.rot[2];
 
-			// === Naughty Dog Bug ===
-			// if pointer count is 7 (ntropy/noxide) and camera path is nullptr, 
-			// the game does not check that nullptr and explodes. Only impacts 
-			// custom levels, that contain ghost data, and no camera path
-
-            // if fly-in data is not in LEV
-            if (gGT->level1->ptrSpawnType1->count < 4)
+            // interpolate fly-in [0 to 0x1000]
+            x = cDC->unk8C;
+        }
+		
+        // if startline camera
+        else
+        {
+			// get camera path from level
+			struct SpawnType1* st1 = gGT->level1->ptrSpawnType1;
+			void **pointers = ST1_GETPOINTERS(st1);
+			x = pointers[ST1_CAMERA_PATH];
+				
+            // Conditions to skip:
+            if (
+					// 7 pointers, NULL camera (custom levels)
+					(x == 0) ||
+					
+					// No camera + No ghosts (battle maps)
+					(st1->count < 4) ||
+					
+					// Press Triangle
+					((pad->buttonsTapped & BTN_TRIANGLE) != 0)
+				)
             {
                 // startline fly-in is done
-                flyInDone = true;
                 x = 0x1000;
             }
 
-            // if fly-in data exists in LEV
+			// run fly-in animation
             else
-            {
-				// === Decomp Bug ===
-				// This will not act as a struct on stack,
-				// will make CAM_StartLine_FlyIn explode
-				
-				void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-				x = pointers[ST1_CAMERA_PATH];
-				
+            {	
 				flyInData.ptrEnd = x + 0x354;
 				flyInData.ptrStart = x;
 				flyInData.frameCount1 = 0x96;
@@ -564,56 +597,14 @@ LAB_8001ab04:
                 x = (int)cDC->unk8C;
             }
 
-            // if timer for fly-in camera is finished
-            if (cDC->unk8E < 1)
-            {
-                // startline fly-in is done
-                flyInDone = true;
-            }
-
-            // If you press Triangle
-            if ((pad[d->driverID].buttonsTapped & 0x40000) != 0)
-            {
-                // Skip Intro-Race cutscene, jump to traffic lights
-                cDC->flags |= 9;
-
-                // startline fly-in is done
-                flyInDone = true;
-            }
             // if startline fly-in is done
-            if (flyInDone)
+            if (x == 0x1000)
             {
-                // enable drawing HUD
-                gGT->hudFlags |= 1;
+                cDC->flags |= 9;
+                gGT->hudFlags |= 0x21;
                 gGT->gameMode1 &= ~(START_OF_RACE);
-                gGT->hudFlags |= 0x20;
             }
         }
-
-        // if transitioning
-        else
-        {
-            // cameraDC TransitionTo pos and rot
-            local_40[0] = *(short *)((int)cDC + 0xa4);
-            local_40[1] = *(short *)((int)cDC + 0xa6);
-            local_40[2] = *(short *)((int)cDC + 0xa8);
-            
-			local_38[0] = *(short *)((int)cDC + 0xaa);
-            local_38[1] = *(short *)((int)cDC + 0xac);
-            local_38[2] = *(short *)((int)cDC + 0xae);
-
-            // interpolate fly-in [0 to 0x1000]
-            x = cDC->unk8C;
-        }
-    }
-
-    // if end-of-race battle
-    else
-    {
-        DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
-
-        // reverse interpolation of fly-in [0x1000 to 0]
-        x = 0x1000 - cDC->unk8C;
     }
 
     // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
@@ -662,33 +653,23 @@ LAB_8001ab04:
     // backup  flags
     backupFlags = cDC->flags;
 
-    // if not transitioning away from player
-    if ((backupFlags & 0x200) == 0)
-    {
-        // If game is paused
-        if ((gGT->gameMode1 & PAUSE_ALL) != 0)
-            return;
-
-        // decrement counter for fly-in camera
-        sVar10 = cDC->unk8E + -1;
-        if (cDC->unk8E < 1)
-            return;
-    }
-
-    // if transitioning from player
-    else
+    // if transition is a round-trip,
+	// like Load/Save that moves and comes back
+    if ((backupFlags & 0x200) != 0)
     {
         // if not transitioning back to player
         if ((backupFlags & 0x400) == 0)
         {
-            // increment counter until limit is hit
-            sVar10 = cDC->unk8E + 1;
-
-            // compare two transition timers
-            if (cDC->frameCounterTransition <= cDC->unk8E)
+            // Definitely >, not >=,
+			// or else the transition is off-by-one,
+			
+			// |= 0x800, stop transitioning away from player,
+			// sit stationary away from player, wait before moving back
+			
+            cDC->unk8E++;
+            if (cDC->unk8E > cDC->frameCounterTransition)
             {
-                // stop transitioning away from player,
-                // sit stationary away from player
+				cDC->unk8E = cDC->frameCounterTransition;
                 cDC->flags |= 0x800;
                 return;
             }
@@ -697,19 +678,37 @@ LAB_8001ab04:
         // if transitioning back to player
         else
         {
-            // decrement counter to zero
-            sVar10 = cDC->unk8E + -1;
-
-            // if timer is over
-            if (cDC->unk8E < 1)
-            {
-                // remove all transition flags
-                cDC->flags &= 0xfffff1ff;
-                return;
-            }
+			// definitely do < 0, not == 0,
+			// or else the transition is off-by-one
+			
+			// &= ~(0xE00), remove transition flags
+			
+			// optimization
+            goto Countdown8E;
         }
     }
-    cDC->unk8E = sVar10;
+	
+	// if not a round-trip,
+	// like startline camera
+	else
+	{
+        // If game is paused
+        if ((gGT->gameMode1 & PAUSE_ALL) != 0)
+            return;
+
+Countdown8E:
+
+        cDC->unk8E--;
+        if (cDC->unk8E < 0)
+		{
+			// This is normally not here,
+			// but saves byte budget
+            cDC->flags &= ~(0x200 | 0x400 | 0x800);
+			
+			cDC->unk8E = 0;
+            return;
+		}
+	}
 
     return;
 }
