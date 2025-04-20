@@ -563,8 +563,10 @@ LAB_8001ab04:
 				
             // Conditions to skip:
             if (
+					#if defined(USE_LEVELDEV) || defined(USE_LEVELDISC)
 					// 7 pointers, NULL camera (custom levels)
 					(x == 0) ||
+					#endif
 					
 					// No camera + No ghosts (battle maps)
 					(st1->count < 4) ||
@@ -586,12 +588,12 @@ LAB_8001ab04:
 				flyInData.frameCount2 = 0x8e;
 
                 // which frame of fly-in you are in
-                x = 0xa5 - (u_int)cDC->unk8E;
+                x = FPS_DOUBLE(0xa5) - (u_int)cDC->unk8E;
 				
-				if (x > 0x96)
-					x = 0x96;
+				if (x > FPS_DOUBLE(0x96))
+					x = FPS_DOUBLE(0x96);
 
-                CAM_StartLine_FlyIn(&flyInData, 0x96, x, &local_40[0], &local_38[0]);
+                CAM_StartLine_FlyIn(&flyInData, FPS_DOUBLE(0x96), x, &local_40[0], &local_38[0]);
 
                 // get interpolation of fly-in [0 - 0x1000]
                 x = (int)cDC->unk8C;

@@ -91,18 +91,6 @@ void ui60_entryHook()
 		*(short*)0x8004A5C8 = FPS_DOUBLE(4);
 	}
 
-	// Starting line
-	{
-		// Intro Camera Fly-in
-		// Need to fix camera zoom to player
-
-		// these are in FollowDriver_Normal
-		*(unsigned short*)0x8001AF6C = 0x14A;
-		*(unsigned short*)0x8001AF80 = 0x12D;
-		*(unsigned short*)0x8001AF8C = 0x12C;
-		*(unsigned short*)0x8001AF90 = 0x12C;
-	}
-
 	// AI cooldown
 	{
 		// nextDriver->weaponCooldown
