@@ -603,7 +603,7 @@ LAB_8001ab04:
             local_38[2] = *(short *)((int)cDC + 0xae);
 
             // interpolate fly-in [0 to 0x1000]
-            x = (int)*(short *)((int)cDC + 0x8c);
+            x = cDC->unk8C;
         }
     }
 
@@ -613,7 +613,7 @@ LAB_8001ab04:
         DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
 
         // reverse interpolation of fly-in [0x1000 to 0]
-        x = 0x1000 - (int)*(short *)((int)cDC + 0x8c);
+        x = 0x1000 - cDC->unk8C;
     }
 
     // use camera pos+rot, TransitionTo pos+rot, camera pos+rot, and interpolation
@@ -629,8 +629,8 @@ LAB_8001ab04:
 
     CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
 
-    x = (u_int) * (u_short *)((int)cDC + 0x9e) << 0x10;
-    iVar14 = x >> 0x10;
+    x = cDC->frameCounterTransition;
+    iVar14 = cDC->frameCounterTransition;
 
     if (iVar14 != 0)
     {
@@ -654,7 +654,7 @@ LAB_8001ab04:
                 // Cosine(angle)
                 x = MATH_Cos(iVar14 / x);
 
-                *(short *)((int)cDC + 0x8c) = 0x800 - (short)(x / 2);
+                cDC->unk8C = 0x800 - (short)(x / 2);
             }
         }
     }
