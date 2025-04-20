@@ -76,8 +76,8 @@ void highLOD_DriverMPK(int numDrivers)
 	
 	// TODO: Should restore Purple Gem Cup
 	// so that those are still Boss drivers
-	
-	for(int i = 0; i < numDrivers-1; i++)
+	int i = 0;
+	for(i = 0; i < numDrivers-1; i++)
 	{
 		// high lod CTR model
 		DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
