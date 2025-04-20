@@ -114,9 +114,9 @@ void Saphi_LoadCustomIcons()
     }
 }
 
-void Saphi_DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned transparency, int scale, Color color)
+void Saphi_DrawSprite(const RECT* iconPos, const RECT* clutPos, Point pos, u_long* ot, unsigned transparency, int scale, Color color)
 {
-	PolyFT4 * p;
+    PolyFT4 * p;
 	GetPrimMem(p);
 	if (p == nullptr) { return; }
 
@@ -124,8 +124,6 @@ void Saphi_DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned trans
 	color.code = primCode;
 	p->colorCode = color;
 
-    const RECT* iconPos = icons[iconID].image;
-    const RECT* clutPos = icons[iconID].clut;
     const int ICON_WIDTH = iconPos->w * 4;
     const int ICON_HEIGHT = iconPos->h;
     const int BPP = 4;
@@ -170,4 +168,9 @@ void Saphi_DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned trans
 	p->v[3].texCoords.v = v1;
 
 	AddPrimitive(p, ot);
+}
+
+void Saphi_DrawCustomIcon(unsigned iconID, Point pos, u_long* ot, unsigned transparency, int scale, Color color)
+{
+    Saphi_DrawSprite(icons[iconID].image, icons[iconID].clut, pos, ot, transparency, scale, color);
 }

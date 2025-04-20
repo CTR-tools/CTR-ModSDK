@@ -131,6 +131,7 @@ static void InitGame()
 
 	LOAD_AppendQueue(sdata->ptrBigfile1, LT_VRAM, 222, CUSTOM_VRAM_ADDR, 0);
 	LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 221, CUSTOM_MAP_PTR_ADDR, 0);
+	LOAD_AppendQueue(sdata->ptrBigfile1, LT_DRAM, 223, COUNTRIES_ADDR, 0);
 
 	char* currDriver = DRIVER_ADDR;
 	for (int i = 0; i < 15; i++) // load every character except oxide. oxide will come with time trial pack
@@ -146,6 +147,7 @@ static void InitGame()
 
 	int dummy;
 	LOAD_XnfFile("\\DLL.BIN;1", SAPHI_DLL_ADDR, &dummy);
+	printf("Loaded at: %d\n", SAPHI_DLL_ADDR);
 	Saphi_LoadCustomIcons();
 }
 
