@@ -314,7 +314,10 @@ common, exe, CAM_ProcessTransition, 0x0,               General/CAMERA/CAM_10_Pro
 common, exe, CAM_LookAtPosition, 0x0,                  General/CAMERA/CAM_14_LookAtPosition.c
 common, exe, CAM_FollowDriver_Spin360, 0x0,            General/CAMERA/CAM_15_FollowDriver_Spin360.c
 common, exe, CAM_SetDesiredPosRot, 0x0,                General/CAMERA/CAM_16_SetDesiredPosRot.c
-common, exe, CAM_FollowDriver_Normal, 0x0,             General/CAMERA/CAM_17_FollowDriver_Normal.c
+
+// BlastedLerp is BUGGED
+//common, exe, CAM_FollowDriver_Normal, 0x0,             General/CAMERA/CAM_17_FollowDriver_Normal.c
+
 //common, exe, CAM_MapRange_PosPoints, 0x0,              General/CAMERA/CAM_18_MapRange_PosPoints.c //TODO
 common, exe, CAM_ThTick, 0x0,                          General/CAMERA/CAM_19_ThTick.c
 
