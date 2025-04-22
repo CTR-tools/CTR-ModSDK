@@ -342,7 +342,11 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
     if (dInst->thread->modelIndex == DYNAMIC_PLAYER)
     {
-        DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
+		#ifdef USE_ONLINE
+		if(d->driverID == 0)
+		#endif
+		
+			DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
         dInst->thread->funcThTick = 
 			((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) 
