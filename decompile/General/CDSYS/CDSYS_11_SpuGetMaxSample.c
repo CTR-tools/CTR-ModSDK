@@ -2,34 +2,23 @@
 
 void DECOMP_CDSYS_SpuGetMaxSample(void)
 {
-	int endIndex;
-    int currIndex;
-    int index2;
-    
+    int index2;   
 	short sample;
     short max;
+	max = 0;
 
-    // if you are not using CD, quit
+	#if 0 // impossible
     if (sdata->boolUseDisc == false) return;
-
-    // range {0x0 - 0x100}
-    if (sdata->irqAddr == 0)
-    {
-        currIndex = 0;
-        endIndex = 0x100;
-    }
-    // otherwise, range {0x100 - 0x200}
-    else
-    {
-		currIndex = 0x100;
-        endIndex = 0x200;
-    }
+	#endif
+	
+	short* ptrSpuBuf = 
+		&sdata->SpuDecodedBuf[sdata->irqAddr];
 	
     // loop through region
-    for (max = 0; currIndex < endIndex; currIndex++)
+    for (int i = 0; i < 0x100; i++)
     {
 		// absolute value
-        sample = sdata->SpuDecodedData[currIndex];
+        sample = ptrSpuBuf[i];
         if (sample < 0) sample = -sample;
 
 		// find max
@@ -57,9 +46,8 @@ void DECOMP_CDSYS_SpuGetMaxSample(void)
     // set max to zero
     sdata->XA_MaxSampleValInArr = 0;
 
-    currIndex = sdata->XA_SampleMaxIndex1;
+    int currIndex = sdata->XA_SampleMaxIndex1;
     index2 = sdata->XA_SampleMaxIndex2;
-
     if (index2 == 0) return;
 
     for (; index2 != -1; index2--)

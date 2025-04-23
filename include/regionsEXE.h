@@ -4508,9 +4508,9 @@ struct sData
 	// 80091198 -- JpnRetail
 	// see FUN_8001c8e4
 	#if BUILD == SepReview
-	short SpuDecodedData[0x800];
+	char SpuDecodedBuf[0x1000];
 	#elif BUILD >= UsaRetail
-	short SpuDecodedData[0x400];
+	char SpuDecodedBuf[0x800];
 	#endif
 
 	// 8008E528

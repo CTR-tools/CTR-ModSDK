@@ -2,7 +2,8 @@
 
 void DECOMP_CDSYS_SpuEnableIRQ()
 {
-	int* ptr = &sdata->SpuDecodedData[0];
+	// erase 0x400 bytes
+	int* ptr = &sdata->SpuDecodedBuf[0];
 	for(int i = 0; i < 0x100; i++)
 		ptr[i] = 0;
 	
