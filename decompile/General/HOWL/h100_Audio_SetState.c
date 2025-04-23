@@ -47,14 +47,10 @@ void DECOMP_Audio_SetState(u_int state)
         }
         break;
     case 9:
-
-		// OG game would use desiredXA_RaceIntroIndex
-		// to cycle through 4 different XAs (0,1,2,3),
-		// but all the tracks are the same (unused beta)
-
-		XA_index = 0;
+		XA_index = sdata->desiredXA_RaceIntroIndex;
+		sdata->desiredXA_RaceIntroIndex += 1;
+		sdata->desiredXA_RaceIntroIndex &= 3;
 		goto PLAY_XA;
-		//break;
     
 	case 10:
 

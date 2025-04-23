@@ -3895,8 +3895,6 @@ struct sData
 	short unkAudioState;
 
 	// 8008d7f2
-	// unused, OG game would cycle through
-	// 4 RaceIntro XA files (0,1,2,3)
 	short desiredXA_RaceIntroIndex;
 
 	// 8008d7f4
