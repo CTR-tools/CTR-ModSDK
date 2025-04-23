@@ -3621,10 +3621,10 @@ struct sData
 	int XA_boolFinished;
 
 	// 8008d6bc
-	int XA_SampleMaxIndex1;
+	int XA_MaxSampleIndex;
 
 	// 8008d6c0
-	int XA_SampleMaxIndex2;
+	int XA_MaxSampleNumSaved;
 
 	// 8008d6c4
 	int irqAddr;

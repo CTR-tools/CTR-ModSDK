@@ -7,56 +7,36 @@ void DECOMP_CDSYS_SpuGetMaxSample(void)
     short max;
 	max = 0;
 
-	#if 0 // impossible
-    if (sdata->boolUseDisc == false) return;
-	#endif
-	
 	short* ptrSpuBuf = 
 		&sdata->SpuDecodedBuf[sdata->irqAddr];
 	
-    // loop through region
+	// absolute value, find max in block
     for (int i = 0; i < 0x100; i++)
     {
-		// absolute value
         sample = ptrSpuBuf[i];
         if (sample < 0) sample = -sample;
-
-		// find max
         if (max < sample) max = sample;
     }
 
-    // save max
+    // save max for this block
     sdata->XA_MaxSampleVal = max;
+    sdata->XA_MaxSampleValArr[sdata->XA_MaxSampleIndex] = max;
 
-    sdata->XA_MaxSampleValArr[sdata->XA_SampleMaxIndex1] = max;
+	// Cycle through ring buffer
+    sdata->XA_MaxSampleIndex++;
+    if (sdata->XA_MaxSampleIndex >= 3)
+        sdata->XA_MaxSampleIndex = 0;
 
-    // XA_MaxSampleValArr
-    sdata->XA_SampleMaxIndex1++;
+	// === Naughty Dog Bug ===
+	// This needs to reset itself
+    sdata->XA_MaxSampleNumSaved++;
+    if (sdata->XA_MaxSampleNumSaved >= 3)
+		sdata->XA_MaxSampleNumSaved = 3;
 
-    if (2 < sdata->XA_SampleMaxIndex1)
-    {
-        sdata->XA_SampleMaxIndex1 = 0;
-    }
-
-    if (sdata->XA_SampleMaxIndex2 < 3)
-    {
-        sdata->XA_SampleMaxIndex2++;
-    }
-
-    // set max to zero
+    // Find max of last 3 block maxes,
+	// as long as 3 blocks have already passed
     sdata->XA_MaxSampleValInArr = 0;
-
-    int currIndex = sdata->XA_SampleMaxIndex1;
-    index2 = sdata->XA_SampleMaxIndex2;
-    if (index2 == 0) return;
-
-    for (; index2 != -1; index2--)
-    {
-		currIndex--;
-		if(currIndex < 0)
-			currIndex = 2;
-		
-        if (sdata->XA_MaxSampleValInArr < sdata->XA_MaxSampleValArr[currIndex])
-            sdata->XA_MaxSampleValInArr = sdata->XA_MaxSampleValArr[currIndex];
-    }
+    for (int i = 0; i < sdata->XA_MaxSampleNumSaved; i++)
+        if (sdata->XA_MaxSampleValInArr < sdata->XA_MaxSampleValArr[i])
+            sdata->XA_MaxSampleValInArr = sdata->XA_MaxSampleValArr[i];
 }

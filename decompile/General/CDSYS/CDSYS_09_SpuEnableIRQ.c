@@ -12,6 +12,10 @@ void DECOMP_CDSYS_SpuEnableIRQ()
 	SpuSetIRQCallback(DECOMP_CDSYS_SpuCallbackIRQ);
 	
 	sdata->irqAddr = 0x200;
-	SpuSetIRQAddr(0x200);
+	SpuSetIRQAddr(sdata->irqAddr);
 	SpuSetIRQ(1);
+	
+	// === Naughty Dog Bug (fixed) ===
+	sdata->XA_MaxSampleIndex = 0;
+	sdata->XA_MaxSampleNumSaved = 0;
 }

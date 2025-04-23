@@ -9,10 +9,11 @@ void DECOMP_CDSYS_SpuCallbackTransfer()
 		sdata->irqAddr = 0;
 	
 	SpuSetIRQAddr(sdata->irqAddr);
-	
 	SpuSetIRQ(1);
 	
+	#if 0 // unused
 	sdata->countPass_CdTransferCallback++;
+	#endif
 	
 	DECOMP_CDSYS_SpuGetMaxSample();
 }
