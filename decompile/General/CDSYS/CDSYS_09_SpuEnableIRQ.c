@@ -2,10 +2,9 @@
 
 void DECOMP_CDSYS_SpuEnableIRQ()
 {
+	int* ptr = &sdata->SpuDecodedData[0];
 	for(int i = 0; i < 0x100; i++)
-	{
-		sdata->SpuDecodedData[i] = 0;
-	}
+		ptr[i] = 0;
 	
 	SpuSetTransferMode(SPU_TRANSFER_BY_DMA);
 	SpuSetTransferCallback(DECOMP_CDSYS_SpuCallbackTransfer);
