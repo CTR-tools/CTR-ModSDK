@@ -342,7 +342,7 @@ void DECOMP_Audio_Update1(void)
             }
 
             // desired XA
-            sdata->desiredXA_3 = uVar1;
+            sdata->desiredXA_RaceEndIndex = uVar1;
 
             DECOMP_Audio_SetState_Safe(0x10);
         }

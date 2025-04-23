@@ -47,21 +47,12 @@ void DECOMP_Audio_SetState(u_int state)
         }
         break;
     case 9:
-        
-		// hack to save byte budget
-		//CDSYS_XAPlay(XA_type, (int)sdata->desiredXA_1);
 
-        iVar1 = (int)sdata->desiredXA_1 + 1;
-        XA_index = iVar1;
-        if (iVar1 < 0)
-        {
-            XA_index = (int)sdata->desiredXA_1 + 4;
-        }
-        sdata->desiredXA_1 = iVar1 + (XA_index >> 2) * -4;
-		
-		// hack to save byte budget,
-		// jmp to XAPlay call instead of "break"
-		XA_index = iVar1 - 1;
+		// OG game would use desiredXA_RaceIntroIndex
+		// to cycle through 4 different XAs (0,1,2,3),
+		// but all the tracks are the same (unused beta)
+
+		XA_index = 0;
 		goto PLAY_XA;
 		//break;
     
@@ -117,7 +108,7 @@ void DECOMP_Audio_SetState(u_int state)
         DECOMP_Music_Restart();
 
         // set XA
-        XA_index = sdata->desiredXA_3;
+        XA_index = sdata->desiredXA_RaceEndIndex;
 
         if (61 < XA_index)
         {

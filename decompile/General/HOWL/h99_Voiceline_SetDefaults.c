@@ -3,8 +3,11 @@
 void DECOMP_Voiceline_SetDefaults(void)
 {
     sdata->unkAudioState = 0;
-    sdata->desiredXA_1 = 0;
-    sdata->desiredXA_2 = 0;
+	
+#if 0 // unused
+    sdata->desiredXA_RaceIntroIndex = 0;
+    sdata->desiredXA_FinalLapIndex = 0;
+#endif
 
     sdata->WrongWayDirection_bool = false;
 

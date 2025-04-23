@@ -3895,13 +3895,17 @@ struct sData
 	short unkAudioState;
 
 	// 8008d7f2
-	short desiredXA_1;
+	// unused, OG game would cycle through
+	// 4 RaceIntro XA files (0,1,2,3)
+	short desiredXA_RaceIntroIndex;
 
 	// 8008d7f4
-	int desiredXA_2;
+	// unused, would have changed the Final Lap XA,
+	// (at least assumed? its between Intro and End?) 
+	int desiredXA_FinalLapIndex;
 
 	// 8008d7f8
-	short desiredXA_3;
+	short desiredXA_RaceEndIndex;
 
 	// 8008d7fa
 	short nTropyVoiceCount;
