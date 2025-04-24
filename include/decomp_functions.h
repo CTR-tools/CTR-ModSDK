@@ -28,7 +28,7 @@ void DECOMP_CDSYS_SpuCallbackTransfer(void);
 void DECOMP_CDSYS_SpuEnableIRQ(void);
 void DECOMP_CDSYS_SpuDisableIRQ(void);
 void DECOMP_CDSYS_SpuGetMaxSample(void);
-u_int DECOMP_CDSYS_XAGetNumTracks(int categoryID);
+int DECOMP_CDSYS_XAGetNumTracks(int categoryID);
 
 void DECOMP_CDSYS_XAPlay(int categoryID, int xaID);
 void DECOMP_CDSYS_XAPauseRequest(void);

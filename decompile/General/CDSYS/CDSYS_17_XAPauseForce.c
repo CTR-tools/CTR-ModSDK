@@ -2,7 +2,9 @@
 
 void DECOMP_CDSYS_XAPauseForce()
 {
-	if(sdata->boolUseDisc == 0) return;
+	// XnfLoaded will be false without boolUseDisc
+	// if(sdata->boolUseDisc == 0) return;
+	
 	if(sdata->bool_XnfLoaded == 0) return;
 	if(sdata->XA_State == 0) return;
 	

@@ -5,10 +5,7 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 	char buf1[8];
 	char buf2[8];
 	
-	if(sdata->boolUseDisc == 0) return;
-	if(sdata->bool_XnfLoaded == 0) return;
-	if(categoryID >= CDSYS_XA_NUM_TYPES) return;
-	if((u_int)xaID > DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
+	if(xaID >= DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
 	
 	#if 0
 	// If game is loading, play error sound
