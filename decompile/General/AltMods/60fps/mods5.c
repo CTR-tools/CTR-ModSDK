@@ -93,6 +93,8 @@ void ui60_entryHook()
 
 	// AI cooldown
 	{
+		// decompile\WorkInProgress\src\PickupBots_UpdateAll.c
+		
 		// nextDriver->weaponCooldown
 		*(short*)0x800412ac = FPS_DOUBLE(0xFF);
 		*(short*)0x800412b0 = FPS_DOUBLE(0xF0);
@@ -100,10 +102,6 @@ void ui60_entryHook()
 		// nextDriver->weaponCooldown (same func, different place)
 		*(short*)0x8004149c = FPS_DOUBLE(0xFF);
 		*(short*)0x800414a0 = FPS_DOUBLE(0xF0);
-
-		// BOTS_GotoStartingLine cooldown
-		*(short*)0x80017144 = FPS_DOUBLE(0xFF);
-		*(short*)0x80017148 = FPS_DOUBLE(0x12c);
 	}
 
 	// Boss cooldown

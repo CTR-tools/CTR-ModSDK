@@ -66,5 +66,5 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver* d)
 
 	// cooldown before next weapon
 	int rng = RngDeadCoed(&sdata->const_0x30215400);
-	d->botData.weaponCooldown = (rng & 0xff) + 300;
+	d->botData.weaponCooldown = FPS_DOUBLE((rng & 0xff) + 300);
 }
