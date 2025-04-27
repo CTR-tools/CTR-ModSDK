@@ -446,9 +446,11 @@ LAB_8001ab04:
         // camera dirZ, cameraPosZ minus driverPosZ
         *(int *)(scratchpad + 0x254) = (int)pb->pos[2] - (d->posCurr.z >> 8);
 
-        if ((pb->rot[0] < 0x800) && (0x800 < pb->rot[0] + 0x10))
+        if (pb->rot[0] < 0x800)
         {
-            pb->rot[0] = 0x800;
+			pb->rot[0] += FPS_HALF(0x10);
+			if (pb->rot[0] > 0x800)
+				pb->rot[0] = 0x800;
         }
     }
 
