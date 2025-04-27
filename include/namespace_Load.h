@@ -136,6 +136,21 @@ enum LevVramIndex
 	LVI_PTR = 2,
 };
 
+// For modding OG game, 
+// not in decompile
+enum LoadTypeLegacy
+{
+	// ordinary read to ram
+	LT_RAW = 1,
+	
+	// read with pointer map at the end
+	LT_DRAM = 2,
+	
+	// read with vram transfer
+	LT_VRAM = 3
+};
+
+// New system
 enum LoadType
 {
 	// load to specified ram address
