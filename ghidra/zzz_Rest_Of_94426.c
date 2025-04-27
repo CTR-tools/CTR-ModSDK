@@ -5934,8 +5934,8 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
         uVar19 = *(uint *)(iVar4 + 0x34);
         puVar5[3] = uVar19;
        
-		// LineG2->xy0
-		// LineG2->xy1
+		// LineG2->xy0 (puVar5 offset 0x8)
+		// LineG2->xy1 (puVar5 offset 0x10)
         gte_stSXY0();
         gte_stSXY1();
 		
