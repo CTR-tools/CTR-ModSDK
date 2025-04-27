@@ -1883,6 +1883,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 }
 
 
+// COLL_FIXED_TRIANGL_Barycentrics
 // part of triangle collision
 // param1 - sps->Set1
 // param2 + param3 BspSearchVertex
@@ -1912,12 +1913,18 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   iVar10 = param_3[1] - iVar7;
   uVar11 = param_3[2] - iVar8;
   
+  // vertex2 - vertex1
   uVar2 = uVar9 & 0xffff | iVar10 * 0x10000;
   gte_ldR11R12(uVar2);
+  
+  // vertex3 - vertex1
   gte_ldR13R21(uVar11 & 0xffff | (*param_4 - iVar6) * 0x10000);
   gte_ldR22R23(sVar1 - iVar7 & 0xffffU | (param_4[2] - iVar8) * 0x10000);
+  
+  // vertex2 - vertex1
   gte_ldVXY0(uVar2);
   gte_ldVZ0(uVar11);
+  
   gte_mvmva(0,0,0,3,0);
   iVar3 = gte_stMAC2();
   iVar4 = gte_stMAC1();
@@ -1940,12 +1947,18 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
       iVar5 = 0x1000;
     }
   }
+  
   gte_ldIR0(iVar5);
+  
+  // vertex1
   gte_ldMAC1(iVar6);
   gte_ldMAC2(iVar7);
   gte_ldMAC3(iVar8);
+  
+  // vertex2 - vertex1
   gte_ldsv_(uVar9,iVar10,uVar11);
   gte_gpl12();
+  
   read_mt(uVar9,iVar10,uVar11);
   
   // get position from barycentrics
@@ -1953,7 +1966,8 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
   param_1[1] = (short)iVar10;
   param_1[2] = (short)uVar11;
   
-  return sVar1 - iVar7;
+  // ghidra fail
+  // return sVar1 - iVar7;
 }
 
 
@@ -2898,7 +2912,7 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
   }
   
   // COLL_FIXED_TRIANGL_Barycentrics
-  FUN_8001ede4();
+  FUN_8001ede4(param_1, param_2, param_3, param_4);
   return 1;
 }
 
