@@ -5851,7 +5851,7 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
   // ptrOT plus an offset
   puVar12 = (uint *)(uVar11 + param_3[0xb] * 4);
   
-  // colorTop
+  // colorTop, plus LineG2 primitive code
   *(uint *)(iVar4 + 0x30) = param_3[8] | 0x52000000;
   
   // colorBottom
@@ -5939,7 +5939,7 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
         gte_stSXY0();
         gte_stSXY1();
 		
-		// AddPrim: 0x40 - LineF2 (naughty dog bug?)
+		// AddPrim
 		*puVar5 = *puVar12 | 0x4000000;
         *puVar12 = (uint)puVar5 & 0xffffff;
         
