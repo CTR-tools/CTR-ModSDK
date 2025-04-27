@@ -507,7 +507,7 @@ LAB_8001ab04:
     cDC->unkTriplet2[2] = *(int *)(scratchpad + 0x248);
     cDC->unkTriplet3[0] = *(int *)(scratchpad + 0x258);
     cDC->unkTriplet3[1] = *(int *)(scratchpad + 0x25c);
-    cDC->unkTriplet3[0] = *(int *)(scratchpad + 0x260);
+    cDC->unkTriplet3[2] = *(int *)(scratchpad + 0x260);
 
     // backup flags (again)
     backupFlags = cDC->flags;
