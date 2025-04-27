@@ -5927,15 +5927,20 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
           (uVar19 = ~(uVar19 - uVar13 | uVar7 - uVar13) | uVar19 & uVar7, -1 < (int)uVar19)) &&
          (-1 < (int)(uVar19 << 0x10))) 
 	  {
-        uVar19 = *(uint *)(iVar4 + 0x34);
+		// LineG2->rgb0
         puVar5[1] = *(uint *)(iVar4 + 0x30);
-        puVar5[3] = uVar19;
-        
-		// 0x40 - LineF2
-		*puVar5 = *puVar12 | 0x4000000;
 		
+		// LineG2->rgb1
+        uVar19 = *(uint *)(iVar4 + 0x34);
+        puVar5[3] = uVar19;
+       
+		// LineG2->xy0
+		// LineG2->xy1
         gte_stSXY0();
         gte_stSXY1();
+		
+		// AddPrim: 0x40 - LineF2 (naughty dog bug?)
+		*puVar5 = *puVar12 | 0x4000000;
         *puVar12 = (uint)puVar5 & 0xffffff;
         
 		puVar5 = puVar5 + 5;
