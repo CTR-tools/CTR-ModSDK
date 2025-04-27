@@ -34,14 +34,27 @@ const Point speedometerData[]=
 #else
 
 #ifdef _MSC_VER
+
 #define SPEEDO_GREEN 0xb500
 #define SPEEDO_YELLOW 0xffd1
 #define SPEEDO_RED 0xdb
+
+const Color DrawSpeedBG_Colors[7] =
+{
+	[0].self = SPEEDO_GREEN,
+	[1].self = SPEEDO_GREEN,
+	[2].self = SPEEDO_GREEN,
+	[3].self = SPEEDO_GREEN,
+	[4].self = SPEEDO_YELLOW,
+	[5].self = SPEEDO_RED,
+	[6].self = SPEEDO_RED,
+};
+
 #else
+
 #define SPEEDO_GREEN MakeColor(0, 0xb5, 0)
 #define SPEEDO_YELLOW MakeColor(0xff, 0xd1, 0)
 #define SPEEDO_RED MakeColor(0xdb, 0, 0)
-#endif
 
 const Color DrawSpeedBG_Colors[7] =
 {
@@ -50,6 +63,9 @@ const Color DrawSpeedBG_Colors[7] =
 	SPEEDO_YELLOW, SPEEDO_RED,
 	SPEEDO_RED,
 };
+#endif
+
+
 #endif
 
 // speedometer background
@@ -142,6 +158,11 @@ void DECOMP_UI_DrawSpeedBG(void)
     p->p.v[1].pos.y = vertexes[i + 3].y + yOffset;
     p->p.v[2].pos.x = p2x;
     p->p.v[2].pos.y = p2y;
+	
+	#ifdef REBUILD_PC
+	((TPage *)p)->texpage.drawDisplayArea = 1;
+	#endif
+	
     AddPrimitive(p, sdata->gGT->pushBuffer_UI.ptrOT);
   }
 }
