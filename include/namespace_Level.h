@@ -371,7 +371,10 @@ struct RainBuffer
 
   // 0x28
   // controls how particles are drawn
-  int renderMode[2];
+  int fillMode;
+  
+  // 0x2C
+  int offsetOT;
 
   // 0x30 -- size of struct
 

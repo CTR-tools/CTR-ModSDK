@@ -5841,10 +5841,20 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
   uVar18 = (uVar18 - uVar7 & 0xfffeffff) + uVar15 & 0xfffeffff;
   iVar17 = ((uVar8 + ((int)param_3[5] >> 1)) - (iVar9 - (iVar9 - sVar3 >> 3))) + iVar16;
   iVar16 = (uVar19 - iVar9) + iVar16;
+  
+  // colorBottom
   uVar6 = param_3[9];
+  
+  // fillMode
   uVar15 = param_3[10];
+  
+  // ptrOT plus an offset
   puVar12 = (uint *)(uVar11 + param_3[0xb] * 4);
+  
+  // colorTop
   *(uint *)(iVar4 + 0x30) = param_3[8] | 0x52000000;
+  
+  // colorBottom
   *(uint *)(iVar4 + 0x34) = uVar6;
   
   // RNG seed
@@ -5864,10 +5874,16 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
     uVar11 = uVar11 | (uint)puVar23;
     puVar21 = (undefined *)((int)uVar22 >> 5);
     uVar8 = (int)uVar19 >> 0x15 & 0xffff;
-    while( true ) {
+    while( true ) 
+	{
       bVar1 = uVar14 == 0;
       uVar14 = uVar14 - 1;
-      if (bVar1) {
+      
+	  if (bVar1) 
+	  {
+		// setFill(p)
+		// setlen(p,  3), setcode(p, 0x02)
+		  
         puVar5[1] = uVar15;
         puVar5[2] = 0;
         *puVar5 = *puVar12 | 0x2000000;
@@ -5875,7 +5891,8 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
         *(uint **)(param_2 + 0xc) = puVar5 + 3;
         return;
       }
-      uVar19 = ((uVar8 | (uint)puVar21) + uVar10 & 0x7fe07ff) - *(int *)(iVar4 + 0x38);
+      
+	  uVar19 = ((uVar8 | (uint)puVar21) + uVar10 & 0x7fe07ff) - *(int *)(iVar4 + 0x38);
       uVar8 = ((uVar8 | (uint)puVar21) + uVar18 & 0x7fe07ff) - *(int *)(iVar4 + 0x38);
       if (uVar8 - uVar19 != uVar18 - uVar10) break;
       uVar8 = uVar8 & 0xfffeffff;
@@ -5905,17 +5922,23 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
       uVar19 = gte_stSXY0();
       iVar9 = gte_stFLAG();
       uVar7 = gte_stSXY1();
-      if (((-1 < iVar9 << 0xe) &&
+      
+	  if (((-1 < iVar9 << 0xe) &&
           (uVar19 = ~(uVar19 - uVar13 | uVar7 - uVar13) | uVar19 & uVar7, -1 < (int)uVar19)) &&
-         (-1 < (int)(uVar19 << 0x10))) {
+         (-1 < (int)(uVar19 << 0x10))) 
+	  {
         uVar19 = *(uint *)(iVar4 + 0x34);
         puVar5[1] = *(uint *)(iVar4 + 0x30);
         puVar5[3] = uVar19;
-        *puVar5 = *puVar12 | 0x4000000;
+        
+		// 0x40 - LineF2
+		*puVar5 = *puVar12 | 0x4000000;
+		
         gte_stSXY0();
         gte_stSXY1();
         *puVar12 = (uint)puVar5 & 0xffffff;
-        puVar5 = puVar5 + 5;
+        
+		puVar5 = puVar5 + 5;
       }
     }
   } while( true );
