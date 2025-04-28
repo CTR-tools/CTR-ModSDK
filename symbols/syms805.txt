@@ -53,6 +53,8 @@
 800249b4 GAMEPAD_ProcessAnyoneVars
 
 
+// 80025294 -- ghost?
+
 
 8002ec00 LOAD_ReadFile
 
@@ -84,6 +86,8 @@
 800307c4 MainDB_PrimMem
 
 
+80031dd4 MainFrame_RenderFrame
+
 
 8003968c MEMCARD_IsFile
 800396f0 MEMCARD_FindFirstGhost
@@ -111,8 +115,13 @@
 8003a91c Particle_UpdateAllParticles
 
 
+8003e580 RaceFlag_DrawSelf
+
+
 
 80041544 RefreshCard_Entry
+
+
 
 80041588 SelectProfile_QueueLoadHub_MenuProc
 800415dc SelectProfile_ThTick
@@ -124,6 +133,12 @@
 80041db0 SelectProfile_Init
 800420c4 SelectProfile_Destroy
 
+
+// EndRace menus are in UI
+// 8004cc04
+// 80051910 CC_EndEvent (dingo bingo still here)
+// 800523b4
+// 8004ee04
 
 
 80053054 VehBirth_WriteKey2BCB
