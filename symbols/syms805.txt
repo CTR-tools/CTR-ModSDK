@@ -148,4 +148,14 @@
 80053b30 VehBirth_SetConsts
 
 
+// Main Menu overlay
+800a60c0 MM_JumpTo_Title_FirstTime
+800a6104 MM_JumpTo_BattleSetup
+800a6128 MM_JumpTo_TrackSelect
+800a6164 MM_JumpTo_Characters
+
+
+
+
+// RaceBattle overlay (contains RB, AH, Weapons)
 800AE140 AH_WarpPad_LInB
