@@ -38,6 +38,13 @@
 8001c1e0 CDSYS_SetXAToLang
 
 
+
+
+80021fd8 DebugFont_Init
+80022010 DebugFont_DrawNumbers
+
+
+
 // extra appears in Aug+Sep3
 80024084 GAMEPAD_ProcessHold
 800241c0 GAMEPAD_ProcessSticks
@@ -102,6 +109,21 @@
 // extra just in aug (check dead?)
 8003a3a4 Particle_UpdateList
 8003a91c Particle_UpdateAllParticles
+
+
+
+80041544 RefreshCard_Entry
+
+80041588 SelectProfile_QueueLoadHub_MenuProc
+800415dc SelectProfile_ThTick
+80041700 SelectProfile_PrintInteger
+80041798 SelectProfile_ConvertX_2
+800417b8 SelectProfile_ConvertY_2
+800417d8 SelectProfile_DrawAdvProfile
+80041d8c SelectProfile_GetTrackID
+80041db0 SelectProfile_Init
+800420c4 SelectProfile_Destroy
+
 
 
 80053054 VehBirth_WriteKey2BCB
