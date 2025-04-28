@@ -1,0 +1,20 @@
+
+80039090 main
+
+8003b0d0 MEMCARD_IsFile
+8003b134 MEMCARD_FindFirstGhost
+8003b1ac MEMCARD_FindNextGhost
+8003b208 MEMCARD_EraseFile
+8003b268 MEMCARD_CopyrightE3
+
+8003b468 MEMPACK_Init
+8003b510 MEMPACK_SwapPacks
+8003b534 MEMPACK_NewPack
+8003b560 MEMPACK_GetFreeBytes
+8003b578 MEMPACK_AllocMem
+
+80056478 VehBirth_WriteKey2BCB
+800564ec VehBirth_TeleportSelf
+80056d84 VehBirth_TeleportAll
+80056e34 VehBirth_GetModelByName
+80056f4c VehBirth_SetConsts
