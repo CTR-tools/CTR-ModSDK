@@ -1,0 +1,38 @@
+80010000 rdata
+// data
+// sdata_static
+// bss
+
+// start of BOTS
+8001306c BOTS_SetGlobalNavData
+800130cc BOTS_InitNavPath
+// no EmptyFunc, no NumTimesLostEvent
+800131f4 BOTS_Adv_AdjustDifficulty
+80013bd8 BOTS_UpdateGlobals
+80013ca8 BOTS_SetRotation
+80013e14 BOTS_LevInstColl
+80013f68 BOTS_ThTick_RevEngine
+80014074 BOTS_MaskGrab
+800142ac BOTS_Killplane
+80014454 BOTS_ThTick_Drive
+80016d48 BOTS_ChangeState
+80017064 BOTS_CollideWithOtherAI
+800171c8 BOTS_GotoStartingLine
+800172fc BOTS_Driver_Init
+800174b0 BOTS_Driver_Convert
+
+// start of CAM
+
+
+
+
+
+800397c4 MEMCARD_EraseFile
+80039824 MEMCARD_CopyrightE3
+
+80039a24 MEMPACK_Init
+
+
+80039ed8 MixRNG_GetValue
+
+80053054 VehBirth_WriteKey2BCB

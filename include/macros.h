@@ -19,6 +19,7 @@ typedef uint8_t  u8;
 typedef int8_t   s8;
 
 #define AugReview 805
+// TODO: Aug5 and Aug14
 #define SepReview 903
 #define UsaRetail 926
 #define JpnTrial 1006
