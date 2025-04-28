@@ -63,6 +63,7 @@ COLL_FIXED_BotsSearch = 0x8001d77c;
 COLL_FIXED_PlayerSearch = 0x8001d944;
 COLL_SearchBSP_CallbackQUADBLK = 0x8001eb0c;
 COLL_SearchBSP_CallbackPARAM = 0x8001ebec;
+COLL_FIXED_TRIANGL_Barycentrics = 0x8001ede4;
 COLL_FIXED_TRIANGL_TestPoint = 0x8001ef50;
 COLL_FIXED_TRIANGL_GetNormVec = 0x8001f2dc;
 COLL_FIXED_QUADBLK_TestTriangles = 0x8001f41c;
