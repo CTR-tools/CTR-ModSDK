@@ -22,17 +22,82 @@
 800174b0 BOTS_Driver_Convert
 
 // start of CAM
+80017720 CAM_SkyboxGlow
+80018770 CAM_ClearScreen
+8001896c CAM_Init
 
 
 
 
 
+// start of CDSYS
+8001bfcc CDSYS_Init
+8001c084 CDSYS_GetFilePosInt
+8001c0d4 CDSYS_SetMode_StreamData
+8001c160 CDSYS_SetMode_StreamAudio
+8001c1e0 CDSYS_SetXAToLang
+
+
+
+
+8002ec00 LOAD_ReadFile
+
+
+
+8002ee34 LOAD_RunPtrMap
+8002ee80 LOAD_Robots2P
+8002ef6c LOAD_Robots1P
+8002efbc LOAD_DriverMPK
+8002f2b8 LOAD_LangFile
+8002f354 LOAD_GetBigfileIndex
+8002f3e0 LOAD_AppendQueue
+8002f43c LOAD_CDRequestCallback
+8002f470 LOAD_NextQueuedFile
+// missing LOAD_Hub_ReadFile
+8002f6a4 LOAD_Hub_SwapNow
+// missing several
+8002fac0 LOAD_TenStages
+// missing LOAD_TalkingMask
+80030718 LOAD_LevelFile
+80030758 LOAD_IsOpen_RacingOrBattle
+// missing all other IsOpen's
+
+// missing GetClipSize
+800307c4 MainDB_PrimMem
+
+
+
+8003968c MEMCARD_IsFile
+800396f0 MEMCARD_FindFirstGhost
+80039768 MEMCARD_FindNextGhost
 800397c4 MEMCARD_EraseFile
 80039824 MEMCARD_CopyrightE3
 
 80039a24 MEMPACK_Init
+80039acc MEMPACK_SwapPacks
+80039af0 MEMPACK_NewPack
+80039b1c MEMPACK_GetFreeBytes
+80039b34 MEMPACK_AllocMem
 
-
+80039e54 MixRNG_Scramble
+80039e98 MixRNG_Particles
 80039ed8 MixRNG_GetValue
 
+80039f0c Particle_FuncPtr_PotionShatter
+8003a044 Particle_FuncPtr_SpitTire
+8003a24c Particle_FuncPtr_ExhaustUnderwater
+8003a2dc Particle_OnDestroy
+// extra in aug+sep3
+// extra just in aug (check dead?)
+8003a3a4 Particle_UpdateList
+8003a91c Particle_UpdateAllParticles
+
+
 80053054 VehBirth_WriteKey2BCB
+800530c8 VehBirth_TeleportSelf
+80053968 VehBirth_TeleportAll
+80053a18 VehBirth_GetModelByName
+80053b30 VehBirth_SetConsts
+
+
+800AE140 AH_WarpPad_LInB
