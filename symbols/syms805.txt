@@ -38,6 +38,13 @@
 8001c1e0 CDSYS_SetXAToLang
 
 
+// extra appears in Aug+Sep3
+80024084 GAMEPAD_ProcessHold
+800241c0 GAMEPAD_ProcessSticks
+80024680 GAMEPAD_ProcessTapRelease
+80024788 GAMEPAD_ProcessMotors
+800249b4 GAMEPAD_ProcessAnyoneVars
+
 
 
 8002ec00 LOAD_ReadFile
@@ -61,6 +68,10 @@
 80030718 LOAD_LevelFile
 80030758 LOAD_IsOpen_RacingOrBattle
 // missing all other IsOpen's
+
+
+80037008 main
+
 
 // missing GetClipSize
 800307c4 MainDB_PrimMem
