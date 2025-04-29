@@ -194,4 +194,30 @@
 
 
 // RaceBattle overlay (contains RB, AH, Weapons)
-800AE140 AH_WarpPad_LInB
+800a45dc RB_Warpball_ThTick
+
+800a95c4 RB_Blade_LInB
+
+800aab88 RB_Crystal_LInC
+800aac54 RB_Crystal_LInB
+
+800abae8 RB_Armadillo_LInB
+
+// no Follower thread in Aug05
+
+800abf88 RB_Fireball_LInB
+
+
+
+800ae140 AH_WarpPad_LInB
+
+800afC40 AH_Garage_LInB
+
+
+
+800b1874 RB_Minecart_LInB
+
+800b3cb0 RB_Spider_LInB
+
+800b485c RB_Turtle_LInC
+800b48b4 RB_Turtle_LInB
