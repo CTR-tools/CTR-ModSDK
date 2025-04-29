@@ -25,9 +25,25 @@
 80017720 CAM_SkyboxGlow
 80018770 CAM_ClearScreen
 8001896c CAM_Init
-
-
-
+80018a08 CAM_FindClosestQuadblock
+// 80018c78 extra function
+80018db8 CAM_Path_GetNumPoints
+80018e40 CAM_Path_Move
+// 80018fc4 extra function
+80019024 CAM_StartOfRace
+800190a0 CAM_EndOfRace_Battle
+8001913c CAM_EndOfRace
+800191b0 CAM_StartLine_FlyIn_FixY
+// no CAM_ProcessTransition
+// no CAM_FollowDriver_AngleAxis
+800192dc CAM_StartLine_FlyIn
+8001970c CAM_FollowDriver_TrackPath
+80019c90 CAM_LookAtPosition
+80019d6c CAM_FollowDriver_Spin360
+80019e68 CAM_SetDesiredPosRot
+80019ed0 CAM_FollowDriver_Normal
+8001ac24 CAM_MapRange_PosPoints
+8001ad04 CAM_ThTick
 
 
 // start of CDSYS
