@@ -127,6 +127,9 @@
 80026714 GhostTape_Destroy
 
 
+// howl...
+80026740 CountSounds
+
 
 8002ec00 LOAD_ReadFile
 
