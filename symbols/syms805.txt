@@ -44,16 +44,52 @@
 80022010 DebugFont_DrawNumbers
 
 
+800237a0 DotLights_Video
+800239d8 DotLights_AudioAndVideo
 
+80023b84 DropRain_MakeSound
+80023c3c DropRain_Reset
+
+// ElimBG is not in Aug builds
+
+80023c44 GAMEPAD_Init
+80023c98 GAMEPAD_SetMainMode
+80023d30 GAMEPAD_ProcessState
+80023e18 GAMEPAD_PollVsync
+// missing GAMEPAD_GetNumConnected
 // extra appears in Aug+Sep3
 80024084 GAMEPAD_ProcessHold
 800241c0 GAMEPAD_ProcessSticks
 80024680 GAMEPAD_ProcessTapRelease
 80024788 GAMEPAD_ProcessMotors
 800249b4 GAMEPAD_ProcessAnyoneVars
+80024a84 GAMEPAD_JogCon1
+80024ae0 GAMEPAD_JogCon2
+80024b24 GAMEPAD_ShockFreq
+80024ba4 GAMEPAD_ShockForce1
+80024c24 GAMEPAD_ShockForce2
 
+80024ca4 GAMEPROG_AdvPercent
+80024f0c GAMEPROG_ResetHighScores
+// missing GAMEPROG_CheckGhostsBeaten
+80025110 GAMEPROG_NewProfile_OutsideAdv
+80025144 GAMEPROG_InitFullMemcard
+800251d0 GAMEPROG_NewProfile_InsideAdv
+// missing GAMEPROG_SaveCupProgress
+// missing GAMEPROG_SyncGameAndCard
+80026e48 GAMEPROG_NewGame_OnBoot
+8002523c GAMEPROG_GetPtrHighScoreTrack
 
-// 80025294 -- ghost?
+80025294 GhostReplay_ThTick
+80025b60 GhostReplay_Init1
+80025eb8 GhostReplay_Init2
+
+80026108 GhostTape_Start
+800261a4 GhostTape_End
+80026234 GhostTape_WriteMoves
+80026690 GhostTape_WriteBoosts
+80026714 GhostTape_Destroy
+
 
 
 8002ec00 LOAD_ReadFile
