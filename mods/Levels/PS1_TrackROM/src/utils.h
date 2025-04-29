@@ -41,14 +41,6 @@ enum GameState
     STATE_GAMEPLAY = 3,
 };
 
-/* Load Type - obsolete file format */
-enum LT
-{
-    LT_RAW = 1,
-    LT_DRAM = 2,
-    LT_VRAM = 3
-};
-
 enum HotReloadSteps
 {
     HOT_RELOAD_DONE = 0,
