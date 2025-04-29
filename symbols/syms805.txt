@@ -52,6 +52,26 @@
 8001c0d4 CDSYS_SetMode_StreamData
 8001c160 CDSYS_SetMode_StreamAudio
 8001c1e0 CDSYS_SetXAToLang
+8001c4a8 CDSYS_XaCallbackCdSync
+8001c500 CDSYS_XaCallbackCdReady
+8001c5d0 CDSYS_SpuCallbackIRQ
+8001c664 CDSYS_SpuCallbackTransfer
+8001c6b4 CDSYS_SpuEnableIRQ
+8001c72c CDSYS_SpuDisableIRQ
+8001c75c CDSYS_SpuGetMaxSample
+8001c85c CDSYS_XAGetNumTracks
+// 8001c894 accidental duplicate of CDSYS_XAGetNumTracks
+8001c8cc CDSYS_XASeek
+8001c9d4 CDSYS_XAGetTrackLength
+8001ca68 CDSYS_XAPlay
+8001cc1c CDSYS_XAPauseRequest
+// no CDSYS_XAPauseForce
+// no CDSYS_XAPauseAtEnd
+// 8001cc70 (force or AtEnd?)
+
+
+8001ccc0 COLL_LevModelMeta
+// rest of coll...
 
 
 
