@@ -18,3 +18,7 @@
 80056d84 VehBirth_TeleportAll
 80056e34 VehBirth_GetModelByName
 80056f4c VehBirth_SetConsts
+
+
+// Like Aug05, Aug14 also has 2 thread overlays,
+// one for MM, one for RB+AH
