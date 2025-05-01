@@ -21,4 +21,9 @@
 
 
 // Like Aug05, Aug14 also has 2 thread overlays,
-// one for MM, one for RB+AH
+// Aug05: one for MM, one for RB+AH
+// Aug14: one for MM+AH, one for RB
+
+// this one crashes on adventure hub,
+// stored in RB, while MM+AH is loaded
+800a650c VehPhysProc_SpinFirst_Init
