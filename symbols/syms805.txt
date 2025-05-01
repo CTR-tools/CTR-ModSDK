@@ -131,6 +131,21 @@
 80026740 CountSounds
 
 
+
+// No GARAGE in howl for this build
+
+
+8002d148 INSTANCE_Birth
+8002d23c INSTANCE_Birth3D
+8002d2b4 INSTANCE_Birth2D
+8002d374 INSTANCE_BirthWithThread
+8002d420 INSTANCE_BirthWithThread_Stack
+8002d478 INSTANCE_Death
+8002d4a4 INSTANCE_LevInitAll
+// no INSTANCE_LevDelayedLInBs
+8002d874 INSTANCE_GetNumAnimFrames
+
+
 8002ec00 LOAD_ReadFile
 
 
@@ -189,6 +204,7 @@
 8003a3a4 Particle_UpdateList
 8003a91c Particle_UpdateAllParticles
 
+8003ca54 PROC_BirthWithObject
 
 8003e580 RaceFlag_DrawSelf
 
