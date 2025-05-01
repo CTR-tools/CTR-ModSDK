@@ -433,13 +433,13 @@
 80039068 LIST_RemoveBack
 800390f8 LIST_Init
 
-80039164 LOAD_VramFileCallback
+80039164 LOAD_VramFile // no callback
 // unknown 80039294 -- file debug strings
 80039340 LOAD_StringToUpper
 8003937c LOAD_ReadDirectory
 80039464 LOAD_InitCD
-// unknown 800394a0 LOAD_ReadFile1
-// unknown 80039620 LOAD_ReadFile2
+800394a0 LOAD_ReadFile
+80039620 LOAD_XnfFile // should be DiscFile
 8003977c LOAD_FindFile
 800397e8 LOAD_HowlHeaderSectors
 8003989c LOAD_RunPtrMap
