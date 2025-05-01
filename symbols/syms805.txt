@@ -146,6 +146,13 @@
 8002d874 INSTANCE_GetNumAnimFrames
 
 
+
+
+8002e5e8 LOAD_DramFileCallback
+8002e688 LOAD_DramFile
+8002e76c LOAD_VramFileCallback
+8002e878 LOAD_VramFile
+8002e9ac LOAD_ReadFileASyncCallback
 8002ec00 LOAD_ReadFile
 
 
@@ -169,14 +176,40 @@
 // missing all other IsOpen's
 
 
-80037008 main
-
 
 // missing GetClipSize
 800307c4 MainDB_PrimMem
 
 
+80030994 MainFrame_ResetDB
+80030b28 MainFrame_SplashScreens // Aug05
+80030d68 MainFrame_GameLogic
+
 80031dd4 MainFrame_RenderFrame
+
+
+
+
+
+80035ec0 MainInit_VisMem
+80035f44 MainInit_RainBuffer
+
+8003602c MainInit_PrimMem
+80036168 MainInit_JitPoolsReset
+800361c8 MainInit_OTMem
+80036238 MainInit_JitPoolsNew
+800364a8 MainInit_Drivers
+80036718 MainInit_FinalizeInit
+80036edc MainInit_StringToLevID
+// no MainInit_VRAMClear
+80036f40 MainInit_VRAMDisplay
+// no MainKillGame
+// no MainLoadVLC
+80037008 main
+
+
+
+
 
 
 8003968c MEMCARD_IsFile
