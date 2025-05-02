@@ -7,6 +7,8 @@
 8001b9b8 BOTS_SetGlobalNavData
 // 8001ba18 -- load from file (debug?)
 8001ba60 BOTS_InitNavPath
+// 8001bbfc unknown (demo mode?)
+// 8001bcfc unknown (also demo mode?)
 // no counting how many times AI lost
 8001bdec BOTS_Adv_AdjustDifficulty // except no Adv, just difficulty
 8001c2d8 BOTS_UpdateGlobals
