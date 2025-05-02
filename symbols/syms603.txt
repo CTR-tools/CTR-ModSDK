@@ -734,9 +734,15 @@
 
 // skip a bunch
 800629ac PushBuffer_FadeOneWindow
+80062b3c PushBuffer_FadeAllWindows
 
 
 
+80062bb4 Script_ReadAlignedU16
+80062be0 Script_ReadAlignedS16
+80062c04 Script_ReadUnalignedU32
+80062c7c Script_StartNextScript
+// unknown 80062cf4
 
 // at 80089c14 is table of SOP strings and SOP funcPtrs
 80062d34 SOP_NOP
@@ -830,7 +836,20 @@
 // 8006455c - 80069890
 
 // First function after script block ends
-80069890
+80069890 Torch_Main
+80069d34 Torch_Subset1
+80069d6c Torch_Subset2
+80069dec Torch_Subset3
+80069e6c Torch_Subset4
+8006a008 Torch_Subset5
+8006a1a4 Torch_Subset6
+8006a340 Torch_Subset7
+8006a554 Torch_Subset8
+8006a768 Torch_Subset9
+
+8006a97c DrawSky_Full
+8006aa90 DrawSky_Piece
+// continue...
 
 // unknown 8006b910
 // [Large zero'd block]
