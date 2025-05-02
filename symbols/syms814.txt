@@ -24,6 +24,9 @@
 // Aug05: one for MM, one for RB+AH
 // Aug14: one for MM+AH, one for RB
 
+800a9c60 MM_Characters_MenuProc
+
 // this one crashes on adventure hub,
-// stored in RB, while MM+AH is loaded
-800a650c VehPhysProc_SpinFirst_Init
+// stored in RB, while MM+AH is loaded,
+// called from VehPhysProc_SpinFirst_Init
+800a650c RB_Player_ModifyWumpa
