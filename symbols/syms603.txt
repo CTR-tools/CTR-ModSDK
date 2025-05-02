@@ -8,7 +8,7 @@
 // 8001ba18 -- load from file (debug?)
 8001ba60 BOTS_InitNavPath
 8001bbfc BOTS_KillAllBots // June1999 only
-// 8001bcfc unknown (also demo mode?)
+8001bcfc BOTS_SpawnBotMidRace // June1999 only
 // no counting how many times AI lost
 8001bdec BOTS_Adv_AdjustDifficulty // except no Adv, just difficulty
 8001c2d8 BOTS_UpdateGlobals
