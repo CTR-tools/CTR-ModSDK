@@ -816,8 +816,21 @@
 80064154 SOP_STORE16
 80064184 SOP_STORE32
 
+800641b4 ScriptRunOpcode
+800642c0 ScriptMemInit
 8006438c MainMenuRun
 
+// RefreshCard?
+// memcard functions related to scripts 
+// 80064498
+// 800644b0
+// 8006453c
+
+// All scripts permanently in RAM
+// 8006455c - 80069890
+
+// First function after script block ends
+80069890
 
 // unknown 8006b910
 // [Large zero'd block]
