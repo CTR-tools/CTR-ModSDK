@@ -86,7 +86,7 @@ enum Split
 		.terrain_type = 0, \
 		.weather_intensity = 0, \
 		.weather_vanishRate = 0, \
-		.speedImpact = 0, \
+		.mulNormVecY = 0, \
 		\
 		.blockID = 0, \
 		.checkpointIndex = qIndex, \

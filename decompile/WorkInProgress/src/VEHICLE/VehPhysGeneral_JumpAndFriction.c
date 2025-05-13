@@ -139,7 +139,7 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
              // if player is over a quadblock
              (d->underDriver != 0)) &&
             (
-                iVar3 = d->underDriver->speedImpact,
+                iVar3 = d->underDriver->mulNormVecY,
                 iVar3 != 0))
         {
           // player speed
