@@ -13,7 +13,7 @@
     :                                         \
     : "r"(r0), "r"(r1), "r"(r2))
 
-void FUN_80060630(int /* Thread */ param_1, int /* Driver */ param_2)
+void FUN_80060630(struct Thread* t, struct Driver* d)
 
 {
   char uVar1;
@@ -31,12 +31,14 @@ void FUN_80060630(int /* Thread */ param_1, int /* Driver */ param_2)
   int iVar13;
   unsigned int uVar14;
   char *puVar15;
+  int param_1;
+  int param_2;
   int param_3;
   char auStack_40 [40];
   
   puVar15 = auStack_40;
-  uVar12 = param_2;
-  gte_SetRotMatrix((MATRIX *)(param_2 + 0x310));
+  uVar12 = d;
+  gte_SetRotMatrix(&d->matrixMovingDir);
   if (((*(char *)(uVar12 + 0x376) != '\x02') && ((*(unsigned int *)(uVar12 + 0x2c8) & 0x800000) == 0)) &&
      (param_2 = 0, *(short *)(uVar12 + 0x3e2) == 0)) {
     uVar1 = *(char *)(uVar12 + 0x43b);

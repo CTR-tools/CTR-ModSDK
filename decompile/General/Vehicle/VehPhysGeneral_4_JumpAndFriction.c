@@ -27,10 +27,12 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
   int setY;
   int iVar11;
   VECTOR movement;
+  
   struct GameTracker *gGT = sdata->gGT;
   short approxSpd = d->speedApprox;
   short baseSpeed = d->baseSpeed;
-  gte_SetRotMatrix(&d->matrixMovingDir.m[0][0]);
+  
+  gte_SetRotMatrix(&d->matrixMovingDir);
 
   // if driver is not drifting
   if (((d->kartState != KS_DRIFTING) &&
@@ -76,9 +78,9 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
     d->baseSpeed = baseSpeed;
   }
 
-  movement.vx = d->velocityXYZ[0];
-  movement.vy = d->velocityXYZ[1];
-  movement.vz = d->velocityXYZ[2];
+  movement.vx = d->velocity.x;
+  movement.vy = d->velocity.y;
+  movement.vz = d->velocity.z;
 
   // if driver is not on quadblock, or if not forced to jump (via GOTO)
   if ((d->actionsFlagSet & 1) == 0)
@@ -124,14 +126,16 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
     // if not being forced to jump (turtles), this should cause the tiny jumps on top of walls.
     if (d->forcedJump_trampoline == 0)
     {
-      // if driver left quadblock more than 0.16s ago
-      if (((d->jump_CoyoteTimerMS == 0) ||
+      if (
+			// if driver left quadblock more than 0.16s ago
+			(d->jump_CoyoteTimerMS == 0) ||
 
-           // if haven't jumped in last 10 frames
-           (d->jump_TenBuffer == 0)) ||
+			// if haven't jumped in last 10 frames
+			(d->jump_TenBuffer == 0) ||
 
-          // jump_CooldownMS not over (so can't jump again)
-          (d->jump_CooldownMS != 0))
+			// jump_CooldownMS not over (so can't jump again)
+			(d->jump_CooldownMS != 0)
+		  )
       {
         // if player is touching ground
         if ((((d->actionsFlagSet & 1) != 0) &&
@@ -154,8 +158,8 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
           read_mt(iVar3, iVar2, iVar8);
 
           movement.vx += iVar3;
-          movement.vy += iVar8;
-          movement.vz += iVar2;
+          movement.vy += iVar2;
+          movement.vz += iVar8;
         }
         goto NOT_JUMPING;
       }
@@ -289,9 +293,6 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
     if (baseSpeed < 0)
     {
       d->unk_offset3B2 = -accel;
-      iVar3 = -accel;
-      iVar2 = -iVar2;
-      iVar8 = -approxSpd;
       d->unkVectorX = -sVar4;
       d->unkVectorY = -sVar5;
       d->unkVectorZ = -sVar6;
@@ -303,9 +304,10 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
       d->unkVectorY = sVar5;
       d->unkVectorZ = sVar6;
     }
-    movement.vz += iVar2;
-    movement.vy += iVar8;
-    movement.vx += iVar3;
+	
+	movement.vx += d->unkVectorX;
+	movement.vy += d->unkVectorY;
+	movement.vz += d->unkVectorZ;
 
     // sqrt(x2+y2+z2 << 0x10)
     iVar11 = VehCalc_FastSqrt(movement.vx * movement.vx + movement.vy * movement.vy + movement.vz * movement.vz, 0x10);
@@ -347,7 +349,7 @@ PROCESS_JUMP:
   d->jump_TenBuffer = 0;
   d->actionsFlagSet |= 0x480;
 
-  int ramp = VehPhysGeneral_JumpGetVelY(d->AxisAngle4_normalVec[0], &movement);
+  int ramp = VehPhysGeneral_JumpGetVelY(&d->AxisAngle4_normalVec[0], &movement);
 
   if (ramp < 0)
   {
@@ -367,10 +369,10 @@ PROCESS_JUMP:
     jump = -jump;
   }
 
-  // if (ramp < 0)
-  // {
-  //   ramp = -ramp;
-  // }
+  if (ramp < 0)
+  {
+    ramp = -ramp;
+  }
 
   ramp = (ramp < jump) ? (jump * jump) : (ramp * ramp);
 
@@ -379,12 +381,12 @@ PROCESS_JUMP:
   // are rendered, and the last byte is sub-pixel percision
 
   // iVar2 = sqrt(ramp+jump*jump)
-  iVar2 = VehCalc_FastSqrt(ramp + (d->jump_InitialVelY * d->jump_InitialVelY) , 0);
+  iVar2 = VehCalc_FastSqrt(ramp + d->jump_InitialVelY * d->jump_InitialVelY >> 8 , 8);
 
-  // zero in all arcade maps, idk adv, battle, cutscene, or credits
+  // Zero in all levels, 0x50 in Sewer Speedway
   uVar9 = gGT->level1->unk_18C << 8;
 
-  if (gGT->level1->unk_18C == 0)
+  if (uVar9 == 0)
   {
     uVar9 = 0x3700;
   }
