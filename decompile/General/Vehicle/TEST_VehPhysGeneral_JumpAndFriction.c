@@ -86,7 +86,8 @@ void FUN_80060630(struct Thread* t, struct Driver* d)
   uVar14 = 0;
   iVar9 = 0;
   
-  if ((d->actionsFlagSet & 1) == 0) {
+  if ((d->actionsFlagSet & 1) == 0) 
+  {
 CHECK_FOR_ANY_JUMP:
     // If you want to fire a weapon
     if (((d->actionsFlagSet & 0x8000) != 0) &&
@@ -97,23 +98,44 @@ CHECK_FOR_ANY_JUMP:
 	  // Remove the request to fire a weapon, since we will use it now
       d->actionsFlagSet &= ~(0x8000);
 	  
-      if ((*(short *)(uVar12 + 0x3f4) != 0) && (*(short *)(uVar12 + 0x3f2) == 0)) {
-        *(unsigned short *)(uVar12 + 0x3f6) = 0xa0;
-        iVar9 = *(short *)(uVar12 + 0x418) * 9;
-        if (iVar9 < 0) {
+      // if coyoteTimerMS has not expired, and cooldownMS is over
+      if ((d->jump_CoyoteTimerMS != 0) && (d->jump_CooldownMS == 0))
+	  {
+        // driver is now forced to jump
+        d->jump_ForcedMS = 0xa0;
+		
+        iVar9 = d->const_JumpForce * 9;
+        
+		if (iVar9 < 0) {
           iVar9 = iVar9 + 3;
         }
         d->jump_InitialVelY = (short)(iVar9 >> 2);
-        DECOMP_OtherFX_Play_Echo(9,1,*(unsigned short *)(uVar12 + 0x2ca) & 1);
-        d->jump_unknown = 0x180;
+		
+		// spring weapon sound
+        OtherFX_Play_Echo(9, 1, d->actionsFlagSet & 0x10000);
+		
+		d->jump_unknown = 0x180;
         goto PROCESS_JUMP;
       }
-      *(unsigned short *)(uVar12 + 0x3c) = 0;
+      d->noItemTimer = 0;
     }
-    if (*(char *)(uVar12 + 0x366) == '\0') {
-      if (((*(short *)(uVar12 + 0x3f4) == 0) || (*(short *)(uVar12 + 0x3f0) == 0)) ||
-         (*(short *)(uVar12 + 0x3f2) != 0)) {
-        if ((d->actionsFlagSet & 1) != 0) {
+	
+    // if not being forced to jump (turtles), this should cause the tiny jumps on top of walls.
+    if (d->forcedJump_trampoline == 0)
+    {
+      if (
+			// if driver left quadblock more than 0.16s ago
+			(d->jump_CoyoteTimerMS == 0) ||
+
+			// if haven't jumped in last 10 frames
+			(d->jump_TenBuffer == 0) ||
+
+			// jump_CooldownMS not over (so can't jump again)
+			(d->jump_CooldownMS != 0)
+		  )
+      {
+        if ((d->actionsFlagSet & 1) != 0) 
+		{
           if ((*(int *)(uVar12 + 0x350) != 0) &&
              (iVar9 = (int)*(char *)(*(int *)(uVar12 + 0x350) + 0x3b), iVar9 != 0)) {
             iVar13 = (int)d->speedApprox;
@@ -133,14 +155,30 @@ CHECK_FOR_ANY_JUMP:
         }
         goto NOT_JUMPING;
       }
-      *(unsigned short *)(uVar12 + 0x3f6) = 0xa0;
-      *(short *)(uVar12 + 0x554) = *(short *)(uVar12 + 0x554) + 1;
-      *(unsigned short *)(uVar12 + 0x3f8) = *(unsigned short *)(uVar12 + 0x418);
-      DECOMP_OtherFX_Play_Echo(8,1,*(unsigned short *)(uVar12 + 0x2ca) & 1);
+	  
+      // force driver to jump
+      d->jump_ForcedMS = 0xa0;
+
+      // increment jump counter
+      d->numberOfJumps++;
+
+      d->jump_InitialVelY = d->const_JumpForce;
+
+      // play jump sound
+      DECOMP_OtherFX_Play_Echo(8, 1, d->actionsFlagSet & 0x10000);
     }
-    else {
-      if ((d->jump_ForcedMS == 0) ||
-         (d->jump_InitialVelY == *(short *)(uVar12 + 0x418))) {
+    
+	// if being forced to jump (by turtles)
+	else 
+	{
+      // if first frame (basically)
+      if (
+          // if not currently airborne from forced jump
+          (d->jump_ForcedMS == 0) ||
+
+          // if jump_InitialVelY was just now set to const_jump
+          (d->jump_InitialVelY == d->const_JumpForce))
+      {
         DECOMP_OtherFX_Play(0x7e,1);
       }
       *(unsigned short *)(uVar12 + 0x3f6) = 0xa0;
@@ -154,10 +192,12 @@ CHECK_FOR_ANY_JUMP:
       *(char *)(uVar12 + 0x366) = 0;
     }
   }
+  
+  // ((d->actionsFlagSet & 1) == 1)
   else {
-    if (((*(unsigned int *)(uVar12 + 0xbc) & 3) == 0) || (d->baseSpeed < 1)) {
+    if (((d->stepFlagSet & 3) == 0) || (d->baseSpeed < 1)) {
       if (d->baseSpeed != 0) {
-        if ((((*(unsigned int *)(*(int *)(uVar12 + 0x358) + 4) & 4) == 0) ||
+        if ((((d->terrainMeta1->flags & 4) == 0) ||
             (d->baseSpeed < 1)) || (-1 < d->speedApprox)) {
           iVar8 = (int)d->speedApprox;
           iVar13 = iVar8;
@@ -169,11 +209,11 @@ CHECK_FOR_ANY_JUMP:
         }
         param_1 = (int)*(short *)(uVar12 + 0x428);
         iVar9 = param_1 + ((int)*(char *)(uVar12 + 0x33) << 5) / 5;
-        if ((*(unsigned int *)(uVar12 + 0xbc) & 3) == 0) {
+        if ((d->stepFlagSet & 3) == 0) {
           if ((*(short *)(uVar12 + 0x3e2) != 0) && (0 < d->baseSpeed)) {
-            iVar9 = (int)*(short *)(uVar12 + 0x42a);
+            iVar9 = d->const_Accel_Reserves;
           }
-          param_1 = *(int *)(*(int *)(uVar12 + 0x358) + 0xc);
+          param_1 = d->terrainMeta1->slowUntilSpeed;
           if ((param_1 != 0x100) && ((d->actionsFlagSet & 0x800000) == 0)) {
             iVar9 = param_1 * iVar9 >> 8;
           }
