@@ -15,114 +15,111 @@
 
 void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
 {
-  char bVar1;
-  int iVar2;
-  int iVar3;
-  short sVar4;
-  short sVar5;
-  short sVar6;
-  short jumpForce;
+  char uVar1;
+  bool bVar2;
+  short sVar3;
+  int iVar4;
+  int iVar5;
+  int iVar6;
+  short sVar7;
   int iVar8;
-  u_int uVar9;
-  int setY;
-  int iVar11;
+  int iVar9;
+  unsigned int uVar10;
+  unsigned int uVar11;
+  unsigned int uVar12;
+  int iVar13;
+  unsigned int uVar14;
+  int param_1;
+  int param_2;
+  int param_3;
   VECTOR movement;
+  int jumpForce;
   
-  struct GameTracker *gGT = sdata->gGT;
-  short approxSpd = d->speedApprox;
-  short baseSpeed = d->baseSpeed;
-  
+  uVar12 = d;
   gte_SetRotMatrix(&d->matrixMovingDir);
-
-  // if driver is not drifting
-  if (((d->kartState != KS_DRIFTING) &&
-
-       // if driver is not using mask weapon
-       ((d->actionsFlagSet & 0x800000) == 0)) &&
-
-      // no reserves
-      (d->reserves == 0))
+    
+  if (
+		(d->kartState != KS_DRIFTING) &&
+		((d->actionsFlagSet & 0x800000) == 0) &&
+		(d->reserves == 0)
+	 )
   {
     short ampTurnState = (short)d->ampTurnState >> 8;
     if (ampTurnState < 0)
     {
       ampTurnState = -ampTurnState;
     }
-
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    int turnSpeed = DECOMP_VehCalc_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
-    if (baseSpeed < 0)
-    {
-      baseSpeed = -baseSpeed;
+	
+    param_1 = DECOMP_VehCalc_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
+    
+	param_3 = d->baseSpeed;
+    
+	iVar9 = param_3;
+    if (param_3 < 0) {
+      iVar9 = -param_3;
     }
-    if (baseSpeed < turnSpeed)
-    {
-      turnSpeed = baseSpeed;
+    if (iVar9 < param_1) {
+      param_1 = iVar9;
     }
-    turnSpeed = (baseSpeed < 0) ? turnSpeed : -turnSpeed;
-    d->baseSpeed += turnSpeed;
+    sVar7 = (short)param_1;
+    sVar3 = -sVar7;
+    if (param_3 < 0) {
+      param_1 = -param_1;
+      sVar3 = sVar7;
+    }
+    d->baseSpeed = d->baseSpeed + sVar3;
   }
-
-  // if rubbing on wall now, or recently
-  if (d->set_0xF0_OnWallRub)
+  
+  if (d->set_0xF0_OnWallRub != 0) 
   {
-    if (d->scrubMeta8 < baseSpeed)
-    {
-      baseSpeed = d->scrubMeta8;
-    }
-    if (baseSpeed < -d->scrubMeta8)
-    {
-      baseSpeed = -d->scrubMeta8;
-    }
-    d->baseSpeed = baseSpeed;
-  }
+    if (d->baseSpeed > d->scrubMeta8)
+		d->baseSpeed = d->scrubMeta8;
 
+	if (d->baseSpeed < -d->scrubMeta8) 
+		d->baseSpeed = -d->scrubMeta8;
+  }
+  
   movement.vx = d->velocity.x;
   movement.vy = d->velocity.y;
   movement.vz = d->velocity.z;
-
-  // if driver is not on quadblock, or if not forced to jump (via GOTO)
-  if ((d->actionsFlagSet & 1) == 0)
+  
+  uVar14 = 0;
+  iVar9 = 0;
+  
+  if ((d->actionsFlagSet & 1) == 0) 
   {
-  CHECK_FOR_ANY_JUMP:
+
+CHECK_FOR_ANY_JUMP:
+
+
     // If you want to fire a weapon
     if (((d->actionsFlagSet & 0x8000) != 0) &&
 
         // If that weapon is a spring
         (d->heldItemID == 5))
-    {
-      // Remove the request to fire a weapon, since we will use it now
+    {      
+	  // Remove the request to fire a weapon, since we will use it now
       d->actionsFlagSet &= ~(0x8000);
-
+	  
       // if coyoteTimerMS has not expired, and cooldownMS is over
       if ((d->jump_CoyoteTimerMS != 0) && (d->jump_CooldownMS == 0))
-      {
+	  {
         // driver is now forced to jump
         d->jump_ForcedMS = 0xa0;
-
-        // const_Jump * 9
+		
+		// const 2.25x
         jumpForce = d->const_JumpForce * 9;
-
-        // always true
-        if (jumpForce < 0)
-        {
-          // add 3
-          jumpForce += 3;
-        }
-
-        // jump_InitialVelY = big jump from spring
         d->jump_InitialVelY = (short)(jumpForce >> 2);
-
-        // spring weapon sound
+		
+		// spring weapon sound
         OtherFX_Play_Echo(9, 1, d->actionsFlagSet & 0x10000);
-
-        d->jump_unknown = 0x180;
+		
+		d->jump_unknown = 0x180;
         goto PROCESS_JUMP;
       }
       d->noItemTimer = 0;
     }
-
+	
     // if not being forced to jump (turtles), this should cause the tiny jumps on top of walls.
     if (d->forcedJump_trampoline == 0)
     {
@@ -137,52 +134,50 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
 			(d->jump_CooldownMS != 0)
 		  )
       {
-        // if player is touching ground
-        if ((((d->actionsFlagSet & 1) != 0) &&
-
-             // if player is over a quadblock
-             (d->underDriver != 0)) &&
-            (
-                iVar3 = d->underDriver->mulNormVecY,
-                iVar3 != 0))
-        {
-          // player speed
-          if (approxSpd < 0)
-          { // change sign of player speed
-            approxSpd = -approxSpd;
+        if ((d->actionsFlagSet & 1) != 0) 
+		{
+          if (
+				(d->underDriver != 0) &&
+				(
+					iVar9 = d->underDriver->mulNormVecY, 
+					iVar9 != 0
+				)
+			 ) 
+		  {
+            iVar13 = (int)d->speedApprox;
+            if (iVar13 < 0) {
+              iVar13 = -iVar13;
+            }
+            gte_ldVXY0((iVar9 * iVar13 >> 8) << 0x10);
+            gte_ldVZ0(0);
+            gte_rtv0();
+			
+			int temp;
+            read_mt(iVar9,temp,param_3);
+            movement.vx += iVar9;
+            movement.vy += temp;
+            movement.vz += param_3;
           }
-
-          gte_ldVXY0((iVar3 * approxSpd >> 8) << 0x10);
-          gte_ldVZ0(0);
-          gte_rtv0();
-          read_mt(iVar3, iVar2, iVar8);
-
-          movement.vx += iVar3;
-          movement.vy += iVar2;
-          movement.vz += iVar8;
         }
         goto NOT_JUMPING;
       }
-
-      // implied "else",
-      // if (jump_cooldownMS is over) &&
-      // 	(haven't left quadblock || no jump in over 10 frames)
-
+	  
       // force driver to jump
       d->jump_ForcedMS = 0xa0;
 
       // increment jump counter
       d->numberOfJumps++;
 
+	  // const 1.0x
       d->jump_InitialVelY = d->const_JumpForce;
 
       // play jump sound
-      OtherFX_Play_Echo(8, 1, d->actionsFlagSet & 0x10000);
+      DECOMP_OtherFX_Play_Echo(8, 1, d->actionsFlagSet & 0x10000);
     }
-
-    // if being forced to jump (by turtles)
-    else
-    {
+    
+	// if being forced to jump (by turtles)
+	else 
+	{
       // if first frame (basically)
       if (
           // if not currently airborne from forced jump
@@ -191,254 +186,258 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
           // if jump_InitialVelY was just now set to const_jump
           (d->jump_InitialVelY == d->const_JumpForce))
       {
-        OtherFX_Play(0x7e, 1);
+        DECOMP_OtherFX_Play(0x7e,1);
       }
-
-      // currently forced airborne
+	        
+	  // currently forced airborne
       d->jump_ForcedMS = 0xa0;
-
-      jumpForce = d->const_JumpForce * 3;
-
+	  
+	  jumpForce = d->const_JumpForce * 3;
+	  
       // if big force jump (turtles)
       if (d->forcedJump_trampoline == 2)
       {
-        d->jump_unknown = 0x180;
-        d->jump_InitialVelY = jumpForce;
+		d->jump_unknown = 0x180;
+		
+		// const 3.0x
+		d->jump_InitialVelY = jumpForce;
       }
-
-      // if small force jump (turtles)
-      else
-      {
-        d->jump_InitialVelY = (jumpForce >> 1);
+	  
+      else 
+	  {
+		// const 1.5x
+        d->jump_InitialVelY = jumpForce >> 1;
       }
-
+	  
       // remove force jump (turtles)
       d->forcedJump_trampoline = 0;
     }
   }
-
-  // if driver is on a quadblock
-  else
-  {
-    short accel;
-    // if driver is not on any turbo pad
-    if (((d->stepFlagSet & 3) == 0) ||
-        (baseSpeed < 1))
-    {
-      // driving backwards?
-      if (baseSpeed != 0)
-      {
-        // terrain related
+  
+  // ((d->actionsFlagSet & 1) == 1)
+  else {
+    if (((d->stepFlagSet & 3) == 0) || (d->baseSpeed < 1)) 
+	{
+      if (d->baseSpeed != 0) 
+	  {
         if ((((d->terrainMeta1->flags & 4) == 0) ||
-             (baseSpeed < 1)) ||
-            (-1 < approxSpd))
-        {
-          iVar2 = approxSpd;
-          if (iVar2 < 0)
-          {
-            iVar2 = -approxSpd;
+            (d->baseSpeed < 1)) || (-1 < d->speedApprox)) 
+		{
+          iVar8 = (int)d->speedApprox;
+          iVar13 = iVar8;
+          if (iVar8 < 0) {
+            iVar13 = -iVar8;
           }
-          if (((0x2ff < iVar2) && ((baseSpeed < 1 || (approxSpd < 1)))) &&
-              ((-1 < baseSpeed || (-1 < approxSpd))))
-            goto PROCESS_ACCEL;
+          if (((0x2ff < iVar13) && ((d->baseSpeed < 1 || (iVar8 < 1)))) &&
+             ((-1 < d->baseSpeed || (-1 < iVar8)))) goto PROCESS_ACCEL;
         }
-
-        // const_accel_noReserves + driver-specific acceleration
-        accel = d->const_Accel_ClassStat + (d->accelConst << 5) / 5;
-
-        // if you're not on any turbo pad
-        if ((d->stepFlagSet & 3) == 0)
-        {
-          // if reserves are not zero
-          if ((d->reserves != 0) &&
-              (0 < baseSpeed))
-          {
-            accel = d->const_Accel_Reserves;
+		
+        iVar9 = d->const_Accel_ClassStat + (d->accelConst << 5) / 5;
+		
+        if ((d->stepFlagSet & 3) == 0) 
+		{
+          if ((d->reserves != 0) && (0 < d->baseSpeed)) 
+		  {
+            iVar9 = d->const_Accel_Reserves;
           }
-
-          // driver -> terrain meta -> slowUntilSpeed,
-          // if 0, driver will slow down until completely stuck
-          iVar2 = d->terrainMeta1->slowUntilSpeed;
-
-          if ((iVar2 != 0x100) &&
-
-              // if driver is not using mask weapon
-              ((d->actionsFlagSet & 0x800000) == 0))
-          {
-            accel = (accel * iVar2) >> 8;
+          
+		  param_1 = d->terrainMeta1->slowUntilSpeed;
+          if ((param_1 != 0x100) && ((d->actionsFlagSet & 0x800000) == 0)) 
+		  {
+            iVar9 = param_1 * iVar9 >> 8;
           }
         }
-        else
-        {
-          if (0 < baseSpeed)
-            goto SET_HIGH_ACCEL;
-        }
+        else if (0 < d->baseSpeed) goto SET_HIGH_ACCEL;
       }
     }
-    // if driver is on a turbo pad
-    else
-    {
-    SET_HIGH_ACCEL:
-      // high acceleration
-      accel = 8000;
+    else {
+SET_HIGH_ACCEL:
+      iVar9 = 8000;
     }
-  PROCESS_ACCEL:
-    accel = (accel * gGT->elapsedTimeMS) >> 5;
-
+PROCESS_ACCEL:
+    uVar10 = (iVar9 * sdata->gGT->elapsedTimeMS) >> 5;
     gte_ldVXY0(0);
-    gte_ldVZ0(accel & 0xffff);
+    gte_ldVZ0(uVar10 & 0xffff);
     gte_rtv0();
-    read_mt(sVar4, sVar5, sVar6);
-
-    if (baseSpeed < 0)
-    {
-      d->unk_offset3B2 = -accel;
-      d->unkVectorX = -sVar4;
-      d->unkVectorY = -sVar5;
-      d->unkVectorZ = -sVar6;
+    read_mt(param_1,param_2,param_3);
+	
+    if (d->baseSpeed < 0) {
+      d->unk_offset3B2 = -(short)uVar10;
+      d->unkVectorX = -(short)param_1;
+      d->unkVectorY = -(short)param_2;
+      d->unkVectorZ = -(short)param_3;
     }
-    else
-    {
-      d->unk_offset3B2 = accel;
-      d->unkVectorX = sVar4;
-      d->unkVectorY = sVar5;
-      d->unkVectorZ = sVar6;
+    else {
+      d->unk_offset3B2 = (short)uVar10;
+      d->unkVectorX = (short)param_1;
+      d->unkVectorY = (short)param_2;
+      d->unkVectorZ = (short)param_3;
     }
 	
-	movement.vx += d->unkVectorX;
-	movement.vy += d->unkVectorY;
-	movement.vz += d->unkVectorZ;
-
-    // sqrt(x2+y2+z2 << 0x10)
-    iVar11 = VehCalc_FastSqrt(movement.vx * movement.vx + movement.vy * movement.vy + movement.vz * movement.vz, 0x10);
-
-    iVar11 = (iVar11 >> 8) - baseSpeed;
-    bVar1 = (accel < iVar11);
-
-    if (iVar11 < 0)
-    {
-      iVar11 = 0;
-      bVar1 = (accel < 0);
+    movement.vx += d->unkVectorX;
+    movement.vy += d->unkVectorY;
+    movement.vz += d->unkVectorZ;
+    
+	uVar14 = VehCalc_FastSqrt(
+		movement.vx * movement.vx +
+        movement.vy * movement.vy +
+        movement.vz * movement.vz, 0x10);
+    
+	iVar9 = (int)d->baseSpeed;
+    if (iVar9 < 0) {
+      iVar9 = -iVar9;
     }
-
-    if (bVar1)
-    {
-      iVar11 = accel;
+    uVar14 = (uVar14 >> 8) - iVar9;
+    bVar2 = (int)uVar10 < (int)uVar14;
+    if ((int)uVar14 < 0) {
+      uVar14 = 0;
+      bVar2 = (int)uVar10 < 0;
     }
-
-    // if not on quadblock, or if not forced to jump
+    if (bVar2) {
+      uVar14 = uVar10;
+    }
+	
     if (((d->actionsFlagSet & 1) == 0) || (d->jump_ForcedMS == 0))
-      goto CHECK_FOR_ANY_JUMP;
+		goto CHECK_FOR_ANY_JUMP;
+    
+	if (d->jump_unknown != 0)
+		d->jump_unknown = 0x180;
 
-    if (d->jump_unknown != 0)
-    {
-      d->jump_unknown = 0x180;
-    }
-
-    // If you're "blasted", flipping around after hit by missile, bomb, etc
-    if (d->kartState == KS_BLASTED)
-    {
-      GAMEPAD_ShockFreq(d, 8, 0);
-      GAMEPAD_ShockForce1(d, 8, 0x7f);
+    if (d->kartState == KS_BLASTED) 
+	{
+      DECOMP_GAMEPAD_ShockFreq(d,8,0);
+      DECOMP_GAMEPAD_ShockForce1(d,8,0x7f);
     }
   }
 
+// PROCESS_JUMP
 PROCESS_JUMP:
 
-  d->jump_CooldownMS = 0x180;
   d->jump_TenBuffer = 0;
+  d->jump_CooldownMS = 0x180;
   d->actionsFlagSet |= 0x480;
+  
+// UNUSED LOOP
+// Take largest jump calculation based on separate AxisAngle vectors
+#if 0
 
-  int ramp = VehPhysGeneral_JumpGetVelY(&d->AxisAngle4_normalVec[0], &movement);
+  iVar9 = 0;
+  iVar13 = 0;
 
-  if (ramp < 0)
-  {
-    ramp = -ramp;
+  do {
+  
+  iVar4 = DECOMP_VehPhysGeneral_JumpGetVelY(&d->AxisAngle4_normalVec[0],&movement);
+  
+  // Abs Value of Jump, from Given AxisAngle
+  iVar6 = iVar4;
+  if (iVar4 < 0) {
+   iVar6 = -iVar4;
+  }
+  
+  // Compare to largest Jump from AxisAngle(s)
+  iVar5 = iVar9;
+  if (iVar9 < 0) {
+    iVar5 = -iVar9;
   }
 
-  short* axisAngle = &d->AxisAngle1_normalVec.x;
-  if ((d->actionsFlagSet & 1) == 0)
-  {
-    axisAngle = &d->AxisAngle2_normalVec[0];
+  // If new-largest jump from AxisAngle, save it
+  if (iVar5 < iVar6) {
+    iVar9 = iVar4;
   }
 
-  int jump = VehPhysGeneral_JumpGetVelY(axisAngle, &movement);
+    //iVar13 ++
+    //iVar8 ++ (next angleAxis)
+  } while (iVar13 < 1)
 
-  if (jump < 0)
-  {
-    jump = -jump;
+#else
+	
+  iVar9 = DECOMP_VehPhysGeneral_JumpGetVelY(&d->AxisAngle4_normalVec[0],&movement);
+
+#endif
+
+
+  // AxisAngle
+  short* axisAngle = &d->AxisAngle1_normalVec;
+  if ((d->actionsFlagSet & 1) == 0) {
+    axisAngle = &d->AxisAngle2_normalVec;
   }
-
-  if (ramp < 0)
-  {
-    ramp = -ramp;
+  
+  iVar8 = DECOMP_VehPhysGeneral_JumpGetVelY(axisAngle,&movement);
+  
+  // jump
+  iVar13 = iVar8;
+  if (iVar8 < 0) {
+    iVar13 = -iVar8;
   }
-
-  ramp = (ramp < jump) ? (jump * jump) : (ramp * ramp);
-
-  // iVar2 = sqrt( "basically" ramp+jump*jump )
-  // last byte is cleared cause only 3 bytes in driver->0x2D4
-  // are rendered, and the last byte is sub-pixel percision
-
-  // iVar2 = sqrt(ramp+jump*jump)
-  iVar2 = VehCalc_FastSqrt(ramp + d->jump_InitialVelY * d->jump_InitialVelY >> 8 , 8);
-
-  // Zero in all levels, 0x50 in Sewer Speedway
-  uVar9 = gGT->level1->unk_18C << 8;
-
-  if (uVar9 == 0)
-  {
-    uVar9 = 0x3700;
+  
+  // ramp
+  iVar6 = iVar9;
+  if (iVar9 < 0) {
+    iVar6 = -iVar9;
   }
-  else if (0x5000 < uVar9)
-  {
-    uVar9 = 0x5000;
+  
+  // ramp OR jump
+  iVar4 = iVar9 * iVar9;
+  if (iVar6 < iVar13) {
+    iVar4 = iVar8 * iVar8;
+    iVar9 = iVar8;
   }
-
-  setY = iVar2 - jump;
-  if (uVar9 < setY)
-  {
-    setY = uVar9;
+  
+  iVar13 = VehCalc_FastSqrt(
+			iVar4 + (int)d->jump_InitialVelY * (int)d->jump_InitialVelY >> 8, 8);
+						
+  // 0 for most tracks, 0x50 for Sewer Speedway
+  uVar10 = sdata->gGT->level1->unk_18C << 8;
+  if (uVar10 == 0) {
+    uVar10 = 0x3700;
   }
-
-  // max value for movementY (on stack)
-  if (movement.vy < setY)
-  {
-    // set movementY to the speed that
-    // you should have, on first frame of jump
-    movement.vy = setY;
+  else if (0x5000 < uVar10) {
+    uVar10 = 0x5000;
+  }
+  
+  uVar11 = iVar13 - iVar9;
+  if ((int)uVar10 < iVar13 - iVar9) {
+    uVar11 = uVar10;
+  }
+  if (movement.vy < (int)uVar11) {
+	movement.vy = uVar11;
   }
 
 // [end of the first frame of jump]
 
 // skip here if not jumping
+  
 NOT_JUMPING:
 
-  VehPhysCrash_ConvertVecToSpeed(d, &movement);
-
-  // decrease speed
-  d->speed -= iVar11;
-
-  if (d->speed < 0)
-  {
+  VehPhysCrash_ConvertVecToSpeed(d,&movement);
+  iVar9 = d->speed - uVar14;
+  d->speed = (short)iVar9;
+  if (iVar9 * 0x10000 < 0) {
     d->speed = 0;
   }
-
-  if (approxSpd < 0)
-  {
-    approxSpd = -approxSpd;
-    if (approxSpd < 0x100)
-    {
-      sVar4 = d->unk36E - (d->unk36E >> 3);
+  
+  
+  // d->unk36E is related to speedometer needle
+  
+  
+  iVar9 = (int)d->speedApprox;
+  if (iVar9 < 0) {
+    if (iVar9 < 0) {
+      iVar9 = -iVar9;
     }
-    else
-    {
-      sVar4 = (short)(d->unk36E * 0xd + (gGT->timer & 7) * 0x300 >> 4);
+    if (iVar9 < 0x100) {
+      sVar7 = d->unk36E - (d->unk36E >> 3);
+    }
+    else {
+      sVar7 = (short)(d->unk36E * 0xd +
+                      (sdata->gGT->timer & 7) * 0x300 >> 4);
     }
   }
-  else
-  {
-    sVar4 = (short)(d->unk36E * 0xd + approxSpd * 3 >> 4);
+  else {
+    sVar7 = (short)(d->unk36E * 0xd + iVar9 * 3 >> 4);
   }
-  d->unk36E = sVar4;
+  d->unk36E = sVar7;
+  
+  
+  return;
 }
