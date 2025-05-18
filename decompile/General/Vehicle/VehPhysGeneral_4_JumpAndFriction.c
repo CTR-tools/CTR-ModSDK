@@ -50,24 +50,31 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
       ampTurnState = -ampTurnState;
     }
 	
+	// Part 1
     param_1 = DECOMP_VehCalc_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
-    
 	param_3 = d->baseSpeed;
     
+	// Part 2
 	iVar9 = param_3;
     if (param_3 < 0) {
       iVar9 = -param_3;
     }
+	
+	// Part 3
     if (iVar9 < param_1) {
       param_1 = iVar9;
     }
     sVar7 = (short)param_1;
+	
+	// Part 4
     sVar3 = -sVar7;
-    if (param_3 < 0) {
+	if (param_3 < 0) {
       param_1 = -param_1;
       sVar3 = sVar7;
     }
-    d->baseSpeed = d->baseSpeed + sVar3;
+    
+	// Part 5
+	d->baseSpeed = d->baseSpeed + sVar3;
   }
   
   if (d->set_0xF0_OnWallRub != 0) 

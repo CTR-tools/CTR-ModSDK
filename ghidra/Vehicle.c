@@ -7810,23 +7810,30 @@ void FUN_80060630(undefined4 param_1,int param_2)
       iVar7 = -iVar7;
     }
 
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
+	// Part 1
     iVar2 = FUN_80058f9c(iVar7,0,(uint)*(byte *)(param_2 + 0x43b),0,(int)*(short *)(param_2 + 0x43c)
                         );
     iVar10 = (int)*(short *)(param_2 + 0x39c);
-    iVar7 = iVar10;
+    
+	// Part 2
+	iVar7 = iVar10;
     if (iVar10 < 0) {
       iVar7 = -iVar10;
     }
+	
+	// Part 3
     sVar6 = (short)iVar2;
     if (iVar7 < iVar2) {
       sVar6 = (short)iVar7;
     }
+	
+	// Part 4
     sVar8 = -sVar6;
     if (iVar10 < 0) {
       sVar8 = sVar6;
     }
+	
+	// Part 5
     *(short *)(param_2 + 0x39c) = *(short *)(param_2 + 0x39c) + sVar8;
   }
   

@@ -46,23 +46,33 @@ void FUN_80060630(struct Thread* t, struct Driver* d)
     if (iVar9 < 0) {
       iVar9 = -iVar9;
     }
+	
+	// Part 1
     *(int *)(puVar15 + 0x10) = (int)*(short *)(uVar12 + 0x43c);
     param_1 = DECOMP_VehCalc_MapToRange(iVar9,0,uVar1,0, (int)*(short *)(uVar12 + 0x43c));
     param_3 = (int)*(short *)(uVar12 + 0x39c);
     param_2 = (unsigned int)*(unsigned short *)(uVar12 + 0x39c);
-    iVar9 = param_3;
+    
+	// Part 2
+	iVar9 = param_3;
     if (param_3 < 0) {
       iVar9 = -param_3;
     }
+	
+	// Part 3
     if (iVar9 < param_1) {
       param_1 = iVar9;
     }
     sVar7 = (short)param_1;
-    sVar3 = -sVar7;
+    
+	// Part 4
+	sVar3 = -sVar7;
     if (param_3 < 0) {
       param_1 = -param_1;
       sVar3 = sVar7;
     }
+	
+	// Part 5
     *(unsigned short *)(uVar12 + 0x39c) = *(unsigned short *)(uVar12 + 0x39c) + sVar3;
   }
   if (*(short *)(uVar12 + 0x3fe) != 0) {
