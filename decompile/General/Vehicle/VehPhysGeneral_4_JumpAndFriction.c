@@ -91,7 +91,8 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread *t, struct Driver *d)
 
 CHECK_FOR_ANY_JUMP:
 
-
+// UNUSED Spring Weapon
+#if 0
     // If you want to fire a weapon
     if (((d->actionsFlagSet & 0x8000) != 0) &&
 
@@ -119,6 +120,7 @@ CHECK_FOR_ANY_JUMP:
       }
       d->noItemTimer = 0;
     }
+#endif
 	
     // if not being forced to jump (turtles), this should cause the tiny jumps on top of walls.
     if (d->forcedJump_trampoline == 0)
@@ -232,7 +234,7 @@ CHECK_FOR_ANY_JUMP:
              ((-1 < d->baseSpeed || (-1 < iVar8)))) goto PROCESS_ACCEL;
         }
 		
-        iVar9 = d->const_Accel_ClassStat + (d->accelConst << 5) / 5;
+        iVar9 = d->const_Accel_ClassStat + ((int)d->accelConst << 5) / 5;
 		
         if ((d->stepFlagSet & 3) == 0) 
 		{
@@ -263,21 +265,33 @@ PROCESS_ACCEL:
 	
     if (d->baseSpeed < 0) {
       d->unk_offset3B2 = -(short)uVar10;
+	  
+	  movement.vx -= param_1;
+	  movement.vy -= param_2;
+	  movement.vz -= param_3;
+	  
+	  // unused?
+	  #if 0
       d->unkVectorX = -(short)param_1;
       d->unkVectorY = -(short)param_2;
       d->unkVectorZ = -(short)param_3;
+	  #endif
     }
     else {
       d->unk_offset3B2 = (short)uVar10;
+	  
+	  movement.vx += param_1;
+	  movement.vy += param_2;
+	  movement.vz += param_3;
+	  
+	  // unused?
+	  #if 0
       d->unkVectorX = (short)param_1;
       d->unkVectorY = (short)param_2;
       d->unkVectorZ = (short)param_3;
-    }
-	
-    movement.vx += d->unkVectorX;
-    movement.vy += d->unkVectorY;
-    movement.vz += d->unkVectorZ;
-    
+	  #endif
+	}
+
 	uVar14 = VehCalc_FastSqrt(
 		movement.vx * movement.vx +
         movement.vy * movement.vy +

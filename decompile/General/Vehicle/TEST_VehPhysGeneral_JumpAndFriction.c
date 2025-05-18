@@ -78,8 +78,13 @@ void FUN_80060630(struct Thread* t, struct Driver* d)
   uVar14 = 0;
   *(unsigned int *)(puVar15 + 0x20) = *(unsigned int *)(uVar12 + 0x90);
   iVar9 = 0;
+  
   if ((*(unsigned int *)(uVar12 + 0x2c8) & 1) == 0) {
+
 LAB_80060ab0:
+
+// UNUSED Spring Weapon
+#if 0
     if (((*(unsigned int *)(uVar12 + 0x2c8) & 0x8000) != 0) && (*(char *)(uVar12 + 0x36) == '\x05')) {
       *(unsigned int *)(uVar12 + 0x2c8) = *(unsigned int *)(uVar12 + 0x2c8) & 0xffff7fff;
       if ((*(short *)(uVar12 + 0x3f4) != 0) && (*(short *)(uVar12 + 0x3f2) == 0)) {
@@ -95,7 +100,9 @@ LAB_80060ab0:
       }
       *(unsigned short *)(uVar12 + 0x3c) = 0;
     }
-    if (*(char *)(uVar12 + 0x366) == '\0') {
+#endif
+	
+	if (*(char *)(uVar12 + 0x366) == '\0') {
       if (((*(short *)(uVar12 + 0x3f4) == 0) || (*(short *)(uVar12 + 0x3f0) == 0)) ||
          (*(short *)(uVar12 + 0x3f2) != 0)) {
         if ((*(unsigned int *)(uVar12 + 0x2c8) & 1) != 0) {
