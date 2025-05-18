@@ -51,7 +51,10 @@ void FUN_80060630(struct Thread* t, struct Driver* d)
     *(int *)(puVar15 + 0x10) = (int)*(short *)(uVar12 + 0x43c);
     param_1 = DECOMP_VehCalc_MapToRange(iVar9,0,uVar1,0, (int)*(short *)(uVar12 + 0x43c));
     param_3 = (int)*(short *)(uVar12 + 0x39c);
-    param_2 = (unsigned int)*(unsigned short *)(uVar12 + 0x39c);
+    
+	// commenting out THIS line breaks it, WHY?
+	// Need to make VehPhysGeneral_4_JumpAndFriction work
+	param_2 = (unsigned int)*(unsigned short *)(uVar12 + 0x39c);
     
 	// Part 2
 	iVar9 = param_3;
