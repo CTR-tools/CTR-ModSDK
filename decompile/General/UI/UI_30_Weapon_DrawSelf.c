@@ -26,19 +26,15 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	// character ID
 	currChar = data.characterIDs[d->driverID];
 
-	if (
-			// If your weapon is a mask
-			(itemID == 7) &&
-			
-			// Not Crash, Coco, Polar, Pura
-			(currChar != 0) &&
-			(currChar != 3) &&
-			(currChar != 6) &&
-			(currChar != 7)
-		)
+	// if mask item
+	if (itemID == 7)
 	{
+	  // Crash, Coco, Pura, Polar, NO Penta
+	  unsigned int maskBits = 0xc9;
+	
 	  // This is a bad guy, change icon to Uka
-      iconID = 0x32;
+	  if ( ((maskBits >> currChar) & 1) == 0)
+		iconID = 0x32;
     }
 
     if (
