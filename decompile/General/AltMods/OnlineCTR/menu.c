@@ -94,12 +94,17 @@ void NewPage_ServerCountry()
 	}
 
 	#ifdef ONLINE_BETA_MODE
+	//disable everything except beta and private
 	for(i = 0; i < 6; i++)
-	#else
-	i = 6;
-	#endif
-
 		menuRows[i].stringIndex |= 0x8000;
+	#else
+	//disable beta
+	i = 6;
+	menuRows[i].stringIndex |= 0x8000;
+	#endif
+	//disable europe for the time being
+	i = 0;
+	menuRows[i].stringIndex |= 0x8000;
 }
 
 void MenuWrites_ServerCountry()
