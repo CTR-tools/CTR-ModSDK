@@ -1348,7 +1348,7 @@ common, exe, VehPhysGeneral_JumpGetVelY, 0x0,            General/Vehicle/VehPhys
 
 
 //common, exe, VehPhysGeneral_JumpAndFriction, 0x0,        General/Vehicle/VehPhysGeneral_4_JumpAndFriction.c
-common, exe, VehPhysGeneral_JumpAndFriction, 0x0,        General/Vehicle/TEST_VehPhysGeneral_JumpAndFriction.c
+//common, exe, VehPhysGeneral_JumpAndFriction, 0x0,        General/Vehicle/TEST_VehPhysGeneral_JumpAndFriction.c
 
 common, exe, VehPhysGeneral_SetHeldItem, 0x0,            General/Vehicle/VehPhysGeneral_5_SetHeldItem.c
 //common, exe, VehPhysGeneral_GetBaseSpeed, 0x0,           General/Vehicle/VehPhysGeneral_6_GetBaseSpeed.c
