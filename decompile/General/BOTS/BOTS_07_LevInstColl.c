@@ -31,16 +31,16 @@ void DECOMP_BOTS_LevInstColl(struct Thread* param_1)
 
 		if ((sps->bspHitbox->flag & 0x80) != 0)
 		{
-			struct QuadBlock* qb = sps->bspHitbox->data.leaf.ptrQuadBlockArray;
-			int iVar3 = *(int*)&qb->bbox.min[0]; //x & y concatenated, I'm confused though, it's being passed as `struct Instance*`
-			if (iVar3 != 0)
+			struct InstDef* instDef = sps->bspHitbox->data.hitbox.instDef;
+			struct Instance* inst = instDef->ptrInstance;
+			if (inst != NULL)
 			{
-				struct MetaDataMODEL* mdm = DECOMP_COLL_LevModelMeta(qb->blockID);
+				struct MetaDataMODEL* mdm = DECOMP_COLL_LevModelMeta(instDef->modelID);
 				if (mdm != NULL)
 				{
 					if (mdm->LInC != NULL)
 					{
-						mdm->LInC((struct Instance*)iVar3, param_1, sps); //1st param doesn't make much sense to me...
+						mdm->LInC(inst, param_1, sps);
 					}
 				}
 			}

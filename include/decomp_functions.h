@@ -906,3 +906,5 @@ void DECOMP_CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d);
 u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struct Driver* driverAttacker, int reason);
 void DECOMP_BOTS_Killplane(struct Thread* botThread);
 void DECOMP_COLL_FIXED_BotsSearch(short* posCurr, short* posPrev, struct ScratchpadStruct* sps);
+void DECOMP_BOTS_LevInstColl(struct Thread* param_1);
+void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd);

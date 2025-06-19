@@ -1632,8 +1632,6 @@ LAB_80013fbc:
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
 
-	////////// START
-
 	if ((uVar8 & 0xc0) == 0x40) 
 	{  
 	  // offset 0x10 of NavFrame
@@ -1750,6 +1748,9 @@ LAB_800144a0:
         }
       }
     }
+
+	//PICK IT UP HEREEEEEEEEEEEEEEEEEEEEEEEEEEEE
+	
     //puVar5 = 0x96B20
     puVar5 = PTR_DAT_8008d2ac;
 	
@@ -1893,8 +1894,6 @@ LAB_800144a0:
         iVar15 = (((iVar3 - *(int *)(iVar4 + 0x488)) + uVar20 * iVar3) -
                  ((iVar3 - *(int *)(iVar17 + 0x488)) + uVar18 * iVar3)) -
                  ((int)*(short *)(PTR_DAT_8008cf70 + ((int)(uVar8 << 0x10) >> 0xf)) + (int)sVar7);
-
-		//// CONTINUE FROM HERE
 
         if ((bVar1) && ((uVar8 & 0xffff) == 0)) {
           if (iVar15 < 1) {
@@ -2058,8 +2057,6 @@ LAB_80014a98:
       if (0x6900 < iVar3) {
         iVar3 = 0x6900;
       }
-
-	  //// CONTINUE FROM HERE 2
       
 	  // terrain->0x38
 	  iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;
@@ -2465,8 +2462,8 @@ LAB_8001509c:
       if ((*(short *)(iVar17 + 0x5c4) < 0x961) || (uVar6 = 5, 4 < *(short *)(iVar17 + 0x5c6))) {
         if ((*(short *)(iVar17 + 0x5c4) < 0x781) || (3 < *(short *)(iVar17 + 0x5c6))) {
           if ((0x5a0 < *(short *)(iVar17 + 0x5c4)) && (uVar6 = 3, *(short *)(iVar17 + 0x5c6) < 3))
-          //skip next 12 lines of code
-          goto LAB_800153d0;
+			//skip next 12 lines of code
+			goto LAB_800153d0;
           if ((*(short *)(iVar17 + 0x5c4) < 0x3c1) || (1 < *(short *)(iVar17 + 0x5c6))) {
             if ((0x1e0 < *(short *)(iVar17 + 0x5c4)) && (uVar6 = 1, *(short *)(iVar17 + 0x5c6) < 1))
             //skip next 9 lines of code
@@ -3172,9 +3169,6 @@ LAB_800160f4:
     }
   }
 
-  // END OF TOP-DOWN
-  // ========================================================================
-
   if ((0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U)) &&
      (0x9e < (byte)(*(char *)((int)psVar21 + 9) - 0x31U))) {
 
@@ -3488,9 +3482,6 @@ LAB_8001686c:
 	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
-
-  // ========================================================================
-  // BEGINNING OF BOTTOM-UP
 
   // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);

@@ -4464,7 +4464,7 @@ struct sData
 
 	// 8008da48
 	// pointer at 8008cf70
-	short arcadeDiff[0xE]; //this might be a MATRIX too.
+	short arcadeDiff[0xE]; //this might be a MATRIX too. (this is used as a MATRIX in some locations)
 
 	// 8008da64
 	// pointer at 8008cf74

@@ -335,13 +335,13 @@ struct BotData
 {
 	//these offset are from the perspective as they exist from within `struct Driver`
 
-	// 0x598
+	// 0x598, offset in `struct BotData` == 0x0
 	struct Item item;
 
-	// 0x5a0
+	// 0x5a0, offset in `struct BotData` == 0x8
 	int unk5a0;
 
-	// 0x5a4
+	// 0x5a4, offset in `struct BotData` == 0xc
 	struct NavFrame* botNavFrame;
 
 	// 0x5a8
@@ -352,9 +352,11 @@ struct BotData
 
 	// 0x5b0
 	// unsigned int flags
-	// & 0x010 - is blasted? Something to do with damage
+	// & 0x010 - is blasted? Something to do with damage, might also be "am currently on a s/tp"
 	// & 0x100 - camera spectates this AI
 	// & 0x200 - race started for AI
+	// & 0x020 - bot has moon gravity
+	// bits 9-16 might be = (navframe flags << 8)
 	int botFlags;
 
 	// 0x5b4
@@ -405,7 +407,7 @@ struct BotData
 			short ai_fireLevel;
 
 			// 0x5c8
-			int ai_squishCooldown;
+			int ai_squishCooldown; //why does this get interpreted as a short sometimes and an int other times
 
 			// 0x5cc
 			int unk5cc;
@@ -440,8 +442,10 @@ struct BotData
 	short ai_rotY_608;
 
 	// 0x60a
-	short ai_quadblock_checkpointIndex; //0x60a may be a char and not a short.
+	short ai_quadblock_checkpointIndex; //0x60a almost certainly is a char and not a short.
 
+	// within the regions POTENTALNAVFRAMESTART/END, is this a navframe?
+	// POTENTAL NAV FRAME START
 	// 0x60c
 	short estimatePos[3];
 
@@ -462,6 +466,7 @@ struct BotData
 
 	// 0x61c
 	int unk61c;
+	//POTENTAL NAV FRAME END
 
 	// 0x620
 	struct MaskHeadWeapon* maskObj;
@@ -471,7 +476,7 @@ struct BotData
 
 	// 0x626
 	// short ??? // Something set when blasted ?
-	short unk626;
+	short unk626; //this is probably 2 chars, but also maybe not
 
 	// 0x628
 	int unk628;
@@ -778,7 +783,7 @@ struct Driver
 	// 0x36e
     // Seems to control the speedometer needle to show base current speed
     // Altought the needle is also controlled a little bit by other variables that are not constants
-	short unk36E;
+	short unk36E; 
 
 	// 0x370
 	short AxisAngle3_normalVec[3];
