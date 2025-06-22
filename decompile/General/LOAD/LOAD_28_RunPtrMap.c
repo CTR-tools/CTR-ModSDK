@@ -11,6 +11,6 @@ void DECOMP_LOAD_RunPtrMap(char* origin, int* patchArr, int numPtrs)
 		)
 	{
 		*(int*)&origin[*ptrCurrOffset] =
-		*(int*)&origin[*ptrCurrOffset] + origin;
+		(int)(*(int*)&origin[*ptrCurrOffset] + origin);
 	}
 }

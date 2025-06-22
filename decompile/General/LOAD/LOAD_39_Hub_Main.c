@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_LOAD_Hub_Main(int bigfilePtr)
+void DECOMP_LOAD_Hub_Main(struct BigHeader* bigfilePtr)
 {
 	struct GameTracker* gGT;
 

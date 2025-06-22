@@ -1,7 +1,7 @@
 #include <common.h>
 
 // packID will always be 3-gGT->activeMempackIndex
-void DECOMP_LOAD_Hub_ReadFile(int bigfile, int levID, int packID)
+void DECOMP_LOAD_Hub_ReadFile(struct BigHeader* bigfile, int levID, int packID)
 {
 	int iVar2;
 	struct GameTracker* gGT = sdata->gGT;

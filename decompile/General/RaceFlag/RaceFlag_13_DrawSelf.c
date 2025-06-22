@@ -123,7 +123,7 @@ SKIP_LOADING_TEXT:
 		toggle = toggle ^ 1;
 		posR = (u_int *)(0x1f800000 + toggle * 0x78);
 		local = (u_int *)(0x1f8000F0);
-		pos = (u_int *)(0x1f800108);
+		pos = (SVECTOR *)(0x1f800108);
 #endif
 
 		local[0] = data.checkerFlagVariables[0];

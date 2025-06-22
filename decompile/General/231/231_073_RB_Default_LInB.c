@@ -27,7 +27,7 @@ void DECOMP_RB_Default_LInB(struct Instance* inst)
 	*(short*)&scratch[0x112] = var + 0x80;
 	
 	COLL_SearchBSP_CallbackQUADBLK(
-		(u_int*)&scratch[0x108], (u_int*)&scratch[0x110], (struct ScratchpadStruct*)&scratch[0x118], 0); //this scratchpadstruct is +0x118 from 0x1f800000, that may be a problem? all other function calls I've seen just pass 0x1f800000
+		(short*)&scratch[0x108], (short*)&scratch[0x110], (struct ScratchpadStruct*)&scratch[0x118], 0); //this scratchpadstruct is +0x118 from 0x1f800000, that may be a problem? all other function calls I've seen just pass 0x1f800000
 		
 	RB_MakeInstanceReflective((struct ScratchpadStruct*)&scratch[0x118], inst);
 }

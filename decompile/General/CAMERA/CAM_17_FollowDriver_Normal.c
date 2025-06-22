@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct PushBuffer* pb, int scratchpad, struct ZoomData *zoom)
+void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct PushBuffer* pb, struct ScratchpadStructExtended* scratchpad, struct ZoomData *zoom)
 {
     struct GameTracker *gGT = sdata->gGT;
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad[d->driverID];
@@ -99,11 +99,12 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         uVar8 = 0xff9c;
     }
 
-    *(short *)(scratchpad + 0x20c) = uVar8;
+	//scratchpad->bspSearchTriangle[0].quadblock = (struct QuadBlock*)uVar8;
+    *(short *)(((int)scratchpad) + 0x20c) = uVar8;
 
     // 0x20e
     // camera RotY
-    *(u_short *)(scratchpad + 0x20e) =
+    *(u_short *)(((int)scratchpad) + 0x20e) =
         (
 			d->rotCurr.w +
 			d->angle +
@@ -111,18 +112,18 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 			sVar10 
 		) & 0xfff;
 
-    *(short *)(scratchpad + 0x210) = cDC->desiredRot[0] * -2;
+    *(short *)(((int)scratchpad) + 0x210) = cDC->desiredRot[0] * -2;
 
     // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
+    ConvertRotToMatrix(((int)scratchpad) + 0x220, ((int)scratchpad) + 0x20c);
 
     if (((cDC->flags & 0x80) != 0) &&
         (x = (int)((u_int)d->fireSpeedCap << 0x10) >> 0x14, *(int*)&cDC->unk_b8[4] < x))
     {
         *(int*)&cDC->unk_b8[4] = x;
     }
-    *(short *)(scratchpad + 0x20c) = 0;
-    *(short *)(scratchpad + 0x20e) = 0;
+    *(short *)(((int)scratchpad) + 0x20c) = 0;
+    *(short *)(((int)scratchpad) + 0x20e) = 0;
 
     uVar8 = DECOMP_VehCalc_MapToRange
 	(
@@ -131,7 +132,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         (int)zoom->distMin, (int)zoom->distMax
 	);
 
-    *(short *)(scratchpad + 0x210) = uVar8;
+    *(short *)(((int)scratchpad) + 0x210) = uVar8;
 
     if (*(int*)&cDC->unk_b8[4] == 0)
     {
@@ -153,56 +154,56 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         if (*(int*)&cDC->unk_b8[4] < 0)
             *(int*)&cDC->unk_b8[4] = 0;
     }
-    *(short *)(scratchpad + 0x210) += *(int*)&cDC->unk_b8[0] >> 8;
+    *(short *)(((int)scratchpad) + 0x210) += *(int*)&cDC->unk_b8[0] >> 8;
 
-    gte_SetRotMatrix((MATRIX *)(scratchpad + 0x220));
-    psVar12 = (SVECTOR *)(scratchpad + 0x20c);
+    gte_SetRotMatrix((MATRIX *)(((int)scratchpad) + 0x220));
+    psVar12 = (SVECTOR *)(((int)scratchpad) + 0x20c);
     gte_ldv0(psVar12);
     gte_rtv0();
-    gte_stlvnl((VECTOR *)(scratchpad + 0x240));
+    gte_stlvnl((VECTOR *)(((int)scratchpad) + 0x240));
 
-    *(short *)(scratchpad + 0x20c) = 0;
-    *(short *)(scratchpad + 0x20e) = 0x40;
-    *(short *)(scratchpad + 0x210) = 0;
+    *(short *)(((int)scratchpad) + 0x20c) = 0;
+    *(short *)(((int)scratchpad) + 0x20e) = 0x40;
+    *(short *)(((int)scratchpad) + 0x210) = 0;
 
     gte_ldv0(psVar12);
     gte_rtv0();
-    gte_stlvnl((VECTOR *)(scratchpad + 0x27c));
+    gte_stlvnl((VECTOR *)(((int)scratchpad) + 0x27c));
 
-    *(int *)(scratchpad + 600) = d->posCurr.x >> 8;
-    *(int *)(scratchpad + 0x25c) = d->posCurr.y >> 8;
-    *(int *)(scratchpad + 0x260) = d->posCurr.z >> 8;
+    *(int *)(((int)scratchpad) + 600) = d->posCurr.x >> 8;
+    *(int *)(((int)scratchpad) + 0x25c) = d->posCurr.y >> 8;
+    *(int *)(((int)scratchpad) + 0x260) = d->posCurr.z >> 8;
 	
-    *(int *)(scratchpad + 600) += *(int *)(scratchpad + 0x27c);
-    *(int *)(scratchpad + 0x260) += *(int *)(scratchpad + 0x284);
-    *(int *)(scratchpad + 0x240) += *(int *)(scratchpad + 600);
+    *(int *)(((int)scratchpad) + 600) += *(int *)(((int)scratchpad) + 0x27c);
+    *(int *)(((int)scratchpad) + 0x260) += *(int *)(((int)scratchpad) + 0x284);
+    *(int *)(((int)scratchpad) + 0x240) += *(int *)(((int)scratchpad) + 600);
 
 
 	// mask-grab
     if ((cDC->flags & 0x10) != 0)
     {
-        *(int *)(scratchpad + 0x244) = (d->quadBlockHeight >> 8) + (int)cDC->unk98 + (int)zoom->vertDistance;
+        *(int *)(((int)scratchpad) + 0x244) = (d->quadBlockHeight >> 8) + (int)cDC->unk98 + (int)zoom->vertDistance;
     }
 	
     else
     {
-        *(int *)(scratchpad + 0x244) += *(int *)(scratchpad + 0x25c) + (int)zoom->vertDistance;
+        *(int *)(((int)scratchpad) + 0x244) += *(int *)(((int)scratchpad) + 0x25c) + (int)zoom->vertDistance;
     }
 
-    *(int *)(scratchpad + 0x248) += *(int *)(scratchpad + 0x260);
+    *(int *)(((int)scratchpad) + 0x248) += *(int *)(((int)scratchpad) + 0x260);
 
     uVar8 = 0;
     if (gGT->numPlyrCurrGame != 2)
         uVar8 = 0xff9c;
 
     // rotX
-    *(short *)(scratchpad + 0x20c) = uVar8;
+    *(short *)(((int)scratchpad) + 0x20c) = uVar8;
 
     // rotZ
-    *(short *)(scratchpad + 0x210) = 0;
+    *(short *)(((int)scratchpad) + 0x210) = 0;
 
     // rotY
-    *(u_short *)(scratchpad + 0x20e) = 
+    *(u_short *)(((int)scratchpad) + 0x20e) = 
 		(
 			d->rotCurr.w +
 			d->angle +
@@ -212,7 +213,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 		) & 0xfff;
 
     // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(scratchpad + 0x220, scratchpad + 0x20c);
+    ConvertRotToMatrix(((int)scratchpad) + 0x220, ((int)scratchpad) + 0x20c);
 
     // if racer is not damaged,
 	// slight-down view angle
@@ -233,21 +234,21 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     }
 
 	// Z, Y, X
-    *(short *)(scratchpad + 0x210) = cDC->unk1A;
-    *(short *)(scratchpad + 0x20e) = 0;
-    *(short *)(scratchpad + 0x20c) = 0;
+    *(short *)(((int)scratchpad) + 0x210) = cDC->unk1A;
+    *(short *)(((int)scratchpad) + 0x20e) = 0;
+    *(short *)(((int)scratchpad) + 0x20c) = 0;
 	
-    gte_SetRotMatrix((MATRIX *)(scratchpad + 0x220));
+    gte_SetRotMatrix((MATRIX *)(((int)scratchpad) + 0x220));
 
-    psVar12 = (SVECTOR *)(scratchpad + 0x20c);
+    psVar12 = (SVECTOR *)(((int)scratchpad) + 0x20c);
 
     gte_ldv0(psVar12);
     gte_rtv0();
     gte_stsv(psVar12);
 
-    *(int *)(scratchpad + 600) += (int)*(short *)(scratchpad + 0x20c);
-    *(int *)(scratchpad + 0x260) += (int)*(short *)(scratchpad + 0x210);
-    *(int *)(scratchpad + 0x25c) += (int)*(short *)(scratchpad + 0x20e) + (int)zoom->angle[2];
+    *(int *)(((int)scratchpad) + 600) += (int)*(short *)(((int)scratchpad) + 0x20c);
+    *(int *)(((int)scratchpad) + 0x260) += (int)*(short *)(((int)scratchpad) + 0x210);
+    *(int *)(((int)scratchpad) + 0x25c) += (int)*(short *)(((int)scratchpad) + 0x20e) + (int)zoom->angle[2];
 
     cDC->desiredRot[0] =
         (
@@ -262,9 +263,9 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     if (state == KS_MASK_GRABBED)
     {
         // pushBuffer position
-        *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
-        *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
-        *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
+        *(int *)(((int)scratchpad) + 0x240) = (int)pb->pos[0];
+        *(int *)(((int)scratchpad) + 0x244) = (int)pb->pos[1];
+        *(int *)(((int)scratchpad) + 0x248) = (int)pb->pos[2];
 
         // reset camera interpolation
         *(short *)((int)cDC + 0xc0) = 0;
@@ -288,13 +289,13 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     {
         cDC->BlastedLerp.boolLerpPending = 0;
 
-        cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(scratchpad + 600);
-        cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-        cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+        cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(((int)scratchpad) + 600);
+        cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(((int)scratchpad) + 0x25c);
+        cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(((int)scratchpad) + 0x260);
 
-        cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-        cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-        cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+        cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(((int)scratchpad) + 0x240);
+        cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(((int)scratchpad) + 0x244);
+        cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(((int)scratchpad) + 0x248);
 
         cDC->BlastedLerp.framesRemaining = FPS_DOUBLE(8);
     }
@@ -317,11 +318,11 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
         cDC->BlastedLerp.boolLerpPending = 1;
 
-        if (((int)cDC->unkTriplet2[1] < *(int *)(scratchpad + 0x244)) &&
+        if (((int)cDC->unkTriplet2[1] < *(int *)(((int)scratchpad) + 0x244)) &&
             (x = (int)*(short *)((int)cDC + 0xca) + (d->quadBlockHeight >> 8),
-             x < *(int *)(scratchpad + 0x244)))
+             x < *(int *)(((int)scratchpad) + 0x244)))
         {
-            *(int *)(scratchpad + 0x244) = x;
+            *(int *)(((int)scratchpad) + 0x244) = x;
         }
 
     LAB_8001a8b0:
@@ -337,13 +338,13 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         {
             cDC->BlastedLerp.boolLerpPending = 0;
 
-            cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(scratchpad + 0x258);
-            cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(scratchpad + 0x25c);
-            cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(scratchpad + 0x260);
+            cDC->BlastedLerp.desiredRot[0] = cDC->unkTriplet3[0] - *(short *)(((int)scratchpad) + 0x258);
+            cDC->BlastedLerp.desiredRot[1] = cDC->unkTriplet3[1] - *(short *)(((int)scratchpad) + 0x25c);
+            cDC->BlastedLerp.desiredRot[2] = cDC->unkTriplet3[2] - *(short *)(((int)scratchpad) + 0x260);
 
-            cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(scratchpad + 0x240);
-            cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(scratchpad + 0x244);
-            cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(scratchpad + 0x248);
+            cDC->BlastedLerp.desiredPos[0] = cDC->unkTriplet2[0] - *(short *)(((int)scratchpad) + 0x240);
+            cDC->BlastedLerp.desiredPos[1] = cDC->unkTriplet2[1] - *(short *)(((int)scratchpad) + 0x244);
+            cDC->BlastedLerp.desiredPos[2] = cDC->unkTriplet2[2] - *(short *)(((int)scratchpad) + 0x248);
 
             cDC->BlastedLerp.framesRemaining = FPS_DOUBLE(8);
 
@@ -355,82 +356,82 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         // if frame countdown is not finished
         if (cDC->BlastedLerp.framesRemaining != 0)
         {
-            *(int *)(scratchpad + 0x240) += (cDC->BlastedLerp.desiredPos[0] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
-            *(int *)(scratchpad + 0x244) += (cDC->BlastedLerp.desiredPos[1] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
-            *(int *)(scratchpad + 0x248) += (cDC->BlastedLerp.desiredPos[2] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x240) += (cDC->BlastedLerp.desiredPos[0] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x244) += (cDC->BlastedLerp.desiredPos[1] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x248) += (cDC->BlastedLerp.desiredPos[2] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
 
-            *(int *)(scratchpad + 0x258) += (cDC->BlastedLerp.desiredRot[0] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
-            *(int *)(scratchpad + 0x25c) += (cDC->BlastedLerp.desiredRot[1] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
-            *(int *)(scratchpad + 0x260) += (cDC->BlastedLerp.desiredRot[2] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x258) += (cDC->BlastedLerp.desiredRot[0] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x25c) += (cDC->BlastedLerp.desiredRot[1] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
+            *(int *)(((int)scratchpad) + 0x260) += (cDC->BlastedLerp.desiredRot[2] * cDC->BlastedLerp.framesRemaining) >> FPS_RIGHTSHIFT(3);
 
             // decrease frame countdown
             cDC->BlastedLerp.framesRemaining--;
         }
     }
 
-    CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
+    CAM_FindClosestQuadblock(((int)scratchpad), cDC, d, ((int)scratchpad) + 0x240);
 
     if (
-        (*(short *)(scratchpad + 0x3e) == 0) ||
+        (*(short *)(((int)scratchpad) + 0x3e) == 0) ||
 
         // quadblock->quadFlags & 0x4100
-        ((*(u_short *)(*(int *)(scratchpad + 0x80) + 0x12) & 0x4100) != 0))
+        ((*(u_short *)(*(int *)(((int)scratchpad) + 0x80) + 0x12) & 0x4100) != 0))
     {
-        if (*(int *)(scratchpad + 0x244) < (int)cDC->framesZoomingOut + (d->posCurr.y >> 8))
+        if (*(int *)(((int)scratchpad) + 0x244) < (int)cDC->framesZoomingOut + (d->posCurr.y >> 8))
         {
             *(short *)((int)cDC + 0xc2) = 8;
             *(short *)((int)cDC + 0xc0) = cDC->framesZoomingOut;
-            *(int *)(scratchpad + 0x244) = (int)cDC->framesZoomingOut + (d->posCurr.y >> 8);
+            *(int *)(((int)scratchpad) + 0x244) = (int)cDC->framesZoomingOut + (d->posCurr.y >> 8);
 
             goto LAB_8001ab04;
         }
 
         *(short *)((int)cDC + 0xc2) = 8;
-        *(short *)((int)cDC + 0xc0) = *(short *)(scratchpad + 0x244) - (short)(d->posCurr.y >> 8);
+        *(short *)((int)cDC + 0xc0) = *(short *)(((int)scratchpad) + 0x244) - (short)(d->posCurr.y >> 8);
     }
 
     else
     {
         // quadblock->terrainFlags
-        state = *(char *)(*(int *)(scratchpad + 0x80) + 0x38);
+        state = *(char *)(*(int *)(((int)scratchpad) + 0x80) + 0x38);
 
         // Mud, Water, or FastWater
         if (((state == 0xe) || (state == 4)) || (state == 0xd))
         {
-            *(short *)(scratchpad + 0x1e) = 0;
+            *(short *)(((int)scratchpad) + 0x1e) = 0;
         }
 
-        x = (int)*(short *)(scratchpad + 0x1e) + (int)zoom->vertDistance;
-        if (*(int *)(scratchpad + 0x244) < x)
+        x = (int)*(short *)(((int)scratchpad) + 0x1e) + (int)zoom->vertDistance;
+        if (*(int *)(((int)scratchpad) + 0x244) < x)
         {
-            *(int *)(scratchpad + 0x244) = x;
+            *(int *)(((int)scratchpad) + 0x244) = x;
         }
 
         x = (int)*(short *)((int)cDC + 0xc2);
         if (x != 0)
         {
-            *(int *)(scratchpad + 0x244) =
+            *(int *)(((int)scratchpad) + 0x244) =
 
-                (8 - x) * *(int *)(scratchpad + 0x244) +
+                (8 - x) * *(int *)(((int)scratchpad) + 0x244) +
                     x * ((int)*(short *)((int)cDC + 0xc0) + (d->posCurr.y >> 8)) >>
                 3;
 
             *(short *)((int)cDC + 0xc2) += -1;
         }
     }
-    cDC->framesZoomingOut = *(short *)(scratchpad + 0x244) - (d->posCurr.y >> 8);
+    cDC->framesZoomingOut = *(short *)(((int)scratchpad) + 0x244) - (d->posCurr.y >> 8);
 LAB_8001ab04:
 
     // if mask grabs you when you're underwater
     if (((gGT->level1->configFlags & 2) != 0) &&
-        (*(int *)(scratchpad + 0x244) < zoom->vertDistance))
+        (*(int *)(((int)scratchpad) + 0x244) < zoom->vertDistance))
     {
-        *(int *)(scratchpad + 0x244) = zoom->vertDistance;
+        *(int *)(((int)scratchpad) + 0x244) = zoom->vertDistance;
     }
 
     if (cDC->BlastedLerp.boolLerpPending != 0)
     {
-        *(int *)(scratchpad + 0x25c) = *(int *)(scratchpad + 0x244) + (int)*(short *)((int)cDC + 0xc8);
+        *(int *)(((int)scratchpad) + 0x25c) = *(int *)(((int)scratchpad) + 0x244) + (int)*(short *)((int)cDC + 0xc8);
     }
 
     if (d->kartState == KS_MASK_GRABBED)
@@ -438,13 +439,13 @@ LAB_8001ab04:
         pb->rot[2] -= (pb->rot[2] >> 3);
 
         // camera dirX, cameraPosX minus driverPosX
-        *(int *)(scratchpad + 0x24c) = (int)pb->pos[0] - (d->posCurr.x >> 8);
+        *(int *)(((int)scratchpad) + 0x24c) = (int)pb->pos[0] - (d->posCurr.x >> 8);
 
         // camera dirY, cameraPosY minus driverPosY, plus something else
-        *(int *)(scratchpad + 0x250) = (int)pb->pos[1] - ((d->posCurr.y >> 8) + (int)zoom->angle[2]);
+        *(int *)(((int)scratchpad) + 0x250) = (int)pb->pos[1] - ((d->posCurr.y >> 8) + (int)zoom->angle[2]);
 
         // camera dirZ, cameraPosZ minus driverPosZ
-        *(int *)(scratchpad + 0x254) = (int)pb->pos[2] - (d->posCurr.z >> 8);
+        *(int *)(((int)scratchpad) + 0x254) = (int)pb->pos[2] - (d->posCurr.z >> 8);
 
         if (pb->rot[0] < 0x800)
         {
@@ -457,36 +458,36 @@ LAB_8001ab04:
     // if not mask grab
     else
     {
-        x = *(int *)(scratchpad + 0x248) - *(int *)(scratchpad + 0x260);
+        x = *(int *)(((int)scratchpad) + 0x248) - *(int *)(((int)scratchpad) + 0x260);
 
         // camera direction
-        *(int *)(scratchpad + 0x254) = x;
-        *(int *)(scratchpad + 0x24c) = *(int *)(scratchpad + 0x240) - *(int *)(scratchpad + 600);
-        *(int *)(scratchpad + 0x250) = *(int *)(scratchpad + 0x244) - *(int *)(scratchpad + 0x25c);
+        *(int *)(((int)scratchpad) + 0x254) = x;
+        *(int *)(((int)scratchpad) + 0x24c) = *(int *)(((int)scratchpad) + 0x240) - *(int *)(((int)scratchpad) + 600);
+        *(int *)(((int)scratchpad) + 0x250) = *(int *)(((int)scratchpad) + 0x244) - *(int *)(((int)scratchpad) + 0x25c);
 
         // camera rotation
-        x_00 = ratan2(*(long *)(scratchpad + 0x24c), x);
+        x_00 = ratan2(*(long *)(((int)scratchpad) + 0x24c), x);
         pb->rot[1] = (short)x_00;
 
         x_00 = SquareRoot0_stub(
-				*(int *)(scratchpad + 0x24c) * *(int *)(scratchpad + 0x24c) +
-				*(int *)(scratchpad + 0x254) * *(int *)(scratchpad + 0x254)
+				*(int *)(((int)scratchpad) + 0x24c) * *(int *)(((int)scratchpad) + 0x24c) +
+				*(int *)(((int)scratchpad) + 0x254) * *(int *)(((int)scratchpad) + 0x254)
 			);
         
-		x_00 = ratan2(*(long *)(scratchpad + 0x250), x_00);
+		x_00 = ratan2(*(long *)(((int)scratchpad) + 0x250), x_00);
         pb->rot[0] = 0x800 - (short)x_00;
 
         pb->rot[2] = (short)((u_int)((int)zoom->angle[0] * (int)cDC->desiredRot[0]) >> 8);
     }
 
     // something with pushBuffer position
-    *(int *)(scratchpad + 0x214) = *(int *)(scratchpad + 0x240) - (int)pb->pos[0];
-    *(int *)(scratchpad + 0x218) = *(int *)(scratchpad + 0x244) - (int)pb->pos[1];
-    *(int *)(scratchpad + 0x21c) = *(int *)(scratchpad + 0x248) - (int)pb->pos[2];
+    *(int *)(((int)scratchpad) + 0x214) = *(int *)(((int)scratchpad) + 0x240) - (int)pb->pos[0];
+    *(int *)(((int)scratchpad) + 0x218) = *(int *)(((int)scratchpad) + 0x244) - (int)pb->pos[1];
+    *(int *)(((int)scratchpad) + 0x21c) = *(int *)(((int)scratchpad) + 0x248) - (int)pb->pos[2];
 
-    cDC->unkTriplet1[0] -= (*(int *)(scratchpad + 0x240) - *(int *)((int)cDC + 0x58));
-    cDC->unkTriplet1[1] -= (*(int *)(scratchpad + 0x244) - *(int *)((int)cDC + 0x5c));
-    cDC->unkTriplet1[2] -= (*(int *)(scratchpad + 0x248) - *(int *)((int)cDC + 0x60));
+    cDC->unkTriplet1[0] -= (*(int *)(((int)scratchpad) + 0x240) - *(int *)((int)cDC + 0x58));
+    cDC->unkTriplet1[1] -= (*(int *)(((int)scratchpad) + 0x244) - *(int *)((int)cDC + 0x5c));
+    cDC->unkTriplet1[2] -= (*(int *)(((int)scratchpad) + 0x248) - *(int *)((int)cDC + 0x60));
 
     if (cDC->unkTriplet1[0] > 2)  cDC->unkTriplet1[0] = 2;
     if (cDC->unkTriplet1[1] > 2)  cDC->unkTriplet1[1] = 2;
@@ -499,17 +500,17 @@ LAB_8001ab04:
     if (d->kartState != KS_MASK_GRABBED)
     {
         // pushBuffer position
-        pb->pos[0] += *(short *)(scratchpad + 0x214) + cDC->unkTriplet1[0];
-        pb->pos[1] += *(short *)(scratchpad + 0x218) + cDC->unkTriplet1[1];
-        pb->pos[2] += *(short *)(scratchpad + 0x21c) + cDC->unkTriplet1[2];
+        pb->pos[0] += *(short *)(((int)scratchpad) + 0x214) + cDC->unkTriplet1[0];
+        pb->pos[1] += *(short *)(((int)scratchpad) + 0x218) + cDC->unkTriplet1[1];
+        pb->pos[2] += *(short *)(((int)scratchpad) + 0x21c) + cDC->unkTriplet1[2];
     }
 
-    cDC->unkTriplet2[0] = *(int *)(scratchpad + 0x240);
-    cDC->unkTriplet2[1] = *(int *)(scratchpad + 0x244);
-    cDC->unkTriplet2[2] = *(int *)(scratchpad + 0x248);
-    cDC->unkTriplet3[0] = *(int *)(scratchpad + 0x258);
-    cDC->unkTriplet3[1] = *(int *)(scratchpad + 0x25c);
-    cDC->unkTriplet3[2] = *(int *)(scratchpad + 0x260);
+    cDC->unkTriplet2[0] = *(int *)(((int)scratchpad) + 0x240);
+    cDC->unkTriplet2[1] = *(int *)(((int)scratchpad) + 0x244);
+    cDC->unkTriplet2[2] = *(int *)(((int)scratchpad) + 0x248);
+    cDC->unkTriplet3[0] = *(int *)(((int)scratchpad) + 0x258);
+    cDC->unkTriplet3[1] = *(int *)(((int)scratchpad) + 0x25c);
+    cDC->unkTriplet3[2] = *(int *)(((int)scratchpad) + 0x260);
 
     // backup flags (again)
     backupFlags = cDC->flags;
@@ -530,7 +531,7 @@ LAB_8001ab04:
     // if end-of-race battle
     if ((backupFlags & 4) != 0)
     {
-        DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40[0], &local_38[0]);
+        DECOMP_CAM_FollowDriver_Spin360(cDC, ((int)scratchpad), d, &local_40[0], &local_38[0]);
 
         // reverse interpolation of fly-in [0x1000 to 0]
         x = 0x1000 - cDC->unk8C;
@@ -621,11 +622,11 @@ LAB_8001ab04:
 		&pb->pos[0], &pb->rot[0],
 		x);
 
-    *(int *)(scratchpad + 0x240) = (int)pb->pos[0];
-    *(int *)(scratchpad + 0x244) = (int)pb->pos[1];
-    *(int *)(scratchpad + 0x248) = (int)pb->pos[2];
+    *(int *)(((int)scratchpad) + 0x240) = (int)pb->pos[0];
+    *(int *)(((int)scratchpad) + 0x244) = (int)pb->pos[1];
+    *(int *)(((int)scratchpad) + 0x248) = (int)pb->pos[2];
 
-    CAM_FindClosestQuadblock(scratchpad, cDC, d, scratchpad + 0x240);
+    CAM_FindClosestQuadblock(((int)scratchpad), cDC, d, ((int)scratchpad) + 0x240);
 
     x = cDC->frameCounterTransition;
     iVar14 = cDC->frameCounterTransition;

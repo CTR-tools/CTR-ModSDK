@@ -10,7 +10,7 @@ u_char* DECOMP_RECTMENU_DrawTime(int milliseconds)
 		// the original game actually did this
 		char* str = &sdata->mempack[4];
 	#else
-		char* str = 0x1f800000;
+		char* str = (char*)0x1f800000;
 	#endif
 
 	// build a string

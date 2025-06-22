@@ -26,7 +26,7 @@ void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 			LoadImage(&vh->rect, VRAMHEADER_GETPIXLES(vh));
 			
 			// goto next
-			vramBuf = (u_int)vh + size;
+			vramBuf = (int*)((int)vh + size);
 			
 			size = vramBuf[0];
 			vh = (struct VramHeader*)&vramBuf[1];

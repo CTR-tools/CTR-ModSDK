@@ -67,7 +67,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	{
 		DECOMP_LibraryOfModels_Store(
 			gGT, level1->numModels,
-			(int*)level1->ptrModelsPtrArray);
+			level1->ptrModelsPtrArray);
 			
 		DECOMP_INSTANCE_LevInitAll(
 			level1->ptrInstDefs,
@@ -75,7 +75,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 			
 		DECOMP_LevInstDef_UnPack(level1->ptr_mesh_info);
 		
-		DECOMP_DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
+		DECOMP_DecalGlobal_Store(gGT, level1->levTexLookup);
 	}
 	
 	#ifndef REBUILD_PS1

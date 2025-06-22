@@ -1,6 +1,6 @@
 #include <common.h>
 
-static int cbDRAM = DECOMP_LOAD_DramFileCallback;
+static void(*cbDRAM)(struct LoadQueueSlot*) = DECOMP_LOAD_DramFileCallback;
 
 #ifdef USE_DRIVERRND
 

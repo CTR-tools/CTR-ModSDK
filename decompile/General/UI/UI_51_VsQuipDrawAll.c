@@ -43,7 +43,7 @@ void DECOMP_UI_VsQuipDrawAll(void)
 	else 
 	{
 		// Add two strings together
-		sprintf(0x1f800000,
+		sprintf((char*)0x1f800000,
 	
 			// Contains '%s' format:
 			// Original end-of-race comment
@@ -55,7 +55,7 @@ void DECOMP_UI_VsQuipDrawAll(void)
 			sdata->lngStrings[data.MetaDataCharacters[d->EndOfRaceComment_characterID].name_LNG_long]);
 	
 		// Overwrite the stack pointer to print
-		print = 0x1f800000;
+		print = (char*)0x1f800000;
 	}
 
     // get current player's pushBuffer

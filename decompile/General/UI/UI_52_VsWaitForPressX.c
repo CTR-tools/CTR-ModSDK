@@ -87,7 +87,7 @@ void DECOMP_UI_VsWaitForPressX(void)
 
           if (numPlyr == 2)
           {
-            shortArr = &sdata->Battle_EndOfRace.textFlags1_2P;
+            shortArr = sdata->Battle_EndOfRace.textFlags1_2P;
           }
 
           // YOU HIT THEM
@@ -104,7 +104,7 @@ void DECOMP_UI_VsWaitForPressX(void)
 
 		  // only 8 bytes, use scratchpad
 		  
-          sprintf(0x1f800000, "p%d:%2.02d",
+          sprintf((char*)0x1f800000, "p%d:%2.02d",
 
                   // basically, j + 1
                   // which is (1, 2, 3, 4)
@@ -120,7 +120,7 @@ void DECOMP_UI_VsWaitForPressX(void)
           local_78 = (sVar4 + 0x18U | 0x8000);
 
 
-          DecalFont_DrawLine(0x1f800000,
+          DecalFont_DrawLine((char*)0x1f800000,
 
                              // midpoint between Start X and Size X
                              (r->x + shortArr[j*2+0]),
@@ -140,7 +140,7 @@ void DECOMP_UI_VsWaitForPressX(void)
 
 	  // 4-byte RGBA = black
 	  *(int*)0x1f800000 = 0;
-      DECOMP_CTR_Box_DrawClearBox(r, 0x1f800000, 0, gGT->backBuffer->otMem.startPlusFour);
+      DECOMP_CTR_Box_DrawClearBox(r, (Color*)0x1f800000, 0, gGT->backBuffer->otMem.startPlusFour);
 
       // Allow Go-Back option to YouHit/HitYou
       if ((tap & BTN_SQUARE) != 0)
