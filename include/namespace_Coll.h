@@ -252,7 +252,20 @@ struct ScratchpadStructExtended
 	// 1f800400 end of memory
 };
 
+struct DCACHE
+{
+	union {
+		struct {
+			char beginning108[0x108]; //maybe make a "pre-scratchpad" struct (spiders use this area).
+			struct ScratchpadStructExtended spse;
+		};
+		char raw[1024]; //forces `struct DCACHE` to be >= 1024 bytes (exact size of ps1 dcache).
+	};
+};
+
 _Static_assert(sizeof(struct BoundingBox) == 0xC);
 _Static_assert(sizeof(struct BspSearchVertex) == 0x14);
 _Static_assert(sizeof(struct BspSearchTriangle) == 0xC);
 _Static_assert(sizeof(struct ScratchpadStruct) == 0x20C);
+_Static_assert(sizeof(struct DCACHE) == 1024);
+_Static_assert(offsetof(struct DCACHE, spse) == 0x108);

@@ -139,6 +139,9 @@ void NikoCalcFPS()
 	#endif
 #endif
 
+char scratchpad[1024]; //extern/usage at the bottom of regionsEXE.h
+struct DCACHE* dcache = (struct DCACHE*)(&scratchpad[0]); //extern/usage at the bottom of regionsEXE.h
+
 int main(int argc, char* argv[])
 {
 	printf("[CTR] Built with: " CC "\n");
