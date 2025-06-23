@@ -70,7 +70,7 @@ struct ScratchpadStruct
 			short hitPos[3];
 			
 			// 0x22
-			short searchFlags;
+			unsigned short searchFlags;
 			
 			// 0x24
 			int qbFlagsWanted;

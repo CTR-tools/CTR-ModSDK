@@ -911,3 +911,4 @@ void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd);
 void DECOMP_LOAD_Hub_Main(struct BigHeader* bigfilePtr);
 void DECOMP_LOAD_Hub_ReadFile(struct BigHeader* bigfilePtr, int levID, int packID);
 void DECOMP_LOAD_Hub_SwapNow(void);
+void DECOMP_COLL_MOVED_FindScrub(struct QuadBlock* quadblock, int triangleID, struct ScratchpadStructExtended* spse);
