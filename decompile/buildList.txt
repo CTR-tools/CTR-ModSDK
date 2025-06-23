@@ -264,6 +264,7 @@ common, 233, CS_Credits_End, 0x0,                                    General/233
 // ====================================================================================================================
 common, exe, data, 0x0,                                  General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0,                          General/zGlobal_SDATA.c
+common, exe, dcache, 0x0,                                General/zGlobal_DCACHE.c
 
 // ====================================================================================================================
 // BOTS (stubbed for this file + files created)

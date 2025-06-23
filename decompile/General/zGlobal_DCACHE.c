@@ -1,0 +1,1 @@
+struct DCACHE dcache_static; //represents 0x1f800000

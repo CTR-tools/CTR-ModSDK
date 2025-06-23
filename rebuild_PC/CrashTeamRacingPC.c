@@ -73,6 +73,7 @@ typedef enum {
 #include "../rebuild_PS1/main.c"
 #include "../decompile/General/zGlobal_DATA.c"
 #include "../decompile/General/zGlobal_SDATA.c"
+#include "../decompile/General/zGlobal_DCACHE.c"
 
 // ======= PC-Specific Code =============
 
@@ -138,9 +139,6 @@ void NikoCalcFPS()
 		#define CC "Unknown"
 	#endif
 #endif
-
-char scratchpad[1024]; //extern/usage at the bottom of regionsEXE.h
-struct DCACHE* dcache = (struct DCACHE*)(&scratchpad[0]); //extern/usage at the bottom of regionsEXE.h
 
 int main(int argc, char* argv[])
 {

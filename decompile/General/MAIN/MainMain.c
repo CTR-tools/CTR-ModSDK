@@ -4,8 +4,6 @@ void StateZero();
 
 //#define FastBoot
 
-struct DCACHE* dcache = (struct DCACHE*)0x1f800000; //extern/usage at the bottom of regionsEXE.h
-
 u_int DECOMP_main()
 {
 	u_int AddBitsConfig0;

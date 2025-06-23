@@ -5058,15 +5058,17 @@ extern struct sData sdata_static;
 // 0x8008d668 - 0x8009f6fc
 extern struct BSS bss;
 
+// represents 0x1f800000 1kb dcache.
+extern struct DCACHE dcache_static;
+
 #ifndef REBUILD_PC
 // optimal use for modding
 register struct sData* sdata asm("$gp");
-// address of the ps1's hardware dcache (wired up to be used as a scratchpad).
-extern struct DCACHE* dcache; //ps1, store this here instead. (definition in MainMain.c).
+//struct DCACHE* dcache = &dcache_static;
+#define dcache (&dcache_static)
 #else
 struct sData* sdata = &sdata_static;
-extern char scratchpad[1024]; //pc port, store this here instead. (definition in CrashTeamRacingPC.c).
-extern struct DCACHE* dcache; //pc port, store this here instead. (definition in CrashTeamRacingPC.c).
+struct DCACHE* dcache = &dcache_static;
 #endif
 
 // OVR1
