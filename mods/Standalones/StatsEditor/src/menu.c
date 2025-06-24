@@ -4,6 +4,8 @@
 u_int metaPhysID = 0;
 u_int digitSelected = 0;
 
+int abs(int value) { return value < 0 ? -value : value; }
+
 force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* driverClass, u_int buttonsTapped)
 {
 	// Triangle: Print class values to console log
