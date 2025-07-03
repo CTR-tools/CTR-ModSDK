@@ -12,7 +12,7 @@ void DECOMP_AH_Pause_Update()
 		
 		D232.ptrPauseObject = ptrPauseObject;
 		D232.pausePageTimer = 0;
-		D232.pausePageCurr = gGT->levelID-0x19;
+		D232.pausePageCurr = gGT->levelID - GEM_STONE_VALLEY;
 		gGT->advPausePage = D232.pausePageCurr;
 		
 		// 0 = size
@@ -28,7 +28,7 @@ void DECOMP_AH_Pause_Update()
 		{
 			struct Instance* inst =
 				DECOMP_INSTANCE_Birth3D(
-					gGT->modelPtr[0x5F], 0, t);
+					gGT->modelPtr[STATIC_GEM], 0, t);
 					
 			ptrPauseObject->PauseMember[i].inst = inst;
 			ptrPauseObject->PauseMember[i].rot[0] = 0;

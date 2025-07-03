@@ -18,7 +18,7 @@ void DECOMP_CS_Podium_Prize_ThTick1(struct Thread *th)
     if (OVR_233.PodiumInitUnk3 != 0)
     {
 		// if not just beat oxide
-        if (th->modelIndex != 0x38)
+        if (th->modelIndex != STATIC_BIG1)
         {
             // Make visible
             inst->flags &= ~(HIDE_MODEL);

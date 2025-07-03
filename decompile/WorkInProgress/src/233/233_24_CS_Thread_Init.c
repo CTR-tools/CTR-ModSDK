@@ -211,7 +211,7 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
                         }
 
                         // byte-offset in array
-                        offset = (modelID - 0x7e) * 4;
+                        offset = (modelID - STATIC_CRASHDANCE) * 4;
 
                         goto LAB_800af5d8;
                     }

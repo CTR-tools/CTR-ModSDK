@@ -21,11 +21,11 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	char** ptrStrings = creditsBSS->ptrStrings;
 	
 	// less than TAWNA1
-	if(dancerModelID < 0x8f)
+	if(dancerModelID < STATIC_TAWNA1)
 	{
 		// subtract CRASHDANCE
 		creditsObj->epilogue_topString = 
-			ptrStrings[dancerModelID - 0x7e];
+			ptrStrings[dancerModelID - STATIC_CRASHDANCE];
 	}
 	
 	// TAWNA
@@ -33,7 +33,7 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	{
 		// subtract an extra cause of GARAGE_TOP
 		creditsObj->epilogue_topString = 
-			ptrStrings[(dancerModelID - 0x7e) - 1];
+			ptrStrings[(dancerModelID - STATIC_CRASHDANCE) - 1];
 	}
 	
 	creditsObj->epilogueCount200 = 200;

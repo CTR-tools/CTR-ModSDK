@@ -19,7 +19,7 @@ struct Instance* DECOMP_LinkedCollide_Radius(struct Instance* objInst,struct Thr
     diff_dist = diff_x*diff_x + diff_z*diff_z;
 	
 	// Minecart
-    if (objInst->model->id == 0x21)
+    if (objInst->model->id == DYNAMIC_MINE_CART)
 	{		
 	  // Cylinder collision
 	  if((diff_dist < hitRadius) && (-0x20 < diff_y))

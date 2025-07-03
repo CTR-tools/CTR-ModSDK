@@ -58,19 +58,19 @@ struct Instance* DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int 
     modelID = model->id;
   
     // bigNum
-    if (modelID == 0x38)
+    if (modelID == STATIC_BIG1)
     {
   	  driver->instBigNum = inst;
     }
     
     // fruitDisp
-    else if (modelID == 0x37) 
+    else if (modelID == STATIC_FRUITDISP) 
     {
       driver->instFruitDisp = inst;
     }
   
     // if this is a gem
-    else if (modelID == 0x5f) {
+    else if (modelID == STATIC_GEM) {
       color = 0x6c08080;
 LAB_8004cc4c:
       ui3D->lightDir[0] = 0xf368;
@@ -84,7 +84,7 @@ LAB_8004cc58:
     }
       
 	// crystal
-    else if (modelID == 0x60) 
+    else if (modelID == STATIC_CRYSTAL) 
 	{
       ui3D->lightDir[0] = 0xf4a0;
       ui3D->lightDir[1] = 0xb60;
@@ -94,14 +94,14 @@ LAB_8004cc58:
     }
 	
 	// relic
-	else if (modelID == 0x61) 
+	else if (modelID == STATIC_RELIC) 
 	{
       color = 0x60a5ff0;
       goto LAB_8004cc4c;
 	}
 
 	// key
-    else if (modelID == 99) 
+    else if (modelID == STATIC_KEY) 
 	{
       color = 0xdca6000;
       goto LAB_8004cc4c;
@@ -113,7 +113,7 @@ LAB_8004cc58:
 	  // -4 for C
 	  // +0 for T
 	  // +4 for R
-      ui3D->vel[0] = FPS_HALF((modelID-0x94) * 4);
+      ui3D->vel[0] = FPS_HALF((modelID - STATIC_T) * 4);
       ui3D->vel[1] = FPS_HALF(0xc);
 	
 	  // Set color
@@ -123,7 +123,7 @@ LAB_8004cc58:
     }
       
 	// token
-	else if (modelID == 0x7d)
+	else if (modelID == STATIC_TOKEN)
 	{
 	  // get AdvCup ID from level metadata
       int advCupID = data.metaDataLEV[gGT->levelID].ctrTokenGroupID;

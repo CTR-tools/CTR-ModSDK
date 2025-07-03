@@ -83,7 +83,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 	if(type == 0)
 	{
-		int hubID = levelID-0x19;
+		int hubID = levelID - GEM_STONE_VALLEY;
 
 		// gemstone
 		if(hubID == 0)

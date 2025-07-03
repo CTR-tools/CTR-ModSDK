@@ -401,7 +401,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	warpballInst = warpballThread->inst;
 
 	  	// if not warpball, skip
-	  	if (warpballInst->model->id != 0x36)
+	  	if (warpballInst->model->id != DYNAMIC_WARPBALL)
 	  		continue;
 
 	  	// pointer to path data

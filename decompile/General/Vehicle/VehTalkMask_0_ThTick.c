@@ -29,7 +29,7 @@ void DECOMP_VehTalkMask_ThTick(struct Thread* t)
 				DECOMP_VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]);
 				
 			// 0x3A for Uka, 0x39 for Aku
-			int modelID = 0x3A - boolGoodGuy;
+			int modelID = STATIC_UKAUKA - boolGoodGuy;
 			mhInst->model = gGT->modelPtr[modelID];
 		}
 	}

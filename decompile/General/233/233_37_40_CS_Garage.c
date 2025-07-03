@@ -209,11 +209,11 @@ void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1)
     i = 0;
 
 	// 0x24A - Advanced
-    if (engineID == 2)
+    if (engineID == SPEED)
         i = 2;
 
 	// 0x249 - Intermediate
-    if (engineID < 2)
+    if (engineID < SPEED)
         i = 1;
 
     // 7 pixels tall

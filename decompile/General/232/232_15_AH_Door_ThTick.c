@@ -221,7 +221,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
             for (i = 0; i < numKeys; i++)
             {
 			  // name = "key"
-              keyInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x63], 0, t);
+              keyInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_KEY], 0, t);
 
               // Set Key Color
               keyInst->colorRGBA = 0xdca6000;

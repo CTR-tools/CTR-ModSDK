@@ -23,7 +23,7 @@ void DECOMP_RB_Snowball_ThTick(struct Thread* t)
 	// TEMP_SNOWBALL (0x22), so the sound never plays,
 	  
 	// DYNAMIC_SNOWBALL
-	if(modelID == 0x20)
+	if(modelID == DYNAMIC_SNOWBALL)
 	{
 		// snowball roll
 		soundID = 0x73;
@@ -32,7 +32,7 @@ RollSound:
 	}
 	
 	// sewer speedway barrel
-	else if(modelID == 0x4e)
+	else if(modelID == DYNAMIC_BARREL)
 	{
 		// barrel roll
 		soundID = 0x74;
@@ -41,7 +41,7 @@ RollSound:
 #endif
 
 	// sewer speedway barrel
-	if(modelID == 0x4e)
+	if(modelID == DYNAMIC_BARREL)
 	{
 		#ifndef REBUILD_PS1
 		// barrel roll

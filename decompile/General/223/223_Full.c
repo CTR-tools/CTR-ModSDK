@@ -130,7 +130,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	// 0x3a is the bit index of where platinum
 	// relics start in adventure progress
-	bitIndex = gGT->levelID + 0x3a;
+	unsigned char prize = 0x3a;
+	bitIndex = gGT->levelID + prize;
 
 	// set color of relic in Instance
 	relic->colorRGBA =

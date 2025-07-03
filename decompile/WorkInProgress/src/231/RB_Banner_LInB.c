@@ -51,8 +51,9 @@ void RB_Banner_LInB(struct Instance* inst)
       // initialize the object
       banner->unk0 = 0;
       banner->unk1 = 0;
-
-      m = gGT->modelPtr[0xA6];
+      
+	  //0xA6
+      m = gGT->modelPtr[STATIC_STARTBANNERWAVE];
 
       // if startbanner model is loaded
       if (m != 0)

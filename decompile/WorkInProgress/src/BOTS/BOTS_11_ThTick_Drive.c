@@ -1214,7 +1214,7 @@ give_this_label_a_better_name2:
 
 					botDriver->botData.unk5bc.ai_speedY = deltaPosThisFrame + 0x1400;
 
-					if (botThread->modelIndex == 0x18)
+					if (botThread->modelIndex == DYNAMIC_PLAYER)
 					{
 						OtherFX_Play_Echo(8, 1, oldActionsFlags >> 0x10 & 1);
 					}
@@ -1499,7 +1499,7 @@ give_this_label_a_better_name2:
 		botDriver->botData.unk5bc.ai_speedY = sdata->NavPath_ptrHeader[botDriver->botData.botPath]->rampPhys2[iVar4];
 		botDriver->botData.unk5bc.ai_speedLinear = sdata->NavPath_ptrHeader[botDriver->botData.botPath]->rampPhys1[iVar4];
 
-		if (data.characterIDs[botDriver->driverID] == 0xf)
+		if (data.characterIDs[botDriver->driverID] == NITROS_OXIDE)
 		{
 			botDriver->botData.unk5bc.ai_squishCooldown = 0;
 			botDriver->botData.unk5bc.ai_mulDrift = 0;

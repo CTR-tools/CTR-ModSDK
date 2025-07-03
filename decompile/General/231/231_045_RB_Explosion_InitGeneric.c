@@ -27,7 +27,7 @@ void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst)
   color = 0x1eac000;
   
   // instance -> model -> modelID == TNT
-  if ((inst->model->id) == 0x27) 
+  if ((inst->model->id) == STATIC_CRATE_TNT) 
   {  
 	// red
 	color = 0xad10000;

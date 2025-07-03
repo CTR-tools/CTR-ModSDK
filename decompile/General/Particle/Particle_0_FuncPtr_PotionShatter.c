@@ -32,7 +32,7 @@ void DECOMP_Particle_FuncPtr_PotionShatter(struct Particle *p)
 LAB_8003ebc8:
 
   // green shatter or red shatter
-  if (p->modelID == 0x45)
+  if (p->modelID == STATIC_SHOCKWAVE_GREEN)
   {
     if (0 < p->axis[8].startVal)
     {

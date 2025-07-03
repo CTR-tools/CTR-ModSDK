@@ -417,8 +417,8 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		// If thread->modelIndex is Aku or Uka
 		if
 		(
-			(*(short*)&driverItemThread->modelIndex == 0x3a) ||
-			(*(short*)&driverItemThread->modelIndex == 0x39)
+			(*(short*)&driverItemThread->modelIndex == STATIC_UKAUKA) ||
+			(*(short*)&driverItemThread->modelIndex == STATIC_AKUAKU)
 		)
 		{
 			// driver is using mask weapon

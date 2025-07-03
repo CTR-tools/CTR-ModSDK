@@ -170,7 +170,7 @@ LAB_800b9ff8:
   SPS->Input1.hitRadius = 0x300;
   SPS->Input1.hitRadiusSquared = 0x90000;
   
-  SPS->Input1.modelID = 0x70;
+  SPS->Input1.modelID = STATIC_TEETH;
   
   SPS->Union.ThBuckColl.thread = t;
   SPS->Union.ThBuckColl.funcCallback = DECOMP_RB_Teeth_BSP_Callback;
@@ -251,7 +251,7 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
     teeth = teethTh->object;
 
     // if collided object is a player
-    if (sps->Input1.modelID == 0x18)
+    if (sps->Input1.modelID == DYNAMIC_PLAYER)
     {
         // if driver is using mask weapon
         if ((d->actionsFlagSet & 0x800000) != 0)

@@ -9,7 +9,7 @@ void DECOMP_RB_MovingExplosive_Explode(
   struct Driver* d;
 
   // bomb
-  if (inst->model->id == 0x3b)
+  if (inst->model->id == DYNAMIC_BOMB)
   {
     // bomb explode
     soundId = 0x49;

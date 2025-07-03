@@ -74,22 +74,22 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   woodDoor->doorRot[2] = 0;
 
   // Level ID is Glacier Park
-  if (levelID == 0x1c)
+  if (levelID == GLACIER_PARK)
   {
     // door with two key holes
-    m = gGT->modelPtr[0xb5];
+    m = gGT->modelPtr[STATIC_DOOR3];
   }
   
   // Level ID is not Glacier Park
   else if (
         // Level ID is N Sanity Beach
-        (levelID == 0x1a) &&
+        (levelID == N_SANITY_BEACH) &&
 
         // doorID == 5
         (woodDoor->doorID == 5))
   {
     // door with no key holes
-    m = gGT->modelPtr[0xa7];
+    m = gGT->modelPtr[STATIC_DOOR2];
   }
   
   // if not that door
@@ -97,7 +97,7 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   {
     // STATIC_DOOR
     // door with one key hole
-    m = gGT->modelPtr[0x7a];
+    m = gGT->modelPtr[STATIC_DOOR];
   }
 
   // DAT_800abaa4

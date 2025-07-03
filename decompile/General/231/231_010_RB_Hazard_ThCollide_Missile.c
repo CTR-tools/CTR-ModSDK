@@ -10,7 +10,7 @@ void DECOMP_RB_Hazard_ThCollide_Missile(struct Thread* thread)
 	inst = thread->inst;
 	
 	// could I also just do thread->modelID?
-	if (inst->model->id == 0x29)
+	if (inst->model->id == DYNAMIC_ROCKET)
 	{
 		#ifndef REBUILD_PS1
 		// play audio of explosion

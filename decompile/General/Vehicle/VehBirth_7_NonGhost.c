@@ -7,7 +7,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	// model index = DYNAMIC_PLAYER,
 	// AI will override this right after
 	// the end of the function
-	t->modelIndex = 0x18;
+	t->modelIndex = DYNAMIC_PLAYER;
 	
 	t->driver_HitRadius = 0x40;
 	t->driver_unk1 = 0x1000;
@@ -51,7 +51,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	t->inst = inst;
 	
 	// Wake
-	m = gGT->modelPtr[0x43];
+	m = gGT->modelPtr[STATIC_WAKE];
 	if(m != 0)
 	{
 		inst = DECOMP_INSTANCE_Birth3D(m, 0, 0);

@@ -142,7 +142,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 	// get rid of oxide cause MPK is too big
 	else if(gGT->levelID == ADVENTURE_GARAGE)
 	{
-		data.characterIDs[0] = 0;
+		data.characterIDs[0] = CRASH_BANDICOOT;
 		
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
 	}
@@ -198,10 +198,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 			(gGT->cup.cupID == 4)
 		)
 	{
-		data.characterIDs[1] = 0xA;
-		data.characterIDs[2] = 0x9;
-		data.characterIDs[3] = 0xB;
-		data.characterIDs[4] = 0x8;
+		data.characterIDs[1] = RIPPER_ROO;
+		data.characterIDs[2] = PAPU_PAPU;
+		data.characterIDs[3] = KOMODO_JOE;
+		data.characterIDs[4] = PINSTRIPE;
 
 		#ifdef USE_DRIVERLOD
 		highLOD_DriverMPK(5);

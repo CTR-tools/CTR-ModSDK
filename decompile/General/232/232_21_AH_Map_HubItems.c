@@ -30,7 +30,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
   adv = &sdata->advProgress;
   levelID = gGT->levelID;
 
-  psVar10 = D232.hubItemsXY_ptrArray[levelID-0x19];
+  psVar10 = D232.hubItemsXY_ptrArray[levelID - GEM_STONE_VALLEY];
   if (*psVar10 != -1)
   {
     psVar9 = psVar10 + 1;

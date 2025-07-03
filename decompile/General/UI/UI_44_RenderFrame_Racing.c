@@ -335,13 +335,13 @@ void DECOMP_UI_RenderFrame_Racing()
 					LetterCTR_Pos[1] = hudStructPtr[0x12].y;
 
 					// C-Letter
-					if (playerStruct->PickupLetterHUD.modelID == 0x93)
+					if (playerStruct->PickupLetterHUD.modelID == STATIC_C)
 					{
 						curr = sdata->ptrHudC;
 					}
 
 					// T-letter
-					else if (playerStruct->PickupLetterHUD.modelID == 0x94)
+					else if (playerStruct->PickupLetterHUD.modelID == STATIC_T)
 					{
 						LetterCTR_Pos[0] += 0x1d;
 						LetterCTR_Pos[1] -= 1;

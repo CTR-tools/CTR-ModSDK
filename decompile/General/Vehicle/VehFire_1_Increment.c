@@ -46,7 +46,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		(driver->driverID == '\0') &&
 
 		// if modelIndex == "player" of any kind
-		(driver->instSelf->thread->modelIndex == 0x18)
+		(driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 	)
 	{
 		// Add Reserves to ghost buffer
@@ -127,7 +127,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(
-				gGT->modelPtr[0x2C], 	// model
+				gGT->modelPtr[STATIC_TURBO_EFFECT], 	// model
 				&sdata->s_turbo2[0], 		// name
 				turboThread					// parent thread
 			);
@@ -147,7 +147,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			turboObj->fireDisappearCountdown = count;
 
 			// if modelIndex == "player" of any kind
-			if (driver->instSelf->thread->modelIndex == 0x18)
+			if (driver->instSelf->thread->modelIndex ==  DYNAMIC_PLAYER)
 			{
 				turboObj->fireAudioDistort = 0;
 
@@ -226,7 +226,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		turboInst2->alphaScale = 0;
 
 		// driver -> instance -> thread -> modelIndex == "player" of any kind
-		if(*(short *)&driver->instSelf->thread->modelIndex == 0x18)
+		if(*(short *)&driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			if
 			(
@@ -362,7 +362,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 
 	//#if !defined (USE_ONLINE) //uncomment this if you need bytebudget.
 	// if modelIndex == "player" of any kind
-	if (driver->instSelf->thread->modelIndex == 0x18)
+	if (driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 	{
 		// CameraDC flag
 		gGT->cameraDC[driver->driverID].flags |= 0x80;

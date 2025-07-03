@@ -34,7 +34,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 		) &&
 	
 		// instance -> thread -> modelID == DYNAMIC_GHOST
-		(instanceDriver->thread->modelIndex != 0x4b)
+		(instanceDriver->thread->modelIndex != DYNAMIC_GHOST)
 	)
 	{
 		// cut driverInst transparency in half
@@ -154,10 +154,19 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	}
 	
 	// set new model pointer, one of seven
-	instance->model = gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
+	instance->model = gGT->modelPtr[(int)turbo->fireAnimIndex + STATIC_TURBO_EFFECT];
 	
 	// set new model pointer, one of seven
-	turbo->inst->model = gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
+	
+	//STATIC_TURBO_EFFECT
+    //STATIC_TURBO_EFFECT1
+    //STATIC_TURBO_EFFECT2
+    //STATIC_TURBO_EFFECT3
+    //STATIC_TURBO_EFFECT4
+    //STATIC_TURBO_EFFECT5
+    //STATIC_TURBO_EFFECT6
+    //STATIC_TURBO_EFFECT7
+	turbo->inst->model = gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + STATIC_TURBO_EFFECT];
 	
 	#ifdef USE_60FPS
 	if(gGT->timer & 1)
@@ -173,7 +182,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	}
 	
 	// instance -> thread -> modelIndex == "player" of any kind
-	if (instanceDriver->thread->modelIndex == 0x18)
+	if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 	{
 		iVar7 = 0x100 - (u_int)(instance->alphaScale >> 4);
 	
@@ -228,7 +237,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	if
 	(
 		// if this is a ghost
-		(instanceDriver->thread->modelIndex == 0x4b) ||
+		(instanceDriver->thread->modelIndex == DYNAMIC_GHOST) ||
 	
 		(
 			(kartState != KS_MASK_GRABBED)
@@ -276,7 +285,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 		LAB_80069b50:
 	
 		// instance -> thread -> modelIndex == "player" of any kind
-		if (instanceDriver->thread->modelIndex == 0x18)
+		if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			// volume, distortion, left/right
 			uVar8 = 0x8080;

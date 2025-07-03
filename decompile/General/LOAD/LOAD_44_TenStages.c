@@ -711,7 +711,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				
 				// TAWNA
 				fileIndex = BI_DANCETAWNAGIRL + iVar9 + 
-					(gGT->podium_modelIndex_tawna - 0x8f) * 2;
+					(gGT->podium_modelIndex_tawna - STATIC_TAWNA1) * 2;
 
 				// add TAWNA to loading queue
 				DECOMP_LOAD_AppendQueue(
@@ -719,7 +719,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					(void*)&data.podiumModel_tawna, drmCb);
 
 				// if 0x7e+5 (dingo)
-				if (gGT->podium_modelIndex_First == 0x83)
+				if (gGT->podium_modelIndex_First == STATIC_DINGODANCE)
 				{
 					// add "DingoFire" to loading queue
 					DECOMP_LOAD_AppendQueue(

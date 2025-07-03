@@ -11,7 +11,7 @@ void DECOMP_AH_Garage_Open(struct ScratchpadStruct* sps,struct Thread* otherTh)
   // skip the IF that was in the original game
 #if 0
   // thread -> modelIndex != "player" of any kind
-  if (otherTh->modelIndex != 0x18) return;
+  if (otherTh->modelIndex != DYNAMIC_PLAYER) return;
 #endif
   
   garageThread = sps->Union.ThBuckColl.thread;

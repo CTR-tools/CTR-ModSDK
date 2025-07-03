@@ -28,6 +28,8 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
   u_short local_58[2];
 
   gGT = sdata->gGT;
+  
+  unsigned char ADV_CUP = 100;
 
   numDrivers = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
@@ -527,7 +529,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
         if ((gGT->gameMode2 & 0x10) == 0)
 		{
           // Array with the ranking of each player
-          gGT->levelID = i + 100;
+          gGT->levelID = i + ADV_CUP;
 
           // when loading is done,
           // remove flag for adventure cup

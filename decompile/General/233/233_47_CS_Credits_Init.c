@@ -79,7 +79,7 @@ void CS_Credits_Init()
 		#endif
 		
 		// STATIC_AKUAKU for some reason?
-		inst = INSTANCE_Birth3D(gGT->modelPtr[0x39], 0, 0);
+		inst = INSTANCE_Birth3D(gGT->modelPtr[STATIC_AKUAKU], 0, 0);
 		
 		// save instance
 		creditsObj->creditGhostInst[4-i] = inst;

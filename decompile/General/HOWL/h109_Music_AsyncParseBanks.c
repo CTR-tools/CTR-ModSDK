@@ -134,7 +134,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 							(sdata->bankLoad54 != 0) &&
 
 							// if characterID is part of original 8
-							(data.characterIDs[sdata->bankCount] < 8)
+							(data.characterIDs[sdata->bankCount] < PINSTRIPE)
 						)
                     {
 						// skip load bank
@@ -174,7 +174,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 				if ((sdata->bankLoad54 != 0) ||
 	
 					// characterID is special character
-					(7 < data.characterIDs[0]))
+					(PURA < data.characterIDs[0]))
 				{
 					goto LAB_8002e178;
 				}

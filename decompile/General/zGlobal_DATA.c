@@ -2777,7 +2777,7 @@ struct Data data =
 			.numTrophiesToOpen = 7,
 			.ctrTokenGroupID = 3,
 			.characterID_Boss = -1,
-			.characterID_Champion = 5
+			.characterID_Champion = DINGODILE
 		},
 		[1] =
 		{
@@ -2788,7 +2788,7 @@ struct Data data =
 			.numTrophiesToOpen = 9,
 			.ctrTokenGroupID = 2,
 			.characterID_Boss = 11,
-			.characterID_Champion = 11
+			.characterID_Champion = KOMODO_JOE
 		},
 		[2] =
 		{
@@ -2799,7 +2799,7 @@ struct Data data =
 			.numTrophiesToOpen = 8,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = -1,
-			.characterID_Champion = 13
+			.characterID_Champion = PENTA_PENGUIN
 		},
 		[3] =
 		{
@@ -2810,7 +2810,7 @@ struct Data data =
 			.numTrophiesToOpen = 0,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = -1,
-			.characterID_Champion = 0
+			.characterID_Champion = CRASH_BANDICOOT
 		},
 		[4] =
 		{
@@ -2821,7 +2821,7 @@ struct Data data =
 			.numTrophiesToOpen = 4,
 			.ctrTokenGroupID = 2,
 			.characterID_Boss = -1,
-			.characterID_Champion = 7
+			.characterID_Champion = PURA
 		},
 		[5] =
 		{
@@ -2832,7 +2832,7 @@ struct Data data =
 			.numTrophiesToOpen = 6,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = 9,
-			.characterID_Champion = 9
+			.characterID_Champion = PAPU_PAPU
 		},
 		[6] =
 		{
@@ -2843,7 +2843,7 @@ struct Data data =
 			.numTrophiesToOpen = 0,
 			.ctrTokenGroupID = 1,
 			.characterID_Boss = 10,
-			.characterID_Champion = 10
+			.characterID_Champion = RIPPER_ROO
 		},
 		[7] =
 		{
@@ -2854,7 +2854,7 @@ struct Data data =
 			.numTrophiesToOpen = 14,
 			.ctrTokenGroupID = 3,
 			.characterID_Boss = 8,
-			.characterID_Champion = 8
+			.characterID_Champion = PINSTRIPE
 		},
 		[8] =
 		{
@@ -2865,7 +2865,7 @@ struct Data data =
 			.numTrophiesToOpen = 3,
 			.ctrTokenGroupID = 2,
 			.characterID_Boss = -1,
-			.characterID_Champion = 12
+			.characterID_Champion = N_TROPY
 		},
 		[9] =
 		{
@@ -2876,7 +2876,7 @@ struct Data data =
 			.numTrophiesToOpen = 1,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = -1,
-			.characterID_Champion = 14
+			.characterID_Champion = FAKE_CRASH
 		},
 		[10] =
 		{
@@ -2887,7 +2887,7 @@ struct Data data =
 			.numTrophiesToOpen = 12,
 			.ctrTokenGroupID = 1,
 			.characterID_Boss = -1,
-			.characterID_Champion = 1
+			.characterID_Champion = NEO_CORTEX
 		},
 		[11] =
 		{
@@ -2898,7 +2898,7 @@ struct Data data =
 			.numTrophiesToOpen = 12,
 			.ctrTokenGroupID = 2,
 			.characterID_Boss = -1,
-			.characterID_Champion = 4
+			.characterID_Champion = N_GIN
 		},
 		[12] =
 		{
@@ -2909,7 +2909,7 @@ struct Data data =
 			.numTrophiesToOpen = 10,
 			.ctrTokenGroupID = 1,
 			.characterID_Boss = -1,
-			.characterID_Champion = 6
+			.characterID_Champion = POLAR
 		},
 		[13] =
 		{
@@ -2920,7 +2920,7 @@ struct Data data =
 			.numTrophiesToOpen = 15,
 			.ctrTokenGroupID = 3,
 			.characterID_Boss = 15,
-			.characterID_Champion = 15
+			.characterID_Champion = NITROS_OXIDE
 		},
 		[14] =
 		{
@@ -2931,7 +2931,7 @@ struct Data data =
 			.numTrophiesToOpen = 4,
 			.ctrTokenGroupID = 1,
 			.characterID_Boss = -1,
-			.characterID_Champion = 3
+			.characterID_Champion = TINY_TIGER
 		},
 		[15] =
 		{
@@ -2942,7 +2942,7 @@ struct Data data =
 			.numTrophiesToOpen = 11,
 			.ctrTokenGroupID = 3,
 			.characterID_Boss = -1,
-			.characterID_Champion = 2
+			.characterID_Champion = COCO_BANDICOOT
 		},
 		[16] =
 		{
@@ -2953,7 +2953,7 @@ struct Data data =
 			.numTrophiesToOpen = 10,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = -1,
-			.characterID_Champion = 0
+			.characterID_Champion = CRASH_BANDICOOT
 		},
 		[17] =
 		{
@@ -2964,7 +2964,7 @@ struct Data data =
 			.numTrophiesToOpen = 15,
 			.ctrTokenGroupID = 0,
 			.characterID_Boss = -1,
-			.characterID_Champion = 0
+			.characterID_Champion = CRASH_BANDICOOT
 		},
 		[18] =
 		{
@@ -5031,7 +5031,7 @@ struct Data data =
 			.name_LNG_long = 44,
 			.name_LNG_short = 60,
 			.iconID = 32,
-			.engineID = 0,
+			.engineID = BALANCED,
 		},
 		[1] =
 		{
@@ -5041,7 +5041,7 @@ struct Data data =
 			.name_LNG_long = 45,
 			.name_LNG_short = 61,
 			.iconID = 33,
-			.engineID = 0,
+			.engineID = BALANCED,
 		},
 		[2] =
 		{
@@ -5051,7 +5051,7 @@ struct Data data =
 			.name_LNG_long = 46,
 			.name_LNG_short = 62,
 			.iconID = 34,
-			.engineID = 2,
+			.engineID = SPEED,
 		},
 		[3] =
 		{
@@ -5061,7 +5061,7 @@ struct Data data =
 			.name_LNG_long = 47,
 			.name_LNG_short = 63,
 			.iconID = 35,
-			.engineID = 1,
+			.engineID = ACCEL,
 		},
 		[4] =
 		{
@@ -5071,7 +5071,7 @@ struct Data data =
 			.name_LNG_long = 48,
 			.name_LNG_short = 64,
 			.iconID = 36,
-			.engineID = 1,
+			.engineID = ACCEL,
 		},
 		[5] =
 		{
@@ -5081,7 +5081,7 @@ struct Data data =
 			.name_LNG_long = 49,
 			.name_LNG_short = 65,
 			.iconID = 37,
-			.engineID = 2,
+			.engineID = SPEED,
 		},
 		[6] =
 		{
@@ -5091,7 +5091,7 @@ struct Data data =
 			.name_LNG_long = 50,
 			.name_LNG_short = 66,
 			.iconID = 38,
-			.engineID = 3,
+			.engineID = TURN,
 		},
 		[7] =
 		{
@@ -5101,7 +5101,7 @@ struct Data data =
 			.name_LNG_long = 51,
 			.name_LNG_short = 67,
 			.iconID = 39,
-			.engineID = 3,
+			.engineID = TURN,
 		},
 		[8] =
 		{
@@ -5111,7 +5111,7 @@ struct Data data =
 			.name_LNG_long = 52,
 			.name_LNG_short = 68,
 			.iconID = 43,
-			.engineID = 1,
+			.engineID = ACCEL,
 		},
 		[9] =
 		{
@@ -5121,7 +5121,7 @@ struct Data data =
 			.name_LNG_long = 53,
 			.name_LNG_short = 69,
 			.iconID = 41,
-			.engineID = 2,
+			.engineID = SPEED,
 		},
 		[10] =
 		{
@@ -5131,7 +5131,7 @@ struct Data data =
 			.name_LNG_long = 54,
 			.name_LNG_short = 70,
 			.iconID = 40,
-			.engineID = 3,
+			.engineID = TURN,
 		},
 		[11] =
 		{
@@ -5141,7 +5141,7 @@ struct Data data =
 			.name_LNG_long = 55,
 			.name_LNG_short = 71,
 			.iconID = 42,
-			.engineID = 0,
+			.engineID = BALANCED,
 		},
 		[12] =
 		{
@@ -5151,7 +5151,7 @@ struct Data data =
 			.name_LNG_long = 56,
 			.name_LNG_short = 72,
 			.iconID = 44,
-			.engineID = 2,
+			.engineID = SPEED,
 		},
 		[13] =
 		{
@@ -5163,9 +5163,9 @@ struct Data data =
 			.iconID = 53,
 
 			#if (BUILD >= JpnTrial) || defined(USE_PENTA)
-			.engineID = 4,
+			.engineID = MAX,
 			#else
-			.engineID = 3,
+			.engineID = TURN,
 			#endif
 		},
 		[14] =
@@ -5176,7 +5176,7 @@ struct Data data =
 			.name_LNG_long = 59,
 			.name_LNG_short = 75,
 			.iconID = 54,
-			.engineID = 0,
+			.engineID = BALANCED,
 		},
 		[15] =
 		{
@@ -5186,7 +5186,7 @@ struct Data data =
 			.name_LNG_long = 57,
 			.name_LNG_short = 73,
 			.iconID = 55,
-			.engineID = 0,
+			.engineID = BALANCED,
 		}
 	},
 

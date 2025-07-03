@@ -2,7 +2,7 @@
 
 void DECOMP_Garage_PlayFX(u_int soundId, char charId)
 {
-  if (charId < 8) 
+  if (charId < PINSTRIPE) 
   {
 	// if sound == BIRD_RANDOM
     if (soundId == 0xf6)

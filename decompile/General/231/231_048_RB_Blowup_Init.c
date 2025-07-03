@@ -41,16 +41,16 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   color = 0x1eac000;
 
   // green shockwave
-  int modelID = 0x45;
+  int modelID = STATIC_SHOCKWAVE_GREEN;
   
   // if instance -> model -> modelID == tnt
-  if (weaponInst->model->id == 0x27) 
+  if (weaponInst->model->id == STATIC_CRATE_TNT) 
   {
 	// red
     color = 0xad10000;
 	
 	// red shockwave
-    modelID = 0x44;
+    modelID = STATIC_SHOCKWAVE_RED;
   }
   
   // set color
@@ -120,7 +120,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   PROC_CollideHitboxWithBucket(gGT->threadBuckets[MINE].thread,sps,0);
   
   // Nitro explosion has smaller radius than TNT explosion
-  if (weaponInst->model->id != 0x27) 
+  if (weaponInst->model->id != STATIC_CRATE_TNT) 
   {
 	// hitRadius and hitRadiusSquared
     sps->Input1.hitRadius = 0x80;

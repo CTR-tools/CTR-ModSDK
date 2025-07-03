@@ -35,7 +35,7 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
 		)
     {
         // if thread->modelIndex is NOT Aku or Uka
-        if ((unsigned int)(currThread->modelIndex - 0x39) >= 2)
+        if ((unsigned int)(currThread->modelIndex - STATIC_AKUAKU) >= 2)
 			continue;
 
         currThread->funcThTick = DECOMP_RB_MaskWeapon_ThTick;
@@ -75,7 +75,7 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
 	int boolGoodGuy =
 		DECOMP_VehPickupItem_MaskBoolGoodGuy(driver);
 		
-	int modelID = 0x3a - boolGoodGuy;
+	int modelID = STATIC_UKAUKA - boolGoodGuy;
 
     // 0x3a: uka head model idx in modelPtr array
     instance = 
@@ -121,7 +121,7 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
 	// 0x40: uka beam
 	// 0x3E: aku beam
 	
-    modelPtr = gGT->modelPtr[0x3E + ((modelID-0x39)*2)];
+    modelPtr = gGT->modelPtr[STATIC_AKUBEAM + ((modelID - STATIC_AKUAKU)*2)];
 
     t = instance->thread;
 

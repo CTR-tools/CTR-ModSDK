@@ -32,7 +32,7 @@ void DECOMP_SelectProfile_DrawAdvProfile(struct AdvProgress *adv, int posX, int 
     GAMEPROG_AdvPercent(adv);
 
     // If Adventure Profile is empty
-    if (adv->characterID < 0)
+    if (adv->characterID < CRASH_BANDICOOT) //0
     {
         // EMPTY (slot)
         DecalFont_DrawLine(sdata->lngStrings[0xb5], posX + 0x6c, posY + 23, 1, emptySlotColor | JUSTIFY_CENTER);

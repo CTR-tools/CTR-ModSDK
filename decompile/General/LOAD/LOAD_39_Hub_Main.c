@@ -31,7 +31,9 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 	{
 		// only in AdvHub, or else the game
 		// crashes in 4P Nitro Court Life Limit
-		unsigned int currLevelID = gGT->levelID - 0x19;
+		unsigned int currLevelID = gGT->levelID - GEM_STONE_VALLEY;
+		
+		//ctr hubs are 0-4
 		if (currLevelID >= 5) return;
 
 		#ifndef REBUILD_PS1

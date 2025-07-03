@@ -383,7 +383,7 @@ LAB_800ad17c:
 	param = 0x3d;
   
 	// if model is Nitro
-	if (model == 6) 
+	if (model == PU_EXPLOSIVE_CRATE) 
 	{
 		// glass shatter
 		param = 0x3f;

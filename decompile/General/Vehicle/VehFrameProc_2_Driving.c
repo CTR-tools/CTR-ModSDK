@@ -163,24 +163,27 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             if (d->kartState == KS_MASK_GRABBED) return;
 
             char charID = data.characterIDs[d->driverID];
-
+            
+			//for human reading purposes
+			unsigned char animType;
+			
             switch (charID)
             {
             // if this is Penta
             case 13:
-                charID = 10; // Use Coco's
+                animType = 10; // Use Coco's
                 break;
             // if this is Fake Crash or Oxide
             case 14:
             case 15:
-                charID = 7; // Use Crash's
+                animType = 7; // Use Crash's
                 break;
             default:
-                charID += 7;
+                animType = charID + 7;
             }
 
 			// set AnimType based on charID
-            d->matrixArray = charID;
+            d->matrixArray = animType;
 
             // set animation frame (needs FPS_HALF)
             d->matrixIndex = *(char *)&inst->animFrame;

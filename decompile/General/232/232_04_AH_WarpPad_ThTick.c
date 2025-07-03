@@ -36,6 +36,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	
 	char randKartSpawn[8];
 	
+	//for human reading purposes
+	unsigned char ADV_CUP = 100;
+	
 	boolOpen = 0;
 	gGT = sdata->gGT;
 	warppadObj = t->object;
@@ -94,14 +97,14 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	
 	// if near a portal
 	if(
-		// Trophy tracks
-		((((unsigned short)(levelID))		< 0x10)	&& (dist < 0x144000)) ||
+		// Trophy tracks (-16)
+		((((unsigned short)(levelID)) < SLIDE_COLISEUM)	&& (dist < 0x144000)) ||
 		
-		// Slide Col + Turbo Track
-		((((unsigned short)(levelID-0x10))	< 2) 	&& (dist < 0x90000)) ||
+		// Slide Col + Turbo Track (-16)
+		((((unsigned short)(levelID - SLIDE_COLISEUM)) < 2) 	&& (dist < 0x90000)) ||
 		
-		// Battle tracks
-		((((unsigned short)(levelID-0x12))	< 7)	&& (dist < 0x144000)) ||
+		// Battle tracks (-18)
+		((((unsigned short)(levelID - NITRO_COURT)) < 7)	&& (dist < 0x144000)) ||
 		
 		// Gem cups
 		((((unsigned short)(levelID))		>= 100)	&& (dist < 0x90000))
@@ -119,11 +122,12 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			// saved as nearest warppad
 			D232.levelID = levelID;
 			
+			
 			// if not giving Aku Hint
 			if(sdata->AkuAkuHintState == 0)
 			{
 				// default
-				if(levelID < 100)
+				if(levelID < ADV_CUP)
 					warppadLNG = 
 						sdata->lngStrings
 						[data.metaDataLEV[levelID].name_LNG];
@@ -132,7 +136,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				else
 					warppadLNG = 
 						sdata->lngStrings
-						[data.AdvCups[levelID-100].lngIndex_CupName];
+						[data.AdvCups[levelID-ADV_CUP].lngIndex_CupName];
 				
 				// midpoing X,
 				// 30 pixels above botttom Y
@@ -152,7 +156,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			  (
 
 				// gem cup
-				(levelID >= 100) &&
+				(levelID >= ADV_CUP) &&
 				
 				// Dont have hint "you must have 4 tokens for a gem"
 				((sdata->advProgress.rewards[4] & 0x20000) == 0)
@@ -167,13 +171,13 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			   (
 			   
 				// Trophy track
-				(levelID < 0x10) &&
+				(levelID < SLIDE_COLISEUM) &&
 				
 				// Dont have hint "you must have more trophies"
 				((sdata->advProgress.rewards[3] & 0x1000000) == 0) &&
 				
 				// required item is not KEY
-				(instArr[WPIS_CLOSED_ITEM]->model->id != 99)
+				(instArr[WPIS_CLOSED_ITEM]->model->id != STATIC_KEY)
 			   )
 			{
 				// give hint for "need more trophies"
@@ -184,7 +188,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			   (
 				
 				// Slide Col
-				(levelID == 0x10) &&
+				(levelID == SLIDE_COLISEUM) &&
 				
 				// Dont have hint "you must have 10 relics"
 				((sdata->advProgress.rewards[4] & 0x40000) == 0)
@@ -261,28 +265,28 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 
 #ifndef REBUILD_PS1
 		// Trophy has no specular light
-		if(modelID == 0x62) return;
+		if(modelID == STATIC_TROPHY) return;
 		
 		// OG code had pointers to warppadObj->specLightXXX
 		// but that was replaced with pointers to globals,
 		// because the arrays didnt actually change per warppad
 				
 		// Relic
-		if(modelID == 0x61) 
+		if(modelID == STATIC_RELIC) 
 		{
 			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &D232.specLightRelic[0]);
 			return;
 		}
 		
 		// Token
-		if(modelID == 0x7d) 
+		if(modelID == STATIC_TOKEN) 
 		{
 			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &D232.specLightToken[0]);
 			return;
 		}
 		
 		// If Gem, change colors every 2 seconds
-		if(modelID == 0x5f)
+		if(modelID == STATIC_GEM)
 		{
 			i = (gGT->timer / FPS_DOUBLE(0x3C)) % 5;
 			
@@ -436,13 +440,13 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				rewardScale2 = 0x2000;
 	
 				// not token
-				if(modelID != 0x7d)
+				if(modelID != STATIC_TOKEN)
 				{
 					// trophy
 					rewardScale2 = 0x2800;
 					
 					// relic
-					if(modelID == 0x61)
+					if(modelID == STATIC_RELIC)
 					{
 						rewardScale2 = 0x1800;
 					}
@@ -501,7 +505,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		// Dont worry about Token or Relic, those dont 
 		// use kartSpawnOrderArray, the OG game just did
 		// this without an IF check at all
-		if( (levelID < 0x10) || (levelID >= 100) )
+		if( (levelID < SLIDE_COLISEUM) || (levelID >= ADV_CUP) )
 		{
 			// assign characterIDs, not actually "load"
 			DECOMP_LOAD_Robots1P(data.characterIDs[0]);
@@ -572,7 +576,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	if (warppadObj->framesWarping <= FPS_DOUBLE(60)) return;
 
 	// only works for trophy tracks rn
-	if(levelID < 0x10)
+	if(levelID < SLIDE_COLISEUM)
 	{
 		// if trophy is unlocked
 		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
@@ -625,14 +629,14 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 	
 	// Slide Col or Turbo Track
-	else if(levelID < 0x12)
+	else if(levelID < NITRO_COURT)
 	{
 		// Add Relic
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
 	}
 	
 	// Battle Tracks
-	else if(levelID < 0x19)
+	else if(levelID < GEM_STONE_VALLEY)
 	{
 		// Add Crystal Challenge
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
@@ -646,7 +650,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		i = DECOMP_AH_MaskHint_boolCanSpawn();
 		if((i & 0xffff) == 0) return;
 		
-		gGT->originalEventTime = D232.timeCrystalChallenge[levelID-0x12];
+		gGT->originalEventTime = D232.timeCrystalChallenge[levelID - NITRO_COURT];
 	}
 	
 	// gem cups
@@ -655,7 +659,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		// Add Adv Cup
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
 		
-		gGT->cup.cupID = levelID-100;
+		gGT->cup.cupID = levelID - ADV_CUP;
 		gGT->cup.trackIndex = 0;
 		for(i = 0; i < 8; i++)
 			gGT->cup.points[i] = 0;
