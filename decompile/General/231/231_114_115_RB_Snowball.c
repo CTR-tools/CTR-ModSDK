@@ -22,7 +22,7 @@ void DECOMP_RB_Snowball_ThTick(struct Thread* t)
 	// Naughty Dog bug, the boulder has modelID:
 	// TEMP_SNOWBALL (0x22), so the sound never plays,
 	  
-	// DYNAMIC_SNOWBALL
+
 	if(modelID == DYNAMIC_SNOWBALL)
 	{
 		// snowball roll

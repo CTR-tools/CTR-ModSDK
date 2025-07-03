@@ -338,8 +338,8 @@ LAB_800add14:
     else
 	{
       tw->vel[1] = 0;
-
-	  // DYNAMIC_ROCKET
+	  
+	  //missile model
       if (modelID == DYNAMIC_ROCKET)
 	  {
         VehPhysForce_RotAxisAngle(

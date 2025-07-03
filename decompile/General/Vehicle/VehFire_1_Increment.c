@@ -45,7 +45,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		// If this is the first driver (P1) and
 		(driver->driverID == '\0') &&
 
-		// if modelIndex == "player" of any kind
+		// player of any kind
 		(driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 	)
 	{
@@ -146,7 +146,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 			else			count = -1;
 			turboObj->fireDisappearCountdown = count;
 
-			// if modelIndex == "player" of any kind
+			// player of any kind
 			if (driver->instSelf->thread->modelIndex ==  DYNAMIC_PLAYER)
 			{
 				turboObj->fireAudioDistort = 0;
@@ -225,7 +225,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 		turboInst1->alphaScale = 0;
 		turboInst2->alphaScale = 0;
 
-		// driver -> instance -> thread -> modelIndex == "player" of any kind
+		// player of any kind
 		if(*(short *)&driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			if
@@ -361,7 +361,7 @@ void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, i
 	#endif
 
 	//#if !defined (USE_ONLINE) //uncomment this if you need bytebudget.
-	// if modelIndex == "player" of any kind
+	// player of any kind
 	if (driver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 	{
 		// CameraDC flag

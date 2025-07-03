@@ -61,7 +61,7 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 	}
 	
 	// if driver itself
-	else if (hitModelID_cast == DYNAMIC_PLAYER) // DYNAMIC_PLAYER
+	else if (hitModelID_cast == DYNAMIC_PLAYER) // //player model
 	{
 		driver = (struct Driver*)t->object;
 		

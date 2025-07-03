@@ -95,7 +95,7 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   // if not that door
   else
   {
-    // STATIC_DOOR
+
     // door with one key hole
     m = gGT->modelPtr[STATIC_DOOR];
   }

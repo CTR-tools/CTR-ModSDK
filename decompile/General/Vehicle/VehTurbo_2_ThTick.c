@@ -33,7 +33,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 			(instance->alphaScale == 0)
 		) &&
 	
-		// instance -> thread -> modelID == DYNAMIC_GHOST
+
 		(instanceDriver->thread->modelIndex != DYNAMIC_GHOST)
 	)
 	{
@@ -181,7 +181,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 		turbo->fireDisappearCountdown--;
 	}
 	
-	// instance -> thread -> modelIndex == "player" of any kind
+	// player of any kind
 	if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 	{
 		iVar7 = 0x100 - (u_int)(instance->alphaScale >> 4);
@@ -284,7 +284,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 		instanceDriver->alphaScale = driver->alphaScaleBackup;
 		LAB_80069b50:
 	
-		// instance -> thread -> modelIndex == "player" of any kind
+		// player of any kind
 		if (instanceDriver->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			// volume, distortion, left/right

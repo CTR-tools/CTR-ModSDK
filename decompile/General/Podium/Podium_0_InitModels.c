@@ -38,26 +38,26 @@ void DECOMP_Podium_InitModels(struct GameTracker *gGT)
 	  	// Crash + Coco
 	  	case 0:
 	  	case 3:
-	  	// STATIC_TAWNA2 (Isabella)
+	  	// (Isabella)
 	  	gGT->podium_modelIndex_tawna = STATIC_TAWNA2;
 	  	break;
 	  	
 	  	// Polar + Pura
 	  	case 6:
 	  	case 7:
-	  	// STATIC_TAWNA3 (Liz)
+	  	// (Liz)
 	  	gGT->podium_modelIndex_tawna = STATIC_TAWNA3;
 	  	break;
 	  
 	  	// Cortex + NGin
 	  	case 1:
 	  	case 4:
-	  	// STATIC_TAWNA4 (Megumi)
+	  	// (Megumi)
 	  	gGT->podium_modelIndex_tawna = STATIC_TAWNA4;
 	  	break;
 	  
 	  	default:
-	  	// STATIC_TAWNA1 (Ami)
+	  	// (Ami)
 	  	gGT->podium_modelIndex_tawna = STATIC_TAWNA1;
 	  	break;
 	  }

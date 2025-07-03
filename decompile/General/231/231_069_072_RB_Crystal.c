@@ -85,10 +85,10 @@ int DECOMP_RB_Crystal_LInC(
 	// by player, or robotcar, and there's no
 	// AIs in Crystal Challenge anyway
 	if (
-			// not DYNAMIC_PLAYER
+			// not player model
 			(modelID != DYNAMIC_PLAYER) && 
 			
-			// not DYNAMIC_ROBOT_CAR
+			// not bot model
 			(modelID != DYNAMIC_ROBOT_CAR)
 		)
 	{

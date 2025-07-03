@@ -137,7 +137,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						// If you're in Time Trial
 						((gGT->gameMode1 & 0x4a0000) != 0) &&
 
-						// driver -> instance -> thread -> modelIndex == "player" of any kind
+						//player of any kind
 						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 					)
 				{
