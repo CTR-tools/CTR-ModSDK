@@ -1362,17 +1362,17 @@ struct Data data =
 
 	.ptrColor =
 	{
-		&data.colors[0][0], &data.colors[1][0], &data.colors[2][0], &data.colors[3][0],
-		&data.colors[4][0], &data.colors[5][0], &data.colors[6][0], &data.colors[7][0],
-		&data.colors[8][0], &data.colors[9][0], &data.colors[10][0], &data.colors[11][0],
-		&data.colors[12][0], &data.colors[13][0], &data.colors[14][0], &data.colors[15][0],
-		&data.colors[16][0], &data.colors[17][0], &data.colors[18][0], &data.colors[19][0],
-		&data.colors[20][0], &data.colors[21][0], &data.colors[22][0], &data.colors[23][0],
-		&data.colors[24][0], &data.colors[25][0], &data.colors[26][0], &data.colors[27][0],
-		&data.colors[28][0], &data.colors[29][0], &data.colors[30][0], &data.colors[31][0],
+		&data.colors[ORANGE][0], &data.colors[PERIWINKLE][0], &data.colors[ORANGE_DARKENED][0], &data.colors[RED][0],
+		&data.colors[WHITE][0], &data.colors[CRASH_BLUE][0], &data.colors[CORTEX_RED][0], &data.colors[TINY_GREEN][0],
+		&data.colors[COCO_MAGENTA][0], &data.colors[N_GIN_PURPLE][0], &data.colors[DINGODILE_OLIVE][0], &data.colors[POLAR_CYAN][0],
+		&data.colors[PURA_VIOLET][0], &data.colors[PINSTRIPE_PALE_DARK_BLUE][0], &data.colors[PAPU_YELLOW][0], &data.colors[ROO_ORANGE][0],
+		&data.colors[JOE_COLOR][0], &data.colors[TROPY_LIGHT_BLUE][0], &data.colors[PENTA_WHITE][0], &data.colors[FAKE_CRASH_GRAY][0],
+		&data.colors[OXIDE_LIGHT_GREEN][0], &data.colors[BLACK][0], &data.colors[SILVER][0], &data.colors[GRAY][0],
+		&data.colors[PLAYER_BLUE][0], &data.colors[PLAYER_RED][0], &data.colors[PLAYER_GREEN][0], &data.colors[PLAYER_YELLOW][0],
+		&data.colors[DARK_RED][0], &data.colors[LIGHT_GREEN][0], &data.colors[FOREST_GREEN][0], &data.colors[CREDITS_FADE][0],
 
 		#if BUILD >= UsaRetail
-		&data.colors[32][0], &data.colors[33][0], &data.colors[34][0],
+		&data.colors[BLUE][0], &data.colors[LIME_GREEN][0], &data.colors[ORANGE_RED][0],
 		#endif
 	},
 
@@ -2768,7 +2768,7 @@ struct Data data =
 	// leave name_Debug out, dont need it
 	.metaDataLEV =
 	{
-		[0] =
+		[DINGO_CANYON] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8008d298,
@@ -2779,7 +2779,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = DINGODILE
 		},
-		[1] =
+		[DRAGON_MINES] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x8008d290,
@@ -2787,10 +2787,10 @@ struct Data data =
 			.timeTrial = 110400,
 			.numTrophiesToOpen = 9,
 			.ctrTokenGroupID = 2,
-			.characterID_Boss = 11,
+			.characterID_Boss = KOMODO_JOE,
 			.characterID_Champion = KOMODO_JOE
 		},
-		[2] =
+		[BLIZZARD_BLUFF] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x8008d288,
@@ -2801,7 +2801,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = PENTA_PENGUIN
 		},
-		[3] =
+		[CRASH_COVE] =
 		{
 			.hubID = 1,
 			//.name_Debug = 0x8008d280,
@@ -2812,7 +2812,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = CRASH_BANDICOOT
 		},
-		[4] =
+		[TIGER_TEMPLE] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8008d278,
@@ -2823,7 +2823,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = PURA
 		},
-		[5] =
+		[PAPU_PYRAMID] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8008d270,
@@ -2831,10 +2831,10 @@ struct Data data =
 			.timeTrial = 127680,
 			.numTrophiesToOpen = 6,
 			.ctrTokenGroupID = 0,
-			.characterID_Boss = 9,
+			.characterID_Boss = PAPU_PAPU,
 			.characterID_Champion = PAPU_PAPU
 		},
-		[6] =
+		[ROO_TUBES] =
 		{
 			.hubID = 1,
 			//.name_Debug = 0x8008d268,
@@ -2842,10 +2842,10 @@ struct Data data =
 			.timeTrial = 105600,
 			.numTrophiesToOpen = 0,
 			.ctrTokenGroupID = 1,
-			.characterID_Boss = 10,
+			.characterID_Boss = RIPPER_ROO,
 			.characterID_Champion = RIPPER_ROO
 		},
-		[7] =
+		[HOT_AIR_SKYWAY] =
 		{
 			.hubID = 4,
 			//.name_Debug = 0x8008d260,
@@ -2853,10 +2853,10 @@ struct Data data =
 			.timeTrial = 208320,
 			.numTrophiesToOpen = 14,
 			.ctrTokenGroupID = 3,
-			.characterID_Boss = 8,
+			.characterID_Boss = PINSTRIPE,
 			.characterID_Champion = PINSTRIPE
 		},
-		[8] =
+		[SEWER_SPEEDWAY] =
 		{
 			.hubID = 1,
 			//.name_Debug = 0x8008d258,
@@ -2867,7 +2867,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = N_TROPY
 		},
-		[9] =
+		[MYSTERY_CAVES] =
 		{
 			.hubID = 1,
 			//.name_Debug = 0x8008d250,
@@ -2878,7 +2878,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = FAKE_CRASH
 		},
-		[10] =
+		[CORTEX_CASTLE] =
 		{
 			.hubID = 4,
 			//.name_Debug = 0x8008d248,
@@ -2889,7 +2889,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = NEO_CORTEX
 		},
-		[11] =
+		[N_GIN_LABS] =
 		{
 			.hubID = 4,
 			//.name_Debug = 0x8008d240,
@@ -2900,7 +2900,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = N_GIN
 		},
-		[12] =
+		[POLAR_PASS] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x8008d238,
@@ -2911,7 +2911,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = POLAR
 		},
-		[13] =
+		[OXIDE_STATION] =
 		{
 			.hubID = 4,
 			//.name_Debug = 0x8008d230,
@@ -2919,10 +2919,10 @@ struct Data data =
 			.timeTrial = 204480,
 			.numTrophiesToOpen = 15,
 			.ctrTokenGroupID = 3,
-			.characterID_Boss = 15,
+			.characterID_Boss = NITROS_OXIDE,
 			.characterID_Champion = NITROS_OXIDE
 		},
-		[14] =
+		[TINY_ARENA] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8001138c,
@@ -2933,7 +2933,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = TINY_TIGER
 		},
-		[15] =
+		[COCO_PARK] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x80011380,
@@ -2944,7 +2944,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = COCO_BANDICOOT
 		},
-		[16] =
+		[SLIDE_COLISEUM] =
 		{
 			.hubID = 0,
 			//.name_Debug = 0x8008d228,
@@ -2955,7 +2955,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = CRASH_BANDICOOT
 		},
-		[17] =
+		[TURBO_TRACK] =
 		{
 			.hubID = 0,
 			//.name_Debug = 0x8008d220,
@@ -2966,7 +2966,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = CRASH_BANDICOOT
 		},
-		[18] =
+		[NITRO_COURT] =
 		{
 			.hubID = 4,
 			//.name_Debug = 0x8008d218,
@@ -2977,7 +2977,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[19] =
+		[RAMPAGE_RUINS] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8008d210,
@@ -2988,7 +2988,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[20] =
+		[PARKING_LOT] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d208,
@@ -2999,7 +2999,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[21] =
+		[SKULL_ROCK] =
 		{
 			.hubID = 1,
 			//.name_Debug = 0x8008d200,
@@ -3010,7 +3010,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[22] =
+		[THE_NORTH_BOWL] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1f8,
@@ -3021,7 +3021,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[23] =
+		[ROCKY_ROAD] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x8008d1f0,
@@ -3032,7 +3032,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[24] =
+		[LAB_BASEMENT] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1e8,
@@ -3043,7 +3043,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[25] =
+		[GEM_STONE_VALLEY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1e0,
@@ -3054,7 +3054,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[26] =
+		[N_SANITY_BEACH] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1d8,
@@ -3065,7 +3065,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[27] =
+		[THE_LOST_RUINS] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1d0,
@@ -3076,7 +3076,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[28] =
+		[GLACIER_PARK] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1c8,
@@ -3087,7 +3087,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[29] =
+		[CITADEL_CITY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1c0,
@@ -3098,7 +3098,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[30] =
+		[INTRO_RACE_TODAY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1b8,
@@ -3109,7 +3109,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[31] =
+		[INTRO_COCO] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1b0,
@@ -3120,7 +3120,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[32] =
+		[INTRO_TINY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1a8,
@@ -3131,7 +3131,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[33] =
+		[INTRO_POLAR] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d1a0,
@@ -3142,7 +3142,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[34] =
+		[INTRO_DINGODILE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d198,
@@ -3153,7 +3153,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[35] =
+		[INTRO_CORTEX] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d190,
@@ -3164,7 +3164,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[36] =
+		[INTRO_SPACE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d188,
@@ -3175,7 +3175,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[37] =
+		[INTRO_CRASH] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d180,
@@ -3186,7 +3186,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[38] =
+		[INTRO_OXIDE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d178,
@@ -3197,7 +3197,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[39] =
+		[MAIN_MENU_LEVEL] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011374,
@@ -3208,7 +3208,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[40] =
+		[ADVENTURE_GARAGE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d170,
@@ -3219,7 +3219,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[41] =
+		[NAUGHTY_DOG_CRATE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d16c,
@@ -3230,7 +3230,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[42] =
+		[OXIDE_ENDING] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d164,
@@ -3241,7 +3241,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[43] =
+		[OXIDE_TRUE_ENDING] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d15c,
@@ -3252,7 +3252,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[44] =
+		[CREDITS_CRASH] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d154,
@@ -3263,7 +3263,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[45] =
+		[CREDITS_CORTEX] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d14c,
@@ -3274,7 +3274,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[46] =
+		[CREDITS_TINY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d144,
@@ -3285,7 +3285,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[47] =
+		[CREDITS_COCO] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d13c,
@@ -3296,7 +3296,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[48] =
+		[CREDITS_N_GIN] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d134,
@@ -3307,7 +3307,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[49] =
+		[CREDITS_DINGO] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d12c,
@@ -3318,7 +3318,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[50] =
+		[CREDITS_POLAR] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d124,
@@ -3329,7 +3329,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[51] =
+		[CREDITS_PURA] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d11c,
@@ -3340,7 +3340,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[52] =
+		[CREDITS_PINSTRIPE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8008d114,
@@ -3351,7 +3351,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[53] =
+		[CREDITS_PAPU] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011368,
@@ -3362,7 +3362,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[54] =
+		[CREDITS_ROO] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8001135c,
@@ -3373,7 +3373,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[55] =
+		[CREDITS_JOE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011350,
@@ -3384,7 +3384,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[56] =
+		[CREDITS_TROPY] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011344,
@@ -3395,7 +3395,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[57] =
+		[CREDITS_PENTA] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011338,
@@ -3406,7 +3406,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[58] =
+		[CREDITS_FAKE_CRASH] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x8001132c,
@@ -3417,7 +3417,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[59] =
+		[CREDITS_OXIDE] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011320,
@@ -3428,7 +3428,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[60] =
+		[CREDITS_AMI] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011314,
@@ -3439,7 +3439,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[61] =
+		[CREDITS_ISABELLA] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x80011308,
@@ -3450,7 +3450,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[62] =
+		[CREDITS_LIZ] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x800112fc,
@@ -3461,7 +3461,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[63] =
+		[CREDITS_MEGUMI] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x800112f0,
@@ -3472,7 +3472,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = -1
 		},
-		[64] =
+		[SCRAPBOOK] =
 		{
 			.hubID = -1,
 			//.name_Debug = 0x800112e4,
@@ -5023,7 +5023,7 @@ struct Data data =
 	// the strings are needed for model lookup
 	.MetaDataCharacters =
 	{
-		[0] =
+		[CRASH_BANDICOOT] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_crash[0],
@@ -5033,7 +5033,7 @@ struct Data data =
 			.iconID = 32,
 			.engineID = BALANCED,
 		},
-		[1] =
+		[NEO_CORTEX] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_cortex[0],
@@ -5043,7 +5043,7 @@ struct Data data =
 			.iconID = 33,
 			.engineID = BALANCED,
 		},
-		[2] =
+		[TINY_TIGER] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_tiny[0],
@@ -5053,7 +5053,7 @@ struct Data data =
 			.iconID = 34,
 			.engineID = SPEED,
 		},
-		[3] =
+		[COCO_BANDICOOT] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_coco[0],
@@ -5063,7 +5063,7 @@ struct Data data =
 			.iconID = 35,
 			.engineID = ACCEL,
 		},
-		[4] =
+		[N_GIN] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_ngin[0],
@@ -5073,7 +5073,7 @@ struct Data data =
 			.iconID = 36,
 			.engineID = ACCEL,
 		},
-		[5] =
+		[DINGODILE] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_dingo[0],
@@ -5083,7 +5083,7 @@ struct Data data =
 			.iconID = 37,
 			.engineID = SPEED,
 		},
-		[6] =
+		[POLAR] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_polar[0],
@@ -5093,7 +5093,7 @@ struct Data data =
 			.iconID = 38,
 			.engineID = TURN,
 		},
-		[7] =
+		[PURA] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pura[0],
@@ -5103,7 +5103,7 @@ struct Data data =
 			.iconID = 39,
 			.engineID = TURN,
 		},
-		[8] =
+		[PINSTRIPE] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pinstripe[0],
@@ -5113,7 +5113,7 @@ struct Data data =
 			.iconID = 43,
 			.engineID = ACCEL,
 		},
-		[9] =
+		[PAPU_PAPU] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_papu[0],
@@ -5123,7 +5123,7 @@ struct Data data =
 			.iconID = 41,
 			.engineID = SPEED,
 		},
-		[10] =
+		[RIPPER_ROO] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_roo[0],
@@ -5133,7 +5133,7 @@ struct Data data =
 			.iconID = 40,
 			.engineID = TURN,
 		},
-		[11] =
+		[KOMODO_JOE] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_joe[0],
@@ -5143,7 +5143,7 @@ struct Data data =
 			.iconID = 42,
 			.engineID = BALANCED,
 		},
-		[12] =
+		[N_TROPY] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_ntropy[0],
@@ -5153,7 +5153,7 @@ struct Data data =
 			.iconID = 44,
 			.engineID = SPEED,
 		},
-		[13] =
+		[PENTA_PENGUIN] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pen[0],
@@ -5168,7 +5168,7 @@ struct Data data =
 			.engineID = TURN,
 			#endif
 		},
-		[14] =
+		[FAKE_CRASH] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_fake[0],
@@ -5178,7 +5178,7 @@ struct Data data =
 			.iconID = 54,
 			.engineID = BALANCED,
 		},
-		[15] =
+		[NITROS_OXIDE] =
 		{
 #ifndef REBUILD_PC
 			.name_Debug = &rdata.s_oxide[0],
@@ -7346,7 +7346,7 @@ struct Data data =
 	.MetaDataTerrain =
 	{
 		// asphalt
-		[0] =
+		[TERRAIN_ASPHALT] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7357,7 +7357,7 @@ struct Data data =
 		},
 
 		// dirt
-		[1] =
+		[TERRAIN_DIRT] =
 		{
 				0, 0, 140,
 				180, 256, 256,
@@ -7368,7 +7368,7 @@ struct Data data =
 		},
 
 		// grass
-		[2] =
+		[TERRAIN_GRASS] =
 		{
 				0, 0, 140,
 				180, 256, 256,
@@ -7379,7 +7379,7 @@ struct Data data =
 		},
 
 		// wood
-		[3] =
+		[TERRAIN_WOOD] =
 		{
 				0, 33, 256,
 				256, 256, 256,
@@ -7390,7 +7390,7 @@ struct Data data =
 		},
 
 		// water
-		[4] =
+		[TERRAIN_WATER] =
 		{
 				0, 0, 180,
 				200, 256, 256,
@@ -7401,7 +7401,7 @@ struct Data data =
 		},
 
 		// stone
-		[5] =
+		[TERRAIN_STONE] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7412,7 +7412,7 @@ struct Data data =
 		},
 
 		// ice
-		[6] =
+		[TERRAIN_ICE] =
 		{
 				0, 28, 256,
 				100, 0, 0,
@@ -7423,7 +7423,7 @@ struct Data data =
 		},
 
 		// track
-		[7] =
+		[TERRAIN_TRACK] =
 		{
 				0, 33, 140,
 				180, 256, 256,
@@ -7434,7 +7434,7 @@ struct Data data =
 		},
 
 		// icy road
-		[8] =
+		[TERRAIN_ICY_ROAD] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7445,7 +7445,7 @@ struct Data data =
 		},
 
 		// snow
-		[9] =
+		[TERRAIN_SNOW] =
 		{
 				0, 0, 140,
 				180, 256, 256,
@@ -7456,7 +7456,7 @@ struct Data data =
 		},
 
 		// none
-		[10] =
+		[TERRAIN_NONE] =
 		{
 				0, 0, 256,
 				256, 0, 256,
@@ -7467,7 +7467,7 @@ struct Data data =
 		},
 
 		// hardpack
-		[11] =
+		[TERRAIN_HARDPACK] =
 		{
 				0, 0, 256,
 				256, 256, 256,
@@ -7478,7 +7478,7 @@ struct Data data =
 		},
 
 		// metal
-		[12] =
+		[TERRAIN_METAL] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7489,7 +7489,7 @@ struct Data data =
 		},
 
 		// fastwater
-		[13] =
+		[TERRAIN_FASTWATER] =
 		{
 				0, 0, 256,
 				256, 256, 256,
@@ -7500,7 +7500,7 @@ struct Data data =
 		},
 
 		// mud
-		[14] =
+		[TERRAIN_MUD] =
 		{
 				0, 128, 140,
 				180, 256, 256,
@@ -7511,7 +7511,7 @@ struct Data data =
 		},
 
 		// sideslip
-		[15] =
+		[TERRAIN_SIDESLIP] =
 		{
 				0, 320, 256,
 				256, 256, 256,
@@ -7522,7 +7522,7 @@ struct Data data =
 		},
 
 		// riverasphalt
-		[16] =
+		[TERRAIN_RIVERASPHALT] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7533,7 +7533,7 @@ struct Data data =
 		},
 
 		// steamasphalt
-		[17] =
+		[TERRAIN_STEAMASPHALT] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7544,7 +7544,7 @@ struct Data data =
 		},
 
 		// oceanasphalt
-		[18] =
+		[TERRAIN_OCEANASPHALT] =
 		{
 				0, 64, 256,
 				256, 256, 256,
@@ -7555,7 +7555,7 @@ struct Data data =
 		},
 
 		// slowgrass
-		[19] =
+		[TERRAIN_SLOWGRASS] =
 		{
 				0, 0, 100,
 				180, 256, 256,
@@ -7566,7 +7566,7 @@ struct Data data =
 		},
 
 		// slowdirt
-		[20] =
+		[TERRAIN_SLOWDIRT] =
 		{
 				0, 0, 100,
 				180, 256, 256,
@@ -7590,10 +7590,13 @@ struct Data data =
 		.value[3] = g,		\
 		.value[4] = h
 
-
+    
+	//every engine have a stat, usa retail have 4 engines (0-3)
+	//decomp, PAL and NTSC-J have 5 engines (0-4)
+	//stats starts on the 3rd param
 	.metaPhys =
 	{
-		{PHYSWRAP(0x416, 2, 900, 900, 900, 900, 900)},
+		{PHYSWRAP(0x416, 2, 900, 900, 900, 900, 900)}, //gravity stats
 		{PHYSWRAP(0x418, 2, 4596, 4596, 4596, 4596, 4596)},
 		{PHYSWRAP(0x41a, 2, 350, 350, 350, 350, 350)},
 		{PHYSWRAP(0x41c, 2, 120, 120, 120, 120, 120)},
@@ -7602,10 +7605,10 @@ struct Data data =
 		{PHYSWRAP(0x422, 2, 260, 260, 260, 260, 260)},
 		{PHYSWRAP(0x424, 2, 120, 120, 120, 120, 120)},
 		{PHYSWRAP(0x426, 2, 120, 120, 120, 120, 120)},
-		{PHYSWRAP(0x428, 2, 480, 544, 448, 512, 544)},
-		{PHYSWRAP(0x42a, 2, 1152, 1152, 1152, 1152, 1152)},
-		{PHYSWRAP(0x42c, 2, 13140, 13520, 13900, 12950, 13900)},
-		{PHYSWRAP(0x42e, 2, 14640, 15020, 15400, 14450, 15400)},
+		{PHYSWRAP(0x428, 2, 480, 544, 448, 512, 544)}, //accel related stats
+		{PHYSWRAP(0x42a, 2, 1152, 1152, 1152, 1152, 1152)}, //accel related stats
+		{PHYSWRAP(0x42c, 2, 13140, 13520, 13900, 12950, 13900)}, //speed related stats
+		{PHYSWRAP(0x42e, 2, 14640, 15020, 15400, 14450, 15400)}, // speed related stats
 		{PHYSWRAP(0x430, 2, 2048, 2048, 2048, 2048, 2048)},
 		{PHYSWRAP(0x432, 2, 4096, 4096, 4096, 4096, 4096)},
 		{PHYSWRAP(0x434, 2, 5120, 5120, 5120, 5120, 5120)},

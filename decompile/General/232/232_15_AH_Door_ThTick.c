@@ -82,7 +82,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   }
 
   // If this is N Sane Beach
-  if (lev == 0x1a)
+  if (lev == N_SANITY_BEACH)
   {
 
     // if this is beach -> gemstone,
@@ -458,13 +458,13 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
     
   if (
       // if this is N Sane Beach
-      ((lev == 0x1a) &&
+      ((lev == N_SANITY_BEACH) &&
   
        // if this is door #4 (beach -> glacier)
        (doorID == 4)) ||
   
       // if this is lost ruins (ruins -> glacier)
-      (lev == 0x1b))
+      (lev == THE_LOST_RUINS))
   {
     // open all doors to glacier
     sdata->advProgress.rewards[3] |= 0xc0;
@@ -472,7 +472,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   
   else if (
         // if this is N Sane Beach
-        (lev == 0x1a) &&
+        (lev == N_SANITY_BEACH) &&
   
         // Door #5 (beach -> ruins)
         (doorID == 5))
@@ -482,7 +482,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   }
     
   // Gemstone valley (cup door)
-  else if (lev == 0x19)
+  else if (lev == GEM_STONE_VALLEY)
   {
     // record that door is open
     sdata->advProgress.rewards[3] |= 0x20;

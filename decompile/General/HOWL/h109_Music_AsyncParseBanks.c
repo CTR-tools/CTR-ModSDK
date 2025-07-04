@@ -188,7 +188,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 	
 			// if no podium reward, or all podium banks
 			// are loaded, then go to next "case 3:" stage
-			if (gGT->podiumRewardID == 0) break;
+			if (gGT->podiumRewardID == NOFUNC) break; //0
 			if (sdata->bankPodiumStage >= 3) break;
 			
 			unsigned char* podiumIndex = &gGT->podium_modelIndex_First;

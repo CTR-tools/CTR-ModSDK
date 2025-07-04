@@ -6,7 +6,7 @@ u_char DECOMP_CS_Camera_BoolGotoBoss(void)
 
 	if (
 			// If just got 18th relic
-			(gGT->podiumRewardID == 0x61) &&
+			(gGT->podiumRewardID == STATIC_RELIC) &&
 			(gGT->currAdvProfile.numRelics >= 18)
 			// skip check to BeatOxide2 (obvious not beaten)
 		)
@@ -15,7 +15,7 @@ u_char DECOMP_CS_Camera_BoolGotoBoss(void)
 	}
 	
 	// If just unlocked Key
-	if (gGT->podiumRewardID == 99)
+	if (gGT->podiumRewardID == STATIC_KEY)
 		return 1;
 
     struct Instance* inst = gGT->drivers[0]->instSelf;

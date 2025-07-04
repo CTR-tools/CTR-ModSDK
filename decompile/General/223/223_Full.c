@@ -60,7 +60,7 @@ void DECOMP_RR_EndEvent_UnlockAward()
 		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 
 		// relic model
-		gGT->podiumRewardID = 0x61;
+		gGT->podiumRewardID = STATIC_RELIC;
 
 		// won relic
 		gGT->gameModeEnd |= NEW_RELIC;

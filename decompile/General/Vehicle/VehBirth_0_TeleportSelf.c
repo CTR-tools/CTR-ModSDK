@@ -62,7 +62,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	// If just obtained Roo boss key
 	// spawn in front of hub door, beach-to-gemstone
 	else if (
-		(gGT->podiumRewardID == 99) &&
+		(gGT->podiumRewardID == STATIC_KEY) &&
 		(gGT->currAdvProfile.numKeys == 1))
 	{
         gGT->gameMode2 |= VEH_FREEZE_DOOR;
@@ -88,7 +88,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			// Before starting a boss cutscene
 			(
 				// Just won the last trophy on the hub
-				(gGT->podiumRewardID == 0x62) &&
+				(gGT->podiumRewardID == STATIC_TROPHY) &&
 				((gGT->currAdvProfile.numTrophies & 3) == 0)
 			)
 	)
@@ -129,7 +129,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 			// a sapphire relic and hitting RETRY will 
 			// set podiumRewardID=RELIC, then spawn in the void
 			((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-			(gGT->podiumRewardID != 0)
+			(gGT->podiumRewardID != NOFUNC) //0
 		)
     {
         // spawn on the podium in the adv hub

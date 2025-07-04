@@ -134,11 +134,11 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 
 	#ifdef USE_HIGHMP
 	numTracks = 23;
-	D230.battleTracks[0].levID = 0x19;
-	D230.battleTracks[1].levID = 0x1a;
-	D230.battleTracks[2].levID = 0x1b;
-	D230.battleTracks[3].levID = 0x1c;
-	D230.battleTracks[4].levID = 0x1d;
+	D230.battleTracks[0].levID = GEM_STONE_VALLEY;
+	D230.battleTracks[1].levID = N_SANITY_BEACH;
+	D230.battleTracks[2].levID = THE_LOST_RUINS;
+	D230.battleTracks[3].levID = GLACIER_PARK;
+	D230.battleTracks[4].levID = CITADEL_CITY;
 	#endif
 
 	// if you are in battle mode
@@ -148,11 +148,11 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 		numTracks = 7;
 
 		#ifdef USE_HIGHMP
-		D230.battleTracks[0].levID = 18;
-		D230.battleTracks[1].levID = 19;
-		D230.battleTracks[2].levID = 20;
-		D230.battleTracks[3].levID = 21;
-		D230.battleTracks[4].levID = 22;
+		D230.battleTracks[0].levID = NITRO_COURT;
+		D230.battleTracks[1].levID = RAMPAGE_RUINS;
+		D230.battleTracks[2].levID = PARKING_LOT;
+		D230.battleTracks[3].levID = SKULL_ROCK;
+		D230.battleTracks[4].levID = THE_NORTH_BOWL;
 		#endif
 	}
 

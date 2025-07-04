@@ -454,14 +454,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 			{
 				// Go to Podium after returning to Adventure Hub
-				gGT->podiumRewardID = 99; // key
+				gGT->podiumRewardID = STATIC_KEY; // key
 
 				// hot air skyway
 				if (gGT->levelID == HOT_AIR_SKYWAY)
 				{
 					// If you just beat Pinstripe
 					// Load gemstone valley
-					levSpawn = 0x19;
+					levSpawn = GEM_STONE_VALLEY;
 				}
 			}
 		}
@@ -471,7 +471,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		{
 			// Always go to podium after oxide,
 			// with no key (0x38 = empty)
-			gGT->podiumRewardID = 0x38;
+			gGT->podiumRewardID = STATIC_BIG1;
 
 			// assume oxide beaten 1st time
 			adv->rewards[3] |= 0x80004;
@@ -502,7 +502,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 
 		// go to podium with trophy
-		gGT->podiumRewardID = 0x62;
+		gGT->podiumRewardID = STATIC_TROPHY;
 	}
 
 	MainRaceTrack_RequestLoad(levSpawn);

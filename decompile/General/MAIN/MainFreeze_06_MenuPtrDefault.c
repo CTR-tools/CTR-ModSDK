@@ -2,7 +2,7 @@
 
 void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 {
-	int levID = 0;
+	int levID = 0; //dingo canyon
 	u_short stringID;
 	u_int gameMode;
 

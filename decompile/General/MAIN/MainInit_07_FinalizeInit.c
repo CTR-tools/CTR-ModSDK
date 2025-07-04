@@ -383,7 +383,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 
 #ifndef REBUILD_PS1
     if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
-		if (gGT->podiumRewardID != 0)
+		if (gGT->podiumRewardID != NOFUNC) //0
 			CS_Podium_FullScene_Init();
     
     if ((gGT->gameMode1 & GAME_CUTSCENE) != 0)

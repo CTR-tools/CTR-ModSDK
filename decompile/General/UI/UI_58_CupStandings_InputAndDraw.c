@@ -550,7 +550,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 			  UNLOCK_ADV_BIT(sdata->gameProgress.unlocks, bitIndex);
 
               // Set podium reward model to Gem
-              gGT->podiumRewardID = 0x5f;
+              gGT->podiumRewardID = STATIC_GEM;
             }
 
             // reset counter for number of times you lost cup, to zero
@@ -628,7 +628,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           }
 
           // Set podium's reward model to "Empty"
-          gGT->podiumRewardID = 0x38;
+          gGT->podiumRewardID = STATIC_BIG1;
         }
 
         // Level ID for Gemstone Valley (podiums)
