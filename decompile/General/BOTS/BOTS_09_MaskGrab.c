@@ -70,7 +70,7 @@ void DECOMP_BOTS_MaskGrab(struct Thread* botThread)
 	bot->actionsFlagSet &= 0xfff7ffbf;
 
 	// if driver is not ghost
-	if (botThread->modelIndex != 0x4b)
+	if (botThread->modelIndex != DYNAMIC_GHOST)
 	{
 		// enable collision for this thread
 		botThread->flags &= 0xffffefff;

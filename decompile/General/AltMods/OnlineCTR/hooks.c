@@ -160,8 +160,9 @@ void OnlineInit_Drivers(struct GameTracker* gGT)
 		// realID
 		dr->driverID = i;
 	}
+	
 
-	if (gGT->levelID != 0x26/*INTRO_RACE_TODAY*/) //was 0x26 (globe level)
+	if (gGT->levelID != 0x26 /*INTRO_RACE_TODAY*/) //was 0x26 (globe level)
 	{
 		octr->CurrState = GAME_WAIT_FOR_RACE;
 	}

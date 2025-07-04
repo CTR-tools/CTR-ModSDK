@@ -10,7 +10,8 @@ void DECOMP_Garage_Enter(char charId)
 	int* audioPtr;
 	int LR;
 	
-	if (charId >= 8)
+	//>=8
+	if (charId >= PINSTRIPE)
 		return;
   
 	// characterID to the left/right

@@ -19,9 +19,9 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
   //	hub*2+1 - outro (after winning key)
   if (OVR_233.bossCutsceneIndex < 0)
   {
-    cutsceneID = (levID - 0x19) * 2;
+    cutsceneID = (levID - GEM_STONE_VALLEY) * 2;
     
-	if (gGT->podiumRewardID == 99)
+	if (gGT->podiumRewardID == STATIC_KEY)
       cutsceneID++;
   }
   
@@ -151,7 +151,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     if (OVR_233.isCutsceneOver != 1)
 		break;
     
-    gGT->podiumRewardID = 0;
+    gGT->podiumRewardID = NOFUNC; // 0
     t->flags |= 0x800;
     
   }

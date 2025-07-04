@@ -19,6 +19,9 @@ void DECOMP_GhostReplay_Init1(void)
 	int charID;
 	char* recordBuffer;
 	
+	//for human reading purposes
+	unsigned char playerID;
+	
 	struct GameTracker *gGT = sdata->gGT;
 	
 	// This has to run from MainInit_Drivers
@@ -47,6 +50,7 @@ void DECOMP_GhostReplay_Init1(void)
 	// for "Ghost Too Big" will never play
 	gh = 0;
 	charID = 0;
+	playerID = charID;
 
 	for (i = 0; i < 2; i++)
 	{
@@ -62,7 +66,7 @@ void DECOMP_GhostReplay_Init1(void)
 				// assign the ghost you loaded
 				gh = sdata->ptrGhostTapePlaying;
 				
-				charID = 1;
+				playerID = 1;
 			}
 
 			// if no human ghost is replayed, do NOT
@@ -96,13 +100,13 @@ void DECOMP_GhostReplay_Init1(void)
 				// ntropy
 				case 1:
 					gh = pointers[ST1_NTROPY];	
-					charID = 2;
+					playerID = 2;
 					break;
 				
 				// oxide
 				default:
 					gh = pointers[ST1_NOXIDE];	
-					charID = 3;
+					playerID = 3;
 					break;
 			}
 		}
@@ -139,7 +143,7 @@ void DECOMP_GhostReplay_Init1(void)
 		}
 
 		// characterID and model
-		charID = data.characterIDs[charID];
+		charID = data.characterIDs[playerID];
 		
 		#ifdef USE_PRELOAD
 		int* arr = 0x8000a000;
@@ -171,7 +175,7 @@ void DECOMP_GhostReplay_Init1(void)
 			0
 		);
 		
-		t->modelIndex = 0x4b;	// ghost
+		t->modelIndex = DYNAMIC_GHOST;	// ghost
 		t->flags |= 0x1000;		// ignore collisions
 		
 		t->inst = inst;
@@ -189,7 +193,7 @@ void DECOMP_GhostReplay_Init1(void)
 		ghostDriver->actionsFlagSet |= 0x100000; // AI driver
 
 		// Ptr Model "Wake"
-		wake = gGT->modelPtr[0x43];
+		wake = gGT->modelPtr[STATIC_WAKE];
 
 		// if "Wake" model exists
 		if (wake)
@@ -207,7 +211,7 @@ void DECOMP_GhostReplay_Init1(void)
 		DECOMP_VehBirth_TireSprites(t);
 		DECOMP_VehBirth_SetConsts(ghostDriver);
 		
-		if(charID == 0xF)
+		if(charID == NITROS_OXIDE)
 			ghostDriver->wheelSize = 0;
 
 		// pointer to TrTire, for transparent tires

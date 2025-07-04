@@ -9,11 +9,11 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   int shatterColor;
   
   // green explosion
-  shatterColor = 0x45;
+  shatterColor = STATIC_SHOCKWAVE_GREEN;
   
   // if red beaker, red explosion
-  if (inst->model->id == 0x46) 
-	  shatterColor = 0x44;
+  if (inst->model->id == STATIC_BEAKER_RED) 
+	  shatterColor = STATIC_SHOCKWAVE_RED;
   
   // create thread for shatter
   shatterInst = INSTANCE_BirthWithThread(
@@ -53,7 +53,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
 
 	p->modelID = shatterColor;
 	
-	if (shatterColor == 0x45) 
+	if (shatterColor == STATIC_SHOCKWAVE_GREEN) 
 	{
       p->axis[7].startVal = 1;
       p->axis[8].startVal = 0xc800;

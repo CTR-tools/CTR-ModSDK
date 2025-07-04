@@ -366,7 +366,7 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   }
   
   struct Instance* shadowInst = 
-	DECOMP_INSTANCE_Birth3D(sdata->gGT->modelPtr[0x53], 0, t);
+	DECOMP_INSTANCE_Birth3D(sdata->gGT->modelPtr[DYNAMIC_SPIDERSHADOW], 0, t);
   
   spider->shadowInst = shadowInst;
   

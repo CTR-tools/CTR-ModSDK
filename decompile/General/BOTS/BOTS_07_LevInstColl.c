@@ -10,7 +10,7 @@ void DECOMP_BOTS_LevInstColl(struct Thread* param_1)
 	//scratchpad stuff
 	sps->ptr_mesh_info = sdata->gGT->level1->ptr_mesh_info;
 	sps->Union.QuadBlockColl.searchFlags = 1;
-	(*(int*)(0x1f800114)) = 0x3f; //Input1.modelID._0_2_ (this location probably has another name).
+	(*(int*)(0x1f800114)) = DYNAMIC_ROBOT_CAR; //Input1.modelID._0_2_ (this location probably has another name).
 	(*(int*)(0x1f80012c)) = 0; //Union._20_4_ (this location probably has another name).
 	sps->Union.QuadBlockColl.qbFlagsIgnored = 0;
 	sps->Input1.hitRadius = 0x19; //this might be the wrong name for this location, idk.

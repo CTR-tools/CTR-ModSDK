@@ -68,7 +68,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 					if(gGT->elapsedEventTime & 1)
 					{
 						// if not DYNAMIC_PLAYER
-						if(d->instSelf->thread->modelIndex != 0x18)
+						if(d->instSelf->thread->modelIndex != DYNAMIC_PLAYER)
 						{
 							int rank = d->driverRank;
 							if(rank != 0)
@@ -111,7 +111,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			dInst = d->instSelf;
 
 			// set up missile
-			modelID = 0x29;
+			modelID = DYNAMIC_ROCKET;
 			int bucket = TRACKING;
 			struct Thread* parentTh = 0;
 
@@ -121,7 +121,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 				(d->heldItemID == 10)
 			  )
 			{
-				modelID = 0x3b;
+				modelID = DYNAMIC_BOMB;
 				bucket = OTHER;
 				parentTh = dInst->thread;
 			}
@@ -164,7 +164,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			int talk;
 
 			// bomb
-			if(modelID == 0x3b)
+			if(modelID == DYNAMIC_BOMB)
 			{
 				talk = 10;
 				d->instBombThrow = weaponInst;
@@ -229,7 +229,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			}
 
 			// bomb
-			if(modelID == 0x3b)
+			if(modelID == DYNAMIC_BOMB)
 			{
 				struct GamepadBuffer* gb =
 					&sdata->gGamepads->gamepad[d->driverID];
@@ -270,9 +270,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 		case 3:
 
 			// tnt or nitro
-			modelID = 0x27;
+			modelID = STATIC_CRATE_TNT;
 			if(d->numWumpas >= 10)
-				modelID = 6;
+				modelID = PU_EXPLOSIVE_CRATE;
 
 			weaponInst =
 				DECOMP_INSTANCE_BirthWithThread(
@@ -411,9 +411,9 @@ RunMineCOLL:
 		// Beaker
 		case 4:
 
-			modelID = 0x47;
+			modelID = STATIC_BEAKER_GREEN;
 			if(d->numWumpas >= 10)
-				modelID = 0x46;
+				modelID = STATIC_BEAKER_RED;
 
 			weaponInst =
 				DECOMP_INSTANCE_BirthWithThread(
@@ -455,7 +455,7 @@ RunMineCOLL:
 			mw->crateInst = 0;
 			mw->boolDestroyed = 0;
 			mw->frameCount_DontHurtParent = FPS_DOUBLE(10);
-			mw->extraFlags = (modelID == 0x46);
+			mw->extraFlags = (modelID == STATIC_BEAKER_RED);
 
 			struct GamepadBuffer* gb =
 				&sdata->gGamepads->gamepad[d->driverID];
@@ -499,15 +499,15 @@ RunMineCOLL:
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
 
-			modelID = 0x5e;
+			modelID = DYNAMIC_SHIELD_GREEN;
 			if(d->numWumpas >= 10)
-				modelID = 0x56;
+				modelID = DYNAMIC_SHIELD;
 
 			struct Instance* instColor =
 				INSTANCE_Birth3D(gGT->modelPtr[modelID], 0, 0);
 
 			struct Instance* instHighlight =
-				INSTANCE_Birth3D(gGT->modelPtr[0x5D], 0, weaponTh);
+				INSTANCE_Birth3D(gGT->modelPtr[DYNAMIC_HIGHLIGHT], 0, weaponTh);
 
 			weaponInst->alphaScale = 0x400;
 

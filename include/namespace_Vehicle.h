@@ -37,74 +37,114 @@ enum KartState
 enum PhysType
 {
 	// MetaPhys[0]
-	// Driver Offset 0x416
-	GRAVITY=0,
+	GRAVITY=0,	
+	// Driver offset
+	GRAVITY_OFFSET = 0x416,
 
 	// MetaPhys[1]
-	// Driver offset 0x418
-	JUMP=1,
+	JUMP=1,	
+	// Driver offset
+	JUMP_OFFSET = 0x418,
 
 	// MetaPhys[2]
-	// Driver offset 0x41A
+	ACCEL_SLIDE = 0x2,
+	// Driver offset
+	ACCEL_SLIDE_OFFSET = 0x41A,
 
 	// MetaPhys[3]
-	// Driver offset 0x41C
+	ACCEL_FRICTION = 0x3,
+	// Driver offset
+	ACCEL_FRICTION_OFFSET = 0x41C,
 
 	// MetaPhys[4]
-	// Driver offset 0x41E
+	SLIDING_UNK41E = 0x4,
+	// Driver offset
+	SLIDING_UNK41E_OFFSET = 0x41E,
 
 	// MetaPhys[5]
-	// Driver offset 0x420
+	FRICTION_UNK420 = 0x5,
+	// Driver offset
+	FRICTION_UNK420_OFFSET = 0x420,
 
 	// MetaPhys[6]
-	// Driver offset 0x422
+	BRAKING_FRICTION = 0x6,
+	// Driver offset
+	BRAKING_FRICTION_OFFSET = 0x422,
 
 	// MetaPhys[7]
-	// Driver offset 0x424
+	DRIFT_UNK424 = 0x7,
+	// Driver offset
+	DRIFT_UNK424_OFFSET = 0x424,
 
 	// MetaPhys[8]
-	// Driver offset 0x426
+	DRIFT_FRICTION = 0x8,
+	// Driver offset
+	DRIFT_FRICTION_OFFSET = 0x426,
 
 	// MetaPhys[9]
-	// Driver offset 0x428
-	ACCELERATION_NO_RESERVES=9,
+	ACCELERATION_NO_RESERVES=9,	
+	// Driver offset
+	ACCEL_NO_RESERVES_OFFSET = 0x428,
 
 	// MetaPhys[A]
-	// Driver offset 0x42A
-	ACCELERATION_WITH_RESERVES=0xA,
+	ACCELERATION_WITH_RESERVES=0xA,	
+	// Driver offset
+	ACCEL_WITH_RESERVES_OFFSET=0x42A,
 
 	// MetaPhys[B]
-	// Driver offset 0x42C
+	CLASS_SPEED = 0xB,	
+	// Driver offset
+	CLASS_SPEED_OFFSET = 0x42C,
 
 	// MetaPhys[C]
-	// Driver offset 0x42E
-
+    SPEEDOMETER_UNK42E = 0xC,
+	// Driver offset
+	SPEEDOMETER_UNK42E_OFFSET = 0x42E,
+	
 	// MetaPhys[D]
-	// Driver offset 0x430
+	MAX_SPEED_SINGLE_TURBO = 0xD,
+	// Driver offset
+	MAX_SPEED_SINGLE_TURBO_OFFSET = 0x430,
 
 	// MetaPhys[E]
-	// Driver offset 0x432
+	MAX_SPEED_WITH_SACRED = 0xE,
+	// Driver offset
+	MAX_SPEED_WITH_SACRED_OFFSET = 0x432,
 
 	// MetaPhys[F]
-	// Driver offset 0x434
+	RESERVE_SPEED = 0xF,
+	// Driver offset
+	RESERVE_SPEED_OFFSET = 0x434,
 
 	// MetaPhys[10]
-	// Driver offset 0x436
+	MASK_SPEED = 0x10,
+	// Driver offset
+	MASK_SPEED_OFFSET = 0x436,
 
 	// MetaPhys[11]
-	// Driver offset 0x438
+	TURN_SPEED_UNK438 = 0x11,
+	// Driver offset
+	TURN_SPEED_UNK438_OFFSET = 0x438,
 
 	// MetaPhys[12]
-	// Driver offset 0x43A
+	TURNING_STAT = 0x12,
+	// Driver offset
+	TURNING_STAT_OFFSET = 0x43A,
 
 	// MetaPhys[13]
-	// Driver offset 0x43B
-
+	REVERSE_TURNING_SPEED = 0x13,
+	// Driver offset
+	REVERSE_TURNING_SPEED_OFFSET = 0x43B,
+	
 	// MetaPhys[14]
-	// Driver offset 0x43C
+	TURN_UNK43C = 0x14,
+	// Driver offset
+	TURN_UNK43C_OFFSET = 0x43C,
 
 	// MetaPhys[15]
-	// Driver offset 0x43E
+	TURN_UNK43E = 0x15,
+	// Driver offset
+	TURN_UNK43E_OFFSET = 0x43E,
 
 	// MetaPhys[16]
 	// Driver offset 0x440
@@ -209,10 +249,14 @@ enum PhysType
 	// Driver offset 0x474
 
 	// MetaPhys[38]
-	// Driver offset 0x476
+	TURBO_METER_EMPTY = 0x38,
+	// Driver offset
+	TURBO_METER_EMPTY_OFFSET = 0x476,
 
 	// MetaPhys[39]
-	// Driver offset 0x477
+	TURBO_METER_FILLED = 0x39,
+	// Driver offset
+	TURBO_METER_FILLED_OFFSET = 0x477,
 
 	// MetaPhys[3A]
 	// Driver offset 0x478
@@ -236,8 +280,9 @@ enum PhysType
 	// that's driver rank
 
 	// MetaPhys[40]
-	// Driver offset 0x484
 	PROTOTYPE_KEY = 0x40,
+	// Driver offset
+	PROTOTYPE_KEY_OFFSET = 0x484,
 
 	NUM_PHYS_TYPES = 65
 

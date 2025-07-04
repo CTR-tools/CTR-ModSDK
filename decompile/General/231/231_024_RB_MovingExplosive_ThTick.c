@@ -239,7 +239,7 @@ LAB_800add14:
   inst->matrix.t[2] += (((int)tw->vel[2] * elapsedTime) >> 5);
 
   // If this is bomb
-  if (modelID == 0x3b)
+  if (modelID == DYNAMIC_BOMB)
   {
 	// if bomb is forwards
 	if ((tw->flags & 0x20) == 0)
@@ -321,7 +321,7 @@ LAB_800add14:
       int iVar8 = elapsedTime << 2;
 
 	  // if missile
-      if (modelID == 0x29)
+      if (modelID == DYNAMIC_ROCKET)
 	  {
         iVar8 = elapsedTime << 3;
       }
@@ -338,9 +338,9 @@ LAB_800add14:
     else
 	{
       tw->vel[1] = 0;
-
-	  // DYNAMIC_ROCKET
-      if (modelID == 0x29)
+	  
+	  //missile model
+      if (modelID == DYNAMIC_ROCKET)
 	  {
         VehPhysForce_RotAxisAngle(
 			&inst->matrix,
@@ -380,7 +380,7 @@ LAB_800add14:
 			(
 				(
 					(instDef->ptrInstance != 0) &&
-					(instDef->modelID == 0x70)
+					(instDef->modelID == STATIC_TEETH)
 				)
 			)
 		)
@@ -418,7 +418,7 @@ LAB_800add14:
 	if (hitInst == 0)
 	{
 	  // instance -> model -> modelID is not bomb
-	  if (modelID != 0x3b) {
+	  if (modelID != DYNAMIC_BOMB) {
 LAB_800ae440:
         if (tw->frameCount_DontHurtParent != 0)
 			tw->frameCount_DontHurtParent--;
@@ -445,7 +445,7 @@ LAB_800ae440:
 	  else
 	  {
 		// not a missile
-        if (hitInst->model->id != 0x29)
+        if (hitInst->model->id != DYNAMIC_ROCKET)
 		{
 		  // quit, warpball collisions dont matter
           return;

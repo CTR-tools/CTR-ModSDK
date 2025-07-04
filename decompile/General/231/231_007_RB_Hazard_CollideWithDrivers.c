@@ -48,7 +48,7 @@ struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 		
 		// to be more optimal, just do weaponInst->thread->funcThTick == GenericMine_ThTick
 		if (
-				((unsigned int)modelID - 0x46 < 2) ||	// red or green potion
+				((unsigned int)modelID - STATIC_BEAKER_RED < 2) ||	// red or green potion
 				(modelID == PU_EXPLOSIVE_CRATE) ||						// Nitro
 				(modelID == STATIC_CRATE_TNT) 						// TNT
 			)

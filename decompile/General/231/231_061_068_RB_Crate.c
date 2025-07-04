@@ -14,10 +14,10 @@ void RB_CrateAny_CheckBlockage(struct Thread* crateTh, int hitModelID_cast, stru
 	
 	// if model is on top of crate
 	if(
-		(hitModelID_cast == 6) || // nitro
-		(hitModelID_cast == 0x27) || // tnt
-		(hitModelID_cast == 0x46) || // red beaker
-		(hitModelID_cast == 0x47) // green beaker
+		(hitModelID_cast == PU_EXPLOSIVE_CRATE) || // nitro
+		(hitModelID_cast == STATIC_CRATE_TNT) || // tnt
+		(hitModelID_cast == STATIC_BEAKER_RED) || // red beaker
+		(hitModelID_cast == STATIC_BEAKER_GREEN) // green beaker
 	)
 	{	
 		// prevent crate from growing back
@@ -40,10 +40,10 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 	
 	// if moving explosive
 	if(
-		(hitModelID_cast == 0x3b) || // bomb
-		(hitModelID_cast == 0x29) || // missile
-		(hitModelID_cast == 0x56) || // blue shield
-		(hitModelID_cast == 0x5e)    // green shield
+		(hitModelID_cast == DYNAMIC_BOMB) || // bomb
+		(hitModelID_cast == DYNAMIC_ROCKET) || // missile
+		(hitModelID_cast == DYNAMIC_SHIELD) || // blue shield
+		(hitModelID_cast == DYNAMIC_SHIELD_GREEN)    // green shield
 	)
 	{
 		// get driver that used the weapon
@@ -61,7 +61,7 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 	}
 	
 	// if driver itself
-	else if (hitModelID_cast == 0x18) // DYNAMIC_PLAYER
+	else if (hitModelID_cast == DYNAMIC_PLAYER) // //player model
 	{
 		driver = (struct Driver*)t->object;
 		

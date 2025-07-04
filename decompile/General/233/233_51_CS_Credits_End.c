@@ -17,7 +17,7 @@ void CS_Credits_End()
 	// go to gemstone valley
 	if(creditsBSS->boolAllBlue == 0)
 	{
-		levID = 0x19;
+		levID = GEM_STONE_VALLEY;
 		
 		gGT->gameMode1 |= ADVENTURE_MODE;
 	}
@@ -27,7 +27,7 @@ void CS_Credits_End()
 	{
 		sdata->mainMenuState = 5;
 		
-		levID = 0x40;
+		levID = SCRAPBOOK;
 	}
 	
 	MainRaceTrack_RequestLoad(levID);

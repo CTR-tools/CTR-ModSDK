@@ -83,7 +83,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 	if(type == 0)
 	{
-		int hubID = levelID-0x19;
+		int hubID = levelID - GEM_STONE_VALLEY;
 
 		// gemstone
 		if(hubID == 0)
@@ -96,7 +96,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				// 0x11 - TurboTrack
 
 				struct MetaDataLEV* mdLev =
-					&data.metaDataLEV[0x10+i];
+					&data.metaDataLEV[SLIDE_COLISEUM + i];
 
 				DECOMP_DecalFont_DrawLine(
 					sdata->lngStrings[mdLev->name_LNG],

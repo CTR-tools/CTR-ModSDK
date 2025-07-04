@@ -31,7 +31,7 @@ void DECOMP_GAMEPROG_ResetHighScores(struct GameProgress* gameProg)
 			for(k = 0; k < 6; k++)
 			{
 				characterID = i + j + k;
-				characterID = characterID - 0xD * (characterID/0xD);
+				characterID = characterID - PENTA_PENGUIN * (characterID/PENTA_PENGUIN);
 				
 				entry = &track->scoreEntry[j*6+k];
 				entry->time = 0x8c640;

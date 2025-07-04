@@ -15,7 +15,7 @@ void DECOMP_VehPhysProc_SlamWall_Animate(struct Thread* t, struct Driver* d)
 	// If crashing animation is not finished, quit function
 	if(
 		// oxide has no animation
-		(data.characterIDs[d->driverID] != 0xF) &&
+		(data.characterIDs[d->driverID] != NITROS_OXIDE) &&
 
 		// animation is not over
 		((inst->animFrame+1) < 15)

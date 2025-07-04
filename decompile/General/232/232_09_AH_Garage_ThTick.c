@@ -29,7 +29,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     inst = t->inst;
     drv_inst = gGT->drivers[0]->instSelf;
     levelID = gGT->levelID;
-    hubID = levelID - 0x19;
+    hubID = levelID - GEM_STONE_VALLEY;
 
     // if door is not opening or closing
     if (garage->direction == 0)
@@ -139,7 +139,7 @@ LAB_800aeb6c:
     // If you're not in Gemstone Valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - 0x1a) * 4];
+        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
@@ -189,7 +189,7 @@ LAB_800aec34:
 	uVar8 = 0;
 
     // if this is gemstone valley
-    if (levelID == 0x19)
+    if (levelID == GEM_STONE_VALLEY)
     {
         // if hint is not unlocked "need 4 keys for oxide"
         if ((sdata->advProgress.rewards[3] & 0x4000000) == 0)
@@ -223,7 +223,7 @@ LAB_800aede8:
     SPS->Input1.pos[2] = inst->instDef->pos[2];
     SPS->Input1.hitRadius = 0x300;
     SPS->Input1.hitRadiusSquared = 0x90000;
-    SPS->Input1.modelID = 0x73;
+    SPS->Input1.modelID = STATIC_PINGARAGE;
 
     SPS->Union.ThBuckColl.thread = t;
     SPS->Union.ThBuckColl.funcCallback = DECOMP_AH_Garage_Open;

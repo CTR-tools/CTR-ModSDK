@@ -8,8 +8,8 @@ void DECOMP_QueueLoadTrack_MenuProc(struct RectMenu* menu)
   // set P3 to N Tropy, and P4 to N Oxide
   if ((gGT->gameMode1 & TIME_TRIAL) != 0)
   {
-    data.characterIDs[2] = 0xc;
-    data.characterIDs[3] = 0xf;
+    data.characterIDs[2] = N_TROPY;
+    data.characterIDs[3] = NITROS_OXIDE;
   }
 
   // If you're in Adventure Mode, 

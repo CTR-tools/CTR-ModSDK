@@ -79,12 +79,12 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
   }
 
   // not DYNAMIC_ROCKET
-  if (model != 0x29)
+  if (model != DYNAMIC_ROCKET)
   {
-    if (model < 0x2a)
+    if (model < DYNAMIC_BIGROCKET)
     {
       // not nitro and not STATIC_CRATE_TNT
-      if ((model != 6) && (model != 0x27))
+      if ((model != PU_EXPLOSIVE_CRATE) && (model != STATIC_CRATE_TNT))
       {
         return;
       }
@@ -92,7 +92,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
     else
     {
       // return if anything that isn't beakers
-      if ((0x47 < model) || (model < 0x46)) return;
+      if ((STATIC_BEAKER_GREEN < model) || (model < STATIC_BEAKER_RED)) return;
     }
   }
 

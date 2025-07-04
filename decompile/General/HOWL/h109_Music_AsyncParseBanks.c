@@ -134,7 +134,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 							(sdata->bankLoad54 != 0) &&
 
 							// if characterID is part of original 8
-							(data.characterIDs[sdata->bankCount] < 8)
+							(data.characterIDs[sdata->bankCount] < PINSTRIPE)
 						)
                     {
 						// skip load bank
@@ -174,7 +174,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 				if ((sdata->bankLoad54 != 0) ||
 	
 					// characterID is special character
-					(7 < data.characterIDs[0]))
+					(PURA < data.characterIDs[0]))
 				{
 					goto LAB_8002e178;
 				}
@@ -188,7 +188,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 	
 			// if no podium reward, or all podium banks
 			// are loaded, then go to next "case 3:" stage
-			if (gGT->podiumRewardID == 0) break;
+			if (gGT->podiumRewardID == NOFUNC) break; //0
 			if (sdata->bankPodiumStage >= 3) break;
 			
 			unsigned char* podiumIndex = &gGT->podium_modelIndex_First;

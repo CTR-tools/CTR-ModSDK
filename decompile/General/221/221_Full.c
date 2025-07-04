@@ -30,6 +30,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	int levelID;
 	int elapsedFrames;
 	
+	unsigned char prize = 0x6f;
+	
 	gGT = sdata->gGT;
 	levelID = gGT->levelID;
 	driver = gGT->drivers[0];
@@ -38,15 +40,15 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// Dingo Canyon gives different item depending on 
 	// camera, Blizz Bluff gives Skull Rock token, and
 	// Dragon Mines gives purple gem
-	if(levelID == 0) bitIndex = gGT->pushBuffer[0].pos[2];
-	else if(levelID == 1) bitIndex = 0;
-	else if(levelID == 2) bitIndex = -1;
+	if(levelID == DINGO_CANYON) bitIndex = gGT->pushBuffer[0].pos[2];
+	else if(levelID == DRAGON_MINES) bitIndex = 0;
+	else if(levelID == BLIZZARD_BLUFF) bitIndex = -1;
 	
 	// default logic
-	else bitIndex = hub[gGT->levelID-0x12];
+	else bitIndex = hub[gGT->levelID-TURBO_TRACK]; //0x12
 	
 	// first purple token at 0x6f
-	bitIndex += 0x6f;
+	bitIndex += prize;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;

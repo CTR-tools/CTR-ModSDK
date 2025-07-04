@@ -142,7 +142,7 @@ void CS_Camera_ThTick_Podium(struct Thread *th)
       gGT->gameMode1 = gGT->gameMode1 & ~(ADVENTURE_ARENA) | MAIN_MENU;
 
       // podium reward
-      gGT->podiumRewardID = 0;
+      gGT->podiumRewardID = NOFUNC; //0
 
       // remove podium scene bit
       gGT.gameMode2 &= ~(4);
@@ -221,7 +221,7 @@ void CS_Camera_ThTick_Podium(struct Thread *th)
         CDSYS_XAPlay(1, hintID);
 
         // reset podium reward
-        gGT->podiumRewardID = 0;
+        gGT->podiumRewardID = NOFUNC; //0
         return;
       }
 
@@ -254,7 +254,7 @@ void CS_Camera_ThTick_Podium(struct Thread *th)
     // or else the function would have returned
 
     // podium reward
-    gGT->podiumRewardID = 0;
+    gGT->podiumRewardID = NOFUNC; //0
     // remove adventure hub bit
     gGT->gameMode1 &= ~(ADVENTURE_ARENA);
     // remove podium bit

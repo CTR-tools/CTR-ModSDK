@@ -49,7 +49,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     garage->cooldown = 0;
 
     // if it is Oxide's Door
-    if (inst->model->id == 0x77)
+    if (inst->model->id == STATIC_OXIDEGARAGE)
     {
         garage->garageTopInst = NULL;
     }
@@ -59,7 +59,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     {
         // make a "garagetop" to make door appear to roll up
 
-        garageTop = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x8e],0, t);
+        garageTop = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_GARAGETOP],0, t);
 
         // copy matrix from one instance to the other
         *(int*)&garageTop->matrix.m[0][0] = *(int*)&inst->matrix.m[0][0];
@@ -90,7 +90,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     if (levelID == GEM_STONE_VALLEY)
     {
         // ripper roo boss key
-        bitIndex = 0x63;
+        bitIndex = STATIC_KEY;
         // check four boss keys
         for (i = 0; i < 4; i++)
         {
@@ -104,7 +104,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     // if not gemstone valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - 0x1a) * 4];
+        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
@@ -119,7 +119,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     if (bossIsOpen)
     {
         // check if boss was NOT beaten on this hub (levelID - 0x19)
-        bitIndex = data.BeatBossPrize[levelID - 0x19];
+        bitIndex = data.BeatBossPrize[levelID - GEM_STONE_VALLEY];
         t->modelIndex = (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0) ? 2 : 1;
     }
 

@@ -23,17 +23,17 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	// because the arrays didnt actually change per warppad
 
 	//this was re-rewritten because the original rewrite had incorrect behavior
-	if (modelID != 0x62) //if not trophy (no specLight on trophy)
+	if (modelID != STATIC_TROPHY) //if not trophy (no specLight on trophy)
 	{
-		if (modelID == 0x5f) //gem
+		if (modelID == STATIC_GEM) //gem
 			specLight = &D232.specLightGem[0];
 		else
 		{
-			if (modelID == 0x61) //relic
+			if (modelID == STATIC_RELIC) //relic
 				specLight = &D232.specLightRelic[0];
 			else
 			{
-				if (modelID == 0x7d) //token
+				if (modelID == STATIC_TOKEN) //token
 					specLight = &D232.specLightToken[0];
 				else
 					goto SpinReward;

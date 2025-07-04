@@ -16,6 +16,9 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	int* arrTokenCount;
 	struct Instance* newInst;
 	
+	//for human reading purposes
+	unsigned char ADV_CUP = 100;
+	
 	gGT = sdata->gGT;
 	
     t =	
@@ -55,7 +58,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	inst->flags |= 0x80;
 		
 	warppadObj = t->object;
-	warppadObj->levelID = 0;
+	warppadObj->levelID = 0; //this is dingo canyon
 	warppadObj->boolEnteredWarppad = 0;
 	warppadObj->framesWarping = 0;
 	
@@ -80,7 +83,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	unlockItem_numNeeded = -1;
 	
 	// Trophy Track
-	if (levelID < 0x10)
+	if (levelID < SLIDE_COLISEUM)
 	{
 		// optimization idea:
 		// instead of data.metaDataLEV[levelID].hubID
@@ -92,7 +95,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 GetKeysRequirement:
 			
 			// keys needed to unlock track again
-			unlockItem_modelID = 99;
+			unlockItem_modelID = STATIC_KEY;
 			unlockItem_numOwned = gGT->currAdvProfile.numKeys;
 			unlockItem_numNeeded = D232.arrKeysNeeded[data.metaDataLEV[levelID].hubID];
 		}
@@ -101,26 +104,26 @@ GetKeysRequirement:
 		else
 		{
 			// number trophies needed to open
-			unlockItem_modelID = 0x62;
+			unlockItem_modelID = STATIC_TROPHY;
 			unlockItem_numOwned = gGT->currAdvProfile.numTrophies;
 			unlockItem_numNeeded = data.metaDataLEV[levelID].numTrophiesToOpen;
 		}
 	}
 	
 	// Slide Col
-	else if (levelID == 0x10)
+	else if (levelID == SLIDE_COLISEUM)
 	{
 		// number relics needed to open
-		unlockItem_modelID = 0x61;
+		unlockItem_modelID = STATIC_RELIC;
 		unlockItem_numOwned = gGT->currAdvProfile.numRelics;
 		unlockItem_numNeeded = 10;
 	}
 	
 	// Turbo Track
-	else if (levelID == 0x11)
+	else if (levelID == TURBO_TRACK)
 	{
 		// number gems needed to open
-		unlockItem_modelID = 0x5f;
+		unlockItem_modelID = STATIC_GEM;
 		unlockItem_numNeeded = 5;
 		
 		// count number of gems owned
@@ -131,7 +134,7 @@ GetKeysRequirement:
 	}
 	
 	// battle maps
-	else if (levelID < 0x19)
+	else if (levelID < GEM_STONE_VALLEY)
 	{
 		goto GetKeysRequirement;
 	}
@@ -140,11 +143,11 @@ GetKeysRequirement:
 	else
 	{
 		// number tokens needed to open
-		unlockItem_modelID = 0x7d;
+		unlockItem_modelID = STATIC_TOKEN;
 		unlockItem_numNeeded = 4;
 		
 		arrTokenCount = &gGT->currAdvProfile.numCtrTokens.red;
-		unlockItem_numOwned = arrTokenCount[levelID-100];
+		unlockItem_numOwned = arrTokenCount[levelID - ADV_CUP];
 	}
 	
 	// if unlocked
@@ -153,9 +156,9 @@ GetKeysRequirement:
 		warppadObj->digit1s = 0;
 		
 		// if beam model exists
-		if(gGT->modelPtr[0x7B] != 0)
+		if(gGT->modelPtr[STATIC_BEAM] != 0)
 		{
-			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7B], 0, t);
+			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_BEAM], 0, t);
 				
 			// copy matrix
 			*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
@@ -173,11 +176,11 @@ GetKeysRequirement:
 		}
 		
 		// if spiral ring exists
-		if(gGT->modelPtr[0x7C] != 0)
+		if(gGT->modelPtr[STATIC_BOTTOMRING] != 0)
 		{
 			for(i = 0; i < 2; i++)
 			{
-				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7C], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_BOTTOMRING], 0, t);
 					
 				// copy matrix
 				*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
@@ -213,7 +216,7 @@ GetKeysRequirement:
 			warppadObj->spinRot_Wisp[i][2] = 0;
 		}
 	
-		if(levelID < 0x10)
+		if(levelID < SLIDE_COLISEUM)
 		{
 			// unlocked all
 			t->modelIndex = 2;
@@ -224,7 +227,7 @@ GetKeysRequirement:
 				// open for trophy
 				t->modelIndex = 1;
 				
-				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x62], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_TROPHY], 0, t);
 				
 				newInst->scale[0] = 0x2800;
 				newInst->scale[1] = 0x2800;
@@ -243,7 +246,7 @@ GetKeysRequirement:
 					t->modelIndex = 3;
 				}
 BattleTrack:
-				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_TOKEN], 0, t);
 				
 				// specular lighting
 				newInst->flags |= 0x30000;
@@ -280,18 +283,18 @@ BattleTrack:
 SlideColTurboTrack:
 			
 			// if relic not owned
-			if(levelID < 0x12) // check this cause of "goto BattleTrack"
+			if(levelID < NITRO_COURT) // check this cause of "goto BattleTrack"
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
 			{
 				// SlideCol/TurboTrack
-				if(levelID>=0x10)
+				if(levelID>=SLIDE_COLISEUM)
 					t->modelIndex = 4;
 				
 				// open for token/relic
 				else if(t->modelIndex != 1)
 					t->modelIndex = 3;
 				
-				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_RELIC], 0, t);
 				
 				// relic blue
 				newInst->colorRGBA = 0x20a5ff0;
@@ -325,7 +328,7 @@ SlideColTurboTrack:
 		}
 		
 		// slide col, turbo track
-		else if(levelID < 0x12)
+		else if(levelID < NITRO_COURT)
 		{
 			// already unlocked
 			t->modelIndex = 2;
@@ -334,9 +337,9 @@ SlideColTurboTrack:
 		}
 		
 		// battle tracks
-		else if(levelID < 0x19)
+		else if(levelID < GEM_STONE_VALLEY)
 		{
-			i = R232.battleTrackArr[levelID - 0x12] + 0x6f;
+			i = R232.battleTrackArr[levelID - NITRO_COURT] + 0x6f;
 			
 			// already unlocked
 			t->modelIndex = 2;
@@ -354,7 +357,7 @@ SlideColTurboTrack:
 		else
 		{	
 			// bit index of gem
-			i = (levelID - 100) + 0x6a;
+			i = (levelID - ADV_CUP) + 0x6a;
 	
 			// if gem is already unlocked, quit
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
@@ -368,12 +371,12 @@ SlideColTurboTrack:
 			// rainbow color
 			t->modelIndex = 4;
 			
-			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
+			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_GEM], 0, t);
 				
 			// specular lighting
 			newInst->flags |= 0x20000;
 
-			i = levelID-100;
+			i = levelID - ADV_CUP;
 		
 			// token color
 			newInst->colorRGBA =
@@ -431,13 +434,13 @@ SlideColTurboTrack:
 	newInst->scale[2] = 0x2000;
 	
 	// no specular for trophy
-	if(unlockItem_modelID != 0x62) 
+	if(unlockItem_modelID != STATIC_TROPHY) 
 	{
 		// specular lighting
 		newInst->flags |= 0x20000;
 		
 		// relic
-		if(unlockItem_modelID == 0x61)
+		if(unlockItem_modelID == STATIC_RELIC)
 		{
 			// Relic blue color
 			newInst->colorRGBA = 0x20a5ff0;
@@ -450,7 +453,7 @@ SlideColTurboTrack:
 		}
 		
 		// Key
-		else if(unlockItem_modelID == 99)
+		else if(unlockItem_modelID == STATIC_KEY)
 		{
 			// Key color
 			newInst->colorRGBA = 0xdca6000;
@@ -464,7 +467,7 @@ SlideColTurboTrack:
 		}
 		
 		// Gem
-		else if(unlockItem_modelID == 0x5f)
+		else if(unlockItem_modelID == STATIC_GEM)
 		{
 			// dont set color, that gets set in ThTick
 			
@@ -479,7 +482,7 @@ SlideColTurboTrack:
 		// assume token
 		else
 		{
-			i = levelID-100;
+			i = levelID - ADV_CUP;
 			
 			// token color
 			newInst->colorRGBA =
@@ -505,7 +508,7 @@ SlideColTurboTrack:
 	// ====== "X" ========
 	
 	// WPIS_CLOSED_X
-	newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x6F], 0, t);
+	newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_BIGX], 0, t);
 	
 	// copy matrix
 	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
@@ -531,7 +534,7 @@ SlideColTurboTrack:
 	if(warppadObj->digit10s != 0)
 	{
 		// WPIS_CLOSED_10S
-		newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+		newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_BIG1], 0, t);
 		
 		// copy matrix
 		*(int*)((int)&newInst->matrix + 0x0) = 0x1000;

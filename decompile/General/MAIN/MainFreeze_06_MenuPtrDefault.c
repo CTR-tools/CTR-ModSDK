@@ -2,12 +2,14 @@
 
 void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 {
-	int levID = 0;
+	int levID = 0; //dingo canyon
 	u_short stringID;
 	u_int gameMode;
 
 	struct GameTracker* gGT = sdata->gGT;
 	gameMode = gGT->gameMode1;
+	
+	unsigned char ADV_CUP = 100;
 
 	// if you have not waited 5 frames since the game was paused then quit
 	if (gGT->cooldownfromPauseUntilUnpause != 0) return;
@@ -216,7 +218,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 				sdata->Loading.OnBegin.RemBitsConfig0 |= 0x1c000000;
 
 				// Level ID
-				gGT->levelID = gGT->cup.cupID + 100;
+				gGT->levelID = gGT->cup.cupID + ADV_CUP;
 			}
 		default:
 			break;

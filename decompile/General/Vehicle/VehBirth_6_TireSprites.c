@@ -21,7 +21,7 @@ void DECOMP_VehBirth_TireSprites(struct Thread *t)
 
     if (
 			// if character ID is oxide
-			(data.characterIDs[driverID] == 0xf) &&
+			(data.characterIDs[driverID] == NITROS_OXIDE) &&
 			(gGT->levelID != MAIN_MENU_LEVEL)
 		)
     {

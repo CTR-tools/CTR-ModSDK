@@ -23,11 +23,11 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
         return;
 
     // param_2 is character ID,
-    if (15 < param_2)
+    if (NITROS_OXIDE < param_2)
         return;
 
     // param_3 is character ID (or 16 for null)
-    if (16 < param_3)
+    if (NITROS_OXIDE + 1 < param_3)
         return;
 
     if ((gGT->gameMode1 & END_OF_RACE) != 0)

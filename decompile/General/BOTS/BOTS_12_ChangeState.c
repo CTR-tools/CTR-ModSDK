@@ -27,7 +27,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 			driverVictim->botData.unk5bc.ai_turboMeter = 0;
 
 			if (
-					(data.characterIDs[driverVictim->driverID] != 0xf) || 
+					(data.characterIDs[driverVictim->driverID] != NITROS_OXIDE) || 
 					((driverVictim->actionsFlagSet & 1) != 0)
 				)
 			{
@@ -37,7 +37,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 
 				int newSpeed;
 
-				if (data.characterIDs[driverVictim->driverID] == 0xf)
+				if (data.characterIDs[driverVictim->driverID] == NITROS_OXIDE)
 				{
 					newSpeed = driverVictim->botData.unk5bc.ai_speedLinear >> 1;
 				}
@@ -57,7 +57,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 
 		if (damageType == 4)
 		{
-			if (driverVictim->instSelf->thread->modelIndex == 0x18 && driverVictim->burnTimer == 0)
+			if (driverVictim->instSelf->thread->modelIndex == DYNAMIC_PLAYER && driverVictim->burnTimer == 0)
 			{
 				OtherFX_Play(0x69, 1);
 			}
@@ -97,7 +97,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 	case 3:
 		driverVictim->botData.unk5bc.ai_turboMeter = 0;
 
-		if (driverVictim->instSelf->thread->modelIndex == 0x18 && driverVictim->botData.unk5bc.ai_squishCooldown == 0)
+		if (driverVictim->instSelf->thread->modelIndex == DYNAMIC_PLAYER && driverVictim->botData.unk5bc.ai_squishCooldown == 0)
 		{
 			OtherFX_Play(0x5a, 1);
 		}

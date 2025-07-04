@@ -42,7 +42,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   // ======== Next one ===========
   
-  currInst = INSTANCE_Birth3D(gGT->modelPtr[0x2b],0,t);
+  currInst = INSTANCE_Birth3D(gGT->modelPtr[STATIC_WARPEDBURST],0,t);
   
   burst[2] = (int)currInst;
   currInst->unk50 += -2;
@@ -65,7 +65,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   
   // ======= Next One ===========
   
-  currInst = INSTANCE_Birth3D(gGT->modelPtr[0x44],0,t);
+  currInst = INSTANCE_Birth3D(gGT->modelPtr[STATIC_SHOCKWAVE_RED],0,t);
   
   burst[0] = (int)currInst;
   currInst->unk50 += -2;
@@ -136,7 +136,7 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   int modelID = weaponInst->model->id;
   
   // missile
-  if (modelID == 0x29) 
+  if (modelID == DYNAMIC_ROCKET) 
   {
 	// hitRadius and hitRadiusSquared
     sps->Input1.hitRadius = 0x80;

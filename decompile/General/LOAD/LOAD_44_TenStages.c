@@ -175,7 +175,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				gGT->gameMode2 |= LEV_SWAP;
 				
 				#ifdef USE_HIGHMP
-				if(gGT->podiumRewardID == 0)
+				if(gGT->podiumRewardID == NOFUNC) //0
 				{
 					// get CurrGame from main menu's NextGame
 					gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
@@ -323,7 +323,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// advHub, 232
 			else if (
 						(levelID <= CITADEL_CITY) &&
-						(gGT->podiumRewardID == 0)
+						(gGT->podiumRewardID == NOFUNC) //0
 				)
 			{
 				ovrRegion3 = 2;
@@ -666,7 +666,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				break;
 			
 			// podium reward
-			if (gGT->podiumRewardID != 0)
+			if (gGT->podiumRewardID != NOFUNC) //0
 			{			
 				// Set Pack of the hub you're NOT on
 				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
@@ -711,7 +711,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				
 				// TAWNA
 				fileIndex = BI_DANCETAWNAGIRL + iVar9 + 
-					(gGT->podium_modelIndex_tawna - 0x8f) * 2;
+					(gGT->podium_modelIndex_tawna - STATIC_TAWNA1) * 2;
 
 				// add TAWNA to loading queue
 				DECOMP_LOAD_AppendQueue(
@@ -719,7 +719,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					(void*)&data.podiumModel_tawna, drmCb);
 
 				// if 0x7e+5 (dingo)
-				if (gGT->podium_modelIndex_First == 0x83)
+				if (gGT->podium_modelIndex_First == STATIC_DINGODANCE)
 				{
 					// add "DingoFire" to loading queue
 					DECOMP_LOAD_AppendQueue(
@@ -743,7 +743,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if
 			(
 				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(gGT->podiumRewardID != 0)
+				(gGT->podiumRewardID != NOFUNC) //0
 			)
 			{
 				struct Model** modelPtrArr = 
@@ -778,7 +778,7 @@ LAB_800346b0:
 				uVar16 = 6;
 
 				// podium reward
-				if (gGT->podiumRewardID == 0)
+				if (gGT->podiumRewardID == NOFUNC) //0
 				{
 					uVar16 = 5;
 				}

@@ -49,10 +49,10 @@ int DECOMP_LOAD_Robots2P(int p1, int p2)
 	#else	
 	
 	i = 7;
-	data.characterIDs[2] = 0xA;
-	data.characterIDs[3] = 0x9;
-	data.characterIDs[4] = 0xB;
-	data.characterIDs[5] = 0x8;
+	data.characterIDs[2] = RIPPER_ROO;
+	data.characterIDs[3] = PAPU_PAPU;
+	data.characterIDs[4] = KOMODO_JOE;
+	data.characterIDs[5] = PINSTRIPE;
 	
 	#endif
 	
