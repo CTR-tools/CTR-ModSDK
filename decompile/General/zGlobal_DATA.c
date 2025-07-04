@@ -7591,9 +7591,10 @@ struct Data data =
 		.value[4] = h
 
     
-	//every engine have a stat, usa retail have 4 engines (0-3)
+	//each line is an stat and each stat have a value per engine, usa retail have 4 engines (0-3)
 	//decomp, PAL and NTSC-J have 5 engines (0-4)
-	//stats starts on the 3rd param
+	//stats starts on the 3rd param after size param e.g
+	//offset, size, stat(engine == 0), stat(engine == 1), stat(engine == 2) etc
 	.metaPhys =
 	{
 		{PHYSWRAP(0x416, 2, 900, 900, 900, 900, 900)}, //gravity stats
