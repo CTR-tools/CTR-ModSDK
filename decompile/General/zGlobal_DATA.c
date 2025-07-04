@@ -7607,7 +7607,7 @@ struct Data data =
 		{PHYSWRAP(0x424, 2, 120, 120, 120, 120, 120)},
 		{PHYSWRAP(0x426, 2, 120, 120, 120, 120, 120)},
 		{PHYSWRAP(0x428, 2, 480, 544, 448, 512, 544)}, //accel related stats
-		{PHYSWRAP(0x42a, 2, 1152, 1152, 1152, 1152, 1152)}, //accel related stats
+		{PHYSWRAP(0x42a, 2, 1152, 1152, 1152, 1152, 1152)},
 		{PHYSWRAP(0x42c, 2, 13140, 13520, 13900, 12950, 13900)}, //speed related stats
 		{PHYSWRAP(0x42e, 2, 14640, 15020, 15400, 14450, 15400)}, // speed related stats
 		{PHYSWRAP(0x430, 2, 2048, 2048, 2048, 2048, 2048)},
