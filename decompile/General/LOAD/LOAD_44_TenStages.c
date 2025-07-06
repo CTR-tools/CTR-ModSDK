@@ -144,7 +144,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// ========== Set numPlyr ================
 
 
-			if (levelID <= TURBO_TRACK)
+			if (levelID <= LAB_BASEMENT)
 			{
 				// get CurrGame from main menu's NextGame
 				gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
