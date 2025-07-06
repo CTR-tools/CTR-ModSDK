@@ -15,7 +15,7 @@ void OVR_Region3();
 void DECOMP_MEMPACK_Init(int ramSize)
 {
 
-	unsigned int startPtr;
+	char* startPtr;
 	int packSize;
 
 #ifdef REBUILD_PC
@@ -53,8 +53,8 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	
 	// Original game allocated 0x800 to stack,
 	// but now Stack is relocated to kernel memory
-	startPtr = ((u_int)OVR_Region3 + Aligned231);
-	packSize = ramSize - (int)(startPtr & 0xffffff);
+	startPtr = (char*)((u_int)OVR_Region3 + Aligned231);
+	packSize = ramSize - (int)((int)startPtr & 0xffffff);
 #endif
 
 	DECOMP_MEMPACK_NewPack(startPtr, packSize);

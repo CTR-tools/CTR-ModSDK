@@ -1,3 +1,4 @@
+dcache = 0x1f800000;
 rdata = 0x80010000;
 rdata_free = 0x800100cc;
 BOTS_SetGlobalNavData = 0x800123e0;
@@ -74,6 +75,7 @@ COLL_FIXED_QUADBLK_LoadScratchpadVerts = 0x8001f7f0;
 COLL_MOVED_TRIANGL_TestPoint = 0x8001fc40;
 COLL_MOVED_QUADBLK_TestTriangles = 0x80020064;
 COLL_MOVED_BSPLEAF_TestQuadblocks = 0x800202a8;
+COLL_MOVED_FindScrub = 0x80020334;
 COLL_MOVED_PlayerSearch = 0x80020410;
 COLL_MOVED_ScrubImpact = 0x80020c58;
 CTR_Box_DrawWirePrims = 0x80021500;

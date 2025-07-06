@@ -1658,7 +1658,7 @@ struct Data
 	int driverModelExtras[3]; //maybe should be `struct Model**[3]`
 
 	// 80083a1c
-	int podiumModel_firstPlace;
+	struct Model* podiumModel_firstPlace;
 	int podiumModel_secondPlace;
 	int podiumModel_thirdPlace;
 	int podiumModel_tawna;
@@ -3453,8 +3453,8 @@ struct sData
 		// 8008d568
 		// Normal flags are in registers,
 		// while 2P flags are from RAM
-		u_int textFlags1_2P;
-		u_int textFlags2_2P;
+		short* textFlags1_2P;
+		short* textFlags2_2P;
 
 	} Battle_EndOfRace;
 
@@ -4510,7 +4510,7 @@ struct sData
 	#if BUILD == SepReview
 	char SpuDecodedBuf[0x1000];
 	#elif BUILD >= UsaRetail
-	char SpuDecodedBuf[0x800];
+	char SpuDecodedBuf[0x800]; //maybe should be short[0x400]
 	#endif
 
 	// 8008E528
@@ -5058,11 +5058,17 @@ extern struct sData sdata_static;
 // 0x8008d668 - 0x8009f6fc
 extern struct BSS bss;
 
+// represents 0x1f800000 1kb dcache.
+extern struct DCACHE dcache_static;
+
 #ifndef REBUILD_PC
 // optimal use for modding
 register struct sData* sdata asm("$gp");
+//struct DCACHE* dcache = &dcache_static;
+#define dcache (&dcache_static)
 #else
 struct sData* sdata = &sdata_static;
+struct DCACHE* dcache = &dcache_static;
 #endif
 
 // OVR1

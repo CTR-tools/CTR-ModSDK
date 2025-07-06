@@ -264,6 +264,7 @@ common, 233, CS_Credits_End, 0x0,                                    General/233
 // ====================================================================================================================
 common, exe, data, 0x0,                                  General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0,                          General/zGlobal_SDATA.c
+common, exe, dcache, 0x0,                                General/zGlobal_DCACHE.c
 
 // ====================================================================================================================
 // BOTS (stubbed for this file + files created)
@@ -361,7 +362,7 @@ common, exe, COLL_FIXED_BotsSearch, 0x0,                   	General/COLL/COLL_03
 //common, exe, COLL_MOVED_TRIANGL_TestPoint, 0x0,          	General/COLL/COLL_17_MOVED_TRIANGL_TestPoint.c //TODO
 //common, exe, COLL_MOVED_QUADBLK_TestTriangles, 0x0,      	General/COLL/COLL_18_MOVED_QUADBLK_TestTriangles.c //over budget, but assumed working
 //common, exe, COLL_MOVED_BSPLEAF_TestQuadblocks, 0x0,     	General/COLL/COLL_19_MOVED_BSPLEAF_TestQuadblocks.c //over budget, but assumed working
-//common, exe, COLL_MOVED_FindScrub, 0x0,                  	General/COLL/COLL_20_MOVED_FindScrub.c //TODO
+//common, exe, COLL_MOVED_FindScrub, 0x0,                  	General/COLL/COLL_20_MOVED_FindScrub.c //over budget, needs testing
 //common, exe, COLL_MOVED_PlayerSearch, 0x0,               	General/COLL/COLL_21_MOVED_PlayerSearch.c //TODO
 //common, exe, COLL_MOVED_ScrubImpact, 0x0,                	General/COLL/COLL_22_MOVED_ScrubImpact.c //TODO
 

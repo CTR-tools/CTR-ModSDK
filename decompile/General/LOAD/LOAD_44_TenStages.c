@@ -682,7 +682,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// podium first place
 				u_char* ptrIndexArr = &gGT->podium_modelIndex_First;
-				int* ptrModelPtrArr = &data.podiumModel_firstPlace;
+				struct Model** ptrModelPtrArr = &data.podiumModel_firstPlace;
 				int baseIndexPM = BI_DANCEMODELWIN;
 
 				// Fix for Oxide (faster than OG code that does nothing)
@@ -691,7 +691,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					baseIndexPM = BI_DANCEMODELLOSE;
 				
 				int fileIndex;
-				int drmCb = DECOMP_LOAD_DramFileCallback;
+				void (*drmCb)(struct LoadQueueSlot*) = DECOMP_LOAD_DramFileCallback;
 
 				// Loop through 3 podium models
 				for(int i = 0; i < 3; i++)

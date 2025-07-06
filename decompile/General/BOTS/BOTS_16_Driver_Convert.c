@@ -32,7 +32,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 		
 		// If all 3 are checked, quit
 		if (navPathIndex == initialNavPathIndex)
-			return NULL;
+			return;
 	}
 
 	memset(&d->botData, 0, sizeof(struct BotData));

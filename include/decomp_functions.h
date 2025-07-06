@@ -908,3 +908,7 @@ void DECOMP_BOTS_Killplane(struct Thread* botThread);
 void DECOMP_COLL_FIXED_BotsSearch(short* posCurr, short* posPrev, struct ScratchpadStruct* sps);
 void DECOMP_BOTS_LevInstColl(struct Thread* param_1);
 void DECOMP_CS_LoadBoss(struct BossCutsceneData* bcd);
+void DECOMP_LOAD_Hub_Main(struct BigHeader* bigfilePtr);
+void DECOMP_LOAD_Hub_ReadFile(struct BigHeader* bigfilePtr, int levID, int packID);
+void DECOMP_LOAD_Hub_SwapNow(void);
+void DECOMP_COLL_MOVED_FindScrub(struct QuadBlock* quadblock, int triangleID, struct ScratchpadStructExtended* spse);

@@ -2,7 +2,6 @@
 
 void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
-int CS_Thread_Init(u_int, char*, short *, short, u_int);
 void CS_Camera_ThTick_Podium(int param_1);
 
 void DECOMP_CS_Podium_FullScene_Init()

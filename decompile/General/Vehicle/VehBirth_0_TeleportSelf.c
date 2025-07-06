@@ -184,7 +184,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 		#endif
 
         // get coords where driver based on driver order (0-7)
-        posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
+        posRot = (struct PosRot*)&level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
 		rotArr = &posRot->rot[0];
 		rotDeltaY = 0x400;
 	}
@@ -234,7 +234,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     sps->Union.QuadBlockColl.searchFlags = (gGT->numPlyrCurrGame > 3) ? 2 : 0;
     sps->ptr_mesh_info = level1->ptr_mesh_info;
 
-    COLL_SearchBSP_CallbackQUADBLK(&posTop[0], &posBottom[0], sps, 0);
+    COLL_SearchBSP_CallbackQUADBLK(posTop, posBottom, sps, 0);
 
     // if collision was not found
     if (sps->boolDidTouchQuadblock == 0)

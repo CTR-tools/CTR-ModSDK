@@ -39,17 +39,16 @@ void DECOMP_LOAD_NextQueuedFile()
 	// BEFORE calling ReadFile, which may change it
 	int* prevValue = curr->ptrDestination;
 	
-	int forceSetAddr = 0;
+	int* forceSetAddr = (int*)0;
 	if ((curr->flags & LT_SETADDR) != 0)
 		forceSetAddr = prevValue;
 	
 	DECOMP_LOAD_ReadFile(0,
 		curr->flags | LT_ASYNC,
-		curr->subfileIndex, forceSetAddr);
+		curr->subfileIndex, (void*)forceSetAddr);
 		
 	if ((curr->flags & LT_GETADDR) != 0)
 	{
-		*prevValue = curr->ptrDestination;
-		*prevValue = *prevValue + 4;
+		*prevValue = (int)curr->ptrDestination + 4;
 	}
 }

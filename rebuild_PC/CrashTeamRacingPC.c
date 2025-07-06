@@ -73,6 +73,7 @@ typedef enum {
 #include "../rebuild_PS1/main.c"
 #include "../decompile/General/zGlobal_DATA.c"
 #include "../decompile/General/zGlobal_SDATA.c"
+#include "../decompile/General/zGlobal_DCACHE.c"
 
 // ======= PC-Specific Code =============
 

@@ -12,12 +12,12 @@ void DECOMP_LOAD_Callback_PatchMem()
 	// it loads one ReadFile for PtrMap with AllocHighMem
 	
 	// that's why patchPtr is here
-	patchPtr = sdata->PatchMem_Ptr;
+	patchPtr = (char*)sdata->PatchMem_Ptr;
 	patchStart = &patchPtr[4];
 	patchSize = *(int*)&patchPtr[0];
 	patchNum = patchSize >> 2;
 	
-	DECOMP_LOAD_RunPtrMap((int)sdata->ptrLevelFile, (int*)patchStart, patchNum);
+	DECOMP_LOAD_RunPtrMap((char*)sdata->ptrLevelFile, (int*)patchStart, patchNum);
 	
 	return;
 }

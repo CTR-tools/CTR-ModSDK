@@ -74,7 +74,7 @@ u_int COLL_FIXED_INSTANC_TestPoint(struct ScratchpadStruct* param_1, struct BSP*
 void COLL_FIXED_BSPLEAF_TestInstance(struct BSP* node, struct ScratchpadStruct *sps);
 void COLL_FIXED_BotsSearch(short* posCurr, short* posPrev, short* param_3);
 void COLL_FIXED_PlayerSearch(struct Thread* t, struct Driver* d);
-void COLL_SearchBSP_CallbackQUADBLK(u_int* posTop, u_int* posBottom, struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
+void COLL_SearchBSP_CallbackQUADBLK(short posTop[3], short posBottom[3], struct ScratchpadStruct* sps, int param_4); //posTop/posButtom may be backwards, also may have 6 params not 4???
 void COLL_SearchBSP_CallbackPARAM(struct BSP* param_1, struct BoundingBox* bbox, void (*callback)(struct BSP*, struct ScratchpadStruct*), short* param_4); //4th param might be `struct ScratchpadStruct*`
 u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001ef1c();
@@ -983,7 +983,7 @@ void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
 //VehPhysCrash_AI()
 //VehPhysCrash_Attack()
 void VehPhysCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-void VehPhysForce_ConvertSpeedToVec(struct Driver* d, short* velArr, int x);
+void VehPhysForce_ConvertSpeedToVec(struct Driver* d, Vec3* velArr, int x);
 //VehPhysForce_OnGravity()
 void VehPhysForce_OnApplyForces(struct Thread* t, struct Driver* d);
 void VehPhysForce_CollideDrivers(struct Thread* t, struct Driver* d);
@@ -1339,3 +1339,4 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
 void EngineSound_NearestAIs(void);
 void VehStuckProc_Tumble_PhysLinear(struct Thread* t, struct Driver* d);
+struct Thread* CS_Thread_Init(short modelID, char* name, short* param_3, short param_4, struct Thread* parent);

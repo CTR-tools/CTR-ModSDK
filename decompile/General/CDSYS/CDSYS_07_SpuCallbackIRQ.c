@@ -17,7 +17,7 @@ half.
   // from TOMB5
   // https://github.com/TOMB5/TOMB5/blob/master/EMULATOR/LIBSPU.H
   #define SPU_CDONLY	5
-  SpuReadDecodedData(&sdata->SpuDecodedBuf[0], SPU_CDONLY);
+  SpuReadDecodedData((short*)&sdata->SpuDecodedBuf[0], SPU_CDONLY);
   
   if(
 	  (sdata->XA_boolFinished == 0) &&
