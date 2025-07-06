@@ -1922,6 +1922,9 @@ void FUN_80033108(void)
   FUN_8003e80c((int)*(short *)(PTR_DAT_8008d2ac + 0x254a));
 
   // MainInit_VisMem
+  // ===  Naughty Dog Bug ===
+  // This only happens because LOAD_HubCallback does not set gGT->visMem2,
+  // which then corrupts gGT->visMem1 in LOAD_HubSwapPtrs, so reset gGT->visMem1
   FUN_8003af84(PTR_DAT_8008d2ac);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -2313,7 +2316,10 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 	// saved into 0x8d098, which is used to erase later
     DAT_8008d098 = FUN_8003e978();
 
+	// Required for Scrapbook "Press Start",
+	// may also be required for other edge-cases
 	DrawSync(0);
+	
     puVar3 = PTR_DAT_8008d2ac;
 
 	// no overlay transition
@@ -3283,6 +3289,12 @@ LAB_800346b0:
     if (iVar9 - 0x2aU < 2) goto LAB_800346b0;
     break;
   case 9:
+  
+	// === Naughty Dog Bug ===
+	// This is only if CDSYS_XAPlay is called during loading,
+	// which never happens. This is left over from an old Beta
+	// that would play an "error" sound if CDSYS_XAPlay was 
+	// accidentally called during loading screen
     if (DAT_8008d708 != 2) {
 
       if (
@@ -3306,19 +3318,32 @@ LAB_800346b0:
 		// if going to credits
         else
 		{
-		  // disable everything (except loading screen if still there)
-		  // enable drawing render bucket
+		  // disable rendering everything
+		  // draw loading screen and instances
           uVar10 = *(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x1000 | 0x20;
         }
 
 		// apply desired value
         *(uint *)(PTR_DAT_8008d2ac + 0x256c) = uVar10;
       }
+	  
+	  // MAIN_MENU is in:
+	  // MAIN_MENU_LEVEL
+	  // ADVENTURE_GARAGE
+	  // SCRAPBOOK
+	  
+	  // (main menu or scrapbook)
+	  // MAIN_MENU!=0 && level!=ADVENTURE_GARAGE
       else
 	  {
-		  // disable everything (except loading screen if still there)
-		  // enable pause menu? Or enable 3D cars on track?
+		// disable rendering everything
+		// draw loading screen and instances
         *(uint *)(PTR_DAT_8008d2ac + 0x256c) = *(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x1000 | 0x20;
+
+		// === Naughty Dog Bug ===
+		// This will never happen,
+		// the loading of Garage or Scrapbook will 
+		// always have flag on-screen during loading
 
 		// RaceFlag_IsFullyOffScreen
         iVar9 = FUN_80043f28();

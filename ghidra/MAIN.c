@@ -7061,6 +7061,8 @@ void FUN_8003af84(int param_1)
 			*(char *)(param_1 + 0x1ca8) != '\0')
 		)
   {
+	// === Why reset? Always zero in the level file anyway? ===
+	  
 	// for iVar1 = 0; iVar1 < numPlyrCurrGame; iVar1++
     do {
       iVar2 = iVar1 * 4;

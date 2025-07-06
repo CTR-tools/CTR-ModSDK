@@ -12,27 +12,16 @@ void (*mainMenuInit[6])() =
 
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
-	u_char numPlyrNextGame;
 	short sVar4;
 	int iVar5;
 	u_int uVar6;
-	CdlCB pcVar7;
-	u_int* puVar8;
 	int iVar9;
-	struct Level* lev;
-	u_int gameMode1; //-- redundant
 	int iVar12;
-	char *levelNamePtr;
-	u_char* moremoredata; //-- redundant
 	int *piVar15;
 	u_int uVar16;
-	u_int uVar17;
-	int vramSize;
-	int boolDefault1P;
 	int levelID;
 	int ovrRegion1;
 	int ovrRegion3;
-	struct Model* m;
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
@@ -42,13 +31,17 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	
 	levelID = gGT->levelID;
 	
+	// Used in stage 0, 4, 5, 6
+	int boolPlayMusicDuringLoading = 
+		(levelID == ADVENTURE_GARAGE) || 
+		(levelID == NAUGHTY_DOG_CRATE);
+	
 	switch(loadingStage)
 	{
 		case 0:
-		{
+		{	
 #ifndef REBUILD_PS1
-			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
+			if (!boolPlayMusicDuringLoading)
 			{
 				Cutscene_VolumeBackup();
 			}
@@ -83,84 +76,58 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// this permanently reserves LNG, bigfile header, etc
 			sdata->bookmarkID = DECOMP_MEMPACK_PushState();
 
-			// Turn off HUD
-			gGT->hudFlags &= 0xfe;
-			gGT->hudFlags &= 0xf7;
+			// Reset HUD
+			gGT->hudFlags &= ~(1 | 8);
+			gGT->hudFlags |= 2;
 
 			// disable all rendering except loading screen
+			// no overlay transition (advhub),  use normal spawn
 			gGT->renderFlags &= 0x1000;
-
-			gGT->level1 = 0;
-			gGT->level2 = 0;
-
-			DrawSync(0);
-
-			// no overlay transition
 			gGT->overlayTransition = 0;
+			gGT->Debug_ToggleNormalSpawn = 1;
+				
+			// Required for Scrapbook "Press Start",
+			// may also be required for other edge-cases
+			DrawSync(0);
+			
+			// ========== Start of flags ===============
+			
 
 			// disable certain game mode flags
 			gGT->gameMode1 &= ~(GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU);
 			gGT->gameMode2 &= ~(LEV_SWAP | CREDITS | NO_LEV_INSTANCE);
-
-			gGT->visMem1 = 0;
-			gGT->visMem2 = 0;
 			
-			boolDefault1P = 1;
-			
+			// just scrapbook
 			if(levelID >= SCRAPBOOK)
 			{
-				// both in main menu, and after credits,
-				// checked and confirmed in retail version
 				gGT->gameMode1 |= MAIN_MENU;
 			}
 			
-			// credits
+			// all credits
 			else if(levelID >= CREDITS_CRASH)
 			{
-				// enable cutscene flag
 				gGT->gameMode1 |= GAME_CUTSCENE;
-			
-				// lev swap (&20) and credits (&80)
 				gGT->gameMode2 |= (LEV_SWAP | CREDITS);
 			}
 				
-			// If you're in Naughty Dog Box Scene,
+			// Naughty Dog Box Scene,
 			// Oxide Any% ending
 			// Oxide 101% ending
 			else if(levelID >= NAUGHTY_DOG_CRATE)
 			{
-				// Enable cutscene flag
 				gGT->gameMode1 |= GAME_CUTSCENE;
 			}
 
 			// main menu or garage
 			else if(levelID >= MAIN_MENU_LEVEL)
 			{
-				// enable flag that shows you are in main menu
 				gGT->gameMode1 |= MAIN_MENU;
-
-				if(levelID == ADVENTURE_GARAGE)
-				{
-					// Enter Adventure Character Selection
-					sdata->mainMenuState = 4;
-				}
-				
-				else
-				{
-					// get NextGame from the game you exited
-					gGT->numPlyrNextGame = gGT->numPlyrCurrGame;
-					gGT->numPlyrCurrGame = 4;
-					boolDefault1P = 0;
-				}
 			}
 
 			// intro cutscenes
 			else if(levelID >= INTRO_RACE_TODAY)
 			{
-				// Enable cutscene flag
 				gGT->gameMode1 |= GAME_CUTSCENE;
-
-				// lev swap will be needed
 				gGT->gameMode2 |= LEV_SWAP;
 			}
 
@@ -168,40 +135,49 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// any of the hubs: "hub1", "hub2", etc
 			else if(levelID >= GEM_STONE_VALLEY)
 			{
-				// Change mode to Adventure Arena
 				gGT->gameMode1 |= ADVENTURE_ARENA;
-
-				// lev swap will be needed
 				gGT->gameMode2 |= LEV_SWAP;
-				
-				#ifdef USE_HIGHMP
-				if(gGT->podiumRewardID == NOFUNC) //0
-				{
-					// get CurrGame from main menu's NextGame
-					gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
-					boolDefault1P = 0;
-				}
-				#endif
 			}
-			
-			// driving track
-			else
+
+
+			// ========== End of flags ===============
+			// ========== Set numPlyr ================
+
+
+			if (levelID <= TURBO_TRACK)
 			{
 				// get CurrGame from main menu's NextGame
 				gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
-				boolDefault1P = 0;
 			}
 			
-			if(boolDefault1P != 0)
+			#ifdef USE_HIGHMP
+			else if (levelID <= GEM_STONE_VALLEY)
+			{
+				if(gGT->podiumRewardID == 0) //0
+				{
+					// get CurrGame from main menu's NextGame
+					gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
+				}
+			}
+			#endif
+			
+			else if (levelID == MAIN_MENU_LEVEL)
+			{
+				// get NextGame from the game you exited
+				gGT->numPlyrNextGame = gGT->numPlyrCurrGame;
+				gGT->numPlyrCurrGame = 4;
+			}
+		
+			else
 			{
 				gGT->numPlyrCurrGame = 1;
 				gGT->numPlyrNextGame = 1;
 			}
+			
+			
+			// ========== End of setting numPlyr ================
+			// ========== Set LevelLOD variables ================
 
-			// Enable HUD Instances
-			gGT->hudFlags |= 2;
-
-			gGT->Debug_ToggleNormalSpawn = 1;
 
 			// default
 			sdata->levelLOD = gGT->numPlyrCurrGame;
@@ -217,6 +193,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				sdata->levelLOD = 8;
 			}
+			
+			
+			// ========== End of LevelLOD ================
+			// ========== Alloc Prim + OT ================
+			
 			
 			#ifndef USE_MOREPRIM
 				// OG game
@@ -276,9 +257,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			break;
 		}
 		case 2:
-		{
-			int levelID = gGT->levelID;
-			
+		{	
 			// force no-load on main menu
 			if (levelID == MAIN_MENU_LEVEL) 
 				break;
@@ -340,8 +319,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 4:
 		{
-			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
+			if (!boolPlayMusicDuringLoading)
 			{
 				DECOMP_Music_Restart();
 			}
@@ -361,6 +339,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
 					sdata->gameProgress.unlocks[0] |= 1;
 				#endif
+				
+				if(levelID == ADVENTURE_GARAGE)
+					sdata->mainMenuState = 4;
 				
 				mainMenuInit[sdata->mainMenuState]();
 			}
@@ -433,8 +414,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_DecalGlobal_Store(gGT, (struct LevTexLookup*)gGT->mpkIcons);
 			}
 			
-			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
+			if (!boolPlayMusicDuringLoading)
 			{
 				DECOMP_Music_Stop();
 				DECOMP_CseqMusic_StopAll();
@@ -445,8 +425,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 6:
 		{
-			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != ADVENTURE_GARAGE) && (levelID != NAUGHTY_DOG_CRATE))
+			if (!boolPlayMusicDuringLoading)
 			{
 				iVar9 = DECOMP_Music_AsyncParseBanks();
 
@@ -580,7 +559,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		case 7:
 		{
 			// get level pointer
-			lev = sdata->ptrLevelFile;
+			struct Level* lev = sdata->ptrLevelFile;
 			
 			#ifdef USE_LEVELDEV
 			if (gGT->levelID == CUSTOM_LEVEL_ID) 
@@ -660,81 +639,84 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if ((gGT->gameMode2 & LEV_SWAP) == 0)
 				break;
 			
-			// === LEV_SWAP ===
+			// === Assume LEV_SWAP Active ===
 			
 			if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 				break;
 			
+			// === Assume AdventureArena Active ===
+			
 			// podium reward
-			if (gGT->podiumRewardID != NOFUNC) //0
-			{			
-				// Set Pack of the hub you're NOT on
-				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
-				
-				// Load model+vrm files on the VRAM page
-				// that does NOT overwrite the hub VRAM
-				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
+			if (gGT->podiumRewardID == 0)
+				break;
+			
+			// === Assume PodiumReward Active ===
+			
+			// Set Pack of the hub you're NOT on
+			DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
+			
+			// Load model+vrm files on the VRAM page
+			// that does NOT overwrite the hub VRAM
+			iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
 
-				// VRAM for podium and all related models
-				DECOMP_LOAD_AppendQueue(
-					0, LT_SETVRAM, BI_PODIUMVRMS + iVar9, 
-					NULL, DECOMP_LOAD_VramFileCallback);
+			// VRAM for podium and all related models
+			DECOMP_LOAD_AppendQueue(
+				0, LT_SETVRAM, BI_PODIUMVRMS + iVar9, 
+				NULL, DECOMP_LOAD_VramFileCallback);
 
-				// podium first place
-				u_char* ptrIndexArr = &gGT->podium_modelIndex_First;
-				int* ptrModelPtrArr = &data.podiumModel_firstPlace;
-				int baseIndexPM = BI_DANCEMODELWIN;
+			// podium first place
+			u_char* ptrIndexArr = &gGT->podium_modelIndex_First;
+			int* ptrModelPtrArr = &data.podiumModel_firstPlace;
+			int baseIndexPM = BI_DANCEMODELWIN;
 
-				// Fix for Oxide (faster than OG code that does nothing)
-				// If Oxide WIN is requested, add 16 to load Oxide LOSE
-				if (ptrIndexArr[0] == 0x8d)
-					baseIndexPM = BI_DANCEMODELLOSE;
-				
-				int fileIndex;
-				int drmCb = DECOMP_LOAD_DramFileCallback;
+			// Fix for Oxide (faster than OG code that does nothing)
+			// If Oxide WIN is requested, add 16 to load Oxide LOSE
+			if (ptrIndexArr[0] == 0x8d)
+				baseIndexPM = BI_DANCEMODELLOSE;
+			
+			int fileIndex;
+			int drmCb = DECOMP_LOAD_DramFileCallback;
 
-				// Loop through 3 podium models
-				for(int i = 0; i < 3; i++)
+			// Loop through 3 podium models
+			for(int i = 0; i < 3; i++)
+			{
+				if(ptrIndexArr[i] != 0)
 				{
-					if(ptrIndexArr[i] != 0)
-					{
-						fileIndex = baseIndexPM + iVar9 + 
-							(ptrIndexArr[i] - 0x7e) * 2;
-						
-						DECOMP_LOAD_AppendQueue(
-							0, LT_GETADDR, fileIndex, 
-							&ptrModelPtrArr[i], drmCb);
-					}
+					fileIndex = baseIndexPM + iVar9 + 
+						(ptrIndexArr[i] - 0x7e) * 2;
 					
-					baseIndexPM = BI_DANCEMODELLOSE;
+					DECOMP_LOAD_AppendQueue(
+						0, LT_GETADDR, fileIndex, 
+						&ptrModelPtrArr[i], drmCb);
 				}
 				
-				// TAWNA
-				fileIndex = BI_DANCETAWNAGIRL + iVar9 + 
-					(gGT->podium_modelIndex_tawna - STATIC_TAWNA1) * 2;
+				baseIndexPM = BI_DANCEMODELLOSE;
+			}
+			
+			// TAWNA
+			fileIndex = BI_DANCETAWNAGIRL + iVar9 + 
+				(gGT->podium_modelIndex_tawna - STATIC_TAWNA1) * 2;
 
-				// add TAWNA to loading queue
+			// add TAWNA to loading queue
+			DECOMP_LOAD_AppendQueue(
+				0, LT_GETADDR, fileIndex, 
+				(void*)&data.podiumModel_tawna, drmCb);
+
+			// if 0x7e+5 (dingo)
+			if (gGT->podium_modelIndex_First == STATIC_DINGODANCE)
+			{
+				// add "DingoFire" to loading queue
 				DECOMP_LOAD_AppendQueue(
-					0, LT_GETADDR, fileIndex, 
-					(void*)&data.podiumModel_tawna, drmCb);
-
-				// if 0x7e+5 (dingo)
-				if (gGT->podium_modelIndex_First == STATIC_DINGODANCE)
-				{
-					// add "DingoFire" to loading queue
-					DECOMP_LOAD_AppendQueue(
-						0, LT_GETADDR, BI_DINGOFIRE + iVar9, 
-						(void*)&data.podiumModel_dingoFire, drmCb);
-				}
-
-				// add Podium
-				DECOMP_LOAD_AppendQueue(0, LT_GETADDR, BI_PODIUM + iVar9, 
-					&data.podiumModel_podiumStands, drmCb);
-
-				// Disable LEV instances on Adv Hub, for podium scene
-				gGT->gameMode2 = gGT->gameMode2 | 0x100;
+					0, LT_GETADDR, BI_DINGOFIRE + iVar9, 
+					(void*)&data.podiumModel_dingoFire, drmCb);
 			}
 
+			// add Podium
+			DECOMP_LOAD_AppendQueue(0, LT_GETADDR, BI_PODIUM + iVar9, 
+				&data.podiumModel_podiumStands, drmCb);
+
+			// Disable LEV instances on Adv Hub, for podium scene
+			gGT->gameMode2 = gGT->gameMode2 | 0x100;
 			break;
 		}
 		case 8:
@@ -751,7 +733,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				for(int i = 0; i < 8; i++)
 				{
-					m = modelPtrArr[i];
+					struct Model* m = modelPtrArr[i];
 					
 					if (m == 0) continue;
 					if (m->id == -1) continue;
@@ -813,61 +795,34 @@ LAB_800346b0:
 			break;
 		}
 		case 9:
-		{
-			if (sdata->XA_State != 2)
-			{
-				if
-				(
-
-					// If not in main menu (not in 2D character selection, track selection, or any part of it)
-					((gGT->gameMode1 & MAIN_MENU) == 0) ||
-
-					// If level ID == 40
-					// If you are in Adventure Character Selection
-					(gGT->levelID == ADVENTURE_GARAGE)
+		{			
+			// Limited-Rendering scenarios
+			if (
+					(levelID == SCRAPBOOK) ||
+					(levelID == MAIN_MENU_LEVEL) ||
+					((gGT->gameMode2 & CREDITS) != 0)
 				)
-				{
-					// if not going to credits
-					if ((gGT->gameMode2 & CREDITS) == 0)
-					{
-						// enable all flags except loading screen
-						gameMode1 = gGT->renderFlags | 0xffffefff;
-					}
-
-					// if going to credits
-					else
-					{
-						// disable everything (except loading screen if still there)
-						// enable drawing render bucket
-						gameMode1 = (gGT->renderFlags & 0x1000) | 0x20;
-					}
-
-					// apply desired value
-					gGT->renderFlags = gameMode1;
-				}
-				else
-				{
-					// disable everything (except loading screen if still there)
-					// enable drawing render bucket
-					gGT->renderFlags = (gGT->renderFlags & 0x1000) | 0x20;
-
-					iVar9 = DECOMP_RaceFlag_IsFullyOffScreen();
-					if (iVar9 == 1)
-					{
-						// checkered flag, begin transition on-screen
-						DECOMP_RaceFlag_BeginTransition(1);
-					}
-				}
-				gGT->hudFlags = gGT->hudFlags | 8;
-				gGT->framesInThisLEV = 0;
-				gGT->msInThisLEV = 0;
-
-				DECOMP_ElimBG_Deactivate(gGT);
-
-				// signify end of load
-				return -2;
+			{
+				// disable rendering everything
+				// draw loading screen and instances
+				gGT->renderFlags = (gGT->renderFlags & 0x1000) | 0x20;
 			}
-			__attribute__((fallthrough));
+			
+			// Normal level
+			else
+			{
+				// enable all flags except loading screen
+				gGT->renderFlags = gGT->renderFlags | 0xffffefff;
+			}
+
+			gGT->hudFlags = gGT->hudFlags | 8;
+			gGT->framesInThisLEV = 0;
+			gGT->msInThisLEV = 0;
+
+			DECOMP_ElimBG_Deactivate(gGT);
+
+			// signify end of load
+			return -2;
 		}
 		default:
 			return loadingStage;

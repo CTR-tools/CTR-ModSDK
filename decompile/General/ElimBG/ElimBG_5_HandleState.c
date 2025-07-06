@@ -48,10 +48,9 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
       // if this is the first frame of pause
       if (sdata->pause_state == 1)
       {
-        // allow rendering of checkered flag, add rendering of RenderBucket,
-        // so that Adv Pause instances can render, after non-pause instances are disabled
-        gGT->renderFlags &= 0x1000;
-		gGT->renderFlags |= 0x20;
+		// optimization, already know & 0x1000
+		// is removed as prerequisite for ElimBG_Activate
+        gGT->renderFlags = 0x20;
 
         gGT->hudFlags &= 0xf6;
 

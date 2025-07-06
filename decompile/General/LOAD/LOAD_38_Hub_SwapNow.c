@@ -78,10 +78,6 @@ void DECOMP_LOAD_Hub_SwapNow()
 		DECOMP_DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
 	}
 	
-	#ifndef REBUILD_PS1
-	MainInit_VisMem(gGT);
-	#endif
-	
 	cDC = &gGT->cameraDC[0];
 	cDC->ptrQuadBlock = 0;
 	cDC->visLeafSrc = 0;

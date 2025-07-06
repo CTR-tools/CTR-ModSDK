@@ -767,12 +767,19 @@ void RenderAllHUD(struct GameTracker* gGT)
 	if(gGT->level1 == 0) return;
 	#endif
 
-	// if not drawing intro-race title bars
+	// if drawing intro-race title bars
 	if(
-		(gGT->numPlyrCurrGame != 1) ||
-		((hudFlags & 8) == 0) ||
-		((gameMode1 & START_OF_RACE) == 0)
+		(gGT->numPlyrCurrGame == 1) &&
+		((hudFlags & 8) != 0) &&
+		((gameMode1 & START_OF_RACE) != 0)
 	)
+	{
+		#ifndef REBUILD_PS1
+		UI_RaceStart_IntroText1P();
+		#endif
+	}
+
+	// if not drawing intro-race title bars
 	{
 		// if no hud
 		if((hudFlags & 1) == 0)
@@ -933,14 +940,6 @@ void RenderAllHUD(struct GameTracker* gGT)
 				}
 			}
 		}
-	}
-
-	// if drawing intro-race title bars
-	else
-	{
-		#ifndef REBUILD_PS1
-		UI_RaceStart_IntroText1P();
-		#endif
 	}
 }
 
