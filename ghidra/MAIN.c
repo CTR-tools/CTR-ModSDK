@@ -7062,6 +7062,7 @@ void FUN_8003af84(int param_1)
 		)
   {
 	// === Why reset? Always zero in the level file anyway? ===
+	// Left over from E3 / PizzaHut, when this was dynamically allocated
 	  
 	// for iVar1 = 0; iVar1 < numPlyrCurrGame; iVar1++
     do {
