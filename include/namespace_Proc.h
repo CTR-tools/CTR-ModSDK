@@ -163,6 +163,10 @@ struct ThreadBucket
 	// 0x0
 	struct Thread* thread;
 
+
+
+	// ==== ONLY FOR DEBUG MENU ====
+
 	// could be PLAYER
 	// 0x4
 	char* s_longName;
@@ -175,7 +179,10 @@ struct ThreadBucket
 	int boolCantPause;
 
 	// 0x10
-	char unk2[4];
+	char rectCol[4];
+
+	// ============================
+	
 
 	// size is 0x14
 };

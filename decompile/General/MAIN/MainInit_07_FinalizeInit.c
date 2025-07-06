@@ -25,10 +25,12 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     gGT->pushBuffer[0].distanceToScreen_PREV = 0x100;
     gGT->pushBuffer[0].distanceToScreen_CURR = 0x100;
 
-    // erase all threadBucket structs
-    memset(&gGT->threadBuckets[0], 0, sizeof(struct ThreadBucket) * NUM_BUCKETS);
+    // reset root thread for each bucket
+	for(int i = 0; i < NUM_BUCKETS; i++)
+		gGT->threadBuckets[i].thread = 0;
 
-#if 0
+// This code was in OG, but not needed by retail game
+#ifdef USE_PROFILER
     gGT->threadBuckets[PLAYER].s_longName = 0x8008d30c;  // PLAYER
     gGT->threadBuckets[PLAYER].s_shortName = 0x8008d314; // PLYR
     gGT->threadBuckets[ROBOT].s_longName = 0x8008d31c;  // ROBOT
@@ -41,39 +43,37 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     gGT->threadBuckets[WARPPAD].s_shortName = 0x8008d34c; // WRPD
     gGT->threadBuckets[TRACKING].s_longName = 0x80011434;  // TRACKING
     gGT->threadBuckets[TRACKING].s_shortName = 0x8008d354; // TRKG
-#endif
 
     gGT->threadBuckets[PLAYER].boolCantPause = 0;
-    gGT->threadBuckets[PLAYER].unk2[0] = 0x40;
-    gGT->threadBuckets[PLAYER].unk2[1] = 0x40;
-    gGT->threadBuckets[PLAYER].unk2[2] = 0x80;
+    gGT->threadBuckets[PLAYER].rectCol[0] = 0x40;
+    gGT->threadBuckets[PLAYER].rectCol[1] = 0x40;
+    gGT->threadBuckets[PLAYER].rectCol[2] = 0x80;
 
     gGT->threadBuckets[ROBOT].boolCantPause = 0;
-    gGT->threadBuckets[ROBOT].unk2[0] = 0x40;
-    gGT->threadBuckets[ROBOT].unk2[1] = 0x80;
-    gGT->threadBuckets[ROBOT].unk2[2] = 0x40;
+    gGT->threadBuckets[ROBOT].rectCol[0] = 0x40;
+    gGT->threadBuckets[ROBOT].rectCol[1] = 0x80;
+    gGT->threadBuckets[ROBOT].rectCol[2] = 0x40;
 
     gGT->threadBuckets[STATIC].boolCantPause = 1;
-    gGT->threadBuckets[STATIC].unk2[0] = 0x40;
-    gGT->threadBuckets[STATIC].unk2[1] = 0x80;
-    gGT->threadBuckets[STATIC].unk2[2] = 0x80;
+    gGT->threadBuckets[STATIC].rectCol[0] = 0x40;
+    gGT->threadBuckets[STATIC].rectCol[1] = 0x80;
+    gGT->threadBuckets[STATIC].rectCol[2] = 0x80;
 
     gGT->threadBuckets[MINE].boolCantPause = 0;
-    gGT->threadBuckets[MINE].unk2[0] = 0x80;
-    gGT->threadBuckets[MINE].unk2[1] = 0x80;
-    gGT->threadBuckets[MINE].unk2[2] = 0x80;
+    gGT->threadBuckets[MINE].rectCol[0] = 0x80;
+    gGT->threadBuckets[MINE].rectCol[1] = 0x80;
+    gGT->threadBuckets[MINE].rectCol[2] = 0x80;
 
     gGT->threadBuckets[WARPPAD].boolCantPause = 1;
-    gGT->threadBuckets[WARPPAD].unk2[0] = 0x80;
-    gGT->threadBuckets[WARPPAD].unk2[1] = 0x40;
-    gGT->threadBuckets[WARPPAD].unk2[2] = 0x80;
+    gGT->threadBuckets[WARPPAD].rectCol[0] = 0x80;
+    gGT->threadBuckets[WARPPAD].rectCol[1] = 0x40;
+    gGT->threadBuckets[WARPPAD].rectCol[2] = 0x80;
 
     gGT->threadBuckets[TRACKING].boolCantPause = 0;
-    gGT->threadBuckets[TRACKING].unk2[0] = 0x80;
-    gGT->threadBuckets[TRACKING].unk2[1] = 0x80;
-    gGT->threadBuckets[TRACKING].unk2[2] = 0x80;
+    gGT->threadBuckets[TRACKING].rectCol[0] = 0x80;
+    gGT->threadBuckets[TRACKING].rectCol[1] = 0x80;
+    gGT->threadBuckets[TRACKING].rectCol[2] = 0x80;
 
-#if 0
     gGT->threadBuckets[BURST].s_longName = 0x8008d35c;  // BURST
     gGT->threadBuckets[BURST].s_shortName = 0x8008d364; // BRST
     gGT->threadBuckets[BLOWUP].s_longName = 0x8008d36c;  // BLOWUP
@@ -85,34 +85,32 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     gGT->threadBuckets[FOLLOWER].s_longName = 0x80011440;  // FOLLOWER
     gGT->threadBuckets[FOLLOWER].s_shortName = 0x8008d39c; // FLWR
     gGT->threadBuckets[STARTTEXT].s_longName = 0x8001144c; // STARTTEXT
-#endif
 
     gGT->threadBuckets[BURST].boolCantPause = 0;
-    gGT->threadBuckets[BURST].unk2[0] = 0x80;
-    gGT->threadBuckets[BURST].unk2[1] = 0x40;
-    gGT->threadBuckets[BURST].unk2[2] = 0x80;
+    gGT->threadBuckets[BURST].rectCol[0] = 0x80;
+    gGT->threadBuckets[BURST].rectCol[1] = 0x40;
+    gGT->threadBuckets[BURST].rectCol[2] = 0x80;
 
     gGT->threadBuckets[BLOWUP].boolCantPause = 0;
-    gGT->threadBuckets[BLOWUP].unk2[0] = 0x80;
-    gGT->threadBuckets[BLOWUP].unk2[1] = 0x80;
-    gGT->threadBuckets[BLOWUP].unk2[2] = 0;
+    gGT->threadBuckets[BLOWUP].rectCol[0] = 0x80;
+    gGT->threadBuckets[BLOWUP].rectCol[1] = 0x80;
+    gGT->threadBuckets[BLOWUP].rectCol[2] = 0;
 
     gGT->threadBuckets[TURBO].boolCantPause = 0;
-    gGT->threadBuckets[TURBO].unk2[0] = 0;
-    gGT->threadBuckets[TURBO].unk2[1] = 0;
-    gGT->threadBuckets[TURBO].unk2[2] = 0x80;
+    gGT->threadBuckets[TURBO].rectCol[0] = 0;
+    gGT->threadBuckets[TURBO].rectCol[1] = 0;
+    gGT->threadBuckets[TURBO].rectCol[2] = 0x80;
 
     gGT->threadBuckets[SPIDER].boolCantPause = 0;
-    gGT->threadBuckets[SPIDER].unk2[0] = 0x80;
-    gGT->threadBuckets[SPIDER].unk2[1] = 0x40;
-    gGT->threadBuckets[SPIDER].unk2[2] = 0x80;
+    gGT->threadBuckets[SPIDER].rectCol[0] = 0x80;
+    gGT->threadBuckets[SPIDER].rectCol[1] = 0x40;
+    gGT->threadBuckets[SPIDER].rectCol[2] = 0x80;
 
     gGT->threadBuckets[FOLLOWER].boolCantPause = 0;
-    gGT->threadBuckets[FOLLOWER].unk2[0] = 0x40;
-    gGT->threadBuckets[FOLLOWER].unk2[1] = 0x40;
-    gGT->threadBuckets[FOLLOWER].unk2[2] = 0x80;
+    gGT->threadBuckets[FOLLOWER].rectCol[0] = 0x40;
+    gGT->threadBuckets[FOLLOWER].rectCol[1] = 0x40;
+    gGT->threadBuckets[FOLLOWER].rectCol[2] = 0x80;
 
-#if 0
     gGT->threadBuckets[STARTTEXT].s_shortName = 0x8008d3a4; // STXT
     gGT->threadBuckets[OTHER].s_longName = 0x8008d3ac;  // OTHER
     gGT->threadBuckets[OTHER].s_shortName = 0x8008d3b4; // OTHR
@@ -124,37 +122,37 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     gGT->threadBuckets[HUD].s_shortName = 0x8008d3e0; // THUD
     gGT->threadBuckets[PAUSE].s_longName = 0x8008d3e8;  // PAUSE
     gGT->threadBuckets[PAUSE].s_shortName = 0x8008d3f0; // PAUS
-#endif
-
+	
     gGT->threadBuckets[STARTTEXT].boolCantPause = 0;
-    gGT->threadBuckets[STARTTEXT].unk2[0] = 0x80;
-    gGT->threadBuckets[STARTTEXT].unk2[2] = 0x80;
-    gGT->threadBuckets[STARTTEXT].unk2[1] = 0x40;
+    gGT->threadBuckets[STARTTEXT].rectCol[0] = 0x80;
+    gGT->threadBuckets[STARTTEXT].rectCol[2] = 0x80;
+    gGT->threadBuckets[STARTTEXT].rectCol[1] = 0x40;
 
     gGT->threadBuckets[OTHER].boolCantPause = 0;
-    gGT->threadBuckets[OTHER].unk2[0] = 0x80;
-    gGT->threadBuckets[OTHER].unk2[1] = 0x40;
-    gGT->threadBuckets[OTHER].unk2[2] = 0x40;
+    gGT->threadBuckets[OTHER].rectCol[0] = 0x80;
+    gGT->threadBuckets[OTHER].rectCol[1] = 0x40;
+    gGT->threadBuckets[OTHER].rectCol[2] = 0x40;
 
     gGT->threadBuckets[AKUAKU].boolCantPause = 0;
-    gGT->threadBuckets[AKUAKU].unk2[0] = 0x80;
-    gGT->threadBuckets[AKUAKU].unk2[1] = 0x40;
-    gGT->threadBuckets[AKUAKU].unk2[2] = 0x40;
+    gGT->threadBuckets[AKUAKU].rectCol[0] = 0x80;
+    gGT->threadBuckets[AKUAKU].rectCol[1] = 0x40;
+    gGT->threadBuckets[AKUAKU].rectCol[2] = 0x40;
 
     gGT->threadBuckets[CAMERA].boolCantPause = 1;
-    gGT->threadBuckets[CAMERA].unk2[0] = 0x80;
-    gGT->threadBuckets[CAMERA].unk2[1] = 0x80;
-    gGT->threadBuckets[CAMERA].unk2[2] = 0x40;
+    gGT->threadBuckets[CAMERA].rectCol[0] = 0x80;
+    gGT->threadBuckets[CAMERA].rectCol[1] = 0x80;
+    gGT->threadBuckets[CAMERA].rectCol[2] = 0x40;
 
     gGT->threadBuckets[HUD].boolCantPause = 1;
-    gGT->threadBuckets[HUD].unk2[0] = 0x80;
-    gGT->threadBuckets[HUD].unk2[1] = 0x80;
-    gGT->threadBuckets[HUD].unk2[2] = 0x80;
+    gGT->threadBuckets[HUD].rectCol[0] = 0x80;
+    gGT->threadBuckets[HUD].rectCol[1] = 0x80;
+    gGT->threadBuckets[HUD].rectCol[2] = 0x80;
 
     gGT->threadBuckets[PAUSE].boolCantPause = 0;
-    gGT->threadBuckets[PAUSE].unk2[0] = 0;
-    gGT->threadBuckets[PAUSE].unk2[1] = 0x80;
-    gGT->threadBuckets[PAUSE].unk2[2] = 0;
+    gGT->threadBuckets[PAUSE].rectCol[0] = 0;
+    gGT->threadBuckets[PAUSE].rectCol[1] = 0x80;
+    gGT->threadBuckets[PAUSE].rectCol[2] = 0;
+#endif
 
     // particles
     gGT->particleList_ordinary = NULL;

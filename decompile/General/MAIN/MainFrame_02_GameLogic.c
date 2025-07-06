@@ -189,6 +189,8 @@ LAB_80035098:
 		{			
 			if
 			(
+				// This code was in OG, but not needed by retail game
+				#ifdef USE_PROFILER
 				(
 					// if threads are not paused
 					((gGT->gameMode1 & DEBUG_MENU) == 0) ||
@@ -196,6 +198,7 @@ LAB_80035098:
 					// if bucket can not be paused
 					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)
 				) &&
+				#endif
 
 				// if threads exist
 				(gGT->threadBuckets[iVar4].thread != 0)
