@@ -2922,7 +2922,7 @@ struct Data data =
 			.characterID_Boss = NITROS_OXIDE,
 			.characterID_Champion = NITROS_OXIDE
 		},
-		[TINY_ARENA] =
+		[COCO_PARK] =
 		{
 			.hubID = 2,
 			//.name_Debug = 0x8001138c,
@@ -2933,7 +2933,7 @@ struct Data data =
 			.characterID_Boss = -1,
 			.characterID_Champion = TINY_TIGER
 		},
-		[COCO_PARK] =
+		[TINY_ARENA] =
 		{
 			.hubID = 3,
 			//.name_Debug = 0x80011380,
