@@ -2931,7 +2931,7 @@ struct Data data =
 			.numTrophiesToOpen = 4,
 			.ctrTokenGroupID = 1,
 			.characterID_Boss = -1,
-			.characterID_Champion = TINY_TIGER
+			.characterID_Champion = COCO_BANDICOOT
 		},
 		[TINY_ARENA] =
 		{
@@ -2942,7 +2942,7 @@ struct Data data =
 			.numTrophiesToOpen = 11,
 			.ctrTokenGroupID = 3,
 			.characterID_Boss = -1,
-			.characterID_Champion = COCO_BANDICOOT
+			.characterID_Champion = TINY_TIGER
 		},
 		[SLIDE_COLISEUM] =
 		{
