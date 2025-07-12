@@ -314,7 +314,7 @@ struct sData sdata_static =
 	.region = "XXXX",
 	#endif
 	
-	.unk_card_8008D404 = 0,
+	.memcard_stage = 0,
 	.memcard_ptrStart = 0,
 	.memcard_fd = -1,
 	.memcard_remainingAttempts = 8,

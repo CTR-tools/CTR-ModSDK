@@ -3,11 +3,11 @@
 // NOTE: unused function?
 uint8_t DECOMP_MEMCARD_EraseFile(int slotIdx, char *srcString)
 {
-    if (sdata->unk_card_8008D404)
+    if (sdata->memcard_stage)
         return 1;
     char name[64];
     MEMCARD_StringSet(name, slotIdx, srcString);
-    sdata->unk_card_8008D404 = (erase(name)) ? 14 : 13;
+    sdata->memcard_stage = (erase(name)) ? 14 : 13;
     MEMCARD_GetFreeBytes(slotIdx);
     return 7;
 }

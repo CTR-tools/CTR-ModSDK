@@ -4,7 +4,7 @@
 // TODO: 4 bytes over budget
 char *DECOMP_MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
 {
-    if (sdata->unk_card_8008D404)
+    if (sdata->memcard_stage)
     {
         return (char *)0;
     }
@@ -18,7 +18,7 @@ char *DECOMP_MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
 
     if (firstEntry == &someEntry)
     {
-        sdata->unk_card_8008D404 = 0xf;
+        sdata->memcard_stage = 0xf;
         strcpy(firstEntry->name, someEntry.name); // 0x80
         return &sdata->s_memcardFindGhostFile[0];
     }

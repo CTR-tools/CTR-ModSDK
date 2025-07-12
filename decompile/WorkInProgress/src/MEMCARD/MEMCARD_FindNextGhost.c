@@ -9,7 +9,7 @@ char* DECOMP_MEMCARD_FindNextGhost(void)
     struct DIRENTRY *nextEntry;
     struct DIRENTRY someEntry;
 
-    if (sdata->unk_card_8008D404 == 0xf)
+    if (sdata->memcard_stage == 0xf)
 	{
 		nextEntry = nextfile(&someEntry);
 		if (nextEntry == &someEntry)
@@ -17,7 +17,7 @@ char* DECOMP_MEMCARD_FindNextGhost(void)
 			strcpy(nextEntry->name, someEntry.name);
 			return &sdata->s_memcardFindGhostFile[0];
 		}
-		sdata->unk_card_8008D404 = 0;
+		sdata->memcard_stage = 0;
 	}
 	
 	return (char *)0;

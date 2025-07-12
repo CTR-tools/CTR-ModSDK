@@ -1,6 +1,6 @@
 #include <common.h>
 
-// TODO: Name function, add symbol
+// TODO: Name function, add symbol (MEMCARD_GetStageResult)
 int FUN_8003ddac(void)
 {
     int readResult;
@@ -8,10 +8,11 @@ int FUN_8003ddac(void)
     int iVar4;
     int *ptrData;
 
-    switch (sdata->unk_card_8008D404)
+    switch (sdata->memcard_stage)
     {
 
-    case 1:
+	// after checking info
+    case MC_STAGE_GETINFO:
 
         event = MEMCARD_GetNextSwEvent();
 
@@ -22,7 +23,7 @@ int FUN_8003ddac(void)
             if ((sdata->memcardStatusFlags & 1) != 0)
             {
                 // allow the "switch" statement to go to stage 2
-                sdata->unk_card_8008D404 = 2;
+                sdata->memcard_stage = 2;
 
                 // do something wtih both memcards if they're present,
                 MEMCARD_SkipEvents();
@@ -47,7 +48,7 @@ int FUN_8003ddac(void)
             {
                 if (event != 7)
                 {
-                    sdata->unk_card_8008D404 = 0;
+                    sdata->memcard_stage = 0;
 
                     sdata->memoryCard_SizeRemaining = 0;
 
@@ -55,16 +56,16 @@ int FUN_8003ddac(void)
                 }
                 return 7;
             }
-            MEMCARD_SkipEvents();
-            while (_card_clear(sdata->memcardSlot) != 1)
-                ;
+            
+			MEMCARD_SkipEvents();
+            while (_card_clear(sdata->memcardSlot) != 1);
+			
             event = MEMCARD_WaitForHwEvent();
             if (event == 0)
             {
-                sdata->unk_card_8008D404 = 2;
+                sdata->memcard_stage = 2;
                 MEMCARD_SkipEvents();
-                while (_card_load(sdata->memcardSlot) != 1)
-                    ;
+                while (_card_load(sdata->memcardSlot) != 1);
                 return 7;
             }
         }
@@ -77,7 +78,7 @@ int FUN_8003ddac(void)
 
         if (event == 0)
         {
-            sdata->unk_card_8008D404 = 0;
+            sdata->memcard_stage = 0;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffe | 2;
 
             MEMCARD_GetFreeBytes(sdata->memcardSlot);
@@ -86,7 +87,7 @@ int FUN_8003ddac(void)
         }
         if (event == 3)
         {
-            sdata->unk_card_8008D404 = 0;
+            sdata->memcard_stage = 0;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffc;
             return 5;
         }
@@ -95,7 +96,7 @@ int FUN_8003ddac(void)
             return 7;
         }
     LAB_8003df38:
-        sdata->unk_card_8008D404 = 0;
+        sdata->memcard_stage = 0;
         break;
 
     case 3:
@@ -105,7 +106,7 @@ int FUN_8003ddac(void)
         if (event == 0)
         {
             // allow "switch" statement to go to stage 4
-            sdata->unk_card_8008D404 = 4;
+            sdata->memcard_stage = 4;
 
             // Bitwise & with 0xf to extract last 4 bits then increment by 1
             sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
@@ -149,7 +150,7 @@ int FUN_8003ddac(void)
         {
             sdata->crc16_checkpoint_byteIndex = 0;
             sdata->crc16_checkpoint_status = 0;
-            sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
+            sdata->memcard_stage = sdata->memcard_stage + 1;
             if ((sdata->memcardStatusFlags & 8) == 0)
             {
                 sdata->crc16_checkpoint_byteIndex = 0;
@@ -166,7 +167,7 @@ int FUN_8003ddac(void)
 
         if (sdata->memcard_remainingAttempts > 0)
         {
-            iVar4 = sdata->memcardIconSize + (sdata->unk_card_8008D404 - 4) * sdata->memoryCardFileSize_0x1680;
+            iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memoryCardFileSize_0x1680;
             event = sdata->memoryCardFileSize_0x1680;
 
             sdata->memcard_remainingAttempts = sdata->memcard_remainingAttempts + -1;
@@ -193,12 +194,12 @@ int FUN_8003ddac(void)
 
             // at this point, assume checksum succeeded (return 1)
 
-            if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->unk_card_8008D404 < 7))
+            if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
             {
                 // Make "switch" statement go to "next" stage
-                sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
+                sdata->memcard_stage = sdata->memcard_stage + 1;
 
-                iVar4 = sdata->memcardIconSize + (sdata->unk_card_8008D404 - 4) * sdata->memoryCardFileSize_0x1680;
+                iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memoryCardFileSize_0x1680;
                 event = sdata->memoryCardFileSize_0x1680;
             READCARD_JUMP:
 
@@ -219,7 +220,7 @@ int FUN_8003ddac(void)
 
         if (event == 0)
         {
-            if ((sdata->unk_card_8008D404 != 9) && ((10 < sdata->unk_card_8008D404 || ((sdata->memcardStatusFlags & 4) != 0))))
+            if ((sdata->memcard_stage != 9) && ((10 < sdata->memcard_stage || ((sdata->memcardStatusFlags & 4) != 0))))
             {
                 MEMCARD_CloseFile();
 
@@ -228,10 +229,10 @@ int FUN_8003ddac(void)
                 return 0;
             }
             
-			sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
+			sdata->memcard_stage = sdata->memcard_stage + 1;
 			
         LAB_8003e1e4:
-            event = sdata->unk_card_8008D404 - 10;
+            event = sdata->memcard_stage - 10;
             iVar4 = sdata->memcardIconSize + event * sdata->memoryCardFileSize_0x1680;
 
             // pointer to memory card bytes
@@ -256,7 +257,7 @@ int FUN_8003ddac(void)
                 goto CLOSEFILE_JUMP;
 
             sdata->memcard_remainingAttempts = iVar4;
-            if (sdata->unk_card_8008D404 != 9)
+            if (sdata->memcard_stage != 9)
                 goto LAB_8003e1e4;
 			
             iVar4 = 0;
@@ -272,11 +273,11 @@ int FUN_8003ddac(void)
         event = MEMCARD_WriteFile(iVar4, ptrData, event);
         break;
     case 13:
-        sdata->unk_card_8008D404 = 0;
+        sdata->memcard_stage = 0;
         event = 1;
         break;
     case 14:
-        sdata->unk_card_8008D404 = 0;
+        sdata->memcard_stage = 0;
         event = 0;
     }
     return event;

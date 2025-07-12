@@ -3,10 +3,10 @@
 uint8_t DECOMP_MEMCARD_GetInfo(int slotIdx)
 
 {
-    if (sdata->unk_card_8008D404 == 0)
+    if (sdata->memcard_stage == 0)
     {
         MEMCARD_SkipEvents();
-        sdata->unk_card_8008D404 = 1;
+        sdata->memcard_stage = 1;
         sdata->memcardSlot = slotIdx;
 
         // loop until check is "submitted",

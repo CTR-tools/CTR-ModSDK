@@ -7,7 +7,7 @@
 uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize, unsigned int param5)
 
 {
-    if (sdata->unk_card_8008D404 != 0)
+    if (sdata->memcard_stage != 0)
     {
         return 1;
     }
@@ -41,7 +41,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
         */
         // process crc16 to the end of memory
         sdata->memcardStatusFlags = sdata->memcardStatusFlags | 8;
-        sdata->unk_card_8008D404 = 3;
+        sdata->memcard_stage = 3;
 
         // Read memory card
         return MEMCARD_ReadFile(0, 0x80);

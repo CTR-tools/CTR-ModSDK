@@ -66,7 +66,7 @@
 #define CUSTOM_LEVEL_ID 0
 #define USE_RAMEX
 #define USE_BIGQUEUE
-#define USE_PRELOAD
+//#define USE_PRELOAD (breaks ND Box)
 #define USE_MOREPRIM
 
 #define TRIGGER_HOT_RELOAD (volatile int*) 0x8000C000

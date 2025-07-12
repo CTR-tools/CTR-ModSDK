@@ -7,7 +7,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
 {
 
-    if (sdata->unk_card_8008D404 != 0)
+    if (sdata->memcard_stage != 0)
         return 1;
 
     sdata->memcardIconSize = 0x100;
@@ -68,7 +68,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
     if (sdata->memcard_fd != -1)
     {
-        sdata->unk_card_8008D404 = 9;
+        sdata->memcard_stage = 9;
         return MEMCARD_WriteFile(0, data.memcardIcon_PsyqHand, sdata->memcardIconSize);
     }
 

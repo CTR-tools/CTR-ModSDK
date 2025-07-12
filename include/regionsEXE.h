@@ -3135,8 +3135,10 @@ struct sData
 	char region[8];
 	#endif
 
+	// ====== Should be memcard struct ================
+
 	// 8008D404
-	int unk_card_8008D404;
+	int memcard_stage;
 
 	// 8008d408
 	uint8_t* memcard_ptrStart;
@@ -3153,6 +3155,8 @@ struct sData
 
 	// 8008d41c
 	char s_AnyFile[4];
+	
+	// ===================================================
 
 	// 8008e0bc -- Aug14
 	// 8008b880 -- SepReview
