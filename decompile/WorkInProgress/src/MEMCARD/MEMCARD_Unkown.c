@@ -193,12 +193,12 @@ int FUN_8003ddac(void)
 
             // at this point, assume checksum succeeded (return 1)
 
-            if (((sdata->memcardStatusFlags & 4) == 0) && (iVar4 = sdata->unk_card_8008D404 - 3, sdata->unk_card_8008D404 < 7))
+            if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->unk_card_8008D404 < 7))
             {
                 // Make "switch" statement go to "next" stage
                 sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
 
-                iVar4 = sdata->memcardIconSize + iVar4 * sdata->memoryCardFileSize_0x1680;
+                iVar4 = sdata->memcardIconSize + (sdata->unk_card_8008D404 - 4) * sdata->memoryCardFileSize_0x1680;
                 event = sdata->memoryCardFileSize_0x1680;
             READCARD_JUMP:
 
@@ -227,9 +227,11 @@ int FUN_8003ddac(void)
 
                 return 0;
             }
-            event = sdata->unk_card_8008D404 - 9;
-            sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
+            
+			sdata->unk_card_8008D404 = sdata->unk_card_8008D404 + 1;
+			
         LAB_8003e1e4:
+            event = sdata->unk_card_8008D404 - 10;
             iVar4 = sdata->memcardIconSize + event * sdata->memoryCardFileSize_0x1680;
 
             // pointer to memory card bytes
@@ -253,10 +255,10 @@ int FUN_8003ddac(void)
             if (sdata->memcard_remainingAttempts < 1)
                 goto CLOSEFILE_JUMP;
 
-            event = sdata->unk_card_8008D404 - 10;
             sdata->memcard_remainingAttempts = iVar4;
             if (sdata->unk_card_8008D404 != 9)
                 goto LAB_8003e1e4;
+			
             iVar4 = 0;
 
             // pointer to memory card icon
