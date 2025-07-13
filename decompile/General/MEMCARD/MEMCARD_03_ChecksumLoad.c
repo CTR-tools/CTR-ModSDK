@@ -42,14 +42,14 @@ int DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 	
 	// if end is not reached
 	if (byteIndexEnd != len) 
-		return MC_EVENT_NONE;
+		return MC_RETURN_PENDING;
 	
 	// finalize checksum twice (dont loop)
 	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd]);
 	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd+1]);
 
 	// Will return one of these:
-	// 0: MC_EVENT_DONE
-	// 1: MC_EVENT_BAD_CARD
+	// 0: MC_RETURN_IOE
+	// 1: MC_RETURN_TIMEOUT
 	return (unsigned int)(crc != 0);
 }

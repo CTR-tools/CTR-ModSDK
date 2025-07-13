@@ -1292,9 +1292,9 @@ void FUN_80047a58(void)
     DAT_8009aa34 = 5;
     break;
   
-  // MC_RETURN_SUCCESS
+  // MC_RETURN_PENDING
   case 7:
-	// MC_RESULT_FINISHED
+	// MC_RESULT_PENDING
     DAT_8009aa34 = 8;
 	
   default:

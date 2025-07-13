@@ -4,13 +4,14 @@ uint8_t MEMCARD_WaitForHwEvent(void)
 {
     while (1)
     {
-		if (TestEvent(sdata->HwCARD_EvSpIOE))	return MC_EVENT_DONE;
-		if (TestEvent(sdata->HwCARD_EvSpERROR))	return MC_EVENT_BAD_CARD;
-		if (TestEvent(sdata->HwCARD_EvSpTIMOUT))return MC_EVENT_NO_CARD;
-		if (TestEvent(sdata->HwCARD_EvSpNEW))	return MC_EVENT_NEW_CARD;
+		// IOE = IO End, meaning "finished without error"
+		if (TestEvent(sdata->HwCARD_EvSpIOE))	return MC_RETURN_IOE;
+		if (TestEvent(sdata->HwCARD_EvSpERROR))	return MC_RETURN_TIMEOUT;
+		if (TestEvent(sdata->HwCARD_EvSpTIMOUT))return MC_RETURN_NOCARD;
+		if (TestEvent(sdata->HwCARD_EvSpNEW))	return MC_RETURN_NEWCARD;
 	
-		// Not allowed to return NONE,
-		// the goal is to keep going until "something" important happens
-		// return MC_EVENT_NONE;
+		// Not allowed to return PENDING, the goal is to 
+		// wait until the memcard is not PENDING anymore
+		// return MC_RETURN_PENDING;
     }
 }

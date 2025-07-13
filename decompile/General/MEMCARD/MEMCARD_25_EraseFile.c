@@ -15,5 +15,5 @@ uint8_t DECOMP_MEMCARD_EraseFile(int slotIdx, char *srcString)
 			: MC_STAGE_ERASE_FAIL;
     
 	MEMCARD_GetFreeBytes(slotIdx);
-    return MC_RETURN_SUCCESS;
+    return MC_RETURN_PENDING;
 }

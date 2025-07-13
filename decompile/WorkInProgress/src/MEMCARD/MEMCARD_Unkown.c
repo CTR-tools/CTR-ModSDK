@@ -16,16 +16,16 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 		
-        if (event == MC_EVENT_NONE)
+        if (event == MC_RETURN_PENDING)
 			return 0;
 
-        else if (event == MC_EVENT_DONE)
+        else if (event == MC_RETURN_IOE)
         {
             // If this is the first frame of the main game loop,
             // after all initialization is done
             if ((sdata->memcardStatusFlags & 1) != 0)
             {
-				// discard any pending events
+				// discard any previous events
 				// submit a load to make sure format worked,
 				// check the result of a NEW CARD
                 MEMCARD_SkipEvents();
@@ -40,7 +40,7 @@ int FUN_8003ddac(void)
             }
         }
 
-        else if (event == MC_EVENT_NEW_CARD)
+        else if (event == MC_RETURN_NEWCARD)
         {
 			MEMCARD_SkipEvents();
 			while (_card_clear(sdata->memcardSlot) != 1);
@@ -48,7 +48,7 @@ int FUN_8003ddac(void)
 			event = MEMCARD_WaitForHwEvent();
 			if (event == 0)
 			{
-				// discard any pending events
+				// discard any previous events
 				// submit a load to make sure format worked,
 				// check the result of a NEW CARD
 				MEMCARD_SkipEvents();
@@ -74,14 +74,14 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
 
 		// if nothing happened yet, try again next frame
-        if (event == MC_EVENT_NONE)
+        if (event == MC_RETURN_PENDING)
             return 0;
 		
 		sdata->memcard_stage = MC_STAGE_IDLE;
 
 		// if new card passed a "load" test (after format),
 		// set stage to idle, record free bytes
-        if (event == MC_EVENT_DONE)
+        if (event == MC_RETURN_IOE)
         {
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffe | 2;
             MEMCARD_GetFreeBytes(sdata->memcardSlot);
@@ -89,7 +89,7 @@ int FUN_8003ddac(void)
         }
 		
 		// if new card was just inserted
-        if (event == MC_EVENT_NEW_CARD)
+        if (event == MC_RETURN_NEWCARD)
         {
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffc;
             return 5;
@@ -104,14 +104,14 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
 
 		// if nothing happened yet, try again next frame
-        if (event == MC_EVENT_NONE)
+        if (event == MC_RETURN_PENDING)
         {
             return 7;
         }
 
 		// if pass, then move to next stage,
 		// setup variables for the load about to happen
-        if (event == MC_EVENT_DONE)
+        if (event == MC_RETURN_IOE)
         {
             sdata->memcard_stage++;
 
@@ -154,12 +154,12 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 
-        if (event == MC_EVENT_NONE)
+        if (event == MC_RETURN_PENDING)
         {
             return 7;
         }
 
-        if (event == MC_EVENT_DONE)
+        if (event == MC_RETURN_IOE)
         {
             sdata->crc16_checkpoint_byteIndex = 0;
             sdata->crc16_checkpoint_status = 0;
@@ -191,12 +191,12 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memcardFileSize);
 
-        if (event == MC_EVENT_NONE)
+        if (event == MC_RETURN_PENDING)
         {
             return 7;
         }
 
-        if (event == MC_EVENT_DONE)
+        if (event == MC_RETURN_IOE)
         {
 		CLOSEFILE_JUMP:
 			MEMCARD_CloseFile();
@@ -228,12 +228,12 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
             
-		if (event == MC_EVENT_NONE)
+		if (event == MC_RETURN_PENDING)
         {
             return 7;
         }
 			
-        if (event == MC_EVENT_DONE)
+        if (event == MC_RETURN_IOE)
         {
             if ((sdata->memcard_stage != 9) && ((10 < sdata->memcard_stage || ((sdata->memcardStatusFlags & 4) != 0))))
             {

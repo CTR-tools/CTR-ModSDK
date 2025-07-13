@@ -531,7 +531,7 @@ undefined4 FUN_8003dc30(long param_1,long param_2)
   // read to memcard buffer in RAM, param_2 size
   if ((lVar1 != -1) && (lVar1 = read(DAT_8008d40c,DAT_8008d408,param_2), lVar1 != -1)) 
   {
-	// MC_RETURN_SUCCESS
+	// MC_RETURN_PENDING
     return 7;
   }
 
@@ -556,7 +556,7 @@ undefined4 FUN_8003dc9c(long param_1,void *param_2,long param_3)
   // write to memcard buffer in RAM, param_3 size
   if ((lVar1 != -1) && (lVar1 = write(DAT_8008d40c,param_2,param_3), lVar1 != -1)) 
   {
-	// MC_RETURN_SUCCESS
+	// MC_RETURN_PENDING
     return 7;
   }
 
@@ -639,7 +639,7 @@ int FUN_8003ddac(void)
           lVar1 = _card_load(DAT_8008d8b8);
         } while (lVar1 != 1);
 
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
       if ((DAT_8008d8cc & 2) == 0)
@@ -663,7 +663,7 @@ int FUN_8003ddac(void)
           return iVar3;
         }
 		
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
 	  
@@ -682,7 +682,7 @@ int FUN_8003ddac(void)
           lVar1 = _card_load(DAT_8008d8b8);
         } while (lVar1 != 1);
 		
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
     }
@@ -716,7 +716,7 @@ int FUN_8003ddac(void)
 	
     if (iVar3 == 7) 
 	{
-	  // MC_RETURN_SUCCESS
+	  // MC_RETURN_PENDING
       return 7;
     }
 	
@@ -780,7 +780,7 @@ LAB_8003df38:
         DAT_8008d8b0 = 0;
         DAT_8008d8d0 = 0;
 		
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
       goto switchD_8003dde0_caseD_5;
@@ -788,7 +788,7 @@ LAB_8003df38:
 
     if (iVar3 == 7) 
 	{
-	  // MC_RETURN_SUCCESS
+	  // MC_RETURN_PENDING
       return 7;
     }
 
@@ -820,7 +820,7 @@ switchD_8003dde0_caseD_5:
 	  // is not finished processing, it will continue next frame
       if (iVar3 == 7) 
 	  {
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
 
@@ -884,7 +884,7 @@ LAB_8003e1e4:
 	{
       if (iVar3 == 7) 
 	  {
-		// MC_RETURN_SUCCESS
+		// MC_RETURN_PENDING
         return 7;
       }
 
@@ -946,7 +946,7 @@ undefined4 FUN_8003e238(long param_1)
 
 	DAT_8008d410 = 8;
 	
-	// MC_RETURN_SUCCESS
+	// MC_RETURN_PENDING
     uVar1 = 7;
   }
   else 
@@ -1156,7 +1156,7 @@ undefined4 FUN_8003e51c(long param_1)
 
 	  DAT_8008d410 = 8;
 	  
-	  // MC_RETURN_SUCCESS
+	  // MC_RETURN_PENDING
       uVar3 = 7;
     }
   }
