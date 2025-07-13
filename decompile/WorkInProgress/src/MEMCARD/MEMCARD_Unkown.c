@@ -282,12 +282,14 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_WriteFile(iVar4, ptrData, event);
         break;
-    case 13:
-        sdata->memcard_stage = 0;
+		
+    case MC_STAGE_ERASE_PASS:
+        sdata->memcard_stage = MC_STAGE_IDLE;
         event = 1;
         break;
-    case 14:
-        sdata->memcard_stage = 0;
+		
+    case MC_STAGE_ERASE_FAIL:
+        sdata->memcard_stage = MC_STAGE_IDLE;
         event = 0;
     }
     return event;
