@@ -15,73 +15,77 @@ int FUN_8003ddac(void)
     case MC_STAGE_GETINFO:
 
         event = MEMCARD_GetNextSwEvent();
+		
+        if (event == MC_EVENT_NONE)
+			return MC_EVENT_NONE;
 
-        if (event == 0)
+        if (event == MC_EVENT_DONE)
         {
             // If this is the first frame of the main game loop,
             // after all initialization is done
             if ((sdata->memcardStatusFlags & 1) != 0)
             {
-                // allow the "switch" statement to go to stage 2
-                sdata->memcard_stage = 2;
-
-                // do something wtih both memcards if they're present,
+				// discard any pending events
+				// submit a load to make sure format worked,
+				// check the result of a NEW CARD
                 MEMCARD_SkipEvents();
-
-                // ?? spam read until it works?
-                while (_card_load(sdata->memcardSlot) != 1)
-                    ;
-
+                while (_card_load(sdata->memcardSlot) != 1);
+                sdata->memcard_stage = MC_STAGE_NEWCARD;
                 return 7;
             }
             if ((sdata->memcardStatusFlags & 2) == 0)
             {
                 sdata->memoryCard_SizeRemaining = 0;
-
                 event = 5;
             }
         }
 
         else
         {
-            if (event != 3)
+            if (event == MC_EVENT_NEW_CARD)
             {
-                if (event != 7)
-                {
-                    sdata->memcard_stage = 0;
-
-                    sdata->memoryCard_SizeRemaining = 0;
-
-                    return event;
-                }
-                return 7;
-            }
-            
-			MEMCARD_SkipEvents();
-            while (_card_clear(sdata->memcardSlot) != 1);
+				MEMCARD_SkipEvents();
+				while (_card_clear(sdata->memcardSlot) != 1);
+				
+				event = MEMCARD_WaitForHwEvent();
+				if (event == 0)
+				{
+					// discard any pending events
+					// submit a load to make sure format worked,
+					// check the result of a NEW CARD
+					MEMCARD_SkipEvents();
+					while (_card_load(sdata->memcardSlot) != 1);
+					sdata->memcard_stage = MC_STAGE_NEWCARD;
+					return 7;
+				}
+			}
 			
-            event = MEMCARD_WaitForHwEvent();
-            if (event == 0)
-            {
-                sdata->memcard_stage = 2;
-                MEMCARD_SkipEvents();
-                while (_card_load(sdata->memcardSlot) != 1);
-                return 7;
-            }
+			else
+			{
+                sdata->memcard_stage = MC_STAGE_IDLE;
+                sdata->memoryCard_SizeRemaining = 0;
+                return event;
+			}
         }
 
-        goto LAB_8003df38;
+        sdata->memcard_stage = MC_STAGE_IDLE;
+        break;
 
 	// after checking new card
     case MC_STAGE_NEWCARD:
 
         event = MEMCARD_GetNextSwEvent();
 
+		// if nothing happened yet, try again next frame
+        if (event == MC_EVENT_NONE)
+            return MC_EVENT_NONE;
+		
+		sdata->memcard_stage = MC_STAGE_IDLE;
+
 		// if new card passed a "load" test (after format),
 		// set stage to idle, record free bytes
         if (event == MC_EVENT_DONE)
         {
-            sdata->memcard_stage = MC_STAGE_IDLE;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffe | 2;
             MEMCARD_GetFreeBytes(sdata->memcardSlot);
             return 3;
@@ -90,19 +94,10 @@ int FUN_8003ddac(void)
 		// if new card was just inserted
         if (event == MC_EVENT_NEW_CARD)
         {
-            sdata->memcard_stage = MC_STAGE_IDLE;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffc;
             return 5;
         }
 		
-		// if nothing happened yet, try again next frame
-        if (event == MC_EVENT_NONE)
-        {
-            return 7;
-        }
-		
-    LAB_8003df38:
-        sdata->memcard_stage = MC_STAGE_IDLE;
         break;
 
     case 3:
