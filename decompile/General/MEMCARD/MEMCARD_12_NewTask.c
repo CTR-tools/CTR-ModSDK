@@ -10,7 +10,7 @@ int DECOMP_MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int mem
     // pointer to memcard 800992e4
     sdata->memcard_ptrStart = ptrMemcard;
     sdata->memcard_remainingAttempts = 8;
-    sdata->memoryCardFileSize_0x1680 = memcardFileSize;
+    sdata->memcardFileSize = memcardFileSize;
 
     return 0;
 }

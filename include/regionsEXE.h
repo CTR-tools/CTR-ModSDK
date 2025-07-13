@@ -4099,7 +4099,7 @@ struct sData
 	// 8008c800 -- JpnTrial
 	// 8008dc5c -- EurRetail
 	// 80090ccc -- JpnRetail
-	int memoryCardFileSize_0x1680;
+	int memcardFileSize;
 
 	// 8008d8ac
 	int memoryCard_SizeRemaining;

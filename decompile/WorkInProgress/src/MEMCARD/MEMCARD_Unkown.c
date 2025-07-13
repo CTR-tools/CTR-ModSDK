@@ -112,11 +112,11 @@ int FUN_8003ddac(void)
             // Bitwise & with 0xf to extract last 4 bits then increment by 1
             sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
 
-            readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memoryCardFileSize_0x1680);
+            readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memcardFileSize);
 
             // count blocks of size 0x200 there are being compared to remaining blocks most likely
-            if ((sdata->memcardIconSize + sdata->memoryCardFileSize_0x1680 + 0x1fff >> 0xd < ((int)(unsigned char)sdata->memcard_ptrStart[3])) &&
-                (1 < sdata->memcardIconSize + sdata->memoryCardFileSize_0x1680 * 2 + 0x1fff >> 0xd))
+            if ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd < ((int)(unsigned char)sdata->memcard_ptrStart[3])) &&
+                (sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd > 1))
             {
                 sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
                 return readResult;
@@ -169,8 +169,8 @@ int FUN_8003ddac(void)
 
         if (sdata->memcard_remainingAttempts > 0)
         {
-            iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memoryCardFileSize_0x1680;
-            event = sdata->memoryCardFileSize_0x1680;
+            iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memcardFileSize;
+            event = sdata->memcardFileSize;
 
             sdata->memcard_remainingAttempts = sdata->memcard_remainingAttempts + -1;
 
@@ -183,7 +183,7 @@ int FUN_8003ddac(void)
     case 7:
     CASE7_JUMP:
 
-        event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memoryCardFileSize_0x1680);
+        event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memcardFileSize);
 
         if (event != 0)
         {
@@ -201,8 +201,8 @@ int FUN_8003ddac(void)
                 // Make "switch" statement go to "next" stage
                 sdata->memcard_stage = sdata->memcard_stage + 1;
 
-                iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memoryCardFileSize_0x1680;
-                event = sdata->memoryCardFileSize_0x1680;
+                iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memcardFileSize;
+                event = sdata->memcardFileSize;
             READCARD_JUMP:
 
                 return MEMCARD_ReadFile(iVar4, event);
@@ -235,13 +235,13 @@ int FUN_8003ddac(void)
 			
         LAB_8003e1e4:
             event = sdata->memcard_stage - 10;
-            iVar4 = sdata->memcardIconSize + event * sdata->memoryCardFileSize_0x1680;
+            iVar4 = sdata->memcardIconSize + event * sdata->memcardFileSize;
 
             // pointer to memory card bytes
             ptrData = sdata->memcard_ptrStart;
 
             // size, 0x1680 bytes
-            event = sdata->memoryCardFileSize_0x1680;
+            event = sdata->memcardFileSize;
         }
 
         else
