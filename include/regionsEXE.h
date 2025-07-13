@@ -3286,18 +3286,7 @@ struct sData
 	// MC Start
 	short mcStart;
 
-	// 0 - MC_SCREEN_WARNING_NOCARD
-	// 1 - MC_SCREEN_WARNING_UNFORMATTED
-	// 2 - MC_SCREEN_FORMATTING
-	// 3 - MC_SCREEN_SAVING
-	// 4 - MC_SCREEN_LOADING
-	// 5 - MC_SCREEN_CHECKING
-	// 6 - MC_SCREEN_ERROR_FULL
-	// 7 - MC_SCREEN_ERROR_TIMEOUT
-	// 8 - MC_SCREEN_NULL
-	// 9 - MC_SCREEN_ERROR_NODATA
-
-	// 8008d47a
+	// 8008d47a (MC_SCREEN)
 	short mcScreenText;
 
 	// 8008d47c
@@ -4870,38 +4859,12 @@ struct sData
 	// & 1: frame2->frame1
 	int memcardUnk1;
 
-	// return
-	// 0 - MC_RETURN_IOE
-	// 1 - MC_RETURN TIMEOUT
-	// 2 - MC_RETURN_NOCARD
-	// 3 - MC_RETURN_NEWCARD
-	// 4 - MC_RETURN_FULL
-	// 5 - MC_RETURN_UNFORMATTED
-	// 6 - MC_RETURN_NODATA
-	// 7 - MC_RETURN_SUCCESS
-
 	// result
-	// 0 - MC_RESULT_ERROR_NOCARD
-	// 1 - MC_RESULT_FULL
-	// 2 - MC_RESULT_ERROR_TIMEOUT
-	// 3 - MC_RESULT_NEWCARD
-	// 4 - MC_RESULT_READY_LOAD
-	// 5 - MC_RESULT_ERROR_NODATA
-	// 6 - MC_RESULT_ERROR_UNFORMATTED
-	// 7 - MC_RESULT_READY_SAVE
-	// 8 - MC_RESULT_FINISHED
 
-	// 8009AA34
+	// 8009AA34 (MC_RESULT)
 	short desired_memcardResult;
 
-	// action
-	// 1 - MC_ACTION_GetInfo
-	// 2 - MC_ACTION_Save
-	// 3 - MC_ACTION_Load
-	// 4 - MC_ACTION_Format
-	// 5 - MC_ACTION_Erase
-
-	// 8009aa36
+	// 8009aa36 (MC_ACTION)
 	short frame1_memcardAction;
 
 	// 8009aa38
