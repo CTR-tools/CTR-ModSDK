@@ -49,13 +49,16 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
     MEMCARD_ChecksumSave(ptrData, fileSize);
 
-    // In sys/fcntl.h
-    // 0x200 is FCREAT, create if it does not exist,
-    // DAT_800857a3 handles read or write
+
+
+	// ====== Open 1 ======
+
+
 
 	// Search for "MEMCARD_SET_SIZE_BYTE3"
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 
-    (unsigned int)*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) << 0x10 | FCREATE);
+	int whatIsThis = (unsigned int)*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) << 0x10;
+	
+    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, whatIsThis | FCREATE);
 
     if (sdata->memcard_fd != -1)
     {
@@ -63,11 +66,11 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         sdata->memcard_fd = -1;
     }
 
-    // 0x8002, in sys/fcntl.h
-    // 0x8000 = FASYNC, for asynchronous I/O
-    // 0x0002 = FWRITE, for writing
 
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 0x8002);
+	// ====== Open 2 ======
+
+
+    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, FASYNC|FWRITE);
 
     if (sdata->memcard_fd != -1)
     {

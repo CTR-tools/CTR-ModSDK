@@ -12,12 +12,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
 
     MEMCARD_NewTask(slotIdx, name, ptrMemcard, memcardFileSize, param5); // Too many params to NewTask. param5 is always 0
 
-
-    // 0x8001, in sys/fcntl.h
-    // 0x8000 = FASYNC, for asynchronous I/O
-    // 0x0001 = FREAD, for reading
-
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 0x8001);
+    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, FASYNC|FREAD);
 
     if (sdata->memcard_fd == -1)
     {

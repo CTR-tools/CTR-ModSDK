@@ -6,15 +6,18 @@ int DECOMP_MEMCARD_IsFile(int slotIdx, char *save_name)
 
     MEMCARD_StringSet(name, slotIdx, save_name);
 
-    // 0x8002, in sys/fcntl.h
-    // 0x8000 = FASYNC, for asynchronous I/O
-    // 0x0002 = FWRITE, for writing
-    sdata->memcard_fd = open(name, FASYNC|FWRITE);
+	// This temporary FD will not be saved,
+	// The global FD will always be wiped
+	int fd;
+	sdata->memcard_fd = -1;
 
-    if (sdata->memcard_fd == -1)
-        return MC_RETURN_NODATA;
+    fd = open(name, FASYNC|FWRITE);
 
-    close(sdata->memcard_fd);
-    sdata->memcard_fd = -1;
-    return MC_RETURN_IOE;
+    if (fd != -1)
+	{
+		close(fd);
+		return MC_RETURN_IOE;
+	}
+
+	return MC_RETURN_NODATA;
 }
