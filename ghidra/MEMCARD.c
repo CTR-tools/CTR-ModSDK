@@ -667,6 +667,9 @@ int FUN_8003ddac(void)
         return 7;
       }
 	  
+	  // === MC_RETURN_NEWCARD (3) ===
+	  
+	  // MEMCARD_SkipEvents
       FUN_8003db54();
       
 	  do {
