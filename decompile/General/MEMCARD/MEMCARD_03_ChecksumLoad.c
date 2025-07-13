@@ -1,6 +1,6 @@
 #include <common.h>
 
-unsigned int DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
+MC_EVENT DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 {
 	int i;
 	int crc;
@@ -41,10 +41,15 @@ unsigned int DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 	sdata->crc16_checkpoint_byteIndex = byteIndexEnd;
 	
 	// if end is not reached
-	if(byteIndexEnd != len) return 7;
+	if (byteIndexEnd != len) 
+		return MC_EVENT_NONE;
 	
 	// finalize checksum twice (dont loop)
 	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd]);
-	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd+1]);	
+	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd+1]);
+
+	// Will return one of these:
+	// 0: MC_EVENT_DONE
+	// 1: MC_EVENT_BAD_CARD
 	return (unsigned int)(crc != 0);
 }

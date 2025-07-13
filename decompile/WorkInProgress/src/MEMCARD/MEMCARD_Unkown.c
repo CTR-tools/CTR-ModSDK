@@ -19,7 +19,7 @@ int FUN_8003ddac(void)
         if (event == MC_EVENT_NONE)
 			return 0;
 
-        if (event == MC_EVENT_DONE)
+        else if (event == MC_EVENT_DONE)
         {
             // If this is the first frame of the main game loop,
             // after all initialization is done
@@ -40,32 +40,29 @@ int FUN_8003ddac(void)
             }
         }
 
+        else if (event == MC_EVENT_NEW_CARD)
+        {
+			MEMCARD_SkipEvents();
+			while (_card_clear(sdata->memcardSlot) != 1);
+			
+			event = MEMCARD_WaitForHwEvent();
+			if (event == 0)
+			{
+				// discard any pending events
+				// submit a load to make sure format worked,
+				// check the result of a NEW CARD
+				MEMCARD_SkipEvents();
+				while (_card_load(sdata->memcardSlot) != 1);
+				sdata->memcard_stage = MC_STAGE_NEWCARD;
+				return 7;
+			}
+		}
+
         else
         {
-            if (event == MC_EVENT_NEW_CARD)
-            {
-				MEMCARD_SkipEvents();
-				while (_card_clear(sdata->memcardSlot) != 1);
-				
-				event = MEMCARD_WaitForHwEvent();
-				if (event == 0)
-				{
-					// discard any pending events
-					// submit a load to make sure format worked,
-					// check the result of a NEW CARD
-					MEMCARD_SkipEvents();
-					while (_card_load(sdata->memcardSlot) != 1);
-					sdata->memcard_stage = MC_STAGE_NEWCARD;
-					return 7;
-				}
-			}
-			
-			else
-			{
-                sdata->memcard_stage = MC_STAGE_IDLE;
-                sdata->memoryCard_SizeRemaining = 0;
-                return event;
-			}
+            sdata->memcard_stage = MC_STAGE_IDLE;
+            sdata->memoryCard_SizeRemaining = 0;
+            return event;
         }
 
         sdata->memcard_stage = MC_STAGE_IDLE;
@@ -106,6 +103,12 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 
+		// if nothing happened yet, try again next frame
+        if (event == MC_EVENT_NONE)
+        {
+            return 7;
+        }
+
 		// if pass, then move to next stage,
 		// setup variables for the load about to happen
         if (event == MC_EVENT_DONE)
@@ -131,12 +134,6 @@ int FUN_8003ddac(void)
             return readResult;
         }
 
-		// if nothing happened yet, try again next frame
-        if (event == MC_EVENT_NONE)
-        {
-            return 7;
-        }
-
 		// if failed, restart attempting icon
         if (sdata->memcard_remainingAttempts > 0)
         {
@@ -156,7 +153,12 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 
-        if (event == 0)
+        if (event == MC_EVENT_NONE)
+        {
+            return 7;
+        }
+
+        if (event == MC_EVENT_DONE)
         {
             sdata->crc16_checkpoint_byteIndex = 0;
             sdata->crc16_checkpoint_status = 0;
@@ -168,11 +170,6 @@ int FUN_8003ddac(void)
                 return 7;
             }
             goto CASE7_JUMP;
-        }
-
-        if (event == 7)
-        {
-            return 7;
         }
 
         if (sdata->memcard_remainingAttempts > 0)
@@ -193,32 +190,34 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memcardFileSize);
 
-        if (event != 0)
+        if (event == MC_EVENT_NONE)
         {
-            // if checksumLoad returned 7, then the checksum
-            // is not finished processing, it will continue next frame
-            if (event == 7)
-            {
-                return 7;
-            }
-
-            // at this point, assume checksum succeeded (return 1)
-
-            if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
-            {
-                // Make "switch" statement go to "next" stage
-                sdata->memcard_stage = sdata->memcard_stage + 1;
-
-                iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memcardFileSize;
-                event = sdata->memcardFileSize;
-            READCARD_JUMP:
-
-                return MEMCARD_ReadFile(iVar4, event);
-            }
+            return 7;
         }
-    CLOSEFILE_JUMP:
-        MEMCARD_CloseFile();
-        break;
+
+        if (event == MC_EVENT_DONE)
+        {
+		CLOSEFILE_JUMP:
+			MEMCARD_CloseFile();
+			break;
+		}
+			
+        // at this point, assume checksum succeeded (return 1)
+
+        if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
+        {
+            // Make "switch" statement go to "next" stage
+            sdata->memcard_stage = sdata->memcard_stage + 1;
+
+            iVar4 = sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memcardFileSize;
+            event = sdata->memcardFileSize;
+        
+		READCARD_JUMP:
+            return MEMCARD_ReadFile(iVar4, event);
+        }
+		
+		break;
+        
     default:
         event = 1;
         break;
@@ -227,8 +226,13 @@ int FUN_8003ddac(void)
     case 11:
 
         event = MEMCARD_GetNextSwEvent();
-
-        if (event == 0)
+            
+		if (event == MC_EVENT_NONE)
+        {
+            return 7;
+        }
+			
+        if (event == MC_EVENT_DONE)
         {
             if ((sdata->memcard_stage != 9) && ((10 < sdata->memcard_stage || ((sdata->memcardStatusFlags & 4) != 0))))
             {
@@ -254,11 +258,6 @@ int FUN_8003ddac(void)
 
         else
         {
-            if (event == 7)
-            {
-                return 7;
-            }
-
             // reduce remaining number of attempts
             iVar4 = sdata->memcard_remainingAttempts - 1;
 
