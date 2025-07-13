@@ -17,7 +17,7 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
 		
         if (event == MC_EVENT_NONE)
-			return MC_EVENT_NONE;
+			return 0;
 
         if (event == MC_EVENT_DONE)
         {
@@ -78,7 +78,7 @@ int FUN_8003ddac(void)
 
 		// if nothing happened yet, try again next frame
         if (event == MC_EVENT_NONE)
-            return MC_EVENT_NONE;
+            return 0;
 		
 		sdata->memcard_stage = MC_STAGE_IDLE;
 
@@ -283,14 +283,14 @@ int FUN_8003ddac(void)
         event = MEMCARD_WriteFile(iVar4, ptrData, event);
         break;
 		
-    case MC_STAGE_ERASE_PASS:
+    case MC_STAGE_ERASE_FAIL: // 13
         sdata->memcard_stage = MC_STAGE_IDLE;
-        event = 1;
+        event = MC_RETURN_TIMEOUT; // 1
         break;
 		
-    case MC_STAGE_ERASE_FAIL:
+    case MC_STAGE_ERASE_PASS: // 14
         sdata->memcard_stage = MC_STAGE_IDLE;
-        event = 0;
+        event = MC_RETURN_IOE; // 0
     }
     return event;
 }

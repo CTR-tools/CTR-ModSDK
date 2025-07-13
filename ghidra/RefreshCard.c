@@ -1245,7 +1245,7 @@ void FUN_80047a58(void)
     }
     break;
   
-  // MC_RETURN TIMEOUT
+  // MC_RETURN_TIMEOUT
   case 1:
 	// MC_RESULT_ERROR_TIMEOUT
     DAT_8009aa34 = 2;
