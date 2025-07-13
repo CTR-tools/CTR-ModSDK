@@ -72,31 +72,37 @@ int FUN_8003ddac(void)
 
         goto LAB_8003df38;
 
-    case 2:
+	// after checking new card
+    case MC_STAGE_NEWCARD:
 
         event = MEMCARD_GetNextSwEvent();
 
-        if (event == 0)
+		// if new card passed a "load" test (after format),
+		// set stage to idle, record free bytes
+        if (event == MC_EVENT_DONE)
         {
-            sdata->memcard_stage = 0;
+            sdata->memcard_stage = MC_STAGE_IDLE;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffe | 2;
-
             MEMCARD_GetFreeBytes(sdata->memcardSlot);
-
             return 3;
         }
-        if (event == 3)
+		
+		// if new card was just inserted
+        if (event == MC_EVENT_NEW_CARD)
         {
-            sdata->memcard_stage = 0;
+            sdata->memcard_stage = MC_STAGE_IDLE;
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffc;
             return 5;
         }
-        if (event == 7)
+		
+		// if nothing happened yet, try again next frame
+        if (event == MC_EVENT_NONE)
         {
             return 7;
         }
+		
     LAB_8003df38:
-        sdata->memcard_stage = 0;
+        sdata->memcard_stage = MC_STAGE_IDLE;
         break;
 
     case 3:
@@ -124,7 +130,8 @@ int FUN_8003ddac(void)
             return readResult;
         }
 
-        if (event == 7)
+		// if nothing happened yet, try again next frame
+        if (event == MC_EVENT_NONE)
         {
             return 7;
         }
