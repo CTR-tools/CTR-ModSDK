@@ -8,7 +8,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
 
 {
     if (sdata->memcard_stage != MC_STAGE_IDLE)
-        return 1;
+        return MC_RETURN_TIMEOUT;
 
     MEMCARD_NewTask(slotIdx, name, ptrMemcard, memcardFileSize, param5); // Too many params to NewTask. param5 is always 0
 
@@ -22,7 +22,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
     if (sdata->memcard_fd == -1)
     {
         MEMCARD_CloseFile();
-        return 6;
+        return MC_RETURN_NODATA;
     }
     else
     {
@@ -39,7 +39,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
         */
         // process crc16 to the end of memory
         sdata->memcardStatusFlags = sdata->memcardStatusFlags | 8;
-        sdata->memcard_stage = 3;
+        sdata->memcard_stage = MC_STAGE_LOAD_PART1_ICON;
 
         // Read memory card
         return MEMCARD_ReadFile(0, 0x80);

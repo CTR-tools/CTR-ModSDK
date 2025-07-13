@@ -3,7 +3,7 @@
 uint8_t DECOMP_MEMCARD_GetInfo(int slotIdx)
 {
     if (sdata->memcard_stage != MC_STAGE_IDLE)
-        return 1;
+        return MC_RETURN_TIMEOUT;
 
 	// discard any pending events
 	// submit a card_info request,
@@ -15,5 +15,5 @@ uint8_t DECOMP_MEMCARD_GetInfo(int slotIdx)
     sdata->memcard_remainingAttempts = 8;
     sdata->memcardSlot = slotIdx;
 	
-    return 7;
+    return MC_RETURN_SUCCESS;
 }

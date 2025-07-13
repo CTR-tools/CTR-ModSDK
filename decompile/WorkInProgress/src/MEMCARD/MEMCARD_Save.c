@@ -7,13 +7,15 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
 {
 
-    if (sdata->memcard_stage != 0)
-        return 1;
+    if (sdata->memcard_stage != MC_STAGE_IDLE)
+        return MC_RETURN_TIMEOUT;
 
     sdata->memcardIconSize = 0x100;
 
     // this will always return 0, no need to check
     MEMCARD_NewTask(slotIdx, name, ptrData, fileSize);
+
+	// Search for "MEMCARD_SET_SIZE_BYTE3"
 
     // NOTE: Commented out because param6 always 0, will always eval to false
     /*
@@ -51,6 +53,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
     // 0x200 is FCREAT, create if it does not exist,
     // DAT_800857a3 handles read or write
 
+	// Search for "MEMCARD_SET_SIZE_BYTE3"
     sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 
     (unsigned int)*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) << 0x10 | 0x200);
 
@@ -68,10 +71,10 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
     if (sdata->memcard_fd != -1)
     {
-        sdata->memcard_stage = 9;
+        sdata->memcard_stage = MC_STAGE_SAVE_PART1_ICON;
         return MEMCARD_WriteFile(0, data.memcardIcon_PsyqHand, sdata->memcardIconSize);
     }
 
     MEMCARD_CloseFile(0);
-    return 4;
+    return MC_RETURN_FULL;
 }

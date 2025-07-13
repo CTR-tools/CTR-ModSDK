@@ -119,6 +119,7 @@ int FUN_8003ddac(void)
 
             readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memcardFileSize);
 
+			// Search for "MEMCARD_SET_SIZE_BYTE3"
             if (
                 // ((sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd) > 1) &&
 				   ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd) < ((int)(unsigned char)sdata->memcard_ptrStart[3]))
