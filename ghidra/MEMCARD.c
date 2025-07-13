@@ -1099,8 +1099,7 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
 
 	  // 0x8002, in sys/fcntl.h
 	  // 0x8000 = FASYNC, for asynchronous I/O
-	  // 0x0001 = FWRITE, for writing
-
+	  // 0x0002 = FWRITE, for writing
       DAT_8008d40c = open(&DAT_800990a4,0x8002);
 
       if (DAT_8008d40c != -1) {
@@ -1183,7 +1182,7 @@ undefined4 FUN_8003e59c(undefined4 param_1,undefined4 param_2)
 
   // 0x8002, in sys/fcntl.h
   // 0x8000 = FASYNC, for asynchronous I/O
-  // 0x0001 = FWRITE, for writing
+  // 0x0002 = FWRITE, for writing
   DAT_8008d40c = open(acStack72,0x8002);
 
   if (DAT_8008d40c == -1) 
