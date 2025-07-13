@@ -12,9 +12,9 @@ int DECOMP_MEMCARD_IsFile(int slotIdx, char *save_name)
     sdata->memcard_fd = open(name, 0x8002);
 
     if (sdata->memcard_fd == -1)
-        return 6;
+        return MC_RETURN_NODATA;
 
     close(sdata->memcard_fd);
     sdata->memcard_fd = -1;
-    return 0;
+    return MC_RETURN_IOE;
 }
