@@ -8,7 +8,7 @@ uint8_t DECOMP_MEMCARD_Format(int slotIdx)
     if (!format(MEMCARD_StringInit(slotIdx, 0)))
 		return 1;
 
-	// discard any pending events
+	// discard any previous events
 	// submit a load to make sure format worked,
 	// check the result of a NEW CARD
 	// 8 tries to see if it worked
