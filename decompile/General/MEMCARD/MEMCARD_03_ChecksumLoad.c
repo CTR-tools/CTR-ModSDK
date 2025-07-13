@@ -1,6 +1,6 @@
 #include <common.h>
 
-MC_EVENT DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
+int DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 {
 	int i;
 	int crc;
