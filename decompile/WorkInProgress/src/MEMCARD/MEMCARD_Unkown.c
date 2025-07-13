@@ -17,7 +17,7 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
 		
         if (event == MC_RETURN_PENDING)
-			return 0;
+			return MC_RETURN_PENDING;
 
         else if (event == MC_RETURN_IOE)
         {
@@ -73,9 +73,8 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 
-		// if nothing happened yet, try again next frame
         if (event == MC_RETURN_PENDING)
-            return 0;
+            return MC_RETURN_PENDING;
 		
 		sdata->memcard_stage = MC_STAGE_IDLE;
 
