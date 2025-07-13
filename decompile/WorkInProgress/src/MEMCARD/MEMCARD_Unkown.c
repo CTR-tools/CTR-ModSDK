@@ -102,11 +102,8 @@ int FUN_8003ddac(void)
 
         event = MEMCARD_GetNextSwEvent();
 
-		// if nothing happened yet, try again next frame
         if (event == MC_RETURN_PENDING)
-        {
-            return 7;
-        }
+            return MC_RETURN_PENDING;
 
 		// if pass, then move to next stage,
 		// setup variables for the load about to happen
@@ -154,9 +151,7 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
 
         if (event == MC_RETURN_PENDING)
-        {
-            return 7;
-        }
+            return MC_RETURN_PENDING;
 
         if (event == MC_RETURN_IOE)
         {
@@ -191,9 +186,7 @@ int FUN_8003ddac(void)
         event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memcardFileSize);
 
         if (event == MC_RETURN_PENDING)
-        {
-            return 7;
-        }
+            return MC_RETURN_PENDING;
 
         if (event == MC_RETURN_IOE)
         {
@@ -228,9 +221,7 @@ int FUN_8003ddac(void)
         event = MEMCARD_GetNextSwEvent();
             
 		if (event == MC_RETURN_PENDING)
-        {
-            return 7;
-        }
+            return MC_RETURN_PENDING;
 			
         if (event == MC_RETURN_IOE)
         {
