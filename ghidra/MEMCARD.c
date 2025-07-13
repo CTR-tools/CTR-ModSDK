@@ -1250,7 +1250,7 @@ undefined * FUN_8003e678(void)
 }
 
 
-// MEMCARD_EraseFile (unused)
+// MEMCARD_EraseFile
 // param1 slotIndex
 undefined4 FUN_8003e6d4(undefined4 param_1,undefined4 param_2)
 

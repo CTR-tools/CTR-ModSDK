@@ -1,6 +1,6 @@
 #include <common.h>
 
-// NOTE: unused function?
+// called by MC_ACTION_Erase
 uint8_t DECOMP_MEMCARD_EraseFile(int slotIdx, char *srcString)
 {
     if (sdata->memcard_stage != 0)
