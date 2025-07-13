@@ -100,27 +100,33 @@ int FUN_8003ddac(void)
 		
         break;
 
+	// after the attempt to read icon,
+	// MC_STAGE_LOAD_PART1_ICON
     case 3:
 
         event = MEMCARD_GetNextSwEvent();
 
-        if (event == 0)
+		// if pass, then move to next stage,
+		// setup variables for the load about to happen
+        if (event == MC_EVENT_DONE)
         {
-            // allow "switch" statement to go to stage 4
-            sdata->memcard_stage = 4;
+            sdata->memcard_stage++;
 
-            // Bitwise & with 0xf to extract last 4 bits then increment by 1
             sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
 
             readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memcardFileSize);
 
-            // count blocks of size 0x200 there are being compared to remaining blocks most likely
-            if ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd < ((int)(unsigned char)sdata->memcard_ptrStart[3])) &&
-                (sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd > 1))
+            if (
+                // ((sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd) > 1) &&
+				   ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd) < ((int)(unsigned char)sdata->memcard_ptrStart[3]))
+				)
             {
+				// 1-slot file
                 sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
                 return readResult;
             }
+			
+			// 2-slot file
             sdata->memcardStatusFlags = sdata->memcardStatusFlags | 4;
             return readResult;
         }
@@ -131,8 +137,10 @@ int FUN_8003ddac(void)
             return 7;
         }
 
+		// if failed, restart attempting icon
         if (sdata->memcard_remainingAttempts > 0)
         {
+			// replicate MEMCARD_ReadFile(0, 0x80) from MEMCARD_LOAD
             iVar4 = 0;
             event = 0x80;
 
