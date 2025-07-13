@@ -7,13 +7,11 @@
 uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize, unsigned int param5)
 
 {
-    if (sdata->memcard_stage != 0)
-    {
+    if (sdata->memcard_stage != MC_STAGE_IDLE)
         return 1;
-    }
+
     MEMCARD_NewTask(slotIdx, name, ptrMemcard, memcardFileSize, param5); // Too many params to NewTask. param5 is always 0
-    // 800990a4
-    // string for directory and file of save that is in use
+
 
     // 0x8001, in sys/fcntl.h
     // 0x8000 = FASYNC, for asynchronous I/O

@@ -1189,7 +1189,8 @@ void FUN_80047a58(void)
 
 	iVar2 = 0;
 
-	// loop until you have gone through all memory card saves
+	// 0x0: MC_STAGE_IDLE (did not find ghost)
+	// 0xF: MC_STAGE_GHOST_FOUND (found ghost)
     while (iVar3 != 0)
 	{
 	  // If there are less than 7 ghosts loaded

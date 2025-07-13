@@ -9,16 +9,19 @@ char* DECOMP_MEMCARD_FindNextGhost(void)
     struct DIRENTRY *nextEntry;
     struct DIRENTRY someEntry;
 
-    if (sdata->memcard_stage == 0xf)
+    if (sdata->memcard_stage != MC_STAGE_GHOST_FOUND)
 	{
-		nextEntry = nextfile(&someEntry);
-		if (nextEntry == &someEntry)
-		{
-			strcpy(nextEntry->name, someEntry.name);
-			return &sdata->s_memcardFindGhostFile[0];
-		}
-		sdata->memcard_stage = 0;
+		return 0;
 	}
 	
-	return (char *)0;
+	// [error]
+	// They cant be true, a firstfile pointer wont "equal" a stack pointer,
+	// maybe compare the strings instead?
+	nextEntry = nextfile(&someEntry);
+	if (nextEntry == &someEntry)
+	{
+		strcpy(nextEntry->name, someEntry.name);
+		return &sdata->s_memcardFindGhostFile[0];
+	}
+	sdata->memcard_stage = MC_STAGE_IDLE;
 }
