@@ -21,25 +21,19 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
     }
     else
     {
-        // NOTE: Commented out because param5 is always 0, Will always eval to false
-        /*
         if ((param5 & 2) == 0)
-            {
-                // dont process crc16 to the end of memory,
-                // just the next 0x200 bytes (async)
-                sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffff7;
-            }
-            else
-            {
-        */
-        // process crc16 to the end of memory
-        sdata->memcardStatusFlags = sdata->memcardStatusFlags | 8;
+        {
+            // dont process crc16 to the end of memory,
+            // just the next 0x200 bytes (async)
+            sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffff7;
+        }
+        else
+        {
+			// process crc16 to the end of memory
+			sdata->memcardStatusFlags = sdata->memcardStatusFlags | 8;
+		}
+		
         sdata->memcard_stage = MC_STAGE_LOAD_PART1_ICON;
-
-        // Read memory card
         return MEMCARD_ReadFile(0, 0x80);
-        /*
-            }
-        */
-    }
+	}
 }

@@ -169,13 +169,7 @@ int FUN_8003ddac(void)
             sdata->crc16_checkpoint_byteIndex = 0;
             sdata->crc16_checkpoint_status = 0;
             sdata->memcard_stage++;
-			
-            if ((sdata->memcardStatusFlags & 8) == 0)
-            {
-                return 7;
-            }
-			
-			// === Do NOT break, goto 5/7 ===
+			return MC_RETURN_PENDING;
         }
 		else
 		{
@@ -189,8 +183,6 @@ int FUN_8003ddac(void)
 			extra = MC_EXTRA_READ_FILE;
 			break;
 		}
-		
-		// === Do NOT break, goto 5/7 ===
 
     case 5:
     case 7:
