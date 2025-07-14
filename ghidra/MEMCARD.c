@@ -604,7 +604,7 @@ void FUN_8003dd10(undefined4 param_1)
 }
 
 
-
+// MEMCARD_HandleEvent
 int FUN_8003ddac(void)
 
 {

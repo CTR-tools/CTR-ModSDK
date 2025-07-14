@@ -1120,6 +1120,7 @@ void FUN_80047a58(void)
 	// frame1_memcardAction
     if (DAT_8009aa36 != 0) 
 	{
+	  // MEMCARD_HandleEvent
       iVar4 = FUN_8003ddac();
       
 	  // frame3 = frame1
@@ -1279,7 +1280,7 @@ void FUN_80047a58(void)
     DAT_8009aa34 = 1;
     break;
   
-  // from FUN_8003ddac
+  // from MEMCARD_HandleEvent
   // MC_RETURN_UNFORMATTED
   case 5:
 	// MC_RESULT_ERROR_UNFORMATTED

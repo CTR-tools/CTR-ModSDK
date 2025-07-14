@@ -8,8 +8,7 @@ enum MC_EXTRA
 	MC_EXTRA_CLOSE = 1,
 };
 
-// TODO: Name function, add symbol (MEMCARD_GetStageResult)
-int FUN_8003ddac(void)
+int DECOMP_MEMCARD_HandleEvent(void)
 {
     int readResult;
     int event;

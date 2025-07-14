@@ -562,7 +562,7 @@
 8003dc9c MEMCARD_WriteFile
 8003dd10 MEMCARD_GetFreeBytes
 // Extra in Japan Retail (card_clear)
-// unknown 8003ddac
+8003ddac MEMCARD_HandleEvent
 8003e238 MEMCARD_GetInfo
 8003e29c MEMCARD_Load
 8003e344 MEMCARD_Save

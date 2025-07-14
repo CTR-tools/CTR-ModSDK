@@ -454,6 +454,7 @@ MEMCARD_CloseFile = 0x8003dbf8;
 MEMCARD_ReadFile = 0x8003dc30;
 MEMCARD_WriteFile = 0x8003dc9c;
 MEMCARD_GetFreeBytes = 0x8003dd10;
+MEMCARD_HandleEvent = 0x8003ddac;
 MEMCARD_GetInfo = 0x8003e238;
 MEMCARD_Load = 0x8003e29c;
 MEMCARD_Save = 0x8003e344;

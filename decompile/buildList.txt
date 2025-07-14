@@ -968,7 +968,7 @@ common, exe, MEMCARD_CloseFile, 0x0,                     General/MEMCARD/MEMCARD
 common, exe, MEMCARD_ReadFile, 0x0,                      General/MEMCARD/MEMCARD_14_ReadFile.c
 common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD_15_WriteFile.c
 common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
-// unknown 8003ddac
+// MEMCARD_HandleEvent
 common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c
 
 // WIP
