@@ -1,4 +1,5 @@
 #include <psn00bsdk/include/sys/types.h>
+#include <psn00bsdk/include/sys/fcntl.h>
 #include <psn00bsdk/include/psxetc.h>
 #include <psn00bsdk/include/psxgte.h>
 #include <psn00bsdk/include/psxgpu.h>

@@ -107,6 +107,8 @@ common, 231, RB_Hazard_CollLevInst, 0x0,                               General/2
 common, 231, RB_Hazard_InterpolateValue, 0x0,                          General/231/231_023_RB_Hazard_InterpolateValue.c
 common, 231, RB_MovingExplosive_ThTick, 0x0,                           General/231/231_024_RB_MovingExplosive_ThTick.c
 common, 231, RB_MovingExplosive_Explode, 0x0,                          General/231/231_025_RB_MovingExplosive_Explode.c
+
+// TODO: BUGGED
 common, 231, RB_Warpball_FadeAway, 0x0,                                General/231/231_026_RB_Warpball_FadeAway.c
 common, 231, RB_Warpball_Death, 0x0,                                   General/231/231_027_RB_Warpball_Death.c
 //common, 231, RB_Warpball_NewPathNode, 0x0,                             General/231/231_028_RB_Warpball_NewPathNode.c //TODO
@@ -116,6 +118,7 @@ common, 231, RB_Warpball_Start, 0x0,                                   General/2
 common, 231, RB_Warpball_SeekDriver, 0x0,                              General/231/231_032_RB_Warpball_SeekDriver.c
 common, 231, RB_Warpball_TurnAround, 0x0,                              General/231/231_033_RB_Warpball_TurnAround.c
 //common, 231, RB_Warpball_ThTick, 0x0,                                  General/231/231_034_RB_Warpball_ThTick.c //TODO
+
 common, 231, RB_MaskWeapon_FadeAway, 0x0,                              General/231/231_035_RB_MaskWeapon_FadeAway.c
 common, 231, RB_MaskWeapon_ThTick, 0x0,                                General/231/231_036_RB_MaskWeapon_ThTick.c
 common, 231, RB_ShieldDark_ThTick_Pop, 0x0,                            General/231/231_037_RB_ShieldDark_ThTick_Pop.c
@@ -966,13 +969,16 @@ common, exe, MEMCARD_ReadFile, 0x0,                      General/MEMCARD/MEMCARD
 common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD_15_WriteFile.c
 common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
 // unknown 8003ddac
-//common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c //TODO
-//common, exe, MEMCARD_Load, 0x0,                          General/MEMCARD/MEMCARD_19_Load.c //TODO
-//common, exe, MEMCARD_Save, 0x0,                          General/MEMCARD/MEMCARD_20_Save.c //TODO
+common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c
+
+// WIP
+//common, exe, MEMCARD_Load, 0x0,                          General/MEMCARD/MEMCARD_19_Load.c
+//common, exe, MEMCARD_Save, 0x0,                          General/MEMCARD/MEMCARD_20_Save.c
+
 common, exe, MEMCARD_Format, 0x0,                        General/MEMCARD/MEMCARD_21_Format.c
 common, exe, MEMCARD_IsFile, 0x0,                        General/MEMCARD/MEMCARD_22_IsFile.c
-//common, exe, MEMCARD_FindFirstGhost, 0x0,                General/MEMCARD/MEMCARD_23_FindFirstGhost.c //bugged
-//common, exe, MEMCARD_FindNextGhost, 0x0,                 General/MEMCARD/MEMCARD_24_FindNextGhost.c //bugged
+common, exe, MEMCARD_FindFirstGhost, 0x0,                General/MEMCARD/MEMCARD_23_FindFirstGhost.c
+common, exe, MEMCARD_FindNextGhost, 0x0,                 General/MEMCARD/MEMCARD_24_FindNextGhost.c
 common, exe, MEMCARD_EraseFile, 0x0,                     General/MEMCARD/MEMCARD_25_EraseFile.c
 
 // ====================================================================================================================
@@ -980,7 +986,7 @@ common, exe, MEMCARD_EraseFile, 0x0,                     General/MEMCARD/MEMCARD
 // ====================================================================================================================
 common, exe, MEMPACK_Init, 0x0,                          General/MEMPACK/MEMPACK_00_Init.c
 common, exe, MEMPACK_SwapPacks, 0x0,                     General/MEMPACK/MEMPACK_01_SwapPacks.c
-common, exe, MEMPACK_NewPack, 0x0,              General/MEMPACK/MEMPACK_02_NewPack.c
+common, exe, MEMPACK_NewPack, 0x0,              		 General/MEMPACK/MEMPACK_02_NewPack.c
 common, exe, MEMPACK_GetFreeBytes, 0x0,                  General/MEMPACK/MEMPACK_03_GetFreeBytes.c
 common, exe, MEMPACK_AllocMem, 0x0,                      General/MEMPACK/MEMPACK_04_AllocMem.c
 common, exe, MEMPACK_AllocHighMem, 0x0,                  General/MEMPACK/MEMPACK_05_AllocHighMem.c

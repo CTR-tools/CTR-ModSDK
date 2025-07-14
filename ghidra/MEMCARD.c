@@ -501,7 +501,7 @@ undefined4 FUN_8003db98(undefined4 param_1,undefined4 param_2,undefined4 param_3
 }
 
 
-// close memcard file
+// MEMCARD_CloseFile
 void FUN_8003dbf8(void)
 {
   // if file is open
@@ -535,7 +535,7 @@ undefined4 FUN_8003dc30(long param_1,long param_2)
     return 7;
   }
 
-  // close memcard file
+  // MEMCARD_CloseFile
   FUN_8003dbf8();
 
   // MC_RETURN TIMEOUT
@@ -560,7 +560,7 @@ undefined4 FUN_8003dc9c(long param_1,void *param_2,long param_3)
     return 7;
   }
 
-  // close memcard file
+  // MEMCARD_CloseFile
   FUN_8003dbf8();
 
   // MC_RETURN TIMEOUT
@@ -845,7 +845,7 @@ LAB_8003e010:
       }
     }
 LAB_8003e1fc:
-	// close memcard file
+	// MEMCARD_CloseFile
     FUN_8003dbf8();
     break;
   default:
@@ -862,7 +862,7 @@ LAB_8003e1fc:
 	{
       if ((DAT_8008d404 != 9) && ((10 < DAT_8008d404 || ((DAT_8008d8cc & 4) != 0))))
 	  {
-		// close memcard file
+		// MEMCARD_CloseFile
         FUN_8003dbf8();
 
 		// MEMCARD_GetFreeBytes
@@ -995,7 +995,7 @@ undefined4 FUN_8003e29c(param1, param2, param3, param4, param5)
 	// if open failed
     if (DAT_8008d40c == -1)
 	{
-	  // close memcard file
+	  // MEMCARD_CloseFile
       FUN_8003dbf8();
 	  
 	  // MC_RETURN_NODATA
@@ -1115,7 +1115,7 @@ undefined4 FUN_8003e344(undefined4 param_1,undefined4 param_2,
         return uVar3;
       }
 
-	  // close memcard file
+	  // MEMCARD_CloseFile
       FUN_8003dbf8(0);
 	  
 	  // MC_RETURN_FULL

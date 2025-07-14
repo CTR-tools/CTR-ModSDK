@@ -65,7 +65,7 @@ uint FUN_80046a90(short param_1)
   return uVar1;
 }
 
-
+// RefreshCard_NextMemcardAction
 // param1 - memcardSlot
 // param2 - action
 // param3 - filename

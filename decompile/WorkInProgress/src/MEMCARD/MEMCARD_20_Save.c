@@ -78,6 +78,6 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         return MEMCARD_WriteFile(0, data.memcardIcon_PsyqHand, sdata->memcardIconSize);
     }
 
-    MEMCARD_CloseFile(0);
+    MEMCARD_CloseFile();
     return MC_RETURN_FULL;
 }
