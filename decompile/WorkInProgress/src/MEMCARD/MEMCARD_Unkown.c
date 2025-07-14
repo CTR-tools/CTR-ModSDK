@@ -146,17 +146,16 @@ int FUN_8003ddac(void)
             return readResult;
         }
 
-		// if failed, restart attempting icon
-        if (sdata->memcard_remainingAttempts > 0)
-        {
-            sdata->memcard_remainingAttempts--;
-			extra = MC_EXTRA_READ_ICON;
+		if (sdata->memcard_remainingAttempts < 1)
+		{
+			extra = MC_EXTRA_CLOSE;
 			break;
-        }
+		}
 
-		extra = MC_EXTRA_CLOSE;
+        sdata->memcard_remainingAttempts--;
+		extra = MC_EXTRA_READ_ICON;
 		break;
-
+			
     case 4:
     case 6:
 
@@ -180,14 +179,14 @@ int FUN_8003ddac(void)
         }
 		else
 		{
-			if (sdata->memcard_remainingAttempts > 0)
+			if (sdata->memcard_remainingAttempts < 1)
 			{
-				sdata->memcard_remainingAttempts--;
-				extra = MC_EXTRA_READ_FILE;
+				extra = MC_EXTRA_CLOSE;
 				break;
 			}
-	
-			extra = MC_EXTRA_CLOSE;
+			
+			sdata->memcard_remainingAttempts--;
+			extra = MC_EXTRA_READ_FILE;
 			break;
 		}
 		
