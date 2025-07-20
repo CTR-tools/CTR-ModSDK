@@ -6,45 +6,46 @@ int DECOMP_MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 	int crc;
 	int byteIndexEnd;
 	int byteIndexStart;
-	int memcardStatusFlags;
-		
-	// load checkpoints (both zero on first call),
-	// also group all $gp variables together, save asm
-	crc = sdata->crc16_checkpoint_status;
-	byteIndexStart = sdata->crc16_checkpoint_byteIndex;
-	memcardStatusFlags = sdata->memcardStatusFlags;
+	int boolFinishThisFrame = 1;
 	
-	// end of memcard "before" checksum,
-	// checksum goes in last 2 bytes
+	// Leave 2 bytes at the end,
+	// the checksum is stored there
 	len -= 2;
 	byteIndexEnd = len;
+
+	// Option 1: Set ZERO for a one-frame load
+	// Option 2: Set ZERO for first-frame of multi-frame load
+	// Option 3: Set existing checkpoint from previous frame
+	crc = sdata->crc16_checkpoint_status;
+	byteIndexStart = sdata->crc16_checkpoint_byteIndex;
 	
-	// if not running full checksum in one frame
-	if((memcardStatusFlags & 8) == 0)
+	// if this is not a one-frame load
+	if((sdata->memcardStatusFlags & 8) == 0)
 	{	
-		// if more than 512 bytes remain, cap it
-		if(byteIndexEnd > (byteIndexStart + 0x200))
+		// if more than 512 bytes remain
+		if (byteIndexEnd > (byteIndexStart + 0x200))
+		{
+			// cap to 512 bytes, and then continue next frame
 			byteIndexEnd = (byteIndexStart + 0x200);
+			boolFinishThisFrame = 0;
+		}
 	}
 	
-	// checksum 10% of the profile
+	// run checksum
 	for (i = byteIndexStart; i < byteIndexEnd; i++)
 	{
 		crc = MEMCARD_CRC16(crc, saveBytes[i]);
 	}
-	
-	// at this point, 'i' equals byteIndexEnd,
-	// but can't use 'i' cause that's too much asm
-	
-	// save checkpoints
-	sdata->crc16_checkpoint_status = crc;
-	sdata->crc16_checkpoint_byteIndex = byteIndexEnd;
-	
-	// if end is not reached
-	if (byteIndexEnd != len) 
+		
+	// save checkpoints for next frame
+	if (boolFinishThisFrame == 0)
+	{	
+		sdata->crc16_checkpoint_status = crc;
+		sdata->crc16_checkpoint_byteIndex = byteIndexEnd;
 		return MC_RETURN_PENDING;
+	}
 	
-	// finalize checksum twice (dont loop)
+	// finishing check
 	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd]);
 	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd+1]);
 

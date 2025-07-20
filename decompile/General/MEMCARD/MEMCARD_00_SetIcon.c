@@ -21,7 +21,8 @@ void DECOMP_MEMCARD_SetIcon(int icon)
 		src = &data.memcardIcon_CrashHead[0];
 	}
 	
-	// aligned copy, reduce loop jumps
+	// TODO: inline memcpy asm
+	// Aligned copy, reduce loop jumps
 	for(i = 0; i < 0x40; i+= 4)
 	{
 		dst[i+0] = src[i+0];
