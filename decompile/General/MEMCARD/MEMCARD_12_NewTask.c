@@ -5,7 +5,7 @@ int DECOMP_MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int mem
 {
     sdata->memcardSlot = slotIdx;
 
-    MEMCARD_StringSet(sdata->s_bu00_BASCUS_94426_slots, slotIdx, name);
+    MEMCARD_StringSet(sdata->s_memcardFileCurr, slotIdx, name);
 
     // pointer to memcard 800992e4
     sdata->memcard_ptrStart = ptrMemcard;

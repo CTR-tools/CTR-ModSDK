@@ -4803,7 +4803,7 @@ struct sData
 	// 80098058 -- JpnTrial
 	// 8009946C -- EurRetail
 	// 8009C56C -- JpnRetail
-	char s_bu00_BASCUS_94426_slots[0x20];
+	char s_memcardFileCurr[0x20];
 
 	// 800990c4
 	char s_memcardFindGhostFile[0x20];

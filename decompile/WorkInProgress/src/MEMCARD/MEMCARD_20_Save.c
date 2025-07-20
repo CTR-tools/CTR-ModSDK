@@ -54,7 +54,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 	// Search for "MEMCARD_SET_SIZE_BYTE3"
 	int whatIsThis = (unsigned int)*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) << 0x10;
 	
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, whatIsThis | FCREATE);
+    sdata->memcard_fd = open(sdata->s_memcardFileCurr, whatIsThis | FCREATE);
 
     if (sdata->memcard_fd != -1)
     {
@@ -66,7 +66,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 	// ====== Open 2 ======
 
 
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, FASYNC|FWRITE);
+    sdata->memcard_fd = open(sdata->s_memcardFileCurr, FASYNC|FWRITE);
 
     if (sdata->memcard_fd != -1)
     {

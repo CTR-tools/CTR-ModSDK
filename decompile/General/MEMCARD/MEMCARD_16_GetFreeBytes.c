@@ -10,10 +10,10 @@ void DECOMP_MEMCARD_GetFreeBytes(int slotIdx)
   struct DIRENTRY entry;
 
   int bytesUsedMemCard = 0;
-  MEMCARD_StringSet(sdata->s_bu00_BASCUS_94426_slots, slotIdx, sdata->s_AnyFile);
+  MEMCARD_StringSet(sdata->s_memcardFileCurr, slotIdx, sdata->s_AnyFile);
 
   // string for directory and file of save that is in use
-  firstEntry = firstfile(sdata->s_bu00_BASCUS_94426_slots, &entry);
+  firstEntry = firstfile(sdata->s_memcardFileCurr, &entry);
 
   for (
 		struct DIRENTRY *nxtEntry = &entry; 

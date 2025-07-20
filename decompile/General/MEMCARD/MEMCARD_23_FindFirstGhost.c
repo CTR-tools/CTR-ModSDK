@@ -9,9 +9,9 @@ char* DECOMP_MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
 
     struct DIRENTRY *firstEntry;
     struct DIRENTRY someEntry;
-    MEMCARD_StringSet(sdata->s_bu00_BASCUS_94426_slots, slotIdx, srcString);
+    MEMCARD_StringSet(sdata->s_memcardFileCurr, slotIdx, srcString);
 
-    firstEntry = firstfile(sdata->s_bu00_BASCUS_94426_slots, &someEntry);
+    firstEntry = firstfile(sdata->s_memcardFileCurr, &someEntry);
     if (firstEntry == 0)
 		return 0;
     

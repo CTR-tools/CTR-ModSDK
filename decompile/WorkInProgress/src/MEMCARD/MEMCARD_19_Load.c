@@ -12,7 +12,7 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
 
     MEMCARD_NewTask(slotIdx, name, ptrMemcard, memcardFileSize, param5); // Too many params to NewTask. param5 is always 0
 
-    sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, FASYNC|FREAD);
+    sdata->memcard_fd = open(sdata->s_memcardFileCurr, FASYNC|FREAD);
 
     if (sdata->memcard_fd == -1)
     {
