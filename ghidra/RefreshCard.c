@@ -1174,6 +1174,8 @@ void FUN_80047a58(void)
 		(
 			iVar3 = iVar2 >> 0x10,
 			iVar2 = iVar4 << 0x10,
+			
+			// MC_RETURN_NEWCARD
 			iVar3 == 3
 		)
 	  )
