@@ -211,6 +211,9 @@ int DECOMP_MEMCARD_HandleEvent(void)
 			
         // at this point, assume checksum failed (return 1),
 		// if loading 2-block save, read again, then retry checksum
+		
+		// THIS WILL NEVER HAPPEN,
+		// the |4 flag is never used for LOAD
         if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
         {
             sdata->memcard_stage++;
