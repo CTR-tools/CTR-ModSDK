@@ -17,12 +17,18 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
 	// Search for "MEMCARD_SET_SIZE_BYTE3"
 
-    // NOTE: Commented out because param6 always 0, will always eval to false
+    // ALWAYS USED,
+	// param_6 is always zero, (used to determine 1-block or 2-block)
+	// fileSize*2 is always 2 blocks, rigged to make sure this path happens
     if (((param6 & 1) == 0) && (1 < sdata->memcardIconSize + fileSize * 2 + 0x1fff >> 0xd))
     {
         sdata->memcardStatusFlags = sdata->memcardStatusFlags | 4;
         *((uint8_t *)(data.memcardIcon_PsyqHand) + 3) = ((sdata->memcardIconSize + fileSize * 1 + 0x1fff) >> 0xd);
     }
+	
+	// UNUSED
+	// This is likely from a time when "fileSize" was "blockSize",
+	// then this path would be used to write a 2-block file
     else
     {
 		sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;

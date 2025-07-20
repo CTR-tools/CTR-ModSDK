@@ -159,7 +159,8 @@ int DECOMP_MEMCARD_HandleEvent(void)
         sdata->memcard_remainingAttempts--;
 		extra = MC_EXTRA_READ_ICON;
 		break;
-			
+	
+	// LOAD Data
     case 4:
     case 6:
 
@@ -205,6 +206,7 @@ int DECOMP_MEMCARD_HandleEvent(void)
 			
         // at this point, assume checksum succeeded (return 1)
 
+		// THIS WILL NEVER HAPPEN
         if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
         {
             sdata->memcard_stage++;
@@ -213,7 +215,8 @@ int DECOMP_MEMCARD_HandleEvent(void)
         }
 		
 		return event;
-        
+    
+	// SAVE Data
     case 9:
     case 10:
     case 11:
