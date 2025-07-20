@@ -110,8 +110,8 @@ int DECOMP_MEMCARD_HandleEvent(void)
 		
         return event;
 
-	// after the attempt to read icon,
-	// MC_STAGE_LOAD_PART1_ICON
+	// after the attempt to read header,
+	// MC_STAGE_LOAD_PART1_HEADER
     case 3:
 
         event = MEMCARD_GetNextSwEvent();
