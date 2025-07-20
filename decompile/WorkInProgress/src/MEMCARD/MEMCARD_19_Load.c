@@ -21,12 +21,14 @@ uint8_t MEMCARD_Load(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFi
     }
     else
     {
+		// use ASYNC checksum load (ALWAYS)
         if ((param5 & 2) == 0)
         {
-            // dont process crc16 to the end of memory,
-            // just the next 0x200 bytes (async)
+            // Process 0x200 bytes per frame
             sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffff7;
         }
+		
+		// skip ASYNC and use the check the full card (UNUSED)
         else
         {
 			// process crc16 to the end of memory

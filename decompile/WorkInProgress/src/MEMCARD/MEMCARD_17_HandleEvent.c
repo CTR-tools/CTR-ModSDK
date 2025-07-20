@@ -131,8 +131,13 @@ int DECOMP_MEMCARD_HandleEvent(void)
 
 			// Search for "MEMCARD_SET_SIZE_BYTE3"
             if (
+				// if a ghost file (2x) is larger than 1 memcard block file
+				// if the number of blocks in this save, is more than 1 block
                 // ((sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd) > 1) &&
-				   ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd) < ((int)(unsigned char)sdata->memcard_ptrStart[3]))
+				// ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd) < ((int)(unsigned char)sdata->memcard_ptrStart[3]))
+				
+				// if 2 blocks in the file
+				((int)(unsigned char)sdata->memcard_ptrStart[3]) == 2
 				)
             {
 				// 1-slot file

@@ -20,13 +20,13 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
     // NOTE: Commented out because param6 always 0, will always eval to false
     if (((param6 & 1) == 0) && (1 < sdata->memcardIconSize + fileSize * 2 + 0x1fff >> 0xd))
     {
-        DAT_800857a3 = (byte)(sdata->memcardIconSize + fileSize + 0x1fff >> 0xd);
         sdata->memcardStatusFlags = sdata->memcardStatusFlags | 4;
+        *((uint8_t *)(data.memcardIcon_PsyqHand) + 3) = ((sdata->memcardIconSize + fileSize * 1 + 0x1fff) >> 0xd);
     }
     else
     {
 		sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
-		*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) = ((sdata->memcardIconSize + fileSize * 2 + 0x1fff) >> 0xd) & 0xFF;
+		*((uint8_t *)(data.memcardIcon_PsyqHand) + 3) = ((sdata->memcardIconSize + fileSize * 2 + 0x1fff) >> 0xd);
 	}
 
     uint8_t *memcardIconPtr = (uint8_t *)data.memcardIcon_PsyqHand[1];
