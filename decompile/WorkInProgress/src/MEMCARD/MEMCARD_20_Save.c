@@ -21,6 +21,8 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 	// Two Block = 0x4000 bytes, minus 0x100 icon, thats 0x3F00, NOT 0x3e00 ND used
 
 	// Search for "MEMCARD_SET_SIZE_BYTE3"
+	// TODO: struct MemcardWORD
+	// S, C, iconSize, blockSize
 
     // ALWAYS USED,
 	// param_6 is always zero, (used to determine 1-block or 2-block)

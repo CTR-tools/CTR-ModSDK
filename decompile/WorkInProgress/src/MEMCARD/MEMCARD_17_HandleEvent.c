@@ -125,6 +125,9 @@ int DECOMP_MEMCARD_HandleEvent(void)
         {
             sdata->memcard_stage++;
 
+			// TODO: struct MemcardWORD
+			// S, C, iconSize, blockSize
+
             sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
 
             readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memcardFileSize);
