@@ -15,6 +15,11 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
     // this will always return 0, no need to check
     MEMCARD_NewTask(slotIdx, name, ptrData, fileSize);
 
+	// === Note for Niko ===
+	// We can potentially do 1-block ghost,
+	// One block = 0x2000 bytes, minus 0x100 icon, thats 0x1F00, NOT 0x1680 ND used
+	// Two Block = 0x4000 bytes, minus 0x100 icon, thats 0x3F00, NOT 0x3e00 ND used
+
 	// Search for "MEMCARD_SET_SIZE_BYTE3"
 
     // ALWAYS USED,
