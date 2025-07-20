@@ -209,9 +209,8 @@ int DECOMP_MEMCARD_HandleEvent(void)
 			break;
 		}
 			
-        // at this point, assume checksum succeeded (return 1)
-
-		// THIS WILL NEVER HAPPEN
+        // at this point, assume checksum failed (return 1),
+		// if loading 2-block save, read again, then retry checksum
         if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
         {
             sdata->memcard_stage++;
