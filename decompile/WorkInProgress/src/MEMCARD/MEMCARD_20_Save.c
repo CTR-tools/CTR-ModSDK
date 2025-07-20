@@ -49,6 +49,10 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         *(memcardIconPtr + i) = *param_3;
     }
 
+	// === Naughty Dog Bug ===
+	// This can not happen async because the MEMCARD_EventHandler
+	// will only run AFTER the memcard request (write) begins,
+	// That is why the first frame lags, and it can not be fixed as-is
     MEMCARD_ChecksumSave(ptrData, fileSize);
 
 
