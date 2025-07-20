@@ -198,6 +198,8 @@ int DECOMP_MEMCARD_HandleEvent(void)
         if (event == MC_RETURN_PENDING)
             return MC_RETURN_PENDING;
 
+		// This should have no IF,
+		// that way it always returns 0 or 1
         if (event == MC_RETURN_IOE)
         {
 			extra = MC_EXTRA_CLOSE;
