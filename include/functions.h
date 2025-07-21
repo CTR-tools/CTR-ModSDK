@@ -661,7 +661,7 @@ uint8_t MEMCARD_GetNextSwEvent(void);
 uint8_t MEMCARD_GetNextHwEvent(void);
 //MEMCARD_WaitForHwEvent()
 void MEMCARD_SkipEvents(void);
-int MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize);
+int MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize, int flags);
 void MEMCARD_CloseFile(void);
 int MEMCARD_ReadFile(int start_offset, int end_offset);
 uint8_t MEMCARD_WriteFile(int start_offset, const uint8_t *data, int end_offset);

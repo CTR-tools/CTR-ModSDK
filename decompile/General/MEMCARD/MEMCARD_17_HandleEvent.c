@@ -4,8 +4,11 @@
 // just for cleaning up repetition
 enum MC_EXTRA
 {
-	MC_EXTRA_NULL = 0,
-	MC_EXTRA_CLOSE = 1,
+	MC_EXTRA_NULL,
+	MC_EXTRA_CLOSE,
+	MC_EXTRA_WRITE_ICON,
+	MC_EXTRA_WRITE_FILE,
+	MC_EXTRA_READ_FILE
 };
 
 int DECOMP_MEMCARD_HandleEvent(void)
@@ -42,12 +45,15 @@ int DECOMP_MEMCARD_HandleEvent(void)
                 sdata->memcard_stage = MC_STAGE_NEWCARD;
                 return MC_RETURN_PENDING;
             }
+			
             if ((sdata->memcardStatusFlags & 2) == 0)
             {
                 sdata->memoryCard_SizeRemaining = 0;
                 return MC_RETURN_UNFORMATTED;
             }
 			
+			// retail feature, this spams every frame,
+			// is this for finding unplugged cards?
 			sdata->memcard_stage = MC_STAGE_IDLE;
 			return MC_RETURN_IOE;
         }
@@ -81,9 +87,10 @@ int DECOMP_MEMCARD_HandleEvent(void)
             return event;
         }
 	}
+	
 	// after checking new card
     case MC_STAGE_NEWCARD:
-
+	{
         event = MEMCARD_GetNextSwEvent();
 
         if (event == MC_RETURN_PENDING)
@@ -109,63 +116,19 @@ int DECOMP_MEMCARD_HandleEvent(void)
         }
 		
         return event;
+	}
 
-	// after the attempt to read header,
-	// MC_STAGE_LOAD_PART1_HEADER
-    case 3:
+	// after requesting to load for first time
+	case MC_STAGE_LOAD_PART0_START:
 
-        event = MEMCARD_GetNextSwEvent();
-
-        if (event == MC_RETURN_PENDING)
-            return MC_RETURN_PENDING;
-
-		// if pass, then move to next stage,
-		// setup variables for the load about to happen
-        if (event == MC_RETURN_IOE)
-        {
-            sdata->memcard_stage++;
-
-			// TODO: struct MemcardWORD
-			// S, C, iconSize, blockSize
-
-            sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
-
-            readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memcardFileSize);
-
-			// Search for "MEMCARD_SET_SIZE_BYTE3"
-            if (
-				// if a ghost file (2x) is larger than 1 memcard block file
-				// if the number of blocks in this save, is more than 1 block
-                // ((sdata->memcardIconSize + sdata->memcardFileSize * 2 + 0x1fff >> 0xd) > 1) &&
-				// ((sdata->memcardIconSize + sdata->memcardFileSize * 1 + 0x1fff >> 0xd) < ((int)(unsigned char)sdata->memcard_ptrStart[3]))
-				
-				// if 2 blocks in the file
-				((int)(unsigned char)sdata->memcard_ptrStart[3]) == 2
-				)
-            {
-				// 1-slot file
-                sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
-                return readResult;
-            }
-			
-			// 2-slot file
-            sdata->memcardStatusFlags = sdata->memcardStatusFlags | 4;
-            return readResult;
-        }
-
-		if (sdata->memcard_remainingAttempts < 1)
-		{
-			extra = MC_EXTRA_CLOSE;
-			break;
-		}
-
-        sdata->memcard_remainingAttempts--;
-		extra = MC_EXTRA_READ_ICON;
+		sdata->memcard_stage++;
+		extra = MC_EXTRA_READ_FILE;
 		break;
+		
+	// HEADER code skipped
 	
 	// LOAD Data
-    case 4:
-    case 6:
+    case MC_STAGE_LOAD_PART2_READ:
 
         event = MEMCARD_GetNextSwEvent();
 
@@ -174,59 +137,60 @@ int DECOMP_MEMCARD_HandleEvent(void)
 
         if (event == MC_RETURN_IOE)
         {
-            sdata->crc16_checkpoint_byteIndex = 0;
-            sdata->crc16_checkpoint_status = 0;
             sdata->memcard_stage++;
 			return MC_RETURN_PENDING;
         }
 		else
 		{
-			if (sdata->memcard_remainingAttempts < 1)
-			{
-				extra = MC_EXTRA_CLOSE;
-				break;
-			}
-			
-			sdata->memcard_remainingAttempts--;
 			extra = MC_EXTRA_READ_FILE;
 			break;
 		}
 
-    case 5:
-    case 7:
-    CASE7_JUMP:
+    case MC_STAGE_LOAD_PART3_CHECK:
 
         event = MEMCARD_ChecksumLoad(sdata->memcard_ptrStart, sdata->memcardFileSize);
 
         if (event == MC_RETURN_PENDING)
             return MC_RETURN_PENDING;
 
-		// This should have no IF,
-		// that way it always returns 0 or 1
+		extra = MC_EXTRA_CLOSE;
+		break;
+		
+	case MC_STAGE_SAVE_PART0_START:
+			
+		int DECOMP_MEMCARD_ChecksumSave(unsigned char* saveBytes, int len);
+		event = DECOMP_MEMCARD_ChecksumSave(sdata->memcard_ptrStart, sdata->memcardFileSize);
+		
+		if (event == MC_RETURN_PENDING)
+			return MC_RETURN_PENDING;
+		
+		sdata->memcard_stage++;
+		extra = MC_EXTRA_WRITE_ICON;
+		break;
+	
+    case MC_STAGE_SAVE_PART1_ICON:
+	
+        event = MEMCARD_GetNextSwEvent();
+            
+		if (event == MC_RETURN_PENDING)
+            return MC_RETURN_PENDING;
+			
         if (event == MC_RETURN_IOE)
-        {
-			extra = MC_EXTRA_CLOSE;
+        {		
+			sdata->memcard_stage++;	
+			extra = MC_EXTRA_WRITE_FILE;
 			break;
 		}
-			
-        // at this point, assume checksum failed (return 1),
-		// if loading 2-block save, read again, then retry checksum
 		
-		// THIS WILL NEVER HAPPEN,
-		// the |4 flag is never used for LOAD
-        if (((sdata->memcardStatusFlags & 4) == 0) && (sdata->memcard_stage < 7))
-        {
-            sdata->memcard_stage++;
-			extra = MC_EXTRA_READ_FILE;
+		else
+		{			
+			extra = MC_EXTRA_WRITE_ICON;
 			break;
-        }
+		}
 		
-		return event;
-    
-	// SAVE Data
-    case 9:
-    case 10:
-    case 11:
+		break;
+	
+    case MC_STAGE_SAVE_PART2_WRITE:
 
         event = MEMCARD_GetNextSwEvent();
             
@@ -235,45 +199,13 @@ int DECOMP_MEMCARD_HandleEvent(void)
 			
         if (event == MC_RETURN_IOE)
         {
-			if (
-					// 1-file write
-					(sdata->memcard_stage == 9) || 
-					(
-						// 2-file write
-						((sdata->memcard_stage <= 10)) &&
-						((sdata->memcardStatusFlags & 4) != 0)
-					)
-				)
-			{
-				sdata->memcard_stage++;	
-				extra = MC_EXTRA_WRITE_FILE;
-				break;
-			}
-			
-            else
-            {
-                MEMCARD_CloseFile();
-                MEMCARD_GetFreeBytes(sdata->memcardSlot);
-                return MC_RETURN_IOE;
-            }
+            MEMCARD_CloseFile();
+            MEMCARD_GetFreeBytes(sdata->memcardSlot);
+            return MC_RETURN_IOE;
         }
 
         else
-        {
-			if (sdata->memcard_remainingAttempts < 1)
-            {
-				extra = MC_EXTRA_CLOSE;
-				break;
-			}
-
-            sdata->memcard_remainingAttempts--;
-            
-			if (sdata->memcard_stage == 9)
-			{
-				extra = MC_EXTRA_WRITE_ICON;
-				break;
-			}
-			
+        {			
 			extra = MC_EXTRA_WRITE_FILE;
 			break;
         }				
@@ -288,8 +220,19 @@ int DECOMP_MEMCARD_HandleEvent(void)
         return MC_RETURN_IOE;
 		
     default:
+		// if HandleEvent was called for a STAGE_DONE
         return MC_RETURN_TIMEOUT;
     }
+	
+	// Whether pass or fail, deduct one chance anyway
+	{
+		if (sdata->memcard_remainingAttempts < 1)
+		{
+			extra = MC_EXTRA_CLOSE;
+		}
+
+		sdata->memcard_remainingAttempts--;
+	}
 	
 	switch(extra)
 	{
@@ -303,24 +246,73 @@ int DECOMP_MEMCARD_HandleEvent(void)
 			return event;
 			
 		case MC_EXTRA_WRITE_ICON:
-			return MEMCARD_WriteFile(0, 
-				sdata->memcardIcon_PsyqHand, 
+		
+			int* icon = &data.memcardIcon_CrashHead[0];
+			if (sdata->memcardFileSize == 0x3E00)
+				icon = &data.memcardIcon_Ghost[0];
+		
+			return MEMCARD_WriteFile(
+				0, icon, 
 				sdata->memcardIconSize);
 				
 		case MC_EXTRA_WRITE_FILE:
 			return MEMCARD_WriteFile(
-				sdata->memcardIconSize + (sdata->memcard_stage - 10) * sdata->memcardFileSize,
+				sdata->memcardIconSize,
 				sdata->memcard_ptrStart,
 				sdata->memcardFileSize);
 				
-		case MC_EXTRA_READ_ICON:
-			return MEMCARD_ReadFile(0, 0x80);
+		//case MC_EXTRA_READ_HEADER:
+		//	return MEMCARD_ReadFile(0, 0x80);
 			
 		case MC_EXTRA_READ_FILE:
             return MEMCARD_ReadFile(
-				sdata->memcardIconSize + (sdata->memcard_stage - 4) * sdata->memcardFileSize, 
+				// offset and size,
+				// read pointer is assumed
+				sdata->memcardIconSize, 
 				sdata->memcardFileSize);
 	};
-	
+}
 
+int MEMCARD_NewFunc_AsyncCRC(unsigned char* saveBytes, int len)
+{
+	int i;
+	int crc;
+	int byteIndexEnd;
+	int byteIndexStart;
+	int boolFinishThisFrame = 1;
+	
+	// Leave 2 bytes at the end,
+	// the checksum is stored there
+	len -= 2;
+	byteIndexEnd = len;
+
+	// Option 1: Set ZERO for first-frame of multi-frame load
+	// Option 2: Set existing checkpoint from previous frame
+	crc = sdata->crc16_checkpoint_status;
+	byteIndexStart = sdata->crc16_checkpoint_byteIndex;
+	
+	// if more than 512 bytes remain
+	if (byteIndexEnd > (byteIndexStart + 0x200))
+	{
+		// cap to 512 bytes, and then continue next frame
+		byteIndexEnd = (byteIndexStart + 0x200);
+		boolFinishThisFrame = 0;
+	}
+	
+	// run checksum
+	for (i = byteIndexStart; i < byteIndexEnd; i++)
+	{
+		crc = MEMCARD_CRC16(crc, saveBytes[i]);
+	}
+
+	// save checkpoints for next frame
+	sdata->crc16_checkpoint_status = crc;
+	sdata->crc16_checkpoint_byteIndex = byteIndexEnd;
+
+	if (boolFinishThisFrame == 0)
+	{	
+		return MC_RETURN_PENDING;
+	}
+	
+	return MC_RETURN_IOE;
 }

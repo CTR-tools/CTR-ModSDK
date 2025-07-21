@@ -968,12 +968,15 @@ common, exe, MEMCARD_CloseFile, 0x0,                     General/MEMCARD/MEMCARD
 common, exe, MEMCARD_ReadFile, 0x0,                      General/MEMCARD/MEMCARD_14_ReadFile.c
 common, exe, MEMCARD_WriteFile, 0x0,                     General/MEMCARD/MEMCARD_15_WriteFile.c
 common, exe, MEMCARD_GetFreeBytes, 0x0,                  General/MEMCARD/MEMCARD_16_GetFreeBytes.c
-// MEMCARD_HandleEvent
+
+// WIP
+common, exe, MEMCARD_HandleEvent, 0x0,                   General/MEMCARD/MEMCARD_17_HandleEvent.c
+
 common, exe, MEMCARD_GetInfo, 0x0,                       General/MEMCARD/MEMCARD_18_GetInfo.c
 
 // WIP
-//common, exe, MEMCARD_Load, 0x0,                          General/MEMCARD/MEMCARD_19_Load.c
-//common, exe, MEMCARD_Save, 0x0,                          General/MEMCARD/MEMCARD_20_Save.c
+common, exe, MEMCARD_Load, 0x0,                          General/MEMCARD/MEMCARD_19_Load.c
+common, exe, MEMCARD_Save, 0x0,                          General/MEMCARD/MEMCARD_20_Save.c
 
 common, exe, MEMCARD_Format, 0x0,                        General/MEMCARD/MEMCARD_21_Format.c
 common, exe, MEMCARD_IsFile, 0x0,                        General/MEMCARD/MEMCARD_22_IsFile.c
