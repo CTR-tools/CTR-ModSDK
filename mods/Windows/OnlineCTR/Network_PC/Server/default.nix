@@ -5,6 +5,7 @@
 , enet
 , ctrModSDK ? ./../../../../..
 , withDebug ? true
+, trustCompiler ? false
 }:
 
 let
@@ -20,13 +21,11 @@ let
         (previousAttrs: {
           nativeBuildInputs = [ cmake ];
 
-          installPhase = ''
-            runHook preInstall
+          outputs = [ "out" "dev" ];
 
-            mkdir -p $out/lib
-            cp libenet.a $out/lib/
-
-            runHook postInstall
+          postInstall = ''
+            mkdir -p $dev/lib
+            cp libenet.a $dev/lib/
           '';
 
           meta = previousAttrs.meta // { platforms = lib.platforms.all; };
@@ -49,7 +48,8 @@ stdenv.mkDerivation (_: {
   hardeningDisable = [ "format" ];
 
   # Config
-  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ];
+  cmakeFlags = lib.optionals withDebug [ "-DCMAKE_BUILD_TYPE=Debug" ]
+    ++ lib.optionals trustCompiler [ "-DCMAKE_C_COMPILER_WORKS=1" "-DCMAKE_CXX_COMPILER_WORKS=1" ];
 
   installPhase = ''
     runHook preInstall
