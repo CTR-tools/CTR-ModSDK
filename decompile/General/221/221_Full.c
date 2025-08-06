@@ -30,7 +30,6 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	int levelID;
 	int elapsedFrames;
 	
-	unsigned char prize = 0x6f;
 	
 	gGT = sdata->gGT;
 	levelID = gGT->levelID;
@@ -45,10 +44,10 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	else if(levelID == BLIZZARD_BLUFF) bitIndex = -1;
 	
 	// default logic
-	else bitIndex = hub[gGT->levelID-TURBO_TRACK]; //0x12
+	else bitIndex = hub[gGT->levelID-NITRO_COURT]; //0x12
 	
 	// first purple token at 0x6f
-	bitIndex += prize;
+	bitIndex += 0x6f;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
