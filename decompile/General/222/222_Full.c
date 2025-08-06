@@ -41,7 +41,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	u_int txtColor;
 	int bitIndex;
 	
-	unsigned char prize;
 
 	bitIndex = -1;
 	gGT = sdata->gGT;
@@ -95,10 +94,10 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			lerpEndY = lerpStartY + 0x10;
 			lerpFrames = FPS_DOUBLE(8);
             
-			prize = 0x4c;
+
 			
 			// If you have not unlocked this CTR Token
-			bitIndex = gGT->levelID + prize;
+			bitIndex = gGT->levelID + 0x4c;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 			{
@@ -442,10 +441,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// If you are in boss mode
 	if (gGT->gameMode1 < 0)
 	{
-		prize = 0x5e;
 		
 		// bitIndex of keys unlocked, and boss beaten
-		bitIndex = gGT->bossID + prize;
+		bitIndex = gGT->bossID + 0x5e;
 
 		// If the number of keys you have is less than 4
 		if (gGT->bossID < 4)
@@ -494,8 +492,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	// if trophy is not won,
 	// Dingo Bingo needs to win trophy and token in the same race
-	prize = 6;
-	bitIndex = gGT->levelID + prize;
+	bitIndex = gGT->levelID + 6;
 	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 	{
 		// unlock tropy
