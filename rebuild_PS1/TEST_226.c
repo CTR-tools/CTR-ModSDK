@@ -24,17 +24,48 @@ struct RenderList
 	// one for each player
 };
 
-enum RotateFlipType
+// From CTR 226 overlay
+const int shiftTable226[24] =
 {
-	RFT_None = 0,
-	RFT_Rotate90 = 1,
-	RFT_Rotate180 = 2,
-	RFT_Rotate270 = 3,
-	RFT_FlipRotate270 = 4,
-	RFT_FlipRotate180 = 5,
-	RFT_FlipRotate90 = 6,
-	RFT_Flip = 7,
-	RFT_NoMatch = -1
+	0x18100800,    0x80900818,       0x81018,    0x98881000,
+	0x98081000,      0x881018,    0x80100818,    0x18900800,
+	0x10081898,    0x88881810,    0x18180810,    0x90980888,
+	0x90180888,    0x18980810,    0x88081810,    0x10881898,
+	 0x8181090,    0x98981008,    0x10101808,    0x88901898,
+	0x88101898,    0x10901808,    0x98181008,     0x8981090
+};
+
+int comboNum = 0;
+
+int combinations[] =
+{
+	0x0004080a, // 0 1 2 3 (sideways)
+	0x00040a08,	// 0 1 3 2
+	0x0008040a,	// 0 2 1 3
+	0x00040a08,	// 0 2 3 1
+	0x000a0408,	// 0 3 1 2
+	0x000a0804,	// 0 3 2 1
+
+	0x0400080a, // 0 1 2 3
+	0x04000a08,	// 0 1 3 2
+	0x0408000a,	// 0 2 1 3
+	0x04000a08,	// 0 2 3 1
+	0x040a0008,	// 0 3 1 2
+	0x040a0800,	// 0 3 2 1
+
+	0x0804000a, // 0 1 2 3
+	0x08040a00,	// 0 1 3 2
+	0x0800040a,	// 0 2 1 3
+	0x08040a00,	// 0 2 3 1
+	0x080a0400,	// 0 3 1 2
+	0x080a0004,	// 0 3 2 1
+
+	0x0a040800, // 0 1 2 3
+	0x0a040008,	// 0 1 3 2
+	0x0a080400,	// 0 2 1 3
+	0x0a040008,	// 0 2 3 1
+	0x0a000408,	// 0 3 1 2
+	0x0a000804,	// 0 3 2 1
 };
 
 void TEST_226(
@@ -219,17 +250,116 @@ void TEST_226(
 				continue;
 			}
 
+			int idHigh_ShapeOfZ[16] =
+			{
+				0,4,5,6,
+				4,1,6,7,
+				5,6,2,8,
+				6,7,8,3
+			};
+
+			int idLow_ShapeOfZ[4] =
+			{
+				0,1,2,3
+			};
+
+#define L1Z(x) idLow_ShapeOfZ[x]
+#define H1Z(x) idHigh_ShapeOfZ[0+x]
+#define H2Z(x) idHigh_ShapeOfZ[4+x]
+#define H3Z(x) idHigh_ShapeOfZ[8+x]
+#define H4Z(x) idHigh_ShapeOfZ[12+x]
+
 			int idHigh[16] =
 			{
-				5,0,6,4,
-				6,4,7,1,
-				2,5,8,6,
-				8,6,3,7
+				// 0
+				//H1Z(0), H1Z(1), H1Z(2), H1Z(3),
+				//H2Z(0), H2Z(1), H2Z(2), H2Z(3),
+				//H3Z(0), H3Z(1), H3Z(2), H3Z(3),
+				//H4Z(0), H4Z(1), H4Z(2), H4Z(3),
+
+				// 1
+				//H1Z(0), H1Z(1), H1Z(3), H1Z(2),
+				//H2Z(0), H2Z(1), H2Z(3), H2Z(2),
+				//H3Z(0), H3Z(1), H3Z(3), H3Z(2),
+				//H4Z(0), H4Z(1), H4Z(3), H4Z(2),
+
+				// 2
+				//H1Z(0), H1Z(2), H1Z(1), H1Z(3),
+				//H2Z(0), H2Z(2), H2Z(1), H2Z(3),
+				//H3Z(0), H3Z(2), H3Z(1), H3Z(3),
+				//H4Z(0), H4Z(2), H4Z(1), H4Z(3),
+
+				// 3						  
+				//H1Z(0), H1Z(2), H1Z(3), H1Z(1),
+				//H2Z(0), H2Z(2), H2Z(3), H2Z(1),
+				//H3Z(0), H3Z(2), H3Z(3), H3Z(1),
+				//H4Z(0), H4Z(2), H4Z(3), H4Z(1),
+
+				// 4						  
+				//H1Z(1), H1Z(0), H1Z(2), H1Z(3),
+				//H1Z(1), H1Z(0), H1Z(2), H1Z(3),
+				//H1Z(1), H1Z(0), H1Z(2), H1Z(3),
+				//H1Z(1), H1Z(0), H1Z(2), H1Z(3),
+				//							  
+				//H1Z(1), H1Z(0), H1Z(3), H1Z(2),
+				//H2Z(1), H2Z(0), H2Z(3), H2Z(2),
+				//H3Z(1), H3Z(0), H3Z(3), H3Z(2),
+				//H4Z(1), H4Z(0), H4Z(3), H4Z(2),
+				//							  
+				//H1Z(1), H1Z(2), H1Z(0), H1Z(3),
+				//H2Z(1), H2Z(2), H2Z(0), H2Z(3),
+				//H3Z(1), H3Z(2), H3Z(0), H3Z(3),
+				//H4Z(1), H4Z(2), H4Z(0), H4Z(3),
+				//							  
+				//H1Z(1), H1Z(2), H1Z(3), H1Z(0),
+				//H2Z(1), H2Z(2), H2Z(3), H2Z(0),
+				//H3Z(1), H3Z(2), H3Z(3), H3Z(0),
+				//H4Z(1), H4Z(2), H4Z(3), H4Z(0),
+				//							  
+				//H1Z(2), H1Z(1), H1Z(0), H1Z(3),
+				//H2Z(2), H2Z(1), H2Z(0), H2Z(3),
+				//H3Z(2), H3Z(1), H3Z(0), H3Z(3),
+				//H4Z(2), H4Z(1), H4Z(0), H4Z(3),
+				//							  
+				//H1Z(2), H1Z(1), H1Z(3), H1Z(0),
+				//H2Z(2), H2Z(1), H2Z(3), H2Z(0),
+				//H3Z(2), H3Z(1), H3Z(3), H3Z(0),
+				//H4Z(2), H4Z(1), H4Z(3), H4Z(0),
+				//							  
+				//H1Z(2), H1Z(0), H1Z(1), H1Z(3),
+				//H2Z(2), H2Z(0), H2Z(1), H2Z(3),
+				//H3Z(2), H3Z(0), H3Z(1), H3Z(3),
+				//H4Z(2), H4Z(0), H4Z(1), H4Z(3),
+				//							  
+				//H1Z(2), H1Z(0), H1Z(3), H1Z(1),
+				//H2Z(2), H2Z(0), H2Z(3), H2Z(1),
+				//H3Z(2), H3Z(0), H3Z(3), H3Z(1),
+				//H4Z(2), H4Z(0), H4Z(3), H4Z(1),
+				//							  
+				H1Z(3), H1Z(1), H1Z(2), H1Z(0),
+				H2Z(3), H2Z(1), H2Z(2), H2Z(0),
+				H3Z(3), H3Z(1), H3Z(2), H3Z(0),
+				H4Z(3), H4Z(1), H4Z(2), H4Z(0),
+				//							  
+				//H1Z(3), H1Z(1), H1Z(0), H1Z(2),
+				//H2Z(3), H2Z(1), H2Z(0), H2Z(2),
+				//H3Z(3), H3Z(1), H3Z(0), H3Z(2),
+				//H4Z(3), H4Z(1), H4Z(0), H4Z(2),
+				//							  
+				//H1Z(3), H1Z(2), H1Z(1), H1Z(0),
+				//H2Z(3), H2Z(2), H2Z(1), H2Z(0),
+				//H3Z(3), H3Z(2), H3Z(1), H3Z(0),
+				//H4Z(3), H4Z(2), H4Z(1), H4Z(0),
+				//							  
+				//H1Z(3), H1Z(2), H1Z(0), H1Z(1),
+				//H2Z(3), H2Z(2), H2Z(0), H2Z(1),
+				//H3Z(3), H3Z(2), H3Z(0), H3Z(1),
+				//H4Z(3), H4Z(2), H4Z(0), H4Z(1)
 			};
 
 			int idLow[4] =
 			{
-				2,0,3,1
+				L1Z(3), L1Z(1), L1Z(2), L1Z(0)
 			};
 
 			// low LOD
@@ -301,135 +431,41 @@ void TEST_226(
 					}
 				}
 
-
 				unsigned int draw_order_high = block->draw_order_high;
 				unsigned int draw_order_low = block->draw_order_low;
 
-				unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
-				unsigned int justRot = rotAndOrder & 7;
-				unsigned int justOrder = (rotAndOrder >> 3) & 3;
-
-				if (tl != 0)
+				if (tl != 1)
 				{
-					// 2031
-					if (justRot == RFT_None)
-					{
-						setUV4(p,
-							tl->u2, tl->v2,
-							tl->u0, tl->v0,
-							tl->u3, tl->v3,
-							tl->u1, tl->v1);
-					}
+					unsigned int bits5 = (draw_order_low >> (8 + k * 5)) & 0x1F;
+					char* tlByteAddr = (char*)tl;
 
-					// 3210
-					else if (justRot == RFT_Rotate90)
-					{
-						setUV4(p,
-							tl->u3, tl->v3,
-							tl->u2, tl->v2,
-							tl->u1, tl->v1,
-							tl->u0, tl->v0);
-					}
+					// u0, u1, u2, u3 {3,2,1,0}
+					// int tlOffsets_RegularOrder = 0x0a080400;
 
-					// 1302
-					else if (justRot == RFT_Rotate180)
-					{
-						setUV4(p,
-							tl->u1, tl->v1,
-							tl->u3, tl->v3,
-							tl->u0, tl->v0,
-							tl->u2, tl->v2);
-					}
+					comboNum = sdata->gGT->timer >> 6;
+					if (comboNum > 24)
+						comboNum = 0;
 
-					// 0123
-					else if (justRot == RFT_Rotate270)
-					{
-						setUV4(p,
-							tl->u0, tl->v0,
-							tl->u1, tl->v1,
-							tl->u2, tl->v2,
-							tl->u3, tl->v3);
-					}
+					// This will do "FOR NOW"
+					comboNum = 10;
 
-					// 1032
-					else if (justRot == RFT_FlipRotate270)
-					{
-						setUV4(p,
-							tl->u1, tl->v1,
-							tl->u0, tl->v0,
-							tl->u3, tl->v3,
-							tl->u2, tl->v2);
-					}
+					// match idLow: 2, 0, 3, 1 {1,3,0,2}
+					int tlOffsets = combinations[comboNum];
 
-					// 3102
-					else if (justRot == RFT_FlipRotate180)
-					{
-						setUV4(p,
-							tl->u0, tl->v0,
-							tl->u2, tl->v2,
-							tl->u1, tl->v1,
-							tl->u3, tl->v3);
-					}
+					int tlU0 = (tlOffsets >> ((shiftTable226[bits5] >> 0x0) & 0xFF)) & 0xFF;
+					int tlU1 = (tlOffsets >> ((shiftTable226[bits5] >> 0x8) & 0xFF)) & 0xFF;
+					int tlU2 = (tlOffsets >> ((shiftTable226[bits5] >> 0x10) & 0xFF)) & 0xFF;
+					int tlU3 = (tlOffsets >> ((shiftTable226[bits5] >> 0x18) & 0xFF)) & 0xFF;
 
-					// 2301
-					else if (justRot == RFT_FlipRotate90)
-					{
-						setUV4(p,
-							tl->u2, tl->v2,
-							tl->u3, tl->v3,
-							tl->u0, tl->v0,
-							tl->u1, tl->v1);
-					}
-
-					// 3120
-					else if (justRot == RFT_Flip)
-					{
-						setUV4(p,
-							tl->u3, tl->v3,
-							tl->u1, tl->v1,
-							tl->u2, tl->v2,
-							tl->u0, tl->v0);
-					}
-
-					else
-						continue;
+					setUV4(p,
+						*(unsigned char*)&tlByteAddr[tlU0 + 0], *(unsigned char*)&tlByteAddr[tlU0 + 1],
+						*(unsigned char*)&tlByteAddr[tlU1 + 0], *(unsigned char*)&tlByteAddr[tlU1 + 1],
+						*(unsigned char*)&tlByteAddr[tlU2 + 0], *(unsigned char*)&tlByteAddr[tlU2 + 1],
+						*(unsigned char*)&tlByteAddr[tlU3 + 0], *(unsigned char*)&tlByteAddr[tlU3 + 1],
+						);
 
 					p->clut = tl->clut;
 					p->tpage = tl->tpage;
-				}
-
-				int u[4];
-				int v[4];
-
-				u[0] = p->u0;
-				v[0] = p->v0;
-
-				u[1] = p->u1;
-				v[1] = p->v1;
-
-				u[2] = p->u2;
-				v[2] = p->v2;
-
-				u[3] = p->u3;
-				v[3] = p->v3;
-
-#define SETME(x0, x1, x2, x3) p->u0 = u[x0-1], p->v0 = v[x0-1]; p->u1 = u[x1-1], p->v1 = v[x1-1]; p->u2 = u[x2-1], p->v2 = v[x2-1]; p->u3 = u[x3-1], p->v3 = v[x3-1];
-
-
-				if (justOrder == 1)
-				{
-					// for a good example, see AdvHub Warppads
-
-					/*SETME(1, 3, 2, 4);*/
-					SETME(3, 1, 4, 2);
-				}
-
-				else if (justOrder == 2)
-				{
-					// for a good example, see N Gin Labs
-
-					/*SETME(3, 4, 2, 1);*/
-					SETME(4, 3, 1, 2);
 				}
 
 				// automatic pass, if no frontface or backface culling
@@ -441,7 +477,7 @@ void TEST_226(
 					int opZ;
 					gte_nclip();
 					gte_stopz(&opZ);
-					boolPassCull = (opZ < 0);
+					boolPassCull = (opZ >= 0);
 				}
 
 				if (boolPassCull)
