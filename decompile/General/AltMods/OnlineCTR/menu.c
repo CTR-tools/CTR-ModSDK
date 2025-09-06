@@ -99,12 +99,8 @@ void NewPage_ServerCountry()
 		menuRows[i].stringIndex |= 0x8000;
 	#else
 	//disable beta
-	i = 6;
-	menuRows[i].stringIndex |= 0x8000;
+	menuRows[6].stringIndex |= 0x8000;
 	#endif
-	//disable europe for the time being
-	i = 0;
-	menuRows[i].stringIndex |= 0x8000;
 }
 
 void MenuWrites_ServerCountry()
