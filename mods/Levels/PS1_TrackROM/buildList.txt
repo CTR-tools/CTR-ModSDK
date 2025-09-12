@@ -39,3 +39,4 @@ common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
 common, exe, MEMCARD_Save, 0x0, src/memcard_save_hook.c
 common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
 common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c
+common, exe, MainDB_GetClipSize, 0x0, src/clip_buffer.c
