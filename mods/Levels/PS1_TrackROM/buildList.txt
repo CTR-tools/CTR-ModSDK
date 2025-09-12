@@ -25,9 +25,10 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 926, 226, 0x800a36d8, 0x0, src/patches/lod2.s
 926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
 926, 226, 0x800a6f70, 0x0, src/patches/lod4.s
+926, 226, 0x800ab460, 0x0, src/patches/highLOD.s
 
 // Menus
-common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
+common, 230, MM_TrackSelect_MenuProc, 0x0, src/track_select.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 
 // exe

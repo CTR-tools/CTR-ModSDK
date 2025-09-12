@@ -29,18 +29,7 @@ void MM_MenuProc_Main(struct RectMenu* mainMenu)
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~CHEAT_ALL;
     sdata_static.gameProgress.unlocks[0] |= UNLOCK_CHARACTERS;
-
-    if(sdata->ptrGhostTapePlaying == 0)
-    {
-      SelectProfile_ToggleMode(0x30);
-      sdata->boolReplayHumanGhost = 0;
-      sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
-    }
-
-    // Leave main menu hierarchy
     D230.MM_State = 2;
-
-    // Set next stage to 2 for Time Trial
     D230.desiredMenuIndex = 2;
   }
 }
