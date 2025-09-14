@@ -712,13 +712,13 @@ give_this_label_a_better_name2:
 				}
 			}
 
-			if ((unsigned char)0x80u < navFrameCurr->goBackCount)
+			if ((unsigned char)0x80u < navFrameCurr->rot[3])
 			{
 				velocityAccountingForTerrain += botDriver->unk47E;
 
 				if (botDriver->botData.unk5bc.ai_speedLinear < velocityAccountingForTerrain)
 				{
-					unsigned int var = (unsigned int)navFrameCurr->goBackCount;
+					unsigned int var = (unsigned int)navFrameCurr->rot[3];
 					int sinOfAngle = MATH_Sin(var << 4);
 
 					botDriver->botData.unk5bc.ai_speedLinear -= (botDriver->const_Gravity * sinOfAngle) >> 0xc; //force on a slope due to gravity
