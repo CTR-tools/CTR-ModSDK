@@ -9,11 +9,11 @@ void DF_DrawOTag(u_long* ot)
 		// Demo Mode never times out, for inf-long unit testing
 		sdata->gGT->demoCountdownTimer = 900;
 		
-		// wait 24 seconds, 720 frames,
-		// includes loading screen (12 seconds)
-		// includes camera-fly-in, DotLights frames, racing (12 seconds)
+		// 45*30 = 45 seconds,
+		// subtract 17s to get race-time, to take out camera fly-in
 		
-		// 24s really is 7s, because fly-in and DotLights are 17 seconds
+		// At 32s(15s racing), decomp/retail match,
+		// At 45s(28s racing), decomp/retail miss
 		if(*(int*)0x8000c000 == (45*30))
 		{
 			while(1) {}
