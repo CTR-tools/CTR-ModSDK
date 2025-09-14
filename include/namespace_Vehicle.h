@@ -521,7 +521,7 @@ struct BotData
 
 	// 0x626
 	unsigned char unk626;
-	unsigned char unk627;
+	unsigned char desiredPath_BossOnly;
 
 	// 0x628
 	int unk628;

@@ -229,34 +229,37 @@ give_this_label_a_better_name2:
 
 		unsigned int botFlags = botDriver->botData.botFlags; //uVar8
 
+		// if path change is requested, but not started (BOSS ONLY)
 		if ((botFlags & 0xc0) == 0x40)
 		{
-			short pathIndexOfWhat = navFrameNext->pathIndexOfffff; //uVar11, also uVar20 = (uint)uVar11
+			short changeOpcode = navFrameNext->pathChangeOpcode;
+			short newPathID = changeOpcode >> 0xa;
+			short newFrameIndex = changeOpcode & 0x3ff;
+			short cap = 3 << 0xA; // 0xC00, cant have path[3]
 
-			int truncatedPathIndexOfWhat = pathIndexOfWhat >> 0xa; //uVar18
-			if ((pathIndexOfWhat < 0xc00) && (truncatedPathIndexOfWhat == botDriver->botData.unk627))
+			if ((changeOpcode < cap) && (newPathID == botDriver->botData.desiredPath_BossOnly))
 			{
+				// record that change is requested (boss only)
 				botDriver->botData.botFlags = botFlags | 0x80;
 
-				LIST_RemoveMember(&sdata->navBotList[botDriver->botData.botPath], &botDriver->botData.item);
-
-				botDriver->botData.botPath = (short)(int)pathIndexOfWhat >> 10;
-
-				LIST_AddFront(&sdata->navBotList[truncatedPathIndexOfWhat], &botDriver->botData.item);
-
-				struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[truncatedPathIndexOfWhat];
-			//LAB_800144a0:
+				short oldPathID = botDriver->botData.botPath;
+				botDriver->botData.botPath = newPathID;
 				
-				navFrameCurr = (struct NavFrame*)&botDriver->botData.estimatePos[0];
-				botDriver->botData.botNavFrame = &firstNavFrameOnPath[pathIndexOfWhat & 0x3ff];
+				LIST_RemoveMember (&sdata->navBotList[oldPathID], &botDriver->botData.item);
+				LIST_AddFront     (&sdata->navBotList[newPathID], &botDriver->botData.item);
+
+				struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[newPathID];
+				botDriver->botData.botNavFrame = &firstNavFrameOnPath[newFrameIndex];
 
 				BOTS_SetRotation(botDriver, 0);
 
 				navFrameNext = botDriver->botData.botNavFrame;
+				navFrameCurr = (struct NavFrame*)&botDriver->botData.estimatePos[0];
 			}
 		}
 		else
 		{
+			// Only after first 15 seconds of the race
 			if (450 < sdata->unk_counter_upTo450)
 			{
 				struct Driver* otherDriver = NULL; //iVar4
@@ -264,78 +267,91 @@ give_this_label_a_better_name2:
 				{
 					int iVar3 = 1000;
 					short sVar7 = 1000;
-
-					struct BotData* botData = (struct BotData*)LIST_GetFirstItem(&sdata->navBotList[botDriver->botData.botPath]); //iVar15
-					while (botData != NULL)
+					struct BotData* botData;
+					
+					for(
+						botData = (struct BotData*)LIST_GetFirstItem(&sdata->navBotList[botDriver->botData.botPath]);
+						botData != NULL;
+						botData = (struct BotData*)LIST_GetNextItem((struct Item*)botData), sVar7 = (short)iVar3
+					)
 					{
 						struct Driver* driverFromBotData = ((char*)botData) - offsetof(struct Driver, botData);
 
-						if (driverFromBotData != (char*)botDriver)
-						{
-							// Find the index of the path: "(curr - first) / sizeof(NavFrame)"
-							unsigned int subtractAddr = 
-								(unsigned int)botData->botNavFrame - 
-								(unsigned int)botDriver->botData.botNavFrame;
+						if (driverFromBotData == (char*)botDriver)
+							continue;
+						
+						
+						// Find the index of the path: "(curr - first) / sizeof(NavFrame)"
+						unsigned int subtractAddr = 
+							(unsigned int)botData->botNavFrame - 
+							(unsigned int)botDriver->botData.botNavFrame;
 			
-							subtractAddr /= sizeof(struct NavFrame);
-							
-							int iVar13 = subtractAddr;
+						subtractAddr /= sizeof(struct NavFrame);
+						
+						int iVar13 = subtractAddr;
 
-							if (iVar13 < 0)
-							{
-								iVar13 += sdata->NavPath_ptrHeader[botDriver->botData.botPath]->numPoints;
-							}
-							if (iVar13 < iVar3)
-							{
-								iVar3 = iVar13;
-								otherDriver = (struct Driver*)(((char*)botData) - offsetof(struct Driver, botData));
-							}
+						// if "other" botData driver is behind "this" botDriver driver, 
+						if (iVar13 < 0)
+						{
+							// assume number of points "away" is large (add track length)
+							iVar13 += sdata->NavPath_ptrHeader[botDriver->botData.botPath]->numPoints;
 						}
-						sVar7 = (short)iVar3;
-
-						botData = (struct BotData*)LIST_GetNextItem((struct Item*)botData);
+						
+						// find closest "other" botData driver
+						// that is AHEAD of "this" botDriver driver
+						if (iVar13 < iVar3)
+						{
+							// save number of points ahead,
+							// and save pointer to other driver
+							iVar3 = iVar13;
+							otherDriver = driverFromBotData;
+						}						
 					}
 
-					if (otherDriver != NULL && sVar7 < 3)
+					// TODO Note: Maybe instead of sVar7, just erase that and use sVar3
+					
+					// If two drivers are within 3 navframe points of each other
+					if ((otherDriver != NULL) && (sVar7 < 3))
 					{
 						int diff = botDriver->distanceToFinish_curr - otherDriver->distanceToFinish_curr;
 
+						// if "this" bot is closer to finish than "other" bot, do nothing,
+						// because "diff" will be incremented largely and fail the <0x200 check
 						if (diff < 0)
 						{
 							diff += gGT->level1->ptr_restart_points->distToFinish * 8;
 						}
+						
+						// if "this" bot driver is behind "other" driver, and very close to them,
+						// while also being on the same nav path, then change the nav path
 						if (diff < 0x200)
 						{
-							short pathIndexOfWhat = navFrameNext->pathIndexOfffff; //also uVar20 = (uint)uVar11
+							short changeOpcode = navFrameNext->pathChangeOpcode;
+							short newPathID = changeOpcode >> 0xa;
+							short newFrameIndex = changeOpcode & 0x3ff;
+							short cap = 3 << 0xA; // 0xC00, cant have path[3]
 
-							if (pathIndexOfWhat < 0xc00)
+							if (changeOpcode < cap)
 							{
-								LIST_RemoveMember(&sdata->navBotList[botDriver->botData.botPath], &botDriver->botData.item);
+								short oldPathID = botDriver->botData.botPath;
+								botDriver->botData.botPath = newPathID;
+								
+								LIST_RemoveMember (&sdata->navBotList[oldPathID], &botDriver->botData.item);
+								LIST_AddFront     (&sdata->navBotList[newPathID], &botDriver->botData.item);
 
-								int truncatedPathIndexOfWhat = pathIndexOfWhat >> 0xa; //iVar4
-
-								botDriver->botData.botPath = pathIndexOfWhat >> 10;
-
-								LIST_AddFront(&sdata->navBotList[truncatedPathIndexOfWhat], &botDriver->botData.item);
-
-								struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[truncatedPathIndexOfWhat];
-
-								//goto LAB_800144a0; //instead of goto, just copy/paste
-
-								navFrameCurr = (struct NavFrame*)&botDriver->botData.estimatePos[0];
-								botDriver->botData.botNavFrame = &firstNavFrameOnPath[pathIndexOfWhat & 0x3ff];
+								struct NavFrame* firstNavFrameOnPath = sdata->NavPath_ptrNavFrameArray[newPathID];
+								botDriver->botData.botNavFrame = &firstNavFrameOnPath[newFrameIndex & 0x3ff];
 
 								BOTS_SetRotation(botDriver, 0);
 
 								navFrameNext = botDriver->botData.botNavFrame;
+								navFrameCurr = (struct NavFrame*)&botDriver->botData.estimatePos[0];
 							}
 						}
 					}
 				}
 			}
 		}
-
-		//PICK IT UP HEREEEEEEEEEEEEEEEEEEEEEEEEEEEE
 
 		//puVar5 = gGT but different?
 

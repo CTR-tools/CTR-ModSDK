@@ -30,7 +30,7 @@ struct NavFrame
 	short flags;
 	
 	// 0x10
-	short pathIndexOfffff; // of what?
+	short pathChangeOpcode;
 	
 	// 0x12
 	// how many nodes to go back, if AI hits killplane
