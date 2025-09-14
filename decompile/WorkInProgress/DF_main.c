@@ -14,7 +14,7 @@ void DF_DrawOTag(u_long* ot)
 		// includes camera-fly-in, DotLights frames, racing (12 seconds)
 		
 		// 24s really is 7s, because fly-in and DotLights are 17 seconds
-		if(*(int*)0x8000c000 == (600*30))
+		if(*(int*)0x8000c000 == (45*30))
 		{
 			while(1) {}
 		}

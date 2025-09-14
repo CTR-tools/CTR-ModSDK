@@ -10,7 +10,7 @@
 //common, exe, TT_EndEvent_DrawMenu, 0x0, src/224/TT_EndEvent_DrawMenu.c
 //common, exe, TT_EndEvent_DrawHighScore, 0x0, src/224/TT_EndEvent_DrawHighScore.c
 
-//common, exe, BOTS_ThTick_Drive, 0x0, src/BOTS/BOTS_11_ThTick_Drive.c
+common, exe, BOTS_ThTick_Drive, 0x0, src/BOTS/BOTS_11_ThTick_Drive.c
 common, exe, Timer_GetTime_Elapsed, 0x0, Timer_3_GetTime_Elapsed.c
 926, exe, 0x800379b0, 0x0, DF_JalDrawOTag.s
 common, exe, rdata_free, 0x0, DF_main.c
