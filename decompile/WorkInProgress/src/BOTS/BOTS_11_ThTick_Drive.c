@@ -120,11 +120,11 @@ give_this_label_a_better_name:
 	{
 		navFrameCurr = botDriver->botData.botNavFrame;
 		navFrameNext = navFrameCurr + 1;
+		
+		int pathID = botDriver->botData.botPath;
 			
-		if (sdata->NavPath_ptrHeader[botDriver->botData.botPath]->last <= navFrameNext)
-		{
-			navFrameNext = sdata->NavPath_ptrNavFrameArray[0];
-		}
+		if (navFrameNext >= sdata->NavPath_ptrHeader[pathID]->last)
+			navFrameNext = sdata->NavPath_ptrNavFrameArray[pathID];
 	}
 	else
 	{
@@ -834,10 +834,8 @@ give_this_label_a_better_name2:
 
 		iVar15 -= iVar3;
 
-		if (sdata->NavPath_ptrHeader[index]->last <= navFrameNext)
-		{
+		if (navFrameNext >= sdata->NavPath_ptrHeader[index]->last)
 			navFrameNext = sdata->NavPath_ptrNavFrameArray[index];
-		}
 
 		if (
 				((botDriver->botData.ai_posBackup[1] >> 8) < navFrameNext->pos[1]) && 
@@ -1029,10 +1027,8 @@ give_this_label_a_better_name2:
 
 		navFrameNext = NAVFRAME_GETNEXTFRAME(navFrameCurr);
 
-		if (sdata->NavPath_ptrHeader[botPath]->last <= navFrameNext)
-		{
-			navFrameNext = sdata->NavPath_ptrNavFrameArray[0];
-		}
+		if (navFrameNext >= sdata->NavPath_ptrHeader[botPath]->last)
+			navFrameNext = sdata->NavPath_ptrNavFrameArray[botPath];
 	}
 
 	int percentage; //iVar13
