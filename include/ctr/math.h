@@ -74,11 +74,11 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
-struct TrigTable
+typedef struct TrigTable
 {
     s16 sin;
     s16 cos;
-};
+} TrigTable;
 
 #define ANG_TWO_PI 0x1000        // 360
 #define ANG_PI (ANG_TWO_PI / 2)  // 180
@@ -115,6 +115,7 @@ force_inline s32 clamp(s32 n, s32 lo, s32 hi)
 	return n;
 }
 
+s32 MATH_Sin(u32 angle);
 s32 MATH_VectorLength(const SVec3* vector);
 
 #endif
