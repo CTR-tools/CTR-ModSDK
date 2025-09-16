@@ -97,12 +97,14 @@ typedef struct TrigTable
 #define FP8_ONE (1 << FRACTIONAL_BITS_8)
 #define FP8_INT(x) ((x) >> FRACTIONAL_BITS_8)
 #define FP8_MULT(x, y) (((x) * (y)) >> FRACTIONAL_BITS_8)
-#define FP8(x) ((int)(((float)x) * FP8_ONE))
+#define FP8_DIV(x, y) (((x) << FRACTIONAL_BITS_8) / (y))
+#define FP8(x) ((int)(((float)(x)) * FP8_ONE))
 
 #define FRACTIONAL_BITS 12
 #define FP_ONE (1 << FRACTIONAL_BITS)
 #define FP_INT(x) ((x) >> FRACTIONAL_BITS)
 #define FP_MULT(x, y) (((x) * (y)) >> FRACTIONAL_BITS)
+#define FP_DIV(x, y) (((x) << FRACTIONAL_BITS) / (y))
 #define FP(x) ((int)(((float)(x)) * FP_ONE))
 
 force_inline s32 abs(s32 value) { return value < 0 ? -value : value; }
@@ -116,6 +118,9 @@ force_inline s32 clamp(s32 n, s32 lo, s32 hi)
 }
 
 s32 MATH_Sin(u32 angle);
+s32 MATH_Cos(u32 angle);
+s32 MATH_Sqrt(u32 n, u32 shift); // sqrt(n * 2^shift)
 s32 MATH_VectorLength(const SVec3* vector);
+void MATH_VectorNormalize(SVec3* vector);
 
 #endif

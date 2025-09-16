@@ -7,4 +7,7 @@ common, DLL, 0x80200000, 0x0, src/math.c src/prim.c, DECOMP.BIN
 
 // decomp hooks
 common, exe, ND_MATH_Sin, 0x0, src/hooks/math/Sin.s
+common, exe, ND_MATH_Cos, 0x0, src/hooks/math/Cos.s
+common, exe, ND_MATH_FastSqrt, 0x0, src/hooks/math/Sqrt.s
 common, exe, ND_MATH_VectorLength, 0x0, src/hooks/math/VectorLength.s
+common, exe, ND_MATH_VectorNormalize, 0x0, src/hooks/math/VectorNormalize.s
