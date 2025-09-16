@@ -1,8 +1,6 @@
 #include <common.h>
 
 #include "../prim.c"
-#include "../math.c"
-#include "../gte.c"
 
 #ifndef USE_ONLINE
 #include "UI_00_SaveLapTime.c"

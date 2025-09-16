@@ -78,7 +78,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
         highlightIdpp[i].pushBuffer = pb;
       }
   }
-  
+
   // if driver is not invisible
   else
   {
@@ -94,8 +94,8 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   }
 
   short pos[3];
-  pos[0] = 0; 
-  pos[1] = 0; 
+  pos[0] = 0;
+  pos[1] = 0;
   pos[2] = 0;
 
   // Copy matrix
@@ -130,7 +130,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   {
     scaleXZ = ((int *)0x800b2cf4)[shield->animFrame*2+0];
     scaleY =  ((int *)0x800b2cf4)[shield->animFrame*2+1];
-	
+
     // set scale
     shieldInst->scale[0] = WIDE_34(scaleXZ);
     shieldInst->scale[1] = scaleY;
@@ -140,18 +140,18 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
     colorInst->scale[0] = WIDE_34(scaleXZ);
     colorInst->scale[1] = scaleY;
     colorInst->scale[2] = scaleXZ;
-	
+
 	#ifdef USE_60FPS
 	if(sdata->gGT->timer & 1)
 	#endif
 		// next frame
 		shield->animFrame++;
   }
-  
+
   // if animation is done
   else
   {
-    short timerIndex = 
+    short timerIndex =
 		(
 			(gGT->timer >> FPS_RIGHTSHIFT(0))
 			% 6
@@ -211,9 +211,9 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   shieldFlags = shield->flags;
 
   if (
-		((shieldFlags & 1) != 0) || 
+		((shieldFlags & 1) != 0) ||
 		((shieldFlags & 8) != 0) ||
-		
+
 		// if race ended for this driver
 		((player->actionsFlagSet & 0x2000000) != 0) ||
 
@@ -235,8 +235,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
     player->instBubbleHold = NULL;
 
     // execute, then assign per-frame funcPtr to thread
-	void RB_ShieldDark_ThTick_Pop();
-    ThTick_SetAndExec(th, RB_ShieldDark_ThTick_Pop);
+    ThTick_SetAndExec(th, DECOMP_RB_ShieldDark_ThTick_Pop);
     return;
   }
 
@@ -259,13 +258,13 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   }
 
   // create a thread, get an instance
-  struct Instance *bombInst = 
+  struct Instance *bombInst =
 	DECOMP_INSTANCE_BirthWithThread(
-		model, 0, MEDIUM, OTHER, 
-        DECOMP_RB_MovingExplosive_ThTick, 
+		model, 0, MEDIUM, OTHER,
+        DECOMP_RB_MovingExplosive_ThTick,
         sizeof(struct TrackerWeapon),
         playerTh);
-		
+
   struct Thread* bombTh = bombInst->thread;
   bombTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
 
@@ -280,7 +279,7 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
     Voiceline_RequestPlay(13, data.characterIDs[player->driverID], 0x10);
   }
 
-  // copy position and rotation from one instance to another 
+  // copy position and rotation from one instance to another
   *(int*)&bombInst->matrix.m[0][0] = *(int*)&shieldInst->matrix.m[0][0];
   *(int*)&bombInst->matrix.m[0][2] = *(int*)&shieldInst->matrix.m[0][2];
   *(int*)&bombInst->matrix.m[1][1] = *(int*)&shieldInst->matrix.m[1][1];
@@ -304,16 +303,16 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   tw->timeAlive = 0;
   tw->audioPtr = 0;
   tw->frameCount_Blind = 0;
-  
+
   tw->driverParent = player;
   tw->instParent = driverInst;
-  
+
   // do NOT patch for 60fps,
   // velocity uses elapsedTime
   tw->vel[1] = 0;
   tw->vel[0] = (driverInst->matrix.m[0][2] * 3) >> 7;
   tw->vel[2] = (driverInst->matrix.m[2][2] * 3) >> 7;
-  
+
   tw->rotY = player->angle;
   tw->frameCount_DontHurtParent = FPS_DOUBLE(10);
 
@@ -330,4 +329,3 @@ LAB_800b0d6c:
   th->flags |= 0x800;
 }
 
- 

@@ -56,7 +56,7 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
         // this one is for a different pool than prev
 
         inst = INSTANCE_BirthWithThread(
-            modelID,            
+            modelID,
             name,               // debug name
             MEDIUM,             // stackpool
             bucket,             // threadbucket
@@ -272,7 +272,7 @@ LAB_800af5ec:
     }
 
     cs->unk44[0] = 0xff;
-    
+
     cs->unk28 = 0;
     cs->unk1e = 0;
     cs->flags = 0;

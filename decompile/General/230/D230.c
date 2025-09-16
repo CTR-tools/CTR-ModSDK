@@ -1,23 +1,9 @@
 #include <common.h>
 
-void DECOMP_MM_MenuProc_Main();
-void DECOMP_MM_MenuProc_1p2p();
-void DECOMP_MM_MenuProc_2p3p4p();
-void DECOMP_MM_MenuProc_Difficulty();
-void DECOMP_MM_MenuProc_SingleCup();
-void DECOMP_MM_MenuProc_NewLoad();
-void DECOMP_MM_Characters_MenuProc();
-void DECOMP_MM_TrackSelect_MenuProc();
-void DECOMP_MM_CupSelect_MenuProc();
-void DECOMP_MM_Battle_MenuProc();
-void DECOMP_MM_HighScore_MenuProc();
-void DECOMP_MM_Scrapbook_PlayMovie();
-void DECOMP_MM_Battle_CloseSubMenu();
-
 struct OverlayDATA_230 D230 =
 {
 	// MAIN MENU CONSTS
-	
+
 	.rowsMainMenuBasic =
 	{
 		{0x4C, 0,1,0,0},
@@ -28,7 +14,7 @@ struct OverlayDATA_230 D230 =
 		{0x51, 4,5,5,5},
 		{-1},
 	},
-	
+
 	.rowsMainMenuWithScrapbook =
 	{
 		{0x4C, 0,1,0,0},
@@ -40,37 +26,37 @@ struct OverlayDATA_230 D230 =
 		{0x234,5,6,6,6},
 		{-1},
 	},
-	
+
 	.menuMainMenu =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.posX_curr = 0x180,
 		.posY_curr = 0x6c,
-		
+
 		.state = 0x403,
 		.rows = &D230.rowsMainMenuBasic[0],
 		.funcPtr = DECOMP_MM_MenuProc_Main,
-		
+
 		.unk1e = 1,
 	},
-	
+
 	.rowsPlayers1P2P =
 	{
 		{0x54,   0,1,0,0},
 		{0x8055, 0,1,1,1},
 		{-1},
 	},
-	
+
 	.menuPlayers1P2P =
 	{
 		.stringIndexTitle = 0x53,
-		
+
 		.state = 9,
 		.rows = &D230.rowsPlayers1P2P[0],
-		.funcPtr = DECOMP_MM_MenuProc_1p2p,	
+		.funcPtr = DECOMP_MM_MenuProc_1p2p,
 	},
-	
+
 	.rowsPlayers2P3P4P =
 	{
 		{0x8055, 0,1,0,0},
@@ -78,16 +64,16 @@ struct OverlayDATA_230 D230 =
 		{0x8057, 1,2,2,2},
 		{-1},
 	},
-	
+
 	.menuPlayers2P3P4P =
 	{
 		.stringIndexTitle = 0x53,
-		
+
 		.state = 9,
 		.rows = &D230.rowsPlayers2P3P4P[0],
-		.funcPtr = DECOMP_MM_MenuProc_2p3p4p,	
+		.funcPtr = DECOMP_MM_MenuProc_2p3p4p,
 	},
-	
+
 	.rowsDifficulty =
 	{
 		{0x15A, 0,1,0,0},
@@ -95,52 +81,52 @@ struct OverlayDATA_230 D230 =
 		{0x15C, 1,2,2,2},
 		{-1},
 	},
-	
+
 	.menuDifficulty =
 	{
 		.stringIndexTitle = 0x159,
-		
+
 		.state = 1,
 		.rows = &D230.rowsDifficulty[0],
-		.funcPtr = DECOMP_MM_MenuProc_Difficulty,	
+		.funcPtr = DECOMP_MM_MenuProc_Difficulty,
 	},
-	
+
 	.rowsRaceType =
 	{
 		{0x15E, 0,1,0,0},
 		{0x15F, 0,1,1,1},
 		{-1},
 	},
-	
+
 	.menuRaceType =
 	{
 		.stringIndexTitle = 0x15D,
-		
+
 		.state = 1,
 		.rows = &D230.rowsRaceType[0],
-		.funcPtr = DECOMP_MM_MenuProc_SingleCup,	
+		.funcPtr = DECOMP_MM_MenuProc_SingleCup,
 	},
-	
+
 	.rowsAdventure =
 	{
 		{0x8d, 0,1,0,0},
 		{0x8e, 0,1,1,1},
 		{-1},
 	},
-	
+
 	.menuAdventure =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 9,
 		.rows = &D230.rowsAdventure[0],
-		.funcPtr = DECOMP_MM_MenuProc_NewLoad,	
+		.funcPtr = DECOMP_MM_MenuProc_NewLoad,
 	},
 
 #if 0
 	.langIndex = {2,3,4,5,6,7},
 
-	.rowsLanguage = 
+	.rowsLanguage =
 	{
 		{0x85, 0,1,0,0},
 		{0x86, 0,2,1,1},
@@ -151,33 +137,33 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuLanguage = 
+	.menuLanguage =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x400001,
 		.rows = &D230.rowsLngBoot,
 		.funcPtr = DECOMP_MM_MenuProc_Language
 	},
 
 #endif
-	
+
 	.menuCharacterSelect =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x28,
 		.funcPtr = DECOMP_MM_Characters_MenuProc,
 	},
-	
+
 	.menuTrackSelect =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x28,
 		.funcPtr = DECOMP_MM_TrackSelect_MenuProc,
 	},
-	
+
 	.rowsCupSelect =
 	{
 		{0, 0,2,0,1},
@@ -186,40 +172,40 @@ struct OverlayDATA_230 D230 =
 		{0, 1,3,2,3},
 		{-1}
 	},
-	
+
 	.menuCupSelect =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x2408,
 		.rows = &D230.rowsCupSelect[0],
-		.funcPtr = DECOMP_MM_CupSelect_MenuProc,	
+		.funcPtr = DECOMP_MM_CupSelect_MenuProc,
 	},
-	
+
 	.menuBattleWeapons =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x28,
 		.funcPtr = DECOMP_MM_Battle_MenuProc,
 	},
-	
+
 	.menuHighScores =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x28,
 		.funcPtr = DECOMP_MM_HighScore_MenuProc,
 	},
-	
+
 	.menuScrapbook =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.state = 0x20,
 		.funcPtr = DECOMP_MM_Scrapbook_PlayMovie,
 	},
-	
+
 	.arrayMenuPtrs =
 	{
 		&D230.menuMainMenu,
@@ -232,7 +218,7 @@ struct OverlayDATA_230 D230 =
 		&D230.menuBattleWeapons,
 		&D230.menuHighScores
 	},
-	
+
 	.titleInstances =
 	{
 		{0x68, FPS_DOUBLE(0x4e), 0xe6, 0},
@@ -242,16 +228,16 @@ struct OverlayDATA_230 D230 =
 		{0x6a, FPS_DOUBLE(0x8c), 0xe6, 0},
 		{0x6b, FPS_DOUBLE(0xd7), 0xe6, 0}
 	},
-	
+
 	.titleCameraPos = {0x32, 0xFFE2, 0x64, 0},
 	.titleCameraRot = {0, 0xFF9C, 0, 0},
-	
+
 	.title_numFrameTotal = FPS_DOUBLE(0xC),
 	.title_numTransition = FPS_DOUBLE(8),
-	
+
 	.title_mainPosX = 0x180,
 	.title_mainPosY = 0x6c,
-	
+
 	.title_advPosX = 0,
 	.title_advPosY = 0,
 	.title_racePosX = 0,
@@ -260,9 +246,9 @@ struct OverlayDATA_230 D230 =
 	.title_plyrPosY = 0,
 	.title_diffPosX = 0,
 	.title_diffPosY = 0,
-	
+
 	.title_camPos = {0x32, 0xFFE2, 0x64, 0},
-	
+
 	.transitionMeta_Menu =
 	{
 		{512, 0, 0, 0, 0},
@@ -274,7 +260,7 @@ struct OverlayDATA_230 D230 =
 		{0x64, 0xC8, 0, 0, 0},
 		{0, 0, -1, 0, 0},
 	},
-	
+
 	.titleSounds =
 	{
 		{0x94, 0x9B},
@@ -286,44 +272,44 @@ struct OverlayDATA_230 D230 =
 		{0x84, 0xA1},
 		{0xC8, 0xA2},
 	},
-	
+
 	// these are rewritten in MM_CheatCodes
 	.cheatButtonEntry = {0},
-	
+
 	.cupDifficultyUnlockFlags = {-1, 0xC, 0x10, 0},
 	.cupDifficultyLngIndex = {0x15A, 0x15B, 0x15C, 0},
 	.cupDifficultySpeed = {0x50, 0xA0, 0xF0},
-	
+
 	// CHARACTER SELECT CONSTS
-	
+
 	.characterSelectWindowPos =
 	{
 		// 1P full menu
 		{0x7F, 0xA},
-		
+
 		// 1P small menu
-		{0x4D, 0x1E}, 
-		
+		{0x4D, 0x1E},
+
 		// 2P full menu
 		{0xA, 0xA},
 		{0x101, 0xA},
-		
+
 		// 2P small menu
 		{0x1E, 0x1E},
 		{0x100, 0x1E},
-		
+
 		// 3P menu
 		{0x136, 0x4},
 		{0x136, 0x4A},
 		{0x136, 0x90},
-		
+
 		// 4P menu
 		{0x15, 0x1},
 		{0x13F, 0x1},
 		{0x15, 0x95},
 		{0x13F, 0x95},
 	},
-	
+
 	.ptrSelectWindowPos =
 	{
 		// full menus, 1p2p3p4p
@@ -331,38 +317,38 @@ struct OverlayDATA_230 D230 =
 		&D230.characterSelectWindowPos[2],
 		&D230.characterSelectWindowPos[6],
 		&D230.characterSelectWindowPos[9],
-		
+
 		// small menus, 1p2p
 		&D230.characterSelectWindowPos[1],
 		&D230.characterSelectWindowPos[4],
 	},
-	
+
 	.windowW =
 	{
 		0xF6, 0xD6, 0xA0, 0xA0, 0x15A, 0xD6
 	},
-	
+
 	.windowH =
 	{
 		0x50, 0x50, 0x40, 0x40, 0x5C, 0x5C
 	},
-	
+
 	.driverPosZ =
 	{
 		0xC8, 0xC8, 0xFa, 0xFa, 0xAA, 0xAA
 	},
-	
+
 	.driverPosY =
 	{
 		0x28, 0x28, 0x28, 0x28, 0x28, 0x28
 	},
-	
+
 	.textPosArr =
 	{
 		0x46, 0x46, 0x36, 0x36, 0x52, 0x52
 	},
 
-	.csm_1P2P_limited = 
+	.csm_1P2P_limited =
 	{
 		// Crash
 		{0x80, 0x80,  {0, 4,8,1}, 0, 0xFFFF},
@@ -396,7 +382,7 @@ struct OverlayDATA_230 D230 =
 		{0x120, 0xCE, {6,14,13,14}, 14, 0xB}
 	},
 
-	.csm_1P2P = 
+	.csm_1P2P =
 	{
 		// Crash
 		{0x80, 0x60,  {0,4,8,1}, 0, 0xFFFF},
@@ -430,7 +416,7 @@ struct OverlayDATA_230 D230 =
 		{0x120, 0xAE, {6,14,13,14}, 14, 0xB}
 	},
 
-	.csm_3P = 
+	.csm_3P =
 	{
 		// Crash
 		{0x20, 0x47,  {12,4,0,1}, 0, 0xFFFF},
@@ -464,7 +450,7 @@ struct OverlayDATA_230 D230 =
 		{0xC0, 0x20,  {14,3,13,14}, 14, 0xB}
 	},
 
-	.csm_4P = 
+	.csm_4P =
 	{
 		// Crash
 		{0x80, 0x47,  {0,4,10,1}, 0, 0xFFFF},
@@ -497,8 +483,8 @@ struct OverlayDATA_230 D230 =
 		// Penta
 		{0xE0, 0x20,  {14,1,14,14}, 13, 0x6}
 	},
-	
-	.ptrCsmArr = 
+
+	.ptrCsmArr =
 	{
 		&D230.csm_1P2P[0],
 		&D230.csm_1P2P[0],
@@ -508,7 +494,7 @@ struct OverlayDATA_230 D230 =
 		&D230.csm_1P2P_limited[0]
 	},
 
-	.characterMenuID = 
+	.characterMenuID =
 	{
 		-1, 0, 0, 0,
 		0, 0, 0, 0,
@@ -516,7 +502,7 @@ struct OverlayDATA_230 D230 =
 		0, 0, 0, 0,
 	},
 
-	.transitionMeta_csm_1P2P = 
+	.transitionMeta_csm_1P2P =
 	{
 		{0, 0xC8, 6, 0, 0},
 		{0, 0xC8, 5, 0, 0},
@@ -541,7 +527,7 @@ struct OverlayDATA_230 D230 =
 		{0, 0, -1, 0, 0},
 	},
 
-	.transitionMeta_csm_3P = 
+	.transitionMeta_csm_3P =
 	{
 		{-512, 0, 2, 0, 0},
 		{-512, 0, 3, 0, 0},
@@ -566,7 +552,7 @@ struct OverlayDATA_230 D230 =
 		{0, 0, -1, 0, 0},
 	},
 
-	.transitionMeta_csm_4P = 
+	.transitionMeta_csm_4P =
 	{
 		{-512, 0, 1, 0, 0},
 		{-512, 0, 2, 0, 0},
@@ -591,7 +577,7 @@ struct OverlayDATA_230 D230 =
 		{0, 0, -1, 0, 0},
 	},
 
-	.ptr_transitionMeta_csm = 
+	.ptr_transitionMeta_csm =
 	{
 		&D230.transitionMeta_csm_1P2P[0],
 		&D230.transitionMeta_csm_1P2P[0],
@@ -602,12 +588,12 @@ struct OverlayDATA_230 D230 =
 	.csm_instPos = {0, 0x28, 0xFA, 0},
 
 	.csm_instRot = {0x800, 0, 0},
-	
+
 	.moveModels = FPS_DOUBLE(4),
 
 	.unkCharacterWindows = 0x8C,
 
-	.PlayerNumberStrings = 
+	.PlayerNumberStrings =
 	{
 		&R230.s_1[0],
 		&R230.s_2[0],
@@ -621,23 +607,23 @@ struct OverlayDATA_230 D230 =
 
 	.characterSelect_Outline = 0,
 
-	.characterSelect_NeutralColor = 0x808080, 
+	.characterSelect_NeutralColor = 0x808080,
 
 	.characterSelect_ChosenColor = 0,
 
-	.characterSelect_BlueRectColors = 
-	{ 
-		0x1b, 0x6a, 0xcb, 0x00, 
-		0x9b, 0xd2, 0xf2, 0x40, 
-		0xb7, 0xe1, 0xed, 0x43, 
-		0x65, 0x4b, 0x03, 0x46, 
-		0xa6, 0x83, 0x23, 0x50, 
-		0xdf, 0xc8, 0x95, 0x64 
+	.characterSelect_BlueRectColors =
+	{
+		0x1b, 0x6a, 0xcb, 0x00,
+		0x9b, 0xd2, 0xf2, 0x40,
+		0xb7, 0xe1, 0xed, 0x43,
+		0x65, 0x4b, 0x03, 0x46,
+		0xa6, 0x83, 0x23, 0x50,
+		0xdf, 0xc8, 0x95, 0x64
 	},
 
 	// TRACK SELECT CONSTS
 
-	.arcadeTracks = 
+	.arcadeTracks =
 	{
 		// CRASH_COVE
 		{3, 0x51, 0x6a, 0xFFFF, 0x1e4, 0x258},
@@ -677,7 +663,7 @@ struct OverlayDATA_230 D230 =
 		{17, 0x56, 0x74, 0x1, 0x1f1, 0x3d5},
 	},
 
-	.battleTracks = 
+	.battleTracks =
 	{
 		// NITRO_COURT
 		{18, 0x45, 0xFFFF, 0xFFFF, 0x1f2, 0x197},
@@ -695,7 +681,7 @@ struct OverlayDATA_230 D230 =
 		{24, 0x4b, 0xFFFF, 0x4, 0x1f8, 0x19a},
 	},
 
-	.transitionMeta_trackSel = 
+	.transitionMeta_trackSel =
 	{
 		{-512, 0, 1, 0, 0},
 		{0, -200, 2, 0, 0},
@@ -706,7 +692,7 @@ struct OverlayDATA_230 D230 =
 
 	.lapRowVal = {3, 5, 7, 0},
 
-	.rowsLapSel = 
+	.rowsLapSel =
 	{
 		{0x9b, 0,1,0,0},
 		{0x9c, 0,2,1,1},
@@ -714,10 +700,10 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuLapSel = 
+	.menuLapSel =
 	{
 		.stringIndexTitle = 0x9a,
-		
+
 		.posX_curr = 0x18C,
 		.posY_curr = 0x7c,
 
@@ -742,7 +728,7 @@ struct OverlayDATA_230 D230 =
 
 	// CUP SELECT CONSTS
 
-	.transitionMeta_cupSel = 
+	.transitionMeta_cupSel =
 	{
 		{-256, -100, 5, 0, 0},
 		{256, -100, 4, 0, 0},
@@ -760,7 +746,7 @@ struct OverlayDATA_230 D230 =
 
 	// BATTLE CONSTS
 
-	.transitionMeta_battle = 
+	.transitionMeta_battle =
 	{
 		{400, 0, 5, 0, 0},
 		{-200, 0, 5, 0, 0},
@@ -775,7 +761,7 @@ struct OverlayDATA_230 D230 =
 		{0, 0, -1, 0, 0}
 	},
 
-	.rowsBattleType = 
+	.rowsBattleType =
 	{
 		{0x92, 0,1,0,0},
 		{0x93, 0,2,1,1},
@@ -783,7 +769,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleType = 
+	.menuBattleType =
 	{
 		.stringIndexTitle = -1,
 
@@ -800,7 +786,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleLengthLifeTime = 
+	.menuBattleLengthLifeTime =
 	{
 		.stringIndexTitle = -1,
 
@@ -817,7 +803,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleLengthTimeTime = 
+	.menuBattleLengthTimeTime =
 	{
 		.stringIndexTitle = -1,
 
@@ -834,7 +820,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleLengthPoints = 
+	.menuBattleLengthPoints =
 	{
 		.stringIndexTitle = -1,
 
@@ -851,7 +837,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleLengthLifeLife = 
+	.menuBattleLengthLifeLife =
 	{
 		.stringIndexTitle = -1,
 
@@ -866,7 +852,7 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	},
 
-	.menuBattleStartGame = 
+	.menuBattleStartGame =
 	{
 		.stringIndexTitle = -1,
 
@@ -894,7 +880,7 @@ struct OverlayDATA_230 D230 =
 		0x2000, 0x12
 	},
 
-	.FlagesGameMode1_BattleType = 
+	.FlagesGameMode1_BattleType =
 		{POINT_LIMIT,TIME_LIMIT,LIFE_LIMIT},
 
 	.time_3_6_9 = {3,6,9},
@@ -930,7 +916,7 @@ struct OverlayDATA_230 D230 =
 
 	.highscore_iconColor = 0x808080,
 
-	.rowsHighScore = 
+	.rowsHighScore =
 	{
 		{0xAF, 0,1,0,0},
 		{0xB1, 0,2,0,0},
@@ -956,8 +942,8 @@ struct OverlayDATA_230 D230 =
 #if 0
 
 	.fileIndexLngBoot = {2,3,4,5,6,7},
-	
-	.rowsLngBoot = 
+
+	.rowsLngBoot =
 	{
 		{0x85, 0,1,0,0},
 		{0x86, 0,2,1,1},
@@ -968,13 +954,13 @@ struct OverlayDATA_230 D230 =
 		{-1}
 	}
 
-	.menuLngBoot = 
+	.menuLngBoot =
 	{
 		.stringIndexTitle = -1,
-		
+
 		.posX_curr = 256,
 		.posY_curr = 118,
-		
+
 		.state = 0xC03,
 		.rows = &D230.rowsLngBoot,
 		.funcPtr = DECOMP_MM_MenuProc_LanguageBoot

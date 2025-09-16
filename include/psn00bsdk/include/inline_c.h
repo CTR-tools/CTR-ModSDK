@@ -63,7 +63,7 @@
  * @brief Load three SVECTORs to GTE vector registers at once
  *
  * @details Loads values from three SVECTOR structs to GTE data registers
- * C2_VXY0 and C2_VZ0, C2_VXY1 and C2_VZ1,  C2_VXY2 and C2_VZ2 at once. 
+ * C2_VXY0 and C2_VZ0, C2_VXY1 and C2_VZ1,  C2_VXY2 and C2_VZ2 at once.
  */
 #define gte_ldv3( r0, r1, r2 ) __asm__ volatile ( \
 	"lwc2	$0, 0( %0 );"	\
@@ -1539,7 +1539,7 @@
 	((sf)<<19) | ((mx)<<17) | ((v)<<15) | ((cv)<<13) | ((lm)<<10) )
 
 /* GTE operation macros without leading nops */
- 
+
 #define gte_rtps_b()		__asm__ volatile ( "cop2 0x0180001;" )
 #define gte_rtpt_b()		__asm__ volatile ( "cop2 0x0280030;" )
 #define gte_rt_b()			__asm__ volatile ( "cop2 0x0480012;" )

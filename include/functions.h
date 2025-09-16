@@ -961,7 +961,6 @@ int VehCalc_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_i
 //VehEmitter_Sparks_Ground()
 //VehEmitter_Terrain_Ground()
 //VehEmitter_Sparks_Wall()
-void VehEmitter_DriverMain();
 
 // more uncategorized vehicle stuff
 
@@ -983,11 +982,10 @@ void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
 //VehPhysCrash_AI()
 //VehPhysCrash_Attack()
 void VehPhysCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-void VehPhysForce_ConvertSpeedToVec(struct Driver* d, short* velArr, int x);
+void VehPhysForce_ConvertSpeedToVec(struct Driver* d, short* velArr);
 //VehPhysForce_OnGravity()
 void VehPhysForce_OnApplyForces(struct Thread* t, struct Driver* d);
 void VehPhysForce_CollideDrivers(struct Thread* t, struct Driver* d);
-void VehPhysForce_TranslateMatrix();
 void VehPhysForce_RotAxisAngle(MATRIX* m, short* normVec, short angle);
 void VehPhysForce_AccelTerrainSlope(struct Driver* d);
 
@@ -1270,7 +1268,6 @@ u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
 void RB_RainCloud_Init(struct Driver* d);
 void RB_Explosion_InitPotion(struct Instance* inst);
 void RB_Blowup_Init(struct Instance* weaponInst);
-void RB_TNT_ThTick_ThrowOffHead();
 void RB_Explosion_InitGeneric(struct Instance* inst);
 void MatrixRotate(MATRIX*, MATRIX*, MATRIX*);
 void RB_Warpball_Death(struct Thread* t);
@@ -1295,6 +1292,10 @@ void SpuSetTransferCallback(void(*)(void));
 void MainInit_RainBuffer(struct GameTracker*);
 void CS_Podium_FullScene_Init();
 void CS_Cutscene_Start();
+void CS_Podium_Stand_Init(u_short *);
+void CS_Podium_Prize_Init(u_int, char*, short *);
+int CS_Thread_Init(short modelID, char* name, short *param_3, short param_4, struct Thread* parent);
+void CS_Camera_ThTick_Podium(int param_1);
 void howl_StopAudio(int boolErasePauseBackup, int boolEraseMusic, int boolDestroyAllFX);
 u_int OtherFX_Modify(u_int soundId, u_int flags);
 void RB_TNT_ThTick_ThrowOnHead(struct Thread*);

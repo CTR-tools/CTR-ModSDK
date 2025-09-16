@@ -1,4 +1,4 @@
-#include <common.h>
+#include <ctr_math.h>
 
 int DECOMP_MATH_Cos(unsigned int angle)
 {

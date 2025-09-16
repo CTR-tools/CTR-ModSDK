@@ -20,22 +20,22 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
   if (OVR_233.bossCutsceneIndex < 0)
   {
     cutsceneID = (levID - GEM_STONE_VALLEY) * 2;
-    
+
 	if (gGT->podiumRewardID == STATIC_KEY)
       cutsceneID++;
   }
-  
+
   else
   {
     cutsceneID = OVR_233.bossCutsceneIndex;
   }
 
-  struct BossCutsceneData* bcd = 
+  struct BossCutsceneData* bcd =
 	&OVR_233.bossCS[cutsceneID];
 
   switch (OVR_233.cutsceneState)
   {
-	  
+
   // Start Fade-to-black
   case 0:
   case 1:
@@ -43,7 +43,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     gGT->pushBuffer_UI.fade_step = -0x400;
     OVR_233.cutsceneState = 2;
     break;
-	
+
   // Wait for fade-to-black
   // Start loading process
   case 2:
@@ -51,7 +51,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     // wait for fade
     if (gGT->pushBuffer_UI.fadeFromBlack_currentValue != 0)
 		break;
-    
+
     // kill all podium "other" threads
     t = gGT->threadBuckets[OTHER].thread;
     while (t != 0)
@@ -63,7 +63,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     // wait one frame, for the thread recycler to finish
     if (gGT->threadBuckets[OTHER].thread != 0)
 		break;
-    
+
     DECOMP_CS_LoadBoss(bcd);
     OVR_233.cutsceneState = 3;
     break;
@@ -79,7 +79,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
 	if (!DRAM_IS_PATCHED(OVR_233.ptrModelBossHead)) break;
 
 	struct Model** mArr = &OVR_233.ptrModelBossHead;
-	
+
 	gGT->modelPtr[mArr[0]->id] = mArr[0];
 	gGT->modelPtr[mArr[1]->id] = mArr[1];
 
@@ -101,7 +101,7 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     for (i = 1; i >= 0; i--)
     {
       t =
-		CS_Thread_Init(mArr[i]->id, mArr[i], &initData, 0, t);
+		CS_Thread_Init(mArr[i]->id, mArr[i]->name, &initData, 0, t);
 
       inst = t->inst;
       cs = t->object;
@@ -135,13 +135,13 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     gGT->pushBuffer_UI.fade_step = 0x400;
     OVR_233.cutsceneState = 4;
     break;
-	
+
   case 4:
 
     // wait for fade
     if (gGT->pushBuffer_UI.fadeFromBlack_currentValue != 0x1000)
 		break;
-    
+
     OVR_233.cutsceneState = 5;
     break;
 
@@ -150,9 +150,9 @@ void CS_Camera_ThTick_Boss(struct Thread* t)
     // wait for cutscene to end
     if (OVR_233.isCutsceneOver != 1)
 		break;
-    
+
     gGT->podiumRewardID = NOFUNC; // 0
     t->flags |= 0x800;
-    
+
   }
 }

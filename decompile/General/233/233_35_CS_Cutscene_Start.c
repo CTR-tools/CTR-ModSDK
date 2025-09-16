@@ -7,7 +7,7 @@ void DECOMP_CS_Cutscene_Start(void)
 {
   // stack allocation
   struct CsThreadInitData initData;
-  
+
   struct GameTracker *gGT = sdata->gGT;
 
   // no instance, no initData required,
@@ -21,15 +21,15 @@ void DECOMP_CS_Cutscene_Start(void)
 	int* ptrIntArr = &initData;
 	for(int i = 0; i < sizeof(struct CsThreadInitData)/4; i++)
 		ptrIntArr[i] = 0;
-	  
+
     CS_Instance_InitMatrix();
-  
+
 	for(int i = 0; i < 19; i++)
 	{
 		CS_Thread_Init(BoxSceneArr[i], 0, &initData, 0, 0);
 	}
   }
-  
+
   // if going to credits
   if ((gGT->gameMode2 & CREDITS) != 0)
   {
@@ -57,16 +57,16 @@ unsigned char BoxSceneArr[20] =
 	0xca, // LIDC
 	0xcb, // LIDD
 	0xbf, // LID2
-	
+
 	193, // KART0
 	194, // KART1
 	195, // KART2
 	196, // KART3
-	
+
 	// --- cut by ND
-	
+
 	199, // KART6
 	200, // KART7
-	
+
 	-1, // NULL
 };

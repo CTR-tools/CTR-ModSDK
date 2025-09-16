@@ -469,7 +469,7 @@ def budget(name, size, symbolData, verbose = False):
          ns = nsindex.group(1)
          ind = nsindex.group(2)
          n = nsindex.group(3)
-         budgetSingleNamed(name, size, symbolData, verbose, ns, ind, n)         
+         budgetSingleNamed(name, size, symbolData, verbose, ns, ind, n)
       # ===============================================================================================================
       elif nsindexrange != None: #Range of things starting at a single named file
          ns = nsindexrange.group(1)
@@ -538,9 +538,9 @@ def main():
    #arg 0 is .py, arg 1 is gccsyms, arg 2 is syms, arg 3 is /output
    argv = sys.argv
    if len(argv) == 1:
-      argv.append("D:/source/c/psx-modding-toolchain/games/theubm-ctr-modsdk/symbols/gcc-syms926.txt")
-      argv.append("D:/source/c/psx-modding-toolchain/games/theubm-ctr-modsdk/symbols/syms926.txt")
-      argv.append("D:/source/c/psx-modding-toolchain/games/theubm-ctr-modsdk/decompile/output/")
+      argv.append("C:/Users/mateu/OneDrive/Documentos/Github/psx-modding-toolchain/games/CTR-ModSDK/symbols/gcc-syms926.txt")
+      argv.append("C:/Users/mateu/OneDrive/Documentos/Github/psx-modding-toolchain/games/CTR-ModSDK/symbols/syms926.txt")
+      argv.append("C:/Users/mateu/OneDrive/Documentos/Github/psx-modding-toolchain/games/CTR-ModSDK/decompile/output/")
       argv.append("-v")
    verbose = argv.__contains__("-v")
    if not verbose:
@@ -550,7 +550,7 @@ def main():
    if len(argv) != 4:
       print("ERROR: improper number of arguments to byteBudget's main.py")
       exit(-1)
-   
+
    #this file is made with 926 (ntsc-u) in mind
 
    print("WARNING!!! This tool is not perfect, there are a few circumstances it will not be useful:")

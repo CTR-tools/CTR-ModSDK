@@ -1,8 +1,6 @@
 #pragma once
 #include <macros.h>
 
-// vectors //
-
 typedef union SVec2
 {
 	struct
@@ -74,8 +72,6 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
-// trigonometry //
-
 struct TrigTable
 {
     s16 sin;
@@ -95,8 +91,6 @@ struct TrigTable
 #define IS_ANG_FIRST_OR_THIRD_QUADRANT(x) (((x) & ANG_HALF_PI) == 0) // [0, 90[ \/ [180, 270[
 #define IS_ANG_THIRD_OR_FOURTH_QUADRANT(x) ((x) & ANG_PI)            // [180, 360[
 
-// fixed point //
-
 #define FRACTIONAL_BITS_8 8
 #define FP8_ONE (1 << FRACTIONAL_BITS_8)
 #define FP8_INT(x) ((x) >> FRACTIONAL_BITS_8)
@@ -109,21 +103,24 @@ struct TrigTable
 #define FP_MULT(x, y) (((x) * (y)) >> FRACTIONAL_BITS)
 #define FP(x) ((int)(((float)x) * FP_ONE))
 
-short FP_Div(short a, short b); // see fp.c
-
-// at least one of the operands needs to be a fixed point value converted to integer form
-// e.g. FP_Mult(0x1000, 0x2000) or FP_Mult(FP(1.0), FP(2.0)) or FP_Mult(3, FP(0.75))
-static inline int FP_Mult(int x, int y)
+force_inline int FP_Mult(int x, int y)
 {
 	return (x * y) >> FRACTIONAL_BITS;
 }
 
-// misc //
-
 #ifndef REBUILD_PC
-int abs(int value);
+force_inline int abs(int value) { return value < 0 ? -value : value; }
 #endif
 
-int clamp(int n, int lo, int hi);
-int max(int a, int b);
-int min(int a, int b);
+force_inline int clamp(int n, int lo, int hi)
+{
+	if (n < lo) { return lo; }
+	if (n > hi) { return hi; }
+	return n;
+}
+force_inline int max(int a, int b) { return (a > b) ? a : b; }
+force_inline int min(int a, int b) { return (a < b) ? a : b; }
+
+int DECOMP_MATH_Sin(unsigned int angle);
+int DECOMP_MATH_Cos(unsigned int angle);
+int DECOMP_Math_VectorLength(SVec3* vector);

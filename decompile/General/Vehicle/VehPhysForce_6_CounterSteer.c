@@ -25,5 +25,6 @@ void DECOMP_VehPhysForce_CounterSteer(struct Driver * driver)
 		.y = 0,
 		.z = 0
 		};
-	RotateVector(&driver->accel, &vec);
+	gte_loadSVec(&vec, GTE_VECTOR_0);
+    gte_mulMatrixVec(&driver->accel, GTE_MATRIX_ROT, GTE_VECTOR_0);
 }

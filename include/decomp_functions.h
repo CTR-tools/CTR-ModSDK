@@ -1,3 +1,5 @@
+#include "ctr_math.h"
+
 #if defined(REBUILD_PC)/* && !defined (REBUILD_PS1)*/
 typedef enum _CdlIntrResult {
 	_CdlNoIntr = 0,
@@ -354,9 +356,6 @@ void DECOMP_MainInit_VRAMDisplay(void);
 void DECOMP_MainRaceTrack_StartLoad(short levelID);
 void DECOMP_MainRaceTrack_RequestLoad(short levelID);
 
-int DECOMP_MATH_Sin(u_int angle);
-int DECOMP_MATH_Cos(u_int angle);
-
 void DECOMP_MEMCARD_InitCard(void);
 
 void DECOMP_MEMPACK_Init(int ramSize);
@@ -630,9 +629,11 @@ void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 void DECOMP_RB_MinePool_Init(void);
 void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw);
 void DECOMP_RB_MinePool_Add(struct MineWeapon* mw);
-
+void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t);
 void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t);
 void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh);
+void DECOMP_RB_Warpball_FadeAway(struct Thread* t);
+void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t);
 
 struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 	struct Instance* weaponInst, char boolCanSkipParent,
@@ -756,6 +757,7 @@ void DECOMP_AH_MaskHint_LerpVol(int param_1);
 void DECOMP_AH_MaskHint_Update(void);
 
 // 233
+struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, short param_4, struct Thread* parent);
 void DECOMP_CS_Garage_ZoomOut(char zoomState);
 void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1);
 void DECOMP_CS_Garage_Init(void);

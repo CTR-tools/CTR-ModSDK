@@ -944,7 +944,7 @@ common, exe, MATH_Sin, 0x0,                            General/MATH/MATH_0_Sin_h
 common, exe, MATH_Cos, 0x0,                            General/MATH/MATH_1_Cos.c
 //common, exe, MATH_FastSqrt, 0x0,                       General/MATH/MATH_2_FastSqrt.c //TODO
 //common, exe, MATH_HitboxMatrix, 0x0,                General/MATH/MATH_3_HitboxMatrix.c //TODO
-//common, exe, MATH_VectorLength, 0x0,                General/MATH/MATH_4_VectorLength.c //TODO
+common, exe, MATH_VectorLength, 0x0,                General/MATH/MATH_4_VectorLength.c
 //common, exe, MATH_VectorNormalize, 0x0,             General/MATH/MATH_5_VectorNormalize.c //TODO
 //common, exe, MATH_MatrixMul, 0x0,                   General/MATH/MATH_6_MatrixMul.c //TODO
 
