@@ -1,9 +1,7 @@
 #ifndef CTR_MATH_H
 #define CTR_MATH_H
 
-#include <macros.h>
-
-// vectors //
+#include <ctr/macros.h>
 
 typedef union SVec2
 {
@@ -76,8 +74,6 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
-// trigonometry //
-
 struct TrigTable
 {
     s16 sin;
@@ -97,8 +93,6 @@ struct TrigTable
 #define IS_ANG_FIRST_OR_THIRD_QUADRANT(x) (((x) & ANG_HALF_PI) == 0) // [0, 90[ \/ [180, 270[
 #define IS_ANG_THIRD_OR_FOURTH_QUADRANT(x) ((x) & ANG_PI)            // [180, 360[
 
-// fixed point //
-
 #define FRACTIONAL_BITS_8 8
 #define FP8_ONE (1 << FRACTIONAL_BITS_8)
 #define FP8_INT(x) ((x) >> FRACTIONAL_BITS_8)
@@ -109,25 +103,18 @@ struct TrigTable
 #define FP_ONE (1 << FRACTIONAL_BITS)
 #define FP_INT(x) ((x) >> FRACTIONAL_BITS)
 #define FP_MULT(x, y) (((x) * (y)) >> FRACTIONAL_BITS)
-#define FP(x) ((int)(((float)x) * FP_ONE))
+#define FP(x) ((int)(((float)(x)) * FP_ONE))
 
-short FP_Div(short a, short b); // see fp.c
-
-// at least one of the operands needs to be a fixed point value converted to integer form
-// e.g. FP_Mult(0x1000, 0x2000) or FP_Mult(FP(1.0), FP(2.0)) or FP_Mult(3, FP(0.75))
-static inline int FP_Mult(int x, int y)
+force_inline s32 abs(s32 value) { return value < 0 ? -value : value; }
+force_inline s32 max(s32 a, s32 b) { return (a > b) ? a : b; }
+force_inline s32 min(s32 a, s32 b) { return (a < b) ? a : b; }
+force_inline s32 clamp(s32 n, s32 lo, s32 hi)
 {
-	return (x * y) >> FRACTIONAL_BITS;
+	if (n < lo) { return lo; }
+	if (n > hi) { return hi; }
+	return n;
 }
 
-// misc //
-
-#ifndef REBUILD_PC
-int abs(int value);
-#endif
-
-int clamp(int n, int lo, int hi);
-int max(int a, int b);
-int min(int a, int b);
+s32 MATH_VectorLength(const SVec3* vector);
 
 #endif

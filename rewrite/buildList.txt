@@ -1,0 +1,9 @@
+// loading decomp as a DLL
+common, exe, 0x8003c8f4, 0x0, src/hooks/dll/hook.s
+common, header, 0x8000B0B8, 0x0, src/hooks/dll/load_decomp.c
+
+// decomp files
+common, DLL, 0x80200000, 0x0, src/math.c src/prim.c, DECOMP.BIN
+
+// decomp hooks
+common, exe, ND_MATH_VectorLength, 0x0, src/hooks/math/VectorLength.s

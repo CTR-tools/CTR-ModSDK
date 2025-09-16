@@ -121,6 +121,128 @@
 			]
 		}
 	],
+	"rewrite":
+	[
+		{
+			"SCUS_944.26":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name":   "exe",
+					"address":   "0x80010000",
+					"offset":   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
 	"pal":
 	[
 		{
