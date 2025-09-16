@@ -5061,14 +5061,14 @@ extern struct BSS bss;
 // represents 0x1f800000 1kb dcache.
 extern struct DCACHE dcache_static;
 
+// no reserved register for dcache, not used often enough (atm)
+struct DCACHE* dcache = &dcache_static;
+
 #ifndef REBUILD_PC
 // optimal use for modding
 register struct sData* sdata asm("$gp");
-//struct DCACHE* dcache = &dcache_static;
-#define dcache (&dcache_static)
 #else
 struct sData* sdata = &sdata_static;
-struct DCACHE* dcache = &dcache_static;
 #endif
 
 // OVR1

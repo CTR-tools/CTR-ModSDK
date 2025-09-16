@@ -1,4 +1,4 @@
-dcache = 0x1f800000;
+dcache_static = 0x1f800000;
 rdata = 0x80010000;
 rdata_free = 0x800100cc;
 BOTS_SetGlobalNavData = 0x800123e0;
