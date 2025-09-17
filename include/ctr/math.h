@@ -2,6 +2,7 @@
 #define CTR_MATH_H
 
 #include <ctr/macros.h>
+#include <ctr/gte.h>
 
 typedef union SVec2
 {
@@ -120,7 +121,10 @@ force_inline s32 clamp(s32 n, s32 lo, s32 hi)
 s32 MATH_Sin(u32 angle);
 s32 MATH_Cos(u32 angle);
 s32 MATH_Sqrt(u32 n, u32 shift); // sqrt(n * 2^shift)
+void MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix);
 s32 MATH_VectorLength(const SVec3* vector);
 void MATH_VectorNormalize(SVec3* vector);
+void MATH_CombineMatrixTransformation(Matrix* out, const Matrix* m, const Matrix* n);
+void MATH_MatrixMultiplication(Matrix* out, const Matrix* m, const Matrix* n); // overwrites Rotation Matrix in the GTE with resulting matrix
 
 #endif
