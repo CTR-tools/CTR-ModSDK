@@ -584,10 +584,10 @@ void StatePC_Launch_PickServer()
 
 	switch (octr->serverCountry)
 	{
-		// EUROPE (Unknown Location)
+		// EUROPE (Gravelines)
 		case 0:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			strcpy_s(dns_string, sizeof(dns_string), "octr.bemug.fr");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
