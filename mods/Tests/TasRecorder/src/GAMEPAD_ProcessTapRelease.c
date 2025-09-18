@@ -25,6 +25,8 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 		
 		int hold;
 		
+		*(int*)0x8000fff4 = 0;
+		
 		// RECORD mode
 		if(*(int*)0x8000fff4 == 0)
 		{
