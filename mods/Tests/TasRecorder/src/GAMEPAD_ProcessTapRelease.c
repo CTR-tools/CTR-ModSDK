@@ -44,6 +44,12 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 			// replay
 			pad->buttonsHeldCurrFrame = hold;
 			
+			if(currIndex > 0)
+			{
+				pad->buttonsHeldPrevFrame = 
+					buttonArr[currIndex - 1];
+			}
+			
 			// In this order: Up, Down, Left, Right
 			if ((hold & 1) != 0) pad->stickLY = 0;
 			if ((hold & 2) != 0) pad->stickLY = 0xFF;
