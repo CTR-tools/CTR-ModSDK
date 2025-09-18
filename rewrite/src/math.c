@@ -33,14 +33,18 @@ s32 MATH_Cos(u32 angle)
         cos = s_trigTable[ANG_MODULO_HALF_PI(angle)].sin;
         if (!IS_ANG_THIRD_OR_FOURTH_QUADRANT(angle)) { cos = -cos; }
     }
+    TEST_MATH_Cos(angle, cos);
     return cos;
 }
 
 /* Address: 0x8003d214 */
-s32 MATH_Sqrt(u32 n, u32 shift)
+u32 MATH_Sqrt(u32 n, u32 shift)
 {
     u32 root = 0;
     u32 remainder = 0;
+#ifdef TEST_MATH_IMPL
+    const u32 input = n;
+#endif
     const u32 iterations = (shift / 2) + (sizeof(u32) * 8) / 2;
     for (u32 i = 0; i < iterations; i++)
     {
@@ -54,6 +58,7 @@ s32 MATH_Sqrt(u32 n, u32 shift)
             root += 1;
         }
     }
+    TEST_MATH_Sqrt(input, shift, root);
     return root;
 }
 
@@ -64,10 +69,11 @@ void MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix)
     {
         for (u32 j = 0; j < 3; j++) { out->m[i][j] = matrix->m[j][i]; }
     }
-    const SVec3 t = { .x = (s16) -matrix->t.x, .y = (s16) -matrix->t.y, .z = (s16) -matrix->t.z };
+    const SVec3 t = { .x = (-matrix->t.x) & 0xFFFF, .y = (-matrix->t.y) & 0xFFFF, .z = (-matrix->t.z) & 0xFFFF };
     gte_SetRotMatrix(matrix->m);
     gte_loadVec(&t, GTE_VECTOR_0);
     gte_mulMatrixVec(out->t.v, GTE_MATRIX_ROT, GTE_VECTOR_0);
+    TEST_MATH_GetInverseMatrixTransformation(matrix, out);
 }
 
 /* Address: 0x8003d328 */
@@ -77,17 +83,23 @@ s32 MATH_VectorLength(const SVec3* vector)
     gte_loadVec(vector, GTE_VECTOR_0);
     s32 lengthSquared;
     gte_dotProduct(&lengthSquared, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0);
-    return ND_SquareRoot0_stub(lengthSquared);
+    const s32 len = ND_SquareRoot0_stub(lengthSquared);
+    TEST_MATH_VectorLength(vector, len);
+    return len;
 }
 
 /* Address: 0x8003d378 */
 void MATH_VectorNormalize(SVec3* vector)
 {
+#ifdef TEST_MATH_IMPL
+    SVec3 input = *vector;
+#endif
     s32 len = MATH_VectorLength(vector);
     if (len == 0) { return; }
     vector->x = FP_DIV(vector->x, len);
     vector->y = FP_DIV(vector->y, len);
     vector->z = FP_DIV(vector->z, len);
+    TEST_MATH_VectorNormalize(&input, vector);
 }
 
 /* Address: 0x8003d460 */
@@ -100,36 +112,45 @@ void MATH_CombineMatrixTransformation(Matrix* out, const Matrix* m, const Matrix
         M*N = [ RmRn (Rmtn + tm) ]
               [   0        1     ]
     */
+#ifdef TEST_MATH_IMPL
+    Matrix inputM = *m;
+    Matrix inputN = *n;
+#endif
     MATH_MatrixMultiplication(out, m, n);
-
     Vec3 res[2];
     Vec3 upper = { .x = n->t.x >> 15, .y = n->t.y >> 15, .z = n->t.z >> 15 };
     Vec3 lower = { .x = n->t.x & 0x7fff, .y = n->t.y & 0x7fff, .z = n->t.z & 0x7fff };
     gte_loadVec(&upper, GTE_VECTOR_IR);
-    _gte_mulMatrixVec(&res[0], GTE_MATRIX_ROT, GTE_VECTOR_IR, 0); // Special case, no shifting
+    _gte_mulMatrixVec(res[0].v, GTE_MATRIX_ROT, GTE_VECTOR_IR, 0); // Special case, no shifting
     gte_loadVec(&lower, GTE_VECTOR_IR);
-    gte_mulMatrixVec(&res[1], GTE_MATRIX_ROT, GTE_VECTOR_IR);
+    gte_mulMatrixVec(res[1].v, GTE_MATRIX_ROT, GTE_VECTOR_IR);
     out->t.x = (res[0].x * 8) + res[1].x + m->t.x;
     out->t.y = (res[0].y * 8) + res[1].y + m->t.y;
     out->t.z = (res[0].z * 8) + res[1].z + m->t.z;
+    TEST_MATH_CombineMatrixTransformation(&inputM, &inputN, out);
 }
 
 /* Address: 0x8006c3b0 */
 void MATH_MatrixMultiplication(Matrix* out, const Matrix* m, const Matrix* n)
 {
+#ifdef TEST_MATH_IMPL
+    Matrix inputM = *m;
+    Matrix inputN = *n;
+#endif
     Vec3 res[3];
-    const SVec3 v0 = { n->m[0][0], n->m[1][0], n->m[2][0] };
-    const SVec3 v1 = { n->m[0][1], n->m[1][1], n->m[2][1] };
-    const SVec3 v2 = { n->m[0][2], n->m[1][2], n->m[2][2] };
+    const SVec3 v0 = { .x = n->m[0][0], .y = n->m[1][0], .z = n->m[2][0] };
+    const SVec3 v1 = { .x = n->m[0][1], .y = n->m[1][1], .z = n->m[2][1] };
+    const SVec3 v2 = { .x = n->m[0][2], .y = n->m[1][2], .z = n->m[2][2] };
     gte_SetRotMatrix(m->m);
     gte_loadVec(&v0, GTE_VECTOR_0);
-    gte_mulMatrixVec(&res[0], GTE_MATRIX_ROT, GTE_VECTOR_0);
+    gte_mulMatrixVec(res[0].v, GTE_MATRIX_ROT, GTE_VECTOR_0);
     gte_loadVec(&v1, GTE_VECTOR_1);
-    gte_mulMatrixVec(&res[1], GTE_MATRIX_ROT, GTE_VECTOR_1);
-    gte_loadVec(&v2, GTE_VECTOR_0);
-    gte_mulMatrixVec(&res[2], GTE_MATRIX_ROT, GTE_VECTOR_2);
+    gte_mulMatrixVec(res[1].v, GTE_MATRIX_ROT, GTE_VECTOR_1);
+    gte_loadVec(&v2, GTE_VECTOR_2);
+    gte_mulMatrixVec(res[2].v, GTE_MATRIX_ROT, GTE_VECTOR_2);
     out->m[0][0] = res[0].x; out->m[0][1] = res[1].x; out->m[0][2] = res[2].x;
     out->m[1][0] = res[0].y; out->m[1][1] = res[1].y; out->m[1][2] = res[2].y;
     out->m[2][0] = res[0].z; out->m[2][1] = res[1].z; out->m[2][2] = res[2].z;
     gte_SetRotMatrix(out->m);
+    TEST_MATH_MatrixMultiplication(&inputM, &inputN, out);
 }

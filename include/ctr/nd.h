@@ -12,7 +12,7 @@ void ND_LOAD_InitCD();
 /* MATH */
 s32 ND_MATH_Sin(u32 angle);
 s32 ND_MATH_Cos(u32 angle);
-s32 ND_MATH_Sqrt(u32 n, u32 shift);
+u32 ND_MATH_Sqrt(u32 n, u32 shift);
 void ND_MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix);
 s32 ND_MATH_VectorLength(const SVec3* vector);
 void ND_MATH_VectorNormalize(SVec3* vector);
