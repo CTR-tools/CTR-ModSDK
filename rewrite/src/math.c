@@ -70,7 +70,7 @@ void MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix)
         for (u32 j = 0; j < 3; j++) { out->m[i][j] = matrix->m[j][i]; }
     }
     const SVec3 t = { .x = (-matrix->t.x) & 0xFFFF, .y = (-matrix->t.y) & 0xFFFF, .z = (-matrix->t.z) & 0xFFFF };
-    gte_SetRotMatrix(matrix->m);
+    gte_SetRotMatrix(out->m);
     gte_loadVec(&t, GTE_VECTOR_0);
     gte_mulMatrixVec(out->t.v, GTE_MATRIX_ROT, GTE_VECTOR_0);
     TEST_MATH_GetInverseMatrixTransformation(matrix, out);

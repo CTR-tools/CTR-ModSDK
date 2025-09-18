@@ -48,7 +48,7 @@ typedef enum GTE_MAC
 #define _gte_loadVec_GTE_VECTOR_0(v) gte_ldv0(v)
 #define _gte_loadVec_GTE_VECTOR_1(v) gte_ldv1(v)
 #define _gte_loadVec_GTE_VECTOR_2(v) gte_ldv2(v)
-#define _gte_loadVec_GTE_VECTOR_IR(v) gte_ldsv(v)
+#define _gte_loadVec_GTE_VECTOR_IR(v) gte_ldlvl(v)
 #define _gte_readMac_GTE_MAC_0(out) gte_stopz(out)
 #define _gte_readMac_GTE_MAC_1(out) gte_stlvnl0(out)
 #define _gte_readMac_GTE_MAC_2(out) gte_stlvnl1(out)
