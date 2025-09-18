@@ -4,7 +4,4 @@ common, header, 0x8000B0B8, 0x0, src/hooks/dll/load_decomp.c
 
 // decomp files
 common, DLL, 0x80200000, 0x0, src/math.c src/prim.c, DECOMP.BIN
-
-// decomp hooks
-common, exe, ND_MATH_Sin, 0x0, src/hooks/math/Sin.s
-common, exe, ND_MATH_VectorLength, 0x0, src/hooks/math/VectorLength.s
+common, DLL, 0x80600000, 0x0, src/tests/test.c, TESTS.BIN

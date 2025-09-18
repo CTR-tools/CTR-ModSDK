@@ -43,10 +43,10 @@ typedef int8_t   s8;
 #define MINUTES(x) ((s32)(((float)(x)) * MINUTE))
 #define HOURS(x)   ((s32)(((float)(x)) * HOUR))
 
-#define nullptr ((void *) 0)
-#define len(arr) (sizeof(arr) / sizeof(arr[0]))
-#define force_inline static inline __attribute__((always_inline))
-
+#define ARR_LEN(arr) (sizeof(arr) / sizeof(arr[0]))
 #define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
+
+#define nullptr ((void *) 0)
+#define force_inline static inline __attribute__((always_inline))
 
 #endif
