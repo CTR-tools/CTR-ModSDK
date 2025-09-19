@@ -72,7 +72,7 @@
 				"name": "ctr-u.bin",
 				"symbols":
 				[
-					"gcc-syms-rewrite.txt"
+					"gcc-syms-rewrite.txt", "gcc-extern-rewrite.txt"
 				],
 				"build_id": 9999
 			}

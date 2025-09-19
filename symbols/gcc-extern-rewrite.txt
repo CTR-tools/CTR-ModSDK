@@ -1,0 +1,2 @@
+e_seed = 0x8008d424;
+e_gameTrackerSeed = 0x8009904c;
