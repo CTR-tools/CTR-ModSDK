@@ -54,8 +54,10 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 	DECOMP_CDSYS_SetXAToLang(lang);
 #endif
 
+#if 0
 	// ===== For TAS ====
 	LOAD_ReadFile(
-		bigfilePtr, LT_RAW, BI_LANGUAGEFILE + lang, 
+		bigfilePtr, LT_RAW, 225, 
 		0x80200000, &size, 0);
+#endif
 }
