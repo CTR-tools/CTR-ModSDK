@@ -14,23 +14,23 @@ void LoadTestPatches();
 #define TEST_RNG_IMPL
 
 #ifdef TEST_MATH_IMPL
-    void TEST_MATH_Sin(u32 angle, s32 res);
-    void TEST_MATH_Cos(u32 angle, s32 res);
-    void TEST_MATH_Sqrt(u32 n, u32 shift, u32 res);
-    void TEST_MATH_GetInverseMatrixTransformation(const Matrix* matrix, const Matrix* res);
-    void TEST_MATH_VectorLength(const SVec3* vector, s32 res);
-    void TEST_MATH_VectorNormalize(SVec3* vector, const SVec3* res);
-    void TEST_MATH_CombineMatrixTransformation(const Matrix* m, const Matrix* n, const Matrix* res);
-    void TEST_MATH_MatrixMultiplication(const Matrix* m, const Matrix* n, const Matrix* res);
+    void TEST_MATH_Sin(u32 angle, s32 ret);
+    void TEST_MATH_Cos(u32 angle, s32 ret);
+    void TEST_MATH_Sqrt(u32 n, u32 shift, u32 ret);
+    void TEST_MATH_GetInverseMatrixTransformation(const Matrix* matrix, const Matrix* ret);
+    void TEST_MATH_VectorLength(const SVec3* vector, s32 ret);
+    void TEST_MATH_VectorNormalize(SVec3* vector, const SVec3* ret);
+    void TEST_MATH_CombineMatrixTransformation(const Matrix* m, const Matrix* n, const Matrix* ret);
+    void TEST_MATH_MatrixMultiplication(const Matrix* m, const Matrix* n, const Matrix* ret);
 #else
-    #define TEST_MATH_Sin(angle, res)
-    #define TEST_MATH_Cos(angle, res)
-    #define TEST_MATH_Sqrt(n, shift, res)
-    #define TEST_MATH_GetInverseMatrixTransformation(matrix, res)
-    #define TEST_MATH_VectorLength(vector, res)
-    #define TEST_MATH_VectorNormalize(vector, res)
-    #define TEST_MATH_CombineMatrixTransformation(m, n, res)
-    #define TEST_MATH_MatrixMultiplication(m, n, res)
+    #define TEST_MATH_Sin(angle, ret)
+    #define TEST_MATH_Cos(angle, ret)
+    #define TEST_MATH_Sqrt(n, shift, ret)
+    #define TEST_MATH_GetInverseMatrixTransformation(matrix, ret)
+    #define TEST_MATH_VectorLength(vector, ret)
+    #define TEST_MATH_VectorNormalize(vector, ret)
+    #define TEST_MATH_CombineMatrixTransformation(m, n, ret)
+    #define TEST_MATH_MatrixMultiplication(m, n, ret)
 #endif
 
 #ifdef TEST_RNG_IMPL
