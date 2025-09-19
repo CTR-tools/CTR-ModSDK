@@ -3,6 +3,7 @@
 
 #include <ctr/macros.h>
 #include <ctr/math.h>
+#include <ctr/rng.h>
 
 void ND_LOAD_XnfFile(char* filename, u32 address, char* dummy);
 s32 ND_SquareRoot0_stub(s32 n);
@@ -18,5 +19,11 @@ s32 ND_MATH_VectorLength(const SVec3* vector);
 void ND_MATH_VectorNormalize(SVec3* vector);
 void ND_MATH_CombineMatrixTransformation(Matrix* out, const Matrix* m, const Matrix* n);
 void ND_MATH_MatrixMultiplication(Matrix* out, const Matrix* m, const Matrix* n);
+
+/* RNG */
+u32 ND_RNG_Rand();
+s32 ND_RNG_RandInt(u32 n);
+u16 ND_RNG_PseudoRand(u16 n);
+u32 ND_RNG_Random(RNGSeed* seed);
 
 #endif
