@@ -8,6 +8,8 @@ This folder is an ongoing decompilation project for the PSX game Crash Team Raci
 
 `src/tests/`: tests for each decompiled function.
 
+`scripts/`: helpful misc scripts.
+
 `../include/ctr/`: decompile headers.
 
 `../symbols/gcc-syms-rewrite.txt`: original function addresses.
