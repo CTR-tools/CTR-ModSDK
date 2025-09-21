@@ -1,5 +1,6 @@
 #include <ctr/rng.h>
 #include <ctr/math.h>
+#include <ctr/game_tracker.h>
 #include <ctr/test.h>
 
 #define RNG_MULT_FACTOR 0x6255
@@ -18,7 +19,7 @@ u32 RNG_Rand()
 s32 RNG_RandInt(u32 n)
 {
     BACKUP_RNG_RandInt();
-    const u32 rand = RNG_Random(&e_gameTrackerSeed);
+    const u32 rand = RNG_Random(&e_gameTracker->seed);
     const s32 ret = ((s32) ((rand & 0xFFFF) * n)) >> 16;
     TEST_RNG_RandInt(n, ret);
     return ret;

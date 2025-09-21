@@ -1,5 +1,4 @@
-#ifndef ND_H
-#define ND_H
+#pragma once
 
 #include <ctr/macros.h>
 #include <ctr/math.h>
@@ -25,5 +24,3 @@ u32 ND_RNG_Rand();
 s32 ND_RNG_RandInt(u32 n);
 u16 ND_RNG_PseudoRand(u16 n);
 u32 ND_RNG_Random(RNGSeed* seed);
-
-#endif

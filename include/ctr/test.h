@@ -1,12 +1,17 @@
-#ifndef TEST_H
-#define TEST_H
+#pragma once
 
 #include <ctr/macros.h>
 #include <ctr/redux.h>
+#include <ctr/nd.h>
+#include <ctr/game_tracker.h>
 #include <ctr/math.h>
 #include <ctr/rng.h>
 
 void LoadTestPatches();
+u32 PatchFunction_Beg(u32* index);
+void PatchFunction_End(u32 index);
+u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret);
+u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret, u32 cmpTrans);
 
 #define BACKUP_ADDR 0x80400000
 
@@ -47,6 +52,4 @@ void LoadTestPatches();
     #define TEST_RNG_RandInt(n, ret)
     #define TEST_RNG_PseudoRand(n, ret)
     #define TEST_RNG_Random(seed, ret)
-#endif
-
 #endif

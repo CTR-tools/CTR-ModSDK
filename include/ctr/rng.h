@@ -1,5 +1,4 @@
-#ifndef RAND_H
-#define RAND_H
+#pragma once
 
 #include <ctr/macros.h>
 
@@ -15,6 +14,3 @@ u16 RNG_PseudoRand(u16 n);
 u32 RNG_Random(RNGSeed* seed);
 
 extern u32 e_seed; // 0x8008d424
-extern RNGSeed e_gameTrackerSeed; // 0x8009904c
-
-#endif

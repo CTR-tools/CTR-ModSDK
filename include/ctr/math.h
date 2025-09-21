@@ -1,5 +1,4 @@
-#ifndef CTR_MATH_H
-#define CTR_MATH_H
+#pragma once
 
 #include <ctr/macros.h>
 #include <ctr/gte.h>
@@ -126,5 +125,3 @@ s32 MATH_VectorLength(const SVec3* vector);
 void MATH_VectorNormalize(SVec3* vector);
 void MATH_CombineMatrixTransformation(Matrix* out, const Matrix* m, const Matrix* n);
 void MATH_MatrixMultiplication(Matrix* out, const Matrix* m, const Matrix* n); // overwrites Rotation Matrix in the GTE with resulting matrix
-
-#endif
