@@ -29,9 +29,9 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     gte_loadIR(barycentricFactor, GTE_IR_0);
     gte_loadSVec(edge.v, GTE_VECTOR_IR);
     gte_loadVec(V1.v, GTE_VECTOR_MAC);
-    gte_interpolate(GTE_INTERPOLATE_FLOATING_POINT);
+
     Vec3 coords;
-    gte_readMac(coords.v, GTE_VECTOR_MAC);
+    gte_interpolate(coords.v, GTE_INTERPOLATE_FLOATING_POINT);
     out->x = coords.x;
     out->y = coords.y;
     out->z = coords.z;

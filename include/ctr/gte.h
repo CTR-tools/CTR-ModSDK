@@ -100,4 +100,4 @@ typedef enum GTE_INTERPOLATE
 #define gte_mulMatrixVec(out, matrixType, vecType) _gte_mulMatrixVec(out, matrixType, vecType, 1)
 #define gte_dotProduct(out, rowIndex, matrixType, vecType) CAT(_gte_dotProduct_, rowIndex)(out, matrixType, vecType)
 #define gte_leadingZeroes(out, in) _gte_leadingZeroes(out, in)
-#define gte_interpolate(interpolationType) CAT(_gte_interpolate_, interpolationType)()
+#define gte_interpolate(out, interpolationType) CAT(_gte_interpolate_, interpolationType)(); _gte_readMac_GTE_VECTOR_MAC(out)
