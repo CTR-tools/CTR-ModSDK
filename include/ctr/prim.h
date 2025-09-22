@@ -1,5 +1,4 @@
-#ifndef PRIM_H
-#define PRIM_H
+#pragma once
 
 #include <ctr/macros.h>
 
@@ -277,5 +276,3 @@ void AddPrimitive(void * pPrim, void * pOt);
 
 #define GetPrimMem(p) GetPrimitiveMem((void **) &p, sizeof(*p))
 */
-
-#endif

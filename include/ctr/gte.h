@@ -1,7 +1,6 @@
-#ifndef CTR_GTE_H
-#define CTR_GTE_H
+#pragma once
 
-#include <ctr_math.h>
+#include <ctr/math.h>
 #include <psn00bsdk/include/inline_c.h>
 
 typedef enum GTE_ROW_INDEX
@@ -65,4 +64,3 @@ typedef enum GTE_MAC
 #define gte_loadRowMatrix(v, rowIndex, matrixType) CAT3(_gte_loadSVecMatrix_, matrixType, _##rowIndex)(v)
 #define gte_mulMatrixVec(out, matrixType, vecType) _gte_mulMatrixVec(out, matrixType, vecType, 1)
 #define gte_dotProduct(out, rowIndex, matrixType, vecType) CAT(_gte_dotProduct_, rowIndex)(out, matrixType, vecType)
-#endif

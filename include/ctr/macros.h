@@ -1,5 +1,4 @@
-#ifndef MACROS_H
-#define MACROS_H
+#pragma once
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -48,5 +47,3 @@ typedef int8_t   s8;
 
 #define nullptr ((void *) 0)
 #define force_inline static inline __attribute__((always_inline))
-
-#endif
