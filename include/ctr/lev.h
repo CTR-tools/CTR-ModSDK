@@ -3,12 +3,16 @@
 #include <ctr/macros.h>
 #include <ctr/math.h>
 
-typedef struct Color
+typedef union Color
 {
-	uint32_t r : 8;
-	uint32_t g : 8;
-	uint32_t b : 8;
-	uint32_t a : 8;
+    struct
+    {
+        u8 r;
+        u8 g;
+        u8 b;
+        u8 a;
+    };
+    u32 color;
 } Color;
 
 typedef struct Vertex
