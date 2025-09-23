@@ -94,7 +94,7 @@ static s32 _COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const Coll
         if (deltaTri[0].y == 0) { return BARYCENTRIC_TEST_INVALID; }
         beta = FP_DIV(deltaT.y, deltaTri[0].y);
         if (deltaTri[1].x == 0) { return BARYCENTRIC_TEST_INVALID; }
-        gamma = (deltaT.y * FP_ONE) - (beta * deltaTri[1].y);
+        gamma = ((deltaT.y * FP_ONE) - (beta * deltaTri[1].y)) / deltaTri[1].x;
     }
     if (beta == FP(-1) || gamma == FP(-1)) { return BARYCENTRIC_TEST_INVALID; }
 
