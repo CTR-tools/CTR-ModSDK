@@ -7,6 +7,7 @@
 void ND_LOAD_XnfFile(char* filename, u32 address, char* dummy);
 s32 ND_SquareRoot0_stub(s32 n);
 int ND_printf(const char* format, ...);
+int ND_sprintf(const char* outStr, const char* format, ...);
 void ND_LOAD_InitCD();
 
 /* MATH */

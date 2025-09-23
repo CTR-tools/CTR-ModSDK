@@ -16,9 +16,9 @@ u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret,
 
 #define BACKUP_ADDR 0x80400000
 
-#define TEST_MATH_IMPL
-#define TEST_RNG_IMPL
-#define TEST_COLL_IMPL
+//#define TEST_MATH_IMPL
+//#define TEST_RNG_IMPL
+//#define TEST_COLL_IMPL
 
 #ifdef TEST_MATH_IMPL
     void TEST_MATH_Sin(u32 angle, s32 ret);
