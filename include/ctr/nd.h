@@ -24,3 +24,6 @@ u32 ND_RNG_Rand();
 s32 ND_RNG_RandInt(u32 n);
 u16 ND_RNG_PseudoRand(u16 n);
 u32 ND_RNG_Random(RNGSeed* seed);
+
+/* COLL */
+void ND_COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);

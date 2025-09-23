@@ -71,7 +71,7 @@ void MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix)
     }
     const SVec3 t = { .x = (-matrix->t.x) & 0xFFFF, .y = (-matrix->t.y) & 0xFFFF, .z = (-matrix->t.z) & 0xFFFF };
     gte_SetRotMatrix(out->m);
-    gte_loadVec(&t, GTE_VECTOR_0);
+    gte_loadSVec(&t, GTE_VECTOR_0);
     gte_mulMatrixVec(out->t.v, GTE_MATRIX_ROT, GTE_VECTOR_0);
     TEST_MATH_GetInverseMatrixTransformation(matrix, out);
 }
@@ -80,7 +80,7 @@ void MATH_GetInverseMatrixTransformation(Matrix* out, const Matrix* matrix)
 s32 MATH_VectorLength(const SVec3* vector)
 {
     gte_loadRowMatrix(vector, GTE_ROW_INDEX_0, GTE_MATRIX_ROT);
-    gte_loadVec(vector, GTE_VECTOR_0);
+    gte_loadSVec(vector, GTE_VECTOR_0);
     s32 lengthSquared;
     gte_dotProduct(&lengthSquared, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0);
     const s32 len = ND_SquareRoot0_stub(lengthSquared);
@@ -142,11 +142,11 @@ void MATH_MatrixMultiplication(Matrix* out, const Matrix* m, const Matrix* n)
     const SVec3 v1 = { .x = n->m[0][1], .y = n->m[1][1], .z = n->m[2][1] };
     const SVec3 v2 = { .x = n->m[0][2], .y = n->m[1][2], .z = n->m[2][2] };
     gte_SetRotMatrix(m->m);
-    gte_loadVec(&v0, GTE_VECTOR_0);
+    gte_loadSVec(&v0, GTE_VECTOR_0);
     gte_mulMatrixVec(res[0].v, GTE_MATRIX_ROT, GTE_VECTOR_0);
-    gte_loadVec(&v1, GTE_VECTOR_1);
+    gte_loadSVec(&v1, GTE_VECTOR_1);
     gte_mulMatrixVec(res[1].v, GTE_MATRIX_ROT, GTE_VECTOR_1);
-    gte_loadVec(&v2, GTE_VECTOR_2);
+    gte_loadSVec(&v2, GTE_VECTOR_2);
     gte_mulMatrixVec(res[2].v, GTE_MATRIX_ROT, GTE_VECTOR_2);
     out->m[0][0] = res[0].x; out->m[0][1] = res[1].x; out->m[0][2] = res[2].x;
     out->m[1][0] = res[0].y; out->m[1][1] = res[1].y; out->m[1][2] = res[2].y;

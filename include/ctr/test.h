@@ -6,6 +6,7 @@
 #include <ctr/game_tracker.h>
 #include <ctr/math.h>
 #include <ctr/rng.h>
+#include <ctr/coll.h>
 
 void LoadTestPatches();
 u32 PatchFunction_Beg(u32* index);
@@ -17,6 +18,7 @@ u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret,
 
 #define TEST_MATH_IMPL
 #define TEST_RNG_IMPL
+#define TEST_COLL_IMPL
 
 #ifdef TEST_MATH_IMPL
     void TEST_MATH_Sin(u32 angle, s32 ret);
@@ -52,4 +54,10 @@ u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret,
     #define TEST_RNG_RandInt(n, ret)
     #define TEST_RNG_PseudoRand(n, ret)
     #define TEST_RNG_Random(seed, ret)
+#endif
+
+#ifdef TEST_COLL_IMPL
+    void TEST_COLL_ProjectPointToEdge(const SVec3* v1, const SVec3* v2, const SVec3* point, const SVec3* ret);
+#else
+    #define TEST_COLL_ProjectPointToEdge(out, v1, v2, point)
 #endif
