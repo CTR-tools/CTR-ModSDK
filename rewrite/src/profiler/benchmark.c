@@ -5,6 +5,7 @@
 // When running OG functions,
 // dont forget to undefine these in ctr\test.h:
 // TEST_MATH_IMPL, TEST_RNG_IMPL, TEST_COLL_IMPL
+#ifdef REWRITE_PROFILER
 
 void RunBenchmark()
 {
@@ -30,5 +31,7 @@ void RunBenchmark()
 		{
 			ND_COLL_ProjectPointToEdge(&out, &v1, &v2, &point);
 		}
-		
+
 }
+
+#endif // REWRITE_PROFILER

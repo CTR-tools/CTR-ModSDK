@@ -30,6 +30,7 @@ FunctionPatch s_functions[] =
     TEST_FUNC(RNG_PseudoRand),
     TEST_FUNC(RNG_Random),
     TEST_FUNC(COLL_ProjectPointToEdge),
+    TEST_FUNC(COLL_BarycentricTest),
 };
 
 void LoadTestPatches()
@@ -44,6 +45,7 @@ void LoadTestPatches()
         *(s_functions[i].address) = s_functions[i].firstNewInst;
         *(s_functions[i].address + 1) = s_functions[i].secondNewInst;
     }
+    FlushCache();
 }
 
 u32 PatchFunction_Beg(u32* address)
@@ -57,6 +59,7 @@ u32 PatchFunction_Beg(u32* address)
             index = i;
             *(s_functions[i].address) = s_functions[i].firstInst;
             *(s_functions[i].address + 1) = s_functions[i].secondInst;
+            FlushCache();
             break;
         }
     }
@@ -67,6 +70,7 @@ void PatchFunction_End(u32 index)
 {
     *(s_functions[index].address) = s_functions[index].firstNewInst;
     *(s_functions[index].address + 1) = s_functions[index].secondNewInst;
+    FlushCache();
 }
 
 u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret)

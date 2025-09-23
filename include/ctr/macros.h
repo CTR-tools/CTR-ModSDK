@@ -47,3 +47,5 @@ typedef int8_t   s8;
 
 #define nullptr ((void *) 0)
 #define force_inline static inline __attribute__((always_inline))
+
+//#define FIX_CTR_BUGS

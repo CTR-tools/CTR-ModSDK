@@ -1,6 +1,8 @@
 #include <ctr/profiler.h>
 #include <ctr/nd.h>
 
+#ifdef REWRITE_PROFILER
+
 // No Vehicle.h
 struct MetaPhys
 {
@@ -51,7 +53,7 @@ int Debug_GetPreciseTime()
 	int sysClock =
 		ND_GetRCnt(0xf2000001) +
 		sdata->rcntTotalUnits;
-		
+
 	return sysClock;
 }
 
@@ -65,35 +67,35 @@ void Hook_DrawOTag(int a)
 	if (timeRed == 0)
 	{
 		timeStart = Debug_GetPreciseTime();
-	
+
 		void RunBenchmark();
 		RunBenchmark();
-		
+
 		timeEnd = Debug_GetPreciseTime();
-	
+
 
 		timeRed = timeEnd - timeStart;
 	}
-	
+
 	struct GameTracker* gGT = sdata->gGT;
-	
+
 	if((gGT->gameMode1 & (LOADING|1)) == 0)
 	{
 		// reset depth to CLOSEST
 		gGT->pushBuffer_UI.ptrOT =
 			gGT->otSwapchainDB[gGT->swapchainIndex];
-	
-		
+
+
 		#ifndef REBUILD_PC
 		char* string = (char*)0x1f800000;
 		#else
 		char string[128];
 		#endif
-		
+
 		ND_sprintf(string, "RED  %d", timeRed);
 		ND_DecalFont_DrawLine(string, 0x14, 0x5C, FONT_SMALL, 0);
 	}
-	
+
 	ND_DrawOTag(a);
 }
 
@@ -101,6 +103,8 @@ void Hook_DrawOTag(int a)
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
 void LoadProfilerPatches()
-{	
+{
 	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
 }
+
+#endif // REWRITE_PROFILER
