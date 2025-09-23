@@ -37,3 +37,108 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     out->z = coords.z;
     TEST_COLL_ProjectPointToEdge(v1, v2, point, out);
 }
+
+/* Address: 0x8001f928 */
+static s32 _COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+    Vec2 deltaT;
+    Vec2 deltaTri[2];
+    const SVec3* edgeV2;
+    const SVec3* edgeV3;
+    u32 firstAxis, secondAxis;
+
+    if (t->normalDominantAxis == AXIS_X)
+    {
+        firstAxis = 1; // y
+        secondAxis = 2; // z
+    }
+    else if (t->normalDominantAxis == AXIS_Y)
+    {
+        firstAxis = 2; // z
+        secondAxis = 0; // x
+    }
+    else
+    {
+        firstAxis = 0; // x
+        secondAxis = 1; // y
+    }
+
+    deltaTri[0].x = v2->pos.v[firstAxis] - v1->pos.v[firstAxis];
+    deltaTri[0].y = v3->pos.v[firstAxis] - v1->pos.v[firstAxis];
+    deltaT.x = t->interpolationPoint.v[firstAxis] - v1->pos.v[firstAxis];
+    edgeV2 = &v2->pos;
+    edgeV3 = &v3->pos;
+    if (abs(deltaTri[0].x) < abs(deltaTri[0].y))
+    {
+        edgeV2 = &v3->pos;
+        edgeV3 = &v2->pos;
+        s32 temp = deltaTri[0].x;
+        deltaTri[0].x = deltaTri[0].y;
+        deltaTri[0].y = temp;
+    }
+    deltaTri[1].x = edgeV2->v[secondAxis] - v1->pos.v[secondAxis];
+    deltaTri[1].y = edgeV3->v[secondAxis] - v1->pos.v[secondAxis];
+    deltaT.y = t->interpolationPoint.v[secondAxis] - v1->pos.v[secondAxis];
+
+    s32 beta = FP(-1);
+    s32 gamma = FP(-1);
+    if (deltaTri[0].x != 0)
+    {
+        s32 dem = ((deltaTri[1].y * deltaTri[0].x) - (deltaTri[0].y * deltaTri[1].x)) >> 6;
+        if (dem == 0) { return BARYCENTRIC_TEST_INVALID; }
+        beta = (((deltaT.y * deltaTri[0].x) - (deltaT.x * deltaTri[1].x)) << 6) / dem;
+        gamma = ((deltaT.x * FP_ONE) - (beta * deltaTri[0].y)) / deltaTri[0].x;
+    }
+    else
+    {
+        if (deltaTri[0].y == 0) { return BARYCENTRIC_TEST_INVALID; }
+        beta = FP_DIV(deltaT.y, deltaTri[0].y);
+        if (deltaTri[1].x == 0) { return BARYCENTRIC_TEST_INVALID; }
+        gamma = (deltaT.y * FP_ONE) - (beta * deltaTri[1].y);
+    }
+    if (beta == FP(-1) || gamma == FP(-1)) { return BARYCENTRIC_TEST_INVALID; }
+
+    s32 alpha = beta + gamma + FP(-1);
+    if (gamma < 0)
+    {
+        if (beta < 0)
+        {
+            t->pos = v1->pos;
+            return BARYCENTRIC_TEST_SNAP_V1;
+        }
+        if (alpha < 0)
+        {
+            COLL_ProjectPointToEdge(&t->pos, &v1->pos, edgeV3, &t->interpolationPoint);
+            return BARYCENTRIC_TEST_EDGE_V1_V3;
+        }
+        t->pos = *edgeV3;
+        return BARYCENTRIC_TEST_SNAP_V3;
+    }
+    if (beta < 0)
+    {
+        if (alpha < 0)
+        {
+            COLL_ProjectPointToEdge(&t->pos, &v1->pos, edgeV2, &t->interpolationPoint);
+            return BARYCENTRIC_TEST_EDGE_V1_V2;
+        }
+        t->pos = *edgeV2;
+        return BARYCENTRIC_TEST_SNAP_V2;
+    }
+    if (alpha > 0)
+    {
+        COLL_ProjectPointToEdge(&t->pos, edgeV2, edgeV3, &t->interpolationPoint);
+        return BARYCENTRIC_TEST_EDGE_V2_V3;
+    }
+    t->pos = t->interpolationPoint;
+    return BARYCENTRIC_TEST_INSIDE_TRIANGLE;
+}
+
+s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+#ifdef TEST_COLL_IMPL
+    TestVertex input = *t;
+#endif
+    const s32 ret = _COLL_BarycentricTest(t, v1, v2, v3);
+    TEST_COLL_BarycentricTest(&input, v1, v2, v3, &t->pos, ret);
+    return ret;
+}

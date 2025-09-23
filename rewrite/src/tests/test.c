@@ -30,6 +30,7 @@ FunctionPatch s_functions[] =
     TEST_FUNC(RNG_PseudoRand),
     TEST_FUNC(RNG_Random),
     TEST_FUNC(COLL_ProjectPointToEdge),
+    TEST_FUNC(COLL_BarycentricTest),
 };
 
 void LoadTestPatches()
