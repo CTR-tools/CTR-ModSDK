@@ -14,6 +14,13 @@ void PatchFunction_End(u32 index);
 u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret);
 u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret, u32 cmpTrans);
 
+force_inline void FlushCache()
+{
+    register int n asm("t1") = 0x44;
+    __asm__ volatile("" : "=r"(n) : "r"(n));
+    ((void (*)())0xa0)();
+}
+
 #define BACKUP_ADDR 0x80400000
 
 #define TEST_MATH_IMPL
