@@ -5,7 +5,6 @@ common, header, 0x8000B0B8, 0x0, src/hooks/dll/load_decomp.c
 // decomp files
 common, DLL, 0x80200000, 0x0, src/exe/*.c, DECOMP.BIN
 common, DLL, 0x80600000, 0x0, src/tests/*.c src/tests/test_wrappers.s, TESTS.BIN
-common, DLL, 0x80600000, 0x0, src/tests/*.c, TESTS.BIN
 
 // profiler files
 common, DLL, 0x80500000, 0x0, src/profiler/*.c, PROFILER.BIN
