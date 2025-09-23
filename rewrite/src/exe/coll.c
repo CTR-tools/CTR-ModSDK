@@ -85,18 +85,28 @@ static s32 _COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const Coll
     if (deltaTri[0].x != 0)
     {
         s32 dem = ((deltaTri[1].y * deltaTri[0].x) - (deltaTri[0].y * deltaTri[1].x)) >> 6;
-        if (dem == 0) { return BARYCENTRIC_TEST_INVALID; }
-        beta = (((deltaT.y * deltaTri[0].x) - (deltaT.x * deltaTri[1].x)) << 6) / dem;
-        gamma = ((deltaT.x * FP_ONE) - (beta * deltaTri[0].y)) / deltaTri[0].x;
+        if (dem != 0)
+        {
+            beta = (((deltaT.y * deltaTri[0].x) - (deltaT.x * deltaTri[1].x)) << 6) / dem;
+            gamma = ((deltaT.x * FP_ONE) - (beta * deltaTri[0].y)) / deltaTri[0].x;
+        }
     }
     else
     {
-        if (deltaTri[0].y == 0) { return BARYCENTRIC_TEST_INVALID; }
-        beta = FP_DIV(deltaT.y, deltaTri[0].y);
-        if (deltaTri[1].x == 0) { return BARYCENTRIC_TEST_INVALID; }
-        gamma = ((deltaT.y * FP_ONE) - (beta * deltaTri[1].y)) / deltaTri[1].x;
+        if ((deltaTri[0].y != 0) && (deltaTri[1].x != 0))
+        {
+            beta = FP_DIV(deltaT.y, deltaTri[0].y);
+            gamma = ((deltaT.y * FP_ONE) - (beta * deltaTri[1].y)) / deltaTri[1].x;
+        }
     }
-    if (beta == FP(-1) || gamma == FP(-1)) { return BARYCENTRIC_TEST_INVALID; }
+
+    /* Naughty Dog bug: their hand written assembly code
+    forgets to check beta == -1, creating false collisions */
+#ifdef FIX_CTR_BUGS
+    if ((beta == FP(-1)) || (gamma == FP(-1))) { return BARYCENTRIC_TEST_INVALID; }
+#else
+    if (gamma == FP(-1)) { return BARYCENTRIC_TEST_INVALID; }
+#endif
 
     s32 alpha = beta + gamma + FP(-1);
     if (gamma < 0)
