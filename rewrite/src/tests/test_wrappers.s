@@ -1,7 +1,8 @@
 .set noreorder
+.set noat
 .align 2
 .macro SAVE_CONTEXT
-    addiu  $sp, $sp, -44
+    addiu  $sp, $sp, -48
     sw     $s0, 0($sp)
     sw     $s1, 4($sp)
     sw     $s2, 8($sp)
@@ -12,11 +13,13 @@
     sw     $s7, 28($sp)
     sw     $fp, 32($sp)
     sw     $gp, 36($sp)
-    sw     $ra, 40($sp)
+    sw     $at, 40($sp)
+    sw     $ra, 44($sp)
 .endm
 
 .macro RESTORE_CONTEXT
-    lw     $ra, 40($sp)
+    lw     $ra, 44($sp)
+    lw     $at, 40($sp)
     lw     $gp, 36($sp)
     lw     $fp, 32($sp)
     lw     $s7, 28($sp)
@@ -27,14 +30,14 @@
     lw     $s2, 8($sp)
     lw     $s1, 4($sp)
     lw     $s0, 0($sp)
-    addiu  $sp, $sp, 44
+    addiu  $sp, $sp, 48
 .endm
 
-.global WRAPPER_ND_COLL_BarycentricTest
-.type WRAPPER_ND_COLL_BarycentricTest, @function
-WRAPPER_ND_COLL_BarycentricTest:
+.global TEST_WRAPPER
+.type TEST_WRAPPER, @function
+TEST_WRAPPER:
     SAVE_CONTEXT
-    jal    ND_COLL_BarycentricTest
+    jalr   $k1
     nop
     RESTORE_CONTEXT
     jr     $ra
