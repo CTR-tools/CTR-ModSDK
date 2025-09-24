@@ -8,6 +8,7 @@
 #include <ctr/rng.h>
 #include <ctr/coll.h>
 
+void TEST_WRAPPER();
 void LoadTestPatches();
 u32 PatchFunction_Beg(u32* index);
 void PatchFunction_End(u32 index);

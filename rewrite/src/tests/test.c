@@ -50,6 +50,9 @@ void LoadTestPatches()
 
 u32 PatchFunction_Beg(u32* address)
 {
+    u32 addr = (u32)address;
+    __asm__ volatile("move $k1, %0" : : "r"(addr));
+
     u32 index = 0;
     const u32 funcCount = ARR_LEN(s_functions);
     for (u32 i = 0; i < funcCount; i++)
