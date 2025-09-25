@@ -1,8 +1,8 @@
-#ifdef REWRITE_PROFILER
 
 #include <ctr/profiler.h>
 #include <ctr/nd.h>
 
+#ifdef REWRITE_PROFILER
 // No Vehicle.h
 struct MetaPhys
 {
@@ -71,7 +71,7 @@ void RunCollRW();
 // because of how assembly hooking system works
 
 void LoadProfilerPatches()
-{	
+{
 	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
 }
 
@@ -80,15 +80,15 @@ void RunAllBenchmarks()
 {
 	if(doThisOnce != 0)
 		return;
-	
+
 	int r = 0;
 	doThisOnce = 1;
-	
+
 	ND_ResetRCnt(0xf2000001);
 	RunCollRW();
 	r = ND_GetRCnt(0xf2000001);
 	timeRW_COLL_ProjectPointToEdge = r;
-	
+
 	ND_ResetRCnt(0xf2000001);
 	RunCollOG();
 	r = ND_GetRCnt(0xf2000001);
@@ -104,25 +104,25 @@ void Hook_DrawOTag(int a)
 	// Why does this break on console?
 	// struct GameTracker* gGT = sdata->gGT;
 	struct GameTracker* gGT = (struct GameTracker*)0x80096b20;
-	
+
 	if((gGT->gameMode1 & (LOADING|1)) == 0)
 	{
 		// reset depth to CLOSEST
 		gGT->pushBuffer_UI.ptrOT =
-			gGT->otSwapchainDB[gGT->swapchainIndex];	
+			gGT->otSwapchainDB[gGT->swapchainIndex];
 
 		char string[128];
-		
+
 		ND_DecalFont_DrawLine("1s  15720", 0x14, 0x8, FONT_SMALL, 0);
-		
+
 		ND_sprintf(string, "RW  %d", timeRW_COLL_ProjectPointToEdge);
 		ND_DecalFont_DrawLine(string, 0x14, 0x10, FONT_SMALL, 0);
-		
+
 		ND_sprintf(string, "OG  %d", timeOG_COLL_ProjectPointToEdge);
 		ND_DecalFont_DrawLine(string, 0x14, 0x18, FONT_SMALL, 0);
 	}
-	
+
 	ND_DrawOTag(a);
 }
 
-#endif
+#endif // REWRITE_PROFILER
