@@ -1,7 +1,14 @@
 #pragma once
 
+#define EMULATE_GTE //enable me to enable gte simulation (and do not emit gte asm).
+
 #include <ctr/math.h>
+#if !defined(EMULATE_GTE)
 #include <psn00bsdk/include/inline_c.h>
+#include <ctr/gte_extended.h>
+#else
+#include <ctr/gte_simulator.h>
+#endif
 
 typedef enum GTE_ROW_INDEX
 {
@@ -53,6 +60,7 @@ typedef enum GTE_INTERPOLATE
 #define _CAT(a, b) a##b
 #define CAT(a, b)  _CAT(a, b)
 #define CAT3(a, b, c) CAT(CAT(a, b), c)
+#define CAT4(a, b, c, d) CAT(CAT(CAT(a, b), c), d)
 
 /* Private definitions */
 #define _gte_loadSVecMatrix_GTE_MATRIX_ROT_GTE_ROW_INDEX_0(v) gte_ldsvrtrow0(v)
@@ -63,12 +71,7 @@ typedef enum GTE_INTERPOLATE
 #define _gte_loadSVec_GTE_VECTOR_2(v) gte_ldv2(v)
 #define _gte_loadSVec_GTE_VECTOR_IR(v) gte_ldsv(v)
 #define _gte_loadVec_GTE_VECTOR_IR(v) gte_ldlvl(v)
-#define _gte_loadVec_GTE_VECTOR_MAC(v) __asm__ volatile ( \
-	"lwc2	$25, 0( %0 );"	\
-	"lwc2	$26, 4( %0 );"	\
-	"lwc2	$27, 8( %0 );"	\
-	:						\
-	: "r"( v ) )
+#define _gte_loadVec_GTE_VECTOR_MAC(v) _Impl_gte_loadVec_GTE_VECTOR_MAC(v)
 #define _gte_readMac_GTE_MAC_0(out) gte_stopz(out)
 #define _gte_readMac_GTE_MAC_1(out) gte_stlvnl0(out)
 #define _gte_readMac_GTE_MAC_2(out) gte_stlvnl1(out)
@@ -81,15 +84,7 @@ typedef enum GTE_INTERPOLATE
 #define _gte_mulMatrixVec(out, matrixType, vecType, shift) gte_mvmva(shift, matrixType, vecType, 3, 0); _gte_readMac_GTE_VECTOR_MAC(out)
 #define _gte_interpolate_GTE_INTERPOLATE_INT() gte_gpl0()
 #define _gte_interpolate_GTE_INTERPOLATE_FLOATING_POINT() gte_gpl12()
-#define _gte_leadingZeroes(out, in) __asm__ volatile ( \
-    "mtc2	%1, $30;" \
-    "nop;" \
-    "nop;" \
-    "swc2	$31, 0( %0 );" \
-    : \
-    : "r"( out ), "r"( in ) \
-    : "memory" \
-    )
+#define _gte_leadingZeroes(out, in) _Impl_gte_leadingZeroes(out, in)
 
 /* API */
 #define gte_readMac(out, macType) CAT(_gte_readMac_, macType)(out)
