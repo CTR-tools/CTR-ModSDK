@@ -66,6 +66,7 @@ force_inline void FlushCache()
 
 #ifdef TEST_COLL_IMPL
     void TEST_COLL_ProjectPointToEdge(const SVec3* v1, const SVec3* v2, const SVec3* point, const SVec3* ret);
+    void TEST_COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollVertex* ret);
     void TEST_COLL_LoadVerticeData(CollDCache* cache);
     void TEST_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const SVec3* pos, s32 ret);
 #else

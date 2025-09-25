@@ -32,6 +32,7 @@ FunctionPatch s_functions[] =
     TEST_FUNC(COLL_ProjectPointToEdge),
     TEST_FUNC(COLL_BarycentricTest),
     TEST_FUNC(COLL_LoadVerticeData),
+    TEST_FUNC(COLL_CalculateTrianglePlane),
 };
 
 void LoadTestPatches()

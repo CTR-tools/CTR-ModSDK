@@ -13,6 +13,18 @@ void TEST_COLL_ProjectPointToEdge(const SVec3* v1, const SVec3* v2, const SVec3*
     PatchFunction_End(index);
 }
 
+void TEST_COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollVertex* ret)
+{
+    const u32 index = PatchFunction_Beg((u32*)(&ND_COLL_CalculateTrianglePlane));
+    typedef void (*Func)(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
+    Func func = (Func) TEST_WRAPPER;
+    func(cache, v1, v2, v3);
+    PrintSVectorDiff("COLL_CalculateTrianglePlane", &v1->triNormal, &ret->triNormal);
+    if (v1->planeDist != ret->planeDist) { ND_printf("[COLL_CalculateTrianglePlane] Test Failed:\nDist: %d\nResult: %d\n", v1->planeDist, ret->planeDist); }
+    if (v1->normalDominantAxis != ret->normalDominantAxis) { ND_printf("[COLL_CalculateTrianglePlane] Test Failed:\nAxis: %d\nResult: %d\n", v1->normalDominantAxis, ret->normalDominantAxis); }
+    PatchFunction_End(index);
+}
+
 void TEST_COLL_LoadVerticeData(CollDCache* cache)
 {
     CollVertex vertices[NUM_VERTICES_QUADBLOCK];

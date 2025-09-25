@@ -14,7 +14,7 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     gte_SetRotMatrix(m.m);
     gte_loadSVec(edge.v, GTE_VECTOR_0);
     s32 edgeDot, pointDot;
-    gte_dotProduct(&edgeDot, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0);
+    gte_dotProduct(&edgeDot, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0, GTE_CALC_INT);
     gte_readMac(&pointDot, GTE_MAC_2);
     s32 leadingZeroes;
     gte_leadingZeroes(&leadingZeroes, pointDot);
@@ -31,17 +31,49 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     gte_loadVec(V1.v, GTE_VECTOR_MAC);
 
     Vec3 coords;
-    gte_interpolate(coords.v, GTE_INTERPOLATE_FLOATING_POINT);
+    gte_interpolate(coords.v, GTE_CALC_FLOATING_POINT);
     out->x = coords.x;
     out->y = coords.y;
     out->z = coords.z;
     TEST_COLL_ProjectPointToEdge(v1, v2, point, out);
     /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched*/
+    and some callers expect the argument registers to be untouched */
     __asm__ volatile("move $a0, %0" : : "r"((u32)out));
     __asm__ volatile("move $a1, %0" : : "r"((u32)v1));
     __asm__ volatile("move $a2, %0" : : "r"((u32)v2));
     __asm__ volatile("move $a3, %0" : : "r"((u32)point));
+}
+
+/* Address: 0x8001f2dc */
+void COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+#ifdef TEST_COLL_IMPL
+    CollVertex input = *v1;
+#endif
+    Vec3 cross;
+    const Matrix m = { .m[0][0] = v3->pos.x - v1->pos.x, .m[1][1] = v3->pos.y - v1->pos.y, .m[2][2] = v3->pos.z - v1->pos.z };
+    const SVec3 v = { .x = v2->pos.x - v1->pos.x, .y = v2->pos.y - v1->pos.y, .z = v2->pos.z - v1->pos.z };
+    gte_crossProduct(cross.v, m.m, v.v);
+    v1->triNormal.x = ((cross.x >> cache->lodShift) * cache->normalScale) >> cache->normalBitshift;
+    v1->triNormal.y = ((cross.y >> cache->lodShift) * cache->normalScale) >> cache->normalBitshift;
+    v1->triNormal.z = ((cross.z >> cache->lodShift) * cache->normalScale) >> cache->normalBitshift;
+
+    s32 dot;
+    gte_loadRowMatrix(v1->pos.v, GTE_ROW_INDEX_0, GTE_MATRIX_ROT);
+    gte_loadSVec(v1->triNormal.v, GTE_VECTOR_IR);
+    gte_dotProduct(&dot, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_IR, GTE_CALC_FLOATING_POINT);
+    v1->planeDist = dot >> 1;
+
+    Vec3 absNormal = { .x = abs(v1->triNormal.x), .y = abs(v1->triNormal.y), .z = abs(v1->triNormal.z) };
+    const s32 magnitude = max(max(absNormal.x, absNormal.y), absNormal.z);
+    if (magnitude == absNormal.x) { v1->normalDominantAxis = AXIS_X; }
+    else if (magnitude == absNormal.y) { v1->normalDominantAxis = AXIS_Y; }
+    else { v1->normalDominantAxis = AXIS_Z; }
+    TEST_COLL_CalculateTrianglePlane(cache, &input, v2, v3, v1);
+    /* This is a hand written assembly function that breaks the ABI,
+    and some callers expect the argument registers to be untouched */
+    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
+    __asm__ volatile("move $t9, %0" : : "r"((u32)cache->currQuadblock));
 }
 
 /* Address: 0x8001f7f0 */
@@ -60,7 +92,7 @@ void COLL_LoadVerticeData(CollDCache* cache)
     cache->quadblockFourthIndex = quadblock->index[3];
     TEST_COLL_LoadVerticeData(cache);
     /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched*/
+    and some callers expect the argument registers to be untouched */
     __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
     __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
 }

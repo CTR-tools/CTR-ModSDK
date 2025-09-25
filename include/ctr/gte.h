@@ -43,11 +43,11 @@ typedef enum GTE_MAC
     GTE_MAC_3, /* s32 */
 } GTE_MAC;
 
-typedef enum GTE_INTERPOLATE
+typedef enum GTE_CALC
 {
-    GTE_INTERPOLATE_INT,
-    GTE_INTERPOLATE_FLOATING_POINT,
-} GTE_INTERPOLATE;
+    GTE_CALC_INT,
+    GTE_CALC_FLOATING_POINT,
+} GTE_CALC;
 
 /* HELPERS */
 #define _CAT(a, b) a##b
@@ -75,12 +75,15 @@ typedef enum GTE_INTERPOLATE
 #define _gte_readMac_GTE_MAC_3(out) gte_stlvnl2(out)
 #define _gte_readMac_GTE_VECTOR_MAC(out) gte_stlvnl(out)
 #define _gte_loadIR_GTE_IR_0(in) gte_lddp(in)
-#define _gte_dotProduct_GTE_ROW_INDEX_0(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_1(out)
-#define _gte_dotProduct_GTE_ROW_INDEX_1(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_2(out)
-#define _gte_dotProduct_GTE_ROW_INDEX_2(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_3(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_0_GTE_CALC_INT(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_1(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_1_GTE_CALC_INT(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_2(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_2_GTE_CALC_INT(out, matrixType, vecType) gte_mvmva(0, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_3(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_0_GTE_CALC_FLOATING_POINT(out, matrixType, vecType) gte_mvmva(1, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_1(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_1_GTE_CALC_FLOATING_POINT(out, matrixType, vecType) gte_mvmva(1, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_2(out)
+#define _gte_dotProduct_GTE_ROW_INDEX_2_GTE_CALC_FLOATING_POINT(out, matrixType, vecType) gte_mvmva(1, matrixType, vecType, 3, 0); _gte_readMac_GTE_MAC_3(out)
 #define _gte_mulMatrixVec(out, matrixType, vecType, shift) gte_mvmva(shift, matrixType, vecType, 3, 0); _gte_readMac_GTE_VECTOR_MAC(out)
-#define _gte_interpolate_GTE_INTERPOLATE_INT() gte_gpl0()
-#define _gte_interpolate_GTE_INTERPOLATE_FLOATING_POINT() gte_gpl12()
+#define _gte_interpolate_GTE_CALC_INT() gte_gpl0()
+#define _gte_interpolate_GTE_CALC_FLOATING_POINT() gte_gpl12()
 #define _gte_leadingZeroes(out, in) __asm__ volatile ( \
     "mtc2	%1, $30;" \
     "nop;" \
@@ -98,6 +101,7 @@ typedef enum GTE_INTERPOLATE
 #define gte_loadVec(v, vecType) CAT(_gte_loadVec_, vecType)(v)
 #define gte_loadRowMatrix(v, rowIndex, matrixType) CAT3(_gte_loadSVecMatrix_, matrixType, _##rowIndex)(v)
 #define gte_mulMatrixVec(out, matrixType, vecType) _gte_mulMatrixVec(out, matrixType, vecType, 1)
-#define gte_dotProduct(out, rowIndex, matrixType, vecType) CAT(_gte_dotProduct_, rowIndex)(out, matrixType, vecType)
+#define gte_dotProduct(out, rowIndex, matrixType, vecType, calcType) CAT3(_gte_dotProduct_, rowIndex, _##calcType)(out, matrixType, vecType)
 #define gte_leadingZeroes(out, in) _gte_leadingZeroes(out, in)
-#define gte_interpolate(out, interpolationType) CAT(_gte_interpolate_, interpolationType)(); _gte_readMac_GTE_VECTOR_MAC(out)
+#define gte_interpolate(out, calcType) CAT(_gte_interpolate_, calcType)(); _gte_readMac_GTE_VECTOR_MAC(out)
+#define gte_crossProduct(out, matrix, vector) gte_SetRotMatrix(matrix); gte_loadSVec(vector, GTE_VECTOR_IR); gte_op0(); gte_readMac(out, GTE_VECTOR_MAC)

@@ -82,7 +82,7 @@ s32 MATH_VectorLength(const SVec3* vector)
     gte_loadRowMatrix(vector, GTE_ROW_INDEX_0, GTE_MATRIX_ROT);
     gte_loadSVec(vector, GTE_VECTOR_0);
     s32 lengthSquared;
-    gte_dotProduct(&lengthSquared, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0);
+    gte_dotProduct(&lengthSquared, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0, GTE_CALC_INT);
     const s32 len = ND_SquareRoot0_stub(lengthSquared);
     TEST_MATH_VectorLength(vector, len);
     return len;
