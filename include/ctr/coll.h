@@ -27,7 +27,7 @@ typedef struct CollVertex
 {
     SVec3 pos;
     u16 normalDominantAxis;
-    Vertex* levVertex;
+    const Vertex* levVertex;
     SVec3 triNormal;
     u16 planeDist;
 } CollVertex;
@@ -93,7 +93,7 @@ typedef struct CollDCache
     SVec3 distInterpolationIntersection;
     s16 unk7;
     u16 quadblockThirdIndex;
-    u16 quadblockFouthIndex;
+    u16 quadblockFourthIndex;
     CollVertex quadblockCollVertices[NUM_VERTICES_QUADBLOCK];
     u32 stepFlags;
     s16 normalScale;
@@ -104,4 +104,5 @@ typedef struct CollDCache
 #define DCACHE_COLL (*(CollDCache*) 0x1f800000)
 
 void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
+void COLL_LoadVerticeData(CollDCache* cache);
 s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);

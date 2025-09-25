@@ -29,4 +29,5 @@ u32 ND_RNG_Random(RNGSeed* seed);
 
 /* COLL */
 void ND_COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
+void ND_COLL_LoadVerticeData(CollDCache* cache);
 s32 ND_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);

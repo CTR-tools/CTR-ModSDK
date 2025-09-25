@@ -36,14 +36,33 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     out->y = coords.y;
     out->z = coords.z;
     TEST_COLL_ProjectPointToEdge(v1, v2, point, out);
-#ifdef TEST_COLL_IMPL
     /* This is a hand written assembly function that breaks the ABI,
     and some callers expect the argument registers to be untouched*/
     __asm__ volatile("move $a0, %0" : : "r"((u32)out));
     __asm__ volatile("move $a1, %0" : : "r"((u32)v1));
     __asm__ volatile("move $a2, %0" : : "r"((u32)v2));
     __asm__ volatile("move $a3, %0" : : "r"((u32)point));
-#endif
+}
+
+/* Address: 0x8001f7f0 */
+void COLL_LoadVerticeData(CollDCache* cache)
+{
+    const Quadblock* quadblock = cache->currQuadblock;
+    const Vertex* vertices = cache->meshInfo->vertices;
+    for (u32 i = 0; i < NUM_VERTICES_QUADBLOCK; i++)
+    {
+        u16 index = quadblock->index[i];
+        const Vertex* vertex = &vertices[index];
+        cache->quadblockCollVertices[i].pos = vertex->pos;
+        cache->quadblockCollVertices[i].levVertex = vertex;
+    }
+    cache->quadblockThirdIndex = quadblock->index[2];
+    cache->quadblockFourthIndex = quadblock->index[3];
+    TEST_COLL_LoadVerticeData(cache);
+    /* This is a hand written assembly function that breaks the ABI,
+    and some callers expect the argument registers to be untouched*/
+    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
+    __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
 }
 
 /* Address: 0x8001f928 */
