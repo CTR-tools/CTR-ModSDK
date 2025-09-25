@@ -2,13 +2,13 @@
 
 #include <ctr/macros.h>
 
-enum VertexCount
+typedef enum VertexCount
 {
     VertexCount_Point = 1,
     VertexCount_Line = 2,
     VertexCount_Tri = 3,
     VertexCount_Quad = 4,
-};
+} VertexCount;
 
 typedef union Tag
 {
@@ -41,18 +41,18 @@ typedef union Texpage
     u32 self;
 } Texpage;
 
-typedef struct
+typedef struct TPage
 {
     Tag tag;
     Texpage texpage;
 } TPage;
 
-enum RenderCode
+typedef enum RenderCode
 {
     RenderCode_Polygon = 1,
     RenderCode_Line = 2,
     RenderCode_Rectangle = 3,
-};
+} RenderCode;
 
 typedef union PrimCode
 {
@@ -99,8 +99,6 @@ typedef union ColorCode
     };
     u32 self;
 } ColorCode;
-
-typedef ColorCode Color;
 
 #define MakeColorCode(red, green, blue, renderCode) (ColorCode) { .r = red, .g = green, .b = blue, .code = renderCode }
 #define MakeColor(red, green, blue) (Color) { .r = red, .g = green, .b = blue }

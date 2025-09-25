@@ -37,6 +37,8 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     out->z = coords.z;
     TEST_COLL_ProjectPointToEdge(v1, v2, point, out);
 #ifdef TEST_COLL_IMPL
+    /* This is a hand written assembly function that breaks the ABI,
+    and some callers expect the argument registers to be untouched*/
     __asm__ volatile("move $a0, %0" : : "r"((u32)out));
     __asm__ volatile("move $a1, %0" : : "r"((u32)v1));
     __asm__ volatile("move $a2, %0" : : "r"((u32)v2));

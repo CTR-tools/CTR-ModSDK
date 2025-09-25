@@ -41,5 +41,67 @@ typedef struct TestVertex
     SVec3 interpolationPoint;
 } TestVertex;
 
+typedef struct DriverQuadblockCollData
+{
+    SVec3 driverPos;
+    s16 driverHitRadius;
+    s32 driverHitRadiusSquared;
+    SVec3 driverNextPos;
+    u16 collFlags;
+    u16 searchFlags;
+    s16 unk0;
+    u32 skipCollNoQuadFlagsMatch;
+} DriverQuadblockCollData;
+
+typedef union CollInputData
+{
+    DriverQuadblockCollData quadblock;
+} CollInputData;
+
+typedef struct CollDCache
+{
+    SVec3 inputNextPos;
+    s16 inputHitRadius;
+    s32 inputHitRadiusSquared;
+    s16 unk0;
+    s16 unk1;
+    CollInputData collInput;
+    MeshInfo* meshInfo;
+    BoundingBox bbox;
+    s16 numVerticesTested;
+    s16 numTrianglesTouched;
+    s16 unk2;
+    s16 numInstancesCollided;
+    u32 unk3;
+    BSPNode* bspNodes;
+    TestVertex collIntersection;
+    u8 unk4;
+    u8 currTriangleIndex;
+    Quadblock* currQuadblock;
+    SVec3 collPos;
+    u16 normalDominantAxis_TriCollided;
+    SVec3 normalTriCollided;
+    s16 unk5;
+    SVec3 interpolationPoint;
+    u8 barycentricTest;
+    u8 collidedTriangleIndex;
+    Quadblock* collidedQuadblock;
+    s32 speedScale;
+    u8 unk6[0x44];
+    Vertex* collidedVertices[NUM_VERTICES_TRIANGLE];
+    CollVertex* currTestVertices[NUM_VERTICES_TRIANGLE];
+    SVec3 distInterpolationIntersection;
+    s16 unk7;
+    u16 quadblockThirdIndex;
+    u16 quadblockFouthIndex;
+    CollVertex quadblockCollVertices[NUM_VERTICES_QUADBLOCK];
+    u32 stepFlags;
+    s16 normalScale;
+    u8 normalBitshift;
+    u8 lodShift;
+} CollDCache;
+
+#define DCACHE_COLL (*(CollDCache*) 0x1f800000)
+
 void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
 s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
