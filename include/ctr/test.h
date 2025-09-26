@@ -24,9 +24,9 @@ force_inline void FlushCache()
 
 #define BACKUP_ADDR 0x80400000
 
-#define TEST_MATH_IMPL
-#define TEST_RNG_IMPL
-#define TEST_COLL_IMPL
+//#define TEST_MATH_IMPL
+//#define TEST_RNG_IMPL
+//#define TEST_COLL_IMPL
 
 #ifdef TEST_MATH_IMPL
     void TEST_MATH_Sin(u32 angle, s32 ret);
@@ -71,6 +71,7 @@ force_inline void FlushCache()
     void TEST_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const SVec3* pos, s32 ret);
 #else
     #define TEST_COLL_ProjectPointToEdge(out, v1, v2, point)
+    #define TEST_COLL_CalculateTrianglePlane(cache, v1, v2, v3, ret)
     #define TEST_COLL_LoadVerticeData(cache)
     #define TEST_COLL_BarycentricTest(t, v1, v2, v3, pos, ret)
 #endif
