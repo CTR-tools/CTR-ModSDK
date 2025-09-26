@@ -1,5 +1,6 @@
 #include <ctr/coll.h>
 #include <ctr/gte.h>
+#include <ctr/driver.h>
 #include <ctr/test.h>
 
 /* Address: 0x8001ede4 */
@@ -31,7 +32,7 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     gte_loadVec(V1.v, GTE_VECTOR_MAC);
 
     Vec3 coords;
-    gte_interpolate(coords.v, GTE_CALC_FLOATING_POINT);
+    gte_interpolateBase(coords.v, GTE_CALC_FLOATING_POINT);
     out->x = coords.x;
     out->y = coords.y;
     out->z = coords.z;
@@ -244,7 +245,7 @@ static s32 _COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const Coll
     return BARYCENTRIC_TEST_INSIDE_TRIANGLE;
 }
 
-s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+static s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
 {
 #ifdef TEST_COLL_IMPL
     TestVertex input = *t;
@@ -252,4 +253,142 @@ s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* 
     const s32 ret = _COLL_BarycentricTest(t, v1, v2, v3);
     TEST_COLL_BarycentricTest(&input, v1, v2, v3, &t->pos, ret);
     return ret;
+}
+
+static void _COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+    cache->numVerticesTested++;
+    cache->collIntersection.triNormal = v1->triNormal;
+    cache->collIntersection.planeDist = v1->planeDist;
+    cache->collIntersection.normalDominantAxis = v1->normalDominantAxis;
+
+    const u16 quadFlags = cache->currQuadblock->flags;
+    if ((quadFlags & QUADFLAGS_TIGER_TEMPLE_DOOR) && (cache->currQuadblock->terrain & e_ignoreCollisionDoorFlagTerrain)) { return; }
+
+    const u32 triggerScript = quadFlags & QUADFLAGS_TRIGGER_SCRIPT;
+    const Matrix m = {
+        .m[0][0] = cache->inputNextPos.x, .m[0][1] = cache->inputNextPos.y, .m[0][2] = cache->inputNextPos.z,
+        .m[1][0] = cache->collInput.quadblock.driverPos.x, .m[1][1] = cache->collInput.quadblock.driverPos.y, .m[1][2] = cache->collInput.quadblock.driverPos.z,
+    };
+    s32 distTriNextPos, distTriCurrPos;
+    gte_SetRotMatrix(m.m);
+    gte_loadSVec(cache->collIntersection.triNormal.v, GTE_VECTOR_0);
+    gte_dotProduct(&distTriNextPos, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0, GTE_CALC_FLOATING_POINT);
+    gte_readMac(&distTriCurrPos, GTE_MAC_2);
+    distTriNextPos = distTriNextPos + (cache->collIntersection.planeDist * -2);
+    distTriCurrPos = distTriCurrPos + (cache->collIntersection.planeDist * -2);
+    cache->numVerticesTested++;
+    if (distTriCurrPos < 0)
+    {
+        if ((!triggerScript) && (cache->currQuadblock->drawOrderLow.doubleSided == 0)) { return; }
+        distTriCurrPos = -distTriCurrPos;
+        distTriNextPos = -distTriNextPos;
+        cache->collIntersection.triNormal.x = -cache->collIntersection.triNormal.x;
+        cache->collIntersection.triNormal.y = -cache->collIntersection.triNormal.y;
+        cache->collIntersection.triNormal.z = -cache->collIntersection.triNormal.z;
+        cache->collIntersection.planeDist = -cache->collIntersection.planeDist;
+    }
+    if ((distTriNextPos >= cache->inputHitRadius) || ((!triggerScript) && (distTriNextPos > distTriCurrPos))) { return; }
+
+    u32 crossedPlane = false;
+    const SVec3 deltaPos = {
+        .x = cache->inputNextPos.x - cache->collInput.quadblock.driverPos.x,
+        .y = cache->inputNextPos.y - cache->collInput.quadblock.driverPos.y,
+        .z = cache->inputNextPos.z - cache->collInput.quadblock.driverPos.z
+    };
+    if (distTriNextPos < 0)
+    {
+        const s32 interpolationFactor = FP_DIV(-distTriNextPos, distTriCurrPos - distTriNextPos);
+        gte_loadSVec(deltaPos.v, GTE_VECTOR_IR);
+        gte_loadIR(interpolationFactor, GTE_IR_0);
+        crossedPlane = true;
+    }
+    else
+    {
+        gte_loadSVec(cache->collIntersection.triNormal.v, GTE_VECTOR_IR);
+        gte_loadIR(distTriNextPos, GTE_IR_0);
+    }
+    Vec3 interpolation;
+    gte_interpolate(interpolation.v, GTE_CALC_FLOATING_POINT);
+    cache->collIntersection.interpolationPoint.x = cache->inputNextPos.x - interpolation.x;
+    cache->collIntersection.interpolationPoint.y = cache->inputNextPos.y - interpolation.y;
+    cache->collIntersection.interpolationPoint.z = cache->inputNextPos.z - interpolation.z;
+    cache->currTestVertices[0] = v1;
+    cache->currTestVertices[1] = v2;
+    cache->currTestVertices[2] = v3;
+    const s32 barycentricTest = COLL_BarycentricTest(&cache->collIntersection, v1, v2, v3);
+    if (barycentricTest == BARYCENTRIC_TEST_INVALID) { return; }
+
+    if (crossedPlane)
+    {
+        cache->deltaInterpolationIntersection.x = cache->collIntersection.interpolationPoint.x - cache->collIntersection.pos.x;
+        cache->deltaInterpolationIntersection.y = cache->collIntersection.interpolationPoint.y - cache->collIntersection.pos.y;
+        cache->deltaInterpolationIntersection.z = cache->collIntersection.interpolationPoint.z - cache->collIntersection.pos.z;
+    }
+    else
+    {
+        cache->deltaInterpolationIntersection.x = cache->inputNextPos.x - cache->collIntersection.pos.x;
+        cache->deltaInterpolationIntersection.y = cache->inputNextPos.y - cache->collIntersection.pos.y;
+        cache->deltaInterpolationIntersection.z = cache->inputNextPos.z - cache->collIntersection.pos.z;
+    }
+    s32 distSquaredInterpolationIntersection;
+    gte_loadRowMatrix(cache->deltaInterpolationIntersection.v, GTE_ROW_INDEX_0, GTE_MATRIX_ROT);
+    gte_loadSVec(cache->deltaInterpolationIntersection.v, GTE_VECTOR_0);
+    gte_dotProduct(&distSquaredInterpolationIntersection, GTE_ROW_INDEX_0, GTE_MATRIX_ROT, GTE_VECTOR_0, GTE_CALC_INT);
+    if (distSquaredInterpolationIntersection > cache->inputHitRadiusSquared) { return; }
+
+    if (triggerScript)
+    {
+        const u32 skip = (distTriNextPos >= 0) && (distTriNextPos >= cache->inputHitRadius) && (distTriCurrPos >= cache->inputHitRadius);
+        if (!skip) { cache->stepFlags |= cache->currQuadblock->terrain; return; }
+    }
+
+    s32 deltaDist = distTriCurrPos - distTriNextPos;
+    if (deltaDist != 0) { deltaDist = FP_ONE - FP_DIV(cache->inputHitRadius - distTriNextPos, deltaDist); }
+    if (deltaDist >= cache->speedScale) { return; }
+
+    if (quadFlags & QUADFLAGS_OUT_OF_BOUNDS)
+    {
+        if ((quadFlags & QUADFLAGS_MASK_GRAB) == 0) { return; }
+        cache->stepFlags |= STEPFLAGS_OUT_OF_BOUNDS;
+        return;
+    }
+
+    cache->speedScale = deltaDist;
+    cache->collidedVertices[0] = cache->currTestVertices[0]->levVertex;
+    cache->collidedVertices[1] = cache->currTestVertices[1]->levVertex;
+    cache->collidedVertices[2] = cache->currTestVertices[2]->levVertex;
+    cache->coll.pos = cache->collIntersection.pos;
+    cache->coll.normalDominantAxis = cache->collIntersection.normalDominantAxis;
+    cache->coll.triNormal = cache->collIntersection.triNormal;
+    cache->coll.planeDist = cache->collIntersection.planeDist;
+    cache->coll.interpolationPoint = cache->collIntersection.interpolationPoint;
+    cache->collidedQuadblock = cache->currQuadblock;
+    cache->collidedTriangleIndex = cache->currTriangleIndex;
+    cache->barycentricTest = barycentricTest;
+    if (deltaDist > 0)
+    {
+        Vec3 nextPos;
+        gte_loadSVec(deltaPos.v, GTE_VECTOR_IR);
+        gte_loadIR(deltaDist, GTE_IR_0);
+        gte_interpolate(nextPos.v, GTE_CALC_FLOATING_POINT);
+        cache->collInput.quadblock.driverNextPos.x = cache->collInput.quadblock.driverPos.x + nextPos.x;
+        cache->collInput.quadblock.driverNextPos.y = cache->collInput.quadblock.driverPos.y + nextPos.y;
+        cache->collInput.quadblock.driverNextPos.z = cache->collInput.quadblock.driverPos.z + nextPos.z;
+    }
+    else { cache->collInput.quadblock.driverNextPos = cache->collInput.quadblock.driverPos; }
+    cache->numTrianglesCollided++;
+}
+
+void COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+#ifdef TEST_COLL_IMPL
+    *(CollDCache*)(BACKUP_ADDR) = *cache;
+#endif
+    _COLL_TestTriangle(cache, v1, v2, v3);
+    TEST_COLL_TestTriangle((CollDCache*)(BACKUP_ADDR), v1, v2, v3, cache);
+    /* This is a hand written assembly function that breaks the ABI,
+    and some callers expect the argument registers to be untouched */
+    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
+    __asm__ volatile("move $t9, %0" : : "r"((u32)cache->currQuadblock));
 }

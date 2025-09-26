@@ -53,11 +53,46 @@ typedef struct VisibleSet
 	u32* visibleExtra;
 } VisibleSet;
 
+typedef enum QuadFlags
+{
+	QUADFLAGS_INVISIBLE = 1 << 0,
+	QUADFLAGS_MOON_GRAVITY = 1 << 1,
+	QUADFLAGS_REFLECTION = 1 << 2,
+	QUADFLAGS_KICKERS = 1 << 3,
+	QUADFLAGS_OUT_OF_BOUNDS = 1 << 4,
+	QUADFLAGS_NEVER_USED = 1 << 5,
+	QUADFLAGS_TRIGGER_SCRIPT = 1 << 6,
+	QUADFLAGS_REVERB = 1 << 7,
+	QUADFLAGS_KICKERS_TWO = 1 << 8,
+	QUADFLAGS_MASK_GRAB = 1 << 9,
+	QUADFLAGS_TIGER_TEMPLE_DOOR = 1 << 10,
+	QUADFLAGS_COLLISION_TRIGGER = 1 << 11,
+	QUADFLAGS_GROUND = 1 << 12,
+	QUADFLAGS_WALL = 1 << 13,
+	QUADFLAGS_NO_COLLISION = 1 << 14,
+	QUADFLAGS_INVISIBLE_TRIGGER = 1 << 15,
+} QuadFlags;
+
+typedef struct DrawOrder
+{
+	u32 drawOrder : 8;
+	u32 rotFlipFace0 : 3;
+	u32 drawModeFace0 : 2;
+	u32 rotFlipFace1 : 3;
+	u32 drawModeFace1 : 2;
+	u32 rotFlipFace2 : 3;
+	u32 drawModeFace2 : 2;
+	u32 rotFlipFace3 : 3;
+	u32 drawModeFace3 : 2;
+	u32 unk : 3;
+	u32 doubleSided : 1;
+} DrawOrder;
+
 typedef struct Quadblock
 {
 	u16 index[NUM_VERTICES_QUADBLOCK]; // 0x0
 	u16 flags; // 0x12
-	u32 drawOrderLow; // 0x14
+	DrawOrder drawOrderLow; // 0x14
 	u32 drawOrderHigh; // 0x18
 	u32 offMidTextures[4]; // 0x1C
 	BoundingBox bbox; // 0x2C

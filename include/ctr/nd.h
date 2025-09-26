@@ -35,3 +35,4 @@ void ND_COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock);
 void ND_COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
 void ND_COLL_LoadVerticeData(CollDCache* cache);
 s32 ND_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
+void ND_COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
