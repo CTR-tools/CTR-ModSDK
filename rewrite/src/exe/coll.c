@@ -45,7 +45,7 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
 }
 
 /* Address: 0x8001f2dc */
-void COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+static void COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
 {
 #ifdef TEST_COLL_IMPL
     CollVertex input = *v1;
@@ -70,14 +70,10 @@ void COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const 
     else if (magnitude == absNormal.y) { v1->normalDominantAxis = AXIS_Y; }
     else { v1->normalDominantAxis = AXIS_Z; }
     TEST_COLL_CalculateTrianglePlane(cache, &input, v2, v3, v1);
-    /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched */
-    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
-    __asm__ volatile("move $t9, %0" : : "r"((u32)cache->currQuadblock));
 }
 
 /* Address: 0x8001f7f0 */
-void COLL_LoadVerticeData(CollDCache* cache)
+static void COLL_LoadVerticeData(CollDCache* cache)
 {
     const Quadblock* quadblock = cache->currQuadblock;
     const Vertex* vertices = cache->meshInfo->vertices;
@@ -91,6 +87,52 @@ void COLL_LoadVerticeData(CollDCache* cache)
     cache->quadblockThirdIndex = quadblock->index[2];
     cache->quadblockFourthIndex = quadblock->index[3];
     TEST_COLL_LoadVerticeData(cache);
+}
+
+/* Address: 0x8001f67c */
+void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock)
+{
+    COLL_LoadVerticeData(cache);
+    cache->lodShift = 2;
+    cache->normalBitshift = quadblock->triNormalVecBitshift;
+    if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
+    {
+        cache->normalScale = quadblock->triNormalVecDividend[9];
+        COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[3], &cache->quadblockCollVertices[2]);
+    }
+    cache->normalScale = quadblock->triNormalVecDividend[8];
+    COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[2]);
+    /* This is a hand written assembly function that breaks the ABI,
+    and some callers expect the argument registers to be untouched */
+    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
+    __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
+}
+
+/* Address: 0x8001f6f0 */
+void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock)
+{
+    COLL_LoadVerticeData(cache);
+    cache->lodShift = 0;
+    cache->normalBitshift = quadblock->triNormalVecBitshift;
+    if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
+    {
+        cache->normalScale = quadblock->triNormalVecDividend[4];
+        COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[8], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[7]);
+        cache->normalScale = quadblock->triNormalVecDividend[5];
+        COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[7], &cache->quadblockCollVertices[3], &cache->quadblockCollVertices[8]);
+        cache->normalScale = quadblock->triNormalVecDividend[6];
+        COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[7], &cache->quadblockCollVertices[6]);
+        cache->normalScale = quadblock->triNormalVecDividend[7];
+        COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[2], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[8]);
+    }
+    cache->normalScale = quadblock->triNormalVecDividend[0];
+    COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[5]);
+    cache->normalScale = quadblock->triNormalVecDividend[1];
+    COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[5]);
+    cache->normalScale = quadblock->triNormalVecDividend[2];
+    COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[1]);
+    cache->normalScale = quadblock->triNormalVecDividend[3];
+    COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[5], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[2]);
     /* This is a hand written assembly function that breaks the ABI,
     and some callers expect the argument registers to be untouched */
     __asm__ volatile("move $a0, %0" : : "r"((u32)cache));

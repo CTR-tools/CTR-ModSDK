@@ -69,8 +69,8 @@ typedef struct Quadblock
 	u8 checkpointIndex; // 0x3E
 	u8 triNormalVecBitshift; // 0x3F
 	u32 offLowTexture; // 0x40
-	VisibleSet visibleSet; // 0x44
-	u16 triNormalVecDividend[NUM_VERTICES_QUADBLOCK + 1]; // 0x48
+	VisibleSet* visibleSet; // 0x44
+	s16 triNormalVecDividend[NUM_VERTICES_QUADBLOCK + 1]; // 0x48
 } Quadblock;
 
 typedef struct BSPBranch

@@ -104,6 +104,6 @@ typedef struct CollDCache
 #define DCACHE_COLL (*(CollDCache*) 0x1f800000)
 
 void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
-void COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
-void COLL_LoadVerticeData(CollDCache* cache);
+void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock);
+void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock);
 s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
