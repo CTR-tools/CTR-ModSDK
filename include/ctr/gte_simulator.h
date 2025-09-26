@@ -342,21 +342,128 @@ extern GTE gte;
 
 //TODO: swap out integer division for GTE division.
 
-#define gte_ldsvrtrow0(v) gte.cop2r32.lsbs = v.x; gte.cop2r32.msbs = v.y; gte.cop2r33.lsbs = v.z
-#define gte_ldsvllrow0(v) gte.cop2r40.lsbs = v.x; gte.cop2r40.msbs = v.y; gte.cop2r41.lsbs = v.z
-#define gte_ldsvlcrow0(v) gte.cop2r48.lsbs = v.x; gte.cop2r48.msbs = v.y; gte.cop2r49.lsbs = v.z
-#define gte_ldv0(v) gte.Vector0 = v
-#define gte_ldv1(v) gte.Vector1 = v
-#define gte_ldv2(v) gte.Vector2 = v
-#define gte_ldsv(v) gte.VectorIR = v
-#define gte_ldlvl(v) gte.VectorIR.x = *((s16*)&v.x); gte.VectorIR.y = *((s16*)&v.y); gte.VectorIR.z = *((s16*)&v.z) //assume V is Vec3 (not SVec3, and load 2 lsB from each element)
-#define _Impl_gte_loadVec_GTE_VECTOR_MAC(v) gte.MAC1 = ((Vec3)(v)).x; gte.MAC1 = ((Vec3)(v)).y; gte.MAC1 = ((Vec3)(v)).z
-#define gte_stopz(out) *((s32*)(out)) = gte.MAC0
-#define gte_stlvnl0(out) *((s32*)(out)) = gte.MAC1
-#define gte_stlvnl1(out) *((s32*)(out)) = gte.MAC2
-#define gte_stlvnl2(out) *((s32*)(out)) = gte.MAC3
-#define gte_stlvnl(out) ((Vec3)(out)).x = gte.MAC1; ((Vec3)(out)).y = gte.MAC2; ((Vec3)(out)).z = gte.MAC3;
-#define gte_lddp(in) gte.IR0 = in
+/////////////////////////////////////
+
+#define gte_ldsvrtrow0(v_)                                                     \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.cop2r32.lsbs = v_p_[0];                                                \
+    gte.cop2r32.msbs = v_p_[1];                                                \
+    gte.cop2r33.lsbs = v_p_[2];                                                \
+} while (0)
+
+#define gte_ldsvllrow0(v_)                                                     \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.cop2r40.lsbs = v_p_[0];                                                \
+    gte.cop2r40.msbs = v_p_[1];                                                \
+    gte.cop2r41.lsbs = v_p_[2];                                                \
+} while (0)
+
+#define gte_ldsvlcrow0(v_)                                                     \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.cop2r48.lsbs = v_p_[0];                                                \
+    gte.cop2r48.msbs = v_p_[1];                                                \
+    gte.cop2r49.lsbs = v_p_[2];                                                \
+} while (0)
+
+/////////////////////////////////////
+
+#define gte_ldv0(v_)                                                           \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.Vector0.x = v_p_[0];                                                   \
+    gte.Vector0.y = v_p_[1];                                                   \
+    gte.Vector0.z = v_p_[2];                                                   \
+} while (0)
+
+#define gte_ldv1(v_)                                                           \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.Vector1.x = v_p_[0];                                                   \
+    gte.Vector1.y = v_p_[1];                                                   \
+    gte.Vector1.z = v_p_[2];                                                   \
+} while (0)
+
+#define gte_ldv2(v_)                                                           \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.Vector2.x = v_p_[0];                                                   \
+    gte.Vector2.y = v_p_[1];                                                   \
+    gte.Vector2.z = v_p_[2];                                                   \
+} while (0)
+
+#define gte_ldsv(v_)                                                           \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.VectorIR.x = v_p_[0];                                                  \
+    gte.VectorIR.y = v_p_[1];                                                  \
+    gte.VectorIR.z = v_p_[2];                                                  \
+} while (0)
+
+/////////////////////////////////////
+
+#define gte_ldlvl(v_)                                                          \
+do {                                                                           \
+    const s16 *const v_p_ = (const s16*)(const void*)&(v_);                    \
+    gte.VectorIR.x = v_p_[0];                                                  \
+    gte.VectorIR.y = v_p_[2];                                                  \
+    gte.VectorIR.z = v_p_[4];                                                  \
+} while (0)
+
+/////////////////////////////////////
+
+#define _Impl_gte_loadVec_GTE_VECTOR_MAC(v_)                                   \
+do {                                                                           \
+    const Vec3 v_v_ = (v_);                                                    \
+    gte.MAC1 = v_v_.x;                                                         \
+    gte.MAC2 = v_v_.y;                                                         \
+    gte.MAC3 = v_v_.z;                                                         \
+} while (0)
+
+/////////////////////////////////////
+
+#define gte_stopz(out_)                                                        \
+do {                                                                           \
+    s32* const out_p_ = (s32*)(out_);                                          \
+    *out_p_ = gte.MAC0;                                                        \
+} while (0)
+
+#define gte_stlvnl0(out_)                                                      \
+do {                                                                           \
+    s32* const out_p_ = (s32*)(out_);                                          \
+    *out_p_ = gte.MAC1;                                                        \
+} while (0)
+
+#define gte_stlvnl1(out_)                                                      \
+do {                                                                           \
+    s32* const out_p_ = (s32*)(out_);                                          \
+    *out_p_ = gte.MAC2;                                                        \
+} while (0)
+
+#define gte_stlvnl2(out_)                                                      \
+do {                                                                           \
+    s32* const out_p_ = (s32*)(out_);                                          \
+    *out_p_ = gte.MAC3;                                                        \
+} while (0)
+
+#define gte_stlvnl(out_)                                                       \
+do {                                                                           \
+    s32* const out_p_ = (s32*)(void*)&(out_);                                  \
+    out_p_[0] = gte.MAC1;                                                      \
+    out_p_[1] = gte.MAC2;                                                      \
+    out_p_[2] = gte.MAC3;                                                      \
+} while (0)
+
+/////////////////////////////////////
+
+#define gte_lddp(in_)                       \
+do {                                        \
+    const s32 in_v_ = (in_);                \
+    gte.IR0 = (s16)in_v_;                   \
+} while (0)
+
 //Mx = matrix specified by mx  ;RT/LLM/LCM - Rotation, light or color matrix
 //Vx = vector specified by v; V0, V1, V2, or [IR1, IR2, IR3]
 //Tx = translation vector specified by cv; TR or BK or Bugged / FC, or None
@@ -365,29 +472,131 @@ extern GTE gte;
 //MAC2 = (Tx2 * 1000h + Mx21 * Vx1 + Mx22 * Vx2 + Mx23 * Vx3) SAR(sf * 12)
 //MAC3 = (Tx3 * 1000h + Mx31 * Vx1 + Mx32 * Vx2 + Mx33 * Vx3) SAR(sf * 12)
 //[IR1, IR2, IR3] = [MAC1, MAC2, MAC3]
-#define gte_mvmva(sf, mx, v, cv, lm) \
-gte.MAC1 = (gte.cv.x * 1000 + mx[0][0] * gte.v.x + mx[0][1] * gte.v.y + mx[0][2] * gte.v.z) >> (sf * 12); \
-gte.MAC2 = (gte.cv.y * 1000 + mx[1][0] * gte.v.x + mx[1][1] * gte.v.y + mx[1][2] * gte.v.z) >> (sf * 12); \
-gte.MAC3 = (gte.cv.z * 1000 + mx[2][0] * gte.v.x + mx[2][1] * gte.v.y + mx[2][2] * gte.v.z) >> (sf * 12); \
-gte.IR1 = gte.MAC1; gte.IR2 = gte.MAC2; gte.IR3 = gte.MAC3
+#define gte_mvmva(sf_, mx_, v_, cv_, lm_)                                          \
+do {                                                                               \
+    const u8 sf_v_ = (u8)(sf_);                                                    \
+    const u8 lm_v_ = (u8)(lm_);                                                    \
+                                                                                   \
+    /* row 0 */                                                                    \
+    s64 mac1_v_ =  (s64)gte.cv_.x * 0x1000                                        \
+                 + (s64)gte.mx_[0][0] * (s64)gte.v_.x                              \
+                 + (s64)gte.mx_[0][1] * (s64)gte.v_.y                              \
+                 + (s64)gte.mx_[0][2] * (s64)gte.v_.z;                             \
+    mac1_v_ >>= (sf_v_ * 12);                                                      \
+    gte.MAC1 = (s32)mac1_v_;                                                       \
+    { s32 t_v_ = (s32)mac1_v_;                                                     \
+      if (lm_v_) {                                                                 \
+          if (t_v_ < 0) t_v_ = 0;                                                  \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      } else {                                                                     \
+          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      }                                                                            \
+      gte.IR1 = (s16)t_v_; }                                                       \
+                                                                                   \
+    /* row 1 */                                                                    \
+    s64 mac2_v_ =  (s64)gte.cv_.y * 0x1000                                        \
+                 + (s64)gte.mx_[1][0] * (s64)gte.v_.x                              \
+                 + (s64)gte.mx_[1][1] * (s64)gte.v_.y                              \
+                 + (s64)gte.mx_[1][2] * (s64)gte.v_.z;                             \
+    mac2_v_ >>= (sf_v_ * 12);                                                      \
+    gte.MAC2 = (s32)mac2_v_;                                                       \
+    { s32 t_v_ = (s32)mac2_v_;                                                     \
+      if (lm_v_) {                                                                 \
+          if (t_v_ < 0) t_v_ = 0;                                                  \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      } else {                                                                     \
+          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      }                                                                            \
+      gte.IR2 = (s16)t_v_; }                                                       \
+                                                                                   \
+    /* row 2 */                                                                    \
+    s64 mac3_v_ =  (s64)gte.cv_.z * 0x1000                                        \
+                 + (s64)gte.mx_[2][0] * (s64)gte.v_.x                              \
+                 + (s64)gte.mx_[2][1] * (s64)gte.v_.y                              \
+                 + (s64)gte.mx_[2][2] * (s64)gte.v_.z;                             \
+    mac3_v_ >>= (sf_v_ * 12);                                                      \
+    gte.MAC3 = (s32)mac3_v_;                                                       \
+    { s32 t_v_ = (s32)mac3_v_;                                                     \
+      if (lm_v_) {                                                                 \
+          if (t_v_ < 0) t_v_ = 0;                                                  \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      } else {                                                                     \
+          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
+          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
+      }                                                                            \
+      gte.IR3 = (s16)t_v_; }                                                       \
+} while (0)
 
-#define gte_gpl0() \
-gte.MAC1 = ((gte.IR1 * gte.IR0) + gte.MAC1); \
-gte.MAC2 = ((gte.IR2 * gte.IR0) + gte.MAC2); \
-gte.MAC2 = ((gte.IR3 * gte.IR0) + gte.MAC3); \
-gte.Color0 = gte.MAC1 / 16; gte.Color1 = gte.MAC2 / 16; gte.Color2 = gte.MAC3 / 16; gte.VectorIR = gte.MACVector
+#define gte_gpl0()                                                               \
+do {                                                                             \
+    /* MACi = MACi + (IRi * IR0) */                                              \
+    s64 mac1_v_ = (s64)gte.MAC1 + (s64)gte.IR1 * (s64)gte.IR0;                   \
+    s64 mac2_v_ = (s64)gte.MAC2 + (s64)gte.IR2 * (s64)gte.IR0;                   \
+    s64 mac3_v_ = (s64)gte.MAC3 + (s64)gte.IR3 * (s64)gte.IR0;                   \
+    gte.MAC1 = (s32)mac1_v_;                                                     \
+    gte.MAC2 = (s32)mac2_v_;                                                     \
+    gte.MAC3 = (s32)mac3_v_;                                                     \
+                                                                                 \
+    /* Color FIFO = MAC/16 (integer divide matches your original semantics) */   \
+    gte.Color0 = gte.MAC1 / 16;                                                  \
+    gte.Color1 = gte.MAC2 / 16;                                                  \
+    gte.Color2 = gte.MAC3 / 16;                                                  \
+                                                                                 \
+    /* [IR1, IR2, IR3] = [MAC1, MAC2, MAC3] via your MACVector alias */          \
+    gte.VectorIR = gte.MACVector;                                                \
+} while (0)
+
 //[MAC1,MAC2,MAC3] = [MAC1,MAC2,MAC3] SHL (sf*12)       ;<--- for GPL only
 //[MAC1, MAC2, MAC3] = (([IR1, IR2, IR3] * IR0) + [MAC1, MAC2, MAC3]) SAR(sf * 12)
 //Color FIFO = [MAC1 / 16, MAC2 / 16, MAC3 / 16, CODE], [IR1, IR2, IR3] = [MAC1, MAC2, MAC3]
-#define gte_gpl12() gte.MAC1 << 12; gte.MAC2 << 12; gte.MAC3 << 12; \
-gte.MAC1 = ((gte.IR1 * gte.IR0) + gte.MAC1) >> 12; \
-gte.MAC2 = ((gte.IR2 * gte.IR0) + gte.MAC2) >> 12; \
-gte.MAC2 = ((gte.IR3 * gte.IR0) + gte.MAC3) >> 12; \
-gte.Color0 = gte.MAC1 / 16; gte.Color1 = gte.MAC2 / 16; gte.Color2 = gte.MAC3 / 16; gte.VectorIR = gte.MACVector
-//if positive, calculate leading zeroes, if negative, calculate leading ones.
-#define _Impl_gte_leadingZeroes(out, in) gte.LZCS = in; \
-char t = gte.LZCS < 0; \
-for (u8 i = 0; i < (((u32)gte.LZCS) & (0x80000000U >> i)) != 0; i++) { \
-} \
-gte.LZCR = result; \
-*((s32*)out) = gte.LZCR
+#define gte_gpl12()                                                             \
+do {                                                                            \
+    /* Shift existing MACs left by 12 */                                        \
+    gte.MAC1 <<= 12;                                                            \
+    gte.MAC2 <<= 12;                                                            \
+    gte.MAC3 <<= 12;                                                            \
+                                                                                \
+    /* Add (IRn*IR0) and shift right by 12 */                                   \
+    gte.MAC1 = ((s32)((s64)gte.IR1 * (s64)gte.IR0 + (s64)gte.MAC1) >> 12);      \
+    gte.MAC2 = ((s32)((s64)gte.IR2 * (s64)gte.IR0 + (s64)gte.MAC2) >> 12);      \
+    gte.MAC3 = ((s32)((s64)gte.IR3 * (s64)gte.IR0 + (s64)gte.MAC3) >> 12);      \
+                                                                                \
+    /* Color FIFO = MAC/16 */                                                   \
+    gte.Color0 = gte.MAC1 / 16;                                                 \
+    gte.Color1 = gte.MAC2 / 16;                                                 \
+    gte.Color2 = gte.MAC3 / 16;                                                 \
+                                                                                \
+    /* Copy MACs into IRs */                                                    \
+    gte.VectorIR = gte.MACVector;                                               \
+} while (0)
+
+#define _Impl_gte_leadingZeroes(out_, in_)                                        \
+do {                                                                              \
+    const s32 in_v_  = (in_);                                                     \
+    gte.LZCS = in_v_;                                                             \
+                                                                                  \
+    const u32 v_v_   = (u32)in_v_;                                                \
+    const u32 sign_v_ = v_v_ >> 31; /* 0 for >=0, 1 for <0 */                     \
+    s32 i_v_ = 0;                                                                  \
+    while (i_v_ < 32 && (((v_v_ >> (31 - i_v_)) & 1u) == sign_v_)) {              \
+        ++i_v_;                                                                    \
+    }                                                                             \
+    gte.LZCR = i_v_;                                                              \
+    *(s32*)(out_) = gte.LZCR;                                                     \
+} while (0)
+
+#define gte_SetRotMatrix(m) \
+do { \
+	s16 (*mat)[3] = (s16(*)[3])m; \
+	gte.RotationMatrix[0][0] = mat[0][0]; \
+	gte.RotationMatrix[0][1] = mat[0][1]; \
+	gte.RotationMatrix[0][2] = mat[0][2]; \
+	gte.RotationMatrix[1][0] = mat[1][0]; \
+	gte.RotationMatrix[1][1] = mat[1][1]; \
+	gte.RotationMatrix[1][2] = mat[1][2]; \
+	gte.RotationMatrix[2][0] = mat[2][0]; \
+	gte.RotationMatrix[2][1] = mat[2][1]; \
+	gte.RotationMatrix[2][2] = mat[2][2]; \
+} while (0)
