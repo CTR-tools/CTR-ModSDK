@@ -129,13 +129,9 @@ void RunTest()
 		ND_howl_Disable();
 		
 		ND_EnterCriticalSection();
-
 		ND_ResetRCnt(0xf2000001);
-		ND_printf("%d\n", ND_GetRCnt(0xf2000001));
 		tests[testIndex].funcPtr();
 		tests[testIndex].val = ND_GetRCnt(0xf2000001);
-		ND_printf("%d\n", ND_GetRCnt(0xf2000001));
-
 		ND_ExitCriticalSection();
 		
 		testIndex++;
