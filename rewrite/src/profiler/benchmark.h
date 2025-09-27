@@ -22,6 +22,8 @@ void RunTest_RW_COLL_PPTE_STACK()
 	{
 		COLL_ProjectPointToEdge(&out, &v1, &v2, &point);
 	}
+	
+	ND_printf("Done\n");
 }
 
 void RunTest_ND_COLL_PPTE_STACK()
@@ -36,14 +38,13 @@ void RunTest_ND_COLL_PPTE_STACK()
 	SVec3 v2 = {0xFD00, 0x2EC, 0xEA58};
 	SVec3 point = {0xFD6F, 0x2F5, 0xEDCE};
 	
-	// Revert the Hook from OG -> DECOMP
-	PatchFunction_Beg((u32*)(&ND_COLL_ProjectPointToEdge));
-	
 	// million
 	for(int i = 0; i < 1000000; i++)
 	{
 		ND_COLL_ProjectPointToEdge(&out, &v1, &v2, &point);
 	}
+	
+	ND_printf("Done\n");
 }
 
 void RunTest_RW_COLL_PPTE_SCRATCH()
@@ -74,6 +75,8 @@ void RunTest_RW_COLL_PPTE_SCRATCH()
 	{
 		COLL_ProjectPointToEdge(out, v1, v2, point);
 	}
+	
+	ND_printf("Done\n");
 }
 
 void RunTest_ND_COLL_PPTE_SCRATCH()
@@ -99,14 +102,13 @@ void RunTest_ND_COLL_PPTE_SCRATCH()
 	point->v[1] = 0x2F5;
 	point->v[2] = 0xEDCE;
 	
-	// Revert the Hook from OG -> DECOMP
-	PatchFunction_Beg((u32*)(&ND_COLL_ProjectPointToEdge));
-	
 	// million
 	for(int i = 0; i < 1000000; i++)
 	{
 		ND_COLL_ProjectPointToEdge(out, v1, v2, point);
 	}
+	
+	ND_printf("Done\n");
 }
 
 // Always run RW (rewrite) before OG (original)
