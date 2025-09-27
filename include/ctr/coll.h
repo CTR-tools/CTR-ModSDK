@@ -27,9 +27,9 @@ typedef struct CollVertex
 {
     SVec3 pos;
     u16 normalDominantAxis;
-    Vertex* levVertex;
+    const Vertex* levVertex;
     SVec3 triNormal;
-    u16 planeDist;
+    s16 planeDist;
 } CollVertex;
 
 typedef struct TestVertex
@@ -37,9 +37,71 @@ typedef struct TestVertex
     SVec3 pos;
     u16 normalDominantAxis;
     SVec3 triNormal;
-    u16 planeDist;
+    s16 planeDist;
     SVec3 interpolationPoint;
 } TestVertex;
 
+typedef struct DriverQuadblockCollData
+{
+    SVec3 driverPos;
+    s16 driverHitRadius;
+    s32 driverHitRadiusSquared;
+    SVec3 driverNextPos;
+    u16 collFlags;
+    u16 searchFlags;
+    s16 unk0;
+    u32 skipCollNoQuadFlagsMatch;
+} DriverQuadblockCollData;
+
+typedef union CollInputData
+{
+    DriverQuadblockCollData quadblock;
+} CollInputData;
+
+typedef struct CollDCache
+{
+    SVec3 inputNextPos;
+    s16 inputHitRadius;
+    s32 inputHitRadiusSquared;
+    s16 unk0;
+    s16 unk1;
+    CollInputData collInput;
+    const MeshInfo* meshInfo;
+    BoundingBox bbox;
+    s16 numVerticesTested;
+    s16 numTrianglesCollided;
+    s16 unk2;
+    s16 numInstancesCollided;
+    u32 unk3;
+    const BSPNode* bspNodes;
+    TestVertex collIntersection;
+    u8 unk4;
+    u8 currTriangleIndex;
+    const Quadblock* currQuadblock;
+    TestVertex coll;
+    s8 barycentricTest;
+    u8 collidedTriangleIndex;
+    const Quadblock* collidedQuadblock;
+    s32 speedScale;
+    u8 unk6[0x44];
+    const Vertex* collidedVertices[NUM_VERTICES_TRIANGLE];
+    const CollVertex* currTestVertices[NUM_VERTICES_TRIANGLE];
+    SVec3 deltaInterpolationIntersection;
+    s16 unk7;
+    u16 quadblockThirdIndex;
+    u16 quadblockFourthIndex;
+    CollVertex quadblockCollVertices[NUM_VERTICES_QUADBLOCK];
+    u32 stepFlags;
+    s16 normalScale;
+    u8 normalBitshift;
+    u8 lodShift;
+} CollDCache;
+
+#define DCACHE_COLL (*(CollDCache*) 0x1f800000)
+
 void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
-s32 COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
+void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock);
+void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock);
+void COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
+
+extern u32 e_ignoreCollisionDoorFlagTerrain; // 0x8008d728

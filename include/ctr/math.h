@@ -69,10 +69,17 @@ typedef union Vec4
 	s32 v[4];
 } Vec4;
 
-typedef struct Matrix {
+typedef struct Matrix
+{
 	s16 m[3][3];
 	Vec3 t;
 } Matrix;
+
+typedef struct BoundingBox
+{
+	SVec3 min;
+	SVec3 max;
+} BoundingBox;
 
 typedef struct TrigTable
 {
