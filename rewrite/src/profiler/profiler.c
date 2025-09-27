@@ -84,7 +84,10 @@ void DrawResults()
 
 		char string[128];
 
-		ND_DecalFont_DrawLine("1s  15720", 0x14, 0x8, 2, 0);
+		// Draw text centered on-screen
+		// 0x100 - midpoint, 0x800 - center
+		ND_sprintf(string, "%s    %s", __DATE__, __TIME__);
+		ND_DecalFont_DrawLine(string, 0x100, 0x8, 2, 0x8000);
 		
 		int numTest = sizeof(tests) / sizeof(struct BenchTest);
 		
