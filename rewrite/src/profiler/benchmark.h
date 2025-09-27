@@ -1,10 +1,5 @@
-#ifdef REWRITE_PROFILER
 
-#include <ctr/nd.h>
-#include <ctr/coll.h>
-#include <ctr/test.h>
-
-void RunCollRW()
+void RunTest_RW_COLL_ProjectPointToEdge()
 {
 	// Sample input from no$psx
 	// $a0: 1f800154 - 0, 0, 0
@@ -23,7 +18,7 @@ void RunCollRW()
 	}
 }
 
-void RunCollOG()
+void RunTest_ND_COLL_ProjectPointToEdge()
 {
 	// Sample input from no$psx
 	// $a0: 1f800154 - 0, 0, 0
@@ -45,4 +40,9 @@ void RunCollOG()
 	}
 }
 
-#endif
+// Always run RW (rewrite) before OG (original)
+struct BenchTest tests[] =
+{
+	ADDTEST(RunTest_RW_COLL_ProjectPointToEdge),
+	ADDTEST(RunTest_ND_COLL_ProjectPointToEdge)
+};

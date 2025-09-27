@@ -1,128 +1,166 @@
 
 #include <ctr/profiler.h>
 #include <ctr/nd.h>
+#include <ctr/test.h>
 
-#ifdef REWRITE_PROFILER
-// No Vehicle.h
-struct MetaPhys
-{
-	// assume USA build
-	char* name;
-	int offset;
-	int size;
-	int value[4];
-};
 
-// block the including of common.h via inheritance
-#define COMMON_H
 #include <gccHeaders.h>
-#include <macros.h>
-#include <prim.h>
-#include <namespace_Bots.h>
-#include <namespace_Camera.h>
-#include <namespace_Cdsys.h>
-#include <namespace_Coll.h>
-#include <namespace_Decal.h>
 #include <namespace_Display.h>
-#include <namespace_Gamepad.h>
-#include <namespace_Ghost.h>
-#include <namespace_Howl.h>
-#include <namespace_Instance.h>
-#include <namespace_Level.h>
-#include <namespace_List.h>
-#include <namespace_JitPool.h>
-#include <namespace_Load.h>
-#include <namespace_Memcard.h>
-#include <namespace_Mempack.h>
-#include <namespace_Particle.h>
-#include <namespace_Proc.h>
 #include <namespace_PushBuffer.h>
-#include <namespace_RectMenu.h>
-#include <namespace_Main.h>
-#include <namespace_UI.h>
-#include <regionsEXE.h>
 
+#ifdef TEST_MATH_IMPL
+#error Please go to ModSDK/include/ctr/test.h, and disable TEST_MATH_IMPL
+#endif
+
+#ifdef TEST_RNG_IMPL
+#error Please go to ModSDK/include/ctr/test.h, and disable TEST_RNG_IMPL
+#endif
+
+#ifdef TEST_COLL_IMPL
+#error Please go to ModSDK/include/ctr/test.h, and disable TEST_COLL_IMPL
+#endif
+
+// Required declarations
 void ND_EnterCriticalSection();
 void ND_ExitCriticalSection();
-
 void ND_DrawOTag(int a);
 void ND_DecalFont_DrawLine(char* a, int b, int c, int d, int e);
-
 int ND_GetRCnt(int a);
 int ND_ResetRCnt(int a);
 
-// OG = Original
-// RW = Rewrite
-int timeOG_COLL_ProjectPointToEdge;
-int timeRW_COLL_ProjectPointToEdge;
+struct BenchTest { char* name; void (*funcPtr)(); int val; };
+#define ADDTEST(x) {.name = #x, .funcPtr = x, .val = 0}
 
-#define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
-#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+#include "benchmark.h"
 
-void Hook_DrawOTag(int a);
-void RunCollOG();
-void RunCollRW();
-
-// When running OG functions,
-// dont forget to undefine these in ctr\test.h:
-// TEST_MATH_IMPL, TEST_RNG_IMPL, TEST_COLL_IMPL
-
-// Also, required to run RW function before OG,
-// because of how assembly hooking system works
-
-void LoadProfilerPatches()
+// real ND name
+struct GameTracker_Local
 {
-	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
+	// 0x0
+	int gameMode1;
+
+	// 0x4
+	int gameMode1_prevFrame;
+
+	// 0x8
+	int gameMode2;
+
+	// 0xC
+	int swapchainIndex; // 0 or 1
+
+	// 0x10
+	struct DB* backBuffer;	// the one you render to
+
+	// 0x14
+	struct DB* frontBuffer;	// the one being sent to screen
+
+	// 0x18
+	struct DB db[2];			/* packet double buffer */
+	
+	// 0x160
+	char buf[0x1768];
+	
+	// pointers to OT memory,
+	// used in ClearOTagR
+	// 0x18c8
+	// 0x18cc
+	// one for each DB
+	void* otSwapchainDB[2];
+	
+};
+
+void DrawResults()
+{
+	// avoid header headaches,
+	// this is gGT, and gGT->pushBuffer_UI
+	struct GameTracker_Local* gGT = (struct GameTracker_Local*)(0x80096b20);
+	struct PushBuffer* pb = (struct PushBuffer*)(0x80096b20+0x1388);
+
+	#define LOADING 0x40000000
+	if((gGT->gameMode1 & (LOADING|1)) == 0)
+	{
+		// reset depth to CLOSEST
+		pb->ptrOT = gGT->otSwapchainDB[gGT->swapchainIndex];
+
+		char string[128];
+
+		ND_DecalFont_DrawLine("1s  15720", 0x14, 0x8, 2, 0);
+		
+		int numTest = sizeof(tests) / sizeof(struct BenchTest);
+		
+		for(int i = 0; i < numTest; i++)
+		{
+			ND_sprintf(string, "%s  %d", &tests[i].name[8], tests[i].val);
+			ND_DecalFont_DrawLine(string, 0x14, 0x10+(i*8), 2, 0);
+		}
+	}
 }
 
-int doThisOnce=0;
-void RunAllBenchmarks()
+int testIndex=0;
+void RunTest()
 {
-	if(doThisOnce != 0)
+	int numTest = sizeof(tests) / sizeof(struct BenchTest);
+	
+	int timer = *(int*)(0x80096b20+0x1cec);
+	
+	// In between each test, run 15 frames
+	if((timer & 0xF) != 0xF)
 		return;
+	
+	if(testIndex < numTest)
+	{
+		// Stop XA
+		void ND_CDSYS_XAPauseForce();
+		ND_CDSYS_XAPauseForce();
+		
+		// From Spyro 2 Demo Launcher
+		void ND_Music_Stop();
+		void ND_howl_StopAudio(int a, int b, int c);
+		void ND_Bank_DestroyAll();
+		void ND_howl_Disable();
+		
+		// From Spyro 2 Demo Launcher
+		ND_Music_Stop();
+		ND_howl_StopAudio(1,1,1);
+		ND_Bank_DestroyAll();
+		ND_howl_Disable();
+		
+		ND_EnterCriticalSection();
 
-	int r = 0;
-	doThisOnce = 1;
+		ND_ResetRCnt(0xf2000001);
+		tests[testIndex].funcPtr();
+		tests[testIndex].val = ND_GetRCnt(0xf2000001);
 
-	ND_ResetRCnt(0xf2000001);
-	RunCollRW();
-	r = ND_GetRCnt(0xf2000001);
-	timeRW_COLL_ProjectPointToEdge = r;
-
-	ND_ResetRCnt(0xf2000001);
-	RunCollOG();
-	r = ND_GetRCnt(0xf2000001);
-	timeOG_COLL_ProjectPointToEdge = r;
+		ND_ExitCriticalSection();
+		
+		testIndex++;
+	}
 }
 
 void Hook_DrawOTag(int a)
 {
-	ND_EnterCriticalSection();
-	RunAllBenchmarks();
-	ND_ExitCriticalSection();
-
-	// Why does this break on console?
-	// struct GameTracker* gGT = sdata->gGT;
-	struct GameTracker* gGT = (struct GameTracker*)0x80096b20;
-
-	if((gGT->gameMode1 & (LOADING|1)) == 0)
-	{
-		// reset depth to CLOSEST
-		gGT->pushBuffer_UI.ptrOT =
-			gGT->otSwapchainDB[gGT->swapchainIndex];
-
-		char string[128];
-
-		ND_DecalFont_DrawLine("1s  15720", 0x14, 0x8, FONT_SMALL, 0);
-
-		ND_sprintf(string, "RW  %d", timeRW_COLL_ProjectPointToEdge);
-		ND_DecalFont_DrawLine(string, 0x14, 0x10, FONT_SMALL, 0);
-
-		ND_sprintf(string, "OG  %d", timeOG_COLL_ProjectPointToEdge);
-		ND_DecalFont_DrawLine(string, 0x14, 0x18, FONT_SMALL, 0);
-	}
-
+	DrawResults();
 	ND_DrawOTag(a);
+	
+	// Run first test AFTER first DrawOTag,
+	// so it does not take forever for screen to refresh,
+	// Therefore, always run a test after DrawOTag
+	RunTest();
 }
 
-#endif // REWRITE_PROFILER
+void LoadProfilerPatches()
+{
+	#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+	*(int*)0x800379b0 = JAL(Hook_DrawOTag);
+	
+	// JR RA so main menu never loads
+	*(int*)0x8003cfc0 = 0x3E00008;
+	*(int*)0x8003cfc4 = 0;
+	
+	// JR RA so RaceFlag does not drawpoly
+	*(int*)0x800444e8 = 0x3E00008;
+	*(int*)0x800444ec = 0;
+	
+	// skip XA on boot "Start Your Engines..."
+	*(int*)0x8003c958 = 0;
+}
