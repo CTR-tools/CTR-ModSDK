@@ -358,11 +358,7 @@ static void _COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const Co
     cache->collidedVertices[0] = cache->currTestVertices[0]->levVertex;
     cache->collidedVertices[1] = cache->currTestVertices[1]->levVertex;
     cache->collidedVertices[2] = cache->currTestVertices[2]->levVertex;
-    cache->coll.pos = cache->collIntersection.pos;
-    cache->coll.normalDominantAxis = cache->collIntersection.normalDominantAxis;
-    cache->coll.triNormal = cache->collIntersection.triNormal;
-    cache->coll.planeDist = cache->collIntersection.planeDist;
-    cache->coll.interpolationPoint = cache->collIntersection.interpolationPoint;
+    cache->coll = cache->collIntersection;
     cache->collidedQuadblock = cache->currQuadblock;
     cache->collidedTriangleIndex = cache->currTriangleIndex;
     cache->barycentricTest = barycentricTest;
