@@ -26,7 +26,7 @@ force_inline void FlushCache()
 
 //#define TEST_MATH_IMPL
 //#define TEST_RNG_IMPL
-//#define TEST_COLL_IMPL
+#define TEST_COLL_IMPL
 
 #ifdef TEST_MATH_IMPL
     void TEST_MATH_Sin(u32 angle, s32 ret);

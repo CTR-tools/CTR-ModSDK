@@ -23,6 +23,13 @@ typedef enum BarycentricTest
     BARYCENTRIC_TEST_INSIDE_TRIANGLE = 6,
 } BarycentricTest;
 
+typedef enum CollFlags
+{
+    COLLFLAGS_TEST_INSTANCES = 0x1,
+    COLLFLAGS_HIGH_LOD_QUAD = 0x2,
+    COLLFLAGS_CACHED_HIGH_LOD_VERTICES = 0x8,
+} CollFlags;
+
 typedef struct CollVertex
 {
     SVec3 pos;
@@ -48,9 +55,8 @@ typedef struct DriverQuadblockCollData
     s32 driverHitRadiusSquared;
     SVec3 driverNextPos;
     u16 collFlags;
-    u16 searchFlags;
-    s16 unk0;
-    u32 skipCollNoQuadFlagsMatch;
+    u32 quadFlagsCheckColl;
+    u32 quadFlagsIgnoreColl;
 } DriverQuadblockCollData;
 
 typedef union CollInputData
@@ -97,7 +103,7 @@ typedef struct CollDCache
     u8 lodShift;
 } CollDCache;
 
-#define DCACHE_COLL (*(CollDCache*) 0x1f800000)
+#define DCACHE_COLL (*(CollDCache*) 0x1f800108)
 
 void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point);
 void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock);
