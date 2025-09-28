@@ -29,11 +29,10 @@ FunctionPatch s_functions[] =
     TEST_FUNC(RNG_RandInt),
     TEST_FUNC(RNG_PseudoRand),
     TEST_FUNC(RNG_Random),
-    TEST_FUNC(COLL_ProjectPointToEdge),
-    TEST_FUNC(COLL_LoadQuadblockData_LowLOD),
-    TEST_FUNC(COLL_LoadQuadblockData_HighLOD),
-    TEST_FUNC(COLL_TestTriangle),
+    TEST_FUNC(COLL_TestLeaf_Quadblock),
 };
+
+const char* s_nameTestedFunc = nullptr;
 
 void LoadTestPatches()
 {
@@ -50,12 +49,13 @@ void LoadTestPatches()
     FlushCache();
 }
 
-u32 PatchFunction_Beg(u32* address)
+u32 PatchFunction_Beg(u32* address, const char* funcName)
 {
     u32 addr = (u32)address;
+    s_nameTestedFunc = funcName;
     __asm__ volatile("move $k1, %0" : : "r"(addr));
 
-    u32 index = 0;
+    u32 index = UINT32_MAX;
     const u32 funcCount = ARR_LEN(s_functions);
     for (u32 i = 0; i < funcCount; i++)
     {
@@ -73,12 +73,13 @@ u32 PatchFunction_Beg(u32* address)
 
 void PatchFunction_End(u32 index)
 {
+    if (index == UINT32_MAX) { return; }
     *(s_functions[index].address) = s_functions[index].firstNewInst;
     *(s_functions[index].address + 1) = s_functions[index].secondNewInst;
     FlushCache();
 }
 
-u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret)
+u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)
@@ -86,13 +87,13 @@ u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret)
         if (expected->v[i] != ret->v[i])
         {
             failed = 1;
-            ND_printf("[%s] Test Failed:\nv[%d] = %d, got %d\n", name, i, expected->v[i], ret->v[i]);
+            ND_printf("[%s] Test Failed:\nv[%d] = %d, got %d\n", s_nameTestedFunc, i, expected->v[i], ret->v[i]);
         }
     }
     return failed;
 }
 
-u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret, u32 cmpTrans)
+u32 PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)
@@ -102,13 +103,13 @@ u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret,
             if (expected->m[i][j] != ret->m[i][j])
             {
                 failed = 1;
-                ND_printf("[%s] Test Failed:\nm[%d][%d] = %d, got %d\n", name, i, j, expected->m[i][j], ret->m[i][j]);
+                ND_printf("[%s] Test Failed:\nm[%d][%d] = %d, got %d\n", s_nameTestedFunc, i, j, expected->m[i][j], ret->m[i][j]);
             }
         }
         if ((cmpTrans) && (expected->t.v[i] != ret->t.v[i]))
         {
             failed = 1;
-            ND_printf("[%s] Test Failed:\nt[%d] = %d, got %d\n", name, i, expected->t.v[i], ret->t.v[i]);
+            ND_printf("[%s] Test Failed:\nt[%d] = %d, got %d\n", s_nameTestedFunc, i, expected->t.v[i], ret->t.v[i]);
         }
     }
     return failed;

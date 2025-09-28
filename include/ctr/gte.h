@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ctr/math.h>
-#include <psn00bsdk/include/inline_c.h>
+#include <ctr/nugget/inline_n.h>
 
 typedef enum GTE_ROW_INDEX
 {
