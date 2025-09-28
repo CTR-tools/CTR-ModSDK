@@ -34,6 +34,14 @@ typedef enum GTE_VECTOR
     GTE_VECTOR_MAC, /* Vec */
 } GTE_VECTOR;
 
+typedef enum GTE_TRANS_VECTOR
+{
+	GTE_TRANS_TRANSLATION, /*Vec*/
+	GTE_TRANS_BG_COLOR, /*Vec*/
+	GTE_TRANS_FAR_COLOR, /*Vec*/
+	GTE_TRANS_NONE
+} GTE_TRANS_VECTOR;
+
 typedef enum GTE_IR
 {
     GTE_IR_0, /* s16 */
