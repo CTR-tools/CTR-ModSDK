@@ -17,6 +17,20 @@ typedef int16_t  s16;
 typedef uint8_t  u8;
 typedef int8_t   s8;
 
+#define U32_MAX UINT32_MAX
+#define S32_MAX INT32_MAX
+#define U16_MAX UINT16_MAX
+#define S16_MAX INT16_MAX
+#define U8_MAX UINT8_MAX
+#define S8_MAX INT8_MAX
+
+#define U32_MIN UINT32_MIN
+#define S32_MIN INT32_MIN
+#define U16_MIN UINT16_MIN
+#define S16_MIN INT16_MIN
+#define U8_MIN UINT8_MIN
+#define S8_MIN INT8_MIN
+
 #define AugReview 805
 #define SepReview 903
 #define UsaRetail 926

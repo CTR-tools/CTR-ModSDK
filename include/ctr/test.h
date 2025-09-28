@@ -8,12 +8,14 @@
 #include <ctr/rng.h>
 #include <ctr/coll.h>
 
+extern const char* s_nameTestedFunc;
+
 void TEST_WRAPPER();
 void LoadTestPatches();
-u32 PatchFunction_Beg(u32* index);
+u32 PatchFunction_Beg(u32* index, const char* funcName);
 void PatchFunction_End(u32 index);
-u32 PrintSVectorDiff(const char* name, const SVec3* expected, const SVec3* ret);
-u32 PrintMatrixDiff(const char* name, const Matrix* expected, const Matrix* ret, u32 cmpTrans);
+u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret);
+u32 PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans);
 
 force_inline void FlushCache()
 {
@@ -24,8 +26,8 @@ force_inline void FlushCache()
 
 #define BACKUP_ADDR 0x80400000
 
-//#define TEST_MATH_IMPL
-//#define TEST_RNG_IMPL
+#define TEST_MATH_IMPL
+#define TEST_RNG_IMPL
 #define TEST_COLL_IMPL
 
 #ifdef TEST_MATH_IMPL
@@ -68,12 +70,18 @@ force_inline void FlushCache()
     void TEST_COLL_ProjectPointToEdge(const SVec3* v1, const SVec3* v2, const SVec3* point, const SVec3* ret);
     void TEST_COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollVertex* ret);
     void TEST_COLL_LoadVerticeData(CollDCache* cache);
+    void TEST_COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret);
+    void TEST_COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret);
     void TEST_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const SVec3* pos, s32 ret);
     void TEST_COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollDCache* ret);
+    void TEST_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache, const CollDCache* ret);
 #else
     #define TEST_COLL_ProjectPointToEdge(out, v1, v2, point)
     #define TEST_COLL_CalculateTrianglePlane(cache, v1, v2, v3, ret)
     #define TEST_COLL_LoadVerticeData(cache)
+    #define TEST_COLL_LoadQuadblockData_LowLOD(cache, quadblock, ret)
+    #define TEST_COLL_LoadQuadblockData_HighLOD(cache, quadblock, ret)
     #define TEST_COLL_BarycentricTest(t, v1, v2, v3, pos, ret)
     #define TEST_COLL_TestTriangle(cache, v1, v2, v3, ret)
+    #define TEST_COLL_TestLeaf_Quadblock(quadblock, cache, ret)
 #endif

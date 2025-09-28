@@ -4,7 +4,7 @@
 #include <ctr/test.h>
 
 /* Address: 0x8001ede4 */
-void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point)
+static void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const SVec3* point)
 {
     const SVec3 edge = { v2->x - v1->x, v2->y - v1->y, v2->z - v1->z };
     const Matrix m =
@@ -37,12 +37,6 @@ void COLL_ProjectPointToEdge(SVec3* out, const SVec3* v1, const SVec3* v2, const
     out->y = coords.y;
     out->z = coords.z;
     TEST_COLL_ProjectPointToEdge(v1, v2, point, out);
-    /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched */
-    __asm__ volatile("move $a0, %0" : : "r"((u32)out));
-    __asm__ volatile("move $a1, %0" : : "r"((u32)v1));
-    __asm__ volatile("move $a2, %0" : : "r"((u32)v2));
-    __asm__ volatile("move $a3, %0" : : "r"((u32)point));
 }
 
 /* Address: 0x8001f2dc */
@@ -91,7 +85,7 @@ static void COLL_LoadVerticeData(CollDCache* cache)
 }
 
 /* Address: 0x8001f67c */
-void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock)
+static void _COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock)
 {
     COLL_LoadVerticeData(cache);
     cache->lodShift = 2;
@@ -103,14 +97,19 @@ void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, Quadblock* quadblock)
     }
     cache->normalScale = quadblock->triNormalVecDividend[8];
     COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[2]);
-    /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched */
-    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
-    __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
+}
+
+static void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock)
+{
+#ifdef TEST_COLL_IMPL
+    *(CollDCache*)(BACKUP_ADDR) = *cache;
+#endif
+    _COLL_LoadQuadblockData_LowLOD(cache, quadblock);
+    TEST_COLL_LoadQuadblockData_LowLOD((CollDCache*)(BACKUP_ADDR), quadblock, cache);
 }
 
 /* Address: 0x8001f6f0 */
-void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock)
+static void _COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock)
 {
     COLL_LoadVerticeData(cache);
     cache->lodShift = 0;
@@ -134,10 +133,15 @@ void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, Quadblock* quadblock)
     COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[1]);
     cache->normalScale = quadblock->triNormalVecDividend[3];
     COLL_CalculateTrianglePlane(cache, &cache->quadblockCollVertices[5], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[2]);
-    /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched */
-    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
-    __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
+}
+
+static void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock)
+{
+#ifdef TEST_COLL_IMPL
+    *(CollDCache*)(BACKUP_ADDR) = *cache;
+#endif
+    _COLL_LoadQuadblockData_HighLOD(cache, quadblock);
+    TEST_COLL_LoadQuadblockData_HighLOD((CollDCache*)(BACKUP_ADDR), quadblock, cache);
 }
 
 /* Address: 0x8001f928 */
@@ -376,15 +380,90 @@ static void _COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const Co
     cache->numTrianglesCollided++;
 }
 
-void COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+static void COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
+{
+#ifdef TEST_COLL_IMPL
+    const u32 backupAddr = BACKUP_ADDR + sizeof(CollDCache);
+    *(CollDCache*)(backupAddr) = *cache;
+#endif
+    _COLL_TestTriangle(cache, v1, v2, v3);
+    TEST_COLL_TestTriangle((CollDCache*)(backupAddr), v1, v2, v3, cache);
+}
+
+/* Address: 0x80020064 */
+static void _COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache)
+{
+    cache->currQuadblock = quadblock;
+    const u16 quadFlags = quadblock->flags;
+    if (((cache->collInput.quadblock.quadFlagsCheckColl & quadFlags) == 0) || (cache->collInput.quadblock.quadFlagsIgnoreColl & quadFlags) ||
+        quadblock->bbox.min.x > cache->bbox.max.x || quadblock->bbox.max.x < cache->bbox.min.x ||
+        quadblock->bbox.min.y > cache->bbox.max.y || quadblock->bbox.max.y < cache->bbox.min.y ||
+        quadblock->bbox.min.z > cache->bbox.max.z || quadblock->bbox.max.z < cache->bbox.min.z ) { return; }
+
+    const u16 collFlags = cache->collInput.quadblock.collFlags;
+    if (collFlags & COLLFLAGS_HIGH_LOD_QUAD)
+    {
+        if ((collFlags & COLLFLAGS_CACHED_HIGH_LOD_VERTICES) == 0) { COLL_LoadQuadblockData_HighLOD(cache, quadblock); }
+        cache->currTriangleIndex = 2;
+        COLL_TestTriangle(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[5]);
+        cache->currTriangleIndex = 3;
+        COLL_TestTriangle(cache, &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[5]);
+        cache->currTriangleIndex = 4;
+        COLL_TestTriangle(cache, &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[4], &cache->quadblockCollVertices[1]);
+        /* This function isn't doing critical calculations to justify hand writting in assembly, they were really just asking for bugs... */
+#ifdef FIX_CTR_BUGS
+        cache->currTriangleIndex = 5;
+#endif
+        COLL_TestTriangle(cache, &cache->quadblockCollVertices[5], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[2]);
+#ifndef FIX_CTR_BUG
+    cache->currTriangleIndex = 6; // not a bug, but unnecessary assignment...
+#endif
+        if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
+        {
+#ifdef FIX_CTR_BUGS
+            cache->currTriangleIndex = 6;
+#endif
+            COLL_TestTriangle(cache, &cache->quadblockCollVertices[8], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[7]);
+            cache->currTriangleIndex = 7;
+            COLL_TestTriangle(cache, &cache->quadblockCollVertices[7], &cache->quadblockCollVertices[3], &cache->quadblockCollVertices[8]);
+            cache->currTriangleIndex = 8;
+            COLL_TestTriangle(cache, &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[7], &cache->quadblockCollVertices[6]);
+            cache->currTriangleIndex = 9;
+            COLL_TestTriangle(cache, &cache->quadblockCollVertices[2], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[8]);
+        }
+        return;
+    }
+    COLL_LoadQuadblockData_LowLOD(cache, quadblock);
+    cache->currTriangleIndex = 0;
+    COLL_TestTriangle(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[2]);
+#ifndef FIX_CTR_BUG
+    cache->currTriangleIndex = 1; // not a bug, but unnecessary assignment...
+#endif
+    if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
+    {
+#ifdef FIX_CTR_BUGS
+        cache->currTriangleIndex = 1;
+#endif
+        COLL_TestTriangle(cache, &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[3], &cache->quadblockCollVertices[2]);
+    }
+}
+
+void COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache)
 {
 #ifdef TEST_COLL_IMPL
     *(CollDCache*)(BACKUP_ADDR) = *cache;
 #endif
-    _COLL_TestTriangle(cache, v1, v2, v3);
-    TEST_COLL_TestTriangle((CollDCache*)(BACKUP_ADDR), v1, v2, v3, cache);
+    _COLL_TestLeaf_Quadblock(quadblock, cache);
+#ifdef TEST_COLL_IMPL
+    const u32 retAddr = BACKUP_ADDR + sizeof(CollDCache);
+    *(CollDCache*)(retAddr) = *cache;
+    *cache = *(CollDCache*)(BACKUP_ADDR);
+#endif
+    TEST_COLL_TestLeaf_Quadblock(quadblock, cache, (CollDCache*)(retAddr));
+#ifdef TEST_COLL_IMPL
+    *cache = *(CollDCache*)(retAddr);
+#endif
     /* This is a hand written assembly function that breaks the ABI,
-    and some callers expect the argument registers to be untouched */
-    __asm__ volatile("move $a0, %0" : : "r"((u32)cache));
-    __asm__ volatile("move $t9, %0" : : "r"((u32)cache->currQuadblock));
+        and some callers expect the argument registers to be untouched */
+    __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
 }
