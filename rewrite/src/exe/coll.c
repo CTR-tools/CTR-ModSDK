@@ -416,7 +416,7 @@ static void _COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cac
 #endif
         COLL_TestTriangle(cache, &cache->quadblockCollVertices[5], &cache->quadblockCollVertices[6], &cache->quadblockCollVertices[2]);
 #ifndef FIX_CTR_BUG
-    cache->currTriangleIndex = 6;
+    cache->currTriangleIndex = 6; // not a bug, but unnecessary assignment...
 #endif
         if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
         {
@@ -437,7 +437,7 @@ static void _COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cac
     cache->currTriangleIndex = 0;
     COLL_TestTriangle(cache, &cache->quadblockCollVertices[0], &cache->quadblockCollVertices[1], &cache->quadblockCollVertices[2]);
 #ifndef FIX_CTR_BUG
-    cache->currTriangleIndex = 1;
+    cache->currTriangleIndex = 1; // not a bug, but unnecessary assignment...
 #endif
     if (cache->quadblockThirdIndex != cache->quadblockFourthIndex)
     {

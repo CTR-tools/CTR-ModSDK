@@ -55,7 +55,7 @@ u32 PatchFunction_Beg(u32* address, const char* funcName)
     s_nameTestedFunc = funcName;
     __asm__ volatile("move $k1, %0" : : "r"(addr));
 
-    u32 index = UINT32_MAX;
+    u32 index = U32_MAX;
     const u32 funcCount = ARR_LEN(s_functions);
     for (u32 i = 0; i < funcCount; i++)
     {
@@ -73,7 +73,7 @@ u32 PatchFunction_Beg(u32* address, const char* funcName)
 
 void PatchFunction_End(u32 index)
 {
-    if (index == UINT32_MAX) { return; }
+    if (index == U32_MAX) { return; }
     *(s_functions[index].address) = s_functions[index].firstNewInst;
     *(s_functions[index].address + 1) = s_functions[index].secondNewInst;
     FlushCache();
