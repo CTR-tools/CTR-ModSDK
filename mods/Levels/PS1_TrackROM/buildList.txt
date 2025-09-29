@@ -10,9 +10,6 @@
 926, 224, 0x8009f6fc, 0xD5C, src/hacks/tt_menu.c
 926, 224, 0x8009f6fc, 0xD88, src/hacks/tt_menu_no_save.c
 
-// disable map
-common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
-
 // Assembly patches
 926, exe, 0x800150c0, 0x0, src/patches/nop.bin
 926, exe, 0x800277c8, 0x0, src/patches/nop.bin
@@ -20,7 +17,7 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 926, exe, 0x800277f0, 0x0, src/patches/killThread.s
 926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
 
-// 229 - patch vistree lookup to not do modulo 4096
+// 226 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
 926, 226, 0x800a36d8, 0x0, src/patches/lod2.s
 926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
