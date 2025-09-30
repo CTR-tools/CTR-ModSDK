@@ -533,7 +533,7 @@ force_inline void _gte_mvmva(
 do {                                                                             \
     const u8 sf_v_ = (u8)(sf_);                                                  \
     const u8 lm_v_ = (u8)(lm_);                                                  \
-                                                                                  \
+                                                                                 \
     /* matrix pointer */                                                         \
     const s16 (*mx_p_)[3];                                                       \
     static const s16 _gte_zero_mx_[3][3] = {{0,0,0},{0,0,0},{0,0,0}};            \
@@ -542,8 +542,8 @@ do {                                                                            
         case GTE_MATRIX_LIGHT: mx_p_ = gte.GTE_MATRIX_LIGHT; break;              \
         case GTE_MATRIX_COLOR: mx_p_ = gte.GTE_MATRIX_COLOR; break;              \
         default:               mx_p_ = _gte_zero_mx_;          break;            \
-    }                                                                             \
-                                                                                  \
+    }                                                                            \
+                                                                                 \
     /* vector (SVec3) */                                                         \
     const SVec3* v_p_;                                                           \
     static const SVec3 _gte_zero_svec_ = {0,0,0};                                \
@@ -553,8 +553,8 @@ do {                                                                            
         case GTE_VECTOR_2:  v_p_ = &gte.GTE_VECTOR_2;  break;                    \
         case GTE_VECTOR_IR: v_p_ = &gte.GTE_VECTOR_IR; break;                    \
         default:            v_p_ = &_gte_zero_svec_;    break;                   \
-    }                                                                             \
-                                                                                  \
+    }                                                                            \
+                                                                                 \
     /* translation (Vec3) */                                                     \
     const Vec3* cv_p_;                                                           \
     static const Vec3 _gte_zero_vec_ = {0,0,0};                                  \
@@ -563,99 +563,40 @@ do {                                                                            
         case GTE_TRANS_BG_COLOR:   cv_p_ = &gte.GTE_TRANS_BG_COLOR;   break;     \
         case GTE_TRANS_FAR_COLOR:  cv_p_ = &gte.GTE_TRANS_FAR_COLOR;  break;     \
         default:                   cv_p_ = &_gte_zero_vec_;          break;      \
-    }                                                                             \
-                                                                                  \
+    }                                                                            \
+                                                                                 \
     _gte_mvmva(sf_v_, mx_p_, v_p_, cv_p_, lm_v_);                                \
 } while (0)
 
-//Mx = matrix specified by mx  ;RT/LLM/LCM - Rotation, light or color matrix
-//Vx = vector specified by v; V0, V1, V2, or [IR1, IR2, IR3]
-//Tx = translation vector specified by cv; TR or BK or Bugged / FC, or None
+//COP2 190003Dh - 5 Cycles - GPF(sf,lm) - General purpose Interpolation
+//COP2 1A0003Eh - 5 Cycles - GPL(sf,?) - General Interpolation with base
 
-//MAC1 = (Tx1*1000h + Mx11*Vx1 + Mx12*Vx2 + Mx13*Vx3) SAR (sf*12)
-//MAC2 = (Tx2 * 1000h + Mx21 * Vx1 + Mx22 * Vx2 + Mx23 * Vx3) SAR(sf * 12)
-//MAC3 = (Tx3 * 1000h + Mx31 * Vx1 + Mx32 * Vx2 + Mx33 * Vx3) SAR(sf * 12)
-//[IR1, IR2, IR3] = [MAC1, MAC2, MAC3]
-//2nd param is of enum type GTE_MATRIX
-//3rd param is of enum type GTE_VECTOR
-//#define gte_mvmva(sf_, mx_, v_, cv_, lm_)                                          \
-//do {                                                                               \
-//    const u8 sf_v_ = (u8)(sf_);                                                    \
-//    const u8 lm_v_ = (u8)(lm_);                                                    \
-//                                                                                   \
-//    /* row 0 */                                                                    \
-//    s64 mac1_v_ =  (s64)gte.cv_.x * 0x1000                                         \
-//                 + (s64)gte.mx_[0][0] * (s64)gte.v_.x                              \
-//                 + (s64)gte.mx_[0][1] * (s64)gte.v_.y                              \
-//                 + (s64)gte.mx_[0][2] * (s64)gte.v_.z;                             \
-//    mac1_v_ >>= (sf_v_ * 12);                                                      \
-//    gte.MAC1 = (s32)mac1_v_;                                                       \
-//    { s32 t_v_ = (s32)mac1_v_;                                                     \
-//      if (lm_v_) {                                                                 \
-//          if (t_v_ < 0) t_v_ = 0;                                                  \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      } else {                                                                     \
-//          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      }                                                                            \
-//      gte.IR1 = (s16)t_v_; }                                                       \
-//                                                                                   \
-//    /* row 1 */                                                                    \
-//    s64 mac2_v_ =  (s64)gte.cv_.y * 0x1000                                         \
-//                 + (s64)gte.mx_[1][0] * (s64)gte.v_.x                              \
-//                 + (s64)gte.mx_[1][1] * (s64)gte.v_.y                              \
-//                 + (s64)gte.mx_[1][2] * (s64)gte.v_.z;                             \
-//    mac2_v_ >>= (sf_v_ * 12);                                                      \
-//    gte.MAC2 = (s32)mac2_v_;                                                       \
-//    { s32 t_v_ = (s32)mac2_v_;                                                     \
-//      if (lm_v_) {                                                                 \
-//          if (t_v_ < 0) t_v_ = 0;                                                  \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      } else {                                                                     \
-//          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      }                                                                            \
-//      gte.IR2 = (s16)t_v_; }                                                       \
-//                                                                                   \
-//    /* row 2 */                                                                    \
-//    s64 mac3_v_ =  (s64)gte.cv_.z * 0x1000                                         \
-//                 + (s64)gte.mx_[2][0] * (s64)gte.v_.x                              \
-//                 + (s64)gte.mx_[2][1] * (s64)gte.v_.y                              \
-//                 + (s64)gte.mx_[2][2] * (s64)gte.v_.z;                             \
-//    mac3_v_ >>= (sf_v_ * 12);                                                      \
-//    gte.MAC3 = (s32)mac3_v_;                                                       \
-//    { s32 t_v_ = (s32)mac3_v_;                                                     \
-//      if (lm_v_) {                                                                 \
-//          if (t_v_ < 0) t_v_ = 0;                                                  \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      } else {                                                                     \
-//          if (t_v_ < -0x8000) t_v_ = -0x8000;                                      \
-//          else if (t_v_ > 0x7FFF) t_v_ = 0x7FFF;                                   \
-//      }                                                                            \
-//      gte.IR3 = (s16)t_v_; }                                                       \
-//} while (0)
+//[MAC1,MAC2,MAC3] = [0,0,0]                            ;<--- for GPF only
+//[MAC1,MAC2,MAC3] = [MAC1,MAC2,MAC3] SHL (sf*12)       ;<--- for GPL only
+//[MAC1,MAC2,MAC3] = (([IR1,IR2,IR3] * IR0) + [MAC1,MAC2,MAC3]) SAR (sf*12)
+//Color FIFO = [MAC1/16,MAC2/16,MAC3/16,CODE], [IR1,IR2,IR3] = [MAC1,MAC2,MAC3]
 
 #define gte_gpl0()                                                                \
 do {                                                                              \
     /* MACi = MACi + IRi * IR0 (widen to s64 for exact math) */                   \
-    s64 mac1_v_ = (s64)gte.MAC1 + (s64)gte.IR1 * (s64)gte.IR0;                    \
-    s64 mac2_v_ = (s64)gte.MAC2 + (s64)gte.IR2 * (s64)gte.IR0;                    \
-    s64 mac3_v_ = (s64)gte.MAC3 + (s64)gte.IR3 * (s64)gte.IR0;                    \
+    s64 mac1_v_ = ((s64)gte.IR1 * (s64)gte.IR0) + (s64)gte.MAC1;                  \
+    s64 mac2_v_ = ((s64)gte.IR2 * (s64)gte.IR0) + (s64)gte.MAC2;                  \
+    s64 mac3_v_ = ((s64)gte.IR3 * (s64)gte.IR0) + (s64)gte.MAC3;                  \
     gte.MAC1 = (s32)mac1_v_;                                                      \
     gte.MAC2 = (s32)mac2_v_;                                                      \
     gte.MAC3 = (s32)mac3_v_;                                                      \
-                                                                                   \
+                                                                                  \
     /* Color FIFO: arithmetic >> 4, then clamp to [0..255] */                     \
     s32 _c0 = gte.MAC1 >> 4;                                                      \
     s32 _c1 = gte.MAC2 >> 4;                                                      \
     s32 _c2 = gte.MAC3 >> 4;                                                      \
-    if (_c0 < 0) _c0 = 0; else if (_c0 > 255) _c0 = 255;                           \
-    if (_c1 < 0) _c1 = 0; else if (_c1 > 255) _c1 = 255;                           \
-    if (_c2 < 0) _c2 = 0; else if (_c2 > 255) _c2 = 255;                           \
+    if (_c0 < 0) _c0 = 0; else if (_c0 > 255) _c0 = 255;                          \
+    if (_c1 < 0) _c1 = 0; else if (_c1 > 255) _c1 = 255;                          \
+    if (_c2 < 0) _c2 = 0; else if (_c2 > 255) _c2 = 255;                          \
     gte.Color0 = (u8)_c0;                                                         \
     gte.Color1 = (u8)_c1;                                                         \
     gte.Color2 = (u8)_c2;                                                         \
-                                                                                   \
+                                                                                  \
     /* IR = MAC with signed saturation (no lm parameter for GPL0) */              \
     s32 _t1 = gte.MAC1;                                                           \
     s32 _t2 = gte.MAC2;                                                           \
@@ -668,15 +609,16 @@ do {                                                                            
     gte.IR3 = (s16)_t3;                                                           \
 } while (0)
 
-//[MAC1,MAC2,MAC3] = [MAC1,MAC2,MAC3] SHL (sf*12)       ;<--- for GPL only
-//[MAC1, MAC2, MAC3] = (([IR1, IR2, IR3] * IR0) + [MAC1, MAC2, MAC3]) SAR(sf * 12)
-//Color FIFO = [MAC1 / 16, MAC2 / 16, MAC3 / 16, CODE], [IR1, IR2, IR3] = [MAC1, MAC2, MAC3]
 #define gte_gpl12()                                                               \
 do {                                                                              \
     /* (MAC * 4096) + (IR * IR0), then >> 12  — wide math, no signed << UB */     \
-    s64 _m1 = (s64)gte.MAC1 * 4096 + (s64)gte.IR1 * (s64)gte.IR0;                 \
-    s64 _m2 = (s64)gte.MAC2 * 4096 + (s64)gte.IR2 * (s64)gte.IR0;                 \
-    s64 _m3 = (s64)gte.MAC3 * 4096 + (s64)gte.IR3 * (s64)gte.IR0;                 \
+    s64 _m1 = (s64)gte.MAC1 * 4096;                                               \
+    s64 _m2 = (s64)gte.MAC2 * 4096;                                               \
+    s64 _m3 = (s64)gte.MAC3 * 4096;                                               \
+                                                                                  \
+	_m1 = ((s64)gte.IR1 * (s64)gte.IR0) + _m1;                                    \
+	_m2 = ((s64)gte.IR2 * (s64)gte.IR0) + _m2;                                    \
+	_m3 = ((s64)gte.IR3 * (s64)gte.IR0) + _m3;                                    \
                                                                                   \
     _m1 >>= 12;                                                                   \
     _m2 >>= 12;                                                                   \
@@ -705,6 +647,108 @@ do {                                                                            
     gte.IR1 = (s16)_t1;                                                           \
     gte.IR2 = (s16)_t2;                                                           \
     gte.IR3 = (s16)_t3;                                                           \
+} while (0)
+
+#define gte_gpf0()                                                                \
+do {                                                                              \
+    gte.MAC1 = (s32)((s64)gte.IR1 * (s64)gte.IR0);                                \
+    gte.MAC2 = (s32)((s64)gte.IR2 * (s64)gte.IR0);                                \
+    gte.MAC3 = (s32)((s64)gte.IR3 * (s64)gte.IR0);                                \
+                                                                                  \
+    /* Color FIFO: arithmetic >> 4, then clamp to [0..255] */                     \
+    s32 _c0 = gte.MAC1 >> 4;                                                      \
+    s32 _c1 = gte.MAC2 >> 4;                                                      \
+    s32 _c2 = gte.MAC3 >> 4;                                                      \
+    if (_c0 < 0) _c0 = 0; else if (_c0 > 255) _c0 = 255;                          \
+    if (_c1 < 0) _c1 = 0; else if (_c1 > 255) _c1 = 255;                          \
+    if (_c2 < 0) _c2 = 0; else if (_c2 > 255) _c2 = 255;                          \
+    gte.Color0 = (u8)_c0;                                                         \
+    gte.Color1 = (u8)_c1;                                                         \
+    gte.Color2 = (u8)_c2;                                                         \
+                                                                                  \
+    /* IR = MAC with signed saturation (no lm parameter for GPL0) */              \
+    s32 _t1 = gte.MAC1;                                                           \
+    s32 _t2 = gte.MAC2;                                                           \
+    s32 _t3 = gte.MAC3;                                                           \
+    if (_t1 < -0x8000) _t1 = -0x8000; else if (_t1 > 0x7FFF) _t1 = 0x7FFF;        \
+    if (_t2 < -0x8000) _t2 = -0x8000; else if (_t2 > 0x7FFF) _t2 = 0x7FFF;        \
+    if (_t3 < -0x8000) _t3 = -0x8000; else if (_t3 > 0x7FFF) _t3 = 0x7FFF;        \
+    gte.IR1 = (s16)_t1;                                                           \
+    gte.IR2 = (s16)_t2;                                                           \
+    gte.IR3 = (s16)_t3;                                                           \
+} while (0)
+
+//#define gte_gpf12()                                                               \
+//do {                                                                              \
+//    gte.MAC1 = (s32)((s64)gte.IR1 * (s64)gte.IR0);                                \
+//    gte.MAC2 = (s32)((s64)gte.IR2 * (s64)gte.IR0);                                \
+//    gte.MAC3 = (s32)((s64)gte.IR3 * (s64)gte.IR0);                                \
+//                                                                                  \
+//    /* Color outputs: arithmetic >>4 then clamp to [0..255] */                    \
+//    s32 _c0 = gte.MAC1 >> 4;                                                      \
+//    s32 _c1 = gte.MAC2 >> 4;                                                      \
+//    s32 _c2 = gte.MAC3 >> 4;                                                      \
+//    if (_c0 < 0) _c0 = 0; else if (_c0 > 255) _c0 = 255;                          \
+//    if (_c1 < 0) _c1 = 0; else if (_c1 > 255) _c1 = 255;                          \
+//    if (_c2 < 0) _c2 = 0; else if (_c2 > 255) _c2 = 255;                          \
+//    gte.Color0 = (u8)_c0;                                                         \
+//    gte.Color1 = (u8)_c1;                                                         \
+//    gte.Color2 = (u8)_c2;                                                         \
+//                                                                                  \
+//    s32 _t1 = gte.MAC1, _t2 = gte.MAC2, _t3 = gte.MAC3;                           \
+//    if (_t1 < -0x8000) _t1 = -0x8000; else if (_t1 > 0x7FFF) _t1 = 0x7FFF;        \
+//    if (_t2 < -0x8000) _t2 = -0x8000; else if (_t2 > 0x7FFF) _t2 = 0x7FFF;        \
+//    if (_t3 < -0x8000) _t3 = -0x8000; else if (_t3 > 0x7FFF) _t3 = 0x7FFF;        \
+//    gte.IR1 = (s16)_t1;                                                           \
+//    gte.IR2 = (s16)_t2;                                                           \
+//    gte.IR3 = (s16)_t3;                                                           \
+//} while (0)
+
+#define gte_gpf12()                                                             \
+do {                                                                            \
+    /* MAC = (IR * IR0) >> 12  (sf=1) */                                        \
+    s64 _m1 = (s64)gte.IR1 * (s64)gte.IR0;                                      \
+    s64 _m2 = (s64)gte.IR2 * (s64)gte.IR0;                                      \
+    s64 _m3 = (s64)gte.IR3 * (s64)gte.IR0;                                      \
+    _m1 >>= 12;                                                                  \
+    _m2 >>= 12;                                                                  \
+    _m3 >>= 12;                                                                  \
+    gte.MAC1 = (s32)_m1;                                                         \
+    gte.MAC2 = (s32)_m2;                                                         \
+    gte.MAC3 = (s32)_m3;                                                         \
+                                                                                 \
+    /* Color FIFO: arithmetic >>4 then clamp [0..255] */                         \
+    s32 _c0 = gte.MAC1 >> 4;                                                     \
+    s32 _c1 = gte.MAC2 >> 4;                                                     \
+    s32 _c2 = gte.MAC3 >> 4;                                                     \
+    if (_c0 < 0) _c0 = 0; else if (_c0 > 255) _c0 = 255;                         \
+    if (_c1 < 0) _c1 = 0; else if (_c1 > 255) _c1 = 255;                         \
+    if (_c2 < 0) _c2 = 0; else if (_c2 > 255) _c2 = 255;                         \
+    gte.Color0 = (u8)_c0;                                                        \
+    gte.Color1 = (u8)_c1;                                                        \
+    gte.Color2 = (u8)_c2;                                                        \
+                                                                                 \
+    /* IR = MAC with signed saturation (consistent with your GPL0/12) */         \
+    s32 _t1 = gte.MAC1, _t2 = gte.MAC2, _t3 = gte.MAC3;                          \
+    if (_t1 < -0x8000) _t1 = -0x8000; else if (_t1 > 0x7FFF) _t1 = 0x7FFF;       \
+    if (_t2 < -0x8000) _t2 = -0x8000; else if (_t2 > 0x7FFF) _t2 = 0x7FFF;       \
+    if (_t3 < -0x8000) _t3 = -0x8000; else if (_t3 > 0x7FFF) _t3 = 0x7FFF;       \
+    gte.IR1 = (s16)_t1; gte.IR2 = (s16)_t2; gte.IR3 = (s16)_t3;                  \
+} while (0)
+
+#define gte_op0()                                                                 \
+do {                                                                              \
+    const s16 D1 = gte.GTE_MATRIX_ROT[0][0];                                      \
+    const s16 D2 = gte.GTE_MATRIX_ROT[1][1];                                      \
+    const s16 D3 = gte.GTE_MATRIX_ROT[2][2];                                      \
+    s32 m1 = (s32)gte.IR3 * (s32)D2 - (s32)gte.IR2 * (s32)D3;                     \
+    s32 m2 = (s32)gte.IR1 * (s32)D3 - (s32)gte.IR3 * (s32)D1;                     \
+    s32 m3 = (s32)gte.IR2 * (s32)D1 - (s32)gte.IR1 * (s32)D2;                     \
+    gte.MAC1 = m1; gte.MAC2 = m2; gte.MAC3 = m3;                                  \
+    if (m1 < -0x8000) m1 = -0x8000; else if (m1 > 0x7FFF) m1 = 0x7FFF;            \
+    if (m2 < -0x8000) m2 = -0x8000; else if (m2 > 0x7FFF) m2 = 0x7FFF;            \
+    if (m3 < -0x8000) m3 = -0x8000; else if (m3 > 0x7FFF) m3 = 0x7FFF;            \
+    gte.IR1 = (s16)m1; gte.IR2 = (s16)m2; gte.IR3 = (s16)m3;                      \
 } while (0)
 
 #define _Impl_gte_leadingZeroes(out_, in_)                                       \
