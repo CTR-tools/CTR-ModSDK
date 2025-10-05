@@ -7,8 +7,7 @@
 		"debug": 1,
 		"psyq": 0,
 		"mininoob": 0,
-		"8mb": 1,
-		"pch": "common.h"
+		"8mb": 1
 	},
 	"versions":
 	[
@@ -65,6 +64,17 @@
 					"gcc-syms1006.txt"
 				],
 				"build_id": 1006
+			}
+		},
+		{
+			"rewrite":
+			{
+				"name": "ctr-u.bin",
+				"symbols":
+				[
+					"gcc-syms-rewrite.txt", "gcc-extern-rewrite.txt"
+				],
+				"build_id": 9999
 			}
 		}
 	]

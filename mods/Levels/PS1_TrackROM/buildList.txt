@@ -10,9 +10,6 @@
 926, 224, 0x8009f6fc, 0xD5C, src/hacks/tt_menu.c
 926, 224, 0x8009f6fc, 0xD88, src/hacks/tt_menu_no_save.c
 
-// disable map
-common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
-
 // Assembly patches
 926, exe, 0x800150c0, 0x0, src/patches/nop.bin
 926, exe, 0x800277c8, 0x0, src/patches/nop.bin
@@ -20,14 +17,15 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/hacks/return.c
 926, exe, 0x800277f0, 0x0, src/patches/killThread.s
 926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
 
-// 229 - patch vistree lookup to not do modulo 4096
+// 226 - patch vistree lookup to not do modulo 4096
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
 926, 226, 0x800a36d8, 0x0, src/patches/lod2.s
 926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
 926, 226, 0x800a6f70, 0x0, src/patches/lod4.s
+926, 226, 0x800ab460, 0x0, src/patches/highLOD.s
 
 // Menus
-common, 230, MM_Characters_MenuProc, 0x0, src/character_menu.c
+common, 230, MM_TrackSelect_MenuProc, 0x0, src/track_select.c
 common, 230, MM_MenuProc_Main, 0x0, src/main_menu.c
 
 // exe
@@ -38,3 +36,4 @@ common, exe, VehBirth_SetConsts, 0x0, src/engine_stats.c
 common, exe, MEMCARD_Save, 0x0, src/memcard_save_hook.c
 common, exe, LOAD_DriverMPK, 0x0, src/load_drivers.c
 common, exe, VehBirth_GetModelByName, 0x0, src/search_model.c
+common, exe, MainDB_GetClipSize, 0x0, src/clip_buffer.c

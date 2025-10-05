@@ -1,0 +1,3 @@
+e_gameTracker = 0x8008d2ac;
+e_seed = 0x8008d424;
+e_ignoreCollisionDoorFlagTerrain = 0x8008d728;

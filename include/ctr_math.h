@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CTR_MATH_H
+#define CTR_MATH_H
+
 #include <macros.h>
 
 // vectors //
@@ -127,3 +129,5 @@ int abs(int value);
 int clamp(int n, int lo, int hi);
 int max(int a, int b);
 int min(int a, int b);
+
+#endif

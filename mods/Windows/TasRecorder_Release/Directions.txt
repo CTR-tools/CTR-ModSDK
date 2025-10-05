@@ -6,6 +6,8 @@ Enable "Export Shared Memory"
 Close Settings
 Close DuckStation
 
+Also, enable 8mb RAM expansion
+
 Recording a TAS:
 Open the modded ROM in DuckStation
 Play any 1P mode (multiplayer comes later)
@@ -24,3 +26,8 @@ Press 2 to Load
 Type NewTAS.bin or whatever name
 Wait for completion message
 Resume the emulator
+
+TODO: I put a 0xFFFFFFFF at the end of the tas file,
+Should make the recorder do that automatically
+
+ALWAYS record/replay with no memcard inserted

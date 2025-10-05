@@ -1,6 +1,7 @@
-#pragma once
+#ifndef CTR_GTE_H
+#define CTR_GTE_H
 
-// where is this included 
+// where is this included
 // that's not ifndef guarded?
 #ifndef REBUILD_PC
 
@@ -9,5 +10,7 @@
 
 void RotateVector(SVec3 * out, const SVec3 * in);
 void MulMatrixVec(Vec3 * out, const Matrix * m, const SVec3 * in);
+
+#endif
 
 #endif

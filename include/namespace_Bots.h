@@ -4,7 +4,7 @@ struct NavFrame
 	short pos[3];
 
 	// 6
-	char rot[4];
+	unsigned char rot[4];
 
 	// 0xA
 	short unk[2];
@@ -30,7 +30,7 @@ struct NavFrame
 	short flags;
 	
 	// 0x10
-	short pathIndexOfffff; // of what?
+	short pathChangeOpcode;
 	
 	// 0x12
 	// how many nodes to go back, if AI hits killplane
@@ -45,7 +45,7 @@ struct NavFrame
 	// & 0x80 - tagged as "moon gravity"
 		// 15 levels of alpha,
 		// for darkening model in coco park tunnel)
-	char specialBits;
+	unsigned char specialBits;
 	
 	// 0x14 - size of struct
 };

@@ -534,17 +534,24 @@ LAB_80041298:
         if (DAT_8008d42a == 0) {
           sVar11 = *(short *)(iVar13 + 0x5b8);
           if (sVar11 == 2) goto LAB_80040ba0;
-          if (sVar11 == 1) {
+          if (sVar11 == 1) 
+		  {
+			// set desired both path (boss only)
             *(undefined *)(iVar13 + 0x627) = 0;
-            DAT_8008d428 = 0;
+            
+			DAT_8008d428 = 0;
             DAT_8008d42a = sVar11;
-            *(uint *)(iVar13 + 0x5b0) = *(uint *)(iVar13 + 0x5b0) | 0x40;
+            
+			// request to change path (boss only)
+			*(uint *)(iVar13 + 0x5b0) = *(uint *)(iVar13 + 0x5b0) | 0x40;
           }
         }
         else {
           if (*(short *)(iVar13 + 0x5b8) == 0) {
 LAB_80040ba0:
             uVar5 = *(uint *)(iVar13 + 0x5b0);
+			
+			// set desired both path (boss only)
             *(undefined *)(iVar13 + 0x627) = 1;
           }
           else {
@@ -554,6 +561,8 @@ LAB_80040ba0:
             DAT_8008d42a = 0;
           }
           DAT_8008d428 = 0;
+		  
+		  // request to change path (boss only)
           *(uint *)(iVar13 + 0x5b0) = uVar5 | 0x40;
         }
       }

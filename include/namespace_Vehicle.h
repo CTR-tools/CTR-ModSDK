@@ -520,8 +520,8 @@ struct BotData
 	short weaponCooldown;
 
 	// 0x626
-	// short ??? // Something set when blasted ?
-	short unk626; //this is probably 2 chars, but also maybe not
+	unsigned char unk626;
+	unsigned char desiredPath_BossOnly;
 
 	// 0x628
 	int unk628;
