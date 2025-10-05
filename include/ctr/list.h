@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ctr/macros.h>
+
 typedef struct Item
 {
 	struct Item* next;
@@ -10,7 +12,7 @@ typedef struct LinkedList
 {
 	Item* first;
 	Item* last;
-	int count;
+	s32 count;
 } LinkedList;
 
 void LIST_Clear(LinkedList* list);
@@ -18,7 +20,7 @@ void LIST_AddFront(LinkedList* list, Item* item);
 void LIST_AddBack(LinkedList* list, Item* item);
 void* LIST_GetNextItem(Item* item);
 void* LIST_GetFirstItem(LinkedList* list);
-Item* LIST_RemoveMember(LinkedList* L, Item* I);
-Item* LIST_RemoveFront(LinkedList* L);
-Item* LIST_RemoveBack(LinkedList* L);
-void LIST_Init(LinkedList* L, Item* item, int itemSize, int numItems);
+Item* LIST_RemoveMember(LinkedList* list, Item* item);
+Item* LIST_RemoveFront(LinkedList* list);
+Item* LIST_RemoveBack(LinkedList* list);
+void LIST_Init(LinkedList* list, Item* item, s32 itemSize, s32 numItems);

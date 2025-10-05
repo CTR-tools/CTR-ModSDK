@@ -37,3 +37,9 @@ void ND_COLL_LoadVerticeData(CollDCache* cache);
 s32 ND_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
 void ND_COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
 void ND_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache);
+
+/* MEMPACK */
+void* ND_MEMPACK_AllocMem(s32 size);
+
+/* MISC */
+void* memset(void* dest, u8 val, s32 len);
