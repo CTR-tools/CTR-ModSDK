@@ -191,7 +191,7 @@ void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver) {
 	}
 
 	// In Boss race
-	if (gGT->gameMode1 & ADVENTURE_BOSS)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		bossFails = sdata->advProgress.timesLostBossRace[gGT->bossID];
 

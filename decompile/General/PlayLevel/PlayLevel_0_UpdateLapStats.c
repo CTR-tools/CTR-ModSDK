@@ -132,10 +132,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			{
 				#ifndef USE_ONLINE
 				if (
-						// If you're in Arcade, or
-						// If you're in Adventure, or
-						// If you're in Time Trial
-						((gGT->gameMode1 & 0x4a0000) != 0) &&
+		
+						((gGT->gameMode1 & (ARCADE_MODE | ADVENTURE_MODE | TIME_TRIAL)) != 0) &&
 
 						//player of any kind
 						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
@@ -198,7 +196,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// === Run on first frame that race ends ===
 
 				// if total event hasn't finished (gGT->gameMode1)
-				if ((gGT->gameMode1 & 0x200000) == 0)
+				if ((gGT->gameMode1 & END_OF_RACE) == 0)
 				{
 					// set driver placement rank, based on
 					// how many drivers have finished the race

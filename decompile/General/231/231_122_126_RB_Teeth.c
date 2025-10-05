@@ -11,7 +11,7 @@ void DECOMP_RB_Teeth_LInB(struct Instance* inst)
     sdata->doorAccessFlags |= 1;
 	
 	// Make invisible
-    inst->flags |= 0x80;
+    inst->flags |= HIDE_MODEL;
   }
   return;
 }
@@ -22,24 +22,24 @@ void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* we
   struct Thread* teethTh;
   struct Instance* weaponInst;
   struct Instance* teethInst;
-  int iVar5;
+  int distance;
   
   model = weaponThread->modelIndex;
   
   // if not driver
-  if (model != 0x18) 
+  if (model != DYNAMIC_PLAYER) 
   {
-    if (model < 0x19) 
+    if (model < DYNAMIC_SMALL_BOMB) 
 	{
 	  // if not nitro
-      if (model != 6) {
+      if (model != PU_EXPLOSIVE_CRATE) {
         return;
       }
     }
     else 
 	{
 	  // if not potion or tnt
-      if ((model != 0x1d) && (model != 0x27)) {
+      if ((model != DYNAMIC_POISON) && (model != STATIC_CRATE_TNT)) {
         return;
       }
     }
@@ -52,15 +52,15 @@ void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* we
   teethInst = teethTh->inst;
   
   if ((weaponInst != NULL) && (teethInst != NULL)) {
-    iVar5 = ((int)sps->Input1.pos[0] - weaponInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
+    distance = ((int)sps->Input1.pos[0] - weaponInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
             ((int)sps->Input1.pos[2] - weaponInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
 
-		// catch negative value
-    if (iVar5 < 0) {
-      iVar5 = -iVar5;
+	// catch negative value
+    if (distance < 0) {
+      distance = -distance;
     }
 
-    if (0x100 < iVar5 >> 0xc) {
+    if ((distance >> 0xc) > 0x100) {
       return;
     }
   }
@@ -73,18 +73,16 @@ void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* we
 
 void DECOMP_RB_Teeth_ThTick(struct Thread* t)
 {
-  int iVar1;
-  u_int flags;
+  int doorTimeCount;
   struct Teeth* teeth;
-  struct Instance* inst;
+  struct Instance* doorInst;
   struct GameTracker* gGT;
   
   gGT = sdata->gGT;
   teeth = t->object;
-  inst = t->inst;
-
-  #define SPS \
-	((struct ScratchpadStruct*)0x1f800108)
+  doorInst = t->inst;
+  
+  struct ScratchpadStruct* SPS = (struct ScratchpadStruct*)0x1f800108;
   
   // if door is not moving
   if (teeth->direction == 0) 
@@ -93,17 +91,17 @@ void DECOMP_RB_Teeth_ThTick(struct Thread* t)
     if (teeth->timeOpen == 0) goto LAB_800b9ff8;
     
 	// reduce timer by milliseconds
-	iVar1 = teeth->timeOpen - gGT->elapsedTimeMS;
+	doorTimeCount = teeth->timeOpen - gGT->elapsedTimeMS;
     
 	// set new timer
-	teeth->timeOpen = iVar1;
+	teeth->timeOpen = doorTimeCount;
     
 	// if timer is up
-	if (iVar1 < 1) 
+	if (doorTimeCount < 1) 
 	{
 	  // play sound
 	  // teeth closing
-      PlaySound3D(0x75,inst);
+      PlaySound3D(0x75,doorInst);
       
 	  // timer is zero
 	  teeth->timeOpen = 0;
@@ -119,18 +117,18 @@ void DECOMP_RB_Teeth_ThTick(struct Thread* t)
   else 
   {
 	// modify animation index by direction
-    inst->animFrame = inst->animFrame + teeth->direction;
+    doorInst->animFrame += teeth->direction;
 	
-    iVar1 = VehFrameInst_GetNumAnimFrames((struct Driver*)inst, 0);
+    doorTimeCount = VehFrameInst_GetNumAnimFrames((struct Driver*)doorInst, 0);
 	
 	// if animation is not on last frame
-    if ((int)inst->animFrame < iVar1) 
+    if ((int)doorInst->animFrame < doorTimeCount) 
 	{
 	  // if animation when backwards past beginning
-      if ((int)inst->animFrame < 0) 
+      if ((int)doorInst->animFrame < 0) 
 	  {
 		// set animation to beginning
-        inst->animFrame = 0;
+        doorInst->animFrame = 0;
 		
 		// door is not moving
         teeth->direction = 0;
@@ -147,25 +145,25 @@ void DECOMP_RB_Teeth_ThTick(struct Thread* t)
     else 
 	{
 	  // set animation to last frame
-      inst->animFrame = (short)iVar1 + -1;
+      doorInst->animFrame = FPS_DOUBLE((short)(doorTimeCount -1));
 	  
 	  // door is not moving (fully open)
       teeth->direction = 0;
 	  
-	  // timer, 2 seconds 
-      teeth->timeOpen = 0x780;
+	  // timer
+      teeth->timeOpen = SECONDS(2);
     }
 LAB_800b9fe8:
     if (teeth->timeOpen == 0) {
 LAB_800b9ff8:
-      if (-1 < teeth->direction) goto LAB_800ba084;
+      if (teeth->direction > -1) goto LAB_800ba084;
     }
   }
   
   // Teeth instance position
-  SPS->Input1.pos[0] = inst->matrix.t[0];
-  SPS->Input1.pos[1] = inst->matrix.t[1];
-  SPS->Input1.pos[2] = inst->matrix.t[2];
+  SPS->Input1.pos[0] = doorInst->matrix.t[0];
+  SPS->Input1.pos[1] = doorInst->matrix.t[1];
+  SPS->Input1.pos[2] = doorInst->matrix.t[2];
   
   SPS->Input1.hitRadius = 0x300;
   SPS->Input1.hitRadiusSquared = 0x90000;
@@ -189,7 +187,7 @@ LAB_800ba084:
   if (teeth->timeOpen == 0) 
   {
 	// make visible
-	flags = inst->flags & 0xffffff7f;
+	doorInst->flags &= ~(HIDE_MODEL);
   }
 
   // if a timer is active
@@ -197,17 +195,15 @@ LAB_800ba084:
   else 
   {
 	// make invisible
-    flags = inst->flags | 0x80;
+    doorInst->flags |= HIDE_MODEL;
   }
-
-  inst->flags = flags;
   
   return;
 }
 
 int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct ScratchpadStruct* sps)
 {
-    int iVar1;
+    int distance;
     struct Thread *teethTh;
     struct Teeth *teeth;
     struct Driver *d;
@@ -224,11 +220,14 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
 
     if (teethTh == NULL)
     {
-        // 0x8 = size
-        // 0 = no relation to param4
-        // 0x300 = SmallStackPool
-        // 0x3 = "static" thread bucket
-        teethTh = PROC_BirthWithObject(0x80303, DECOMP_RB_Teeth_ThTick, 0, 0);
+
+        teethTh = PROC_BirthWithObject(
+		          SIZE_RELATIVE_POOL_BUCKET(
+		              sizeof(struct Teeth),
+		              NONE,
+		              SMALL,    
+		              STATIC),
+		          DECOMP_RB_Teeth_ThTick, 0, 0);
 
         teethInst->thread = teethTh;
 
@@ -268,15 +267,15 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
     // time to close
     if (teeth->timeOpen == 0)
     {
-        iVar1 =
+        distance =
             ((int)sps->Input1.pos[0] - teethInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
             ((int)sps->Input1.pos[2] - teethInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
 
-        if (iVar1 < 0)
+        if (distance < 0)
         {
-            iVar1 = -iVar1;
+            distance = -distance;
         }
-        if (iVar1 >> 0xc < 0x81)
+        if ((distance >> 0xc) < 0x81)
         {
             return 1;
         }
@@ -288,24 +287,32 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
 struct InstDef* DECOMP_RB_Teeth_OpenDoor(struct Instance* inst)
 {
 	struct Thread* teethTh = inst->thread;
+	struct Teeth* templeDoor = (struct Teeth*)teethTh->object;
+	
 	if (teethTh == NULL) {
-		// 0x8 = size
-		// 0 = no relation to param4
-		// 0x300 flag = SmallStackPool
-		// 0x3 = "static" thread bucket
-		u_int creationFlags = 0x80000 | 0x300 | 0x3;
-
+    
 		//ghidra output says third arg to PROC_BirthWithObject is s_teeth_OVR_231__800b9de8, idk the equivalent.
-		teethTh = PROC_BirthWithObject(creationFlags, DECOMP_RB_Teeth_ThTick, NULL, NULL);
+		teethTh = PROC_BirthWithObject(		
+		          SIZE_RELATIVE_POOL_BUCKET(
+		              sizeof(struct Teeth),
+		              NONE,
+		              SMALL,
+		              STATIC),
+		          DECOMP_RB_Teeth_ThTick, NULL, NULL);
+		
 		inst->thread = teethTh;
 		if (teethTh == NULL)
 			return NULL;
+		
 		teethTh->inst = inst;
-		*(int*)((int)teethTh->object + 4) = 0; //idk what this line does
+		
+		templeDoor->timeOpen = 0;
 	}
+	
 	PlaySound3D(0x75, inst); // play sound, teeth opening
-	((struct Teeth*)teethTh->object)->direction = 1; // door is open
+	templeDoor->direction = 1; // door is open
 	sdata->doorAccessFlags |= 1; // enable access through a door (disable collision)
+	
 	//return (struct Instance*)&DAT_80090000;
 	return (struct InstDef*)0x80090000; //todo: make this a reference to named memory
 }

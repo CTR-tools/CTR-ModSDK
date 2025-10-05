@@ -6,7 +6,8 @@
 		"optimization": 4,
 		"debug": 1,
 		"psyq": 0,
-		"mininoob": 0,
+		"mininoob": 0,  
+		"pch": "common.h",   
 		"8mb": 1
 	},
 	"versions":

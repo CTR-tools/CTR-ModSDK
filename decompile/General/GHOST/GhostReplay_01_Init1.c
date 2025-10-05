@@ -29,7 +29,7 @@ void DECOMP_GhostReplay_Init1(void)
 	sdata->boolGhostsDrawing = 0;
 
 	// only continue if you're in time trial, not main menu, and not cutscene
-	if ((gGT->gameMode1 & 0x20022000) != 0x20000) return;
+	if ((gGT->gameMode1 & TIME_TRIAL) == 0) return;
 	
 	// === Record Buffer ===
 	

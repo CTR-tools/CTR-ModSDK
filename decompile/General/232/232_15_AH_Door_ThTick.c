@@ -188,7 +188,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   if ((door->camFlags & WdCam_FlyingOut) == 0)
   {
     // If the game is paused
-    if ((gGT->gameMode1 & 0xf) != 0)
+    if ((gGT->gameMode1 & PAUSE_ALL) != 0)
     {
       return;
     }

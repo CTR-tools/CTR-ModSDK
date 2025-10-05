@@ -47,7 +47,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	else bitIndex = hub[gGT->levelID-NITRO_COURT]; //0x12
 	
 	// first purple token at 0x6f
-	bitIndex += 0x6f;
+	bitIndex += PRIZE_CRYSTAL_CH;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;

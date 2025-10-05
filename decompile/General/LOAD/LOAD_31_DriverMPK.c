@@ -133,7 +133,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		// high lod model (temporary workaround)
 		DECOMP_LOAD_AppendQueue(
 			0, LT_GETADDR,
-			BI_RACERMODELHI + 0xF,
+			BI_RACERMODELHI + NITROS_OXIDE,
 			&data.driverModelExtras[0],cbDRAM);
 			
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];

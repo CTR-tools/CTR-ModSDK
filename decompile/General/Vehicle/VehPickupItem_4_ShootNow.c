@@ -63,7 +63,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			if(victim == 0)
 			{
 				// if not battle mode
-				if((gGT->gameMode1 & 0x20) == 0)
+				if((gGT->gameMode1 & BATTLE_MODE) == 0)
 				{
 					if(gGT->elapsedEventTime & 1)
 					{

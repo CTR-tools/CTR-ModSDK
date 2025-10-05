@@ -97,7 +97,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			
 			// If you have not unlocked this CTR Token
-			bitIndex = gGT->levelID + 0x4c;
+			bitIndex = gGT->levelID + PRIZE_TOKEN_RACE;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 			{
@@ -418,7 +418,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_BOSS | TOKEN_RACE);
 
 	// If you are in boss mode
-	if (gGT->gameMode1 < 0)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 	}
@@ -439,14 +439,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	levSpawn = gGT->prevLEV;
 
 	// If you are in boss mode
-	if (gGT->gameMode1 < 0)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		
 		// bitIndex of keys unlocked, and boss beaten
-		bitIndex = gGT->bossID + 0x5e;
+		bitIndex = gGT->bossID + PRIZE_BOSS_KEY;
 
 		// If the number of keys you have is less than 4
-		if (gGT->bossID < 4)
+		if (gGT->bossID < BOSS_OXIDE)
 		{
 			// only if first time beating boss
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
@@ -475,7 +475,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			adv->rewards[3] |= 0x80004;
 
 			// if beaten oxide 2nd time
-			if(gGT->bossID == 5)
+			if(gGT->bossID == BOSS_OXIDEFINAL)
 			{
 				// beat 2nd time
 				adv->rewards[3] |= 0x100008;
@@ -492,7 +492,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	// if trophy is not won,
 	// Dingo Bingo needs to win trophy and token in the same race
-	bitIndex = gGT->levelID + 6;
+	bitIndex = gGT->levelID + PRIZE_TROPHY_RACE;
 	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 	{
 		// unlock tropy

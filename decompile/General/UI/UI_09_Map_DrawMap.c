@@ -98,7 +98,7 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 	// 12% size
 	short len = (sizeX * 125) / 1000;
 	
-	if((sdata->gGT->gameMode1 & 0x2000) != 0)
+	if((sdata->gGT->gameMode1 & MAIN_MENU) != 0)
 	{
 		// 12% from each side
 		leftX += len;

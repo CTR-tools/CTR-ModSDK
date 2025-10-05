@@ -265,8 +265,8 @@ LAB_800aede8:
             (levelID == GEM_STONE_VALLEY) &&
             (gGT->currAdvProfile.numRelics == 18))
         {
-            // set string index (0-5) to "N Oxide's Final Challenge"
-            gGT->bossID = 5;
+            //"N Oxide's Final Challenge"
+            gGT->bossID = BOSS_OXIDEFINAL;
         }
 
         else

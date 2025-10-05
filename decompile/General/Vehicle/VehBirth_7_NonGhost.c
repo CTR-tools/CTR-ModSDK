@@ -19,7 +19,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	struct GameTracker* gGT = sdata->gGT;
 	
 	int id = data.characterIDs[0];
-	if((gGT->gameMode1 & 0x2000) == 0)
+	if((gGT->gameMode1 & MAIN_MENU) == 0)
 	{
 		id = data.characterIDs[index];
 	}
@@ -85,7 +85,7 @@ void DECOMP_VehBirth_NonGhost(struct Thread* t, int index)
 	DECOMP_VehBirth_SetConsts(d);
 	
 	// if you are in cutscene or in main menu
-	if((gGT->gameMode1 & 0x20002000) != 0)
+	if((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0)
 	{
 		// dont update, make invisible
 		t->funcThTick = DECOMP_VehBirth_NullThread;

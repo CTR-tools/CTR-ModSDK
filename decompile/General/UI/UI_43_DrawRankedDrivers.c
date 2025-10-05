@@ -120,7 +120,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
       iVar14 = 4;
 
       // If you're in a Boss Race
-      if (gGT->gameMode1 < 0)
+      if ((gGT->gameMode1 & ADVENTURE_BOSS)!= 0)
 	  {
         // Show 2 racers
         iVar14 = 2;

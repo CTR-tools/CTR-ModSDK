@@ -169,7 +169,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		}
 		
 		// If you're in a Boss Race
-		if (gGT->gameMode1 < 0)
+		if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 			sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 		
 		DECOMP_MainRaceTrack_RequestLoad(gGT->prevLEV);

@@ -132,12 +132,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x3a));
 			}
 
-			char bossID = 0xf;
+			char boss_charID = NITROS_OXIDE;
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
 					data.MetaDataCharacters[
-						bossID
+						boss_charID
 					].name_LNG_long
 				],
 				posX + 0x6e, 2*0x10 + 4 + 0x26,
@@ -256,14 +256,12 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 			}
 
 			// roo, papu, joe, pinstripe
-			// 10, 9, 11, 8
-			int bossArr = 0x080b090a;
-			char bossID = bossArr >> (8*(hubID-1));
+			char boss_charID = data.metaDataLEV[R232.bossTracks[hubID]].characterID_Boss;
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
 					data.MetaDataCharacters[
-						bossID
+						boss_charID
 					].name_LNG_long
 				],
 				posX + 0x50, 4*0x10 + 0 + 0x26,

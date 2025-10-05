@@ -53,7 +53,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   countPtr = &sdata->advProgress.timesLostRacePerLev[0];
 
   // if you're in boss mode
-  if (gameMode1 < 0)
+  if ((gameMode1 & ADVENTURE_BOSS) != 0)
   {
 	// in boss
     index = gGT->bossID;

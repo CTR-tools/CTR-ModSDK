@@ -94,7 +94,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   sps->Input1.pos[2] = weaponInst->matrix.t[2];
 
   // if you're in boss mode
-  if (gGT->gameMode1 < 0) 
+  if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0) 
   {
 	// hitRadius and hitRadiusSquared
     sps->Input1.hitRadius = 0x100;

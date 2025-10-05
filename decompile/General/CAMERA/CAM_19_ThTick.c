@@ -441,7 +441,7 @@ LAB_8001c128:
 						}
 						if ((cDC->cameraMode == 9) || (psVar21 = (short *)0x1f800108, cDC->cameraMode == 0xd))
 						{
-							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & 0xf) == 0))
+							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & PAUSE_ALL) == 0))
 							{
 								uVar9 = CAM_FollowDriver_TrackPath(
 											cDC, (short *)0x1f800390,

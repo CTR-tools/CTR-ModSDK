@@ -1,8 +1,9 @@
 #include <common.h>
 
 // copy/paste from GameProg
+//is thisbeing used or is it needed for another compiler optimization?
 #define NO_ADV_BIT(rewards, bitIndex) \
-	((rewards[bitIndex >> 5] >> (bitIndex & 0x1f)) & 1) != 0
+	((rewards[bitIndex >> 5] >> (bitIndex & 0x1f)) & 1) != 0 
 
 // this goes to footer
 static int str_number = 0x20; // " \0"
@@ -130,7 +131,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	// 0x3a is the bit index of where platinum
 	// relics start in adventure progress
-	bitIndex = gGT->levelID + 0x3a;
+	bitIndex = gGT->levelID + PRIZE_PLATINUM;
 
 	// set color of relic in Instance
 	relic->colorRGBA =
@@ -139,7 +140,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		(CHECK_ADV_BIT(adv->rewards, bitIndex)) ? 0xffede90 :
 
 		// check if gold is unlocked, set gold color
-		(CHECK_ADV_BIT(adv->rewards, (bitIndex - 0x12) )) ? 0xd8d2090 :
+		(CHECK_ADV_BIT(adv->rewards, PRIZE_GOLD)) ? 0xd8d2090 :
 
 		// if sapphire, keep original color
 		relic->colorRGBA;

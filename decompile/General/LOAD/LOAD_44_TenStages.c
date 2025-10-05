@@ -367,7 +367,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		
 			// Time Trial MPK
 			DECOMP_LOAD_AppendQueue(0, LT_GETADDR,
-				BI_TIMETRIALPACK + 0xF,
+				BI_TIMETRIALPACK + NITROS_OXIDE,
 				&sdata->ptrMPK, cbDRAM);
 			break;
 			#endif

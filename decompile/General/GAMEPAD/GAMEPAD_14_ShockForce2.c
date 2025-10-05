@@ -8,7 +8,7 @@ void DECOMP_GAMEPAD_ShockForce2(struct Driver* d, int frame, int val)
 	
 	// 0 for enabled,
 	// 1 for disabled
-	if((sdata->gGT->gameMode1 & (0x100 << d->driverID)) != 0)
+	if((sdata->gGT->gameMode1 & (P1_VIBRATE << d->driverID)) != 0)
 		return;
 	
 	struct GamepadBuffer* gb = 
