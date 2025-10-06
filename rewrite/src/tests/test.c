@@ -1,4 +1,5 @@
 #include <ctr/test.h>
+#include <ctr/test_backup.h>
 
 #define JMP(dest) ((((u32)dest) & 0x3FFFFFF) >> 2 | 0x8000000)
 #define NOP 0x0
@@ -33,6 +34,27 @@ FunctionPatch s_functions[] =
 };
 
 const char* s_nameTestedFunc = nullptr;
+
+void TEST_Init()
+{
+	BACKUP_INIT();
+	LoadTestPatches();
+}
+
+s32 TEST_Memcmp(const void* s1, const void* s2, u32 n)
+{
+	const u8* p1 = (const u8*)s1;
+	const u8* p2 = (const u8*)s2;
+	for (u32 i = 0; i < n; i++)
+	{
+		if (p1[i] != p2[i])
+		{
+			ND_printf("[%s] Test Failed (memcmp mismatch at byte %d):\nExpected: %02x\nResult: %02x\n", s_nameTestedFunc, i, p1[i], p2[i]);
+			return p1[i] - p2[i];
+		}
+	}
+	return 0;
+}
 
 void LoadTestPatches()
 {

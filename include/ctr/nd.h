@@ -42,4 +42,6 @@ void ND_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache);
 void* ND_MEMPACK_AllocMem(s32 size);
 
 /* MISC */
+//TODO: ensure that the signedness of s32 for both of these are correct
 void* memset(void* dest, u8 val, s32 len);
+void* memcpy(void* dest, const void* src, s32 count);

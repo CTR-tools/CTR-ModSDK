@@ -83,8 +83,6 @@ Item* LIST_RemoveFront(LinkedList* list)
 Item* LIST_RemoveBack(LinkedList* list)
 {
 	//for some reason, LIST_RemoveBack and LIST_RemoveFront aren't mirrors of each other.
-	struct Item* removedItem;
-
 	Item* removedItem = list->last;
 	if (removedItem == NULL) { return removedItem; }
 

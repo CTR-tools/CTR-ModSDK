@@ -7,11 +7,14 @@
 #include <ctr/math.h>
 #include <ctr/rng.h>
 #include <ctr/coll.h>
+#include <ctr/test_backup.h>
 
 extern const char* s_nameTestedFunc;
 
 void TEST_WRAPPER();
 void LoadTestPatches();
+void TEST_Init();
+s32 TEST_Memcmp(const void* s1, const void* s2, u32 n);
 u32 PatchFunction_Beg(u32* index, const char* funcName);
 void PatchFunction_End(u32 index);
 u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret);
@@ -25,11 +28,26 @@ force_inline void FlushCache()
 }
 
 #define BACKUP_ADDR 0x80400000
+#define TEST
 
+#if defined(TEST)
+#define DYNAMIC_ASSERT(expected, actual, msg) //TODO
+#else
+#define DYNAMIC_ASSERT(expected, actual, msg)
+#endif
+
+#if defined(TEST)
+#define STATIC_ASSERT //TODO
+#else
+#define STATIC_ASSERT
+#endif
+
+#if defined(TEST)
 #define TEST_MATH_IMPL
 #define TEST_RNG_IMPL
-#define TEST_COLL_IMPL
+//#define TEST_COLL_IMPL
 #define TEST_LIST_IMPL
+#endif
 
 #ifdef TEST_MATH_IMPL
     void TEST_MATH_Sin(u32 angle, s32 ret);
@@ -52,10 +70,22 @@ force_inline void FlushCache()
 #endif
 
 #ifdef TEST_RNG_IMPL
+	typedef struct BDATA_RNG_Rand
+	{
+		u32 e_seed; //backup of 0x8008d424
+	} BDATA_RNG_Rand;
     void BACKUP_RNG_Rand();
+	void RESTORE_RNG_Rand(BDATA_RNG_Rand* restore);
     void TEST_RNG_Rand();
+
+	typedef struct BDATA_RNG_RandInt
+	{
+		RNGSeed e_gameTracker_seed; //backup of e_gameTracker->seed
+	} BDATA_RNG_RandInt;
     void BACKUP_RNG_RandInt();
+	void RESTORE_RNG_RandInt(BDATA_RNG_RandInt* restore);
     void TEST_RNG_RandInt(u32 n, s32 ret);
+
     void TEST_RNG_PseudoRand(u16 n, u16 ret);
     void TEST_RNG_Random(RNGSeed* seed, const RNGSeed* ret);
 #else
