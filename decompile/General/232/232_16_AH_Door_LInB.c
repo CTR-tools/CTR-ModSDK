@@ -7,8 +7,8 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   short sVar2;
   int levelID;
   int ratio;
-  short leftRot[3];
-  short rightRot[3];
+  SVec3 leftRot;
+  SVec3 rightRot;
 
   struct GameTracker *gGT;
   struct Thread *t;
@@ -30,7 +30,7 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
 	(
       SIZE_RELATIVE_POOL_BUCKET
 	  (
-          0x38,
+          sizeof(struct WoodDoor),
           NONE,
           SMALL,
           STATIC
@@ -69,9 +69,9 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   woodDoor->frameCount_doorOpenAnim = 0;
   woodDoor->keyShrinkFrame = 0;
 
-  woodDoor->doorRot[0] = 0;
-  woodDoor->doorRot[1] = 0;
-  woodDoor->doorRot[2] = 0;
+  woodDoor->doorRot.x = 0;
+  woodDoor->doorRot.y = 0;
+  woodDoor->doorRot.z = 0;
 
   // Level ID is Glacier Park
   if (levelID == GLACIER_PARK)
@@ -120,22 +120,22 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   *(int*)&otherDoorInst->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
   *(int*)&otherDoorInst->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
   otherDoorInst->matrix.m[2][2] = inst->matrix.m[2][2];
-  otherDoorInst->matrix.t[0] = inst->matrix.t[0];
-  otherDoorInst->matrix.t[1] = inst->matrix.t[1];
-  otherDoorInst->matrix.t[2] = inst->matrix.t[2];
+  otherDoorInst->matrix.t.x = inst->matrix.t.x;
+  otherDoorInst->matrix.t.y = inst->matrix.t.y;
+  otherDoorInst->matrix.t.z = inst->matrix.t.z;
 
   // set scaleX to -0x1000
   otherDoorInst->scale[0] = 0xf000;
 
   ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
-  otherDoorInst->matrix.t[0] += (ratio * 0x600 >> 0xc);
+  otherDoorInst->matrix.t.x += (ratio * 0x600 >> 0xc);
 
-  otherDoorInst->matrix.t[1] = inst->matrix.t[1];
+  otherDoorInst->matrix.t.y = inst->matrix.t.y;
 
   ratio = DECOMP_MATH_Sin((int)(int)inst->instDef->rot[1]);
 
-  otherDoorInst->matrix.t[2] += (ratio * 0x600 >> 0xc);
+  otherDoorInst->matrix.t.z += (ratio * 0x600 >> 0xc);
 
   // both doors always face camera
   headers = inst->model->headers;
@@ -163,21 +163,21 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
       (levelID == GLACIER_PARK) && ((sdata->advProgress.rewards[3] & 0x100) != 0))
   {
     // rotation = 90 degrees
-    woodDoor->doorRot[1] = 0x400;
+    woodDoor->doorRot.y = 0x400;
 
-    leftRot[0] = woodDoor->doorRot[0];
-    leftRot[1] = inst->instDef->rot[1] + woodDoor->doorRot[1];
-    leftRot[2] = woodDoor->doorRot[2];
+    leftRot.x = woodDoor->doorRot.x;
+    leftRot.y = inst->instDef->rot[1] + woodDoor->doorRot.y;
+    leftRot.z = woodDoor->doorRot.z;
 
-    rightRot[0] = woodDoor->doorRot[0];
-    rightRot[1] = inst->instDef->rot[1] - woodDoor->doorRot[1];
-    rightRot[2] = woodDoor->doorRot[2];
+    rightRot.x = woodDoor->doorRot.x;
+    rightRot.y = inst->instDef->rot[1] - woodDoor->doorRot.y;
+    rightRot.z = woodDoor->doorRot.z;
 
     // make matrices for both doors rotated open
 
 	// converted to TEST in rebuildPS1
-	ConvertRotToMatrix(&inst->matrix, &leftRot[0]);
-	ConvertRotToMatrix(&otherDoorInst->matrix, &rightRot[0]);
+	ConvertRotToMatrix(&inst->matrix, (short*)&leftRot);
+	ConvertRotToMatrix(&otherDoorInst->matrix, (short*)&rightRot);
   }
   return;
 }

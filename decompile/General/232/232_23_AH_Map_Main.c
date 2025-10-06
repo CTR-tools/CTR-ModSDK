@@ -6,14 +6,13 @@ void DECOMP_AH_Map_Main(void)
   struct Driver* advDriver;
   struct UiElement2D* ptrHudData;
   int iVar1;
-  int hubPtrs; //int*?
-  short local_20;
-  short local_1e[3];
+  struct Map* hubPtrs;
+  short type;
   
   // force disable speedometer
   sdata->HudAndDebugFlags &= 0xfffffff7;
   
-  local_20 = 0;
+
   advDriver = gGT->drivers[0];
   ptrHudData = data.hudStructPtr[0];
   hubPtrs = 0;
@@ -55,7 +54,7 @@ void DECOMP_AH_Map_Main(void)
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
 	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-    hubPtrs = (int)pointers[ST1_MAP]; //cast as int*?
+    hubPtrs = (struct Map*)pointers[ST1_MAP]; 
   }
   
   // if game is not paused
@@ -68,21 +67,26 @@ void DECOMP_AH_Map_Main(void)
   // Check a HUD flag
   if ((gGT->hudFlags & 0x10) == 0) {
 
-    local_1e[0] = 0;
+    type = 0;
 	
     D232.unkModeHubItems = 0;
 	
-    DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
+    DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread, 0);
 
-    DECOMP_AH_Map_Warppads((short*)hubPtrs,gGT->threadBuckets[5].thread,(short*)&local_1e[0]); //local_1e index 1 and 2 are never assigned to, so garbage data?
+    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread, &type); //local_1e index 1 and 2 are never assigned to, so garbage data?
 	
-    DECOMP_AH_Map_HubItems((void*)hubPtrs,&local_1e[0]);
+    DECOMP_AH_Map_HubItems(hubPtrs,&type);
 	
+    SVec2 mapPos;
+    
+    mapPos.x = 500;
+    mapPos.y = 195;
+    
     DECOMP_UI_Map_DrawMap(
         gGT->ptrIcons[3],
         gGT->ptrIcons[4],
 
-        500,195,
+        &mapPos,
 
         &gGT->backBuffer->primMem,
 		gGT->pushBuffer_UI.ptrOT, 1);

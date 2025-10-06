@@ -22,7 +22,7 @@ void DECOMP_RB_Crystal_ThTick(struct Thread* t)
 	sine = DECOMP_MATH_Sin(crystalObj->rot[1]);
 	
 	// set posY
-	crystalInst->matrix.t[1] =
+	crystalInst->matrix.t.y =
 		crystalInst->instDef->pos[1] + 	// original posY
 		((sine << 4) >> 0xc) +			// sine (bounce up/down)
 		0x30;							// airborne bump

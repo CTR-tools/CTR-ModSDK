@@ -151,9 +151,9 @@ lightDir_spec0x30000:
 	  struct UiElement2D* currUI2D;
       currUI2D = &hudStruct[param_3];
 
-      inst->matrix.t[0] = DECOMP_UI_ConvertX_2(currUI2D->x,currUI2D->z);
-      inst->matrix.t[1] = DECOMP_UI_ConvertY_2(currUI2D->y,currUI2D->z);
-	  inst->matrix.t[2] = currUI2D->z;
+      inst->matrix.t.x = DECOMP_UI_ConvertX_2(currUI2D->x,currUI2D->z);
+      inst->matrix.t.y = DECOMP_UI_ConvertY_2(currUI2D->y,currUI2D->z);
+	  inst->matrix.t.z = currUI2D->z;
     }
 
 	// if pushBuffer is supplied,
@@ -166,9 +166,9 @@ lightDir_spec0x30000:
 	  // record that pushBuffer is present
 	  inst->flags |= 0x100;
 
-      inst->matrix.t[0] = 0;
-      inst->matrix.t[1] = 0;
-      inst->matrix.t[2] = 0x200;
+      inst->matrix.t.x = 0;
+      inst->matrix.t.y = 0;
+      inst->matrix.t.z = 0x200;
     }
 
 	uVar5 = hudStruct[param_3].scale;
@@ -185,11 +185,11 @@ lightDir_spec0x30000:
 	{
 	  #ifdef USE_NEW2P
 	  if(gGT->numPlyrCurrGame == 2)
-		lVar7 = ratan2((inst->matrix.t[1]*4)/3,inst->matrix.t[2]);
+		lVar7 = ratan2((inst->matrix.t.y*4)/3,inst->matrix.t.z);
 	  else
 	  #endif
   
-	  lVar7 = ratan2(inst->matrix.t[1],inst->matrix.t[2]);  
+	  lVar7 = ratan2(inst->matrix.t.y,inst->matrix.t.z);  
 	  rot[0] = -(short)lVar7;
     }
     rot[1] = 0;

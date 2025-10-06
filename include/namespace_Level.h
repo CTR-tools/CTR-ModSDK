@@ -468,6 +468,23 @@ enum ST1
 	ST1_CREDITS
 };
 
+
+//minimap
+struct Map
+{
+	short worldEndX;
+	short worldEndY;
+	short worldStartX;
+	short worldStartY;
+	
+	short iconSizeX;
+	short iconSizeY;
+	short iconStartX;
+	short iconStartY;
+	
+	short mode;
+};
+
 struct SpawnType1
 {
 	int count;

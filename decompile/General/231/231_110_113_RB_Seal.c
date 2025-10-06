@@ -186,7 +186,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	// move seal
 	for(i = 0; i < 3; i++)
 	{
-		sealInst->matrix.t[i] = 
+		sealInst->matrix.t.v[i] = 
 			(int)sealObj->spawnPos[i] - 
 				(sealObj->distFromSpawn * (int)sealObj->vel[i]) / FPS_DOUBLE(0x2d);
 	}

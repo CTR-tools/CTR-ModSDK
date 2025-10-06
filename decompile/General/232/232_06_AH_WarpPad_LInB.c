@@ -166,9 +166,9 @@ GetKeysRequirement:
 			*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 			*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 			*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-			newInst->matrix.t[0] = inst->matrix.t[0];
-			newInst->matrix.t[1] = inst->matrix.t[1];
-			newInst->matrix.t[2] = inst->matrix.t[2];
+			newInst->matrix.t.x = inst->matrix.t.x;
+			newInst->matrix.t.y = inst->matrix.t.y;
+			newInst->matrix.t.z = inst->matrix.t.z;
 			
 			newInst->alphaScale = 0xc00;
 			
@@ -188,9 +188,9 @@ GetKeysRequirement:
 				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-				newInst->matrix.t[0] = inst->matrix.t[0];
-				newInst->matrix.t[1] = inst->matrix.t[1] + i * 0x400;
-				newInst->matrix.t[2] = inst->matrix.t[2];
+				newInst->matrix.t.x = inst->matrix.t.x;
+				newInst->matrix.t.y = inst->matrix.t.y + i * 0x400;
+				newInst->matrix.t.z = inst->matrix.t.z;
 				
 				newInst->alphaScale = 0x400;
 				
@@ -321,9 +321,9 @@ SlideColTurboTrack:
 				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-				newInst->matrix.t[0] = inst->matrix.t[0];
-				newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-				newInst->matrix.t[2] = inst->matrix.t[2];
+				newInst->matrix.t.x = inst->matrix.t.x;
+				newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+				newInst->matrix.t.z = inst->matrix.t.z;
 			}
 		}
 		
@@ -425,9 +425,9 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 	*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 	*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
@@ -516,9 +516,9 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 	*(int*)((int)&newInst->matrix + 0xC) = 0;
 	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
@@ -542,9 +542,9 @@ SlideColTurboTrack:
 		*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 		*(int*)((int)&newInst->matrix + 0xC) = 0;
 		*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-		newInst->matrix.t[0] = inst->matrix.t[0];
-		newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-		newInst->matrix.t[2] = inst->matrix.t[2];
+		newInst->matrix.t.x = inst->matrix.t.x;
+		newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+		newInst->matrix.t.z = inst->matrix.t.z;
 		
 		newInst->scale[0] = 0x2000;
 		newInst->scale[1] = 0x2000;
@@ -573,9 +573,9 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 	*(int*)((int)&newInst->matrix + 0xC) = 0;
 	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;

@@ -70,8 +70,8 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     else
     {
         // Increment animation by 0x20 in either direction
-        move = inst->matrix.t[1] + garage->direction * FPS_HALF(0x20);
-        inst->matrix.t[1] = move;
+        move = inst->matrix.t.y + garage->direction * FPS_HALF(0x20);
+        inst->matrix.t.y = move;
 
         top = inst->instDef->pos[1] + 0x300;
         bottom = inst->instDef->pos[1];
@@ -80,7 +80,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         if (move > top)
         {
             // Set position to the top
-            inst->matrix.t[1] = top;
+            inst->matrix.t.y = top;
 
             // Door is now open (not moving)
             garage->direction = 0;
@@ -95,7 +95,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         else if (move < bottom)
         {
             // Set position to the bottom
-            inst->matrix.t[1] = bottom;
+            inst->matrix.t.y = bottom;
 
             garage->direction = 0;
 
@@ -155,9 +155,9 @@ LAB_800aebd0:
     bossIsOpen = false;
 
 LAB_800aec34:
-    dist[0] = drv_inst->matrix.t[0] - inst->instDef->pos[0];
-    dist[1] = drv_inst->matrix.t[1] - inst->instDef->pos[1];
-    dist[2] = drv_inst->matrix.t[2] - inst->instDef->pos[2];
+    dist[0] = drv_inst->matrix.t.x - inst->instDef->pos[0];
+    dist[1] = drv_inst->matrix.t.y - inst->instDef->pos[1];
+    dist[2] = drv_inst->matrix.t.z - inst->instDef->pos[2];
 
     // if in a state where you're seeing the boss key open an adv door,
     // or some other kind of cutscene where you can't move
@@ -243,9 +243,9 @@ LAB_800aede8:
     pos[2] = (int)inst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
 
 	// DriverPos - DoorPos
-    dist[0] = drv_inst->matrix.t[0] - pos[0];
-    dist[1] = drv_inst->matrix.t[1] - pos[1];
-    dist[2] = drv_inst->matrix.t[2] - pos[2];
+    dist[0] = drv_inst->matrix.t.x - pos[0];
+    dist[1] = drv_inst->matrix.t.y - pos[1];
+    dist[2] = drv_inst->matrix.t.z - pos[2];
 
 	// If small distance (inside garage)
     if (dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2] < 0x40000)

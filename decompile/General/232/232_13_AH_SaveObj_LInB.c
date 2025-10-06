@@ -63,9 +63,9 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
             inst->matrix.m[2][0] = savInst->matrix.m[2][0];
             inst->matrix.m[2][2] = savInst->matrix.m[2][2];
 
-            inst->matrix.t[0] = savInst->matrix.t[0];
-            inst->matrix.t[1] = savInst->matrix.t[1];
-            inst->matrix.t[2] = savInst->matrix.t[2];
+            inst->matrix.t.x = savInst->matrix.t.x;
+            inst->matrix.t.y = savInst->matrix.t.y;
+            inst->matrix.t.z = savInst->matrix.t.z;
 
             rot[0] = gGT->level1->ptrSpawnType2_PosRot->posCoords[3];
             rot[1] = gGT->level1->ptrSpawnType2_PosRot->posCoords[4];
@@ -74,9 +74,9 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
 			// converted to TEST in rebuildPS1
 			ConvertRotToMatrix(&inst->matrix, (short*)&rot);
 
-            inst->matrix.t[0] = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[0];
-            inst->matrix.t[1] = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[1];
-            inst->matrix.t[2] = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[2];
+            inst->matrix.t.x = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[0];
+            inst->matrix.t.y = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[1];
+            inst->matrix.t.z = (int)gGT->level1->ptrSpawnType2_PosRot->posCoords[2];
 
             inst->unk50 = 0xf8;
 

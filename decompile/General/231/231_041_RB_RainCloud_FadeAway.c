@@ -13,15 +13,20 @@ void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
   parentInst = t->parentThread->inst;
 
   // offset upward before averaging
-  inst->matrix.t[1] += 0x80;
+  inst->matrix.t.y += 0x80;
 
   // X, Y, Z
-  for(int i = 0; i < 3; i++)
-  {
 	// get average between instance and driver
-	inst->matrix.t[i] += parentInst->matrix.t[i];
-	inst->matrix.t[i] = inst->matrix.t[i] >> 1;
-  }
+	inst->matrix.t.x += parentInst->matrix.t.x;
+	inst->matrix.t.x = parentInst->matrix.t.x >> 1;
+	
+	inst->matrix.t.y += parentInst->matrix.t.y;
+	inst->matrix.t.y = parentInst->matrix.t.y >> 1;
+	
+	inst->matrix.t.z += parentInst->matrix.t.z;
+	inst->matrix.t.z = parentInst->matrix.t.z >> 1;
+	
+
   
   struct RainLocal* rainLocal = rcloud->rainLocal;
   rainLocal->frameCount -= FPS_HALF(2);

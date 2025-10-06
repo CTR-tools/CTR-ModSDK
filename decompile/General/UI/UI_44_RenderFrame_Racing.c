@@ -25,21 +25,19 @@ void DECOMP_UI_RenderFrame_Racing()
 	u_int local_70;
 	struct Driver* playerStruct;
 	struct UiElement2D *hudStructPtr;
-	void* levPtrMap;
+	struct Map* levPtrMap;
 	char cVar22;
 	short wumpaModel_Pos[2];
 	short LetterCTR_Pos[2];
 	char string [8];
 	short turboCount_Pos[2];
-	u_short local_30 [2];
 	struct Thread* playerThread;
 	u_long *ptrOT;
 	struct DB *backBuffer;
 	struct Thread* turboThread;
 	struct Turbo* turboThreadObject;
 	int offset;
-	u_int mapPosX;
-	u_int mapPosY;
+	SVec2 mapPos;
 
 	#ifdef USE_ONLINE
 	offset = WIDE_PICK(-19, -27);
@@ -117,7 +115,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
 		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-		levPtrMap = pointers[ST1_MAP];
+		levPtrMap = (struct Map*)pointers[ST1_MAP];
 	}
 
 	// If you are not in Relic Race, and not in battle mode,
@@ -373,9 +371,9 @@ void DECOMP_UI_RenderFrame_Racing()
 						FPS_DOUBLE(10)
 					);
 
-					curr->matrix.t[0] = DECOMP_UI_ConvertX_2((int)LetterCTR_Pos[0],0x200);
-					curr->matrix.t[1] = DECOMP_UI_ConvertY_2((int)LetterCTR_Pos[1],0x200);
-					curr->matrix.t[2] = 0x200;
+					curr->matrix.t.x = DECOMP_UI_ConvertX_2((int)LetterCTR_Pos[0],0x200);
+					curr->matrix.t.y = DECOMP_UI_ConvertY_2((int)LetterCTR_Pos[1],0x200);
+					curr->matrix.t.z = 0x200;
 				}
 			}
 
@@ -850,7 +848,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	}
 
 	if(
-		(levPtrMap != 0) &&
+		(levPtrMap != NULL) &&
 		((gameMode1 & BATTLE_MODE) == 0)
 		
 		// if loaded battle map in arcade,
@@ -874,28 +872,28 @@ void DECOMP_UI_RenderFrame_Racing()
 			(numPlyr == 3)
 		)
 		{
-			local_30[0] = 0;
 
-			DECOMP_UI_Map_DrawDrivers	((int)levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
-			DECOMP_UI_Map_DrawDrivers	((int)levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
+
+			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, 0);
+			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, 0);
 
 			#ifndef USE_ONLINE
-			DECOMP_UI_Map_DrawGhosts	((int)levPtrMap, gGT->threadBuckets[GHOST].thread);
+			DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
 			#endif
 
-			DECOMP_UI_Map_DrawTracking	((int)levPtrMap, gGT->threadBuckets[TRACKING].thread);
+			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
 
-			mapPosX = 500;
+			mapPos.x = 500;
 			#ifdef USE_ONLINE
-			mapPosY = 145;
+			mapPos.y = 145;
 			#else
-			mapPosY = 195;
+			mapPos.y = 195;
 			#endif
 
 			if (numPlyr == 3)
 			{
-				mapPosX -= 60;
-				mapPosY += 10;
+				mapPos.x -= 60;
+				mapPos.y += 10;
 			}
 
 			// Draw the map
@@ -906,7 +904,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				gGT->ptrIcons[4],
 
 				// X and Y
-				mapPosX, mapPosY,
+				&mapPos,
 
 				// Pointer to primary memory
 				&gGT->backBuffer->primMem,

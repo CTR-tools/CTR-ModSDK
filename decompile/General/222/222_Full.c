@@ -181,8 +181,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					elapsedFrames, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
-				hudToken->matrix.t[0] = hudT->matrix.t[0];
-				hudToken->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
+				hudToken->matrix.t.x = hudT->matrix.t.x;
+				hudToken->matrix.t.y = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
 
 				// variable reuse, frame timers
 				lerpStartY = FPS_DOUBLE(120);
@@ -218,8 +218,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			for (i = 0; i < 3; i++)
 			{
-				hudLetters[i]->matrix.t[0] = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
-				hudLetters[i]->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
+				hudLetters[i]->matrix.t.x = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
+				hudLetters[i]->matrix.t.y = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
 
@@ -239,16 +239,16 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						(elapsedFrames > FPS_DOUBLE(6*i)) &&
 
 						// letter not fully off-screen
-						(-300 < hudLetters[i]->matrix.t[1])
+						(-300 < hudLetters[i]->matrix.t.y)
 					)
 				{
 					letter = hudLetters[i]->thread->object;
 
 					// move X position (yes, C-Letter only, Naughty Dog bug?)
-					hudLetters[0]->matrix.t[0] += letter->vel[0];
+					hudLetters[0]->matrix.t.x += letter->vel[0];
 
 					// make the letter fall off the screen
-					hudLetters[i]->matrix.t[1] -= letter->vel[1];
+					hudLetters[i]->matrix.t.y -= letter->vel[1];
 
 					if (FPS_HALF(-0x14) < letter->vel[1])
 					{
@@ -633,8 +633,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpEndX, lerpEndY,
 		currFrame, endFrame);
 
-	bigNum->matrix.t[0] = posXY[0];
-	bigNum->matrix.t[1] = posXY[1];
+	bigNum->matrix.t.x = posXY[0];
+	bigNum->matrix.t.y = posXY[1];
 
 	// interpolate scale to 0x1e00
 	DECOMP_UI_Lerp2D_Linear(

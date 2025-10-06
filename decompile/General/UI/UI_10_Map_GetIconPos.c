@@ -2,23 +2,9 @@
 
 // 488 / 760
 
-// move to headers later
-struct Map
-{
-	short worldEndX;
-	short worldEndY;
-	short worldStartX;
-	short worldStartY;
-	
-	short iconSizeX;
-	short iconSizeY;
-	short iconStartX;
-	short iconStartY;
-	
-	short mode;
-};
 
-void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
+
+void DECOMP_UI_Map_GetIconPos(struct Map* minimap, Vec2* pos)
 
 {
   short mode;
@@ -27,7 +13,6 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
   int worldRangeX;
   int worldRangeY;
 
-  struct Map* map = (struct Map*)m;
 
   #if 0
   // trap() functions were removed from original,
@@ -35,37 +20,37 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
   #endif
   
   // rendering mode (forward, sideways, etc)
-  mode = map->mode;
+  mode = minimap->mode;
   
-  worldRangeX = map->worldEndX - map->worldStartX;
-  worldRangeY = map->worldEndY - map->worldStartY;
+  worldRangeX = minimap->worldEndX - minimap->worldStartX;
+  worldRangeY = minimap->worldEndY - minimap->worldStartY;
   
   if (mode == 0) 
   {
 	// 0 degrees
-    addX =  (*posX * map->iconSizeX    ) / worldRangeX;
-    addY =  (*posY * map->iconSizeY * 2) / worldRangeY;
+    addX =  (pos->x * minimap->iconSizeX    ) / worldRangeX;
+    addY =  (pos->y * minimap->iconSizeY * 2) / worldRangeY;
   }
   
   else if (mode == 1) 
   {
 	// 90 degrees
-	addX = -(*posY * map->iconSizeX    ) / worldRangeY;
-	addY =  (*posX * map->iconSizeY * 2) / worldRangeX;
+	addX = -(pos->y * minimap->iconSizeX    ) / worldRangeY;
+	addY =  (pos->x * minimap->iconSizeY * 2) / worldRangeX;
   }
   
   else if (mode == 2) 
   {
 	// 180 degrees
-    addX = -(*posX * map->iconSizeX    ) / worldRangeX;
-    addY = -(*posY * map->iconSizeY * 2) / worldRangeY;
+    addX = -(pos->x * minimap->iconSizeX    ) / worldRangeX;
+    addY = -(pos->y * minimap->iconSizeY * 2) / worldRangeY;
   }
   
   else 
   {
 	// 270 degrees
-    addX =  (*posY * map->iconSizeX    ) / worldRangeY;
-    addY = -(*posX * map->iconSizeY * 2) / worldRangeX;
+    addX =  (pos->x * minimap->iconSizeX    ) / worldRangeY;
+    addY = -(pos->y * minimap->iconSizeY * 2) / worldRangeX;
   }
 
   #ifdef USE_16BY9
@@ -73,7 +58,7 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
   
   if (sdata->gGT->numPlyrCurrGame == 1)
   {
-	addX += ((462 - map->iconStartX) / 4) + 5;
+	addX += ((462 - minimap->iconStartX) / 4) + 5;
   }
   #endif
 
@@ -83,7 +68,7 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
     addY += 10;
   }
   
-  *posX = map->iconStartX + addX;
-  *posY = map->iconStartY + addY - 0x10;
+  pos->x = minimap->iconStartX + addX;
+  pos->y = minimap->iconStartY + addY - 0x10;
   return;
 }

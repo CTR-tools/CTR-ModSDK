@@ -49,15 +49,20 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   }
   
   // offset upward before averaging
-  inst->matrix.t[1] += (inst->scale[1] * 5 >> 7);
+  inst->matrix.t.y += (inst->scale[1] * 5 >> 7);
   
-  // X, Y, Z
-  for(int i = 0; i < 3; i++)
-  {
+
 	// get average between instance and driver
-	inst->matrix.t[i] += dInst->matrix.t[i];
-	inst->matrix.t[i] = inst->matrix.t[i] >> 1;
-  }
+	inst->matrix.t.x += dInst->matrix.t.x;
+	inst->matrix.t.x = dInst->matrix.t.x >> 1;
+	
+	inst->matrix.t.y += dInst->matrix.t.y;
+	inst->matrix.t.y = dInst->matrix.t.y >> 1;
+	
+	inst->matrix.t.z += dInst->matrix.t.z;
+	inst->matrix.t.z = dInst->matrix.t.z >> 1;
+
+ 
   
   // if driver is not using mask weapon
   if ((d->actionsFlagSet & 0x800000) == 0) 

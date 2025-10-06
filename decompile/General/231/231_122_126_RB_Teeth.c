@@ -52,8 +52,8 @@ void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* we
   teethInst = teethTh->inst;
   
   if ((weaponInst != NULL) && (teethInst != NULL)) {
-    distance = ((int)sps->Input1.pos[0] - weaponInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
-            ((int)sps->Input1.pos[2] - weaponInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
+    distance = ((int)sps->Input1.pos[0] - weaponInst->matrix.t.x) * (int)teethInst->matrix.m[0][2] +
+            ((int)sps->Input1.pos[2] - weaponInst->matrix.t.z) * (int)teethInst->matrix.m[2][2];
 
 	// catch negative value
     if (distance < 0) {
@@ -161,9 +161,9 @@ LAB_800b9ff8:
   }
   
   // Teeth instance position
-  SPS->Input1.pos[0] = doorInst->matrix.t[0];
-  SPS->Input1.pos[1] = doorInst->matrix.t[1];
-  SPS->Input1.pos[2] = doorInst->matrix.t[2];
+  SPS->Input1.pos[0] = doorInst->matrix.t.x;
+  SPS->Input1.pos[1] = doorInst->matrix.t.y;
+  SPS->Input1.pos[2] = doorInst->matrix.t.z;
   
   SPS->Input1.hitRadius = 0x300;
   SPS->Input1.hitRadiusSquared = 0x90000;
@@ -268,8 +268,8 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
     if (teeth->timeOpen == 0)
     {
         distance =
-            ((int)sps->Input1.pos[0] - teethInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
-            ((int)sps->Input1.pos[2] - teethInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
+            ((int)sps->Input1.pos[0] - teethInst->matrix.t.x) * (int)teethInst->matrix.m[0][2] +
+            ((int)sps->Input1.pos[2] - teethInst->matrix.t.z) * (int)teethInst->matrix.m[2][2];
 
         if (distance < 0)
         {

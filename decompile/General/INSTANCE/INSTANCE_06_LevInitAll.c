@@ -75,9 +75,9 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		ConvertRotToMatrix(&inst->matrix, &levInstDef->rot[0]);
 	
 		// instance posX and posY
-		inst->matrix.t[0] = levInstDef->pos[0];
-		inst->matrix.t[1] = levInstDef->pos[1];
-		inst->matrix.t[2] = levInstDef->pos[2];
+		inst->matrix.t.x = levInstDef->pos[0];
+		inst->matrix.t.y = levInstDef->pos[1];
+		inst->matrix.t.z = levInstDef->pos[2];
 	
 		inst->thread = NULL;
 		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);

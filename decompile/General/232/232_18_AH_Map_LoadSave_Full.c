@@ -1,7 +1,7 @@
 #include <common.h>
 
 void DECOMP_AH_Map_LoadSave_Full(
-	int posX, int posY, 
+	Vec2* pos, 
 	short* vertPos, char* vertCol,
 	int unk800, int angle)
 {
@@ -16,7 +16,7 @@ void DECOMP_AH_Map_LoadSave_Full(
 	for(int i = 0; i < 4; i++)
 	{
 		local_30[i*2+0] =
-			posX + 6 +
+			pos->x + 6 +
 			(short)((
 				(
 					((vertPos[2*i+0] * cos) >> 0xc) +
@@ -26,7 +26,7 @@ void DECOMP_AH_Map_LoadSave_Full(
 			) >> 0xc);
 			
 		local_30[i*2+1] =
-			posY + 4 +
+			pos->y + 4 +
 			(short)((
 				(
 					((vertPos[2*i+1] * cos) >> 0xc) -

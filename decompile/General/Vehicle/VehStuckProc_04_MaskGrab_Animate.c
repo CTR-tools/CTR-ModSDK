@@ -136,14 +136,14 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread* t, struct Driver* d)
 	struct MaskHeadWeapon* mask = d->KartStates.MaskGrab.maskObj;
 
 	// if maskObj
-	if (mask == 0)
+	if (mask == NULL)
 		return;
 
 	// set mask duration
-	mask->duration = 7680;
+	mask->duration = SECONDS(8);
 
 	// less than 0.5s after player fell
-	if (d->NoInputTimer > 960)
+	if (d->NoInputTimer > SECONDS(1))
 	{
 		// scale = 0%
 		mask->scale = 0;
@@ -156,7 +156,7 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread* t, struct Driver* d)
 	if (d->KartStates.MaskGrab.boolLiftingPlayer == false)
 	{
 		// decrease mask posY by elapsed time
-		mask->pos[1] -= gGT->elapsedTimeMS;
+		mask->pos.y -= gGT->elapsedTimeMS;
 	}
 
 	// if lifting player (if driver isn't falling infinitely)
@@ -170,16 +170,16 @@ void DECOMP_VehStuckProc_MaskGrab_Animate(struct Thread* t, struct Driver* d)
 	}
 
 	// maskPosX = driverPosX
-	mask->pos[0] = (short)(d->posCurr.x >> 8);
+	mask->pos.x = (short)(d->posCurr.x >> 8);
 
 	// set mask posZ
-	mask->pos[2] = (short)(d->posCurr.z >> 8);
+	mask->pos.z = (short)(d->posCurr.z >> 8);
 
 	// if mask posY < driver posY
-	if (mask->pos[1] < (short)(d->posCurr.y >> 8))
+	if (mask->pos.x < (short)(d->posCurr.y >> 8))
 	{
 		// mask posY = driver posY
-		mask->pos[1] = (short)(d->posCurr.y >> 8);
+		mask->pos.y = (short)(d->posCurr.y >> 8);
 
 		d->KartStates.MaskGrab.boolLiftingPlayer = true;
 	}

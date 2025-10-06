@@ -30,9 +30,9 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
     tw->vel[1] = -tw->vel[1];
     tw->vel[2] = -tw->vel[2];
 	
-    inst->matrix.t[0] += ((int)tw->vel[0] * gGT->elapsedTimeMS) >> 5;
-    inst->matrix.t[1] += ((int)tw->vel[1] * gGT->elapsedTimeMS) >> 5;
-    inst->matrix.t[2] += ((int)tw->vel[2] * gGT->elapsedTimeMS) >> 5;
+    inst->matrix.t.x += ((int)tw->vel[0] * gGT->elapsedTimeMS) >> 5;
+    inst->matrix.t.y += ((int)tw->vel[1] * gGT->elapsedTimeMS) >> 5;
+    inst->matrix.t.z += ((int)tw->vel[2] * gGT->elapsedTimeMS) >> 5;
     
 	// increment counter
 	sVar3 = tw->turnAround++;
@@ -71,8 +71,8 @@ void DECOMP_RB_Warpball_TurnAround(struct Thread* t)
 	
 	// rotation
     rot = ratan2(
-			cn->pos[0] - inst->matrix.t[0], 
-			cn->pos[2] - inst->matrix.t[2]
+			cn->pos[0] - inst->matrix.t.x, 
+			cn->pos[2] - inst->matrix.t.z
 		);
 		
 	// rotation

@@ -10,7 +10,7 @@ void DECOMP_RB_Warpball_Death(struct Thread* t)
   
   // play sound of warpball death
   struct Instance* inst = t->inst;
-  tw->distFromGround = inst->matrix.t[1];
+  tw->distFromGround = inst->matrix.t.y;
   PlaySound3D(0x4f, inst);
   
   // stop audio of moving

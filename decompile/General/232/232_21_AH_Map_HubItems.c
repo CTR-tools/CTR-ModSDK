@@ -1,39 +1,35 @@
 #include <common.h>
 
-void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
+void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short* type)
 {
 
   struct GameTracker *gGT;
   struct AdvProgress *adv;
   short levelID;
   short hubID;
-  short sVar1;
+  short iconType;
   short *trophies;
   bool open;
-  int iVar3;
+  int menu_TrackIndex;
   u_int bit;
   int iVar5;
   int uVar6;
   short sVar7;
   short sVar8;
-  short *psVar9;
-  short *psVar10;
-  int pos3D[3];
-  int local_40;
-  int local_3c;
-  int local_38;
-  int local_34;
-  int local_30;
-  int local_2c;
+  struct HubItem* hubItems;
+  SVec2 pos;
+  Vec3 pos3D;
 
   gGT = sdata->gGT;
   adv = &sdata->advProgress;
   levelID = gGT->levelID;
 
-  psVar10 = D232.hubItemsXY_ptrArray[levelID - GEM_STONE_VALLEY];
-  if (*psVar10 != -1)
+  hubItems = D232.hubItemsXY_ptrArray[levelID - GEM_STONE_VALLEY];
+  pos = hubItems->pos;
+  
+  if (pos.x != -1)
   {
-    psVar9 = psVar10 + 1;
+
     do
     {
       sVar8 = -1;
@@ -43,12 +39,12 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
       sVar7 = -1;
 	  
 	  // iconType
-      sVar1 = psVar9[2];
+      iconType = hubItems->iconType;
 	  
       open = true;
 	  
 	  // Arrow beach->gemstone
-      if (sVar1 == -1)
+      if (iconType == -1)
       {
         sVar7 = 0;
 
@@ -67,20 +63,19 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
       }
       else
       {
-        if (-1 < sVar1)
+        if (iconType > -1)
         {
-          sVar7 = sVar7;
 		  
 		  // gemstone valley
-          if (sVar1 == 4)
+          if (iconType == 4)
           {
-            iVar3 = 0;
+            menu_TrackIndex = 0;
             iVar5 = 0;
 
 			// check 4 boss keys
-            for (iVar3 = 0; iVar3 < 4; iVar3++)
+            for (menu_TrackIndex = 0; menu_TrackIndex < 4; menu_TrackIndex++)
             {
-              bit = iVar3 + 0x5e;
+              bit = menu_TrackIndex + PRIZE_BOSS_KEY;
 
               if (CHECK_ADV_BIT(adv->rewards, bit) == 0)
               {
@@ -102,23 +97,24 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
           {
             iVar5 = 0;
 			
-            if (3 < sVar1)
+            if (3 < iconType)
             {
               iVar5 = -0x10000;
               sVar8 = sVar8;
 			  
 			  // saveLoad screen (0x64)
-              if (sVar1 == 100)
+              if (iconType == 100)
               {
-                local_40 = (int)*psVar10 + -0x200;
-                local_3c = (int)*psVar9 + -0x100;
+				Vec2 newPos;
+                newPos.x = (int)hubItems->pos.x -0x200;
+                newPos.y = (int)hubItems->pos.y -0x100;
 				
-                DECOMP_UI_Map_GetIconPos(hubPtrs, &local_40, &local_3c);
+                DECOMP_UI_Map_GetIconPos(hubPtrs, &newPos);
                 
 				DECOMP_AH_Map_LoadSave_Full(
-					local_40, local_3c, 
+					&newPos,
 					&D232.loadSave_pos[0], (char*)&D232.loadSave_col[0],
-					0x800, (int)psVar9[1]
+					0x800, (int)hubItems->angle
 				);
 				
                 iVar5 = -0x10000;
@@ -131,11 +127,11 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
 			
 			int base = levelID - N_SANITY_BEACH;
 			
-            for (iVar3 = 0; iVar3 < 4; iVar3++)
+            for (menu_TrackIndex = 0; menu_TrackIndex < 4; menu_TrackIndex++)
             {
               trophies = &data.advHubTrackIDs[base * 4];
 			  
-              if (CHECK_ADV_BIT(adv->rewards, (trophies[iVar3]+6)) == 0)
+              if (CHECK_ADV_BIT(adv->rewards, (trophies[menu_TrackIndex]+PRIZE_TROPHY_RACE)) == 0)
               {
                 open = false;
                 break;
@@ -145,7 +141,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
               goto LAB_800b17e4;
 
 			// check if key is unlocked
-            sVar7 = CHECK_ADV_BIT(adv->rewards, (base+0x5e));
+            sVar7 = CHECK_ADV_BIT(adv->rewards, (base+PRIZE_BOSS_KEY));
           }
 		  
 		  // open, not beaten
@@ -162,16 +158,16 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         }
 		
 		// Arrow beach->glacier
-        if (sVar1 == -4)
+        if (iconType == -4)
         {
 		  // locked if keys < 2
           sVar7 = ((gGT->currAdvProfile.numKeys) < 2);
           goto LAB_800b17e8;
         }
-        if (sVar1 < -3)
+        if (iconType < -3)
         {
 		  // Arrow glacier->citadel
-          if (sVar1 == -5)
+          if (iconType == -5)
           {
 			// locked if keys < 3
             sVar7 = ((gGT->currAdvProfile.numKeys) < 3);
@@ -184,7 +180,7 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         {
 		  // either arrow on Gemstone hub,
 		  // pointing to beach or to ruins
-          if ((sVar1 == -3) || (sVar1 == -2))
+          if ((iconType == -3) || (iconType == -2))
           {
 			// never locked
             sVar7 = 0;
@@ -195,17 +191,19 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         }
       }
 	  
-      if (-1 < iVar5)
+      if (iVar5 > -1)
       {
-        local_38 = (int)*psVar10 + -0x200;
-        local_34 = (int)*psVar9 + -0x100;
-        DECOMP_UI_Map_GetIconPos(hubPtrs, &local_38, &local_34);
+		Vec2 newPos;
+		
+        newPos.x = (int)hubItems->pos.x -0x200;
+        newPos.y = (int)hubItems->pos.y -0x100;
+        DECOMP_UI_Map_GetIconPos(hubPtrs, &newPos);
         if ((iVar5 == 0) && (D232.unkModeHubItems == 0))
         {
           DECOMP_AH_Map_HubArrowOutter(
-              hubPtrs, (int)*param_2, local_38, local_34,
-              (0x1000 - (u_short)psVar9[1]), 1);
-          *param_2 = *param_2 + 1;
+              hubPtrs, (int)*type, &newPos,
+              (0x1000 - hubItems->angle), 1);
+          *type++;
         }
 		
         // if even frame
@@ -219,16 +217,16 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         }
 
         DECOMP_AH_Map_HubArrow(
-			local_38, local_34, 
+			&newPos, 
 			&D232.hubArrow_pos[0], (char*)&D232.hubArrow_col1[iVar5],
-			0x800, (int)psVar9[1]);
+			0x800, (int)hubItems->angle);
       }
 	  
       if (-1 < sVar8)
       {
-        pos3D[0] = (int)*psVar10;
-        pos3D[1] = 0;
-        pos3D[2] = (int)*psVar9;
+        pos3D.x = (int)hubItems->pos.x;
+        pos3D.y = 0;
+        pos3D.z = (int)hubItems->pos.y;
         
 		// if beat boss race
 		if (sVar8 == 2)
@@ -259,22 +257,19 @@ void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2)
         if (sVar8 == 1)
         {
           D232.unkModeHubItems = sVar8;
-          local_30 = pos3D[0];
-          local_2c = pos3D[2];
 
-          DECOMP_UI_Map_GetIconPos(hubPtrs, &local_30, &local_2c);
+          DECOMP_UI_Map_GetIconPos(hubPtrs, &pos3D);
 
-          DECOMP_AH_Map_HubArrowOutter(hubPtrs, (int)*param_2, local_30, local_2c, 0, 2);
+          DECOMP_AH_Map_HubArrowOutter(hubPtrs, (int)*type, &pos3D, 0, 2);
 
-          *param_2 = *param_2 + 1;
+          *type++;
         }
 		
 		// draw star icon for boss
-        DECOMP_UI_Map_DrawRawIcon((int)hubPtrs, &pos3D[0], 0x37, uVar6, 0, 0x1000);
+        DECOMP_UI_Map_DrawRawIcon(hubPtrs, &pos3D, 0x37, uVar6, 0, 0x1000);
       }
-      psVar10 = psVar10 + 4;
-      psVar9 = psVar9 + 4;
-    } while (*psVar10 != -1);
+
+    } while (hubItems->angle != -1);
   }
   return;
 }

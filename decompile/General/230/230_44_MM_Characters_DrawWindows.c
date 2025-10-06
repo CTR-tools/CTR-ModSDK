@@ -162,9 +162,9 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
     gGT->cameraDC[iVar6].cameraMode = 3;
 	
     // Set position of player
-    iVar10->matrix.t[0] = D230.csm_instPos[0];
-    iVar10->matrix.t[1] = D230.csm_instPos[1];
-    iVar10->matrix.t[2] = D230.csm_instPos[2];
+    iVar10->matrix.t.x = D230.csm_instPos[0];
+    iVar10->matrix.t.y = D230.csm_instPos[1];
+    iVar10->matrix.t.z = D230.csm_instPos[2];
   
     psVar11 = &D230.timerPerPlayer[iVar6];
     sVar9 = *psVar11 + -1;
@@ -205,7 +205,7 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
         iVar6 = (0x1000 - iVar5) * (int)D230.unkCharacterWindows >> 0xc;
       }
 
-      iVar10->matrix.t[0] += iVar6 * iVar8;
+      iVar10->matrix.t.x += iVar6 * iVar8;
     }
   
     // driver rotation

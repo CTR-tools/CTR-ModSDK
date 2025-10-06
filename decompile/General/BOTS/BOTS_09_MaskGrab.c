@@ -86,8 +86,8 @@ void DECOMP_BOTS_MaskGrab(struct Thread* botThread)
 
 	if (mask != 0)
 	{
-		mask->duration = 0x1e00;
-		mask->rot[2] |= 1;
+		mask->duration = SECONDS(8);
+		mask->rot.y |= 1;
 	}
 
 	// execute, then assign per-frame to BOTS_ThTick_RevEngine

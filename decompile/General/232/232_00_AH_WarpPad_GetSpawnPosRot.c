@@ -37,13 +37,13 @@ short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData)
 	instDef = inst->instDef;
 	
 	posData[0] = 
-		inst->matrix.t[0] +
+		inst->matrix.t.x +
 		((DECOMP_MATH_Cos(instDef->rot[1]) << 0xA) >> 0xC);
 		
-	posData[1] = inst->matrix.t[1];
+	posData[1] = inst->matrix.t.y;
 
 	posData[2] = 
-		inst->matrix.t[2] +
+		inst->matrix.t.z +
 		((DECOMP_MATH_Sin(instDef->rot[1]) * -0x400) >> 0xC);
 		
 	return &instDef->rot[0];

@@ -20,16 +20,23 @@
 #include <stdint-gcc.h>
 #else
 #include <stdint.h>
+
 #endif
 
+#include "ctr_math.h"
 #define ONE (1 << 12)
 
 /* Structure definitions */
 
+//this is duplicated
+/*
 typedef struct _MATRIX {
 	int16_t m[3][3];
-	int32_t t[3];
+	int32_t t;
 } MATRIX;
+*/
+
+
 
 typedef struct _VECTOR {
 	int32_t vx, vy, vz;

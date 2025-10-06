@@ -140,9 +140,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			#ifndef REBUILD_PS1
 			VehPhysForce_RotAxisAngle(&weaponInst->matrix, (short*)&d->AxisAngle1_normalVec, d->rotCurr.y);
@@ -290,9 +290,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			weaponInst->scale[0] = 0;
 			weaponInst->scale[1] = 0;
@@ -329,13 +329,13 @@ RunMineCOLL:
 			short pos1[3];
 			short pos2[3];
 
-			pos1[0] = weaponInst->matrix.t[0];
-			pos1[1] = weaponInst->matrix.t[1] - 400;
-			pos1[2] = weaponInst->matrix.t[2];
+			pos1[0] = weaponInst->matrix.t.x;
+			pos1[1] = weaponInst->matrix.t.y - 400;
+			pos1[2] = weaponInst->matrix.t.z;
 
-			pos2[0] = weaponInst->matrix.t[0];
-			pos2[1] = weaponInst->matrix.t[1] + 64;
-			pos2[2] = weaponInst->matrix.t[2];
+			pos2[0] = weaponInst->matrix.t.x;
+			pos2[1] = weaponInst->matrix.t.y + 64;
+			pos2[2] = weaponInst->matrix.t.z;
 
 			struct ScratchpadStruct *sps = (struct ScratchpadStruct*)0x1f800108;
 
@@ -389,7 +389,7 @@ RunMineCOLL:
 				rotPtr[2] = 0;
 				rotPtr[3] = 0;
 
-				mw->stopFallAtY = weaponInst->matrix.t[1];
+				mw->stopFallAtY = weaponInst->matrix.t.y;
 			}
 
 			else
@@ -430,9 +430,9 @@ RunMineCOLL:
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			// potion always faces camera
 			weaponInst->model->headers[0].flags |= 2;
@@ -526,7 +526,7 @@ RunMineCOLL:
 			struct Shield* shieldObj = weaponTh->object;
 			shieldObj->animFrame = 0;
 			shieldObj->flags = 0;
-			shieldObj->duration = 0x2d00;
+			shieldObj->duration = SECONDS(12);
 			shieldObj->instColor = instColor;
 			shieldObj->instHighlight = instHighlight;
 			shieldObj->highlightRot[0] = 0;
@@ -608,9 +608,9 @@ RunMineCOLL:
 			*(int*)&weaponInst->matrix.m[2][0] = 0;
 			weaponInst->matrix.m[2][2] = 0x1000;
 
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;

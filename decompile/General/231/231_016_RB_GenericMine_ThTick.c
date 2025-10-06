@@ -76,10 +76,10 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   
   // increment posY by velY * time
   // do NOT use parenthesis
-  inst->matrix.t[1] += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
+  inst->matrix.t.y += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
   
-  if (inst->matrix.t[1] < mw->stopFallAtY) {
-    inst->matrix.t[1] = mw->stopFallAtY;
+  if (inst->matrix.t.y < mw->stopFallAtY) {
+    inst->matrix.t.y = mw->stopFallAtY;
   }
   
   // decrease velocity by time, this is artificial gravity (negative acceleration)
@@ -291,9 +291,9 @@ LAB_800ad174:
         instCrate->matrix.m[2][1] = inst->matrix.m[2][1];
         
 		// X, Y, Z positions of TNT instanece
-		instCrate->matrix.t[0] = inst->matrix.t[0];
-        instCrate->matrix.t[1] = inst->matrix.t[1];
-        instCrate->matrix.t[2] = inst->matrix.t[2];
+		instCrate->matrix.t.x = inst->matrix.t.x;
+        instCrate->matrix.t.y = inst->matrix.t.y;
+        instCrate->matrix.t.z = inst->matrix.t.z;
 		
         instCrate->thread->funcThDestroy = PROC_DestroyInstance;
 		
@@ -314,7 +314,7 @@ LAB_800ad174:
 		tnt->driverTarget = d;
 
 		// stopFallAtY (where it explodes)
-        tnt->stopFallAtY = inst->matrix.t[1];
+        tnt->stopFallAtY = inst->matrix.t.y;
 		
 		// driver -> instTntRecv
         d->instTntRecv = instCrate;

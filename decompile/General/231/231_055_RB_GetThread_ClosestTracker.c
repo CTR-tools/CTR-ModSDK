@@ -30,8 +30,8 @@ struct Thread* DECOMP_RB_GetThread_ClosestTracker(struct Driver* d)
 	if(
 		// get distance between posX and posZ of 
 		// driver->instSelf->position, and tracker's position, 
-		distX = dInst->matrix.t[0] - currInst->matrix.t[0],
-		distZ = dInst->matrix.t[2] - currInst->matrix.t[2],
+		distX = dInst->matrix.t.x - currInst->matrix.t.x,
+		distZ = dInst->matrix.t.z - currInst->matrix.t.z,
 		
 		// if this is a new closest distance
 		distX = distX * distX + distZ * distZ, distX < smallestDist

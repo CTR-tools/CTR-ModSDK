@@ -171,9 +171,9 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	switch(cDC->cameraMode)
 	{
 		case 0:
-			pb->pos[0] = *(short *)(&d->instSelf->matrix.t[0]);
-			pb->pos[1] = *(short *)(&d->instSelf->matrix.t[1]);
-			pb->pos[2] = *(short *)(&d->instSelf->matrix.t[2]);
+			pb->pos[0] = *(short *)(&d->instSelf->matrix.t.x);
+			pb->pos[1] = *(short *)(&d->instSelf->matrix.t.y);
+			pb->pos[2] = *(short *)(&d->instSelf->matrix.t.z);
 			pb->rot[0] = d->rotCurr.x;
 			pb->rot[1] = d->rotCurr.y;
 			pb->rot[2] = d->rotCurr.z;

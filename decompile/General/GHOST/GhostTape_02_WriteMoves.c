@@ -65,9 +65,9 @@ void DECOMP_GhostTape_WriteMoves(short raceFinished)
     iVar7 = iVar8->instSelf;
 
 	// compress position (x, y, z) with bitshifting
-    iVar4 = iVar7->matrix.t[0] >> 3;
-    iVar3 = iVar7->matrix.t[1] >> 3;
-    iVar6 = iVar7->matrix.t[2] >> 3;
+    iVar4 = iVar7->matrix.t.x >> 3;
+    iVar3 = iVar7->matrix.t.y >> 3;
+    iVar6 = iVar7->matrix.t.z >> 3;
 
 	// get change in position (x, y, z)
     sdata->GhostRecording.VelX = (short)iVar4 - sdata->GhostRecording.VelX;

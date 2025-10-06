@@ -10,7 +10,7 @@ struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 	struct Driver* driver;
 	struct Instance* driverInst;
 	
-	int dist[3];
+	Vec3 dist;
 	int modelID;
 	
 	int distCheck;
@@ -37,14 +37,14 @@ struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 		
 		for(j = 0; j < 3; j++)
 		{
-			dist[j] = driverInst->matrix.t[j] - weaponInst->matrix.t[j];
-			dist[j] *= dist[j];
+			dist.v[j] = driverInst->matrix.t.v[j] - weaponInst->matrix.t.v[j];
+			dist.v[j] *= dist.v[j];
 		}
 		
 		modelID = weaponInst->model->id;
 		
 		// 2D collision (barrel, warpball)
-		distCheck = dist[0] + dist[2];
+		distCheck = dist.x + dist.z;
 		
 		// to be more optimal, just do weaponInst->thread->funcThTick == GenericMine_ThTick
 		if (
@@ -54,7 +54,7 @@ struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 			)
 		{
 			// upgrade to 2D collision to 3D sphere
-			distCheck += dist[1];
+			distCheck += dist.y;
 		}
 		  
 		// 2D collision, or 3D sphere
@@ -62,7 +62,7 @@ struct Instance* DECOMP_RB_Hazard_CollideWithDrivers(
 		{
 			// wasted check for 3D sphere,
 			// also upgrades 2D collision to 3D cylinder
-			if( dist[1] < ( hitRadius << 2 ) )
+			if( dist.y < ( hitRadius << 2 ) )
 			{
 				return driverInst;
 			}

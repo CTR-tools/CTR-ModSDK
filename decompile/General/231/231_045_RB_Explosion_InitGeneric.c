@@ -19,9 +19,9 @@ void DECOMP_RB_Explosion_InitGeneric(struct Instance* inst)
   *(int*)&explosion->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
   explosion->matrix.m[2][2] = inst->matrix.m[2][2];
   
-  explosion->matrix.t[0] = inst->matrix.t[0];
-  explosion->matrix.t[1] = inst->matrix.t[1];
-  explosion->matrix.t[2] = inst->matrix.t[2];
+  explosion->matrix.t.x = inst->matrix.t.x;
+  explosion->matrix.t.y = inst->matrix.t.y;
+  explosion->matrix.t.z = inst->matrix.t.z;
 
   // green
   color = 0x1eac000;

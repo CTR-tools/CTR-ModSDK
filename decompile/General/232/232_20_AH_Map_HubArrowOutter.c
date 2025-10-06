@@ -1,15 +1,15 @@
 #include <common.h>
 
 void DECOMP_AH_Map_HubArrowOutter(
-	void* hubPtrs, int arrowIndex,
-	int posX, int posY,
+	struct Map* hubPtrs, int arrowIndex,
+	Vec2* pos,
 	int inputAngle, int type)
 {
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
 
-	posX += D232.hubArrowXY_Inner[2*type+0];
-	posY += D232.hubArrowXY_Inner[2*type+1];
+	pos->x += D232.hubArrowXY_Inner[2*type+0];
+	pos->y += D232.hubArrowXY_Inner[2*type+1];
 
 	int timer = gGT->timer >> FPS_RIGHTSHIFT(0);
 
@@ -32,8 +32,8 @@ void DECOMP_AH_Map_HubArrowOutter(
 		var14 = 0xff;
 		var8 = 0x555;
 
-		posX += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+0];
-		posY += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+1];
+		pos->x += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+0];
+		pos->y += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+1];
 	}
 
 	else
@@ -76,8 +76,8 @@ void DECOMP_AH_Map_HubArrowOutter(
 
 			int iVar4 = (var5 & 1) + 0xc;
 
-			sin = posX + ((((iVar16 << 3) / 5) * sin) >> iVar4);
-			cos = posY - ((((iVar16     )    ) * cos) >> iVar4);
+			sin = pos->x + ((((iVar16 << 3) / 5) * sin) >> iVar4);
+			cos = pos->y - ((((iVar16     )    ) * cos) >> iVar4);
 
 			if(!bVar1)
 			{

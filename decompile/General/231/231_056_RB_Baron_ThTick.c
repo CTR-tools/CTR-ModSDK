@@ -103,9 +103,9 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 		// converted to TEST in rebuildPS1
 		ConvertRotToMatrix(&baronInst->matrix, &rot[0]);
 			
-		baronInst->matrix.t[0] = pos[0] + 0x111;
-		baronInst->matrix.t[1] = pos[1];
-		baronInst->matrix.t[2] = pos[2] - 0x110;
+		baronInst->matrix.t.x = pos[0] + 0x111;
+		baronInst->matrix.t.y = pos[1];
+		baronInst->matrix.t.z = pos[2] - 0x110;
 	
 	// 30FPS
 	#else
@@ -115,9 +115,9 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 			&baronInst->matrix,
 			&ptrSpawnType2->posCoords[baseShort+3]);
 			
-		baronInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0] + 0x111;
-		baronInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
-		baronInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2] - 0x110;
+		baronInst->matrix.t.x = ptrSpawnType2->posCoords[baseShort+0] + 0x111;
+		baronInst->matrix.t.y = ptrSpawnType2->posCoords[baseShort+1];
+		baronInst->matrix.t.z = ptrSpawnType2->posCoords[baseShort+2] - 0x110;
 		
 		baronObj->pointIndex = (baronObj->pointIndex + 1) % (ptrSpawnType2->numCoords);
 	

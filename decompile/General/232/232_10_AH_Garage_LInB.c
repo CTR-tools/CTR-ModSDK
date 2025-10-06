@@ -67,20 +67,20 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
         *(int*)&garageTop->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
         *(int*)&garageTop->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
         garageTop->matrix.m[2][2] = inst->matrix.m[2][2];
-		garageTop->matrix.t[0] = inst->matrix.t[0];
-		garageTop->matrix.t[1] = inst->matrix.t[1];
-		garageTop->matrix.t[2] = inst->matrix.t[2];
+		garageTop->matrix.t.x = inst->matrix.t.x;
+		garageTop->matrix.t.y = inst->matrix.t.y;
+		garageTop->matrix.t.z = inst->matrix.t.z;
 
         ratio = DECOMP_MATH_Sin((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTop->matrix.t[0] = inst->matrix.t[0] + (ratio * 0x4c >> 0xc);
-        garageTop->matrix.t[1] = inst->matrix.t[1] + 0x300;
+        garageTop->matrix.t.x = inst->matrix.t.x + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t.y = inst->matrix.t.y + 0x300;
 
         ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTop->matrix.t[2] = inst->matrix.t[2] + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t.z = inst->matrix.t.z + (ratio * 0x4c >> 0xc);
 
         garageTop->unk50 = 0xfe;
 

@@ -25,9 +25,9 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
    cloudInst->matrix.m[2][2] = 0x1000;
 	
 	// cloud->posX = driver->posX
-    cloudInst->matrix.t[0] = d->instSelf->matrix.t[0];
-    cloudInst->matrix.t[1] = d->instSelf->matrix.t[1] + 0x80;
-    cloudInst->matrix.t[2] = d->instSelf->matrix.t[2];
+    cloudInst->matrix.t.x = d->instSelf->matrix.t.x;
+    cloudInst->matrix.t.y = d->instSelf->matrix.t.y + 0x80;
+    cloudInst->matrix.t.z = d->instSelf->matrix.t.z;
 	
     cloudInst->alphaScale = 0x800;
 	
@@ -50,9 +50,9 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
       rlocal->vel[1] = FPS_HALF(-0x28);
       rlocal->vel[2] = 0;
       
-	  rlocal->pos[0] = d->instSelf->matrix.t[0];
-      rlocal->pos[1] = d->instSelf->matrix.t[1] + 0x80;
-      rlocal->pos[2] = d->instSelf->matrix.t[2];
+	  rlocal->pos[0] = d->instSelf->matrix.t.x;
+      rlocal->pos[1] = d->instSelf->matrix.t.y + 0x80;
+      rlocal->pos[2] = d->instSelf->matrix.t.z;
       
 	  rlocal->cloudInst = cloudInst;
     }

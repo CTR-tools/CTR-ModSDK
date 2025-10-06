@@ -149,19 +149,19 @@ PlayChewSound:
 					
 					particle->axis[0].startVal +=
 					(
-						plantInst->matrix.t[0] +
+						plantInst->matrix.t.x +
 						(plantInst->matrix.m[0][2] * 9 >> 7) 
 					) * 0x100;
 						
 					particle->axis[1].startVal +=
 					(
-						plantInst->matrix.t[1] 
+						plantInst->matrix.t.y 
 						+ 0x20
 					) * 0x100;
 						
 					particle->axis[2].startVal +=
 					(
-						plantInst->matrix.t[2] +
+						plantInst->matrix.t.z +
 						(plantInst->matrix.m[2][2] * 9 >> 7) 
 					) * 0x100;
 						

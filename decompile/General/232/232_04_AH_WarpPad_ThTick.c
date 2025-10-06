@@ -88,9 +88,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	driver = gGT->drivers[0];
 	driverInst = driver->instSelf;
 	
-	x = warppadMatrix->t[0] - driverInst->matrix.t[0];
-	y = warppadMatrix->t[1] - driverInst->matrix.t[1];
-	z = warppadMatrix->t[2] - driverInst->matrix.t[2];
+	x = warppadMatrix->t.x - driverInst->matrix.t.x;
+	y = warppadMatrix->t.y - driverInst->matrix.t.y;
+	z = warppadMatrix->t.z - driverInst->matrix.t.z;
 	dist = x*x + y*y + z*z;
 	
 	levelID = warppadObj->levelID;
@@ -211,8 +211,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	{	
 		angleCamToWarppad =
 			ratan2(
-				warppadMatrix->t[0] - gGT->pushBuffer[0].pos[0],
-				warppadMatrix->t[2] - gGT->pushBuffer[0].pos[2]
+				warppadMatrix->t.x - gGT->pushBuffer[0].pos[0],
+				warppadMatrix->t.z - gGT->pushBuffer[0].pos[2]
 			);
 			
 		angleCamToWarppad = -angleCamToWarppad;
@@ -223,27 +223,27 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		// no 10s digit
 		if(instArr[WPIS_CLOSED_10S] == 0)
 		{
-			instArr[WPIS_CLOSED_1S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0x80 >> 0xC);
-			instArr[WPIS_CLOSED_1S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0x80 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0x80 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0x80 >> 0xC);
 			
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[0] = warppadMatrix->t[0] + ((angleCos << 7) >> 0xC);
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[2] = warppadMatrix->t[2] + ((angleSin << 7) >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.x = warppadMatrix->t.x + ((angleCos << 7) >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.z = warppadMatrix->t.z + ((angleSin << 7) >> 0xC);
 		}
 		
 		// 10s digit
 		else
 		{
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * 0xC0 >> 0xC);
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * 0xC0 >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.x = warppadMatrix->t.x + (angleCos * 0xC0 >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.z = warppadMatrix->t.z + (angleSin * 0xC0 >> 0xC);
 			
-			instArr[WPIS_CLOSED_X]->matrix.t[0] = warppadMatrix->t[0] + ((angleCos << 6) >> 0xC);
-			instArr[WPIS_CLOSED_X]->matrix.t[2] = warppadMatrix->t[2] + ((angleSin << 6) >> 0xC);
+			instArr[WPIS_CLOSED_X]->matrix.t.x = warppadMatrix->t.x + ((angleCos << 6) >> 0xC);
+			instArr[WPIS_CLOSED_X]->matrix.t.z = warppadMatrix->t.z + ((angleSin << 6) >> 0xC);
 			
-			instArr[WPIS_CLOSED_10S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0x40 >> 0xC);
-			instArr[WPIS_CLOSED_10S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0x40 >> 0xC);
+			instArr[WPIS_CLOSED_10S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0x40 >> 0xC);
+			instArr[WPIS_CLOSED_10S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0x40 >> 0xC);
 			
-			instArr[WPIS_CLOSED_1S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0xa0 >> 0xC);
-			instArr[WPIS_CLOSED_1S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0xa0 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0xa0 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0xa0 >> 0xC);
 		}
 		
 		warppadObj->spinRot_Prize[0] = 0;
@@ -348,17 +348,17 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 			// if height hasn't reached max height
 			if(
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
-				(warppadInst->matrix.t[1] + wispMaxHeight)
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y < 
+				(warppadInst->matrix.t.y + wispMaxHeight)
 			  )
 			{
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] += wispRiseRate;
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y += wispRiseRate;
 				
 				// if height hasn't reached 4x RiseRate,
 				// first 4 frames of rising
 				if(
-					instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
-					(warppadInst->matrix.t[1] + wispRiseRate*4)
+					instArr[WPIS_OPEN_RING1+i]->matrix.t.y < 
+					(warppadInst->matrix.t.y + wispRiseRate*4)
 				)
 				{
 					// reduce transparency
@@ -377,7 +377,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			else
 			{
 				// reset height
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] = warppadInst->matrix.t[1];
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y = warppadInst->matrix.t.y;
 				
 				// full transparency
 				instArr[WPIS_OPEN_RING1+i]->alphaScale = 0x1000;
@@ -419,9 +419,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			DECOMP_AH_WarpPad_SpinRewards(
 				instArr[WPIS_OPEN_PRIZE1+i],
 				warppadObj, i,
-				warppadInst->matrix.t[0],
-				warppadInst->matrix.t[1],
-				warppadInst->matrix.t[2]);
+				warppadInst->matrix.t.x,
+				warppadInst->matrix.t.y,
+				warppadInst->matrix.t.z);
 				
 			modelID = instArr[WPIS_OPEN_PRIZE1+i]->model->id;
 			

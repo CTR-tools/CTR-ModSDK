@@ -2,18 +2,17 @@
 
 void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short empty, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
-void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID)
+void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, SVec2* pos, struct PrimMem* primMem, u_long* otMem, u_int colorID)
 {
 	short mapBottomHeight;
 	short mapTopHeight;
-	int iVar9;
+	struct Map* minimap;
 	POLY_FT4* p;
 	u_int color;
 	struct GameTracker* gGT;
 
 	gGT = sdata->gGT;
 
-	iVar9 = 0;
 
 	// draw minimap with neutral/none vertex color, minimap's regular color is white
 	color = 0x808080;
@@ -35,7 +34,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
 		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-		iVar9 = (int)pointers[ST1_MAP];
+		minimap = (struct Map*)pointers[ST1_MAP];
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap
@@ -47,7 +46,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	// not sure when the game ever draws only the bottom half
 	if
 	(
-		((iVar9 != 0) && (*(short *)(iVar9 + 0x12) == 0)) ||
+		((minimap != 0) && (minimap->mode == 0)) ||
 
 		// if in main menu (character selection, track selection, any part of it)
 		((gGT->gameMode1 & MAIN_MENU) != 0)
@@ -57,14 +56,14 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 		*(int*)&p->r0 = color;
 
 		// position of the top margin of the primitive for the top half of the minimap
-		mapTopHeight = posY - (((u_short)mapTop->texLayout.v2 - (u_short)mapTop->texLayout.v0) + mapBottomHeight);
+		mapTopHeight = pos->y - (((u_short)mapTop->texLayout.v2 - (u_short)mapTop->texLayout.v0) + mapBottomHeight);
 
 		p->y0 = mapTopHeight;
 		p->y1 = mapTopHeight;
-		p->y2 = posY - mapBottomHeight;
-		p->y3 = posY - mapBottomHeight;
+		p->y2 = pos->y - mapBottomHeight;
+		p->y3 = pos->y - mapBottomHeight;
 
-		UI_Map_DrawMap_ExtraFunc(mapTop, p, posX, 0, primMem, otMem, colorID);
+		UI_Map_DrawMap_ExtraFunc(mapTop, p, pos->x, 0, primMem, otMem, colorID);
 		
 		p = p + 1;
 	}
@@ -72,12 +71,12 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	// r0, g0, b0 (vertex color)
 	*(int*)&p->r0 = color;
 
-	p->y0 = posY - mapBottomHeight;
-	p->y1 = posY - mapBottomHeight;
-	p->y2 = posY;
-	p->y3 = posY;
+	p->y0 = pos->y - mapBottomHeight;
+	p->y1 = pos->y - mapBottomHeight;
+	p->y2 = pos->y;
+	p->y3 = pos->y;
 
-	UI_Map_DrawMap_ExtraFunc(mapBottom, p, posX, 0, primMem, otMem, colorID);
+	UI_Map_DrawMap_ExtraFunc(mapBottom, p, pos->x, 0, primMem, otMem, colorID);
 
 	primMem->curr = p + 1;
 }
@@ -114,18 +113,18 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 		void* levPtrMap = pointers[ST1_MAP];
 		
-		int midX = 0;
-		int midY = 0;
-		DECOMP_UI_Map_GetIconPos(levPtrMap, &midX, &midY);
+		Vec2 mid;
 		
-		leftX += ((midX-leftX) * 250) / 1000;
-		posX -= ((posX-midX) * 250) / 1000;
+		DECOMP_UI_Map_GetIconPos(levPtrMap, &mid);
+		
+		leftX += ((mid.x-leftX) * 250) / 1000;
+		posX -= ((posX-mid.x) * 250) / 1000;
 		
 		if (sdata->gGT->numPlyrCurrGame == 1)
 		{
 			// 462 is midX of Crash Cove
-			leftX += ((462 - midX) / 4) + 5;
-			posX += ((462 - midX) / 4) + 5;
+			leftX += ((462 - mid.x) / 4) + 5;
+			posX += ((462 - mid.x) / 4) + 5;
 		}
 	}
 	

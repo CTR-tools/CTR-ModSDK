@@ -108,8 +108,8 @@ LAB_800adc08:;
     if (tw->framesSeekMine == 0)
 	{
 	  // get distance between tracker and the driver being chased
-      iVar6 = (driverTarget->posCurr.x >> 8) - inst->matrix.t[0];
-      iVar8 = (driverTarget->posCurr.z >> 8) - inst->matrix.t[2];
+      iVar6 = (driverTarget->posCurr.x >> 8) - inst->matrix.t.x;
+      iVar8 = (driverTarget->posCurr.z >> 8) - inst->matrix.t.z;
       tw->distanceToTarget = iVar6 * iVar6 + iVar8 * iVar8;
 
 LAB_800add14:
@@ -130,8 +130,8 @@ LAB_800add14:
 	  if (instTNT != 0)
 	  {
 		// Get X and Y differences between two instances
-        iVar6 = instTNT->matrix.t[0] - inst->matrix.t[0];
-        iVar8 = instTNT->matrix.t[1] - inst->matrix.t[2];
+        iVar6 = instTNT->matrix.t.x - inst->matrix.t.x;
+        iVar8 = instTNT->matrix.t.y - inst->matrix.t.z;
         goto LAB_800add14;
       }
 
@@ -226,17 +226,17 @@ LAB_800add14:
 
 	if(p!=0)
 	{
-		p->axis[0].startVal = inst->matrix.t[0] << 8;
-		p->axis[1].startVal = inst->matrix.t[1] << 8;
-		p->axis[2].startVal = inst->matrix.t[2] << 8;
+		p->axis[0].startVal = inst->matrix.t.x << 8;
+		p->axis[1].startVal = inst->matrix.t.y << 8;
+		p->axis[2].startVal = inst->matrix.t.z << 8;
 	}
   }
 #endif
 
   int elapsedTime = gGT->elapsedTimeMS;
-  inst->matrix.t[0] += (((int)tw->vel[0] * elapsedTime) >> 5);
-  inst->matrix.t[1] += (((int)tw->vel[1] * elapsedTime) >> 5);
-  inst->matrix.t[2] += (((int)tw->vel[2] * elapsedTime) >> 5);
+  inst->matrix.t.x += (((int)tw->vel[0] * elapsedTime) >> 5);
+  inst->matrix.t.y += (((int)tw->vel[1] * elapsedTime) >> 5);
+  inst->matrix.t.z += (((int)tw->vel[2] * elapsedTime) >> 5);
 
   // If this is bomb
   if (modelID == DYNAMIC_BOMB)
@@ -257,13 +257,13 @@ LAB_800add14:
     ConvertRotToMatrix(&inst->matrix,(short*)&tw->dir);
   }
 
-  posA[0] = inst->matrix.t[0];
-  posA[1] = inst->matrix.t[1] + -0x40;
-  posA[2] = inst->matrix.t[2];
+  posA[0] = inst->matrix.t.x;
+  posA[1] = inst->matrix.t.y + -0x40;
+  posA[2] = inst->matrix.t.z;
 
-  posB[0] = inst->matrix.t[0];
-  posB[1] = inst->matrix.t[1] + 0x100;
-  posB[2] = inst->matrix.t[2];
+  posB[0] = inst->matrix.t.x;
+  posB[1] = inst->matrix.t.y + 0x100;
+  posB[2] = inst->matrix.t.z;
 
 #ifndef REBUILD_PC
   struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
@@ -289,9 +289,9 @@ LAB_800add14:
     tw->vel[1] = -tw->vel[1];
     tw->vel[2] = -tw->vel[2];
 
-    inst->matrix.t[0] += ((int)tw->vel[0] * elapsedTime) >> 5;
-	inst->matrix.t[1] += ((int)tw->vel[1] * elapsedTime) >> 5;
-	inst->matrix.t[2] += ((int)tw->vel[2] * elapsedTime) >> 5;
+    inst->matrix.t.x += ((int)tw->vel[0] * elapsedTime) >> 5;
+	inst->matrix.t.y += ((int)tw->vel[1] * elapsedTime) >> 5;
+	inst->matrix.t.z += ((int)tw->vel[2] * elapsedTime) >> 5;
 
 	DECOMP_RB_MovingExplosive_Explode(t,inst,tw);
     return;
@@ -305,9 +305,9 @@ LAB_800add14:
 	  // look again for another quadblock LOWER
 
       inst->vertSplit = 0;
-      posA[0] = inst->matrix.t[0];
-      posA[1] = inst->matrix.t[1] - 0x900;
-      posA[2] = inst->matrix.t[2];
+      posA[0] = inst->matrix.t.x;
+      posA[1] = inst->matrix.t.y - 0x900;
+      posA[2] = inst->matrix.t.z;
 
       COLL_SearchBSP_CallbackQUADBLK((u_int*)&posA, (u_int*)&posB, sps, 0);
 
@@ -349,9 +349,9 @@ LAB_800add14:
       }
 
 	  // position
-      inst->matrix.t[0] = sps->Union.QuadBlockColl.hitPos[0];
-      inst->matrix.t[1] = sps->Union.QuadBlockColl.hitPos[1] + 0x30;
-      inst->matrix.t[2] = sps->Union.QuadBlockColl.hitPos[2];
+      inst->matrix.t.x = sps->Union.QuadBlockColl.hitPos[0];
+      inst->matrix.t.y = sps->Union.QuadBlockColl.hitPos[1] + 0x30;
+      inst->matrix.t.z = sps->Union.QuadBlockColl.hitPos[2];
     }
   }
   else

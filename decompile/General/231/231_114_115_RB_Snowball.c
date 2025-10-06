@@ -93,9 +93,9 @@ RollSound:
 		// converted to TEST in rebuildPS1
 		ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
 			
-		snowInst->matrix.t[0] = pos[0];
-		snowInst->matrix.t[1] = pos[1];
-		snowInst->matrix.t[2] = pos[2];
+		snowInst->matrix.t.x = pos[0];
+		snowInst->matrix.t.y = pos[1];
+		snowInst->matrix.t.z = pos[2];
 	
 	// original 30fps
 	#else
@@ -105,9 +105,9 @@ RollSound:
 			&snowInst->matrix,
 			&ptrSpawnType2->posCoords[baseShort+3]);
 			
-		snowInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0];
-		snowInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
-		snowInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2];
+		snowInst->matrix.t.x = ptrSpawnType2->posCoords[baseShort+0];
+		snowInst->matrix.t.y = ptrSpawnType2->posCoords[baseShort+1];
+		snowInst->matrix.t.z = ptrSpawnType2->posCoords[baseShort+2];
 		
 		// [skip safety checks]
 		snowObj->pointIndex = (snowObj->pointIndex + 1) % (snowObj->numPoints*2);

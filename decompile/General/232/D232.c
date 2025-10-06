@@ -68,13 +68,13 @@ struct OverlayDATA_232 D232 =
 	// 800b4e88
 	.timeCrystalChallenge =
 	{
-		0x1c200,	// NITRO_COURT
-		0x13ec0,	// RAMPAGE_RUINS
-		0xe100,		// PARKING_LOT (null)
-		0x13740,	// SKULL_ROCK
-		0xe100,		// THE_NORTH_BOWL (null)
-		0x12c00,	// ROCKY_ROAD
-		0xe100,		// LAB_BASEMENT (null)
+		MINUTES(2),	// NITRO_COURT
+		MINUTES(1) + SECONDS(25), // RAMPAGE_RUINS
+		MINUTES(1),	// PARKING_LOT (null)
+		MINUTES(1) + SECONDS(23), // SKULL_ROCK
+		MINUTES(1),	// THE_NORTH_BOWL (null)
+		MINUTES(1) + SECONDS(20), // ROCKY_ROAD
+		MINUTES(1),	// LAB_BASEMENT (null)
 	},
 	
 	// 800b4ea4
@@ -155,11 +155,11 @@ struct OverlayDATA_232 D232 =
 	
 	.hubItemsXY_ptrArray =
 	{
-		&D232.hubItems_hub1[0].posX,
-		&D232.hubItems_hub2[0].posX,
-		&D232.hubItems_hub3[0].posX,
-		&D232.hubItems_hub4[0].posX,
-		&D232.hubItems_hub5[0].posX,
+		&D232.hubItems_hub1[0].pos,
+		&D232.hubItems_hub2[0].pos,
+		&D232.hubItems_hub3[0].pos,
+		&D232.hubItems_hub4[0].pos,
+		&D232.hubItems_hub5[0].pos,
 	},
 	
 	.hubArrowXY_Inner =
@@ -231,11 +231,11 @@ struct OverlayDATA_232 D232 =
 	.advPausePages =
 	{
 		// hubs and bosses
-		{0x19, -1, 0, 0xF},
-		{0x1A, -1, 0, 0xA},
-		{0x1B, -1, 0, 0x9},
-		{0x1C, -1, 0, 0xB},
-		{0x1D, -1, 0, 0x8},
+		{GEM_STONE_VALLEY, -1, 0, NITROS_OXIDE},
+		{N_SANITY_BEACH, -1, 0, RIPPER_ROO},
+		{THE_LOST_RUINS, -1, 0, PAPU_PAPU},
+		{GLACIER_PARK, -1, 0, KOMODO_JOE},
+		{CITADEL_CITY, -1, 0, PINSTRIPE},
 		
 		// gems and relics
 		{-1, 0x10, 1, 0},
@@ -245,29 +245,29 @@ struct OverlayDATA_232 D232 =
 	.advPauseInst =
 	{
 		// gems: red, green, blue, yellow, purple
-		{0x5F, 0xAF0, 0x8086c,  USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
-		{0x5F, 0xAF0, 0x86c08,  USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
-		{0x5F, 0xAF0, 0x808000, USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
-		{0x5F, 0xAF0, 0x8080,   USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
-		{0x5F, 0xAF0, 0x6c086c, USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
+		{STATIC_GEM, 0xAF0, 0x8086c,  USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
+		{STATIC_GEM, 0xAF0, 0x86c08,  USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
+		{STATIC_GEM, 0xAF0, 0x808000, USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
+		{STATIC_GEM, 0xAF0, 0x8080,   USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
+		{STATIC_GEM, 0xAF0, 0x6c086c, USE_SPECULAR_LIGHT, {0xfa5b, 0xf0f, 0xfe1f, 0}},
 		
 		// key
-		{0x63, 0x30D, 0xA6DC, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0xfd28}},
+		{STATIC_KEY, 0x30D, 0xA6DC, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0xfd28}},
 		
 		// relic: blue, gold, platinum
-		{0x61, 0x30D, 0xFFA560, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
-		{0x61, 0x30D, 0x9d2d8,  USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
-		{0x61, 0x30D, 0xe9edff, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
+		{STATIC_RELIC, 0x30D, 0xFFA560, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
+		{STATIC_RELIC, 0x30D, 0x9d2d8,  USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
+		{STATIC_RELIC, 0x30D, 0xe9edff, USE_SPECULAR_LIGHT, {0xf368, 0x99f, 0x232}},
 		
 		// token: red, green, blue, yellow, purple
-		{0x7d, 0x500, 0x8086c,  USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
-		{0x7d, 0x500, 0x86c08,  USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
-		{0x7d, 0x500, 0x800000, USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
-		{0x7d, 0x500, 0x8080,   USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
-		{0x7d, 0x500, 0x6c086c, USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
+		{STATIC_TOKEN, 0x500, 0x8086c,  USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
+		{STATIC_TOKEN, 0x500, 0x86c08,  USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
+		{STATIC_TOKEN, 0x500, 0x800000, USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
+		{STATIC_TOKEN, 0x500, 0x8080,   USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
+		{STATIC_TOKEN, 0x500, 0x6c086c, USE_SPECULAR_LIGHT, {0xf5f6, 0x787, 0xa0a, 0}},
 		
 		// trophy
-		{0x62, 0x500, 0x808080, 0, {0xf368, 0x99f, 0x232}}
+		{STATIC_TROPHY, 0x500, 0x808080, 0, {0xf368, 0x99f, 0x232}}
 	},
 	
 	.menuHintMenu =
@@ -313,7 +313,7 @@ struct OverlayDATA_232 D232 =
 		0, 0x180, 0
 	},
 	
-	.maskScale = 0x1000,
+	.maskScale = FP(1),
 	
 	.maskOffsetPos =
 	{

@@ -130,9 +130,9 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	  *(int*)&pb->matrix_ViewProj.m[1][1] = *(int*)&ui->matrix_ViewProj.m[1][1];
 	  *(int*)&pb->matrix_ViewProj.m[2][0] = *(int*)&ui->matrix_ViewProj.m[2][0];
 	  *(int*)&pb->matrix_ViewProj.m[2][2] = *(int*)&ui->matrix_ViewProj.m[2][2];
-	  pb->matrix_ViewProj.t[0] = ui->matrix_ViewProj.t[0];
-	  pb->matrix_ViewProj.t[1] = ui->matrix_ViewProj.t[1];
-	  pb->matrix_ViewProj.t[2] = ui->matrix_ViewProj.t[2];
+	  pb->matrix_ViewProjmatrix.t.x = ui->matrix_ViewProj.t.x;
+	  pb->matrix_ViewProj.t.y = ui->matrix_ViewProj.t.y;
+	  pb->matrix_ViewProj.t.z = ui->matrix_ViewProj.t.z;
 	  
 	  // first half of pixel-LOD pushBuffer, copy from PushBuffer_UI
 	  pb->pos[0] = ui->pos[0];

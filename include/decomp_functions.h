@@ -472,8 +472,8 @@ void DECOMP_UI_RenderFrame_Racing(void);
 
 void DECOMP_UI_SaveLapTime(int numLaps, int lapTime, short driverID);
 
-void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY);
-void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
+void DECOMP_UI_Map_GetIconPos(struct Map* minimap, Vec2* pos);
+void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, SVec2* pos, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
 void DECOMP_UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 
@@ -722,22 +722,22 @@ void DECOMP_AH_Map_LoadSave_Prim(
 	void* ot, struct PrimMem* primMem);
 
 void DECOMP_AH_Map_LoadSave_Full(
-	int posX, int posY,
+	Vec2* pos,
 	short* vertPos, char* vertCol,
 	int unk800, int angle);
 
 void DECOMP_AH_Map_HubArrow(
-	int posX, int posY,
-	short* vertPos, char* vertCol,
+	Vec2* pos,
+	short* arrowPos, char* arrorCol,
 	int unk800, int angle);
 
 void DECOMP_AH_Map_HubArrowOutter(
-	void* hubPtrs, int arrowIndex,
-	int posX, int posY,
+	struct Map* hubPtrs, int arrowIndex,
+	Vec2* pos,
 	int inputAngle, int type);
 
-void DECOMP_AH_Map_HubItems(void* hubPtrs, short *param_2);
-void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *param_3);
+void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type);
+void DECOMP_AH_Map_Warppads(struct Map* ptrMap, struct Thread* warppadThread, short *type);
 void DECOMP_AH_Map_Main(void);
 void DECOMP_AH_Pause_Destroy(void);
 void DECOMP_AH_Pause_Draw(int pageID, int posX);
@@ -820,11 +820,11 @@ int DECOMP_RaceFlag_IsTransitioning(void);
 void DECOMP_LOAD_Robots1P(int characterID);
 void DECOMP_CTR_Box_DrawWirePrims(Point p1, Point p2, Color color, void* ot);
 void DECOMP_UI_Map_DrawRawIcon( //1st param is probably a ptr type of some sort (maybe short*)?, could maybe do `void*` for now
-	int ptrMap, int* param_2,
+	struct Map* ptrMap, Vec3* pos,
 	int iconID, int colorID, int unused,
 	short scale);
 int DECOMP_RaceFlag_GetCanDraw(void);
-void DECOMP_UI_Map_DrawDrivers(int ptrMap, struct Thread* bucket, short* param_3);
+void DECOMP_UI_Map_DrawDrivers(struct Map* ptrMap, struct Thread* bucket, short unused);
 int DECOMP_VehTalkMask_boolNoXA(void);
 void DECOMP_VehTalkMask_End(void);
 struct Instance* DECOMP_VehTalkMask_Init(void);
@@ -864,12 +864,12 @@ int DECOMP_LOAD_IsOpen_MainMenu(void);
 int DECOMP_Particle_BitwiseClampByte(int* value);
 void DECOMP_PROC_DestroyBloodline(struct Thread* t);
 void DECOMP_RECTMENU_DrawFullRect(struct RectMenu* menu, RECT* inner);
-void DECOMP_UI_Map_DrawAdvPlayer(int ptrMap, int* matrix, int unused1, int unused2, short param_5, short param_6);
+void DECOMP_UI_Map_DrawAdvPlayer(struct Map* ptrMap, Vec3* pos, int unused1, int unused2, short unk800, short angle);
 void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
 void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY);
 void DECOMP_UI_RenderFrame_CrystChall(void);
-void DECOMP_UI_Map_DrawGhosts(int ptrMap, struct Thread* bucket);
-void DECOMP_UI_Map_DrawTracking(int ptrMap, struct Thread* bucket);
+void DECOMP_UI_Map_DrawGhosts(struct Map* ptrMap, struct Thread* bucket);
+void DECOMP_UI_Map_DrawTracking(struct Map* ptrMap, struct Thread* bucket);
 void DECOMP_LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
 void DECOMP_LOAD_Callback_PatchMem();

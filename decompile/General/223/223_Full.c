@@ -261,8 +261,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 			}
 		}
 	
-		relic->matrix.t[0] = DECOMP_UI_ConvertX_2(pos[0], 0x100);
-		relic->matrix.t[1] = DECOMP_UI_ConvertY_2(0xa2, 0x100);
+		relic->matrix.t.x = DECOMP_UI_ConvertX_2(pos[0], 0x100);
+		relic->matrix.t.y = DECOMP_UI_ConvertY_2(0xa2, 0x100);
 	}
 	
 
@@ -289,8 +289,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	
 		pos[1] = 0x79;
 	
-		sdata->ptrTimebox1->matrix.t[0] = DECOMP_UI_ConvertX_2(pos[0], 0x100);
-		sdata->ptrTimebox1->matrix.t[1] = DECOMP_UI_ConvertY_2(pos[1], 0x100);
+		sdata->ptrTimebox1->matrix.t.x = DECOMP_UI_ConvertX_2(pos[0], 0x100);
+		sdata->ptrTimebox1->matrix.t.y = DECOMP_UI_ConvertY_2(pos[1], 0x100);
 	
 		// Draw 'x' before number of crates
 		DecalFont_DrawLine("x", pos[0] + 0x14, pos[1] - 10, 2, 0);

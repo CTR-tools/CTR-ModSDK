@@ -35,9 +35,12 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   for(int i = 0; i < 3; i++)
   {
 	shatterInst->scale[i] = 0x800;
-	shatterInst->matrix.t[i] = inst->matrix.t[i];
+	
   }
   
+    //copy XYZ
+    shatterInst->matrix.t = inst->matrix.t;
+	
   // particles for potion shatter
   for (int i = 0; i < 5; i++)
   {  
@@ -47,9 +50,9 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
     if (p == NULL)
 		continue;
 	
-    p->axis[0].startVal += shatterInst->matrix.t[0] * 0x100;
-    p->axis[1].startVal += shatterInst->matrix.t[1] * 0x100;
-    p->axis[2].startVal += shatterInst->matrix.t[2] * 0x100;
+    p->axis[0].startVal += shatterInst->matrix.t.x * 0x100;
+    p->axis[1].startVal += shatterInst->matrix.t.y * 0x100;
+    p->axis[2].startVal += shatterInst->matrix.t.z * 0x100;
 
 	p->modelID = shatterColor;
 	

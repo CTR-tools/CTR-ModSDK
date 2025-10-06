@@ -84,6 +84,9 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	if(type == 0)
 	{
 		int hubID = levelID - GEM_STONE_VALLEY;
+		
+		//  oxide, roo, papu, joe, pinstripe
+		char boss_charID =  D232.advPausePages[hubID].characterID_Boss;
 
 		// gemstone
 		if(hubID == 0)
@@ -107,10 +110,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					ptrPauseObject->PauseMember[i].inst;
 
 				// Remove SelectProfile with regular UI variant
-				inst->matrix.t[0] =
+				inst->matrix.t.x =
 					DECOMP_UI_ConvertX_2(posX + 0x16d + 1*0x1e, 0x100);
 
-				inst->matrix.t[1] =
+				inst->matrix.t.y =
 					DECOMP_UI_ConvertY_2(i*0x10 + 4 + 0x2f, 0x100);
 
 				// 6, 7, 8,
@@ -132,7 +135,6 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x3a));
 			}
 
-			char boss_charID = NITROS_OXIDE;
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
@@ -181,10 +183,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					ptrPauseObject->PauseMember[2+i].inst;
 
 				// Remove SelectProfile with regular UI variant
-				inst->matrix.t[0] =
+				inst->matrix.t.x =
 					DECOMP_UI_ConvertX_2(posX + 0x100 + (i-2)*60, 0x100);
 
-				inst->matrix.t[1] =
+				inst->matrix.t.y =
 					DECOMP_UI_ConvertY_2(((i&1)<<4)|0x6a, 0x100);
 
 				// gem color
@@ -219,10 +221,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 						ptrPauseObject->PauseMember[3*i+j].inst;
 
 					// Remove SelectProfile with regular UI variant
-					inst->matrix.t[0] =
+					inst->matrix.t.x =
 						DECOMP_UI_ConvertX_2(posX + 0x15e + j*0x1e, 0x100);
 
-					inst->matrix.t[1] =
+					inst->matrix.t.y =
 						DECOMP_UI_ConvertY_2(i*0x10 + 0 + 0x2f, 0x100);
 				}
 
@@ -255,8 +257,6 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					CHECK_ADV_BIT(adv->rewards, (check[i]+0x4c));
 			}
 
-			// roo, papu, joe, pinstripe
-			char boss_charID = data.metaDataLEV[R232.bossTracks[hubID]].characterID_Boss;
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
@@ -271,10 +271,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[12].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(4*0x10 + 0 + 0x2f, 0x100);
 
 			ptrPauseObject->PauseMember[12].indexAdvPauseInst = 5;
@@ -300,10 +300,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[13].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(5*0x10 + 0 + 0x2f, 0x100);
 
 			ptrPauseObject->PauseMember[13].indexAdvPauseInst = 13;
@@ -329,10 +329,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[i].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(instPosY + 0x41, 0x100);
 
 			#ifndef REBUILD_PS1
@@ -385,10 +385,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[i].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(0x49, 0x100);
 
 			#ifndef REBUILD_PS1
@@ -524,8 +524,8 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		}
 
 		rotArr[1] =
-			inst->matrix.t[0] * 0x10 +
-			inst->matrix.t[1] * 0x20 +
+			inst->matrix.t.x * 0x10 +
+			inst->matrix.t.y * 0x20 +
 			sdata->frameCounter * FPS_HALF(0x40);
 
 		rotArr[1] &= 0xfff;

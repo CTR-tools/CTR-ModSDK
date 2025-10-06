@@ -249,9 +249,9 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	// fire particle
 	if(particle1 != 0)
 	{
-		particle1->axis[0].startVal += (inst->matrix.t[0]) * 0x100;
-		particle1->axis[1].startVal += (inst->matrix.t[1] + 0x32) * 0x100;
-		particle1->axis[2].startVal += (inst->matrix.t[2]) * 0x100;
+		particle1->axis[0].startVal += (inst->matrix.t.x) * 0x100;
+		particle1->axis[1].startVal += (inst->matrix.t.y + 0x32) * 0x100;
+		particle1->axis[2].startVal += (inst->matrix.t.z) * 0x100;
 		
 		particle1->axis[0].velocity = (short)fjObj->dirX;
 		particle1->axis[1].velocity = 0;

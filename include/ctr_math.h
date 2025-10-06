@@ -76,6 +76,8 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
+typedef Matrix MATRIX; //fix decompile duplicated
+
 // trigonometry //
 
 struct TrigTable

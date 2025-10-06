@@ -10,7 +10,7 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 
-	gte_ldv0(&D232.maskOffsetPos[0]);
+	gte_ldv0((short*)&D232.maskOffsetPos);
 	gte_rt();
 
 	int posEndINT[3];
@@ -23,9 +23,9 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	posEnd[2] = posEndINT[2];
 
 	short rotEnd[3];
-	rotEnd[0] = pb->rot[0] - D232.maskOffsetRot[0];
-	rotEnd[1] = pb->rot[1] + D232.maskOffsetRot[1];
-	rotEnd[2] = pb->rot[2] - D232.maskOffsetRot[2];
+	rotEnd[0] = pb->rot[0] - D232.maskOffsetRot.x;
+	rotEnd[1] = pb->rot[1] + D232.maskOffsetRot.y;
+	rotEnd[2] = pb->rot[2] - D232.maskOffsetRot.z;
 
 	short posCurr[3];
 	short rotCurr[3];
@@ -51,8 +51,8 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	int cos = DECOMP_MATH_Cos(angle);
 
 	struct Instance* mhInst = sdata->instMaskHints3D;
-	mhInst->matrix.t[0] = posCurr[0] + (short)((sin*rot)>>0xc);
-	mhInst->matrix.t[2] = posCurr[2] + (short)((cos*rot)>>0xc);
+	mhInst->matrix.t.x = posCurr[0] + (short)((sin*rot)>>0xc);
+	mhInst->matrix.t.z = posCurr[2] + (short)((cos*rot)>>0xc);
 
 	rotCurr[1] += angle;
 	ConvertRotToMatrix(&mhInst->matrix, rotCurr);
@@ -61,5 +61,5 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 
 	angle = (sdata->frameCounter + gGT->timer) * FPS_HALF(0x20);
 	sin = DECOMP_MATH_Sin(angle);
-	mhInst->matrix.t[1] = posCurr[1] + (short)(((sin << 4) >> 0xc) * scale >> 0xc);
+	mhInst->matrix.t.y = posCurr[1] + (short)(((sin << 4) >> 0xc) * scale >> 0xc);
 }
