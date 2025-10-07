@@ -27,7 +27,6 @@ force_inline void FlushCache()
     ((void (*)())0xa0)();
 }
 
-#define BACKUP_ADDR 0x80400000
 #define TEST
 
 #if defined(TEST)
@@ -45,7 +44,7 @@ force_inline void FlushCache()
 #if defined(TEST)
 #define TEST_MATH_IMPL
 #define TEST_RNG_IMPL
-//#define TEST_COLL_IMPL
+#define TEST_COLL_IMPL
 #define TEST_LIST_IMPL
 #endif
 
@@ -90,8 +89,10 @@ force_inline void FlushCache()
     void TEST_RNG_Random(RNGSeed* seed, const RNGSeed* ret);
 #else
     #define BACKUP_RNG_Rand()
+	#define RESTORE_RNG_Rand(restore)
     #define TEST_RNG_Rand()
     #define BACKUP_RNG_RandInt()
+	#define RESTORE_RNG_RandInt(restore)
     #define TEST_RNG_RandInt(n, ret)
     #define TEST_RNG_PseudoRand(n, ret)
     #define TEST_RNG_Random(seed, ret)
@@ -101,11 +102,40 @@ force_inline void FlushCache()
     void TEST_COLL_ProjectPointToEdge(const SVec3* v1, const SVec3* v2, const SVec3* point, const SVec3* ret);
     void TEST_COLL_CalculateTrianglePlane(const CollDCache* cache, CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollVertex* ret);
     void TEST_COLL_LoadVerticeData(CollDCache* cache);
-    void TEST_COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret);
-    void TEST_COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret);
+
+	typedef struct BDATA_COLL_LoadQuadblockData_LowLOD
+	{
+		CollDCache cache; //backup of *cache
+	} BDATA_COLL_LoadQuadblockData_LowLOD;
+	void BACKUP_COLL_LoadQuadblockData_LowLOD(CollDCache* cache);
+	void RESTORE_COLL_LoadQuadblockData_LowLOD(BDATA_COLL_LoadQuadblockData_LowLOD* restore, CollDCache* cache);
+    void TEST_COLL_LoadQuadblockData_LowLOD(const Quadblock* quadblock, CollDCache* cache);
+
+	typedef struct BDATA_COLL_LoadQuadblockData_HighLOD
+	{
+		CollDCache cache; //backup of *cache
+	} BDATA_COLL_LoadQuadblockData_HighLOD;
+	void BACKUP_COLL_LoadQuadblockData_HighLOD(CollDCache* cache);
+	void RESTORE_COLL_LoadQuadblockData_HighLOD(BDATA_COLL_LoadQuadblockData_HighLOD* restore, CollDCache* cache);
+    void TEST_COLL_LoadQuadblockData_HighLOD(const Quadblock* quadblock, CollDCache* cache);
+
     void TEST_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const SVec3* pos, s32 ret);
-    void TEST_COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollDCache* ret);
-    void TEST_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache, const CollDCache* ret);
+
+	typedef struct BDATA_COLL_TestTriangle
+	{
+		CollDCache cache; //backup of *cache
+	} BDATA_COLL_TestTriangle;
+	void BACKUP_COLL_TestTriangle(CollDCache* cache);
+	void RESTORE_COLL_TestTriangle(BDATA_COLL_TestTriangle* restore, CollDCache* cache);
+    void TEST_COLL_TestTriangle(const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, CollDCache* cache);
+
+	typedef struct BDATA_COLL_TestLeaf_Quadblock
+	{
+		CollDCache cache; //backup of *cache
+	} BDATA_COLL_TestLeaf_Quadblock;
+	void BACKUP_COLL_TestLeaf_Quadblock(CollDCache* cache);
+	void RESTORE_COLL_TestLeaf_Quadblock(BDATA_COLL_TestLeaf_Quadblock* restore, CollDCache* cache);
+    void TEST_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache);
 #else
     #define TEST_COLL_ProjectPointToEdge(out, v1, v2, point)
     #define TEST_COLL_CalculateTrianglePlane(cache, v1, v2, v3, ret)

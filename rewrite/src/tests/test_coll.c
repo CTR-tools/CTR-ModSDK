@@ -70,23 +70,65 @@ void TEST_COLL_LoadVerticeData(CollDCache* cache)
     PatchFunction_End(index);
 }
 
-void TEST_COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret)
+void BACKUP_COLL_LoadQuadblockData_LowLOD(CollDCache* cache)
+{
+	BDATA_COLL_LoadQuadblockData_LowLOD backup = {};
+	backup.cache = *cache;
+	BACKUP_PUSH(&backup, sizeof(backup));
+}
+
+void RESTORE_COLL_LoadQuadblockData_LowLOD(BDATA_COLL_LoadQuadblockData_LowLOD* restore, CollDCache* cache)
+{
+	*cache = restore->cache;
+}
+
+void TEST_COLL_LoadQuadblockData_LowLOD(const Quadblock* quadblock, CollDCache* cache)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_COLL_LoadQuadblockData_LowLOD), "COLL_LoadQuadblockData_LowLOD");
+
+	BDATA_COLL_LoadQuadblockData_LowLOD* before = (BDATA_COLL_LoadQuadblockData_LowLOD*)BACKUP_PEEK(1, NULL);
+	BDATA_COLL_LoadQuadblockData_LowLOD* resultFromDecomp = (BDATA_COLL_LoadQuadblockData_LowLOD*)BACKUP_PEEK(0, NULL);
+	RESTORE_COLL_LoadQuadblockData_LowLOD(before, cache);
     typedef void (*Func)(CollDCache* cache, const Quadblock* quadblock);
     Func func = (Func) TEST_WRAPPER;
     func(cache, quadblock);
-    PrintDCacheDiff(cache, ret);
+	BACKUP_COLL_LoadQuadblockData_LowLOD(cache);
+	BDATA_COLL_LoadQuadblockData_LowLOD* resultFromND = (BDATA_COLL_LoadQuadblockData_LowLOD*)BACKUP_PEEK(0, NULL);
+
+	BACKUP_POP_MULTIPLE(3);
+
+    PrintDCacheDiff(&resultFromND->cache, &resultFromDecomp->cache);
     PatchFunction_End(index);
 }
 
-void TEST_COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock, const CollDCache* ret)
+void BACKUP_COLL_LoadQuadblockData_HighLOD(CollDCache* cache)
+{
+	BDATA_COLL_LoadQuadblockData_HighLOD backup = {};
+	backup.cache = *cache;
+	BACKUP_PUSH(&backup, sizeof(backup));
+}
+
+void RESTORE_COLL_LoadQuadblockData_HighLOD(BDATA_COLL_LoadQuadblockData_HighLOD* restore, CollDCache* cache)
+{
+	*cache = restore->cache;
+}
+
+void TEST_COLL_LoadQuadblockData_HighLOD(const Quadblock* quadblock, CollDCache* cache)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_COLL_LoadQuadblockData_HighLOD), "COLL_LoadQuadblockData_HighLOD");
+
+	BDATA_COLL_LoadQuadblockData_HighLOD* before = (BDATA_COLL_LoadQuadblockData_HighLOD*)BACKUP_PEEK(1, NULL);
+	BDATA_COLL_LoadQuadblockData_HighLOD* resultFromDecomp = (BDATA_COLL_LoadQuadblockData_HighLOD*)BACKUP_PEEK(0, NULL);
+	RESTORE_COLL_LoadQuadblockData_HighLOD(before, cache);
     typedef void (*Func)(CollDCache* cache, const Quadblock* quadblock);
     Func func = (Func) TEST_WRAPPER;
     func(cache, quadblock);
-    PrintDCacheDiff(cache, ret);
+	BACKUP_COLL_LoadQuadblockData_HighLOD(cache);
+	BDATA_COLL_LoadQuadblockData_HighLOD* resultFromND = (BDATA_COLL_LoadQuadblockData_HighLOD*)BACKUP_PEEK(0, NULL);
+
+	BACKUP_POP_MULTIPLE(3);
+
+	PrintDCacheDiff(&resultFromND->cache, &resultFromDecomp->cache);
     PatchFunction_End(index);
 }
 
@@ -101,23 +143,65 @@ void TEST_COLL_BarycentricTest(TestVertex* t, const CollVertex* v1, const CollVe
     PatchFunction_End(index);
 }
 
-void TEST_COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, const CollDCache* ret)
+void BACKUP_COLL_TestTriangle(CollDCache* cache)
+{
+	BDATA_COLL_TestTriangle backup = {};
+	backup.cache = *cache;
+	BACKUP_PUSH(&backup, sizeof(backup));
+}
+
+void RESTORE_COLL_TestTriangle(BDATA_COLL_TestTriangle* restore, CollDCache* cache)
+{
+	*cache = restore->cache;
+}
+
+void TEST_COLL_TestTriangle(const CollVertex* v1, const CollVertex* v2, const CollVertex* v3, CollDCache* cache)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_COLL_TestTriangle), "COLL_TestTriangle");
+
+	BDATA_COLL_TestTriangle* before = (BDATA_COLL_TestTriangle*)BACKUP_PEEK(1, NULL);
+	BDATA_COLL_TestTriangle* resultFromDecomp = (BDATA_COLL_TestTriangle*)BACKUP_PEEK(0, NULL);
+	RESTORE_COLL_TestTriangle(before, cache);
     typedef void (*Func)(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3);
     Func func = (Func) TEST_WRAPPER;
     func(cache, v1, v2, v3);
-    PrintDCacheDiff(cache, ret);
+	BACKUP_COLL_TestTriangle(cache);
+	BDATA_COLL_TestTriangle* resultFromND = (BDATA_COLL_TestTriangle*)BACKUP_PEEK(0, NULL);
+
+	BACKUP_POP_MULTIPLE(3);
+
+    PrintDCacheDiff(&resultFromND->cache, &resultFromDecomp->cache);
     PatchFunction_End(index);
 }
 
-void TEST_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache, const CollDCache* ret)
+void BACKUP_COLL_TestLeaf_Quadblock(CollDCache* cache)
+{
+	BDATA_COLL_TestLeaf_Quadblock backup = {};
+	backup.cache = *cache;
+	BACKUP_PUSH(&backup, sizeof(backup));
+}
+
+void RESTORE_COLL_TestLeaf_Quadblock(BDATA_COLL_TestLeaf_Quadblock* restore, CollDCache* cache)
+{
+	*cache = restore->cache;
+}
+
+void TEST_COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_COLL_TestLeaf_Quadblock), "COLL_TestLeaf_Quadblock");
+
+	BDATA_COLL_TestLeaf_Quadblock* before = (BDATA_COLL_TestLeaf_Quadblock*)BACKUP_PEEK(1, NULL);
+	BDATA_COLL_TestLeaf_Quadblock* resultFromDecomp = (BDATA_COLL_TestLeaf_Quadblock*)BACKUP_PEEK(0, NULL);
+	RESTORE_COLL_TestLeaf_Quadblock(before, cache);
     typedef void (*Func)(const Quadblock* quadblock, CollDCache* cache);
     Func func = (Func) TEST_WRAPPER;
     func(quadblock, cache);
-    PrintDCacheDiff(cache, ret);
+	BACKUP_COLL_TestLeaf_Quadblock(cache);
+	BDATA_COLL_TestLeaf_Quadblock* resultFromND = (BDATA_COLL_TestLeaf_Quadblock*)BACKUP_PEEK(0, NULL);
+
+	BACKUP_POP_MULTIPLE(3);
+
+	PrintDCacheDiff(&resultFromND->cache, &resultFromDecomp->cache);
     PatchFunction_End(index);
 }
 

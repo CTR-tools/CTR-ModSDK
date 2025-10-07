@@ -101,11 +101,12 @@ static void _COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* q
 
 static void COLL_LoadQuadblockData_LowLOD(CollDCache* cache, const Quadblock* quadblock)
 {
-#ifdef TEST_COLL_IMPL
-    *(CollDCache*)(BACKUP_ADDR) = *cache;
-#endif
+	BACKUP_COLL_LoadQuadblockData_LowLOD(cache); //global state before
+
     _COLL_LoadQuadblockData_LowLOD(cache, quadblock);
-    TEST_COLL_LoadQuadblockData_LowLOD((CollDCache*)(BACKUP_ADDR), quadblock, cache);
+
+	BACKUP_COLL_LoadQuadblockData_LowLOD(cache); //global state after (result from decomp)
+    TEST_COLL_LoadQuadblockData_LowLOD(quadblock, cache);
 }
 
 /* Address: 0x8001f6f0 */
@@ -137,11 +138,12 @@ static void _COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* 
 
 static void COLL_LoadQuadblockData_HighLOD(CollDCache* cache, const Quadblock* quadblock)
 {
-#ifdef TEST_COLL_IMPL
-    *(CollDCache*)(BACKUP_ADDR) = *cache;
-#endif
+	BACKUP_COLL_LoadQuadblockData_HighLOD(cache); //global state before
+
     _COLL_LoadQuadblockData_HighLOD(cache, quadblock);
-    TEST_COLL_LoadQuadblockData_HighLOD((CollDCache*)(BACKUP_ADDR), quadblock, cache);
+
+	BACKUP_COLL_LoadQuadblockData_HighLOD(cache); //global state after (result from decomp)
+	TEST_COLL_LoadQuadblockData_HighLOD(quadblock, cache);
 }
 
 /* Address: 0x8001f928 */
@@ -385,12 +387,12 @@ static void _COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const Co
 
 static void COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const CollVertex* v2, const CollVertex* v3)
 {
-#ifdef TEST_COLL_IMPL
-    const u32 backupAddr = BACKUP_ADDR + sizeof(CollDCache);
-    *(CollDCache*)(backupAddr) = *cache;
-#endif
-    _COLL_TestTriangle(cache, v1, v2, v3);
-    TEST_COLL_TestTriangle((CollDCache*)(backupAddr), v1, v2, v3, cache);
+	BACKUP_COLL_TestTriangle(cache); //global state before
+
+	_COLL_TestTriangle(cache, v1, v2, v3);
+
+	BACKUP_COLL_TestTriangle(cache); //global state after (result from decomp)
+    TEST_COLL_TestTriangle(v1, v2, v3, cache);
 }
 
 /* Address: 0x80020064 */
@@ -453,19 +455,13 @@ static void _COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cac
 
 void COLL_TestLeaf_Quadblock(const Quadblock* quadblock, CollDCache* cache)
 {
-#ifdef TEST_COLL_IMPL
-    *(CollDCache*)(BACKUP_ADDR) = *cache;
-#endif
-    _COLL_TestLeaf_Quadblock(quadblock, cache);
-#ifdef TEST_COLL_IMPL
-    const u32 retAddr = BACKUP_ADDR + sizeof(CollDCache);
-    *(CollDCache*)(retAddr) = *cache;
-    *cache = *(CollDCache*)(BACKUP_ADDR);
-#endif
-    TEST_COLL_TestLeaf_Quadblock(quadblock, cache, (CollDCache*)(retAddr));
-#ifdef TEST_COLL_IMPL
-    *cache = *(CollDCache*)(retAddr);
-#endif
+	BACKUP_COLL_TestLeaf_Quadblock(cache); //global state before
+
+	_COLL_TestLeaf_Quadblock(quadblock, cache);
+
+	BACKUP_COLL_TestLeaf_Quadblock(cache); //global state after (result from decomp)
+	TEST_COLL_TestLeaf_Quadblock(quadblock, cache);
+
     /* This is a hand written assembly function that breaks the ABI,
         and some callers expect the argument registers to be untouched */
     __asm__ volatile("move $t9, %0" : : "r"((u32)quadblock));
