@@ -167,6 +167,13 @@ struct IconGroup
 	// 0x14
 	//struct Icon* icons[0];
 };
+
+//0x1f800000
+struct ScratchpadString
+{
+	char str[20];
+};
+
 #define ICONGROUP_GETICONS(x) (struct Icon **)((unsigned int)x + sizeof(struct IconGroup))
 
 _Static_assert(sizeof(struct TextureLayout) == 0xC);

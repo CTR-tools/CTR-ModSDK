@@ -151,6 +151,12 @@ struct RectMenu
 	#endif
 };
 
+//0x1f800000
+struct ScratchpadRect
+{
+	RECT rect;	
+};
+
 _Static_assert(sizeof(struct MenuRow) == 6);
 #if BUILD != SepReview
 _Static_assert(sizeof(struct RectMenu) == 0x2C);

@@ -30,7 +30,7 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   int max_Y;
   int max_Z;
   
-  struct ScratchpadFrustum* spf = 0x1f800000;
+  struct ScratchpadFrustum* spf = (struct ScratchpadFrustum*)0x1f800000;
   
   #if 0
   // TRAP checks removed
@@ -120,14 +120,14 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
 	
 	iVar19 = 0x1000;
     
-    fcOUT->pos[0] = (short)tx + cameraPosX;
-    fcOUT->pos[1] = (short)ty + cameraPosY;
-	fcOUT->pos[2] = (short)tz + cameraPosZ;
+    fcOUT->pos.x = (short)tx + cameraPosX;
+    fcOUT->pos.y = (short)ty + cameraPosY;
+	fcOUT->pos.z = (short)tz + cameraPosZ;
 	
 	// far clip: pos + dir*100
-    spf->pos[0] = posX;
-    spf->pos[1] = posY;
-    spf->pos[2] = posZ;
+    spf->pos.x = posX;
+    spf->pos.y = posY;
+    spf->pos.z = posZ;
     
 	// === X Axis ===
 	if (((cameraPosX < -0x8000) && (-0x8000 < posX)) || ((-0x8000 < cameraPosX && (posX < -0x8000)))) {
@@ -136,9 +136,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       tz = ty / tx;
 
       if (tz < 0x1000) {
-        spf->pos[0] = -0x8000;
-        spf->pos[1] = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
-        spf->pos[2] = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
+        spf->pos.x = -0x8000;
+        spf->pos.y = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
+        spf->pos.z = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
         iVar19 = tz;
       }
     }
@@ -150,9 +150,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       tz = ty / tx;
 
       if (tz < iVar19) {
-        spf->pos[1] = -0x8000;
-        spf->pos[0] = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
-        spf->pos[2] = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
+        spf->pos.y = -0x8000;
+        spf->pos.x = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
+        spf->pos.z = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
         iVar19 = tz;
       }
     }
@@ -164,9 +164,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       tz = ty / tx;
 
       if (tz < iVar19) {
-        spf->pos[2] = -0x8000;
-        spf->pos[0] = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
-        spf->pos[1] = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
+        spf->pos.z = -0x8000;
+        spf->pos.x = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
+        spf->pos.y = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
         iVar19 = tz;
       }
     }
@@ -178,9 +178,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       tz = ty / tx;
 
       if (tz < iVar19) {
-        spf->pos[0] = 0x7fff;
-        spf->pos[1] = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
-        spf->pos[2] = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
+        spf->pos.x = 0x7fff;
+        spf->pos.y = cameraPosY + (tz * (posY - cameraPosY) >> 0xc);
+        spf->pos.z = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
         iVar19 = tz;
       }
     }
@@ -192,9 +192,9 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       tz = ty / tx;
 
       if (tz < iVar19) {
-        spf->pos[1] = 0x7fff;
-        spf->pos[0] = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
-        spf->pos[2] = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
+        spf->pos.y = 0x7fff;
+        spf->pos.x = cameraPosX + (tz * (posX - cameraPosX) >> 0xc);
+        spf->pos.z = cameraPosZ + (tz * (posZ - cameraPosZ) >> 0xc);
         iVar19 = tz;
       }
     }
@@ -206,21 +206,21 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
       ty = tx / posZ;
 
       if (ty < iVar19) {
-        spf->pos[2] = 0x7fff;
-        spf->pos[0] = cameraPosX + (ty * (posX - cameraPosX) >> 0xc);
-        spf->pos[1] = cameraPosY + (ty * (posY - cameraPosY) >> 0xc);
+        spf->pos.z = 0x7fff;
+        spf->pos.x = cameraPosX + (ty * (posX - cameraPosX) >> 0xc);
+        spf->pos.y = cameraPosY + (ty * (posY - cameraPosY) >> 0xc);
       }
     }
 	
 	// === Set 6 Min/Max X,Y,Z variables ===
 	
-    if (min_X > spf->pos[0]) min_X = spf->pos[0];
-    if (min_Y > spf->pos[1]) min_Y = spf->pos[1];
-    if (min_Z > spf->pos[2]) min_Z = spf->pos[2];
+    if (min_X > spf->pos.x) min_X = spf->pos.x;
+    if (min_Y > spf->pos.y) min_Y = spf->pos.y;
+    if (min_Z > spf->pos.z) min_Z = spf->pos.z;
     
-    if (max_X < spf->pos[0]) max_X = spf->pos[0];
-    if (max_Y < spf->pos[1]) max_Y = spf->pos[1];
-    if (max_Z < spf->pos[2]) max_Z = spf->pos[2];
+    if (max_X < spf->pos.x) max_X = spf->pos.x;
+    if (max_Y < spf->pos.y) max_Y = spf->pos.y;
+    if (max_Z < spf->pos.z) max_Z = spf->pos.z;
     
 	// next corner to write
     fcOUT--;
@@ -235,21 +235,21 @@ void DECOMP_PushBuffer_UpdateFrustum(struct PushBuffer* pb)
   pb->bbox.max[2] = (short)max_Z;
 
   // cameraPos (x,y,z)
-  spf->camPos[0] = cameraPosX;
-  spf->camPos[1] = cameraPosY;
-  spf->camPos[2] = cameraPosZ;
+  spf->camPos.x = cameraPosX;
+  spf->camPos.y = cameraPosY;
+  spf->camPos.z = cameraPosZ;
 
   // PushBuffer_SetFrustumPlane (x4)
-  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0],&spf->fc[0],&spf->camPos[0],&spf->fc[1]);
+  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0],&spf->fc[0],&spf->camPos.x,&spf->fc[1]);
   pb->RenderListJmpIndex[0] = ~val_Y & 7;
 
-  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x8],&spf->fc[1],&spf->camPos[0],&spf->fc[3]);
+  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x8],&spf->fc[1],&spf->camPos.x,&spf->fc[3]);
   pb->RenderListJmpIndex[1] = ~val_Y & 7;
 
-  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x10],&spf->fc[3],&spf->camPos[0],&spf->fc[2]);
+  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x10],&spf->fc[3],&spf->camPos.x,&spf->fc[2]);
   pb->RenderListJmpIndex[2] = ~val_Y & 7;
 
-  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x18],&spf->fc[2],&spf->camPos[0],&spf->fc[0]);
+  val_Y = PushBuffer_SetFrustumPlane(&pb->frustumData[0x18],&spf->fc[2],&spf->camPos.x,&spf->fc[0]);
   pb->RenderListJmpIndex[3] = ~val_Y & 7;
 
   gte_ldVXY0(0);

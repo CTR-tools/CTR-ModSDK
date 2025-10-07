@@ -17,7 +17,7 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
   short boolKey;
   short itemMode;
   short typeCount;
-  Vec3 rawIconPos;
+  Vec3 boss_StarPos;
   
   //load/save instance on minimap
   Vec2 saveObjpos;
@@ -229,9 +229,9 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
 	  
       if (itemMode > -1)
       {
-        rawIconPos.x = hubitem->pos.x;
-        rawIconPos.y = 0;
-        rawIconPos.z = hubitem->pos.y;
+        boss_StarPos.x = hubitem->pos.x;
+        boss_StarPos.y = 0;
+        boss_StarPos.z = hubitem->pos.y;
         
 		// if beat boss race
 		if (itemMode == 2)
@@ -275,7 +275,7 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
         }
 		
 		// draw star icon for boss
-        DECOMP_UI_Map_DrawRawIcon(hubPtrs, &rawIconPos, 0x37, itemColorID, 0, 0x1000);
+        DECOMP_UI_Map_DrawRawIcon(hubPtrs, &boss_StarPos, 0x37, itemColorID, 0, 0x1000);
       }
 	  
 	  *type = typeCount;

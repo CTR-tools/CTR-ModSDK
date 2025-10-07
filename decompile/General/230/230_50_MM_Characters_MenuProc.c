@@ -31,12 +31,16 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 	Color color;
 
 	u_char colorRGBA[4];
+	
+	
+	
 
 	#ifdef REBUILD_PC
 	RECT r1;
 	RECT* r = &r1;
 	#else
-	RECT* r = (RECT*)0x1f800000; //todo: replace 0x1f800000 with reference to scratchpad
+	struct ScratchpadRect* scpr = (struct ScratchpadRect*)0x1f800000;
+	RECT* r = (RECT*)&scpr->rect; 
 	#endif
 	RECT r58;
 
