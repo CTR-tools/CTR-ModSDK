@@ -28,11 +28,11 @@
 
 /* Structure definitions */
 
-//this is duplicated
+//decomp already have a matrix declaration
 /*
 typedef struct _MATRIX {
 	int16_t m[3][3];
-	int32_t t;
+	int32_t t[3];
 } MATRIX;
 */
 

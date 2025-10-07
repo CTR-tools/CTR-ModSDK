@@ -76,7 +76,7 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
-typedef Matrix MATRIX; //fix decompile duplicated
+typedef Matrix MATRIX; //fix psn00b duplicate
 
 // trigonometry //
 

@@ -1,5 +1,6 @@
 #include <common.h>
 
+//unused was a short*, but it literally didnt had any use on code
 void DECOMP_UI_Map_DrawDrivers(struct Map* ptrMap,struct Thread* bucket, short unused)
 
 {
@@ -18,7 +19,7 @@ void DECOMP_UI_Map_DrawDrivers(struct Map* ptrMap,struct Thread* bucket, short u
   for( /* bucket */ ;
 		bucket != 0;
 		bucket = bucket->siblingThread
-		//, unused++;
+		//, unused++
 	  )
   {
 	// Player structure
@@ -52,7 +53,7 @@ void DECOMP_UI_Map_DrawDrivers(struct Map* ptrMap,struct Thread* bucket, short u
 		if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		{
 			// Draw dot for Player on 2D Adv Map
-			DECOMP_UI_Map_DrawAdvPlayer(ptrMap,(int*)&bucket->inst->matrix.t.x, 0x32, kartColor,
+			DECOMP_UI_Map_DrawAdvPlayer(ptrMap,&bucket->inst->matrix.t, 0x32, kartColor,
 						(d->rotCurr.y + 0x800U) | 0x1000,0x800);
 		
 			continue;

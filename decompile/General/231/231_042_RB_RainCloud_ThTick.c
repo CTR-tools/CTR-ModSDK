@@ -54,13 +54,13 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
 
 	// get average between instance and driver
 	inst->matrix.t.x += dInst->matrix.t.x;
-	inst->matrix.t.x = dInst->matrix.t.x >> 1;
+	inst->matrix.t.x = inst->matrix.t.x >> 1;
 	
 	inst->matrix.t.y += dInst->matrix.t.y;
-	inst->matrix.t.y = dInst->matrix.t.y >> 1;
+	inst->matrix.t.y = inst->matrix.t.y >> 1;
 	
 	inst->matrix.t.z += dInst->matrix.t.z;
-	inst->matrix.t.z = dInst->matrix.t.z >> 1;
+	inst->matrix.t.z = inst->matrix.t.z >> 1;
 
  
   

@@ -12,10 +12,12 @@ void DECOMP_AH_Map_Main(void)
   // force disable speedometer
   sdata->HudAndDebugFlags &= 0xfffffff7;
   
+  
+  
 
   advDriver = gGT->drivers[0];
   ptrHudData = data.hudStructPtr[0];
-  hubPtrs = 0;
+
   iVar1 = DECOMP_RaceFlag_GetCanDraw();
   if (iVar1 == 0) 
   {
@@ -73,7 +75,7 @@ void DECOMP_AH_Map_Main(void)
 	
     DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread, 0);
 
-    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread, &type); //local_1e index 1 and 2 are never assigned to, so garbage data?
+    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread, (short*)&type); //local_1e index 1 and 2 are never assigned to, so garbage data?
 	
     DECOMP_AH_Map_HubItems(hubPtrs,&type);
 	

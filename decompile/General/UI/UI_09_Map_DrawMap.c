@@ -14,6 +14,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, SVec2* p
 	gGT = sdata->gGT;
 
 
+	
 	// draw minimap with neutral/none vertex color, minimap's regular color is white
 	color = 0x808080;
 
@@ -46,7 +47,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, SVec2* p
 	// not sure when the game ever draws only the bottom half
 	if
 	(
-		((minimap != 0) && (minimap->mode == 0)) ||
+		((minimap != 0) && (minimap->unk == 0)) ||
 
 		// if in main menu (character selection, track selection, any part of it)
 		((gGT->gameMode1 & MAIN_MENU) != 0)
@@ -111,7 +112,7 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 		// and icons to scale together
 		
 		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
-		void* levPtrMap = pointers[ST1_MAP];
+		void* levPtrMap = (struct Map*)pointers[ST1_MAP];
 		
 		Vec2 mid;
 		

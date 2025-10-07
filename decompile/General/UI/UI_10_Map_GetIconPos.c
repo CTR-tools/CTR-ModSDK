@@ -49,8 +49,8 @@ void DECOMP_UI_Map_GetIconPos(struct Map* minimap, Vec2* pos)
   else 
   {
 	// 270 degrees
-    addX =  (pos->x * minimap->iconSizeX    ) / worldRangeY;
-    addY = -(pos->y * minimap->iconSizeY * 2) / worldRangeX;
+    addX =  (pos->y * minimap->iconSizeX    ) / worldRangeY;
+    addY = -(pos->x * minimap->iconSizeY * 2) / worldRangeX;
   }
 
   #ifdef USE_16BY9
