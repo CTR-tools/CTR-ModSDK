@@ -38,25 +38,22 @@ const char* s_nameTestedFunc = nullptr;
 void TEST_Init()
 {
 	BACKUP_INIT();
-	LoadTestPatches();
+	TEST_LoadPatches();
 }
 
-s32 TEST_Memcmp(const void* s1, const void* s2, u32 n)
+bool TEST_Memcmp(const void* expected, const void* actual, u32 n)
 {
-	const u8* p1 = (const u8*)s1;
-	const u8* p2 = (const u8*)s2;
+	bool failed = false;
+	const u8* pExpected = (const u8*)expected;
+	const u8* pActual = (const u8*)actual;
 	for (u32 i = 0; i < n; i++)
 	{
-		if (p1[i] != p2[i])
-		{
-			ND_printf("[%s] Test Failed (memcmp mismatch at byte %d):\nExpected: %02x\nResult: %02x\n", s_nameTestedFunc, i, p1[i], p2[i]);
-			return p1[i] - p2[i];
-		}
+		if (pExpected[i] != pActual[i]) { ND_printf("[%s] Test Failed:\nOffset %x: %d, got: %d\n", s_nameTestedFunc, i, (u32)pExpected[i], (u32)pActual[i]); failed = true; }
 	}
-	return 0;
+	return failed;
 }
 
-void LoadTestPatches()
+void TEST_LoadPatches()
 {
     const u32 funcCount = ARR_LEN(s_functions);
     for (u32 i = 0; i < funcCount; i++)
@@ -101,7 +98,7 @@ void PatchFunction_End(u32 index)
     FlushCache();
 }
 
-u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
+u32 TEST_PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)
@@ -115,7 +112,7 @@ u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
     return failed;
 }
 
-u32 PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans)
+u32 TEST_PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)

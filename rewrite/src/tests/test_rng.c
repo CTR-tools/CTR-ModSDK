@@ -2,6 +2,7 @@
 
 #ifdef TEST_RNG_IMPL
 
+#pragma region RNG_Rand
 void BACKUP_RNG_Rand()
 {
 	BDATA_RNG_Rand backup = {
@@ -34,7 +35,9 @@ void TEST_RNG_Rand()
     if (resultFromND->e_seed != resultFromDecomp->e_seed) { ND_printf("[%s] Test Failed:\nExpected: %d\nResult: %d\n", s_nameTestedFunc, resultFromND->e_seed, resultFromDecomp->e_seed); }
     PatchFunction_End(index);
 }
+#pragma endregion
 
+#pragma region RNG_RandInt
 void BACKUP_RNG_RandInt()
 {
 	BDATA_RNG_RandInt backup = {
@@ -67,7 +70,9 @@ void TEST_RNG_RandInt(u32 n, s32 ret)
     if (expected != ret) { ND_printf("[%s] Test Failed:\nExpected: %d\nResult: %d\n", s_nameTestedFunc, expected, ret); }
     PatchFunction_End(index);
 }
+#pragma endregion
 
+#pragma region RNG_PseudoRand
 void TEST_RNG_PseudoRand(u16 n, u16 ret)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_RNG_PseudoRand), "RNG_PseudoRand");
@@ -75,7 +80,9 @@ void TEST_RNG_PseudoRand(u16 n, u16 ret)
     if (expected != ret) { ND_printf("[%s] Test Failed:\nExpected: %d\nResult: %d\n", s_nameTestedFunc, expected, ret); }
     PatchFunction_End(index);
 }
+#pragma endregion
 
+#pragma region RNG_Random
 void TEST_RNG_Random(RNGSeed* seed, const RNGSeed* ret)
 {
     const u32 index = PatchFunction_Beg((u32*)(&ND_RNG_Random), "RNG_Random");
@@ -85,5 +92,6 @@ void TEST_RNG_Random(RNGSeed* seed, const RNGSeed* ret)
     if (expected != ret->b) { ND_printf("[%s] Test Failed:\nExpected: %d\nret: %d\n", s_nameTestedFunc, expected, ret->b); }
     PatchFunction_End(index);
 }
+#pragma endregion
 
 #endif // TEST_RNG_IMPL

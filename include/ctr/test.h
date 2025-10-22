@@ -7,18 +7,19 @@
 #include <ctr/math.h>
 #include <ctr/rng.h>
 #include <ctr/coll.h>
+#include <ctr/list.h>
 #include <ctr/test_backup.h>
 
 extern const char* s_nameTestedFunc;
 
 void TEST_WRAPPER();
-void LoadTestPatches();
+void TEST_LoadPatches();
 void TEST_Init();
-s32 TEST_Memcmp(const void* s1, const void* s2, u32 n);
+bool TEST_Memcmp(const void* expected, const void* actual, u32 n);
 u32 PatchFunction_Beg(u32* index, const char* funcName);
 void PatchFunction_End(u32 index);
-u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret);
-u32 PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans);
+u32 TEST_PrintSVectorDiff(const SVec3* expected, const SVec3* ret);
+u32 TEST_PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans);
 
 force_inline void FlushCache()
 {
@@ -145,4 +146,16 @@ force_inline void FlushCache()
     #define TEST_COLL_BarycentricTest(t, v1, v2, v3, pos, ret)
     #define TEST_COLL_TestTriangle(cache, v1, v2, v3, ret)
     #define TEST_COLL_TestLeaf_Quadblock(quadblock, cache, ret)
+#endif
+
+#ifdef TEST_LIST_IMPL
+	typedef struct BDATA_LIST_Init
+	{
+		void asdf;
+	} BDATA_LIST_Init;
+	void BACKUP_LIST_Init(const void* source);
+	void RESTORE_LIST_Init(BDATA_LIST_Init* restore, void* destination);
+	void TEST_LIST_Init(LinkedList* list, Item* item, s32 itemSize, s32 numItems);
+#else
+	#define TEST_LIST_Init(list, item, itemSize, numItems)
 #endif
