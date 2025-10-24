@@ -18,10 +18,12 @@
 926, exe, 0x8001af3c, 0x0, src/patches/introCam.s
 
 // 226 - patch vistree lookup to not do modulo 4096
+926, 226, 0x800a0f18, 0x0, src/patches/lod0.s
 926, 226, 0x800a1e80, 0x0, src/patches/lod1.s
 926, 226, 0x800a36d8, 0x0, src/patches/lod2.s
 926, 226, 0x800a4fd0, 0x0, src/patches/lod3.s
 926, 226, 0x800a6f70, 0x0, src/patches/lod4.s
+926, 226, 0x800a8b90, 0x0, src/patches/lod5.s
 926, 226, 0x800ab460, 0x0, src/patches/highLOD.s
 
 // Menus
