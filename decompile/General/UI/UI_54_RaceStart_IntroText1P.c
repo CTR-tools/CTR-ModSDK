@@ -5,7 +5,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    short windowHeight;
    struct GameTracker * gGT;
    int iVar2;
-   int gameMode;
+   unsigned int gameMode;
    int posX;
    short * txtArray;
    char * pcVar6;

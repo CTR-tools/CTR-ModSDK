@@ -15,16 +15,14 @@ void DECOMP_RB_RainCloud_FadeAway(struct Thread* t)
   // offset upward before averaging
   inst->matrix.t.y += 0x80;
 
-  // X, Y, Z
+	// pos X, Y, Z
 	// get average between instance and driver
-	inst->matrix.t.x += parentInst->matrix.t.x;
-	inst->matrix.t.x = parentInst->matrix.t.x >> 1;
-	
-	inst->matrix.t.y += parentInst->matrix.t.y;
-	inst->matrix.t.y = parentInst->matrix.t.y >> 1;
-	
-	inst->matrix.t.z += parentInst->matrix.t.z;
-	inst->matrix.t.z = parentInst->matrix.t.z >> 1;
+	for (unsigned char i = 0; i < 3; i++)
+	{
+		//cant separate this per coord, byte budget
+		///Apparently looping uses fewer bytes
+		inst->matrix.t.v[i] = (parentInst->matrix.t.v[i] + inst->matrix.t.v[i]) >> 1;
+	}
 	
 
   

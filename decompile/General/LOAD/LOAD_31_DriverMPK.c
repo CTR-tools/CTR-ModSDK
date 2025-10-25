@@ -95,7 +95,7 @@ void highLOD_DriverMPK(int numDrivers)
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 {
 	int i;
-	int gameMode1;
+	unsigned int gameMode1;
 		
 #ifdef USE_ONLINE
 	goto ForceOnlineLoad8;

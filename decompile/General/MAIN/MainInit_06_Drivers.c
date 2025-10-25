@@ -6,7 +6,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     char numPlyrCurrGame = gGT->numPlyrCurrGame;
     u_char numDrivers;
     u_int uVar3;
-    int gameMode = gGT->gameMode1;
+    unsigned int gameMode = gGT->gameMode1;
     struct Driver* d;
 
     for (i = 0; i < 8; i++)

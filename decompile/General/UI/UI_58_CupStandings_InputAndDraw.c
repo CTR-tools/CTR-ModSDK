@@ -538,7 +538,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
           // If player 1 won the cup
           if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID)
 		  {
-            int bitIndex = 0x6a + i;
+            int bitIndex = PRIZE_GEM_CUP + i;
 			unsigned int* rewardsSet = sdata->advProgress.rewards;
 
             if (CHECK_ADV_BIT(rewardsSet, bitIndex) == 0)

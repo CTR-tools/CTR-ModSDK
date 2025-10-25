@@ -373,7 +373,7 @@ LAB_800ad17c:
 	// glass shatter sound
 	PlaySound3D(0x3f,inst);
 	
-	RB_Explosion_InitPotion(inst);
+	DECOMP_RB_Explosion_InitPotion(inst);
   }
   
   else

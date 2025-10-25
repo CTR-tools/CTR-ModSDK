@@ -752,7 +752,7 @@ void RenderAllStars(struct GameTracker* gGT)
 void RenderAllHUD(struct GameTracker* gGT)
 {
 	int hudFlags;
-	int gameMode1;
+	unsigned int gameMode1;
 
 	hudFlags = gGT->hudFlags;
 	gameMode1 = gGT->gameMode1;

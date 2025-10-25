@@ -6,7 +6,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   int index;
   char* countPtr;
   
-  int gameMode1;
+  unsigned int gameMode1;
   struct GameTracker* gGT;
 
   gGT = sdata->gGT;

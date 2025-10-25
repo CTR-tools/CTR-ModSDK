@@ -10,6 +10,7 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   struct Driver* d;
   struct RainCloud* rcloud;
   struct Instance* dInst;
+  unsigned char i;
   
   struct GameTracker* gGT = sdata->gGT;
   
@@ -40,8 +41,8 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
     inst->animFrame = 0;
   }
   
-  // X, Y, Z
-  for(int i = 0; i < 3; i++)
+  // scale X, Y, Z
+  for(i = 0; i < 3; i++)
   {
 	// get average between instance and driver
 	inst->scale[i] += dInst->scale[i];
@@ -51,16 +52,12 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   // offset upward before averaging
   inst->matrix.t.y += (inst->scale[1] * 5 >> 7);
   
-
+  // pos X, Y, Z
+  for(i = 0; i < 3; i++)
+  {
 	// get average between instance and driver
-	inst->matrix.t.x += dInst->matrix.t.x;
-	inst->matrix.t.x = inst->matrix.t.x >> 1;
-	
-	inst->matrix.t.y += dInst->matrix.t.y;
-	inst->matrix.t.y = inst->matrix.t.y >> 1;
-	
-	inst->matrix.t.z += dInst->matrix.t.z;
-	inst->matrix.t.z = inst->matrix.t.z >> 1;
+	inst->matrix.t.v[i] = (dInst->matrix.t.v[i] + inst->matrix.t.v[i]) >> 1;
+  }
 
  
   
@@ -127,6 +124,7 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   // or timeMS is over
   rcloud->timeMS = 0;
   d->thCloud = NULL;
+  
   
   ThTick_SetAndExec(t,DECOMP_RB_RainCloud_FadeAway);
   return;

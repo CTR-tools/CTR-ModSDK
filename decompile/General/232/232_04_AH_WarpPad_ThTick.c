@@ -579,13 +579,13 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	if(levelID < SLIDE_COLISEUM)
 	{
 		// if trophy is unlocked
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TROPHY_RACE)) != 0)
 		{
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
 				D232.menuTokenRelic.rowSelected =
-					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
+					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TOKEN_RACE)) != 0);
 				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
@@ -614,7 +614,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 					i = 0x1a;
 				
 				// if hint is locked
-				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
+				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+ MASK_HINT_PROGRESS)) == 0)
 					DECOMP_MainFrame_RequestMaskHint(i, 1);
 				
 				// if can't spawn aku cause he's already here,

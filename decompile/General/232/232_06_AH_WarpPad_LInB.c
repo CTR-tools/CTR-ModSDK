@@ -90,7 +90,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 		// can we just do gGT->levelID-0x19?
 		
 		// if trophy owned
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TROPHY_RACE)) != 0)
 		{
 GetKeysRequirement:
 			
@@ -129,7 +129,7 @@ GetKeysRequirement:
 		// count number of gems owned
 		unlockItem_numOwned = 0;
 		for(i = 0; i < 5; i++)
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i + 0x6a)) != 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i + PRIZE_GEM_CUP)) != 0)
 				unlockItem_numOwned++;
 	}
 	

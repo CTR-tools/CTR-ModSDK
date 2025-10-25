@@ -67,9 +67,9 @@ void DECOMP_AH_Map_Warppads(struct Map* ptrMap, struct Thread* warppadThread, sh
 		// Get Icon Dimensions
 		DECOMP_UI_Map_GetIconPos(ptrMap, &pos);
 	
-		DECOMP_AH_Map_HubArrowOutter(ptrMap,(int)(*type),&pos,0,0);
+		DECOMP_AH_Map_HubArrowOutter(ptrMap,(int)type[0],&pos,0,0);
 	
-		(*type)++;
+		type[0]++;
 	}
 	
 	DECOMP_UI_Map_DrawRawIcon(

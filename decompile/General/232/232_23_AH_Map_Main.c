@@ -77,7 +77,7 @@ void DECOMP_AH_Map_Main(void)
 
     DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread, (short*)&type); //local_1e index 1 and 2 are never assigned to, so garbage data?
 	
-    DECOMP_AH_Map_HubItems(hubPtrs,&type);
+    DECOMP_AH_Map_HubItems(hubPtrs, (short*)&type);
 	
     SVec2 mapPos;
     

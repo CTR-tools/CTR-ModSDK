@@ -49,7 +49,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	gGT = sdata->gGT;
 
 	int numPlyr = gGT->numPlyrCurrGame;
-	int gameMode1 = gGT->gameMode1;
+	unsigned int gameMode1 = gGT->gameMode1;
 
 	// Get pointer to array of HUD structs
 	hudStructPtr = (struct UiElement2D*)data.hudStructPtr[numPlyr - 1];

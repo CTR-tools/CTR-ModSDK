@@ -9,7 +9,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     int move;
     int ratio;
     int bottom;
-    short *check;
+    short *trophy_index;
     u_int bitIndex;
     u_int uVar5;
     u_int uVar8;
@@ -126,7 +126,7 @@ LAB_800aeb6c:
     if (levelID == GEM_STONE_VALLEY)
     {
         // ripper roo boss key
-        bitIndex = 0x5e;
+        bitIndex = PRIZE_BOSS_KEY;
 
         // check four boss keys
         for (i = 0; i < 4; i++)
@@ -139,12 +139,12 @@ LAB_800aeb6c:
     // If you're not in Gemstone Valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+        trophy_index = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
+            if (CHECK_ADV_BIT(adv->rewards, trophy_index[i] + PRIZE_TROPHY_RACE) == 0)
                 // boss is not open
                 goto LAB_800aebd0;
         }

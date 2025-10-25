@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_GhostReplay_ThTick(struct Thread *);
+void DECOMP_GhostReplay_ThTick(struct Thread *t);
 
 void DECOMP_GhostReplay_Init1(void)
 {
@@ -20,7 +20,7 @@ void DECOMP_GhostReplay_Init1(void)
 	char* recordBuffer;
 	
 	//for human reading purposes
-	unsigned char playerID;
+	unsigned char driverID;
 	
 	struct GameTracker *gGT = sdata->gGT;
 	
@@ -29,7 +29,14 @@ void DECOMP_GhostReplay_Init1(void)
 	sdata->boolGhostsDrawing = 0;
 
 	// only continue if you're in time trial, not main menu, and not cutscene
-	if ((gGT->gameMode1 & TIME_TRIAL) == 0) return;
+	if 
+	(
+		((gGT->gameMode1 & TIME_TRIAL) == 0) ||
+		((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0)
+	)
+	{
+		return;
+	}
 	
 	// === Record Buffer ===
 	
@@ -50,11 +57,12 @@ void DECOMP_GhostReplay_Init1(void)
 	// for "Ghost Too Big" will never play
 	gh = 0;
 	charID = 0;
-	playerID = charID;
-
+	driverID = 0;
+	
+	//2 ghosts, our player tape + tropy or oxide instead
 	for (i = 0; i < 2; i++)
 	{
-		tape = DECOMP_MEMPACK_AllocMem(0x268/*, "ghost tape"*/);
+		tape = DECOMP_MEMPACK_AllocMem(sizeof(struct GhostTape));
 		sdata->ptrGhostTape[i] = tape;
 
 		// first ghost pointer is a ghost loaded by player
@@ -66,7 +74,7 @@ void DECOMP_GhostReplay_Init1(void)
 				// assign the ghost you loaded
 				gh = sdata->ptrGhostTapePlaying;
 				
-				playerID = 1;
+				driverID = 1;
 			}
 
 			// if no human ghost is replayed, do NOT
@@ -100,13 +108,13 @@ void DECOMP_GhostReplay_Init1(void)
 				// ntropy
 				case 1:
 					gh = pointers[ST1_NTROPY];	
-					playerID = 2;
+					driverID = 2;
 					break;
 				
 				// oxide
 				default:
 					gh = pointers[ST1_NOXIDE];	
-					playerID = 3;
+					driverID = 3;
 					break;
 			}
 		}
@@ -143,7 +151,7 @@ void DECOMP_GhostReplay_Init1(void)
 		}
 
 		// characterID and model
-		charID = data.characterIDs[playerID];
+		charID = data.characterIDs[driverID];
 		
 		#ifdef USE_PRELOAD
 		int* arr = 0x8000a000;
@@ -181,9 +189,9 @@ void DECOMP_GhostReplay_Init1(void)
 		t->inst = inst;
 		inst->thread = t;
 		
-		// ghost drivers are 0x638 bytes large
+		// ghost drivers are 0x638 bytes large as any other driver
 		ghostDriver = t->object;
-		memset(ghostDriver, 0, 0x638);
+		memset(ghostDriver, 0, sizeof(struct Driver));
 		ghostDriver->ghostID = i;
 		ghostDriver->driverID = i + 1;
 		ghostDriver->ghostBoolInit = 1;

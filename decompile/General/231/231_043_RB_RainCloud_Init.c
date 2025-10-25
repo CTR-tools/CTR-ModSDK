@@ -5,16 +5,16 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
   struct Instance* cloudInst;
   struct RainCloud* rcloud;
   struct RainLocal* rlocal;
-  unsigned short uVar3;
 
   // if driver -> cloudTh is invalid
   if (d->thCloud == NULL) 
   {
     cloudInst = DECOMP_INSTANCE_BirthWithThread(
 		0x42, 0, SMALL, OTHER,
-		RB_RainCloud_ThTick, 
+		DECOMP_RB_RainCloud_ThTick, 
 		sizeof(struct RainCloud), 
 		d->instSelf->thread);
+		
 	
     cloudInst->thread->funcThDestroy = DECOMP_PROC_DestroyInstance;
 	
@@ -58,7 +58,7 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     }
     
 	rcloud = cloudInst->thread->object;
-    rcloud->timeMS = 0x1e00; // 7.68s
+    rcloud->timeMS = SECONDS(8);
     rcloud->rainLocal = rlocal;
 	rcloud->boolScrollItem = 1;
     
@@ -81,8 +81,8 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
   {
 	rcloud = d->thCloud->object;
 	  
-	// set duration to 8 seconds
-    rcloud->timeMS = 0x1e00;
+
+    rcloud->timeMS = SECONDS(8);
     
 	// random number
 	int rng = DECOMP_MixRNG_Scramble();

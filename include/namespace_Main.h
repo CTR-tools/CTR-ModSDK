@@ -121,13 +121,13 @@ enum CharacterUnlock
 struct GameTracker
 {
 	// 0x0
-	int gameMode1;
+	unsigned int gameMode1;
 
 	// 0x4
-	int gameMode1_prevFrame;
+	unsigned int gameMode1_prevFrame;
 
 	// 0x8
-	int gameMode2;
+	unsigned int gameMode2;
 
 	// 0xC
 	int swapchainIndex; // 0 or 1

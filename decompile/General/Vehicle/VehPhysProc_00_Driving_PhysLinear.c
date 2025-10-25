@@ -12,7 +12,7 @@ extern short PhysLinear_DriverOffsets[14];
 void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
-	int gameMode2;
+	unsigned int gameMode2;
 
 	char kartState;
 	char heldItemID;

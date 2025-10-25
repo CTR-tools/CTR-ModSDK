@@ -136,10 +136,13 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   // backup original position
 
 
-  	followerInst->matrix.t = mineInst->matrix.t;
-	
-  	fObj->realPos.x = mineInst->matrix.t.x;
+  	followerInst->matrix.t.x = mineInst->matrix.t.x;
+	fObj->realPos.x = mineInst->matrix.t.x;
+  	
+	followerInst->matrix.t.y = mineInst->matrix.t.y;
 	fObj->realPos.y = mineInst->matrix.t.y;
+	
+	followerInst->matrix.t.z = mineInst->matrix.t.z;
 	fObj->realPos.z = mineInst->matrix.t.z;
   
 }

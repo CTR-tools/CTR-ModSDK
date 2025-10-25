@@ -1,12 +1,11 @@
 #include <common.h>
 
-void RB_Explosion_ThTick();
-
 void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
 {
   struct Instance* shatterInst;
   struct Particle* p;
   int shatterColor;
+  unsigned char i;
   
   // green explosion
   shatterColor = STATIC_SHOCKWAVE_GREEN;
@@ -15,10 +14,10 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   if (inst->model->id == STATIC_BEAKER_RED) 
 	  shatterColor = STATIC_SHOCKWAVE_RED;
   
-  // create thread for shatter
+  // create instance for shatter
   shatterInst = INSTANCE_BirthWithThread(
 	shatterColor, 0, SMALL, OTHER, 
-	RB_Explosion_ThTick, 0,0);
+	DECOMP_RB_Explosion_ThTick, 0,0);
   
   shatterInst->flags |= 0xa00;
   
@@ -32,17 +31,21 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   *(int*)&shatterInst->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
   shatterInst->matrix.m[2][2] = inst->matrix.m[2][2];
   
-  for(int i = 0; i < 3; i++)
+
+  
+   	//copy XYZ
+  for (i = 0; i < 3; i++)
   {
+	//scale
 	shatterInst->scale[i] = 0x800;
 	
+	//pos
+    shatterInst->matrix.t.v[i] = inst->matrix.t.v[i];
   }
-  
-    //copy XYZ
-    shatterInst->matrix.t = inst->matrix.t;
+	
 	
   // particles for potion shatter
-  for (int i = 0; i < 5; i++)
+  for (i = 0; i < 5; i++)
   {  
 	// Create instance in particle pool
     p = Particle_Init(0,sdata->gGT->iconGroup[1], (struct ParticleEmitter*)0x800b2d58);
@@ -74,7 +77,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
     p->funcPtr = Particle_FuncPtr_PotionShatter;
   } 
   
-  RB_Potion_OnShatter_TeethSearch(inst);
+  DECOMP_RB_Potion_OnShatter_TeethSearch(inst);
   return;
 }
  

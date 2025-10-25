@@ -3,7 +3,7 @@
 void DECOMP_AH_Garage_LInB(struct Instance *inst)
 {
     char bossIsOpen, i;
-    short * check;
+    short * trophy_index;
     u_int bitIndex;
     int levelID;
     int ratio;
@@ -104,12 +104,12 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     // if not gemstone valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+        trophy_index = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
+            if (CHECK_ADV_BIT(adv->rewards, trophy_index[i] + PRIZE_TROPHY_RACE) == 0)
                 // boss is not open
                 goto GarageLocked;
         }

@@ -32,7 +32,7 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
   adv = &sdata->advProgress;
   levelID = gGT->levelID;
   hubID = levelID - GEM_STONE_VALLEY;  
-  typeCount = *type;
+  typeCount = type[0];
   
 
 
@@ -103,7 +103,6 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
             if (iconType > 3)
             {
               arrowColIndex = -0x10000;
-              itemMode = itemMode;
 			  
 			  // saveLoad screen (0x64)
               if (iconType == 100)
@@ -278,7 +277,7 @@ void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
         DECOMP_UI_Map_DrawRawIcon(hubPtrs, &boss_StarPos, 0x37, itemColorID, 0, 0x1000);
       }
 	  
-	  *type = typeCount;
+	  type[0] = typeCount;
     }
   
   return;

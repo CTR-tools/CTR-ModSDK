@@ -200,7 +200,7 @@ SPINOUT:
 	GAMEPAD_ShockFreq(victimDriver, 8, 0);
 	GAMEPAD_ShockForce1(victimDriver, 8, 0x7f);
 	
-	int gameMode1 = sdata->gGT->gameMode1;
+	unsigned int gameMode1 = sdata->gGT->gameMode1;
 	
 	if(
 		(attackDriver != 0) &&
