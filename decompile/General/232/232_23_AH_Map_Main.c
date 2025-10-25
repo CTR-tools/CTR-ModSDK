@@ -73,9 +73,9 @@ void DECOMP_AH_Map_Main(void)
 	
     D232.unkModeHubItems = 0;
 	
-    DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread, 0);
+    DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[PLAYER].thread, 0);
 
-    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5].thread, (short*)&type); //local_1e index 1 and 2 are never assigned to, so garbage data?
+    DECOMP_AH_Map_Warppads(hubPtrs,gGT->threadBuckets[WARPPAD].thread, (short*)&type); //local_1e index 1 and 2 are never assigned to, so garbage data?
 	
     DECOMP_AH_Map_HubItems(hubPtrs, (short*)&type);
 	

@@ -606,11 +606,12 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			// if opened, then closed
 			else
 			{
+				//--TODO: hint enum
 				// Relic Hint
 				i = 0x1d;
 				
 				// CTR Token Hint
-				if((gGT->gameMode2 & 8) != 0)
+				if((gGT->gameMode2 & TOKEN_RACE) != 0)
 					i = 0x1a;
 				
 				// if hint is locked

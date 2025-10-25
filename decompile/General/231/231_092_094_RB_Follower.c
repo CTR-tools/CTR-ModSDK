@@ -88,6 +88,7 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   struct Instance* followerInst;
   struct Follower* fObj;
   struct Instance* mineInst;
+  unsigned char i;
 
   // disable for slow speed
   if (d->speedApprox <= 0x1e00) return;
@@ -110,9 +111,10 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   if (followerInst == NULL) return;
 
   // followerInst scale
-  followerInst->scale[0] = 0x200;
-  followerInst->scale[1] = 0x200;
-  followerInst->scale[2] = 0x200;
+  for (i = 0; i < 3; i++)
+  {
+	followerInst->scale[i] = 0x200;
+  }
 
   // mineInst
   mineInst = mineTh->inst;
@@ -133,16 +135,11 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   fObj->mineTh = mineTh;
   fObj->backupTimesDestroyed = mineTh->timesDestroyed;
 
-  // backup original position
-
-
-  	followerInst->matrix.t.x = mineInst->matrix.t.x;
-	fObj->realPos.x = mineInst->matrix.t.x;
-  	
-	followerInst->matrix.t.y = mineInst->matrix.t.y;
-	fObj->realPos.y = mineInst->matrix.t.y;
-	
-	followerInst->matrix.t.z = mineInst->matrix.t.z;
-	fObj->realPos.z = mineInst->matrix.t.z;
+	// backup original position
+	for (i = 0; i < 3; i++)
+	{
+		followerInst->matrix.t.v[i] = mineInst->matrix.t.v[i];
+		fObj->realPos.v[i] = mineInst->matrix.t.v[i];
+	}
   
 }

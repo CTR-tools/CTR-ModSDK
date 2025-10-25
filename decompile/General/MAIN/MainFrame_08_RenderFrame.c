@@ -761,7 +761,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 	// that causes this to run premature?
 	#ifdef REBUILD_PS1
 	// LOADING... and pause screen (see adv pause)
-	if((gGT->gameMode1 & 0x4000000f) != 0) return;
+	if((gGT->gameMode1 & (PAUSE_ALL | RELIC_RACE)) != 0) return;
 
 	// before level is done loading
 	if(gGT->level1 == 0) return;

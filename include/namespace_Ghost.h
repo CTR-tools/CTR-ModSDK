@@ -15,6 +15,15 @@ struct GhostPacket
 	// 0x10 -- size of packet
 };
 
+//sdata->ptrGhostTape[GHOST_TAPE]
+enum GHOST_TAPES
+{
+	REPLAY_PLAYER,
+	REPLAY_NTROPY,
+	REPLAY_NOXIDE = 1,
+	NUM_GHOST_TAPES = 2
+};
+
 struct GhostTape
 {
 	// 0x0

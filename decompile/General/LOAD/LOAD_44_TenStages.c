@@ -716,7 +716,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				&data.podiumModel_podiumStands, drmCb);
 
 			// Disable LEV instances on Adv Hub, for podium scene
-			gGT->gameMode2 = gGT->gameMode2 | 0x100;
+			gGT->gameMode2 |= NO_LEV_INSTANCE;
 			break;
 		}
 		case 8:

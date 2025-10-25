@@ -129,7 +129,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	}
 
 	// pointer to first Player thread
-	playerThread = gGT->threadBuckets[0].thread;
+	playerThread = gGT->threadBuckets[PLAYER].thread;
 
 	cVar22 = '\0';
 	if (playerThread != 0)

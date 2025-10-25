@@ -53,7 +53,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		(
 			(
 				(d->kartState != KS_WARP_PAD && (d->kartState != KS_FREEZE)) &&
-				(((gGT->gameMode2 & 4) == 0 && ((sdata->gGamepads->gamepad[cDC->cameraID].buttonsTapped & 0x80U) != 0)))
+				(((gGT->gameMode2 & VEH_FREEZE_PODIUM) == 0 && ((sdata->gGamepads->gamepad[cDC->cameraID].buttonsTapped & 0x80U) != 0)))
 			)
 		)
 	)

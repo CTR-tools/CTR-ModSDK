@@ -1,5 +1,6 @@
 #include <common.h>
 
+//TODO: i think door arrows are a little bit off ?
 void DECOMP_AH_Map_HubItems(struct Map* hubPtrs, short *type)
 {
 

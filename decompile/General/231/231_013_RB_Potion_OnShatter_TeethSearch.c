@@ -1,7 +1,5 @@
 #include <common.h>
 
-int RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox);
-
 // This is broken even in retail CTR,
 // cause teeth collision is detected 
 // by Potion_InAir, so this can be scrapped
@@ -18,7 +16,7 @@ void DECOMP_RB_Potion_OnShatter_TeethSearch(struct Instance* inst)
 	SPS->Input1.modelID = inst->model->id;
 	
 	SPS->Union.ThBuckColl.thread = inst->thread;
-	SPS->Union.ThBuckColl.funcCallback = RB_Potion_OnShatter_TeethCallback;
+	SPS->Union.ThBuckColl.funcCallback = DECOMP_RB_Potion_OnShatter_TeethCallback;
 	
 	PROC_StartSearch_Self(SPS);
 }

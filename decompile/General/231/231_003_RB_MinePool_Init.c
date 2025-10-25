@@ -5,17 +5,18 @@ void DECOMP_RB_MinePool_Init(void)
 	int i;
 	int numMines;
 	unsigned int addr;
-	unsigned int gameMode;
+	struct GameTracker* gGT;
+	
+	gGT = sdata->gGT; 
 
 	DECOMP_LIST_Clear(&D231.minePoolTaken);
 	DECOMP_LIST_Clear(&D231.minePoolFree);
 	
-	gameMode = sdata->gGT->gameMode1;
 	
 	// default
 	numMines = 10;
 	
-	if ((gameMode & CRYSTAL_CHALLENGE) != 0)
+	if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0)
 	{
 		// naughty dog bug, should be 50,
 		// this caused nitro court challenge bug
@@ -23,10 +24,10 @@ void DECOMP_RB_MinePool_Init(void)
 	}
 	
 	// boss race
-	if ((gameMode & ADVENTURE_BOSS) != 0)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
-		if (sdata->gGT->levelID == DRAGON_MINES) numMines = 3;
-		if (sdata->gGT->levelID == ROO_TUBES) numMines = 7;
+		if (gGT->levelID == DRAGON_MINES) numMines = 3;
+		if (gGT->levelID == ROO_TUBES) numMines = 7;
 	}
 		
 	// add all mines
@@ -34,4 +35,6 @@ void DECOMP_RB_MinePool_Init(void)
 	{
 		DECOMP_LIST_AddFront(&D231.minePoolFree, (struct Item*)&D231.minePoolItem[i]);
 	}
+	
+	return;
 }

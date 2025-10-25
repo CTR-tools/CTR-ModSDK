@@ -103,7 +103,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
   // if in a state where you're seeing the boss key open an adv door,
   // or some other kind of cutscene where you can't move
-  if ((gGT->gameMode2 & 4) != 0)
+  if ((gGT->gameMode2 & VEH_FREEZE_PODIUM) != 0)
     return;
 
   // If door is open

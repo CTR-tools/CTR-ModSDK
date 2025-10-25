@@ -5,9 +5,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   char numPlyr;
   u_int gameMode;
   struct JitPool *pool;
-  u_int uVar5;
-  u_int uVar7;
-  u_int uVar9;
+  u_int poolSize;
+  u_int threadSize;
   int* pointer;
 
   // game mode
@@ -15,14 +14,14 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   numPlyr = gGT->numPlyrCurrGame;
 
   // Adventure Arena, 1P No Weapons
-  uVar7 = 0x800;
+  poolSize = 0x800;
 
   if (
 		// If you're not in Adventure Arena
 		((gameMode & ADVENTURE_ARENA) == 0) &&
 		(
 			// All racing gameplay
-			uVar7 = 0x1000,
+			poolSize = 0x1000,
 
 			// If you're in main menu
 			(gameMode & MAIN_MENU) != 0
@@ -30,28 +29,28 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	  )
   {
 	// Main Menu, bare minimum
-    uVar7 = 0x400;
+    poolSize = 0x400;
   }
 
   // Adventure Arena, 1P No Weapons
-  uVar9 = 0x800;
+  threadSize = 0x800;
 
   // If you're not in Adventure Arena
   if ((gameMode & ADVENTURE_ARENA) == 0)
   {
 	// All racing gameplay
     if ((gameMode & MAIN_MENU) == 0) {
-      uVar9 = 0x1000;
+      threadSize = 0x1000;
     }
 
     else
 	{
 	  // Main Menu, bare minimum
-      uVar9 = 0x400;
+      threadSize = 0x400;
 
       if (gGT->levelID == ADVENTURE_GARAGE)
 	  {
-        uVar9 = 0x800;
+        threadSize = 0x800;
       }
     }
   }
@@ -60,8 +59,8 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // assume RAMEX,
   // always have 8 drivers
   #ifdef USE_ONLINE
-  uVar7 = 0x1000;
-  uVar9 = 0x1000;
+  poolSize = 0x1000;
+  threadSize = 0x1000;
   #endif
 
 
@@ -79,7 +78,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 
   // normally maxed at 96
-  int numThread = uVar9 * 3 >> 7;
+  int numThread = threadSize * 3 >> 7;
 
   // ThreadPool
   DECOMP_JitPool_Init(
@@ -96,7 +95,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 
   // normally maxed at 32
-  int numMedium = uVar7 >> 7;
+  int numMedium = poolSize >> 7;
   if(numMedium > 20) numMedium = 20;
 
   // MediumStackPool
@@ -130,7 +129,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 
   // normally maxed at 100
-  int numSmall = uVar7 * 0x19 >> 10;
+  int numSmall = poolSize * 0x19 >> 10;
 
   // SmallStackPool
   // OG game was 0x40+8,
@@ -158,7 +157,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
 
   // normally maxed at 128
-  int numInstance = uVar9 >> 5;
+  int numInstance = threadSize >> 5;
 
   // Optimization tech
   if (numInstance == 128)
@@ -216,7 +215,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 	/*"InstancePool"*/0);
 	
 	
-  int numDriver = uVar7 >> 9;
+  int numDriver = poolSize >> 9;
   if (gGT->numPlyrCurrGame == 2) numDriver = 6;
   if (gGT->numPlyrCurrGame > 2) numDriver = 4;
   if ((gameMode & TIME_TRIAL) != 0) numDriver = 3;
@@ -235,7 +234,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
 
   // Must be 64 in adventure arena,
   // normally maxed at 128
-  int numParticle = uVar7 >> 5;
+  int numParticle = poolSize >> 5;
   if(numParticle > 120) numParticle = 120;
 
   #ifdef USE_ONLINE
@@ -253,7 +252,7 @@ void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT)
   // original CTR code, still used for
   // REBUILD_PS1 and REBUILD_PC cause those
   // builds dont have OG game's bloatful RDATA
-  gGT->ptrRenderBucketInstance = DECOMP_MEMPACK_AllocMem(uVar9/*,"RENDER_BUCKET_INSTANCE"*/);
+  gGT->ptrRenderBucketInstance = DECOMP_MEMPACK_AllocMem(threadSize/*,"RENDER_BUCKET_INSTANCE"*/);
 #else
   // save 0x400 - 0x1000 bytes
   // when compiling with OG game's RDATA

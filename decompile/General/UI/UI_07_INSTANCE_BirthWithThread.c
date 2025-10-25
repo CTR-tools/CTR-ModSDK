@@ -29,7 +29,7 @@ struct Instance* DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int 
 
   inst = 0;
 
-  driverThread = gGT->threadBuckets[0].thread;
+  driverThread = gGT->threadBuckets[PLAYER].thread;
   
   while (driverThread != 0)
   {	  

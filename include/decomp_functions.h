@@ -632,6 +632,8 @@ void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw);
 void DECOMP_RB_MinePool_Add(struct MineWeapon* mw);
 
 void DECOMP_RB_Explosion_ThTick(struct Thread* t);
+void DECOMP_RB_Potion_OnShatter_TeethSearch(struct Instance* inst);
+int DECOMP_RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox);
 
 void DECOMP_RB_MaskWeapon_FadeAway(struct Thread* t);
 void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh);

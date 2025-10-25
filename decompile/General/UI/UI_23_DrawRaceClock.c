@@ -53,7 +53,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	u_short stringColor_but_its_also_relicColor;
 	char minutesOnes;
 	char minutesTens;
-	char text_array[8];
+	char text_buffer[8];
 
 	u_short textPosX;
 	u_short textPosY;
@@ -363,11 +363,11 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 					// DAT_8008d510
 					// %d
 
-					sprintf(text_array, &sdata->s_int[0], numParamY);
+					sprintf(text_buffer, &sdata->s_int[0], numParamY);
 					lapTextHeight = (short *)(&data.font_charPixHeight[lapFontType]);
 
 					// draw string
-					DECOMP_DecalFont_DrawLine(text_array, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
+					DECOMP_DecalFont_DrawLine(text_buffer, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					// LAP
 					DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));

@@ -9,70 +9,70 @@ void RunVehicleThread(VehicleFuncPtr func, struct Thread* thread, struct Driver*
 
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
-	char bVar1;
-	short sVar2;
-	u_int uVar3;
-	int iVar4;
-	VehicleFuncPtr pcVar5;
-	u_int uVar5;
-	u_int uVar6;
-	int* piVar7;
-	struct Driver* psVar8;
-	struct Driver* psVar9;
-	struct Driver* psVar10;
-	struct Driver* pvVar12;
+	char boolPaused;
+	short submitState;
+	unsigned int msCount;
+	int timeElapsed;
+	VehicleFuncPtr driverFuncPtrs;
+	char numControllers;
+	unsigned char boolRace_Battle;
+	struct Driver* player1;
+	struct Driver* currDriver;
+	struct Driver* player1_backup;
 	struct PushBuffer* pushBuffer;
-	int iVar11;
-	struct Thread* psVar12;
+	unsigned char i;
+	unsigned int gameMode;
+	unsigned char j;
+	struct Thread* currThread;
 
-	bVar1 = true;
+	boolPaused = true;
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
-		bVar1 = false;
+		boolPaused = false;
 		pushBuffer = gGT->pushBuffer;
-		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+		for(currThread = gGT->threadBuckets[PLAYER].thread; currThread != 0; currThread = currThread->siblingThread)
 		{
-			psVar9 = (struct Driver*)psVar12->object;
+			currDriver = (struct Driver*)currThread->object;
 
 			#ifdef USE_ONLINE
-			psVar9 = gGT->drivers[0];
+			currDriver = gGT->drivers[0];
 			#endif
 
-			if (psVar9->clockSend)
+			if (currDriver->clockSend)
 			{
-				psVar9->clockSend--;
+				currDriver->clockSend--;
 			}
-			uVar3 = psVar9->clockFlash;
-			if (uVar3 == 0)
+			msCount = currDriver->clockFlash;
+			if (msCount == 0)
 			{
-				if (psVar9->clockReceive == 0)
+				if (currDriver->clockReceive == 0)
 				{
-					uVar3 = (u_int)psVar9->clockSend;
-					if (uVar3 == 0)
+					msCount = (u_int)currDriver->clockSend;
+					if (msCount == 0)
 					{
 						if ((gGT->clockEffectEnabled & 1) == 0) goto LAB_80034e74;
-						uVar3 = 10000;
+						msCount = 10000;
 					}
 				}
 				else
 				{
-					if ((psVar9->actionsFlagSet & 0x2000000) != 0)
+					if ((currDriver->actionsFlagSet & 0x2000000) != 0)
 					{
-						psVar9->clockReceive = 0;
+						currDriver->clockReceive = 0;
 					}
-					uVar3 = (u_int)psVar9->clockReceive;
+					msCount = (u_int)currDriver->clockReceive;
 				}
 
 #ifndef REBUILD_PS1
-				DISPLAY_Blur_Main(pushBuffer, uVar3);
+				DISPLAY_Blur_Main(pushBuffer, msCount);
 #endif
 			}
 			else
 			{
 #ifndef REBUILD_PS1
-				DISPLAY_Blur_Main(pushBuffer, -uVar3);
+				DISPLAY_Blur_Main(pushBuffer, -msCount);
 #endif
-				psVar9->clockFlash--;
+				currDriver->clockFlash--;
 			}
 LAB_80034e74:
 			pushBuffer = pushBuffer + 1;
@@ -85,15 +85,15 @@ LAB_80034e74:
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
 
-		iVar4 = DECOMP_Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
-		iVar4 = (iVar4 << 5) / 100;
+		timeElapsed = DECOMP_Timer_GetTime_Elapsed(gGT->clockFrameStart, &gGT->clockFrameStart);
+		timeElapsed = (timeElapsed << 5) / 100;
 		
-		gGT->elapsedTimeMS = iVar4;
-		if (iVar4 < 0)
+		gGT->elapsedTimeMS = timeElapsed;
+		if (timeElapsed < 0)
 		{
 			gGT->elapsedTimeMS = 0x20;
 		}
-		if (0x40 < gGT->elapsedTimeMS)
+		if (gGT->elapsedTimeMS > 0x40)
 		{
 			gGT->elapsedTimeMS = 0x40;
 		}
@@ -115,18 +115,18 @@ LAB_80034e74:
 				}
 				else
 				{
-					iVar4 = gGT->frozenTimeRemaining - gGT->elapsedTimeMS;
-					gGT->frozenTimeRemaining = iVar4;
-					if (iVar4 < 0)
+					timeElapsed = gGT->frozenTimeRemaining - gGT->elapsedTimeMS;
+					gGT->frozenTimeRemaining = timeElapsed;
+					if (timeElapsed < 0)
 					{
 						gGT->frozenTimeRemaining = 0;
 					}
 					else
 					{
-						uVar3 = gGT->timer;
-						if (uVar3 == (uVar3 / FPS_DOUBLE(6)) * FPS_DOUBLE(6))
+						msCount = gGT->timer;
+						if (msCount == (msCount / FPS_DOUBLE(6)) * FPS_DOUBLE(6))
 						{
-							if (uVar3 == (uVar3 / FPS_DOUBLE(0xc)) * FPS_DOUBLE(0xc))
+							if (msCount == (msCount / FPS_DOUBLE(0xc)) * FPS_DOUBLE(0xc))
 							{
 								DECOMP_OtherFX_Play_LowLevel(0x40, '\0', 0x8c9080);
 							}
@@ -147,45 +147,43 @@ LAB_80034e74:
 		DECOMP_CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
 		DECOMP_CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
 
-		psVar8 = 0;
-		psVar9 = 0;
+		player1 = NULL;
+		currDriver = NULL;
 
 #ifndef REBUILD_PS1
-		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+		for(currThread = gGT->threadBuckets[PLAYER].thread; currThread != 0; currThread = currThread->siblingThread)
 		{
-			psVar9 = (struct Driver*)psVar12->object;
-			psVar10 = psVar9;
-			if (psVar9->driverID == 0)
+			currDriver = (struct Driver*)currThread->object;
+			player1_backup = currDriver;
+			
+			if (currDriver->driverID == 0)
 			{
 LAB_80035098:
-				psVar8 = psVar9;
-				psVar9 = psVar10;
+				player1 = currDriver;
+				currDriver = player1_backup;
 			}
 			else
 			{
-				if (psVar9->driverID == 1)
-				{
-					psVar9 = psVar9;
-				}
-				psVar10 = psVar8;
-				if ((u_char)psVar9->numTimesAttacking < (u_char)psVar8->numTimesAttacking) goto LAB_80035098;
+
+				player1_backup = player1;
+				if ((u_char)currDriver->numTimesAttacking < (u_char)player1->numTimesAttacking) goto LAB_80035098;
 			}
 		}
 #endif
 
 		if
 		(
-			((psVar8 != 0) && (psVar9 != 0)) &&
+			((player1 != NULL) && (currDriver != NULL)) &&
 			(
-				iVar4 = (u_int)(u_char)psVar9->numTimesAttacking - (u_int)(u_char)psVar8->numTimesAttacking,
-				psVar8->quip2 < iVar4
+				timeElapsed = (u_int)(u_char)currDriver->numTimesAttacking - (u_int)(u_char)player1->numTimesAttacking,
+				player1->quip2 < timeElapsed
 			)
 		)
 		{
-			psVar8->quip2 = (short)iVar4;
+			player1->quip2 = (short)timeElapsed;
 		}
 				
-		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
+		for (j = 0; j < NUM_BUCKETS; j++)
 		{			
 			if
 			(
@@ -196,31 +194,31 @@ LAB_80035098:
 					((gGT->gameMode1 & DEBUG_MENU) == 0) ||
 
 					// if bucket can not be paused
-					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)
+					((gGT->threadBuckets[j].boolCantPause & 1U) != 0)
 				) &&
 				#endif
 
 				// if threads exist
-				(gGT->threadBuckets[iVar4].thread != 0)
+				(gGT->threadBuckets[j].thread != 0)
 			)
 			{
 				#if defined(USE_ONLINE)
 				// synchronize track hazards
 				if(
-					(iVar4 == STATIC) ||
-					(iVar4 == SPIDER)
+					(j == STATIC) ||
+					(j == SPIDER)
 				)
 				{
 					if(gGT->trafficLightsTimer > 3600)
 						continue;
 				}
 				#endif
-				if (iVar4 == 0)
+				if (j == 0)
 				{
 
-					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+					for(currThread = gGT->threadBuckets[j].thread; currThread != 0; currThread = currThread->siblingThread)
 					{
-						DECOMP_VehPickupItem_ShootOnCirclePress((struct Driver*)psVar12->object);
+						DECOMP_VehPickupItem_ShootOnCirclePress((struct Driver*)currThread->object);
 					}
 
 					#ifdef USE_HIGHMP
@@ -230,38 +228,38 @@ LAB_80035098:
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
 					// at the same time, that's why the stages exist
-					for(iVar11 = 0; iVar11 < 13; iVar11++)
+					for(i = 0; i < 13; i++)
 					{
-						for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+						for(currThread = gGT->threadBuckets[j].thread; currThread != 0; currThread = currThread->siblingThread)
 						{
 							// if PLYR converted to robotcar at end of race,
 							// dont run funcPtrs from inside driver struct
-							if (psVar12->funcThTick != 0) continue;
+							if (currThread->funcThTick != 0) continue;
 
-							psVar9 = (struct Driver*)psVar12->object;
+							currDriver = (struct Driver*)currThread->object;
 
-							pcVar5 = psVar9->funcPtrs[iVar11];
+							driverFuncPtrs = currDriver->funcPtrs[i];
 
 							#ifdef USE_ONLINE
-							RunVehicleThread(pcVar5, psVar12, psVar9);
+							RunVehicleThread(driverFuncPtrs, currThread, currDriver);
 							#else
-							if (pcVar5 != 0)
+							if (driverFuncPtrs != 0)
 							{
-								pcVar5(psVar12, psVar9);
+								driverFuncPtrs(currThread, currDriver);
 							}
 							#endif
 
 							#ifdef USE_60FPS
 								#ifndef REBUILD_PS1
 									// if this function just ran
-									if(pcVar5 == VehFrameProc_Driving)
+									if(driverFuncPtrs == VehFrameProc_Driving)
 									{
 										// only if jumping animation,
 										// otherwise wheelie gets bugged
-										if(psVar9->instSelf->animIndex == 3)
+										if(currDriver->instSelf->animIndex == 3)
 										{
-											psVar9->matrixIndex =
-											psVar9->matrixIndex >> 1;
+											currDriver->matrixIndex =
+											currDriver->matrixIndex >> 1;
 										}
 									}
 								#endif
@@ -272,7 +270,7 @@ LAB_80035098:
 						// wait until Stage 2 finishes, cause PhysLinear
 						// uses gGT->numPlyrCurrGame for VehPhysGeneral_SetHeldItem
 						#ifdef USE_HIGHMP
-						if(iVar11 == 2)
+						if(i == 2)
 						{
 							backupPlyrCount = gGT->numPlyrCurrGame;
 							gGT->numPlyrCurrGame = 1;
@@ -291,9 +289,9 @@ LAB_80035098:
 
 
 #ifndef REBUILD_PS1
-				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);
+				ThTick_RunBucket(gGT->threadBuckets[j].thread);
 #else
-				TEST_ThTickRunBucket(gGT->threadBuckets[iVar4].thread);
+				TEST_ThTickRunBucket(gGT->threadBuckets[j].thread);
 #endif
 			}			
 		}
@@ -355,19 +353,19 @@ LAB_80035098:
 	}
 	else
 	{
-		psVar12 = gGT->threadBuckets[AKUAKU].thread;
-		if (psVar12 != 0)
+		currThread = gGT->threadBuckets[AKUAKU].thread;
+		if (currThread != NULL)
 		{
 #ifndef REBUILD_PS1
-			ThTick_RunBucket(psVar12);
+			ThTick_RunBucket(currThread);
 #else
-			TEST_ThTickRunBucket(psVar12);
+			TEST_ThTickRunBucket(currThread);
 #endif
 		}
 	}
 
-	uVar5 = DECOMP_LOAD_IsOpen_RacingOrBattle();
-	if (uVar5 != 0)
+	boolRace_Battle = DECOMP_LOAD_IsOpen_RacingOrBattle();
+	if (boolRace_Battle != 0)
 	{
 #ifndef REBUILD_PS1
 		if ((gGT->gameMode1 & PAUSE_ALL) == 0)
@@ -389,12 +387,12 @@ LAB_80035098:
 	}
 
 	gGT->gameMode1_prevFrame = gGT->gameMode1;
-	uVar5 = DECOMP_GAMEPAD_GetNumConnected(gGamepads);
-	uVar3 = gGT->gameMode1;
+	numControllers = DECOMP_GAMEPAD_GetNumConnected(gGamepads);
+	gameMode = gGT->gameMode1;
 
-	if ((uVar3 & END_OF_RACE) == 0)
+	if ((gameMode & END_OF_RACE) == 0)
 	{
-		if ((bVar1) || ((uVar3 & PAUSE_ALL) != 0))
+		if ((boolPaused) || ((gameMode & PAUSE_ALL) != 0))
 		{
 			if (gGT->cooldownfromPauseUntilUnpause == 0)
 			{
@@ -427,29 +425,29 @@ LAB_80035098:
 		}
 		else if (gGT->cooldownFromUnpauseUntilPause == 0)
 		{
-			if ((uVar3 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0)
+			if ((gameMode & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0)
 				if (sdata->ptrActiveMenu == 0)
 					if (sdata->AkuAkuHintState == 0)
 						if (DECOMP_RaceFlag_IsFullyOnScreen() == 0)
 			{
-				for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
+				for(j = 0; j < gGT->numPlyrCurrGame; j++)
 				{
 					if
 					(
 						(
 							(
-								(uVar5 != 0) &&
+								(numControllers != 0) &&
 								(
 									(
 #ifndef REBUILD_PS1
-										uVar3 = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
-										(uVar3 & 0xffff) == 0 &&
+										msCount = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
+										(msCount & 0xffff) == 0 &&
 #endif
 										((gGT->gameMode1 & PAUSE_ALL) == 0)
 									)
 								)
 							) ||
-							((gGamepads->gamepad[iVar4].buttonsTapped & BTN_START) != 0)
+							((gGamepads->gamepad[j].buttonsTapped & BTN_START) != 0)
 						) &&
 						(gGT->overlayIndex_Threads != -1)
 					)
@@ -473,10 +471,10 @@ LAB_80035098:
 	}
 	else if (gGT->timerEndOfRaceVS == 0)
 	{
-		uVar3 = gGT->gameModeEnd;
-		if ((uVar3 & AKU_SONG) == 0)
+		gameMode = gGT->gameModeEnd;
+		if ((gameMode & AKU_SONG) == 0)
 		{
-			if ((uVar3 & CRYSTAL_CHALLENGE) == 0)
+			if ((gameMode & CRYSTAL_CHALLENGE) == 0)
 			{
 				if (gGT->unk_timerCooldown_similarTo_1d36 == 0)
 				{
@@ -485,15 +483,15 @@ LAB_80035098:
 			}
 			else if (gGT->unk_timerCooldown_similarTo_1d36 == 0)
 			{
-				if ((uVar3 & PAUSE_2) == 0)
+				if ((gameMode & PAUSE_2) == 0)
 				{
 					return;
 				}
 
-				sVar2 = DECOMP_SubmitName_DrawMenu(0x140);
+				submitState = DECOMP_SubmitName_DrawMenu(0x140);
 
 				// if not done yet
-				if (sVar2 == 0)
+				if (submitState == 0)
 				{
 					return;
 				}
@@ -502,7 +500,7 @@ LAB_80035098:
 #ifndef REBUILD_PS1
 
 				// if SAVE
-				if (sVar2 == 1)
+				if (submitState == 1)
 				{
 					sdata->boolSaveCupProgress = 0;
 
@@ -523,7 +521,7 @@ LAB_80035098:
 			gGT->unk_timerCooldown_similarTo_1d36--;
 		}
 	}
-	else if ((uVar3 & ARCADE_MODE) == 0)
+	else if ((gameMode & ARCADE_MODE) == 0)
 	{
 		if (gGT->timerEndOfRaceVS < 0x96)
 		{
@@ -532,7 +530,7 @@ LAB_80035098:
 			UI_VsWaitForPressX();
 #endif
 		}
-		if (0x1e < gGT->timerEndOfRaceVS)
+		if (gGT->timerEndOfRaceVS > 0x1e)
 		{
 			gGT->timerEndOfRaceVS--;
 		}

@@ -32,8 +32,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
   shatterInst->matrix.m[2][2] = inst->matrix.m[2][2];
   
 
-  
-   	//copy XYZ
+  //copy XYZ
   for (i = 0; i < 3; i++)
   {
 	//scale

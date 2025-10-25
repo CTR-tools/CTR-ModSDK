@@ -549,7 +549,7 @@ RunMineCOLL:
 		case 8:
 
 			d->numTimesClockWeaponUsed++;
-			d->clockSend = FPS_DOUBLE(0x1e);
+			d->clockSend = FPS_DOUBLE(30);
 
 			DECOMP_OtherFX_Play(0x44, 1);
 
@@ -559,9 +559,9 @@ RunMineCOLL:
 				Voiceline_RequestPlay(0xe, data.characterIDs[d->driverID], 0x10);
 			}
 
-			int hurtVal = 0x1e00;
+			int clockTimer = SECONDS(8);
 			if(d->numWumpas >= 10)
-				hurtVal = 0x2d00;
+				clockTimer = SECONDS(12);
 
 			struct Driver** dptr;
 
@@ -573,16 +573,17 @@ RunMineCOLL:
 			{
 				struct Driver* victim = *dptr;
 
-				if(victim == 0) continue;
+				if(victim == NULL) continue;
 
 				victim->clockFlash = FPS_DOUBLE(4);
-
+				
+				//dont apply clockflash to us if we are the ones shooting the clock
 				if(victim == d) continue;
 
 				// if spin out driver
 				if(DECOMP_RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
 				{
-					victim->clockReceive = hurtVal;
+					victim->clockReceive = clockTimer;
 				}
 			}
 			break;
@@ -719,9 +720,9 @@ RunMineCOLL:
 		// Super Engine
 		case 0xd: {
 
-			int engine = 0x1e00;
+			int engine = SECONDS(8);
 			if(d->numWumpas >= 10)
-				engine = 0x2d00;
+				engine = SECONDS(12);
 
 			d->superEngineTimer = engine;
 			} break;

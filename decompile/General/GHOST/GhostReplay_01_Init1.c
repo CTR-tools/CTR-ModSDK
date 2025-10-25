@@ -60,7 +60,7 @@ void DECOMP_GhostReplay_Init1(void)
 	driverID = 0;
 	
 	//2 ghosts, our player tape + tropy or oxide instead
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < NUM_GHOST_TAPES; i++)
 	{
 		tape = DECOMP_MEMPACK_AllocMem(sizeof(struct GhostTape));
 		sdata->ptrGhostTape[i] = tape;

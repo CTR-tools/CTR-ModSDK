@@ -3,7 +3,7 @@
 void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, struct MineWeapon* mw)
 {
   unsigned int model;
-  unsigned short param;
+  unsigned short soundID;
 
   model = inst->model->id;
 
@@ -20,16 +20,16 @@ void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, st
   {
     // if model is TNT
 	// tnt explosion sound
-	param = 0x3d;
+	soundID = 0x3d;
   
 	// if model is Nitro
-	if (model == 6) 
+	if (model == PU_EXPLOSIVE_CRATE) 
 	{
 		// glass shatter
-		param = 0x3f;
+		soundID = 0x3f;
 	}
 	
-	PlaySound3D(param, inst);
+	PlaySound3D(soundID, inst);
 
 	RB_Blowup_Init(inst);
   }
@@ -40,7 +40,7 @@ void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, st
   inst->scale[2] = 0;
 
   // make invisible
-  inst->flags |= 0x80;
+  inst->flags |= HIDE_MODEL;
 
   DECOMP_RB_MinePool_Remove(mw);
 

@@ -203,10 +203,10 @@ u_int DECOMP_main()
 							gGT->hudFlags &= 0xf7;
 
 							gameMode1 = gGT->gameMode1;
-							gGT->gameMode2 = gameMode2 | AddBitsConfig8;
-							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
-							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
-							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
+							gGT->gameMode2 |= AddBitsConfig8;
+							gGT->gameMode1 |= AddBitsConfig0;
+							gGT->gameMode1 &= ~RemBitsConfig0;
+							gGT->gameMode2 &= ~RemBitsConfig8;
 
 							DECOMP_MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 						}

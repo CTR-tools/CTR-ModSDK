@@ -21,7 +21,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 		menu->drawStyle &= 0xfeff;
 
 		// if more than 2 screens
-		if (2 < gGT->numPlyrCurrGame)
+		if (gGT->numPlyrCurrGame > 2)
 		{
 			menu->drawStyle |= 0x100;
 		}
@@ -142,7 +142,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 			sdata->mainMenuState = 1;
 
 			// when loading is done, add bit for "in mb"
-			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
+			sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;
 			break;
 
 		// stringID 6: "CHANGE LEVEL"
@@ -159,7 +159,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 
 			// when loading is done
 			// add bit for "in mb"
-			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
+			sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;
 			break;
 
 		// stringID 10: "CHANGE SETUP"
@@ -173,7 +173,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 
 			// when loading is done
 			// add bit for "in mb"
-			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
+			sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;
 			break;
 
 		// stringID 13: "EXIT TO MAP"
@@ -181,25 +181,25 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 
 			// when loading is done
 			// add this bit for In Adventure Arena
-			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x100000;
+			sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
 
 			// when loading is done
 			// remove bits for Relic Race or Crystal Challenge
-			sdata->Loading.OnBegin.RemBitsConfig0 |= 0xc000000;
+			sdata->Loading.OnBegin.RemBitsConfig0 |= CRYSTAL_CHALLENGE | RELIC_RACE;
 
 			// when loading is done
 			// remove bit for CTR Token Challenge
-			sdata->Loading.OnBegin.RemBitsConfig8 |= 8;
+			sdata->Loading.OnBegin.RemBitsConfig8 |= TOKEN_RACE;
 
 			// If you are not in Adventure cup
 			if ((gameMode & ADVENTURE_CUP) == 0)
 			{
-				// 0x80000000
+
 				// If you're in Boss Mode
-				if ((int)gameMode < 0)
+				if ((gameMode & ADVENTURE_BOSS) != 0)
 				{
 					// when loading is done remove bit for Boss Race, relic, and crystal challenge
-					sdata->Loading.OnBegin.RemBitsConfig0 |= 0x8c000000;
+					sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS | CRYSTAL_CHALLENGE | RELIC_RACE;
 
 					// When loading is done add bit to spawn driver near boss door
 					sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
@@ -215,7 +215,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 				levID = GEM_STONE_VALLEY;
 
 				// when loading is done remove bits for Adventure Cup, relic, and crystal challenge
-				sdata->Loading.OnBegin.RemBitsConfig0 |= 0x1c000000;
+				sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_CUP | CRYSTAL_CHALLENGE | RELIC_RACE;
 
 				// Level ID
 				gGT->levelID = gGT->cup.cupID + ADV_CUP;

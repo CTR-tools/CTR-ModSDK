@@ -381,7 +381,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	if ((gameMode2 & CHEAT_TURBO) != 0) weaponId = 0;
 	if ((gameMode2 & CHEAT_BOMBS) != 0) weaponId = 1;
 	if ((gameMode2 & CHEAT_WUMPA) != 0) d->numWumpas = 99;
-	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = 0x2d00;
+	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = SECONDS(12);
     d->heldItemID = weaponId;
 
 	if(weaponId != 0xf)
