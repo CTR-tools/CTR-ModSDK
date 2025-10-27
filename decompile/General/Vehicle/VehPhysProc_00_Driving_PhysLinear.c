@@ -386,7 +386,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	uVar20 = actionsFlagSetCopy & 0x7f1f83d5;
 
 	// disable input if opening adv hub door with key
-	if (gameMode2 & (VEH_FREEZE_PODIUM | VEH_FREEZE_DOOR))
+	if ((gameMode2 & (VEH_FREEZE_PODIUM | VEH_FREEZE_DOOR)) != 0)
 	{
 		driver->actionsFlagSet = uVar20;
 		return;

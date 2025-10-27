@@ -201,8 +201,9 @@ u_int DECOMP_main()
 							gameMode2 = gGT->gameMode2;
 
 							gGT->hudFlags &= 0xf7;
-
+							
 							gameMode1 = gGT->gameMode1;
+							
 							gGT->gameMode2 |= AddBitsConfig8;
 							gGT->gameMode1 |= AddBitsConfig0;
 							gGT->gameMode1 &= ~RemBitsConfig0;

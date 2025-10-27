@@ -167,7 +167,7 @@ void DECOMP_MM_Characters_MenuProc(struct RectMenu* unused)
 		case 3:
 
 			// If Fake Crash is unlocked, do not draw "Select Character"
-			if (sdata->gameProgress.unlocks[0] & 0x800) goto dontDrawSelectCharacter;
+			if ((sdata->gameProgress.unlocks[0] & UNLOCK_FAKE_CRASH) != 0) goto dontDrawSelectCharacter;
 
 			// SELECT
 			DECOMP_DecalFont_DrawLine

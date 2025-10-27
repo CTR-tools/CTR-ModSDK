@@ -336,7 +336,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// if scrapbook unlocked, then unlock Oxide,
 				// flag 0x1000 must match the 1<<0 in the icon array,
 				// this bit was used in Aug5 to unlock SlideCol, unused
-				if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+				if ((sdata->gameProgress.unlocks[1] & UNLOCK_SCRAPBOOK) != 0)
 					sdata->gameProgress.unlocks[0] |= 1;
 				#endif
 				

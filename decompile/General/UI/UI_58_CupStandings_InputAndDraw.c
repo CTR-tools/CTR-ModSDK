@@ -491,7 +491,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 			index = data.ArcadeCups[cupID].CupTrack[cupTrack].trackID;
 		}
 
-		MainRaceTrack_RequestLoad(index);
+		DECOMP_MainRaceTrack_RequestLoad(index);
       }
 
       // If this was the last race in the cup
@@ -533,7 +533,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
 
           // when loading is done,
           // remove flag for adventure cup
-          sdata->Loading.OnBegin.RemBitsConfig0 |= 0x10000000;
+          sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_CUP;
 
           // If player 1 won the cup
           if (data.cupPositionPerPlayer[0] == gGT->drivers[0]->driverID)
@@ -632,7 +632,7 @@ void DECOMP_UI_CupStandings_InputAndDraw(void)
         }
 
         // Level ID for Gemstone Valley (podiums)
-        MainRaceTrack_RequestLoad(0x19);
+        DECOMP_MainRaceTrack_RequestLoad(GEM_STONE_VALLEY);
       }
     }
   }

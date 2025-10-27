@@ -27,7 +27,7 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 	sdata->XA_Playing_Index = xaID;
 	sdata->XA_Playing_Category = categoryID;
 
-	struct XaSize* xas = &sdata->ptrArray_XaSize[sdata->ptrArray_firstSongIndex[categoryID]+xaID];
+	struct XaSize* xas = &sdata->ptrArray_XaSize[sdata->ptrArray_firstXASongIndex[categoryID]+xaID];
 	int sum = sdata->ptrArray_XaCdPos[sdata->ptrArray_firstXaIndex[categoryID] + xas->XaPrefix];
 
 	buf1[0] = 1;

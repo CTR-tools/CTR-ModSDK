@@ -502,7 +502,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		gGT->podiumRewardID = STATIC_TROPHY;
 	}
 
-	MainRaceTrack_RequestLoad(levSpawn);
+	DECOMP_MainRaceTrack_RequestLoad(levSpawn);
 }
 
 void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)

@@ -30,7 +30,7 @@ void CS_Credits_End()
 		levID = SCRAPBOOK;
 	}
 	
-	MainRaceTrack_RequestLoad(levID);
+	DECOMP_MainRaceTrack_RequestLoad(levID);
 
 	gGT->renderFlags &= 0xfffffffb;
 }

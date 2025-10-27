@@ -40,11 +40,11 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	// spawn all AIs
     if (
         (
-			// exclude cutscene, relic, Time limit,
+			// exclude cutscene, relic, time trial
 			// Adventure Hub, Main Menu, Battle
             (
-				(gameMode & (BATTLE_MODE | MAIN_MENU | TIME_LIMIT |
-				ADVENTURE_ARENA | RELIC_RACE | CRYSTAL_CHALLENGE | ADVENTURE_CUP)) == 0
+				(gameMode & (BATTLE_MODE | MAIN_MENU | ADVENTURE_ARENA |
+				TIME_TRIAL | RELIC_RACE | CRYSTAL_CHALLENGE | GAME_CUTSCENE)) == 0
 				
 			) &&
 

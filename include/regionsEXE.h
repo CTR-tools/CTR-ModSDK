@@ -2820,7 +2820,7 @@ struct sData
 	// 8008bfe0 - JpnTrial
 	// 8008d41c - EurRetail
 	// 80090490 - JpnRetail
-	int ptrMPK; //maybe is `void*` instead of `int`
+	int ptrMPK; //this is a pointer to struct MPK which will be added eventually
 
 	// 8008d08c
 	// ptrLEV, stored here during loading,
@@ -3364,10 +3364,10 @@ struct sData
 	// 8008c40c JpnTrial
 	// 8008d858 EurRetail
 	// 800908cc JpnRetail
-	int ptrPushBufferUI;
+	struct PushBuffer* ptrPushBufferUI;
 
 	// 8008d4b8
-	int ptrFruitDisp; //should maybe be `struct Instance*` instead of `int`?
+	struct Instance* ptrFruitDisp; //should maybe be `struct Instance*` instead of `int`?
 
 	// 8008d4bc
 	int menuReadyToPass;
@@ -3626,10 +3626,10 @@ struct sData
 	int XA_VolumeDeduct;
 
 	// 8008d6cc
-	int* ptrArray_numSongs;
+	int* ptrArray_numXASongs;
 
 	// 8008d6d0
-	int* ptrArray_firstSongIndex;
+	int* ptrArray_firstXASongIndex;
 
 	// 8008d6d4
 	int XA_CurrPos;

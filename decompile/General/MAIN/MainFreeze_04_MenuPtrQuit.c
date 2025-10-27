@@ -26,7 +26,7 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct RectMenu* menu)
             gGT->gameMode1 &= ~1;
 
             // Level ID for main menu (39)
-            DECOMP_MainRaceTrack_RequestLoad(0x27);
+            DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 			return;
         }
 		

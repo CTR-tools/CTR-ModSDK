@@ -209,7 +209,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	UNLOCK_ADV_BIT(adv->rewards,bitIndex);
 	
 	// go back to adv hub
-	MainRaceTrack_RequestLoad(gGT->prevLEV);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->prevLEV);
 	
 	return;
 }

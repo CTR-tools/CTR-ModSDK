@@ -107,7 +107,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     }
 
 	// used for multiplayer wumpa
-    sdata->ptrPushBufferUI = (int)NULL;
+    sdata->ptrPushBufferUI = NULL;
 	
 #ifdef USE_DECALMP // OG game
 	if (1 < gGT->numPlyrCurrGame)
@@ -115,7 +115,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	  struct PushBuffer* pb = &sdata->pushBuffer_DecalMP;
 	  struct PushBuffer* ui = &gGT->pushBuffer_UI;
 	  
-      sdata->ptrPushBufferUI = (int)pb;
+      sdata->ptrPushBufferUI = pb;
     
 	  // second half of pixel-LOD pushBuffer, copy from PushBuffer_UI
 	  *(int*)&pb->matrix_ViewProj.m[0][0] = *(int*)&ui->matrix_ViewProj.m[0][0];
@@ -142,7 +142,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 #endif
 
     sdata->ptrFruitDisp =
-		(int) DECOMP_UI_INSTANCE_BirthWithThread(STATIC_FRUITDISP,(int)DECOMP_UI_ThTick_CountPickup,3,1,sdata->ptrPushBufferUI,/*sdata->s_fruitdisp*/0);
+		DECOMP_UI_INSTANCE_BirthWithThread(STATIC_FRUITDISP,(int)DECOMP_UI_ThTick_CountPickup,3,1,sdata->ptrPushBufferUI,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&

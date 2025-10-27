@@ -393,8 +393,8 @@ struct sData sdata_static =
 	.str_underscore = "_",
 	
 	.boolOpenTokenRelicMenu = 0,
-	.ptrPushBufferUI = 0,
-	.ptrFruitDisp = 0,
+	.ptrPushBufferUI = NULL,
+	.ptrFruitDisp = NULL,
 	.menuReadyToPass = 0,
 	
 	.s_token = "token",

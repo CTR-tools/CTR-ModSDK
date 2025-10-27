@@ -58,7 +58,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		sdata->mainMenuState = 0;
 		
 		// load LEV of main menu
-		DECOMP_MainRaceTrack_RequestLoad(0x27);
+		DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 		break;
 	}
 	
@@ -115,10 +115,10 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		
 		// when loading is done
 		// add flag for "in menus"
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;
 		
 		// load LEV of main menu
-		DECOMP_MainRaceTrack_RequestLoad(0x27);
+		DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 		break;
 	}
 	
@@ -144,7 +144,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		sdata->mainMenuState = 3;
 		
 		// load LEV of main menu
-		DECOMP_MainRaceTrack_RequestLoad(0x27);
+		DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 		break;
 	}
 	

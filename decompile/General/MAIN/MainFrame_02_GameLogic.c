@@ -12,6 +12,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	char boolPaused;
 	short submitState;
 	unsigned int msCount;
+	char boolControllerIsValid;
 	int timeElapsed;
 	VehicleFuncPtr driverFuncPtrs;
 	char numControllers;
@@ -243,7 +244,7 @@ LAB_80035098:
 							#ifdef USE_ONLINE
 							RunVehicleThread(driverFuncPtrs, currThread, currDriver);
 							#else
-							if (driverFuncPtrs != 0)
+							if (driverFuncPtrs != NULL)
 							{
 								driverFuncPtrs(currThread, currDriver);
 							}
@@ -440,8 +441,8 @@ LAB_80035098:
 								(
 									(
 #ifndef REBUILD_PS1
-										msCount = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
-										(msCount & 0xffff) == 0 &&
+										boolControllerIsValid = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
+										(boolControllerIsValid & 0xffff) == 0 &&
 #endif
 										((gGT->gameMode1 & PAUSE_ALL) == 0)
 									)

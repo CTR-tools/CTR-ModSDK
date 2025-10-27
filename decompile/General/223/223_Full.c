@@ -67,8 +67,7 @@ void DECOMP_RR_EndEvent_UnlockAward()
 		{
 			if (gGT->levelID == TURBO_TRACK)
 			{
-				// unlock turbo track
-				sdata->gameProgress.unlocks[0] |= 2;
+				sdata->gameProgress.unlocks[0] |= UNLOCK_TURBO_TRACK;
 			}
 
 			continue;

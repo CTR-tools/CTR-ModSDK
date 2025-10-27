@@ -105,8 +105,21 @@ enum GameMode2
 	CHEAT_ALL 		= CHEAT_ADV | CHEAT_BOMBS | CHEAT_ENGINE | CHEAT_ICY | CHEAT_INVISIBLE | CHEAT_MASK | CHEAT_ONELAP | CHEAT_SUPERHARD | CHEAT_TURBO | CHEAT_TURBOCOUNT | CHEAT_TURBOPAD | CHEAT_WUMPA,
 };
 
-enum CharacterUnlock
+
+enum ProgressUnlocks
 {
+	//sdata_static.gameProgress.unlocks[0]
+	UNLOCK_TURBO_TRACK = 2,
+};
+
+enum UnlockCheats
+{
+	//sdata_static.gameProgress.unlocks[1]
+	UNLOCK_SCRAPBOOK = 0x10,
+	//end
+	
+	//sdata_static.gameProgress.unlocks[0]
+	UNLOCK_TRACKS = 0x1e,
 	UNLOCK_TROPY = 0x20,
 	UNLOCK_PENTA = 0x40,
 	UNLOCK_ROO = 0x80,
@@ -115,7 +128,46 @@ enum CharacterUnlock
 	UNLOCK_PINSTRIPE = 0x400,
 	UNLOCK_FAKE_CRASH = 0x800,
 	UNLOCK_CHARACTERS = UNLOCK_TROPY | UNLOCK_PENTA | UNLOCK_ROO | UNLOCK_PAPU | UNLOCK_JOE | UNLOCK_PINSTRIPE | UNLOCK_FAKE_CRASH,
+	UNLOCK_ALL = UNLOCK_CHARACTERS | UNLOCK_TRACKS
+	//end
 };
+
+// all buttons fit in one byte
+// except triangle, which overrides
+enum CheatLetters
+{
+	LETTER_N = (BTN_UP    & 0xff),
+	LETTER_U = (BTN_UP    & 0xff),
+	LETTER_S = (BTN_DOWN  & 0xff),
+	LETTER_D = (BTN_DOWN  & 0xff),
+	LETTER_W = (BTN_LEFT  & 0xff),
+	LETTER_L = (BTN_LEFT  & 0xff),
+	LETTER_E = (BTN_RIGHT & 0xff),
+	LETTER_R = (BTN_RIGHT & 0xff),
+
+	LETTER_A = 0x80, // BTN_TRIANGLE overrides to 0x80
+	LETTER_O = (BTN_CIRCLE & 0xff),
+	LETTER_X = (BTN_CROSS  & 0xff)
+};
+
+
+struct Cheat
+{
+	// 0x0
+	int length;
+	
+	// 0x4, 0x8, 0xC
+	unsigned char buttons[12];
+	
+	// 0x10
+	unsigned int* writeAddr;
+	
+	// 0x14
+	unsigned int addBits;
+	
+	// 0x18 - size
+};
+
 
 // real ND name
 struct GameTracker
@@ -188,7 +240,7 @@ struct GameTracker
 
 		// 0x128 - size
 
-	} DecalMP[3*4];
+	} DecalMP[12]; //3 per human player ?
 
 	// 0x1388
 	struct PushBuffer pushBuffer_UI;

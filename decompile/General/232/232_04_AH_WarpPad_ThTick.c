@@ -633,14 +633,14 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	else if(levelID < NITRO_COURT)
 	{
 		// Add Relic
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= RELIC_RACE;
 	}
 	
 	// Battle Tracks
 	else if(levelID < GEM_STONE_VALLEY)
 	{
 		// Add Crystal Challenge
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= CRYSTAL_CHALLENGE;
 		
 		// Dont have hint "collect every crystal"
 		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
@@ -658,7 +658,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	else
 	{
 		// Add Adv Cup
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_CUP;
 		
 		gGT->cup.cupID = levelID - ADV_CUP;
 		gGT->cup.trackIndex = 0;
@@ -669,7 +669,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 		
 	// Rem Adventure Arena
-	sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+	sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_ARENA;
 	
 	DECOMP_MainRaceTrack_RequestLoad(levelID);
 }
