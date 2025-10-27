@@ -19,15 +19,15 @@ void DECOMP_RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_
   // quit if not in battle mode, or if 
   // either driver is nullptr
   
-  if ((gameMode & 0x20) == 0) return;
+  if ((gameMode & BATTLE_MODE) == 0) return;
   if (player_1 == NULL) return;
   if (player_2 == NULL) return;
   
   // If you dont have a Point Limit (battle)
-  if ((gameMode & 0x4000) == 0) {
+  if ((gameMode & POINT_LIMIT) == 0) {
 	  
 	// If you dont have a Life Limit (battle)
-    if ((gameMode & 0x8000) == 0) {
+    if ((gameMode & LIFE_LIMIT) == 0) {
 		
 	  // Quit the function
       return;
@@ -180,7 +180,7 @@ void DECOMP_RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_
       return;
 	
 	// if this is a time-limit game
-    if ((gameMode & 0x10000) != 0) 
+    if ((gameMode & TIME_LIMIT) != 0) 
       return;
 	
 	// if this is not a time-limit game,

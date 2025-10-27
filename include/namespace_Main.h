@@ -1,5 +1,6 @@
 enum GameMode1
 {
+	VS_MODE 			= 0x0, //if no mode found then VS mode is active
 	PAUSE_1				= 0x1,
 	PAUSE_2				= 0x2,	// unused, debug
 	PAUSE_3				= 0x4,	// unused, debug

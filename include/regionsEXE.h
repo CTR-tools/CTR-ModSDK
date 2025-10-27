@@ -3367,7 +3367,7 @@ struct sData
 	struct PushBuffer* ptrPushBufferUI;
 
 	// 8008d4b8
-	struct Instance* ptrFruitDisp; //should maybe be `struct Instance*` instead of `int`?
+	struct Instance* ptrFruitDisp; //Wumpa
 
 	// 8008d4bc
 	int menuReadyToPass;

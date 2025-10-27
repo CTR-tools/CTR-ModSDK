@@ -246,7 +246,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				ovrRegion1 = 1;
 			
 			// default VS/Battle overlay if no mode found
-			else 
+			else //if (gGT->gameMode1 & VS_MODE)
 				ovrRegion1 = 4;
 			
 			#ifdef USE_HIGHMP
