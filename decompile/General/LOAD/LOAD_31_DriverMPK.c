@@ -92,7 +92,7 @@ void highLOD_DriverMPK(int numDrivers)
 }
 #endif
 
-void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
+void DECOMP_LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD)
 {
 	int i;
 	unsigned int gameMode1;

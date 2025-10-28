@@ -1,16 +1,16 @@
 #include <common.h>
 
-void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL)
+void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct IconHeader* ICH)
 {
 	struct Icon* currIcon;
 	struct IconGroup** currGroup;
 	
-	if(LTL == 0) return;
+	if(ICH == 0) return;
 	
 	for(
 			// array of Icon
-			currIcon = &LTL->firstIcon[0];
-			currIcon < &LTL->firstIcon[LTL->numIcon]; 
+			currIcon = &ICH->firstIcon[0];
+			currIcon < &ICH->firstIcon[ICH->numIcon]; 
 			currIcon++
 		)
 	{
@@ -21,8 +21,8 @@ void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL)
 	
 	for(
 			// array of POINTER to iconGroup
-			currGroup = &LTL->firstIconGroupPtr[0]; 
-			currGroup < &LTL->firstIconGroupPtr[LTL->numIconGroup];
+			currGroup = &ICH->firstIconGroupPtr[0]; 
+			currGroup < &ICH->firstIconGroupPtr[ICH->numIconGroup];
 			currGroup++
 		)
 	{	

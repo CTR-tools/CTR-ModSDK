@@ -122,8 +122,8 @@ struct sData sdata_static =
 	},
 	#endif
 	
-	.ptrMPK = 0,
-	.ptrLevelFile = 0,
+	.ptrMPK = NULL,
+	.ptrLevelFile = NULL,
 	.PatchMem_Ptr = 0,
 	
 	#if BUILD >= UsaRetail

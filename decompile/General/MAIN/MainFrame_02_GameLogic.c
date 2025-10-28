@@ -145,7 +145,7 @@ LAB_80034e74:
 			gGT->elapsedEventTime = 0;
 		}
 
-		DECOMP_CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
+		DECOMP_CTR_CycleTex_AllModels(-1, sdata->PLYROBJECTLIST, gGT->timer);
 		DECOMP_CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
 
 		player1 = NULL;

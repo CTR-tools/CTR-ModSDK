@@ -563,7 +563,8 @@ struct Skybox
 #define SKY_GETFACES(x) \
 	((unsigned int)x + sizeof(struct Skybox))
 
-struct LevTexLookup
+//comes from lev or MPKs
+struct IconHeader
 {
 	int numIcon;
 	struct Icon* firstIcon;
@@ -639,7 +640,7 @@ struct Level
 
 	// 0x3c
 	// leads to the icon pack header
-	struct LevTexLookup* levTexLookup;
+	struct IconHeader* iconHeader;
 
 	// 0x40
 	// leads to the icon pack data

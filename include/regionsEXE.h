@@ -2820,7 +2820,7 @@ struct sData
 	// 8008bfe0 - JpnTrial
 	// 8008d41c - EurRetail
 	// 80090490 - JpnRetail
-	int ptrMPK; //this is a pointer to struct MPK which will be added eventually
+	struct Mpk* ptrMPK;
 
 	// 8008d08c
 	// ptrLEV, stored here during loading,
@@ -4005,7 +4005,7 @@ struct sData
 
 	// 8008d870
 	// ptr to array of model pointers (real ND name)
-	int** PLYROBJECTLIST; //maybe should be `struct Model**`
+	struct Model** PLYROBJECTLIST;
 
 	// 8008d874
 	// activated in FUN_80035e20,

@@ -365,6 +365,20 @@ struct ModelHeader
 	struct AnimTex* animtex;
 };
 
+
+struct Mpk
+{
+	//0x0
+	struct IconHeader* iconHeader;
+
+	//0x4
+	//there is not num entries though
+	struct Model** modelPtrArray;
+	
+	//struct size = numModelptrs * 4 + 0x4
+
+};
+
 // https://github.com/DCxDemo/CTR-tools/blob/master/formats/txt_ctr.txt
 struct Model
 {

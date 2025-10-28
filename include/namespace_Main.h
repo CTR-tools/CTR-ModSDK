@@ -365,7 +365,7 @@ struct GameTracker
 	// 1b28
 	// handles character icons,
 	// traffic light sprites, etc
-	unsigned int mpkIcons;
+	struct IconHeader* mpkIcons;
 
 	// 0x1b2c - 0x1c93
 	struct ThreadBucket threadBuckets[NUM_BUCKETS];
