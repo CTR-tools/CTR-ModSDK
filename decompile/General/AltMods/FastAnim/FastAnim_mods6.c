@@ -24,7 +24,7 @@ void FastAnim_Start(struct GameTracker* gGT)
 		
 		for(int j = 0; j < m->numHeaders; j++)
 		{
-			struct ModelHeader* h = &m->headers[j];
+			struct ModelHeader* h = &m->ptrHeadersArray[j];
 
 			for(int k = 0; k < h->numAnimations; k++)
 			{

@@ -48,28 +48,28 @@ u_int MM_Video_CheckIfFinished(int param_1);
 #ifdef USE_60FPS
 void PatchModel_60fps(struct Model* m)
 {
-	struct ModelHeader* h;
 	struct ModelAnim** a;
 	int i;
 	int j;
 	int loopNum;
 	struct Thread* search;
+	struct ModelHeader* mh;
 
 	// error check (yes, needed)
 	if(m == 0) return;
 
-	// model header
-	h = m->headers;
-
+	//ptrHeadersArray points to the first header
+	mh = m->ptrHeadersArray;
+	
 	// skip if the model is patched
-	if(h[0].name[0xf] == 1) return;
+	if(mh[0].name[0xf] == 1) return;
 
 	// record the model is patched
-	h[0].name[0xf] = 1;
+	mh[0].name[0xf] = 1;
 
 	// skip "big1" because it needs LODs
 	// to shift from 1st to 8th UI polygons
-	if(*(int*)&h[0].name[0] == 0x31676962) return;
+	if(*(int*)&mh[0].name[0] == 0x31676962) return;
 
 	#if 1
 	// Only do this for drivers, because we dont have
@@ -87,11 +87,11 @@ void PatchModel_60fps(struct Model* m)
 			// expand range of LOD[0], but dont expand
 			// all the way to LOD[3], cause polygons
 			// explode when they get too small on-screen
-			h[0].maxDistanceLOD = 0x1000;
+			mh[0].->maxDistanceLOD = 0x1000;
 
 			// skip LOD[1] and LOD[2]
-			h[1].maxDistanceLOD = 0;
-			h[2].maxDistanceLOD = 0;
+			mh[1].maxDistanceLOD = 0;
+			mh[2].maxDistanceLOD = 0;
 
 			// dont touch LOD[3], that is the cutoff
 			// to stop rendering the model. Without that,
@@ -104,7 +104,7 @@ void PatchModel_60fps(struct Model* m)
 	// min graphics
 	for(i = 0; i < m->numHeaders-1; i++)
 	{
-		h[i].maxDistanceLOD = 0;
+		mh[i].->maxDistanceLOD = 0;
 	}
 	#endif
 
@@ -112,10 +112,10 @@ void PatchModel_60fps(struct Model* m)
 	for(i = 0; i < m->numHeaders; i++)
 	{
 		// pointer to array of pointers
-		a = h[i].ptrAnimations;
+		a = mh[i].ptrAnimations;
 
 		// number of animations
-		loopNum = h[i].numAnimations;
+		loopNum = mh[i].->numAnimations;
 
 		// loop through all animations
 		for(j = 0; j < loopNum; j++)

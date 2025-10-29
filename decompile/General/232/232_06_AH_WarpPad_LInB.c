@@ -6,6 +6,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	int levelID;
 	struct Thread* t;
 	struct WarpPad* warppadObj;
+	struct ModelHeader* mh;
 	
 	struct GameTracker* gGT;
 	
@@ -525,7 +526,8 @@ SlideColTurboTrack:
 	newInst->scale[2] = 0x2000;
 	
 	// always face camera
-	newInst->model->headers[0].flags |= 1;
+	//ptrHeadersArray points to the first header
+	newInst->model->ptrHeadersArray->flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_X] = newInst;
 	
@@ -550,9 +552,12 @@ SlideColTurboTrack:
 		newInst->scale[1] = 0x2000;
 		newInst->scale[2] = 0x2000;
 		
+		//ptrHeadersArray points to the first header
+		mh = newInst->model->ptrHeadersArray;
+		
 		// always face camera
 		for(i = 0; i < newInst->model->numHeaders; i++)	
-			newInst->model->headers[i].flags |= 1;
+			mh[i].flags |= 1;
 		
 		warppadObj->inst[WPIS_CLOSED_10S] = newInst;
 	}
@@ -580,10 +585,13 @@ SlideColTurboTrack:
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
-			
+	
+	//ptrHeadersArray points to the first header
+	mh = newInst->model->ptrHeadersArray;
+		
 	// always face camera
 	for(i = 0; i < newInst->model->numHeaders; i++)	
-		newInst->model->headers[i].flags |= 1;
+		mh[i].flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
 }

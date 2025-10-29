@@ -75,7 +75,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 			
 		DECOMP_LevInstDef_UnPack(level1->ptr_mesh_info);
 		
-		DECOMP_DecalGlobal_Store(gGT, (struct Icon*)level1->iconHeader); //2nd param might be `level1->iconHeader->firstIcon`
+		DECOMP_DecalGlobal_Store(gGT, level1->iconHeader);
 	}
 	
 	cDC = &gGT->cameraDC[0];

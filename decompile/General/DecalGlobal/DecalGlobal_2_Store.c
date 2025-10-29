@@ -5,7 +5,7 @@ void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct IconHeader* ICH)
 	struct Icon* currIcon;
 	struct IconGroup** currGroup;
 	
-	if(ICH == 0) return;
+	if(ICH == NULL) return;
 	
 	for(
 			// array of Icon

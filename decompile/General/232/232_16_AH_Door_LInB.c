@@ -14,7 +14,6 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   struct Thread *t;
   struct Instance *otherDoorInst;
   struct Model *m;
-  struct ModelHeader *headers;
   struct WoodDoor* woodDoor;
   struct Instance** instPtrArr;
 
@@ -120,9 +119,12 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   *(int*)&otherDoorInst->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
   *(int*)&otherDoorInst->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
   otherDoorInst->matrix.m[2][2] = inst->matrix.m[2][2];
-  otherDoorInst->matrix.t.x = inst->matrix.t.x;
-  otherDoorInst->matrix.t.y = inst->matrix.t.y;
-  otherDoorInst->matrix.t.z = inst->matrix.t.z;
+  
+  //pos XYZ
+  for (i = 0; i < 3; i++)
+  {
+    otherDoorInst->matrix.t.v[i] = inst->matrix.t.v[i];
+  }
 
   // set scaleX to -0x1000
   otherDoorInst->scale[0] = 0xf000;
@@ -138,13 +140,9 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   otherDoorInst->matrix.t.z += (ratio * 0x600 >> 0xc);
 
   // both doors always face camera
-  headers = inst->model->headers;
-
-  headers->flags |= 2;
-
-  headers = otherDoorInst->model->headers;
-
-  headers->flags |= 2;
+  //ptrHeadersArray points to the first header
+  inst->model->ptrHeadersArray->flags |= 2;
+  otherDoorInst->model->ptrHeadersArray->flags |= 2;
 
   if (
       // Level ID is N Sanity Beach, check door to Gemstone Valley
@@ -164,7 +162,8 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   {
     // rotation = 90 degrees
     woodDoor->doorRot.y = 0x400;
-
+    
+    //door Rot XYZ
     leftRot.x = woodDoor->doorRot.x;
     leftRot.y = inst->instDef->rot[1] + woodDoor->doorRot.y;
     leftRot.z = woodDoor->doorRot.z;

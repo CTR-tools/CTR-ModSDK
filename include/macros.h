@@ -18,6 +18,9 @@ typedef int16_t  s16;
 typedef uint8_t  u8;
 typedef int8_t   s8;
 
+//this is for struct headers
+#define UNDEFINED_ARRAY_LENGTH 1
+
 #define AugReview 805
 // TODO: Aug5 and Aug14
 #define SepReview 903

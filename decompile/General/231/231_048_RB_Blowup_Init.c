@@ -9,7 +9,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   struct Thread* explosionTh;
   struct Instance* explosionInst;
   struct Instance* shockwaveInst;
-  struct ModelHeader* headers;
+  struct ModelHeadr* mh;
   struct GameTracker* gGT = sdata->gGT;
   unsigned short color;
   int *blowup;
@@ -78,11 +78,14 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   shockwaveInst->matrix.t.y = weaponInst->matrix.t.y;
   shockwaveInst->matrix.t.z = weaponInst->matrix.t.z;
   
-  headers = shockwaveInst->model->headers;
+  //ptrHeadersArray points to the first header
+  mh = shockwaveInst->model->ptrHeadersArray;
   
   // set flag to always point to camera
-  headers[0].flags |= 2;
-  headers[1].flags |= 2;
+  for (unsigned char i = 0; i < 2; i++)
+  {
+    mh[i].flags |= 2;
+  }
   
   // ======== End Of Instance ==========
   

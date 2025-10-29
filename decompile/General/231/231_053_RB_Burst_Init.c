@@ -7,10 +7,11 @@ void RB_Burst_CollThBucket();
 void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
 {
   struct GameTracker* gGT = sdata->gGT;
-  struct ModelHeader* headers;
   struct Instance* currInst;
+  struct ModelHeader* mh;
   struct Thread* t;
   int* burst;
+  int i;
   
   // initialize thread for burst
   currInst = 
@@ -37,8 +38,8 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   currInst->matrix.m[2][2] = 0x1000;
   
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
+  //ptrHeadersArray points to the first header
+  currInst->model->ptrHeadersArray->flags |= 2;
   
   // ======== Next one ===========
   
@@ -60,8 +61,8 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   currInst->matrix.m[2][2] = 0x1000;
   
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
+  //ptrHeadersArray points to the first header
+  currInst->model->ptrHeadersArray->flags |= 2;
   
   // ======= Next One ===========
   
@@ -73,14 +74,17 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   // instance flags
   currInst->flags |= 0x2040000;
       
+  mh = currInst->model->ptrHeadersArray;
+  
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
-  headers[1].flags |= 2;
+  for (i = 0; i < 2; i++)
+  {
+    mh[i].flags |= 2;
+  }
   
   // ======= End of Instance =========
   
-  for(int i = 0; /*i < 3*/; i++)
+  for(i = 0; /*i < 3*/; i++)
   {
 	currInst = (struct Instance*)burst[i];
 

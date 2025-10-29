@@ -430,12 +430,16 @@ RunMineCOLL:
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t.x = dInst->matrix.t.x;
-			weaponInst->matrix.t.y = dInst->matrix.t.y;
-			weaponInst->matrix.t.z = dInst->matrix.t.z;
+			
+			//pos XYZ
+			for (unsigned char b = 0; b < 3; b++)
+			{
+				weaponInst->matrix.t.v[b] = dInst->matrix.t.v[b];
+			}
 
 			// potion always faces camera
-			weaponInst->model->headers[0].flags |= 2;
+			//ptrHeadersArray points to the first header
+			weaponInst->model->ptrHeadersArray->flags |= 2;
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;

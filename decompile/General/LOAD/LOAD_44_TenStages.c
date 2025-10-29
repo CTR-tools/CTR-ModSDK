@@ -20,7 +20,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	struct Icon* firstMpkIcon;
 	short bigFileIndex;
 	unsigned char audioState;
-	short levelID;
+	unsigned short levelID;
 	unsigned char ovrRegion1;
 	unsigned char ovrRegion3;
 
@@ -383,7 +383,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				ptrArray[i] = 0;
 			}
-			
+
 			DECOMP_LOAD_DriverMPK(bigfile, sdata->levelLOD);
 			break;
 		}
@@ -398,7 +398,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}
 			#endif
 			
+
 			sdata->PLYROBJECTLIST = sdata->ptrMPK->modelPtrArray;
+			
+			
 			if (sdata->ptrMPK == NULL) sdata->PLYROBJECTLIST = NULL;
 						
 			// clear and reset
@@ -430,7 +433,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				boolRestart = DECOMP_Music_AsyncParseBanks();
 
-				if (levSwapSize1 == 0)
+				if (boolRestart == 0)
 				{
 					// quit and restart stage 6 next frame
 					return loadingStage;

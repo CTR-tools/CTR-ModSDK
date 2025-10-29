@@ -16,7 +16,7 @@ u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animInd
         if (pModel->numHeaders > 0)
 
             // get first header ptr and validate
-            if (pHeader = pModel->headers, pHeader != NULL)
+            if (pHeader = pModel->ptrHeadersArray, pHeader != NULL)
 
                 // if header got animations
                 if (pHeader->ptrAnimations != NULL)
