@@ -6,7 +6,7 @@ int DECOMP_MainFrame_HaveAllPads(short numPlyrNextGame)
 #ifndef USE_4PADTEST
 	
 	// if game is not loading
-	if (sdata->Loading.stage == -1)
+	if (sdata->Loading.stage == LOADING_IDLE)
 	{
 		struct GamepadBuffer* gb = 
 			&sdata->gGamepads->gamepad[0];

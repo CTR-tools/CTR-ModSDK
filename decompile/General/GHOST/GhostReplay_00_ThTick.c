@@ -62,8 +62,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     if (d->reserves < 0)
       d->reserves = 0;
   }
+  
 
-  if ((gGT->trafficLightsTimer < 1) && (d->ghostBoolStarted == 0)) {
+  if ((gGT->trafficLightsTimer <= SECONDS(0)) && (d->ghostBoolStarted == 0)) {
     d->ghostBoolStarted = 1;
     tape->packetID = -1;
   }
@@ -382,7 +383,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     }
   }
 
-  if (gGT->trafficLightsTimer < 1) {
+  if (gGT->trafficLightsTimer <= SECONDS(0)) {
     tape->timeElapsedInRace += gGT->elapsedTimeMS;
   }
   return;

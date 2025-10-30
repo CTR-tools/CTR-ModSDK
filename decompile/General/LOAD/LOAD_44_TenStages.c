@@ -10,6 +10,7 @@ void (*mainMenuInit[6])() =
 	DECOMP_MM_JumpTo_Scrapbook
 };
 
+//2nd parameter can be negative, the switch just covers from 0 to 9
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	void* ptrHubFile;
@@ -39,7 +40,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	
 	switch(loadingStage)
 	{
-		case 0:
+		case LOADING_INIT:
 		{	
 #ifndef REBUILD_PS1
 			if (!boolPlayMusicDuringLoading)
@@ -216,7 +217,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			break;
 		}
-		case 1:
+		case LOADING_OVR_ENDRACE:
 		{
 			// if XA has not paused since CDSYS_XAPauseRequest in stage #0,
 			// then quit the function and try again next frame
@@ -257,7 +258,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_LOAD_OvrEndRace((int)ovrRegion1);
 			break;
 		}
-		case 2:
+		case LOADING_OVR_QUADBLOCKLOD:
 		{	
 			// force no-load on main menu
 			if (levelID == MAIN_MENU_LEVEL) 
@@ -276,7 +277,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			#endif
 			break;
 		}	
-		case 3:
+		case LOADING_OVR_THREAD:
 		{
 			#ifdef USE_ONLINE
 			// Load Region3 for planet
@@ -303,7 +304,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// advHub, 232
 			else if (
 						(levelID <= CITADEL_CITY) &&
-						(gGT->podiumRewardID == NOFUNC) //0
+						(gGT->podiumRewardID == 0)
 				)
 			{
 				ovrRegion3 = 2;
@@ -318,7 +319,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_LOAD_OvrThreads((int)ovrRegion3);
 			break;
 		}
-		case 4:
+		case LOADING_MPK:
 		{
 			if (!boolPlayMusicDuringLoading)
 			{
@@ -387,7 +388,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_LOAD_DriverMPK(bigfile, sdata->levelLOD);
 			break;
 		}
-		case 5:
+		case LOADING_STORE_MPK_DATA:
 		{
 			#ifdef USE_PRELOAD
 			// first-boot
@@ -427,7 +428,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			break;
 		}
-		case 6:
+		case LOADING_LEVFILE:
 		{
 			if (!boolPlayMusicDuringLoading)
 			{
@@ -560,7 +561,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}			
 			break;
 		}
-		case 7:
+		case LOADING_STORE_LEV_DATA:
 		{
 			// get level pointer
 			struct Level* lev = sdata->ptrLevelFile;
@@ -573,7 +574,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			gGT->level1 = lev;
 			gGT->visMem1 = lev->visMem;
 
-			if (lev != 0)
+			if (lev != NULL)
 			{
 				DECOMP_DecalGlobal_Store(gGT, lev->iconHeader);
 			}
@@ -581,7 +582,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			DECOMP_DebugFont_Init(gGT);
 
 			// if level is not nullptr
-			if (lev != 0)
+			if (lev != NULL)
 			{
 				DECOMP_LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
 
@@ -723,13 +724,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			gGT->gameMode2 |= NO_LEV_INSTANCE;
 			break;
 		}
-		case 8:
+		case LOADING_SET_AUDIO_STATE:
 		{
 			// If going to the podium		
 			if
 			(
 				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
-				(gGT->podiumRewardID != NOFUNC) //0
+				(gGT->podiumRewardID != 0) 
 			)
 			{
 				struct Model** modelPtrArr = 
@@ -746,8 +747,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				}
 			}
 
-			// Level ID
-			levelID = gGT->levelID;
 
 			// Main Menu
 			if (levelID == MAIN_MENU_LEVEL)
@@ -755,7 +754,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				audioState = 7;
 LAB_800346b0:
 				DECOMP_Audio_SetState_Safe((int)audioState);
-				return loadingStage + 1;
+				return ++loadingStage;
 			}
 
 			// One of the maps on Adventure Arena
@@ -798,7 +797,7 @@ LAB_800346b0:
 			if (levelID - CREDITS_CRASH < 2) goto LAB_800346b0;
 			break;
 		}
-		case 9:
+		case LOADING_SET_GGT_FLAGS:
 		{			
 			// Limited-Rendering scenarios
 			if (
@@ -826,7 +825,7 @@ LAB_800346b0:
 			DECOMP_ElimBG_Deactivate(gGT);
 
 			// signify end of load
-			return -2;
+			return LOADING_END;
 		}
 		default:
 			return loadingStage;

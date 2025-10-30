@@ -120,7 +120,7 @@ void ThreadFunc(struct Thread* t)
 
 		// load next level
 		//sdata->gGT->gameMode1 = LOADING;
-		//sdata->Loading.stage = 0;
+		//sdata->Loading.stage = LOADING_INIT;
 
 		// load with flag animation
 		DECOMP_MainRaceTrack_RequestLoad(INTRO_OXIDE);

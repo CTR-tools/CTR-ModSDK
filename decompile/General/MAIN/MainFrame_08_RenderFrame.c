@@ -87,7 +87,7 @@ void PatchModel_60fps(struct Model* m)
 			// expand range of LOD[0], but dont expand
 			// all the way to LOD[3], cause polygons
 			// explode when they get too small on-screen
-			mh[0].->maxDistanceLOD = 0x1000;
+			mh[0].maxDistanceLOD = 0x1000;
 
 			// skip LOD[1] and LOD[2]
 			mh[1].maxDistanceLOD = 0;
@@ -104,7 +104,7 @@ void PatchModel_60fps(struct Model* m)
 	// min graphics
 	for(i = 0; i < m->numHeaders-1; i++)
 	{
-		mh[i].->maxDistanceLOD = 0;
+		mh[i].maxDistanceLOD = 0;
 	}
 	#endif
 
@@ -115,7 +115,7 @@ void PatchModel_60fps(struct Model* m)
 		a = mh[i].ptrAnimations;
 
 		// number of animations
-		loopNum = mh[i].->numAnimations;
+		loopNum = mh[i].numAnimations;
 
 		// loop through all animations
 		for(j = 0; j < loopNum; j++)
@@ -236,7 +236,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	}
 
 	if(sdata->ptrActiveMenu != 0)
-		if(sdata->Loading.stage == -1)
+		if(sdata->Loading.stage == LOADING_IDLE)
 			DECOMP_RECTMENU_ProcessState();
 
 	RainLogic(gGT);
@@ -386,7 +386,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
 
 			// if loading is 100% finished
-			(sdata->Loading.stage != -4)
+			(sdata->Loading.stage != LOADING_NEWLEV_REQUEST)
 		)
 		{
 			DECOMP_DotLights_AudioAndVideo(gGT);
@@ -403,7 +403,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 #ifndef REBUILD_PS1
 		// if game is not loading
-		if (sdata->Loading.stage == -1)
+		if (sdata->Loading.stage == LOADING_IDLE)
 		{
 			// If game is not paused
 			if ((gGT->gameMode1 & PAUSE_ALL) == 0)

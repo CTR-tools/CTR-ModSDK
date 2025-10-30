@@ -29,7 +29,7 @@ void DECOMP_GhostTape_WriteMoves(short raceFinished)
     }
 
 	// if traffic lights are not done counting down
-    if (gGT->trafficLightsTimer > 0) {
+    if (gGT->trafficLightsTimer > SECONDS(0)) {
       return;
     }
 

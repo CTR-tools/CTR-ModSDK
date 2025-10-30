@@ -14,7 +14,7 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
   if ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0)
   {
 	// traffic light countdown
-    gGT->trafficLightsTimer = 0xf00;
+    gGT->trafficLightsTimer = SECONDS(4);
 
 // Temporary until camera thread is done
 #ifndef REBUILD_PS1
@@ -26,7 +26,7 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
   else
   {
 	// disable traffic lights
-    gGT->trafficLightsTimer = 0;
+    gGT->trafficLightsTimer = SECONDS(0);
 
 	// no fly-in camera
     gameModeFlag &= ~(START_OF_RACE);

@@ -399,7 +399,7 @@ struct Model
 	//points to the first index from header array
 	struct ModelHeader* ptrHeadersArray;
 	
-	//struct size 0x14
+	//struct size 0x18
 };
 
 struct InstDef

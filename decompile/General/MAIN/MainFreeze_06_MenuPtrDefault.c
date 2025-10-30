@@ -97,7 +97,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct RectMenu* menu)
 		case 4:
 
 			// restart race
-			sdata->Loading.stage = -5;
+			sdata->Loading.stage = LOADING_RESTART_LEV;
 
 			if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
 			{

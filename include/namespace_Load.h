@@ -174,6 +174,29 @@ enum LoadType
 	LT_MEMPACK = 0x100,
 };
 
+//LoadTenStages
+enum LoadingStages
+{
+	LOADING_VLCTABLE = -6,
+	LOADING_RESTART_LEV = -5, //when you retry a track
+	LOADING_NEWLEV_REQUEST = -4, //when loading a levelID with MainRaceTrack_RequestLoad
+	LOADING_UNK = -3, //maybe audio?
+	LOADING_END = -2,
+	LOADING_IDLE = -1,
+	LOADING_INIT = 0,
+	LOADING_OVR_ENDRACE = 1,
+	LOADING_OVR_QUADBLOCKLOD = 2,
+	LOADING_OVR_THREAD = 3,
+	LOADING_MPK = 4,
+	LOADING_STORE_MPK_DATA = 5, //icons + models
+	LOADING_LEVFILE = 6, //load the level from bigfile, can be used for cutscenes and adv hubs too, and parses music banks.
+	LOADING_STORE_LEV_DATA = 7, //loads podium models from bigfile if needed, searchs trafficLights from mpk
+	LOADING_SET_AUDIO_STATE = 8, //this stores podium models at the beginning if podium scene is required
+	LOADING_SET_GGT_FLAGS = 9
+	
+	//end	
+};
+
 struct LoadQueueSlot
 {
 	// 0x0

@@ -10,10 +10,12 @@ u_int DECOMP_main()
 	u_int RemBitsConfig0;
 	u_int AddBitsConfig8;
 	u_int RemBitsConfig8;
-	int iVar8;
+	short trafficLightsTimer;
+	char loadingStage;
 	u_int gameMode1;
 	u_int gameMode2;
-	u_int uVar12;
+	unsigned char audioState;
+	unsigned char demoTextposY;
 
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
@@ -88,7 +90,7 @@ u_int DECOMP_main()
 				// 11 = racing
 
 				// Arcade-Style track starts with intro cutscene
-				uVar12 = 9;
+				audioState = 9;
 
 				if
 				(
@@ -96,14 +98,14 @@ u_int DECOMP_main()
 					(gGT->levelID < NITRO_COURT) ||
 					(
 						// Battle-Style track starts with traffic lights
-						uVar12 = 10,
+						audioState = 10,
 						// Level ID >= 18 and < 23
 						// Battle tracks
 						gGT->levelID - NITRO_COURT < 7
 					)
 				)
 				{
-					DECOMP_Audio_SetState_Safe(uVar12);
+					DECOMP_Audio_SetState_Safe((int)audioState);
 				}
 				sdata->mainGameState = 3;
 				gGT->clockEffectEnabled &= 0xfffe;
@@ -132,7 +134,7 @@ u_int DECOMP_main()
 			}
 			#endif
 				// if loading, or gameplay interrupted
-				if (sdata->Loading.stage != -1)
+				if (sdata->Loading.stage != LOADING_IDLE)
 				{
 					if
 					(
@@ -144,14 +146,14 @@ u_int DECOMP_main()
 						gGT->gameMode1 |= LOADING;
 					}
 
-					iVar8 = sdata->Loading.stage;
+					loadingStage = sdata->Loading.stage;
 
 					// elapsed milliseconds per frame, locked 32 here
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
 					gGT->elapsedTimeMS = FPS_HALF(32);
 
 					// if loading VLC
-					if (iVar8 == -6)
+					if (loadingStage == LOADING_VLCTABLE)
 					{
 						// if VLC is not loaded, quit
 						// we know when it's done from a load callback
@@ -162,7 +164,7 @@ u_int DECOMP_main()
 					}
 
 					// if restarting race
-					if (iVar8 == -5)
+					if (loadingStage == LOADING_RESTART_LEV)
 					{
 						if (DECOMP_RaceFlag_IsFullyOnScreen() == 1)
 						{
@@ -171,7 +173,7 @@ u_int DECOMP_main()
 							sdata->mainGameState = 2;
 
 							// no loading, and no interruption
-							sdata->Loading.stage = -1;
+							sdata->Loading.stage = LOADING_IDLE;
 
 							// Turn off the "Loading..." flag
 							gGT->gameMode1 &= ~LOADING;
@@ -184,7 +186,7 @@ u_int DECOMP_main()
 
 					// if waiting for checkered flag to cover screen,
 					// right before loading the next requested level
-					else if (iVar8 == -4)
+					else if (loadingStage == LOADING_NEWLEV_REQUEST)
 					{
 						RemBitsConfig8 = sdata->Loading.OnBegin.RemBitsConfig8;
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
@@ -222,10 +224,10 @@ u_int DECOMP_main()
 					// if something is being loaded
 					else
 					{
-						sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
+						sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, loadingStage, sdata->ptrBigfile1);
 
-						// If just finished loading stage 9
-						if (sdata->Loading.stage == -2)
+						// If just finished loading all 10 stages
+						if (sdata->Loading.stage == LOADING_END)
 						{
 							if
 							(
@@ -235,8 +237,8 @@ u_int DECOMP_main()
 							{
 								DECOMP_MainLoadVLC();
 
-								// start loading VLC (scroll up to iVar8 == -6)
-								sdata->Loading.stage = -6;
+								// start loading VLC (scroll up to loadingStage == LOADING_VLCTABLE)
+								sdata->Loading.stage = LOADING_VLCTABLE;
 								break;
 							}
 
@@ -244,7 +246,7 @@ FinishLoading:
 							// loading is finished,
 							// initialize world and pools,
 							// remove LOADING... flag from gGT
-							sdata->Loading.stage = -1;
+							sdata->Loading.stage = LOADING_IDLE;
 							sdata->mainGameState = 1;
 							gGT->gameMode1 &= ~LOADING;
 							break;
@@ -281,22 +283,22 @@ FinishLoading:
 				(
 					(
 						// Check value of traffic lights
-						(-960 < gGT->trafficLightsTimer) &&
+						(gGT->trafficLightsTimer > -SECONDS(1)) &&
 						// if not drawing intro race cutscene and if not paused
 						((gGT->gameMode1 & (START_OF_RACE | PAUSE_ALL)) == 0)
 					) &&
 					(
 						// amount of milliseconds on Traffic Lights - elapsed milliseconds per frame, ~32
-						iVar8 = gGT->trafficLightsTimer - gGT->elapsedTimeMS,
+						trafficLightsTimer = gGT->trafficLightsTimer - gGT->elapsedTimeMS,
 						// decrease amount of time on Traffic Lights
-						gGT->trafficLightsTimer = iVar8,
+						gGT->trafficLightsTimer = trafficLightsTimer,
 						// if countdown has gone down far enough for traffic lights to go off-screen
-						iVar8 < -960
+						trafficLightsTimer < -SECONDS(1) //negative
 					)
 				)
 				{
 					// set a floor value, so countdown can't go farther negative
-					gGT->trafficLightsTimer = 0xfffffc40;
+					gGT->trafficLightsTimer = -SECONDS(1);
 				}
 
 				// frame counter, not represented in common.h currently
@@ -354,7 +356,7 @@ FinishLoading:
 						// Turn off HUD
 						gGT->hudFlags &= 0xfe,
 						// if game is not loading
-						sdata->Loading.stage == -1
+						sdata->Loading.stage == LOADING_IDLE
 					)
 				)
 				{
@@ -392,18 +394,18 @@ FinishLoading:
 					if (gGT->numPlyrCurrGame == 1)
 					{
 						// Draw text near top of screen
-						uVar12 = 0x23;
+						demoTextposY = 0x23;
 					}
 
 					// if this is multiplayer
 					else
 					{
 						// draw text halfway to top of screen
-						uVar12 = 100;
+						demoTextposY = 100;
 					}
 
 					// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
-					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, demoTextposY, 0x200, 2, 0xffff8000);
 				}
 
 				if ((gGT->gameMode1 & LOADING) == 0)
@@ -470,11 +472,11 @@ FinishLoading:
 
 					if (
 							// on adv hub, freeze camera for a few frames
-							(gGT->trafficLightsTimer > 3800) ||
+							(gGT->trafficLightsTimer > (SECONDS(3) + MILLISECONDS(959))) ||
 
 							// on race tracks, wait for full countdown
 							(
-								(gGT->trafficLightsTimer > 0) &&
+								(gGT->trafficLightsTimer > SECONDS(0)) &&
 								(gGT->levelID < GEM_STONE_VALLEY)
 							)
 						)
@@ -786,10 +788,14 @@ void StateZero()
 	gGT->battleSetup.enabledWeapons |= 0x34de;
 	gGT->numPlyrCurrGame = 1;
 	gGT->numPlyrNextGame = 1;
-	*(u_int*)&gGT->battleSetup.teamOfEachPlayer = 0x3020100;
+	
+	for (unsigned char i = 0; i < 4; i++)
+	{
+		gGT->battleSetup.teamOfEachPlayer[i] = i;
+	}
 
 	// traffic light countdown timer, set to negative one second
-	gGT->trafficLightsTimer = 0xfffffc40;
+	gGT->trafficLightsTimer = -SECONDS(1);
 
 	DECOMP_Timer_Init();
 	DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
@@ -905,7 +911,7 @@ void StateZero()
 	sdata->mainGameState = 3;
 
 	// start loading
-	sdata->Loading.stage = 0;
+	sdata->Loading.stage = LOADING_INIT;
 
 	clockEffect = &gGT->clockEffectEnabled;
 	gGT->gameMode1 |= LOADING;

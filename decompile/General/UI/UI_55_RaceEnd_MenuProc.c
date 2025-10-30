@@ -15,7 +15,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
     menu->drawStyle &= ~(0x100);
 
     // if more than 2 screens
-    if (2 < gGT->numPlyrCurrGame)
+    if (gGT->numPlyrCurrGame > 2)
       menu->drawStyle |= 0x100;
   
 	return;
@@ -70,7 +70,7 @@ void DECOMP_UI_RaceEnd_MenuProc(struct RectMenu* menu)
 		if (DECOMP_RaceFlag_IsFullyOffScreen() == 1)
 			DECOMP_RaceFlag_BeginTransition(1);
 	
-		sdata->Loading.stage = -5;
+		sdata->Loading.stage = LOADING_RESTART_LEV;
 	
 		// clear backup,
 		// keep music,

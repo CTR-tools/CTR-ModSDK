@@ -73,7 +73,7 @@ struct sData sdata_static =
 		0,0,0,0,
 	},
 	
-	.trafficLightsTimer_prevFrame = 0,
+	.trafficLightsTimer_prevFrame = SECONDS(0),
 	
 	//.PausePtrsVRAM = {},
 	.pause_backup_renderFlags = 0,

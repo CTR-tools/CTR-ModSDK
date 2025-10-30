@@ -103,7 +103,7 @@ LAB_80034e74:
 			gGT->elapsedTimeMS = 0x20;
 		}
 		gGT->msInThisLEV += gGT->elapsedTimeMS;
-		if (gGT->trafficLightsTimer < 1)
+		if (gGT->trafficLightsTimer <= SECONDS(0))
 		{
 			if ((gGT->gameMode1 & DEBUG_MENU) == 0)
 			{
@@ -210,7 +210,7 @@ LAB_80035098:
 					(j == SPIDER)
 				)
 				{
-					if(gGT->trafficLightsTimer > 3600)
+					if(gGT->trafficLightsTimer > (SECONDS(3) + MILLISECONDS(750)))
 						continue;
 				}
 				#endif
