@@ -271,7 +271,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 				// clock timer to make the car waddle
 
 				driverTimer = driver->clockReceive >> 6;
-				if (driverTimer > 0x40) driverTimer = 0x40;
+				if (driverTimer > MILLISECONDS(67)) driverTimer = MILLISECONDS(67);
 
 				timerHazard = driver->clockReceive << 4;
 
@@ -536,7 +536,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 			// if numHeldItems == 0
 			// wait a full second before next weapon
-			driver->noItemTimer = FPS_DOUBLE(0x1e);
+			driver->noItemTimer = FPS_DOUBLE(30);
 
 			// If "held item quantity" is zero
 			if (driver->numHeldItems != 0)

@@ -19,7 +19,7 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 		
 		// if less than 1.0 seconds
 		// wait for rise
-		if(currTimer < 0x3c0)
+		if(currTimer < SECONDS(1))
 		{
 			// increment
 			currTimer += sdata->gGT->elapsedTimeMS;
@@ -32,9 +32,9 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 			#if 0
 			
 			// Naughty Dog "intended" this
-			if(currTimer >= 0x3c0)
+			if(currTimer >= SECONDS(1))
 			{
-				turtleObj->timer = 0x3c0;
+				turtleObj->timer = SECONDS(1);
 				PlaySound3D(0x7d, turtleInst);
 			}
 			
@@ -44,9 +44,9 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 			// identical decomp that represents 
 			// the "shipped" game
 			
-			if(currTimer > 0x3c0)
+			if(currTimer > SECONDS(1))
 			{
-				turtleObj->timer = 0x3c0;
+				turtleObj->timer = SECONDS(1);
 			}
 			
 			#endif
@@ -94,7 +94,7 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 		
 		// if less than 1.0 seconds
 		// wait for fall
-		if(currTimer < 0x3c0)
+		if(currTimer < SECONDS(1))
 		{
 			// increment
 			currTimer += sdata->gGT->elapsedTimeMS;
@@ -104,9 +104,9 @@ void DECOMP_RB_Turtle_ThTick(struct Thread* t)
 			
 			// == fixed Naughty Dog bug ==
 			
-			if(currTimer > 0x3c0)
+			if(currTimer > SECONDS(1))
 			{
-				turtleObj->timer = 0x3c0;
+				turtleObj->timer = SECONDS(1);
 			}
 		}
 		

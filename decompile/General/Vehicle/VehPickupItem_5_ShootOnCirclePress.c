@@ -4,7 +4,7 @@ void DECOMP_VehPickupItem_ShootOnCirclePress(struct Driver *d)
 {
     u_char weapon;
 
-    if (d->ChangeState_param2 != 0)
+    if (d->ChangeState_param2 != HURT_SKIP_DAMAGE)
     {
 		#ifndef REBUILD_PS1
         DECOMP_VehPickState_NewState(d, d->ChangeState_param2, (struct Driver*)d->ChangeState_param3, d->ChangeState_param4);

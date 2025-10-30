@@ -36,7 +36,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
 			instParent->thread->object;
 		
       // blasted anyone?
-	  DECOMP_RB_Hazard_HurtDriver(victim, 2, attacker, 2);
+	  DECOMP_RB_Hazard_HurtDriver(victim, HURT_BLASTED, attacker, HIT_BY_STATIC_POTION);
     }
     else
     {
@@ -55,7 +55,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
 			driverParent;
 
       // blasted anyone?
-	  DECOMP_RB_Hazard_HurtDriver(victim, 2, attacker, reason);
+	  DECOMP_RB_Hazard_HurtDriver(victim, HURT_BLASTED, attacker, reason);
 
       if (attacker->longestShot < tw->timeAlive)
 		attacker->longestShot = tw->timeAlive;
@@ -72,7 +72,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
     }
 
     // icon damage timer, draw icon as red
-    victim->damageColorTimer = 0x1e;
+    victim->damageColorTimer = MILLISECONDS(32);
 
     // get modelID from thread
     model = t->modelIndex;

@@ -300,7 +300,7 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		// == first frame of fireball rising ==
 		
 		// reset timer
-		fireObj->cycleTimer = 0xb40;
+		fireObj->cycleTimer = SECONDS(3);
 		
 		// upward velocity
 		fireObj->velY = 200;
@@ -370,8 +370,8 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	// similar to turtles, dont need to subtract '0'
 	if(inst->name[9] & 1)
 	{
-		// 1.44s, this is a ms-based timer, not a frame-based 
+		// this is a ms-based timer, not a frame-based 
 		// counter, so t->cooldownFrameCount is not allowed
-		fireObj->cycleTimer = 1440;
+		fireObj->cycleTimer = SECONDS(1) + MILLISECONDS(500);
 	}
 }

@@ -344,7 +344,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 			0;
 		#else
 			// attempt to harm driver (eat)
-			DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
+			DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_EATEN,0,HIT_NO_REASON);
 		#endif
 		
 		if(didHit != 0)
@@ -381,7 +381,7 @@ EatDriver:
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		#ifndef REBUILD_PS1
-		DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_EATEN,0,HIT_NO_REASON);
 		#endif
 		
 		plantObj->boolEatingPlayer = 0;

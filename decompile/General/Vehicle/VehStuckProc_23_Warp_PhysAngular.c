@@ -57,8 +57,8 @@ void DECOMP_VehStuckProc_Warp_PhysAngular(struct Thread *th, struct Driver *d)
     }
     else
     {
-        // cap to 800
-		timer = 800;
+        // cap ms
+		timer = MILLISECONDS(834);
 
         d->revEngineState = 2;
 

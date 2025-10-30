@@ -92,15 +92,15 @@ LAB_80034e74:
 		gGT->elapsedTimeMS = timeElapsed;
 		if (timeElapsed < 0)
 		{
-			gGT->elapsedTimeMS = 0x20;
+			gGT->elapsedTimeMS = FPS_HALF(32);
 		}
-		if (gGT->elapsedTimeMS > 0x40)
+		if (gGT->elapsedTimeMS > FPS_HALF(64))
 		{
-			gGT->elapsedTimeMS = 0x40;
+			gGT->elapsedTimeMS = FPS_HALF(64);
 		}
 		if ((gGT->gameMode1_prevFrame & PAUSE_ALL) != 0)
 		{
-			gGT->elapsedTimeMS = 0x20;
+			gGT->elapsedTimeMS = 32;
 		}
 		gGT->msInThisLEV += gGT->elapsedTimeMS;
 		if (gGT->trafficLightsTimer <= SECONDS(0))

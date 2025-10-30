@@ -585,7 +585,7 @@ RunMineCOLL:
 				if(victim == d) continue;
 
 				// if spin out driver
-				if(DECOMP_RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
+				if(DECOMP_RB_Hazard_HurtDriver(victim, HURT_SPINNING, 0, HIT_NO_REASON) != 0)
 				{
 					victim->clockReceive = clockTimer;
 				}

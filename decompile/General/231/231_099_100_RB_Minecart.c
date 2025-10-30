@@ -41,7 +41,7 @@ void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecar
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		// attempt to harm driver (squish)
-		DECOMP_RB_Hazard_HurtDriver(hitDriver,3,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_SQUISHED,0,HIT_NO_REASON);
 	}
 #endif
 }

@@ -371,18 +371,18 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 		
 		// get driver from instance
 		hitDriver = (struct Driver*)hitInst->thread->object;
-		DECOMP_RB_Hazard_HurtDriver(hitDriver, 4, 0, 0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver, HURT_BURNED, 0, HIT_NO_REASON);
 	}
 	
 	// on 45th frame (1.5s)
-	else if(fjObj->cycleTimer == FPS_DOUBLE(0x2d))
+	else if(fjObj->cycleTimer == FPS_DOUBLE(45))
 	{
 		if(fjObj->audioPtr != 0)
 			OtherFX_RecycleMute((int*)fjObj->audioPtr);
 	}
 	
 	// repeat cycle every 105 (3.5s)
-	else if(fjObj->cycleTimer > FPS_DOUBLE(0x69))
+	else if(fjObj->cycleTimer > FPS_DOUBLE(105))
 		fjObj->cycleTimer = 0;
 	
 EndFjThTick:

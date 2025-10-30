@@ -619,7 +619,8 @@ FinishLoading:
 
 				// reboot game
 				sdata->mainGameState = GSTATE_BOOT;
-
+				
+				//break;
 			}
 			#endif
 		}

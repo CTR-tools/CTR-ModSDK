@@ -478,7 +478,7 @@ LAB_800ae440:
 	struct Driver* hitD =
 		hitTh->object;
 
-	hitD->damageColorTimer = 0x1e;
+	hitD->damageColorTimer = MILLISECONDS(32);
 
     if (hitD == tw->driverTarget)
 	{

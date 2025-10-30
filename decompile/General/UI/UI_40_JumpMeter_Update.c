@@ -54,7 +54,7 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
    else 
    {
 	  #ifndef REBUILD_PS1
-      if ((0x480 < d->jump_LandingBoost) && (d->jumpMeter < 0x481)) 
+      if ((d->jump_LandingBoost > 0x480) && (d->jumpMeter < 0x481)) 
 	  {
          // Make driver talk
          Voiceline_RequestPlay(7, data.characterIDs[d->driverID], 0x10);
@@ -65,12 +65,12 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
       d->jumpMeter = d->jump_LandingBoost;
 
       //if Jump meter > 0x960
-      if (0x960 < d->jump_LandingBoost) {
+      if (d->jump_LandingBoost > 0x960) {
          //prevent Jump meter from going over 0x960
          d->jumpMeter = 0x960;
       }
-      //keep Jump meter Timer at 0x5A0.
-      d->jumpMeterTimer = 0x5a0;
+      //keep Jump meter Timer at 0x5A0
+      d->jumpMeterTimer = SECONDS(1) + MILLISECONDS(500);
    }
    return;
 }

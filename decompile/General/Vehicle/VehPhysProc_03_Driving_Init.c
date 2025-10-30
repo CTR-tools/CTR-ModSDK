@@ -36,7 +36,7 @@ void DECOMP_VehPhysProc_Driving_Init(struct Thread *t, struct Driver *d)
 				(d->kartState == KS_BLASTED)
 			)
         {
-            d->invincibleTimer = 0xb40;
+            d->invincibleTimer = SECONDS(3);
         }
 		
 		// must put this HERE, so that 

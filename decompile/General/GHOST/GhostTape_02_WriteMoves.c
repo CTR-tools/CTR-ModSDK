@@ -219,7 +219,7 @@ void DECOMP_GhostTape_WriteMoves(short raceFinished)
 
 	  // set ghostOverflowTextTimer
 	  // to 180 frames (6 seconds 30fps)
-      sdata->ghostOverflowTextTimer = FPS_DOUBLE(0xb4);
+      sdata->ghostOverflowTextTimer = FPS_DOUBLE(180);
     }
 
 	// Increment frame counter

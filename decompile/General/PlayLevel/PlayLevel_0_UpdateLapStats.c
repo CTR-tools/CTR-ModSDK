@@ -527,7 +527,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// === VS Mode ===
 
 			// Make the player Blasted
-			VehPickState_NewState(currDriver, 2, currDriver, 0);
+			DECOMP_VehPickState_NewState(currDriver, HURT_BLASTED, currDriver, HIT_NO_REASON);
 
 			// Reduce counters for AttackingPlayer and AttackedByPlayer
 			currDriver->numTimesAttackedByPlayer[currDriver->driverID]--;

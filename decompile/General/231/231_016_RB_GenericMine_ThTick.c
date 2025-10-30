@@ -13,15 +13,19 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   unsigned int model;
   int numFrames;
   void(*func)(struct Thread*);
-  int param;
-  int boolPotion;
+  unsigned char soundID;
+  char damageReason;
+  char boolPotion;
+  char colorTimer;
+  char booldamageTaken;
+  short hitRadious;
   
   gGT = sdata->gGT;
   inst = t->inst;
   mw = inst->thread->object;
   model = inst->model->id;
   
-  boolPotion = (unsigned int)(model - 0x46) < 2;
+  boolPotion = (unsigned int)(model - STATIC_BEAKER_RED) < 2;
   
   // if weapon is "thrown" like Komodo Joe
   if ((mw->extraFlags & 2) != 0) 
@@ -97,16 +101,16 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     inst->scale[2] += FPS_HALF(0x200);
   }
  
-  param = 0x3840;
+  hitRadious = 0x3840;
 
   // red beaker or green beaker
   if (boolPotion != 0) 
   {
-    param = 0x1900;
+    hitRadious = 0x1900;
   }
   
   coll = DECOMP_RB_Hazard_CollideWithDrivers(
-	inst,mw->frameCount_DontHurtParent,param,mw->instParent);
+	inst,mw->frameCount_DontHurtParent,hitRadious,mw->instParent);
   
   // if no collision
   if (coll == 0) goto LAB_800ad17c;
@@ -126,20 +130,20 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   if (boolPotion != 0)
   {
     // count times hit by motionless potion
-    param = 2;
+    damageReason = HIT_BY_STATIC_POTION;
 
     // if fly-forward timer is still active
     if (mw->cooldown != 0)
     {
       // moving potion
-      param = 4;
+      damageReason = HIT_BY_MOVING_POTION;
     }
 
     // spin driver
-    coll = (struct Instance*)DECOMP_RB_Hazard_HurtDriver(d,1,mw->instParent->thread->object,param);
+    booldamageTaken = DECOMP_RB_Hazard_HurtDriver(d,HURT_SPINNING,mw->instParent->thread->object,damageReason);
     
 	// if collision, and if this was a red potion
-	if ((coll != 0) && (mw->extraFlags & 1) != 0)
+	if ((booldamageTaken != 0) && (mw->extraFlags & 1) != 0)
 	{
 		RB_RainCloud_Init(d);
 	}
@@ -159,19 +163,19 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	
 	// make player icon red
 	// If this is a red beaker
-    param = 0x1e;
+    colorTimer = MILLISECONDS(32);
 	
 	// green beaker
-    if (model == 0x47) 
+    if (model == STATIC_BEAKER_GREEN) 
 	{
 	  // make player icon green
-      param = -0x1e;
+      colorTimer = -(MILLISECONDS(32));
     }
 	
 LAB_800ace88:
     
 	// set icon damage timer
-	d->damageColorTimer = param;
+	d->damageColorTimer = colorTimer;
 	
 LAB_800ad174:
 
@@ -185,10 +189,10 @@ LAB_800ad174:
     if (d->instTntRecv!= NULL) 
 	{
 	  // blasted driver
-      DECOMP_RB_Hazard_HurtDriver(d,2,0,2);
+      DECOMP_RB_Hazard_HurtDriver(d,HURT_BLASTED,0, HIT_BY_STATIC_POTION);
 	  
 	  // icon damage timer, draw icon as red
-      d->damageColorTimer = 0x1e;
+      d->damageColorTimer = MILLISECONDS(32);
 	  
 	  // set scale (x, y, z) to zero
       d->instTntRecv->scale[0] = 0;
@@ -210,40 +214,40 @@ LAB_800ad174:
 	// if driver has squished timer
     if (d->squishTimer != 0) 
 	{
-	  DECOMP_RB_Hazard_HurtDriver(d,2,0,2);
+	  DECOMP_RB_Hazard_HurtDriver(d,HURT_BLASTED,0, HIT_BY_STATIC_POTION);
       
-	  param = 0x1e;
+	  colorTimer = 0x1e;
       goto LAB_800ace88;
     }
 	
 	// if model is Nitro
-    if (model == 6) 
+    if (model == PU_EXPLOSIVE_CRATE) 
 	{
-      DECOMP_RB_Hazard_HurtDriver(d,2,mw->instParent->thread->object,2);
+      DECOMP_RB_Hazard_HurtDriver(d,HURT_BLASTED,mw->instParent->thread->object,HIT_BY_STATIC_POTION);
       
 	  // Why does icon turn red in gameplay?
 	  
 	  // icon damage timer, draw icon as green
-	  d->damageColorTimer = -0x1e;
+	  d->damageColorTimer = -MILLISECONDS(32);
 	  
       goto LAB_800ad174;
     }
 	
 	// if model is TNT
-    if (model == 0x27) 
+    if (model == STATIC_CRATE_TNT) 
 	{
 	  // RB_Hazard_HurtDriver (keep driving?)
-      crate = (struct Crate*)DECOMP_RB_Hazard_HurtDriver(d,0,mw->instParent->thread->object,2);
+      booldamageTaken = DECOMP_RB_Hazard_HurtDriver(d,0,mw->instParent->thread->object,HIT_BY_STATIC_POTION);
       
-	  if (crate == 0) goto LAB_800ad174;
+	  if (booldamageTaken == 0) goto LAB_800ad174;
 	  
 	  // if Instance has no InstDef,
 	  // if this TNT is not part of the level,
 	  // use existing thread
-      if (inst->instDef == 0) 
+      if (inst->instDef == NULL) 
 	  {
 		// icon damage timer, draw icon as red
-       d->damageColorTimer = 0x1e;
+       d->damageColorTimer = MILLISECONDS(32);
 		
 		// give driver to tnt object
         mw->driverTarget = d;
@@ -380,17 +384,17 @@ LAB_800ad17c:
   {
     // if model is TNT
 	// tnt explosion sound
-	param = 0x3d;
+	soundID = 0x3d;
   
 	// if model is Nitro
 	if (model == PU_EXPLOSIVE_CRATE) 
 	{
 		// glass shatter
-		param = 0x3f;
+		soundID = 0x3f;
 	}
 	
 	// play sound
-	PlaySound3D(param,inst);
+	PlaySound3D(soundID,inst);
   
 	RB_Blowup_Init(inst);
   }

@@ -62,7 +62,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 				OtherFX_Play(0x69, 1);
 			}
 
-			driverVictim->burnTimer = 0xf00;
+			driverVictim->burnTimer = SECONDS(4);
 		}
 		break;
 	case 2:
@@ -105,7 +105,7 @@ u_int DECOMP_BOTS_ChangeState(struct Driver* driverVictim, int damageType, struc
 		driverVictim->botData.unk5ba = 3;
 		driverVictim->botData.unk5bc.ai_squishCooldown = 0x300;
 		driverVictim->botData.unk5bc.rotXZ = 0xf00;
-		driverVictim->squishTimer = 0xf00;
+		driverVictim->squishTimer = SECONDS(4);
 		driverVictim->reserves = 0;
 		driverVictim->turbo_outsideTimer = 0;
 		driverVictim->botData.unk5bc.unk5cc = 0;

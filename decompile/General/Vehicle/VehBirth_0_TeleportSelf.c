@@ -398,7 +398,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
         dInst->flags |= GHOST_DRAW_TRANSPARENT;
 
-        d->invisibleTimer = 0x2d00;
+        d->invisibleTimer = SECONDS(12);
     }
 }
 

@@ -30,8 +30,8 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     d->turbo_outsideTimer = 0;
     d->reserves = 0;
 
-    // 1.44s until spawned back over track
-    d->NoInputTimer = 1440;
+    // wait until spawned back over track
+    d->NoInputTimer = SECONDS(1) + MILLISECONDS(500);
 
     d->actionsFlagSet &= 0xfff7ffbf;
 
