@@ -164,14 +164,14 @@ struct sData sdata_static =
 	
 	.modelMaskHints3D = 0,
 	
-	.mainGameState = 0,
+	.mainGameState = GSTATE_BOOT,
 	
 	.Loading =
 	{
-		.stage = -1,
+		.stage = LOADING_IDLE,
 		
 		// MAIN MENU LEVEL
-		.Lev_ID_To_Load = 0x27,
+		.Lev_ID_To_Load = MAIN_MENU_LEVEL,
 		
 		// OnBegin is all zeros
 	},

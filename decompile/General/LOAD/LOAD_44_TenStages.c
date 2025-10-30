@@ -22,8 +22,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	short bigFileIndex;
 	unsigned char audioState;
 	unsigned short levelID;
-	unsigned char ovrRegion1;
-	unsigned char ovrRegion3;
+	unsigned char index_OvrEndRace;
+	unsigned char index_OvrThread;
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
@@ -187,13 +187,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// main menu or adv garage
 			if((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
-				sdata->levelLOD = 1;
+				sdata->levelLOD = LOD_HI;
 			}
 			
 			// if relic, or time trial
 			if((gGT->gameMode1 & (TIME_TRIAL | RELIC_RACE)) != 0)
 			{
-				sdata->levelLOD = 8;
+				sdata->levelLOD = LOD_RELIC_TT;
 			}
 			
 			
@@ -232,30 +232,30 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			
 			// 221 - Crystal Challenge
 			if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0) 	
-				ovrRegion1 = 0;
+				index_OvrEndRace = 0;
 
 			// 223 - Relic Race
 			else if ((gGT->gameMode1 & RELIC_RACE) != 0) 
-				ovrRegion1 = 2;
+				index_OvrEndRace = 2;
 			
 			// 224 - Time Trial
 			else if ((gGT->gameMode1 & TIME_TRIAL) != 0)
-				ovrRegion1 = 3;
+				index_OvrEndRace = 3;
 			
 			// 222 - Arcade/Trophy/Boss/C-T-R token
 			// if arcade, or adv that isn't listed above
 			else if ((gGT->gameMode1 & (ARCADE_MODE | ADVENTURE_MODE)) != 0)
-				ovrRegion1 = 1;
+				index_OvrEndRace = 1;
 			
 			// default VS/Battle overlay if no mode found
 			else //if (gGT->gameMode1 & VS_MODE)
-				ovrRegion1 = 4;
+				index_OvrEndRace = 4;
 			
 			#ifdef USE_HIGHMP
-			ovrRegion1 = 4;
+			index_OvrEndRace = 4;
 			#endif
 		
-			DECOMP_LOAD_OvrEndRace((int)ovrRegion1);
+			DECOMP_LOAD_OvrEndRace((int)index_OvrEndRace);
 			break;
 		}
 		case LOADING_OVR_QUADBLOCKLOD:
@@ -282,7 +282,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			#ifdef USE_ONLINE
 			// Load Region3 for planet
 			if(gGT->levelID == INTRO_OXIDE)
-				ovrRegion3 = 3;
+				index_OvrThread = 3;
 			else
 			#endif
 			
@@ -292,13 +292,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					((gGT->gameMode1 & MAIN_MENU) != 0)
 				)
 			{
-				ovrRegion3 = 0;
+				index_OvrThread = 0;
 			}
 			
 			// race threads, 231
 			else if (levelID <= LAB_BASEMENT)
 			{
-				ovrRegion3 = 1;
+				index_OvrThread = 1;
 			}
 			
 			// advHub, 232
@@ -307,16 +307,16 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 						(gGT->podiumRewardID == 0)
 				)
 			{
-				ovrRegion3 = 2;
+				index_OvrThread = 2;
 			}
 			
 			// Cutscene, Credits, ND, Garage, Podium
 			else
 			{
-				ovrRegion3 = 3;
+				index_OvrThread = 3;
 			}
 			
-			DECOMP_LOAD_OvrThreads((int)ovrRegion3);
+			DECOMP_LOAD_OvrThreads((int)index_OvrThread);
 			break;
 		}
 		case LOADING_MPK:

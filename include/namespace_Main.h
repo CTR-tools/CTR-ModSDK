@@ -1,3 +1,14 @@
+//sdata->mainGameState
+enum MainGameState
+{
+	GSTATE_BOOT = 0, //only when booting ctr
+	GSTATE_INIT_LEV, //resets some variables
+	GSTATE_RESET_LEV, //when restarting a track
+	GSTATE_MAINLOOP, //game loop, render graphics, race etc
+	GSTATE_REBOOT, //left from ctr demos, apparently reboots the game, removed in decomp
+	GSTATE_KILLGAME //wont happen under normal conditions
+};
+
 enum GameMode1
 {
 	VS_MODE 			= 0x0, //if no mode found then VS mode is active

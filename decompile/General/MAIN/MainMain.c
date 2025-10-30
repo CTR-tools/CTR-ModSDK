@@ -31,7 +31,7 @@ u_int DECOMP_main()
 	{
 		#if 0
 		// wont happen under normal conditions
-		if (sdata->mainGameState == 5)
+		if (sdata->mainGameState == GSTATE_KILLGAME)
 		{
 			MainKillGame_StopCTR();
 			return 0;
@@ -48,12 +48,12 @@ u_int DECOMP_main()
 		switch(sdata->mainGameState)
 		{
 			// Initialize Game (happens once)
-			case 0:
+			case GSTATE_BOOT:
 				StateZero();
 				break;
 
 			// Happens on first frame that loading ends
-			case 1:
+			case GSTATE_INIT_LEV:
 
 				DECOMP_ElimBG_Deactivate(gGT);
 
@@ -107,12 +107,12 @@ u_int DECOMP_main()
 				{
 					DECOMP_Audio_SetState_Safe((int)audioState);
 				}
-				sdata->mainGameState = 3;
+				sdata->mainGameState = GSTATE_MAINLOOP;
 				gGT->clockEffectEnabled &= 0xfffe;
 				break;
 
 			// Reset stage, reset music
-			case 2:
+			case GSTATE_RESET_LEV:
 				DECOMP_Audio_SetState_Safe(1);
 				DECOMP_MEMPACK_PopState();
 
@@ -120,12 +120,12 @@ u_int DECOMP_main()
 				// so the threadpool will reset anyway
 				DECOMP_LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
 
-				sdata->mainGameState = 1;
+				sdata->mainGameState = GSTATE_INIT_LEV;
 				break;
 
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
-			case 3:
+			case GSTATE_MAINLOOP:
 			
 			#ifdef USE_LANG
 			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
@@ -170,7 +170,7 @@ u_int DECOMP_main()
 						{
 							// reinitialize world,
 							// does not reinitialize pools
-							sdata->mainGameState = 2;
+							sdata->mainGameState = GSTATE_RESET_LEV;
 
 							// no loading, and no interruption
 							sdata->Loading.stage = LOADING_IDLE;
@@ -247,7 +247,7 @@ FinishLoading:
 							// initialize world and pools,
 							// remove LOADING... flag from gGT
 							sdata->Loading.stage = LOADING_IDLE;
-							sdata->mainGameState = 1;
+							sdata->mainGameState = GSTATE_INIT_LEV;
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
@@ -586,7 +586,7 @@ FinishLoading:
 			#if 0
 			// In theory, this is left over from the demos,
 			// which would "timeout" and restart after sitting idle
-			case 4:
+			case GSTATE_REBOOT:
 
 				// erase all data past the
 				// last 3 bookmarks, if there
@@ -609,7 +609,7 @@ FinishLoading:
 				VSync(30);
 
 				// reboot game
-				sdata->mainGameState = 0;
+				sdata->mainGameState = GSTATE_BOOT;
 			#endif
 		}
 	} while( true );
@@ -908,7 +908,7 @@ void StateZero()
 	// This includes traffic lights, font, and more
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102);
 
-	sdata->mainGameState = 3;
+	sdata->mainGameState = GSTATE_MAINLOOP;
 
 	// start loading
 	sdata->Loading.stage = LOADING_INIT;

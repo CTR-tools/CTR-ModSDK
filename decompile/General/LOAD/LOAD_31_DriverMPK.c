@@ -107,7 +107,9 @@ void DECOMP_LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD)
 	int lastFileIndexMPK;
 
 	// 3P/4P
-	if(levelLOD - 3U < 2)
+	if(
+		(levelLOD == LOD_LOW_3P)  || (levelLOD == LOD_LOW_4P)		
+	  )
 	{
 		#ifdef USE_DRIVERLOD
 		highLOD_DriverMPK(levelLOD);
@@ -219,7 +221,7 @@ void DECOMP_LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD)
 
 	// any 1P mode,
 	// not adv, not time trial, not gem cup, not credits
-	else if(levelLOD == 1)
+	else if(levelLOD == LOD_HI)
 	{
 ForceOnlineLoad8:
 		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
@@ -233,7 +235,7 @@ ForceOnlineLoad8:
 		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
 	}
 
-	//else if(levelLOD == 2)
+	//else if(levelLOD == LOD_MED)
 	else
 	{
 		#ifdef USE_DRIVERLOD
