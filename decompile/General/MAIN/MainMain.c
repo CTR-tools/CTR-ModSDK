@@ -49,11 +49,14 @@ u_int DECOMP_main()
 		{
 			// Initialize Game (happens once)
 			case GSTATE_BOOT:
+			{
 				StateZero();
 				break;
+			}
 
 			// Happens on first frame that loading ends
 			case GSTATE_INIT_LEV:
+			{
 
 				DECOMP_ElimBG_Deactivate(gGT);
 
@@ -110,9 +113,11 @@ u_int DECOMP_main()
 				sdata->mainGameState = GSTATE_MAINLOOP;
 				gGT->clockEffectEnabled &= 0xfffe;
 				break;
+			}
 
 			// Reset stage, reset music
 			case GSTATE_RESET_LEV:
+			{
 				DECOMP_Audio_SetState_Safe(1);
 				DECOMP_MEMPACK_PopState();
 
@@ -122,10 +127,12 @@ u_int DECOMP_main()
 
 				sdata->mainGameState = GSTATE_INIT_LEV;
 				break;
+			}
 
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case GSTATE_MAINLOOP:
+			{
 			
 			#ifdef USE_LANG
 			if ((gGT->gameMode2 & LNG_CHANGE) != 0) {
@@ -582,11 +589,13 @@ FinishLoading:
 					DECOMP_AH_MaskHint_Update();
 				}
 				break;
+			}
 
 			#if 0
 			// In theory, this is left over from the demos,
 			// which would "timeout" and restart after sitting idle
 			case GSTATE_REBOOT:
+			{
 
 				// erase all data past the
 				// last 3 bookmarks, if there
@@ -610,6 +619,8 @@ FinishLoading:
 
 				// reboot game
 				sdata->mainGameState = GSTATE_BOOT;
+
+			}
 			#endif
 		}
 	} while( true );
