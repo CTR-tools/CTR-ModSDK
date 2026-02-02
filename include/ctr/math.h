@@ -1,7 +1,6 @@
 #pragma once
 
 #include <ctr/macros.h>
-#include <ctr/gte.h>
 
 typedef union SVec2
 {
