@@ -31,15 +31,20 @@ force_inline void FlushCache()
 #define TEST
 
 #if defined(TEST)
-#define DYNAMIC_ASSERT(expected, actual, msg) //TODO
+#define DYNAMIC_ASSERT(expected, actual, msg) \
+    do { \
+        if ((expected) != (actual)) { \
+            printf("DYNAMIC_ASSERT FAILED (expected %d, got %d): %s\n", (u32)(expected), (u32)(actual), msg); \
+        } \
+    } while (0)
 #else
 #define DYNAMIC_ASSERT(expected, actual, msg)
 #endif
 
 #if defined(TEST)
-#define STATIC_ASSERT //TODO
+#define STATIC_ASSERT(cond, msg) _Static_assert(cond, msg)
 #else
-#define STATIC_ASSERT
+#define STATIC_ASSERT(cond, msg)
 #endif
 
 #if defined(TEST)

@@ -296,9 +296,6 @@ static void _COLL_TestTriangle(CollDCache* cache, const CollVertex* v1, const Co
     }
     if ((distTriNextPos >= cache->inputHitRadius) || ((!triggerScript) && (distTriNextPos > distTriCurrPos))) { return; }
 
-
-
-
     u32 crossedPlane = false;
     const SVec3 deltaPos = {
         .x = cache->inputNextPos.x - cache->collInput.quadblock.driverPos.x,

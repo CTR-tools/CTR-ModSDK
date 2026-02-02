@@ -1,5 +1,6 @@
 #include <ctr/list.h>
 
+/* Address: 0x80031734 */
 void LIST_Clear(LinkedList* list)
 {
 	list->first = NULL;
@@ -7,6 +8,7 @@ void LIST_Clear(LinkedList* list)
 	list->count = 0;
 }
 
+/* Address: 0x80031744 */
 void LIST_AddFront(LinkedList* list, Item* item)
 {
 	if (item == NULL) { return; }
@@ -22,6 +24,7 @@ void LIST_AddFront(LinkedList* list, Item* item)
 	list->count++;
 }
 
+/* Address: 0x80031788 */
 void LIST_AddBack(LinkedList* list, Item* item)
 {
 	if (item == NULL) { return; }
@@ -37,16 +40,19 @@ void LIST_AddBack(LinkedList* list, Item* item)
 	list->count++;
 }
 
+/* Address: 0x800317cc */
 void* LIST_GetNextItem(Item* item)
 {
 	return item->next;
 }
 
+/* Address: 0x800317d8 */
 void* LIST_GetFirstItem(LinkedList* list)
 {
 	return list->first;
 }
 
+/* Address: 0x800317e4 */
 Item* LIST_RemoveMember(LinkedList* list, Item* item)
 {
 	if (item == NULL || list->first == NULL) { return item; }
@@ -63,6 +69,7 @@ Item* LIST_RemoveMember(LinkedList* list, Item* item)
 	return item;
 }
 
+/* Address: 0x8003186c */
 Item* LIST_RemoveFront(LinkedList* list)
 {
 	Item* removedItem = list->first;
@@ -80,6 +87,7 @@ Item* LIST_RemoveFront(LinkedList* list)
 	return removedItem;
 }
 
+/* Address: 0x800318ec */
 Item* LIST_RemoveBack(LinkedList* list)
 {
 	//for some reason, LIST_RemoveBack and LIST_RemoveFront aren't mirrors of each other.
@@ -101,6 +109,7 @@ Item* LIST_RemoveBack(LinkedList* list)
 	return removedItem;
 }
 
+/* Address: 0x8003197c */
 void LIST_Init(LinkedList* list, Item* item, s32 itemSize, s32 numItems)
 {
 	for(; numItems > 0; numItems--)

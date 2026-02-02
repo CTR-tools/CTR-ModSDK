@@ -1,6 +1,7 @@
 #include <ctr/jitpool.h>
 #include <ctr/nd.h>
 
+/* Address: 0x80030fdc */
 void JitPool_Clear(JitPool* AP)
 {
 	Item* item = (Item*)AP->ptrPoolData;
@@ -15,6 +16,7 @@ void JitPool_Clear(JitPool* AP)
 	}
 }
 
+/* Address: 0x8003105c */
 void JitPool_Init(JitPool* AP, s32 maxItems, s32 itemSize)
 {
 	memset((void*)AP, '\0', sizeof(JitPool));
@@ -26,6 +28,7 @@ void JitPool_Init(JitPool* AP, s32 maxItems, s32 itemSize)
 	JitPool_Clear(AP);
 }
 
+/* Address: 0x800310d4 */
 Item* JitPool_Add(JitPool* AP)
 {
 	Item* item = AP->free.first;
@@ -36,6 +39,7 @@ Item* JitPool_Add(JitPool* AP)
 	return item;
 }
 
+/* Address: 0x8003112c */
 void JitPool_Remove(JitPool* AP, Item* item)
 {
 	LIST_RemoveMember(&AP->taken, item);
