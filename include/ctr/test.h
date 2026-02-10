@@ -8,6 +8,7 @@
 #include <ctr/rng.h>
 #include <ctr/coll.h>
 #include <ctr/list.h>
+#include <ctr/jitpool.h>
 #include <ctr/test_backup.h>
 
 extern const char* s_nameTestedFunc;
@@ -154,13 +155,7 @@ force_inline void FlushCache()
 #endif
 
 #ifdef TEST_LIST_IMPL
-	typedef struct BDATA_LIST_Init
-	{
-		void asdf;
-	} BDATA_LIST_Init;
-	void BACKUP_LIST_Init(const void* source);
-	void RESTORE_LIST_Init(BDATA_LIST_Init* restore, void* destination);
-	void TEST_LIST_Init(LinkedList* list, Item* item, s32 itemSize, s32 numItems);
+
 #else
-	#define TEST_LIST_Init(list, item, itemSize, numItems)
+
 #endif

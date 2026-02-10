@@ -31,6 +31,19 @@ FunctionPatch s_functions[] =
     TEST_FUNC(RNG_PseudoRand),
     TEST_FUNC(RNG_Random),
     TEST_FUNC(COLL_TestLeaf_Quadblock),
+    TEST_FUNC(JitPool_Clear),
+    TEST_FUNC(JitPool_Init),
+    TEST_FUNC(JitPool_Add),
+    TEST_FUNC(JitPool_Remove),
+    TEST_FUNC(LIST_Clear),
+    TEST_FUNC(LIST_AddFront),
+    TEST_FUNC(LIST_AddBack),
+    TEST_FUNC(LIST_GetNextItem),
+    TEST_FUNC(LIST_GetFirstItem),
+    TEST_FUNC(LIST_RemoveMember),
+    TEST_FUNC(LIST_RemoveFront),
+    TEST_FUNC(LIST_RemoveBack),
+    TEST_FUNC(LIST_Init),
 };
 
 const char* s_nameTestedFunc = nullptr;
