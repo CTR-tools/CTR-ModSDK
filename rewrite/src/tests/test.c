@@ -1,4 +1,5 @@
 #include <ctr/test.h>
+#include <ctr/test_backup.h>
 
 #define JMP(dest) ((((u32)dest) & 0x3FFFFFF) >> 2 | 0x8000000)
 #define NOP 0x0
@@ -30,11 +31,42 @@ FunctionPatch s_functions[] =
     TEST_FUNC(RNG_PseudoRand),
     TEST_FUNC(RNG_Random),
     TEST_FUNC(COLL_TestLeaf_Quadblock),
+    TEST_FUNC(JitPool_Clear),
+    TEST_FUNC(JitPool_Init),
+    TEST_FUNC(JitPool_Add),
+    TEST_FUNC(JitPool_Remove),
+    TEST_FUNC(LIST_Clear),
+    TEST_FUNC(LIST_AddFront),
+    TEST_FUNC(LIST_AddBack),
+    TEST_FUNC(LIST_GetNextItem),
+    TEST_FUNC(LIST_GetFirstItem),
+    TEST_FUNC(LIST_RemoveMember),
+    TEST_FUNC(LIST_RemoveFront),
+    TEST_FUNC(LIST_RemoveBack),
+    TEST_FUNC(LIST_Init),
 };
 
 const char* s_nameTestedFunc = nullptr;
 
-void LoadTestPatches()
+void TEST_Init()
+{
+	BACKUP_INIT();
+	TEST_LoadPatches();
+}
+
+bool TEST_Memcmp(const void* expected, const void* actual, u32 n)
+{
+	bool failed = false;
+	const u8* pExpected = (const u8*)expected;
+	const u8* pActual = (const u8*)actual;
+	for (u32 i = 0; i < n; i++)
+	{
+		if (pExpected[i] != pActual[i]) { ND_printf("[%s] Test Failed:\nOffset %x: %d, got: %d\n", s_nameTestedFunc, i, (u32)pExpected[i], (u32)pActual[i]); failed = true; }
+	}
+	return failed;
+}
+
+void TEST_LoadPatches()
 {
     const u32 funcCount = ARR_LEN(s_functions);
     for (u32 i = 0; i < funcCount; i++)
@@ -79,7 +111,7 @@ void PatchFunction_End(u32 index)
     FlushCache();
 }
 
-u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
+u32 TEST_PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)
@@ -93,7 +125,7 @@ u32 PrintSVectorDiff(const SVec3* expected, const SVec3* ret)
     return failed;
 }
 
-u32 PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans)
+u32 TEST_PrintMatrixDiff(const Matrix* expected, const Matrix* ret, u32 cmpTrans)
 {
     u32 failed = 0;
     for (u32 i = 0; i < 3; i++)

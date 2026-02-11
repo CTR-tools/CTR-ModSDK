@@ -14,7 +14,7 @@ void LoadDecomp()
 	
 	#ifndef REWRITE_PROFILER
 		ND_LOAD_XnfFile("\\TESTS.BIN;1", testAddr, &dummy);
-		LoadTestPatches();
+		TEST_Init();
 	#endif
 	
     ND_LOAD_XnfFile("\\DECOMP.BIN;1", decompAddr, &dummy);

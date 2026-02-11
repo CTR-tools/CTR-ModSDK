@@ -9,8 +9,11 @@
 /* Address: 0x8003ea28 */
 u32 RNG_Rand()
 {
-    BACKUP_RNG_Rand();
+	BACKUP_RNG_Rand(); //global state before
+
     e_seed = (e_seed * RNG_MULT_FACTOR + RNG_INC_FACTOR) & 0xFFFF;
+
+	BACKUP_RNG_Rand(); //global state after (result from decomp)
     TEST_RNG_Rand();
     return e_seed;
 }
@@ -18,9 +21,12 @@ u32 RNG_Rand()
 /* Address: 0x8003ea6c */
 s32 RNG_RandInt(u32 n)
 {
-    BACKUP_RNG_RandInt();
+    BACKUP_RNG_RandInt(); //global state before
+
     const u32 rand = RNG_Random(&e_gameTracker->seed);
     const s32 ret = ((s32) ((rand & 0xFFFF) * n)) >> 16;
+
+	BACKUP_RNG_RandInt(); //global state after (result from decomp)
     TEST_RNG_RandInt(n, ret);
     return ret;
 }
