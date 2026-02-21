@@ -1,4 +1,4 @@
-#include <ctr_math.h>
+#include <math.h>
 
 enum Characters
 {
@@ -37,12 +37,12 @@ enum KartState
 enum PhysType
 {
 	// MetaPhys[0]
-	GRAVITY=0,	
+	GRAVITY=0,
 	// Driver offset
 	GRAVITY_OFFSET = 0x416,
 
 	// MetaPhys[1]
-	JUMP=1,	
+	JUMP=1,
 	// Driver offset
 	JUMP_OFFSET = 0x418,
 
@@ -82,17 +82,17 @@ enum PhysType
 	DRIFT_FRICTION_OFFSET = 0x426,
 
 	// MetaPhys[9]
-	ACCELERATION_NO_RESERVES=9,	
+	ACCELERATION_NO_RESERVES=9,
 	// Driver offset
 	ACCEL_NO_RESERVES_OFFSET = 0x428,
 
 	// MetaPhys[A]
-	ACCELERATION_WITH_RESERVES=0xA,	
+	ACCELERATION_WITH_RESERVES=0xA,
 	// Driver offset
 	ACCEL_WITH_RESERVES_OFFSET=0x42A,
 
 	// MetaPhys[B]
-	CLASS_SPEED = 0xB,	
+	CLASS_SPEED = 0xB,
 	// Driver offset
 	CLASS_SPEED_OFFSET = 0x42C,
 
@@ -100,7 +100,7 @@ enum PhysType
     SPEEDOMETER_UNK42E = 0xC,
 	// Driver offset
 	SPEEDOMETER_UNK42E_OFFSET = 0x42E,
-	
+
 	// MetaPhys[D]
 	MAX_SPEED_SINGLE_TURBO = 0xD,
 	// Driver offset
@@ -135,7 +135,7 @@ enum PhysType
 	REVERSE_TURNING_SPEED = 0x13,
 	// Driver offset
 	REVERSE_TURNING_SPEED_OFFSET = 0x43B,
-	
+
 	// MetaPhys[14]
 	TURN_UNK43C = 0x14,
 	// Driver offset
@@ -828,7 +828,7 @@ struct Driver
 	// 0x36e
     // Seems to control the speedometer needle to show base current speed
     // Altought the needle is also controlled a little bit by other variables that are not constants
-	short unk36E; 
+	short unk36E;
 
 	// 0x370
 	short AxisAngle3_normalVec[3];
