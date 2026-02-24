@@ -5,11 +5,11 @@ int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod)
 	// === Wow we need a bigfile enum ===
 
 #ifdef USE_HIGHMP
-	lod = 1;
+	lod = LOD_HI;
 #endif
 
 #ifdef USE_REAL60PS1
-	lod = 4;
+	lod = LOD_LOW_4P;
 #endif
 
 	if(levelID <= LAB_BASEMENT)

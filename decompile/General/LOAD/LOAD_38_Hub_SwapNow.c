@@ -42,13 +42,13 @@ void DECOMP_LOAD_Hub_SwapNow()
 	
 	/*
 	In Aug 5
-	if (sdata->PLYROBJECTLIST == 0)
+	if (sdata->PLYROBJECTLIST == NULL)
 	{
 		printf("ERROR: No PLYROBJECTLIST!\n");
 	}
 	*/
 	
-	if(sdata->PLYROBJECTLIST != 0)
+	if(sdata->PLYROBJECTLIST != NULL)
 	{
 		DECOMP_LOAD_GlobalModelPtrs_MPK();
 	}
@@ -75,7 +75,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 			
 		DECOMP_LevInstDef_UnPack(level1->ptr_mesh_info);
 		
-		DECOMP_DecalGlobal_Store(gGT, (struct Icon*)level1->levTexLookup); //2nd param might be `level1->levTexLookup->firstIcon`
+		DECOMP_DecalGlobal_Store(gGT, level1->iconHeader);
 	}
 	
 	cDC = &gGT->cameraDC[0];

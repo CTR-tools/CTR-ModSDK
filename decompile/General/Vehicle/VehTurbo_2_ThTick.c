@@ -110,7 +110,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	gte_rt();
 	
 	// set translation vector
-	gte_stlvl((VECTOR *)&instance->matrix.t[0]);
+	gte_stlvl((VECTOR *)&instance->matrix.t.x);
 	
 	// matrix of second turbo instance, negate X axis
 	turbo->inst->matrix.m[0][0] = (short)(-(int)instanceDriver->matrix.m[0][0] * fireSize >> 3);
@@ -128,7 +128,7 @@ void DECOMP_VehTurbo_ThTick(struct Thread* turboThread)
 	gte_rt();
 	
 	// set translation vector
-	gte_stlvl((VECTOR *)&turbo->inst->matrix.t[0]);
+	gte_stlvl((VECTOR *)&turbo->inst->matrix.t.x);
 	
 	// decrease turbo visibility cooldown by elapsed milliseconds per frame, ~32
 	elapsedTime = turbo->fireVisibilityCooldown - gGT->elapsedTimeMS;

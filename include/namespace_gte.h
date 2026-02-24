@@ -1,20 +1,12 @@
-/*
- * PSn00bSDK GTE library
- * (C) 2019-2022 Lameguy64 - MPL licensed
- */
+#ifndef CTR_GTE_H
+#define CTR_GTE_H
 
-/**
- * @file psxgte.h
- * @brief GTE library header
- *
- * @details The Geometry Transformation Engine, often referred to as the GTE,
- * is most responsible for providing 3D capabilities to the PS1. This is
- * effectively an all-integer math co-processor connected directly to the CPU,
- * as it is accessed using COP2 and related MIPS instructions to access
- * registers and issue commands to the GTE.
- */
+// where is this included //its on common.h -penta3
+// that's not ifndef guarded?
+#ifndef REBUILD_PC
 
-#pragma once
+#include <ctr_math.h>
+#include <psn00bsdk/include/inline_c.h>
 
 #ifdef INTELLISENSE_HINT
 #include <stdint-gcc.h>
@@ -25,17 +17,13 @@
 
 #define ONE (1 << 12)
 
-/* Structure definitions */
+void RotateVector(SVec3 * out, const SVec3 * in);
+void MulMatrixVec(Vec3 * out, const Matrix * m, const SVec3 * in);
 
 
-typedef struct _MATRIX {
-	int16_t m[3][3];
-	int32_t t[3];
-} MATRIX;
+typedef Matrix MATRIX; //check ctr_math.h
 
-
-
-
+//all of these copied from psn00b/psxgte.h
 typedef struct _VECTOR {
 	int32_t vx, vy, vz;
 } VECTOR;
@@ -52,8 +40,6 @@ typedef struct _DVECTOR {
 	int16_t vx, vy;
 } DVECTOR;
 
-/* Public API */
-
 #define csin(a) isin(a)
 #define ccos(a) icos(a)
 #define rsin(a) isin(a)
@@ -62,6 +48,7 @@ typedef struct _DVECTOR {
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /**
  * @brief Gets sine of angle (fixed-point)
@@ -264,6 +251,7 @@ void VectorNormalS(VECTOR *v0, SVECTOR *v1);
  */
 void Square0(VECTOR *v0, VECTOR *v1);
 
-#ifdef __cplusplus
-}
+
+#endif
+
 #endif

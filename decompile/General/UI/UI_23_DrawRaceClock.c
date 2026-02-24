@@ -26,6 +26,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	short sVar1;
 	int stringColor;
 	u_int lapIndex;
+	u_int boolRelic;
 	u_int uVar3;
 	u_char *totalTimeString;
 	int iVar5;
@@ -52,12 +53,11 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	u_short stringColor_but_its_also_relicColor;
 	char minutesOnes;
 	char minutesTens;
-	char acStack80 [8];
+	char text_buffer[8];
 
 	u_short textPosX;
 	u_short textPosY;
 
-	char *local_38;
 	int unbitshiftTextPosX;
 	int bitshiftTextPosX;
 
@@ -283,7 +283,6 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 			return;
 		}
 
-		local_38 = acStack80;
 		numParamY = 1;
 		bitshiftTextPosX = (u_int)textPosX << 0x10;
 		unbitshiftTextPosX = bitshiftTextPosX >> 0x10;
@@ -364,11 +363,11 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 					// DAT_8008d510
 					// %d
 
-					sprintf(local_38, &sdata->s_int[0], numParamY);
+					sprintf(text_buffer, &sdata->s_int[0], numParamY);
 					lapTextHeight = (short *)(&data.font_charPixHeight[lapFontType]);
 
 					// draw string
-					DECOMP_DecalFont_DrawLine(local_38, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
+					DECOMP_DecalFont_DrawLine(text_buffer, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					// LAP
 					DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
@@ -410,7 +409,7 @@ LAB_8004f84c:
 		// 16 is bit index for unlocking blue relics
 
 		// if you have gold, draw platinum
-		if(CHECK_ADV_BIT(rewardsSet, (gGT->levelID + 0x28)) != 0)
+		if(CHECK_ADV_BIT(rewardsSet, (gGT->levelID + (PRIZE_RELIC_RACE + PRIZE_GOLD))) != 0)
 		{
 DrawPlatinum:
 			str = 200;
@@ -422,21 +421,21 @@ DrawPlatinum:
 
 		// if no blue relic, draw blue,
 		// if owned blue relic, draw gold
-		lapIndex = CHECK_ADV_BIT(rewardsSet, (gGT->levelID + 0x16));
+		boolRelic = CHECK_ADV_BIT(rewardsSet, (gGT->levelID + (PRIZE_RELIC_RACE + PRIZE_SAPPHIRE)));
 	}
 
 	// Draw (blue,gold,plat) based on which you have unlocked
 	else
 	{
 		// if owned plat, draw plat
-		if(CHECK_ADV_BIT(rewardsSet, (gGT->levelID + 0x3a)) != 0) goto DrawPlatinum;
+		if(CHECK_ADV_BIT(rewardsSet, (gGT->levelID + (PRIZE_RELIC_RACE + PRIZE_PLATINUM))) != 0) goto DrawPlatinum;
 
 		// if own gold, draw gold,
 		// if own blue, draw blue
-		lapIndex = CHECK_ADV_BIT(rewardsSet, (gGT->levelID + 0x28));
+		boolRelic = CHECK_ADV_BIT(rewardsSet, (gGT->levelID + RELIC_RACE + PRIZE_GOLD));
 	}
 
-	if ((lapIndex & 1) == 0)
+	if ((boolRelic & 1) == 0)
 	{
 		// SAPPHIRE
 		str = 0xc6;

@@ -3,7 +3,7 @@
 // Required to make door open
 // when driver hits potion, or 
 // potion shatters due to full MinePool
-int RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox)
+int DECOMP_RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox)
 {
 	struct InstDef* instDef;
 	struct Instance* teethInst;

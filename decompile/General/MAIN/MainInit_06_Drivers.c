@@ -6,7 +6,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     char numPlyrCurrGame = gGT->numPlyrCurrGame;
     u_char numDrivers;
     u_int uVar3;
-    int gameMode = gGT->gameMode1;
+    unsigned int gameMode = gGT->gameMode1;
     struct Driver* d;
 
     for (i = 0; i < 8; i++)
@@ -40,9 +40,13 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	// spawn all AIs
     if (
         (
-			// exclude cutscene, relic, Time Trial,
+			// exclude cutscene, relic, time trial
 			// Adventure Hub, Main Menu, Battle
-            ((gameMode & 0x2c122020) == 0) &&
+            (
+				(gameMode & (BATTLE_MODE | MAIN_MENU | ADVENTURE_ARENA |
+				TIME_TRIAL | RELIC_RACE | CRYSTAL_CHALLENGE | GAME_CUTSCENE)) == 0
+				
+			) &&
 
             // numPlyrCurrGame requires AIs
             (numPlyrCurrGame < 3)
@@ -54,8 +58,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	   )
     {
         // If you're in Boss Mode
-        // 0x80000000
-        if (gameMode < 0)
+        if ((gameMode & ADVENTURE_BOSS) != 0)
         {
             numDrivers = numPlyrCurrGame+1;
         }
@@ -119,6 +122,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		m = sdata->PLYROBJECTLIST[i++];
 
 		// "token"
+		//this is char[16] text parsed as hex to being able to compare
 		if(*(int*)&m->name[0] == 0x656b6f74)
 		{
 			// Player 1 always comes after Token
@@ -158,7 +162,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	
 	for(driverID; driverID < 7; driverID++)
 	{
-		if(gGT->drivers[driverID] == 0) break;
+		if(gGT->drivers[driverID] == NULL) break;
 		gGT->drivers[driverID]->instSelf->model = sdata->PLYROBJECTLIST[i++];
 	}
 
@@ -166,7 +170,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	#if 0
 	for(driverID = 0; driverID < 7; driverID++)
 	{
-		if(gGT->drivers[driverID] == 0) break;
+		if(gGT->drivers[driverID] == NULL) break;
 		printf("%s\n", gGT->drivers[driverID]->instSelf->model->name);
 	}
 	#endif
@@ -175,7 +179,12 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 
     // if you're in time trial, not main menu, not loading.
     // basically, if you're in time trial gameplay
-    if ((gameMode & 0x20022000) == TIME_TRIAL)
+    if (
+	
+		((gGT->gameMode1 & TIME_TRIAL) != 0) &&
+		((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0)
+	
+	   )
     {
         DECOMP_GhostReplay_Init2();
 
@@ -183,13 +192,12 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		
 		#ifdef REBUILD_PS1
 		
-		// 0: human ghost
-		// 1: n tropy / oxide
-		if(sdata->ptrGhostTape[1] != 0)
+
+		if(sdata->ptrGhostTape[REPLAY_NOXIDE] != NULL)
 		{
 			// N Tropy to Oxide	
 			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
-			if(sdata->ptrGhostTape[1]->gh == pointers[ST1_NOXIDE])
+			if(sdata->ptrGhostTape[REPLAY_NOXIDE]->gh == pointers[ST1_NOXIDE])
 				i++;
 		}
 		

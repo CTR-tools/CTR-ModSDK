@@ -30,8 +30,8 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     d->turbo_outsideTimer = 0;
     d->reserves = 0;
 
-    // 1.44s until spawned back over track
-    d->NoInputTimer = 1440;
+    // wait until spawned back over track
+    d->NoInputTimer = SECONDS(1) + MILLISECONDS(500);
 
     d->actionsFlagSet &= 0xfff7ffbf;
 
@@ -111,9 +111,9 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     }
 
     // edits position
-    d->posCurr.x = inst->matrix.t[0] << 8;
-    d->posCurr.y = inst->matrix.t[1] << 8;
-    d->posCurr.z = inst->matrix.t[2] << 8;
+    d->posCurr.x = inst->matrix.t.x << 8;
+    d->posCurr.y = inst->matrix.t.y << 8;
+    d->posCurr.z = inst->matrix.t.z << 8;
 
     // set previous frame velocity to the same as current frame velocity
     d->posCurr.x = d->posPrev.x;
@@ -129,11 +129,11 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     if (mask == NULL)
         return;
 
-    mask->rot[2] |= 1;
+    mask->rot.z |= 1;
 
-    mask->pos[0] = d->posCurr.x >> 8;
-    mask->pos[1] = (d->posCurr.y >> 8) + 0x140;
-    mask->pos[2] = d->posCurr.z >> 8;
+    mask->pos.x = d->posCurr.x >> 8;
+    mask->pos.y = (d->posCurr.y >> 8) + 0x140;
+    mask->pos.z = d->posCurr.z >> 8;
 }
 
 void DECOMP_VehStuckProc_MaskGrab_Particles(struct Driver *d);

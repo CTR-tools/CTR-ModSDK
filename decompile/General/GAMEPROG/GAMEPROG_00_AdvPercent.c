@@ -25,24 +25,24 @@ void DECOMP_GAMEPROG_AdvPercent(struct AdvProgress* adv)
 	for(i = 0; i < 18; i++)
 	{
 		// first bit of blue relic
-		bitIndex = 0x16 + i;
+		bitIndex = (PRIZE_RELIC_RACE + PRIZE_SAPPHIRE) + i;
 		if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 		{
 			gGT->currAdvProfile.numRelics++;
 		}
 		
 		// check 16 trophies
-		if(i < 0x10)
+		if(i < 16)
 		{
 			// first bit of trophy
-			bitIndex = 6 + i;
+			bitIndex = PRIZE_TROPHY_RACE + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numTrophies++;
 			}
 			
 			// first bit of token
-			bitIndex = 0x4c + i;
+			bitIndex = PRIZE_TOKEN_RACE + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				// increment number of tokens, based on
@@ -60,14 +60,14 @@ void DECOMP_GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		if(i < 4)
 		{
 			// first bit of key
-			bitIndex = 0x5e + i;
+			bitIndex = PRIZE_BOSS_KEY + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numKeys++;
 			}
 			
 			// first bit of purple tokens
-			bitIndex = 0x6f + i;
+			bitIndex = PRIZE_CRYSTAL_CH + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numCtrTokens.purple++;
@@ -78,14 +78,14 @@ void DECOMP_GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		if(i < 5)
 		{
 			// first bit of gem
-			bitIndex = 0x6a + i;
+			bitIndex = PRIZE_GEM_CUP + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				numGems++;
 			}
 		}
 		
-		// if beat oxide once, add 2% for first timie (2-0=2%)
+		// if beat oxide once, add 2% for first time (2-0=2%)
 		// if beat oxide twice, add 1% for second time (2-1=1%)
 		if(i < 2)
 		{
@@ -106,7 +106,7 @@ void DECOMP_GAMEPROG_AdvPercent(struct AdvProgress* adv)
 	for(i = 0; i < 18; i++)
 	{
 		// first bit of gold relic
-		bitIndex = 0x28 + i;
+		bitIndex = (PRIZE_RELIC_RACE + PRIZE_GOLD) + i;
 		if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 		{
 			// check next relic

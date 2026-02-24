@@ -5,8 +5,8 @@ void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh);
 void DECOMP_AH_WarpPad_AllWarppadNum()
 {
 	struct WarpPad* wp;
-	struct ModelHeader* mh;
 	struct Instance* inst;
+	struct ModelHeader* mh;
 	
 	struct Thread* t =
 		sdata->gGT->threadBuckets[WARPPAD].thread;
@@ -25,7 +25,8 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 			)
 		{
 			inst = wp->inst[2];
-			mh = &inst->model->headers[0];
+			//ptrHeadersArray points to the first header
+			mh = inst->model->ptrHeadersArray;
 			AH_WarpPad_SetNumModelData(inst, &mh[wp->digit1s-1]);
 		}
 		
@@ -35,8 +36,9 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 			)
 		{
 			inst = wp->inst[3];
-			mh = &inst->model->headers[0];
-			AH_WarpPad_SetNumModelData(inst, mh);
+			//ptrHeadersArray points to the first header
+			mh = inst->model->ptrHeadersArray;
+			AH_WarpPad_SetNumModelData(inst, &mh[0]);
 		}
 	}
 }

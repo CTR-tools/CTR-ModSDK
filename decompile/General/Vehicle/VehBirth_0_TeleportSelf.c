@@ -218,9 +218,9 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
     d->posCurr.y = (posRot->pos[1]-0x40) << 8;
     d->posCurr.z = posRot->pos[2] << 8;
 
-	dInst->matrix.t[0] = posRot->pos[0];
-	dInst->matrix.t[1] = (posRot->pos[1]-0x40);
-	dInst->matrix.t[2] = posRot->pos[2];
+	dInst->matrix.t.x = posRot->pos[0];
+	dInst->matrix.t.y = (posRot->pos[1]-0x40);
+	dInst->matrix.t.z = posRot->pos[2];
 
     ConvertRotToMatrix(&dInst->matrix.m, &d->rotCurr.x);
 
@@ -381,7 +381,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 	if ((gameMode2 & CHEAT_TURBO) != 0) weaponId = 0;
 	if ((gameMode2 & CHEAT_BOMBS) != 0) weaponId = 1;
 	if ((gameMode2 & CHEAT_WUMPA) != 0) d->numWumpas = 99;
-	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = 0x2d00;
+	if ((gameMode2 & CHEAT_ENGINE) != 0) d->superEngineTimer = SECONDS(12);
     d->heldItemID = weaponId;
 
 	if(weaponId != 0xf)
@@ -398,7 +398,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
 
         dInst->flags |= GHOST_DRAW_TRANSPARENT;
 
-        d->invisibleTimer = 0x2d00;
+        d->invisibleTimer = SECONDS(12);
     }
 }
 

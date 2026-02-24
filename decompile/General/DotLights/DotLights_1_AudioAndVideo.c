@@ -2,9 +2,9 @@
 
 void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
 {
-  int iVar1;
+  int trafficLightsTimer;
   int d1;
-  int iVar5;
+  int count;
   int sortaPosY;
   
   struct Icon* icon;
@@ -20,18 +20,19 @@ void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
   d1 = 0;
 
   // time on traffic light counter
-  iVar1 = gGT->trafficLightsTimer;
+  trafficLightsTimer = gGT->trafficLightsTimer;
   
   // if timer is negative, skip the whole function
-  if (iVar1 < -0x3bf) goto SkipLights;
+  //-959 elapsedMS
+  if (trafficLightsTimer < -(SECONDS(1) - 1)) goto SkipLights;
   
   // default, lights are near center of screen
   sortaPosY = 0x1000;
   
   // green light (1,1,1,1)
-  if (iVar1 < 1)
+  if (trafficLightsTimer <= SECONDS(0))
   {
-    if (0 < sdata->trafficLightsTimer_prevFrame)
+    if (sdata->trafficLightsTimer_prevFrame > SECONDS(0))
 	{
 	  // Play "green light" Sound
       DECOMP_OtherFX_Play(0x46,0);
@@ -42,9 +43,9 @@ void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
 
 	// use time on traffic light counter to transition
 	// lights upward, add full second to treat negative as possitive
-	iVar1 = (gGT->trafficLightsTimer + 0x3c0) * 0x1000;
-	iVar5 = (int)((long long)((long long)iVar1 * -0x77777777) >> 0x20);
-	sortaPosY = (iVar5 + iVar1 >> 9) - (iVar1 >> 0x1f);
+	trafficLightsTimer = (gGT->trafficLightsTimer + SECONDS(1)) * 0x1000;
+	count = (int)((long long)((long long)trafficLightsTimer * -0x77777777) >> 0x20);
+	sortaPosY = (count + trafficLightsTimer >> 9) - (trafficLightsTimer >> 0x1f);
 
 	goto DrawLights;
   }
@@ -52,9 +53,9 @@ void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
   // any of the red lights
   for(lightIndex = 1; lightIndex < 4; lightIndex++)
   {
-	  if(iVar1 < (0x3c0*lightIndex)+1)
+	  if(trafficLightsTimer < (SECONDS(1) *lightIndex)+1)
 	  {
-		  if(sdata->trafficLightsTimer_prevFrame > (0x3c0*lightIndex))
+		  if(sdata->trafficLightsTimer_prevFrame > (SECONDS(1) *lightIndex))
 		  {
 			// Play "red light" Sound
 			DECOMP_OtherFX_Play(0x45,0);
@@ -73,9 +74,9 @@ void DECOMP_DotLights_AudioAndVideo(struct GameTracker* gGT)
   // d1 is still zero
 
   // use time on traffic light counter to transition posY downward
-  iVar1 = (0xf00 - gGT->trafficLightsTimer) * 0x1000;
-  iVar5 = (int)((long long)((long long)iVar1 * -0x77777777) >> 0x20);
-  sortaPosY = (iVar5 + iVar1 >> 9) - (iVar1 >> 0x1f);
+  trafficLightsTimer = (SECONDS(4) - gGT->trafficLightsTimer) * 0x1000;
+  count = (int)((long long)((long long)trafficLightsTimer * -0x77777777) >> 0x20);
+  sortaPosY = (count + trafficLightsTimer >> 9) - (trafficLightsTimer >> 0x1f);
   
 DrawLights:
   

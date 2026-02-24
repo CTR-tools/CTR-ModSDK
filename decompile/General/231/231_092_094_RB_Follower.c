@@ -71,9 +71,9 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 		}
 
 		// midpoint between real mine position, and driver position
-		inst->matrix.t[0] = (fObj->realPos[0] + (d->posCurr.x>>8)) >> 1;
-		inst->matrix.t[1] = (fObj->realPos[1] + (d->posCurr.y>>8)) >> 1;
-		inst->matrix.t[2] = (fObj->realPos[2] + (d->posCurr.z>>8)) >> 1;
+		inst->matrix.t.x = (fObj->realPos.x + (d->posCurr.x>>8)) >> 1;
+		inst->matrix.t.y = (fObj->realPos.y + (d->posCurr.y>>8)) >> 1;
+		inst->matrix.t.z = (fObj->realPos.z + (d->posCurr.z>>8)) >> 1;
 
 		return;
 	}
@@ -85,9 +85,10 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
 {
   struct Thread* t;
-  struct Instance* iVar1;
+  struct Instance* followerInst;
   struct Follower* fObj;
-  struct Instance* iVar3;
+  struct Instance* mineInst;
+  unsigned char i;
 
   // disable for slow speed
   if (d->speedApprox <= 0x1e00) return;
@@ -96,35 +97,36 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   if ((d->actionsFlagSet & 0x100000) != 0) return;
 
   #ifdef USE_ONLINE
-  if(d->driverID != 0) return;
+  if(d->driverID != NULL) return;
   #endif
 
   // disable for airborne camera
   if (((sdata->gGT->cameraDC[d->driverID].flags) & 0x10000) != 0) return;
 
   // create a thread and an Instance
-  iVar1 = INSTANCE_BirthWithThread(
+  followerInst = INSTANCE_BirthWithThread(
   	mineTh->modelIndex, 0, SMALL, FOLLOWER,
   	DECOMP_RB_Follower_ThTick, sizeof(struct Follower), 0);
 
-  if (iVar1 == NULL) return;
+  if (followerInst == NULL) return;
 
   // followerInst scale
-  iVar1->scale[0] = 0x200;
-  iVar1->scale[1] = 0x200;
-  iVar1->scale[2] = 0x200;
+  for (i = 0; i < 3; i++)
+  {
+	followerInst->scale[i] = 0x200;
+  }
 
   // mineInst
-  iVar3 = mineTh->inst;
+  mineInst = mineTh->inst;
 
   // copy position and rotation from one instance to another
-  *(int*)&iVar1->matrix.m[0][0] = *(int*)&iVar3->matrix.m[0][0];
-  *(int*)&iVar1->matrix.m[0][2] = *(int*)&iVar3->matrix.m[0][2];
-  *(int*)&iVar1->matrix.m[1][1] = *(int*)&iVar3->matrix.m[1][1];
-  *(int*)&iVar1->matrix.m[2][0] = *(int*)&iVar3->matrix.m[2][0];
-  iVar1->matrix.m[2][2] = iVar3->matrix.m[2][2];
+  *(int*)&followerInst->matrix.m[0][0] = *(int*)&mineInst->matrix.m[0][0];
+  *(int*)&followerInst->matrix.m[0][2] = *(int*)&mineInst->matrix.m[0][2];
+  *(int*)&followerInst->matrix.m[1][1] = *(int*)&mineInst->matrix.m[1][1];
+  *(int*)&followerInst->matrix.m[2][0] = *(int*)&mineInst->matrix.m[2][0];
+  followerInst->matrix.m[2][2] = mineInst->matrix.m[2][2];
 
-  t = iVar1->thread;
+  t = followerInst->thread;
   t->funcThDestroy = PROC_DestroyInstance;
 
   fObj = t->object;
@@ -133,11 +135,11 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
   fObj->mineTh = mineTh;
   fObj->backupTimesDestroyed = mineTh->timesDestroyed;
 
-  // backup original position
-  for(int i = 0; i < 3; i++)
-  {
-  	int pos = iVar3->matrix.t[i];
-  	iVar1->matrix.t[i] = pos;
-  	fObj->realPos[i] = pos;
-  }
+	// backup original position
+	for (i = 0; i < 3; i++)
+	{
+		followerInst->matrix.t.v[i] = mineInst->matrix.t.v[i];
+		fObj->realPos.v[i] = mineInst->matrix.t.v[i];
+	}
+  
 }

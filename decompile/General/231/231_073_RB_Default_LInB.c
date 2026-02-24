@@ -16,13 +16,13 @@ void DECOMP_RB_Default_LInB(struct Instance* inst)
 	*(int*)&scratch[0x144] = (int)sdata->gGT->level1->ptr_mesh_info;
 	
 	// Make a hitbox
-	var = inst->matrix.t[0];
+	var = inst->matrix.t.x;
 	*(short*)&scratch[0x108] = var;
 	*(short*)&scratch[0x110] = var;
-	var = inst->matrix.t[2];
+	var = inst->matrix.t.z;
 	*(short*)&scratch[0x10c] = var;
 	*(short*)&scratch[0x114] = var;
-	var = inst->matrix.t[1];
+	var = inst->matrix.t.y;
 	*(short*)&scratch[0x10a] = var - 0x180;
 	*(short*)&scratch[0x112] = var + 0x80;
 	

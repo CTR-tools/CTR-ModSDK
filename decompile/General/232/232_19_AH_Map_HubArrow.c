@@ -1,8 +1,8 @@
 #include <common.h>
 
 void DECOMP_AH_Map_HubArrow(
-	int posX, int posY, 
-	short* vertPos, char* vertCol,
+	Vec2* pos, 
+	short* arrowPos, char* arrowCol,
 	int unk800, int angle)
 {
 	short local_30 [6];
@@ -16,21 +16,21 @@ void DECOMP_AH_Map_HubArrow(
 	for(int i = 0; i < 3; i++)
 	{
 		local_30[i*2+0] =
-			posX + 6 +
+			pos->x + 6 +
 			(short)((
 				(
-					((vertPos[2*i+0] * cos) >> 0xc) +
-					((vertPos[2*i+1] * sin) >> 0xc)
+					((arrowPos[2*i+0] * cos) >> 0xc) +
+					((arrowPos[2*i+1] * sin) >> 0xc)
 				) * ((unk800 * 8) / 5)
 			
 			) >> 0xc);
 			
 		local_30[i*2+1] =
-			posY + 4 +
+			pos->y + 4 +
 			(short)((
 				(
-					((vertPos[2*i+1] * cos) >> 0xc) -
-					((vertPos[2*i+0] * sin) >> 0xc)
+					((arrowPos[2*i+1] * cos) >> 0xc) -
+					((arrowPos[2*i+0] * sin) >> 0xc)
 				) * unk800
 			
 			) >> 0xc);
@@ -50,10 +50,10 @@ void DECOMP_AH_Map_HubArrow(
 		}
 		
 		DECOMP_RECTMENU_DrawRwdTriangle(
-			&local_20[0], vertCol,
+			&local_20[0], arrowCol,
 			gGT->pushBuffer_UI.ptrOT,
 			&gGT->backBuffer->primMem);
 		
-		vertCol = (char*)&D232.colorTri[0];
+		arrowCol = (char*)&D232.colorTri[0];
 	}
 }

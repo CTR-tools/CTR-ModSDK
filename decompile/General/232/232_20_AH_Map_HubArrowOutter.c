@@ -1,44 +1,44 @@
 #include <common.h>
 
 void DECOMP_AH_Map_HubArrowOutter(
-	void* hubPtrs, int arrowIndex,
-	int posX, int posY,
+	struct Map* hubPtrs, int arrowIndex,
+	Vec2* pos,
 	int inputAngle, int type)
 {
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
 
-	posX += D232.hubArrowXY_Inner[2*type+0];
-	posY += D232.hubArrowXY_Inner[2*type+1];
+	pos->x += D232.hubArrowXY_Inner[2*type+0];
+	pos->y += D232.hubArrowXY_Inner[2*type+1];
 
 	int timer = gGT->timer >> FPS_RIGHTSHIFT(0);
 
-	int var14;
-	int var15;
+	int colorR;
+	int colorG;
 	int var8;
 
-	var15 = 0x40;
+	colorG = 0x40;
 	if((timer & 1) != 0)
-		var15 = 0xe0;
+		colorG = 0xe0;
 
 	if(type == 0)
 	{
-		var14 = var15;
+		colorR = colorG;
 		var8 = 0x200;
 	}
 
 	else if(type == 1)
 	{
-		var14 = 0xff;
+		colorR = 0xff;
 		var8 = 0x555;
 
-		posX += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+0];
-		posY += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+1];
+		pos->x += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+0];
+		pos->y += D232.hubArrowXY_Outter[2*(((inputAngle>>0x8)&0xc)>>2)+1];
 	}
 
 	else
 	{
-		var14 = var15;
+		colorR = colorG;
 		var8 = 0x199;
 
 		// needed?
@@ -56,10 +56,11 @@ void DECOMP_AH_Map_HubArrowOutter(
 
 		int iVar16 =
 			((var5 * 0x2aa + 0x1000) * 0x10000) >> 0x1a;
-
+        
+		#if 0
 		int bVar1 = 1;
+		#endif
 
-		var5 = 0;
 
         int iVar6 = 0;
         int iVar9 = 0;
@@ -76,18 +77,22 @@ void DECOMP_AH_Map_HubArrowOutter(
 
 			int iVar4 = (var5 & 1) + 0xc;
 
-			sin = posX + ((((iVar16 << 3) / 5) * sin) >> iVar4);
-			cos = posY - ((((iVar16     )    ) * cos) >> iVar4);
-
+			sin = pos->x + ((((iVar16 << 3) / 5) * sin) >> iVar4);
+			cos = pos->y - ((((iVar16     )    ) * cos) >> iVar4);
+            
+			#if 0 //unused ?
 			if(!bVar1)
 			{
 				DECOMP_CTR_Box_DrawWirePrims(
 					(Point){iVar9, iVar6}, (Point){sin, cos},
-					MakeColor(var14, var15, 0xff),
+					MakeColor(colorR, colorG, 0xff),
 					(void*)gGT->pushBuffer_UI.ptrOT);
 			}
-
+			
+            
 			bVar1 = 0;
+			#endif
+			
 			iVar9 = sin;
 			iVar6 = cos;
 			var5++;

@@ -11,7 +11,7 @@ void DECOMP_UI_VsQuipDrawAll(void)
   
   // loop through player threads
   for(
-		thread = gGT->threadBuckets[0].thread;
+		thread = gGT->threadBuckets[PLAYER].thread;
 		thread != 0;
 		thread = thread->siblingThread
 	)

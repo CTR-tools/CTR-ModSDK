@@ -5,7 +5,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    short windowHeight;
    struct GameTracker * gGT;
    int iVar2;
-   int gameMode;
+   unsigned int gameMode;
    int posX;
    short * txtArray;
    char * pcVar6;
@@ -23,44 +23,44 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    // title bars to off-screen
    transition = 0;
 
-   gameMode = gGT -> gameMode1;
+   gameMode = gGT->gameMode1;
 
-   // If you are not in a relic race
-   if ((gameMode & 0x4000000) == 0) {
+   // if not in relic race
+   if ((gameMode & RELIC_RACE) == 0) {
       // BONUS ROUND
       textID = 0xbe;
 
       // If you are not in Crystal challenge
-      if ((gameMode & 0x8000000) == 0) {
+      if ((gameMode & CRYSTAL_CHALLENGE) == 0) {
 
          // If you are not in Adventure Cup
-         if ((gameMode & 0x10000000) == 0) {
+         if ((gameMode & ADVENTURE_CUP) == 0) {
 
             // If you are not in Arcade or VS cup
-            if ((gGT -> gameMode2 & 0x10) == 0) {
+            if ((gGT->gameMode2 & CUP_ANY_KIND) == 0) {
 
                // ARCADE
                textID = 0x4e;
 
                if (
                   // If you're in Arcade Mode
-                  ((gameMode & 0x400000) != 0) ||
+                  ((gameMode & ARCADE_MODE) != 0) ||
 
                   (
                      // TIME TRIAL
                      textID = 0x4d,
 
                      // if you are in time trial mode
-                     (gameMode & 0x20000) != 0
+                     (gameMode & TIME_TRIAL) != 0
                   )
                ) goto LAB_80055930;
 
-               if (-1 < gameMode) {
+               if (gameMode > -1) {
                   // TROPHY RACE
                   textID = 0xb7;
 
                   // If you're in a CTR Token Race
-                  if ((gGT -> gameMode2 & 8) != 0) {
+                  if ((gGT -> gameMode2 & TOKEN_RACE) != 0) {
                      // CTR CHALLENGE
                      textID = 0x176;
                   }
@@ -119,10 +119,10 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
       if (
 
          // If you are not in Adventure cup
-         ((gameMode & 0x10000000) == 0) &&
+         ((gameMode & ADVENTURE_CUP) == 0) &&
 
          // If you are not in Arcade or VS cup
-         (((gGT -> gameMode2 & 0x10) == 0))
+         (((gGT -> gameMode2 & CUP_ANY_KIND) == 0))
       )
 	  {
 		#if 0

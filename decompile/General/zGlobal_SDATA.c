@@ -73,7 +73,7 @@ struct sData sdata_static =
 		0,0,0,0,
 	},
 	
-	.trafficLightsTimer_prevFrame = 0,
+	.trafficLightsTimer_prevFrame = SECONDS(0),
 	
 	//.PausePtrsVRAM = {},
 	.pause_backup_renderFlags = 0,
@@ -122,8 +122,8 @@ struct sData sdata_static =
 	},
 	#endif
 	
-	.ptrMPK = 0,
-	.ptrLevelFile = 0,
+	.ptrMPK = NULL,
+	.ptrLevelFile = NULL,
 	.PatchMem_Ptr = 0,
 	
 	#if BUILD >= UsaRetail
@@ -164,14 +164,14 @@ struct sData sdata_static =
 	
 	.modelMaskHints3D = 0,
 	
-	.mainGameState = 0,
+	.mainGameState = GSTATE_BOOT,
 	
 	.Loading =
 	{
-		.stage = -1,
+		.stage = LOADING_IDLE,
 		
 		// MAIN MENU LEVEL
-		.Lev_ID_To_Load = 0x27,
+		.Lev_ID_To_Load = MAIN_MENU_LEVEL,
 		
 		// OnBegin is all zeros
 	},
@@ -393,8 +393,8 @@ struct sData sdata_static =
 	.str_underscore = "_",
 	
 	.boolOpenTokenRelicMenu = 0,
-	.ptrPushBufferUI = 0,
-	.ptrFruitDisp = 0,
+	.ptrPushBufferUI = NULL,
+	.ptrFruitDisp = NULL,
 	.menuReadyToPass = 0,
 	
 	.s_token = "token",

@@ -29,7 +29,7 @@ struct MaskHeadScratch
 struct MaskHeadWeapon
 {
 	// 0x0
-	short rot[3];
+	SVec3 rot;
 
 	// 0x6
 	short duration;
@@ -38,7 +38,7 @@ struct MaskHeadWeapon
 	struct Instance* maskBeamInst;
 
 	// 0xC
-	short pos[3];
+	SVec3 pos;
 
 	// 0x12
 	short scale;
@@ -430,7 +430,7 @@ struct Follower
 	struct Thread* mineTh;
 	int backupTimesDestroyed;
 	
-	short realPos[4];
+	SVec4 realPos;
 };
 
 #if 0

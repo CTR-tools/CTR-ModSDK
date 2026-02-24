@@ -48,15 +48,15 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
   
   iVar3 = (bool_interruptWarppad & 1) * 3;
   
-  short* input = &D232.maskVars[0];
+  short* maskPosRotArray = &D232.maskVars[0];
   
-  D232.maskOffsetPos[0] = input[iVar3 + 0];
-  D232.maskOffsetPos[1] = input[iVar3 + 1];
-  D232.maskOffsetPos[2] = input[iVar3 + 2];
+  D232.maskOffsetPos.x = maskPosRotArray[iVar3 + 0];
+  D232.maskOffsetPos.y = maskPosRotArray[iVar3 + 1];
+  D232.maskOffsetPos.z = maskPosRotArray[iVar3 + 2];
   
-  D232.maskOffsetRot[0] = input[iVar3 + 6];
-  D232.maskOffsetRot[1] = input[iVar3 + 7];
-  D232.maskOffsetRot[2] = input[iVar3 + 8];
+  D232.maskOffsetRot.x = maskPosRotArray[iVar3 + 6];
+  D232.maskOffsetRot.y = maskPosRotArray[iVar3 + 7];
+  D232.maskOffsetRot.z = maskPosRotArray[iVar3 + 8];
   
   for (int i = 0; i < 3; i++)
   {

@@ -44,7 +44,7 @@ void DECOMP_AH_MaskHint_SpawnParticles(
 #endif
 
 	for(j = 0; j < 3; j++)
-		particle->axis[j].startVal += maskInst->matrix.t[j] * 0x100;
+		particle->axis[j].startVal += maskInst->matrix.t.v[j] * 0x100;
     
 	particle->axis[5].startVal = (particle->axis[5].startVal * maskAnim) >> 0xc;
     particle->axis[5].velocity = (particle->axis[5].velocity * maskAnim) >> 0xc;

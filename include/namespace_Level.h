@@ -468,6 +468,32 @@ enum ST1
 	ST1_CREDITS
 };
 
+
+//minimap
+struct Map
+{
+	//0x0
+	short worldEndX;
+	//0x2
+	short worldEndY;
+	//0x4
+	short worldStartX;
+	//0x6
+	short worldStartY;
+	//0x8
+	short iconSizeX;
+	//0xA
+	short iconSizeY;
+	//0xC
+	short iconStartX;
+	//0xE
+	short iconStartY;
+	//0x10
+	short mode;
+	//0x12
+	short unk; //this is not padding, this is used to draw minimap, needed for crash cove
+};
+
 struct SpawnType1
 {
 	int count;
@@ -537,7 +563,8 @@ struct Skybox
 #define SKY_GETFACES(x) \
 	((unsigned int)x + sizeof(struct Skybox))
 
-struct LevTexLookup
+//comes from lev or MPKs
+struct IconHeader
 {
 	int numIcon;
 	struct Icon* firstIcon;
@@ -613,7 +640,7 @@ struct Level
 
 	// 0x3c
 	// leads to the icon pack header
-	struct LevTexLookup* levTexLookup;
+	struct IconHeader* iconHeader;
 
 	// 0x40
 	// leads to the icon pack data

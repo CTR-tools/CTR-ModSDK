@@ -21,7 +21,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
             goto PARSE_FINISH;
 
         // If you're in a Boss Race
-        if (gGT->gameMode1 < 0)
+        if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
         {
             index = sdata->songBankBossID[gGT->bossID];
         }
@@ -210,7 +210,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 
         // If you're in a Boss Race
         // 0x80000000
-        if (gGT->gameMode1 < 0)
+        if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
         {
             index = 0x19;
         }

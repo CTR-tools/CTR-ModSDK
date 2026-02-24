@@ -34,7 +34,7 @@ struct Model* VehBirth_GetModelByName(char *searchName)
         }
     }
 
-	models = (struct Model**)sdata->PLYROBJECTLIST;
+	models = sdata->PLYROBJECTLIST;
 
     if (
 			// list is valid, and first element is valid

@@ -13,14 +13,12 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   u_int chkRewards;
   int i;
   int ratio;
-  int distX;
-  int distY;
-  int distZ;
+  Vec3 distance;
   int dist;
   int iVar17;
   int iVar18;
-  short desiredPos[3];
-  short desiredRot[3];
+  SVec3 desiredPos;
+  SVec3 desiredRot;
   short* scaler;
 
   struct GameTracker* gGT = sdata->gGT;
@@ -39,7 +37,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   lev = gGT->levelID;
 
   // check if the door that the player approached is open
-  if (door->doorRot[1] == 0x400)
+  if (door->doorRot.y == 0x400)
   {
     // door is open
     doorIsOpen = true;
@@ -49,19 +47,19 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   ratio = DECOMP_MATH_Cos((int)doorInst->instDef->rot[1]);
 
   // X distance of player and door
-  distX = doorInst->matrix.t[0] + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t[0];
+  distance.x = doorInst->matrix.t.x + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t.x;
 
   // Y distance of player and door
-  distY = doorInst->matrix.t[1] - driver->instSelf->matrix.t[1];
+  distance.y = doorInst->matrix.t.y - driver->instSelf->matrix.t.y;
 
   // Sine(angle)
   ratio = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1]);
 
   // Z distance of player and door
-  distZ = doorInst->matrix.t[2] + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t[2];
+  distance.z = doorInst->matrix.t.z + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t.z;
 
   // distance from player and door
-  dist = distX * distX + distY * distY + distZ * distZ;
+  dist = distance.x * distance.x + distance.y * distance.y + distance.z * distance.z;
 
   // If player is close to a door
   if (dist < 0x90000)
@@ -105,7 +103,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
   // if in a state where you're seeing the boss key open an adv door,
   // or some other kind of cutscene where you can't move
-  if ((gGT->gameMode2 & 4) != 0)
+  if ((gGT->gameMode2 & VEH_FREEZE_PODIUM) != 0)
     return;
 
   // If door is open
@@ -188,7 +186,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   if ((door->camFlags & WdCam_FlyingOut) == 0)
   {
     // If the game is paused
-    if ((gGT->gameMode1 & 0xf) != 0)
+    if ((gGT->gameMode1 & PAUSE_ALL) != 0)
     {
       return;
     }
@@ -205,10 +203,10 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
       if (driver->speedApprox < 0x80)
       {
 		// Actually, specLightDir
-        desiredPos[0] = -0xc98;
-        desiredPos[1] = 0x99f;
-        desiredPos[2] = 0x232;
-
+        desiredPos.x = -0xc98;
+        desiredPos.y = 0x99f;
+        desiredPos.z = 0x232;
+        
         // if keys are not spawned, create them
         if (door->keyInst[0] == NULL)
         {
@@ -238,9 +236,9 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
               keyInst->matrix.m[2][2] = driverInst->matrix.m[2][2];
 
               // copy position for key from driver
-              keyInst->matrix.t[0] = driverInst->matrix.t[0];
-              keyInst->matrix.t[1] = driverInst->matrix.t[1];
-              keyInst->matrix.t[2] = driverInst->matrix.t[2];
+              keyInst->matrix.t.x = driverInst->matrix.t.x;
+              keyInst->matrix.t.y = driverInst->matrix.t.y;
+              keyInst->matrix.t.z = driverInst->matrix.t.z;
 
               // set scale to zero
               keyInst->scale[0] = 0;
@@ -279,10 +277,10 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
               }
 
               // if key posY is less than (player posY + 0xa0)
-              if (keyInst->matrix.t[1] < (driver->instSelf->matrix.t[1] + 0xa0))
+              if (keyInst->matrix.t.y < (driver->instSelf->matrix.t.y + 0xa0))
               {
                 // increase key posY
-                keyInst->matrix.t[1] += FPS_HALF(4);
+                keyInst->matrix.t.y += FPS_HALF(4);
               }
 
               if (1 < numKeys)
@@ -298,30 +296,30 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
                 ratio = DECOMP_MATH_Sin(door->keyOrbit + iVar18);
 
-                keyInst->matrix.t[0] = driver->instSelf->matrix.t[0] + ((iVar17 >> 5) * ratio >> 0xc);
+                keyInst->matrix.t.x = driver->instSelf->matrix.t.x + ((iVar17 >> 5) * ratio >> 0xc);
 
                 ratio = DECOMP_MATH_Cos(door->keyOrbit + iVar18);
 
-                keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
+                keyInst->matrix.t.z = driver->instSelf->matrix.t.z + ((iVar17 >> 5) * ratio >> 0xc);
               }
 
 #ifndef REBUILD_PS1
-			  short* kr = &door->keyRot[0];
+
 
 			  // desiredPos is actually specLightDir in this case, variable re-use
-              Vector_SpecLightSpin3D(keyInst, kr, &desiredPos[0]);
+              Vector_SpecLightSpin3D(keyInst, (short*)&door->keyRot, (short*)&desiredPos);
 
               // convert 3 rotation shorts into rotation matrix
-              ConvertRotToMatrix(&keyInst->matrix, kr);
+              ConvertRotToMatrix(&keyInst->matrix, (short*)&door->keyRot);
 #endif
             }
             door->keyInst[i] = keyInst;
           }
         }
 		
-        door->keyRot[0] = 0;
-        door->keyRot[1] += FPS_HALF(0x40);
-        door->keyRot[2] = 0;
+        door->keyRot.x = 0;
+        door->keyRot.y += FPS_HALF(0x40);
+        door->keyRot.z = 0;
 
         door->keyOrbit += 0x10;
 
@@ -366,26 +364,26 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
     i = DECOMP_MATH_Cos((int)doorInst->instDef->rot[1] + 0x400);
 
     // desired posX for transition
-    desiredPos[0] = doorInst->matrix.t[0] + (short)(ratio * 0x312 >> 0xc) +
+    desiredPos.x = doorInst->matrix.t.x + (short)(ratio * 0x312 >> 0xc) +
                     (short)(i * 0x600 >> 0xc);
     // desired posY for transition
-    desiredPos[1] = doorInst->matrix.t[1] + 0x17a;
+    desiredPos.y = doorInst->matrix.t.y + 0x17a;
 
 	ratio = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1]);
 
 	i = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1] + 0x400);
 
     // desired posZ for transition
-    desiredPos[2] = doorInst->matrix.t[2] + (short)(ratio * 0x312 >> 0xc) +
+    desiredPos.z = doorInst->matrix.t.z + (short)(ratio * 0x312 >> 0xc) +
                     (short)(i * 0x600 >> 0xc);
 
     // desired rotation for transition
-    desiredRot[0] = doorInst->instDef->rot[0] + 0x800;
-    desiredRot[1] = doorInst->instDef->rot[1];
-    desiredRot[2] = doorInst->instDef->rot[2];
+    desiredRot.x = doorInst->instDef->rot[0] + 0x800;
+    desiredRot.y = doorInst->instDef->rot[1];
+    desiredRot.z = doorInst->instDef->rot[2];
 
     // set desired position and rotation for CamerDC transition
-    DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], &desiredPos[0], &desiredRot[0]);
+    DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], (short*)&desiredPos, (short*)&desiredRot);
 
 #ifndef REBUILD_PS1
     GAMEPAD_JogCon2(driver, 0, 0);
@@ -399,21 +397,21 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
   // == door is opening ==
 
-  door->doorRot[1] += FPS_HALF(0x10);
+  door->doorRot.y += FPS_HALF(0x10);
   
   // right-hand door rot[x,y,z]
-  desiredRot[0] = door->doorRot[0];
-  desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
-  desiredRot[2] = door->doorRot[2];
+  desiredRot.x = door->doorRot.x;
+  desiredRot.y = doorInst->instDef->rot[1] - door->doorRot.y;
+  desiredRot.z = door->doorRot.z;
   
   // converted to TEST in rebuildPS1
-  ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
+  ConvertRotToMatrix(&door->otherDoor->matrix, (short*)&desiredRot);
   
   // left-hand door rot[x,y,z]
-  desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
+  desiredRot.y = doorInst->instDef->rot[1] + door->doorRot.y;
 
   // converted to TEST in rebuildPS1
-  ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
+  ConvertRotToMatrix(&doorInst->matrix, (short*)&desiredRot);
   
   // if less than 11 frames have passed,
   // decrease key scale, then quit function
@@ -451,7 +449,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   }
 	
   // if not last frame of opening door
-  if(door->doorRot[1] < 0x400) return;
+  if(door->doorRot.y < 0x400) return;
   
   
   // == Door is fully open ==

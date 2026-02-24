@@ -28,9 +28,9 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
     driverInst = driver->instSelf;
 
     // Get difference in positions between instances
-    distX = saveInst->matrix.t[0] - driverInst->matrix.t[0];
-    distY = saveInst->matrix.t[1] - driverInst->matrix.t[1];
-    distZ = saveInst->matrix.t[2] - driverInst->matrix.t[2];
+    distX = saveInst->matrix.t.x - driverInst->matrix.t.x;
+    distY = saveInst->matrix.t.y - driverInst->matrix.t.y;
+    distZ = saveInst->matrix.t.z - driverInst->matrix.t.z;
 
     save = t->object;
 

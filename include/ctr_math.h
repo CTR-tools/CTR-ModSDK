@@ -76,6 +76,7 @@ typedef struct Matrix {
 	Vec3 t;
 } Matrix;
 
+
 // trigonometry //
 
 struct TrigTable

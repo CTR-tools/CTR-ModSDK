@@ -1,37 +1,8 @@
 #include <common.h>
 
-// all buttons fit in one byte
-// except triangle, which overrides
 
-#define LETTER_N (BTN_UP    & 0xff)
-#define LETTER_U (BTN_UP    & 0xff)
-#define LETTER_S (BTN_DOWN  & 0xff)
-#define LETTER_D (BTN_DOWN  & 0xff)
-#define LETTER_W (BTN_LEFT  & 0xff)
-#define LETTER_L (BTN_LEFT  & 0xff)
-#define LETTER_E (BTN_RIGHT & 0xff)
-#define LETTER_R (BTN_RIGHT & 0xff)
 
-#define LETTER_A 0x80 // BTN_TRIANGLE overrides to 0x80
-#define LETTER_O (BTN_CIRCLE & 0xff)
-#define LETTER_X (BTN_CROSS  & 0xff)
 
-struct Cheat
-{
-	// 0x0
-	int length;
-	
-	// 0x4, 0x8, 0xC
-	char buttons[12];
-	
-	// 0x10
-	int* writeAddr;
-	
-	// 0x14
-	int addBits;
-	
-	// 0x18 - size
-};
 
 struct Cheat cheats[22] =
 {
@@ -65,7 +36,7 @@ struct Cheat cheats[22] =
 		},
 				
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x200,
+		.addBits = CHEAT_WUMPA,
 	},
 	
 	// UnlockRoo - "roodude"
@@ -84,7 +55,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x80,
+		.addBits = UNLOCK_ROO,
 	},
 	
 	// UnlockPapu - "lardrolls"
@@ -105,7 +76,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x100,
+		.addBits = UNLOCK_PAPU,
 	},
 	
 	// UnlockJoe - "dollars"
@@ -124,7 +95,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x200,
+		.addBits = UNLOCK_JOE,
 	},
 	
 	// UnlockPinstripe - "leaded"
@@ -142,7 +113,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x400,
+		.addBits = UNLOCK_PINSTRIPE,
 	},
 	
 	// UnlockFakeCrash - "oddnoodle"
@@ -163,7 +134,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x800,
+		.addBits = UNLOCK_FAKE_CRASH,
 	},
 	
 	// UnlockPenta - "seaswan"
@@ -182,7 +153,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x40,
+		.addBits = UNLOCK_PENTA,
 	},
 	
 	// UnlockTropy - "slender"
@@ -201,7 +172,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x20,
+		.addBits = UNLOCK_TROPY,
 	},
 	
 	// UnlockScrapbook - "underwear"
@@ -221,7 +192,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[1],
-		.addBits = 0x10,
+		.addBits = UNLOCK_SCRAPBOOK,
 	},
 	
 	// UnlockTracks - "rewards"
@@ -240,7 +211,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameProgress.unlocks[0],
-		.addBits = 0x1e,
+		.addBits = UNLOCK_TRACKS,
 	},
 	
 	// InfiniteMasks - "warlords"
@@ -260,7 +231,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x400,
+		.addBits = CHEAT_MASK,
 	},
 	
 	// MaxTurbos - "axelwax"
@@ -279,7 +250,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x800,
+		.addBits = CHEAT_TURBO,
 	},
 	
 	// MaxInvisibility - "unseen"
@@ -297,7 +268,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x8000,
+		.addBits = CHEAT_INVISIBLE,
 	},
 	
 	// MaxEngine - "unleaded" (also triggers pinstripe)
@@ -317,7 +288,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x10000,
+		.addBits = CHEAT_ENGINE,
 	},
 	
 	// MaxBombs - "arsenal"
@@ -336,7 +307,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x400000,
+		.addBits = CHEAT_BOMBS,
 	},
 	
 	// AdvDifficulty - "endneo"
@@ -354,7 +325,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x40000,
+		.addBits = CHEAT_ADV,
 	},
 	
 	// SuperHard - "deluxe"
@@ -372,7 +343,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x200000,
+		.addBits = CHEAT_SUPERHARD,
 	},
 
 	// IcyTracks - "sledroad"
@@ -392,7 +363,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x80000,
+		.addBits = CHEAT_ICY,
 	},
 	
 	// SuperTurboPads - "arrow"
@@ -409,7 +380,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x100000,
+		.addBits = CHEAT_TURBOPAD,
 	},
 	
 	// OneLap - "suddendead"
@@ -430,7 +401,7 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x800000,
+		.addBits = CHEAT_ONELAP,
 	},
 	
 	// TurboCounter - "addon"
@@ -447,11 +418,11 @@ struct Cheat cheats[22] =
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 0x8000000,
+		.addBits = CHEAT_TURBOCOUNT,
 	}
 };
 
-char inputButtons[12] = {0,0,0,0,0,0,0,0,0,0};
+unsigned char inputButtons[12] = {0,0,0,0,0,0,0,0,0,0};
 
 void DECOMP_MM_ParseCheatCodes()
 {
@@ -539,13 +510,13 @@ void DECOMP_MM_ParseCheatCodes()
 		DECOMP_OtherFX_Play(0x67, 1);
 		
 		// apply cheat
-		*cheat->writeAddr |= cheat->addBits;
+		cheat->writeAddr[0] |= cheat->addBits;
 		
 		#ifdef USE_OXIDE
 		// if scrapbook unlocked, then unlock Oxide,
 		// flag 0x1000 must match the 1<<0 in the icon array,
 		// this bit was used in Aug5 to unlock SlideCol, unused
-		if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+		if ((sdata->gameProgress.unlocks[1] & UNLOCK_SCRAPBOOK) != 0)
 			sdata->gameProgress.unlocks[0] |= 1;
 		#endif
 		

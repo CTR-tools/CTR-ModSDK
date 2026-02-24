@@ -203,11 +203,11 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 	
 	// if fireball isn't below the lava,
 	// handle all particle spawning
-	if(fireInst->matrix.t[1] >= resetPosY)
+	if(fireInst->matrix.t.y >= resetPosY)
 	{
 		// move based on velocity
 		velY = fireObj->velY;
-		fireInst->matrix.t[1] += (velY * elapsedTimeMS) >> 5;
+		fireInst->matrix.t.y += (velY * elapsedTimeMS) >> 5;
 		
 		// reduce velocity (gravity)
 		velY -= ((elapsedTimeMS * 10) >> 5);
@@ -249,9 +249,9 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		{
 			// adjust positions,
 			// dont bitshift, must multiply, or negatives break
-			particle->axis[0].startVal += fireInst->matrix.t[0] * 0x100;
-			particle->axis[1].startVal += fireInst->matrix.t[1] * 0x100;
-			particle->axis[2].startVal += fireInst->matrix.t[2] * 0x100;
+			particle->axis[0].startVal += fireInst->matrix.t.x * 0x100;
+			particle->axis[1].startVal += fireInst->matrix.t.y * 0x100;
+			particle->axis[2].startVal += fireInst->matrix.t.z * 0x100;
 			
 			particle->unk1A = 0x1e00;
 			
@@ -300,13 +300,13 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		// == first frame of fireball rising ==
 		
 		// reset timer
-		fireObj->cycleTimer = 0xb40;
+		fireObj->cycleTimer = SECONDS(3);
 		
 		// upward velocity
 		fireObj->velY = 200;
 		
 		// reset position under lava
-		fireInst->matrix.t[1] = resetPosY;
+		fireInst->matrix.t.y = resetPosY;
 		
 		#if 0
 		// reset animation
@@ -370,8 +370,8 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	// similar to turtles, dont need to subtract '0'
 	if(inst->name[9] & 1)
 	{
-		// 1.44s, this is a ms-based timer, not a frame-based 
+		// this is a ms-based timer, not a frame-based 
 		// counter, so t->cooldownFrameCount is not allowed
-		fireObj->cycleTimer = 1440;
+		fireObj->cycleTimer = SECONDS(1) + MILLISECONDS(500);
 	}
 }

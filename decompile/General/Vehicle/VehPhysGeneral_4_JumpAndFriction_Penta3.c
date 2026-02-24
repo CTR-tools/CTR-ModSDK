@@ -143,14 +143,14 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread* t, struct Driver* d)
 			d->actionsFlagSet &= 0xFFFF7FFF; // can be wrong!
 
 			if ((d->jump_CoyoteTimerMS != 0) && (d->jump_CooldownMS == 0)) {
-				d->jump_ForcedMS = 0xa0;
+				d->jump_ForcedMS = MILLISECONDS(167);
 				tempValue = d->const_JumpForce * 9;
 				if (tempValue < 0) {
 					tempValue = tempValue + 3;
 				}
 				d->jump_InitialVelY = (short)(tempValue >> 2);
 				DECOMP_OtherFX_Play_Echo(9, 1, d->actionsFlagSet & 0x10000);
-				d->jump_unknown = 0x180;
+				d->jump_unknown = MILLISECONDS(400);
 
 				goto PROCESS_JUMP;
 			}
@@ -197,7 +197,7 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread* t, struct Driver* d)
 				}
 				goto NOT_JUMPING;
 			}
-			d->jump_ForcedMS = 0xa0;
+			d->jump_ForcedMS = MILLISECONDS(167);
 			d->numberOfJumps = d->numberOfJumps + 1;
 			d->jump_InitialVelY = d->const_JumpForce;
 
@@ -210,7 +210,7 @@ void DECOMP_VehPhysGeneral_JumpAndFriction(struct Thread* t, struct Driver* d)
 
 				DECOMP_OtherFX_Play(0x7e, 1);
 			}
-			d->jump_ForcedMS = 0xa0;
+			d->jump_ForcedMS = MILLISECONDS(167);
 			if (d->forcedJump_trampoline == 2) {
 				d->jump_unknown = 0x180;
 				d->jump_InitialVelY = d->const_JumpForce * 3;
@@ -362,7 +362,7 @@ PROCESS_JUMP:
 
 	tempValue = 0;
 	ApproxSpeed = 0x378;
-	d->jump_CooldownMS = 0x180;
+	d->jump_CooldownMS = MILLISECONDS(400);
 	d->jump_TenBuffer = 0;
 	d->actionsFlagSet |= 0x480;
 

@@ -53,7 +53,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		(
 			(
 				(d->kartState != KS_WARP_PAD && (d->kartState != KS_FREEZE)) &&
-				(((gGT->gameMode2 & 4) == 0 && ((sdata->gGamepads->gamepad[cDC->cameraID].buttonsTapped & 0x80U) != 0)))
+				(((gGT->gameMode2 & VEH_FREEZE_PODIUM) == 0 && ((sdata->gGamepads->gamepad[cDC->cameraID].buttonsTapped & 0x80U) != 0)))
 			)
 		)
 	)
@@ -171,9 +171,9 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	switch(cDC->cameraMode)
 	{
 		case 0:
-			pb->pos[0] = *(short *)(&d->instSelf->matrix.t[0]);
-			pb->pos[1] = *(short *)(&d->instSelf->matrix.t[1]);
-			pb->pos[2] = *(short *)(&d->instSelf->matrix.t[2]);
+			pb->pos[0] = *(short *)(&d->instSelf->matrix.t.x);
+			pb->pos[1] = *(short *)(&d->instSelf->matrix.t.y);
+			pb->pos[2] = *(short *)(&d->instSelf->matrix.t.z);
 			pb->rot[0] = d->rotCurr.x;
 			pb->rot[1] = d->rotCurr.y;
 			pb->rot[2] = d->rotCurr.z;
@@ -441,7 +441,7 @@ LAB_8001c128:
 						}
 						if ((cDC->cameraMode == 9) || (psVar21 = (short *)0x1f800108, cDC->cameraMode == 0xd))
 						{
-							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & 0xf) == 0))
+							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & PAUSE_ALL) == 0))
 							{
 								uVar9 = CAM_FollowDriver_TrackPath(
 											cDC, (short *)0x1f800390,

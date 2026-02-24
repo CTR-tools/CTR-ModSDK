@@ -95,9 +95,9 @@ void DECOMP_AH_MaskHint_Update()
 			D232.maskCamRotStart[2] = rot[2] & 0xfff;
 			D232.maskCamRotStart[1] = rot[0] & 0xfff;
 			
-			D232.maskCamPosStart[0] = dInst->matrix.t[0];
-			D232.maskCamPosStart[1] = dInst->matrix.t[1];
-			D232.maskCamPosStart[2] = dInst->matrix.t[2];
+			D232.maskCamPosStart[0] = dInst->matrix.t.x;
+			D232.maskCamPosStart[1] = dInst->matrix.t.y;
+			D232.maskCamPosStart[2] = dInst->matrix.t.z;
 			
 			sdata->instMaskHints3D = DECOMP_VehTalkMask_Init();
 			struct Instance* mhInst = sdata->instMaskHints3D;

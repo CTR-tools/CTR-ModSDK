@@ -12,7 +12,7 @@ extern short PhysLinear_DriverOffsets[14];
 void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
-	int gameMode2;
+	unsigned int gameMode2;
 
 	char kartState;
 	char heldItemID;
@@ -271,7 +271,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 				// clock timer to make the car waddle
 
 				driverTimer = driver->clockReceive >> 6;
-				if (driverTimer > 0x40) driverTimer = 0x40;
+				if (driverTimer > MILLISECONDS(67)) driverTimer = MILLISECONDS(67);
 
 				timerHazard = driver->clockReceive << 4;
 
@@ -386,7 +386,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	uVar20 = actionsFlagSetCopy & 0x7f1f83d5;
 
 	// disable input if opening adv hub door with key
-	if ((gameMode2 & 0x4004) != 0)
+	if ((gameMode2 & (VEH_FREEZE_PODIUM | VEH_FREEZE_DOOR)) != 0)
 	{
 		driver->actionsFlagSet = uVar20;
 		return;
@@ -536,7 +536,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 
 			// if numHeldItems == 0
 			// wait a full second before next weapon
-			driver->noItemTimer = FPS_DOUBLE(0x1e);
+			driver->noItemTimer = FPS_DOUBLE(30);
 
 			// If "held item quantity" is zero
 			if (driver->numHeldItems != 0)

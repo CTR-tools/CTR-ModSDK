@@ -9,7 +9,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     int move;
     int ratio;
     int bottom;
-    short *check;
+    short *trophy_index;
     u_int bitIndex;
     u_int uVar5;
     u_int uVar8;
@@ -70,8 +70,8 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     else
     {
         // Increment animation by 0x20 in either direction
-        move = inst->matrix.t[1] + garage->direction * FPS_HALF(0x20);
-        inst->matrix.t[1] = move;
+        move = inst->matrix.t.y + garage->direction * FPS_HALF(0x20);
+        inst->matrix.t.y = move;
 
         top = inst->instDef->pos[1] + 0x300;
         bottom = inst->instDef->pos[1];
@@ -80,7 +80,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         if (move > top)
         {
             // Set position to the top
-            inst->matrix.t[1] = top;
+            inst->matrix.t.y = top;
 
             // Door is now open (not moving)
             garage->direction = 0;
@@ -95,7 +95,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         else if (move < bottom)
         {
             // Set position to the bottom
-            inst->matrix.t[1] = bottom;
+            inst->matrix.t.y = bottom;
 
             garage->direction = 0;
 
@@ -126,7 +126,7 @@ LAB_800aeb6c:
     if (levelID == GEM_STONE_VALLEY)
     {
         // ripper roo boss key
-        bitIndex = 0x5e;
+        bitIndex = PRIZE_BOSS_KEY;
 
         // check four boss keys
         for (i = 0; i < 4; i++)
@@ -139,12 +139,12 @@ LAB_800aeb6c:
     // If you're not in Gemstone Valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+        trophy_index = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
+            if (CHECK_ADV_BIT(adv->rewards, trophy_index[i] + PRIZE_TROPHY_RACE) == 0)
                 // boss is not open
                 goto LAB_800aebd0;
         }
@@ -155,17 +155,17 @@ LAB_800aebd0:
     bossIsOpen = false;
 
 LAB_800aec34:
-    dist[0] = drv_inst->matrix.t[0] - inst->instDef->pos[0];
-    dist[1] = drv_inst->matrix.t[1] - inst->instDef->pos[1];
-    dist[2] = drv_inst->matrix.t[2] - inst->instDef->pos[2];
+    dist[0] = drv_inst->matrix.t.x - inst->instDef->pos[0];
+    dist[1] = drv_inst->matrix.t.y - inst->instDef->pos[1];
+    dist[2] = drv_inst->matrix.t.z - inst->instDef->pos[2];
 
     // if in a state where you're seeing the boss key open an adv door,
     // or some other kind of cutscene where you can't move
-    if ((gGT->gameMode2 & 4) != 0)
+    if ((gGT->gameMode2 & VEH_FREEZE_PODIUM) != 0)
         return;
 
     // check distance
-    if (0x143fff < dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2])
+    if ((dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2]) > 0x143fff)
         goto LAB_800aede0;
 
     RECT view = gGT->pushBuffer[0].rect;
@@ -243,9 +243,9 @@ LAB_800aede8:
     pos[2] = (int)inst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
 
 	// DriverPos - DoorPos
-    dist[0] = drv_inst->matrix.t[0] - pos[0];
-    dist[1] = drv_inst->matrix.t[1] - pos[1];
-    dist[2] = drv_inst->matrix.t[2] - pos[2];
+    dist[0] = drv_inst->matrix.t.x - pos[0];
+    dist[1] = drv_inst->matrix.t.y - pos[1];
+    dist[2] = drv_inst->matrix.t.z - pos[2];
 
 	// If small distance (inside garage)
     if (dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2] < 0x40000)
@@ -265,8 +265,8 @@ LAB_800aede8:
             (levelID == GEM_STONE_VALLEY) &&
             (gGT->currAdvProfile.numRelics == 18))
         {
-            // set string index (0-5) to "N Oxide's Final Challenge"
-            gGT->bossID = 5;
+            //"N Oxide's Final Challenge"
+            gGT->bossID = BOSS_OXIDEFINAL;
         }
 
         else

@@ -34,7 +34,7 @@ void DECOMP_RECTMENU_CollectInput()
 		gb[3].buttonsTapped = 0;
 	}
 	
-	sdata->gameProgress.unlocks[0] = -1;
+	sdata->gameProgress.unlocks[0] = -1; //??? this is unsigned in struct GameProgress
 #endif
 
 	for(i = 0; i < numListen; i++)

@@ -73,7 +73,12 @@ void DECOMP_RaceFlag_DrawSelf()
 
 	if (sdata->RaceFlag_LoadingTextAnimFrame < 0)
 	{
-		if ((5 < sdata->Loading.stage) && (sdata->Loading.stage < 8))
+		if (
+		
+			(sdata->Loading.stage > LOADING_STORE_MPK_DATA) &&
+			(sdata->Loading.stage < LOADING_SET_AUDIO_STATE)
+			
+		   )
 		{
 			sdata->RaceFlag_LoadingTextAnimFrame = 0;
 		}

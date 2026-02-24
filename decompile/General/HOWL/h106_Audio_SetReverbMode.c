@@ -30,7 +30,7 @@ void DECOMP_Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID)
         else
         {
             // if invalid bossID
-            if (5 < bossID)
+            if (bossID > BOSS_OXIDEFINAL)
             {
                 // quit
                 return;

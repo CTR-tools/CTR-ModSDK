@@ -316,6 +316,7 @@ struct ModelAnim
 #define MODELANIM_GETFRAME(x) \
 	((unsigned int)x + sizeof(struct ModelAnim))
 
+//a model can have different headers, this is usually used for diff lods
 struct ModelHeader
 {
 	// name of individual model LOD,
@@ -365,6 +366,20 @@ struct ModelHeader
 	struct AnimTex* animtex;
 };
 
+//comes from MPK files
+struct Mpk
+{
+	//0x0
+	struct IconHeader* iconHeader;
+
+	//0x4
+	//there is not num entries though
+	struct Model* modelPtrArray[UNDEFINED_ARRAY_LENGTH]; //the array of model pointers is stored on MPK->0x4
+	
+	//struct size = numModelptrs * 4 + 0x4
+
+};
+
 // https://github.com/DCxDemo/CTR-tools/blob/master/formats/txt_ctr.txt
 struct Model
 {
@@ -381,7 +396,10 @@ struct Model
 	short numHeaders;
 
 	// 0x14
-	struct ModelHeader* headers;
+	//points to the first index from header array
+	struct ModelHeader* ptrHeadersArray;
+	
+	//struct size 0x18
 };
 
 struct InstDef

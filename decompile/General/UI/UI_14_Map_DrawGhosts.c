@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
+void DECOMP_UI_Map_DrawGhosts(struct Map* ptrMap,struct Thread* bucket)
 {
   int color;
   struct Driver* d;
@@ -11,15 +11,14 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 		bucket = bucket->siblingThread
 	  )
   {
-	d = bucket->object;
+	d = (struct Driver*)bucket->object;
 	  
-	// Need to finish Driver struct
 	  
 	// if ghost not initialized
-    if (*(short*)((int)d + 0x632) == 0) continue;
+    if (!d->ghostBoolInit) continue;
 	  
 	// ghost made by player
-	if (*(short*)((int)d + 0x630) == 0) 
+	if (d->ghostID == 0) 
 	{
 		// flash red and blue
 		
@@ -46,7 +45,7 @@ void DECOMP_UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 	}
 	
 	DECOMP_UI_Map_DrawRawIcon(
-		ptrMap, (int*)&bucket->inst->matrix.t[0],
+		ptrMap, &bucket->inst->matrix.t,
 		0x31, color, 0, 0x1000);
   }
   return;

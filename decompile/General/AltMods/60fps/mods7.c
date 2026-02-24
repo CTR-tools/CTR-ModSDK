@@ -30,7 +30,7 @@ void NewCallback233()
 
 struct Particle* NewParticleInit(struct LinkedList* param_1)
 {
-	// NOTE: Need to add workaround for RB_Explosion_InitPotion,
+	// NOTE: Need to add workaround for DECOMP_RB_Explosion_InitPotion,
 	// VehEmitter_DriverMain, when those functions are rewritten,
 	// can't do VehEmitter_Sparks_Ground due to byte budget
 

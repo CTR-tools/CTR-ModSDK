@@ -17,9 +17,9 @@ void DECOMP_PROC_CollidePointWithSelf(struct Thread* th, struct BucketSearchPara
 	// it will not compile to less assembly,
 	// 180 bytes is as low as this will go
 	
-	distX = (int)buf->pos[0]-(int)inst->matrix.t[0];
-	distY = (int)buf->pos[1]-(int)inst->matrix.t[1];
-	distZ = (int)buf->pos[2]-(int)inst->matrix.t[2];
+	distX = (int)buf->pos[0]-(int)inst->matrix.t.x;
+	distY = (int)buf->pos[1]-(int)inst->matrix.t.y;
+	distZ = (int)buf->pos[2]-(int)inst->matrix.t.z;
 	
 	if(distX*distX >= 0x10000000) return;
 	if(distY*distY >= 0x10000000) return;

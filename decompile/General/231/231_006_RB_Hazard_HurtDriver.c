@@ -12,15 +12,14 @@ int DECOMP_RB_Hazard_HurtDriver(
 	if ((driverVictim->actionsFlagSet & 0x100000) == 0)
 	{
 		#ifndef REBUILD_PS1 //this ifndef should be removed at some point?
-		result = VehPickState_NewState(driverVictim, damageType, driverAttacker, reason);
+		result = DECOMP_VehPickState_NewState(driverVictim, damageType, driverAttacker, reason);
 		#endif
 	}
 	else
 	{
-		//decomp attempt 1 had the second condition of this if statement as: ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
-		//currently using ((int)gGT->gameMode1 < 0) bc that's what ghidra says (it might be equivalent idk)
-		if ((gGT->levelID == OXIDE_STATION) && (gGT->gameMode1 < 0))
-			damageType = 1;
+		//oxide cant be blasted, make him spin out instead
+		if ((gGT->levelID == OXIDE_STATION) && ((gGT->gameMode1 & ADVENTURE_BOSS) != 0))
+			damageType = HURT_SPINNING;
 
 		#ifndef REBUILD_PS1 //this ifndef should be removed at some point?
 		result = (int)BOTS_ChangeState(driverVictim, damageType, driverAttacker, reason);

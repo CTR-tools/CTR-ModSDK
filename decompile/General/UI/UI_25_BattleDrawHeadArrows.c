@@ -68,8 +68,8 @@ void DECOMP_UI_BattleDrawHeadArrows(struct Driver *player)
     struct Instance* playerInst = player->instSelf;
 
     // Get X distance and Z distance between two players
-    int xDistance = playerInst->matrix.t[0] - currInst->matrix.t[0];
-    int zDistance = playerInst->matrix.t[2] - currInst->matrix.t[2];
+    int xDistance = playerInst->matrix.t.x - currInst->matrix.t.x;
+    int zDistance = playerInst->matrix.t.z - currInst->matrix.t.z;
     int playerDistance = ((xDistance * xDistance) + (zDistance * zDistance));
 
     // sqrt(0x90000) is 768
@@ -80,9 +80,9 @@ void DECOMP_UI_BattleDrawHeadArrows(struct Driver *player)
       continue;
 
     // load input vector
-    pos.vx = currInst->matrix.t[0];
-    pos.vy = currInst->matrix.t[1];
-    pos.vz = currInst->matrix.t[2];
+    pos.vx = currInst->matrix.t.x;
+    pos.vy = currInst->matrix.t.y;
+    pos.vz = currInst->matrix.t.z;
 
     gte_ldv0(&pos); // xyz
 

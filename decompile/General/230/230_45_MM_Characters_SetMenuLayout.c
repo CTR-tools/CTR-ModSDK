@@ -23,10 +23,10 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
 
 #ifndef USE_OXIDE
   // original game
-  #define NUM_ICONS 0xF
+  #define NUM_ICONS 15
 #else
-  // modded game
-  #define NUM_ICONS 0x10
+  // modded game (USE_OXIDE enabled)
+  #define NUM_ICONS 16
   D230.ptrCsmArr[0] = &OXIDE_icons1p2p[0];
   D230.ptrCsmArr[1] = &OXIDE_icons1p2p[0];
   D230.ptrCsmArr[2] = &OXIDE_icons3p[0];
@@ -37,15 +37,16 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   
   //struct Model* m = sdata->PLYROBJECTLIST[18];
   struct Model* MM_Characters_GetModelByID(int id);
-  struct Model* m = MM_Characters_GetModelByID(0xf);
+  struct Model* m = MM_Characters_GetModelByID(NITROS_OXIDE);
   
   // modified scale, 5/8 size -- ((orig * 5) >> 3)
-  m->headers[0].scale[0] = 0x896;
-  m->headers[0].scale[1] = 0x809;
-  m->headers[0].scale[2] = 0xADC;
+  //ptrHeadersArray points to the first header.
+  m->ptrHeadersArray->scale[0] = 0x896;
+  m->ptrHeadersArray->scale[1] = 0x809;
+  m->ptrHeadersArray->scale[2] = 0xADC;
   
-  m->headers[0].ptrAnimations[0] = 
-  m->headers[0].ptrAnimations[1];
+  m->ptrHeadersArray->ptrAnimations[0] = 
+  m->ptrHeadersArray->ptrAnimations[1];
 #endif
 
   // Loop through bottom characters,

@@ -88,9 +88,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	driver = gGT->drivers[0];
 	driverInst = driver->instSelf;
 	
-	x = warppadMatrix->t[0] - driverInst->matrix.t[0];
-	y = warppadMatrix->t[1] - driverInst->matrix.t[1];
-	z = warppadMatrix->t[2] - driverInst->matrix.t[2];
+	x = warppadMatrix->t.x - driverInst->matrix.t.x;
+	y = warppadMatrix->t.y - driverInst->matrix.t.y;
+	z = warppadMatrix->t.z - driverInst->matrix.t.z;
 	dist = x*x + y*y + z*z;
 	
 	levelID = warppadObj->levelID;
@@ -211,8 +211,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	{	
 		angleCamToWarppad =
 			ratan2(
-				warppadMatrix->t[0] - gGT->pushBuffer[0].pos[0],
-				warppadMatrix->t[2] - gGT->pushBuffer[0].pos[2]
+				warppadMatrix->t.x - gGT->pushBuffer[0].pos[0],
+				warppadMatrix->t.z - gGT->pushBuffer[0].pos[2]
 			);
 			
 		angleCamToWarppad = -angleCamToWarppad;
@@ -223,27 +223,27 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		// no 10s digit
 		if(instArr[WPIS_CLOSED_10S] == 0)
 		{
-			instArr[WPIS_CLOSED_1S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0x80 >> 0xC);
-			instArr[WPIS_CLOSED_1S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0x80 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0x80 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0x80 >> 0xC);
 			
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[0] = warppadMatrix->t[0] + ((angleCos << 7) >> 0xC);
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[2] = warppadMatrix->t[2] + ((angleSin << 7) >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.x = warppadMatrix->t.x + ((angleCos << 7) >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.z = warppadMatrix->t.z + ((angleSin << 7) >> 0xC);
 		}
 		
 		// 10s digit
 		else
 		{
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * 0xC0 >> 0xC);
-			instArr[WPIS_CLOSED_ITEM]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * 0xC0 >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.x = warppadMatrix->t.x + (angleCos * 0xC0 >> 0xC);
+			instArr[WPIS_CLOSED_ITEM]->matrix.t.z = warppadMatrix->t.z + (angleSin * 0xC0 >> 0xC);
 			
-			instArr[WPIS_CLOSED_X]->matrix.t[0] = warppadMatrix->t[0] + ((angleCos << 6) >> 0xC);
-			instArr[WPIS_CLOSED_X]->matrix.t[2] = warppadMatrix->t[2] + ((angleSin << 6) >> 0xC);
+			instArr[WPIS_CLOSED_X]->matrix.t.x = warppadMatrix->t.x + ((angleCos << 6) >> 0xC);
+			instArr[WPIS_CLOSED_X]->matrix.t.z = warppadMatrix->t.z + ((angleSin << 6) >> 0xC);
 			
-			instArr[WPIS_CLOSED_10S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0x40 >> 0xC);
-			instArr[WPIS_CLOSED_10S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0x40 >> 0xC);
+			instArr[WPIS_CLOSED_10S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0x40 >> 0xC);
+			instArr[WPIS_CLOSED_10S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0x40 >> 0xC);
 			
-			instArr[WPIS_CLOSED_1S]->matrix.t[0] = warppadMatrix->t[0] + (angleCos * -0xa0 >> 0xC);
-			instArr[WPIS_CLOSED_1S]->matrix.t[2] = warppadMatrix->t[2] + (angleSin * -0xa0 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.x = warppadMatrix->t.x + (angleCos * -0xa0 >> 0xC);
+			instArr[WPIS_CLOSED_1S]->matrix.t.z = warppadMatrix->t.z + (angleSin * -0xa0 >> 0xC);
 		}
 		
 		warppadObj->spinRot_Prize[0] = 0;
@@ -348,17 +348,17 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 			// if height hasn't reached max height
 			if(
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
-				(warppadInst->matrix.t[1] + wispMaxHeight)
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y < 
+				(warppadInst->matrix.t.y + wispMaxHeight)
 			  )
 			{
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] += wispRiseRate;
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y += wispRiseRate;
 				
 				// if height hasn't reached 4x RiseRate,
 				// first 4 frames of rising
 				if(
-					instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
-					(warppadInst->matrix.t[1] + wispRiseRate*4)
+					instArr[WPIS_OPEN_RING1+i]->matrix.t.y < 
+					(warppadInst->matrix.t.y + wispRiseRate*4)
 				)
 				{
 					// reduce transparency
@@ -377,7 +377,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			else
 			{
 				// reset height
-				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] = warppadInst->matrix.t[1];
+				instArr[WPIS_OPEN_RING1+i]->matrix.t.y = warppadInst->matrix.t.y;
 				
 				// full transparency
 				instArr[WPIS_OPEN_RING1+i]->alphaScale = 0x1000;
@@ -419,9 +419,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			DECOMP_AH_WarpPad_SpinRewards(
 				instArr[WPIS_OPEN_PRIZE1+i],
 				warppadObj, i,
-				warppadInst->matrix.t[0],
-				warppadInst->matrix.t[1],
-				warppadInst->matrix.t[2]);
+				warppadInst->matrix.t.x,
+				warppadInst->matrix.t.y,
+				warppadInst->matrix.t.z);
 				
 			modelID = instArr[WPIS_OPEN_PRIZE1+i]->model->id;
 			
@@ -579,13 +579,13 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	if(levelID < SLIDE_COLISEUM)
 	{
 		// if trophy is unlocked
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TROPHY_RACE)) != 0)
 		{
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
 				D232.menuTokenRelic.rowSelected =
-					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
+					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TOKEN_RACE)) != 0);
 				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
@@ -606,15 +606,16 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			// if opened, then closed
 			else
 			{
+				//--TODO: hint enum
 				// Relic Hint
 				i = 0x1d;
 				
 				// CTR Token Hint
-				if((gGT->gameMode2 & 8) != 0)
+				if((gGT->gameMode2 & TOKEN_RACE) != 0)
 					i = 0x1a;
 				
 				// if hint is locked
-				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
+				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+ MASK_HINT_PROGRESS)) == 0)
 					DECOMP_MainFrame_RequestMaskHint(i, 1);
 				
 				// if can't spawn aku cause he's already here,
@@ -632,14 +633,14 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	else if(levelID < NITRO_COURT)
 	{
 		// Add Relic
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= RELIC_RACE;
 	}
 	
 	// Battle Tracks
 	else if(levelID < GEM_STONE_VALLEY)
 	{
 		// Add Crystal Challenge
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= CRYSTAL_CHALLENGE;
 		
 		// Dont have hint "collect every crystal"
 		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
@@ -657,7 +658,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	else
 	{
 		// Add Adv Cup
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
+		sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_CUP;
 		
 		gGT->cup.cupID = levelID - ADV_CUP;
 		gGT->cup.trackIndex = 0;
@@ -668,7 +669,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 		
 	// Rem Adventure Arena
-	sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+	sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_ARENA;
 	
 	DECOMP_MainRaceTrack_RequestLoad(levelID);
 }

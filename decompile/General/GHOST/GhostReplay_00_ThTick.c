@@ -62,8 +62,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     if (d->reserves < 0)
       d->reserves = 0;
   }
+  
 
-  if ((gGT->trafficLightsTimer < 1) && (d->ghostBoolStarted == 0)) {
+  if ((gGT->trafficLightsTimer <= SECONDS(0)) && (d->ghostBoolStarted == 0)) {
     d->ghostBoolStarted = 1;
     tape->packetID = -1;
   }
@@ -271,9 +272,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   vel[1] = (int)nextPacket->pos[1] - (int)currPacket->pos[1];
   vel[2] = (int)nextPacket->pos[2] - (int)currPacket->pos[2];
 
-  inst->matrix.t[0] = currPacket->pos[0] + ((vel[0] * lerp4096) >> 0xC);
-  inst->matrix.t[1] = currPacket->pos[1] + ((vel[1] * lerp4096) >> 0xC);
-  inst->matrix.t[2] = currPacket->pos[2] + ((vel[2] * lerp4096) >> 0xC);
+  inst->matrix.t.x = currPacket->pos[0] + ((vel[0] * lerp4096) >> 0xC);
+  inst->matrix.t.y = currPacket->pos[1] + ((vel[1] * lerp4096) >> 0xC);
+  inst->matrix.t.z = currPacket->pos[2] + ((vel[2] * lerp4096) >> 0xC);
 
   // Calculate delta + perform 12-bit wrapping and lerp
   delta = ((int)nextPacket->rot[0] - (int)currPacket->rot[0]) & 0xFFF;
@@ -294,9 +295,9 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
   // converted to TEST in rebuildPS1
   ConvertRotToMatrix(&inst->matrix, local_rot);
 
-  d->posCurr.x = inst->matrix.t[0] << 8;
-  d->posCurr.y = inst->matrix.t[1] << 8;
-  d->posCurr.z = inst->matrix.t[2] << 8;
+  d->posCurr.x = inst->matrix.t.x << 8;
+  d->posCurr.y = inst->matrix.t.y << 8;
+  d->posCurr.z = inst->matrix.t.z << 8;
 
   d->rotCurr.x = local_rot[0];
   d->rotCurr.y = local_rot[1];
@@ -382,7 +383,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
     }
   }
 
-  if (gGT->trafficLightsTimer < 1) {
+  if (gGT->trafficLightsTimer <= SECONDS(0)) {
     tape->timeElapsedInRace += gGT->elapsedTimeMS;
   }
   return;

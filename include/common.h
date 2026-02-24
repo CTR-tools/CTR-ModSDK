@@ -143,8 +143,8 @@ enum HotReloadSteps
 
 // Not PC
 #ifndef REBUILD_PC
-#include <gccHeaders.h>
-#include <ctr_gte.h>
+#include <psn00b_Headers.h>
+#include <namespace_gte.h>
 #endif
 
 

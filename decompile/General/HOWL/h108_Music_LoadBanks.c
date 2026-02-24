@@ -13,7 +13,7 @@ void DECOMP_Music_LoadBanks(void)
         level,
 
         // Check to see if this is a boss race
-        (gGT->gameMode1 < 0),
+        ((gGT->gameMode1 & ADVENTURE_BOSS) != 0),
 
         // Boss ID
         gGT->bossID);

@@ -31,7 +31,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		kartStatePrev = hitDriver->kartState;
 		
 		// attempt to harm driver (spin out)
-		boolHurt = DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,0);
+		boolHurt = DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,HIT_NO_REASON);
 		
 		// if failed, due to mask grab or mask weapon
 		if (boolHurt == 0) return;
@@ -62,7 +62,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		// attempt to harm driver (spin out)
-		DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,damage,0,HIT_NO_REASON);
 		
 		// dont check other buckets
 		return;
@@ -142,7 +142,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// if rotation is finished
 	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
 	{
-		Seal_CheckColl(sealInst, t, 1, 0x4000, 0x78);
+		Seal_CheckColl(sealInst, t, HURT_SPINNING, 0x4000, 0x78);
 		return;
 	}
 	
@@ -186,7 +186,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	// move seal
 	for(i = 0; i < 3; i++)
 	{
-		sealInst->matrix.t[i] = 
+		sealInst->matrix.t.v[i] = 
 			(int)sealObj->spawnPos[i] - 
 				(sealObj->distFromSpawn * (int)sealObj->vel[i]) / FPS_DOUBLE(0x2d);
 	}
@@ -207,7 +207,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	if(sealObj->distFromSpawn != FPS_DOUBLE(sealObj->direction*0x2d))
 	{
-		Seal_CheckColl(sealInst, t, 1, 0x4000, 0x78);
+		Seal_CheckColl(sealInst, t, HURT_SPINNING, 0x4000, 0x78);
 		return;
 	}
 	

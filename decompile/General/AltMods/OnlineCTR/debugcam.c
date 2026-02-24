@@ -12,11 +12,12 @@ void Freecam()
 	gGT = sdata->gGT;
 
 	// wait till race starts, to give the camera a place to spawn
-	if(gGT->trafficLightsTimer > 10)
+	//10 milliseconds returns 9.6 ElapsedMS, this condition needs to check "10" so add +1
+	if(gGT->trafficLightsTimer > (MILLISECONDS(10) + 1))
 		return;
 
-	// erase function pointers (0xd)
-	for(loop = 0; loop < 0xd; loop++)
+	// erase driving function pointers from this driver (0xd)
+	for(loop = 0; loop < 13; loop++)
 	{
 		// erase function pointer
 		gGT->drivers[0]->funcPtrs[loop] = 0;

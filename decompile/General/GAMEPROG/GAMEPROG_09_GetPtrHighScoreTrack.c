@@ -2,7 +2,7 @@
 
 void DECOMP_GAMEPROG_GetPtrHighScoreTrack()
 {
-	int gameMode1;
+	unsigned int gameMode1;
 	struct GameTracker* gGT;
 	
 	gGT = sdata->gGT;

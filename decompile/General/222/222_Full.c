@@ -97,7 +97,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			
 			// If you have not unlocked this CTR Token
-			bitIndex = gGT->levelID + 0x4c;
+			bitIndex = gGT->levelID + PRIZE_TOKEN_RACE;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 			{
@@ -181,8 +181,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					elapsedFrames, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
-				hudToken->matrix.t[0] = hudT->matrix.t[0];
-				hudToken->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
+				hudToken->matrix.t.x = hudT->matrix.t.x;
+				hudToken->matrix.t.y = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
 
 				// variable reuse, frame timers
 				lerpStartY = FPS_DOUBLE(120);
@@ -218,8 +218,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 			for (i = 0; i < 3; i++)
 			{
-				hudLetters[i]->matrix.t[0] = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
-				hudLetters[i]->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
+				hudLetters[i]->matrix.t.x = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
+				hudLetters[i]->matrix.t.y = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
 
@@ -239,16 +239,16 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						(elapsedFrames > FPS_DOUBLE(6*i)) &&
 
 						// letter not fully off-screen
-						(-300 < hudLetters[i]->matrix.t[1])
+						(-300 < hudLetters[i]->matrix.t.y)
 					)
 				{
 					letter = hudLetters[i]->thread->object;
 
 					// move X position (yes, C-Letter only, Naughty Dog bug?)
-					hudLetters[0]->matrix.t[0] += letter->vel[0];
+					hudLetters[0]->matrix.t.x += letter->vel[0];
 
 					// make the letter fall off the screen
-					hudLetters[i]->matrix.t[1] -= letter->vel[1];
+					hudLetters[i]->matrix.t.y -= letter->vel[1];
 
 					if (FPS_HALF(-0x14) < letter->vel[1])
 					{
@@ -418,7 +418,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_BOSS | TOKEN_RACE);
 
 	// If you are in boss mode
-	if (gGT->gameMode1 < 0)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
 	}
@@ -439,14 +439,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	levSpawn = gGT->prevLEV;
 
 	// If you are in boss mode
-	if (gGT->gameMode1 < 0)
+	if ((gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		
 		// bitIndex of keys unlocked, and boss beaten
-		bitIndex = gGT->bossID + 0x5e;
+		bitIndex = gGT->bossID + PRIZE_BOSS_KEY;
 
 		// If the number of keys you have is less than 4
-		if (gGT->bossID < 4)
+		if (gGT->bossID < BOSS_OXIDE)
 		{
 			// only if first time beating boss
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
@@ -475,7 +475,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			adv->rewards[3] |= 0x80004;
 
 			// if beaten oxide 2nd time
-			if(gGT->bossID == 5)
+			if(gGT->bossID == BOSS_OXIDEFINAL)
 			{
 				// beat 2nd time
 				adv->rewards[3] |= 0x100008;
@@ -492,7 +492,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	// if trophy is not won,
 	// Dingo Bingo needs to win trophy and token in the same race
-	bitIndex = gGT->levelID + 6;
+	bitIndex = gGT->levelID + PRIZE_TROPHY_RACE;
 	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 	{
 		// unlock tropy
@@ -502,7 +502,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		gGT->podiumRewardID = STATIC_TROPHY;
 	}
 
-	MainRaceTrack_RequestLoad(levSpawn);
+	DECOMP_MainRaceTrack_RequestLoad(levSpawn);
 }
 
 void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
@@ -633,8 +633,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpEndX, lerpEndY,
 		currFrame, endFrame);
 
-	bigNum->matrix.t[0] = posXY[0];
-	bigNum->matrix.t[1] = posXY[1];
+	bigNum->matrix.t.x = posXY[0];
+	bigNum->matrix.t.y = posXY[1];
 
 	// interpolate scale to 0x1e00
 	DECOMP_UI_Lerp2D_Linear(
