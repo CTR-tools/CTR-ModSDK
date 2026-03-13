@@ -415,12 +415,12 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	RECTMENU_ClearInput();
 	
 	sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
-	sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_BOSS | TOKEN_RACE);
 
 	// If you are in boss mode
 	if (gGT->gameMode1 < 0)
 	{
 		sdata->Loading.OnBegin.AddBitsConfig8 |= SPAWN_AT_BOSS;
+		sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;
 	}
 
 	if (!boolWin)
