@@ -1,4 +1,4 @@
-#include <math.h>
+#include <ctr_math.h>
 
 enum Characters
 {
