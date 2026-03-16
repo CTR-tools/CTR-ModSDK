@@ -63,7 +63,7 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			if(victim == 0)
 			{
 				// if not battle mode
-				if((gGT->gameMode1 & 0x20) == 0)
+				if((gGT->gameMode1 & BATTLE_MODE) == 0)
 				{
 					if(gGT->elapsedEventTime & 1)
 					{
@@ -140,9 +140,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			#ifndef REBUILD_PS1
 			VehPhysForce_RotAxisAngle(&weaponInst->matrix, (short*)&d->AxisAngle1_normalVec, d->rotCurr.y);
@@ -290,9 +290,9 @@ void DECOMP_VehPickupItem_ShootNow(struct Driver* d, int weaponID, int flags)
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			weaponInst->scale[0] = 0;
 			weaponInst->scale[1] = 0;
@@ -329,13 +329,13 @@ RunMineCOLL:
 			short pos1[3];
 			short pos2[3];
 
-			pos1[0] = weaponInst->matrix.t[0];
-			pos1[1] = weaponInst->matrix.t[1] - 400;
-			pos1[2] = weaponInst->matrix.t[2];
+			pos1[0] = weaponInst->matrix.t.x;
+			pos1[1] = weaponInst->matrix.t.y - 400;
+			pos1[2] = weaponInst->matrix.t.z;
 
-			pos2[0] = weaponInst->matrix.t[0];
-			pos2[1] = weaponInst->matrix.t[1] + 64;
-			pos2[2] = weaponInst->matrix.t[2];
+			pos2[0] = weaponInst->matrix.t.x;
+			pos2[1] = weaponInst->matrix.t.y + 64;
+			pos2[2] = weaponInst->matrix.t.z;
 
 			struct ScratchpadStruct *sps = (struct ScratchpadStruct*)0x1f800108;
 
@@ -389,7 +389,7 @@ RunMineCOLL:
 				rotPtr[2] = 0;
 				rotPtr[3] = 0;
 
-				mw->stopFallAtY = weaponInst->matrix.t[1];
+				mw->stopFallAtY = weaponInst->matrix.t.y;
 			}
 
 			else
@@ -430,12 +430,16 @@ RunMineCOLL:
 			*(int*)&weaponInst->matrix.m[1][1] = *(int*)&dInst->matrix.m[1][1];
 			*(int*)&weaponInst->matrix.m[2][0] = *(int*)&dInst->matrix.m[2][0];
 			weaponInst->matrix.m[2][2] = dInst->matrix.m[2][2];
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			
+			//pos XYZ
+			for (unsigned char b = 0; b < 3; b++)
+			{
+				weaponInst->matrix.t.v[b] = dInst->matrix.t.v[b];
+			}
 
 			// potion always faces camera
-			weaponInst->model->headers[0].flags |= 2;
+			//ptrHeadersArray points to the first header
+			weaponInst->model->ptrHeadersArray->flags |= 2;
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
@@ -526,7 +530,7 @@ RunMineCOLL:
 			struct Shield* shieldObj = weaponTh->object;
 			shieldObj->animFrame = 0;
 			shieldObj->flags = 0;
-			shieldObj->duration = 0x2d00;
+			shieldObj->duration = SECONDS(12);
 			shieldObj->instColor = instColor;
 			shieldObj->instHighlight = instHighlight;
 			shieldObj->highlightRot[0] = 0;
@@ -549,7 +553,7 @@ RunMineCOLL:
 		case 8:
 
 			d->numTimesClockWeaponUsed++;
-			d->clockSend = FPS_DOUBLE(0x1e);
+			d->clockSend = FPS_DOUBLE(30);
 
 			DECOMP_OtherFX_Play(0x44, 1);
 
@@ -559,9 +563,9 @@ RunMineCOLL:
 				Voiceline_RequestPlay(0xe, data.characterIDs[d->driverID], 0x10);
 			}
 
-			int hurtVal = 0x1e00;
+			int clockTimer = SECONDS(8);
 			if(d->numWumpas >= 10)
-				hurtVal = 0x2d00;
+				clockTimer = SECONDS(12);
 
 			struct Driver** dptr;
 
@@ -573,16 +577,17 @@ RunMineCOLL:
 			{
 				struct Driver* victim = *dptr;
 
-				if(victim == 0) continue;
+				if(victim == NULL) continue;
 
 				victim->clockFlash = FPS_DOUBLE(4);
-
+				
+				//dont apply clockflash to us if we are the ones shooting the clock
 				if(victim == d) continue;
 
 				// if spin out driver
-				if(DECOMP_RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
+				if(DECOMP_RB_Hazard_HurtDriver(victim, HURT_SPINNING, 0, HIT_NO_REASON) != 0)
 				{
-					victim->clockReceive = hurtVal;
+					victim->clockReceive = clockTimer;
 				}
 			}
 			break;
@@ -608,9 +613,9 @@ RunMineCOLL:
 			*(int*)&weaponInst->matrix.m[2][0] = 0;
 			weaponInst->matrix.m[2][2] = 0x1000;
 
-			weaponInst->matrix.t[0] = dInst->matrix.t[0];
-			weaponInst->matrix.t[1] = dInst->matrix.t[1];
-			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+			weaponInst->matrix.t.x = dInst->matrix.t.x;
+			weaponInst->matrix.t.y = dInst->matrix.t.y;
+			weaponInst->matrix.t.z = dInst->matrix.t.z;
 
 			weaponTh = weaponInst->thread;
 			weaponTh->funcThDestroy = DECOMP_PROC_DestroyInstance;
@@ -719,9 +724,9 @@ RunMineCOLL:
 		// Super Engine
 		case 0xd: {
 
-			int engine = 0x1e00;
+			int engine = SECONDS(8);
 			if(d->numWumpas >= 10)
-				engine = 0x2d00;
+				engine = SECONDS(12);
 
 			d->superEngineTimer = engine;
 			} break;

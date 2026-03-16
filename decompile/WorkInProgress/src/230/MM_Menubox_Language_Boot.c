@@ -25,9 +25,10 @@ void MM_MenuProc_LanguageBoot(struct RectMenu* menu)
     }
     
     // Language change flag
-    gGT->gameMode2 |= 0x10000000;  
+    gGT->gameMode2 |= LNG_CHANGE;  
 
     //langIndex on PAL gGT
+    //langIndex is not gGT + 0x1d58 on NTSC-U
     gGT[0x1D58] = D230.fileIndexLngBoot[menu->rowSelected]; // why need a separate index array???
 
     // always goes to main menu after lang chosen

@@ -82,7 +82,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 	
 	// Set up the First pass (MaskInst)
 
-	rot = mask->rot[1];
+	rot = mask->rot.y;
 
     mhs->posOffset[0] = (((DECOMP_MATH_Sin(rot) << 6) >> 0xc) * mask->scale) >> 0xc;
     mhs->posOffset[2] = (((DECOMP_MATH_Cos(rot) << 6) >> 0xc) * mask->scale) >> 0xc;	
@@ -102,7 +102,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 	// Second time is BeamInst
 	for(int i = 0; i < 2; i++)
 	{
-		if ((mask->rot[2] & 1) == 0)
+		if ((mask->rot.y & 1) == 0)
 		{
 			LHMatrix_Parent(instCurr, driverInst, (SVECTOR*)&mhs->posOffset[0]);
 			ConvertRotToMatrix(&mhs->m, &mhs->rot[0]);
@@ -110,9 +110,9 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 		}
 		else
 		{
-			instCurr->matrix.t[0] = (int)mask->pos[0] + mhs->posOffset[0];
-			instCurr->matrix.t[1] = (int)mask->pos[1] + mhs->posOffset[1];
-			instCurr->matrix.t[2] = (int)mask->pos[2] + mhs->posOffset[2];
+			instCurr->matrix.t.x = (int)mask->pos.x + mhs->posOffset[0];
+			instCurr->matrix.t.y = (int)mask->pos.y + mhs->posOffset[1];
+			instCurr->matrix.t.z = (int)mask->pos.z + mhs->posOffset[2];
 			ConvertRotToMatrix(&instCurr->matrix, &mhs->rot[0]);
 		}
 		
@@ -144,7 +144,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     }
 
     // adjust rotation
-    mask->rot[1] += FPS_HALF(-0x100);
+    mask->rot.y += FPS_HALF(-0x100);
 
     // If duration is over
     if (mask->duration == 0)

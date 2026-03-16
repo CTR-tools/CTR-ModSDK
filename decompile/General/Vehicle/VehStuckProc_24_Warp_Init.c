@@ -8,7 +8,7 @@ void DECOMP_VehStuckProc_Warp_Init(struct Thread *th, struct Driver *d)
 
     // If you are not in a warp pad
 
-    d->KartStates.Warp.timer = 0x3c;
+    d->KartStates.Warp.timer = MILLISECONDS(65);
     d->KartStates.Warp.heightOffset = 0;
     d->KartStates.Warp.quadHeight = d->quadBlockHeight;
 

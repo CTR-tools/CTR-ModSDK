@@ -59,7 +59,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver* d)
 
 	d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
 
-	if ((sdata->gGT->gameMode1 & 0x20) != 0)
+	if ((sdata->gGT->gameMode1 & BATTLE_MODE) != 0)
 	{ // you are in battle mode
 		struct NavFrame* nf = NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[navPathIndex]);
 		d->posCurr.x = nf->pos[0] << 8;

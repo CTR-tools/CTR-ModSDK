@@ -20,10 +20,10 @@ void DECOMP_VehStuckProc_MaskGrab_Update(struct Thread* t, struct Driver* d)
 	if (mask != NULL)
 	{
 		// mask rotZ
-		mask->rot[2] &= ~(1);
+		mask->rot.z &= ~(1);
 
 		// scale = 100%
-		mask->scale = 0x1000;
+		mask->scale = FP(1);
 	}
 
 

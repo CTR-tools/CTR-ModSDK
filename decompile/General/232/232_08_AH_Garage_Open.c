@@ -25,7 +25,7 @@ void DECOMP_AH_Garage_Open(struct ScratchpadStruct* sps,struct Thread* otherTh)
   		
   		// if door is closed,
   		// if posY is the same as instDef posY
-  		(garageInst->matrix.t[1] == garageInst->instDef->pos[1])
+  		(garageInst->matrix.t.y == garageInst->instDef->pos[1])
      ) 
   {
     // if you are not in gemstone valley

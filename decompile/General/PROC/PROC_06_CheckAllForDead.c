@@ -4,7 +4,7 @@ void DECOMP_PROC_CheckAllForDead()
 {
 	int i;
 	
-	struct ThreadBucket* tb = &sdata->gGT->threadBuckets[0];
+	struct ThreadBucket* tb = &sdata->gGT->threadBuckets[PLAYER];
 	
 	for(i = 0; i < NUM_BUCKETS; i++)
 	{

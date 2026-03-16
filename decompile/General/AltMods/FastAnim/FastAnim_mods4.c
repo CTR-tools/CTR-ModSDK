@@ -23,8 +23,8 @@ void FastAnim_Decompress(struct Model* m, int j, int k)
 #else
 	int* addrArray = 0x1f800000;
 #endif
-
-	struct ModelHeader* h = &m->headers[j];
+	
+	struct ModelHeader* h = &m->ptrHeadersArray[j];
 	struct ModelAnim* ma = h->ptrAnimations[k];
 	char* firstFrame = MODELANIM_GETFRAME(ma);
 	printf("%s: %s\n", __FUNCTION__, ma->name);
@@ -198,7 +198,7 @@ void FastAnim_GenerateLerp(struct Model* m, int j, int k)
 	int* addrArray = 0x1f800000;
 #endif
 
-	struct ModelHeader* h = &m->headers[j];
+	struct ModelHeader* h = &m->ptrHeadersArray[j];
 	struct ModelAnim* ma = h->ptrAnimations[k];
 	printf("%s: %s\n", __FUNCTION__, ma->name);
 	u_int* pCmd = h->ptrCommandList;

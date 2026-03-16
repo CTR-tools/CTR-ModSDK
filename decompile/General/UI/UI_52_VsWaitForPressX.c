@@ -57,7 +57,7 @@ void DECOMP_UI_VsWaitForPressX(void)
       }
 
       // If you're in Battle Mode
-      if ((gGT->gameMode1 & 0x20) != 0)
+      if ((gGT->gameMode1 & BATTLE_MODE) != 0)
       {
 		// ivar9 0x157: YOU HIT
 		// ivar9 0x158: HIT YOU

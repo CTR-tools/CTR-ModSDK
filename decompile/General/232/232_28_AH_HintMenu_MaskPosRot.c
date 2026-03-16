@@ -5,15 +5,17 @@ void DECOMP_AH_HintMenu_MaskPosRot(void)
   struct Instance* mask = 
 	sdata->instMaskHints3D;
   
-  ConvertRotToMatrix(&mask->matrix, &D232.maskRot[0]);
+  ConvertRotToMatrix(&mask->matrix, (short*)&D232.maskRot);
   
   // Set position
-  mask->matrix.t[0] = D232.maskPos[0];
-  mask->matrix.t[1] = D232.maskPos[1];
-  mask->matrix.t[2] = D232.maskPos[2];
+  mask->matrix.t.x = D232.maskPos.x;
+  mask->matrix.t.y = D232.maskPos.y;
+  mask->matrix.t.z = D232.maskPos.z;
+  
+  struct MaskHint* hint = (struct MaskHint*)mask->thread->object;
   
   // always 0x1000 ???
-  ((struct MaskHint*)mask->thread->object)->scale = 
+  hint->scale = 
 	D232.maskScale;
   
   return;

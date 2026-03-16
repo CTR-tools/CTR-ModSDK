@@ -93,7 +93,7 @@ void DebugProfiler_Subsection(int flag)
 		if(flag == 2)
 			return;
 		
-		if(sdata->mainGameState != 3)
+		if(sdata->mainGameState != GSTATE_MAINLOOP)
 			return;
 		
 		// dont let fake sections explode on-boot

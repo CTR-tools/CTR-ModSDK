@@ -10,7 +10,7 @@ void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID) //third pa
 	if(sdata->discMode != DM_AUDIO)
 		DECOMP_CDSYS_SetMode_StreamAudio();
 	
-	struct XaSize* xas = &sdata->ptrArray_XaSize[sdata->ptrArray_firstSongIndex[categoryID]+xaID];
+	struct XaSize* xas = &sdata->ptrArray_XaSize[sdata->ptrArray_firstXASongIndex[categoryID]+xaID];
 	int sum = sdata->ptrArray_XaCdPos[sdata->ptrArray_firstXaIndex[categoryID] + xas->XaPrefix];
 	
 	CdIntToPos(sum, &loc);

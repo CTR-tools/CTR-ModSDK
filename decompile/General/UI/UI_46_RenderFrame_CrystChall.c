@@ -120,17 +120,17 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
-  hudCrystal->matrix.t[0] = iVar5 >> 8;
+  hudCrystal->matrix.t.x = iVar5 >> 8;
   
   // posY
   iVar5 = (local_18[1] + -0x6c) * hudStructPtr[0x11].z;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
-  hudCrystal->matrix.t[1] = iVar5 >> 8;
+  hudCrystal->matrix.t.y = iVar5 >> 8;
   
   // posZ
-  hudCrystal->matrix.t[2] = hudStructPtr[0x11].z;
+  hudCrystal->matrix.t.z = hudStructPtr[0x11].z;
 
 LAB_800545e8:
 

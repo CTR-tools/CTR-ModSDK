@@ -623,9 +623,27 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 				// map 4 is blue and shifted 1px downwards
 				// map 5 is blue and shifted 1px upwards
 				// map 6 is black and shifted 6px downwards and 12px to the right
+				
+				
 				for (iVar18 = 0; iVar18 < 6; iVar18++)
 				{
 					iVar10 = ((((u_int)bVar1 - (u_int)bVar2) + (u_int)bVar3) - (u_int)bVar4);
+					
+					SVec2 mapPos;
+					
+					mapPos.x = // X
+						D230.drawMapOffset[iVar18].offsetX +
+									p.x +
+									(D230.transitionMeta_trackSel[2].currX - D230.transitionMeta_trackSel[1].currX) +
+									(0xb0 >> 1) +
+									(iVar9 >> 1);
+					mapPos.y = // Y
+						D230.drawMapOffset[iVar18].offsetY +
+									p.y +
+									(D230.transitionMeta_trackSel[2].currY - D230.transitionMeta_trackSel[1].currY) +
+									0x49+0x22+
+									0x10 + // idk how bitshifting pulls 0x10 in ghidra, but that's it
+									(iVar10 >> 1);
 
 					DECOMP_UI_Map_DrawMap
 					(
@@ -635,20 +653,7 @@ void DECOMP_MM_TrackSelect_MenuProc(struct RectMenu* menu)
 						// bottom half
 						iconMap1,
 
-						// X
-						D230.drawMapOffset[iVar18].offsetX +
-									p.x +
-									(D230.transitionMeta_trackSel[2].currX - D230.transitionMeta_trackSel[1].currX) +
-									(0xb0 >> 1) +
-									(iVar9 >> 1),
-
-						// Y
-						D230.drawMapOffset[iVar18].offsetY +
-									p.y +
-									(D230.transitionMeta_trackSel[2].currY - D230.transitionMeta_trackSel[1].currY) +
-									0x49+0x22+
-									0x10 + // idk how bitshifting pulls 0x10 in ghidra, but that's it
-									(iVar10 >> 1),
+						&mapPos,
 
 						// pointer to PrimMem struct
 						&gGT->backBuffer->primMem,

@@ -118,9 +118,9 @@ void DECOMP_UI_TrackerSelf(struct Driver * d)
   gte_SetRotMatrix(m);
   gte_SetTransMatrix(m);
 
-  pos.vx = (short) d->instSelf->matrix.t[0];
-  pos.vy = (short) d->instSelf->matrix.t[1];
-  pos.vz = (short) d->instSelf->matrix.t[2];
+  pos.vx = (short) d->instSelf->matrix.t.x;
+  pos.vy = (short) d->instSelf->matrix.t.y;
+  pos.vz = (short) d->instSelf->matrix.t.z;
 
   gte_ldv0(&pos);
   gte_rtps();

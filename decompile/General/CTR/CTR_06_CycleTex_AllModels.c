@@ -8,16 +8,17 @@ void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModel
 {
     struct Model * pModel;
     struct ModelHeader * pHeader;
-
-    for(int i = 0; i < *((int*)&numModels); i++)
+	
+	//apparently this is expected to check negative
+    for(int i = 0; i < (int)numModels; i++)
 	{
 		pModel = pModelArray[i];
-		if(pModel == 0) return;
+		if(pModel == NULL) return;
 		
         //iterate over all model headers
         for (int j = 0; j < pModel->numHeaders; j++)
         {
-			pHeader = &pModel->headers[j];
+			pHeader = &pModel->ptrHeadersArray[j];
 			
             if ((pHeader->animtex != NULL) && ((pHeader->flags & 2) == 0) )
             {

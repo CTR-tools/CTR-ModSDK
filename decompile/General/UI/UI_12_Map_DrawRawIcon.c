@@ -2,21 +2,22 @@
 
 // Draw icon on map
 void DECOMP_UI_Map_DrawRawIcon(
-	int ptrMap,int *param_2,
+	struct Map* ptrMap, Vec3* pos,
 	int iconID,int colorID,int unused,
     short scale)
 {
-  int posX;
-  int posY;
+
   int *ptrColor;
   struct GameTracker* gGT = sdata->gGT;
+  
+  
+  Vec2 iconPos;
+  iconPos.x = pos->x;
+  iconPos.y = pos->z;
 
-  posX = param_2[0];
-  posY = param_2[2];
-
-  DECOMP_UI_Map_GetIconPos((short*)ptrMap,&posX,&posY);
+  DECOMP_UI_Map_GetIconPos(ptrMap,&iconPos);
   #ifdef USE_ONLINE
-  posY -= 50;
+  iconPos.y -= 50;
   #endif
 
   ptrColor = data.ptrColor[colorID];
@@ -26,7 +27,7 @@ void DECOMP_UI_Map_DrawRawIcon(
 
   DECOMP_DecalHUD_DrawPolyGT4(
 	iconPtrArray[iconID],
-	posX, posY,
+	(int)iconPos.x, (int)iconPos.y,
 	&gGT->backBuffer->primMem,
 	gGT->pushBuffer_UI.ptrOT,
     ptrColor[0], ptrColor[1], ptrColor[2], ptrColor[3],

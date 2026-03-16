@@ -6,7 +6,7 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK()
 	
 	// Dead code?
 	// Driver models dont go to gGT->modelPtrs,
-	// the m->id will always be -1 for all of them
+	// model->id will always be -1 for all of them
 	
 	#if 0
 	for(int i = 0; i < 3; i++)
@@ -20,8 +20,8 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK()
 	}
 	#endif
 	
-	if(sdata->PLYROBJECTLIST != 0)
+	if(sdata->PLYROBJECTLIST != NULL)
 	{
-		DECOMP_LibraryOfModels_Store(gGT, -1, (struct Model**)sdata->PLYROBJECTLIST);
+		DECOMP_LibraryOfModels_Store(gGT, -1, sdata->PLYROBJECTLIST);
 	}
 }

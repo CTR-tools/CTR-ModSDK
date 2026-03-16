@@ -7,10 +7,11 @@ void RB_Burst_CollThBucket();
 void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
 {
   struct GameTracker* gGT = sdata->gGT;
-  struct ModelHeader* headers;
   struct Instance* currInst;
+  struct ModelHeader* mh;
   struct Thread* t;
   int* burst;
+  int i;
   
   // initialize thread for burst
   currInst = 
@@ -37,8 +38,8 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   currInst->matrix.m[2][2] = 0x1000;
   
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
+  //ptrHeadersArray points to the first header
+  currInst->model->ptrHeadersArray->flags |= 2;
   
   // ======== Next one ===========
   
@@ -60,8 +61,8 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   currInst->matrix.m[2][2] = 0x1000;
   
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
+  //ptrHeadersArray points to the first header
+  currInst->model->ptrHeadersArray->flags |= 2;
   
   // ======= Next One ===========
   
@@ -73,20 +74,23 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   // instance flags
   currInst->flags |= 0x2040000;
       
+  mh = currInst->model->ptrHeadersArray;
+  
   // set flag to always point to camera
-  headers = currInst->model->headers;
-  headers[0].flags |= 2;
-  headers[1].flags |= 2;
+  for (i = 0; i < 2; i++)
+  {
+    mh[i].flags |= 2;
+  }
   
   // ======= End of Instance =========
   
-  for(int i = 0; /*i < 3*/; i++)
+  for(i = 0; /*i < 3*/; i++)
   {
 	currInst = (struct Instance*)burst[i];
 
-	currInst->matrix.t[0] = weaponInst->matrix.t[0];
-	currInst->matrix.t[1] = weaponInst->matrix.t[1] + -0x30;
-	currInst->matrix.t[2] = weaponInst->matrix.t[2];
+	currInst->matrix.t.x = weaponInst->matrix.t.x;
+	currInst->matrix.t.y = weaponInst->matrix.t.y + -0x30;
+	currInst->matrix.t.z = weaponInst->matrix.t.z;
 	
 	// if more than two screens
 	if (2 < gGT->numPlyrCurrGame) 
@@ -126,9 +130,9 @@ void DECOMP_RB_Burst_Init(struct Instance* weaponInst)
   struct ScratchpadStruct* sps = (struct ScratchpadStruct*)0x1f800108;
 
   // put weapon position on scratchpad
-  sps->Input1.pos[0] = weaponInst->matrix.t[0];
-  sps->Input1.pos[1] = weaponInst->matrix.t[1];
-  sps->Input1.pos[2] = weaponInst->matrix.t[2];
+  sps->Input1.pos[0] = weaponInst->matrix.t.x;
+  sps->Input1.pos[1] = weaponInst->matrix.t.y;
+  sps->Input1.pos[2] = weaponInst->matrix.t.z;
   
   struct TrackerWeapon* tw = 
 	weaponInst->thread->object;

@@ -8,7 +8,7 @@ void DECOMP_Particle_FuncPtr_SpitTire(struct Particle *p)
   // Wait until tires are 0x10 units above
   // the ground, which is where the plant
   // actually "spits" tires from the mouth
-  iVar2 = p->plantInst->matrix.t[1] + 0x10;
+  iVar2 = p->plantInst->matrix.t.y + 0x10;
   
   if ((p->axis[1].startVal >> 8) >= iVar2)
   {

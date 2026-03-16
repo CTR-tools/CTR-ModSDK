@@ -10,6 +10,7 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   struct Driver* d;
   struct RainCloud* rcloud;
   struct Instance* dInst;
+  unsigned char i;
   
   struct GameTracker* gGT = sdata->gGT;
   
@@ -40,8 +41,8 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
     inst->animFrame = 0;
   }
   
-  // X, Y, Z
-  for(int i = 0; i < 3; i++)
+  // scale X, Y, Z
+  for(i = 0; i < 3; i++)
   {
 	// get average between instance and driver
 	inst->scale[i] += dInst->scale[i];
@@ -49,15 +50,16 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   }
   
   // offset upward before averaging
-  inst->matrix.t[1] += (inst->scale[1] * 5 >> 7);
+  inst->matrix.t.y += (inst->scale[1] * 5 >> 7);
   
-  // X, Y, Z
-  for(int i = 0; i < 3; i++)
+  // pos X, Y, Z
+  for(i = 0; i < 3; i++)
   {
 	// get average between instance and driver
-	inst->matrix.t[i] += dInst->matrix.t[i];
-	inst->matrix.t[i] = inst->matrix.t[i] >> 1;
+	inst->matrix.t.v[i] = (dInst->matrix.t.v[i] + inst->matrix.t.v[i]) >> 1;
   }
+
+ 
   
   // if driver is not using mask weapon
   if ((d->actionsFlagSet & 0x800000) == 0) 
@@ -122,6 +124,7 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
   // or timeMS is over
   rcloud->timeMS = 0;
   d->thCloud = NULL;
+  
   
   ThTick_SetAndExec(t,DECOMP_RB_RainCloud_FadeAway);
   return;

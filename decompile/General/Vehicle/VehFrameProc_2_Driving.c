@@ -115,7 +115,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         {
             short burnTimer = d->burnTimer;
             // not currently burned or just start burning
-            if ((burnTimer == 0) || (479 < burnTimer))
+            if ((burnTimer == 0) || (burnTimer > MILLISECONDS(499)))
             {
                 // negative turning stat while braking
                 iVar9 = -0x40;

@@ -286,9 +286,9 @@ void DECOMP_RB_ShieldDark_ThTick_Grow(struct Thread *th)
   *(int*)&bombInst->matrix.m[1][1] = *(int*)&shieldInst->matrix.m[1][1];
   *(int*)&bombInst->matrix.m[2][0] = *(int*)&shieldInst->matrix.m[2][0];
   bombInst->matrix.m[2][2] = shieldInst->matrix.m[2][2];
-  bombInst->matrix.t[0] = shieldInst->matrix.t[0];
-  bombInst->matrix.t[1] = shieldInst->matrix.t[1];
-  bombInst->matrix.t[2] = shieldInst->matrix.t[2];
+  bombInst->matrix.t.x = shieldInst->matrix.t.x;
+  bombInst->matrix.t.y = shieldInst->matrix.t.y;
+  bombInst->matrix.t.z = shieldInst->matrix.t.z;
 
   // set scale (x, y, z) and transparency
   bombInst->scale[0] = 0x400;

@@ -18,7 +18,7 @@ void DECOMP_UI_DrawPosSuffix(short posX, short posY, struct Driver *d, short fla
 
   // setting posZ changes which number draws
   if (d->instBigNum != 0)
-	d->instBigNum->matrix.t[2] = (d->driverRank + 0x100);
+	d->instBigNum->matrix.t.z = (d->driverRank + 0x100);
   
   return;
 }

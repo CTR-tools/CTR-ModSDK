@@ -149,19 +149,19 @@ PlayChewSound:
 					
 					particle->axis[0].startVal +=
 					(
-						plantInst->matrix.t[0] +
+						plantInst->matrix.t.x +
 						(plantInst->matrix.m[0][2] * 9 >> 7) 
 					) * 0x100;
 						
 					particle->axis[1].startVal +=
 					(
-						plantInst->matrix.t[1] 
+						plantInst->matrix.t.y 
 						+ 0x20
 					) * 0x100;
 						
 					particle->axis[2].startVal +=
 					(
-						plantInst->matrix.t[2] +
+						plantInst->matrix.t.z +
 						(plantInst->matrix.m[2][2] * 9 >> 7) 
 					) * 0x100;
 						
@@ -344,7 +344,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 			0;
 		#else
 			// attempt to harm driver (eat)
-			DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
+			DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_EATEN,0,HIT_NO_REASON);
 		#endif
 		
 		if(didHit != 0)
@@ -381,7 +381,7 @@ EatDriver:
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		#ifndef REBUILD_PS1
-		DECOMP_RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_EATEN,0,HIT_NO_REASON);
 		#endif
 		
 		plantObj->boolEatingPlayer = 0;

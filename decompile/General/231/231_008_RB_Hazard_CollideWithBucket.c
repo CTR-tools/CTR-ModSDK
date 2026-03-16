@@ -31,7 +31,8 @@ struct Instance* DECOMP_RB_Hazard_CollideWithBucket(
 		
 		for(i = 0; i < 3; i++)
 		{
-			distComponent = threadInst->matrix.t[i] - weaponInst->matrix.t[i];
+			
+			distComponent = threadInst->matrix.t.v[i] - weaponInst->matrix.t.v[i];
 			distComponent *= distComponent;
 			distCheck += distComponent;
 		}

@@ -37,7 +37,7 @@ VictimLaugh:
 			
 		shieldObj->flags |= 1;
 		
-		victimDriver->invincibleTimer = 0x2a0;
+		victimDriver->invincibleTimer = MILLISECONDS(700);
 		
 		victimDriver->instBubbleHold = 0;
 		
@@ -46,16 +46,16 @@ VictimLaugh:
 	
 	voice = 0;
 	
-	if(damageType == 0)
+	if(damageType == HURT_SKIP_DAMAGE)
 		return 1;
 	
 	// spinning
-	else if(damageType == 1)
+	else if(damageType == HURT_SPINNING)
 	{
 		// 1.0s
-		victimDriver->NoInputTimer = 0x3c0;
+		victimDriver->NoInputTimer = SECONDS(1);
 		
-		if(victimState != 3)
+		if(victimState != KS_SPINNING)
 		{
 SPINOUT:
 			victimDriver->funcPtrs[0] = DECOMP_VehPhysProc_SpinFirst_Init;	
@@ -63,7 +63,7 @@ SPINOUT:
 	}
 	
 	// blasted
-	else if(damageType == 2)
+	else if(damageType == HURT_BLASTED)
 	{
 		// quit if already blasted
 		if(victimState == KS_BLASTED)
@@ -75,8 +75,8 @@ SPINOUT:
 		
 		victimDriver->funcPtrs[0] = DECOMP_VehStuckProc_Tumble_Init;
 		
-		// 2.4s
-		victimDriver->NoInputTimer = 0x960;
+	
+		victimDriver->NoInputTimer = SECONDS(2) + MILLISECONDS(500);
 		
 		victimDriver->squishTimer = 0;
 		
@@ -84,7 +84,7 @@ SPINOUT:
 	}
 	
 	// squished
-	else if(damageType == 3)
+	else if(damageType == HURT_SQUISHED)
 	{
 		if(victimState != KS_SPINNING)
 		{
@@ -98,15 +98,15 @@ SPINOUT:
 		}
 		
 		// 0.25s
-		victimDriver->NoInputTimer = 0xf0;
+		victimDriver->NoInputTimer = MILLISECONDS(250);
 		
-		victimDriver->squishTimer = 0xf00;
+		victimDriver->squishTimer = SECONDS(4);
 		
 		goto SPINOUT;
 	}
 	
 	// burned
-	else if(damageType == 4)
+	else if(damageType == HURT_BURNED)
 	{
 		if(victimDriver->burnTimer == 0)
 		{
@@ -116,18 +116,19 @@ SPINOUT:
 		}
 		
 		// 2.0s
-		victimDriver->NoInputTimer = 0x780;
+		victimDriver->NoInputTimer = SECONDS(2);
 		
-		victimDriver->burnTimer = 0xf00;
+		victimDriver->burnTimer = SECONDS(4);
 		
 		goto SPINOUT;
 	}
 	
 	// mask grab
-	else //if(damageType == 5)
+	//eaten by piranha plant.
+	else //if(damageType == HURT_EATEN)
 	{
 		// 3.36s
-		victimDriver->NoInputTimer = 0xd20;
+		victimDriver->NoInputTimer = SECONDS(3) + MILLISECONDS(500);
 		
 		victimDriver->funcPtrs[0] = VehStuckProc_PlantEaten_Init;
 		
@@ -142,12 +143,12 @@ SPINOUT:
 	switch(reason)
 	{
 		// hit by bomb
-		case 1:
+		case HIT_BY_BOMB:
 			victimDriver->numTimesBombHitYou++;
 			break;
 			
 		// hit by motionless potion
-		case 2:
+		case HIT_BY_STATIC_POTION:
 			victimDriver->numTimesMotionlessPotionHitYou++;
 			break;
 		
@@ -155,35 +156,35 @@ SPINOUT:
 			break;
 	}
 	
-	if(attackDriver != 0)
+	if(attackDriver != NULL)
 		if(attackDriver != victimDriver)
 			switch(reason)
 			{
-				// hit by bomb
-				case 1:
+				
+				case HIT_BY_BOMB:
 					attackDriver->numTimesBombsHitSomeone++;
 					attackDriver->quip4 |= 1;
 					break;
 				
-				// hit by missile
-				case 3:
+				
+				case HIT_BY_MISSILE:
 					attackDriver->numTimesMissileHitSomeone++;
 					attackDriver->quip4 |= 2;
 					break;
 					
-				// hit by moving potion
-				case 4:
+				
+				case HIT_BY_MOVING_POTION:
 					attackDriver->numTimesMovingPotionHitSomeone++;
 					attackDriver->quip4 |= 4;
 					break;
 				
-				// squished by turbo
-				case 5:
+				
+				case HIT_SQUISHED_BY_TURBO:
 					attackDriver->numTimesSquishedSomeone++;
 					break;
 				
-				// hit by mask weapon
-				case 6:
+				
+				case HIT_BY_MASK:
 					attackDriver->quip4 |= 8;
 					break;
 					
@@ -200,7 +201,7 @@ SPINOUT:
 	GAMEPAD_ShockFreq(victimDriver, 8, 0);
 	GAMEPAD_ShockForce1(victimDriver, 8, 0x7f);
 	
-	int gameMode1 = sdata->gGT->gameMode1;
+	unsigned int gameMode1 = sdata->gGT->gameMode1;
 	
 	if(
 		(attackDriver != 0) &&

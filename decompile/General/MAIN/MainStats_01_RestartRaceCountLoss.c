@@ -6,7 +6,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   int index;
   char* countPtr;
   
-  int gameMode1;
+  unsigned int gameMode1;
   struct GameTracker* gGT;
 
   gGT = sdata->gGT;
@@ -40,8 +40,15 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   gGT->numPlayersWith3Missiles = 0;
 
   // only count if inside Adv Mode, but not Cup/Relic
-  if ((gameMode1 & (ADVENTURE_MODE | RELIC_RACE | ADVENTURE_CUP)) != ADVENTURE_MODE)
+  if (
+  
+    ((gameMode1 & ADVENTURE_MODE) != 0) &&
+    ((gameMode1 & (RELIC_RACE | ADVENTURE_CUP)) == 0)
+    
+     )
+  {  
     return;
+  }
 
   // only count loss if you rage-quit on lap 3
   if (gGT->drivers[0]->lapIndex != 2) {
@@ -53,7 +60,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   countPtr = &sdata->advProgress.timesLostRacePerLev[0];
 
   // if you're in boss mode
-  if (gameMode1 < 0)
+  if ((gameMode1 & ADVENTURE_BOSS) != 0)
   {
 	// in boss
     index = gGT->bossID;

@@ -92,10 +92,10 @@ void highLOD_DriverMPK(int numDrivers)
 }
 #endif
 
-void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
+void DECOMP_LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD)
 {
 	int i;
-	int gameMode1;
+	unsigned int gameMode1;
 		
 #ifdef USE_ONLINE
 	goto ForceOnlineLoad8;
@@ -107,7 +107,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 	int lastFileIndexMPK;
 
 	// 3P/4P
-	if(levelLOD - 3U < 2)
+	if(
+		(levelLOD == LOD_LOW_3P)  || (levelLOD == LOD_LOW_4P)		
+	  )
 	{
 		#ifdef USE_DRIVERLOD
 		highLOD_DriverMPK(levelLOD);
@@ -133,7 +135,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 		// high lod model (temporary workaround)
 		DECOMP_LOAD_AppendQueue(
 			0, LT_GETADDR,
-			BI_RACERMODELHI + 0xF,
+			BI_RACERMODELHI + NITROS_OXIDE,
 			&data.driverModelExtras[0],cbDRAM);
 			
 		lastFileIndexMPK = BI_ADVENTUREPACK + data.characterIDs[0];
@@ -219,7 +221,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD)
 
 	// any 1P mode,
 	// not adv, not time trial, not gem cup, not credits
-	else if(levelLOD == 1)
+	else if(levelLOD == LOD_HI)
 	{
 ForceOnlineLoad8:
 		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
@@ -233,7 +235,7 @@ ForceOnlineLoad8:
 		lastFileIndexMPK = BI_1PARCADEPACK + data.characterIDs[0];
 	}
 
-	//else if(levelLOD == 2)
+	//else if(levelLOD == LOD_MED)
 	else
 	{
 		#ifdef USE_DRIVERLOD

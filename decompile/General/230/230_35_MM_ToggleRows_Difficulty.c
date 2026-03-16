@@ -2,52 +2,50 @@
 
 void DECOMP_MM_ToggleRows_Difficulty(void)
 {
-  char bVar1;
+  char boolLocked;
   struct GameTracker* gGT;
-  int iVar3;
   short bitIndex;
-  u_short uVar5;
-  u_int uVar6;
-  int iVar7;
+  u_short menuStringIndex;
+  u_int check_progress;
+  unsigned char i;
   
   gGT = sdata->gGT;
-  iVar3 = 0;
   
   // check 3 mods (easy, medium, hard)
-  for (iVar7 = 0; iVar7 < 3; iVar7++) 
+  for (i = 0; i < 3; i++) 
   {
-    bitIndex = D230.cupDifficultyUnlockFlags[iVar7];
+    bitIndex = D230.cupDifficultyUnlockFlags[i];
     
 	// if -1 (for EASY row), skip
-	if (-1 == bitIndex) continue; 
+	if (bitIndex == -1) continue; 
 	
 	// assume unlocked
-    uVar6 = 1;
+    check_progress = 1;
 	
 	// check 4 bits starting at bitIndex,
 	// one for each track in cup
-    for(iVar3 = 0; iVar3 < 4; iVar3++) 
+    for(unsigned char j = 0; j < 4; j++) 
 	{
-      bVar1 = (uVar6 != 0);
-      uVar6 = 0;
+      boolLocked = (check_progress != 0);
+      check_progress = 0;
       
 	  // if not determined locked
-	  if (bVar1) 
+	  if (boolLocked) 
 	  {
-	  	uVar6 = (int)bitIndex + iVar3;
+	  	check_progress = (int)bitIndex + j;
 	  
 		// check what is unlocked
-	  	uVar6 = sdata->gameProgress.unlocks[uVar6 >> 5] >> uVar6 & 1;
+	  	check_progress = sdata->gameProgress.unlocks[check_progress >> 5] >> check_progress & 1;
 	  }
 	}
 	
 	// get current value of lng index,
 	// for easy, medium, hard
-    uVar5 = D230.cupDifficultyLngIndex[iVar7];
+    menuStringIndex = D230.cupDifficultyLngIndex[i];
 	  
     if (
 		// if locked
-		(uVar6 == 0) && 
+		(check_progress == 0) && 
 
 // dont bother checking Arcade,
 // waste of instructions
@@ -57,15 +55,17 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
 #endif
 
 		// if you are in Arcade or VS cup
-		((gGT->gameMode2 & 0x10) != 0)
+		((gGT->gameMode2 & CUP_ANY_KIND) != 0)
 	  ) 
 	{
-	// use high bits for "LOCKED"
-      uVar5 = uVar5 | 0x8000;
+	// set locked string flag (disables selection) --TODO: enum
+      menuStringIndex |= 0x8000;
     }
 	
 	// save new value
-    D230.rowsDifficulty[iVar7].stringIndex = uVar5;
+    D230.rowsDifficulty[i].stringIndex = menuStringIndex;
   }
+  
+  return;
 }
  

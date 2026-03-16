@@ -41,7 +41,8 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
         currThread->funcThTick = DECOMP_RB_MaskWeapon_ThTick;
 
         maskObj = currThread->object;
-        maskObj->duration = (driver->numWumpas < 10) ? 0x2d00 : 0x1e00;
+		//for some reason this is flipped
+        maskObj->duration = (driver->numWumpas < 10) ? SECONDS(12) : SECONDS(8);
 
         if (
 				#ifdef USE_ONLINE
@@ -137,11 +138,11 @@ struct MaskHeadWeapon* DECOMP_VehPickupItem_MaskUseWeapon(struct Driver *driver,
     t->flags |= 0x1000;                   // disable collision
     instance->flags |= 0x80;              // make mask head invisible
     maskObj->maskBeamInst->flags |= 0x80; // make mask beam invisible
-    maskObj->duration = (driver->numWumpas > 9) ? 0x2d00 : 0x1e00;
-    maskObj->rot[0] = 0x40;  // rotX
-    maskObj->rot[1] = 0;     // rotY
-    maskObj->rot[2] = 0;     // rotZ
-    maskObj->scale = 0x1000; // scale
+    maskObj->duration = (driver->numWumpas > 9) ? SECONDS(12) : SECONDS(8);
+    maskObj->rot.x = 0x40;  // rotX
+    maskObj->rot.y = 0;     // rotY
+    maskObj->rot.z = 0;     // rotZ
+    maskObj->scale = FP(1); // scale
 
     return maskObj;
 }

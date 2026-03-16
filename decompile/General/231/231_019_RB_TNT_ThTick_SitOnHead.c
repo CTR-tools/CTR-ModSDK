@@ -139,10 +139,10 @@ LAB_800ad5f8:
   {
 	// Blow up
 	
-	DECOMP_RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
+	DECOMP_RB_Hazard_HurtDriver(mw->driverTarget,HURT_BLASTED,mw->instParent->thread->object,HIT_NO_REASON);
     
 	// icon damage timer, draw icon as red
-	mw->driverTarget->damageColorTimer = 0x1e;
+	mw->driverTarget->damageColorTimer = MILLISECONDS(32);
 	
 	// play 3D sound for TNT explosion
     PlaySound3D(0x3d,inst);

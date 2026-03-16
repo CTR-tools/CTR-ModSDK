@@ -34,9 +34,9 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     iVar6 = 0;
 
     // if game is not loading
-    if (sdata->Loading.stage == -1)
+    if (sdata->Loading.stage == LOADING_IDLE)
     {
-        if (-1000 < (int)sdata->RaceFlag_Transition)
+        if ((int)sdata->RaceFlag_Transition > -1000)
         {
             sdata->RaceFlag_Transition -= FPS_HALF(0x28);
         }
@@ -141,7 +141,14 @@ void DECOMP_RaceFlag_DrawLoadingString(void)
     {
 
         sdata->RaceFlag_LoadingTextAnimFrame = -1;
-        if ((u_int)(sdata->Loading.stage - 6U) < 2)
+        
+        
+        if (
+        
+            (sdata->Loading.stage == LOADING_LEVFILE) || 
+            (sdata->Loading.stage == LOADING_STORE_LEV_DATA)
+            
+           )
         {
             sdata->RaceFlag_LoadingTextAnimFrame = 0;
         }

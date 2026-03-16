@@ -13,11 +13,11 @@ struct Instance* DECOMP_LinkedCollide_Hitbox(struct HitboxDesc* objBoxDesc) {
   {
     thInst = thBucket->inst;
 
-    thInstPos.vx = thInst->matrix.t[0];
-    thInstPos.vy = thInst->matrix.t[1];
-    thInstPos.vz = thInst->matrix.t[2];
+    thInstPos.vx = thInst->matrix.t.x;
+    thInstPos.vy = thInst->matrix.t.y;
+    thInstPos.vz = thInst->matrix.t.z;
 
-    diff_y = thInst->matrix.t[1] - objBoxDesc->inst->matrix.t[1] ;
+    diff_y = thInst->matrix.t.y - objBoxDesc->inst->matrix.t.y ;
 
 	#ifndef REBUILD_PS1
     MATH_HitboxMatrix(&thInstMatrix, &objBoxDesc->inst->matrix);

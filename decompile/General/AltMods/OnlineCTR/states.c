@@ -290,7 +290,7 @@ void StatePS1_Lobby_StartLoading()
 	}
 
 	// instant load
-	//sdata->Loading.stage = 0;
+	//sdata->Loading.stage = LOADING_INIT;
 
 	// load with flag animation
 	DECOMP_MainRaceTrack_RequestLoad(octr->levelID);
@@ -367,7 +367,7 @@ void StatePS1_Game_WaitForRace()
 		initRace = false;
 	}
 
-	gGT->trafficLightsTimer = 0xf40;
+	gGT->trafficLightsTimer = SECONDS(4) + MILLISECONDS(67); //0xf40
 	int rn = octr->serverRoom;
 	if (!ROOM_IS_ITEMS(rn)) //itemless only
 		Ghostify();

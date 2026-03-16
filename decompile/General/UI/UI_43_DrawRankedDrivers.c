@@ -120,7 +120,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
       iVar14 = 4;
 
       // If you're in a Boss Race
-      if (gGT->gameMode1 < 0)
+      if ((gGT->gameMode1 & ADVENTURE_BOSS)!= 0)
 	  {
         // Show 2 racers
         iVar14 = 2;
@@ -416,9 +416,9 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	if (iVar4 < 0) continue;
 
 	  	int pos[4];
-	  	pos[0] = warpballInst->matrix.t[0];
-	  	pos[1] = warpballInst->matrix.t[1];
-	  	pos[2] = warpballInst->matrix.t[2];
+	  	pos[0] = warpballInst->matrix.t.x;
+	  	pos[1] = warpballInst->matrix.t.y;
+	  	pos[2] = warpballInst->matrix.t.z;
 
 	  	struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
 	  	struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];

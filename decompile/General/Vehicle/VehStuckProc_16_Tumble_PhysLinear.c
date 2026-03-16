@@ -9,7 +9,7 @@ void DECOMP_VehStuckProc_Tumble_PhysLinear(struct Thread* thread, struct Driver*
 
 	DECOMP_VehPhysProc_Driving_PhysLinear(thread, driver);
 
-	driver->jump_ForcedMS = 0x60;
+	driver->jump_ForcedMS = MILLISECONDS(100);
 	driver->baseSpeed = 0;
 	driver->fireSpeed = 0;
 	driver->actionsFlagSet |= 0x5808;

@@ -1,9 +1,9 @@
 #include <common.h>
 
-void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
+void DECOMP_UI_Map_DrawTracking(struct Map* ptrMap,struct Thread* bucket)
 
 {
-  int uVar1;
+  unsigned char iconColor;
   struct Instance* inst;
   struct Driver* d;
 
@@ -22,25 +22,27 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
 	
 	// draw warpball
 	DECOMP_UI_Map_DrawRawIcon(
-		ptrMap,(int*)&inst->matrix.t[0],
+		ptrMap,&inst->matrix.t,
 		0x20,0,0,0x1000);
 	
+	struct TrackerWeapon* tracker = (struct TrackerWeapon*)bucket->object;
+	
 	// driver target
-	d = ((struct TrackerWeapon*)bucket->object)->driverTarget;
+	d = (struct Driver*)tracker->driverTarget;
 	
 	// check if target exists
-	if(d == 0) continue;
+	if(d == NULL) continue;
 	
     // == only draw target if target exists ==
 	
 	// flicker
-    uVar1 = 4;
+    iconColor = 4;
     if ((sdata->gGT->timer & 1) != 0)
-      uVar1 = 3;
+      iconColor = 3;
       
     DECOMP_UI_Map_DrawRawIcon(
-	  ptrMap,(int*)&d->instSelf->matrix.t[0],
-	  0x21,uVar1,0,0x1000);
+	  ptrMap,&d->instSelf->matrix.t,
+	  0x21,iconColor,0,0x1000);
   }
   return;
 }

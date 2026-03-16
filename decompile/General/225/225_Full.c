@@ -27,6 +27,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   struct Instance *bigNum;
   struct PushBuffer* view;
   struct RectMenu *endMenu;
+  struct ScratchpadString* scpt;
   char numPlyr;
   short pos[2];
   RECT box;
@@ -65,6 +66,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
   VsConfigIndex = numPlyr-2;
+  scpt = (struct ScratchpadString*)0x1f800000;
 
   if (sdata->framesSinceRaceEnded < FPS_DOUBLE(0xf0))
   {
@@ -75,8 +77,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   iVar10 = 0x50;
 
   short yCoord;
-  // if you are not in battle mode
-  if ((gGT->gameMode1 & 0x20) == 0)
+  
+  if ((gGT->gameMode1 & BATTLE_MODE) == 0)
   {
     // lng index for VERSUS
     iVar10 = 0x14f;
@@ -178,7 +180,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       sVar9 = 0;
 
       // If you are not in battle mode
-      if ((gGT->gameMode1 & 0x20) == 0)
+      if ((gGT->gameMode1 & BATTLE_MODE) == 0)
       {
         uStack112 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + uStack88];
 
@@ -237,12 +239,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         sVar1 = uStack96 - 1;
       }
       iVar6 = sVar1;
-      if (0 < iVar6)
+      if (iVar6 > 0)
       {
         for (iVar10 = 0; iVar10 < iVar6; iVar10++)
         {
           // If you are not in Battle Mode
-          if ((gGT->gameMode1 & 0x20) == 0)
+          if ((gGT->gameMode1 & BATTLE_MODE) == 0)
           {
             // get position player finished in race
             iVar2 = gGT->drivers[gGT->battleSetup.unk1dc8[iVar11]]->driverRank;
@@ -264,15 +266,15 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           }
 
           iVar2 = iVar10 + 1;
-
+          
+          
           // string for each player rank and count from standings (0x1e80)
-          sprintf((char*)0x1f800000, "%d%s-%2.02ld", iVar2, //todo: replace 0x1f800000 with reference to scratchpad
+          sprintf(scpt->str, "%d%s-%2.02ld", iVar2, 
                   sdata->lngStrings[0x19+iVar10],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar11] * 3 + iVar10]));
 
           // Draw string
-		  //todo: replace 0x1f800000 with reference to scratchpad
-          DecalFont_DrawLine((char*)0x1f800000, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
+          DecalFont_DrawLine(scpt->str, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
         }
       }
 
@@ -294,12 +296,11 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack48 = iStack48 + FPS_DOUBLE(5);
 
 	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
-	  //todo: replace 0x1f800000 with reference to scratchpad
-      sprintf((char*)0x1f800000, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
+	 
+      sprintf(scpt->str, "%d%s", sVar1 + 1, sdata->lngStrings[0x19+sVar1]);
 
       // Draw String
-	  //todo: replace 0x1f800000 with reference to scratchpad
-      DecalFont_DrawLine((char*)0x1f800000, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
+      DecalFont_DrawLine(scpt->str, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
     }
   }
 
@@ -322,7 +323,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     if (sStack104 == 0)
     {
       // if this is not battle mode, get first place racer, else get battle winner
-      uVar3 = ((gGT->gameMode1 & 0x20) == 0) ? gGT->driversInRaceOrder[0]->driverID : gGT->winnerIndex[0];
+      uVar3 = ((gGT->gameMode1 & BATTLE_MODE) == 0) ? gGT->driversInRaceOrder[0]->driverID : gGT->winnerIndex[0];
 
       if (uVar3 != plCount)
         goto LAB_8009ff4c;
@@ -407,7 +408,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   if (((sdata->menuReadyToPass & 1) == 0) && (FPS_DOUBLE(25) < sdata->framesSinceRaceEnded))
   {
     // if you're in battle mode.
-    endMenu = ((gGT->gameMode1 & 0x20) == 0) ? &menuVS : &menuBattle;
+    endMenu = ((gGT->gameMode1 & BATTLE_MODE) == 0) ? &menuVS : &menuBattle;
 
     // Make Menu Box appear based on the game mode
     RECTMENU_Show(endMenu);

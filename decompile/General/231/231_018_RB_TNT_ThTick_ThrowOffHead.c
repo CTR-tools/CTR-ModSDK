@@ -13,12 +13,12 @@ void DECOMP_RB_TNT_ThTick_ThrowOffHead(struct Thread* t)
   mw = t->object;
   
   // do NOT use parenthesis
-  inst->matrix.t[1] += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
+  inst->matrix.t.y += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
 
   if (mw->stopFallAtY == 0x3fff) 
-    mw->stopFallAtY = mw->driverTarget->instSelf->matrix.t[1];
+    mw->stopFallAtY = mw->driverTarget->instSelf->matrix.t.y;
   
-  if (inst->matrix.t[1] <= mw->stopFallAtY)
+  if (inst->matrix.t.y <= mw->stopFallAtY)
   {	  
     // plays tnt explosion sound 3D
     PlaySound3D(0x3d,inst);

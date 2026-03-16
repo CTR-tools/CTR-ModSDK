@@ -34,6 +34,28 @@ enum KartState
 	KS_FREEZE=11
 };
 
+//RB_Hazard_HurtDriver 2nd parameter
+enum DamageType
+{
+	HURT_SKIP_DAMAGE = 0,
+	HURT_SPINNING,
+	HURT_BLASTED,
+	HURT_SQUISHED,
+	HURT_BURNED,
+	HURT_EATEN
+};
+
+enum DamageReason
+{
+	HIT_NO_REASON = 0,
+	HIT_BY_BOMB,
+	HIT_BY_STATIC_POTION,
+	HIT_BY_MISSILE,
+	HIT_BY_MOVING_POTION,
+	HIT_SQUISHED_BY_TURBO,
+	HIT_BY_MASK	
+};
+
 enum PhysType
 {
 	// MetaPhys[0]

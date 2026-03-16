@@ -18,7 +18,7 @@ void DECOMP_MainFreeze_IfPressStart(void)
 		(gGT->boolDemoMode == 0) &&
 		((u_int)(gGT->levelID - OXIDE_ENDING) > 1) &&
 		(sdata->load_inProgress == 0) &&
-		((gGT->gameMode2 & 4) == 0)
+		((gGT->gameMode2 & VEH_FREEZE_PODIUM) == 0)
 	   )
     {
         // pause the game

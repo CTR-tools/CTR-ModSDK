@@ -1,3 +1,49 @@
+#define MASK_HINT_PROGRESS 0x76
+
+enum ADV_PRIZES
+{
+	PRIZE_TROPHY_RACE = 6,
+	PRIZE_BOSS_KEY = 0x5e,
+	PRIZE_TOKEN_RACE = 0x4c,
+	PRIZE_RELIC_RACE = 0x16,
+	PRIZE_CRYSTAL_CH = 0x6f,
+	PRIZE_GEM_CUP = 0x6a
+};
+
+//PRIZE_RELIC_RACE + RELIC_TYPE
+enum RELIC_PRIZES
+{
+	PRIZE_SAPPHIRE = 0,
+	PRIZE_GOLD = 0x12,
+	PRIZE_PLATINUM = 0x24
+};
+
+
+//gGT->bossID
+enum BOSS_IDS
+{
+	BOSS_ROO = 0,
+	BOSS_PAPU,
+	BOSS_KOMODO,
+	BOSS_PINSTRIPE,
+	BOSS_OXIDE,
+	BOSS_OXIDEFINAL
+};
+
+enum WARPPAD_TYPE
+{
+	WARPPAD_LOCKED = 0,
+	WARPPAD_TROPHY,
+	WARPPAD_EMPTY,
+	WARPPAD_TOKEN,
+	WARPPAD_RELIC = 3,
+	WARPPAD_CRYSTALCH,
+    WARPPAD_GEMSTONE_ACTIVE = 4	
+};
+
+
+
+
 
 struct MaskHint
 {
@@ -41,7 +87,7 @@ struct WoodDoor
 	struct Instance* keyInst[4];
 	
 	// 0x14 (5)
-	short doorRot[4];
+	SVec4 doorRot;
 	
 	// 0x1c (7)
 	short camFlags;
@@ -55,7 +101,7 @@ struct WoodDoor
 	short frameCount_doorOpenAnim;
 	
 	// 0x28 (10)
-	short keyRot[4];
+	SVec4 keyRot;
 	
 	// 0x30 (12)
 	short keyOrbit;
@@ -175,6 +221,29 @@ struct OverlayRDATA_232
 	short keyFrame[0xc];
 };
 
+struct HubItem
+{
+		// 0x0
+		SVec2 pos;
+		
+		// 0x4
+		short angle;
+		
+		// 0x6
+		// 0x03: boss
+		// 0x04: warppad
+		// 0x64: saveload
+		// -1: (1 key) Arrow beach->gemstone
+		// -2: (0 key) Arrow gemstone->beach
+		// -3: (0 key) Arrow gemstone->ruins
+		// -4: (2 key) Arrow beach->glacier
+		// -5: (3 key) Arrow glacier->citadel
+		short iconType;
+		
+		// 0x8 -- size
+};
+	
+
 struct OverlayDATA_232
 {
 	// 800b4ddc (3*5 plus padding)
@@ -210,44 +279,23 @@ struct OverlayDATA_232
 	// 800b4ec0
 	short primOffsetXY_HubArrow[5*2];
 	
-	struct HubItem
-	{
-		// 0x0
-		short posX;
-		short posY;
-		
-		// 0x4
-		short angle;
-		
-		// 0x6
-		// 0x03: boss
-		// 0x04: warppad
-		// 0x64: saveload
-		// -1: (1 key) Arrow beach->gemstone
-		// -2: (0 key) Arrow gemstone->beach
-		// -3: (0 key) Arrow gemstone->ruins
-		// -4: (2 key) Arrow beach->glacier
-		// -5: (3 key) Arrow glacier->citadel
-		short iconType;
-		
-		// 0x8 -- size
-	}
+
 	// 800b4ed4
 	// 2 arrows, boss, save/load, null(0xFFFF)
-	hubItems_hub1[5],
+	struct HubItem hubItems_hub1[5];
 	// 800b4efc
-	hubItems_hub2[5],
+	struct HubItem hubItems_hub2[5];
 	// 800b4f24
-	hubItems_hub3[5],
+	struct HubItem hubItems_hub3[5];
 	// 800b4f4c (3 arrows)
-	hubItems_hub4[6],
+	struct HubItem hubItems_hub4[6];
 	// 800b4f7c (1 arrow)
-	hubItems_hub5[4];
+	struct HubItem hubItems_hub5[4];
 
 	// 800b4f9c -- array of pointers:
 	//		800b4ed4 800b4efc 800b4f24
 	//		800b4f4c 800b4f7c
-	short* hubItemsXY_ptrArray[5];
+	struct HubItem* hubItemsXY_ptrArray[5];
 	
 	// 800b4fb0
 	short hubArrowXY_Inner[2*3];
@@ -291,6 +339,7 @@ struct OverlayDATA_232
 		short type;
 	
 		short characterID_Boss;
+		
 	} advPausePages[7];
 	
 	// 0x800B5060
@@ -333,10 +382,10 @@ struct OverlayDATA_232
 	int fiveArrow_col2[3];
 	
 	// 0x800b51dc 
-	short maskPos[4];
+	SVec4 maskPos;
 	
 	// 0x800b51e4 
-	short maskRot[4];
+	SVec4 maskRot;
 	
 	// 0x800b51ec 
 	short maskScale;
@@ -345,10 +394,10 @@ struct OverlayDATA_232
 	short maskCooldown;
 	
 	// 0x800b51f0
-	short maskOffsetPos[4];
+	SVec4 maskOffsetPos;
 	
 	// 0x800b51f8
-	short maskOffsetRot[4];
+	SVec4 maskOffsetRot;
 	
 	// 0x800b5200
 	short maskVars[12];

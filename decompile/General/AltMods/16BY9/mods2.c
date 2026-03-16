@@ -8,8 +8,8 @@ void ui16by9_ViewProj(struct PushBuffer* pb)
 	// 750  / 1000 for 16x9
 	// 1000 / 1000 for 4x3
 
-	pb->matrix_ViewProj.t[0] =
-	pb->matrix_ViewProj.t[0] * 750 / 1000;
+	pb->matrix_ViewProjmatrix.t.x =
+	pb->matrix_ViewProjmatrix.t.x * 750 / 1000;
 
 	pb->matrix_ViewProj.m[0][0] =
 	pb->matrix_ViewProj.m[0][0] * 750 / 1000;

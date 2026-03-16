@@ -11,9 +11,9 @@ void RB_Fruit_GetScreenCoords(struct PushBuffer* pb, struct Instance* inst, shor
     gte_SetTransMatrix(m);
 	
 	// load input vector, each int casts to short
-	posWorld[0] = (short)inst->matrix.t[0];
-	posWorld[1] = (short)inst->matrix.t[1];
-	posWorld[2] = (short)inst->matrix.t[2];
+	posWorld[0] = (short)inst->matrix.t.x;
+	posWorld[1] = (short)inst->matrix.t.y;
+	posWorld[2] = (short)inst->matrix.t.z;
 	posWorld[3] = 0;
 	gte_ldv0(&posWorld[0]);
 

@@ -17,7 +17,7 @@ void Voiceline_StartPlay(struct Item *voiceLine)
         (
             // If you're in a Boss Race
             // 0x80000000
-            (sdata->gGT->gameMode1 < 0) &&
+            ((gGT->gameMode1 & ADVENTURE_BOSS) != 0) &&
             (*(u_short *)(voiceLine + 2) - 10 < 6)) &&
         ((
             // if character is 8,9, 10, 11

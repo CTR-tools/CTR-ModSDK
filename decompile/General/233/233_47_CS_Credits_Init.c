@@ -34,17 +34,17 @@ void CS_Credits_Init()
 	boolAllBlue = 1;
 	boolAllGold = 1;
 	
-	for(i = 0; i < 0x12; i++)
+	for(i = 0; i < 18; i++)
 	{
 		if (boolAllBlue != 0)
 		{
-			bitIndex = i + 0x16;
+			bitIndex = i + PRIZE_RELIC_RACE + PRIZE_SAPPHIRE;
 			boolAllBlue = CHECK_ADV_BIT(advProg->rewards, bitIndex);
 		}
 		
 		if (boolAllGold != 0)
 		{
-			bitIndex = i + 0x28;
+			bitIndex = i + PRIZE_RELIC_RACE + PRIZE_GOLD;
 			boolAllGold = CHECK_ADV_BIT(advProg->rewards, bitIndex);
 		}	
 	}

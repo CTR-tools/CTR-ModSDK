@@ -36,7 +36,7 @@ void DECOMP_AH_HintMenu_MenuProc(struct RectMenu* menu)
 	for(/**/; *ptrLngID > -1; ptrLngID++, i++)
 	{
 		int hintID = (ptrLngID[0] - 0x17b)/2;
-		int bitIndex = hintID + 0x76;
+		int bitIndex = hintID + MASK_HINT_PROGRESS;
 
 		if (CHECK_ADV_BIT(sdata->advProgress.rewards, bitIndex) != 0)
 		{

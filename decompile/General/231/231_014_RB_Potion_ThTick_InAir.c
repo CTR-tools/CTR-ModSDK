@@ -20,9 +20,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	mw = t->object;
 	
 	// adjust position, by velocity, do NOT use parenthesis
-	inst->matrix.t[0] += mw->velocity[0] * gGT->elapsedTimeMS >> 5;
-	inst->matrix.t[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
-	inst->matrix.t[2] += mw->velocity[2] * gGT->elapsedTimeMS >> 5;
+	inst->matrix.t.x += mw->velocity[0] * gGT->elapsedTimeMS >> 5;
+	inst->matrix.t.y += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
+	inst->matrix.t.z += mw->velocity[2] * gGT->elapsedTimeMS >> 5;
 	
 	// gravity, decrease velocity over time
 	mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);
@@ -36,13 +36,13 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	if(mw->cooldown < 0)
 		mw->cooldown = 0;
 	
-	posBottom[0] = inst->matrix.t[0];
-	posBottom[1] = inst->matrix.t[1] - 0x40;
-	posBottom[2] = inst->matrix.t[2];
+	posBottom[0] = inst->matrix.t.x;
+	posBottom[1] = inst->matrix.t.y - 0x40;
+	posBottom[2] = inst->matrix.t.z;
 	
-	posTop[0] = inst->matrix.t[0];
-	posTop[1] = inst->matrix.t[1] + 0x100;
-	posTop[2] = inst->matrix.t[2];
+	posTop[0] = inst->matrix.t.x;
+	posTop[1] = inst->matrix.t.y + 0x100;
+	posTop[2] = inst->matrix.t.z;
 
 	SPS->Union.QuadBlockColl.searchFlags = 0x41;
 	SPS->Union.QuadBlockColl.qbFlagsWanted = 0x1040;
@@ -74,7 +74,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			VehPhysForce_RotAxisAngle(&inst->matrix, &SPS->Set2.normalVec[0], 0);
 
 			iVar4 = SPS->Union.QuadBlockColl.hitPos[1];
-			iVar5 = inst->matrix.t[1];
+			iVar5 = inst->matrix.t.y;
 
 			if (iVar4 + 0x30 < iVar5) 
 				return;
@@ -83,7 +83,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			if (mw->cooldown == 0)
 			{
 				// set position to where quadblock was hit
-				inst->matrix.t[1] = iVar4;
+				inst->matrix.t.y = iVar4;
 	
 				mw->stopFallAtY = iVar4;
 				mw->cooldown = 0xf00;	// 3.84s
@@ -98,11 +98,11 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			
 			// if instance is under hitPos, move up
 			if (iVar5 <= iVar4) 
-				inst->matrix.t[1] = iVar4;
+				inst->matrix.t.y = iVar4;
 			
 			// if distance to move back to quadblock < velocity
-			if (mw->velocity[1] < (inst->matrix.t[1] - iVar5) + 0x28)
-				mw->velocity[1] = (inst->matrix.t[1] - iVar5) + 0x28;
+			if (mw->velocity[1] < (inst->matrix.t.y - iVar5) + 0x28)
+				mw->velocity[1] = (inst->matrix.t.y - iVar5) + 0x28;
 			
 			return;
 		}
@@ -111,9 +111,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		// check again with range [-0x900, 0x100]
 
 		// posBottom
-		posBottom[0] = inst->matrix.t[0];
-		posBottom[1] = inst->matrix.t[1] - 0x900;
-		posBottom[2] = inst->matrix.t[2];
+		posBottom[0] = inst->matrix.t.x;
+		posBottom[1] = inst->matrix.t.y - 0x900;
+		posBottom[2] = inst->matrix.t.z;
 
 		COLL_SearchBSP_CallbackQUADBLK((u_int*)&posBottom, (u_int*)&posTop, SPS, 0);
 

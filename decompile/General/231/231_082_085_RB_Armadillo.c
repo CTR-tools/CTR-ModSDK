@@ -106,8 +106,8 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	// 32ms, 30fps
 	armObj->timeRolling += FPS_HALF(0x20);
 	
-	armInst->matrix.t[0] += armObj->velX;
-	armInst->matrix.t[2] += armObj->velZ;
+	armInst->matrix.t.x += armObj->velX;
+	armInst->matrix.t.z += armObj->velZ;
 	
 	// if 1.333 seconds passed, (40 frames)
 	// could be >= if using accurate ms clock
@@ -170,8 +170,8 @@ void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
 	armObj->timeRolling = 0;
 	armObj->timeAtEdge = 0;
 	
-	armObj->spawnPosX = inst->matrix.t[0];
-	armObj->spawnPosZ = inst->matrix.t[2];
+	armObj->spawnPosX = inst->matrix.t.x;
+	armObj->spawnPosZ = inst->matrix.t.z;
 	
 	armObj->velX = inst->matrix.m[0][2] >> FPS_RIGHTSHIFT(7);
 	armObj->velZ = inst->matrix.m[2][2] >> FPS_RIGHTSHIFT(7);

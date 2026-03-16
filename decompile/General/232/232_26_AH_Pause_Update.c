@@ -51,7 +51,7 @@ void DECOMP_AH_Pause_Update()
 			*(int*)&inst->matrix.m[1][1] = 0x1000;
 			*(int*)&inst->matrix.m[2][0] = 0;
 			inst->matrix.m[2][2] = 0x1000;
-			inst->matrix.t[2] = 0x100;
+			inst->matrix.t.z = 0x100;
 		}
 	}
 	

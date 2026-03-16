@@ -14,35 +14,34 @@
 
 void DECOMP_PlayLevel_UpdateLapStats(void)
 {
-	u_char bVar1;
-	int iVar2;
+	int driverID_closestToFinish;
 	u_char lapCounter;
-	int iVar4;
+	short lapIndex;
+	short prevLapIndex;
 	struct Driver *firstRank;
 	struct Driver *currDriver;
 	int distToFinish_prev;
 	int distToFinish_curr;
 	int minDistance;
-	int iVar9;
-	int iVar10;
-	int iVar13;
+	char i;
+	int numDriversFinished;
 	int currRank;
 	struct GameTracker *gGT = sdata->gGT;
 
-	iVar9 = 0;
-	iVar13 = 0;
+	prevLapIndex = 0;
+	numDriversFinished = 0;
 	currRank = 0;
 	
 	// driver pointer,
 	// unlike other "rank" index variables
-	firstRank = 0;
+	firstRank = NULL;
 
 	// find farthest-ahead human
-	for (int iVar9 = 0; iVar9 < 8; iVar9++)
+	for (i= 0; i < 8; i++)
 	{
-		currDriver = gGT->driversInRaceOrder[iVar9];
+		currDriver = gGT->driversInRaceOrder[i];
 
-		if ((currDriver != 0) && ((currDriver->actionsFlagSet & 0x100000) == 0))
+		if ((currDriver != NULL) && ((currDriver->actionsFlagSet & 0x100000) == 0))
 		{
 			firstRank = currDriver;
 			break;
@@ -53,12 +52,12 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	firstRank = gGT->drivers[0];
 	#endif
 
-	for(iVar10 = 0; iVar10 < 8; iVar10++)
+	for(i = 0; i < 8; i++)
 	{
-		gGT->driversInRaceOrder[iVar10] = NULL;
+		gGT->driversInRaceOrder[i] = NULL;
 
 		// iVar6 = driver struct
-		currDriver = gGT->drivers[iVar10];
+		currDriver = gGT->drivers[i];
 
 		if (currDriver == NULL)
 			HANDLE_NULL_DRIVER;
@@ -110,7 +109,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			currDriver->distanceToFinish_checkpoint = distToFinish_curr;
 
 			#ifdef USE_ONLINE
-			if (iVar10 == 0)
+			if (i == 0)
 			{
 				int currLapSaveIndex = currDriver->lapIndex % 2;
 				currDriver->currLapTime = gGT->elapsedEventTime - currDriver->lapTime;
@@ -132,10 +131,8 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			{
 				#ifndef USE_ONLINE
 				if (
-						// If you're in Arcade, or
-						// If you're in Adventure, or
-						// If you're in Time Trial
-						((gGT->gameMode1 & 0x4a0000) != 0) &&
+		
+						((gGT->gameMode1 & (ARCADE_MODE | ADVENTURE_MODE | TIME_TRIAL)) != 0) &&
 
 						//player of any kind
 						(currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
@@ -178,7 +175,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 						#endif
 
 							// frames, so the animation lasts 3 seconds
-							sdata->finalLapTextTimer[iVar10] = FPS_DOUBLE(90);
+							sdata->finalLapTextTimer[i] = FPS_DOUBLE(90);
 					}
 				}
 			}
@@ -198,7 +195,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// === Run on first frame that race ends ===
 
 				// if total event hasn't finished (gGT->gameMode1)
-				if ((gGT->gameMode1 & 0x200000) == 0)
+				if ((gGT->gameMode1 & END_OF_RACE) == 0)
 				{
 					// set driver placement rank, based on
 					// how many drivers have finished the race
@@ -305,7 +302,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		if (currDriver->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
 		{
 			// count humans to finish race
-			iVar13 = iVar13 + 1;
+			numDriversFinished++;
 		}
 
 		// increase your rank in the race, someone passed you
@@ -327,51 +324,51 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 	for (currRank; currRank < 8; currRank++)
 	{
 		#ifdef USE_ONLINE
-		if(gGT->drivers[currRank] == 0)
+		if(gGT->drivers[currRank] == NULL)
 			numDead1++;
 		#endif
 
-		if(gGT->drivers[currRank] == 0)
+		if(gGT->drivers[currRank] == NULL)
 			HANDLE_NULL_DRIVER;
 
 		// set "min" distance to max
 		minDistance = 0x3fffffff;
 
 		// set "highest" lap to min
-		iVar2 = -1;
+		driverID_closestToFinish = -1;
 
 		// lap index
-		iVar9 = -10;
+		prevLapIndex = -10;
 
 		// look for "next" farthest driver,
 		// out of all unsorted drivers remaining
-		for (iVar10 = 0; iVar10 < 8; iVar10++)
+		for (i = 0; i < 8; i++)
 		{
 			// get current driver
-			currDriver = gGT->drivers[iVar10];
+			currDriver = gGT->drivers[i];
 
-			if(currDriver == 0)
+			if(currDriver == NULL)
 				HANDLE_NULL_DRIVER;
 
 			if(currDriver->driverRank != -1)
 				continue;
 
 			// driver lap index
-			iVar4 = currDriver->lapIndex;
+			lapIndex = currDriver->lapIndex;
 
 			// if drive backwards behind startline
 			if((currDriver->actionsFlagSet & 0x1000000) != 0)
-				iVar4 -= 1;
+				lapIndex -= 1;
 
 			if (
 					// new highest lap
-					(iVar4 > iVar9) ||
+					(lapIndex > prevLapIndex) ||
 
 					// OR
 
 					(
 						// same lap
-						(iVar9 == iVar4) &&
+						(prevLapIndex == lapIndex) &&
 
 						// AND
 
@@ -384,22 +381,22 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				minDistance = currDriver->distanceToFinish_curr;
 
 				// highest lap
-				iVar9 = iVar4;
+				prevLapIndex = lapIndex;
 
 				// index of driver closest to finish
-				iVar2 = iVar10;
+				driverID_closestToFinish = i;
 			}
 		}
 
-		if (iVar2 != -1)
+		if (driverID_closestToFinish != -1)
 		{
 			// If traffic lights run out
-			if (gGT->trafficLightsTimer < 1)
+			if (gGT->trafficLightsTimer <= SECONDS(0))
 			{
-				gGT->drivers[iVar2]->driverRank = currRank;
+				gGT->drivers[driverID_closestToFinish]->driverRank = currRank;
 
 				#ifdef USE_ONLINE
-				gGT->drivers[iVar2]->driverRank -= numDead1;
+				gGT->drivers[driverID_closestToFinish]->driverRank -= numDead1;
 				#endif
 			}
 
@@ -411,28 +408,28 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 				// This is broken, sometimes a hole will appear between
 				// the icons at the startline, if someone disconnects,
 				// nobody knows why, but screw it
-				gGT->drivers[iVar2]->driverRank = numSpawn;
-				gGT->humanPlayerPositions[iVar2-numDead1] = numSpawn;
+				gGT->drivers[driverID_closestToFinish]->driverRank = numSpawn;
+				gGT->humanPlayerPositions[driverID_closestToFinish-numDead1] = numSpawn;
 				numSpawn++;
 
 				#else
 
 				// set every driver position rank,
 				// to the order that they spawn on the starting line
-				gGT->drivers[iVar2]->driverRank = sdata->kartSpawnOrderArray[iVar2];
-				gGT->humanPlayerPositions[iVar2] = sdata->kartSpawnOrderArray[iVar2];
+				gGT->drivers[driverID_closestToFinish]->driverRank = sdata->kartSpawnOrderArray[driverID_closestToFinish];
+				gGT->humanPlayerPositions[driverID_closestToFinish] = sdata->kartSpawnOrderArray[driverID_closestToFinish];
 
 				#endif
 			}
 		}
 	}
 
-	for (iVar10 = 0; iVar10 < 8; iVar10++)
+	for (i = 0; i < 8; i++)
 	{
 		// get pointer to each player structure
-		currDriver = gGT->drivers[iVar10];
+		currDriver = gGT->drivers[i];
 
-		if(currDriver == 0)
+		if(currDriver == NULL)
 			HANDLE_NULL_DRIVER;
 
 		// should be impossible to be -1 here
@@ -442,10 +439,10 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		}
 	}
 
-	for (iVar10 = 0; iVar10 < gGT->numPlyrCurrGame; iVar10++)
+	for (i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		// pointer to each player structure
-		currDriver = gGT->drivers[iVar10];
+		currDriver = gGT->drivers[i];
 
 		if (currDriver == NULL)
 			HANDLE_NULL_DRIVER;
@@ -455,7 +452,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		if (
 				(-1 < currRank) &&
 				(0x4b00 < gGT->elapsedEventTime) &&
-				(gGT->humanPlayerPositions[iVar10] < currRank)
+				(gGT->humanPlayerPositions[i] < currRank)
 			)
 		{
 			int characterID =
@@ -464,7 +461,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// Make driver talk
 			Voiceline_RequestPlay(8, characterID, 0x10);
 		}
-		gGT->humanPlayerPositions[iVar10] = currRank;
+		gGT->humanPlayerPositions[i] = currRank;
 	}
 
 	// If already finished race
@@ -486,7 +483,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 		(
 			// 1P game, with 1 human finished
 			(numPlyr == 1) &&
-			(iVar13 > 0)
+			(numDriversFinished > 0)
 
 		) ||
 
@@ -494,13 +491,13 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// Multiplayer VS, all finished except one
 			(numPlyr > 1) &&
 			((gGT->gameMode1 & ARCADE_MODE) == 0) &&
-			(iVar13 >= (numPlyr - 1))
+			(numDriversFinished >= (numPlyr - 1))
 		) ||
 
 		(
 			// Arcade mode, all humans finished
 			((gGT->gameMode1 & ARCADE_MODE) != 0) &&
-			(numPlyr <= iVar13)
+			(numPlyr <= numDriversFinished)
 		)
 	   )
 	{
@@ -530,7 +527,7 @@ void DECOMP_PlayLevel_UpdateLapStats(void)
 			// === VS Mode ===
 
 			// Make the player Blasted
-			VehPickState_NewState(currDriver, 2, currDriver, 0);
+			DECOMP_VehPickState_NewState(currDriver, HURT_BLASTED, currDriver, HIT_NO_REASON);
 
 			// Reduce counters for AttackingPlayer and AttackedByPlayer
 			currDriver->numTimesAttackedByPlayer[currDriver->driverID]--;

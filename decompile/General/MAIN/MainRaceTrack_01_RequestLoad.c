@@ -11,7 +11,7 @@ void DECOMP_MainRaceTrack_RequestLoad(short levelID)
   }
   DECOMP_RaceFlag_ResetTextAnim();
 
-  sdata->Loading.stage = -4;
+  sdata->Loading.stage = LOADING_NEWLEV_REQUEST;
   sdata->Loading.Lev_ID_To_Load = levelID;
   return;
 }

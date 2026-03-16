@@ -6,7 +6,7 @@ void DECOMP_Particle_FuncPtr_ExhaustUnderwater(struct Particle *p)
   struct Icon** iconPtrArray;
 
   if (
-		(3 < ((p->axis[1].startVal >> 8) + p->driverInst->matrix.t[1])) &&
+		(3 < ((p->axis[1].startVal >> 8) + p->driverInst->matrix.t.y)) &&
 		(p->framesLeftInLife < FPS_DOUBLE(27))
 	  )
   {

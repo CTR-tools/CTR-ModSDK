@@ -37,7 +37,7 @@ void DECOMP_Audio_Update1(void)
     case 9:
         // If traffic lights finish counting down
         // from 0x3840 to zero
-        if (gGT->trafficLightsTimer < 1)
+        if (gGT->trafficLightsTimer <= SECONDS(0))
         {
             // 9 means intro cutscene
             // 10 means traffic lights

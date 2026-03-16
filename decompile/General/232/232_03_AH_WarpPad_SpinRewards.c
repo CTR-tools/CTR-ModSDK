@@ -53,15 +53,15 @@ SpinReward:
 	thirds = warppadObj->thirds[index];
 
 	trig = DECOMP_MATH_Sin(thirds);
-	prizeInst->matrix.t[1] = y + ((trig<<6)>>0xc) + 0x100;
+	prizeInst->matrix.t.y = y + ((trig<<6)>>0xc) + 0x100;
 	
 	// do not use original "thirds",
 	// set new value without "+="
 	thirds = 0x555*index + warppadObj->spinRot_Rewards[1];
 	
 	trig = DECOMP_MATH_Sin(thirds);
-	prizeInst->matrix.t[0] = x + (trig * 0xA0 >> 0xc);
+	prizeInst->matrix.t.x = x + (trig * 0xA0 >> 0xc);
 	
 	trig = DECOMP_MATH_Cos(thirds);
-	prizeInst->matrix.t[2] = z + (trig * 0xA0 >> 0xc);
+	prizeInst->matrix.t.z = z + (trig * 0xA0 >> 0xc);
 }

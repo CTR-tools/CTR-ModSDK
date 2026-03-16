@@ -52,7 +52,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct PushBuffer* pb)
 		scratchpad[3] = 0;
 		
         scratchpad[4] = uVar2;
-        scratchpad[5] = t->inst->matrix.t[1] + 0x60;
+        scratchpad[5] = t->inst->matrix.t.y + 0x60;
         scratchpad[6] = sVar1;
 		scratchpad[7] = 0;
 
@@ -298,7 +298,7 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 	
 	}
 	
-	spiderInst->matrix.t[1] = 
+	spiderInst->matrix.t.y = 
 		(int)spiderInst->instDef->pos[1] + 
 		spiderArr[sVar2];
 	
@@ -376,10 +376,10 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   *(int*)&shadowInst->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
   shadowInst->matrix.m[2][2] = inst->matrix.m[2][2];
   
-  shadowInst->matrix.t[0] = inst->matrix.t[0];
-  shadowInst->matrix.t[1] = inst->matrix.t[1] - 8;
-  shadowInst->matrix.t[2] = inst->matrix.t[2];
-  inst->matrix.t[1] += 0x4c0;
+  shadowInst->matrix.t.x = inst->matrix.t.x;
+  shadowInst->matrix.t.y = inst->matrix.t.y - 8;
+  shadowInst->matrix.t.z = inst->matrix.t.z;
+  inst->matrix.t.y += 0x4c0;
   
   shadowInst->scale[0] = 0x2000;
   shadowInst->scale[1] = 0x2000;

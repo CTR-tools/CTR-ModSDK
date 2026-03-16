@@ -68,6 +68,7 @@ void MainGameEnd_Initialize(void)
       if (player->driverRank == 0)
       {
         // If this is boss race
+        //this is not negative, check gamemode enums
         if ((int)gameMode1 < 0)
         {
           sdata->advProgress.timesLostBossRace[gGT->bossID] = 0;
@@ -85,6 +86,7 @@ void MainGameEnd_Initialize(void)
       else
       {
         // if this is boss race
+        //this is not negative, check gamemode enums
         if ((int)gameMode1 < 0)
         {
           i = gGT->bossID + 0x17;

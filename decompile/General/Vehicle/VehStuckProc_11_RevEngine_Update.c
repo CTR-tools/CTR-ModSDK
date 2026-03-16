@@ -8,7 +8,7 @@ void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d)
     if (d->KartStates.RevEngine.boolMaskGrab == false)
     {
         // If Traffic Lights are not done counting down
-        if (0 < sdata->gGT->trafficLightsTimer)
+        if (sdata->gGT->trafficLightsTimer > SECONDS(0))
         {
             // Dont continue with the function,
             // let your kart stay in a revving state

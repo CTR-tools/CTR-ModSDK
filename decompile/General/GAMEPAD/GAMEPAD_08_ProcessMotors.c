@@ -13,7 +13,7 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
 		if(
 			(packet != 0) &&
 			(gGT->boolDemoMode == 0) &&
-			((gGT->gameMode1 & 0xf) == 0) &&
+			((gGT->gameMode1 & PAUSE_ALL) == 0) &&
 			(DECOMP_RaceFlag_IsTransitioning() == 0)
 		  )
 		{

@@ -174,6 +174,40 @@ enum LoadType
 	LT_MEMPACK = 0x100,
 };
 
+//LoadTenStages
+//loading.stage
+enum LoadingStages
+{
+	LOADING_VLCTABLE = -6,
+	LOADING_RESTART_LEV = -5, //when you retry a track
+	LOADING_NEWLEV_REQUEST = -4, //when loading a levelID with MainRaceTrack_RequestLoad
+	LOADING_UNK = -3, //maybe audio?
+	LOADING_END = -2,
+	LOADING_IDLE = -1, //nothing is required to load
+	LOADING_INIT = 0, //start loading
+	LOADING_OVR_ENDRACE = 1,
+	LOADING_OVR_QUADBLOCKLOD = 2,
+	LOADING_OVR_THREAD = 3,
+	LOADING_MPK = 4,
+	LOADING_STORE_MPK_DATA = 5, //icons + models
+	LOADING_LEVFILE = 6, //load the level and vrm from bigfile, its used for level swap too (cutscenes, adv hub), parses music banks as well.
+	LOADING_STORE_LEV_DATA = 7, //save level data, loads podium models from bigfile if needed, searchs trafficLights from mpk
+	LOADING_SET_AUDIO_STATE = 8, //this stores podium models if podium scene is required, then sets audio state
+	LOADING_SET_GGT_FLAGS = 9
+	
+	//end	
+};
+
+//sdata->levelLOD
+enum LevelLOD
+{
+	LOD_HI = 1, //1P
+	LOD_MED, //2P
+	LOD_LOW_3P,
+	LOD_LOW_4P, //should be the same than 3P
+	LOD_RELIC_TT = 8
+};
+
 struct LoadQueueSlot
 {
 	// 0x0

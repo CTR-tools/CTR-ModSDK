@@ -23,6 +23,6 @@ u_char DECOMP_CS_Camera_BoolGotoBoss(void)
 
     // TRUE if TeleportSelf did NOT spawn on podium (goto boss door)
     return 
-		(inst->matrix.t[0] != posCoords[0]) && 
-		(inst->matrix.t[2] != posCoords[2]);
+		(inst->matrix.t.x != posCoords[0]) && 
+		(inst->matrix.t.z != posCoords[2]);
 }

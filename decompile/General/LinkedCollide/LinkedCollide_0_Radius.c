@@ -12,9 +12,9 @@ struct Instance* DECOMP_LinkedCollide_Radius(struct Instance* objInst,struct Thr
     thInst = thBucket->inst;
 
     // get difference in X, Y, and Z, from both instances
-    diff_x = thInst->matrix.t[0] - objInst->matrix.t[0]; 
-    diff_y = thInst->matrix.t[1] - objInst->matrix.t[1]; 
-    diff_z = thInst->matrix.t[2] - objInst->matrix.t[2]; 
+    diff_x = thInst->matrix.t.x - objInst->matrix.t.x; 
+    diff_y = thInst->matrix.t.y - objInst->matrix.t.y; 
+    diff_z = thInst->matrix.t.z - objInst->matrix.t.z; 
 
     diff_dist = diff_x*diff_x + diff_z*diff_z;
 	

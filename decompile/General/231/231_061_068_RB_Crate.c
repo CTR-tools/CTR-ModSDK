@@ -126,9 +126,9 @@ void RB_CrateAny_ExplodeInit(struct Instance* crateInst, int color)
 	explosionInst->alphaScale = 0x1000;
 	
 	// position
-	explosionInst->matrix.t[0] = crateInst->matrix.t[0];
-	explosionInst->matrix.t[1] = crateInst->matrix.t[1];
-	explosionInst->matrix.t[2] = crateInst->matrix.t[2];
+	explosionInst->matrix.t.x = crateInst->matrix.t.x;
+	explosionInst->matrix.t.y = crateInst->matrix.t.y;
+	explosionInst->matrix.t.z = crateInst->matrix.t.z;
 	
 	// rotation matrix
 	rot[0] = 0; 

@@ -6,6 +6,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	int levelID;
 	struct Thread* t;
 	struct WarpPad* warppadObj;
+	struct ModelHeader* mh;
 	
 	struct GameTracker* gGT;
 	
@@ -37,7 +38,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 			0					// thread relative
 		);
 		
-	if(t == 0) return;
+	if(t == NULL) return;
 	inst->thread = t;
 	t->inst = inst;
 	
@@ -50,7 +51,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	// 4 - purple token or SlideCol/TurboTrack
 	
 	// locked
-	t->modelIndex = 0;
+	t->modelIndex = WARPPAD_LOCKED;
 	
 	// make invisible
 	// this is the red triangle 
@@ -90,7 +91,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 		// can we just do gGT->levelID-0x19?
 		
 		// if trophy owned
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TROPHY_RACE)) != 0)
 		{
 GetKeysRequirement:
 			
@@ -129,7 +130,7 @@ GetKeysRequirement:
 		// count number of gems owned
 		unlockItem_numOwned = 0;
 		for(i = 0; i < 5; i++)
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i + 0x6a)) != 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i + PRIZE_GEM_CUP)) != 0)
 				unlockItem_numOwned++;
 	}
 	
@@ -166,9 +167,9 @@ GetKeysRequirement:
 			*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 			*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 			*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-			newInst->matrix.t[0] = inst->matrix.t[0];
-			newInst->matrix.t[1] = inst->matrix.t[1];
-			newInst->matrix.t[2] = inst->matrix.t[2];
+			newInst->matrix.t.x = inst->matrix.t.x;
+			newInst->matrix.t.y = inst->matrix.t.y;
+			newInst->matrix.t.z = inst->matrix.t.z;
 			
 			newInst->alphaScale = 0xc00;
 			
@@ -188,9 +189,9 @@ GetKeysRequirement:
 				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-				newInst->matrix.t[0] = inst->matrix.t[0];
-				newInst->matrix.t[1] = inst->matrix.t[1] + i * 0x400;
-				newInst->matrix.t[2] = inst->matrix.t[2];
+				newInst->matrix.t.x = inst->matrix.t.x;
+				newInst->matrix.t.y = inst->matrix.t.y + i * 0x400;
+				newInst->matrix.t.z = inst->matrix.t.z;
 				
 				newInst->alphaScale = 0x400;
 				
@@ -219,13 +220,13 @@ GetKeysRequirement:
 		if(levelID < SLIDE_COLISEUM)
 		{
 			// unlocked all
-			t->modelIndex = 2;
+			t->modelIndex = WARPPAD_EMPTY;
 			
 			// if trophy not owned
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) == 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TROPHY_RACE)) == 0)
 			{
 				// open for trophy
-				t->modelIndex = 1;
+				t->modelIndex = WARPPAD_TROPHY;
 				
 				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_TROPHY], 0, t);
 				
@@ -237,13 +238,13 @@ GetKeysRequirement:
 			}
 			
 			// if token not owned
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_TOKEN_RACE)) == 0)
 			{
 				// not open for trophy
-				if(t->modelIndex != 1)
+				if(t->modelIndex != WARPPAD_TROPHY)
 				{	
 					// open for relic/token
-					t->modelIndex = 3;
+					t->modelIndex = WARPPAD_TOKEN;
 				}
 BattleTrack:
 				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_TOKEN], 0, t);
@@ -284,15 +285,15 @@ SlideColTurboTrack:
 			
 			// if relic not owned
 			if(levelID < NITRO_COURT) // check this cause of "goto BattleTrack"
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + PRIZE_RELIC_RACE)) == 0)
 			{
 				// SlideCol/TurboTrack
 				if(levelID>=SLIDE_COLISEUM)
-					t->modelIndex = 4;
+					t->modelIndex = WARPPAD_GEMSTONE_ACTIVE;
 				
-				// open for token/relic
-				else if(t->modelIndex != 1)
-					t->modelIndex = 3;
+				// if not open for token/relic
+				else if(t->modelIndex != WARPPAD_TROPHY)
+					t->modelIndex = WARPPAD_RELIC;
 				
 				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_RELIC], 0, t);
 				
@@ -321,9 +322,9 @@ SlideColTurboTrack:
 				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-				newInst->matrix.t[0] = inst->matrix.t[0];
-				newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-				newInst->matrix.t[2] = inst->matrix.t[2];
+				newInst->matrix.t.x = inst->matrix.t.x;
+				newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+				newInst->matrix.t.z = inst->matrix.t.z;
 			}
 		}
 		
@@ -331,7 +332,7 @@ SlideColTurboTrack:
 		else if(levelID < NITRO_COURT)
 		{
 			// already unlocked
-			t->modelIndex = 2;
+			t->modelIndex = WARPPAD_EMPTY;
 			
 			goto SlideColTurboTrack;
 		}
@@ -339,15 +340,15 @@ SlideColTurboTrack:
 		// battle tracks
 		else if(levelID < GEM_STONE_VALLEY)
 		{
-			i = R232.battleTrackArr[levelID - NITRO_COURT] + 0x6f;
+			i = R232.battleTrackArr[levelID - NITRO_COURT] + PRIZE_CRYSTAL_CH;
 			
 			// already unlocked
-			t->modelIndex = 2;
+			t->modelIndex = WARPPAD_EMPTY;
 			
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) == 0)
 			{	
 				// rainbow
-				t->modelIndex = 4;
+				t->modelIndex = WARPPAD_CRYSTALCH;
 				
 				goto BattleTrack;
 			}
@@ -357,19 +358,19 @@ SlideColTurboTrack:
 		else
 		{	
 			// bit index of gem
-			i = (levelID - ADV_CUP) + 0x6a;
+			i = (levelID - ADV_CUP) + PRIZE_GEM_CUP;
 	
 			// if gem is already unlocked, quit
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
 			{
 				// beaten
-				t->modelIndex = 2;
+				t->modelIndex = WARPPAD_EMPTY;
 				
 				return;
 			}
 			
 			// rainbow color
-			t->modelIndex = 4;
+			t->modelIndex = WARPPAD_GEMSTONE_ACTIVE;
 			
 			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[STATIC_GEM], 0, t);
 				
@@ -425,9 +426,9 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
 	*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
 	*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
@@ -516,16 +517,17 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 	*(int*)((int)&newInst->matrix + 0xC) = 0;
 	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
 	
 	// always face camera
-	newInst->model->headers[0].flags |= 1;
+	//ptrHeadersArray points to the first header
+	newInst->model->ptrHeadersArray->flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_X] = newInst;
 	
@@ -542,17 +544,20 @@ SlideColTurboTrack:
 		*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 		*(int*)((int)&newInst->matrix + 0xC) = 0;
 		*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-		newInst->matrix.t[0] = inst->matrix.t[0];
-		newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-		newInst->matrix.t[2] = inst->matrix.t[2];
+		newInst->matrix.t.x = inst->matrix.t.x;
+		newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+		newInst->matrix.t.z = inst->matrix.t.z;
 		
 		newInst->scale[0] = 0x2000;
 		newInst->scale[1] = 0x2000;
 		newInst->scale[2] = 0x2000;
 		
+		//ptrHeadersArray points to the first header
+		mh = newInst->model->ptrHeadersArray;
+		
 		// always face camera
 		for(i = 0; i < newInst->model->numHeaders; i++)	
-			newInst->model->headers[i].flags |= 1;
+			mh[i].flags |= 1;
 		
 		warppadObj->inst[WPIS_CLOSED_10S] = newInst;
 	}
@@ -573,17 +578,20 @@ SlideColTurboTrack:
 	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
 	*(int*)((int)&newInst->matrix + 0xC) = 0;
 	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
+	newInst->matrix.t.x = inst->matrix.t.x;
+	newInst->matrix.t.y = inst->matrix.t.y + 0x100;
+	newInst->matrix.t.z = inst->matrix.t.z;
 	
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
-			
+	
+	//ptrHeadersArray points to the first header
+	mh = newInst->model->ptrHeadersArray;
+		
 	// always face camera
 	for(i = 0; i < newInst->model->numHeaders; i++)	
-		newInst->model->headers[i].flags |= 1;
+		mh[i].flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
 }

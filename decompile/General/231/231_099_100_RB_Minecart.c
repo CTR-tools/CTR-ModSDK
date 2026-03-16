@@ -41,7 +41,7 @@ void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecar
 		hitDriver = (struct Driver*)hitInst->thread->object;
 		
 		// attempt to harm driver (squish)
-		DECOMP_RB_Hazard_HurtDriver(hitDriver,3,0,0);
+		DECOMP_RB_Hazard_HurtDriver(hitDriver,HURT_SQUISHED,0,HIT_NO_REASON);
 	}
 #endif
 }
@@ -58,7 +58,7 @@ void RB_Minecart_NewPoint(
 		int start = spawnType2->posCoords[pointIndex+i-3];
 		int end = spawnType2->posCoords[pointIndex+i];
 		
-		minecartInst->matrix.t[i] = start;
+		minecartInst->matrix.t.v[i] = start;
 		minecartObj->dir[i] = start - end;
 	}
 	
@@ -167,7 +167,7 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	for(i = 0; i < 3; i++)
 	{
 		// skip safety tests, assume no division by zero
-		minecartInst->matrix.t[i] -=
+		minecartInst->matrix.t.v[i] -=
 			minecartObj->dir[i]
 			/ minecartObj->betweenPoints_numFrames;
 	}

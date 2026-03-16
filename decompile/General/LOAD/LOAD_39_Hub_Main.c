@@ -5,7 +5,7 @@ void DECOMP_LOAD_Hub_Main(int bigfilePtr)
 	struct GameTracker* gGT;
 
 	// quit if already loading
-	if (sdata->Loading.stage != -1) return;
+	if (sdata->Loading.stage != LOADING_IDLE) return;
 
 	gGT = sdata->gGT;
 

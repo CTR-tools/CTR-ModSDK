@@ -71,9 +71,9 @@ void DECOMP_MM_Title_Init(void)
       *(int*)&inst->matrix.m[2][0] = 0;
       *(int*)&inst->matrix.m[2][2] = 0x5000;
 
-      inst->matrix.t[0] = 0;
-      inst->matrix.t[1] = 0;
-      inst->matrix.t[2] = 0;
+      inst->matrix.t.x = 0;
+      inst->matrix.t.y = 0;
+      inst->matrix.t.z = 0;
 
       inst->flags |= HIDE_MODEL;
 

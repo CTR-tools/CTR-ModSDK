@@ -21,5 +21,5 @@ void DECOMP_LOAD_LevelFile(int levelID)
 	}
 	
 	// start loading
-	sdata->Loading.stage = 0;
+	sdata->Loading.stage = LOADING_INIT;
 }

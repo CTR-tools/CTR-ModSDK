@@ -70,7 +70,7 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		D232.ptrPauseObject;
 
     // loop through 14 instances
-    for (int i = 0; i < 0xe; i++)
+    for (int i = 0; i < 14; i++)
     {
 		// assume no awards won
         ptrPauseObject->PauseMember[i].unlockFlag &= ~(1);
@@ -84,10 +84,15 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 	if(type == 0)
 	{
 		int hubID = levelID - GEM_STONE_VALLEY;
+		
+		//  oxide, roo, papu, joe, pinstripe
+		char boss_charID =  D232.advPausePages[hubID].characterID_Boss;
+		
 
 		// gemstone
 		if(hubID == 0)
 		{
+			
 			// 2 relics
 			for(int i = 0; i < 2; i++)
 			{
@@ -100,47 +105,48 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 				DECOMP_DecalFont_DrawLine(
 					sdata->lngStrings[mdLev->name_LNG],
-					posX + 0x6e, i*0x10 + 4 + 0x26,
+					posX + 0x6e, i*SLIDE_COLISEUM + 0x2A,
 					FONT_BIG, 0);
 
 				struct Instance* inst =
 					ptrPauseObject->PauseMember[i].inst;
 
 				// Remove SelectProfile with regular UI variant
-				inst->matrix.t[0] =
-					DECOMP_UI_ConvertX_2(posX + 0x16d + 1*0x1e, 0x100);
+				inst->matrix.t.x =
+					DECOMP_UI_ConvertX_2(posX + 0x2ae4, 0x100);
 
-				inst->matrix.t[1] =
-					DECOMP_UI_ConvertY_2(i*0x10 + 4 + 0x2f, 0x100);
+				inst->matrix.t.y =
+					DECOMP_UI_ConvertY_2(i*SLIDE_COLISEUM + 0x33, 0x100);
 
 				// 6, 7, 8,
 				// sapphire, gold, platinum
 
 				// set sapphire by default
 				ptrPauseObject->PauseMember[i].indexAdvPauseInst = 6;
-
+                
+				short prize_index = PRIZE_RELIC_RACE + (SLIDE_COLISEUM + i);
+				
 				// unlock if sapphire is visible
 				ptrPauseObject->PauseMember[i].unlockFlag |=
-					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x16));
+					CHECK_ADV_BIT(adv->rewards, (prize_index + PRIZE_SAPPHIRE));
 
 				// increment to gold
 				ptrPauseObject->PauseMember[i].indexAdvPauseInst +=
-					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x28));
+					CHECK_ADV_BIT(adv->rewards, (prize_index + PRIZE_GOLD));
 
 				// increment to platinum
 				ptrPauseObject->PauseMember[i].indexAdvPauseInst +=
-					CHECK_ADV_BIT(adv->rewards, (0x10+i+0x3a));
+					CHECK_ADV_BIT(adv->rewards, (prize_index + PRIZE_PLATINUM));
 			}
 
-			char bossID = 0xf;
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
 					data.MetaDataCharacters[
-						bossID
+						boss_charID
 					].name_LNG_long
 				],
-				posX + 0x6e, 2*0x10 + 4 + 0x26,
+				posX + 0x6e, 0x4a,
 				FONT_BIG, 4);
 
 			// === Draw Star ===
@@ -181,10 +187,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 					ptrPauseObject->PauseMember[2+i].inst;
 
 				// Remove SelectProfile with regular UI variant
-				inst->matrix.t[0] =
+				inst->matrix.t.x =
 					DECOMP_UI_ConvertX_2(posX + 0x100 + (i-2)*60, 0x100);
 
-				inst->matrix.t[1] =
+				inst->matrix.t.y =
 					DECOMP_UI_ConvertY_2(((i&1)<<4)|0x6a, 0x100);
 
 				// gem color
@@ -192,20 +198,20 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 				// unlock gem
 				ptrPauseObject->PauseMember[2+i].unlockFlag |=
-					CHECK_ADV_BIT(adv->rewards, (i+0x6a));
+					CHECK_ADV_BIT(adv->rewards, (i+ PRIZE_GEM_CUP));
 			}
 		}
 
 		// any other hub
 		else
 		{
-			short* check = &data.advHubTrackIDs[(hubID-1)*4];
+			short* current_track = &data.advHubTrackIDs[(hubID-1)*4];
 
 			// 4 tracks
 			for(int i = 0; i < 4; i++)
 			{
 				struct MetaDataLEV* mdLev =
-					&data.metaDataLEV[check[i]];
+					&data.metaDataLEV[current_track[i]];
 
 				DECOMP_DecalFont_DrawLine(
 					sdata->lngStrings[mdLev->name_LNG],
@@ -219,17 +225,17 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 						ptrPauseObject->PauseMember[3*i+j].inst;
 
 					// Remove SelectProfile with regular UI variant
-					inst->matrix.t[0] =
+					inst->matrix.t.x =
 						DECOMP_UI_ConvertX_2(posX + 0x15e + j*0x1e, 0x100);
 
-					inst->matrix.t[1] =
+					inst->matrix.t.y =
 						DECOMP_UI_ConvertY_2(i*0x10 + 0 + 0x2f, 0x100);
 				}
 
 				// trophy
 				ptrPauseObject->PauseMember[i*3+0].indexAdvPauseInst = 14;
 				ptrPauseObject->PauseMember[i*3+0].unlockFlag |=
-					CHECK_ADV_BIT(adv->rewards, (check[i]+6));
+					CHECK_ADV_BIT(adv->rewards, (current_track[i]+ PRIZE_TROPHY_RACE));
 
 				// 6, 7, 8,
 				// sapphire, gold, platinum
@@ -239,31 +245,27 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 
 				// unlock if sapphire is visible
 				ptrPauseObject->PauseMember[i*3+1].unlockFlag |=
-					CHECK_ADV_BIT(adv->rewards, (check[i]+0x16));
+					CHECK_ADV_BIT(adv->rewards, (current_track[i]+ PRIZE_RELIC_RACE + PRIZE_SAPPHIRE));
 
 				// increment to gold
 				ptrPauseObject->PauseMember[i*3+1].indexAdvPauseInst +=
-					CHECK_ADV_BIT(adv->rewards, (check[i]+0x28));
+					CHECK_ADV_BIT(adv->rewards, (current_track[i]+ PRIZE_RELIC_RACE + PRIZE_GOLD));
 
 				// increment to platinum
 				ptrPauseObject->PauseMember[i*3+1].indexAdvPauseInst +=
-					CHECK_ADV_BIT(adv->rewards, (check[i]+0x3a));
+					CHECK_ADV_BIT(adv->rewards, (current_track[i]+ PRIZE_RELIC_RACE + PRIZE_PLATINUM));
 
 				// CTR Tokens
 				ptrPauseObject->PauseMember[i*3+2].indexAdvPauseInst = 9+mdLev->ctrTokenGroupID;
 				ptrPauseObject->PauseMember[i*3+2].unlockFlag |=
-					CHECK_ADV_BIT(adv->rewards, (check[i]+0x4c));
+					CHECK_ADV_BIT(adv->rewards, (current_track[i]+ PRIZE_TOKEN_RACE));
 			}
 
-			// roo, papu, joe, pinstripe
-			// 10, 9, 11, 8
-			int bossArr = 0x080b090a;
-			char bossID = bossArr >> (8*(hubID-1));
 
 			DECOMP_DecalFont_DrawLine(
 				sdata->lngStrings[
 					data.MetaDataCharacters[
-						bossID
+						boss_charID
 					].name_LNG_long
 				],
 				posX + 0x50, 4*0x10 + 0 + 0x26,
@@ -273,15 +275,15 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[12].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(4*0x10 + 0 + 0x2f, 0x100);
 
 			ptrPauseObject->PauseMember[12].indexAdvPauseInst = 5;
 			ptrPauseObject->PauseMember[12].unlockFlag |=
-				CHECK_ADV_BIT(adv->rewards, ((hubID-1)+0x5e));
+				CHECK_ADV_BIT(adv->rewards, ((hubID-1) + PRIZE_BOSS_KEY));
 
 			// skull rock, rampage ruins,
 			// rocky road, nitro court
@@ -302,15 +304,15 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[13].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(posX + 0x15e + 1*0x1e, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(5*0x10 + 0 + 0x2f, 0x100);
 
 			ptrPauseObject->PauseMember[13].indexAdvPauseInst = 13;
 			ptrPauseObject->PauseMember[13].unlockFlag |=
-				CHECK_ADV_BIT(adv->rewards, ((hubID-1)+0x6f));
+				CHECK_ADV_BIT(adv->rewards, ((hubID-1) + PRIZE_CRYSTAL_CH));
 		}
 	}
 
@@ -331,10 +333,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[i].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(instPosY + 0x41, 0x100);
 
 			#ifndef REBUILD_PS1
@@ -364,15 +366,15 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		for(int i = 0; i < 0x12; i++)
 		{
 			// platinum
-			if(CHECK_ADV_BIT(adv->rewards, (i+0x3a)) != 0)
+			if(CHECK_ADV_BIT(adv->rewards, (i+ PRIZE_RELIC_RACE + PRIZE_PLATINUM)) != 0)
 				count[2]++;
 
 			// gold
-			else if(CHECK_ADV_BIT(adv->rewards, (i+0x28)) != 0)
+			else if(CHECK_ADV_BIT(adv->rewards, (i+ PRIZE_RELIC_RACE + PRIZE_GOLD)) != 0)
 				count[1]++;
 
 			// sapphire
-			else if(CHECK_ADV_BIT(adv->rewards, (i+0x16)) != 0)
+			else if(CHECK_ADV_BIT(adv->rewards, (i + PRIZE_RELIC_RACE + PRIZE_SAPPHIRE)) != 0)
 				count[0]++;
 		}
 
@@ -387,10 +389,10 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 				ptrPauseObject->PauseMember[i].inst;
 
 			// Remove SelectProfile with regular UI variant
-			inst->matrix.t[0] =
+			inst->matrix.t.x =
 				DECOMP_UI_ConvertX_2(instPosX, 0x100);
 
-			inst->matrix.t[1] =
+			inst->matrix.t.y =
 				DECOMP_UI_ConvertY_2(0x49, 0x100);
 
 			#ifndef REBUILD_PS1
@@ -526,8 +528,8 @@ void DECOMP_AH_Pause_Draw(int pageID, int posX)
 		}
 
 		rotArr[1] =
-			inst->matrix.t[0] * 0x10 +
-			inst->matrix.t[1] * 0x20 +
+			inst->matrix.t.x * 0x10 +
+			inst->matrix.t.y * 0x20 +
 			sdata->frameCounter * FPS_HALF(0x40);
 
 		rotArr[1] &= 0xfff;

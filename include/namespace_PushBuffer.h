@@ -1,18 +1,19 @@
 struct FrustumCornerOUT
 {
-	short pos[3];
+	SVec3 pos;
 };
 
-struct ScratchpadFrustum
+
+struct ScratchpadFrustum 
 {
 	// 1f800000
-	int pos[3];
+	Vec3 pos;
 	
 	// 1f80000C
 	struct FrustumCornerOUT fc[4];
 	
 	// 1f800024
-	short camPos[3];
+	SVec3 camPos;
 	
 	// 1f80002A
 	// -- end --

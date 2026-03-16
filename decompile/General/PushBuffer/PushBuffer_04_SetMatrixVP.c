@@ -64,9 +64,9 @@ void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb)
   // assuming pb->pos resets next frame,
   // do not use this with freecam mods cause
   // it will increment infinitely into the skybox
-  pb->pos[0] += matrixDST->t[0];
-  pb->pos[1] += matrixDST->t[1];
-  pb->pos[2] += matrixDST->t[2];
+  pb->pos[0] += matrixDST->t.x;
+  pb->pos[1] += matrixDST->t.y;
+  pb->pos[2] += matrixDST->t.z;
   
 #endif
 
@@ -76,9 +76,9 @@ void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb)
   *(int*)&t[0] = *(int*)&pb->pos[0];
   t[2] = pb->pos[2];
   
-  pb->matrix_Camera.t[0] = t[0];
-  pb->matrix_Camera.t[1] = t[1];
-  pb->matrix_Camera.t[2] = t[2];
+  pb->matrix_Camera.t.x = t[0];
+  pb->matrix_Camera.t.y = t[1];
+  pb->matrix_Camera.t.z = t[2];
   
   // bit-hack, negate two u16s as one u32
   *(int*)&t[0] = -*(int*)&t[0]+0x10000;
@@ -148,8 +148,8 @@ void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb)
   // by transpose camera matrix
   gte_llv0();
 
-  gte_stlvnl(&pb->matrix_CameraTranspose.t[0]);
-  gte_stlvnl(&pb->matrix_ViewProj.t[0]);
+  gte_stlvnl(&pb->matrix_CameraTranspose.t.x);
+  gte_stlvnl(&pb->matrix_ViewProj.t.x);
 
   // start with transpose camera matrix
   *(int*)((int)&pb->matrix_ViewProj + 0x0) = view0;
@@ -181,8 +181,8 @@ void DECOMP_PushBuffer_SetMatrixVP(struct PushBuffer* pb)
   #define r600 0x600
 
   // scale position
-  pb->matrix_ViewProj.t[1] =
-  pb->matrix_ViewProj.t[1] * r360 / r600;
+  pb->matrix_ViewProj.t.y =
+  pb->matrix_ViewProj.t.y * r360 / r600;
   
   // scale Y axis (1)
   pb->matrix_ViewProj.m[1][0] =

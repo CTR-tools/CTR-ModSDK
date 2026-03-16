@@ -25,7 +25,7 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread* t, struct Driver* d
 
 	// if maskObj exists
 	if (d->KartStates.RevEngine.maskObj != 0)
-		d->KartStates.RevEngine.maskObj->duration = 7680;
+		d->KartStates.RevEngine.maskObj->duration = SECONDS(8);
 
 #ifdef USE_ONLINE
 	if (d->driverID != 0)

@@ -18,6 +18,9 @@ typedef int16_t  s16;
 typedef uint8_t  u8;
 typedef int8_t   s8;
 
+//this is for structs on headers
+#define UNDEFINED_ARRAY_LENGTH 1
+
 #define AugReview 805
 // TODO: Aug5 and Aug14
 #define SepReview 903
@@ -36,10 +39,15 @@ typedef int8_t   s8;
 #define ELAPSED_MS 32
 #endif
 #define SCREEN_WIDTH 512
-#define SECOND (FPS * ELAPSED_MS)
+
+//0.96(?)
+#define MILLISECOND (1)
+#define SECOND ((FPS * ELAPSED_MS) * MILLISECOND)
 #define MINUTE (SECOND * 60)
 #define HOUR (MINUTE * 60)
 
+
+#define MILLISECONDS(x) ((s32)((((float)(x)) * 96) / (MILLISECOND * 100)))
 #define SECONDS(x) ((s32)(((float)(x)) * SECOND))
 #define MINUTES(x) ((s32)(((float)(x)) * MINUTE))
 #define HOURS(x)   ((s32)(((float)(x)) * HOUR))

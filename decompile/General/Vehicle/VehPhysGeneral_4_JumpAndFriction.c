@@ -113,7 +113,7 @@ CHECK_FOR_ANY_JUMP:
       if ((d->jump_CoyoteTimerMS != 0) && (d->jump_CooldownMS == 0))
 	  {
         // driver is now forced to jump
-        d->jump_ForcedMS = 0xa0;
+        d->jump_ForcedMS = MILLISECONDS(167);
 		
 		// const 2.25x
         jumpForce = d->const_JumpForce * 9;
@@ -172,7 +172,7 @@ CHECK_FOR_ANY_JUMP:
       }
 	  
       // force driver to jump
-      d->jump_ForcedMS = 0xa0;
+      d->jump_ForcedMS = MILLISECONDS(167);
 
       // increment jump counter
       d->numberOfJumps++;
@@ -199,7 +199,7 @@ CHECK_FOR_ANY_JUMP:
       }
 	        
 	  // currently forced airborne
-      d->jump_ForcedMS = 0xa0;
+      d->jump_ForcedMS = MILLISECONDS(167);
 	  
 	  jumpForce = d->const_JumpForce * 3;
 	  
@@ -335,7 +335,7 @@ PROCESS_ACCEL:
 PROCESS_JUMP:
 
   d->jump_TenBuffer = 0;
-  d->jump_CooldownMS = 0x180;
+  d->jump_CooldownMS = MILLISECONDS(400);
   d->actionsFlagSet |= 0x480;
   
 // UNUSED LOOP

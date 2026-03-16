@@ -3,7 +3,7 @@
 void DECOMP_AH_Garage_LInB(struct Instance *inst)
 {
     char bossIsOpen, i;
-    short * check;
+    short * trophy_index;
     u_int bitIndex;
     int levelID;
     int ratio;
@@ -67,20 +67,20 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
         *(int*)&garageTop->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
         *(int*)&garageTop->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
         garageTop->matrix.m[2][2] = inst->matrix.m[2][2];
-		garageTop->matrix.t[0] = inst->matrix.t[0];
-		garageTop->matrix.t[1] = inst->matrix.t[1];
-		garageTop->matrix.t[2] = inst->matrix.t[2];
+		garageTop->matrix.t.x = inst->matrix.t.x;
+		garageTop->matrix.t.y = inst->matrix.t.y;
+		garageTop->matrix.t.z = inst->matrix.t.z;
 
         ratio = DECOMP_MATH_Sin((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTop->matrix.t[0] = inst->matrix.t[0] + (ratio * 0x4c >> 0xc);
-        garageTop->matrix.t[1] = inst->matrix.t[1] + 0x300;
+        garageTop->matrix.t.x = inst->matrix.t.x + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t.y = inst->matrix.t.y + 0x300;
 
         ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTop->matrix.t[2] = inst->matrix.t[2] + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t.z = inst->matrix.t.z + (ratio * 0x4c >> 0xc);
 
         garageTop->unk50 = 0xfe;
 
@@ -104,12 +104,12 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     // if not gemstone valley
     else
     {
-        check = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
+        trophy_index = &data.advHubTrackIDs[(levelID - N_SANITY_BEACH) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
+            if (CHECK_ADV_BIT(adv->rewards, trophy_index[i] + PRIZE_TROPHY_RACE) == 0)
                 // boss is not open
                 goto GarageLocked;
         }

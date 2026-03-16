@@ -20,8 +20,8 @@ struct OverlayRDATA_232 R232 =
 	
 	.bossIDs =
 	{
-		4, 0, 1, 2, 3,
-		0
+		BOSS_OXIDE, BOSS_ROO, BOSS_PAPU, BOSS_KOMODO, BOSS_PINSTRIPE,
+		0 //this should be BOSS_OXIDEFINAL but decomp is not using this array for gGT->bossID == 5
 	},
 	
 	.keyFrame =

@@ -98,8 +98,9 @@ void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1)
         (currSelectIndex == 0) &&
 		(gGarage.numFramesCurr_GarageMove == 0) &&
 
-		// if at least one character unlocked
-        ((sdata->gameProgress.unlocks[0] & 0x1FE0) != 0))
+		// if any character is unlocked (0x1FE0 includes tracks unlocked)
+		//to check characters only it might be better to check UNLOCK_CHARACTERS instead
+        ((sdata->gameProgress.unlocks[0] & UNLOCK_ALL) != 0))
 	{
 		// button
 		int buttonTap = sdata->AnyPlayerTap;
@@ -440,7 +441,7 @@ void DECOMP_CS_Garage_MenuProc(struct RectMenu* param_1)
 #endif
 
                     // load main menu LEV
-                    DECOMP_MainRaceTrack_RequestLoad(0x27);
+                    DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
                 }
             }
         }

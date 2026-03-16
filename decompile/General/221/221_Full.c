@@ -47,7 +47,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	else bitIndex = hub[gGT->levelID-NITRO_COURT]; //0x12
 	
 	// first purple token at 0x6f
-	bitIndex += 0x6f;
+	bitIndex += PRIZE_CRYSTAL_CH;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
@@ -74,8 +74,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			elapsedFrames,
 			FPS_DOUBLE(0x14));
 	
-		sdata->ptrMenuCrystal->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
-		sdata->ptrMenuCrystal->matrix.t[1] = DECOMP_UI_ConvertY_2(posXY[1], 0x200);
+		sdata->ptrMenuCrystal->matrix.t.x = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
+		sdata->ptrMenuCrystal->matrix.t.y = DECOMP_UI_ConvertY_2(posXY[1], 0x200);
 	
 		DECOMP_UI_DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
 	
@@ -163,8 +163,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// make token visible
 	tokenInst->flags &= ~(HIDE_MODEL);
 
-	tokenInst->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
-	tokenInst->matrix.t[1] = DECOMP_UI_ConvertY_2(0xA2-0x18, 0x200);
+	tokenInst->matrix.t.x = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
+	tokenInst->matrix.t.y = DECOMP_UI_ConvertY_2(0xA2-0x18, 0x200);
 
 	// grow token after first second
 	if(elapsedFrames > FPS_DOUBLE(30))
@@ -209,7 +209,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	UNLOCK_ADV_BIT(adv->rewards,bitIndex);
 	
 	// go back to adv hub
-	MainRaceTrack_RequestLoad(gGT->prevLEV);
+	DECOMP_MainRaceTrack_RequestLoad(gGT->prevLEV);
 	
 	return;
 }

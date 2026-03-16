@@ -29,7 +29,7 @@ void DECOMP_TT_EndEvent_DrawMenu(void)
 			((GAMEPROG_CheckGhostsBeaten(1) & 0xffff) != 0)
 		)
     {
-        sdata->gameProgress.unlocks[0] |= 0x20; // Unlock N Tropy
+        sdata->gameProgress.unlocks[0] |= UNLOCK_TROPY; 
     }
 
     // copy the frame counter variable
