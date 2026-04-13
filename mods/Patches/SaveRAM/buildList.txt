@@ -1,6 +1,0 @@
-// a new LOAD_DriverMPK is needed to prevent Arcade MPK from loading while in the main menu, that'll crash the game
-common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD/LOAD_DriverMPK.c
-common, exe, MainInit_JitPoolsNew, 0x0, src/CustomJitPoolsNew.c
-common, exe, PushBuffer_Init, 0x0, ../../../decompile/General/PushBuffer/PushBuffer_Init.c src/NewDriverPool.c, Mem_DriverPool
-common, exe, MainInit_JitPoolsReset, 0x0, src/hookJitPoolsReset.s
-common, exe, UI_DrawRaceClock, 0x0, ../../../decompile/General/UI_DrawRaceClock.c src/NewThreadPool.c, Mem_ThreadPool

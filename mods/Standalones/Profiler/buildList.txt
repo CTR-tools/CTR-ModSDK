@@ -1,3 +1,0 @@
-
-common, exe, __main, 0x68, src/hookEntry.s
-common, exe, rdata_free, 0x0, src/main.c

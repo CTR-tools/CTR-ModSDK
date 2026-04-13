@@ -1,7 +1,0 @@
-After 23 years, there is finally a visual for the amount of seconds of stacked turbo you can obtain in Crash Team Racing. RESERVES METER
-
-Adds a meter below the power slide bar that indicates the amount of seconds of stacked turbos, or fire "reserves" as named by CTR players, you currently have at any and all times. One thing to note is that the game doesn't actually have a cap on how many reserves you can get, to the point where you can even overflow the amount of seconds you have for reserves, which is what the community notes as "saffi fire", or infinite reserves. The meter has a maximum for how many seconds of reserves it indicates, but this is purely visual.
-
-This mod also comes with a tweak to how exhaust fire is visualized; previously, if you started a race without performing a start line boost, you wouldn't be able to maintain exhaust fire from just doing power slides. This behavior is unintuitive to how turbo reserves actually work, as you do actually get reserves by chaining power slides; this mod changes that behavior so you can retain the exhaust fire you get from power sliding. Try it out on Slide Coliseum! NOTE: This specific tweak has been disabled for the European version for the time being due to issues.
-
-Made by Superstarxalien.

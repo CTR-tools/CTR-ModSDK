@@ -1,4 +1,0 @@
-- Retro-Fueled (without Super Turbo Pad, enable by cheat code)
-- Extra Difficulty (Arcade and Adventure mode), currently only for USA.
-- Reserves Meter
-- Engine Select

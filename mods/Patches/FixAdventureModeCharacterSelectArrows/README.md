@@ -1,1 +1,0 @@
-![This mod corrects the gradients of font characters that are flipped vertically so the gradients themselves aren't flipped as well.](./what%20this%20mod%20does.png)

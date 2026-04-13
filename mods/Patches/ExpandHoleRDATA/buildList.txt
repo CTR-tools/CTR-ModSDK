@@ -1,3 +1,0 @@
-common, exe, rdata_free, 0x0, src/Pause_MoveRDATA.c
-common, exe, ElimBG_SaveScreenshot_Full, 0x40, src/Pause_PatchPtr1.s
-common, exe, ElimBG_HandleState, 0x38, src/Pause_PatchPtr2.s

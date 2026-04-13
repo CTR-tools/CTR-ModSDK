@@ -1,4 +1,0 @@
-void Disable()
-{
-	return;
-}

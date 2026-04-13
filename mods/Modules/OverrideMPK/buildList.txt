@@ -1,9 +1,0 @@
-903, exe, 0x800331ac, 0x0, src/numDrivers.s
-926, exe, 0x80033f3c, 0x0, src/numDrivers.s
-1006, exe, 0x80035520, 0x0, src/numDrivers.s
-1020, exe, 0x800342f8, 0x0, src/numDrivers.s
-1111, exe, 0x80035b5C, 0x0, src/numDrivers.s
-common, exe, LOAD_AppendQueue, 0x8, src/numDriversPlusOne.s
-
-common, exe, VehBirth_GetModelByName, 0x0, src/OvMPK_StringSearch.c
-common, exe, LOAD_DriverMPK, 0x0, src/OvMPK_LoadMPK.c

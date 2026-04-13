@@ -1,2 +1,0 @@
-.set noreorder
-j AllocDriversHook_BeforeTeleport

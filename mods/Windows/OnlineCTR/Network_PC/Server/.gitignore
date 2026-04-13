@@ -1,7 +1,0 @@
-# CMake stuff
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-
-# Server compiled binary
-ctr_srv

@@ -1,8 +1,0 @@
-common, exe, MEMPACK_Init, 0x0, src/mempack_init.s
-common, exe, MEMPACK_AllocMem, 0x0, src/mempack_allocmem.s
-common, exe, MEMPACK_AllocHighMem, 0x0, src/mempack_allochighmem.s
-common, exe, MEMPACK_ReallocMem, 0x0, src/mempack_reallocmem.s
-common, exe, MEMPACK_PushState, 0x0, src/mempack_pushstate.s
-common, exe, MEMPACK_PopState, 0x0, src/mempack_popstate.s
-common, exe, MEMPACK_PopToState, 0x0, src/mempack_poptostate.s
-common, exe, Torch_Main, 0x0, src/main.c

@@ -1,7 +1,0 @@
-// Inject compiled code for Penta's stats into the executable
-926, exe, 0x80088A0C, 0x0, assets/stats.bin
-926, exe, 0x80086E60, 0x0, assets/engine_max.bin
-926, exe, 0x80086E54, 0x0, assets/metadata.bin
-
-// Compile modified VehBirth_SetConsts
-926, exe, VehBirth_SetConsts, 0x0, src/USAUnlimitedPenta.c

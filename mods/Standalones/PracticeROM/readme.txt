@@ -1,1 +1,0 @@
-A ROM hack designed to practice CTR Time Trials. Use save states (⚪ in races to save, SELECT to load, L2 to select save state), engine swap (R2 + Up when in races), enhanced HUD, flying (X + R2 + ⬜) and infinite fire cheat. Made by TheRedhotbr.
