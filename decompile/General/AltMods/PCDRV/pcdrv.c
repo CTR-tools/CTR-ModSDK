@@ -80,6 +80,9 @@ CdlFILE *pcCdSearchFile(CdlFILE *loc, const char *filename)
 	return loc;
 }
 
+// TODO, put his decoding in vsync callback
+int boolDecodeXaDuringVsyncCallback = 0;
+
 int pcCdControl(u_char com, u_long *buf, u_char * result)
 {
 	#ifdef REBUILD_PC
@@ -90,17 +93,35 @@ int pcCdControl(u_char com, u_long *buf, u_char * result)
 	#endif
 	
 	// Seek for File IO (CdlSetloc)
-	// Seek for XA Stream (CdlSetfilter)
-	if (
-			(com == CdlSetloc) ||
-			(com == CdlSetfilter)
-		)
+	if (com == CdlSetloc)
 	{
+		// On PS1 Disc, variable names have literal meanings
+		//	bigfile->cdpos / cdlFileHWL->pos = disc pos of Bigfile
+		//	sector offset eOffs / firstSector = offset from start of file
+		
+		// On PCDRV, we encode a bitmask hack
+		//	Any CdlFile "Pos" = currFD << 24
+		//	The "+ offset" is then stored in bottom 24 bits
+		//	CdIntToPos encodes this, for CdControl input parameter
+		
 		currFD = *(int*)buf >> 24;
 		int sector = *(int*)buf & 0xffffff;
 	
 		v1 = PClseek(fileFD[currFD], sector*0x800, PCDRV_SEEK_SET);
 	}
+	
+	#ifdef REBUILD_PC
+	
+	// Step 1: CdlSetmode XA Stream (ignore)
+	// Step 2: CdlSetfilter Goto Sector (ignore)
+	// Step 3: CdIntToPos
+	//	-- can I reverse "sum" into XA filename?
+	//	-- just like how I hook cdIntToPos for bigfile?
+	// Step 4: CdlReadS Start Reading XA
+	//	-- replace cdPos with CategoryID, XaID, xaChannel(=0)
+	
+	// Or should I just add to XAPlay "if pc, start pcdrv xa code"?
+	// then that "start pcdrv xa cdoe" can enable boolDecodeXaDuringVsyncCallback
 	
 	// Mode for DATA or XA Stream
 	if (com == CdlSetmode)
@@ -112,14 +133,18 @@ int pcCdControl(u_char com, u_long *buf, u_char * result)
 		//	CdlModeSF (subheader filter)
 		if(buf[0] == 0xE8)
 		{
-			// TODO: EuroAli XA system
+			// note to self, can use sdata->discMode
+			boolDecodeXaDuringVsyncCallback = 1;
 		}
 		
 		if(buf[0] == CdlModeSpeed)
 		{
-			// regular file IO
+			// note to self, can use sdata->discMode
+			boolDecodeXaDuringVsyncCallback = 0;
 		}
 	}
+	
+	#endif
 	
 	// TODO: handle v1 failures
 	return 1;
