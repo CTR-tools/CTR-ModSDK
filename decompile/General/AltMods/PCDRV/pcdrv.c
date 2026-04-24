@@ -89,12 +89,36 @@ int pcCdControl(u_char com, u_long *buf, u_char * result)
 	register int v1 asm("v1");
 	#endif
 	
-	if(com == CdlSetloc)
+	// Seek for File IO (CdlSetloc)
+	// Seek for XA Stream (CdlSetfilter)
+	if (
+			(com == CdlSetloc) ||
+			(com == CdlSetfilter)
+		)
 	{
 		currFD = *(int*)buf >> 24;
 		int sector = *(int*)buf & 0xffffff;
 	
 		v1 = PClseek(fileFD[currFD], sector*0x800, PCDRV_SEEK_SET);
+	}
+	
+	// Mode for DATA or XA Stream
+	if (com == CdlSetmode)
+	{
+		// 0xE8 = 
+		//	CdlModeSpeed (double speed)
+		//	CdlModeRT (ADPCM xa streaming)
+		//	CdlModeSize1 (sector size = 2340, not 2048)
+		//	CdlModeSF (subheader filter)
+		if(buf[0] == 0xE8)
+		{
+			// TODO: EuroAli XA system
+		}
+		
+		if(buf[0] == CdlModeSpeed)
+		{
+			// regular file IO
+		}
 	}
 	
 	// TODO: handle v1 failures
