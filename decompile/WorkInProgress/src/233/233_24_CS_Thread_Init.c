@@ -78,8 +78,8 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
     // cutscene obj
     cs = t->object;
 
-    cs->metadata = (int*)(cs + 0x13);
-    cs->unk48 = 0;
+    cs->metadata = (int*)&cs->decodedOpcode;
+    cs->frameOverrideRoot = 0;
     cs->prevOpcode = -1; // 0xFFFFFFFF
 
     // disable subtitles?
@@ -159,7 +159,7 @@ struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, 
             // NDI_KART 0,1,2,3
             if (modelID - NDI_KART0 < 4)
             {
-                cs[0x12] = modelID * 8 + -0x7ff492d8;
+                cs->frameOverrideRoot = (int*)(modelID * 8 + -0x7ff492d8);
             }
             goto LAB_800af5ec;
         }
@@ -227,7 +227,7 @@ LAB_800af5ec:
 
     meta = (short*)cs->metadata;
 
-    cs->unk18 = (int)meta[4];
+    cs->unk18 = cs->metadata[2];
 
     cs->unk14 = meta[2] + (short)(((DECOMP_MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
 
@@ -271,7 +271,7 @@ LAB_800af5ec:
         cs->unk24 = param_3[0xe] & 0xfff;
     }
 
-    cs->unk44[0] = 0xff;
+    cs->particleID = 0xff;
     
     cs->unk28 = 0;
     cs->unk1e = 0;

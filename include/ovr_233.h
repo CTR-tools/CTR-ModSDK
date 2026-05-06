@@ -57,6 +57,25 @@ struct unknown233
 	int unknown3;
 };
 
+union CsOpcodeArg
+{
+	int i;
+	u_int u;
+	char* ptr;
+};
+
+struct CsOpcodeMeta
+{
+	short opcode;
+	short animIndex;
+	short frameStart;
+	short frameEnd;
+	union CsOpcodeArg arg0; // shorts 4/5
+	union CsOpcodeArg arg1; // shorts 6/7
+	short rotStart;
+	short rotEnd;
+};
+
 struct CutsceneObj
 {
 	// 0x0
@@ -120,20 +139,33 @@ struct CutsceneObj
 	} Subtitles;
 
 
-	#if 0
 	// 0x38
 	char* currOpcode[2];
 	// 0x40
 	char* prevOpcode;
 
 	// 0x44
-	u_char unk44[4];
-	// 0x48
-	int unk48;
-	#endif
+	char particleID;
+	// 0x45
+	char unk45;
+	// 0x46
+	char unk46;
+	// 0x47
+	char animIndex;
 
-	// size is supposedly 0x60, some things are still missing
+	// 0x48
+	int* frameOverrideRoot;
+
+	// 0x4c
+	struct CsOpcodeMeta decodedOpcode;
 };
+
+#ifndef REBUILD_PC
+_Static_assert(sizeof(struct CsOpcodeMeta) == 0x14);
+_Static_assert(OFFSETOF(struct CutsceneObj, frameOverrideRoot) == 0x48);
+_Static_assert(OFFSETOF(struct CutsceneObj, decodedOpcode) == 0x4c);
+_Static_assert(sizeof(struct CutsceneObj) == 0x60);
+#endif
 
 enum BOSS_CUTSCENE_ORDER
 {
@@ -278,7 +310,40 @@ extern struct
 
 
 	// TODO: Divide OVR_233 into 'real' sections
-	char fill3[0x5FF4];
+	char fill3_beforeCutsceneOpcodes[0x3128];
+
+	// 800b45bc
+	char* introCutsceneOpcodes[0x47];
+
+	// 800b46d8
+	char introCutsceneOpcodeData[0x74];
+
+	// 800b474c
+	char* creditsCutsceneOpcodes[0x77];
+
+	// 800b4928
+	char fill3_afterCreditsOpcodes_beforeAdvCharSelectOpcodes[0x6bc];
+
+	// 800b4fe4
+	char* advCharSelectSelectOpcodes[8];
+
+	// 800b5004
+	char fill3_afterAdvCharSelectSelectOpcodes[0x20];
+
+	// 800b5024
+	char* advCharSelectDeselectOpcodes[8];
+
+	// 800b5044
+	char fill3_afterAdvCharSelectDeselectOpcodes_beforeClearBox[0x2430];
+
+	// 800b7474
+	Color introClearBoxColor;
+
+	// 800b7478
+	RECT introClearBoxRect;
+
+	// 800b7480
+	short creditsDancerRotOffset[4];
 	
 	
 	
