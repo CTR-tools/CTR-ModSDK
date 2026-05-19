@@ -30,11 +30,11 @@ static inline void CS_RestoreDecodedOpcode(struct CutsceneObj* cs, const int in[
 }
 
 // pass instance and object
-bool CS_Thread_UseOpcode(struct Instance* instance, struct CutsceneObj* cs)
+int CS_Thread_UseOpcode(struct Instance* instance, struct CutsceneObj* cs)
 
 {
   unsigned char numPlayers;
-  bool frameBoundaryHit;
+  int frameBoundaryHit;
   short numCamPathPoints;
   short gameModeTarget;
   unsigned short clockEffectFlags;
@@ -151,11 +151,11 @@ afterPodiumFirstModelCheck:
 reloadAdvCharSelectOpcodeState:
           cs->unk18 = ((int*)&cs->decodedOpcode)[2];
           iVar8 = MixRNG_Scramble();
-          opcodeMeta = &cs->decodedOpcode;
+          opcodeMeta = (struct CsOpcodeMeta *)cs->metadata;
           opcodeMetaShorts = (short*)opcodeMeta;
           cs->unk14 =
                opcodeMeta->frameStart +
-               (short)((int)((iVar8 >> 2 & 0xfffU) *
+               (short)((int)((iVar8 >> 2 & 0xfff) *
                             (((int)opcodeMeta->frameEnd - (int)opcodeMeta->frameStart) + 1)) >>
                       0xc);
         }
@@ -183,7 +183,7 @@ reloadAdvCharSelectOpcodeState:
   // elapsed time per frame
   elapsedTimeRemaining = gGT->elapsedTimeMS;
 
-  opcodeMeta = &cs->decodedOpcode;
+  opcodeMeta = (struct CsOpcodeMeta *)cs->metadata;
   opcodeMetaShorts = (short*)opcodeMeta;
   animIndex = (int)opcodeMeta->animIndex;
 
@@ -495,14 +495,14 @@ processOpcode:
       opcodeDuration = ((int)((iVar10 >> 2 & 0xfffU) * (((int)opcodeMeta->frameEnd - (int)opcodeMeta->frameStart) + 1)) >> 0xc)
                  + (int)opcodeMeta->frameStart;
     }
-    frameBoundaryHit = false;
+    frameBoundaryHit = 0;
     if (opcodeMeta->arg1.i < opcodeMeta->arg0.i) {
       iVar10 = opcodeMeta->arg1.i * 0x20;
       iVar12 = iVar12 - elapsedTimeRemaining;
       if (iVar12 < iVar10) {
         elapsedTimeRemaining = iVar10 - iVar12;
 markAnimationBoundary:
-        frameBoundaryHit = true;
+        frameBoundaryHit = 1;
       }
     }
     else {
@@ -515,7 +515,7 @@ markAnimationBoundary:
       nextFrameTime = (iVar10 + 1) * 0x20;
       iVar12 = iVar12 + elapsedTimeRemaining;
       if (nextFrameTime <= iVar12) {
-        frameBoundaryHit = true;
+        frameBoundaryHit = 1;
         elapsedTimeRemaining = 0;
         if (nextFrameTime != 0) {
           elapsedTimeRemaining = iVar12 + (iVar10 + 1) * -0x20;

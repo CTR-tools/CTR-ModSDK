@@ -113,7 +113,7 @@ struct CutsceneObj
 	short unk22;
 	short unk24;
 	short unk26;
-	short unk28;
+	u_short unk28;
 
 	// 0x2a
 	short scaleSpeed;
@@ -151,7 +151,7 @@ struct CutsceneObj
 	// 0x46
 	char unk46;
 	// 0x47
-	char animIndex;
+	u_char animIndex;
 
 	// 0x48
 	int* frameOverrideRoot;
@@ -277,8 +277,7 @@ extern struct
 
 
 	// 800b0b7c
-	u_short VertSplitLine;
-	u_short VertSplit_unknown;
+	int VertSplitLine;
 	
 	// 800b0b80
 	int boolLoadNextSwap;
@@ -304,37 +303,92 @@ extern struct
 
 
 	// 800b146c
-	struct unknown233* pointerToWhateverThisMeans[10];
+	struct unknown233 pointerToWhateverThisMeans[10];
 
 
+	char fill3_beforeTawnaScripts[0x2d0];
 
+	// 800b17b4
+	char script_tawnaNormal[0x28];
 
-	// TODO: Divide OVR_233 into 'real' sections
-	char fill3_beforeCutsceneOpcodes[0x3128];
+	// 800b17dc
+	char script_tawnaCredits[0x164c];
+
+	// 800b2e28
+	char script_default[0x18];
+
+	// 800b2e40
+	char script_dingofire[0x38];
+
+	// 800b2e78
+	char *danceFirstScripts[0x10];
+
+	// 800b2eb8
+	char danceOtherOpcodeData[0x12d4];
+
+	// 800b418c
+	char *danceOtherScripts[0x10];
+
+	// 800b41cc
+	char introModelOpcodeData[0x3b0];
+
+	// 800b457c
+	char *introModelScripts[0x10];
 
 	// 800b45bc
-	char* introCutsceneOpcodes[0x47];
+	char introCutsceneOpcodeData[0x11c];
 
 	// 800b46d8
-	char introCutsceneOpcodeData[0x74];
+	// NOTE(aalhendi): Retail PTR_DAT_800b45bc_800b46d8.
+	char *introCutsceneOpcodes[9];
+
+	// 800b46fc
+	char introEndingOpcodeData[0x50];
 
 	// 800b474c
-	char* creditsCutsceneOpcodes[0x77];
+	char creditsCutsceneOpcodeData[0x1dc];
 
 	// 800b4928
-	char fill3_afterCreditsOpcodes_beforeAdvCharSelectOpcodes[0x6bc];
+	// NOTE(aalhendi): Retail PTR_DAT_800b474c_800b4928.
+	char *creditsCutsceneOpcodes[20];
 
-	// 800b4fe4
-	char* advCharSelectSelectOpcodes[8];
+	// 800b4978
+	// ND crate intro script starts at offset 0x18.
+	char creditsOpcodeData[0x40];
 
-	// 800b5004
-	char fill3_afterAdvCharSelectSelectOpcodes[0x20];
+	// 800b49b8
+	char boxAndAdvCharSelectOpcodeData[0x10c4];
 
-	// 800b5024
-	char* advCharSelectDeselectOpcodes[8];
+	// 800b5a7c
+	// NOTE(aalhendi): Retail PTR_DAT_800b49b8_800b5a7c.
+	char *boxModelScripts[0x2b];
 
-	// 800b5044
-	char fill3_afterAdvCharSelectDeselectOpcodes_beforeClearBox[0x2430];
+	// 800b5b28
+	// NOTE(aalhendi): Retail PTR_DAT_800b4fe4_800b5b28.
+	char *advCharSelectSelectOpcodes[8];
+
+	// 800b5b48
+	// NOTE(aalhendi): Retail PTR_DAT_800b5024_800b5b48.
+	char *advCharSelectDeselectOpcodes[8];
+
+	char fill3_afterAdvCharSelect[0x8];
+
+	// 800b5b70
+	char cs_initMatrixData[0x17c0];
+
+	// 800b7330
+	// NOTE(aalhendi): Retail PTR_DAT_800b5b70_800b7330.
+	struct
+	{
+		void *data;
+		int count;
+	} cs_initMatrixTable[4];
+
+	// 800b7350
+	char cs_initMatrixBool;
+
+	// 800b7351
+	char fill3_afterInitMatrix_beforeClearBox[0x123];
 
 	// 800b7474
 	Color introClearBoxColor;
@@ -430,7 +484,8 @@ struct OVR233_Garage
 	short delayOneSecond;
 
 	// 800b8640
-	int boolSelected;
+	short boolSelected;
+	short padding2;
 
 	// === End of Garage Data ===
 	// Credits RDATA starts next byte
@@ -448,14 +503,14 @@ struct OVR233_Garage
 struct CreditsLevHeader
 {
 	int size;
-	int numStrings;
-	
-	//char* ptrStrings[0];
+	short numStrings;
+	short unused_06;
+
+	// char* ptrStrings[0];
 };
 
-#define CREDITSHEADER_GETSTRINGS(x) \
-	((unsigned int)x + sizeof(struct CreditsLevHeader))
-	
+#define CREDITSHEADER_GETSTRINGS(x) ((unsigned int)x + sizeof(struct CreditsLevHeader))
+
 struct CreditsObj
 {
 	// 800b94bc (000) 
@@ -475,29 +530,35 @@ struct CreditsObj
 	{
 		char data[0x18];
 	} data_0x18_0x5[5];
-	
-	// 800b97dc (320) 
-	int countdown;
-	
-	// 800b97e0 (324) 
+
+	// 800b97dc (320)
+	short countdown;
+
+	// 800b97de (322)
+	short unused_322;
+
+	// 800b97e0 (324)
 	int unk;
-	
-	// 800b97e4 (328) 
-	struct Instance* creditDanceInst; // base for copies
-	
-	// 800b97e8 (32c) 
-	int credits_posY;
-	
-	// 800b97ec (330) 
-	char* credits_topString;
-	
-	// 800b97f0 (334) 
-	char* epilogue_topString;
-	
-	// 800b97f4 (338) 
-	char* epilogue_nextString;
-	
-	// 800b97f8 (33c) 
+
+	// 800b97e4 (328)
+	struct Instance *creditDanceInst; // base for copies
+
+	// 800b97e8 (32c)
+	short credits_posY;
+
+	// 800b97ea (32e)
+	short unused_32e;
+
+	// 800b97ec (330)
+	char *credits_topString;
+
+	// 800b97f0 (334)
+	char *epilogue_topString;
+
+	// 800b97f4 (338)
+	char *epilogue_nextString;
+
+	// 800b97f8 (33c)
 	short epilogueCount200;
 	
 	// 800b97fa (33e)
@@ -525,14 +586,20 @@ struct Ovr233_Credits_BSS
 	struct Instance* dancerInst_invisible;
 	
 	// 800b94a8
-	int numStrings;
-	
+	short numStrings;
+
+	// 800b94aa
+	short unused_94aa;
+
 	// 800b94ac
-	char** ptrStrings;
-	
+	char **ptrStrings;
+
 	// 800b94b0
-	int boolAllBlue;
-	
+	short boolAllBlue;
+
+	// 800b94b2
+	short unused_94b2;
+
 	// 800b94b4
 	int unused[2];
 	
