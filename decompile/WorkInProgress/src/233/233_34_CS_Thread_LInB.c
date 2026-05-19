@@ -42,8 +42,8 @@ void CS_Thread_LInB(struct Instance* inst)
     // Give Instance to thread
     t->inst = inst;
 
-    cs->metadata = (int*)(cs + 0x13);
-    cs.prevOpCode = -1; // 0xFFFFFFFF
+    cs->metadata = (int*)&cs->decodedOpcode;
+    cs->prevOpcode = -1; // 0xFFFFFFFF
 
     // disable subtitles
     cs->Subtitles.lngIndex = -1;
@@ -73,9 +73,9 @@ void CS_Thread_LInB(struct Instance* inst)
 
     CS_ScriptCmd_OpcodeAt(cs, puVar6);
 
-    meta = cs->metadata;
+    meta = (short*)cs->metadata;
 
-    cs->unk18 = (int)meta[4];
+    cs->unk18 = cs->metadata[2];
     cs->unk14 = meta[2] + (short)(((DECOMP_MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
 
     cs->unk1c = 0;
@@ -86,11 +86,11 @@ void CS_Thread_LInB(struct Instance* inst)
 
     cs->unk1e = 0;
     cs->flags = 0;
-    cs->unk48 = 0;
+    cs->frameOverrideRoot = 0;
     
     cs->scaleSpeed = 0;
     cs->desiredScale = 0x1000;
-    cs->unk44[0] = 0xff;
+    cs->particleID = 0xff;
     cs->unk4 = 0;
     cs->unk6 = 0;
     cs->unk8 = 0x2e808080;

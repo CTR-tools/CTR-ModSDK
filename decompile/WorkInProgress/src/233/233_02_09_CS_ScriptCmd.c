@@ -25,6 +25,7 @@ void CS_ScriptCmd_ReadOpcode_Main(struct CutsceneObj* cs)
 {
   char meta;
   char* opcodes;
+  struct CsOpcodeMeta* decoded;
   short* offsets;
   char *local_18[2];
 
@@ -34,7 +35,8 @@ void CS_ScriptCmd_ReadOpcode_Main(struct CutsceneObj* cs)
   if (opcodes != cs->currOpcode[0])
   {
     // char offset of meta data
-    offsets = (short*)cs->metadata;
+    decoded = (struct CsOpcodeMeta*)cs->metadata;
+    offsets = (short*)decoded;
 
     // remember 0x38 (curr opcode) as 0x40 (prev opcode)
     cs->prevOpcode = opcodes;
@@ -83,27 +85,27 @@ void CS_ScriptCmd_ReadOpcode_Main(struct CutsceneObj* cs)
     if ((meta & 8) == 0)
     {
       // clear XA category
-      *(u_int*)(offsets[4]) = 0;
+      decoded->arg0.u = 0;
     }
     // & 8
     // CDSYS_XAPlay -- Category (param1)
     else
     {
       // set category
-      *(u_int*)(offsets[4]) = CS_ScriptCmd_ReadOpcode_GetInt(local_18);
+      decoded->arg0.u = CS_ScriptCmd_ReadOpcode_GetInt(local_18);
     }
 
     if ((meta & 0x10) == 0)
     {
       // clear XA index
-      *(int*)offsets[6] = 0;
+      decoded->arg1.i = 0;
     }
     // & 0x10
     // CDSYS_XAPlay -- Index (param2)
     else
     {
       // set index
-      *(u_int*)(offsets[6]) = CS_ScriptCmd_ReadOpcode_GetInt(local_18);
+      decoded->arg1.u = CS_ScriptCmd_ReadOpcode_GetInt(local_18);
     }
 
     // & 0x20,
@@ -116,7 +118,7 @@ void CS_ScriptCmd_ReadOpcode_Main(struct CutsceneObj* cs)
         local_18[0] += 1;
       }
 
-      *(u_int*)(offsets[6]) = CS_ScriptCmd_ReadOpcode_GetInt_dup(local_18);
+      decoded->arg1.u = CS_ScriptCmd_ReadOpcode_GetInt_dup(local_18);
 
       local_18[0] += 1;
     }
