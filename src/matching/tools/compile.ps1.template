@@ -1,0 +1,117 @@
+# Per-function compile.ps1 template (Windows PowerShell, no WSL needed).
+#
+# Copy this into your per-function directory next to base.c/target.o.
+# The permuter picks it up as the build script and calls it as:
+#   compile.ps1 <input.c> -o <output.o>
+#
+# Pipeline: windows-gcc-psx gcc.exe -> Python maspsx -> mipsel-none-elf-as.
+#
+# Honours optional environment overrides:
+#   $env:PYEXE     — full path to python.exe
+#   $env:MIPSAS    — full path to mipsel-none-elf-as.exe
+#   $env:GP_VALUE  — if set, runs patch_gprel.py on the .o with this gp
+#                    (needed by a few functions, e.g. 0x8008CF6C for
+#                    VehPhysCrash_AI / VehPhysCrash_Attack)
+#
+# `$args` is used instead of a param() block so the literal `-o` the
+# permuter passes between input.c and output.o isn't bound as a switch.
+
+$ErrorActionPreference = 'Stop'
+
+if ($args.Count -ne 3 -or $args[1] -ne '-o') {
+    Write-Error "Usage: compile.ps1 <input.c> -o <output.o>  (got: $args)"
+    exit 1
+}
+$InputC  = $args[0]
+$OutputO = $args[2]
+
+# --- Resolve repo-relative tool paths --------------------------------------
+# Expects to live in <repo>/src/matching/tools/<function-dir>/compile.ps1.
+
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ToolsDir  = Split-Path -Parent $ScriptDir
+$GccDir    = Join-Path $ToolsDir 'windows-gcc-psx\gcc-2.8.1-psx'
+$GccExe    = Join-Path $GccDir   'gcc.exe'
+$Maspsx    = Join-Path $ToolsDir 'maspsx\maspsx.py'
+$PatchGp   = Join-Path $ToolsDir 'permuter\patch_gprel.py'
+
+$MipsAs = if ($env:MIPSAS) { $env:MIPSAS } else {
+    # `%APPDATA%\mips\mips` is a Windows directory junction maintained by
+    # the pcsx-redux installer pointing at the active version. Python's
+    # pathlib can't see through that style of reparse point reliably, so
+    # resolve it now and hand maspsx the real versioned path.
+    $junction = Join-Path $env:APPDATA 'mips\mips'
+    if (Test-Path $junction) {
+        $target = (Get-Item $junction).Target
+        if ($target) { Join-Path $target[0] 'bin\mipsel-none-elf-as.exe' }
+        else         { Join-Path $junction  'bin\mipsel-none-elf-as.exe' }
+    } else {
+        Join-Path $env:APPDATA 'mips\mips\bin\mipsel-none-elf-as.exe'
+    }
+}
+
+$PyExe = if ($env:PYEXE) { $env:PYEXE } else {
+    $cand = Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'
+    if (Test-Path $cand) { $cand } else { 'python' }
+}
+
+foreach ($t in @($GccExe, $Maspsx, $MipsAs)) {
+    if (-not (Test-Path $t)) { Write-Error "Missing tool: $t"; exit 1 }
+}
+
+# --- Stage input.c + sibling .h files in a Windows-side temp dir -----------
+
+$TmpDir = Join-Path $env:TEMP ("matching." + [System.Guid]::NewGuid().ToString('N').Substring(0,8))
+New-Item -ItemType Directory -Path $TmpDir -Force | Out-Null
+try {
+    $SrcDir = Split-Path -Parent (Resolve-Path $InputC).Path
+    Copy-Item -Path $InputC -Destination (Join-Path $TmpDir 'input.c')
+    Get-ChildItem -Path $SrcDir -Filter '*.h' -ErrorAction SilentlyContinue |
+        ForEach-Object { Copy-Item $_.FullName $TmpDir }
+
+    # --- gcc.exe: .c -> .s -------------------------------------------------
+
+    $gccArgs = @(
+        "-B${GccDir}\"
+        '-I'; $TmpDir
+        '-DUSE_REAL_GTE=1'
+        '-S'
+        '-Wa,--aspsx-version=2.77'
+        '-mel'; '-g'; '-O2'
+        (Join-Path $TmpDir 'input.c')
+        '-o'; (Join-Path $TmpDir 'output.s')
+    )
+    & $GccExe @gccArgs
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    if (-not (Test-Path (Join-Path $TmpDir 'output.s'))) {
+        Write-Error 'gcc produced no output.s'
+        exit 1
+    }
+
+    # gcc on Windows writes CRLF; strip CR so maspsx and the assembler
+    # see LF-only.
+    $sPath = Join-Path $TmpDir 'output.s'
+    $bytes = [System.IO.File]::ReadAllBytes($sPath)
+    $clean = New-Object System.Collections.Generic.List[byte]
+    foreach ($b in $bytes) { if ($b -ne 0x0D) { $clean.Add($b) } }
+    [System.IO.File]::WriteAllBytes($sPath, $clean.ToArray())
+
+    # --- maspsx: .s -> .o --------------------------------------------------
+    # maspsx's file-input mode strips PSY-Q debug directives differently
+    # than its stdin path; stay on stdin. PowerShell's native pipe adds
+    # a UTF-8 BOM, so delegate the stdin redirect to cmd.exe (binary-clean).
+    $maspsxCmd = ('"{0}" "{1}" --aspsx-version=2.77 --expand-div --run-assembler ' +
+                  '--gnu-as-path "{2}" -o "{3}" < "{4}"') -f
+                  $PyExe, $Maspsx, $MipsAs, $OutputO, $sPath
+    cmd /c $maspsxCmd
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+    # Optional GP-relative relocation fixup for functions that use $gp.
+    if ($env:GP_VALUE) {
+        & $PyExe $PatchGp $env:GP_VALUE $OutputO
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    }
+}
+finally {
+    Remove-Item -Recurse -Force $TmpDir -ErrorAction SilentlyContinue
+}

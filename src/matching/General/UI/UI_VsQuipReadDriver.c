@@ -2,19 +2,18 @@
 // Should be score 0, needs types analysis/replacement
 // ===================================================
 
-typedef unsigned int uint;
-typedef unsigned int undefined4;
-typedef unsigned char byte;
+#include "UI.h"
 
-uint func_80054A08(int param_1, int param_2, int param_3)
+u32 func_80054A08(int param_1, int param_2, int param_3)
 {
-    switch (param_3) {
-        case 1:
-            return (uint)*(byte *)(param_1 + param_2);
-        case 2:
-            return (int)*(short *)(param_1 + param_2);
-        case 4:
-            return *(undefined4 *)(param_1 + param_2);
+    switch (param_3)
+    {
+    case 1:
+        return (u32)*(u8*)(param_1 + param_2);
+    case 2:
+        return (int)*(short*)(param_1 + param_2);
+    case 4:
+        return *(u32*)(param_1 + param_2);
     }
     return 0;
 }

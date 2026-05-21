@@ -1,0 +1,70 @@
+#!/bin/bash
+# Per-function compile.sh template (Git Bash on Windows; Linux works too).
+#
+# Copy this into your per-function directory next to base.c/target.o and
+# the permuter will pick it up. Invoked by the permuter as:
+#   compile.sh <input.c> -o <output.o>
+#
+# Pipeline: windows-gcc-psx gcc.exe -> Python maspsx -> mipsel-none-elf-as.
+# No WSL involved.
+#
+# Honours optional environment overrides:
+#   PYEXE       — full path to python.exe / python3
+#   MIPSAS_WIN  — full Windows path to the mipsel assembler
+#   GP_VALUE    — if set, runs patch_gprel.py on the .o with this gp
+#                 (needed by a few functions, e.g. 0x8008CF6C for
+#                 VehPhysCrash_AI / VehPhysCrash_Attack)
+set -e
+
+# The pcsx-redux mips toolchain ships its own cygwin-style cp/sed/mktemp
+# whose path translation differs from Git Bash's. Put Git Bash's utils
+# first so $TMPDIR/... paths work consistently.
+export PATH="/usr/bin:$PATH"
+
+# Resolve repo-relative tool paths. This script expects to live in
+# <repo>/src/matching/tools/<function-dir>/compile.sh — i.e. its parent
+# is the tools/ dir.
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -W)"
+TOOLS_DIR="$(cd "$SCRIPT_DIR/.." && pwd -W)"
+GCC_DIR="${TOOLS_DIR}/windows-gcc-psx/gcc-2.8.1-psx"
+MASPSX="${TOOLS_DIR}/maspsx/maspsx.py"
+PATCH_GPREL="${TOOLS_DIR}/permuter/patch_gprel.py"
+
+MIPSAS_WIN="${MIPSAS_WIN:-$(cygpath -m "$APPDATA/mips/mips/bin/mipsel-none-elf-as.exe" 2>/dev/null || echo "")}"
+if [ -z "$PYEXE" ]; then
+    cand="$(cygpath -m "$LOCALAPPDATA/Programs/Python/Python312/python.exe" 2>/dev/null || true)"
+    if [ -n "$cand" ] && [ -f "$cand" ]; then
+        PYEXE="$cand"
+    else
+        PYEXE="python"
+    fi
+fi
+
+# Stage in a Windows-side temp dir so gcc.exe, Python, and the
+# assembler all see the same paths (no \\wsl.localhost\... and no
+# Cygwin mounts).
+WIN_TEMP="$(cygpath -u "$LOCALAPPDATA")/Temp"
+TMPDIR=$(mktemp -d -p "$WIN_TEMP" matching.XXXXXX)
+trap "rm -rf '$TMPDIR'" EXIT
+TMP_WIN="$(cygpath -m "$TMPDIR")"
+
+SRCDIR="$(cygpath -u "$(dirname "$(cygpath -w "$1")")")"
+cp "$1" "$TMPDIR/input.c"
+for h in "$SRCDIR"/*.h; do
+    [ -f "$h" ] && cp "$h" "$TMPDIR/"
+done
+
+"$GCC_DIR/gcc.exe" "-B${GCC_DIR}/" -I "${TMP_WIN}" -DUSE_REAL_GTE=1 \
+    -S -Wa,--aspsx-version=2.77 -mel -g -O2 \
+    "${TMP_WIN}/input.c" -o "${TMP_WIN}/output.s"
+
+[ -f "$TMPDIR/output.s" ] || exit 1
+sed -i 's/\r$//' "$TMPDIR/output.s"
+
+"$PYEXE" "$MASPSX" --aspsx-version=2.77 --expand-div --run-assembler \
+    --gnu-as-path "$MIPSAS_WIN" -o "$3" < "$TMPDIR/output.s"
+
+# Optional GP-relative relocation fixup for functions that use $gp.
+if [ -n "${GP_VALUE:-}" ]; then
+    "$PYEXE" "$PATCH_GPREL" "$GP_VALUE" "$3"
+fi

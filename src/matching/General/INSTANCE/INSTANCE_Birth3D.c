@@ -2,13 +2,13 @@
 // Should be score 0, needs types analysis/replacement
 // ===================================================
 
-typedef unsigned int undefined4;
+#include "INSTANCE.h"
 
-extern char *D_8008D2AC;
-extern int func_800310D4(void *pool);
-extern void func_80030778(int inst, undefined4 model, undefined4 name, undefined4 thread, undefined4 flags);
+extern char* D_8008D2AC;
+extern int func_800310D4(void* pool);
+extern void func_80030778(int inst, u32 model, u32 name, u32 thread, u32 flags);
 
-int func_8003086C(undefined4 param_1, undefined4 param_2, undefined4 param_3)
+int func_8003086C(u32 param_1, u32 param_2, u32 param_3)
 {
     int iVar1;
 

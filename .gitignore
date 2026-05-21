@@ -58,3 +58,7 @@ games/settings.json
 mods/MyMods/*
 
 log.txt
+
+# Matching project — user-placed toolchain & data (see src/matching/README.md)
+src/matching/tools/gcc/
+src/matching/tools/SCUS-94426.s

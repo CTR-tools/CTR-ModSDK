@@ -23,3 +23,12 @@
 	path = externals/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib
 
+[submodule "src/matching/tools/permuter"]
+	path = src/matching/tools/permuter
+	url = https://github.com/simonlindholm/decomp-permuter.git
+[submodule "src/matching/tools/maspsx"]
+	path = src/matching/tools/maspsx
+	url = https://github.com/mkst/maspsx.git
+[submodule "src/matching/tools/windows-gcc-psx"]
+	path = src/matching/tools/windows-gcc-psx
+	url = https://github.com/DataPlusProgram/windows-gcc-psx.git

@@ -1,0 +1,2 @@
+func_name = "VehPhysProc_SpinStop_Update"
+compiler_type = "gcc"
