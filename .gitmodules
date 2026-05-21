@@ -25,7 +25,8 @@
 
 [submodule "src/matching/tools/permuter"]
 	path = src/matching/tools/permuter
-	url = https://github.com/simonlindholm/decomp-permuter.git
+	url = https://github.com/TheUbMunster/decomp-permuter.git
+	branch = windows-support
 [submodule "src/matching/tools/maspsx"]
 	path = src/matching/tools/maspsx
 	url = https://github.com/mkst/maspsx.git
