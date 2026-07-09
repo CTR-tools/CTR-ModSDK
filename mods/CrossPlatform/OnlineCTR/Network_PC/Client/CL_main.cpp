@@ -1,22 +1,36 @@
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
-#ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#ifdef _WIN32
+  #define WIN32_LEAN_AND_MEAN
+  #include <windows.h>
+  #ifndef _WINSOCK_DEPRECATED_NO_WARNINGS
+  #define _WINSOCK_DEPRECATED_NO_WARNINGS
+  #endif
+  #include <Psapi.h>
+  #pragma comment (lib, "Ws2_32.lib")
+  #pragma comment (lib, "Mswsock.lib")
+  #pragma comment (lib, "AdvApi32.lib")
+#else
+  // Linux / POSIX
+  #include <unistd.h>
+  #include <sys/mman.h>
+  #include <sys/stat.h>
+  #include <fcntl.h>
+  #include <dirent.h>
+  #include <signal.h>
+  #include <ctype.h>
+  #include <errno.h>
+  #include <time.h>
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <Psapi.h>
-//#include <chrono>
-//#include <thread>
-
-#pragma comment (lib, "Ws2_32.lib")
-#pragma comment (lib, "Mswsock.lib")
-#pragma comment (lib, "AdvApi32.lib")
 
 #define WINDOWS_INCLUDE
+// In C++ mode, _Static_assert is not valid - use static_assert instead.
+// Override the __GNUC__ path in global.h which would use _Static_assert.
+#ifdef __cplusplus
+  #define STATIC_ASSERT2 static_assert
+#endif
 #include "../../../../../decompile/General/AltMods/OnlineCTR/global.h"
 #include <enet/enet.h>
 
@@ -29,8 +43,21 @@ char name[100];
 ENetHost* clientHost;
 ENetPeer* serverPeer;
 
-#ifdef __WINDOWS__
+#ifdef _WIN32
 void usleep(__int64 usec);
+#endif
+
+// Cross-platform compatibility macros
+#ifdef _WIN32
+  #define CLEAR_SCREEN() system("cls")
+  #define STRCPY_SAFE(dst, size, src) strcpy_s(dst, size, src)
+  #define SPRINTF_SAFE(dst, size, fmt, ...) sprintf_s(dst, size, fmt, ##__VA_ARGS__)
+  #define SCANF_SAFE(fmt, buf, size) scanf_s(fmt, buf, (int)size)
+#else
+  #define CLEAR_SCREEN() system("clear")
+  #define STRCPY_SAFE(dst, size, src) strncpy(dst, src, size)
+  #define SPRINTF_SAFE(dst, size, fmt, ...) snprintf(dst, size, fmt, ##__VA_ARGS__)
+  #define SCANF_SAFE(fmt, buf, size) scanf(fmt, buf)
 #endif
 
 struct Gamepad
@@ -435,7 +462,7 @@ void ProcessNewMessages()
 
 		case ENET_EVENT_TYPE_DISCONNECT:
 			// command prompt reset
-			system("cls");
+			CLEAR_SCREEN();
 			PrintBanner(SHOW_NAME);
 			printf("\nClient: Connection Dropped (Server Full or Server Offline)...  ");
 
@@ -587,7 +614,7 @@ void StatePC_Launch_PickServer()
 		// EUROPE (Unknown Location)
 		case 0:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "eur1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -597,7 +624,7 @@ void StatePC_Launch_PickServer()
 		// USA (New York City)
 		case 1:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "usa3.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -607,7 +634,7 @@ void StatePC_Launch_PickServer()
 		// Mexico (USA West)
 		case 2:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "usa2.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -617,7 +644,7 @@ void StatePC_Launch_PickServer()
 		// BRAZIL (Unknown Location)
 		case 3:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "brz1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -627,7 +654,7 @@ void StatePC_Launch_PickServer()
 		// AUSTRALIA (Sydney)
 		case 4:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "aus1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 2096;
 
@@ -637,7 +664,7 @@ void StatePC_Launch_PickServer()
 		// SINGAPORE (Unknown Location)
 		case 5:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "sgp1.online-ctr.net");
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -647,7 +674,7 @@ void StatePC_Launch_PickServer()
 		// BETA (New Jersey)
 		case 6:
 		{
-			strcpy_s(dns_string, sizeof(dns_string), "usa1.online-ctr.net"); 
+			STRCPY_SAFE(dns_string, sizeof(dns_string), "usa1.online-ctr.net"); 
 			enet_address_set_host(&addr, dns_string);
 			addr.port = 64001;
 
@@ -676,7 +703,7 @@ void StatePC_Launch_PickServer()
 			ip[strcspn(ip, "\n")] = '\0';
 
 			// check if the input is empty and set it to the default IP if so
-			if (strlen(ip) == 0) strcpy_s(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
+			if (strlen(ip) == 0) STRCPY_SAFE(ip, IP_ADDRESS_SIZE, DEFAULT_IP);
 
 		private_server_port:
 			// port number
@@ -1103,18 +1130,144 @@ void (*ClientState[]) () = {
 };
 
 // for EnumProcessModules
+#ifdef _WIN32
 #pragma comment(lib, "psapi.lib")
+#endif
 
 char* progName;
+
+// ==== Linux-specific helper functions ====
+#ifndef _WIN32
+
+// Find DuckStation PID by scanning /proc/
+static int findDuckStationPID(int* numInstances)
+{
+	DIR* procDir = opendir("/proc");
+	if (!procDir) return -1;
+
+	struct dirent* entry;
+	int duckPID = -1;
+	*numInstances = 0;
+
+	while ((entry = readdir(procDir)) != NULL)
+	{
+		// Only look at numeric directories (PIDs)
+		int pid = atoi(entry->d_name);
+		if (pid <= 0) continue;
+
+		char commPath[256];
+		snprintf(commPath, sizeof(commPath), "/proc/%d/comm", pid);
+
+		FILE* f = fopen(commPath, "r");
+		if (!f) continue;
+
+		char commName[256];
+		int found = 0;
+		if (fgets(commName, sizeof(commName), f))
+		{
+			// Remove trailing newline
+			commName[strcspn(commName, "\n")] = '\0';
+
+			// Check if process name starts with "duckstation"
+			if (strncmp(commName, "duckstation", 11) == 0)
+			{
+				found = 1;
+			}
+		}
+		fclose(f);
+
+		if (!found)
+		{
+			char cmdPath[256];
+			snprintf(cmdPath, sizeof(cmdPath), "/proc/%d/cmdline", pid);
+			FILE* fCmd = fopen(cmdPath, "r");
+			if (fCmd)
+			{
+				char cmdLine[512];
+				size_t bytesRead = fread(cmdLine, 1, sizeof(cmdLine) - 1, fCmd);
+				if (bytesRead > 0)
+				{
+					cmdLine[bytesRead] = '\0';
+					for (size_t i = 0; i < bytesRead; i++) {
+						cmdLine[i] = tolower((unsigned char)cmdLine[i]);
+					}
+					if (strstr(cmdLine, "duckstation") != NULL && strstr(cmdLine, "grep") == NULL && strstr(cmdLine, "ctr_client") == NULL)
+					{
+						found = 1;
+					}
+				}
+				fclose(fCmd);
+			}
+		}
+
+		if (found)
+		{
+			(*numInstances)++;
+			duckPID = pid;
+		}
+	}
+	closedir(procDir);
+	return duckPID;
+}
+
+// Open DuckStation shared memory on Linux
+static char* openDuckStationShmem(const char* shmName, unsigned int size)
+{
+	char shmPath[256];
+	snprintf(shmPath, sizeof(shmPath), "/%s", shmName);
+
+	int fd = shm_open(shmPath, O_RDWR, 0666);
+	if (fd < 0)
+	{
+		// Try alternate naming convention
+		snprintf(shmPath, sizeof(shmPath), "/duckstation");
+		fd = shm_open(shmPath, O_RDWR, 0666);
+	}
+	if (fd < 0) return NULL;
+
+	char* buf = (char*)mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	close(fd);
+
+	if (buf == MAP_FAILED) return NULL;
+	return buf;
+}
+
+static void platformSleep(int ms)
+{
+	usleep(ms * 1000);
+}
+
+static void platformPause()
+{
+	printf("Press Enter to continue...");
+	getchar();
+}
+
+#else // _WIN32
+
+static void platformSleep(int ms)
+{
+	Sleep(ms);
+}
+
+static void platformPause()
+{
+	system("pause");
+}
+
+#endif // _WIN32
 
 int main(int argc, char *argv[])
 {
 	progName = argv[0];
+
+#ifdef _WIN32
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r); // stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 800, 480 + 35, TRUE);
 	SetConsoleOutputCP(CP_UTF8); // force the output to be unicode (UTF-8)
+#endif
 
 	if (argc == 2)
 	{
@@ -1125,44 +1278,22 @@ int main(int argc, char *argv[])
 		PrintBanner(DONT_SHOW_NAME);
 		// ask for the users online identification
 		printf("Input: Enter Your Online Name: ");
-		scanf_s("%s", name, (int)sizeof(name));
+		SCANF_SAFE("%s", name, sizeof(name));
 	}
 	name[NAME_LEN] = 0; // truncate the name (0 based)
 
 	// show a welcome message
-	system("cls");
+	CLEAR_SCREEN();
 	PrintBanner(SHOW_NAME);
 	printf("\n");
-
-	////this call is only good if we're certain duckstation is *running* (and pine is enabled,
-	//// but that needs to be done manually by the user or by the INI config).
-	//while (!defMemInit()) //returns true if socket is good
-	//{
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-	//}
-
-	//pBuf = ps1mem(0);
-	//octr = pBuf.at<OnlineCTR>(0x8000C000);
-
-	//// initialize enet
-	//if (enet_initialize() != 0)
-	//{
-	//	fprintf(stderr, "Error: Failed to initialize ENet!\n");
-
-	//	return 1;
-	//}
-
-	//atexit(enet_deinitialize);
-	//printf("Client: Waiting for the OnlineCTR binary to load...  ");
-
-	//int sleepCount = 5000;
-	//int enableDeferredGPU = 1;
 
 	int numDuckInstances = 0;
 	int duckPID = -1;
 	const char* duckTemplate = "duckstation";
 	int duckAttempts = 0;
 
+#ifdef _WIN32
+	// === Windows: enumerate processes using Win32 API ===
 	while (numDuckInstances == 0 && duckAttempts < 20)
 	{
 	  // copy from
@@ -1171,7 +1302,7 @@ int main(int argc, char *argv[])
 	  EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded);
 	  cProcesses = cbNeeded / sizeof(DWORD);
 	  
-	  for (int i = 0; i < cProcesses; i++)
+	  for (unsigned int i = 0; i < cProcesses; i++)
 	  {
 	  	DWORD processID = aProcesses[i];
 	  
@@ -1182,9 +1313,9 @@ int main(int argc, char *argv[])
 	  		if (NULL != hProcess)
 	  		{
 	  			HMODULE hMod;
-	  			DWORD cbNeeded;
+	  			DWORD cbNeeded2;
 	  
-	  			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded))
+	  			if (EnumProcessModules(hProcess, &hMod, sizeof(hMod), &cbNeeded2))
 	  			{
 	  				char szProcessName[MAX_PATH];
 	  				GetModuleBaseNameA(hProcess, hMod, szProcessName, sizeof(szProcessName) / sizeof(TCHAR));
@@ -1207,20 +1338,35 @@ int main(int argc, char *argv[])
 	  if (numDuckInstances == 0)
 	  {
 	  	printf("DuckStation is not running! waiting 5 seconds...\n\n");
-
-			Sleep(5000);
-
-			duckAttempts++;
+		platformSleep(5000);
+		duckAttempts++;
 	  	numDuckInstances = 0;
 	  	duckPID = -1;
 	  }
 	  else printf("Client: DuckStation detected\n");
 	}
+#else
+	// === Linux: enumerate processes via /proc/ ===
+	while (numDuckInstances == 0 && duckAttempts < 20)
+	{
+		duckPID = findDuckStationPID(&numDuckInstances);
+
+		if (numDuckInstances == 0)
+		{
+			printf("DuckStation is not running! waiting 5 seconds...\n\n");
+			platformSleep(5000);
+			duckAttempts++;
+			numDuckInstances = 0;
+			duckPID = -1;
+		}
+		else printf("Client: DuckStation detected (PID: %d)\n", duckPID);
+	}
+#endif
 
 	if (duckAttempts == 20)
 	{
 		printf("Error: couldn't find duckstation after 20 attempts, quitting...\n\n");
-		system("pause");
+		platformPause();
 		exit(EXIT_FAILURE);
 	}
 
@@ -1232,42 +1378,68 @@ int main(int argc, char *argv[])
 		printf("Please enter the PID manually\n\n");
 
 		printf("Input.: DuckStation PID: ");
-		scanf_s("%s", pidStr, (int)sizeof(pidStr));
+		SCANF_SAFE("%s", pidStr, sizeof(pidStr));
 	}
 	else
 	{
-		sprintf_s(pidStr, 100, "%d", duckPID);
+		SPRINTF_SAFE(pidStr, sizeof(pidStr), "%d", duckPID);
 	}
 
 	char duckName[100];
-	sprintf_s(duckName, 100, "duckstation_%s", pidStr);
-
-	TCHAR duckNameT[100];
-	swprintf(duckNameT, 100, L"%hs", duckName);
+	SPRINTF_SAFE(duckName, sizeof(duckName), "duckstation_%s", pidStr);
 
 	duckAttempts = 0;
 
-	while (duckAttempts < 20)
+#ifdef _WIN32
+	// === Windows: open shared memory via Win32 file mapping ===
 	{
-		// 8 MB RAM
-		const unsigned int size = 0x800000;
-		HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-		pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+		TCHAR duckNameT[100];
+		swprintf(duckNameT, 100, L"%hs", duckName);
 
-		if (pBuf == 0)
+		while (duckAttempts < 20)
 		{
-			printf("Failed to open DuckStation shmem, waiting 5 seconds...\n\n");
-			Sleep(5000);
-		}
-		else break;
-	}
+			// 8 MB RAM
+			const unsigned int size = 0x800000;
+			HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+			pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
-	if (pBuf == 0)
+			if (pBuf == 0)
+			{
+				printf("Failed to open DuckStation shmem, waiting 5 seconds...\n\n");
+				platformSleep(5000);
+				duckAttempts++;
+			}
+			else break;
+		}
+	}
+#else
+	// === Linux: open shared memory via POSIX shm_open/mmap ===
+	{
+		const unsigned int size = 0x800000;
+
+		while (duckAttempts < 20)
+		{
+			pBuf = openDuckStationShmem(duckName, size);
+
+			if (pBuf == NULL)
+			{
+				printf("Failed to open DuckStation shmem '%s', waiting 5 seconds...\n\n", duckName);
+				platformSleep(5000);
+				duckAttempts++;
+			}
+			else break;
+		}
+	}
+#endif
+
+	if (pBuf == 0 || pBuf == NULL)
 	{
 		printf("Error: Failed to open Duckstation shmem after 20 attempts, quitting...\n\n");
-		system("pause");
+		platformPause();
 		exit(EXIT_FAILURE);
 	}
+
+	printf("Client: Shared memory opened successfully!\n");
 
 	octr = (OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 	octr->autoRetryJoinRoomIndex = -1;
@@ -1311,10 +1483,10 @@ int main(int argc, char *argv[])
 	}
 
 	printf("\n");
-	system("pause");
+	platformPause();
 }
 
-#ifdef __WINDOWS__
+#ifdef _WIN32
 void usleep(__int64 usec)
 {
 	HANDLE timer;
