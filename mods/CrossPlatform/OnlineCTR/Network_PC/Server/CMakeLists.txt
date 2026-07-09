@@ -6,20 +6,30 @@ set(CMAKE_C_STANDARD 99)
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/include)
 
-# Add the path to the enet library
-link_directories(${PROJECT_SOURCE_DIR}/../../../../../externals/enet/lib)
+# Add enet sources directly
+set(ENET_DIR ${PROJECT_SOURCE_DIR}/../../../../../externals/enet)
+set(ENET_SOURCES
+    ${ENET_DIR}/callbacks.c
+    ${ENET_DIR}/compress.c
+    ${ENET_DIR}/host.c
+    ${ENET_DIR}/list.c
+    ${ENET_DIR}/packet.c
+    ${ENET_DIR}/peer.c
+    ${ENET_DIR}/protocol.c
+    ${ENET_DIR}/unix.c
+)
 
 # Source files
-set(SOURCES SV_main.c SV_helper.c)
+set(SOURCES SV_main.c SV_helper.c ${ENET_SOURCES})
 
 # Create the executable
 add_executable(ctr_srv ${SOURCES})
 
 # Link with the enet library
 if (WIN32)
-    target_link_libraries(ctr_srv enet winmm ws2_32)
+    target_link_libraries(ctr_srv winmm ws2_32)
 else()
-    target_link_libraries(ctr_srv enet)
+    target_link_libraries(ctr_srv pthread)
 endif()
 
 # Compiler options
