@@ -414,7 +414,7 @@ common, exe, DecalFont_DrawMultiLine, 0x0,             General/DecalFont/DecalFo
 //common, exe, DecalGlobal_EmptyFunc_MainFrame_ResetDB   General/DecalGlobal/DecalGlobal_0_EmptyFunc_MainFrame_ResetDB.c //TODO
 common, exe, DecalGlobal_Clear, 0x0,                   General/DecalGlobal/DecalGlobal_1_Clear.c
 common, exe, DecalGlobal_Store, 0x0,                   General/DecalGlobal/DecalGlobal_2_Store.c
-//common, exe, DecalGlobal_FindInLEV, 0x0,               General/DecalGlobal/DecalGlobal_3_FindInLEV.c //TODO
+common, exe, DecalGlobal_FindInLEV, 0x0,               General/DecalGlobal/DecalGlobal_3_FindInLEV.c
 //common, exe, DecalGlobal_FindInMPK, 0x0,               General/DecalGlobal/DecalGlobal_4_FindInMPK.c //TODO
 
 // ====================================================================================================================
