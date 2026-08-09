@@ -34,7 +34,7 @@ int AnyMatchIPBanL(unsigned int IP);
 typedef struct {
 	ENetPeer* peer;
 
-	char name[NAME_LEN];
+	char name[NAME_LEN + 1];
 	char characterID;
 	char boolLoadSelf;
 	char boolRaceSelf;
@@ -350,6 +350,30 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 	char sgBuffer[16];
 	memset(sgBuffer, 0, sizeof(sgBuffer));
 
+	// === Reject truncated packets before interpreting any body fields ===
+	// packet->data is attacker-controlled and packet->dataLength is not
+	// guaranteed to match the message type. Reading a body out of a short
+	// packet would read past the ENet receive buffer (out-of-bounds read),
+	// and for CG_JOINROOM this is reachable before the peer joins a room.
+	if (packet->dataLength < sizeof(struct CG_Header))
+		return;
+	{
+		size_t minLen;
+		switch (((struct CG_Header*)recvBuf)->type)
+		{
+			case CG_JOINROOM:  minLen = sizeof(struct CG_MessageRoom);      break;
+			case CG_NAME:      minLen = sizeof(struct CG_MessageName);      break;
+			case CG_TRACK:     minLen = sizeof(struct CG_MessageTrack);     break;
+			case CG_CHARACTER: minLen = sizeof(struct CG_MessageCharacter); break;
+			case CG_RACEDATA:  minLen = sizeof(struct CG_EverythingKart);   break;
+			case CG_WEAPON:    minLen = sizeof(struct CG_MessageWeapon);    break;
+			case CG_ENDRACE:   minLen = sizeof(struct CG_MessageEndRace);   break;
+			default:           minLen = sizeof(struct CG_Header);           break;
+		}
+		if (packet->dataLength < minLen)
+			return;
+	}
+
 	if (((struct CG_Header*)recvBuf)->type != CG_JOINROOM)
 	{
 		if (peerID == -1)
@@ -364,7 +388,9 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 			struct CG_MessageRoom* r = recvBuf;
 
 			// kick if room is invalid
-			if (r->room > 16)
+			// roomInfos has 16 entries (0..15); '> 16' let room==16 index one past
+			// the array and corrupt global memory. Reject anything >= 16.
+			if (r->room >= 16)
 			{
 				// update data, reject player
 				SendRoomData(peer);
@@ -452,16 +478,17 @@ void ProcessReceiveEvent(ENetPeer* peer, ENetPacket* packet) {
 
 			s->numClientsTotal = ri->clientCount;
 
-			// save new name
+			// save new name (client controls all bytes; force NUL termination)
 			memcpy(&ri->peerInfos[peerID].name[0], &r->name[0], NAME_LEN);
+			ri->peerInfos[peerID].name[NAME_LEN] = 0;
 
 			int roomId = (((unsigned int)ri - (unsigned int)&roomInfos[0]) / sizeof(RoomInfo)) + 1;
 
 			PrintPrefix(roomId);
-			printf("Player %d joined room %d and is now identified as %s [%08x]\n",
+			printf("Player %d joined room %d and is now identified as %.*s [%08x]\n",
 				peerID,
 				roomId,
-				r->name,
+				NAME_LEN, r->name,
 				peer->address.host);
 
 			s->type = SG_NAME;
@@ -674,10 +701,8 @@ void ProcessNewMessages() {
 
 int ServerState_FirstBoot(int argc, char** argv)
 {
-	printf(__DATE__);
-	printf("\n");
-	printf(__TIME__);
-	printf("\n\n");
+	printf("%s\n", __DATE__);
+	printf("%s\n\n", __TIME__);
 
 #ifdef __WINDOWS__
 	HWND console = GetConsoleWindow();
@@ -763,7 +788,7 @@ int ServerState_FirstBoot(int argc, char** argv)
 	//initialize enet
 	if (enet_initialize() != 0)
 	{
-		printf(stderr, "Failed to initialize ENet!\n");
+		fprintf(stderr, "Failed to initialize ENet!\n");
 		return 1;
 	}
 	atexit(enet_deinitialize);
@@ -912,7 +937,11 @@ int main(int argc, char** argv)
 		void usleep(__int64 usec);
 		#endif
 
-		usleep(1);
+		// 1 ms tick. The original usleep(1) spun the loop millions of times per
+		// second (about 20%% CPU while idle with no clients). enet_host_service is
+		// called non-blocking, so nothing else yields; 1 ms is far finer than the
+		// 30/60 fps network rate and drops idle CPU to a fraction of a percent.
+		usleep(1000);
 		ServerState_Tick();
 	}
 }
