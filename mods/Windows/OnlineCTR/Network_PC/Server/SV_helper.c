@@ -28,7 +28,7 @@ void PrintTime()
 	tm_info = localtime(&timer);
 
 	strftime(buffer, 26, "%Y-%m-%d %H:%M:%S", tm_info);
-	printf(buffer);
+	printf("%s", buffer);
 }
 
 int GetWeekDay()
@@ -61,6 +61,7 @@ void AddPeerLPL(ENetPeer* peer)
 	if (lplHead == NULL)
 	{
 		lplHead = malloc(sizeof(struct LoosePeerList));
+		if (lplHead == NULL) return;
 		lplHead->next = NULL;
 		lplHead->peer = peer;
 	}
@@ -70,6 +71,7 @@ void AddPeerLPL(ENetPeer* peer)
 		while (c->next != NULL)
 			c = c->next;
 		c->next = malloc(sizeof(struct LoosePeerList));
+		if (c->next == NULL) return;
 		c->next->next = NULL;
 		c->next->peer = peer;
 	}
@@ -142,6 +144,7 @@ void AddIPBanL(unsigned int IP)
 	if (ipBanLHead == NULL)
 	{
 		ipBanLHead = malloc(sizeof(struct IPBanL));
+		if (ipBanLHead == NULL) return;
 		ipBanLHead->next = NULL;
 		ipBanLHead->ip = IP;
 	}
@@ -151,6 +154,7 @@ void AddIPBanL(unsigned int IP)
 		while (c->next != NULL)
 			c = c->next;
 		c->next = malloc(sizeof(struct IPBanL));
+		if (c->next == NULL) return;
 		c->next->next = NULL;
 		c->next->ip = IP;
 	}
