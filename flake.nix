@@ -51,6 +51,10 @@
               gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
               clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
             };
+            ucrt64 = with pkgsCross.ucrt64; {
+              gcc = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; inherit withDebug; };
+              clang = callPackage ./mods/Windows/OnlineCTR/Network_PC/Server { ctrModSDK = self; stdenv = clangStdenv; trustCompiler = true; inherit withDebug; };
+            };
           };
         in
         rec {
